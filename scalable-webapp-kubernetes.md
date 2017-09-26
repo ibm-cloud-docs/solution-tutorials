@@ -1,43 +1,40 @@
-# Scalable Java web application on Kubernetes
+# Scalable Web application on Kubernetes
 
-:one: Create a Kubernetes cluster
+* Create a Kubernetes cluster
 
-:two: Scaffold a starter Java application
+* Scaffold a starter Java application
 
-:three: Deploy application to cluster
+* Deploy application to cluster
 
-:four: Bind custom domain
+* Bind custom domain
 
-:five: Monitor cluster health
+* Monitor cluster health
 
-:six: Scale Kubernetes pods
+* Scale Kubernetes pods
 
 ## Prerequisites
 
-* [Docker](https://www.docker.com/get-docker) installed on your machine
 * [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
-* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) to interact with Kubernetes clusters
-* [Helm](https://docs.helm.sh/using_helm/#installing-helm) Client and Tiller on cluster
-* [bx dev tools](https://console.bluemix.net/docs/cloudnative/dev_cli.html#developercli)
+* [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plugins
 
 ## Create a Kubernetes cluster
 
-The free cluster will allow you to deploy your application. However, to bind a custom domain to your cluster, you'll need to select a paid cluster option.
-
-1. Create a cluster from the Bluemix console or with the `bx cs cluster-create` command.
-2. Check the status of your cluster and wait for the cluster to be ready
+1. Create a Kubernetes cluster from the [Bluemix Catalog](https://console.bluemix.net/containers-kubernetes/launch). You will need a **Paid** cluster to bind custom domains. If you create a **free** cluster, you can still follow the guide and skip the appropriate sections.
+2. Check the status of your **Cluster** and **Worker Notes** and wait for them to both be **ready**. This can take about an hour.
 
 ### Configure kubectl to target your cluster
 
-1. Once the cluster is ready, retrieve the cluster configuration
+1. Log in using `bx login`
+
+2. Once the cluster is ready, retrieve the cluster configuration
 
    ```
    bx cs cluster-config <cluster-name>
    ```
 
-2. Export the KUBECONFIG environment variable
+3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed.
 
-3. Check that the `kubectl` command is correctly configured
+4. Check that the `kubectl` command is correctly configured
 
    ```
    kubectl cluster-info
@@ -46,6 +43,10 @@ The free cluster will allow you to deploy your application. However, to bind a c
 ### Initialize Helm for your cluster
 
 [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts — Helm Charts helps you define, install, and upgrade even the most complex Kubernetes application.
+
+1. Initialize helm
+
+   `helm init`
 
 ## Create a starter Java application
 
@@ -114,7 +115,7 @@ In this section, we will first push the Docker image to the IBM Cloud private co
    ```
    bx cr namespaces
    ```
-   If you don't have one, create it.
+   If you have a namespace, make note of the name for use later. If you don't have one, create it.
 
    ```
    bx cr namespace-add <name>
@@ -337,8 +338,3 @@ Refer to Kubernetes documentation for manual and automatic scaling:
 ## Further reading
 
 * [IBM Container Service documentation](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
-
-## Related content
-
-* https://cloud.google.com/container-engine/docs/quickstart
-* https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-tutorial-kubernetes-deploy-application
