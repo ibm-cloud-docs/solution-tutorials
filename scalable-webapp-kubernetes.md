@@ -23,7 +23,9 @@ Let's Scaffold a Java web application, run it locally in a container and then de
 
 1. Create a Kubernetes cluster from the [Bluemix Catalog](https://console.bluemix.net/containers-kubernetes/launch). You will create a **free** cluster of type **Lite** and still be able to follow the guide and skip the appropriate sections. To bind a custom domain, You must create a **Paid** cluster of type **Standard**.
 
-**Note:** For the ease of use, Check the configuration details like Number of CPUs, Memory and Number of Worker Nodes you will be getting under Lite and Standard plans.
+  **Note:** For the ease of use, Check the configuration details like Number of CPUs, Memory and Number of Worker Nodes you will be getting under Lite and Standard plans.
+
+   ![](images/KubernetesClusterCreation.png)
 
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**. 
 
