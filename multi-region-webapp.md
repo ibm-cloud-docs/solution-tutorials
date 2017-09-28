@@ -1,3 +1,17 @@
+---
+
+
+copyright:
+  years: 2017
+lastupdated: "2017-09-28"
+
+---
+
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+
+
+
 # Deploy a secure web application across multiple regions
 
 This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions. Among many other starter applications on IBM Cloud, You will be using Node.js starter application for this tutorial.
