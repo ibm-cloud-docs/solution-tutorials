@@ -1,28 +1,37 @@
 # Scalable Web application on Kubernetes
-Scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Then bind a custom domain, monitor the health of the environment and scale.
+Let's Scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.
 
 ## Objectives
-* Create a Kubernetes cluster
-* Scaffold a starter Java application
-* Deploy application to cluster
-* Bind custom domain
-* Monitor cluster health
-* Scale Kubernetes pods
+* Create a Kubernetes cluster.
+* Scaffold a starter Java application.
+* Deploy application to cluster.
+* Bind custom domain.
+* Monitor cluster health.
+* Scale Kubernetes pods.
+
+### Apps and Services
+* IBM Container Service.
 
 ## Before you begin
 {: #prereqs}
 
-* [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
-* [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plugins
+* [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
+* [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plugins.
+
 
 ## Create a Kubernetes cluster
 
-1. Create a Kubernetes cluster from the [Bluemix Catalog](https://console.bluemix.net/containers-kubernetes/launch). You will need a **Paid** cluster to bind custom domains. If you create a **free** cluster, you can still follow the guide and skip the appropriate sections.
-2. Check the status of your **Cluster** and **Worker Notes** and wait for them to both be **ready**. This can take about an hour.
+1. Create a Kubernetes cluster from the [Bluemix Catalog](https://console.bluemix.net/containers-kubernetes/launch). You will create a **free** cluster of type **Lite** and still be able to follow the guide and skip the appropriate sections. To bind a custom domain, You must create a **Paid** cluster of type **Standard**.
+
+**Note:** For the ease of use, Check the configuration details like Number of CPUs, Memory and Number of Worker Nodes you will be getting under Lite and Standard plans.
+
+2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**. 
+
+In the next step, you will configure **kubectl** to point to your newly created cluster going forward.
 
 ### Configure kubectl to target your cluster
 
-1. Log in using `bx login`
+1. Use `bx login` to login interactively. Provide the Organisation(Org), Region and Space under which the cluster is created. You can reconfirm the details by running `bx target` command.
 
 2. Once the cluster is ready, retrieve the cluster configuration
 
@@ -31,6 +40,9 @@ Scaffold a Java web application, run it locally in a container and then deploy i
    ```
 
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed.
+
+  To verify whether the KUBECONFIG environment variable is set properly or not, run this command 
+  `echo $KUBECONFIG`
 
 4. Check that the `kubectl` command is correctly configured
 
@@ -50,19 +62,19 @@ Scaffold a Java web application, run it locally in a container and then deploy i
 
 The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code, so that you can start coding business logic faster.
 
-1. Start the `bx dev` wizard
+1. Start the `bx dev` wizard.
 
    ```
    bx dev create
    ```
 
-2. Select `Web App`
+2. Select `Web App`.
 
-3. Select `Basic Web`
+3. Select `Basic Web`.
 
-4. Select `Java - MicroProfile / JavaEE`
+4. Select `Java - MicroProfile / JavaEE`.
 
-5. Enter a name for your project
+5. Enter a name for your project.
 
 6. Enter unique hostname for your project.
 
@@ -72,19 +84,19 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 
 ### Build the Java application
 
-1. Ensure your local Docker engine is started
+1. Ensure your local Docker engine is started.
 
    ```
    docker ps
    ```
 
-2. Change to the generated project directory
+2. Change to the generated project directory.
 
    ```
    cd <project name>
    ```
 
-3. Build the application
+3. Build the application.
 
    ```
    bx dev build
@@ -119,7 +131,7 @@ In this section, we will first push the Docker image to the IBM Cloud private co
    bx cr namespace-add <name>
    ```
 
-2. Find the **Container Registry** by running
+2. Find the **Container Registry** by running.
 
    ```
    bx cr info
@@ -142,7 +154,7 @@ In this section, we will first push the Docker image to the IBM Cloud private co
 
 6. Wait a few minutes for your application to be deployed.
 
-7. Retrieve the **public IP** of your cluster workers
+7. Retrieve the **public IP** of your cluster workers.
 
    ```
    bx cs workers <your-cluster>
@@ -151,7 +163,7 @@ In this section, we will first push the Docker image to the IBM Cloud private co
    kube-dal12-cr4a8d8f9f64dedededededdwwdec69a72-w1   169.21.32.14   10.184.220.82   u1c.2x4        normal   Ready
    ```
 
-8. Retrieve the **port** assigned to your application
+8. Retrieve the **port** assigned to your application.
 
    ```
    kubectl get services
