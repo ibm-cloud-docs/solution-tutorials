@@ -25,7 +25,7 @@ Let's Scaffold a Java web application, run it locally in a container and then de
 
   **Note:** For the ease of use, Check the configuration details like Number of CPUs, Memory and Number of Worker Nodes you will be getting under Lite and Standard plans.
 
-   ![](images/KubernetesClusterCreation.png)
+   ![Kubernetes Cluster Creation on IBM Cloud](images/KubernetesClusterCreation.png)
 
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**. 
 
