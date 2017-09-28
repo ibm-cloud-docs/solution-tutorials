@@ -136,6 +136,8 @@ Follow the steps detailed here https://ibm-public-cos.github.io/crs-docs/desktop
 
 1. The CDN URL Preview will look like http://your-subdomain.your-domain.com
 
+1. Access the file through your browser http://your-subdomain.your-domain.com/your-filename
+
 ## Configure SSL
 
 > This does not look possible with COS + CDN

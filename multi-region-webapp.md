@@ -64,9 +64,9 @@ In this step, you will set up a git source control repository to store your code
 
 7. Run the application locally by running the comments one after another 
 `npm install`, `npm build`,  `npm start ` and visit ```localhost:<port_number>```in your browser.
-**port_number** as displayed on the console.
+**<port_number>** as displayed on the console.
 
-8. Let's push the changes to your repository with three simple steps - Add, Commit and Push.
+8. Let's push the change to your repository with three simple steps - Add, Commit and Push.
 
    ```bash
    git add .
@@ -74,7 +74,7 @@ In this step, you will set up a git source control repository to store your code
    git push origin master
    ```
 
-9. Back in the toolchain created earlier, click on the **Delivery Pipeline** tile.
+9. Let's go to the toolchain you created earlier, click on the **Delivery Pipeline** tile.
 
 10. You should see an **BUILD** and **DEPLOY** stage.
 
@@ -90,32 +90,30 @@ In the next step, let's take your application to multiple regions.
 
 ## Deploy to another region
 
-Next, we will deploy the same application to a differnet Bluemix region. We can use the same toolchain but add another DEPLOY stage to handle the deployment of the application to another region.
+Next, we will deploy the same application to a differnet Bluemix region. We can use the same toolchain but will add another DEPLOY stage to handle the deployment of the application to another region.
 
-1. Application **Overview** -> **View toolchain**
+1. Navigate to Application **Overview** and scroll down to find **View toolchain**.
 
-2. Select **Delivery Pipeline**
+2. Select **Delivery Pipeline** under Deliver.
 
-3. **Deploy Stage** -> **Configure Pipeline**
-
-4. Click on the **Gear icon** on the **DEPLOY** stage and select **Clone Stage**
+3. Click on the **Gear icon** on the **DEPLOY** stage and select **Clone Stage**.
 
    ![HelloWorld](images/CloneStage.png)
 
-5. Rename stage to "Deploy to UK" and select **JOBS**
+4. Rename stage to "Deploy to UK" and select **JOBS**.
 
-6. Change **Target** to **United Kingdom**
+5. Change **Target** to **United Kingdom**. Create a **space** if you don't have one.
 
-7. Change **Deploy script** to
+6. Change **Deploy script** to
 
    ```
    cf push "${CF_APP}" -d eu-gb.mybluemix.net
    ```
    ![HelloWorld](images/DeployToUK.png)
 
-8. Click **Save**
+7. Click **Save**.
 
-9. Run the new stage by clicking on the **Play button**
+8. Run the new stage by clicking on the **Play button**.
 
 ## Configure custom domain to your application
 
@@ -131,7 +129,7 @@ Your cool application deserves a cool URL!
 
 4. Click on **Add Domain** and enter your domain url.
 
-5. Application **Overview** -> **Edit Routes** -> **Choose your domain**
+5. Application **Overview** -> **Edit Routes** -> **Choose your domain**.
 
    ​
 ## Map the custom domain to the Bluemix system domain
