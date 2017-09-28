@@ -1,0 +1,7 @@
+{:navgroup: .navgroup}
+{:topicgroup: .topicgroup}
+
+{: .toc subcollection="solutions" audience="platform" href="/docs/solutions/multi-region-webapp.html"}
+Solutions
+  
+    multi-region-webapp.md
