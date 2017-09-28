@@ -1,15 +1,12 @@
 # Scalable Web application on Kubernetes
+Scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Then bind a custom domain, monitor the health of the environment and scale.
 
+## Objectives
 * Create a Kubernetes cluster
-
 * Scaffold a starter Java application
-
 * Deploy application to cluster
-
 * Bind custom domain
-
 * Monitor cluster health
-
 * Scale Kubernetes pods
 
 ## Prerequisites

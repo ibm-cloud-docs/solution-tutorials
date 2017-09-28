@@ -1,6 +1,7 @@
 # Host a static website
+Host static web content in a Content Delivery Network (CDN) for fast and secure access from around the world.
 
-In this tutorial, you can accomplish the following:
+## Objectives
 * Create a Cloud Object Storage S3 bucket
 * Upload files to a bucket
 * Make the website content globally available with a CDN
