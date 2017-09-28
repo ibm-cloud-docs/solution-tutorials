@@ -8,7 +8,8 @@ Host static web content in a Content Delivery Network (CDN) for fast and secure 
 * Use a custom domain to access the content
 * Configure SSL
 
-## Prerequisites
+## Before you begin
+{: #prereqs}
 
 1. **Contact your Infrastructure master user to get the following permissions:**
    * Manage CDN Account
@@ -23,6 +24,7 @@ Host static web content in a Content Delivery Network (CDN) for fast and secure 
    * Confirm you can see the `Storage` section and the `Object Storage` section underneath
 
 ## Create a Cloud Object Storage S3 bucket
+{: #create_cos}
 
 ### Create a Cloud Object Storage S3
 
@@ -63,6 +65,7 @@ Host static web content in a Content Delivery Network (CDN) for fast and secure 
    > Avoid dots (.) in the bucket name
 
 ## Upload files to a bucket
+{: #upload}
 
 ### Configure a desktop client to work with the storage
 
@@ -126,6 +129,7 @@ Follow the steps detailed here https://ibm-public-cos.github.io/crs-docs/desktop
    http://your-cdn-account-id.http.cdn.softlayer.net/another-id/your-bucket-name.s3-api.us-geo.objectstorage.softlayer.net/your-filename
 
 ## Use a custom domain to access the content
+{: #custom_domain}
 
 1. Create a CNAME record in your DNS pointing to the your-cdn-account-id.http.cdn.softlayer.net
 
@@ -140,5 +144,6 @@ Follow the steps detailed here https://ibm-public-cos.github.io/crs-docs/desktop
 1. Access the file through your browser http://your-subdomain.your-domain.com/your-filename
 
 ## Configure SSL
+{: #ssl}
 
 > This does not look possible with COS + CDN

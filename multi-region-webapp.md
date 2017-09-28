@@ -17,6 +17,7 @@ This tutorial is a walkthrough of how to create, secure, and deploy a web applic
 * Continuous Delivery Service for DevOps.
 
 ## Create a Node.js application
+{: #create}
 
 Start by creating a Node.js starter application which runs in a Cloud Foundry environment.
 
@@ -37,6 +38,7 @@ Great start! You have your very own node.js starter application running on Bluem
 Let's push the source code of your application to a repository and deploy your changes automatically.
 
 ## Set up source control and continuous delivery
+{: #devops}
 
 In this step, you will set up a git source control repository to store your code and then create a pipeline which will deploy any code changes automatically.
 
@@ -48,7 +50,7 @@ In this step, you will set up a git source control repository to store your code
 
    ![HelloWorld](images/Toolchain.png)
 
-3. Select **Git** tile under **Code**. You will be taken to your git repository page. 
+3. Select **Git** tile under **Code**. You will be taken to your git repository page.
 
 4. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the link **add an SSH key** in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking on **create a personal access token**. Remember to save the key or token for future reference.
 
@@ -62,7 +64,7 @@ In this step, you will set up a git source control repository to store your code
 
 6. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, Let's update the code. Try changing "Hello World" to something else.
 
-7. Run the application locally by running the comments one after another 
+7. Run the application locally by running the comments one after another
 `npm install`, `npm build`,  `npm start ` and visit ```localhost:<port_number>```in your browser.
 **<port_number>** as displayed on the console.
 
@@ -89,6 +91,7 @@ Continue making further changes to your application and periodically commit your
 In the next step, let's take your application to multiple regions.
 
 ## Deploy to another region
+{: #deploy_another_region}
 
 Next, we will deploy the same application to a differnet Bluemix region. We can use the same toolchain but will add another DEPLOY stage to handle the deployment of the application to another region.
 
@@ -116,6 +119,7 @@ Next, we will deploy the same application to a differnet Bluemix region. We can 
 8. Run the new stage by clicking on the **Play button**.
 
 ## Configure custom domain to your application
+{: #add_domain}
 
 Your cool application deserves a cool URL!
 
@@ -131,8 +135,8 @@ Your cool application deserves a cool URL!
 
 5. Application **Overview** -> **Edit Routes** -> **Choose your domain**.
 
-   ​
 ## Map the custom domain to the Bluemix system domain
+{: #map_domain}
 
 Map the custom domain name to the secure endpoint for the US Bluemix region where your application is running.
 
@@ -143,6 +147,7 @@ Map the custom domain name to the secure endpoint for the US Bluemix region wher
 
 
 ## Bind SSL certificate to your application
+{: #ssl}
 
 1. Purchase SSL cert https://www.godaddy.com/web-security/ssl-certificate
 
@@ -154,6 +159,7 @@ Map the custom domain name to the secure endpoint for the US Bluemix region wher
 
 
 ## Monitor application performance
+{: #monitor}
 
 Lets see how your application is performing from users from all around the world.
 

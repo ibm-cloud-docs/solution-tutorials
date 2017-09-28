@@ -9,7 +9,8 @@ Scaffold a Java web application, run it locally in a container and then deploy i
 * Monitor cluster health
 * Scale Kubernetes pods
 
-## Prerequisites
+## Before you begin
+{: #prereqs}
 
 * [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plugins
