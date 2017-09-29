@@ -2,12 +2,12 @@
 Let's Scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.
 
 ## Objectives
-* Create a Kubernetes cluster.
-* Scaffold a starter Java application.
-* Deploy application to cluster.
-* Bind custom domain.
-* Monitor cluster health.
-* Scale Kubernetes pods.
+* Create a Kubernetes cluster
+* Scaffold a starter Java application
+* Deploy application to cluster
+* Bind custom domain
+* Monitor cluster health
+* Scale Kubernetes pods
 
 ### Apps and Services
 * IBM Container Service.
@@ -27,13 +27,15 @@ Let's Scaffold a Java web application, run it locally in a container and then de
 
    ![Kubernetes Cluster Creation on IBM Cloud](images/KubernetesClusterCreation.png)
 
-2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**. 
+2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 In the next step, you will configure **kubectl** to point to your newly created cluster going forward.
 
-### Configure kubectl to target your cluster
+### Configure kubectl and helm
 
-1. Use `bx login` to login interactively. Provide the Organisation(Org), Region and Space under which the cluster is created. You can reconfirm the details by running `bx target` command.
+[kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a a command line tool to interact with a Kubernetes cluster.
+
+1. Use `bx login` to login interactively. Provide the Organization (Org), Region and Space under which the cluster is created. You can reconfirm the details by running `bx target` command.
 
 2. Once the cluster is ready, retrieve the cluster configuration
 
@@ -43,7 +45,7 @@ In the next step, you will configure **kubectl** to point to your newly created 
 
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed.
 
-  To verify whether the KUBECONFIG environment variable is set properly or not, run this command 
+  To verify whether the KUBECONFIG environment variable is set properly or not, run this command
   `echo $KUBECONFIG`
 
 4. Check that the `kubectl` command is correctly configured
@@ -52,11 +54,8 @@ In the next step, you will configure **kubectl** to point to your newly created 
    kubectl cluster-info
    ```
 
-### Initialize Helm for your cluster
 
-[Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts — Helm Charts helps you define, install, and upgrade even the most complex Kubernetes application.
-
-1. Initialize helm
+5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts — Helm Charts helps you define, install, and upgrade even the most complex Kubernetes application. Initialize Helm in your cluster.
 
    `helm init`
 
@@ -84,7 +83,11 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 
 7. Select **n** to skip adding services.
 
+![](images/bx_dev_create.png)
+
 ### Build the Java application
+
+You can build and run the application as you normally would using `mvn` for local development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the steps below to build your docker image.
 
 1. Ensure your local Docker engine is started.
 
@@ -106,9 +109,9 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 
    > This might take a few minutes to run as all the application dependencies are downloaded and a *Docker image* is built which contains your application and all the required environment.
 
-### Run the Java application
+### Run the Java application locally
 
-1. Run the application locally
+1. Run the container.
 
    ```
    bx dev run
@@ -117,6 +120,8 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
    > This will use your local Docker engine to run the docker image built by the previous step.
 
 2. Once your container starts, visit http://localhost:9080/[nameofproject]
+
+![](images/LibertyLocal.png)
 
 ## Deploy application to cluster
 
@@ -192,7 +197,7 @@ In the previous step, the application was accessed with a not standard port. The
 
 Paid clusters come with an IBM-provided domain. This gives you a better option to expose applications with a proper URL and on standard HTTP/S ports.
 
-**TODO: Describe Ingress here**
+Use Ingress to set up the cluster inbound connection to the service.
 
 1. Identify your IBM-provided **Ingress domain**
 
@@ -207,7 +212,7 @@ Paid clusters come with an IBM-provided domain. This gives you a better option t
    Ingress secret:		mycluster
    ```
 
-2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <>.
+2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.
 
    ```
    apiVersion: extensions/v1beta1
