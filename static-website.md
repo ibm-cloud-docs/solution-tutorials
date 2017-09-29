@@ -104,46 +104,66 @@ Follow the steps detailed here https://ibm-public-cos.github.io/crs-docs/desktop
 
 1. Search for **Content Delivery Network**
 
+1. Pick the one under the **Network** category. This CDN is powered by Akamai.
+
 1. Create a **Content Delivery Network** instance
 
-1. Find the instance in https://control.bluemix.net/storage/cdn
+1. Select **Akamai** as the CDN Provider
 
-### Define an Origin Mapping between the S3 bucket and the CDN
+1. Click **Start Provision**
 
-1. Click **Add Mapping**
+### Configure the CDN instance
 
-1. Set the Origin Base URL to http://your-bucket-name.s3-api.us-geo.objectstorage.softlayer.net/
+1. Set the **hostname** for the CDN to your custom domain
 
-1. Leave CNAME empty for now
+   > Although you set a custom domain, you will still be able to access the CDN contents through the IBM provided CNAME. So if you don't plan to use custom domain, you can make set an arbitrary name.
 
-1. Make note of the CDN URL Preview. It will look like:
+1. Set the **Custom CNAME** prefix
 
-   http://your-cdn-account-id.http.cdn.softlayer.net/another-id/your-bucket-name.s3-api.us-geo.objectstorage.softlayer.net/
+   > Don't use dots "." in the name
 
-1. Wait for the <cdn-account-id>.http.cdn.softlayer.net DNS address to propagate
+1. Leave the **Path** empty
 
-   > You can ping <cdn-account-id>.http.cdn.softlayer.net to check if it is ready
+1. Select **Object Storage** as Origin
 
-1. Once the mapping is available, wait for the uploaded file to be distributed to the CDN
+1. Set the **Endpoint** to your bucket API endpoint, such as *s3-api.us-geo.objectstorage.softlayer.net*
 
-   http://your-cdn-account-id.http.cdn.softlayer.net/another-id/your-bucket-name.s3-api.us-geo.objectstorage.softlayer.net/your-filename
+1. Set the **Bucket name** to *your-bucket-name*
+
+1. Click **Create**
+
+1. Find the instance in https://control.bluemix.net/network/cdn
+
+### Access your content through the CDN domain
+
+1. Select the CDN instance in the list at https://control.bluemix.net/network/cdn
+
+1. The *Details* panel shows the CNAME for your CDN
+
+1. Access your file with https://your-cdn-cname.cdnedge.bluemix.net/your-filename
+
+   > If you omit the filename, you should see the S3 ListBucketResult instead
 
 ## Use a custom domain to access the content
 {: #custom_domain}
 
-1. Create a CNAME record in your DNS pointing to the your-cdn-account-id.http.cdn.softlayer.net
+1. Create a CNAME record in your DNS pointing to the your-cdn-cname.cdnedge.bluemix.net. Make sure to use the same domain name you specified when creating the CDN.
 
-1. In the CDN, click **Add Mapping**
+1. Confirm the CNAME is correctly created
 
-1. Set the Origin Base URL to http://your-bucket-name.s3-api.us-geo.objectstorage.softlayer.net/
+   ```
+   nslookup your-custom-domain
+   ```
 
-1. Set the CNAME to your-subdomain.your-domain.com
+   the answer will look like:
 
-1. The CDN URL Preview will look like http://your-subdomain.your-domain.com
+   ```
+   Non-authoritative answer:
+   your-custom-domain	canonical name = your-cdn-name.cdnedge.bluemix.net.
+   your-cdn-name.cdnedge.bluemix.net	canonical name = wildcard.cdnedge.bluemix.net.edgekey.net.
+   wildcard.cdnedge.bluemix.net.edgekey.net	canonical name = e13937.dsce16.akamaiedge.net.
+   Name:	e13937.dsce16.akamaiedge.net
+   Address: 2.17.228.128
+   ```
 
-1. Access the file through your browser http://your-subdomain.your-domain.com/your-filename
-
-## Configure SSL
-{: #ssl}
-
-> This does not look possible with COS + CDN
+1. Access your file with http://your-custom-domain/your-filename
