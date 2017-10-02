@@ -89,6 +89,10 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 
 ![](images/solution2/bx_dev_create.png)
 
+This will generate a starter application complete with the code and all the necessary configuration files for local development, and deployment to cloud on CloudFoundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
+
+![](images/solution2/Contents.png)
+
 ### Build the Java application
 
 You can build and run the application as you normally would using `mvn` for local development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the steps below to build your docker image.
