@@ -5,3 +5,6 @@
 Solutions
   
     multi-region-webapp.md
+    scalable-webapp-kubernetes.md
+    static-website.md
+    lamp-stack.md

@@ -2,6 +2,7 @@
 Let's Scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.
 
 ## Objectives
+* Create a Kubernetes cluster
 * Scaffold a starter Java application
 * Deploy application to cluster
 * Bind custom domain
@@ -15,9 +16,12 @@ Let's Scaffold a Java web application, run it locally in a container and then de
 
 * [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
 * [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plugins.
+* [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 
 ## Create a Kubernetes cluster
+
+{: #create_kube_cluster}
 
 1. Create a Kubernetes cluster from the [Bluemix Catalog](https://console.bluemix.net/containers-kubernetes/launch). You will create a **free** cluster of type **Lite** and still be able to follow the guide and skip the appropriate sections. To bind a custom domain, You must create a **Paid** cluster of type **Standard**.
 
@@ -58,6 +62,8 @@ In the next step, you will configure **kubectl** to point to your newly created 
    `helm init`
 
 ## Create a starter Java application
+
+{: #create_application}
 
 The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code, so that you can start coding business logic faster.
 
@@ -122,6 +128,8 @@ You can build and run the application as you normally would using `mvn` for loca
 ![](images/solution2/LibertyLocal.png)
 
 ## Deploy application to cluster
+
+{: #deploy}
 
 In this section, we will first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
 
@@ -191,6 +199,8 @@ In this section, we will first push the Docker image to the IBM Cloud private co
 
 ## Use the IBM-provided domain for your cluster
 
+{: #ibm_domain}
+
 In the previous step, the application was accessed with a not standard port. The service was exposed via Kubernetes NodePort feature.
 
 Paid clusters come with an IBM-provided domain. This gives you a better option to expose applications with a proper URL and on standard HTTP/S ports.
@@ -242,7 +252,9 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 4. Access your application at `https://<ingress-sub-domain>/<nameofproject>`
 
-## Use your own domain
+## Use your own custom domain
+
+{: #custom_domain}
 
 To use your custom domain, you need to update your DNS records with either a CNAME record pointing to your IBM-provided domain or an A record pointing to the portable public IP address of the IBM-provided Ingress. Given a paid cluster comes with fixed IP addresses, an A record is a good option.
 
@@ -325,6 +337,8 @@ If you were to try to access your application with HTTPS at this time `https://<
 
 ## Monitor application health
 
+{: #monitor_application}
+
 1. Use the **Kubernetes console** to watch your application health
 
    ```
@@ -338,6 +352,8 @@ If you were to try to access your application with HTTPS at this time `https://<
    ![](images/solution2/KubernetesDashboard.png)
 
 ## Scale Kubernetes pods
+
+{: #scale_cluster}
 
 As load increase you can manually scale the number of pods in your application deployment.
 
