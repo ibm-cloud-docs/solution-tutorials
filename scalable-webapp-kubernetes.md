@@ -2,15 +2,13 @@
 Let's Scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.
 
 ## Objectives
-* Create a Kubernetes cluster
 * Scaffold a starter Java application
 * Deploy application to cluster
 * Bind custom domain
 * Monitor cluster health
 * Scale Kubernetes pods
 
-### Apps and Services
-* IBM Container Service.
+![](images/solution2/Solution2Architecture.png)
 
 ## Before you begin
 {: #prereqs}
@@ -25,7 +23,7 @@ Let's Scaffold a Java web application, run it locally in a container and then de
 
   **Note:** For the ease of use, Check the configuration details like Number of CPUs, Memory and Number of Worker Nodes you will be getting under Lite and Standard plans.
 
-   ![Kubernetes Cluster Creation on IBM Cloud](images/KubernetesClusterCreation.png)
+   ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesClusterCreation.png)
 
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
@@ -83,7 +81,7 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 
 7. Select **n** to skip adding services.
 
-![](images/bx_dev_create.png)
+![](images/solution2/bx_dev_create.png)
 
 ### Build the Java application
 
@@ -121,7 +119,7 @@ You can build and run the application as you normally would using `mvn` for loca
 
 2. Once your container starts, visit http://localhost:9080/[nameofproject]
 
-![](images/LibertyLocal.png)
+![](images/solution2/LibertyLocal.png)
 
 ## Deploy application to cluster
 
@@ -198,6 +196,8 @@ In the previous step, the application was accessed with a not standard port. The
 Paid clusters come with an IBM-provided domain. This gives you a better option to expose applications with a proper URL and on standard HTTP/S ports.
 
 Use Ingress to set up the cluster inbound connection to the service.
+
+![Ingress](images/solution2/Ingress.png)
 
 1. Identify your IBM-provided **Ingress domain**
 
@@ -334,6 +334,8 @@ If you were to try to access your application with HTTPS at this time `https://<
    then access the console at http://127.0.0.1:8001/ui
 
 2. Select **Nodes** and see the **Allocation Resources** to see the health of your nodes.
+
+   ![](images/solution2/KubernetesDashboard.png)
 
 ## Scale Kubernetes pods
 
