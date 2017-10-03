@@ -12,7 +12,7 @@ lastupdated: "2017-10-02"
 
 
 
-# Create application on LAMP Stack (need better title)
+# PHP Web Application on a LAMP Stack
 
 This tutorial is a walkthrough of how to create, secure, and deploy a web application ....
 
@@ -21,7 +21,7 @@ This tutorial is a walkthrough of how to create, secure, and deploy a web applic
 * blah
 * blah
 
-![HelloWorld](images/Architecture.png)
+![HelloWorld](images/solution4/Architecture.png)
 
 ### Apps and Services
 * VM

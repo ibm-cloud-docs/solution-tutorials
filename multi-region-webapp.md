@@ -24,7 +24,7 @@ This tutorial is a walkthrough of how to create, secure, and deploy a web applic
 * Bind an SSL certificate to your application
 * Monitor application performance.
 
-![HelloWorld](images/Architecture.png)
+![HelloWorld](images/solution1/Architecture.png)
 
 ### Apps and Services
 * SDK for Node.js Cloud Foundry App.
@@ -39,13 +39,13 @@ Start by creating a Node.js starter application which runs in a Cloud Foundry en
 
 2.  Click on **Cloud Foundry Apps** under Platform on the left pane and Select **SDK for Node.js** .
 
-     ![](images/SDKforNodejs.png)
+     ![](images/solution1/SDKforNodejs.png)
 
 3.  Enter a **unique name** for your application which will also be your hostname. For example: myusername-nodeapp.
 
 4.  Wait until the application starts and click on the **Visit URL** link on top of the **Overview** page to see your application LIVE on a new tab.
 
-![HelloWorld](images/HelloWorld.png)
+![HelloWorld](images/solution1/HelloWorld.png)
 
 Great start! You have your very own node.js starter application running on Bluemix.
 
@@ -56,13 +56,13 @@ Let's push the source code of your application to a repository and deploy your c
 
 In this step, you will set up a git source control repository to store your code and then create a pipeline which will deploy any code changes automatically.
 
-1. On the left pane of your application you just created,Select **Overview** and scroll down to find **Continuous delivery**. Click on **Enable**.
+1. On the left pane of your application you just created, select **Overview** and scroll down to find **Continuous delivery**. Click on **Enable**.
 
-   ![HelloWorld](images/EnableContinuousDelivery.png)
+   ![HelloWorld](images/solution1/EnableContinuousDelivery.png)
 
 2. Keep the default options and click **Create**. You should now have a default **toolchain** created.
 
-   ![HelloWorld](images/Toolchain.png)
+   ![HelloWorld](images/solution1/Toolchain.png)
 
 3. Select **Git** tile under **Code**. You will be taken to your git repository page.
 
@@ -79,8 +79,8 @@ In this step, you will set up a git source control repository to store your code
 6. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, Let's update the code. Try changing "Hello World" to something else.
 
 7. Run the application locally by running the comments one after another
-`npm install`, `npm build`,  `npm start ` and visit ```localhost:<port_number>```in your browser.
-**<port_number>** as displayed on the console.
+  `npm install`, `npm build`,  `npm start ` and visit ```localhost:<port_number>```in your browser.
+  **<port_number>** as displayed on the console.
 
 8. Let's push the change to your repository with three simple steps - Add, Commit and Push.
 
@@ -94,7 +94,7 @@ In this step, you will set up a git source control repository to store your code
 
 10. You should see an **BUILD** and **DEPLOY** stage.
 
-  ![HelloWorld](images/Pipeline.png)
+  ![HelloWorld](images/solution1/Pipeline.png)
 
 11. Wait for the **DEPLOY** stage to complete
 
@@ -115,7 +115,7 @@ Next, we will deploy the same application to a differnet Bluemix region. We can 
 
 3. Click on the **Gear icon** on the **DEPLOY** stage and select **Clone Stage**.
 
-   ![HelloWorld](images/CloneStage.png)
+   ![HelloWorld](images/solution1/CloneStage.png)
 
 4. Rename stage to "Deploy to UK" and select **JOBS**.
 
@@ -126,7 +126,7 @@ Next, we will deploy the same application to a differnet Bluemix region. We can 
    ```
    cf push "${CF_APP}" -d eu-gb.mybluemix.net
    ```
-   ![HelloWorld](images/DeployToUK.png)
+   ![HelloWorld](images/solution1/DeployToUK.png)
 
 7. Click **Save**.
 
@@ -143,7 +143,7 @@ Your cool application deserves a cool URL!
 
 3. Application **Overview** -> **Routes**  -> **Manage Domains**
 
-   ![HelloWorld](images/ApplicationRoutes.png)
+   ![HelloWorld](images/solution1/ApplicationRoutes.png)
 
 4. Click on **Add Domain** and enter your domain url.
 
@@ -175,10 +175,12 @@ Map the custom domain name to the secure endpoint for the US Bluemix region wher
 ## Monitor application performance
 {: #monitor}
 
-Lets see how your application is performing from users from all around the world.
+Lets see how your application is performing from locations around the world
 
 1. Application **Overview** -> **View toolchain**
 2. Click **Add a Tool**
 3. Choose **Availability Monitoring** -> **Create Integration**
 4. Select **Availability Monitoring** and click on the name of your app.
 5. Click **View All Tests**
+
+Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact users.
