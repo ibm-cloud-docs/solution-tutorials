@@ -14,21 +14,21 @@ lastupdated: "2017-09-28"
 
 # Deploy a secure web application across multiple regions
 
-This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions. Among many other starter applications on IBM Cloud, You will be using Node.js starter application for this tutorial.
+This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions. Among many other starter applications on IBM Cloud, you will be using Node.js starter application for this tutorial.
 
 ## Objectives
-* Create a starter Node.js application.
-* Set up source control and continuous delivery.
-* Deploy to another region.
-* Map a custom domain to your application.
+* Create a starter Node.js application
+* Set up source control and continuous delivery
+* Deploy to another region
+* Map a custom domain to your application
 * Bind an SSL certificate to your application
-* Monitor application performance.
+* Monitor application performance
 
 ![HelloWorld](images/solution1/Architecture.png)
 
 ### Apps and Services
-* SDK for Node.js Cloud Foundry App.
-* Continuous Delivery Service for DevOps.
+* SDK for Node.js Cloud Foundry App
+* Continuous Delivery Service for DevOps
 
 ## Create a Node.js application
 {: #create}

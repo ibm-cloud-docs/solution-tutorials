@@ -1,4 +1,4 @@
-# Scalable Web application on Kubernetes
+# Scalable web application on Kubernetes
 This tutorial is a walkthrough of how to scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.
 
 ## Objectives

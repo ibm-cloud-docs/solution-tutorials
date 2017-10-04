@@ -1,6 +1,5 @@
 ---
 
-
 copyright:
   years: 2017
 lastupdated: "2017-10-02"
@@ -12,7 +11,7 @@ lastupdated: "2017-10-02"
 
 
 
-# PHP Web Application on a LAMP Stack
+# PHP web application on a LAMP Stack
 
 This tutorial is a walkthrough of how to create, secure, and deploy a web application ....
 
