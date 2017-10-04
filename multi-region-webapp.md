@@ -37,7 +37,7 @@ Start by creating a Node.js starter application which runs in a Cloud Foundry en
 
 1.  Click on **Catalog** in the top navigation bar.
 
-2.  Click on **Cloud Foundry Apps** under Platform on the left pane and Select **SDK for Node.js** .
+2.  Click on **Cloud Foundry Apps** under Platform on the left pane and select **SDK for Node.js** .
 
      ![](images/solution1/SDKforNodejs.png)
 

@@ -1,10 +1,12 @@
-# Serve static files to users around the world
-Host and serve website assets and user generated cotent in a Content Delivery Network (CDN) and Cloud Object Storage fast and secure to users around the world.
+# Low latency delivery of static files to users around the world
+
+Host and serve website assets (images, videos, documents) and user generated cotent in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure to users around the world.
 
 ## Objectives
 * Create a Cloud Object Storage S3 bucket
 * Upload files to a bucket
-* Make the website content globally available with a CDN
+* Make the content globally available with a CDN
+* Expose files using a Cloud Foundry web application
 
 ![](images/solution3/Solution3Architecture.png)
 
@@ -23,30 +25,24 @@ Host and serve website assets and user generated cotent in a Content Delivery Ne
    * Go to https://control.bluemix.net
    * Confirm you can see the `Storage` section and the `Object Storage` section underneath
 
-## Create a Cloud Object Storage S3 bucket
+## Create an Object Storage
 {: #create_cos}
+
+Cloud Object Storage provides flexible, cost-effective, and scalable cloud storage for unstructured data.
 
 ### Create a Cloud Object Storage S3
 
 1. Go in the Bluemix catalog
 
-2. Search for **Storage**
+2. Click on **Storage** and then **Cloud Object Storage**
 
-3. Select **Cloud Object Storage**
+3. Select **Cloud Object Storage S3** and click **Create** and **Continue**.
 
-4. Select **Cloud Object Storage S3**
+4. Review terms and click **Place Order**
 
-5. Click **Create**
+5. Go to the **Storage** page https://control.bluemix.net/storage/objectstorage to view the newly created storage
 
-   > You are redirected to the Infrastructure console
-
-6. Click **Continue**
-
-7. Click **Place Order**
-
-8. Go to the **Storage** page https://control.bluemix.net/storage/objectstorage to view the newly created storage
-
-9. Update its description with your name to easily find the storage later
+6. Update its description with your name to easily find the storage later
 
 ### Create a bucket
 
@@ -67,15 +63,16 @@ Host and serve website assets and user generated cotent in a Content Delivery Ne
 ## Upload files to a bucket
 {: #upload}
 
+In this section, we will use a desktop client to connect to the COS, upload files and configure permissions. 
+
 ### Configure a desktop client to work with the storage
 
-By default the bucket and its files are not publicly available. We are going to check the permissions so that the file can be accessed through the Internet without authentication.
+By default the bucket and its files are not publicly available. We are going to change the permissions so that the file can be accessed through the Internet without authentication.
 
-COS provides a S3 compatible API https://ibm-public-cos.github.io/crs-docs/api-reference and you can use command line interfaces too https://ibm-public-cos.github.io/crs-docs/cli.
+COS provides both a [S3 compatible API](https://ibm-public-cos.github.io/crs-docs/api-reference) and [command line interfaces](https://ibm-public-cos.github.io/crs-docs/cli).
 
-Cyberduck is a desktop client that makes it easy to work with S3 storages.
+**Cyberduck** is a desktop client that makes it easy to work with S3 storages. Follow the steps detailed here https://ibm-public-cos.github.io/crs-docs/desktop-clients to configure Cyberduck to access your storage. The steps are:
 
-Follow the steps detailed here https://ibm-public-cos.github.io/crs-docs/desktop-clients to configure Cyberduck to access your storage. The steps are:
       1. Download an install Cyberduck from https://cyberduck.io/
       2. Add a new connection of type **S3 Storage**
       3. Find your storage access keys and endpoints in the storage page
@@ -84,7 +81,7 @@ Follow the steps detailed here https://ibm-public-cos.github.io/crs-docs/desktop
 
 1. Go inside the created bucket
 
-2. Upload one file named **index.html**
+2. Upload file named **LargeImage.jpg**. You can download a sample image file here [LINK]. 
 
 ### Make the file publicly available
 
@@ -94,9 +91,11 @@ Follow the steps detailed here https://ibm-public-cos.github.io/crs-docs/desktop
 
    http://s3-api.us-geo.objectstorage.softlayer.net/your-bucket-name/your-filename
 
-   > this link is for a cross-region bucket in the US
+   > This link is for a cross-region bucket in the US
 
 ## Make the website content globally available with a CDN
+
+In this section, we will create a CDN service. The CDN service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (our image in Object Storage) to the network and stays there for other users to access it quickly without the network latency to reach the host server again.
 
 ### Create a CDN instance
 
