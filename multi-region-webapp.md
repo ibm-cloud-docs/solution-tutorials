@@ -58,11 +58,11 @@ In this step, you will set up a git source control repository to store your code
 
 1. On the left pane of your application you just created, select **Overview** and scroll down to find **Continuous delivery**. Click on **Enable**.
 
-   ![HelloWorld](images/solution1/EnableContinuousDelivery.png)
+   ![HelloWorld](images/solution1/Enable_Continuous_Delivery.png)
 
 2. Keep the default options and click **Create**. You should now have a default **toolchain** created.
 
-   ![HelloWorld](images/solution1/Toolchain.png)
+   ![HelloWorld](images/solution1/DevOps_Toolchain.png)
 
 3. Select **Git** tile under **Code**. You will be taken to your git repository page.
 
@@ -78,7 +78,7 @@ In this step, you will set up a git source control repository to store your code
 
 6. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, Let's update the code. Try changing "Hello World" to something else.
 
-7. Run the application locally by running the comments one after another
+7. Run the application locally by running the commands one after another
   `npm install`, `npm build`,  `npm start ` and visit ```localhost:<port_number>```in your browser.
   **<port_number>** as displayed on the console.
 
@@ -94,9 +94,9 @@ In this step, you will set up a git source control repository to store your code
 
 10. You should see an **BUILD** and **DEPLOY** stage.
 
-  ![HelloWorld](images/solution1/Pipeline.png)
+  ![HelloWorld](images/solution1/DevOps_Pipeline.png)
 
-11. Wait for the **DEPLOY** stage to complete
+11. Wait for the **DEPLOY** stage to complete.
 
 12. Click the application **url** under Last Execution result to view your changes live.
 
@@ -139,7 +139,7 @@ Your cool application deserves a cool URL!
 
 1. Buy a domain from a registrar such as http://godaddy.com
 
-2. **Switch to the US region** by clicking on your account name in the top navigation bar
+2. **Switch to the US region** by clicking on your account name in the top navigation bar.
 
 3. Application **Overview** -> **Routes**  -> **Manage Domains**
 
@@ -163,19 +163,19 @@ Map the custom domain name to the secure endpoint for the US Bluemix region wher
 ## Bind SSL certificate to your application
 {: #ssl}
 
-1. Purchase SSL cert https://www.godaddy.com/web-security/ssl-certificate
+1. Purchase SSL cert https://www.godaddy.com/web-security/ssl-certificate.
 
-2. Navigate to Application **Overview** -> **Routes**  -> **Manage Domains**
+2. Navigate to Application **Overview** -> **Routes**  -> **Manage Domains**.
 
 3. Click on SSL Certificate upload button.
 
-4. Upload certificate
+4. Upload the certificate.
 
 
 ## Monitor application performance
 {: #monitor}
 
-Lets see how your application is performing from locations around the world
+Lets check the health of your multi-region application,
 
 1. Application **Overview** -> **View toolchain**
 2. Click **Add a Tool**
