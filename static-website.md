@@ -1,8 +1,9 @@
 # Low latency delivery of static files to users around the world
 
-Host and serve website assets (images, videos, documents) and user generated cotent in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure to users around the world.
+Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.
 
 ## Objectives
+
 * Create a Cloud Object Storage S3 bucket
 * Upload files to a bucket
 * Make the content globally available with a CDN
@@ -24,6 +25,16 @@ Host and serve website assets (images, videos, documents) and user generated cot
 2. Ensure that you have access to Storage in the Infrastructure console
    * Go to https://control.bluemix.net
    * Confirm you can see the `Storage` section and the `Object Storage` section underneath
+
+## Get the web application code
+
+This guide uses a simple web application linking to files served by a Content Delivery Network.
+
+To start with, retrieve the application code:
+
+   ```
+   git clone https://github.ibm.com/frederic-lavigne/webapp-with-cos-and-cdn
+   ```
 
 ## Create an Object Storage
 {: #create_cos}
@@ -63,7 +74,7 @@ Cloud Object Storage provides flexible, cost-effective, and scalable cloud stora
 ## Upload files to a bucket
 {: #upload}
 
-In this section, we will use a desktop client to connect to the COS, upload files and configure permissions. 
+In this section, we will use a desktop client to connect to the COS, upload files and configure permissions.
 
 ### Configure a desktop client to work with the storage
 
@@ -81,13 +92,13 @@ COS provides both a [S3 compatible API](https://ibm-public-cos.github.io/crs-doc
 
 1. Go inside the created bucket
 
-2. Upload file named **LargeImage.jpg**. You can download a sample image file here [LINK]. 
+2. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory at the root of the bucket.
 
-### Make the file publicly available
+### Make the files publicly available
 
-1. Edit the permissions of the file and give **Everyone** the **READ** permission.
+1. Edit the permissions of the files and give **Everyone** the **READ** permission.
 
-2. Access the file through your browser. The link will look like
+2. Access the files through your browser. The link will look like
 
    http://s3-api.us-geo.objectstorage.softlayer.net/your-bucket-name/your-filename
 
@@ -95,7 +106,7 @@ COS provides both a [S3 compatible API](https://ibm-public-cos.github.io/crs-doc
 
 ## Make the website content globally available with a CDN
 
-In this section, we will create a CDN service. The CDN service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (our image in Object Storage) to the network and stays there for other users to access it quickly without the network latency to reach the host server again.
+In this section, we will create a CDN service. The CDN service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (our bucket in Cloud Object Storage) to the network and stays there for other users to access it quickly without the network latency to reach the host server again.
 
 ### Create a CDN instance
 
@@ -143,26 +154,28 @@ In this section, we will create a CDN service. The CDN service distributes conte
 
    > If you omit the filename, you should see the S3 ListBucketResult instead
 
-## Use a custom domain to access the content
-{: #custom_domain}
+## Deploy the Cloud Foundry application
 
-1. Create a CNAME record in your DNS pointing to the your-cdn-cname.cdnedge.bluemix.net. Make sure to use the same domain name you specified when creating the CDN.
+The application contains a web page **public/index.html** that includes references to the files now hosted in the Cloud Object Storage. The backend **app.js** serves this web page and replace a placeholder with the actual location of your CDN. This way all assets used by the web page will be served by the CDN.
 
-2. Confirm the CNAME is correctly created
+1. With a terminal, go in the directory where you checked out the code
 
-   ```
-   nslookup your-custom-domain
-   ```
-
-   the answer will look like:
+1. Push the application without starting it
 
    ```
-   Non-authoritative answer:
-   your-custom-domain	canonical name = your-cdn-name.cdnedge.bluemix.net.
-   your-cdn-name.cdnedge.bluemix.net	canonical name = wildcard.cdnedge.bluemix.net.edgekey.net.
-   wildcard.cdnedge.bluemix.net.edgekey.net	canonical name = e13937.dsce16.akamaiedge.net.
-   Name:	e13937.dsce16.akamaiedge.net
-   Address: 2.17.228.128
+   bx cf push --no-start
    ```
 
-3. Access your file with http://your-custom-domain/your-filename
+1. Configure the CDN_NAME environment variable so the app can reference the CDN contents
+
+   ```
+   bx cf set-env webapp-with-cos-and-cdn CDN_CNAME your-cdn.cdnedge.bluemix.net
+   ```
+
+1. Start the app
+
+   ```
+   bx cf start webapp-with-cos-and-cdn
+   ```
+
+1. Access the app with your web browser, the page stylesheet, a picture and a video are loaded from the CDN.
