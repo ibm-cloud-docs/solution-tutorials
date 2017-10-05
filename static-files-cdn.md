@@ -24,15 +24,22 @@ Host and serve website assets (images, videos, documents) and user generated con
 
 2. Ensure that you have access to Storage in the Infrastructure console
    * Go to https://control.bluemix.net
-   * Confirm you can see the `Storage` section and the `Object Storage` section underneath
+
+   * Confirm you can see the `Storage` section and the `Object Storage` section underneath.
+
+     ​
+
+![](images/solution3/Storage_Catalog.png)
 
 ## Get the web application code
 
-This guide uses a simple web application linking to files served by a Content Delivery Network.
+{: #get_code}
+
+This guide uses a simple web application which links to the files (css, images and videos) served by a Content Delivery Network.
 
 To start with, retrieve the application code:
 
-   ```
+   ```sh
    git clone https://github.ibm.com/frederic-lavigne/webapp-with-cos-and-cdn
    ```
 
@@ -51,23 +58,21 @@ Cloud Object Storage provides flexible, cost-effective, and scalable cloud stora
 
 4. Review terms and click **Place Order**
 
-5. Go to the **Storage** page https://control.bluemix.net/storage/objectstorage to view the newly created storage
+5. Go to the **Storage** page https://control.bluemix.net/storage/objectstorage to view the newly created storage.
 
-6. Update its description with your name to easily find the storage later
+6. Update its description with your name to easily find the storage later.
 
 ### Create a bucket
 
-1. Select the storage
+1. Select the storage and select **Manage Buckets**
 
-2. Select **Manage Buckets**
+2. Click the **+** button to add a bucket
 
-3. Click the **+** button to add a bucket
+3. Set Resiliency/Location to **Cross Region - us**
 
-4. Set Resiliency/Location to **Cross Region - us**
+4. Set Storage Class to **Standard**
 
-5. Set Storage Class to **Standard**
-
-6. Set the Bucket Name to **mywebsite**
+5. Set the Bucket Name to **mywebsite**
 
    > Avoid dots (.) in the bucket name
 
@@ -78,21 +83,19 @@ In this section, we will use a desktop client to connect to the COS, upload file
 
 ### Configure a desktop client to work with the storage
 
-By default the bucket and its files are not publicly available. We are going to change the permissions so that the file can be accessed through the Internet without authentication.
+By default the bucket and its files are not publicly available. We are going to change the permissions so that the file can be accessed through the Internet without authentication. You can communicate with COS using a [S3 compatible API](https://ibm-public-cos.github.io/crs-docs/api-reference,  [command line interface](https://ibm-public-cos.github.io/crs-docs/cli) or a [desktop client](https://ibm-public-cos.github.io/crs-docs/desktop-clients).
 
-COS provides both a [S3 compatible API](https://ibm-public-cos.github.io/crs-docs/api-reference) and [command line interfaces](https://ibm-public-cos.github.io/crs-docs/cli).
+**Cyberduck** is a popular, open-source, desktop client that makes it easy to work with S3 storages. To connect with Cyberduck:
 
-**Cyberduck** is a desktop client that makes it easy to work with S3 storages. Follow the steps detailed here https://ibm-public-cos.github.io/crs-docs/desktop-clients to configure Cyberduck to access your storage. The steps are:
-
-      1. Download an install Cyberduck from https://cyberduck.io/
-      2. Add a new connection of type **S3 Storage**
-      3. Find your storage access keys and endpoints in the storage page
+  1. Download an install Cyberduck from https://cyberduck.io/
+   2. Add a new connection of type **S3 Storage**
+   3. Find your storage access keys and endpoints in the Bluemix**Storage** page.
 
 ### Upload a file in the bucket
 
 1. Go inside the created bucket
 
-2. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory at the root of the bucket.
+2. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory of the web application code you downloaded above. Upload the files to the root of the bucket.
 
 ### Make the files publicly available
 
@@ -148,7 +151,7 @@ In this section, we will create a CDN service. The CDN service distributes conte
 
 1. Select the CDN instance in the list at https://control.bluemix.net/network/cdn
 
-2. The *Details* panel shows the CNAME for your CDN
+2. The **Details** panel shows the **CNAME** for your CDN
 
 3. Access your file with https://your-cdn-cname.cdnedge.bluemix.net/your-filename
 
@@ -160,22 +163,32 @@ The application contains a web page **public/index.html** that includes referenc
 
 1. With a terminal, go in the directory where you checked out the code
 
-1. Push the application without starting it
+   `cd webapp-with-cos-and-cdn`
+
+2. Push the application without starting it.
 
    ```
    bx cf push --no-start
    ```
 
-1. Configure the CDN_NAME environment variable so the app can reference the CDN contents
+3. Configure the CDN_NAME environment variable so the app can reference the CDN contents
 
    ```
    bx cf set-env webapp-with-cos-and-cdn CDN_CNAME your-cdn.cdnedge.bluemix.net
    ```
 
-1. Start the app
+4. Start the app.
 
    ```
    bx cf start webapp-with-cos-and-cdn
    ```
 
-1. Access the app with your web browser, the page stylesheet, a picture and a video are loaded from the CDN.
+5. Access the app with your web browser, the page stylesheet, a picture and a video are loaded from the CDN.
+
+Using a CDN with an Object Storage is a powerful combination which lets you host files and serve them to users from around the world. You can also use Object Storage to store any files your users upload to your application.
+
+## Related Content
+
+[IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
+
+[Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
