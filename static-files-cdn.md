@@ -87,9 +87,9 @@ By default the bucket and its files are not publicly available. We are going to 
 
 **Cyberduck** is a popular, open-source, desktop client that makes it easy to work with S3 storages. To connect with Cyberduck:
 
-  1. Download an install Cyberduck from https://cyberduck.io/
-   2. Add a new connection of type **S3 Storage**
-   3. Find your storage access keys and endpoints in the Bluemix**Storage** page.
+    1. Download an install Cyberduck from https://cyberduck.io/
+     2. Add a new connection of type **S3 Storage**
+     3. Find your storage access keys and endpoints in the Bluemix**Storage** page.
 
 ### Upload a file in the bucket
 
@@ -163,7 +163,9 @@ The application contains a web page **public/index.html** that includes referenc
 
 1. With a terminal, go in the directory where you checked out the code
 
-   `cd webapp-with-cos-and-cdn`
+   ```
+   cd webapp-with-cos-and-cdn
+   ```
 
 2. Push the application without starting it.
 
@@ -184,6 +186,8 @@ The application contains a web page **public/index.html** that includes referenc
    ```
 
 5. Access the app with your web browser, the page stylesheet, a picture and a video are loaded from the CDN.
+
+![](images/solution3/Application.png)
 
 Using a CDN with an Object Storage is a powerful combination which lets you host files and serve them to users from around the world. You can also use Object Storage to store any files your users upload to your application.
 
