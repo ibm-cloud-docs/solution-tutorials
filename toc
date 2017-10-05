@@ -3,8 +3,8 @@
 
 {: .toc subcollection="solutions" audience="platform" href="/docs/solutions/multi-region-webapp.html"}
 Solutions
-  
+
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
-    static-website.md
+    static-files-cdn.md
     lamp-stack.md
