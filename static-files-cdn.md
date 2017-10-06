@@ -1,4 +1,4 @@
-# Accelerate delivery of static files
+# Accelerate delivery of static files 
 
 Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.
 

@@ -11,7 +11,7 @@ This tutorial is a walkthrough of how to scaffold a Java web application, run it
 
 ![](images/solution2/Solution2Architecture.png)
 
-## Before you begin
+## Before you begin 
 {: #prereqs}
 
 * [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
