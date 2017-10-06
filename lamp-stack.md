@@ -1,7 +1,7 @@
 # PHP web application on a LAMP Stack
 This solution walks you through how to deploy an Apache web server, MySQL, and PHP (the LAMP stack) on a virtual server using Ubuntu image. To see the LAMP server in action, you can optionally install and configure a WordPress site. 
 
-Steps: 4 | Duration time: 15 minutes  
+Steps: 4 | 15 minutes
 
 ## Objectives
 In this tutorial, you deployed a LAMP server in IBM Cloud. 
