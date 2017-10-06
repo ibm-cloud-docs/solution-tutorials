@@ -16,24 +16,24 @@ In this tutorial, you deployed a LAMP server in IBM Cloud.
 * Virtual Server
 
 ## Step 1 - Provision a LAMP server 
-1. Login to Bluemix, navigate to catalog page and select the virtual server service under the Infrastructure section. 
+1. Login to Bluemix, navigate to the catalog page and select the virtual server service under the Infrastructure section. 
 
 2. Select public virtual server and then click create
 
 3. Configure the server, for this solution select the Ubuntu LAMP latest version  
 
-    **Note:** this will come with pre installed Apache, MySQL, and PHP but we will reinstall PHP and MySQL later with the latest version.
+    **Note:** this will come with pre-installed Apache, MySQL, and PHP but we will reinstall PHP and MySQL later with the latest version.
   
 4. Under network interface select the public and private network uplinks option
 
-5. Once you are happy with the configuration then click provision to provision the server.  
+5. Once you are happy with the configuration, then click provision to provision the server.  
 
     **Note** the provisioning process can take up to 10 minutes for the server to be ready for use. 
    
    ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
  
-    Once the server is created, you should see the server username, password and public IP.  
-    the server username and password would be needed to SSH into the server and the public IP address to access the web application. 
+    Once the server is created, you should see the server username, password, and public IP.  
+    The server username and password would be needed to SSH into the server and the public IP address to access the web application. 
     ![Virtual server created](images/solution4/VirtualServerCreated.png)
  
 
@@ -50,17 +50,17 @@ In this tutorial, you deployed a LAMP server in IBM Cloud.
 Verify Apache, MySQL, and PHP running on Ubuntu image.
 
 ### Ubuntu
-1. Verify Ubuntu by opening in the public IP address in the browser, you should see the Ubuntu welcome page.
+1. Verify Ubuntu by opening in the public IP address in the browser. You should see the Ubuntu welcome page.
 
    ![Verify Ubuntu](images/solution4/VerifyUbuntu.png) 
 
 ### Apache
-1. Check the version of Apache using the following command:
+1. Check Apache version installed using the following command:
    
    ```
    apache2 -v
    ```
-2. Verify that port 80 for traffic is open, run the following command: 
+2. Verify port 80 for web traffic, run the following command: 
    
    ```
    sudo netstat -ntlp | grep LISTEN
@@ -68,20 +68,20 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
    ![Verify Port](images/solution4/VerifyPort.png)  
 
 ### MySQL
-1. Check the version of MySQL with the following command:
+1. Check the version of MySQL using the following command:
    
    ```
    mysql -V
    ```
    **Note** the capital V parameter
 
-2. We recommend running the following script to help secure the installation of MySQL:
+2. We recommend running the following script to help securing MySQL database:
 
    ```
    mysql_secure_installation
    ```
 
-3. Enter your MySQL root password, and configure the security settings for your environment.
+3. Enter MySQL root password, and configure the security settings for your environment.
    If you want to create a MySQL database, add users, or change configuration settings, login to MySQL
 
    ```
@@ -92,7 +92,7 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
    When done, exit the mysql prompt by typing \q.
    
 ### PHP
-1. Check the version of PHP with the following command:
+1. Check the version of PHP using the following command:
 
    ```
    PHP -v 
@@ -102,13 +102,13 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
    ```
    sudo sh -c 'echo "<?php phpinfo(); ?>" > /var/www/html/info.php'
    ```
-   Now you can check the PHP info page you created. Open a browser and go to http://yourPublicIPAddress/info.php. Substitute the public IP address of your virtual server. It should look similar to this image.
+   Now you can check the PHP info page you created. Open a browser and go to http://YourPublicIPAddress/info.php. Substitute the public IP address of your virtual server. It should look similar to this image.
    ![PHP info](images/solution4/PHPInfo.png)  
 
 ## Step 4 - Install WordPress
-If you want to try your stack, install a sample app. As an example, the following steps install the open source WordPress platform to create websites and blogs. This WordPress setup is for proof of concept. For more information and settings for production installation, see the WordPress documentation.
+If you want to try your LAMP stack, install a sample app. As an example, the following steps install the open source WordPress platform to create websites and blogs. This WordPress setup is for proof of concept. For more information and settings for production installation, see the WordPress documentation.
 
-### Install the WordPress package
+### Install the WordPress packages
 1. Run the following command:
 
    ```
@@ -165,8 +165,7 @@ If you want to try your stack, install a sample app. As an example, the followin
 
  
 ## Summary 
-In this tutorial, you deployed a LAMP server in IBM Cloud. 
-You learned how to:
+In this tutorial, you deployed a LAMP server using IBM Cloud. You learned how to:
 * Provision a LAMP server 
 * Install Apache, MySQL, and PHP
 * Verify installation and configuration
