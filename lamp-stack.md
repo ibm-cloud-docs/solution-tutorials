@@ -163,13 +163,30 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
 7. Done, now you can complete the WordPress setup and publish on the platform. Open a browser and go to http://yourPublicIPAddress/wordpress. Substitute the public IP address of your VM. It should look similar to this image.
    ![WordPress site running](images/solution4/WordPressSiteRunning.png)  
 
- 
+## Point domain to a LAMP server 
+To point your domain to the LAMP server, simply point the A record the server public IP address. 
+You can get the server public IP address from the dashboard. 
+
+## Scale a LAMP server 
+... 
+
+## Secure a LAMP server  
+...
+
+## Monitor a LAMP server 
+...
+
+
 ## Summary 
 In this tutorial, you deployed a LAMP server using IBM Cloud. You learned how to:
 * Provision a LAMP server 
 * Install Apache, MySQL, and PHP
 * Verify installation and configuration
 * Install WordPress
+* Point domain to a LAMP server  
+* Scale a LAMP server 
+* Secure a LAMP server  
+* Monitor a LAMP server 
 
 
 ## Next step 
