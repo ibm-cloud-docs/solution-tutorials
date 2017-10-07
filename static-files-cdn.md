@@ -81,15 +81,13 @@ Cloud Object Storage provides flexible, cost-effective, and scalable cloud stora
 
 In this section, we will use a desktop client to connect to the COS, upload files and configure permissions.
 
-### Configure a desktop client to work with the storage
+### Configure a desktop client
 
-By default the bucket and its files are not publicly available. We are going to change the permissions so that the file can be accessed through the Internet without authentication. You can communicate with COS using a [S3 compatible API](https://ibm-public-cos.github.io/crs-docs/api-reference,  [command line interface](https://ibm-public-cos.github.io/crs-docs/cli) or a [desktop client](https://ibm-public-cos.github.io/crs-docs/desktop-clients).
+By default the bucket and its files are not publicly available. We are going to change the permissions so that the file can be accessed through the Internet without authentication. You can communicate with COS using a [S3 compatible API](https://ibm-public-cos.github.io/crs-docs/api-reference,  [command line interface](https://ibm-public-cos.github.io/crs-docs/cli) or a [desktop client](https://ibm-public-cos.github.io/crs-docs/desktop-clients). Cyberduck is a popular, open-source, desktop client that makes it easy to work with S3 storages. To connect with Cyberduck:
 
-**Cyberduck** is a popular, open-source, desktop client that makes it easy to work with S3 storages. To connect with Cyberduck:
-
-    1. Download an install Cyberduck from https://cyberduck.io/
-     2. Add a new connection of type **S3 Storage**
-     3. Find your storage access keys and endpoints in the Bluemix**Storage** page.
+1. Download an install **Cyberduck** from https://cyberduck.io/
+2. Add a new connection of type **S3 Storage**
+3. Find your storage access keys and endpoints in the Bluemix **Storage** page.
 
 ### Upload a file in the bucket
 
@@ -107,7 +105,7 @@ By default the bucket and its files are not publicly available. We are going to 
 
    > This link is for a cross-region bucket in the US
 
-## Make the website content globally available with a CDN
+## Make the files globally available with a CDN
 
 In this section, we will create a CDN service. The CDN service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (our bucket in Cloud Object Storage) to the network and stays there for other users to access it quickly without the network latency to reach the host server again.
 

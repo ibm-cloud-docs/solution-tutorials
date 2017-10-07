@@ -11,9 +11,6 @@ Steps: 4 | 15 minutes
 
 ![Architecture diagram - coming soon!](images/solution4/Architecture.png)
 
-### Apps and Services
-* Virtual Server
-
 ## Step 1 - Provision a LAMP server 
 1. Login to **Bluemix**, navigate to the **Catalog** page and select the **Virtual Server** service under the **Infrastructure** section. 
 
