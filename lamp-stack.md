@@ -8,8 +8,8 @@ Time to complete: 15 minutes
 * Install Apache, MySQL, and PHP
 * Verify installation and configuration
 * Install and configure WordPress
-* Configure domain
-* Secure, monitor and scale 
+* Server monitoring and usage
+* Server Security
 
 ![Architecture diagram - coming soon!](images/solution4/Architecture.png)
 
@@ -102,7 +102,7 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
    Now you can check the PHP info page you created. Open a browser and go to http://YourPublicIPAddress/info.php. Substitute the public IP address of your virtual server. It should look similar to this image.
    ![PHP info](images/solution4/PHPInfo.png)  
 
-## Step 4 - Install WordPress
+## Step 4 - Install and configure WordPress
 If you want to try your LAMP stack, install a sample app. As an example, the following steps install the open source WordPress platform to create websites and blogs. For more information and settings for production installation, see the WordPress documentation.
 
 ### Install the WordPress packages
@@ -160,30 +160,61 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
 7. Complete the WordPress setup and publish on the platform. Open a browser and go to http://yourVMPublicIPAddress/wordpress. Substitute the public IP address of your VM. It should look similar to this image.
    ![WordPress site running](images/solution4/WordPressSiteRunning.png)  
 
-## Point domain to a LAMP server 
+## Configure domain
 To point your domain to the LAMP server, simply point the A record the server public IP address. 
 You can get the server public IP address from the dashboard. 
 
-## Scale a LAMP server 
-... 
+## Server monitoring and usage
+#### Server Monitoring
+There are two basic monitoring types, by default SERVICE PING is enabled to alert the Bluemix user when pings are unsuccessful. Other users can be added to the notification alerts once they are part of the same Bluemix organisation.  
+  ![Two Basic Monitoring](images/solution4/TwoBasicMonitoring.png)    
 
-## Secure a LAMP server  
-...
+Now that SERVICE PING is added by default, let's look at adding SLOW PING monitoring. To add SLOW PING monitoring follow the steps below: 
+1. From the dashboard, select your server from the list of devices and then click on the **monitoring** tab. 
+  ![Slow Ping Monitoring](images/solution4/SlowPing.png)     
+2. Click on the **Manage Monitors** button
+3. Add the **SLOW PING** monitoring option and then click on Add Monitoring, for the IP address select your Public IP address.
+  ![Add Slow Ping Monitoring](images/solution4/AddSlowPing.png)      
+  **Note** duplicate monitors with the same configurations wont be allowed, only 1 monitor per configuration can be created.   
 
-## Monitor a LAMP server 
-...
+    With that in place, you now will receive alerts if pings to the server Public IP failed or experiences slowness. **Note:** the server Public IP address is the WordPress site. 
+  ![Two Monitoring](images/solution4/TwoMonitoring.png)        
+
+#### Server Usage
+1. Next, we want to track the usage to understand the current usage of the server memory and CPU, this can be found under the usage tab.
+  ![Server Usage](images/solution4/ServerUsage.png)       
+
+
+## Server Security
+With Bluemix Virtual Servers, you have several security options, we are going to explore the vulnerability scanner and server firewalls.
+
+#### Vulnerability Scanner
+There is a builtin vulnerability scanner option available to under the Virtual Server dashboard. 
+The vulnerability scanners scans the server for any vulnerabilities related to the server. To do a vulnerability scan, follow the steps below.
+
+1. Using Bluemix dashboard, select your server and then click on the security tab.  
+2. Click on the SCAN button and to start the scan. The scan can take up to 10 minutes depending the type of application running on your server.  
+3. Once the scan is complete, you should see "Scan Complete" button. 
+  ![Two Monitoring](images/solution4/Vulnerabilities.png)       
+4. Click on the "Scan complete" button to view the result once the scan completed. Expand on each of the scan results to get more information on the scan report.
+  ![Two Monitoring](images/solution4/VulnerabilityResults.png)       
+
+#### Firewalls
+With Bluemix Virtual Servers, you have several firewall options that provide an essential security layer. The firewall options are provisioned on demand, without service interruptions. The firewall services prevent unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use.
+
+Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN.   
+Learn more on firewalls [here](http://knowledgelayer.softlayer.com/topic/firewall).
 
 
 ## Summary 
 In this tutorial, you deployed a LAMP server using IBM Cloud. You learned how to:
 * Provision a LAMP server 
-* Install Apache, MySQL, and PHP
+* Re-install Apache, MySQL, and PHP
 * Verify installation and configuration
-* Install WordPress
-* Point domain to a LAMP server  
-* Scale a LAMP server 
-* Secure a LAMP server  
-* Monitor a LAMP server 
+* Install and configure WordPress
+* Configure domain 
+* Server monitoring and usage
+* Server Security
 
 
 ## Next steps 
