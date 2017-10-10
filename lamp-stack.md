@@ -1,13 +1,15 @@
 # PHP web application on a LAMP Stack
 This solution walks you through the creation of an Ubuntu **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP (the LAMP stack). To see the LAMP server in action, you will install and configure the [WordPress](https://wordpress.org/) open source application. 
 
-Steps: 4 | 15 minutes
+Time to complete: 15 minutes
 
 ## Objectives
 * Provision a LAMP server 
 * Install Apache, MySQL, and PHP
 * Verify installation and configuration
 * Install and configure WordPress
+* Configure domain
+* Secure, monitor and scale 
 
 ![Architecture diagram - coming soon!](images/solution4/Architecture.png)
 
@@ -184,7 +186,7 @@ In this tutorial, you deployed a LAMP server using IBM Cloud. You learned how to
 * Monitor a LAMP server 
 
 
-## Next step 
+## Next steps 
 Advance to the next tutorial to learn how to:
 * Secure web servers with SSL certificates.  
 * Add auto-scaling.  

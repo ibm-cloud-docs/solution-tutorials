@@ -178,9 +178,22 @@ Map the custom domain name to the secure endpoint for the US Bluemix region wher
 Lets check the health of your multi-region application,
 
 1. Application **Overview** -> **View toolchain**
+
 2. Click **Add a Tool**
+
 3. Choose **Availability Monitoring** -> **Create Integration**
+
 4. Select **Availability Monitoring** and click on the name of your app.
+
 5. Click **View All Tests**
 
+   ![](images/solution1/alert_frequency.png)
+
 Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact users.
+
+## Further Reading
+
+[Adding a Cloudant Database](https://console.bluemix.net/docs/services/Cloudant/tutorials/create_service.html)
+
+[Auto-Scaling Cloud Foundry applications](https://console.bluemix.net/docs/services/Auto-Scaling/index.html)
+
