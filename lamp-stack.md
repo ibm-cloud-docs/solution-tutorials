@@ -14,7 +14,7 @@ Time to complete: 15 minutes
 
 ![Architecture diagram - coming soon!](images/solution4/Architecture.png)
 
-## Step 1 - Provision a LAMP server 
+## Provision a LAMP server 
 1. Login to **Bluemix**, navigate to the **Catalog** page and select the **Virtual Server** service under the **Infrastructure** section. 
 
 2. Select **Public Virtual Server** and then click **Create**.
@@ -42,16 +42,15 @@ ssh
 ![Virtual server created](images/solution4/VirtualServerCreated.png)
 
 
-## Step 2 - Re-install Apache, MySQL, and PHP
-1. Run the following command to update Ubuntu package sources and reinstall Apache, MySQL, and PHP with latest versions.  
+## Re-install Apache, MySQL, and PHP
+Run the following command to update Ubuntu package sources and reinstall Apache, MySQL, and PHP with latest versions.  
 
-   ```sh
-   sudo apt update && sudo apt install lamp-server^
-   ```
-   **Note** the caret (^) at the end of the command.
+```sh
+sudo apt update && sudo apt install lamp-server^
+```
+**Note** the caret (^) at the end of the command.
 
-
-## Step 3 - Verify installation and configuration
+## Verify installation and configuration
 Verify Apache, MySQL, and PHP running on Ubuntu image.
 
 ### Ubuntu
@@ -109,7 +108,7 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
    Now you can check the PHP info page you created. Open a browser and go to http://YourPublicIPAddress/info.php. Substitute the public IP address of your virtual server. It should look similar to this image.
    ![PHP info](images/solution4/PHPInfo.png)  
 
-## Step 4 - Install and configure WordPress
+## Install and configure WordPress
 If you want to try your LAMP stack, install a sample app. As an example, the following steps install the open source WordPress platform to create websites and blogs. For more information and settings for production installation, see the WordPress documentation.
 
 ### Install the WordPress packages
@@ -166,9 +165,9 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    ```
 7. Complete the WordPress setup and publish on the platform. Open a browser and go to http://yourVMPublicIPAddress/wordpress. Substitute the public IP address of your VM. It should look similar to this image.
    ![WordPress site running](images/solution4/WordPressSiteRunning.png)  
-   
+
 -----------
-   
+
 ## Configure Domain
 To point your domain to the LAMP server, simply point the A record the server public IP address. 
 You can get the server public IP address from the dashboard. 
