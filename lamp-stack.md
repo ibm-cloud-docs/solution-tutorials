@@ -5,9 +5,10 @@ Time to complete: 15 minutes
 
 ## Objectives
 * Provision a LAMP server 
-* Install Apache, MySQL, and PHP
+* Re-install Apache, MySQL, and PHP
 * Verify installation and configuration
 * Install and configure WordPress
+* Configure domain 
 * Server monitoring and usage
 * Server Security
 
