@@ -17,13 +17,13 @@ Time to complete: 15 minutes
 ## Step 1 - Provision a LAMP server 
 1. Login to **Bluemix**, navigate to the **Catalog** page and select the **Virtual Server** service under the **Infrastructure** section. 
 
-2. Select **Public Virtual Server** and then click **Create**
+2. Select **Public Virtual Server** and then click **Create**.
 
-3. Under **Image**, select **** **LAMP** latest version  under **Ubuntu**
+3. Under **Image**, select **** **LAMP** latest version under **Ubuntu**.
 
     **Note:** this will come with pre-installed with Apache, MySQL, and PHP but we will reinstall PHP and MySQL with the latest version.
 
-4. Under **Network Interface** select the **Public and Private Network Uplink** option
+4. Under **Network Interface** select the **Public and Private Network Uplink** option.
 
 5. Review the other configuration options, then click **Provision** to provision the server. 
 
@@ -31,7 +31,13 @@ Time to complete: 15 minutes
 
    ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
 
-  	  Once the server is created, you should see the server username, password, and public IP.  The server username and password would be needed to SSH into the server and the public IP address to access the web application. 
+Once the server is created, you should see the server username, password, and public IP.  The server username and password would be needed to SSH into the server and the public IP address to access the web application. 
+
+```
+ssh 
+```
+
+
 
 ![Virtual server created](images/solution4/VirtualServerCreated.png)
 
