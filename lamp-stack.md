@@ -19,7 +19,7 @@ Time to complete: 15 minutes
 
 2. Select **Public Virtual Server** and then click **Create**.
 
-3. Under **Image**, select **** **LAMP** latest version under **Ubuntu**.
+3. Under **Image**, select **LAMP** latest version under **Ubuntu**.
 
     **Note:** this will come with pre-installed with Apache, MySQL, and PHP but we will reinstall PHP and MySQL with the latest version.
 
@@ -109,7 +109,7 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
    sudo sh -c 'echo "<?php phpinfo(); ?>" > /var/www/html/info.php'
    ```
    Now you can check the PHP info page you created. Open a browser and go to http://YourPublicIPAddress/info.php. Substitute the public IP address of your virtual server. It should look similar to this image.
-   ![PHP info](images/solution4/PHPInfo.png)  
+   ![PHP info](images/solution4/PHPInfo.png)
 
 ## Install and configure WordPress
 If you want to try your LAMP stack, install a sample app. As an example, the following steps install the open source WordPress platform to create websites and blogs. For more information and settings for production installation, see the WordPress documentation.
@@ -121,7 +121,8 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    sudo apt install wordpress
    ```
 ### Configure WordPress
-1. Configure WordPress to use MySQL and PHP. Run the following command to open a text editor and create the file /etc/wordpress/config-localhost.php
+1. Configure WordPress to use MySQL and PHP.  
+Run the following command to open a text editor and create the file /etc/wordpress/config-localhost.php
 
    ```sh
    sudo sensible-editor /etc/wordpress/config-localhost.php
@@ -154,7 +155,7 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    FLUSH PRIVILEGES;
    ```
 
-5. Run the following command to **create the database**:
+5. Run the following command to **create the database**
 
    ```sh
    cat wordpress.sql | sudo mysql --defaults-extra-file=/etc/mysql/debian.cnf
@@ -166,9 +167,9 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    sudo ln -s /usr/share/wordpress /var/www/html/wordpress
    sudo mv /etc/wordpress/config-localhost.php /etc/wordpress/config-default.php
    ```
-7. Complete the WordPress setup and publish on the platform. Open a browser and go to http://yourVMPublicIPAddress/wordpress. Substitute the public IP address of your VM. It should look similar to this image.
+7. Complete the WordPress setup and publish on the platform. Open a browser and go to http://yourVMPublicIPAddress/wordpress. Substitute the public IP address of your VM.  
+    It should look similar to the image below.
    ![WordPress site running](images/solution4/WordPressSiteRunning.png)  
-
 -----------
 
 ## Configure Domain
@@ -206,10 +207,13 @@ With Bluemix Virtual Servers, you have several security options like vulnerabili
 The vulnerability scanners scans the server for any vulnerabilities related to the server. To run a vulnerability scan on the server follow the steps below.
 
 1. From the dashboard, select your server and then click on the security tab.  
-2. Click on the **scan** button and to start the scan. The scan can take up to 10 minutes depending the type of application running on your server.  
-3. Once the scan is completed, you should see a "Scan Complete" button to view the scan report.
+2. Click on the **scan** button and to start the scan.  
+The scan can take up to 10 minutes depending the type of application running on your server.  
+3. Once the scan is completed, you should see a **Scan Complete** button to view the scan report.
   ![Two Monitoring](images/solution4/Vulnerabilities.png)       
-4. Click on the "Scan complete" button to view the report. View the report for any vulnerabilities. Expand on each of the results by clicking on the -+ buttons on the right. The report should look like below:
+4. Click on the **Scan complete** button to view the report. View the report for any vulnerabilities. Expand on each of the results by clicking on the -+ buttons on the right.  
+
+    The report should look like the image below:
   ![Two Monitoring](images/solution4/VulnerabilityResults.png)       
 
 ### Firewalls
