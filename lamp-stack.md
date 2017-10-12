@@ -31,13 +31,16 @@ Time to complete: 15 minutes
 
    ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
 
-Once the server is created, you should see the server username, password, and public IP.  The server username and password would be needed to SSH into the server and the public IP address to access the web application. 
-
-```
-ssh 
-```
-
-
+    Once the server is created, you should see the server login credentials.  The server username, password public IP would be needed to SSH into the server.
+     
+## Step 2 - Re-install Apache, MySQL, and PHP
+1. Connect to the server using SSH
+   ```sh
+   sudo ssh root@<Public-IP-Address> 
+   ```
+   **Note** the server Public IP and server password can be found from the dashboard on Bluemix. 
+   
+2. Run the following command to update Ubuntu package sources and reinstall Apache, MySQL, and PHP with latest versions.  
 
 ![Virtual server created](images/solution4/VirtualServerCreated.png)
 
