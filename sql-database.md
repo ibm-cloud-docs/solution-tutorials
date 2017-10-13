@@ -1,15 +1,17 @@
 # SQL Database for Cloud Data 
 
-Deploy a application and provision a database to store relational data. Configure the database, load data and grant credentials to the application. Then, monitor the performance of the application and the database.
+To build a new cloud app I need to store relational data. I need to select a SQL database, set it up, load data, bind it to my app. The database needs to have some security and I need to monitor it once the app is in production.
 
 ## Objectives
 
+* Pick an SQL database service
 * Create SQL database
-* Create and design the schema
-* Load data
-* Connect to the database from an application
-* Secure and Monitor your SQL Database
-* Backups
+* Create the schema
+* Load initial data
+* Connect the app to the database (share credentials)
+* Secure the SQL database
+* Monitoring
+* (Discuss) Backups & Recovery
 
 
 
