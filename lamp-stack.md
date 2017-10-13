@@ -25,22 +25,16 @@ Time to complete: 15 minutes
 
 4. Under **Network Interface** select the **Public and Private Network Uplink** option.
 
-5. Review the other configuration options, then click **Provision** to provision the server. 
+5. Review the other configuration options, then click **Provision** to provision the server.    ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
 
-    **Note**: The provisioning process can take up to 10 minutes for the server to be ready for use. 
+    **Note**: The provisioning process can take up to 10 minutes for the server to be ready for use. Once the server is created, you should see the server login credentials.  The server username, password public IP would be needed to SSH into the server. 
 
-   ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
-
-    Once the server is created, you should see the server login credentials.  The server username, password public IP would be needed to SSH into the server.
-     
-## Step 2 - Re-install Apache, MySQL, and PHP
-1. Connect to the server using SSH
+6. Connect to the server using SSH
    ```sh
    sudo ssh root@<Public-IP-Address> 
    ```
    **Note** the server Public IP and server password can be found from the dashboard on Bluemix. 
-   
-2. Run the following command to update Ubuntu package sources and reinstall Apache, MySQL, and PHP with latest versions.  
+
 
 ![Virtual server created](images/solution4/VirtualServerCreated.png)
 
@@ -122,7 +116,7 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    ```
 ### Configure WordPress
 1. Configure WordPress to use MySQL and PHP.  
-Run the following command to open a text editor and create the file /etc/wordpress/config-localhost.php
+  Run the following command to open a text editor and create the file /etc/wordpress/config-localhost.php
 
    ```sh
    sudo sensible-editor /etc/wordpress/config-localhost.php
@@ -169,7 +163,7 @@ Run the following command to open a text editor and create the file /etc/wordpre
    ```
 7. Complete the WordPress setup and publish on the platform. Open a browser and go to http://yourVMPublicIPAddress/wordpress. Substitute the public IP address of your VM.  
     It should look similar to the image below.
-   ![WordPress site running](images/solution4/WordPressSiteRunning.png)  
+       ![WordPress site running](images/solution4/WordPressSiteRunning.png)  
 -----------
 
 ## Configure Domain
@@ -208,13 +202,13 @@ The vulnerability scanners scans the server for any vulnerabilities related to t
 
 1. From the dashboard, select your server and then click on the security tab.  
 2. Click on the **scan** button and to start the scan.  
-The scan can take up to 10 minutes depending the type of application running on your server.  
+  The scan can take up to 10 minutes depending the type of application running on your server.  
 3. Once the scan is completed, you should see a **Scan Complete** button to view the scan report.
   ![Two Monitoring](images/solution4/Vulnerabilities.png)       
 4. Click on the **Scan complete** button to view the report. View the report for any vulnerabilities. Expand on each of the results by clicking on the -+ buttons on the right.  
 
     The report should look like the image below:
-  ![Two Monitoring](images/solution4/VulnerabilityResults.png)       
+      ![Two Monitoring](images/solution4/VulnerabilityResults.png)       
 
 ### Firewalls
 Another way to secure the server is by adding firewall to the server. With Bluemix Virtual Servers, you have several firewall options that provide an essential security layer. The firewall options are provisioned on demand, without service interruptions. The firewall services prevent unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use.  
