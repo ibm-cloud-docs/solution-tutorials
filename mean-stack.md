@@ -1,4 +1,4 @@
-# Modern Web Applications using MEAN stack 
+# Modern Web Application using MEAN stack 
 
 This solution walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a Node.js runtime. 
 
