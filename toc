@@ -8,3 +8,6 @@ Solutions
     scalable-webapp-kubernetes.md
     static-files-cdn.md
     lamp-stack.md
+    mean-stack.md
+    sql-database.md
+    ios-mobile-push-analytics.md
