@@ -1,4 +1,4 @@
-# SQL Database on Cloud Data 
+# SQL Database for Cloud Data 
 
 Deploy a application and provision a database to store relational data. Configure the database, load data and grant credentials to the application. Then, monitor the performance of the application and the database.
 
