@@ -1,21 +1,21 @@
 # PHP web application on a LAMP Stack
-This solution walks you through the creation of an Ubuntu **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP (the LAMP stack). To see the LAMP server in action, you will install and configure the [WordPress](https://wordpress.org/) open source application. 
+This solution walks you through the creation of an Ubuntu **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP (the LAMP stack). To see the LAMP server in action, you will install and configure the [WordPress](https://wordpress.org/) open source application.
 
 Time to complete: 15 minutes
 
 ## Objectives
-* Provision a LAMP server 
+* Provision a LAMP server
 * Re-install Apache, MySQL, and PHP
 * Verify installation and configuration
 * Install and configure WordPress
-* Configure domain 
+* Configure domain
 * Server monitoring and usage
 * Server Security
 
 ![Architecture diagram - coming soon!](images/solution4/Architecture.png)
 
-## Provision a LAMP server 
-1. Login to **Bluemix**, navigate to the **Catalog** page and select the **Virtual Server** service under the **Infrastructure** section. 
+## Provision a LAMP server
+1. Login to **Bluemix**, navigate to the **Catalog** page and select the **Virtual Server** service under the **Infrastructure** section.
 
 2. Select **Public Virtual Server** and then click **Create**.
 
@@ -27,13 +27,13 @@ Time to complete: 15 minutes
 
 5. Review the other configuration options, then click **Provision** to provision the server.    ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
 
-    **Note**: The provisioning process can take up to 10 minutes for the server to be ready for use. Once the server is created, you should see the server login credentials.  The server username, password public IP would be needed to SSH into the server. 
+    **Note**: The provisioning process can take up to 10 minutes for the server to be ready for use. Once the server is created, you should see the server login credentials.  The server username, password public IP would be needed to SSH into the server.
 
 6. Connect to the server using SSH
    ```sh
-   sudo ssh root@<Public-IP-Address> 
+   sudo ssh root@<Public-IP-Address>
    ```
-   **Note** the server Public IP and server password can be found from the dashboard on Bluemix. 
+   **Note** the server Public IP and server password can be found from the dashboard on Bluemix.
 
 
 ![Virtual server created](images/solution4/VirtualServerCreated.png)
@@ -53,7 +53,7 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
 ### Ubuntu
 1. Verify Ubuntu by opening in the **Public IP** address in the browser. You should see the Ubuntu welcome page.
 
-   ![Verify Ubuntu](images/solution4/VerifyUbuntu.png) 
+   ![Verify Ubuntu](images/solution4/VerifyUbuntu.png)
 
 ### Apache
 1. Check Apache version installed using the following command:
@@ -61,7 +61,7 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
    ```
    apache2 -v
    ```
-2. Verify port 80 for web traffic, run the following command: 
+2. Verify port 80 for web traffic, run the following command:
 
    ```
    sudo netstat -ntlp | grep LISTEN
@@ -95,7 +95,7 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
 1. Check the version of PHP using the following command:
 
    ```sh
-   PHP -v 
+   PHP -v
    ```
 2. If you want to test further, create a quick PHP info page to view in a browser. The following command creates the PHP info page:
 
@@ -124,12 +124,12 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
 
 2. Copy the following lines to the file, substituting *yourPassword* with your MySQL database password (leave other values unchanged). Then save using Ctrl+X to exit and save the file.   
    ```php
-   <?php 
-   define('DB_NAME', 'wordpress'); 
-   define('DB_USER', 'wordpress'); 
-   define('DB_PASSWORD', 'yourPassword'); 
-   define('DB_HOST', 'localhost'); 
-   define('WP_CONTENT_DIR', '/usr/share/wordpress/wp-content'); 
+   <?php
+   define('DB_NAME', 'wordpress');
+   define('DB_USER', 'wordpress');
+   define('DB_PASSWORD', 'yourPassword');
+   define('DB_HOST', 'localhost');
+   define('WP_CONTENT_DIR', '/usr/share/wordpress/wp-content');
    ?>
    ```
 
@@ -142,10 +142,10 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
 4. Add the following commands, substituting your database password for yourPassword (leave other values unchanged). Then save the file.
 
    ```mssql
-   CREATE DATABASE wordpress; 
-   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* 
-   TO wordpress@localhost 
-   IDENTIFIED BY 'yourPassword'; 
+   CREATE DATABASE wordpress;
+   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.*
+   TO wordpress@localhost
+   IDENTIFIED BY 'yourPassword';
    FLUSH PRIVILEGES;
    ```
 
@@ -161,32 +161,33 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    sudo ln -s /usr/share/wordpress /var/www/html/wordpress
    sudo mv /etc/wordpress/config-localhost.php /etc/wordpress/config-default.php
    ```
-7. Complete the WordPress setup and publish on the platform. Open a browser and go to http://yourVMPublicIPAddress/wordpress. Substitute the public IP address of your VM.  
-    It should look similar to the image below.
-       ![WordPress site running](images/solution4/WordPressSiteRunning.png)  
+7. Complete the WordPress setup and publish on the platform. Open a browser and go to http://yourVMPublicIPAddress/wordpress. Substitute the public IP address of your VM. It should look similar to the image below.
+
+   ![WordPress site running](images/solution4/WordPressSiteRunning.png)
+
 -----------
 
 ## Configure Domain
-To point your domain to the LAMP server, simply point the A record the server public IP address. 
-You can get the server public IP address from the dashboard. 
+To point your domain to the LAMP server, simply point the A record to the server public IP address.
+You can get the server public IP address from the dashboard.
 
 ## Server monitoring and usage
-The correct monitoring must be in place for any production application. Below we will explore the options available to monitor a LAMP stack sever and understand the usage of the server at any given time.
+The correct monitoring must be in place for any production application. Below we will explore the options available to monitor a LAMP stack server and understand the usage of the server at any given time.
 
 ### Server Monitoring
-There are two basic monitoring types SERVICE PING and SLAW PING.  
+There are two basic monitoring types SERVICE PING and SLOW PING.  
 - **SERVICE PING:** Test ping to address  
 - **SLOW PING:** Test ping address, will not fail on slow server response due to high latency or high server load.  
 
 Service ping is added by default so let's add Slow ping. To add Slow ping monitoring, follow the steps below:
-1. From the dashboard, select your server from the list of devices and then click on the **monitoring** tab. 
+1. From the dashboard, select your server from the list of devices and then click on the **monitoring** tab.
   ![Slow Ping Monitoring](images/solution4/SlowPing.png)     
 2. Click on the **Manage Monitors** button
 3. Add the **SLOW PING** monitoring option and then click on Add Monitoring, for the IP address select your Public IP address.
   ![Add Slow Ping Monitoring](images/solution4/AddSlowPing.png)      
   **Note** duplicate monitors with the same configurations wont be allowed, only 1 monitor per configuration can be created.   
 
-4. Done, with that in place, you should now receive notification alert to your Bluemix account email address. 
+4. Done, with that in place, you should now receive notification alert to your Bluemix account email address.
   ![Two Monitoring](images/solution4/TwoMonitoring.png)        
 
 ### Server Usage
@@ -198,7 +199,7 @@ Service ping is added by default so let's add Slow ping. To add Slow ping monito
 With Bluemix Virtual Servers, you have several security options like vulnerability scanner and add-on firewalls.
 
 ### Vulnerability Scanner
-The vulnerability scanners scans the server for any vulnerabilities related to the server. To run a vulnerability scan on the server follow the steps below.
+The vulnerability scanner scans the server for any vulnerabilities related to the server. To run a vulnerability scan on the server follow the steps below.
 
 1. From the dashboard, select your server and then click on the security tab.  
 2. Click on the **scan** button and to start the scan.  
@@ -217,17 +218,17 @@ Firewalls are available as an add-on feature for all servers on the Infrastructu
 Learn more on firewalls [here](http://knowledgelayer.softlayer.com/topic/firewall).
 
 
-## Summary 
+## Summary
 In this tutorial, you deployed a LAMP server using IBM Cloud. You learned how to:
-* Provision a LAMP server 
+* Provision a LAMP server
 * Re-install Apache, MySQL, and PHP
 * Verify installation and configuration
 * Install and configure WordPress
-* Configure domain 
+* Configure domain
 * Server monitoring and usage
 * Server Security
 
 
-## Next steps 
+## Next steps
 Advance to the next tutorial to learn how to:
 * [Use IBM Compose for MySQL service instead of the traditional MySQL database.]()
