@@ -4,6 +4,11 @@
 {: .toc subcollection="solutions" audience="platform" href="/docs/solutions/multi-region-webapp.html"}
 Solutions
 
+    {: .navgroup id="learn"}
+    index.md
+    {: .navgroup-end}
+    
+    {: .navgroup id="howto"}
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
     static-files-cdn.md
@@ -11,3 +16,4 @@ Solutions
     mean-stack.md
     sql-database.md
     ios-mobile-push-analytics.md
+    {: .navgroup-end}
