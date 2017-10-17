@@ -20,16 +20,14 @@ Host and serve website assets (images, videos, documents) and user generated con
    * Manage CDN File Transfers
    * API Key
 
-   > These permissions are required to be able to view and use the Storage and CDN services in this guide
+   > These permissions are required to be able to view and use the Storage and CDN services.
 
 2. Ensure that you have access to Storage in the Infrastructure console
    * Go to https://control.bluemix.net
 
    * Confirm you can see the `Storage` section and the `Object Storage` section underneath.
 
-     ​
-
-![](images/solution3/Storage_Catalog.png)
+![](images/solution3/Infrastructure_Dashboard.png)
 
 ## Get the web application code
 
@@ -43,67 +41,87 @@ To start with, retrieve the application code:
    git clone https://github.ibm.com/frederic-lavigne/webapp-with-cos-and-cdn
    ```
 
+
+
 ## Create an Object Storage
+
 {: #create_cos}
 
 Cloud Object Storage provides flexible, cost-effective, and scalable cloud storage for unstructured data.
 
-### Create a Cloud Object Storage S3
+![](images/solution3/Storage_Catalog.png)
+
+
 
 1. Go in the Bluemix catalog
-
-2. Click on **Storage** and then **Cloud Object Storage**
-
-3. Select **Cloud Object Storage S3** and click **Create** and **Continue**.
-
-4. Review terms and click **Place Order**
-
-5. Go to the **Storage** page https://control.bluemix.net/storage/objectstorage to view the newly created storage.
-
-6. Update its description with your name to easily find the storage later.
-
-### Create a bucket
-
-1. Select the storage and select **Manage Buckets**
-
-2. Click the **+** button to add a bucket
-
-3. Set Resiliency/Location to **Cross Region - us**
-
-4. Set Storage Class to **Standard**
-
-5. Set the Bucket Name to **mywebsite**
-
+2. Click on **Storage** and then **Object Storage**
+3. Select **Cloud Object Storage** and click **Create**.
+4. Click **Create Bucket**.
+5. Set the Bucket Name to **mywebsite** and click **Create**.
    > Avoid dots (.) in the bucket name
+
 
 ## Upload files to a bucket
 {: #upload}
 
-In this section, we will use a desktop client to connect to the COS, upload files and configure permissions.
+In this section, we will use the command line tool **curl** to upload files to the bucket. 
 
-### Configure a desktop client
+1. **Login** to Bluemix using the CLI.
 
-By default the bucket and its files are not publicly available. We are going to change the permissions so that the file can be accessed through the Internet without authentication. You can communicate with COS using a [S3 compatible API](https://ibm-public-cos.github.io/crs-docs/api-reference,  [command line interface](https://ibm-public-cos.github.io/crs-docs/cli) or a [desktop client](https://ibm-public-cos.github.io/crs-docs/desktop-clients). Cyberduck is a popular, open-source, desktop client that makes it easy to work with S3 storages. To connect with Cyberduck:
+   ```sh
+   bx login 
+   ```
 
-1. Download an install **Cyberduck** from https://cyberduck.io/
-2. Add a new connection of type **S3 Storage**
-3. Find your storage access keys and endpoints in the Bluemix **Storage** page.
+2. Get a **token** from IAM.
 
-### Upload a file in the bucket
+   ```sh
+   bx iam oauth-tokens
+   ```
 
-1. Go inside the created bucket
+3. **Copy** the token from the output of the command above.
 
-2. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory of the web application code you downloaded above. Upload the files to the root of the bucket.
+   ```
+   IAM token:  Bearer <token>
+   ```
 
-### Make the files publicly available
+4. **Set** the value of the token to an environment variable for easy access.
 
-1. Edit the permissions of the files and give **Everyone** the **READ** permission.
+   ```sh
+   export IAM_TOKEN=<REPLACE_WITH_TOKEN>
+   ```
 
-2. Access the files through your browser. The link will look like
+5. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory of the web application code you downloaded above. Upload the files to the root of the bucket.
+  ```sh
+   cd content
+  ```
+  ```sh
+   
+   curl -X "PUT" "https://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/picture.png" \
+        -H "x-amz-acl: public-read" \
+        -H "Authorization: Bearer $IAM_TOKEN" \
+        -H "Content-Type: image/png" \
+        -T a-picture.png
+  ```
+  ```sh
+   curl -X "PUT" "https://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-css-file.css" \
+        -H "x-amz-acl: public-read" \
+        -H "Authorization: Bearer $IAM_TOKEN" \
+        -H "Content-Type: text/css" \
+        -T a-css-file.css
+  ```
+  ```sh
+   curl -X "PUT" "https://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-video.mp4" \
+        -H "x-amz-acl: public-read" \
+        -H "Authorization: Bearer $IAM_TOKEN" \
+        -H "Content-Type: video/mp4" \
+        -T a-video.mp4
+  ```
+6. Access the files through your browser. The link will look like
 
-   http://s3-api.us-geo.objectstorage.softlayer.net/your-bucket-name/your-filename
+   http://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/picture.png
 
-   > This link is for a cross-region bucket in the US
+
+
 
 ## Make the files globally available with a CDN
 
