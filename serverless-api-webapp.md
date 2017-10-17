@@ -134,7 +134,7 @@ function main(params) {
 
 ## Connect the web app
 
-1. Clone this repo in GitHub public
+1. Fork the Guestbook user interface repository https://github.ibm.com/frederic-lavigne/serverless-guestbook to your public GitHub
 
 1. Modify docs/guestbook.js and replace apiUrl with the route given by API Connect
 
