@@ -1,26 +1,22 @@
 # SQL Database for Cloud Data 
 
-To build a new cloud app I need to store relational data. I need to select a SQL database, set it up, load data, bind it to my app. The database needs to have some security and I need to monitor it once the app is in production.
+This tutorial shows how to provision a SQL (relational) database service, create a table and load a larger data set into the database. Thereafter, we deploy a web app to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](http://flask.pocoo.org/).
 
 ## Objectives
 
 * Pick an SQL database service
 * Create SQL database
-* Create the schema
-* Load initial data
-* Connect the app to the database (share credentials)
-* Secure the SQL database
-* Monitoring
-* (Discuss) Backups & Recovery
-
-
+* Create the database schema (table)
+* Load data
+* Connect the app and database service (share credentials)
+* Monitoring, Backups & Recovery, Security
 
 ## Before you begin
 {: #prereqs}
 
-1. > ​
+1. Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](http://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. We are going to use it as data set.
 
-2. ​
+2. 
 
 ## Provision the SQL Database
 Start by creating an instance of the **Db2 Warehouse on Cloud** service.
