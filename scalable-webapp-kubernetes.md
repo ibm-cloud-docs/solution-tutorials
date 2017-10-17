@@ -44,6 +44,7 @@ In the next step, you will configure **kubectl** to point to your newly created 
    ```
    bx cs cluster-config <cluster-name>
    ```
+   {: pre}
 
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed.
 
@@ -55,6 +56,7 @@ In the next step, you will configure **kubectl** to point to your newly created 
    ```
    kubectl cluster-info
    ```
+   {: pre}
 
 
 5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts — Helm Charts helps you define, install, and upgrade even the most complex Kubernetes application. Initialize Helm in your cluster.
@@ -72,6 +74,7 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
    ```
    bx dev create
    ```
+   {: pre}
 
 2. Select `Web App`.
 
@@ -102,18 +105,21 @@ You can build and run the application as you normally would using `mvn` for loca
    ```
    docker ps
    ```
+   {: pre}
 
 2. Change to the generated project directory.
 
    ```
    cd <project name>
    ```
+   {: pre}
 
 3. Build the application.
 
    ```
    bx dev build
    ```
+   {: pre}
 
    > This might take a few minutes to run as all the application dependencies are downloaded and a *Docker image* is built which contains your application and all the required environment.
 
@@ -124,6 +130,7 @@ You can build and run the application as you normally would using `mvn` for loca
    ```
    bx dev run
    ```
+   {: pre}
 
    > This will use your local Docker engine to run the docker image built by the previous step.
 
@@ -142,17 +149,20 @@ In this section, we will first push the Docker image to the IBM Cloud private co
    ```
    bx cr namespaces
    ```
+   {: pre}
    If you have a namespace, make note of the name for use later. If you don't have one, create it.
 
    ```
    bx cr namespace-add <name>
    ```
+   {: pre}
 
 2. Find the **Container Registry** by running.
 
    ```
    bx cr info
    ```
+   {: pre}
    to find the container registry
 
 3. Deploy to your Kubernetes cluster:
@@ -160,6 +170,7 @@ In this section, we will first push the Docker image to the IBM Cloud private co
    ```
    bx dev deploy -t container
    ```
+   {: pre}
 
 4. You will be prompted to enter **image name**.
 
@@ -175,16 +186,21 @@ In this section, we will first push the Docker image to the IBM Cloud private co
 
    ```
    bx cs workers <your-cluster>
+   ```
+   {: pre}
+   ```
    OK
    ID                                                 Public IP        Private IP      Machine Type   State    Status
    kube-dal12-cr4a8d8f9f64dedededededdwwdec69a72-w1   169.21.32.14   10.184.220.82   u1c.2x4        normal   Ready
    ```
+   {: screen}
 
 8. Retrieve the **port** assigned to your application.
 
    ```
    kubectl get services
    ```
+   {: pre}
 
    and locate your service in the list:
    ```
@@ -192,6 +208,7 @@ In this section, we will first push the Docker image to the IBM Cloud private co
    myjavawebapp-service   10.10.10.17   <nodes>       9080:32321/TCP,9443:31555/TCP   2m
    kubernetes              10.10.10.1    <none>        443/TCP                         1d
    ```
+   {: screen}
 
    alternatively you can use `kubectl describe service [service-name]`. In this example, the port is 32321.
 
@@ -218,6 +235,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    ```
    bx cs cluster-get <cluster-name>
    ```
+   {: pre}
 
    to find
 
@@ -225,6 +243,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    Ingress subdomain:	mycluster.us-south.containers.mybluemix.net
    Ingress secret:		mycluster
    ```
+   {: screen}
 
 2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.
 
@@ -253,6 +272,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    ```
    kubectl apply -f ingress-ibmdomain.yml
    ```
+   {: pre}
 
 4. Access your application at `https://<ingress-sub-domain>/<nameofproject>`
 
@@ -289,6 +309,7 @@ Refer to https://console.bluemix.net/docs/containers/cs_apps.html#custom_domain_
    ```
    kubectl apply -f ingress-customdomain-http.yml
    ```
+   {: pre}
 
 3. Access your application at `http://<customdomain>/<nameofproject>`
 
@@ -308,6 +329,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    ```
    kubectl create secret tls my-custom-domain-secret-name --cert=<custom-domain.cert> --key=<custom-domain.key>
    ```
+   {: pre}
 
 4. Create an Ingress file `ingress-customdomain-https.yml` pointing to your domain:
 
@@ -336,6 +358,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    ```
    kubectl apply -f ingress-customdomain-https.yml
    ```
+   {: pre}
 
 6. Access your application at `https://<customdomain>/<nameofproject>`
 
@@ -348,6 +371,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    ```
    kubectl proxy
    ```
+   {: pre}
 
    then access the console at http://127.0.0.1:8001/ui
 
@@ -366,7 +390,8 @@ To scale to 2 replicas, run the following command.
    ```
    kubectl scale deployment <nameofproject>-deployment --replicas=2
    ```
-
+    {: pre}
+    
 Ingress will handle the load balancing between the two replicas.
 
 Refer to Kubernetes documentation for manual and automatic scaling:
