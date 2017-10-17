@@ -16,4 +16,6 @@ Solutions
     mean-stack.md
     sql-database.md
     ios-mobile-push-analytics.md
+    serverless-api-webapp.md
     {: .navgroup-end}
+

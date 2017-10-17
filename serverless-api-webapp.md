@@ -1,11 +1,11 @@
-# Serverless Application and API
+# Serverless Web Application and API
 
 Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.
 
 ## Objectives
 
-* Deploy a serverless backend
-* Expose a REST API implemented by a serverless backend
+* Deploy a serverless backend and database
+* Expose a REST API
 * Host a static website
 
 ## Before you begin
@@ -15,15 +15,34 @@ Create a serverless web application by hosting static website content in GitHub 
 
 ## Create the database
 
-1. Create Cloudant service instance guestbook-database
-1. Create Cloudant credentials
-1. Add a guestbook database
+Start by creating a database. Cloudant NoSQL DB is a fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema. Cloudant is built upon and compatible with Apache CouchDB and accessible through a secure HTTPS API, which scales as your application grows. 
 
-## Create actions
+![](images/solution8/Catalog_Cloudant.png)
 
-### One sequence of actions to save the guestbook entry
+1. Click on **Catalog** in the top navigation bar.
+2. Click on **Data & Analytics** under Platform on the left pane and select **Cloudant NoSQL DB**.
+3. Set **Service name** to "guestbook-database" and click **Create**.
+4. Click on **Launch** to lauch the Cloudant dashboard.
+5. Select the database icon on the left and then **Create Database** on top.
+6. Enter "guestbook" as the value and click **Create**.
 
-1. Create prepare-entry-for-save
+![](images/solution8/Create_Database.png)
+
+Your database should now be created successfuly. 
+
+## Create Cloud Functions actions
+
+In this section, you will create serverless actions (also commonly called functions). IBM Cloud Functions (based on Apache OpenWhisk) is a Function-as-a-Service (FaaS) platform which executes functions in response to incoming events and costs nothing when not in use.
+
+![](images/solution8/Functions.png)
+
+### Sequence of actions to save the guestbook entry
+
+1. In the left menu choose **Functions**. 
+2. Click **Start Creating** and **Create Action** prepare.
+3. Set **Action Name** to **prepare-entry-for-save**.
+4. Select **Enable as Web Action** and **Create**
+5. Replace the code in the editor with the the following and click **Save**.
 
 ```
 /**
@@ -46,18 +65,18 @@ function main(params) {
 ```
 
 1. Link into a sequence
-1. Pick Cloudant **create document**
-1. Create new binding
-1. Set name to binding-for-guestbook
-1. Select the guestbook Cloudant instance and the guestbook database
-1. Done
-1. Add to sequence
-1. This looks good
-1. Name the sequence **save-guestbook-entry**
-1. Save
-1. Done
+2. Pick Cloudant **create document**
+3. Create new binding
+4. Set name to binding-for-guestbook
+5. Select the guestbook Cloudant instance and the guestbook database
+6. Done
+7. Add to sequence
+8. This looks good
+9. Name the sequence **save-guestbook-entry**
+10. Save
+11. Done
 
-1. Run the sequence to test it
+12. Run the sequence to test it
 ```
 {
   "name": "John Smith",
@@ -71,12 +90,12 @@ function main(params) {
 ### One sequence of actions to retrieve entries
 
 1. Browse public packages
-1. Pick Cloudant **list documents**
-1. Select the guestbook database binding
-1. Link into a sequence
-1. Save the sequence
+2. Pick Cloudant **list documents**
+3. Select the guestbook database binding
+4. Link into a sequence
+5. Save the sequence
 
-1. Create an action to configure the **list documents** call. Name it **set-read-input**
+6. Create an action to configure the **list documents** call. Name it **set-read-input**
 
 ```
 function main(params) {
@@ -108,38 +127,38 @@ function main(params) {
 
 1. Add **set-read-input** at the beginning of the sequence
 
-1. Add **format-entries** at the end of the sequence
+2. Add **format-entries** at the end of the sequence
 
 ## Create an API
 
 1. Go to Actions https://console.bluemix.net/openwhisk/manage/actions
 
-1. Select the **read-guestbook-entries** sequence. In **Additional details**, check **Enable Web Action**
+2. Select the **read-guestbook-entries** sequence. In **Additional details**, check **Enable Web Action**
 
-1. Do the same for the **save-guestbook-entry** sequence
+3. Do the same for the **save-guestbook-entry** sequence
 
-1. Go to APIs https://console.bluemix.net/openwhisk/apimanagement
+4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement
 
-1. **Create Managed API**
+5. **Create Managed API**
 
-1. Set name to **guestbook**
+6. Set name to **guestbook**
 
-1. Set base path to **/api**
+7. Set base path to **/api**
 
-1. Create operation GET /entries with action set to **read-guestbook-entries**
+8. Create operation GET /entries with action set to **read-guestbook-entries**
 
-1. Create operation PUT /entries with action set to **save-guestbook-entry**
+9. Create operation PUT /entries with action set to **save-guestbook-entry**
 
-1. Save and expose the API
+10. Save and expose the API
 
 ## Connect the web app
 
 1. Fork the Guestbook user interface repository https://github.ibm.com/frederic-lavigne/serverless-guestbook to your public GitHub
 
-1. Modify docs/guestbook.js and replace apiUrl with the route given by API Connect
+2. Modify docs/guestbook.js and replace apiUrl with the route given by API Connect
 
-1. Change the Settings of the repo to have GitHub Pages enabled on master/documents
+3. Change the Settings of the repo to have GitHub Pages enabled on master/documents
 
-1. Access the public page
+4. Access the public page
 
-1. Use the app
+5. Use the app
