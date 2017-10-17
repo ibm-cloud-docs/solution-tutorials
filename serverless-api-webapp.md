@@ -64,19 +64,16 @@ function main(params) {
 }
 ```
 
-1. Link into a sequence
-2. Pick Cloudant **create document**
-3. Create new binding
-4. Set name to binding-for-guestbook
-5. Select the guestbook Cloudant instance and the guestbook database
-6. Done
-7. Add to sequence
-8. This looks good
-9. Name the sequence **save-guestbook-entry**
-10. Save
-11. Done
-
-12. Run the sequence to test it
+1. Click **Open in Develop View** and  **Link into a Sequence**
+2. Pick **Cloudant**  and **create document**
+3. Click **New Binding** on the left.
+4. **Add to Sequence**
+5. Set **Name** to binding-for-guestbook
+6. Select the **guestbook-database** instance and the **guestbook** database
+7. Click **Save Configuration** and then **This Looks Good**
+8. Name the sequence **save-guestbook-entry**
+9. **Save Action Sequence**.
+10. **Run the sequence** to test it with the following **JSON Input**.
 ```
 {
   "name": "John Smith",
