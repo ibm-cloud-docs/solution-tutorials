@@ -63,6 +63,7 @@ function main(params) {
   };
 }
 ```
+{: codeblock}
 
 1. Click **Open in Develop View** and  **Link into a Sequence**
 2. Pick **Cloudant**  and **create document**
@@ -81,6 +82,7 @@ function main(params) {
   "comment": "this is my comment"
 }
 ```
+{: codeblock}
 
 1. Check the database
 

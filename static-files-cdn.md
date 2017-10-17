@@ -71,18 +71,21 @@ In this section, we will use the command line tool **curl** to upload files to t
    ```sh
    bx login 
    ```
+   {: pre}
 
 2. Get a **token** from IAM.
 
    ```sh
    bx iam oauth-tokens
    ```
+   {: pre}
 
 3. **Copy** the token from the output of the command above.
 
    ```
    IAM token:  Bearer <token>
    ```
+   {: screen}
 
 4. **Set** the value of the token and bucket name to an environment variable for easy access.
 
@@ -90,11 +93,13 @@ In this section, we will use the command line tool **curl** to upload files to t
    export IAM_TOKEN=<REPLACE_WITH_TOKEN>
    export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
    ```
+   {: pre}
 
 5. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory of the web application code you downloaded above. Upload the files to the root of the bucket.
   ```sh
    cd content
   ```
+  {: pre}
   ```sh
    
    curl -X "PUT" \
@@ -104,6 +109,7 @@ In this section, we will use the command line tool **curl** to upload files to t
         -H "Content-Type: image/png" \
         -T a-picture.png
   ```
+  {: pre}
   ```sh
    curl -X "PUT" \
          "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-css-file.css" \
@@ -112,6 +118,7 @@ In this section, we will use the command line tool **curl** to upload files to t
         -H "Content-Type: text/css" \
         -T a-css-file.css
   ```
+  {: pre}
   ```sh
    curl -X "PUT" \
          "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-video.mp4" \
@@ -120,6 +127,7 @@ In this section, we will use the command line tool **curl** to upload files to t
         -H "Content-Type: video/mp4" \
         -T a-video.mp4
   ```
+  {: pre}
 
 6. You should now be able to view your files using the dashboard.
 
@@ -193,24 +201,28 @@ The application contains a web page **public/index.html** that includes referenc
    ```
    cd webapp-with-cos-and-cdn
    ```
+   {: pre}
 
 2. Push the application without starting it.
 
    ```
    bx cf push --no-start
    ```
+   {: pre}
 
 3. Configure the CDN_NAME environment variable so the app can reference the CDN contents
 
    ```
    bx cf set-env webapp-with-cos-and-cdn CDN_CNAME your-cdn.cdnedge.bluemix.net
    ```
+   {: pre}
 
 4. Start the app.
 
    ```
    bx cf start webapp-with-cos-and-cdn
    ```
+   {: pre}
 
 5. Access the app with your web browser, the page stylesheet, a picture and a video are loaded from the CDN.
 
