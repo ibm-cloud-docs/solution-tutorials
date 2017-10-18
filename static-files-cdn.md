@@ -1,3 +1,16 @@
+---
+
+
+copyright:
+  years: 2017
+lastupdated: "2017-09-28"
+
+---
+
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+
+
 # Accelerate delivery of static files 
 
 Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.
