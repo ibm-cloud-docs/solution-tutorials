@@ -216,11 +216,13 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
 
 1. Commit the modified file
 
-1. Change the Settings of the repo to have GitHub Pages enabled on master/documents
+1. In the Settings page of your repository, scroll to **GitHub Pages**, change the source to **master branch /docs folder** and Save
 
-1. Access the public page
+1. Access the public page for your repository
 
-1. Use the app
+1. You should the test guestbook entry created earlier
+
+1. Add one new entry
 
 ## Optional: Use your own domain for the API
 
