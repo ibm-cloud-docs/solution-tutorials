@@ -9,6 +9,7 @@ The application is a simple guestbook website where users can post messages.
 * Deploy a serverless backend and database
 * Expose a REST API
 * Host a static website
+* Optional: Use a custom domain for the REST API
 
 ![](./images/solution8/Architecture.png)
 
@@ -207,14 +208,48 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
 
 1. Save and expose the API
 
-## Connect the web app
+## Deploy the web app
 
 1. Fork the Guestbook user interface repository https://github.ibm.com/frederic-lavigne/serverless-guestbook to your public GitHub
 
-1. Modify docs/guestbook.js and replace apiUrl with the route given by API Connect
+1. Modify docs/guestbook.js and replace the value of **apiUrl** with the route given by API Connect
+
+1. Commit the modified file
 
 1. Change the Settings of the repo to have GitHub Pages enabled on master/documents
 
 1. Access the public page
 
 1. Use the app
+
+## Optional: Use your own domain for the API
+
+1. Create your domain under your organization https://console.bluemix.net/docs/admin/manageorg.html#managedomains
+
+1. Upload a SSL certificate for your domain and the subdomain you will use for the API
+
+1. Go to the Cloud Functions dashboard, select **APIs** and the Guestbook API
+
+1. Switch to **Definition**
+
+1. Set the **Domain for API** to the domain you added to your organization
+
+1. Set the **Subdomain for API** to **guestbook-api**
+
+1. At this stage, you need to configure your DNS to create a CNAME mapping this subdomain to the IBM Cloud servers. Create a CNAME record for the domain targeting one of the following secure endpoints depending on which region hosts the target API:
+   * US South: secure.us-south.bluemix.net.
+   * United Kingdom: secure.eu-gb.bluemix.net.
+   * Frankfurt: secure.eu-de.bluemix.net.
+   * Sydney: secure.au-syd.bluemix.net.
+
+   > Refer to https://console.bluemix.net/docs/apis/management/manage_apis.html#custom_domains for additional information
+
+1. Save the API
+
+1. Wait for DNS to propagate and you will be able to access your guestbook api at https://guestbook-api.mydomain.com/guestbook
+
+1. Edit docs/guestbook.js and update the value of **apiUrl** with https://guestbook-api.mydomain.com/guestbook
+
+1. Commit the modified file
+
+1. Your application now accesses the API through your custom domain
