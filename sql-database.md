@@ -68,9 +68,12 @@ We need a table to hold the sample data. That table can be created as part of th
 
 ## Load data
 
+1. Load the data.
+
+2. Done. Well, ...
 
 
-## Get the web application code
+## Deploy the web application code
 
 {: #get_code}
 
@@ -81,5 +84,6 @@ blah
 
 ## Related Content
 * [IBM Knowledge Center for Db2 Warehouse on Cloud](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
+* [Frequently asked questions about IBM Db2 on Cloud and IBM Db2 Warehouse on Cloud](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/managed_service.html) answering questions related to managed service, data backup, data encryption and security, and much more.
 * [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 
