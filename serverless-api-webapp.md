@@ -38,10 +38,9 @@ Start by creating a database. Cloudant NoSQL DB is a fully managed data layer de
 ![](images/solution8/Catalog_Cloudant.png)
 
 1. In the Catalog, under **Data & Analytics**, select **Cloudant NoSQL DB**
-2. Set the service name to **guestbook-db**
-3. Click **Create**
-4. **Launch** the Cloudant service console
-5. Create a database named **guestbook**
+2. Set the service name to **guestbook-db** and click **Create**
+3. **Launch** the Cloudant service console
+4. Create a database named **guestbook**
    ![](images/solution8/Create_Database.png)
 
 ## Create Cloud Functions actions
@@ -81,16 +80,13 @@ You can create an action that chains together a sequence of actions. The first s
    ```
    {: codeblock}
 4. Open the action in the Develop view https://console.bluemix.net/openwhisk/editor
-5. **Link into a sequence**
-6. Pick Cloudant **create document**.
-7. Create new binding.
-8. Set name to **binding-for-guestbook**
-9. Select the **guestbook-db** Cloudant instance and the **guestbook** database
-10. Save the configuration
-11. Click **Add to sequence** and then **This looks good**.
-12. Name the sequence **save-guestbook-entry**
-13. **Save the sequence** and then **Done**
-14. Select the sequence and **Run** the sequence to test it
+5. Click**Link into a sequence** and pick Cloudant **create document**.
+6. Create new binding on the left and set name to **binding-for-guestbook**.
+7. Select the **guestbook-db** Cloudant instance and the **guestbook** database and **Save**
+8. Click **Add to sequence** and then **This looks good**.
+9. Name the sequence **save-guestbook-entry**
+10. **Save the sequence** and then **Done**
+11. Select the sequence and **Run** the sequence to test it
 
     ```json
     {
@@ -100,7 +96,7 @@ You can create an action that chains together a sequence of actions. The first s
     }
     ```
     {: codeblock}
-15. Check the database to confirm it contains the new record
+12. Check the database to confirm it contains the new record
 
 ### Sequence of actions to retrieve entries
 
@@ -119,7 +115,7 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
    }
    ```
    {: codeblock}
-2. And one to process the results. Name it **format-entries**
+2. And another action to process the results. Name it **format-entries**
    ```js
    const md5 = require('spark-md5');
 
@@ -136,38 +132,29 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
    }
    ```
    {: codeblock}
-3. Select the **set-read-input** action
-4. Select **Link into a sequence**
-5. Select **Cloudant** then the **list documents** action
-6. Select the **binding-for-guestbook** binding
-7. Click **Add to Sequence**
-8. Click **Extend**
-9. Select **My Actions**
-10. Select **format-entries**
-11. Click **Add to Sequence**
-12. Click **This Looks Good**
-13. Name the sequence **read-guestbook-entries**
-14. Save the action sequence
-15. Done
+3. Select the **set-read-input** action and then **Link into a sequence**.
+4. Select **Cloudant** then the **list documents** action.
+5. Select **binding-for-guestbook** binding, **Add to Sequence**,  **Extend**,  **My Actions** and **format-entries**.
+6. Click **Add to Sequence** and **This Looks Good**
+7. Name the sequence **read-guestbook-entries**
+8. **Save** the action sequence and click **Done**
 
 ## Create an API
 
 1. Go to Actions https://console.bluemix.net/openwhisk/manage/actions
 2. Select the **read-guestbook-entries** sequence. In **Additional details**, check **Enable Web Action**
-3. Do the same for the **save-guestbook-entry** sequence
-4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement
-5. **Create Managed API**
-6. Set name to **guestbook**
-7. Set base path to **/guestbook**
-8. Create an operation to retrieve guestbook entries:
+3. Do the same for the **save-guestbook-entry** sequence.
+4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement and **Create Managed API**
+5. Set name to **guestbook** and base path to **/guestbook**
+6. Create an operation to retrieve guestbook entries:
    1. Set **path** to **/entries**
    2. Set **verb** to **GET**
    3. Select the **read-guestbook-entries** action
-9. Create an operation to persist a guestbook entry:
+7. Create an operation to persist a guestbook entry:
    1. Set **path** to **/entries**
    2. Set **verb** to **PUT**
    3. Select the **save-guestbook-entry** action
-10. Save and expose the API
+8. Save and expose the API
 
 ## Deploy the web app
 
