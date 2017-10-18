@@ -6,8 +6,8 @@ The application is a simple guestbook website where users can post messages.
 
 ## Objectives
 
-* Deploy a serverless backend
-* Expose a REST API implemented by a serverless backend
+* Deploy a serverless backend and database
+* Expose a REST API
 * Host a static website
 
 ![](./images/solution8/Architecture.png)

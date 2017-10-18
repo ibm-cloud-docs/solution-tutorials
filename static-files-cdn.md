@@ -55,7 +55,7 @@ Cloud Object Storage provides flexible, cost-effective, and scalable cloud stora
 
 1. Go in the Bluemix catalog
 2. Click on **Storage** and then **Object Storage**
-3. Select **Cloud Object Storage** and click **Create**.
+3. Select **Cloud Object Storage** and click **Create** and **Create**.
 4. Click **Create Bucket**.
 5. Set the Bucket Name to **mywebsite** and click **Create**.
    > Avoid dots (.) in the bucket name
@@ -71,54 +71,71 @@ In this section, we will use the command line tool **curl** to upload files to t
    ```sh
    bx login 
    ```
+   {: pre}
 
 2. Get a **token** from IAM.
 
    ```sh
    bx iam oauth-tokens
    ```
+   {: pre}
 
 3. **Copy** the token from the output of the command above.
 
    ```
    IAM token:  Bearer <token>
    ```
+   {: screen}
 
-4. **Set** the value of the token to an environment variable for easy access.
+4. **Set** the value of the token and bucket name to an environment variable for easy access.
 
    ```sh
    export IAM_TOKEN=<REPLACE_WITH_TOKEN>
+   export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
    ```
+   {: pre}
 
 5. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory of the web application code you downloaded above. Upload the files to the root of the bucket.
   ```sh
    cd content
   ```
+  {: pre}
   ```sh
    
-   curl -X "PUT" "https://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/picture.png" \
+   curl -X "PUT" \
+         "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-picture.png" \
         -H "x-amz-acl: public-read" \
         -H "Authorization: Bearer $IAM_TOKEN" \
         -H "Content-Type: image/png" \
         -T a-picture.png
   ```
+  {: pre}
   ```sh
-   curl -X "PUT" "https://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-css-file.css" \
+   curl -X "PUT" \
+         "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-css-file.css" \
         -H "x-amz-acl: public-read" \
         -H "Authorization: Bearer $IAM_TOKEN" \
         -H "Content-Type: text/css" \
         -T a-css-file.css
   ```
+  {: pre}
   ```sh
-   curl -X "PUT" "https://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-video.mp4" \
+   curl -X "PUT" \
+         "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-video.mp4" \
         -H "x-amz-acl: public-read" \
         -H "Authorization: Bearer $IAM_TOKEN" \
         -H "Content-Type: video/mp4" \
         -T a-video.mp4
   ```
-6. Access the files through your browser. The link will look like
+  {: pre}
 
-   http://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/picture.png
+6. You should now be able to view your files using the dashboard.
+
+   ![](images/solution3/Buckets.png)
+
+7. Access the files through your browser. The link will look like
+
+   http://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-picture.png
 
 
 
@@ -159,9 +176,11 @@ In this section, we will create a CDN service. The CDN service distributes conte
 
 6. Set the **Bucket name** to *your-bucket-name*
 
-7. Click **Create**
+7. Enable HTTP Port 80
 
-8. Find the instance in https://control.bluemix.net/network/cdn
+8. Click **Create**
+
+9. Find the instance in https://control.bluemix.net/network/cdn
 
 ### Access your content through the CDN domain
 
@@ -169,7 +188,7 @@ In this section, we will create a CDN service. The CDN service distributes conte
 
 2. The **Details** panel shows the **CNAME** for your CDN
 
-3. Access your file with https://your-cdn-cname.cdnedge.bluemix.net/your-filename
+3. Access your file with https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png
 
    > If you omit the filename, you should see the S3 ListBucketResult instead
 
@@ -182,24 +201,28 @@ The application contains a web page **public/index.html** that includes referenc
    ```
    cd webapp-with-cos-and-cdn
    ```
+   {: pre}
 
 2. Push the application without starting it.
 
    ```
    bx cf push --no-start
    ```
+   {: pre}
 
 3. Configure the CDN_NAME environment variable so the app can reference the CDN contents
 
    ```
    bx cf set-env webapp-with-cos-and-cdn CDN_CNAME your-cdn.cdnedge.bluemix.net
    ```
+   {: pre}
 
 4. Start the app.
 
    ```
    bx cf start webapp-with-cos-and-cdn
    ```
+   {: pre}
 
 5. Access the app with your web browser, the page stylesheet, a picture and a video are loaded from the CDN.
 
@@ -212,3 +235,5 @@ Using a CDN with an Object Storage is a powerful combination which lets you host
 [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
 
 [Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
+
+[Getting Started with CDN](https://console.bluemix.net/docs/infrastructure/CDN/getting-started.html)

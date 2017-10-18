@@ -7,7 +7,7 @@ Solutions
     {: .navgroup id="learn"}
     index.md
     {: .navgroup-end}
-    
+
     {: .navgroup id="howto"}
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
@@ -16,4 +16,5 @@ Solutions
     mean-stack.md
     sql-database.md
     ios-mobile-push-analytics.md
+    serverless-api-webapp.md
     {: .navgroup-end}
