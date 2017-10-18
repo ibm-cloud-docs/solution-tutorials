@@ -1,4 +1,4 @@
-# Serverless Application and API
+# Serverless Web Application and API
 
 Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.
 
@@ -19,7 +19,11 @@ This guide uses GitHub Pages to host the static website. Make sure you have a pu
 
 ## Create the Guestbook database
 
-1. In the catalog, under **Data & Analytics**, select **Cloudant NoSQL DB**
+Start by creating a database. Cloudant NoSQL DB is a fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema. Cloudant is built upon and compatible with Apache CouchDB and accessible through a secure HTTPS API, which scales as your application grows.
+
+![](images/solution8/Catalog_Cloudant.png)
+
+1. In the Catalog, under **Data & Analytics**, select **Cloudant NoSQL DB**
 
 1. Set the service name to **guestbook-db**
 
@@ -29,9 +33,15 @@ This guide uses GitHub Pages to host the static website. Make sure you have a pu
 
 1. Create a database named **guestbook**
 
-## Create actions
+   ![](images/solution8/Create_Database.png)
 
-### One sequence of actions to save the guestbook entry
+## Create Cloud Functions actions
+
+In this section, you will create serverless actions (also commonly called functions). IBM Cloud Functions (based on Apache OpenWhisk) is a Function-as-a-Service (FaaS) platform which executes functions in response to incoming events and costs nothing when not in use.
+
+![](images/solution8/Functions.png)
+
+### Sequence of actions to save the guestbook entry
 
 The first sequence we create is used to persist a guest message. Given a name, an email and a comment, the sequence will:
    * create a document to be persisted
@@ -62,6 +72,7 @@ The first sequence we create is used to persist a guest message. Given a name, a
      };
    }
    ```
+   {: codeblock}
 
 1. Open the action in the Develop view https://console.bluemix.net/openwhisk/editor
 
@@ -100,10 +111,11 @@ The first sequence we create is used to persist a guest message. Given a name, a
      "comment": "this is my comment"
    }
    ```
+   {: codeblock}
 
 1. Check the database it should contain one record
 
-### One sequence of actions to retrieve entries
+### Sequence of actions to retrieve entries
 
 The second sequence is used to retrieve the existing guestbook entries. The sequence will:
    * list all documents from the database
@@ -120,6 +132,7 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
      };
    }
    ```
+   {: codeblock}
 
 1. And one to process the results. Name it **format-entries**
 
@@ -138,6 +151,7 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
      };
    }
    ```
+   {: codeblock}
 
 1. Select the **set-read-input** action
 
