@@ -1,13 +1,3 @@
----
-
-copyright:
-  years: 2017
-lastupdated: "2017-10-18"
-
----
-
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
 # SQL Database for Cloud Data 
 
 This tutorial shows how to provision a SQL (relational) database service, create a table and load a larger data set into the database. Thereafter, we deploy a web app to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](http://flask.pocoo.org/).
