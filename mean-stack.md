@@ -4,45 +4,149 @@ This solution walks you through the creation of a web application using the popu
 
 ## Objectives
 
-* Create SQL database
-* Create and design the schema
-* Load data
-* Connect to the database from an application
-* Secure and Monitor your SQL Database
-* Backups
+- Create and run a starter Node.js app locally
 
+- Create a Compose for MongoDB database on Bluemix 
 
+- Deploy the Node.js app to Bluemix
+
+- Manage the app on Bluemix 
+
+- Manage the MongoDB database 
+
+  ​
 
 ## Before you begin
+
 {: #prereqs}
 
-1. > ​
+1. [Install Git](https://git-scm.com/)
 
-2. ​
+2. [Install Node.js and NPM](https://nodejs.org/)
 
-## Get the web application code
+3. [Install and run MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
+
+4. [Install Cloud Foundry Command Line Tool](https://github.com/cloudfoundry/cli)
+
+   ​
+
+## Apps and Services 
+- SDK for Node.js Cloud Foundry App
+- Continuous Delivery Service for DevOps
+- Compose for MongoDB database
+
+
+
+
+## Create and run a starter Node.js app locally
 
 {: #get_code}
 
-This guide uses a simple web application which links to the files (css, images and videos) served by a Content Delivery Network.
+This guide uses a sample MEAN stack ([MongoDB](https://www.mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/) and [Node.js](https://nodejs.org/)) application. 
 
-To start with, retrieve the application code:
 
-   ```sh
-   git clone https://github.ibm.com/frederic-lavigne/webapp-with-cos-and-cdn
-   ```
 
-## Provision database
-{: #create_cos}
+## Test local MongoDB
 
-blah
+Open the terminal window and `cd` to the `bin` directory of your MongoDB installation. You can use this terminal window to run all the commands in this tutorial.
 
-## Load data
+Run `mongo` in the terminal to connect to your local MongoDB server.
+```sh
+   mongo
+```
 
-{: #configure_permissions}
+If your connection is successful, then your MongoDB database is already running. If not, make sure that your local MongoDB database is started by following the steps at Install MongoDB Community Edition. Often, MongoDB is installed, but you still need to start it by running mongod.
+When you're done testing your MongoDB database, type Ctrl+C in the terminal.
 
-blah
+### Create local Node.js app
+In this step, you set up the local Node.js project.
 
-## Related Content
+**Clone the sample application**
+
+1. In the terminal window, cd to a working directory. Run the following command to clone the sample repository.
+  ```sh
+     git clone https://github.com/IBM-Bluemix/nodejs-MEAN-stack
+  ```
+  This sample repository contains a copy of the [MEAN.js repository](https://github.com/IBM-Bluemix/nodejs-MEAN-stack). 
+
+### Run the application
+1. Run the following commands to install the required packages and start the application.
+  ```sh
+     cd nodejs-MEAN-stack
+     npm install
+  ```
+
+2. Rename .env.example file to .env. Edit the contents as needed, at a minimum adding your own SESSION_SECRET.
+
+3. Run node server.js to start your app
+  ```
+     node server.js
+  ```
+
+
+## Create a Compose for MongoDB database on Bluemix
+In this step we will create a Compose for MongoDB database on Bluemix and then push the code to Bluemix.
+
+1. Set your Cloud Foundry CLI tool's API endpoint to Bluemix   
+  ```sh
+     cf api https://api.ng.bluemix.net
+  ```
+2. Login to Bluemix via the command line   
+  ```sh
+     cf login
+  ```
+3. Create the instance of Compose for MongoDB on Bluemix   
+  ```sh
+     cf create-service compose-for-mongodb Standard mongodb
+  ```
+
+
+
+
+## Deploy the Node.js app to Bluemix
+
+There are many ways in which we can deploy the app to Bluemix, first let's push the code to Bluemix by using the following command: 
+
+```sh
+   cf push
+```
+
+By running this command, the code locally will be pushed to Bluemix. Note we created an database instance earlier with the name called **mongodb**. Bluemix will look for the manifest.yml file, then it will find and bind the mongodb database to our application. 
+
+Once the code been pushed to Bluemix, you should be able to view the app on Bluemix. There is a random host name generated where it should be something like: **https://mean-random-name.mybluemix.net** 
+
+![Live App](images/solution7/live-app.png)
+
+## Manage the app on Bluemix 
+
+blah...
+
+
+
+## Manage the MongoDB database 
+
+blah...
+
+
+
+## Summary
+
+In this tutorial, you deployed a MEAN stack application using Compose for MongoDB. 
+
+You learned how to:
+
+- Create and run a starter Node.js app locally
+- Create a Compose for MongoDB database on Bluemix 
+- Deploy the Node.js app to Bluemix
+- Manage the app on Bluemix 
+- Manage the MongoDB database 
+
+
+
+## Next steps
+
+Advance to the next tutorial to learn how to:
+
+- [Set up source control and continuous delivery](https://dev-console.stage1.bluemix.net/docs/solutions/multi-region-webapp.html)
 
 
