@@ -1,3 +1,16 @@
+---
+
+
+copyright:
+  years: 2017
+lastupdated: "2017-09-28"
+
+---
+
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+
+
 # Serverless Web Application and API
 
 Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.
