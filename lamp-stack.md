@@ -1,3 +1,16 @@
+---
+
+
+copyright:
+  years: 2017
+lastupdated: "2017-09-28"
+
+---
+
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+
+
 # PHP web application on a LAMP Stack
 This solution walks you through the creation of an Ubuntu **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP (the LAMP stack). To see the LAMP server in action, you will install and configure the [WordPress](https://wordpress.org/) open source application.
 
