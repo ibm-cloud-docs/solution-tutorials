@@ -29,19 +29,12 @@ Time to complete: 15 minutes
 
 ## Provision a LAMP server
 1. Login to **Bluemix**, navigate to the **Catalog** page and select the **Virtual Server** service under the **Infrastructure** section.
-
 2. Select **Public Virtual Server** and then click **Create**.
-
 3. Under **Image**, select **LAMP** latest version under **Ubuntu**.
-
     **Note:** this will come with pre-installed with Apache, MySQL, and PHP but we will reinstall PHP and MySQL with the latest version.
-
 4. Under **Network Interface** select the **Public and Private Network Uplink** option.
-
 5. Review the other configuration options, then click **Provision** to provision the server.    ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
-
     **Note**: The provisioning process can take up to 10 minutes for the server to be ready for use. Once the server is created, you should see the server login credentials.  The server username, password public IP would be needed to SSH into the server.
-
 6. Connect to the server using SSH
    ```sh
    sudo ssh root@<Public-IP-Address>
@@ -65,42 +58,32 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
 
 ### Ubuntu
 1. Verify Ubuntu by opening in the **Public IP** address in the browser. You should see the Ubuntu welcome page.
-
    ![Verify Ubuntu](images/solution4/VerifyUbuntu.png)
-
 ### Apache
 1. Check Apache version installed using the following command:
-
    ```
    apache2 -v
    ```
 2. Verify port 80 for web traffic, run the following command:
-
    ```
    sudo netstat -ntlp | grep LISTEN
    ```
    ![Verify Port](images/solution4/VerifyPort.png)  
-
 ### MySQL
 1. Check the **version** of MySQL using the following command:
-
    ```sh
    mysql -V
    ```
-
 2. Run the following script to help secure MySQL database:
-
    ```sh
    mysql_secure_installation
    ```
-
 3. Enter MySQL root **password**, and configure the security settings for your environment.
    To create a MySQL database, add users, or change configuration settings, login to MySQL
 
    ```sh
    mysql -u root -p
    ```
-
    **Note** MySQL default username and password is root and root.  
    When done, exit the mysql prompt by typing \q.
 
@@ -134,7 +117,6 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    ```sh
    sudo sensible-editor /etc/wordpress/config-localhost.php
    ```
-
 2. Copy the following lines to the file, substituting *yourPassword* with your MySQL database password (leave other values unchanged). Then save using Ctrl+X to exit and save the file.   
    ```php
    <?php
@@ -145,15 +127,11 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    define('WP_CONTENT_DIR', '/usr/share/wordpress/wp-content');
    ?>
    ```
-
 3. In a working directory, create a text file wordpress.sql to **configure the WordPress database**:
-
    ```sh
    sudo sensible-editor wordpress.sql
    ```
-
 4. Add the following commands, substituting your database password for yourPassword (leave other values unchanged). Then save the file.
-
    ```mssql
    CREATE DATABASE wordpress;
    GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.*
@@ -161,23 +139,17 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    IDENTIFIED BY 'yourPassword';
    FLUSH PRIVILEGES;
    ```
-
 5. Run the following command to **create the database**
-
    ```sh
    cat wordpress.sql | sudo mysql --defaults-extra-file=/etc/mysql/debian.cnf
    ```
-
 6. After the command completes, delete the file wordpress.sql. Move the WordPress installation to the web server document root:
-
    ```sh
    sudo ln -s /usr/share/wordpress /var/www/html/wordpress
    sudo mv /etc/wordpress/config-localhost.php /etc/wordpress/config-default.php
    ```
 7. Complete the WordPress setup and publish on the platform. Open a browser and go to http://yourVMPublicIPAddress/wordpress. Substitute the public IP address of your VM. It should look similar to the image below.
-
    ![WordPress site running](images/solution4/WordPressSiteRunning.png)
-
 -----------
 
 ## Configure Domain

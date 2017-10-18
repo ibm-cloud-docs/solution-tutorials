@@ -11,7 +11,7 @@ lastupdated: "2017-09-28"
 {:new_window: target="_blank"}
 
 
-# Accelerate delivery of static files 
+# Accelerate delivery of static files
 
 Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.
 
@@ -32,14 +32,10 @@ Host and serve website assets (images, videos, documents) and user generated con
    * Manage Storage
    * Manage CDN File Transfers
    * API Key
-
    > These permissions are required to be able to view and use the Storage and CDN services.
-
 2. Ensure that you have access to Storage in the Infrastructure console
    * Go to https://control.bluemix.net
-
    * Confirm you can see the `Storage` section and the `Object Storage` section underneath.
-
 ![](images/solution3/Infrastructure_Dashboard.png)
 
 ## Get the web application code
@@ -77,44 +73,36 @@ Cloud Object Storage provides flexible, cost-effective, and scalable cloud stora
 ## Upload files to a bucket
 {: #upload}
 
-In this section, we will use the command line tool **curl** to upload files to the bucket. 
+In this section, we will use the command line tool **curl** to upload files to the bucket.
 
 1. **Login** to Bluemix using the CLI.
-
    ```sh
-   bx login 
+   bx login
    ```
    {: pre}
-
 2. Get a **token** from IAM.
-
    ```sh
    bx iam oauth-tokens
    ```
    {: pre}
-
 3. **Copy** the token from the output of the command above.
-
    ```
    IAM token:  Bearer <token>
    ```
    {: screen}
-
 4. **Set** the value of the token and bucket name to an environment variable for easy access.
-
    ```sh
    export IAM_TOKEN=<REPLACE_WITH_TOKEN>
    export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
    ```
    {: pre}
-
 5. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory of the web application code you downloaded above. Upload the files to the root of the bucket.
   ```sh
    cd content
   ```
   {: pre}
   ```sh
-   
+
    curl -X "PUT" \
          "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-picture.png" \
         -H "x-amz-acl: public-read" \
@@ -141,13 +129,9 @@ In this section, we will use the command line tool **curl** to upload files to t
         -T a-video.mp4
   ```
   {: pre}
-
 6. You should now be able to view your files using the dashboard.
-
    ![](images/solution3/Buckets.png)
-
 7. Access the files through your browser. The link will look like
-
    http://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-picture.png
 
 
@@ -160,49 +144,31 @@ In this section, we will create a CDN service. The CDN service distributes conte
 ### Create a CDN instance
 
 1. Go into the Bluemix catalog
-
 2. Search for **Content Delivery Network**
-
 3. Pick the one under the **Network** category. This CDN is powered by Akamai.
-
 4. Create a **Content Delivery Network** instance
-
 5. Select **Akamai** as the CDN Provider
-
 6. Click **Start Provision**
 
 ### Configure the CDN instance
 
 1. Set the **hostname** for the CDN to your custom domain
-
    > Although you set a custom domain, you will still be able to access the CDN contents through the IBM provided CNAME. So if you don't plan to use custom domain, you can make set an arbitrary name.
-
 2. Set the **Custom CNAME** prefix
-
    > Don't use dots "." in the name
-
 3. Leave the **Path** empty
-
 4. Select **Object Storage** as Origin
-
 5. Set the **Endpoint** to your bucket API endpoint, such as *s3-api.us-geo.objectstorage.softlayer.net*
-
 6. Set the **Bucket name** to *your-bucket-name*
-
 7. Enable HTTP Port 80
-
 8. Click **Create**
-
 9. Find the instance in https://control.bluemix.net/network/cdn
 
 ### Access your content through the CDN domain
 
 1. Select the CDN instance in the list at https://control.bluemix.net/network/cdn
-
 2. The **Details** panel shows the **CNAME** for your CDN
-
 3. Access your file with https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png
-
    > If you omit the filename, you should see the S3 ListBucketResult instead
 
 ## Deploy the Cloud Foundry application
@@ -210,33 +176,25 @@ In this section, we will create a CDN service. The CDN service distributes conte
 The application contains a web page **public/index.html** that includes references to the files now hosted in the Cloud Object Storage. The backend **app.js** serves this web page and replace a placeholder with the actual location of your CDN. This way all assets used by the web page will be served by the CDN.
 
 1. With a terminal, go in the directory where you checked out the code
-
    ```
    cd webapp-with-cos-and-cdn
    ```
    {: pre}
-
 2. Push the application without starting it.
-
    ```
    bx cf push --no-start
    ```
    {: pre}
-
 3. Configure the CDN_NAME environment variable so the app can reference the CDN contents
-
    ```
    bx cf set-env webapp-with-cos-and-cdn CDN_CNAME your-cdn.cdnedge.bluemix.net
    ```
    {: pre}
-
 4. Start the app.
-
    ```
    bx cf start webapp-with-cos-and-cdn
    ```
    {: pre}
-
 5. Access the app with your web browser, the page stylesheet, a picture and a video are loaded from the CDN.
 
 ![](images/solution3/Application.png)

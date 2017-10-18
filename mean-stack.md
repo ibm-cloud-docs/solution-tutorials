@@ -11,51 +11,37 @@ lastupdated: "2017-09-28"
 {:new_window: target="_blank"}
 
 
-# Modern Web Application using MEAN stack 
+# Modern Web Application using MEAN stack
 
-This solution walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a Node.js runtime. 
+This solution walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a Node.js runtime.
 
 ## Objectives
 
 - Create and run a starter Node.js app locally
-
-- Create a Compose for MongoDB database on Bluemix 
-
+- Create a Compose for MongoDB database on Bluemix
 - Deploy the Node.js app to Bluemix
-
-- Manage the app on Bluemix 
-
-- Manage the MongoDB database 
-
-  ​
+- Manage the app on Bluemix
+- Manage the MongoDB database
 
 ## Before you begin
 
 {: #prereqs}
 
 1. [Install Git](https://git-scm.com/)
-
 2. [Install Node.js and NPM](https://nodejs.org/)
-
 3. [Install and run MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
-
 4. [Install Cloud Foundry Command Line Tool](https://github.com/cloudfoundry/cli)
 
-   ​
-
-## Apps and Services 
+## Apps and Services
 - SDK for Node.js Cloud Foundry App
 - Continuous Delivery Service for DevOps
 - Compose for MongoDB database
-
-
-
 
 ## Create and run a starter Node.js app locally
 
 {: #get_code}
 
-This guide uses a sample MEAN stack ([MongoDB](https://www.mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/) and [Node.js](https://nodejs.org/)) application. 
+This guide uses a sample MEAN stack ([MongoDB](https://www.mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/) and [Node.js](https://nodejs.org/)) application.
 
 
 
@@ -80,7 +66,7 @@ In this step, you set up the local Node.js project.
   ```sh
      git clone https://github.com/IBM-Bluemix/nodejs-MEAN-stack
   ```
-  This sample repository contains a copy of the [MEAN.js repository](https://github.com/IBM-Bluemix/nodejs-MEAN-stack). 
+  This sample repository contains a copy of the [MEAN.js repository](https://github.com/IBM-Bluemix/nodejs-MEAN-stack).
 
 ### Run the application
 1. Run the following commands to install the required packages and start the application.
@@ -88,14 +74,11 @@ In this step, you set up the local Node.js project.
      cd nodejs-MEAN-stack
      npm install
   ```
-
 2. Rename .env.example file to .env. Edit the contents as needed, at a minimum adding your own SESSION_SECRET.
-
 3. Run node server.js to start your app
   ```
      node server.js
   ```
-
 
 ## Create a Compose for MongoDB database on Bluemix
 In this step we will create a Compose for MongoDB database on Bluemix and then push the code to Bluemix.
@@ -113,30 +96,27 @@ In this step we will create a Compose for MongoDB database on Bluemix and then p
      cf create-service compose-for-mongodb Standard mongodb
   ```
 
-
-
-
 ## Deploy the Node.js app to Bluemix
 
-There are many ways in which we can deploy the app to Bluemix, first let's push the code to Bluemix by using the following command: 
+There are many ways in which we can deploy the app to Bluemix, first let's push the code to Bluemix by using the following command:
 
 ```sh
    cf push
 ```
 
-By running this command, the code locally will be pushed to Bluemix. Note we created an database instance earlier with the name called **mongodb**. Bluemix will look for the manifest.yml file, then it will find and bind the mongodb database to our application. 
+By running this command, the code locally will be pushed to Bluemix. Note we created an database instance earlier with the name called **mongodb**. Bluemix will look for the manifest.yml file, then it will find and bind the mongodb database to our application.
 
-Once the code been pushed to Bluemix, you should be able to view the app on Bluemix. There is a random host name generated where it should be something like: **https://mean-random-name.mybluemix.net** 
+Once the code been pushed to Bluemix, you should be able to view the app on Bluemix. There is a random host name generated where it should be something like: **https://mean-random-name.mybluemix.net**
 
 ![Live App](images/solution7/live-app.png)
 
-## Manage the app on Bluemix 
+## Manage the app on Bluemix
 
 blah...
 
 
 
-## Manage the MongoDB database 
+## Manage the MongoDB database
 
 blah...
 
@@ -144,15 +124,15 @@ blah...
 
 ## Summary
 
-In this tutorial, you deployed a MEAN stack application using Compose for MongoDB. 
+In this tutorial, you deployed a MEAN stack application using Compose for MongoDB.
 
 You learned how to:
 
 - Create and run a starter Node.js app locally
-- Create a Compose for MongoDB database on Bluemix 
+- Create a Compose for MongoDB database on Bluemix
 - Deploy the Node.js app to Bluemix
-- Manage the app on Bluemix 
-- Manage the MongoDB database 
+- Manage the app on Bluemix
+- Manage the MongoDB database
 
 
 
@@ -161,5 +141,3 @@ You learned how to:
 Advance to the next tutorial to learn how to:
 
 - [Set up source control and continuous delivery](https://dev-console.stage1.bluemix.net/docs/solutions/multi-region-webapp.html)
-
-

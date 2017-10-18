@@ -38,15 +38,10 @@ Start by creating a database. Cloudant NoSQL DB is a fully managed data layer de
 ![](images/solution8/Catalog_Cloudant.png)
 
 1. In the Catalog, under **Data & Analytics**, select **Cloudant NoSQL DB**
-
-1. Set the service name to **guestbook-db**
-
-1. Click **Create**
-
-1. **Launch** the Cloudant service console
-
-1. Create a database named **guestbook**
-
+2. Set the service name to **guestbook-db**
+3. Click **Create**
+4. **Launch** the Cloudant service console
+5. Create a database named **guestbook**
    ![](images/solution8/Create_Database.png)
 
 ## Create Cloud Functions actions
@@ -57,16 +52,14 @@ In this section, you will create serverless actions (also commonly called functi
 
 ### Sequence of actions to save the guestbook entry
 
-The first sequence we create is used to persist a guest message. Given a name, an email and a comment, the sequence will:
-   * create a document to be persisted
-   * store the document
+You can create an action that chains together a sequence of actions. The first sequence we create is used to persist a guest message. Given a name, an email and a comment, the sequence will:
+
+   * Create a document to be persisted
+   * Store the document in the database
 
 1. Switch to **Cloud Functions**
-
-1. Create a new Node.js action named **prepare-entry-for-save**
-
-1. Use this code for the action:
-
+2. Create a new Node.js action named **prepare-entry-for-save**
+3. Use this code for the action:
    ```js
    /**
     * Prepare the guestbook entry to be persisted
@@ -79,64 +72,43 @@ The first sequence we create is used to persist a guest message. Given a name, a
      return {
        doc: {
          createdAt: new Date(),
-	       name: params.name,
-	       email: params.email,
-	       comment: params.comment
+          name: params.name,
+          email: params.email,
+          comment: params.comment
        }
      };
    }
    ```
    {: codeblock}
+4. Open the action in the Develop view https://console.bluemix.net/openwhisk/editor
+5. **Link into a sequence**
+6. Pick Cloudant **create document**.
+7. Create new binding.
+8. Set name to **binding-for-guestbook**
+9. Select the **guestbook-db** Cloudant instance and the **guestbook** database
+10. Save the configuration
+11. Click **Add to sequence** and then **This looks good**.
+12. Name the sequence **save-guestbook-entry**
+13. **Save the sequence** and then **Done**
+14. Select the sequence and **Run** the sequence to test it
 
-1. Open the action in the Develop view https://console.bluemix.net/openwhisk/editor
-
-1. Link into a sequence
-
-1. Pick Cloudant **create document**
-
-1. Create new binding
-
-1. Set name to **binding-for-guestbook**
-
-1. Select the **guestbook-db** Cloudant instance
-
-1. Select the **guestbook** database
-
-1. Save the configuration
-
-1. Click **Add to sequence**
-
-1. Click **This looks good**
-
-1. Name the sequence **save-guestbook-entry**
-
-1. Save the sequence
-
-1. Done
-
-1. Select the sequence
-
-1. Run the sequence to test it
-
-   ```json
-   {
-     "name": "John Smith",
-     "email": "john@smith.com",
-     "comment": "this is my comment"
-   }
-   ```
-   {: codeblock}
-
-1. Check the database it should contain one record
+    ```json
+    {
+      "name": "John Smith",
+      "email": "john@smith.com",
+      "comment": "this is my comment"
+    }
+    ```
+    {: codeblock}
+15. Check the database to confirm it contains the new record
 
 ### Sequence of actions to retrieve entries
 
 The second sequence is used to retrieve the existing guestbook entries. The sequence will:
-   * list all documents from the database
-   * format the documents before returning them
+   * List all documents from the database
+   * Format the documents and returning them
 
 1. Create an action to configure the **list documents** call. Name it **set-read-input**
-
    ```js
    function main(params) {
      return {
@@ -147,9 +119,7 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
    }
    ```
    {: codeblock}
-
-1. And one to process the results. Name it **format-entries**
-
+2. And one to process the results. Name it **format-entries**
    ```js
    const md5 = require('spark-md5');
 
@@ -166,92 +136,58 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
    }
    ```
    {: codeblock}
-
-1. Select the **set-read-input** action
-
-1. Select **Link into a sequence**
-
-1. Select **Cloudant** then the **list documents** action
-
-1. Select the **binding-for-guestbook** binding
-
-1. Click **Add to Sequence**
-
-1. Click **Extend**
-
-1. Select **My Actions**
-
-1. Select **format-entries**
-
-1. Click **Add to Sequence**
-
-1. Click **This Looks Good**
-
-1. Name the sequence **read-guestbook-entries**
-
-1. Save the action sequence
-
-1. Done
+3. Select the **set-read-input** action
+4. Select **Link into a sequence**
+5. Select **Cloudant** then the **list documents** action
+6. Select the **binding-for-guestbook** binding
+7. Click **Add to Sequence**
+8. Click **Extend**
+9. Select **My Actions**
+10. Select **format-entries**
+11. Click **Add to Sequence**
+12. Click **This Looks Good**
+13. Name the sequence **read-guestbook-entries**
+14. Save the action sequence
+15. Done
 
 ## Create an API
 
 1. Go to Actions https://console.bluemix.net/openwhisk/manage/actions
-
-1. Select the **read-guestbook-entries** sequence. In **Additional details**, check **Enable Web Action**
-
-1. Do the same for the **save-guestbook-entry** sequence
-
-1. Go to APIs https://console.bluemix.net/openwhisk/apimanagement
-
-1. **Create Managed API**
-
-1. Set name to **guestbook**
-
-1. Set base path to **/guestbook**
-
-1. Create an operation to retrieve guestbook entries:
+2. Select the **read-guestbook-entries** sequence. In **Additional details**, check **Enable Web Action**
+3. Do the same for the **save-guestbook-entry** sequence
+4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement
+5. **Create Managed API**
+6. Set name to **guestbook**
+7. Set base path to **/guestbook**
+8. Create an operation to retrieve guestbook entries:
    1. Set **path** to **/entries**
-   1. Set **verb** to **GET**
-   1. Select the **read-guestbook-entries** action
-
-1. Create an operation to persist a guestbook entry:
+   2. Set **verb** to **GET**
+   3. Select the **read-guestbook-entries** action
+9. Create an operation to persist a guestbook entry:
    1. Set **path** to **/entries**
-   1. Set **verb** to **PUT**
-   1. Select the **save-guestbook-entry** action
-
-1. Save and expose the API
+   2. Set **verb** to **PUT**
+   3. Select the **save-guestbook-entry** action
+10. Save and expose the API
 
 ## Deploy the web app
 
 1. Fork the Guestbook user interface repository https://github.ibm.com/frederic-lavigne/serverless-guestbook to your public GitHub
-
-1. Modify docs/guestbook.js and replace the value of **apiUrl** with the route given by API Connect
-
-1. Commit the modified file
-
-1. In the Settings page of your repository, scroll to **GitHub Pages**, change the source to **master branch /docs folder** and Save
-
-1. Access the public page for your repository
-
-1. You should the test guestbook entry created earlier
-
-1. Add one new entry
+2. Modify docs/guestbook.js and replace the value of **apiUrl** with the route given by API Connect
+3. Commit the modified file
+4. In the Settings page of your repository, scroll to **GitHub Pages**, change the source to **master branch /docs folder** and Save
+5. Access the public page for your repository
+6. You should the test guestbook entry created earlier
+7. Add one new entry
 
 ## Optional: Use your own domain for the API
 
 1. Create your domain under your organization https://console.bluemix.net/docs/admin/manageorg.html#managedomains
-
-1. Upload a SSL certificate for your domain and the subdomain you will use for the API
-
-1. Go to the Cloud Functions dashboard, select **APIs** and the Guestbook API
-
-1. Switch to **Definition**
-
-1. Set the **Domain for API** to the domain you added to your organization
-
-1. Set the **Subdomain for API** to **guestbook-api**
-
-1. At this stage, you need to configure your DNS to create a CNAME mapping this subdomain to the IBM Cloud servers. Create a CNAME record for the domain targeting one of the following secure endpoints depending on which region hosts the target API:
+2. Upload a SSL certificate for your domain and the subdomain you will use for the API
+3. Go to the Cloud Functions dashboard, select **APIs** and the Guestbook API
+4. Switch to **Definition**
+5. Set the **Domain for API** to the domain you added to your organization
+6. Set the **Subdomain for API** to **guestbook-api**
+7. At this stage, you need to configure your DNS to create a CNAME mapping this subdomain to the IBM Cloud servers. Create a CNAME record for the domain targeting one of the following secure endpoints depending on which region hosts the target API:
    * US South: secure.us-south.bluemix.net.
    * United Kingdom: secure.eu-gb.bluemix.net.
    * Frankfurt: secure.eu-de.bluemix.net.
@@ -259,12 +195,8 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
 
    > Refer to https://console.bluemix.net/docs/apis/management/manage_apis.html#custom_domains for additional information
 
-1. Save the API
-
-1. Wait for DNS to propagate and you will be able to access your guestbook api at https://guestbook-api.mydomain.com/guestbook
-
-1. Edit docs/guestbook.js and update the value of **apiUrl** with https://guestbook-api.mydomain.com/guestbook
-
-1. Commit the modified file
-
-1. Your application now accesses the API through your custom domain
+8. Save the API
+9. Wait for DNS to propagate and you will be able to access your guestbook api at https://guestbook-api.mydomain.com/guestbook
+10. Edit docs/guestbook.js and update the value of **apiUrl** with https://guestbook-api.mydomain.com/guestbook
+11. Commit the modified file
+12. Your application now accesses the API through your custom domain
