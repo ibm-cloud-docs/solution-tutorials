@@ -48,12 +48,20 @@ We create the SQL database service in the form of Db2 Warehouse on Cloud. Let's 
 
 3. Click on **Open**. The console is now loaded.
 
-4. If it is the first time you are offered to take a tour. Take it. Remember how you can easily take the tour again. It is explained during the tour.
+4. If it is the first time using the console, you are offered to take a tour. Take it. Remember how you can easily take the tour again. It is explained during the tour.
 
 ## Create a table
 We need a table to hold the sample data. That table can be created as part of the load process or before. If we do it directly, then it is simpler to set up the load process.
 
-1. In the BluemixDb2
+1. In the console for Db2 Warehouse on Cloud click **Explore** in the navigation bar. It takes you to a list of existing schemas in the database.
+
+2. Locate the schema beginning with "DASH". Click on it.
+
+3. Now we are creating the new table. Use the **"+ New Table"** for it. It brings up a form for the table name and its columns.
+
+4. Put in "cities" as table name. Copy the column definitions from the file [cityschema.txt](https://github.com/data-henrik/cloud-sql-database/blob/master/cityschema.txt) and paste them into box for the columns and data types.
+
+5. Click on **Create** to define the new table.
 
 ## Load data
 
@@ -65,20 +73,6 @@ We need a table to hold the sample data. That table can be created as part of th
 
 This guide uses a simple web application which links to the files (css, images and videos) served by a Content Delivery Network.
 
-To start with, retrieve the application code:
-
-   ```sh
-   git clone https://github.ibm.com/frederic-lavigne/webapp-with-cos-and-cdn
-   ```
-
-## Provision database
-{: #create_cos}
-
-blah
-
-
-
-{: #configure_permissions}
 
 blah
 
