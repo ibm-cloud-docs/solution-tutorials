@@ -1,3 +1,15 @@
+---
+
+
+copyright:
+  years: 2017
+lastupdated: "2017-09-28"
+
+---
+
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+
 # iOS Mobile Application with Push and Analytics
 
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud. This solution walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, Import the code to Xcode and then further enhance the application.
