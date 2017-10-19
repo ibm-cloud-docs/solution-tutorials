@@ -107,31 +107,49 @@ You must obtain separate certificates for your development and distribution envi
 5. When the `About Creating a Certificate Signing Request (CSR) screen` displays, start the `Keychain Access` application on your Mac to create a Certificate Signing Request (CSR). Click `Continue`.
 
 6. For the Upload CSR file option, click `Choose File`, and select file `CertificateSigningRequest.certSigningRequest`.
+
 7. Click `Continue`.
+
 8. On the Download, Install and Backup pane, click Download. The `aps_development.cer` file is downloaded.
      ![Download certificate](images/solution6/push_certificate_download.png)
+
 9. From the menu, select `Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority…`
 
 10. In `Certificate Information`, enter the email address that is associated with your App Developer account and a common name. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
+
 11. Select `Save to disk` to download the `.certSigningRequest` file to your desktop, then click Continue.
+
 12. In the `Save As` menu option, name the `.certSigningRequest` file and click Save.
+
 13. Click Done. You now have a CSR.
+
 14. Return to the `About Creating a Certificate Siging Request (CSR)` window and click Continue.
+
 15. From the `Generate` screen, click `Choose File ...` and select the CSR file that you saved on your desktop. Then, click `Generate`.
+
+     ​
+
      ![Generate certificate](images/solution6/generate_certificate.png)
+
 16. When your certificate is ready, click `Done`.
+
 17. On the `Push Notifications` screen, click Download to download your certificate, then click `Done`.
    ![Download certificate](images/solution6/certificate_download.png)
+
 18. On your Mac, go to `Keychain Access > My Certificates`, and locate your newly installed certificate. Double-click the certificate to install it into the Keychain Access.
+
 19. Select the certificate and private key, and then select `Export` to convert the certificate into the personal information exchange format (`.p12` format).
 
    ![Export certificate and keys](images/solution6/keychain_export_key.png)
+
 20. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12_certificate` or `production_apns.p12`, then click Save.
 
      ![Export certificate and keys](images/solution6/certificate_p12v2.png)
+
 21. In the `Enter a password` field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
 
     ![Export certificate and keys](images/solution6/export_p12.png)
+
 22. The `Key Access.app` prompts you to export your key from the `Keychain` screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
 
 ### Creating a development provisioning profile
