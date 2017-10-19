@@ -18,17 +18,11 @@ This solution walks you through the creation of a mobile starter application, ad
 ## Objectives
 
 * Create a mobile project from Basic Swift starter kit.
-
 * Add Push Notifications and Mobile Analytics services.
-
 * Obtain APNs credentials and configure Push Notifications service instance.
-
 * Download the code and setup client SDKs.
-
 * Instrumenting the app to use Mobile Analytics.
-
 * Send and monitor push notifications.
-
 * Monitoring the app with Mobile Analytics.
 
   ![](images/solution6/ios_arch.png)
@@ -68,6 +62,7 @@ In the next step, you will add mobile services like Push notifications and Mobil
   ![](images/solution6/mobile_services.png)
 
 6. Click on `Download Code` to download the scaffolded code to Mac. In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
+
 ## Obtain APNs credentials and configure Push Notifications service instance.
 
 For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
@@ -310,9 +305,3 @@ You can record application logs and monitor data with the Mobile Analytics Clien
 [Security in Push Notifications](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
 
 [Exporting Analytics data to Db2 Warehouse](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#dashdb)
-
-
-
- ```
-
- ```
