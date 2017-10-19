@@ -199,7 +199,7 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 3. Select `Sandbox (development)` or `Production (distribution)` as appropriate and then upload the `p.12` certificate that you have created.
 4. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
 
-![](images/solution6/mobile_push_configure.png)
+![](images/solution6/Mobile_push_configure.png)
 
 ## Download the code and setup client SDKs
 If you haven't downloaded the code yet, Click on `Download Code` under Projects > `Your Mobile Project`
