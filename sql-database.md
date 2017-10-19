@@ -3,7 +3,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-09-28"
+lastupdated: "2017-10-19"
 
 ---
 
@@ -36,7 +36,7 @@ Start by creating an instance of the **Db2 Warehouse on Cloud** service.
 
 2.  Click on **Data & Analytics** under Platform on the left pane and select **Db2 Warehouse on Cloud**.
 
-3.  Pick the Entry plan. Change the suggested service name if you want. Pick a region (data center) for the deployment of the database and make sure that the correct organization and space are selected.
+3.  Pick the Entry plan. Change the suggested service name to "sqldatabase" (we will use that name later on). Pick a region (data center) for the deployment of the database and make sure that the correct organization and space are selected.
 
 4.  Click on **Create**.
 
