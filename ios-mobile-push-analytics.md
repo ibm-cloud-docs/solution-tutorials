@@ -224,15 +224,15 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 	```
 	Analyzing dependencies
-Downloading dependencies
-Using BMSAnalytics (2.2.0)
-Using BMSAnalyticsAPI (2.2.1)
-Using BMSCore (2.3.2)
-Using BMSPush (2.0.3)
-Generating Pods project
-Integrating client project
-Sending stats
-Pod installation complete! There are 3 dependencies from the Podfile and 4 total pods installed.
+	Downloading dependencies
+	Using BMSAnalytics (2.2.0)
+	Using BMSAnalyticsAPI (2.2.1)
+	Using BMSCore (2.3.2)
+	Using BMSPush (2.0.3)
+	Generating Pods project
+	Integrating client project
+	Sending stats
+	Pod installation complete! There are 3 dependencies from the Podfile and 4 total pods installed.
 
 	```
 	
@@ -299,7 +299,7 @@ Pod installation complete! There are 3 dependencies from the Podfile and 4 total
 
 3. Registration for notifications happens in `AppDelegate.swift`. Provide an unique USER_ID.
 
-   ```
+ ```
    // Replace USER_ID with a unique end user identifier. This enables specific push notification targeting.
             push.registerWithDeviceToken(deviceToken: deviceToken, WithUserId: "USER_ID") { (response, statusCode, error) -> Void in
                 if error.isEmpty {
@@ -310,7 +310,7 @@ Pod installation complete! There are 3 dependencies from the Podfile and 4 total
                     print("Error during device registration \n  - status code: \(statusCode) \n  - Error: \(error) \n")
                 }
             }
-   ```
+ ```
 
 4. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
 5. Open Push Notifications service on IBM Cloud and to send basic push notifications, complete the following steps:
@@ -339,10 +339,10 @@ You can record application logs and monitor data with the Mobile Analytics Clien
 
 1. Open the `Mobile Analytics` service from the mobile project you created or click on the three vertical dots next to the service and select `Open Dashboard`.
 2. You should see LIVE Users, Sessions and other App Data by disabling `Demo Mode`. You can filter the analytics information by 
-  * Date.
-  * Application.
-  * Operating System.
-  * Version of the app.
+	  * Date.
+	  * Application.
+	  * Operating System.
+	  * Version of the app.
 
    ![Mobile Analytics](images/solution6/mobile_analytics.png)
    
