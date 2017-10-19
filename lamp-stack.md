@@ -28,7 +28,7 @@ Time to complete: 15 minutes
 ![Architecture diagram - coming soon!](images/solution4/Architecture.png)
 
 ## Provision a LAMP server
-1. Login to **Bluemix**, navigate to the **Catalog** page and select the **Virtual Server** service under the **Infrastructure** section.
+1. Login to **IBM Cloud**, navigate to the **Catalog** page and select the **Virtual Server** service under the **Infrastructure** section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Under **Image**, select **LAMP** latest version under **Ubuntu**.
     **Note:** this will come with pre-installed with Apache, MySQL, and PHP but we will reinstall PHP and MySQL with the latest version.
@@ -39,7 +39,7 @@ Time to complete: 15 minutes
    ```sh
    sudo ssh root@<Public-IP-Address>
    ```
-   **Note** the server Public IP and server password can be found from the dashboard on Bluemix.
+   **Note** the server Public IP and server password can be found in the Dashboard.
 
 
 ![Virtual server created](images/solution4/VirtualServerCreated.png)
@@ -172,7 +172,7 @@ Service ping is added by default so let's add Slow ping. To add Slow ping monito
   ![Add Slow Ping Monitoring](images/solution4/AddSlowPing.png)      
   **Note** duplicate monitors with the same configurations wont be allowed, only 1 monitor per configuration can be created.   
 
-4. Done, with that in place, you should now receive notification alert to your Bluemix account email address.
+4. Done, with that in place, you should now receive notification alert to your IBM Cloud account email address.
   ![Two Monitoring](images/solution4/TwoMonitoring.png)        
 
 ### Server Usage
@@ -181,7 +181,7 @@ Service ping is added by default so let's add Slow ping. To add Slow ping monito
 
 
 ## Server Security
-With Bluemix Virtual Servers, you have several security options like vulnerability scanner and add-on firewalls.
+With IBM Cloud Virtual Servers, you have several security options like vulnerability scanner and add-on firewalls.
 
 ### Vulnerability Scanner
 The vulnerability scanner scans the server for any vulnerabilities related to the server. To run a vulnerability scan on the server follow the steps below.
@@ -197,7 +197,7 @@ The vulnerability scanner scans the server for any vulnerabilities related to th
       ![Two Monitoring](images/solution4/VulnerabilityResults.png)       
 
 ### Firewalls
-Another way to secure the server is by adding firewall to the server. With Bluemix Virtual Servers, you have several firewall options that provide an essential security layer. The firewall options are provisioned on demand, without service interruptions. The firewall services prevent unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use.  
+Another way to secure the server is by adding firewall to the server. With IBM Cloud Virtual Servers, you have several firewall options that provide an essential security layer. The firewall options are provisioned on demand, without service interruptions. The firewall services prevent unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use.  
 
 Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN.   
 Learn more on firewalls [here](http://knowledgelayer.softlayer.com/topic/firewall).

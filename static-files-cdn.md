@@ -62,7 +62,7 @@ Cloud Object Storage provides flexible, cost-effective, and scalable cloud stora
 
 
 
-1. Go in the Bluemix catalog
+1. Go in the Catalog
 2. Click on **Storage** and then **Object Storage**
 3. Select **Cloud Object Storage** and click **Create** and **Create**.
 4. Click **Create Bucket**.
@@ -75,7 +75,7 @@ Cloud Object Storage provides flexible, cost-effective, and scalable cloud stora
 
 In this section, we will use the command line tool **curl** to upload files to the bucket.
 
-1. **Login** to Bluemix using the CLI.
+1. **Login** to IBM Cloud using the CLI.
    ```sh
    bx login
    ```
@@ -143,7 +143,7 @@ In this section, we will create a CDN service. The CDN service distributes conte
 
 ### Create a CDN instance
 
-1. Go into the Bluemix catalog
+1. Go into the Catalog
 2. Search for **Content Delivery Network**
 3. Pick the one under the **Network** category. This CDN is powered by Akamai.
 4. Create a **Content Delivery Network** instance

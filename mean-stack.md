@@ -92,12 +92,12 @@ In this step we will create a Compose for MongoDB database on the cloud.
   ```sh
      bx login
   ```
-  3. Target your Bluemix ORG and SPACE
+  3. Target your IBM Cloud ORG and SPACE
   ```sh
      bx target -o ORG -s SPACE
   ```
   **Note:** ORG is usully your email address and SPACE is the space you created on the cloud. Learn more on ORG and SPACE [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_account_spaces).
-3. Create the instance of Compose for MongoDB 
+3. Create the instance of Compose for MongoDB
   ```sh
      bx cf create-service compose-for-mongodb Standard mongodb2
   ```
@@ -121,7 +121,7 @@ Once the code been pushed, you should be able to view the app in your cloud dash
 ## Scaling MongoDB Resources
 {: #database}
 
-If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources. 
+If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
 1. In the application dashboard, go to **Connections** -> **Click on the MongoDB instance**
 2. In the Deployment Details panel, click Scale Resources. The Scale Resouces page opens.
   ![](images/solution7/mongodb-scale-show.png)
