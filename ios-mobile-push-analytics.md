@@ -18,11 +18,17 @@ This solution walks you through the creation of a mobile starter application, ad
 ## Objectives
 
 * Create a mobile project from Basic Swift starter kit.
+
 * Add Push Notifications and Mobile Analytics services.
+
 * Obtain APNs credentials and configure Push Notifications service instance.
+
 * Download the code and setup client SDKs.
+
 * Instrumenting the app to use Mobile Analytics.
+
 * Send and monitor push notifications.
+
 * Monitoring the app with Mobile Analytics.
 
   ![](images/solution6/ios_arch.png)
@@ -30,7 +36,7 @@ This solution walks you through the creation of a mobile starter application, ad
 ## Before you begin
 {: #prereqs}
 
-1. [Apple Developers](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on Bluemix (the provider) to iOS devices and applications. 
+1. [Apple Developers](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications. 
 2. Xcode for importing and enhancing your code.
 
 ## Create a mobile project from basic Swift starter kit.
@@ -54,13 +60,9 @@ In the next step, you will add mobile services like Push notifications and Mobil
 {: #create_cos}
 
 1. Click on `Add Service` and select Mobile to accelerate your app with Mobile services. Click Next to see the available services.
-
 2. Select `Push Notifications` and Click Next.
-
 3. Select Lite plan and Click `Create` to provision a Push Notifications service. To understand the pricing, Click on `pricing details`.
-
 4. Now, you should see Push Notifications service added to your project and also the Credentials.
-
 5. To add Mobile Analytics service, click on `Add Service` and Select Basic plan.Once you click `Create`, you should see both the Mobile services with credentials.
 
   ![](images/solution6/mobile_services.png)
@@ -68,7 +70,7 @@ In the next step, you will add mobile services like Push notifications and Mobil
 6. Click on `Download Code` to download the scaffolded code to Mac. In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
 ## Obtain APNs credentials and configure Push Notifications service instance.
 
-For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from Push Notifications service instance on Bluemix (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
+For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
 
 You need to obtain and configure your APNs credentials. The APNs certificates are securely managed by Push Notifications service and used to connect to APNs server as a provider.
 
@@ -94,7 +96,7 @@ You can use APNs in two modes:
 * Sandbox mode for development and testing.
 * Production mode when distributing applications through the App Store (or other enterprise distribution mechanisms).
 
-You must obtain separate certificates for your development and distribution environments. The certificates are associated with an App ID for the app that is the recipient of remote notifications. For production, you can create up to two certificates. Bluemix uses the certificates to establish an SSL connection with APNs.
+You must obtain separate certificates for your development and distribution environments. The certificates are associated with an App ID for the app that is the recipient of remote notifications. For production, you can create up to two certificates. IBM Cloud uses the certificates to establish an SSL connection with APNs.
 
 1. Go to the Apple Developer website, click `Member Center`, and select `Certificates, IDs & Profiles`.
 2. In the `Identifiers` area, click `App IDs`.
@@ -105,39 +107,25 @@ You must obtain separate certificates for your development and distribution envi
      * On Production SSL certificate pane, click Create Certificate...
     ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
 5. When the `About Creating a Certificate Signing Request (CSR) screen` displays, start the `Keychain Access` application on your Mac to create a Certificate Signing Request (CSR). Click `Continue`.
-
 6. For the Upload CSR file option, click `Choose File`, and select file `CertificateSigningRequest.certSigningRequest`.
-
 7. Click `Continue`.
-
 8. On the Download, Install and Backup pane, click Download. The `aps_development.cer` file is downloaded.
      ![Download certificate](images/solution6/push_certificate_download.png)
-
 9. From the menu, select `Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority…`
-
 10. In `Certificate Information`, enter the email address that is associated with your App Developer account and a common name. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
-
 11. Select `Save to disk` to download the `.certSigningRequest` file to your desktop, then click Continue.
-
 12. In the `Save As` menu option, name the `.certSigningRequest` file and click Save.
-
 13. Click Done. You now have a CSR.
-
 14. Return to the `About Creating a Certificate Siging Request (CSR)` window and click Continue.
-
 15. From the `Generate` screen, click `Choose File ...` and select the CSR file that you saved on your desktop. Then, click `Generate`.
-
-     ​
 
      ![Generate certificate](images/solution6/generate_certificate.png)
 
 16. When your certificate is ready, click `Done`.
-
 17. On the `Push Notifications` screen, click Download to download your certificate, then click `Done`.
    ![Download certificate](images/solution6/certificate_download.png)
 
 18. On your Mac, go to `Keychain Access > My Certificates`, and locate your newly installed certificate. Double-click the certificate to install it into the Keychain Access.
-
 19. Select the certificate and private key, and then select `Export` to convert the certificate into the personal information exchange format (`.p12` format).
 
    ![Export certificate and keys](images/solution6/keychain_export_key.png)
@@ -258,6 +246,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
         Logger.send()
     }
   ```
+
 ## Send and monitor push notifications.
 1. Push notifications SDK is already imported into the project with 
   ```
@@ -292,7 +281,9 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
     ![](images/solution6/send_notifications.png)
   * Verify that your physical devices has received the notification.
 6. You should see a notification on your iPhone.
+
    ![](images/solution6/iphone_notification.png)
+
 7. You can monitor your sent notifications by navigating to `Monitoring` on the Push Notifications Service.
 
   The IBM Push Notifications service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent push notifications, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
