@@ -67,10 +67,15 @@ We need a table to hold the sample data. That table can be created as part of th
 5. Click on **Create** to define the new table.
 
 ## Load data
+Now that the table "cities" has been created, we are going to load data into it.
 
-1. Load the data.
+1. In the top navigation click on **Load**. This brings up the load dialog where you have a choice of loading data from your local machine, from cloud object storage (COS) with Swift interface (IBM Cloud / Softlayer) or from Amazon S3. You can also utilize the [Lift](https://console.bluemix.net/catalog/services/lift) migration service to transfer data from existing data sources. And if that's not enough you could [send in disk drives](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/learn_how/load_mail_in_drive.html) to quickly upload large amounts of data. For our case, uploading from the local machine will do.
 
-2. Done. Well, ...
+2. In the "File selection" either use "browse files" to locate and pick the file "cities1000.txt" (see above) or drag it into that landing area.
+
+3. Click **Next** to get to the schema overview. Choose the schema starting with "DASH" again, then the table "CITIES". Because the table is empty it does not make a difference to either append to or overwrite existing data. Click on **Next** again.
+
+4. 
 
 
 ## Deploy the web application code
