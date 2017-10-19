@@ -55,7 +55,7 @@ This solution walks you through the creation of a mobile starter application, ad
 4. Select `Swift` as your language.
 
     ![](images/solution6/create_new_project.png)
-5. Click on `Create Project` to scaffold a iOS Swift App.
+5. Click on `Create Project` to scaffold an iOS Swift App.
 6. A new `Project` will be created under Projects tab on the left pane.
 
 In the next step, you will add mobile services like Push notifications and Mobile Analytics to accelerate your app.
@@ -253,7 +253,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
         myBMSClient.requestTimeout = 10.0 // seconds
   ```
 
-2. Along with BMSCore, Mobile Analytics is already imported into the project with 
+2. Along with BMSCore, Mobile Analytics SDK is already imported into the project with 
 
  ``` 
   import BMSAnalytics
@@ -282,7 +282,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   ```
   
 ## Send and monitor push notifications.
-1. Push notifications are already included in the project with 
+1. Push notifications SDK is already imported into the project with 
 
   ```
    import BMSPush
