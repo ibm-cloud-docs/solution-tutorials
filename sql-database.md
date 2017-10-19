@@ -1,19 +1,6 @@
----
-
-
-copyright:
-  years: 2017
-lastupdated: "2017-10-19"
-
----
-
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-
-
 # SQL Database for Cloud Data 
 
-This tutorial shows how to provision a SQL (relational) database service, create a table and load a larger data set into the database. Thereafter, we deploy a web app to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](http://flask.pocoo.org/).
+This tutorial shows how to provision a SQL (relational) database service, create a table and load a larger data set, city informationy into the database. Thereafter, we deploy a web app "worldcities" to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](http://flask.pocoo.org/).
 
 ## Objectives
 
@@ -64,7 +51,7 @@ We need a table to hold the sample data. That table can be created as part of th
 
 4. Put in "cities" as table name. Copy the column definitions from the file [cityschema.txt](https://github.com/data-henrik/cloud-sql-database/blob/master/cityschema.txt) and paste them into box for the columns and data types.
 
-5. Click on **Create** to define the new table.
+5. Click on **Create** to define the new table. ![](images/solution5/TableCitiesCreated.png)
 
 ## Load data
 Now that the table "cities" has been created, we are going to load data into it.
@@ -75,9 +62,9 @@ Now that the table "cities" has been created, we are going to load data into it.
 
 3. Click **Next** to get to the schema overview. Choose the schema starting with "DASH" again, then the table "CITIES". Because the table is empty it does not make a difference to either append to or overwrite existing data. Click on **Next** again.
 
-4. The dialog shown then is used to customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable "Header in first row" because the file contains data only. Next, type in "0x09" as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look like in this screenshot.
+4. The dialog shown then is used to customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable "Header in first row" because the file contains data only. Next, type in "0x09" as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look like in this screenshot. ![](images/solution5/LoadTabSeparator.png)
 
-5. Click **Next** and you are offered to review the load settings. If you agree, click **Begin Load** to start loading the data into the "CITIES" table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.
+5. Click **Next** and you are offered to review the load settings. If you agree, click **Begin Load** to start loading the data into the "CITIES" table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented. ![](images/solution5/LoadProgressSteps.png)
 
 ## Verify Loaded Data Using SQL
 The data has been loaded into our relational database. There were no errors, but we want to run some quick tests anyway.
@@ -95,12 +82,19 @@ order by 2 desc
 
 4. In the editor select the text of the above statement. Click the **Run Selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
 
-
 ## Deploy the application code
+The ready-to-run [code for the database app is located in this Github repository](https://github.com/data-henrik/cloud-sql-database). The code can either be downloaded or cloned to a computer and then deployed from there. Or we can let Bluemix take care of everything by simply pressing the following, single button. Sounds right? 
 
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/data-henrik/cloud-sql-database)
+
+1. Pressing the button will open up a deploy dialog. In it you can configure a toolchain. You will need to select a name for the app or go with the suggested generic name. In addition, you should select the Bluemix region, org and space in which the database has been created. This is needed for an automatic connection or binding between the app and the database service. No further configuration is needed and you can click **Deploy**. ![](images/solution5/DeployDeliveryPipeline.png)
+
+2. The "Deploy" will bring up a page with a diagram of the deployed toolchain. Click on "Delivery Pipeline" and then on "View logs..." to watch how the app is deployed. Once everything is finished a link to the app and its logs is shown at the bottom.
+
+3. Click on that link to get to the runtime logs. At the top is a link to the app. You can click it to see the app in action.
 
 ## Test the app
-tbd
+
 
 ## Security, Backup & Recovery, Monitoring
 tbd
