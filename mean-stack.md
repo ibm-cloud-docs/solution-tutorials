@@ -20,8 +20,8 @@ This solution walks you through the creation of a web application using the popu
 - Create and run a starter Node.js app locally
 - Create a Compose for MongoDB database on Bluemix
 - Deploy the Node.js app to Bluemix
-- Manage the app on Bluemix
-- Manage the MongoDB database
+- Scaling MongoDB Resources
+- Monitor application performance
 
 ## Before you begin
 
@@ -69,7 +69,7 @@ In this step, you set up the local Node.js project.
   This sample repository contains a copy of the [MEAN.js repository](https://github.com/IBM-Bluemix/nodejs-MEAN-stack).
 
 ### Run the application
-1. Run the following commands to install the required packages and start the application.
+1. Run the following commands to install the required packages.
   ```sh
      cd nodejs-MEAN-stack
      npm install
@@ -81,19 +81,24 @@ In this step, you set up the local Node.js project.
   ```
 
 ## Create a Compose for MongoDB database on Bluemix
-In this step we will create a Compose for MongoDB database on Bluemix and then push the code to Bluemix.
+In this step we will create a Compose for MongoDB database on Bluemix.
 
 1. Set your Cloud Foundry CLI tool's API endpoint to Bluemix   
   ```sh
-     cf api https://api.ng.bluemix.net
+     bx api https://api.ng.bluemix.net
   ```
 2. Login to Bluemix via the command line   
   ```sh
-     cf login
+     bx login
   ```
+  3. Target your Bluemix ORG and SPACE
+  ```sh
+     bx target -o ORG -s SPACE
+  ```
+  **Note:** ORG is usully your email address and SPACE is the space you created on Bluemix. Learn more on ORG and SPACE [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_account_spaces).
 3. Create the instance of Compose for MongoDB on Bluemix   
   ```sh
-     cf create-service compose-for-mongodb Standard mongodb
+     bx cf create-service compose-for-mongodb Standard mongodb2
   ```
 
 ## Deploy the Node.js app to Bluemix
@@ -101,38 +106,57 @@ In this step we will create a Compose for MongoDB database on Bluemix and then p
 There are many ways in which we can deploy the app to Bluemix, first let's push the code to Bluemix by using the following command:
 
 ```sh
-   cf push
+   bx cf push
 ```
 
-By running this command, the code locally will be pushed to Bluemix. Note we created an database instance earlier with the name called **mongodb**. Bluemix will look for the manifest.yml file, then it will find and bind the mongodb database to our application.
+By running this command, the code locally will be pushed to Bluemix.  
+Note we created an database instance earlier with the name **mongodb**.  Bluemix will look for the manifest.yml file, then it will find and bind the mongodb database to our application.
 
 Once the code been pushed to Bluemix, you should be able to view the app on Bluemix. There is a random host name generated where it should be something like: **https://mean-random-name.mybluemix.net**
 
 ![Live App](images/solution7/live-app.png)
 
-## Manage the app on Bluemix
 
-blah...
+## Scaling MongoDB Resources
+{: #database}
+
+If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources. 
+1. Application **Connections** -> **Click on the MongoDB instance**
+2. In the Deployment Details panel, click Scale Resources. The Scale Resouces page opens.
+  ![](images/solution7/mongodb-scale-show.png)
+3. Adjust the slider to raise or lower the storage allocated to the Compose for MongoDB service. Move the slider to the left to reduce the amount of storage, or move it to the right to increase the storage.
+4. Click Scale Deployment to trigger the rescaling and return to the dashboard overview. A 'Scaling initiated' message appears at the top of the page to let you know the rescaling is in progress and the Deployment Details pane also shows the scaling in progress.
+  ![](images/solution7/scaling-in-progress.png)When the scaling is complete the Deployment Details pane updates to show the current usage and the new value for the available storage.
 
 
+## Monitor application performance
+{: #monitor}
 
-## Manage the MongoDB database
+Lets check the health of your multi-region application,
 
-blah...
+1. Application **Overview** -> **View toolchain**
+2. Click **Add a Tool**
+3. Choose **Availability Monitoring** -> **Create Integration**
+4. Select **Availability Monitoring** and click on the name of your app.
+5. Click **View All Tests**
+   ![](images/solution7/alert_frequency.png)
+
+Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact users.
 
 
 
 ## Summary
 
-In this tutorial, you deployed a MEAN stack application using Compose for MongoDB.
+In this tutorial, you deployed a MEAN stack application using Compose for MongoDB, we covered how to scale the database and monitor the application performance.
 
 You learned how to:
 
 - Create and run a starter Node.js app locally
 - Create a Compose for MongoDB database on Bluemix
 - Deploy the Node.js app to Bluemix
-- Manage the app on Bluemix
-- Manage the MongoDB database
+- Scaling MongoDB Resources
+- Monitor application performance
+
 
 
 
