@@ -1,6 +1,5 @@
 ---
 
-
 copyright:
   years: 2017
 lastupdated: "2017-09-28"
@@ -253,7 +252,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
                                        clientSecret: dictionary["pushClientSecret"] as! String)
   ```
 3. Registration for notifications happens in `AppDelegate.swift`. Provide an unique USER_ID.
- ```
+  ```
    // Replace USER_ID with a unique end user identifier. This enables specific push notification targeting.
             push.registerWithDeviceToken(deviceToken: deviceToken, WithUserId: "USER_ID") { (response, statusCode, error) -> Void in
                 if error.isEmpty {
@@ -264,7 +263,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
                     print("Error during device registration \n  - status code: \(statusCode) \n  - Error: \(error) \n")
                 }
             }
- ```
+  ```
 4. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
 5. Open Push Notifications service on IBM Cloud and to send basic push notifications, complete the following steps:
   * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices. 
