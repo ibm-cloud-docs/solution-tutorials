@@ -9,6 +9,10 @@ lastupdated: "2017-09-28"
 
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:tip: .tip}
+{:pre: .pre}
 
 
 # Serverless Web Application and API

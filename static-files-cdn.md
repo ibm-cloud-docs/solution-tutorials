@@ -9,9 +9,13 @@ lastupdated: "2017-09-28"
 
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:tip: .tip}
+{:pre: .pre}
 
 
-# Accelerate delivery of static files
+# Accelerate delivery of static files using a CDN
 
 Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.
 
@@ -49,7 +53,7 @@ To start with, retrieve the application code:
    ```sh
    git clone https://github.ibm.com/frederic-lavigne/webapp-with-cos-and-cdn
    ```
-
+  {: pre}
 
 
 ## Create an Object Storage
@@ -60,28 +64,20 @@ Cloud Object Storage provides flexible, cost-effective, and scalable cloud stora
 
 ![](images/solution3/Storage_Catalog.png)
 
-
-
 1. Go in the Catalog
 2. Click on **Storage** and then **Object Storage**
 3. Select **Cloud Object Storage** and click **Create** and **Create**.
 4. Click **Create Bucket**.
-5. Set the Bucket Name to **mywebsite** and click **Create**.
-   > Avoid dots (.) in the bucket name
-
+5. Set the Bucket Name to **mywebsite** and click **Create**. Avoid dots (.) in the bucket name
 
 ## Upload files to a bucket
 {: #upload}
 
 In this section, we will use the command line tool **curl** to upload files to the bucket.
 
-1. **Login** to IBM Cloud using the CLI.
+1. **Login** to IBM Cloud using the CLI and get a **token** from IAM
    ```sh
    bx login
-   ```
-   {: pre}
-2. Get a **token** from IAM.
-   ```sh
    bx iam oauth-tokens
    ```
    {: pre}
@@ -131,7 +127,8 @@ In this section, we will use the command line tool **curl** to upload files to t
   {: pre}
 6. You should now be able to view your files using the dashboard.
    ![](images/solution3/Buckets.png)
-7. Access the files through your browser. The link will look like
+7. Access the files through your browser. The link will look like:
+
    http://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-picture.png
 
 
@@ -147,29 +144,24 @@ In this section, we will create a CDN service. The CDN service distributes conte
 2. Search for **Content Delivery Network**
 3. Pick the one under the **Network** category. This CDN is powered by Akamai.
 4. Create a **Content Delivery Network** instance
-5. Select **Akamai** as the CDN Provider
-6. Click **Start Provision**
+5. Select **Akamai** as the CDN Provider and **Start Provision**
 
 ### Configure the CDN instance
 
-1. Set the **hostname** for the CDN to your custom domain
-   > Although you set a custom domain, you will still be able to access the CDN contents through the IBM provided CNAME. So if you don't plan to use custom domain, you can make set an arbitrary name.
-2. Set the **Custom CNAME** prefix
-   > Don't use dots "." in the name
+1. Set the **hostname** for the CDN to your custom domain. Although you set a custom domain, you will still be able to access the CDN contents through the IBM provided CNAME. So if you don't plan to use custom domain, you can set an arbitrary name.
+2. Set the **Custom CNAME** prefix. Do not use dots "." in the name.
 3. Leave the **Path** empty
 4. Select **Object Storage** as Origin
 5. Set the **Endpoint** to your bucket API endpoint, such as *s3-api.us-geo.objectstorage.softlayer.net*
 6. Set the **Bucket name** to *your-bucket-name*
 7. Enable HTTP Port 80
 8. Click **Create**
-9. Find the instance in https://control.bluemix.net/network/cdn
 
 ### Access your content through the CDN domain
 
 1. Select the CDN instance in the list at https://control.bluemix.net/network/cdn
 2. The **Details** panel shows the **CNAME** for your CDN
-3. Access your file with https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png
-   > If you omit the filename, you should see the S3 ListBucketResult instead
+3. Access your file with https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png If you omit the filename, you should see the S3 ListBucketResult instead.
 
 ## Deploy the Cloud Foundry application
 

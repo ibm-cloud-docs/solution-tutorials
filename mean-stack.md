@@ -9,6 +9,10 @@ lastupdated: "2017-09-28"
 
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:tip: .tip}
+{:pre: .pre}
 
 
 # Modern Web Application using MEAN stack
@@ -37,15 +41,8 @@ This solution walks you through the creation of a web application using the popu
 - Continuous Delivery Service for DevOps
 - Compose for MongoDB database
 
-## Create and run a starter Node.js app locally
 
-{: #get_code}
-
-This guide uses a sample MEAN stack ([MongoDB](https://www.mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/) and [Node.js](https://nodejs.org/)) application.
-
-
-
-## Test local MongoDB
+## Configure local MongoDB
 
 Open the terminal window and `cd` to the `bin` directory of your MongoDB installation. You can use this terminal window to run all the commands in this tutorial.
 
@@ -54,28 +51,24 @@ Run `mongo` in the terminal to connect to your local MongoDB server.
    mongo
 ```
 
-If your connection is successful, then your MongoDB database is already running. If not, make sure that your local MongoDB database is started by following the steps at Install MongoDB Community Edition. Often, MongoDB is installed, but you still need to start it by running mongod.
-When you're done testing your MongoDB database, type Ctrl+C in the terminal.
+If your connection is successful, then your MongoDB database is already running. If not, make sure that your local MongoDB database is started by following the steps at Install MongoDB Community Edition. Often, MongoDB is installed, but you still need to start it by running mongod. When you're done testing your MongoDB database, type Ctrl+C in the terminal.
 
-### Create local Node.js app
-In this step, you set up the local Node.js project.
+## Create  Node.js application
 
-**Clone the sample application**
+This guide uses a sample MEAN stack ([MongoDB](https://www.mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/) and [Node.js](https://nodejs.org/)) application.
 
 1. In the terminal window, cd to a working directory. Run the following command to clone the sample repository.
   ```sh
      git clone https://github.com/IBM-Bluemix/nodejs-MEAN-stack
   ```
   This sample repository contains a copy of the [MEAN.js repository](https://github.com/IBM-Bluemix/nodejs-MEAN-stack).
-
-### Run the application
-1. Run the following commands to install the required packages.
+2. Run the following commands to install the required packages.
   ```sh
      cd nodejs-MEAN-stack
      npm install
   ```
-2. Rename .env.example file to .env. Edit the contents as needed, at a minimum adding your own SESSION_SECRET.
-3. Run node server.js to start your app
+3. Rename .env.example file to .env. Edit the contents as needed, at a minimum adding your own SESSION_SECRET.
+4. Run node server.js to start your app
   ```
      node server.js
   ```
@@ -88,15 +81,12 @@ In this step we will create a Compose for MongoDB database on the cloud.
   ```sh
      bx api https://api.ng.bluemix.net
   ```
-2. Login to the IBM cloud via the command line   
+2. Login to the IBM cloud via the command line and target your IBM Cloud ORG and SPACE
   ```sh
      bx login
-  ```
-  3. Target your IBM Cloud ORG and SPACE
-  ```sh
      bx target -o ORG -s SPACE
   ```
-  **Note:** ORG is usully your email address and SPACE is the space you created on the cloud. Learn more on ORG and SPACE [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_account_spaces).
+  **Note:** ORG is usually your email address and SPACE is the space you created on the cloud. Learn more on ORG and SPACE [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_account_spaces).
 3. Create the instance of Compose for MongoDB
   ```sh
      bx cf create-service compose-for-mongodb Standard mongodb2
@@ -123,7 +113,7 @@ Once the code been pushed, you should be able to view the app in your cloud dash
 
 If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
 1. In the application dashboard, go to **Connections** -> **Click on the MongoDB instance**
-2. In the Deployment Details panel, click Scale Resources. The Scale Resouces page opens.
+2. In the Deployment Details panel, click Scale Resources. The Scale Resources page opens.
   ![](images/solution7/mongodb-scale-show.png)
 3. Adjust the slider to raise or lower the storage allocated to the Compose for MongoDB service. Move the slider to the left to reduce the amount of storage, or move it to the right to increase the storage.
 4. Click Scale Deployment to trigger the rescaling and return to the dashboard overview. A 'Scaling initiated' message appears at the top of the page to let you know the rescaling is in progress and the Deployment Details pane also shows the scaling in progress.

@@ -9,6 +9,10 @@ lastupdated: "2017-09-28"
 
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:tip: .tip}
+{:pre: .pre}
 
 
 # Scalable web application on Kubernetes
@@ -41,7 +45,6 @@ This tutorial is a walkthrough of how to scaffold a Java web application, run it
   **Note:** For the ease of use, Check the configuration details like Number of CPUs, Memory and Number of Worker Nodes you will be getting under Lite and Standard plans.
 
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesClusterCreation.png)
-
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 In the next step, you will configure **kubectl** to point to your newly created cluster going forward.
@@ -51,32 +54,27 @@ In the next step, you will configure **kubectl** to point to your newly created 
 [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a a command line tool to interact with a Kubernetes cluster.
 
 1. Use `bx login` to login interactively. Provide the Organization (Org), Region and Space under which the cluster is created. You can reconfirm the details by running `bx target` command.
-
 2. Once the cluster is ready, retrieve the cluster configuration
-
    ```
    bx cs cluster-config <cluster-name>
    ```
    {: pre}
-
-3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed.
-
-  To verify whether the KUBECONFIG environment variable is set properly or not, run this command
+3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run this command
   `echo $KUBECONFIG`
 
 4. Check that the `kubectl` command is correctly configured
-
    ```
    kubectl cluster-info
    ```
    {: pre}
-
-
 5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts — Helm Charts helps you define, install, and upgrade even the most complex Kubernetes application. Initialize Helm in your cluster.
 
-   `helm init`
+   ```
+   helm init
+   ```
+   {: pre}
 
-## Create a starter Java application
+## Create a Java starter application
 
 {: #create_application}
 
@@ -87,16 +85,13 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
    bx dev create
    ```
    {: pre}
-2. Select `Web App`.
-3. Select `Basic Web`.
-4. Select `Java - MicroProfile / JavaEE`.
-5. Enter a name for your project.
-6. Enter unique hostname for your project.
+2. Select `Web App` > `Basic Web` > `Java - MicroProfile / JavaEE`.
+3. Enter a name for your project.
+4. Enter unique hostname for your project.
    > The hostname will be used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net
-7. Select **n** to skip adding services.
+5. Select **n** to skip adding services.
 
 ![](images/solution2/bx_dev_create.png)
-
 This will generate a starter application complete with the code and all the necessary configuration files for local development, and deployment to cloud on CloudFoundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
 
 ![](images/solution2/Contents.png)
@@ -152,12 +147,11 @@ In this section, we will first push the Docker image to the IBM Cloud private co
    bx cr namespace-add <name>
    ```
    {: pre}
-2. Find the **Container Registry** by running.
+2. Find the **Container Registry** information by running.
    ```
    bx cr info
    ```
    {: pre}
-   to find the container registry
 3. Deploy to your Kubernetes cluster:
    ```
    bx dev deploy -t container
@@ -193,9 +187,8 @@ In this section, we will first push the Docker image to the IBM Cloud private co
    {: screen}
    alternatively you can use `kubectl describe service [service-name]`. In this example, the port is 32321.
 9. Access the application
-   ```
-   http://worker-ip-address:portnumber/nameofproject
-   ```
+   `http://worker-ip-address:portnumber/nameofproject`
+
 
 ## Use the IBM-provided domain for your cluster
 

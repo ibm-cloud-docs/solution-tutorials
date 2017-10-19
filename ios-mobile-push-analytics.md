@@ -8,10 +8,14 @@ lastupdated: "2017-09-28"
 
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:tip: .tip}
+{:pre: .pre}
 
 # iOS Mobile Application with Push and Analytics
 
-Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud. 
+Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 
 This solution walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, Importing the code to Xcode and then further enhance the application.
 
@@ -30,7 +34,7 @@ This solution walks you through the creation of a mobile starter application, ad
 ## Before you begin
 {: #prereqs}
 
-1. [Apple Developers](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications. 
+1. [Apple Developers](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
 ## Create a mobile project from basic Swift starter kit.
@@ -143,7 +147,7 @@ Ensure that you have registered an App ID, enabled it for Push Notifications ser
 Create a development provisioning profile, as follows:
 
 1. Go to the [Apple Developer](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
-2. Go to the [Mac Developer Library](https://developer.apple.com/library/mac/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html#//apple_ref/doc/uid/TP40012582-CH30-SW62site), scroll to the `Creating Development Provisioning Profiles` section, and follow the instructions to create a development profile. 
+2. Go to the [Mac Developer Library](https://developer.apple.com/library/mac/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html#//apple_ref/doc/uid/TP40012582-CH30-SW62site), scroll to the `Creating Development Provisioning Profiles` section, and follow the instructions to create a development profile.
   **Note:** When you configure a development provision profile, select the following options:
 
   - **iOS App Development**
@@ -158,7 +162,7 @@ Use the store provisioning profile to submit your app for distribution to the Ap
 
 ### Configure the service instance
 
-To use the Push Notifications service to send notifications, upload the .p12 certificates that you had created in the above Step. This certificate contains the private key and SSL certificates that are required to build and publish your application. 
+To use the Push Notifications service to send notifications, upload the .p12 certificates that you had created in the above Step. This certificate contains the private key and SSL certificates that are required to build and publish your application.
 
 **Note:** After the `.cer` file is in your key chain access, export it to your computer to create a `.p12` certificate.
 
@@ -191,7 +195,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   ```
     pod install
   ```
-4. The required dependencies will be installed 
+4. The required dependencies will be installed
   ```
   Analyzing dependencies
   Downloading dependencies
@@ -211,17 +215,17 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
    ![](images/solution6/Xcode.png)
-2. `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized as follows 
+2. `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized as follows
   ```
   let myBMSClient = BMSClient.sharedInstance
         myBMSClient.initialize(bluemixRegion: <Region you created the service>)
         myBMSClient.requestTimeout = 10.0 // seconds
   ```
 3. Along with BMSCore, Mobile Analytics SDK is already imported into the project with   
-  ``` 
+  ```
    import BMSAnalytics
   ```
-4. Analytics initialization code is already included as shown below 
+4. Analytics initialization code is already included as shown below
   ```
   // Analytics client SDK is configured to record lifecycle events.
          	Analytics.initialize(appName:dictionary["appName"] as? String,
@@ -243,7 +247,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   ```
 
 ## Send and monitor push notifications.
-1. Push notifications SDK is already imported into the project with 
+1. Push notifications SDK is already imported into the project with
   ```
    import BMSPush
   ```
@@ -268,7 +272,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   ```
 4. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
 5. Open Push Notifications service on IBM Cloud and to send basic push notifications, complete the following steps:
-  * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices. 
+  * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
 
        **Note:** When you select the All Devices option, all devices subscribed to Push Notifications will receive notifications.
   * In the `Message` field, compose your message. Choose to configure the optional settings as required.
@@ -288,7 +292,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 You can record application logs and monitor data with the Mobile Analytics Client SDK. Developers can control when to send this data to the Mobile Analytics Service. When data is delivered to Mobile Analytics, you can use the Mobile Analytics console to get analytics insights about your mobile applications, devices, and application logs.
 
 1. Open the `Mobile Analytics` service from the mobile project you created or click on the three vertical dots next to the service and select `Open Dashboard`.
-2. You should see LIVE Users, Sessions and other App Data by disabling `Demo Mode`. You can filter the analytics information by 
+2. You should see LIVE Users, Sessions and other App Data by disabling `Demo Mode`. You can filter the analytics information by
     * Date.
       * Application.
       * Operating System.

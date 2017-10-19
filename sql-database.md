@@ -1,3 +1,20 @@
+---
+
+
+copyright:
+  years: 2017
+lastupdated: "2017-09-28"
+
+---
+
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:tip: .tip}
+{:pre: .pre}
+
+
 # SQL Database for Cloud Data 
 
 This tutorial shows how to provision a SQL (relational) database service, create a table and load a larger data set, city informationy into the database. Thereafter, we deploy a web app "worldcities" to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](http://flask.pocoo.org/).
@@ -14,7 +31,7 @@ This tutorial shows how to provision a SQL (relational) database service, create
 ## Before you begin
 {: #prereqs}
 
-Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](http://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. We are going to use it as data set. 
+Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](http://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. We are going to use it as data set.
 
 ## Provision the SQL Database
 Start by creating an instance of the **Db2 Warehouse on Cloud** service.
@@ -58,7 +75,7 @@ The data has been loaded into our relational database. There were no errors, but
 2. In the "SQL Editor" type or copy in `select count(*) from cities`, then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.
 3. In the "SQL Editor" enter the following statement on a new line:
 ```
-select countrycode, count(name) from cities 
+select countrycode, count(name) from cities
 group by countrycode
 order by 2 desc
 ```
@@ -88,4 +105,3 @@ tbd
 * [IBM Knowledge Center for Db2 Warehouse on Cloud](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Frequently asked questions about IBM Db2 on Cloud and IBM Db2 Warehouse on Cloud](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/managed_service.html) answering questions related to managed service, data backup, data encryption and security, and much more.
 * [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
-

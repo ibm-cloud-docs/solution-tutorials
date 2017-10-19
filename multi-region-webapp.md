@@ -9,8 +9,10 @@ lastupdated: "2017-09-28"
 
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-
-
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:tip: .tip}
+{:pre: .pre}
 
 # Deploy a secure web application across multiple regions
 
@@ -53,8 +55,10 @@ Let's push the source code of your application to a repository and deploy your c
 In this step, you will set up a git source control repository to store your code and then create a pipeline which will deploy any code changes automatically.
 
 1. On the left pane of your application you just created, select **Overview** and scroll down to find **Continuous delivery**. Click on **Enable**.
+
    ![HelloWorld](images/solution1/Enable_Continuous_Delivery.png)
 2. Keep the default options and click **Create**. You should now have a default **toolchain** created.
+
    ![HelloWorld](images/solution1/DevOps_Toolchain.png)
 3. Select **Git** tile under **Code**. You will be taken to your git repository page.
 4. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the link **add an SSH key** in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking on **create a personal access token**. Remember to save the key or token for future reference.
@@ -79,10 +83,8 @@ In this step, you will set up a git source control repository to store your code
   ![HelloWorld](images/solution1/DevOps_Pipeline.png)
 11. Wait for the **DEPLOY** stage to complete.
 12. Click the application **url** under Last Execution result to view your changes live.
-13.
-Continue making further changes to your application and periodically commit your changes to your git repository. If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
 
-In the next step, let's take your application to multiple regions.
+Continue making further changes to your application and periodically commit your changes to your git repository. If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
 
 ## Deploy to another region
 {: #deploy_another_region}
@@ -95,13 +97,10 @@ Next, we will deploy the same application to a different IBM Cloud region. We ca
    ![HelloWorld](images/solution1/CloneStage.png)
 4. Rename stage to "Deploy to UK" and select **JOBS**.
 5. Change **Target** to **United Kingdom**. Create a **space** if you don't have one.
-6. Change **Deploy script** to
-   ```
-   cf push "${CF_APP}" -d eu-gb.mybluemix.net
-   ```
+6. Change **Deploy script** to `cf push "${CF_APP}" -d eu-gb.mybluemix.net`
+
    ![HelloWorld](images/solution1/DeployToUK.png)
-7. Click **Save**.
-8. Run the new stage by clicking on the **Play button**.
+7. Click **Save** and run the new stage by clicking on the **Play button**.
 
 ## Configure custom domain to your application
 {: #add_domain}
@@ -111,6 +110,7 @@ Your cool application deserves a cool URL!
 1. Buy a domain from a registrar such as http://godaddy.com
 2. **Switch to the US region** by clicking on your account name in the top navigation bar.
 3. Application **Overview** -> **Routes**  -> **Manage Domains**
+
    ![HelloWorld](images/solution1/ApplicationRoutes.png)
 4. Click on **Add Domain** and enter your domain url.
 5. Application **Overview** -> **Edit Routes** -> **Choose your domain**.
