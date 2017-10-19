@@ -65,13 +65,18 @@ order by 2 desc
 4. In the editor select the text of the above statement. Click the **Run Selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
 
 ## Deploy the application code
-The ready-to-run [code for the database app is located in this Github repository](https://github.com/data-henrik/cloud-sql-database). The code can either be downloaded or cloned to a computer and then deployed from there. Or we can let Bluemix take care of everything by simply pressing the following, single button. Sounds right? 
+The ready-to-run [code for the database app is located in this Github repository](https://github.com/data-henrik/cloud-sql-database). Clone or download the repository, then push it to the IBM Cloud.
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/data-henrik/cloud-sql-database)
+1. Clone the Github repository:
+   ```bash
+   git clone https://github.com/data-henrik/cloud-sql-database
+   cd cloud-sql-database
+   ```
 
-1. Pressing the button will open up a deploy dialog. In it you can configure a toolchain. You will need to select a name for the app or go with the suggested generic name. In addition, you should select the Bluemix region, org and space in which the database has been created. This is needed for an automatic connection or binding between the app and the database service. No further configuration is needed and you can click **Deploy**.   ![](images/solution5/DeployDeliveryPipeline.png)
-2. The "Deploy" will bring up a page with a diagram of the deployed toolchain. Click on "Delivery Pipeline" and then on "View logs..." to watch how the app is deployed. Once everything is finished a link to the app and its logs is shown at the bottom.
-3. Click on that link to get to the runtime logs. At the top is a link to the app. You can click it to see the app in action.
+2. Push the application to the IBM Cloud. You need to be logged in to the region, org and space to which the database has been provisioned.
+   ```
+   cf push your-app-name
+   ```
 
 ## Test the app
 
