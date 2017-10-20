@@ -40,7 +40,7 @@ We need a table to hold the sample data. That table can be created as part of th
 1. In the console for Db2 Warehouse on Cloud click **Explore** in the navigation bar. It takes you to a list of existing schemas in the database.
 2. Locate the schema beginning with "DASH". Click on it.
 3. Now we are creating the new table. Use the **"+ New Table"** for it. It brings up a form for the table name and its columns.
-4. Put in "cities" as table name. Copy the column definitions from the file [cityschema.txt](https://github.com/data-henrik/cloud-sql-database/blob/master/cityschema.txt) and paste them into box for the columns and data types.
+4. Put in "cities" as table name. Copy the column definitions from the file [cityschema.txt](https://github.com/IBM-Bluemix/cloud-sql-database/blob/master/cityschema.txt) and paste them into box for the columns and data types.
 5. Click on **Create** to define the new table.    ![](images/solution5/TableCitiesCreated.png)
 
 ## Load data
