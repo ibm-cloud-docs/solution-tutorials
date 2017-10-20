@@ -3,7 +3,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-09-28"
+lastupdated: "2017-10-20"
 
 ---
 
@@ -94,12 +94,19 @@ The ready-to-run [code for the database app is located in this Github repository
    ```
    cf push your-app-name
    ```
+3. Once the push process is finished you should be able to access the app. No further configuration is needed. The file `manifest.yml` tells the IBM Cloud to bind the app and the database service named "sqldatabase" together.
 
-## Test the app
+## Test and Expand the App
+The app to display city information based on the loaded data set is reduced to a minimum. It offers a search form to specify a city name and few preconfigured cities. They are translated to either `/search?name=cityname` (search form) or `/city/cityname` (directly specified cities). Both requests are served from the same lines of code in the background. The cityname is passed as value to a prepared SQL statement using a parameter marker for security reasons. The rows are fetched from the database and passed to an HTML template for rendering.
 
+Want to extend this app? Here are some ideas:
+1. Offer a wildcard search on the alternate names.
+2. Search for cities of a specific country and within a certain population values only.
+3. Change the page layout by replacing the CSS styles and extending the templates.
+4. Allow form-based creation of new city information or allow updates to existing data, e.g. population.
 
 ## Security, Backup & Recovery, Monitoring
-tbd
+
 
 ## Related Content
 * [IBM Knowledge Center for Db2 Warehouse on Cloud](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
