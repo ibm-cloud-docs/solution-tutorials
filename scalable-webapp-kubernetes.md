@@ -14,7 +14,6 @@ lastupdated: "2017-09-28"
 {:tip: .tip}
 {:pre: .pre}
 
-
 # Scalable web application on Kubernetes
 This tutorial is a walkthrough of how to scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.
 
@@ -128,7 +127,7 @@ You can build and run the application as you normally would using `mvn` for loca
 
    > This will use your local Docker engine to run the docker image built by the previous step.
 2. Once your container starts, visit http://localhost:9080/[nameofproject]
-![](images/solution2/LibertyLocal.png)
+  ![](images/solution2/LibertyLocal.png)
 
 ## Deploy application to cluster
 
