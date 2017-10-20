@@ -66,11 +66,11 @@ order by 2 desc
 4. In the editor select the text of the above statement. Click the **Run Selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
 
 ## Deploy the application code
-The ready-to-run [code for the database app is located in this Github repository](https://github.com/data-henrik/cloud-sql-database). Clone or download the repository, then push it to the IBM Cloud.
+The ready-to-run [code for the database app is located in this Github repository](https://github.com/IBM-Bluemix/cloud-sql-database). Clone or download the repository, then push it to the IBM Cloud.
 
 1. Clone the Github repository:
    ```bash
-   git clone https://github.com/data-henrik/cloud-sql-database
+   git clone https://github.com/IBM-Bluemix/cloud-sql-database
    cd cloud-sql-database
    ```
 
