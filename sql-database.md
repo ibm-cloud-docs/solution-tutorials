@@ -30,7 +30,7 @@ Start by creating an instance of the **Db2 Warehouse on Cloud** service.
 We create the SQL database service in the form of Db2 Warehouse on Cloud. Let's take a quick tour to familiarize ourselves with the Web UI.
 
 1. In the dashboard locate the entry for the Db2 Warehouse on Cloud service.
-2. Click on it and you will be taken to service dashboard. From here you can get to documentation ("IBM Knowledge Center") under "Learn" or to the console (Web UI) for Db2 Warehouse on Cloud.
+2. Click on it and you will be taken to the service dashboard. From here you can get to the documentation ("IBM Knowledge Center") under "Learn" or to the console (Web UI) for Db2 Warehouse on Cloud.
 3. Click on **Open**. The console is now loaded.
 4. If it is the first time using the console, you are offered to take a tour. Take it. Remember how you can easily take the tour again. It is explained during the tour.
 
