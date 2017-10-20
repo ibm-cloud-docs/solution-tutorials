@@ -1,19 +1,3 @@
----
-
-
-copyright:
-  years: 2017
-lastupdated: "2017-10-20"
-
----
-
-{:shortdesc: .shortdesc}
-{:new_window: target="_blank"}
-{:codeblock: .codeblock}
-{:screen: .screen}
-{:tip: .tip}
-{:pre: .pre}
-
 
 # SQL Database for Cloud Data 
 
