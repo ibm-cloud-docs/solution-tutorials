@@ -68,14 +68,17 @@ Now that the table "cities" has been created, we are going to load data into it.
 The data has been loaded into our relational database. There were no errors, but we want to run some quick tests anyway.
 
 1. In the top navigation click on **Run SQL**. This brings up a bare bones tool to edit and run SQL statements. Remember that you can connect cloud-based and traditional SQL tools on your desktop or server machine to the Db2 Warehouse on Cloud. The connection information can be found in the settings menu. Some tools are even offered for download in the "Downloads" section in the menu offered behind the "book" icon (standing for documentation and help).
-2. In the "SQL Editor" type or copy in `select count(*) from cities`, then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.
+2. In the "SQL Editor" type or copy in the following query:   
+   ```
+   select count(*) from cities
+   ```
+   then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
-```
-select countrycode, count(name) from cities
-group by countrycode
-order by 2 desc
-```
-{:codeblock}
+   ```
+   select countrycode, count(name) from cities
+   group by countrycode
+   order by 2 desc
+   ```   
 4. In the editor select the text of the above statement. Click the **Run Selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
 
 ## Deploy the application code
