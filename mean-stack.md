@@ -1,9 +1,8 @@
 ---
 
-
 copyright:
   years: 2017
-lastupdated: "2017-09-28"
+lastupdated: "2017-10-23"
 
 ---
 
@@ -27,6 +26,8 @@ This solution walks you through the creation of a web application using the popu
 - Scale MongoDB Resources
 - Monitor application performance
 
+![](./images/solution7/Architecture.png)
+
 ## Before you begin
 
 {: #prereqs}
@@ -38,12 +39,11 @@ This solution walks you through the creation of a web application using the popu
 
 ## Apps and Services
 - SDK for Node.js Cloud Foundry App
-- Continuous Delivery Service for DevOps
 - Compose for MongoDB database
 
 
-## Configure local MongoDB
-
+## Create and run a starter Node.js app locally
+**Configure local MongoDB**  
 Open the terminal window and `cd` to the `bin` directory of your MongoDB installation. You can use this terminal window to run all the commands in this tutorial.
 
 Run `mongo` in the terminal to connect to your local MongoDB server.
@@ -51,12 +51,9 @@ Run `mongo` in the terminal to connect to your local MongoDB server.
    mongo
 ```
 
-If your connection is successful, then your MongoDB database is already running. If not, make sure that your local MongoDB database is started by following the steps at Install MongoDB Community Edition. Often, MongoDB is installed, but you still need to start it by running mongod. When you're done testing your MongoDB database, type Ctrl+C in the terminal.
+If your connection is successful, then your MongoDB database is already running. If not, make sure that your local MongoDB database is started by following the steps at Install MongoDB Community Edition. Often, MongoDB is installed, but you still need to start it by running mongod. When you're done testing your MongoDB database, type Ctrl+C in the terminal. This guide uses a sample MEAN stack ([MongoDB](https://www.mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/) and [Node.js](https://nodejs.org/)) application.  
 
-## Create  Node.js application
-
-This guide uses a sample MEAN stack ([MongoDB](https://www.mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/) and [Node.js](https://nodejs.org/)) application.
-
+**Getting Started**  
 1. In the terminal window, cd to a working directory. Run the following command to clone the sample repository.
   ```sh
      git clone https://github.com/IBM-Bluemix/nodejs-MEAN-stack
@@ -73,10 +70,9 @@ This guide uses a sample MEAN stack ([MongoDB](https://www.mongodb.org/), [Expre
      node server.js
   ```
 
-## Create a Compose for MongoDB database on IBM Cloud
+## Create a MongoDB database on the IBM cloud
 
-In this step we will create a Compose for MongoDB database on the cloud.
-
+In this step we will create a Compose for MongoDB database on the cloud.  
 1. Set your Cloud Foundry CLI tool's API endpoint to the IBM cloud  
   ```sh
      bx api https://api.ng.bluemix.net
