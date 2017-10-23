@@ -3,7 +3,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-09-28"
+lastupdated: "2017-10-23"
 
 ---
 
@@ -44,7 +44,7 @@ Start by creating an instance of the **Db2 Warehouse on Cloud** service.
 6.  Click on **Open** to launch the database console. If it is the first time using the console, you are offered to take a tour. 
 
 ## Create a table
-We need a table to hold the sample data. That table can be created as part of the load process or before. If we do it directly, then it is simpler to set up the load process.
+We need a table to hold the sample data.
 
 1. In the console for Db2 Warehouse on Cloud click **Explore** in the navigation bar. It takes you to a list of existing schemas in the database.
 2. Locate and click on the schema beginning with "DASH".
