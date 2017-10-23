@@ -50,7 +50,8 @@ We need a table to hold the sample data.
 2. Locate and click on the schema beginning with "DASH".
 3. Click on **"+ New Table"** to bring up a form for the table name and its columns.
 4. Put in "cities" as table name. Copy the column definitions from the file [cityschema.txt](https://github.com/IBM-Bluemix/cloud-sql-database/blob/master/cityschema.txt) and paste them into box for the columns and data types.
-5. Click on **Create** to define the new table.    ![](images/solution5/TableCitiesCreated.png)
+5. Click on **Create** to define the new table.   
+   ![](images/solution5/TableCitiesCreated.png)
 
 ## Load data
 Now that the table "cities" has been created, we are going to load data into it.
@@ -59,7 +60,7 @@ Now that the table "cities" has been created, we are going to load data into it.
 2. In the **File selection** click on **browse files** to locate and pick the file "cities1000.txt" you downloaded in the first section of this guide.
 3. Click **Next** to get to the schema overview. Choose the schema starting with "DASH" again, then the table "CITIES". Because the table is empty it does not make a difference to either append to or overwrite existing data. Click on **Next** again.
 4. The dialog shown then is used to customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable "Header in first row" because the file contains data only. Next, type in "0x09" as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look like in this screenshot.    
-  ![](images/solution5/LoadTabSeparator.png)
+![](images/solution5/LoadTabSeparator.png)
 5. Click **Next** and you are offered to review the load settings. If you agree, click **Begin Load** to start loading the data into the "CITIES" table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.   
    ![](images/solution5/LoadProgressSteps.png)
 
