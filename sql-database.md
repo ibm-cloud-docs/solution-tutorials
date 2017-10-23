@@ -72,13 +72,15 @@ The data has been loaded into our relational database. There were no errors, but
    ```
    select count(*) from cities
    ```
+   {:pre}   
    then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
    ```
    select countrycode, count(name) from cities
    group by countrycode
    order by 2 desc
-   ```   
+   ```
+   {:pre}   
 4. In the editor select the text of the above statement. Click the **Run Selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
 
 ## Deploy the application code
