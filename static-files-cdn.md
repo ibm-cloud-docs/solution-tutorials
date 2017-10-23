@@ -51,7 +51,7 @@ This guide uses a simple web application which links to the files (css, images a
 To start with, retrieve the application code:
 
    ```sh
-   git clone https://github.ibm.com/frederic-lavigne/webapp-with-cos-and-cdn
+   git clone https://github.com/IBM-Bluemix/webapp-with-cos-and-cdn
    ```
   {: pre}
 
