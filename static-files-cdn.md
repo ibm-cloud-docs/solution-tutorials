@@ -40,7 +40,7 @@ Host and serve website assets (images, videos, documents) and user generated con
 2. Ensure that you have access to Storage in the Infrastructure console
    * Go to https://control.bluemix.net
    * Confirm you can see the `Storage` section and the `Object Storage` section underneath.
-![](images/solution3/Infrastructure_Dashboard.png)
+     ![](images/solution3/Infrastructure_Dashboard.png)
 
 ## Get the web application code
 
@@ -81,24 +81,23 @@ In this section, we will use the command line tool **curl** to upload files to t
    bx iam oauth-tokens
    ```
    {: pre}
-3. **Copy** the token from the output of the command above.
+2. **Copy** the token from the output of the command above.
    ```
    IAM token:  Bearer <token>
    ```
    {: screen}
-4. **Set** the value of the token and bucket name to an environment variable for easy access.
+3. **Set** the value of the token and bucket name to an environment variable for easy access.
    ```sh
    export IAM_TOKEN=<REPLACE_WITH_TOKEN>
    export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
    ```
    {: pre}
-5. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory of the web application code you downloaded above. Upload the files to the root of the bucket.
+4. Upload the files named **a-css-file.css**, **a-picture.png** and **a-video.mp4** from the **content** directory of the web application code you downloaded above. Upload the files to the root of the bucket.
   ```sh
    cd content
   ```
   {: pre}
   ```sh
-
    curl -X "PUT" \
          "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-picture.png" \
         -H "x-amz-acl: public-read" \
@@ -125,9 +124,9 @@ In this section, we will use the command line tool **curl** to upload files to t
         -T a-video.mp4
   ```
   {: pre}
-6. You should now be able to view your files using the dashboard.
+5. You should now be able to view your files using the dashboard.
    ![](images/solution3/Buckets.png)
-7. Access the files through your browser. The link will look like:
+6. Access the files through your browser. The link will look like:
 
    http://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-picture.png
 

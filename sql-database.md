@@ -60,7 +60,7 @@ Now that the table "cities" has been created, we are going to load data into it.
 2. In the **File selection** click on **browse files** to locate and pick the file "cities1000.txt" you downloaded in the first section of this guide.
 3. Click **Next** to get to the schema overview. Choose the schema starting with "DASH" again, then the table "CITIES". Because the table is empty it does not make a difference to either append to or overwrite existing data. Click on **Next** again.
 4. The dialog shown then is used to customize how the data from the file "cities1000.txt" is interpreted during the load process. First, disable "Header in first row" because the file contains data only. Next, type in "0x09" as separator. It means that values within the file are delimited by tab(ulator). Last, pick "YYYY-MM-DD" as date format. Now, everything should look like in this screenshot.    
-![](images/solution5/LoadTabSeparator.png)
+  ![](images/solution5/LoadTabSeparator.png)
 5. Click **Next** and you are offered to review the load settings. If you agree, click **Begin Load** to start loading the data into the "CITIES" table. The progress is displayed. Once the data is uploaded it should only take few seconds until the load is finished and some statistics are presented.   
    ![](images/solution5/LoadProgressSteps.png)
 
@@ -91,15 +91,13 @@ The ready-to-run [code for the database app is located in this Github repository
    git clone https://github.com/IBM-Bluemix/cloud-sql-database
    cd cloud-sql-database
    ```
-   {:pre}
 
-2. Push the application to the IBM Cloud. You need to be logged in to the region, org and space to which the database has been provisioned.
+2. Push the application to the IBM Cloud. You need to be logged in to the region, org and space to which the database has been provisioned. Copy and paste these commands one line at a time.
    ```bash
    bx login
    bx target --cf
    bx cf push your-app-name
    ```
-   {:pre}
 3. Once the push process is finished you should be able to access the app. No further configuration is needed. The file `manifest.yml` tells the IBM Cloud to bind the app and the database service named "sqldatabase" together.
 
 ## Test and Expand the App
