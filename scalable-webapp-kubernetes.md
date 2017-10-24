@@ -254,7 +254,7 @@ Refer to https://console.bluemix.net/docs/containers/cs_apps.html#custom_domain_
    ```
    apiVersion: extensions/v1beta1
    kind: Ingress
-    metadata:
+   metadata:
      name: ingress-for-customdomain-http
    spec:
      rules:
