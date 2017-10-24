@@ -279,7 +279,7 @@ If you were to try to access your application with HTTPS at this time `https://<
 
 1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key:
   https://console.bluemix.net/docs/containers/cs_apps.html#custom_domain_cert
-   > You can use [Let's Encrypt](https://letsencrypt.org/) to generate trusted certificate. [ZeroSSL](https://zerossl.com) makes it easy to go through the Let's Encrypt process.
+   > You can use [Let's Encrypt](https://letsencrypt.org/) to generate trusted certificate.
 2. Save the cert and the key in base64 ascii format files.
 3. Create a TLS secret to store the cert and the key
    ```
