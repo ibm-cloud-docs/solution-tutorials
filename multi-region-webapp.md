@@ -24,6 +24,7 @@ This tutorial is a walkthrough of how to create, secure, and deploy a web applic
 * Deploy to another region
 * Map a custom domain to your application
 * Bind an SSL certificate to your application
+* Monitor application performance
 
 ![HelloWorld](images/solution1/Architecture.png)
 
@@ -131,6 +132,17 @@ Map the custom domain name to the secure endpoint for the IBM Cloud region where
 3. Click on SSL Certificate upload button.
 4. Upload the certificate.
 5. Access your application with https instead of http
+
+## Monitor application performance
+{: #monitor}
+
+Lets check the health of your multi-region application,
+
+1. In the application dashboard, select **Monitoring**
+2. Click **View All Tests**
+   ![](images/solution1/alert_frequency.png)
+
+Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact users. If you configured a custom route for your application, you will want to change the test definition to access your application through its custom domain.
 
 ## Further Reading
 
