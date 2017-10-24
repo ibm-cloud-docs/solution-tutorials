@@ -73,9 +73,11 @@ In this section, we will create a Compose for MongoDB database on the cloud usin
      bx login
      bx target --cf
   ```
-2. Create the instance of Compose for MongoDB. This can also be done using the [UI](https://console.bluemix.net/catalog/services/compose-for-mongodb?env_id=ibm:yp:us-south). It is important that you call this service **mongodb** as the application is configured to look for this service by this name.
+
+2. Create the instance of Compose for MongoDB. This can also be done using the [UI](https://console.bluemix.net/catalog/services/compose-for-mongodb?env_id=ibm:yp:us-south). It is important that you call this service **mean-starter-mongodb** as the application is configured to look for this service by this name.
+
   ```sh
-     bx cf create-service compose-for-mongodb Standard mongodb
+     bx cf create-service compose-for-mongodb Standard mean-starter-mongodb
   ```
 
 ## Deploy the Node.js app
