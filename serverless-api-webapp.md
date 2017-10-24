@@ -145,6 +145,8 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
 
 ## Create an API
 
+![](images/solution8/Cloud_Functions_API.png)
+
 1. Go to Actions https://console.bluemix.net/openwhisk/manage/actions
 2. Select the **read-guestbook-entries** sequence. In **Additional details**, check **Enable Web Action**
 3. Do the same for the **save-guestbook-entry** sequence.
@@ -163,12 +165,14 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
 ## Deploy the web app
 
 1. Fork the Guestbook user interface repository https://github.com/IBM-Bluemix/serverless-guestbook to your public GitHub
-2. Modify docs/guestbook.js and replace the value of **apiUrl** with the route given by API Connect
-3. Commit the modified file
+2. Modify **docs/guestbook.js** and replace the value of **apiUrl** with the route given by API Connect
+3. Commit the modified file.
 4. In the Settings page of your repository, scroll to **GitHub Pages**, change the source to **master branch /docs folder** and Save
 5. Access the public page for your repository
-6. You should the test guestbook entry created earlier
-7. Add one new entry
+6. You should see the "test" guestbook entry created earlier.
+7. Add new entries.
+
+![](images/solution8/Guestbook.png)
 
 ## Optional: Use your own domain for the API
 
@@ -188,6 +192,6 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
 
 8. Save the API
 9. Wait for DNS to propagate and you will be able to access your guestbook api at https://guestbook-api.mydomain.com/guestbook
-10. Edit docs/guestbook.js and update the value of **apiUrl** with https://guestbook-api.mydomain.com/guestbook
-11. Commit the modified file
-12. Your application now accesses the API through your custom domain
+10. Edit **docs/guestbook.js** and update the value of **apiUrl** with https://guestbook-api.mydomain.com/guestbook
+11. Commit the modified file.
+12. Your application now access the API through your custom domain

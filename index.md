@@ -17,7 +17,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ### [Deploy a secure web application across multiple regions](multi-region-webapp.html)
 
-This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions.
+This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continous delivery pipeline.
 
 ### [Scalable Java web app on Kubernetes](scalable-webapp-kubernetes.html)
 
