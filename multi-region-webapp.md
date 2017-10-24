@@ -16,7 +16,7 @@ lastupdated: "2017-09-28"
 
 # Deploy a secure web application across multiple regions
 
-This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continous delivery pipeline. Among many other starter applications on IBM Cloud, you will be using Node.js starter application for this tutorial.
+This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline. Among many other starter applications on IBM Cloud, you will be using Node.js starter application for this tutorial.
 
 ## Objectives
 * Create a starter Node.js application
@@ -24,7 +24,6 @@ This tutorial is a walkthrough of how to create, secure, and deploy a web applic
 * Deploy to another region
 * Map a custom domain to your application
 * Bind an SSL certificate to your application
-* Monitor application performance
 
 ![HelloWorld](images/solution1/Architecture.png)
 
@@ -40,7 +39,7 @@ Start by creating a Node.js starter application which runs in a Cloud Foundry en
 1.  Click on **Catalog** in the top navigation bar.
 2.  Click on **Cloud Foundry Apps** under Platform on the left pane and select **SDK for Node.js** .
      ![](images/solution1/SDKforNodejs.png)
-3.  Enter a **unique name** for your application which will also be your hostname. For example: myusername-nodeapp.
+3.  Enter a **unique name** for your application which will also be your hostname. For example: myusername-nodeapp. And click **Create**.
 4.  Wait until the application starts and click on the **Visit URL** link on top of the **Overview** page to see your application LIVE on a new tab.
 
 ![HelloWorld](images/solution1/HelloWorld.png)
@@ -74,7 +73,7 @@ In this step, you will set up a git source control repository to store your code
   **<port_number>** as displayed on the console.
 8. Let's push the change to your repository with three simple steps - Add, Commit and Push.
    ```bash
-   git add .
+   git add public/index.html
    git commit -m "my first changes"
    git push origin master
    ```
@@ -105,7 +104,7 @@ Next, we will deploy the same application to a different IBM Cloud region. We ca
 ## Configure custom domain to your application
 {: #add_domain}
 
-Your cool application deserves a cool URL!
+When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided mybluemix.net domain.
 
 1. Buy a domain from a registrar such as http://godaddy.com
 2. **Switch to the US region** by clicking on your account name in the top navigation bar.
@@ -127,25 +126,11 @@ Map the custom domain name to the secure endpoint for the IBM Cloud region where
 ## Bind SSL certificate to your application
 {: #ssl}
 
-1. Purchase SSL cert https://www.godaddy.com/web-security/ssl-certificate.
+1. Obtain a SSL certificate. For example, you can purchase from https://www.godaddy.com/web-security/ssl-certificate or generate a free one via https://letsencrypt.org/
 2. Navigate to Application **Overview** -> **Routes**  -> **Manage Domains**.
 3. Click on SSL Certificate upload button.
 4. Upload the certificate.
-
-
-## Monitor application performance
-{: #monitor}
-
-Lets check the health of your multi-region application,
-
-1. Application **Overview** -> **View toolchain**
-2. Click **Add a Tool**
-3. Choose **Availability Monitoring** -> **Create Integration**
-4. Select **Availability Monitoring** and click on the name of your app.
-5. Click **View All Tests**
-   ![](images/solution1/alert_frequency.png)
-
-Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact users.
+5. Access your application with https instead of http
 
 ## Further Reading
 
