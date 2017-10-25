@@ -90,7 +90,7 @@ Verify Apache, MySQL, and PHP running on Ubuntu image.
 7. Check the version of PHP using the following command:
 
    ```sh
-   PHP -v
+   php -v
    ```
    {: pre}
 8. If you want to test further, create a quick PHP info page to view in a browser. The following command creates the PHP info page:
