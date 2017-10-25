@@ -1,5 +1,4 @@
 ---
-
 copyright:
   years: 2017
 lastupdated: "2017-09-28"
@@ -41,16 +40,14 @@ This solution walks you through the creation of a mobile starter application, ad
 
 {: #get_code}
 
-1.  Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from pre-defined `Starter Kits`.
-2.  Click on `Starter Kits` and scroll down to select `Basic` Starter Kit.
-
+1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from pre-defined `Starter Kits`.
+2. Click on `Starter Kits` and scroll down to select `Basic` Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
-3.  Enter a project name which will also be the Xcode project and app name.
-4.  Select `Swift` as your language.
-
+3. Enter a project name which will also be the Xcode project and app name.
+4. Select `Swift` as your language.
     ![](images/solution6/create_new_project.png)
-5.  Click on `Create Project` to scaffold an iOS Swift App.
-6.  A new `Project` will be created under Projects tab on the left pane.
+5. Click on `Create Project` to scaffold an iOS Swift App.
+6. A new `Project` will be created under Projects tab on the left pane.
 
 In the next step, you will add mobile services like Push notifications and Mobile Analytics to accelerate your app.
 
@@ -62,9 +59,7 @@ In the next step, you will add mobile services like Push notifications and Mobil
 3. Select Lite plan and Click `Create` to provision a Push Notifications service. To understand the pricing, Click on `pricing details`.
 4. Now, you should see Push Notifications service added to your project and also the Credentials.
 5. To add Mobile Analytics service, click on `Add Service` and Select Basic plan.Once you click `Create`, you should see both the Mobile services with credentials.
-
   ![](images/solution6/mobile_services.png)
-
 6. Click on `Download Code` to download the scaffolded code to Mac. In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
 
 ## Obtain APNs credentials and configure Push Notifications service instance.
@@ -77,17 +72,15 @@ You need to obtain and configure your APNs credentials. The APNs certificates ar
 
 The App ID (the bundle identifier) is a unique identifier that identifies a specific application. Each application requires an App ID. Services like the Push Notifications service are configured to the App ID.
 Ensure that you have an [Apple Developers](https://developer.apple.com/) account. This is a mandatory prerequisite.
+
 1. Go to the [Apple Developer](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
 2. Go to `Identifiers` > App IDs section.
-3. In the `Registering App IDs` page, provide the App name in the App ID Description Name field. For example: ACME Push Notifications.
-4. Provide a string for the App ID Prefix.
-5. For the App ID Suffix, choose `Explicit App ID` and provide a Bundle ID value. It is recommended that you provide a reverse domain-name style string. For example: com.ACME.push.
-6. Select the `Push Notifications` check-box and click `Continue`.
-7. Go through your settings and click `Register` > `Done`.
+3. In the `Registering App IDs` page, provide the App name in the App ID Description Name field. For example: ACME Push Notifications. Provide a string for the App ID Prefix.
+4. For the App ID Suffix, choose `Explicit App ID` and provide a Bundle ID value. It is recommended that you provide a reverse domain-name style string. For example: com.ACME.push.
+5. Select the `Push Notifications` check-box and click `Continue`.
+6. Go through your settings and click `Register` > `Done`.
   Your App ID is now registered.
-
   ![](images/solution6/push_ios_register_appid.png)
-
 ### Create a development and distribution APNs SSL certificate
 Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key that you use to sign for your Apple push notifications. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
 You can use APNs in two modes:
@@ -99,45 +92,45 @@ You must obtain separate certificates for your development and distribution envi
 
 1. Go to the Apple Developer website, click `Member Center`, and select `Certificates, IDs & Profiles`.
 2. In the `Identifiers` area, click `App IDs`.
-3. From your list of App IDs, select your App ID, then select `Edit` .
+3. From your list of App IDs, select your App ID, then select `Edit`.
 4. Select the the `Push Notifications` check-box, and then:
 
      * On Development SSL certificate pane, click Create Certificate...
      * On Production SSL certificate pane, click Create Certificate...
-    ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
+
+        ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
+
 5. When the `About Creating a Certificate Signing Request (CSR) screen` displays, start the `Keychain Access` application on your Mac to create a Certificate Signing Request (CSR). Click `Continue`.
-6. For the Upload CSR file option, click `Choose File`, and select file `CertificateSigningRequest.certSigningRequest`.
-7. Click `Continue`.
-8. On the Download, Install and Backup pane, click Download. The `aps_development.cer` file is downloaded.
+6. For the Upload CSR file option, click `Choose File`, and select file `CertificateSigningRequest.certSigningRequest`. Click `Continue`.
+7. On the Download, Install and Backup pane, click Download. The `aps_development.cer` file is downloaded.
      ![Download certificate](images/solution6/push_certificate_download.png)
-9. From the menu, select `Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority…`
-10. In `Certificate Information`, enter the email address that is associated with your App Developer account and a common name. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
-11. Select `Save to disk` to download the `.certSigningRequest` file to your desktop, then click Continue.
-12. In the `Save As` menu option, name the `.certSigningRequest` file and click Save.
-13. Click Done. You now have a CSR.
-14. Return to the `About Creating a Certificate Siging Request (CSR)` window and click Continue.
-15. From the `Generate` screen, click `Choose File ...` and select the CSR file that you saved on your desktop. Then, click `Generate`.
+8. From the menu, select `Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority…`
+9. In `Certificate Information`, enter the email address that is associated with your App Developer account and a common name. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
+10. Select `Save to disk` to download the `.certSigningRequest` file to your desktop, then click Continue.
+11. In the `Save As` menu option, name the `.certSigningRequest` file and click Save. Click Done. You now have a CSR.
+12. Return to the `About Creating a Certificate Siging Request (CSR)` window and click Continue.
+13. From the `Generate` screen, click `Choose File ...` and select the CSR file that you saved on your desktop. Then, click `Generate`. When your certificate is ready, click `Done`.
 
      ![Generate certificate](images/solution6/generate_certificate.png)
 
-16. When your certificate is ready, click `Done`.
-17. On the `Push Notifications` screen, click Download to download your certificate, then click `Done`.
+14. On the `Push Notifications` screen, click Download to download your certificate, then click `Done`.
+
    ![Download certificate](images/solution6/certificate_download.png)
 
-18. On your Mac, go to `Keychain Access > My Certificates`, and locate your newly installed certificate. Double-click the certificate to install it into the Keychain Access.
-19. Select the certificate and private key, and then select `Export` to convert the certificate into the personal information exchange format (`.p12` format).
+15. On your Mac, go to `Keychain Access > My Certificates`, and locate your newly installed certificate. Double-click the certificate to install it into the Keychain Access.
+16. Select the certificate and private key, and then select `Export` to convert the certificate into the personal information exchange format (`.p12` format).
 
    ![Export certificate and keys](images/solution6/keychain_export_key.png)
 
-20. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12_certificate` or `production_apns.p12`, then click Save.
+17. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12_certificate` or `production_apns.p12`, then click Save.
 
      ![Export certificate and keys](images/solution6/certificate_p12v2.png)
 
-21. In the `Enter a password` field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
+18. In the `Enter a password` field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
 
     ![Export certificate and keys](images/solution6/export_p12.png)
 
-22. The `Key Access.app` prompts you to export your key from the `Keychain` screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
+19. The `Key Access.app` prompts you to export your key from the `Keychain` screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
 
 ### Creating a development provisioning profile
 The provisioning profile works with the App ID to determine which devices can install and run your app and which services your app can access. For each App ID, you create two provisioning profiles: one for development and the other for distribution. Xcode uses the development provisioning profile to determine which developers are allowed to build the application and which devices are allowed to be tested on the application.
@@ -176,8 +169,7 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 2. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
 3. Select `Sandbox (development)` or `Production (distribution)` as appropriate and then upload the `p.12` certificate that you have created.
 4. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
-
-![](images/solution6/Mobile_push_configure.png)
+   ![](images/solution6/Mobile_push_configure.png)
 
 ## Download the code and setup client SDKs
 If you haven't downloaded the code yet, Click on `Download Code` under Projects > `Your Mobile Project`
@@ -185,15 +177,15 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 1. To install or update CocoaPods on your machine, Open the `Terminal` and run the below command.
    ```
-    sudo gem install cocoapods
+   sudo gem install cocoapods
    ```
 2. On the terminal, Navigate to the folder where you downloaded the code
    ```
-    cd <Name of the Project name>
+   cd <Name of the Project name>
    ```
 3. The folder already includes a `podfile` with required dependencies.So run the below command to install the dependencies (Client SDKs)
   ```
-    pod install
+  pod install
   ```
 4. The required dependencies will be installed
   ```
@@ -221,7 +213,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
         myBMSClient.initialize(bluemixRegion: <Region you created the service>)
         myBMSClient.requestTimeout = 10.0 // seconds
   ```
-3. Along with BMSCore, Mobile Analytics SDK is already imported into the project with   
+3. Along with BMSCore, Mobile Analytics SDK is already imported into the project with
   ```
    import BMSAnalytics
   ```
@@ -247,6 +239,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   ```
 
 ## Send and monitor push notifications.
+
 1. Push notifications SDK is already imported into the project with
   ```
    import BMSPush
