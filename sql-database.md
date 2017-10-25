@@ -69,10 +69,10 @@ The data has been loaded into our relational database. There were no errors, but
 
 1. In the top navigation click on **Run SQL**. This brings up a bare bones tool to edit and run SQL statements. Remember that you can connect cloud-based and traditional SQL tools on your desktop or server machine to the Db2 Warehouse on Cloud. The connection information can be found in the settings menu. Some tools are even offered for download in the "Downloads" section in the menu offered behind the "book" icon (standing for documentation and help).
 2. In the "SQL Editor" type or copy in the following query:   
-   ```
+   ```bash
    select count(*) from cities
    ```
-   {:codeblock}   
+   {:codeblock} 
    then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
    ```
@@ -91,7 +91,6 @@ The ready-to-run [code for the database app is located in this Github repository
    git clone https://github.com/IBM-Bluemix/cloud-sql-database
    cd cloud-sql-database
    ```
-
 2. Push the application to the IBM Cloud. You need to be logged in to the region, org and space to which the database has been provisioned. Copy and paste these commands one line at a time.
    ```bash
    bx login

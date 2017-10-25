@@ -54,7 +54,7 @@ In the next step, you will configure **kubectl** to point to your newly created 
 
 1. Use `bx login` to login interactively. Provide the Organization (Org), Region and Space under which the cluster is created. You can reconfirm the details by running `bx target` command.
 2. Once the cluster is ready, retrieve the cluster configuration
-   ```
+   ```bash
    bx cs cluster-config <cluster-name>
    ```
    {: pre}
@@ -62,13 +62,12 @@ In the next step, you will configure **kubectl** to point to your newly created 
   `echo $KUBECONFIG`
 
 4. Check that the `kubectl` command is correctly configured
-   ```
+   ```bash
    kubectl cluster-info
    ```
    {: pre}
 5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts — Helm Charts helps you define, install, and upgrade even the most complex Kubernetes application. Initialize Helm in your cluster.
-
-   ```
+   ```bash
    helm init
    ```
    {: pre}
@@ -141,7 +140,6 @@ In this section, we will first push the Docker image to the IBM Cloud private co
    ```
    {: pre}
    If you have a namespace, make note of the name for use later. If you don't have one, create it.
-
    ```
    bx cr namespace-add <name>
    ```
@@ -233,7 +231,6 @@ Use Ingress to set up the cluster inbound connection to the service.
              servicePort: 9080
    ```
 3. Deploy the Ingress
-
    ```
    kubectl apply -f ingress-ibmdomain.yml
    ```
@@ -349,3 +346,4 @@ Refer to Kubernetes documentation for manual and automatic scaling:
 ## Further reading
 
 * [IBM Container Service documentation](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
+* [IBM Cloud App Service](https://console.bluemix.net/docs/cloudnative/index.html#web-mobile)

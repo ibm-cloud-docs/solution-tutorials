@@ -1,6 +1,5 @@
 ---
 
-
 copyright:
   years: 2017
 lastupdated: "2017-09-28"
@@ -189,9 +188,15 @@ The second sequence is used to retrieve the existing guestbook entries. The sequ
    * Sydney: secure.au-syd.bluemix.net.
 
    > Refer to https://console.bluemix.net/docs/apis/management/manage_apis.html#custom_domains for additional information
-
 8. Save the API
 9. Wait for DNS to propagate and you will be able to access your guestbook api at https://guestbook-api.mydomain.com/guestbook
 10. Edit **docs/guestbook.js** and update the value of **apiUrl** with https://guestbook-api.mydomain.com/guestbook
 11. Commit the modified file.
-12. Your application now access the API through your custom domain
+12. Your application now access the API through your custom domain.
+
+## Related Content
+* [More guides and samples on serverless](https://developer.ibm.com/code/journey/category/serverless/)
+* [Getting started with Cloud Functions](https://console.bluemix.net/docs/openwhisk/index.html#getting-started-with-openwhisk)
+* [Cloud Functions common use cases](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases)
+* [Create APIs from Cloud Functions actions](https://console.bluemix.net/docs/apis/management/manage_openwhisk_apis.html#manage_openwhisk_apis)
+
