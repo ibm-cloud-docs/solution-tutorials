@@ -59,11 +59,12 @@ In this section, you will run a local MongoDB database, clone a MEAN sample code
   ```sh
      npm install
   ```
-4. Rename .env.example file to .env. Edit the contents as needed, at a minimum adding your own SESSION_SECRET. 
+4. Copy .env.example file to .env. Edit the contents as needed, at a minimum adding your own SESSION_SECRET.
 5. Run node server.js to start your app
   ```
      node server.js
   ```
+6. Access your application, create a new user and log in
 
 ## Create a MongoDB service on the cloud
 
@@ -110,18 +111,13 @@ If your service needs additional storage, or you want to reduce the amount of st
 ## Monitor application performance
 {: #monitor}
 
-Lets check the health of your multi-region application,
+Lets check the health of your application,
 
-1. Application **Overview** -> **View toolchain**
-2. Click **Add a Tool**
-3. Choose **Availability Monitoring** -> **Create Integration**
-4. Select **Availability Monitoring** and click on the name of your app.
-5. Click **View All Tests**
+1. In the application dashboard, select **Monitoring**
+2. Click **View All Tests**
    ![](images/solution7/alert_frequency.png)
 
-Availability Monitoring constantly runs synthetic tests from locations around the world to proactively detect and fix performance issues before they impact users.
-
-
+Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact users.
 
 ## Summary
 
