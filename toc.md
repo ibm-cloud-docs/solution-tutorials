@@ -1,13 +1,13 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="solutions" audience="platform" href="/docs/solutions/index.html"}
-Solutions
+{: .toc subcollection="tutorials" audience="platform" href="/docs/tutorials/index.html"}
+Tutorials
 
     {: .navgroup id="learn"}
     index.md
     {: .navgroup-end}
-
+    
     {: .navgroup id="howto"}
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
