@@ -1,0 +1,21 @@
+{:navgroup: .navgroup}
+{:topicgroup: .topicgroup}
+
+{: .toc subcollection="tutorials" audience="platform" href="/docs/tutorials/index.html"}
+Tutorials
+
+    {: .navgroup id="learn"}
+    index.md
+    {: .navgroup-end}
+    
+    {: .navgroup id="howto"}
+    multi-region-webapp.md
+    scalable-webapp-kubernetes.md
+    static-files-cdn.md
+    lamp-stack.md
+    mean-stack.md
+    sql-database.md
+    ios-mobile-push-analytics.md
+    serverless-api-webapp.md
+    {: .navgroup-end}
+
