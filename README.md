@@ -1,3 +1,3 @@
-# Solution Guides
+# Tutorials
 
-[Solutions - stage1](https://dev-console.stage1.bluemix.net/docs/solutions/index.html)
+Documentation for Tutorials
