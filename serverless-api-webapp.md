@@ -59,8 +59,9 @@ You will create a **sequence** which is a chain of actions where output of one a
    * Store the document in the Cloudant NoSQL database.
 
 1. Switch to **Functions** on IBM Cloud.
-2. Create a new Node.js action named **prepare-entry-for-save**
-3. Use this code for the action:
+2. On the left pane, Click on **Develop**.
+3. Create a new Node.js action named **prepare-entry-for-save** by selecting a **blank slate** option to start with.
+4. Replace the existing code with the code snippet below. This is the code for your action.
    ```js
    /**
     * Prepare the guestbook entry to be persisted
@@ -81,14 +82,13 @@ You will create a **sequence** which is a chain of actions where output of one a
    }
    ```
    {: codeblock}
-4. Open the action in the **Develop** view https://console.bluemix.net/openwhisk/editor.
-5. Click**Link into a sequence** and pick Cloudant **create document**..
-6. Create new binding on the left and set name to **binding-for-guestbook**.
-7. Select the **guestbook-db** Cloudant instance and the **guestbook** database and **Save**.
-8. Click **Add to sequence** and then **This looks good**.
-9. Name the sequence **save-guestbook-entry**
-10. **Save the sequence** and then **Done**
-11. Select the sequence and **Run** the sequence with the JSON below to test it
+4. Click **Make it Live**. In the **Develop** view (https://console.bluemix.net/openwhisk/editor), Click **Link into a sequence** and pick Cloudant **create document**..
+5. Create new binding on the left and set name to **binding-for-guestbook**.
+6. Select the **guestbook-db** Cloudant instance and the **guestbook** database and **Save**.
+7. Click **Add to sequence** and then **This looks good**.
+8. Name the sequence **save-guestbook-entry**
+9. **Save the sequence** and then **Done**
+10. Select the sequence under **My Sequences** and **Run** the sequence with the JSON below to test it
 
     ```json
     {
@@ -98,7 +98,7 @@ You will create a **sequence** which is a chain of actions where output of one a
     }
     ```
     {: codeblock}
-12. Check the Cloudant NoSQL database to confirm it contains the new record.
+11. Check the Cloudant NoSQL database to confirm it contains the new record.
 
 ### Sequence of actions to retrieve entries
 
@@ -164,7 +164,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 
 1. Fork the Guestbook user interface repository https://github.com/IBM-Bluemix/serverless-guestbook to your public GitHub.
 2. Modify **docs/guestbook.js** and replace the value of **apiUrl** with the route given by API Connect.
-3. Commit the modified file.
+3. Commit the modified file to your forked repository.
 4. In the Settings page of your repository, scroll to **GitHub Pages**, change the source to **master branch /docs folder** and Save.
 5. Access the public page for your repository.
 6. You should see the "test" guestbook entry created earlier.
