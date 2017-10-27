@@ -26,8 +26,6 @@ This tutorial walks you through the creation of a web application using the popu
 - Scale MongoDB Resources
 - Monitor application performance
 
-![](./images/solution7/Architecture.png)
-
 ## Before you begin
 
 {: #prereqs}
