@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-09-28"
+lastupdated: "2017-10-27"
 
 ---
 
@@ -61,7 +61,7 @@ In the next step, you will add mobile services like Push notifications and Mobil
 5. To add Mobile Analytics service, click on `Add Service` and Select Basic plan.Once you click `Create`, you should see both the Mobile services with credentials.
 
   ![](images/solution6/mobile_services.png)
-  
+
 6. Click on `Download Code` to download the scaffolded code to Mac. In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
 
 ## Obtain APNs credentials and configure Push Notifications service instance.
@@ -82,9 +82,9 @@ Ensure that you have an [Apple Developers](https://developer.apple.com/) account
 5. Select the `Push Notifications` check-box and click `Continue`.
 6. Go through your settings and click `Register` > `Done`.
   Your App ID is now registered.
-  
+
   ![](images/solution6/push_ios_register_appid.png)
-  
+
 ### Create a development and distribution APNs SSL certificate
 Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key that you use to sign for your Apple push notifications. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
 You can use APNs in two modes:
