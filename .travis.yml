@@ -4,4 +4,4 @@ branches:
 
 script:
   - git remote add public https://$PUBLIC_GITHUB_USER:$PUBLIC_GITHUB_TOKEN@github.com/IBM-Bluemix-Docs/tutorials.git
-  - git push --dry-run public master
+  - git push --dry-run public master --force
