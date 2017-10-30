@@ -18,4 +18,3 @@ Tutorials
     ios-mobile-push-analytics.md
     serverless-api-webapp.md
     {: .navgroup-end}
-
