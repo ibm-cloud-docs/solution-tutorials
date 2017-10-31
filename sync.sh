@@ -2,7 +2,7 @@
 COMMIT_MESSAGE=`date +"%Y-%m-%d %T%z"`' ('`git rev-parse HEAD`')'
 
 mkdir build
-git clone https://$PUBLIC_GITHUB_USER:$PUBLIC_GITHUB_TOKEN@github.com/l2fprod/a-repo-with-files build
+git clone https://$PUBLIC_GITHUB_USER:$PUBLIC_GITHUB_TOKEN@github.com/IBM-Bluemix-Docs/tutorials build
 
 git config --global push.default simple
 git config --global user.email "autobuild@not-a-dom.ain"
