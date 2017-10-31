@@ -54,6 +54,8 @@ In the next step, you will add mobile services like Push notifications and Mobil
 ## Add Push Notifications and Mobile Analytics services.
 {: #create_cos}
 
+**Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter. If not, follow the below steps. Also, Following the below steps you can add other value-add services.
+
 1. Click on `Add Service` and select Mobile to accelerate your app with Mobile services. Click Next to see the available services.
 2. Select `Push Notifications` and Click Next.
 3. Select Lite plan and Click `Create` to provision a Push Notifications service. To understand the pricing, Click on `pricing details`.
@@ -291,9 +293,9 @@ You can record application logs and monitor data with the Mobile Analytics Clien
 1. Open the `Mobile Analytics` service from the mobile project you created or click on the three vertical dots next to the service and select `Open Dashboard`.
 2. You should see LIVE Users, Sessions and other App Data by disabling `Demo Mode`. You can filter the analytics information by
     * Date.
-      * Application.
-      * Operating System.
-      * Version of the app.
+    * Application.
+    * Operating System.
+    * Version of the app.
          ![Mobile Analytics](images/solution6/mobile_analytics.png)
 3. [Click here](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#monitoringapps) to set alerts, Monitor App crashes, and Monitor network requests.
 
