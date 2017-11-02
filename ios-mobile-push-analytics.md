@@ -307,9 +307,10 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
        **Note:** When you select the All Devices option, all devices subscribed to Push Notifications will receive notifications.
   * In the `Message` field, compose your message. Choose to configure the optional settings as required.
-  * Click `Send`.
+  * Click `Send` and verify that your physical devices has received the notification.
     ![](images/solution6/send_notifications.png)
-  * Verify that your physical devices has received the notification.
+
+    ​
 
 6. You should see a notification on your iPhone.
 

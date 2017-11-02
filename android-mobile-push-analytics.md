@@ -21,11 +21,17 @@ This solution walks you through the creation of a mobile starter application, ad
 ## Objectives
 
 * Create a mobile project from Basic Android native starter kit.
+
 * Add Push Notifications and Mobile Analytics services.
-* Obtain FCM credentials and configure Push Notifications service instance.
-* Download the code and setup client SDKs.
+
+* Obtain FCM credentials.
+
+* Download the code and complete required setup.
+
 * Instrumenting the app to use Mobile Analytics.
-* Send and monitor push notifications.
+
+* Configure,Send, and Monitor push notifications.
+
 * Monitoring the app with Mobile Analytics.
 
   ![](images/solution9/android_architecture.png)
@@ -64,7 +70,7 @@ Also, Following the below steps you can add other value-add services.
 4. Now, you should see Push Notifications service added to your project and also the Credentials.
 5. To add Mobile Analytics service, click on `Add Service` and Select Basic plan.Once you click `Create`, you should see both the Mobile services with credentials.
 
-## Obtain FCM credentials and configure Push Notifications service instance.
+## Obtain FCM credentials
 
 Firebase Cloud Messaging (FCM) is the gateway used to deliver push notifications to Android devices, Google Chrome browser and Chrome Apps & Extensions. To set up the Push Notifications service on the console, you need to get your FCM credentials (Sender ID and API key).
 
@@ -185,7 +191,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
    ​
 
-##Send and monitor push notifications.
+##Configure,Send, and Monitor push notifications.
 
 1. Push notifications SDK is already imported into the project with
 
@@ -244,11 +250,9 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
    - In the `Message` field, compose your message. Choose to configure the optional settings as required.
 
-   - Click `Send`.
+   - Click `Send` and verify that your physical devices has received the notification.
 
      ![](images/solution9/android_send_notifications.png)
-
-   - Verify that your physical devices has received the notification.
 
 6. You should see a notification on your Android device.
 
