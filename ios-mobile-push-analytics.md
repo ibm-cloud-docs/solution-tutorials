@@ -28,7 +28,7 @@ This solution walks you through the creation of a mobile starter application, ad
 * Send and monitor push notifications.
 * Monitoring the app with Mobile Analytics.
 
-  ![](images/solution6/ios_arch.png)
+  ![](images/solution6/ios_architecture.png)
 
 ## Before you begin
 {: #prereqs}
@@ -185,15 +185,24 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    ```
    sudo gem install cocoapods
    ```
+   {: pre:}
+
 2. On the terminal, Navigate to the folder where you downloaded the code
+
    ```
    cd <Name of the Project name>
    ```
+   {: pre:}
+
 3. The folder already includes a `podfile` with required dependencies.So run the below command to install the dependencies (Client SDKs)
+
   ```
   pod install
   ```
+  {: pre:}
+
 4. The required dependencies will be installed
+
   ```
   Analyzing dependencies
   Downloading dependencies
@@ -206,6 +215,8 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   Sending stats
   Pod installation complete! There are 3 dependencies from the Podfile and 4 total pods installed.
   ```
+  {: pre:}
+
 5. If you navigate to the folder, you should see a `.xcworkspace` file.
   **Note:** Ensure that you always open the new Xcode workspace, instead of the original Xcode project file: `MyApp.xcworkspace`.
 
@@ -213,17 +224,24 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
    ![](images/solution6/Xcode.png)
+
 2. `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized as follows
   ```
   let myBMSClient = BMSClient.sharedInstance
         myBMSClient.initialize(bluemixRegion: <Region you created the service>)
         myBMSClient.requestTimeout = 10.0 // seconds
   ```
+  {: codeblock:}
+
 3. Along with BMSCore, Mobile Analytics SDK is already imported into the project with
+
   ```
    import BMSAnalytics
   ```
+  {: pre:}
+
 4. Analytics initialization code is already included as shown below
+
   ```
   // Analytics client SDK is configured to record lifecycle events.
          	Analytics.initialize(appName:dictionary["appName"] as? String,
@@ -234,7 +252,10 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
         	Logger.isLogStorageEnabled = true
         	Logger.logLevelFilter = .error
   ```
-   **Note:** The service credentials are part of `BMSCredentials.plist` file.
+   {: codeblock:}
+
+  **Note:** The service credentials are part of `BMSCredentials.plist` file.
+
 5. Gathering usage analytics and using logger - Navigate to `ViewController.swift` to see the below code.
 
   ```
@@ -244,19 +265,27 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
     }
   ```
 
+​        {: codeblock:}
+
 ## Send and monitor push notifications.
 
 1. Push notifications SDK is already imported into the project with
   ```
    import BMSPush
   ```
+   {: pre:}
+
 2. Push initialization code can be found under `func application`
+
   ```
    let push = BMSPushClient.sharedInstance
             push.initializeWithAppGUID(appGUID: dictionary["pushAppGuid"] as! String,
                                        clientSecret: dictionary["pushClientSecret"] as! String)
   ```
+   {: codeblock:}
+
 3. Registration for notifications happens in `AppDelegate.swift`. Provide an unique USER_ID.
+
   ```
    // Replace USER_ID with a unique end user identifier. This enables specific push notification targeting.
             push.registerWithDeviceToken(deviceToken: deviceToken, WithUserId: "USER_ID") { (response, statusCode, error) -> Void in
@@ -269,7 +298,10 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
                 }
             }
   ```
+   {: codeblock:}
+
 4. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
+
 5. Open Push Notifications service on IBM Cloud and to send basic push notifications, complete the following steps:
   * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
 
@@ -278,6 +310,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   * Click `Send`.
     ![](images/solution6/send_notifications.png)
   * Verify that your physical devices has received the notification.
+
 6. You should see a notification on your iPhone.
 
    ![](images/solution6/iphone_notification.png)
