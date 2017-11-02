@@ -21,7 +21,7 @@ This tutorial walks you through how to scaffold a web application, run it locall
 * Scaffold a starter application.
 * Deploy the application to the Kubernetes cluster.
 * Bind a custom domain. 
-* Monitor the health of the cluster.
+* Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
 ![](images/solution2/Solution2Architecture.png)
@@ -313,6 +313,11 @@ If you were to try to access your application with HTTPS at this time `https://<
    then access the console at http://127.0.0.1:8001/ui.
 2. Select **Nodes** and see the **Allocation Resources** to see the health of your nodes.
    ![](images/solution2/KubernetesDashboard.png)
+3. To review the application logs from the container, select **Pods**, **<pod-name>** and **Logs**.
+4. To **ssh** into the container, identify your pod name from the previous step and run
+   ```
+   kubectl exec -it <pod-name> -- bash
+   ```
 
 ## Scale Kubernetes pods
 {: #scale_cluster}
