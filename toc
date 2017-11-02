@@ -17,4 +17,5 @@ Tutorials
     sql-database.md
     ios-mobile-push-analytics.md
     serverless-api-webapp.md
+    android-mobile-push-analytics.md
     {: .navgroup-end}
