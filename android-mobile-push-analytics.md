@@ -191,7 +191,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
    ​
 
-##Configure,Send, and Monitor push notifications.
+## Configure,Send, and Monitor push notifications.
 
 1. Push notifications SDK is already imported into the project with
 
