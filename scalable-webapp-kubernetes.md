@@ -13,15 +13,15 @@ lastupdated: "2017-10-27"
 {:pre: .pre}
 
 # Deploy a scalable web application on Kubernetes
-This tutorial walks you through how to scaffold a Java web application, run it locally in a container, and then deploy it to an IBM Cloud Kubernetes cluster. Additionally, we'll show you how to bind a custom domain, monitor the health of the environment, and scale.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to an IBM Cloud Kubernetes cluster. Additionally, we'll show you how to bind a custom domain, monitor the health of the environment, and scale.
 {:shortdesc}
 
 ## Objectives
 * Create a Kubernetes cluster.
-* Scaffold a starter Java application.
+* Scaffold a starter application.
 * Deploy the application to the Kubernetes cluster.
 * Bind a custom domain. 
-* Monitor the health of the cluster.
+* Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
 ![](images/solution2/Solution2Architecture.png)
@@ -69,7 +69,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    ```
    {: pre}
 
-## Create a Java starter application
+## Create a starter application
 {: #create_application}
 
 The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
@@ -79,9 +79,9 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
    bx dev create
    ```
    {: pre}
-2. Select `Web App` > `Basic Web` > `Java - MicroProfile / JavaEE`.
-3. Enter a name for your project.
-4. Enter unique host name for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
+2. Select `Web App` > `Basic Web` > `Java - MicroProfile / JavaEE` to create a Java starter. (To create a Node.js starter instead, use `Web App` > `Basic Web` > `Node` )
+3. Enter a **name** for your project.
+4. Enter unique **hostname** for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
 5. Select **n** to skip adding services.
 
 ![](images/solution2/bx_dev_create.png)
@@ -89,9 +89,9 @@ This generates a starter application complete with the code and all the necessar
 
 ![](images/solution2/Contents.png)
 
-### Build the Java application
+### Build the application
 
-You can build and run the application as you normally would using `mvn` for local development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
+You can build and run the application as you normally would using `mvn` for java local development or `node` and `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
 
 1. Ensure your local Docker engine is started.
    ```
@@ -111,7 +111,7 @@ You can build and run the application as you normally would using `mvn` for loca
 
    This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
 
-### Run the Java application locally
+### Run the application locally
 
 1. Run the container.
    ```
@@ -313,6 +313,11 @@ If you were to try to access your application with HTTPS at this time `https://<
    then access the console at http://127.0.0.1:8001/ui.
 2. Select **Nodes** and see the **Allocation Resources** to see the health of your nodes.
    ![](images/solution2/KubernetesDashboard.png)
+3. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.
+4. To **ssh** into the container, identify your pod name from the previous step and run
+   ```
+   kubectl exec -it <pod-name> -- bash
+   ```
 
 ## Scale Kubernetes pods
 {: #scale_cluster}
