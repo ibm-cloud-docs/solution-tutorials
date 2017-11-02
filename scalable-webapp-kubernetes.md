@@ -313,7 +313,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    then access the console at http://127.0.0.1:8001/ui.
 2. Select **Nodes** and see the **Allocation Resources** to see the health of your nodes.
    ![](images/solution2/KubernetesDashboard.png)
-3. To review the application logs from the container, select **Pods**, **<pod-name>** and **Logs**.
+3. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.
 4. To **ssh** into the container, identify your pod name from the previous step and run
    ```
    kubectl exec -it <pod-name> -- bash
