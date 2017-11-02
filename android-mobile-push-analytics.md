@@ -83,7 +83,7 @@ To set up FCM and obtain your credentials, complete the steps:
 3. In the Create a project window, provide a project name, choose a country/region and click `Create project`.
 4. On the left navigation pane, select `Settings` (Click on Settings Icon next to **Overview**)> `Project settings`.
 5. Choose the Cloud Messaging tab to obtain your project credentials - Server API Key and a Sender ID. 
-  **Note:**  Server key listed in FCM is the same as Server API Key.
+    **Note:**  Server key listed in FCM is the same as Server API Key.
     ![](images/solution9/fcm_console.png)
 
 You would also need to generate the `google-services.json` file. Complete the following steps:
@@ -93,7 +93,7 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
  2. In `Add Firebase to your Android` app modal window, add **com.ibm.mobilefirstplatform.clientsdk.android.push** as the Package Name to register push notifications android sdk. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
 
-    ![](images/solution9/add_firebase_to_your_app.png)
+     ![](images/solution9/add_firebase_to_your_app.png)
 
 3. Click `ADD APP` > `Add Firebase to your app`.  Include the package name of your application, by entering the package name **com.ibm.mysampleapp** in Add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
 
@@ -155,9 +155,9 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 1. On Android Studio, navigate to `MainActivity.java`. You should see the following `import` statements already added
 
     ```
-       import com.ibm.mobilefirstplatform.clientsdk.android.core.api.*;
-       import com.ibm.mobilefirstplatform.clientsdk.android.analytics.api.*;
-       import com.ibm.mobilefirstplatform.clientsdk.android.logger.api.*;
+    import com.ibm.mobilefirstplatform.clientsdk.android.core.api.*;
+    import com.ibm.mobilefirstplatform.clientsdk.android.analytics.api.*;
+    import com.ibm.mobilefirstplatform.clientsdk.android.logger.api.*;
     ```
 
 2. The code includes `BMSClient` initialization code with the **Region** parameter. In the initializer, the **Region** value specifies which IBM Cloud deployment you are using, for example, `BMSClient.REGION_US_SOUTH` and `BMSClient.REGION_UK`.
@@ -168,7 +168,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
    {: codeblock:}
 
-   **Note:** Core SDK must be initialized to interact with IBM Cloud Mobile services.
+    **Note:** Core SDK must be initialized to interact with IBM Cloud Mobile services.
 
 3. In this code snippet, Analytics is configured to record lifecycle events. Both `app_name` and `apiKey` are pre-configured as part of the code generation process.
 
@@ -187,9 +187,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    Logger.setLogLevel(Logger.LEVEL.ERROR);
    ```
 
-    {: codeblock:}
-
-   ​
+    {: pre:}
 
 ## Configure,Send and Monitor push notifications.
 
@@ -212,7 +210,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
     {: codeblock:}
 
-   **Note:** The service credentials are part of `/res/values/credentials.xml` file.
+   ** Note:** The service credentials are part of `/res/values/credentials.xml` file.
 
 3. Registration for notifications happens in `MainActivity.java`. Provide an unique USER_ID (optional).
 
@@ -256,12 +254,12 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 6. You should see a notification on your Android device.
 
-<p align="center"><img src="images/solution9/android_notifications1.png" width="200"/><img src="images/solution9/android_notifications2.png" width="200"/></p>
+      ![](images/solution9/android_notifications1.png)   ![](images/solution9/android_notifications2.png)
 
 7. You can monitor your sent notifications by navigating to `Monitoring` on the Push Notifications Service.
 
    The IBM Push Notifications service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent push notifications, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
-   ![](images/solution6/monitoring_messages.png)
+      ![](images/solution6/monitoring_messages.png)
 
 ## Monitoring the app with Mobile Analytics.
 
@@ -284,6 +282,8 @@ You can record application logs and monitor data with the Mobile Analytics Clien
 3. [Click here](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#monitoringapps) to set alerts, Monitor App crashes, and Monitor network requests.
 
 ## Related Content
+
+[Customize the Push Notifications settings](https://console.bluemix.net/docs/services/mobilepush/push_step_4.html#push_step_4_Android)
 
 [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
 
