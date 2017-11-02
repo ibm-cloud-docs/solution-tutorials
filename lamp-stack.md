@@ -42,7 +42,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
    sudo ssh root@<Public-IP-Address>
    ```
    {: pre}
-  
+
   You can find the server public IP address and password in the dashboard.
   {:tip}
 
@@ -92,10 +92,10 @@ Verify Apache, MySQL, and PHP running on the Ubuntu image.
    mysql -u root -p
    ```
    {: pre}
-   
+
    MySQL default user name and password is root and root.
    {:tip}
-     
+
    When done, exit the mysql prompt by typing `\q`.
 7. Check the version of PHP by using the following command:
 
@@ -108,7 +108,7 @@ Verify Apache, MySQL, and PHP running on the Ubuntu image.
    sudo sh -c 'echo "<?php phpinfo(); ?>" > /var/www/html/info.php'
    ```
    {: pre}
-   
+
    Now you can check the PHP info page you created. Open a browser and go to http://YourPublicIPAddress/info.php. Substitute the public IP address of your virtual server. It should look similar to the following image.
    ![PHP info](images/solution4/PHPInfo.png)
 
@@ -191,7 +191,7 @@ Service ping is added by default so let's add Slow ping. To add Slow ping monito
 2. Click **Manage Monitors**.
 3. Add the **SLOW PING** monitoring option and then click **Add Monitor**. Select your public IP address for the IP address.
   ![Add Slow Ping Monitoring](images/solution4/AddSlowPing.png)      
-  
+
   **Note**: Duplicate monitors with the same configurations are not allowed. Only one monitor per configuration can be created.   
 
 Now, you should now receive a notification alert at your IBM Cloud account email address.
@@ -225,7 +225,3 @@ The vulnerability scanner scans the server for any vulnerabilities related to th
 Another way to secure the server is by adding firewall to the server. With IBM Cloud Virtual Servers, you have several firewall options that provide an essential security layer. The firewall options are provisioned on demand without service interruptions. The firewall services prevent unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use.  
 
 Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN. For more information, see [Firewalls](http://knowledgelayer.softlayer.com/topic/firewall).
-
-## Next steps
-
-Advance to the next tutorial to learn how to [use IBM Compose for MySQL service instead of the traditional MySQL database]().
