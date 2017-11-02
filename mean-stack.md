@@ -135,4 +135,4 @@ You learned how to:
 
 Advance to the next tutorial to learn how to:
 
-- [Set up source control and continuous delivery](https://dev-console.stage1.bluemix.net/docs/solutions/multi-region-webapp.html)
+- [Set up source control and continuous delivery](multi-region-webapp.html#devops)
