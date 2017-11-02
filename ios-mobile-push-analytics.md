@@ -284,7 +284,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   ```
    {: codeblock:}
 
-3. Registration for notifications happens in `AppDelegate.swift`. Provide an unique USER_ID.
+3. Registration for notifications happens in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
 
   ```
    // Replace USER_ID with a unique end user identifier. This enables specific push notification targeting.
@@ -302,7 +302,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 4. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
 
-5. Open Push Notifications service on IBM Cloud and to send basic push notifications, complete the following steps:
+5. Open Push Notifications service under `Mobile Services` > **Existing services**  on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:
   * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
 
        **Note:** When you select the All Devices option, all devices subscribed to Push Notifications will receive notifications.
