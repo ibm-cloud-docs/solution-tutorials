@@ -13,12 +13,12 @@ lastupdated: "2017-10-27"
 {:pre: .pre}
 
 # Deploy a scalable web application on Kubernetes
-This tutorial walks you through how to scaffold a Java web application, run it locally in a container, and then deploy it to an IBM Cloud Kubernetes cluster. Additionally, we'll show you how to bind a custom domain, monitor the health of the environment, and scale.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to an IBM Cloud Kubernetes cluster. Additionally, we'll show you how to bind a custom domain, monitor the health of the environment, and scale.
 {:shortdesc}
 
 ## Objectives
 * Create a Kubernetes cluster.
-* Scaffold a starter Java application.
+* Scaffold a starter application.
 * Deploy the application to the Kubernetes cluster.
 * Bind a custom domain. 
 * Monitor the health of the cluster.
@@ -43,11 +43,6 @@ This tutorial walks you through how to scaffold a Java web application, run it l
   {:tip}
 
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesClusterCreation.png)
-   
-   Also, you can create a cluster using the CLI through the following command.
-   ```bash
-   bx cs cluster-create <cluster-name>
-   ```
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 ### Configure kubectl and helm
@@ -74,7 +69,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    ```
    {: pre}
 
-## Create a Starter application
+## Create a starter application
 {: #create_application}
 
 The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
@@ -84,11 +79,10 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
    bx dev create
    ```
    {: pre}
-2. Select `Web App` > `Basic Web` > `Java - MicroProfile / JavaEE`.
-3. For Node use `Web App` > `Basic Web` > `Node`
-4. Enter a name for your project.
-5. Enter unique host name for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
-6. Select **n** to skip adding services.
+2. Select `Web App` > `Basic Web` > `Java - MicroProfile / JavaEE` to create a Java starter. (To create a Node.js starter instead, use `Web App` > `Basic Web` > `Node` )
+3. Enter a **name** for your project.
+4. Enter unique **hostname** for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
+5. Select **n** to skip adding services.
 
 ![](images/solution2/bx_dev_create.png)
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
@@ -97,7 +91,7 @@ This generates a starter application complete with the code and all the necessar
 
 ### Build the application
 
-You can build and run the application as you normally would using `mvn` for java local development or `npm` for node local development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
+You can build and run the application as you normally would using `mvn` for java local development or `node` and `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
 
 1. Ensure your local Docker engine is started.
    ```
@@ -343,27 +337,3 @@ Refer to Kubernetes documentation for manual and automatic scaling:
 
 * [IBM Container Service](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
 * [IBM Cloud App Service](https://console.bluemix.net/docs/cloudnative/index.html#web-mobile)
-
-## Shell into Kubernete pods
-
-To shell into a pod use the following command
-
-    ```bash
-    kubectl exec -it <podName> -- bin/bash
-    ```
-    {: pre}
-Refer to Kubernetes documentation for using exec commands with pods:
-    * [Get Shell Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)
-    * [Kubectl Overview](https://kubernetes.io/docs/user-guide/kubectl-overview/)
-    
-## Get Logs for Kubernete pods
-
-To get the logs of a pod use the following command
-    ```bash
-    kubectl logs <podName>
-    ```
-    {: pre}
-    
-Refer to Kubernetes documentation for logging
-    * [Logging](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
-    * [Kubectl Overview](https://kubernetes.io/docs/user-guide/kubectl-overview/)  
