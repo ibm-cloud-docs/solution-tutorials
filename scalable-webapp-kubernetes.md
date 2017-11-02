@@ -74,61 +74,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    ```
    {: pre}
 
-## Create a Node starter application
-{: #create_application_node}
-
-The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
-
-1. Start the `bx dev` wizard.
-   ```
-   bx dev create
-   ```
-   {: pre}
-2. Select `Web App` > `Basic Web` > `Node`.
-3. Enter a name for your project.
-4. Enter unique host name for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
-5. Select **n** to skip adding services.
-
-![](images/solution2/NodeContent.png)
-This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
-
-![](images/solution2/NodeList.png)
-
-### Build the Node application
-
-You can build and run the application as you normally would using `npm` for local development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
-
-1. Ensure your local Docker engine is started.
-   ```
-   docker ps
-   ```
-   {: pre}
-2. Change to the generated project directory.
-   ```
-   cd <project name>
-   ```
-   {: pre}
-3. Build the application.
-   ```
-   bx dev build
-   ```
-   {: pre}
-
-   This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
-
-### Run the Node application locally
-
-1. Run the container.
-   ```
-   bx dev run
-   ```
-   {: pre}
-
-   This uses your local Docker engine to run the docker image that you built in the previous step.
-2. After your container starts, go to http://localhost:3000/[nameofproject]
-  ![](images/solution2/Congratulations.png)
-
-## Create a Java starter application
+## Create a Starter application
 {: #create_application}
 
 The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
@@ -139,18 +85,19 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
    ```
    {: pre}
 2. Select `Web App` > `Basic Web` > `Java - MicroProfile / JavaEE`.
-3. Enter a name for your project.
-4. Enter unique host name for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
-5. Select **n** to skip adding services.
+3. For Node use `Web App` > `Basic Web` > `Node`
+4. Enter a name for your project.
+5. Enter unique host name for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
+6. Select **n** to skip adding services.
 
 ![](images/solution2/bx_dev_create.png)
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
 
 ![](images/solution2/Contents.png)
 
-### Build the Java application
+### Build the application
 
-You can build and run the application as you normally would using `mvn` for local development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
+You can build and run the application as you normally would using `mvn` for java local development or `npm` for node local development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
 
 1. Ensure your local Docker engine is started.
    ```
@@ -170,7 +117,7 @@ You can build and run the application as you normally would using `mvn` for loca
 
    This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
 
-### Run the Java application locally
+### Run the application locally
 
 1. Run the container.
    ```
