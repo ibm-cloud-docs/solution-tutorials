@@ -36,7 +36,7 @@ This solution walks you through the creation of a mobile starter application, ad
 - [Android Studio![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html) for importing and enhancing your code.
 - Gmail account to log into Firebase console for Sender ID and Server API Key.
 
-## Create a mobile project from basic starter kit.
+## Create a mobile project from basic Android native starter kit.
 
 {: #get_code}
 
@@ -76,7 +76,7 @@ To set up FCM and obtain your credentials, complete the steps:
 2. Select `Add project`.
 3. In the Create a project window, provide a project name, choose a country/region and click `Create project`.
 4. On the left navigation pane, select `Settings` (Click on Settings Icon next to **Overview**)> `Project settings`.
-5. Choose the Cloud Messaging tab to obtain your project credentials - Server API Key and a Sender ID. 
+5. Choose the Cloud Messaging tab to obtain your project credentials - Server API Key and a Sender ID.
     **Note:**  Server key listed in FCM is the same as Server API Key.
     ![](images/solution9/fcm_console.png)
 
@@ -91,6 +91,7 @@ You would also need to generate the `google-services.json` file. Complete the fo
     ![](images/solution9/add_firebase_to_your_app.png)
 
 3. Click `ADD APP` > `Add Firebase to your app`.  Include the package name of your application, by entering the package name **com.ibm.mysampleapp** in Add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
+
      **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
 
 4. Download the latest config file `google-services.json` under **Your apps**.
@@ -183,11 +184,11 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    ```
     // Register the device to Push Notifications
     push.registerDeviceWithUserId("YOUR_USER_ID",new MFPPushResponseListener<String>() {
-    @Override	
+    @Override
     public void onSuccess(String response) {
     //handle successful device registration here
     }
-    @Override	
+    @Override
     public void onFailure(MFPPushException ex) {
     //handle failure in device registration here
     }
@@ -196,9 +197,9 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 4. Run the app on a physical device as notifications can't be sent to an Android Emulator.
 
-5. Open Push Notifications service under `Mobile Services` > **Existing services** on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:  
+5. Open Push Notifications service under `Mobile Services` > **Existing services** on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:
 
-   - Click **Manage** > **Configure**. 
+   - Click **Manage** > **Configure**.
    - Select **Mobile** and then update the GCM/FCM Push Credentials tab with the Sender ID/Project number and API Key(Server Key) which you initially created on Firebase console.
 
      ![](images/solution9/configure_push_notifications.png)
