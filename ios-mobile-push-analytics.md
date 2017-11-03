@@ -265,8 +265,6 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
     }
   ```
 
-​        {: codeblock:}
-
 ## Send and monitor push notifications.
 
 1. Push notifications SDK is already imported into the project with
