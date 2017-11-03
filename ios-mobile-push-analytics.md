@@ -128,7 +128,7 @@ You must obtain separate certificates for your development and distribution envi
 
    ![Export certificate and keys](images/solution6/keychain_export_key.png)
 
-17. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12_certificate` or `production_apns.p12`, then click Save.
+17. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or `production_apns.p12`, then click Save.
 
      ![Export certificate and keys](images/solution6/certificate_p12v2.png)
 
@@ -223,7 +223,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 ## Instrumenting the app to use Mobile Analytics.
 
 1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
-   ![](images/solution6/Xcode.png)
+   ![](images/solution6/xcode.png)
 
 2. `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized as follows
   ```
