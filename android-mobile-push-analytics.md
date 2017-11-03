@@ -88,16 +88,16 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
 2. In `Add Firebase to your Android` app modal window, add **com.ibm.mobilefirstplatform.clientsdk.android.push** as the Package Name to register push notifications android sdk. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
 
-  ![](images/solution9/add_firebase_to_your_app.png)
+    ![](images/solution9/add_firebase_to_your_app.png)
 
 3. Click `ADD APP` > `Add Firebase to your app`.  Include the package name of your application, by entering the package name **com.ibm.mysampleapp** in Add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
      **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
 
 4. Download the latest config file `google-services.json` under **Your apps**.
 
-        ![](images/solution9/google_services.png)
+     ![](images/solution9/google_services.png)
 
-      **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
+     **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
 
 In the next step, you will download the scaffolded code and setup the Push and Analytics Android SDKs.
 
@@ -160,7 +160,6 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    Logger.storeLogs(true);
    Logger.setLogLevel(Logger.LEVEL.ERROR);
    ```
-
 
 
 ## Configure,Send and Monitor push notifications.
