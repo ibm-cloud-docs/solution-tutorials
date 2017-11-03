@@ -81,22 +81,24 @@ To set up FCM and obtain your credentials, complete the steps:
     ![](images/solution9/fcm_console.png)
 
 You would also need to generate the `google-services.json` file. Complete the following steps:
- 1. In the Firebase console, click the **Project Settings** icon > `General` tab  under the project you created above > Select `Add Firebase to your Android App`
+
+1. In the Firebase console, click the **Project Settings** icon > `General` tab  under the project you created above > Select `Add Firebase to your Android App`
 
     ![](images/solution9/firebase_project_settings.png)
 
- 2. In `Add Firebase to your Android` app modal window, add **com.ibm.mobilefirstplatform.clientsdk.android.push** as the Package Name to register push notifications android sdk. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
+2. In `Add Firebase to your Android` app modal window, add **com.ibm.mobilefirstplatform.clientsdk.android.push** as the Package Name to register push notifications android sdk. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
 
       ![](images/solution9/add_firebase_to_your_app.png)
+      
 
 3. Click `ADD APP` > `Add Firebase to your app`.  Include the package name of your application, by entering the package name **com.ibm.mysampleapp** in Add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
 
-    **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
+     **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
 4. Download the latest config file `google-services.json` under **Your apps**.
 
     ![](images/solution9/google_services.png)
 
-**Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
+  **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
 
 In the next step, you will download the scaffolded code and setup the Push and Analytics Android SDKs.
 
@@ -134,7 +136,9 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    </intent-filter>
    </service>
    ```
+   
 ## Instrumenting the app to use Mobile Analytics.
+
 1. On Android Studio, navigate to `MainActivity.java`. You should see the following `import` statements already added
 
     ```
