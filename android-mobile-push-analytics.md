@@ -95,9 +95,9 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
 4. Download the latest config file `google-services.json` under **Your apps**.
 
-     ![](images/solution9/google_services.png)
+    ![](images/solution9/google_services.png)
 
-     **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
+    **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
 
 In the next step, you will download the scaffolded code and setup the Push and Analytics Android SDKs.
 
