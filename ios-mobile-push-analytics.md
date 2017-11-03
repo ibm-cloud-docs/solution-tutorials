@@ -223,7 +223,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 ## Instrumenting the app to use Mobile Analytics.
 
 1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
-   ![](images/solution6/xcode.png)
+   ![](images/solution6/Xcode.png)
 
 2. `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized as follows
   ```
