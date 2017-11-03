@@ -88,17 +88,16 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
 2. In `Add Firebase to your Android` app modal window, add **com.ibm.mobilefirstplatform.clientsdk.android.push** as the Package Name to register push notifications android sdk. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
 
-      ![](images/solution9/add_firebase_to_your_app.png)
-      
+  ![](images/solution9/add_firebase_to_your_app.png)
 
 3. Click `ADD APP` > `Add Firebase to your app`.  Include the package name of your application, by entering the package name **com.ibm.mysampleapp** in Add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
-
      **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
+
 4. Download the latest config file `google-services.json` under **Your apps**.
 
-    ![](images/solution9/google_services.png)
+        ![](images/solution9/google_services.png)
 
-  **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
+      **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
 
 In the next step, you will download the scaffolded code and setup the Push and Analytics Android SDKs.
 
@@ -110,7 +109,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 1. Launch Android Studio > `Open an existing Android Studio project` and point to the downloaded code.
 2. `Gradle` build will automatically be triggered and all the dependencies will be downloaded.
-3. Add the `Google Play services` dependency to your Module level `build.gradle (Module: app)` file at the end, after the `dependencies{.....}`:
+3. Add the `Google Play services` dependency to your Module level `build.gradle (Module: app)` file at the end, after the `dependencies{.....}`
    ```
    apply plugin: 'com.google.gms.google-services'
    ```
@@ -136,7 +135,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    </intent-filter>
    </service>
    ```
-   
+
 ## Instrumenting the app to use Mobile Analytics.
 
 1. On Android Studio, navigate to `MainActivity.java`. You should see the following `import` statements already added
@@ -161,13 +160,18 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    Logger.storeLogs(true);
    Logger.setLogLevel(Logger.LEVEL.ERROR);
    ```
+
+
+
 ## Configure,Send and Monitor push notifications.
 
 1. Push notifications SDK is already imported into the project with
+
    ```
    import com.ibm.mobilefirstplatform.clientsdk.android.core.api.*;
    import com.ibm.mobilefirstplatform.clientsdk.android.push.api.*;
    ```
+
 2. Push initialization code can be found in `MainActivity.java` file.
    ```
    //Initialize client Push SDK
@@ -175,6 +179,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    push.initialize(getApplicationContext(), "appGUID", "clientSecret");
    ```
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
+
 3. Registration for notifications happens in `MainActivity.java`. Provide an unique USER_ID (optional).
    ```
     // Register the device to Push Notifications
@@ -189,7 +194,9 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
     }
     });
    ```
+
 4. Run the app on a physical device as notifications can't be sent to an Android Emulator.
+
 5. Open Push Notifications service under `Mobile Services` > **Existing services** on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:  
 
    - Click **Manage** > **Configure**. 
@@ -208,6 +215,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 6. You should see a notification on your Android device.
 
       ![](images/solution9/android_notifications1.png)   ![](images/solution9/android_notifications2.png)
+
 7. You can monitor your sent notifications by navigating to `Monitoring` on the Push Notifications Service.
      The IBM Push Notifications service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent push notifications, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
       ![](images/solution6/monitoring_messages.png)
