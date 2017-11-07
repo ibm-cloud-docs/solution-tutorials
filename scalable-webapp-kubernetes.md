@@ -91,7 +91,7 @@ This generates a starter application complete with the code and all the necessar
 
 ### Build the application
 
-You can build and run the application as you normally would using `mvn` for java local development or `node` and `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
+You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
 
 1. Ensure your local Docker engine is started.
    ```
@@ -120,7 +120,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
-2. After your container starts, go to http://localhost:9080/[nameofproject]
+2. After your container starts, go to http://localhost:9080/[nameofproject]. If you created a Node.js application, use port 3000.
   ![](images/solution2/LibertyLocal.png)
 
 ## Deploy application to cluster
