@@ -35,7 +35,7 @@ This tutorial walks you through how to host and serve website assets (images, vi
    * Manage Storage
    * Manage CDN File Transfers
    * API Key
-   
+
    These permissions are required to be able to view and use the Storage and CDN services.
 2. Ensure that you have access to storage resources in the {{site.data.keyword.Bluemix}} console:
    * Go to https://control.bluemix.net.
@@ -148,7 +148,7 @@ In this section, we will create a CDN service. The CDN service distributes conte
 7. Enable HTTP Port 80.
 8. Click **Create**.
 
-### Access your content through the CDN domain
+### Access your content through the CDN CNAME
 
 1. Select the CDN instance in the list at [https://control.bluemix.net/network/cdn](https://control.bluemix.net/network/cdn).
 2. The Details panel shows the CNAME for your CDN.
@@ -184,7 +184,7 @@ The application contains a public/index.html web page that includes references t
 
 Using a CDN with an Object Storage is a powerful combination which lets you host files and serve them to users from around the world. You can also use Object Storage to store any files your users upload to your application.
 
-## Related information 
+## Related information
 
 [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
 

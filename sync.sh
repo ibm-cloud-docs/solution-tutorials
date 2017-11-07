@@ -16,6 +16,7 @@ tar cf - \
   --exclude=build \
   --exclude=.git \
   --exclude=.gitignore \
+  --exclude=solution-template.md \
   --exclude=sync.sh \
   --exclude=.travis.yml . | (cd build && tar xvf - )
 (cd build && git add . && git commit -m "$COMMIT_MESSAGE" && git push)
