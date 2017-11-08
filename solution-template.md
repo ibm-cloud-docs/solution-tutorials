@@ -53,7 +53,7 @@ Objective description
 This paragraph only appears in the iOS documentation
 {: ios}
 
-And this paragraph only appears in the iOS documentation
+And this paragraph only appears in the Android documentation
 {: android}
 
 ## Second Objective
