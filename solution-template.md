@@ -50,9 +50,11 @@ Objective description
    {: pre}
 
 
-This paragraph only appears in the iOS documentation{: ios}
+This paragraph only appears in the iOS documentation
+{: ios}
 
-And this paragraph only appears in the iOS documentation{: android}
+And this paragraph only appears in the iOS documentation
+{: android}
 
 ## Second Objective
 {: #second_objective}
