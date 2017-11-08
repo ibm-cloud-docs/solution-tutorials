@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-10-27"
+lastupdated: "2017-11-08"
 
 ---
 
@@ -14,19 +14,19 @@ lastupdated: "2017-10-27"
 
 # Android Native Mobile Application with Push and Analytics
 
-Learn how easy it is to quickly create an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
+Learn how easy it is to quickly create an Android native application with high-value mobile services using services like push notifications and mobile analytics on IBM Cloud.
 
 This solution walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, Importing the code to Android Studio and then further enhance the application.
 
 ## Objectives
 
-* Create a mobile project from Basic Android native starter kit.
-* Add Push Notifications and Mobile Analytics services.
+* Create a mobile project from basic android native starter kit.
+* Add push notifications and mobile analytics services.
 * Obtain FCM credentials.
 * Download the code and complete required setup.
-* Instrumenting the app to use Mobile Analytics.
-* Configure,Send, and Monitor push notifications.
-* Monitoring the app with Mobile Analytics.
+* Instrumenting the app to use mobile analytics.
+* Configure, send, and monitor push notifications.
+* Monitoring the app with mobile analytics.
 
   ![](images/solution9/android_architecture.png)
 
@@ -40,39 +40,40 @@ This solution walks you through the creation of a mobile starter application, ad
 
 {: #get_code}
 
-1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from pre-defined `Starter Kits`.
-2. Click on `Starter Kits` and scroll down to select `Basic` Starter Kit.
+1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from the pre-defined `Starter Kits`.
+2. Click on `Starter Kits` and scroll down to select the `Basic` Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
-3. Enter a project name which will be your app name as well.
+3. Enter a project name, this can be your app name as well.
 4. Select `Android` as your language.
 
     ![](images/solution9/create_mobile_project.png)
 5. Click on `Create Project` to scaffold an Android native(Java) App.
 6. A new `Project` will be created under Projects tab on the left pane.
 
-In the next step, you will add mobile services like Push notifications and Mobile Analytics to accelerate your app.
+In the next step, you will add mobile services like push notifications and mobile analytics to accelerate your app.
 
 ## Add Push Notifications and Mobile Analytics services.
 {: #create_cos}
 
-**Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter. If not, Please follow the below steps.
-Also, Following the below steps you can add other value-add services.
+**Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter. If **NOT**, flease follow the below steps. 
 
-1. Click on `Add Service` and select Mobile to accelerate your app with Mobile services. Click Next to see the available services.
-2. Select `Push Notifications` and Click Next.
-3. Select Lite plan and Click `Create` to provision a Push Notifications service. To understand the pricing, Click on `pricing details`.
-4. Now, you should see Push Notifications service added to your project and also the Credentials.
-5. To add Mobile Analytics service, click on `Add Service` and Select Basic plan.Once you click `Create`, you should see both the Mobile services with credentials.
+*Note*: The steps below can also add other value-add services.
+
+1. Click on `Add Service` and select Mobile to accelerate your app with mobile services. Click next to see the available services.
+2. Select `Push Notifications` and the click next.
+3. Select Lite plan and then click `Create` to provision a Push Notifications service. To understand the pricing, click on `pricing details`.
+4. Now, you should see Push Notifications service added to your project and the credentials under the service.
+5. To add mobile analytics service, click on `Add Service` and then select the basic plan. Once you click `Create,` you should see both the mobile services and the credentials.
 
 ## Obtain FCM credentials
 
-Firebase Cloud Messaging (FCM) is the gateway used to deliver push notifications to Android devices, Google Chrome browser and Chrome Apps & Extensions. To set up the Push Notifications service on the console, you need to get your FCM credentials (Sender ID and API key).
+Firebase Cloud Messaging (FCM) is the gateway used to deliver push notifications to Android devices, Google Chrome browser, and Chrome Apps & Extensions. To set up the Push Notifications service on the console, you need to get your FCM credentials (Sender ID and API key).
 
 The API key is stored securely and used by the Push Notifications service to connect to the FCM server and the sender ID (project number) is used by the Android SDK and the JS SDK for Google Chrome and Mozilla Firefox on the client side.
 
 To set up FCM and obtain your credentials, complete the steps:
 
-1. Visit the [Firebase Console ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1). A Google user account is required.
+1. Visit the [Firebase Console ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1. A Google user account is required.
 2. Select `Add project`.
 3. In the Create a project window, provide a project name, choose a country/region and click `Create project`.
 4. On the left navigation pane, select `Settings` (Click on Settings Icon next to **Overview**)> `Project settings`.
@@ -90,7 +91,7 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
     ![](images/solution9/add_firebase_to_your_app.png)
 
-3. Click `ADD APP` > `Add Firebase to your app`.  Include the package name of your application, by entering the package name **com.ibm.mysampleapp** in Add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
+3. Click `ADD APP` > `Add Firebase to your app`.  Include the package name of your application by entering the package name **com.ibm.mysampleapp** then proceed to add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
 
      **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
 
@@ -100,13 +101,15 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
     **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
 
+*The steps and Firebase console UI is subject to change, refer to Google documentation for the Firebase part if needed*
+
 In the next step, you will download the scaffolded code and setup the Push and Analytics Android SDKs.
 
 ## Download the code and complete required setup
 
-If you haven't downloaded the code yet, On the IBM Cloud Mobile Dashboard, Click on `Download Code` under Projects > `Your Mobile Project`.
+If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to get the code by clicking on the  `Download Code` button under Projects > `Your Mobile Project`.
 
-The downloaded code comes with **Push Notifications** and **Mobile Analytics** Client SDKs included. The Client SDKs are available on Gradle and Maven. For this tutorial, you will use `Gradle`.
+The downloaded code comes with **Push Notifications** and **Mobile Analytics** client SDKs included. The client SDKs is available on Gradle and Maven. For this tutorial, you will use `Gradle`.
 
 1. Launch Android Studio > `Open an existing Android Studio project` and point to the downloaded code.
 2. `Gradle` build will automatically be triggered and all the dependencies will be downloaded.
@@ -115,9 +118,8 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    apply plugin: 'com.google.gms.google-services'
    ```
 4. Copy the `google-services.json` file that you have created and downloaded to your Android application module root directory. Note that the `google-service.json`file includes the added package names.
-    ![](images/solution9/json_android_studio.png)
 
-5. The required permissions are already inside the application's `AndroidManifest.xml` file and dependencies - Push and Analytics are included in `build.gradle (Module: app)`.
+5. The required permissions are already inside the application `AndroidManifest.xml` file and dependencies. Push and Analytics are included in `build.gradle (Module: app)`.
    ```
    compile ('com.ibm.mobilefirstplatform.clientsdk.android:analytics:1.+')
    compile ('com.ibm.mobilefirstplatform.clientsdk.android:push:3.+')
@@ -163,7 +165,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    ```
 
 
-## Configure,Send and Monitor push notifications.
+## Configure, send and monitor push notifications.
 
 1. Push notifications SDK is already imported into the project with
 
@@ -180,7 +182,10 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    ```
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
 
-3. Registration for notifications happens in `MainActivity.java`. Provide an unique USER_ID (optional).
+3. Registration for notifications happens in `MainActivity.java`. 
+
+   Provide an unique USER_ID (optional).
+
    ```
     // Register the device to Push Notifications
     push.registerDeviceWithUserId("YOUR_USER_ID",new MFPPushResponseListener<String>() {
@@ -195,7 +200,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
     });
    ```
 
-4. Run the app on a physical device as notifications can't be sent to an Android Emulator.
+4. Run the app on a physical device to receive notifications. Notifications wont sent to an Android Emulator.
 
 5. Open Push Notifications service under `Mobile Services` > **Existing services** on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:
 
@@ -204,9 +209,9 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
      ![](images/solution9/configure_push_notifications.png)
 
-   - Click **Save**. The Push Notifications service is now configured.
-   - Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
-     **Note:** When you select the All Devices option, all devices subscribed to Push Notifications will receive notifications.
+   - Click **Save**. The push notifications service is now configured.
+   - Select `Send Notifications`, and compose a message by choosing a send option. The supported options are device by tag, device id, user id, android devices, IOS devices, web notifications, and all devices.
+     **Note:** When you select the **All Devices** option, all devices subscribed to Push Notifications will receive notifications.
    - In the `Message` field, compose your message. Choose to configure the optional settings as required.
    - Click `Send` and verify that your physical devices has received the notification.
 
@@ -233,7 +238,7 @@ You can record application logs and monitor data with the Mobile Analytics Clien
 
      ![](images/solution9/android_mobile_analytics.png)
 
-3. [Click here](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#monitoringapps) to set alerts, Monitor App crashes, and Monitor network requests.
+3. [Click here](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#monitoringapps) to set alerts, monitor app crashes, and monitor network requests.
 
 ## Related Content
 
