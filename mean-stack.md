@@ -32,7 +32,8 @@ This tutorial walks you through the creation of a web application using the popu
 1. [Install Git](https://git-scm.com/)
 2. [Install Bluemix Command Line Tool](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
 
-For local development
+
+And to develop and run the application locally:
 1. [Install Node.js and NPM](https://nodejs.org/)
 2. [Install and run MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
 
