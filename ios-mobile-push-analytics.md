@@ -28,12 +28,12 @@ This solution walks you through the creation of a mobile starter application, ad
 * Send and monitor push notifications.
 * Monitoring the app with Mobile Analytics.
 
-  ![](images/solution6/ios_arch.png)
+  ![](images/solution6/ios_architecture.png)
 
 ## Before you begin
 {: #prereqs}
 
-1. [Apple Developers](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications.
+1. [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
 ## Create a mobile project from basic Swift starter kit.
@@ -54,6 +54,8 @@ In the next step, you will add mobile services like Push notifications and Mobil
 ## Add Push Notifications and Mobile Analytics services.
 {: #create_cos}
 
+**Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter. If not, follow the below steps. Also, Following the below steps you can add other value-add services.
+
 1. Click on `Add Service` and select Mobile to accelerate your app with Mobile services. Click Next to see the available services.
 2. Select `Push Notifications` and Click Next.
 3. Select Lite plan and Click `Create` to provision a Push Notifications service. To understand the pricing, Click on `pricing details`.
@@ -73,9 +75,9 @@ You need to obtain and configure your APNs credentials. The APNs certificates ar
 ### Registering an App ID
 
 The App ID (the bundle identifier) is a unique identifier that identifies a specific application. Each application requires an App ID. Services like the Push Notifications service are configured to the App ID.
-Ensure that you have an [Apple Developers](https://developer.apple.com/) account. This is a mandatory prerequisite.
+Ensure that you have an [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account. This is a mandatory prerequisite.
 
-1. Go to the [Apple Developer](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
+1. Go to the [Apple Developer![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
 2. Go to `Identifiers` > App IDs section.
 3. In the `Registering App IDs` page, provide the App name in the App ID Description Name field. For example: ACME Push Notifications. Provide a string for the App ID Prefix.
 4. For the App ID Suffix, choose `Explicit App ID` and provide a Bundle ID value. It is recommended that you provide a reverse domain-name style string. For example: com.ACME.push.
@@ -126,7 +128,7 @@ You must obtain separate certificates for your development and distribution envi
 
    ![Export certificate and keys](images/solution6/keychain_export_key.png)
 
-17. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12_certificate` or `production_apns.p12`, then click Save.
+17. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or `production_apns.p12`, then click Save.
 
      ![Export certificate and keys](images/solution6/certificate_p12v2.png)
 
@@ -183,15 +185,24 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    ```
    sudo gem install cocoapods
    ```
+   {: pre:}
+
 2. On the terminal, Navigate to the folder where you downloaded the code
+
    ```
    cd <Name of the Project name>
    ```
+   {: pre:}
+
 3. The folder already includes a `podfile` with required dependencies.So run the below command to install the dependencies (Client SDKs)
+
   ```
   pod install
   ```
+  {: pre:}
+
 4. The required dependencies will be installed
+
   ```
   Analyzing dependencies
   Downloading dependencies
@@ -204,6 +215,8 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   Sending stats
   Pod installation complete! There are 3 dependencies from the Podfile and 4 total pods installed.
   ```
+  {: pre:}
+
 5. If you navigate to the folder, you should see a `.xcworkspace` file.
   **Note:** Ensure that you always open the new Xcode workspace, instead of the original Xcode project file: `MyApp.xcworkspace`.
 
@@ -211,17 +224,24 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
    ![](images/solution6/Xcode.png)
+
 2. `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized as follows
   ```
   let myBMSClient = BMSClient.sharedInstance
         myBMSClient.initialize(bluemixRegion: <Region you created the service>)
         myBMSClient.requestTimeout = 10.0 // seconds
   ```
+  {: codeblock:}
+
 3. Along with BMSCore, Mobile Analytics SDK is already imported into the project with
+
   ```
    import BMSAnalytics
   ```
+  {: pre:}
+
 4. Analytics initialization code is already included as shown below
+
   ```
   // Analytics client SDK is configured to record lifecycle events.
          	Analytics.initialize(appName:dictionary["appName"] as? String,
@@ -232,7 +252,10 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
         	Logger.isLogStorageEnabled = true
         	Logger.logLevelFilter = .error
   ```
-   **Note:** The service credentials are part of `BMSCredentials.plist` file.
+   {: codeblock:}
+
+  **Note:** The service credentials are part of `BMSCredentials.plist` file.
+
 5. Gathering usage analytics and using logger - Navigate to `ViewController.swift` to see the below code.
 
   ```
@@ -248,13 +271,19 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   ```
    import BMSPush
   ```
+   {: pre:}
+
 2. Push initialization code can be found under `func application`
+
   ```
    let push = BMSPushClient.sharedInstance
             push.initializeWithAppGUID(appGUID: dictionary["pushAppGuid"] as! String,
                                        clientSecret: dictionary["pushClientSecret"] as! String)
   ```
-3. Registration for notifications happens in `AppDelegate.swift`. Provide an unique USER_ID.
+   {: codeblock:}
+
+3. Registration for notifications happens in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
+
   ```
    // Replace USER_ID with a unique end user identifier. This enables specific push notification targeting.
             push.registerWithDeviceToken(deviceToken: deviceToken, WithUserId: "USER_ID") { (response, statusCode, error) -> Void in
@@ -267,15 +296,20 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
                 }
             }
   ```
+   {: codeblock:}
+
 4. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
-5. Open Push Notifications service on IBM Cloud and to send basic push notifications, complete the following steps:
+
+5. Open Push Notifications service under `Mobile Services` > **Existing services**  on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:
   * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
 
        **Note:** When you select the All Devices option, all devices subscribed to Push Notifications will receive notifications.
   * In the `Message` field, compose your message. Choose to configure the optional settings as required.
-  * Click `Send`.
+  * Click `Send` and verify that your physical devices has received the notification.
     ![](images/solution6/send_notifications.png)
-  * Verify that your physical devices has received the notification.
+
+    ​
+
 6. You should see a notification on your iPhone.
 
    ![](images/solution6/iphone_notification.png)
@@ -291,9 +325,9 @@ You can record application logs and monitor data with the Mobile Analytics Clien
 1. Open the `Mobile Analytics` service from the mobile project you created or click on the three vertical dots next to the service and select `Open Dashboard`.
 2. You should see LIVE Users, Sessions and other App Data by disabling `Demo Mode`. You can filter the analytics information by
     * Date.
-      * Application.
-      * Operating System.
-      * Version of the app.
+    * Application.
+    * Operating System.
+    * Version of the app.
          ![Mobile Analytics](images/solution6/mobile_analytics.png)
 3. [Click here](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#monitoringapps) to set alerts, Monitor App crashes, and Monitor network requests.
 

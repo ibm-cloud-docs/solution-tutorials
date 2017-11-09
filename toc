@@ -16,5 +16,6 @@ Tutorials
     mean-stack.md
     sql-database.md
     ios-mobile-push-analytics.md
+    android-mobile-push-analytics.md
     serverless-api-webapp.md
     {: .navgroup-end}

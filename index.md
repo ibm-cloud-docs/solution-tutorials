@@ -41,6 +41,10 @@ This tutorial shows how to provision a SQL (relational) database service, create
 
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 
+### [Android native mobile app with Push Notifications and Analytics](android-mobile-push-analytics.html)
+
+Learn how easy it is to quickly create an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
+
 ### [Create a serverless web application](serverless-api-webapp.html)
 
 Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.

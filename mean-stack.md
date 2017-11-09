@@ -15,7 +15,7 @@ lastupdated: "2017-10-27"
 
 # Modern Web Application using MEAN stack
 
-This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a Node.js runtime. 
+This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a Node.js runtime.
 
 ## Objectives
 
@@ -30,9 +30,12 @@ This tutorial walks you through the creation of a web application using the popu
 {: #prereqs}
 
 1. [Install Git](https://git-scm.com/)
-2. [Install Node.js and NPM](https://nodejs.org/)
-3. [Install and run MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
-4. [Install Bluemix Command Line Tool](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+2. [Install Bluemix Command Line Tool](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+
+
+And to develop and run the application locally:
+1. [Install Node.js and NPM](https://nodejs.org/)
+2. [Install and run MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
 
 ## Apps and Services
 - SDK for Node.js Cloud Foundry App
@@ -40,7 +43,7 @@ This tutorial walks you through the creation of a web application using the popu
 
 
 ## Run MEAN application locally
-In this section, you will run a local MongoDB database, clone a MEAN sample code and start the application which will use the local database. 
+In this section, you will run a local MongoDB database, clone a MEAN sample code and start the application which will use the local database.
 
 1. Install and run MongoDB using the instructions [here](https://docs.mongodb.com/manual/administration/install-community/). Confirm your database is running with the following command.
   ```sh
@@ -98,9 +101,9 @@ Once the code been pushed, you should be able to view the app in your dashboard.
 
 If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
 1. In the application **Dashboard**, go to **Connections** -> **Click on the MongoDB instance**
-2. In the **Deployment Details** panel, click **Scale Resources**. 
+2. In the **Deployment Details** panel, click **Scale Resources**.
   ![](images/solution7/mongodb-scale-show.png)
-3. Adjust the **slider** to raise or lower the storage allocated to the Compose for MongoDB service. 
+3. Adjust the **slider** to raise or lower the storage allocated to the Compose for MongoDB service.
 4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. A 'Scaling initiated' message appears at the top of the page to let you know the rescaling is in progress and the Deployment Details pane also shows the scaling in progress.
   ![](images/solution7/scaling-in-progress.png)When the scaling is complete the Deployment Details pane updates to show the current usage and the new value for the available storage.
 
