@@ -7,7 +7,7 @@ Tutorials
     {: .navgroup id="learn"}
     index.md
     {: .navgroup-end}
-    
+
     {: .navgroup id="howto"}
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
@@ -18,4 +18,5 @@ Tutorials
     ios-mobile-push-analytics.md
     android-mobile-push-analytics.md
     serverless-api-webapp.md
+    solution-template.md
     {: .navgroup-end}
