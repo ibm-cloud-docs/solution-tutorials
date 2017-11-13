@@ -27,12 +27,29 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Monitor a LAMP server.
 * Secure the server.
 
+## Before you begin
+
+{: #prereqs}
+
+1. Contact your Infrastructure master user to get the following permissions:
+
+   - Network permission 
+
+   Network permission is required to be able to add **Public and Private Network Uplink**  
+
+   ​
+
 ## Provision a LAMP server
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the Virtual Server service from the Infrastructure section. 
+
 2. Select **Public Virtual Server** and then click **Create**.
+
 3. Under **Image**, select **LAMP** latest version under **Ubuntu**. Even though this comes pre-installed with Apache, MySQL, and PHP, we'll re-install PHP and MySQL with the latest version.
+
 4. Under **Network Interface** select the **Public and Private Network Uplink** option.
+   **Note:** Infrastructure network permission is needed to add **Public and Private Network Uplink**.
+
 5. Review the other configuration options and click **Provision** to provision the server.    ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
 
 
