@@ -55,7 +55,7 @@ In the next step, you will add mobile services like push notifications and mobil
 ## Add Push Notifications and Mobile Analytics services.
 {: #create_cos}
 
-**Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter. If **NOT**, flease follow the below steps. 
+**Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter. If **NOT**, flease follow the below steps.
 
 *Note*: The steps below can also add other value-add services.
 
@@ -73,7 +73,7 @@ The API key is stored securely and used by the Push Notifications service to con
 
 To set up FCM and obtain your credentials, complete the steps:
 
-1. Visit the [Firebase Console ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1. A Google user account is required.
+1. Visit the [Firebase Console ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1). A Google user account is required.
 2. Select `Add project`.
 3. In the Create a project window, provide a project name, choose a country/region and click `Create project`.
 4. On the left navigation pane, select `Settings` (Click on Settings Icon next to **Overview**)> `Project settings`.
@@ -182,7 +182,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
    ```
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
 
-3. Registration for notifications happens in `MainActivity.java`. 
+3. Registration for notifications happens in `MainActivity.java`.
 
    Provide an unique USER_ID (optional).
 
