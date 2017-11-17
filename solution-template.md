@@ -78,6 +78,9 @@ Objective description
 
 ### Sub objective
 
+## Clean up resources
+
+Steps to take to remove the resources created in this tutorial
 
 ## Related information
 
