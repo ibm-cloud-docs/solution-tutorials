@@ -1,6 +1,8 @@
+---
 copyright:
   years: 2017
-lastupdated: "2017-11-15"
+lastupdated: "2017-11-17"
+---
 
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
@@ -170,8 +172,8 @@ Follow the steps below to make above changes.
 
 6. You should see in the logs that your changes applied successfully. ![Source Control URL](images/solution10/Replan-Reapply.png)
 
-
 7. To take this one step forwarder, you can also set up automatic job to automatically process any changes made to the GitHub repo. This can be done using an external deployment tool like [Travis-CI](https://travis-ci.com/).
+
 
 ## Delete environments and resources 
 
@@ -202,6 +204,6 @@ You learned how to:
 
 ## Next steps
 
-Advance to the next tutorial to learn how to:
+Advance to the next tutorial to learn how to
 
-- [Scale a cluster of servers using autoscale group](#)
+- [Scale a cluster of servers using autoscaling group](#)
