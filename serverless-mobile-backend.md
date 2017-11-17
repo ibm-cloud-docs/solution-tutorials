@@ -52,18 +52,45 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-* [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install bx cli and required plug-ins (Cloud Foundry and Cloud Functions)
+This tutorial uses the IBM Cloud command line tool to provision resources and deploy code. Make sure to install the `bx` command line tool.
+
+* [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install bx CLI and required plug-ins (Cloud Foundry and Cloud Functions)
+
+Additionally you will need the following software and accounts:
+
 * Java 8
 {: java}
 * Android Studio 2.3.3
 {: java}
-* Google Developer account to configure Firebase Cloud Messaging
+* a Google Developer account to configure Firebase Cloud Messaging
 {: java}
-* Apple Developer account to configure Apple Push Notification Service
+* XCode
+{: swift}
+* an Apple Developer account to configure Apple Push Notification Service
 {: swift}
 
    In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.md) or [iOS](./ios-mobile-push-analytics.md) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
    {:tip}
+
+## Get the application code
+
+The repository contains both the mobile application and the Cloud Functions actions code.
+
+1. Checkout the code from the GitHub repository
+
+   ```sh
+   git clone https://github.com/IBM-Bluemix/serverless-followupapp-android
+   ```
+   {: pre}
+   {: swift}
+
+### Code Structure
+
+| File | Description |
+| ---- | ----------- |
+| [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
+| [**android**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/android)| Code for the mobile application |
+| [**deploy.js**](deploy.js)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
 
 ## Provision services to handle user authentication, feedback persistence and analysis
 {: #provision_services}
@@ -76,13 +103,13 @@ It is recommended that you create a new space to provision the services and depl
 
 1. Go to the [IBM Cloud catalog](https://console.bluemix.net/catalog/)
 
-1. Create a Cloudant NoSQL DB service with the **Lite** plan. Set the name to **serverlessfollowup-db**.
+1. Create a [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) service with the **Lite** plan. Set the name to **serverlessfollowup-db**.
 
-1. Create a Watson Tone Analyzer service with the **Standard** plan. Set the name to **serverlessfollowup-tone**.
+1. Create a [Watson Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer) service with the **Standard** plan. Set the name to **serverlessfollowup-tone**.
 
-1. Create an App ID service with the **Graduated tier** plan. Set the name to **serverlessfollowup-appid**.
+1. Create an [App ID](https://console.bluemix.net/catalog/services/AppID) service with the **Graduated tier** plan. Set the name to **serverlessfollowup-appid**.
 
-1. Create a Push Notifications service with the **Lite** plan. Set the name to **serverlessfollowup-mobilepush**.
+1. Create a [Push Notifications](https://console.bluemix.net/catalog/services/imfpush) service with the **Lite** plan. Set the name to **serverlessfollowup-mobilepush**.
 
 ### Provision services from the command line
 
@@ -175,14 +202,7 @@ When a user submits a new feedback, the application will analyze this feedback a
 
 With all the services configured, you can now deploy the serverless backend.
 
-1. Checkout the code from the GitHub repository
-
-   ```sh
-   git clone https://github.com/IBM-Bluemix/serverless-followupapp-android
-   ```
-   {: pre}
-
-1. From the root of the project, complile the actions code
+1. From the root of the checkout directory, compile the actions code
 
    ```sh
    ./android/gradlew -p actions clean jar
