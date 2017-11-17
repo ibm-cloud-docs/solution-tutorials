@@ -43,11 +43,11 @@ You are currently viewing the documentation for the iOS version of this tutorial
 
 This tutorial uses the following products:
 
-* [Cloudant NoSQL DB](https://console.ng.bluemix.net/catalog/services/cloudantNoSQLDB)
-* [App ID](https://console.ng.bluemix.net/catalog/services/AppID)
-* [Push Notifications](https://console.ng.bluemix.net/catalog/services/imfpush)
+* [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
+* [App ID](https://console.bluemix.net/catalog/services/AppID)
+* [Push Notifications](https://console.bluemix.net/catalog/services/imfpush)
 * [Cloud Functions](https://console.bluemix.net/openwhisk)
-* [Tone Analyzer](https://console.ng.bluemix.net/catalog/services/tone_analyzer)
+* [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer)
 
 ## Before you begin
 {: #prereqs}
