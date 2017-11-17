@@ -51,33 +51,58 @@ The application shown in this tutorial is a feedback app that smartly analyses t
 ## Provision services to handle user authentication, feedback persistence and analysis
 {: #provision_services}
 
-In this section, you will provision the services used by the application.
+In this section, you will provision the services used by the application. You can choose to provision the services from the IBM Cloud catalog or using the `bx` command line.
 
-1. Step 1
+It is recommended that you create a new space to provision the services and deploy the serverless backend. This helps to keep all the resources together.
 
-  This is a tip.
-  {:tip}
+### Provision services from the IBM Cloud catalog
 
-2. Step 2
+1. Go to the [IBM Cloud catalog](https://console.bluemix.net/catalog/)
 
-### Sub objective
+1. Create a Cloudant NoSQL DB service with the **Lite** plan. Set the name to **serverless-followupapp-db**.
 
-   ```bash
-   some shellscript
+1. Create a Watson Tone Analyzer service with the **Standard** plan. Set the name to **serverless-followupapp-tone**.
+
+1. Create an App ID service with the **Graduated tier** plan. Set the name to **serverless-followupapp-appid**.
+
+1. Create a Push Notifications service with the **Lite** plan. Set the name to **serverless-followupapp-mobilepush**.
+
+### Provision services from the command line
+
+With the command line, run the following commands to provision the services and retrieve their credentials:
+
+   ```sh
+   bx cf create-service cloudantNoSQLDB Lite serverless-followupapp-db
+   bx cf create-service-key serverless-followupapp-db for-cli
+   bx cf service-key serverless-followupapp-db for-cli
    ```
    {: pre}
 
+   ```sh
+   bx cf create-service tone_analyzer standard serverless-followupapp-tone
+   bx cf create-service-key serverless-followupapp-tone for-cli
+   bx cf service-key serverless-followupapp-tone for-cli
+   ```
+   {: pre}
 
-This paragraph only appears in the iOS documentation{: ios}
+   ```sh
+   bx cf create-service AppID "Graduated tier" serverless-followupapp-appid
+   bx cf create-service-key serverless-followupapp-appid for-cli
+   bx cf service-key serverless-followupapp-appid for-cli
+   ```
+   {: pre}
 
-And this paragraph only appears in the iOS documentation{: android}
+   ```sh
+   bx cf create-service imfpush lite serverless-followupapp-mobilepush
+   bx cf create-service-key serverless-followupapp-mobilepush for-cli
+   bx cf service-key serverless-followupapp-mobilepush for-cli
+   ```
+   {: pre}
 
 ## Configure push notifications
 {: #push_notifications}
 
 When a user submits a new feedback, the application will analyze this feedback and send back a notification to the user. The user may have moved to another task, may not have the mobile app started so using push notifications is a good way to communicate with the user. The Push Notifications service makes it possible to send notifications to iOS or Android users via one unified API. In this section, you will configure the Push Notifications service with your Apple Push Notification Service (APNs) or Firebase Cloud Messaging (FCM).
-
-### Sub objective
 
 ## Deploy a serverless backend
 {: #serverless_backend}
@@ -90,6 +115,27 @@ With all the services configured, you can now deploy the serverless backend.
    git clone https://github.com/IBM-Bluemix/serverless-followupapp-android
    ```
    {: pre}
+
+1. From the root of the project, complile the actions code
+
+   ```sh
+   ./android/gradlew -p actions clean jar
+   ```
+   {: pre}
+
+1. Copy template.local.env to local.env
+
+   ```
+   cp template.local.env local.env
+   ```
+
+1. Get the credentials for Cloudant, Tone Analyzer, Push Notifications and App ID services from the IBM Cloud dashboard (or the output of the bx commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+
+1. Deploy the actions to Cloud Functions
+
+   ```
+   ./deploy.sh --install
+   ```
 
 ## Configure and run a native mobile application to collect user feedback
 {: #mobile_app}
