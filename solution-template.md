@@ -26,6 +26,12 @@ This tutorial...
 
 ![](images/solutionX/Architecture.png)
 
+## Products
+
+* [IaaS or PaaS service](https://console.ng.bluemix.net/catalog/services/ServiceName)
+* [IaaS or PaaS service](https://console.ng.bluemix.net/catalog/services/ServiceName)
+* [IaaS or PaaS service](https://console.ng.bluemix.net/catalog/services/ServiceName)
+
 ## Before you begin
 {: #prereqs}
 
