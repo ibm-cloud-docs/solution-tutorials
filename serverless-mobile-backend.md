@@ -16,11 +16,19 @@ lastupdated: "2017-11-16"
 {:tip: .tip}
 {:pre: .pre}
 
-# Serverless Mobile backend
+# Mobile application with a serverless backend
 In this tutorial, you will learn how to use Cloud Functions along with other Cognitive and Data services to build a serverless backend for a mobile application.
 
 The application shown in this tutorial is a feedback app that smartly analyses the Tone of the feedback provided and appropriately acknowledges the customer through a Push Notification.
 {:shortdesc}
+
+This tutorial is configurable based on your target platform.
+
+You are currently viewing the documentation for the iOS version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
+{: ios}
+
+You are currently viewing the documentation for the iOS version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
+{: android}
 
 ## Objectives
 
