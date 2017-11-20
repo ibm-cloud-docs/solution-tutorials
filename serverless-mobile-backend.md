@@ -186,7 +186,8 @@ When a user submits a new feedback, the application will analyze this feedback a
    1. one with the package name set to: **com.ibm.mobilefirstplatform.clientsdk.android.push**
    1. and one with the package name set to: **serverlessfollowup.app**
 1. Download the `google-services.json` containing the two defined applications from Firebase console and place this file in the `android/app` folder of the checkout directory.
-1. Make note of the Sender ID and Server Key under the **Cloud Messaging** tab, you will need them in the next section.
+1. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
+1. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
 {:java}
 
 ### Configure Apple Push Notifications Service
