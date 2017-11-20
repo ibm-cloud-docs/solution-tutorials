@@ -37,8 +37,6 @@ You are currently viewing the documentation for the iOS version of this tutorial
 * Deploy a serverless backend
 * Configure and run a native mobile application to collect user feedback
 
-![](images/solution11/ArchitectureDiagram.png)
-
 ## Products
 
 This tutorial uses the following products:
@@ -48,6 +46,10 @@ This tutorial uses the following products:
 * [Push Notifications](https://console.bluemix.net/catalog/services/imfpush)
 * [Cloud Functions](https://console.bluemix.net/openwhisk)
 * [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer)
+
+![](images/solution11/ArchitectureDiagram.png)
+
+In this application, the user authenticates against [App ID](https://console.bluemix.net/catalog/services/AppID). App ID provides access and identification tokens. Further calls to the backend API include the access token. The backend is implemented with [Cloud Functions](https://console.bluemix.net/openwhisk). The serverless actions, exposed as Web Actions, expect the token to be sent in the request headers and verify its validity (signature and expiration date) before allowing access to the actual API. When the user submits a feedback, the feedback is stored in [Cloudant](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) and later processed with Tone Analyzer. Based on the analysis result, a notification is sent back to the user with [Push Notifications](https://console.bluemix.net/catalog/services/imfpush).
 
 ## Before you begin
 {: #prereqs}
