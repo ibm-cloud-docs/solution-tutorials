@@ -13,13 +13,13 @@ lastupdated: "2017-11-17"
 
 # Automate deployment of environments using Infrastructure as Code
 
-IBM Cloud Schematics is a tool that uses Terraform to provision and manage infrastructure resources, Cloud Foundry applications, services, Kubernetes clusters and much more using code in a configuration file.
+IBM Cloud Schematics is a tool that uses Terraform to provision and manage infrastructure resources, Cloud Foundry applications, services, Kubernetes clusters and much more using code in a configuration file(s).
 
-In this tutorial, we will use a provided template in Schematics to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server (LAMP stack). We will then configure the template to scale the resources and tune the environment (memory, CPU and disk size). We will finish by deleting all of the resources created by the configuration.
+In this tutorial, you will use a provided template in Schematics to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server (LAMP stack). You will then configure the template to scale the resources and tune the environment (memory, CPU and disk size). Finish by deleting all of the resources created by the configuration.
 
 ## Objectives
 
-- Get a LAMP template
+- Explore LAMP template
 - Create custom configuration from template
 - Create environment from the configuration
 - Scale resources
@@ -29,13 +29,12 @@ In this tutorial, we will use a provided template in Schematics to provision a *
 
 {: #prereqs}
 
-1. Contact your Infrastructure master user to get the following permissions:
+Contact your Infrastructure master user to get the following permissions:
 
-   - Network permission 
-   - API Key
+- Network permission 
+- API Key
 
-   Network permission is required to be able to add **Public and Private Network Uplink**  
-
+Network permission is required to be able to add **Public and Private Network Uplink**  
 
 ## Apps and Services
 
@@ -45,41 +44,41 @@ In this tutorial, we will use a provided template in Schematics to provision a *
 - [IBM Cloud Infrastructure](https://console.bluemix.net/dashboard/ibm-iaas-g1) 
 
 
-## Get a LAMP template
+## Explore the LAMP template
 
 {: #gettemplate}
 
-In this section, you will learn how to apply Infrastructure as Code concept for creating and managing virtual servers. We will use IBM Cloud Schematics template to provision a virtual machine instance and provision Apache, MySQL (mariadb), and PHP onto that instance. With this template, you can provision and manage infrastructure as a single unit.
+In this section, you will learn the basics of a Terraform configuration by looking at sample configuration in a template. The LAMP template is used to provision a virtual machine instance and install Apache, MySQL (mariadb), and PHP onto that instance.
 
-1. Go to https://console.bluemix.net 
+1. From https://console.bluemix.net, use the left side menu option and select **Schematics**.
 
-2. Select **Schematics** tab using the left side menu option.
+2. Click on **Templates** to view the list of templates available. 
 
-3. Click on the **Template** option to view the list of templates available. 
-
-4. We will be viewing the LAMP template, click on the **View Details** to learn more about this template. Note the **Source Control URL**, we will need this next to clone that repo and modify it. 
+3. Find the **LAMP** template and click on **View Details** to learn more about this template. Note the **Source Control URL**, we will need this to clone the repository containing this template and modify it. 
 
   ![Source Control URL](images/solution10/sourceControl.png)
 
-5. Clone the LAMP template **Source Control URL**
+4. Clone the LAMP template **Source Control URL** to your local machine
 
   ```sh
      git clone https://github.com/Cloud-Schematics/LAMP
   ```
 
-6. Inspect the cloned source code
+5. Inspect the cloned source code
 
    - [install.yml](https://github.com/Cloud-Schematics/LAMP/blob/master/install.yml) - contains installing script, this is where you can add all scripts related to your server install. See phpinfo() injected. 
    - [provider.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/provider.tf) - variables related to the provider where provider username and api key needed. 
-   - [vm.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/vm.tf) - server configuration file to deploy the VM with specified variables. Next, we will modify this file. 
+   - [vm.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/vm.tf) - server configuration file to deploy the VM with specified variables. 
 
 ## Create custom configuration from template
 
 {: #modifytemplate}
 
-1. Open the vm.tf in your code editor 
+In this section, you will modify the code in the template to create your own custom configuration.
 
-2. Change of the defaults variable below:
+1. Open the **vm.tf** in your code editor 
+
+2. Change the variable defaults:
 
    - Change the hostname default to **lamp**
 
@@ -95,7 +94,7 @@ In this section, you will learn how to apply Infrastructure as Code concept for 
 
    **Note:** In the next section, you will need your repo URL with your modified template code. 
 
-## Create VM from the configuation
+## Create an environment from the configuation
 
 {: #createvm}
 
