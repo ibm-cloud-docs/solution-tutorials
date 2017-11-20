@@ -88,7 +88,7 @@ The repository contains both the mobile application and the Cloud Functions acti
 | ---- | ----------- |
 | [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
 | [**android**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/android)| Code for the mobile application |
-| [**deploy.js**](deploy.js)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
+| [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/deploy.sh)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
 
 ## Provision services to handle user authentication, feedback persistence and analysis
 {: #provision_services}
