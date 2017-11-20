@@ -37,7 +37,7 @@ You are currently viewing the documentation for the iOS version of this tutorial
 * Deploy a serverless backend
 * Configure and run a native mobile application to collect user feedback
 
-![](images/solutionX/Architecture.png)
+![](images/solution11/ArchitectureDiagram.png)
 
 ## Products
 
@@ -82,13 +82,14 @@ The repository contains both the mobile application and the Cloud Functions acti
    {: pre}
    {: java}
 
-### Code Structure
+1. Review the code structure
 
 | File | Description |
 | ---- | ----------- |
 | [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
 | [**android**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/android)| Code for the mobile application |
 | [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/deploy.sh)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
+{: java}
 
 ## Provision services to handle user authentication, feedback persistence and analysis
 {: #provision_services}
