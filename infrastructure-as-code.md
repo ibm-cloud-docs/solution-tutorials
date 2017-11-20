@@ -43,8 +43,8 @@ In this tutorial, we will use Schematics - Infrastructure as Code technologies t
 
 {: #apps}
 
-- Schematics
-- Infrastructure 
+- [IBM Cloud Schematics](https://console.bluemix.net/schematics)
+- [IBM Cloud Infrastructure](https://console.bluemix.net/dashboard/ibm-iaas-g1) 
 
 
 ## Get a LAMP template code
@@ -53,25 +53,27 @@ In this tutorial, we will use Schematics - Infrastructure as Code technologies t
 
 In this section, you will learn how to apply Infrastructure as Code concept for creating and managing virtual servers. We will use IBM Cloud Schematics template to provision a virtual machine instance and provision Apache, MySQL (mariadb), and PHP onto that instance. With this template, you can provision and manage infrastructure as a single unit.
 
-1. Login to IBM Cloud https://console.bluemix.net and select the **Schematics** tab using the left side menu option.
+1. Go to https://console.bluemix.net 
 
-2. Click on the **Template** option to view the list of templates available. 
+2. Select **Schematics** tab using the left side menu option.
 
-3. We will be viewing the LAMP template, click on the **View Details** to learn more about this template. Note the **Source Control URL**, we will need this next to clone that repo and modify it. 
+3. Click on the **Template** option to view the list of templates available. 
+
+4. We will be viewing the LAMP template, click on the **View Details** to learn more about this template. Note the **Source Control URL**, we will need this next to clone that repo and modify it. 
 
   ![Source Control URL](images/solution10/sourceControl.png)
 
-4. Clone the LAMP template **Source Control URL**
+5. Clone the LAMP template **Source Control URL**
 
   ```sh
      git clone https://github.com/Cloud-Schematics/LAMP
   ```
 
-5. Inspect the cloned source code
+6. Inspect the cloned source code
 
-   - install.yml - contains installing script, this is where you can add all scripts related to your server install. Note in that file phpinfo() been injected. 
-   - provider.tf - variables related to the provider where provider username and api key needed. 
-   - vm.tf - server configuration file to deploy the VM with specified variables. Next, we will modify this file. 
+   - [install.yml](https://github.com/Cloud-Schematics/LAMP/blob/master/install.yml) - contains installing script, this is where you can add all scripts related to your server install. See phpinfo() injected. 
+   - [provider.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/provider.tf) - variables related to the provider where provider username and api key needed. 
+   - [vm.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/vm.tf) - server configuration file to deploy the VM with specified variables. Next, we will modify this file. 
 
 ## Modify the template code
 
