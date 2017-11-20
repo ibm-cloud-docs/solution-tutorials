@@ -203,7 +203,23 @@ When a user submits a new feedback, the application will analyze this feedback a
 ## Deploy a serverless backend
 {: #serverless_backend}
 
-With all the services configured, you can now deploy the serverless backend.
+With all the services configured, you can now deploy the serverless backend. The following Cloud Functions artifacts will be created in this section:
+
+| Artifact | Type | Description |
+| -------- | ---- | ----------- |
+| `serverlessfollowup` | Package | A package to group the actions and to keep all service credentials |
+| `serverlessfollowup-cloudant` | Package Binding | Bound to the built-in Cloudant package |
+| `serverlessfollowup-push` | Package Binding | Bound to the Push Notifications package |
+| `auth-validate` | Action | Validates the access and identification tokens |
+| `users-add` | Action | Persists the user information (id, name, email, picture, device id) |
+| `users-prepare-notify` | Action | Formats a message to use with Push Notifications |
+| `feedback-put` | Action | Stores a user feedback in the database |
+| `feedback-analyze` | Action | Analyzes a feedback with Tone Analyzer |
+| `users-add-sequence` | Sequence exposed as Web Action | `auth-validate` and `users-add` |
+| `feedback-put-sequence` | Sequence exposed as Web Action  | `auth-validate` and `feedback-put` |
+| `feedback-analyze-sequence` | Sequence | `read-document` from Cloudant, `feedback-analyze`, `users-prepare-notify` and `sendMessage` with Push Notifications |
+| `feedback-analyze-trigger` | Trigger | Called by Cloud Functions when a feedback is stored in the database |
+| `feedback-analyze-rule` | Rule | Links the trigger `feedback-analyze-trigger` with the sequence `feedback-analyze-sequence` |
 
 1. From the root of the checkout directory, compile the actions code
 
