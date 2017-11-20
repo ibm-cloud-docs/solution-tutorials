@@ -13,19 +13,17 @@ lastupdated: "2017-11-17"
 
 # Automate deployment of environments using Infrastructure as Code
 
-IBM Cloud Schematics is a solution for deploying cloud infrastructure, Kubernetes cluster and much more. 
+IBM Cloud Schematics is a tool that uses Terraform to provision and manage infrastructure resources, Cloud Foundry applications, services, Kubernetes clusters and much more using code in a configuration file.
 
-In this tutorial, we will use Schematics - Infrastructure as Code technologies to provision the **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP (the LAMP stack) server. We will explore the Infrastructure as Code technologies by modifying the template code, scale the resources and tune the (memory, CPU and disk size). We will do all this with the template code and finish by deleting the resources. 
+In this tutorial, we will use a provided template in Schematics to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server (LAMP stack). We will then configure the template to scale the resources and tune the environment (memory, CPU and disk size). We will finish by deleting all of the resources created by the configuration.
 
 ## Objectives
 
-- Get a LAMP template code
-- Modify the template code
-- Create VM from the template code
-- Verify the VM
-- Scale resources using template code
-- Delete environments and resources 
-- Where to go next
+- Get a LAMP template
+- Create custom configuration from template
+- Create environment from the configuration
+- Scale resources
+- Delete the environment
 
 ## Before you begin
 
@@ -47,7 +45,7 @@ In this tutorial, we will use Schematics - Infrastructure as Code technologies t
 - [IBM Cloud Infrastructure](https://console.bluemix.net/dashboard/ibm-iaas-g1) 
 
 
-## Get a LAMP template code
+## Get a LAMP template
 
 {: #gettemplate}
 
@@ -75,7 +73,7 @@ In this section, you will learn how to apply Infrastructure as Code concept for 
    - [provider.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/provider.tf) - variables related to the provider where provider username and api key needed. 
    - [vm.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/vm.tf) - server configuration file to deploy the VM with specified variables. Next, we will modify this file. 
 
-## Modify the template code
+## Create custom configuration from template
 
 {: #modifytemplate}
 
@@ -93,11 +91,11 @@ In this section, you will learn how to apply Infrastructure as Code concept for 
 
 3. **Save** the file and create a new GitHub repository under your account. 
 
-4. Push the modified template code to your GitHub account. 
+4. Push the modified code to your GitHub account. 
 
    **Note:** In the next section, you will need your repo URL with your modified template code. 
 
-## Create VM from the template code
+## Create VM from the configuation
 
 {: #createvm}
 
@@ -200,20 +198,3 @@ Follow the steps below to make above changes.
 ## Where to go next?
 
 For more templates, visit [IBM Cloud Schematics](https://github.com/Cloud-Schematics) GitHub page and [IBM Cloud Provider](https://ibm-bluemix.github.io/tf-ibm-docs) to learn more on templates.
-
-
-
-## Summary
-
-In this tutorial, you used Infrastructure as Code technologies to provision a LAMP stack server, modified the template code to modify the resources, tuned (memory, CPU and disk) and finish by deleting the resources.
-
-You learned how to:
-
-- Get a LAMP template code
-- Modify the template code
-- Create VM from the template code
-- Verify the VM
-- Scale resources using template code
-- Delete environments and resources 
-- Where to go next
-
