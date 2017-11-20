@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-10-27"
+lastupdated: "2017-11-20"
 
 ---
 
@@ -242,3 +242,11 @@ The vulnerability scanner scans the server for any vulnerabilities related to th
 Another way to secure the server is by adding firewall to the server. With IBM Cloud Virtual Servers, you have several firewall options that provide an essential security layer. The firewall options are provisioned on demand without service interruptions. The firewall services prevent unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use.  
 
 Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN. For more information, see [Firewalls](http://knowledgelayer.softlayer.com/topic/firewall).
+
+
+
+## Next steps
+
+Advance to the next tutorial to learn how to
+
+- [Use IBM Cloud Schematics (Infrastructure as Code) to deploy LAMP servers ](infrastructure-as-code.html)
