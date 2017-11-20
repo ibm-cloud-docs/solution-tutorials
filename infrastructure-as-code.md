@@ -150,7 +150,7 @@ In this section, you will learn how to apply Infrastructure as Code concept for 
 
 {: #scaleresources}
 
-Virtual server resources can be scaled and managed fully from the template code. We want to do the the following: 
+Virtual server resources can be scaled and managed fully from the template code. We want to do the following: 
 
 - Increase number of CPU cores to 4 cores 
 - Increase RAM to 4GB
