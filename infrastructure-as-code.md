@@ -40,34 +40,44 @@ In this tutorial, we will use Schematics - Infrastructure as Code technologies t
 
 
 ## Apps and Services
-- Schematics
-- Infrastructure 
+
+{: #apps}
+
+- [IBM Cloud Schematics](https://console.bluemix.net/schematics)
+- [IBM Cloud Infrastructure](https://console.bluemix.net/dashboard/ibm-iaas-g1) 
 
 
 ## Get a LAMP template code
+
+{: #gettemplate}
+
 In this section, you will learn how to apply Infrastructure as Code concept for creating and managing virtual servers. We will use IBM Cloud Schematics template to provision a virtual machine instance and provision Apache, MySQL (mariadb), and PHP onto that instance. With this template, you can provision and manage infrastructure as a single unit.
 
-1. Login to IBM Cloud https://console.bluemix.net and select the **Schematics** tab using the left side menu option.
+1. Go to https://console.bluemix.net 
 
-2. Click on the **Template** option to view the list of templates available. 
+2. Select **Schematics** tab using the left side menu option.
 
-3. We will be viewing the LAMP template, click on the **View Details** to learn more about this template. Note the **Source Control URL**, we will need this next to clone that repo and modify it. 
+3. Click on the **Template** option to view the list of templates available. 
+
+4. We will be viewing the LAMP template, click on the **View Details** to learn more about this template. Note the **Source Control URL**, we will need this next to clone that repo and modify it. 
 
   ![Source Control URL](images/solution10/sourceControl.png)
 
-4. Clone the LAMP template **Source Control URL**
+5. Clone the LAMP template **Source Control URL**
 
   ```sh
      git clone https://github.com/Cloud-Schematics/LAMP
   ```
 
-5. Inspect the cloned source code
+6. Inspect the cloned source code
 
-   - install.yml - contains installing script, this is where you can add all scripts related to your server install. Note in that file phpinfo() been injected. 
-   - provider.tf - variables related to the provider where provider username and api key needed. 
-   - vm.tf - server configuration file to deploy the VM with specified variables. Next, we will modify this file. 
+   - [install.yml](https://github.com/Cloud-Schematics/LAMP/blob/master/install.yml) - contains installing script, this is where you can add all scripts related to your server install. See phpinfo() injected. 
+   - [provider.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/provider.tf) - variables related to the provider where provider username and api key needed. 
+   - [vm.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/vm.tf) - server configuration file to deploy the VM with specified variables. Next, we will modify this file. 
 
 ## Modify the template code
+
+{: #modifytemplate}
 
 1. Open the vm.tf in your code editor 
 
@@ -88,6 +98,8 @@ In this section, you will learn how to apply Infrastructure as Code concept for 
    **Note:** In the next section, you will need your repo URL with your modified template code. 
 
 ## Create VM from the template code
+
+{: #createvm}
 
 1. From the [IBM Cloud console](https://console.bluemix.net), select the **Schematics** tab on the left side menu if you didn't already.
 
@@ -115,6 +127,8 @@ In this section, you will learn how to apply Infrastructure as Code concept for 
 
 ## Verify The VM
 
+{: #verifyvm}
+
 1. Using the console menu option, click on the **Infrastructure** tab to view the list of virtual server devices.![Source Control URL](images/solution10/infrastructure.png)
 
 2. Click **Devices** -> **Device List** to find the server created. You should see your server device listed.
@@ -133,6 +147,8 @@ In this section, you will learn how to apply Infrastructure as Code concept for 
 
 
 ## Scale resources using template code
+
+{: #scaleresources}
 
 Virtual server resources can be scaled and managed fully from the template code. We want to do the the following: 
 
@@ -177,6 +193,8 @@ Follow the steps below to make above changes.
 
 ## Delete environments and resources 
 
+{: #deleteresources}
+
 1. You can delete resources and environments by using the options tab. ![Source Control URL](images/solution10/delete.png)
 
 ## Where to go next?
@@ -199,11 +217,3 @@ You learned how to:
 - Delete environments and resources 
 - Where to go next
 
-
-
-
-## Next steps
-
-Advance to the next tutorial to learn how to
-
-- [Scale a cluster of servers using autoscaling group](#)
