@@ -17,18 +17,16 @@ lastupdated: "2017-11-16"
 {:pre: .pre}
 
 # Mobile application with a serverless backend
-In this tutorial, you will learn how to use Cloud Functions along with other Cognitive and Data services to build a serverless backend for a mobile application.
-
-The application shown in this tutorial is a feedback app that smartly analyses the Tone of the feedback provided and appropriately acknowledges the customer through a Push Notification.
+In this tutorial, you will learn how to use Cloud Functions along with other Cognitive and Data services to build a serverless backend for a mobile application. The application shown in this tutorial is a feedback app that smartly analyses the Tone of the feedback provided and appropriately acknowledges the customer through a Push Notification.
 {:shortdesc}
 
 This tutorial is configurable based on your target platform.
 
 You are currently viewing the documentation for the iOS version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
-{: ios}
+{: swift}
 
 You are currently viewing the documentation for the iOS version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
-{: android}
+{: java}
 
 ## Objectives
 
@@ -59,14 +57,16 @@ This tutorial uses the IBM Cloud command line tool to provision resources and de
 * [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install bx CLI and required plug-ins (Cloud Foundry and Cloud Functions)
 
 Additionally you will need the following software and accounts:
-   * Java 8
-   * Android Studio 2.3.3
-   * a Google Developer account to configure Firebase Cloud Messaging
+* Java 8
+* Android Studio 2.3.3
+* a Google Developer account to configure Firebase Cloud Messaging
+
 {: java}
 
 Additionally you will need the following software and accounts:
-   * XCode
-   * an Apple Developer account to configure Apple Push Notification Service
+* XCode
+* an Apple Developer account to configure Apple Push Notification Service
+
 {: swift}
 
    In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.md) or [iOS](./ios-mobile-push-analytics.md) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
@@ -86,11 +86,11 @@ The repository contains both the mobile application and the Cloud Functions acti
 
 1. Review the code structure
 
-   | File | Description |
-   | ---- | ----------- |
-   | [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
-   | [**android**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/android)| Code for the mobile application |
-   | [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/deploy.sh)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
+| File | Description |
+| ---- | ----------- |
+| [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
+| [**android**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/android)| Code for the mobile application |
+| [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/deploy.sh)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
 {: java}
 
 ## Provision services to handle user authentication, feedback persistence and analysis
@@ -194,7 +194,7 @@ When a user submits a new feedback, the application will analyze this feedback a
 {: swift}
 
 TODO
-{:java}
+{:swift}
 
 ## Deploy a serverless backend
 {: #serverless_backend}
