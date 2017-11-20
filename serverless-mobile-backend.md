@@ -228,7 +228,7 @@ With all the services configured, you can now deploy the serverless backend. The
    cp template.local.env local.env
    ```
 1. Get the credentials for Cloudant, Tone Analyzer, Push Notifications and App ID services from the IBM Cloud dashboard (or the output of the bx commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
-1. Deploy the actions to Cloud Functions. `deploy.sh` loads the credentials from `local.env` to create the Cloudant databases and deploy the Cloud Functions artifacts for the application.
+1. Deploy the actions to Cloud Functions. `deploy.sh` loads the credentials from `local.env` to create the Cloudant databases (users, feedback and moods) and deploy the Cloud Functions artifacts for the application.
    ```sh
    ./deploy.sh --install
    ```
