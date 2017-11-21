@@ -20,12 +20,10 @@ lastupdated: "2017-11-16"
 In this tutorial, you will learn how to use Cloud Functions along with other Cognitive and Data services to build a serverless backend for a mobile application. The application shown in this tutorial is a feedback app that smartly analyses the Tone of the feedback provided and appropriately acknowledges the customer through a Push Notification.
 {:shortdesc}
 
-This tutorial is configurable based on your target platform.
-
-You are currently viewing the documentation for the iOS version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
+This tutorial is configurable based on your target platform. You are currently viewing the documentation for the iOS / Swift version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
 {: swift}
 
-You are currently viewing the documentation for the iOS version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
+This tutorial is configurable based on your target platform. You are currently viewing the documentation for the Android / Java version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
 {: java}
 
 ## Objectives
@@ -57,16 +55,14 @@ This tutorial uses the IBM Cloud command line tool to provision resources and de
 * [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install bx CLI and required plug-ins (Cloud Foundry and Cloud Functions)
 
 Additionally you will need the following software and accounts:
-* Java 8
-* Android Studio 2.3.3
-* a Google Developer account to configure Firebase Cloud Messaging
 
+1. Java 8
+1. Android Studio 2.3.3
+1. a Google Developer account to configure Firebase Cloud Messaging
 {: java}
 
-Additionally you will need the following software and accounts:
-* XCode
-* an Apple Developer account to configure Apple Push Notification Service
-
+1. XCode
+1. an Apple Developer account to configure Apple Push Notification Service
 {: swift}
 
    In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.md) or [iOS](./ios-mobile-push-analytics.md) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
@@ -84,6 +80,12 @@ The repository contains both the mobile application and the Cloud Functions acti
    {: pre}
    {: java}
 
+   ```sh
+   git clone https://github.com/IBM-Bluemix/serverless-followupapp-ios
+   ```
+   {: pre}
+   {: swift}
+
 1. Review the code structure
 
 | File | Description |
@@ -92,6 +94,13 @@ The repository contains both the mobile application and the Cloud Functions acti
 | [**android**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/android)| Code for the mobile application |
 | [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/deploy.sh)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
 {: java}
+
+| File | Description |
+| ---- | ----------- |
+| [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
+| [**ios**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/android)| Code for the mobile application |
+| [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/deploy.sh)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
+{: swift}
 
 ## Provision services to handle user authentication, feedback persistence and analysis
 {: #provision_services}
@@ -188,13 +197,14 @@ When a user submits a new feedback, the application will analyze this feedback a
 1. Download the `google-services.json` containing the two defined applications from Firebase console and place this file in the `android/app` folder of the checkout directory.
 1. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
 1. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
-{:java}
+{: java}
 
 ### Configure Apple Push Notifications Service
 {: swift}
 
-TODO
-{:swift}
+1. Go to Apple developer
+1. Do the configuration
+{: swift}
 
 ## Deploy a serverless backend
 {: #serverless_backend}
@@ -223,6 +233,12 @@ With all the services configured, you can now deploy the serverless backend. The
    ```
    {: pre}
    {: java}
+
+   ```sh
+   any compilation needed?
+   ```
+   {: pre}
+   {: swift}
 1. Copy template.local.env to local.env
 
    ```sh
@@ -233,6 +249,8 @@ With all the services configured, you can now deploy the serverless backend. The
    ```sh
    ./deploy.sh --install
    ```
+   {: pre}
+
    You can use `./deploy.sh --uninstall` to remove the Cloud Functions artifacts once you have completed the tutorial.
    {: tip}
 
@@ -240,16 +258,19 @@ With all the services configured, you can now deploy the serverless backend. The
 {: #mobile_app}
 
 Our Cloud Functions actions are ready for our mobile app. Before running the mobile app, you need to configure its settings to target the services you created.
+
 1. With Android Studio, open the project located in the `android` folder of your checkout directory.
 1. Edit android/app/src/main/res/values/credentials.xml and fill in the blanks with values from credentials. You will need the App ID `tenantId`, the Push Notification `appGuid` and `clientSecret` and the organization and space names where the Cloud Functions have been deployed.
 1. Build the project
 1. Start the application on a real device or with an emulator.
+
    For the emulator to receive push notifications, make sure to pick an image with the Google APIs and to log in with a Google account within the emulator.
    {: tip}
 1. Watch the Cloud Functions in the background
-   ```
+   ```sh
    bx wsk activation poll
    ```
+   {: pre}
 1. In the application, select **Log in** to authenticate with a Facebook or Google account. Once logged in, type a feedback message and press the **Send Feedback** button. Few seconds after the feedback has been sent, you should receive a push notifications on the device. The notification text can be customized by modifying the template documents in the `moods` database in the Cloudant service instance. Use the **View token** button to inspect the access and identification tokens generated by App ID upon login.
 {: java}
 
@@ -257,9 +278,10 @@ Our Cloud Functions actions are ready for our mobile app. Before running the mob
 
 1. Use `deploy.sh` to remove the Cloud Functions artifacts:
 
-   ```
+   ```sh
    ./deploy.sh --uninstall
    ```
+   {: pre}
 
 1. Delete the Cloudant, App ID, Push Notifications and Tone Analyzer services from the IBM Cloud console.
 
