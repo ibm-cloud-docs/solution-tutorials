@@ -13,7 +13,7 @@ lastupdated: "2017-10-30"
 
 Learn how to build, deploy and scale real-world solutions on IBM Cloud. These guides provide step-by-step instructions on how to implement common patterns based on best practices and proven technologies.
 
-## Websites and Web Apps 
+## Websites and Web Apps
 {: #web}
 
 ### [Deploy a secure web application across multiple regions](multi-region-webapp.html)
@@ -55,3 +55,6 @@ Learn how easy it is to quickly create an iOS Swift application with high-value 
 
 Learn how easy it is to quickly create an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 
+### [Native mobile application with a serverless backend](serverless-mobile-backend.html)
+
+Learn how to use Cloud Functions along with other cognitive and data services to build a serverless backend for a mobile application.
