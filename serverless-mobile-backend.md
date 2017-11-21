@@ -43,7 +43,7 @@ This tutorial uses the following products:
 * [Cloud Functions](https://console.bluemix.net/openwhisk)
 * [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer)
 
-![](images/solution11/ArchitectureDiagram.png)
+   ![](images/solution11/ArchitectureDiagram.png)
 
 1. In this application, the user authenticates against [App ID](https://console.bluemix.net/catalog/services/AppID). App ID provides access and identification tokens.
 2. Further calls to the backend API include the access token.
@@ -62,17 +62,17 @@ This tutorial uses the IBM Cloud command line tool to provision resources and de
 
 Additionally you will need the following software and accounts:
 
-1. Java 8
-1. Android Studio 2.3.3
-1. a Google Developer account to configure Firebase Cloud Messaging
-{: java}
+   1. Java 8
+   1. Android Studio 2.3.3
+   1. a Google Developer account to configure Firebase Cloud Messaging
+   {: java}
 
-1. XCode
-1. an Apple Developer account to configure Apple Push Notification Service
-{: swift}
+   1. XCode
+   1. an Apple Developer account to configure Apple Push Notification Service
+   {: swift}
 
-   In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.md) or [iOS](./ios-mobile-push-analytics.md) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
-   {:tip}
+In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.md) or [iOS](./ios-mobile-push-analytics.md) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
+{:tip}
 
 ## Get the application code
 
