@@ -13,6 +13,9 @@ lastupdated: "2017-10-30"
 
 Learn how to build, deploy and scale real-world solutions on IBM Cloud. These guides provide step-by-step instructions on how to implement common patterns based on best practices and proven technologies.
 
+## Websites and Web Apps 
+{: #web}
+
 ### [Deploy a secure web application across multiple regions](multi-region-webapp.html)
 
 This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline.
@@ -37,6 +40,13 @@ This tutorial walks you through the creation of a web application using the popu
 
 This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, we deploy a web app "worldcities" to make use of that data and show how to access the cloud database.
 
+### [Create a serverless web application](serverless-api-webapp.html)
+
+Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.
+
+## Mobile
+{: #mobile}
+
 ### [iOS mobile app with Push Notifications and Analytics](ios-mobile-push-analytics.html)
 
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
@@ -45,6 +55,3 @@ Learn how easy it is to quickly create an iOS Swift application with high-value 
 
 Learn how easy it is to quickly create an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 
-### [Create a serverless web application](serverless-api-webapp.html)
-
-Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.
