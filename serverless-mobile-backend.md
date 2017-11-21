@@ -45,7 +45,13 @@ This tutorial uses the following products:
 
 ![](images/solution11/ArchitectureDiagram.png)
 
-In this application, the user authenticates against [App ID](https://console.bluemix.net/catalog/services/AppID). App ID provides access and identification tokens. Further calls to the backend API include the access token. The backend is implemented with [Cloud Functions](https://console.bluemix.net/openwhisk). The serverless actions, exposed as Web Actions, expect the token to be sent in the request headers and verify its validity (signature and expiration date) before allowing access to the actual API. When the user submits a feedback, the feedback is stored in [Cloudant](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) and later processed with [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer). Based on the analysis result, a notification is sent back to the user with [Push Notifications](https://console.bluemix.net/catalog/services/imfpush).
+1. In this application, the user authenticates against [App ID](https://console.bluemix.net/catalog/services/AppID). App ID provides access and identification tokens.
+2. Further calls to the backend API include the access token.
+3. The backend is implemented with [Cloud Functions](https://console.bluemix.net/openwhisk). The serverless actions, exposed as Web Actions, expect the token to be sent in the request headers and verify its validity (signature and expiration date) before allowing access to the actual API.
+4. When the user submits a feedback, the feedback is stored in [Cloudant](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
+5. Later processed with [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer).
+6. Based on the analysis result, a notification is sent back to the user with [Push Notifications](https://console.bluemix.net/catalog/services/imfpush).
+7. The user receives the notification on the device.
 
 ## Before you begin
 {: #prereqs}
