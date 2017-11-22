@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-08"
+lastupdated: "2017-11-22"
 
 ---
 
@@ -28,7 +28,7 @@ This solution walks you through the creation of a mobile starter application, ad
 * Configure, send, and monitor push notifications.
 * Monitoring the app with mobile analytics.
 
-  ![](images/solution9/android_architecture.png)
+  ![](images/solution9/android_push_analytics_architecture.png)
 
 ## Before you begin
 {: #prereqs}
@@ -73,7 +73,7 @@ The API key is stored securely and used by the Push Notifications service to con
 
 To set up FCM and obtain your credentials, complete the steps:
 
-1. Visit the [Firebase Console ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1). A Google user account is required.
+1. Visit the [Firebase Console ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1)  -  A Google user account is required.
 2. Select `Add project`.
 3. In the Create a project window, provide a project name, choose a country/region and click `Create project`.
 4. On the left navigation pane, select `Settings` (Click on Settings Icon next to **Overview**)> `Project settings`.
