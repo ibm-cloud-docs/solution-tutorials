@@ -25,6 +25,8 @@ In this tutorial, you will use a provided template in Schematics to provision a 
 - Scale resources
 - Delete the environment
 
+![](images/solution10/IaC_architecture.png)
+
 ## Before you begin
 
 {: #prereqs}
@@ -52,45 +54,65 @@ In this section, you will learn the basics of a Terraform configuration by looki
 
 1. From https://console.bluemix.net, use the left side menu option and select **Schematics**.
 
-2. Click on **Templates** to view the list of templates available. 
+2. Under the **Templates** section, find the **LAMP** template and click **View Details** to learn more. 
 
-3. Find the **LAMP** template and click on **View Details** to learn more about this template. Note the **Source Control URL**, we will need this to clone the repository containing this template and modify it. 
+3. Click **Create Environment** to create an environment using this template. 
+
+  **Note:** This template will deploy a full stack LAMP environment (Linux, eNGINX, MySQL, and PHP) on a single VM. 
 
   ![Source Control URL](images/solution10/sourceControl.png)
 
-4. Clone the LAMP template **Source Control URL** to your local machine
+4. Add the following values to the configuration:
 
-  ```sh
-     git clone https://github.com/Cloud-Schematics/LAMP
-  ```
+  - Your GitHub repo where you pushed the modified template in the earlier steps. 
+  - Add an **Environment Name**
+  - Add your **Infrastructure (SoftLayer) username** - Get your Infrastructure username 
+  - Add your **Infrastructure (SoftLayer) API key** - Get your infrastructure API key or create a new one
+  - Add a **description to assign to the SSH key** - Add a description
+  - Add **descriptive tags to label** - Add a tag
+  - Add your **public SSH key to access the VM** - You can get and copy your the public key to your clipboard by using `pbcopy < ~/.ssh/id_rsa.pub` in your terminal window.![Source Control URL](images/solution10/create.png)
 
-5. Inspect the cloned source code
+5. Click **Create** to create this template. 
 
-   - [install.yml](https://github.com/Cloud-Schematics/LAMP/blob/master/install.yml) - contains installing script, this is where you can add all scripts related to your server install. See phpinfo() injected. 
-   - [provider.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/provider.tf) - variables related to the provider where provider username and api key needed. 
-   - [vm.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/vm.tf) - server configuration file to deploy the VM with specified variables. 
+6. Click **Plan** and then **Apply** deploy the VM.
+
+   **Note:** Plan is used to preview the resources and Apply is used to create the VM using this template. 
+
+   ![Source Control URL](images/solution10/plan-apply.png)
+
+7. Once the process is completed successfully, you should then see the status changing to **Active**. This may take few minutes. To verify the server configuration, head over to the infrastructure section to see the server created as per the template code. ![Source Control URL](images/solution10/configuration.png)
 
 ## Create custom configuration from template
 
 {: #modifytemplate}
 
-In this section, you will modify the code in the template to create your own custom configuration.
+In this section, you will modify the code in the template to create your own custom configuration. You will add [Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage) service to store data files.
 
-1. Open the **vm.tf** in your code editor 
+1. Fork the LAMP template code used in above. The template code can be found here: https://github.com/Cloud-Schematics/LAMP
 
-2. Change the variable defaults:
+2. Inspect the current template code files
 
-   - Change the hostname default to **lamp**
+   - [install.yml](https://github.com/Cloud-Schematics/LAMP/blob/master/install.yml) - contains installing script, this is where you can add all scripts related to your server install. See phpinfo() injected. 
+   - [provider.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/provider.tf) - variables related to the provider where provider username and api key needed. 
+   - [vm.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/vm.tf) - server configuration file to deploy the VM with specified variables. 
 
-   - Change the domain default to **IBM.cloud**
+3. Create a new file called: object-storage.tf and add the code below and save the file. 
 
-   - Change the number cores to **2**
+   **Note** the label "lamp_storage", we will later look for that in the logs to make sure Object Storage service added.
 
-     ![Source Control URL](images/solution10/template-code.png)
+   ```sh
+   resource "ibm_object_storage_account" "lamp_storage" {
+     count = "${var.object_storage_enabled}"
+   }
 
-3. **Save** the file and create a new GitHub repository under your account. 
+   variable "object_storage_enabled" {
+       default = 1
+   }
+   ```
 
-4. Push the modified code to your GitHub account. 
+4. **Save** the file and create a new GitHub repository under your account. 
+
+5. Push the modified code to your GitHub account. 
 
    **Note:** In the next section, you will need your repo URL with your modified template code. 
 
@@ -98,13 +120,15 @@ In this section, you will modify the code in the template to create your own cus
 
 {: #createvm}
 
-1. From the [IBM Cloud console](https://console.bluemix.net), select the **Schematics** tab on the left side menu if you didn't already.
+In this section, you will create a new environment with your custom configuration template. 
+
+1. From https://console.bluemix.net, select the **Schematics** tab on the left side menu if you didn't already.
 
 2. Click on the **Environments tab** and then click on the **Create Environment** button to create an Environment. 
 
 3. Add the following values to the configuration:
 
-   - Your GitHub repo where you pushed the modified template in the earlier steps. 
+   - Add your **GitHub repo** where you pushed the modified template in the earlier steps. 
    - Add an **Environment Name**
    - Add your **Infrastructure (SoftLayer) username** - Get your Infrastructure username 
    - Add your **Infrastructure (SoftLayer) API key** - Get your infrastructure API key or create a new one
@@ -122,9 +146,15 @@ In this section, you will modify the code in the template to create your own cus
 
 6. Once the process is completed successfully, you should then see the status changing to **Active**. This may take few minutes. Next, let's verify the server created.
 
-## Verify The VM
+7. In the logs you should see Object Storage created, note the Object Storage **name** and **id**.  ![Source Control URL](images/solution10/logs.png)
+
+## Verify VM and Object Storage
 
 {: #verifyvm}
+
+In this section, we are going to verify the VM and Object Storage created from the template code. 
+
+**Verify VM**
 
 1. Using the console menu option, click on the **Infrastructure** tab to view the list of virtual server devices.![Source Control URL](images/solution10/infrastructure.png)
 
@@ -136,18 +166,19 @@ In this section, you will modify the code in the template to create your own cus
 
    Open the server public IP address in the web browser. You should see the server default installation page like below.![Source Control URL](images/solution10/LAMP.png)
 
-5. Test the version of PHP installed by using: http://<server-public-ip-address>/info.php
 
-   ​
+**Verify Object Storage**
 
-   Now that we verified the server installing and configurations, next we need to scale the server resources using the template code.
-
+1. From the **Infrastructure** section, click on the **Object Storage** button to see your object storage service created.![object-storage](images/solution10/object-storage.png)
+2. Click on the API Type to view all the regions Object Storage is available on. See below the full list of regions Object Storage is available on. 
+3. Click on Dallas 5 to get to the Object Storage dashboard. ![object-storage](images/solution10/regions.png)
+4. Click on **View Credentials** to view your Object Storage credentials and API end points.  ![object-storage](images/solution10/ob-dashboard.png)
 
 ## Scale resources using template code
 
 {: #scaleresources}
 
-Virtual server resources can be scaled and managed fully from the template code. We want to do the following: 
+In this section, we are going to look at how to scale the virtual server resources from GitHub. We are going to modify the template to do the following: 
 
 - Increase number of CPU cores to 4 cores 
 - Increase RAM to 4GB
