@@ -9,8 +9,15 @@ tar cf - \
   --exclude=README.md \
   . | (cd builddocs/input && tar xvf - )
 
+# get the gh-pages branch
+git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.git builddocs/output
+
+# remove all files from gh-pages
+(cd builddocs/output && git rm -rf .)
+
+# generate the new files
 npm install -g marked-it-cli
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt
 
-(cd scripts && npm install)
-NODE_DEBUG=gh-pages node scripts/preview.js
+# commit to gh-pages
+(cd builddocs/output && git add . && git commit -m "changes in staging" && git push)
