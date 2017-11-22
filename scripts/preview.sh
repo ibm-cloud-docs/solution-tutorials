@@ -19,5 +19,9 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.
 npm install -g marked-it-cli
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt
 
+git config --global push.default simple
+git config --global user.email "autobuild@not-a-dom.ain"
+git config --global user.name "autobuild"
+
 # commit to gh-pages
 (cd builddocs/output && git add . && git commit -m "changes in staging" && git push)
