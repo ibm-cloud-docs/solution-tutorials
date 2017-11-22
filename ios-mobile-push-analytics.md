@@ -28,7 +28,7 @@ This solution walks you through the creation of a mobile starter application, ad
 * Send and monitor push notifications.
 * Monitoring the app with Mobile Analytics.
 
-  ![](images/solution6/ios_push_analytics_architecture.png)
+  ![](images/solution6/iOS_push_analytics_architecture.png)
 
 ## Before you begin
 {: #prereqs}
