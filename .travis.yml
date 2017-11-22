@@ -1,7 +1,13 @@
+branches:
+  only:
+  - master
+  - staging
+
 script:
+  - echo "Current branch is ${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
   - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "master" ]; then
-    ./scripts/sync.sh
+    ./scripts/sync.sh;
     fi
   - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "staging" ]; then
-    ./scripts/preview.sh
+    ./scripts/preview.sh;
     fi
