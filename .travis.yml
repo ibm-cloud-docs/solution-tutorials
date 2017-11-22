@@ -1,5 +1,7 @@
-branches:
-  only:
-  - master
-
-script: ./sync.sh
+script:
+  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "master" ]; then
+    ./scripts/sync.sh
+    fi
+  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "staging" ]; then
+    ./scripts/preview.sh
+    fi
