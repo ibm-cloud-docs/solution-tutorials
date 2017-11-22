@@ -11,4 +11,4 @@ tar cf - \
 
 npm install -g marked-it-cli gh-pages
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt
-NODE_DEBUG=gh-pages gh-pages -d builddocs/output
+NODE_DEBUG=gh-pages node scripts/preview.js
