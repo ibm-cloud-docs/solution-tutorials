@@ -36,14 +36,15 @@ This tutorial is configurable based on your target platform. You are currently v
 ## Products
 
 This tutorial uses the following products:
+   * [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
+   * [App ID](https://console.bluemix.net/catalog/services/AppID)
+   * [Push Notifications](https://console.bluemix.net/catalog/services/imfpush)
+   * [Cloud Functions](https://console.bluemix.net/openwhisk)
+   * [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer)
 
-* [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
-* [App ID](https://console.bluemix.net/catalog/services/AppID)
-* [Push Notifications](https://console.bluemix.net/catalog/services/imfpush)
-* [Cloud Functions](https://console.bluemix.net/openwhisk)
-* [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer)
-
-   ![](images/solution11/ArchitectureDiagram.png)
+<p style="text-align: center;">
+![](images/solution11/ArchitectureDiagram.png)
+</p>
 
 1. The user authenticates against [App ID](https://console.bluemix.net/catalog/services/AppID). App ID provides access and identification tokens.
 2. Further calls to the backend API include the access token.
