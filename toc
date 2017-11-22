@@ -19,4 +19,5 @@ Tutorials
     ios-mobile-push-analytics.md
     android-mobile-push-analytics.md
     serverless-mobile-backend.md
+    application-log-analysis.md
     {: .navgroup-end}
