@@ -1,7 +1,0 @@
-{
-  "name": "scripts",
-  "version": "1.0.0",
-  "dependencies": {
-    "gh-pages": "^1.1.0"
-  }
-}
