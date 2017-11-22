@@ -17,13 +17,13 @@ lastupdated: "2017-11-16"
 {:pre: .pre}
 
 # Mobile application with a serverless backend
-In this tutorial, you will learn how to use Cloud Functions along with other Cognitive and Data services to build a serverless backend for a mobile application. The application shown in this tutorial is a feedback app that smartly analyses the Tone of the feedback provided and appropriately acknowledges the customer through a Push Notification.
+In this tutorial, you will learn how to use Cloud Functions along with Cognitive and Data services to build a serverless backend for a mobile application. The application shown in this tutorial is a feedback app that smartly analyses the tone of the feedback text and appropriately acknowledges the customer through a Push Notification.
 {:shortdesc}
 
-This tutorial is configurable based on your target platform. You are currently viewing the documentation for the iOS / Swift version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
+This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **iOS / Swift** version of this tutorial. Use the drop down switcher at the top of this documentation to select the **Android / Java** version of this tutorial
 {: swift}
 
-This tutorial is configurable based on your target platform. You are currently viewing the documentation for the Android / Java version of this tutorial. Use the Operating System switcher at the top of this documentation to select another target platform.
+This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **Android / Java** version of this tutorial. Use the drop down switcher at the top of this documentation to select the **iOS / Swift** version of this tutorial.
 {: java}
 
 ## Objectives
@@ -43,13 +43,13 @@ This tutorial uses the following products:
 * [Cloud Functions](https://console.bluemix.net/openwhisk)
 * [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer)
 
-   ![](images/solution11/ArchitectureDiagram.png)
+![](images/solution11/ArchitectureDiagram.png)
 
-1. In this application, the user authenticates against [App ID](https://console.bluemix.net/catalog/services/AppID). App ID provides access and identification tokens.
+1. The user authenticates against [App ID](https://console.bluemix.net/catalog/services/AppID). App ID provides access and identification tokens.
 2. Further calls to the backend API include the access token.
 3. The backend is implemented with [Cloud Functions](https://console.bluemix.net/openwhisk). The serverless actions, exposed as Web Actions, expect the token to be sent in the request headers and verify its validity (signature and expiration date) before allowing access to the actual API.
 4. When the user submits a feedback, the feedback is stored in [Cloudant](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
-5. Later processed with [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer).
+5. The feedback text is processed with [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer).
 6. Based on the analysis result, a notification is sent back to the user with [Push Notifications](https://console.bluemix.net/catalog/services/imfpush).
 7. The user receives the notification on the device.
 
@@ -62,14 +62,13 @@ This tutorial uses the IBM Cloud command line tool to provision resources and de
 
 Additionally you will need the following software and accounts:
 
-   1. Java 8
-   1. Android Studio 2.3.3
-   1. a Google Developer account to configure Firebase Cloud Messaging
-   {: java}
-
-   1. XCode
-   1. an Apple Developer account to configure Apple Push Notification Service
-   {: swift}
+      1. Java 8
+      2. Android Studio 2.3.3
+      3. Google Developer account to configure Firebase Cloud Messaging
+      {: java}
+      4. XCode
+      5. Apple Developer account to configure Apple Push Notification Service
+      {: swift}
 
 In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.md) or [iOS](./ios-mobile-push-analytics.md) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
 {:tip}
@@ -92,20 +91,20 @@ The repository contains both the mobile application and the Cloud Functions acti
    {: pre}
    {: swift}
 
-1. Review the code structure
+2. Review the code structure
 
-| File | Description |
-| ---- | ----------- |
+| File                                     | Description                              |
+| ---------------------------------------- | ---------------------------------------- |
 | [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
-| [**android**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/android)| Code for the mobile application |
-| [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/deploy.sh)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
+| [**android**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/android) | Code for the mobile application          |
+| [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/deploy.sh) | Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
 {: java}
 
-| File | Description |
-| ---- | ----------- |
+| File                                     | Description                              |
+| ---------------------------------------- | ---------------------------------------- |
 | [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
-| [**ios**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/android)| Code for the mobile application |
-| [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/deploy.sh)|Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
+| [**ios**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/android) | Code for the mobile application          |
+| [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/deploy.sh) | Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
 {: swift}
 
 ## Provision services to handle user authentication, feedback persistence and analysis
@@ -118,10 +117,10 @@ It is recommended that you create a new space to provision the services and depl
 ### Provision services from the IBM Cloud catalog
 
 1. Go to the [IBM Cloud catalog](https://console.bluemix.net/catalog/)
-1. Create a [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) service with the **Lite** plan. Set the name to **serverlessfollowup-db**.
-1. Create a [Watson Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer) service with the **Standard** plan. Set the name to **serverlessfollowup-tone**.
-1. Create an [App ID](https://console.bluemix.net/catalog/services/AppID) service with the **Graduated tier** plan. Set the name to **serverlessfollowup-appid**.
-1. Create a [Push Notifications](https://console.bluemix.net/catalog/services/imfpush) service with the **Lite** plan. Set the name to **serverlessfollowup-mobilepush**.
+2. Create a [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) service with the **Lite** plan. Set the name to **serverlessfollowup-db**.
+3. Create a [Watson Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer) service with the **Standard** plan. Set the name to **serverlessfollowup-tone**.
+4. Create an [App ID](https://console.bluemix.net/catalog/services/AppID) service with the **Graduated tier** plan. Set the name to **serverlessfollowup-appid**.
+5. Create a [Push Notifications](https://console.bluemix.net/catalog/services/imfpush) service with the **Lite** plan. Set the name to **serverlessfollowup-mobilepush**.
 
 ### Provision services from the command line
 
@@ -196,42 +195,42 @@ When a user submits a new feedback, the application will analyze this feedback a
 {: java}
 
 1. In the [Firebase console](https://console.firebase.google.com), create a new project. Set the name to **serverlessfollowup**
-1. Navigate to the Project **Settings**
-1. Under the **General** tab, add two applications:
+2. Navigate to the Project **Settings**
+3. Under the **General** tab, add two applications:
    1. one with the package name set to: **com.ibm.mobilefirstplatform.clientsdk.android.push**
-   1. and one with the package name set to: **serverlessfollowup.app**
-1. Download the `google-services.json` containing the two defined applications from Firebase console and place this file in the `android/app` folder of the checkout directory.
-1. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
-1. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
-{: java}
+   2. and one with the package name set to: **serverlessfollowup.app**
+4. Download the `google-services.json` containing the two defined applications from Firebase console and place this file in the `android/app` folder of the checkout directory.
+5. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
+6. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
+  {: java}
 
 ### Configure Apple Push Notifications Service
 {: swift}
 
 1. Go to Apple developer
-1. Do the configuration
-{: swift}
+2. Do the configuration
+  {: swift}
 
 ## Deploy a serverless backend
 {: #serverless_backend}
 
 With all the services configured, you can now deploy the serverless backend. The following Cloud Functions artifacts will be created in this section:
 
-| Artifact | Type | Description |
-| -------- | ---- | ----------- |
-| `serverlessfollowup` | Package | A package to group the actions and to keep all service credentials |
-| `serverlessfollowup-cloudant` | Package Binding | Bound to the built-in Cloudant package |
-| `serverlessfollowup-push` | Package Binding | Bound to the Push Notifications package |
-| `auth-validate` | Action | Validates the access and identification tokens |
-| `users-add` | Action | Persists the user information (id, name, email, picture, device id) |
-| `users-prepare-notify` | Action | Formats a message to use with Push Notifications |
-| `feedback-put` | Action | Stores a user feedback in the database |
-| `feedback-analyze` | Action | Analyzes a feedback with Tone Analyzer |
-| `users-add-sequence` | Sequence exposed as Web Action | `auth-validate` and `users-add` |
-| `feedback-put-sequence` | Sequence exposed as Web Action  | `auth-validate` and `feedback-put` |
-| `feedback-analyze-sequence` | Sequence | `read-document` from Cloudant, `feedback-analyze`, `users-prepare-notify` and `sendMessage` with Push Notifications |
-| `feedback-analyze-trigger` | Trigger | Called by Cloud Functions when a feedback is stored in the database |
-| `feedback-analyze-rule` | Rule | Links the trigger `feedback-analyze-trigger` with the sequence `feedback-analyze-sequence` |
+| Artifact                      | Type                           | Description                              |
+| ----------------------------- | ------------------------------ | ---------------------------------------- |
+| `serverlessfollowup`          | Package                        | A package to group the actions and to keep all service credentials |
+| `serverlessfollowup-cloudant` | Package Binding                | Bound to the built-in Cloudant package   |
+| `serverlessfollowup-push`     | Package Binding                | Bound to the Push Notifications package  |
+| `auth-validate`               | Action                         | Validates the access and identification tokens |
+| `users-add`                   | Action                         | Persists the user information (id, name, email, picture, device id) |
+| `users-prepare-notify`        | Action                         | Formats a message to use with Push Notifications |
+| `feedback-put`                | Action                         | Stores a user feedback in the database   |
+| `feedback-analyze`            | Action                         | Analyzes a feedback with Tone Analyzer   |
+| `users-add-sequence`          | Sequence exposed as Web Action | `auth-validate` and `users-add`          |
+| `feedback-put-sequence`       | Sequence exposed as Web Action | `auth-validate` and `feedback-put`       |
+| `feedback-analyze-sequence`   | Sequence                       | `read-document` from Cloudant, `feedback-analyze`, `users-prepare-notify` and `sendMessage` with Push Notifications |
+| `feedback-analyze-trigger`    | Trigger                        | Called by Cloud Functions when a feedback is stored in the database |
+| `feedback-analyze-rule`       | Rule                           | Links the trigger `feedback-analyze-trigger` with the sequence `feedback-analyze-sequence` |
 
 1. From the root of the checkout directory, compile the actions code
    ```sh
@@ -245,13 +244,13 @@ With all the services configured, you can now deploy the serverless backend. The
    ```
    {: pre}
    {: swift}
-1. Copy template.local.env to local.env
+2. Copy template.local.env to local.env
 
    ```sh
    cp template.local.env local.env
    ```
-1. Get the credentials for Cloudant, Tone Analyzer, Push Notifications and App ID services from the IBM Cloud dashboard (or the output of the bx commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
-1. Deploy the actions to Cloud Functions. `deploy.sh` loads the credentials from `local.env` to create the Cloudant databases (users, feedback and moods) and deploy the Cloud Functions artifacts for the application.
+3. Get the credentials for Cloudant, Tone Analyzer, Push Notifications and App ID services from the IBM Cloud dashboard (or the output of the bx commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+4. Deploy the actions to Cloud Functions. `deploy.sh` loads the credentials from `local.env` to create the Cloudant databases (users, feedback and moods) and deploy the Cloud Functions artifacts for the application.
    ```sh
    ./deploy.sh --install
    ```
@@ -266,19 +265,19 @@ With all the services configured, you can now deploy the serverless backend. The
 Our Cloud Functions actions are ready for our mobile app. Before running the mobile app, you need to configure its settings to target the services you created.
 
 1. With Android Studio, open the project located in the `android` folder of your checkout directory.
-1. Edit android/app/src/main/res/values/credentials.xml and fill in the blanks with values from credentials. You will need the App ID `tenantId`, the Push Notification `appGuid` and `clientSecret` and the organization and space names where the Cloud Functions have been deployed.
-1. Build the project
-1. Start the application on a real device or with an emulator.
+2. Edit android/app/src/main/res/values/credentials.xml and fill in the blanks with values from credentials. You will need the App ID `tenantId`, the Push Notification `appGuid` and `clientSecret` and the organization and space names where the Cloud Functions have been deployed.
+3. Build the project
+4. Start the application on a real device or with an emulator.
 
    For the emulator to receive push notifications, make sure to pick an image with the Google APIs and to log in with a Google account within the emulator.
    {: tip}
-1. Watch the Cloud Functions in the background
+5. Watch the Cloud Functions in the background
    ```sh
    bx wsk activation poll
    ```
    {: pre}
-1. In the application, select **Log in** to authenticate with a Facebook or Google account. Once logged in, type a feedback message and press the **Send Feedback** button. Few seconds after the feedback has been sent, you should receive a push notifications on the device. The notification text can be customized by modifying the template documents in the `moods` database in the Cloudant service instance. Use the **View token** button to inspect the access and identification tokens generated by App ID upon login.
-{: java}
+6. In the application, select **Log in** to authenticate with a Facebook or Google account. Once logged in, type a feedback message and press the **Send Feedback** button. Few seconds after the feedback has been sent, you should receive a push notifications on the device. The notification text can be customized by modifying the template documents in the `moods` database in the Cloudant service instance. Use the **View token** button to inspect the access and identification tokens generated by App ID upon login.
+  {: java}
 
 ## Clean up resources
 
@@ -289,7 +288,7 @@ Our Cloud Functions actions are ready for our mobile app. Before running the mob
    ```
    {: pre}
 
-1. Delete the Cloudant, App ID, Push Notifications and Tone Analyzer services from the IBM Cloud console.
+2. Delete the Cloudant, App ID, Push Notifications and Tone Analyzer services from the IBM Cloud console.
 
 ## Related information
 
