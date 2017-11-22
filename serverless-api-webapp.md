@@ -29,9 +29,8 @@ The application shown in this tutorial is a simple guestbook website where users
 ## Products
 
 This tutorial uses the following products:
-
-* [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
-* [Cloud Functions](https://console.bluemix.net/openwhisk)
+   * [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
+   * [Cloud Functions](https://console.bluemix.net/openwhisk)
 
    ![](./images/solution8/Architecture.png)
 
