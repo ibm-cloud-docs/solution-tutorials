@@ -62,6 +62,7 @@ This tutorial uses the IBM Cloud command line tool to provision resources and de
 * [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install bx CLI and required plug-ins (Cloud Foundry and Cloud Functions)
 
 Additionally you will need the following software and accounts:
+
       1. Java 8
       2. Android Studio 2.3.3
       3. Google Developer account to configure Firebase Cloud Messaging
