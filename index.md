@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-10-30"
+lastupdated: "2017-11-22"
 
 ---
 
@@ -43,6 +43,10 @@ This tutorial shows how to provision a SQL (relational) database service, create
 ### [Create a serverless web application](serverless-api-webapp.html)
 
 Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.
+
+### [Generate, Access and Analyze Application Logs](application-log-analysis.html)
+
+Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.
 
 ## Mobile
 {: #mobile}
