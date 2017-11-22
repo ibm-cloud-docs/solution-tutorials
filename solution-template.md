@@ -21,16 +21,24 @@ This tutorial...
 {:shortdesc}
 
 ## Objectives
+{: #objectives}
+
 * First objective
 * Second objective
 
-![](images/solutionX/Architecture.png)
-
 ## Products
+{: #products}
 
 * [IaaS or PaaS service](https://console.ng.bluemix.net/catalog/services/ServiceName)
 * [IaaS or PaaS service](https://console.ng.bluemix.net/catalog/services/ServiceName)
 * [IaaS or PaaS service](https://console.ng.bluemix.net/catalog/services/ServiceName)
+
+<p style="text-align: center;">
+![](images/solution11/ArchitectureDiagram.png)
+</p>
+
+1. The user does this
+2. Then that
 
 ## Before you begin
 {: #prereqs}
