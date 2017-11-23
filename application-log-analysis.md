@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-22"
+lastupdated: "2017-11-23"
 
 ---
 
@@ -72,15 +72,20 @@ IBM Cloud offers multiple ways of accessing application logs, in our case for a 
 ```bash
 bx cf logs your-app-name --recent
 ```
+By leaving out the option `--recent` you would attach to the log stream and messages would be displayed the moment they get logged.
 
 2. The second method is to use the [IBM Cloud console](https://console.bluemix.net). In the overview, navigate to your app, click on its entry to open the details and then go to `Logs`. Current logs are shown with the most recent at the bottom. On the upper right you can search for an entry or filter by log type. Selecting `Application (APP)`
 ![](images/solution12/Dashboard_LogsFilter.png)
 
+3. The Log Analysis service offers access to the logs. In contrast to the first two, logs from all the apps in a space are available and not just the recent entries. When using the Lite plan, logs from the past 3 days are retained, for the Premium plans depending on your configuration.   
+The logs can be accessed, searched and visualized using a browser-based UI (Kibana dashboard). You can directly launch it via a [region-specific URI](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/analyzing_logs_Kibana.html#urls_kibana) or by navigating to the service in the [IBM Cloud dashboard](https://console.bluemix.net), clicking on the service details and then on `Launch`. [For details see this section in the Log Analysis documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/analyzing_logs_Kibana.html#launch_Kibana).   
+We are going to discuss how to work with logs in Kibana in the next section.
 
-UI for app
-Kibana
+4. The Log Analysis service offers CLI plugins, but it is broken in some locations. DO NOT USE NOW.
 
 ## Search and Analyze Logs
+
+
 log entries, different values, save/open
 row vs. json formatter
 compose query, search for specific events
@@ -93,8 +98,9 @@ charts and dashboard
 
 ## Expand the Tutorial
 Do you want to learn more? Here are some ideas of what you can do next:
-* Push the same app again with a different name or use the [app deployed in a Kubernetes cluster](https://console.bluemix.net/docs/services/CloudLogAnalysis/containers/tutorials/kibana_tutorial_1.html). Then, the Log Analysis dashboard (Kibana) will show the combined logs of all apps. Filter by app.
-*
+* Push the same app again with a different name or use the [app deployed in a Kubernetes cluster](https://console.bluemix.net/docs/services/CloudLogAnalysis/containers/tutorials/kibana_tutorial_1.html). Then, the Log Analysis dashboard (Kibana) will show the combined logs of all apps.
+* Filter by a single app.
+* Build a dashboard for all your apps.
 
 
 ## Related Content
