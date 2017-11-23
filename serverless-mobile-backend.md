@@ -62,18 +62,16 @@ This tutorial uses the IBM Cloud command line tool to provision resources and de
 * [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install bx CLI and required plug-ins (Cloud Foundry and Cloud Functions)
 
 Additionally you will need the following software and accounts:
- ```
- 1. Java 8
- 2. Android Studio 2.3.3
- 3. Google Developer account to configure Firebase Cloud Messaging
- ```
- {: java}
 
- ```
- 1. Xcode
- 2. Apple Developer account to configure Apple Push Notification Service
- ```
- {: swift}
+   1. Java 8
+   2. Android Studio 2.3.3
+   3. Google Developer account to configure Firebase Cloud Messaging
+   {: java}
+
+
+   1. Xcode
+   2. Apple Developer account to configure Apple Push Notification Service
+   {: swift}
 
 In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.md) or [iOS](./ios-mobile-push-analytics.md) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
 {:tip}
@@ -199,16 +197,15 @@ When a user submits a new feedback, the application will analyze this feedback a
 ### Configure Firebase Cloud Messaging (FCM)
 {: java}
 
-1. In the [Firebase console](https://console.firebase.google.com), create a new project. Set the name to **serverlessfollowup**
-2. Navigate to the Project **Settings**
-3. Under the **General** tab, add two applications:
-   1. one with the package name set to: **com.ibm.mobilefirstplatform.clientsdk.android.push**
-   2. and one with the package name set to: **serverlessfollowup.app**
-4. Download the `google-services.json` containing the two defined applications from Firebase console and place this file in the `android/app` folder of the checkout directory.
-5. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
-6. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
-  
-  {: java}
+   1. In the [Firebase console](https://console.firebase.google.com), create a new project. Set the name to **serverlessfollowup**
+   2. Navigate to the Project **Settings**
+   3. Under the **General** tab, add two applications:
+      1. one with the package name set to: **com.ibm.mobilefirstplatform.clientsdk.android.push**
+      2. and one with the package name set to: **serverlessfollowup.app**
+   4. Download the `google-services.json` containing the two defined applications from Firebase console and place this file in the `android/app` folder of the checkout directory.
+   5. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
+   6. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
+   {: java}
 
 ### Configure Apple Push Notifications Service (APNs)
 {: swift}
@@ -216,11 +213,8 @@ When a user submits a new feedback, the application will analyze this feedback a
 1. Go to the [Apple Developer![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en?lang=en)](https://developer.apple.com/) portal and Register an App ID.
 2. Create a development and distribution APNs SSL certificate.
 3. Create a development provisioning profile.
-4. Configure the Push Notifications service instance on IBM Cloud.
-
-  Refer [Obtain APNs credentials and configure Push Notifications service](https://console.bluemix.net/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
-  
-  {: swift}
+4. Configure the Push Notifications service instance on IBM Cloud. Refer to [Obtain APNs credentials and configure Push Notifications service](https://console.bluemix.net/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+{: swift}
 
 ## Deploy a serverless backend
 {: #serverless_backend}
@@ -246,8 +240,7 @@ With all the services configured, you can now deploy the serverless backend. The
 ### Compile the code
 {: java}
 1. From the root of the checkout directory, compile the actions code
-   
-   {: java}
+{: java}
 
    ```sh
    ./android/gradlew -p actions clean jar
@@ -278,54 +271,38 @@ With all the services configured, you can now deploy the serverless backend. The
 
 Our Cloud Functions actions are ready for our mobile app. Before running the mobile app, you need to configure its settings to target the services you created.
 
-1. With Android Studio, open the project located in the `android` folder of your checkout directory.
-
+1. With Android Studio, open the project located in the `android` folder of your checkout directory
 2. Edit android/app/src/main/res/values/credentials.xml and fill in the blanks with values from credentials. You will need the App ID `tenantId`, the Push Notification `appGuid` and `clientSecret` and the organization and space names where the Cloud Functions have been deployed.
-
 3. Build the project
-
 4. Start the application on a real device or with an emulator.
-
    For the emulator to receive push notifications, make sure to pick an image with the Google APIs and to log in with a Google account within the emulator.
    {: tip}
-
 5. Watch the Cloud Functions in the background
    ```sh
    bx wsk activation poll
    ```
    {: pre}
+6. In the application, select **Log in** to authenticate with a Facebook or Google account. Once logged in, type a feedback message and press the **Send Feedback** button. Few seconds after the feedback has been sent, you should receive a push notifications on the device. The notification text can be customized by modifying the template documents in the `moods` database in the Cloudant service instance. Use the **View token** button to inspect the access and identification tokens generated by App ID upon login.
+{: java}
 
-6.  In the application, select **Log in** to authenticate with a Facebook or Google account. Once logged in, type a feedback message and press the **Send Feedback** button. Few seconds after the feedback has been sent, you should receive a push notifications on the device. The notification text can be customized by modifying the template documents in the `moods` database in the Cloudant service instance. Use the **View token** button to inspect the access and identification tokens generated by App ID upon login.
-  
-  {: java}
 
-   ​
-
-1. Push client SDK and other SDKs are available on CocoaPods and Carthage. For this solution, let's use CocoaPods.
-
+1. Push client SDK and other SDKs are available on CocoaPods and Carthage. For this solution, let's use CocoaPods
 2. Open Terminal and `cd ` into `followupapp` folder. Run the below command to install the required dependencies.
    ```sh
    pod install
    ```
    {: pre}
-
 3. Open the file with  `.xcworkspace` extension located under the `followupapp` folder of your checkout directory to launch your code in Xcode.
-
 4. Edit `BMSCredentials.plist file` and fill in the blanks with values from credentials. You will need the App ID `tenantId`, the Push Notification `appGuid` and `clientSecret` and the organization and space names where the Cloud Functions have been deployed.
-
 5. Build the project.
-
 6. Start the application on a real device or with a simulator.
-
 7. Watch the Cloud Functions in the background by running the below command on a Terminal.
    ```sh
    bx wsk activation poll
    ```
    {: pre}
-
 8. In the application, select **Log in** to authenticate with a Facebook or Google account. Once logged in, type a feedback message and press the **Send Feedback** button. Few seconds after the feedback has been sent, you should receive a push notifications on the device. The notification text can be customized by modifying the template documents in the `moods` database in the Cloudant service instance. Use the **View token** button to inspect the access and identification tokens generated by App ID upon login.
-  
-  {: swift}
+{: swift}
 
 ## Clean up resources
 
