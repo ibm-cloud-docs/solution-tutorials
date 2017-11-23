@@ -272,7 +272,7 @@ With all the services configured, you can now deploy the serverless backend. The
 Our Cloud Functions actions are ready for our mobile app. Before running the mobile app, you need to configure its settings to target the services you created.
 
 1. With Android Studio, open the project located in the `android` folder of your checkout directory
-2. Edit android/app/src/main/res/values/credentials.xml and fill in the blanks with values from credentials. You will need the App ID `tenantId`, the Push Notification `appGuid` and `clientSecret` and the organization and space names where the Cloud Functions have been deployed.
+2. Edit `android/app/src/main/res/values/credentials.xml` and fill in the blanks with values from credentials. You will need the App ID `tenantId`, the Push Notification `appGuid` and `clientSecret` and the organization and space names where the Cloud Functions have been deployed.
 3. Build the project
 4. Start the application on a real device or with an emulator.
    For the emulator to receive push notifications, make sure to pick an image with the Google APIs and to log in with a Google account within the emulator.
