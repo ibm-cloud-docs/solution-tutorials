@@ -66,12 +66,11 @@ Additionally you will need the following software and accounts:
       1. Java 8
       2. Android Studio 2.3.3
       3. Google Developer account to configure Firebase Cloud Messaging
-        {: java}
-
-
-      1. Xcode
-      2. Apple Developer account to configure Apple Push Notification Service
-        {: swift}
+   {: java}
+   
+       1. Xcode
+       2. Apple Developer account to configure Apple Push Notification Service
+   {: swift}
 
 In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.md) or [iOS](./ios-mobile-push-analytics.md) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
 {:tip}
