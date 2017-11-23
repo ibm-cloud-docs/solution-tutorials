@@ -32,6 +32,10 @@ Host and serve website assets (images, videos, documents) and user generated con
 
 This tutorial walks you through the creation of an Ubuntu **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP (the LAMP stack). To see the LAMP server in action, you will install and configure the [WordPress](https://wordpress.org/) open source application.
 
+### [Automate deployment of environments using Infrastructure as Code](infrastructure-as-code.html)
+
+In this tutorial, you will use a provided template in Schematics to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then configure the template to scale the resources and tune the environment (memory, CPU and disk size). Finish by deleting all of the resources created by the configuration.
+
 ### [Modern Web Applications using MEAN stack](mean-stack.html)
 
 This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a Node.js runtime.
