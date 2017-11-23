@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-17"
+lastupdated: "2017-11-23"
 ---
 
 {:shortdesc: .shortdesc}
@@ -44,6 +44,7 @@ Network permission is required to be able to add **Public and Private Network Up
 
 - [IBM Cloud Schematics](https://console.bluemix.net/schematics)
 - [IBM Cloud Infrastructure](https://console.bluemix.net/dashboard/ibm-iaas-g1) 
+- [Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
 
 
 ## Explore the LAMP template
@@ -72,7 +73,7 @@ In this section, you will learn the basics of a Terraform configuration by looki
   - Add **descriptive tags to label** - Add a tag
   - Add your **public SSH key to access the VM** - You can get and copy your the public key to your clipboard by using `pbcopy < ~/.ssh/id_rsa.pub` in your terminal window.![Source Control URL](images/solution10/create.png)
 
-5. Click **Create** to create this template. 
+5. Click **Create** to create a LAMP VM from this template. 
 
 6. Click **Plan** and then **Apply** deploy the VM.
 
@@ -80,13 +81,13 @@ In this section, you will learn the basics of a Terraform configuration by looki
 
    ![Source Control URL](images/solution10/plan-apply.png)
 
-7. Once the process is completed successfully, you should then see the status changing to **Active**. This may take few minutes. To verify the server configuration, head over to the infrastructure section to see the server created as per the template code. ![Source Control URL](images/solution10/configuration.png)
+7. Once the apply process is completed, you should then see the status changing to **Active**. This may take few minutes. To verify the server configuration, head over to the infrastructure section to see the server created as per the template code. ![Source Control URL](images/solution10/configuration.png)
 
 ## Create custom configuration from template
 
 {: #modifytemplate}
 
-In this section, you will modify the code in the template to create your own custom configuration. You will add [Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage) service to store data files.
+In this section, you will modify the code in the template to create your own custom configuration. You will modify the code template to add [Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage) to store data files. 
 
 1. Fork the LAMP template code used in above. The template code can be found here: https://github.com/Cloud-Schematics/LAMP
 
@@ -96,9 +97,11 @@ In this section, you will modify the code in the template to create your own cus
    - [provider.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/provider.tf) - variables related to the provider where provider username and api key needed. 
    - [vm.tf](https://github.com/Cloud-Schematics/LAMP/blob/master/vm.tf) - server configuration file to deploy the VM with specified variables. 
 
-3. Create a new file called: object-storage.tf and add the code below and save the file. 
+3. Create a new file and name it **object-storage.tf** 
 
-   **Note** the label "lamp_storage", we will later look for that in the logs to make sure Object Storage service added.
+4. Add the code below inside the newly created file **object-storage.tf**.
+
+   **Note** the label "lamp_storage", we will later look for that in the logs to make sure Object Storage service getting created.
 
    ```sh
    resource "ibm_object_storage_account" "lamp_storage" {
@@ -110,11 +113,9 @@ In this section, you will modify the code in the template to create your own cus
    }
    ```
 
-4. **Save** the file and create a new GitHub repository under your account. 
+5. **Save** the **object-storage.tf** file and push your changes to your forked repo. 
 
-5. Push the modified code to your GitHub account. 
-
-   **Note:** In the next section, you will need your repo URL with your modified template code. 
+   **Note:** In the next section, you will need your GitHub repo URL with your modified template code. 
 
 ## Create an environment from the configuation
 
@@ -122,7 +123,7 @@ In this section, you will modify the code in the template to create your own cus
 
 In this section, you will create a new environment with your custom configuration template. 
 
-1. From https://console.bluemix.net, select the **Schematics** tab on the left side menu if you didn't already.
+1. Go to https://console.bluemix.net, select the **Schematics** tab on the left side menu if you didn't already.
 
 2. Click on the **Environments tab** and then click on the **Create Environment** button to create an Environment. 
 
@@ -146,7 +147,7 @@ In this section, you will create a new environment with your custom configuratio
 
 6. Once the process is completed successfully, you should then see the status changing to **Active**. This may take few minutes. Next, let's verify the server created.
 
-7. In the logs you should see Object Storage created, note the Object Storage **name** and **id**.  ![Source Control URL](images/solution10/logs.png)
+7. Click on the **View Log** button to view the logs. You should see Object Storage created.![Source Control URL](images/solution10/logs.png)
 
 ## Verify VM and Object Storage
 
@@ -169,10 +170,12 @@ In this section, we are going to verify the VM and Object Storage created from t
 
 **Verify Object Storage**
 
-1. From the **Infrastructure** section, click on the **Object Storage** button to see your object storage service created.![object-storage](images/solution10/object-storage.png)
-2. Click on the API Type to view all the regions Object Storage is available on. See below the full list of regions Object Storage is available on. 
-3. Click on Dallas 5 to get to the Object Storage dashboard. ![object-storage](images/solution10/regions.png)
+1. From the **Infrastructure** section, click on the **Object Storage** button. You should see object storage service created.![object-storage](images/solution10/object-storage.png)
+2. Click on the **Object Storage** name to view the full list of regions Object Storage is available on. 
+3. Object Storage is available from different regions, click on **Dallas 5** to get to the dashboard. ![object-storage](images/solution10/regions.png)
 4. Click on **View Credentials** to view your Object Storage credentials and API end points.  ![object-storage](images/solution10/ob-dashboard.png)
+
+More on [IBM Object Storage can be found here](https://ibm-public-cos.github.io/crs-docs/index.html).
 
 ## Scale resources using template code
 
@@ -228,3 +231,15 @@ Follow the steps below to make above changes.
 ## Where to go next?
 
 For more templates, visit [IBM Cloud Schematics](https://github.com/Cloud-Schematics) GitHub page and [IBM Cloud Provider](https://ibm-bluemix.github.io/tf-ibm-docs) to learn more on templates.
+
+
+
+## Related information
+
+[IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
+
+[IBM Cloud Provider](https://ibm-bluemix.github.io/tf-ibm-docs)
+
+[IBM Cloud Schematics](https://github.com/Cloud-Schematics)
+
+[Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html)
