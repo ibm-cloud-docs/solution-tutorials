@@ -73,7 +73,7 @@ Additionally you will need the following software and accounts:
    2. Apple Developer account to configure Apple Push Notification Service
    {: swift}
 
-In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.md) or [iOS](./ios-mobile-push-analytics.md) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
+In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.html) or [iOS](./ios-mobile-push-analytics.html) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
 {:tip}
 
 ## Get the application code
@@ -317,4 +317,4 @@ Our Cloud Functions actions are ready for our mobile app. Before running the mob
 
 ## Related information
 
-* App ID provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](../services/appid/identity-providers.md).
+* App ID provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](../services/appid/identity-providers.html).
