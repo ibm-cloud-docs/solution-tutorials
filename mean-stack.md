@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-10-27"
+lastupdated: "2017-11-23"
 
 ---
 
@@ -24,6 +24,8 @@ This tutorial walks you through the creation of a web application using the popu
 - Deploy the Node.js app to the cloud
 - Scale MongoDB Resources
 - Monitor application performance
+
+![Architecture diagram](images/solution7/architecture_MEAN.png)
 
 ## Before you begin
 

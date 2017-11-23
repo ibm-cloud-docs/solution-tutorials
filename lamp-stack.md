@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-20"
+lastupdated: "2017-11-23"
 
 ---
 
@@ -27,6 +27,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Monitor a LAMP server.
 * Secure the server.
 
+![Architecture diagram](images/solution4/architecture_PHP.png)
 ## Before you begin
 
 {: #prereqs}
@@ -37,7 +38,6 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 
    Network permission is required to be able to add **Public and Private Network Uplink**  
 
-   ​
 
 ## Provision a LAMP server
 

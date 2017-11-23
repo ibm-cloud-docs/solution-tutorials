@@ -25,7 +25,7 @@ In this tutorial, you will use a provided template in Schematics to provision a 
 - Scale resources
 - Delete the environment
 
-![](images/solution10/IaC_architecture.png)
+![Architecture diagram](images/solution10/IaC_architecture.png)
 
 ## Before you begin
 
