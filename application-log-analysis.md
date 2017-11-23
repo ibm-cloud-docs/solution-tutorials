@@ -85,6 +85,13 @@ We are going to discuss how to work with logs in Kibana in the next section.
 
 ## Search and Analyze Logs
 
+When you open the Log Analysis / Kibana dashboard, by default it shows all available log entries of the past 15 minutes. Most recent entries are shown on the top, automatic refresh is turned off by default. The visible bar chart represents the count of messages per 30 seconds over those 15 minutes. We are going to modify what and how much is displayed and save this as `search query` for future use.
+
+1. On the left side are the available fields that can be displayed and queried. Locate and click on `message`, then on the `add` button next to it. The dashboard should look similar to this now:   
+![](images/solution12/Dashboard_MessagesAdded.png)
+
+2. If you are seeing logs for more than one application, you can filter them based on the `app_name_str` field. Instead of `add` use the `+` next to an app name to only see entries for that application or the `-` to exclude the app's logs from the list.
+![](images/solution12/app_name_str.png)
 
 log entries, different values, save/open
 row vs. json formatter
