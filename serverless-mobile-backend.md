@@ -66,15 +66,21 @@ Additionally you will need the following software and accounts:
    1. Java 8
    2. Android Studio 2.3.3
    3. Google Developer account to configure Firebase Cloud Messaging
+   4. Bash shell, cURL
    {: java}
 
 
    1. Xcode
    2. Apple Developer account to configure Apple Push Notification Service
+   3. Bash shell, cURL
    {: swift}
 
 In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic Push Notifications tutorial for either [Android](./android-mobile-push-analytics.html) or [iOS](./ios-mobile-push-analytics.html) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
 {:tip}
+
+For Windows 10 users to work with the command line instructions, we recommend installing the Windows Subsystem for Linux and Ubuntu as described in [this article](https://msdn.microsoft.com/en-us/commandline/wsl/install-win10).
+{: tip}
+{: java}
 
 ## Get the application code
 
@@ -317,4 +323,4 @@ Our Cloud Functions actions are ready for our mobile app. Before running the mob
 
 ## Related information
 
-* App ID provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](../services/appid/identity-providers.html).
+* App ID provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](../services/appid/identity-providers.html). You will also be able to [customize the login widget](../services/appid/login-widget.html#login-widget).

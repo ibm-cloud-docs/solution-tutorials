@@ -26,8 +26,14 @@
   *[data-hd-programlang="java"] {
     background-color: #189dec;
   }
+  *[data-hd-programlang="java"]:before {
+    content: "[java only] ";
+  }
   *[data-hd-programlang="swift"] {
     background-color: #1bb39f;
+  }
+  *[data-hd-programlang="swift"]:before {
+    content: "[swift only] ";
   }
   .tip {
     background-color: #f4dba9;
