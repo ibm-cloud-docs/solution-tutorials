@@ -27,6 +27,12 @@ This tutorial walks you through the creation of a web application using the popu
 
 ![Architecture diagram](images/solution7/architecture_MEAN.png)
 
+## Products
+
+This tutorial uses the following products:
+   * [Compose for MongoDB](https://console.bluemix.net/catalog/services/compose-for-mongodb)
+   * [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
+
 ## Before you begin
 
 {: #prereqs}

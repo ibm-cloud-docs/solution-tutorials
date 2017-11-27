@@ -12,7 +12,7 @@ lastupdated: "2017-10-27"
 {:tip: .tip}
 {:pre: .pre}
 
-# SQL Database for Cloud Data 
+# SQL Database for Cloud Data
 
 This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, we deploy a web app "worldcities" to make use of that data and show how to access the cloud database. The app is written in Python using the [Flask framework](http://flask.pocoo.org/).
 
@@ -24,22 +24,27 @@ This tutorial shows how to provision a SQL (relational) database service, create
 * Connect the app and database service (share credentials)
 * Monitoring, Security, Backups & Recovery
 
+## Products
+
+This tutorial uses the following products:
+   * [Db2 Warehouse on Cloud](https://console.bluemix.net/catalog/services/db2-warehouse-on-cloud)
+
 ## Before you begin
 {: #prereqs}
 
 Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](http://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. We are going to use it as data set.
 
 ## Provision the SQL Database
-Start by creating an instance of the **Db2 Warehouse on Cloud** service.
+Start by creating an instance of the **[Db2 Warehouse on Cloud](https://console.bluemix.net/catalog/services/db2-warehouse-on-cloud)** service.
 
 ![](images/solution5/Catalog.png)
 
 1.  Click on **Catalog** in the top navigation bar.
 2.  Click on **Data & Analytics** under Platform on the left pane and select **Db2 Warehouse on Cloud**.
-3.  Pick the **Entry** plan and change the suggested service name to "sqldatabase" (we will use that name later on). Pick a region (data center) for the deployment of the database and make sure that the correct organization and space are selected.
-4.  Click on **Create**. After a short moment you should get a success notification. 
+3.  Pick the **Entry** plan and change the suggested service name to "sqldatabase" (we will use that name later on). Pick a region (datacenter) for the deployment of the database and make sure that the correct organization and space are selected.
+4.  Click on **Create**. After a short moment you should get a success notification.
 5.  In the **Dashboard**, click on the entry for your newly created Db2 Warehouse on Cloud service.
-6.  Click on **Open** to launch the database console. If it is the first time using the console, you are offered to take a tour. 
+6.  Click on **Open** to launch the database console. If it is the first time using the console, you are offered to take a tour.
 
 ## Create a table
 We need a table to hold the sample data.
@@ -70,7 +75,7 @@ The data has been loaded into our relational database. There were no errors, but
    ```bash
    select count(*) from cities
    ```
-   {:codeblock} 
+   {:codeblock}
    then press the **Run All** button. In the results section the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
    ```
