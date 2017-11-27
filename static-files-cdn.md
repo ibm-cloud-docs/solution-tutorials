@@ -27,6 +27,12 @@ This tutorial walks you through how to host and serve website assets (images, vi
 
 ![](images/solution3/Solution3Architecture.png)
 
+## Products
+
+This tutorial uses the following products:
+   * [Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
+   * [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai)
+
 ## Before you begin
 {: #prereqs}
 
