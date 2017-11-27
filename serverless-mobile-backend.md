@@ -253,7 +253,7 @@ With all the services configured, you can now deploy the serverless backend. The
    ```
    {: pre}
    {: java}
-
+   
 ### Configure and deploy the actions
 {: java}
 
@@ -324,3 +324,9 @@ Our Cloud Functions actions are ready for our mobile app. Before running the mob
 ## Related information
 
 * App ID provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](../services/appid/identity-providers.html). You will also be able to [customize the login widget](../services/appid/login-widget.html#login-widget).
+
+
+* When you create an OpenWhisk Swift action with a Swift source file(.swift files under `actions` folder), it has to be compiled into a binary before the action is run. Once done, subsequent calls to the action are much faster until the container that holds your action is purged. This delay is known as the cold-start delay.
+  To avoid the cold-start delay, you can compile your Swift file into a binary and then upload to OpenWhisk in a zip file. As you need the OpenWhisk scaffolding, the easiest way to create the binary is to build it within the same environment it runs in. refer [Package an Action as a Swift executable](https://console.bluemix.net/docs/openwhisk/openwhisk_actions.html#creating-swift-actions) for further steps.
+{: swift}
+
