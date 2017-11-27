@@ -30,6 +30,12 @@ This solution walks you through the creation of a mobile starter application, ad
 
   ![](images/solution6/iOS_push_analytics_architecture.png)
 
+## Products
+
+This tutorial uses the following products:
+   * [Mobile Analytics](https://console.bluemix.net/catalog/services/mobile-analytics)
+   * [Push Notifications](https://console.bluemix.net/catalog/services/push-notifications)
+
 ## Before you begin
 {: #prereqs}
 
