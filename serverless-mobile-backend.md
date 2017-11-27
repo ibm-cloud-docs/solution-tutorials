@@ -36,11 +36,11 @@ This tutorial is configurable based on your target platform. You are currently v
 ## Products
 
 This tutorial uses the following products:
-   * [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
    * [App ID](https://console.bluemix.net/catalog/services/AppID)
-   * [Push Notifications](https://console.bluemix.net/catalog/services/imfpush)
    * [Cloud Functions](https://console.bluemix.net/openwhisk)
+   * [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
    * [Tone Analyzer](https://console.bluemix.net/catalog/services/tone_analyzer)
+   * [Push Notifications](https://console.bluemix.net/catalog/services/imfpush)
 
 <p style="text-align: center;">
 ![](images/solution11/ArchitectureDiagram.png)
@@ -253,7 +253,7 @@ With all the services configured, you can now deploy the serverless backend. The
    ```
    {: pre}
    {: java}
-   
+
 ### Configure and deploy the actions
 {: java}
 
@@ -329,4 +329,3 @@ Our Cloud Functions actions are ready for our mobile app. Before running the mob
 * When you create an OpenWhisk Swift action with a Swift source file(.swift files under `actions` folder), it has to be compiled into a binary before the action is run. Once done, subsequent calls to the action are much faster until the container that holds your action is purged. This delay is known as the cold-start delay.
   To avoid the cold-start delay, you can compile your Swift file into a binary and then upload to OpenWhisk in a zip file. As you need the OpenWhisk scaffolding, the easiest way to create the binary is to build it within the same environment it runs in. refer [Package an Action as a Swift executable](https://console.bluemix.net/docs/openwhisk/openwhisk_actions.html#creating-swift-actions) for further steps.
 {: swift}
-
