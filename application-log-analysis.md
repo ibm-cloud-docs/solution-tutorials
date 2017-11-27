@@ -81,8 +81,6 @@ By leaving out the option `--recent` you would attach to the log stream and mess
 The logs can be accessed, searched and visualized using a browser-based UI (Kibana dashboard). You can directly launch it via a [region-specific URI](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/analyzing_logs_Kibana.html#urls_kibana) or by navigating to the service in the [IBM Cloud dashboard](https://console.bluemix.net), clicking on the service details and then on `Launch`. [For details see this section in the Log Analysis documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/analyzing_logs_Kibana.html#launch_Kibana).   
 We are going to discuss how to work with logs in Kibana in the next section.
 
-4. The Log Analysis service offers CLI plugins, but it is broken in some locations. DO NOT USE NOW.
-
 ## Search and Analyze Logs
 
 When you open the Log Analysis / Kibana dashboard, by default it shows all available log entries of the past 15 minutes. Most recent entries are shown on the top, automatic refresh is turned off by default. The visible bar chart represents the count of messages per 30 seconds over those 15 minutes. We are going to modify what and how much is displayed and save this as `search query` for future use.
@@ -100,21 +98,37 @@ When you open the Log Analysis / Kibana dashboard, by default it shows all avail
 5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
 ```
 message:(CRITICAL|INFO|ERROR|WARN|DEBUG) && message_type_str:ERR
-```
+```   
+It should look like shown below. The displayed log entries are now filtered based on the search criteria.   
 ![](images/solution12/SearchForMessagesERR.png)   
-It should look like above. The displayed log entries are now filtered based on the search criteria.
 
-6. You can store the search criteria for future use by clicking `Save` in the configuration bar.
-
-log entries, different values, save/open
-row vs. json formatter
-compose query, search for specific events
+6. You can store the search criteria for future use by clicking `Save` in the configuration bar. Use `ERRlogs` as name.
 
 
 ## Visualize Logs
-charts and dashboard
+Now that we have a query defined, we can use it as foundation for a chart, a visualization of that data. We are going to create to visualizations and then use them to compose a dashboard.
 
-![](images/solution12/PieChart.png)
+### Pie Chart as Donut
+1. Click on `Visualize` in the left navigation bar.
+2. In the list of offered visualizations Locate `Pie chart` and click on it.
+3. Now you can either enter a new filtering query or, on the right hand side, select the query `ERRlogs` that you saved earlier. Pick the saved query.
+4. On the next screen, under `Select buckets type`, select `Split Slices`, then for `Aggregation` choose `Filters`. Add 5 filters having the values of `CRITICAL`, `ERROR`, `WARN`, `INFO` and `DEBUG` as shown here:   
+![](images/solution12/VisualizationFilters.png)   
+6. Click on `Options` (right to `Data`) and activate `Donut` as view option. Finally, click on the `play` icon to apply all changes to the chart. Now you should see a `Donut Pie Chart` similar to this one:   
+![](images/solution12/Donut.png)   
+7. Save the visualization as `DonutERR`.
+
+### Metric
+Now we are going to add another visualization, this time a `Metric`.
+1. Create a metric
+2. adjust filters
+3. save it
+
+
+### Dashboard
+1. compose dashboard from the existing visualizations
+2. if needed, add Markdown visualization for labels, etc.
+
 
 ## Expand the Tutorial
 Do you want to learn more? Here are some ideas of what you can do next:
