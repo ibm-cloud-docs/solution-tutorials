@@ -29,9 +29,10 @@ This tutorial...
 ## Products
 {: #products}
 
-* [IaaS or PaaS service](https://console.ng.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service](https://console.ng.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service](https://console.ng.bluemix.net/catalog/services/ServiceName)
+This tutorial uses the following products:
+* [IaaS or PaaS service name](https://console.ng.bluemix.net/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://console.ng.bluemix.net/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://console.ng.bluemix.net/catalog/services/ServiceName)
 
 <p style="text-align: center;">
 ![](images/solution11/ArchitectureDiagram.png)
