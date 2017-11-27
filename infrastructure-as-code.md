@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-23"
+lastupdated: "2017-11-27"
 ---
 
 {:shortdesc: .shortdesc}
@@ -15,7 +15,7 @@ lastupdated: "2017-11-23"
 
 IBM Cloud Schematics is a tool that uses Terraform to provision and manage infrastructure resources, Cloud Foundry applications, services, Kubernetes clusters and much more using code in a configuration file(s).
 
-In this tutorial, you will use a provided template in Schematics to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server (LAMP stack) and Object Storage. You will then configure the template to scale the resources and tune the environment (memory, CPU and disk size). Finish by deleting all of the resources created by the configuration.
+In this tutorial, you will use a provided template in Schematics to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server (LAMP stack). You will then configure the template to add Object Storage service and to scale the resources to tune the environment (memory, CPU and disk size). Finish by deleting all of the resources created by the configuration.
 
 ## Objectives
 
@@ -26,6 +26,9 @@ In this tutorial, you will use a provided template in Schematics to provision a 
 - Delete the environment
 
 ![Architecture diagram](images/solution10/IaC_architecture.png)
+
+1. Create or use an existing template code and pushes it to GitHub.
+2. IBM Cloud Schematics clone's GitHub repo and pulls all the template variables, then creates an environment. The environment holds all the configurations to provision a LAMP stack server and Cloud Object Storage service. The template code can be updated at any stage to scale the server resources. All can be done with code. 
 
 ## Before you begin
 
