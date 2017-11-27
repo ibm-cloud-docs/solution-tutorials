@@ -142,9 +142,9 @@ More info on [IBM Object Storage can be found here](https://ibm-public-cos.githu
 {: #scaleresources}
 
 In this section, we are going to look at how to scale the virtual server resource. Our configuration contains variables with default values that are editable in Schematics. We are going to override the default value of the variables to accomplish the following:
-- Increase number of CPU cores to 4 cores
-- Increase RAM to 4GB
-- Increase disk size to 100GB
+  - Increase number of CPU cores to 4 cores
+  - Increase RAM to 4GB
+  - Increase disk size to 100GB
 
 1. From the IBM Cloud dashboard, navigate to **Schematics** -> **Environments** -> **My custom LAMP environment** -> **Variables**.
 2. Under the variables section, update the variables **memory** to 4096, **disk_size** to 100, and **cores** to 4 and click **Save**.
