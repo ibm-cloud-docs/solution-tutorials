@@ -28,20 +28,26 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Secure the server.
 
 ![Architecture diagram](images/solution4/architecture_PHP.png)
+
+## Products
+
+This tutorial uses the following products:
+   * [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
+
 ## Before you begin
 
 {: #prereqs}
 
 1. Contact your Infrastructure master user to get the following permissions:
 
-   - Network permission 
+   - Network permission
 
    Network permission is required to be able to add **Public and Private Network Uplink**  
 
 
 ## Provision a LAMP server
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the Virtual Server service from the Infrastructure section. 
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 
 2. Select **Public Virtual Server** and then click **Create**.
 
