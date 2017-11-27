@@ -90,8 +90,21 @@ When you open the Log Analysis / Kibana dashboard, by default it shows all avail
 1. On the left side are the available fields that can be displayed and queried. Locate and click on `message`, then on the `add` button next to it. The dashboard should look similar to this now:   
 ![](images/solution12/Dashboard_MessagesAdded.png)
 
-2. If you are seeing logs for more than one application, you can filter them based on the `app_name_str` field. Instead of `add` use the `+` next to an app name to only see entries for that application or the `-` to exclude the app's logs from the list.
+2. If you are seeing logs for more than one application, you can filter them based on the `app_name_str` field. Instead of `add` use the `+` next to an app name to only see entries for that application or the `-` to exclude the app's logs from the list.   
 ![](images/solution12/app_name_str.png)
+
+3. Adjust the displayed interval by navigating to the upper right and clicking on `Last 15 minutes`. You can change the value to one of the predefined settings under `Quick`, to a sliding interval of your choice under `Relative` or to specific timestamps for start and end under `Absolute`. Adjust the value to `Last 24 hours`.
+
+4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.  Depending on the value the displayed bar chart and log entries are refreshed from every 5 seconds over minutes or hours to once a day.
+
+5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
+```
+message:(CRITICAL|INFO|ERROR|WARN|DEBUG) && message_type_str:ERR
+```
+![](images/solution12/SearchForMessagesERR.png)   
+It should look like above. The displayed log entries are now filtered based on the search criteria.
+
+6. You can store the search criteria for future use by clicking `Save` in the configuration bar.
 
 log entries, different values, save/open
 row vs. json formatter
