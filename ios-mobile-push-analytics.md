@@ -16,7 +16,7 @@ lastupdated: "2017-11-27"
 
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 
-This solution walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, Importing the code to Xcode and then further enhance the application.
+This solution walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, importing the code to Xcode and then further enhance the application.
 
 ## Objectives
 
@@ -42,8 +42,7 @@ This tutorial uses the following products:
 1. [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
-## Create a mobile project from basic Swift starter kit.
-
+## Create a mobile project from basic Swift starter kit
 {: #get_code}
 
 1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from pre-defined `Starter Kits`.
@@ -60,7 +59,7 @@ In the next step, you will add mobile services like Push notifications and Mobil
 ## Add Push Notifications and Mobile Analytics services.
 {: #create_cos}
 
-**Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter. If not, follow the below steps. Also, Following the below steps you can add other value-add services.
+**Note:** Push Notifications and Mobile Analytics Services should already be added with the Basic Starter. If not, follow the below steps. Also, Following the below steps you can add other value-add services.
 
 1. Click on `Add Service` and select Mobile to accelerate your app with Mobile services. Click Next to see the available services.
 2. Select `Push Notifications` and Click Next.
@@ -70,7 +69,7 @@ In the next step, you will add mobile services like Push notifications and Mobil
 
   ![](images/solution6/mobile_services.png)
 
-6. Click on `Download Code` to download the scaffolded code to Mac. In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
+6. Click on `Download Code` to download the scaffolded code. In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
 
 ## Obtain APNs credentials and configure Push Notifications service instance.
 
@@ -89,7 +88,7 @@ Ensure that you have an [Apple Developers![External link icon](https://console.b
 4. For the App ID Suffix, choose `Explicit App ID` and provide a Bundle ID value. It is recommended that you provide a reverse domain-name style string. For example: com.ACME.push.
 5. Select the `Push Notifications` check-box and click `Continue`.
 6. Go through your settings and click `Register` > `Done`.
-  Your App ID is now registered.
+Your App ID is now registered.
 
   ![](images/solution6/push_ios_register_appid.png)
 
@@ -107,13 +106,13 @@ You must obtain separate certificates for your development and distribution envi
 3. From your list of App IDs, select your App ID, then select `Edit`.
 4. Select the the `Push Notifications` check-box, and then:
 
-     * On Development SSL certificate pane, click Create Certificate...
-     * On Production SSL certificate pane, click Create Certificate...
+     * On Development SSL certificate pane, click **Create Certificate**...
+     * On Production SSL certificate pane, click **Create Certificate**...
 
         ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
 
-5. When the `About Creating a Certificate Signing Request (CSR) screen` displays, start the `Keychain Access` application on your Mac to create a Certificate Signing Request (CSR). Click `Continue`.
-6. For the Upload CSR file option, click `Choose File`, and select file `CertificateSigningRequest.certSigningRequest`. Click `Continue`.
+5. When the `About Creating a Certificate Signing Request (CSR) screen` displays, follow the instructions shown to create a Certificate Signing Request (CSR) file and then click `Continue`.
+6. For the Upload CSR file option, click `Choose File`, and select the file `CertificateSigningRequest.certSigningRequest` you just created. Click `Continue`.
 7. On the Download, Install and Backup pane, click Download. The `aps_development.cer` file is downloaded.
      ![Download certificate](images/solution6/push_certificate_download.png)
 8. From the menu, select `Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority…`
