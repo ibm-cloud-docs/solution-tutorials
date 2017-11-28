@@ -108,7 +108,7 @@ It should look like shown below. The displayed log entries are now filtered base
 ## Visualize Logs
 Now that we have a query defined, we can use it as foundation for a chart, a visualization of that data. We are going to create to visualizations and then use them to compose a dashboard.
 
-### Pie Chart as Donut
+#### Pie Chart as Donut
 1. Click on `Visualize` in the left navigation bar.
 2. In the list of offered visualizations Locate `Pie chart` and click on it.
 3. Now you can either enter a new filtering query or, on the right hand side, select the query `ERRlogs` that you saved earlier. Pick the saved query.
@@ -118,25 +118,33 @@ Now that we have a query defined, we can use it as foundation for a chart, a vis
 ![](images/solution12/Donut.png)   
 7. Save the visualization as `DonutERR`.
 
-### Metric
+#### Metric
 Now we are going to add another visualization, this time a `Metric`.
-1. Create a metric
-2. adjust filters
-3. save it
+1. Pick `Metric` from the list of offered visualizations. In step 2, on the left side, click on the name beginning with `[logstash-]`.
+2. On the next screen, expand `Metric` to be able to enter a custom label. Add "Log Entries within 24 hours" and click on the play icon to update the shown metric. Here is my version:   
+![](images/solution12/Metric_LogCount24.png)   
+3. Save the visualization as `LogCount24`.
 
-
-### Dashboard
-1. compose dashboard from the existing visualizations
-2. if needed, add Markdown visualization for labels, etc.
-
+#### Dashboard
+Once you have added visualizations, they can be used to compose a dashboard. A dashboard is used to display all important metrics and to help indicate the health of your apps and services.
+1. Click on `Dashboard` in the left navigation panel, then on `Add` to start placing existing visualizations onto the empty dashboard.
+2. I added the log count on the left, the donut chart on the right. It is possible to change the size of each component and to move them.
+3. When you click on the arrow in the lower left corner of a component, the view changes to a table layout and additional information about the underlying request, response and execution statistics are offered, too. Here is a dashboard showing the log entry count and the data behind the donut chart.   
+![](images/solution12/DashboardTable.png)   
+4. Make sure to save the dashboard for future use. This concludes the tutorial from producing logs, accessing and searching them up to how visualize the data and build a dashboard.
 
 ## Expand the Tutorial
 Do you want to learn more? Here are some ideas of what you can do next:
 * Push the same app again with a different name or use the [app deployed in a Kubernetes cluster](https://console.bluemix.net/docs/services/CloudLogAnalysis/containers/tutorials/kibana_tutorial_1.html). Then, the Log Analysis dashboard (Kibana) will show the combined logs of all apps.
 * Filter by a single app.
+* Add a saved search and metric only for critical and error events.
 * Build a dashboard for all your apps.
 
 
 ## Related Content
 * [Documentation for IBM Cloud Log Analysis](https://console.bluemix.net/docs/services/CloudLogAnalysis/index.html)
 * [Logging facility for Python](https://docs.python.org/3/library/logging.html)
+* [IBM Cloud Log Collection API](https://console.bluemix.net/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction)
+* Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html)
+* Kibana User Guide: [Visualizing Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-visualizing.html)
+* Kibana User Guide: [Putting it all Together with Dashboards](https://www.elastic.co/guide/en/kibana/5.1/tutorial-dashboard.html)
