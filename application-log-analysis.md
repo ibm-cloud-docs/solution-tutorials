@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-23"
+lastupdated: "2017-11-28"
 
 ---
 
@@ -39,12 +39,12 @@ The Log Analysis service is found in the [IBM Cloud service catalog in the DevOp
 By default the `Lite` plan is selected which allows for 500 MB of daily logs for the past 3 days. The `Premium` plans feature higher data volumes and longer log retention.
 
 ## Deploy a Cloud Foundry app
-The ready-to-run [code for the database app is located in this Github repository](https://github.com/IBM-Bluemix/UPDATE_NAME). Clone or download the repository, then push the app to the IBM Cloud.
+The ready-to-run [code for the database app is located in this Github repository](https://github.com/IBM-Bluemix/application-log-analysis). Clone or download the repository, then push the app to the IBM Cloud.
 
 1. Clone the Github repository:
    ```bash
-   git clone https://github.com/IBM-Bluemix/UPDATE_NAME
-   cd UPDATE_NAME
+   git clone https://github.com/IBM-Bluemix/application-log-analysis
+   cd application-log-analysis
    ```
 2. Push the application to the IBM Cloud. You need to be logged in to the region, org and space in which the Log Analysis service was created. Copy and paste these commands one line at a time.
    ```bash
@@ -112,7 +112,7 @@ Now that we have a query defined, we can use it as foundation for a chart, a vis
 1. Click on `Visualize` in the left navigation bar.
 2. In the list of offered visualizations Locate `Pie chart` and click on it.
 3. Now you can either enter a new filtering query or, on the right hand side, select the query `ERRlogs` that you saved earlier. Pick the saved query.
-4. On the next screen, under `Select buckets type`, select `Split Slices`, then for `Aggregation` choose `Filters`. Add 5 filters having the values of `CRITICAL`, `ERROR`, `WARN`, `INFO` and `DEBUG` as shown here:   
+4. On the next screen, under `Select buckets type`, select `Split Slices`, then for `Aggregation` choose `Filters`. Add 5 filters having the values of `CRITICAL`, `ERROR`, `WARN*` (with asteriks as wildcard), `INFO` and `DEBUG` as shown here:   
 ![](images/solution12/VisualizationFilters.png)   
 6. Click on `Options` (right to `Data`) and activate `Donut` as view option. Finally, click on the `play` icon to apply all changes to the chart. Now you should see a `Donut Pie Chart` similar to this one:   
 ![](images/solution12/Donut.png)   
