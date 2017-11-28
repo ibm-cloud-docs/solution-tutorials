@@ -8,7 +8,7 @@ lastupdated: "2017-11-22"
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 
-# Tutorials
+# Solution tutorials
 {: #tutorials}
 
 Learn how to build, deploy and scale real-world solutions on IBM Cloud. These guides provide step-by-step instructions on how to implement common patterns based on best practices and proven technologies.
