@@ -180,14 +180,14 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    ```
    {: pre:}
 
-2. On the terminal, Navigate to the folder where you downloaded the code
+2. Unzip the downloaded code and using the terminal, navigate to the unzipped folder
 
    ```
-   cd <Name of the Project name>
+   cd <Name of Project>
    ```
    {: pre:}
 
-3. The folder already includes a `podfile` with required dependencies.So run the below command to install the dependencies (Client SDKs)
+3. The folder already includes a `podfile` with required dependencies. Run the below command to install the dependencies (Client SDKs)
 
   ```
   pod install
@@ -210,12 +210,11 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   ```
   {: pre:}
 
-5. If you navigate to the folder, you should see a `.xcworkspace` file.
-  **Note:** Ensure that you always open the new Xcode workspace, instead of the original Xcode project file: `MyApp.xcworkspace`.
 
 ## Instrumenting the app to use Mobile Analytics.
 
 1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
+  **Note:** Ensure that you always open the new Xcode workspace, instead of the original Xcode project file: `MyApp.xcworkspace`.
    ![](images/solution6/Xcode.png)
 
 2. `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized as follows

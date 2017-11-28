@@ -24,7 +24,7 @@ This tutorial walks you through creating, securing, and deploying a web applicat
 * Bind an SSL certificate to your application.
 * Monitor application performance.
 
-![HelloWorld](images/solution1/Architecture.png)
+![Architecture](images/solution1/Architecture.png)
 
 ### Apps and Services
 * [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
