@@ -1,8 +1,8 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="tutorials" audience="platform" href="/docs/tutorials/index.html"}
-Tutorials
+{: .toc subcollection="solution-tutorials" audience="platform" href="/docs/tutorials/index.html"}
+Solution Tutorials
 
     {: .navgroup id="learn"}
     index.md
