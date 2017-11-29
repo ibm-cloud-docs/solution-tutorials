@@ -172,14 +172,12 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    sudo gem install cocoapods
    ```
    {: pre:}
-
 2. Unzip the downloaded code and using the terminal, navigate to the unzipped folder
 
    ```
    cd <Name of Project>
    ```
    {: pre:}
-
 3. The folder already includes a `podfile` with required dependencies. Run the below command to install the dependencies (Client SDKs) and the required dependencies will be installed.
 
   ```
@@ -196,9 +194,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    ![](images/solution6/Xcode.png)
 
   `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized in AppDelegate.swift. Along with BMSCore, Mobile Analytics SDK is already imported into the project.
-
 2. Analytics initialization code is already included as shown below
-
   ```
   // Analytics client SDK is configured to record lifecycle events.
          	Analytics.initialize(appName:dictionary["appName"] as? String,
@@ -227,9 +223,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 ## Send and monitor push notifications.
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
-
 2. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
-
 3. Open Push Notifications service under `Mobile Services` > **Existing services**  on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:
   * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
 
@@ -238,16 +232,14 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   * Click `Send` and verify that your physical devices has received the notification.
     ![](images/solution6/send_notifications.png)
 
-    ​
-
 4. You should see a notification on your iPhone.
 
    ![](images/solution6/iphone_notification.png)
 
 5. You can monitor your sent notifications by navigating to `Monitoring` on the Push Notifications Service.
 
-  The IBM Push Notifications service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent push notifications, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
-  ![](images/solution6/monitoring_messages.png)
+The IBM Push Notifications service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent push notifications, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
+![](images/solution6/monitoring_messages.png)
 
 ## Monitoring the app with Mobile Analytics.
 You can record application logs and monitor data with the Mobile Analytics Client SDK. Developers can control when to send this data to the Mobile Analytics Service. When data is delivered to Mobile Analytics, you can use the Mobile Analytics console to get analytics insights about your mobile applications, devices, and application logs.
