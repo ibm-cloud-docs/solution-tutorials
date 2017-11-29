@@ -53,7 +53,7 @@ This tutorial uses the following products:
 5. Click on `Create Project` to scaffold an iOS Swift App.
 6. A new `Project` will be created under Projects tab on the left pane.
 
-​      **Note:** Push Notifications and Mobile Analytics Services should already be added with the Basic Starter. 
+​      **Note:** Push Notifications and Mobile Analytics Services should already be added with the Basic Starter.
 
  In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
 
@@ -213,8 +213,10 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
         Logger.send()
      }
    ```
-   For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
+   For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger)
    {:tip}
+
+
 ## Send and monitor push notifications.
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide an unique USER_ID(Optional).

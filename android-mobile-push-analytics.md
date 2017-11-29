@@ -141,6 +141,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
    For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
    {:tip}
 
+
 ## Configure, send and monitor push notifications.
 
 1. Push notifications SDK is already imported into the project and Push initialization code can be found in `MainActivity.java` file.
