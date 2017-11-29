@@ -16,7 +16,7 @@ lastupdated: "2017-11-29"
 
 Learn how easy it is to quickly create an Android native application with high-value mobile services using services like push notifications and mobile analytics on IBM Cloud.
 
-This solution walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, Importing the code to Android Studio and then further enhance the application.
+This tutorial walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, Importing the code to Android Studio and then further enhance the application.
 
 ## Objectives
 
@@ -128,16 +128,20 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
 2. The code includes `BMSClient` initialization code with the **Region** parameter. In the initializer, the **Region** value specifies which IBM Cloud deployment you are using, for example, `BMSClient.REGION_US_SOUTH` and `BMSClient.REGION_UK`.
 
     **Note:** Core SDK must be initialized to interact with IBM Cloud Mobile services.
+
 3. In this code snippet, Analytics is configured to record lifecycle events. Both `app_name` and `apiKey` are pre-configured as part of the code generation process.
    ```
    Analytics.init(getApplication(), "your_app_name_here", apiKey, hasUserContext, Analytics.DeviceEvent.ALL);
    ```
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
+
 4. The code below enables `Logger` (disabled by default), and sets the logLevel to ERROR (DEBUG by default).
    ```
    Logger.storeLogs(true);
    Logger.setLogLevel(Logger.LEVEL.ERROR);
    ```
+   ​
+
    For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
    {:tip}
 

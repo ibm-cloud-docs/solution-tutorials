@@ -16,7 +16,7 @@ lastupdated: "2017-11-29"
 
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 
-This solution walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, importing the code to Xcode and then further enhance the application.
+This tutorial walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, importing the code to Xcode and then further enhance the application.
 
 ## Objectives
 
