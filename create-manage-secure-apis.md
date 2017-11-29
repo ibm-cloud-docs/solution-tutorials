@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-22"
+lastupdated: "2017-11-29"
 
 ---
 
@@ -16,7 +16,7 @@ lastupdated: "2017-11-22"
 {:tip: .tip}
 {:pre: .pre}
 
-# CREATE, SECURE AND MANAGE APIS
+# Create, Secure and Manage REST APIs
 This tutorial is a walkthrough of creating a new REST API in Node.js using the LoopBack framework, and then using the API Connect service to add management, visibility, security and rate limiting.
 {:shortdesc}
 
@@ -25,31 +25,23 @@ This tutorial is a walkthrough of creating a new REST API in Node.js using the L
 </p>
 
 ## Objectives
-{: #objectives}
-
 * Create a REST API in Node.js
 * Deploy Node.js application
 * Import API Spec to API Connect
 * Secure and Manage API
 
 ## Products
-{: #products}
-
 This tutorial uses the following products:
 * [Loopback](https://loopback.io/)
 * [API Connect](https://console.bluemix.net/docs/services/apiconnect/index.html)
-
-1. The user does this
-2. Then that
+* [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
 
 ## Before you begin
-{: #prereqs}
-
-* [Node.js and npm](https://nodejs.org/en/download/)
+Download and install [Node.js](https://nodejs.org/en/download/)
 
 ## Create a REST API in Node.js
 {: #create_api}
-In this section, you will create an API in Node.js using the LoopBack framework
+In this section, you will create an API in Node.js using the [LoopBack framework](https://loopback.io/doc/index.html). LoopBack is a highly-extensible, open-source Node.js framework that enables you to create dynamic end-to-end REST APIs with little or no coding.
 
 ### Create application
 1.  Install IBM API Connect command line tool.
@@ -66,13 +58,15 @@ In this section, you will create an API in Node.js using the LoopBack framework
 	```
 4.  Press **Enter** to use a directory with the same name as the project.
 5.  Choose the **current** version of LoopBack.
-6.  Specify the kind of application that you want to create by using the arrow keys to select **empty-server**.
+6.  Select **empty-server** for the kind of application.
 	```bash
     ? What kind of application do you have in mind? (Use arrow keys)
     ? empty-server (An empty LoopBack API, without any configured models or datasources) 
       hello-world (A project containing a basic working example, including a memory database) 
       notes (A project containing a basic working example, including a memory database)
 	```
+![apic_loopback](images/solution13/apic_loopback.png)
+
 
 ### Add a data source
 Adding a data source allows you to configure where the data should be persisted. Various types of databases are supported, but for the sake of simplicity, we will use an in-memory data store.
@@ -87,6 +81,8 @@ Adding a data source allows you to configure where the data should be persisted.
 4. Use **in-memory db** for the **Connector** setting. 
 5. Click **All Data Sources** on the top left. The data source will appear in the list of data sources, and the editor updates the server/datasources.json file with settings for the new data source.
 
+![apic_loopback](images/solution13/datastore.png)
+
 ### Add a model
 Models allow you to define and contorl the data structure and schema of your API.
 
@@ -100,6 +96,9 @@ Models allow you to define and contorl the data structure and schema of your API
 8. Repeat with **Property Name** text field `comment` and **Type** of **string**.
 9. Click the **Save** icon ![](images/save-icon.png) to save your changes.
 10. Click **All Models** to finish editing the model.
+
+![apic_loopback](images/solution13/models.png)
+
 
 ## Test your LoopBack application
 In this section, you will start a local instance of your Loopback application and test the API by inserting and querying data.
@@ -122,7 +121,7 @@ In this section, you will start a local instance of your Loopback application an
   }
   ```
 5. Click **Call operation**.
-![](images/explore-test-2.png)
+![apic_loopback](images/solution13/data_entry_1.png)
 >![troubleshooting]
 >If you see an error message due to an untrusted certificate for localhost, click the link provided in the error message in API Designer Explore tool to accept the certificate, then proceed to call the operations in your web browser. The exact procedure depends on the web browser you are using. If you load the REST endpoints directly in your browser, you will see the message: {"name":"PreFlowError","message":"unable to process the request"}. You must use the API Designer Explore tool to test REST endpoints in your browser because it includes the requisite headers and other request parameters.
 >
