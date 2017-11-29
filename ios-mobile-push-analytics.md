@@ -45,7 +45,7 @@ This tutorial uses the following products:
 {: #get_code}
 
 1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from pre-defined `Starter Kits`.
-2. Click on `Starter Kits` and scroll down to select `Basic` Starter Kit.
+2. Click on **Starter Kits** and scroll down to select **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
 3. Enter a project name which will also be the Xcode project and app name.
 4. Select `Swift` as your language and check the mobile services on the right pane.
@@ -88,21 +88,25 @@ You can use APNs in two modes:
 You must obtain separate certificates for your development and distribution environments. The certificates are associated with an App ID for the app that is the recipient of remote notifications. For production, you can create up to two certificates. IBM Cloud uses the certificates to establish an SSL connection with APNs.
 
 1. Go to the Apple Developer website, click `Member Center`, and select `Certificates, IDs & Profiles`.
+
 2. In the `Identifiers` area, click `App IDs`.
+
 3. From your list of App IDs, select your App ID, then select `Edit`.
-4. Select the the `Push Notifications` check-box, and then:
 
-     * On Development SSL certificate pane, click **Create Certificate**...
-     * On Production SSL certificate pane, click **Create Certificate**...
+4. Select the the `Push Notifications` check-box, and then on **Development SSL certificate** pane, click **Create Certificate**.
 
-        ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
+   ​                  ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
 
 5. When the `About Creating a Certificate Signing Request (CSR) screen` displays, follow the instructions shown to create a Certificate Signing Request (CSR) file. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
+
 6. Click **Continue** and on the Upload CSR file screen, click `Choose File`, and select the file `CertificateSigningRequest.certSigningRequest` you just created. Click `Continue`.
+
 7. On the Download, Install and Backup pane, click Download. The `aps_development.cer` file is downloaded.
      ![Download certificate](images/solution6/push_certificate_download.png)
      ![Generate certificate](images/solution6/generate_certificate.png)
+
 8. On your mac, open **Keychain Access**, **File**, **Import** and select the downloaded .cer file to install it.
+
 9. Right-click on the new certificate and private key, and then select `Export` and change the **File Format** to Personal information exchange format (`.p12` format).
 
   ![Export certificate and keys](images/solution6/keychain_export_key.png)
@@ -116,6 +120,11 @@ You must obtain separate certificates for your development and distribution envi
     ![Export certificate and keys](images/solution6/export_p12.png)
 
 12. The `Key Access.app` prompts you to export your key from the `Keychain` screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
+
+   ​
+
+   For Production SSL, On **Production SSL certificate** pane, click **Create Certificate** and repeat Steps 5 to 12 above.
+   {:tip}
 
 ### Creating a development provisioning profile
 The provisioning profile works with the App ID to determine which devices can install and run your app and which services your app can access. For each App ID, you create two provisioning profiles: one for development and the other for distribution. Xcode uses the development provisioning profile to determine which developers are allowed to build the application and which devices are allowed to be tested on the application.
