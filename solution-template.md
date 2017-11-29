@@ -57,7 +57,7 @@ Objective description
   This is a tip.
   {:tip}
 
-2. Keep each steps as short as possible.
+2. Keep each step as short as possible.
 3. Do not use blank lines between steps except for tips or images.
 3. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be perscriptive and tell them exactly what to do succinctly, like a lab.
 4. Do not use "I" or "We will". 
