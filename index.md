@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-22"
+lastupdated: "2017-11-29"
 
 ---
 
@@ -63,6 +63,6 @@ Learn how easy it is to quickly create an iOS Swift application with high-value 
 
 Learn how easy it is to quickly create an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 
-### [Native mobile application with a serverless backend](serverless-mobile-backend.html)
+### [Mobile application with a serverless backend](serverless-mobile-backend.html)
 
 Learn how to use Cloud Functions along with other cognitive and data services to build a serverless backend for a mobile application.
