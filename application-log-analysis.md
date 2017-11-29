@@ -125,7 +125,7 @@ Now we are going to add another visualization, this time a **Metric**.
 
 #### Dashboard
 Once you have added visualizations, they can be used to compose a dashboard. A dashboard is used to display all important metrics and to help indicate the health of your apps and services.
-1. Click on **Dashboard** in the left navigation panel, then on `Add` to start placing existing visualizations onto the empty dashboard.
+1. Click on **Dashboard** in the left navigation panel, then on **Add** to start placing existing visualizations onto the empty dashboard.
 2. I added the log count on the left, the donut chart on the right. It is possible to change the size of each component and to move them.
 3. When you click on the arrow in the lower left corner of a component, the view changes to a table layout and additional information about the underlying request, response and execution statistics are offered, too. Here is a dashboard showing the log entry count and the data behind the donut chart.   
 ![](images/solution12/DashboardTable.png)   
