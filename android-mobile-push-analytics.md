@@ -46,7 +46,6 @@ This tutorial uses the following products:
 {: #get_code}
 
 1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from the pre-defined `Starter Kits`.
-
 2. Click on `Starter Kits` and scroll down to select the `Basic` Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
 
@@ -57,7 +56,6 @@ This tutorial uses the following products:
     ![](images/solution9/create_mobile_project.png)
 
 5. Click on `Create Project` to scaffold an Android native(Java) App.
-
 6. A new `Project` will be created under Projects tab on the left pane.
 
     **Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter.
@@ -141,10 +139,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
    Logger.setLogLevel(Logger.LEVEL.ERROR);
    ```
 
-
-​     For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger)
-
-​    {: tip}
+ For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) {:tip}
 
 ## Configure, send and monitor push notifications.
 

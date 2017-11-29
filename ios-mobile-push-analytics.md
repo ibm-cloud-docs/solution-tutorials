@@ -109,7 +109,7 @@ You must obtain separate certificates for your development and distribution envi
 
 10. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or `production_apns.p12`, then click Save.
 
-    ![Export certificate and keys](images/solution6/certificate_p12v2.png)
+  ![Export certificate and keys](images/solution6/certificate_p12v2.png)
 
 11. In the `Enter a password` field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
 
@@ -207,18 +207,14 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   **Note:** The service credentials are part of `BMSCredentials.plist` file.
 
 3. Gathering usage analytics and using logger - Navigate to `ViewController.swift` to see the below code.
-
-    For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
-
-    {: tip}
-
-  ```
-   func didBecomeActive(_ notification: Notification) {
+   ```
+    func didBecomeActive(_ notification: Notification) {
         Analytics.send()
         Logger.send()
-    }
-  ```
-
+     }
+   ```
+   For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
+   {:tip}
 ## Send and monitor push notifications.
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
