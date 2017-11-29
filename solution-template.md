@@ -52,12 +52,15 @@ This tutorial uses the following products:
 
 Objective description
 
-1. Step 1
+1. Step 1 Click **This** and enter your name.
 
   This is a tip.
   {:tip}
 
-2. Step 2
+2. Keep each steps as short as possible.
+3. Do not use blank lines between steps except for tips or images.
+3. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be perscriptive and tell them exactly what to do succinctly, like a lab.
+4. Do not use "I" or "We will". 
 
 ### Sub objective
 
