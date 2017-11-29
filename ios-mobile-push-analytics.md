@@ -93,7 +93,7 @@ You must obtain separate certificates for your development and distribution envi
 
 3. From your list of App IDs, select your App ID, then select `Edit`.
 
-4. Select the the `Push Notifications` check-box, and then on **Development SSL certificate** pane, click **Create Certificate**.
+4. Select the  `Push Notifications` check-box, and then on **Development SSL certificate** pane, click **Create Certificate**.
 
    ​                  ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
 
@@ -120,8 +120,6 @@ You must obtain separate certificates for your development and distribution envi
     ![Export certificate and keys](images/solution6/export_p12.png)
 
 12. The `Key Access.app` prompts you to export your key from the `Keychain` screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
-
-   ​
 
    For Production SSL, On **Production SSL certificate** pane, click **Create Certificate** and repeat Steps 5 to 12 above.
    {:tip}
