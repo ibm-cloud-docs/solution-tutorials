@@ -139,8 +139,8 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
    Logger.setLogLevel(Logger.LEVEL.ERROR);
    ```
 
- For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
-{:tip}
+​       For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
+​       {:tip}
 
 ## Configure, send and monitor push notifications.
 
