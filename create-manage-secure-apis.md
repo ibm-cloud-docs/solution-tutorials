@@ -122,19 +122,9 @@ In this section, you will start a local instance of your Loopback application an
   ```
 5. Click **Call operation**.
 ![apic_loopback](images/solution13/data_entry_1.png)
->![troubleshooting]
->If you see an error message due to an untrusted certificate for localhost, click the link provided in the error message in API Designer Explore tool to accept the certificate, then proceed to call the operations in your web browser. The exact procedure depends on the web browser you are using. If you load the REST endpoints directly in your browser, you will see the message: {"name":"PreFlowError","message":"unable to process the request"}. You must use the API Designer Explore tool to test REST endpoints in your browser because it includes the requisite headers and other request parameters.
->
->![troubleshooting]
->If you get a response code of **422 - Unprocessable Entity** with the following payload:
->![](images/explore-test-3.png)
->
->the `id` data element has not been removed from the generated data. Remove the `id` data element and re-run the test.
->![troubleshooting]
->If you get the error **failed to parse request body**, you have to remove the comma following the last `humidity_high` number.
-6. Confirm by scrolling down and checking for **Response Code: 200 OK**
-7. Click **entry.find > Call operation** to display all entries instances. You should see JSON for **Jane Doe**
-8. Add another entry using a curl command. Confirm the port matches your Application port
+6. Confirm successful POST by checking for **Response Code: 200 OK**. 
+  **Note:** If you see an error message due to an untrusted certificate for localhost, click the link provided in the error message in API Designer Explore tool to accept the certificate, then proceed to visit the URL in your web browser. The exact procedure depends on the web browser you are using. If you load the REST endpoints directly in your browser, you will see the message: {"name":"PreFlowError","message":"unable to process the request"}. Then, attempt the **Call operation** again.
+7. Add another entry using a curl command. Confirm the port matches your Application port
   ```bash
   curl --request POST \
   --url https://localhost:4002/api/entries \
@@ -142,15 +132,18 @@ In this section, you will start a local instance of your Loopback application an
   --header 'content-type: application/json' \
   --header 'x-ibm-client-id: default' \
   --header 'x-ibm-client-secret: SECRET' \
-  --data '{"name":"John Doe","email":"johndoe@mycomany.com","comment":"Jane likes Orange"}' \
+  --data '{"name":"John Doe","email":"johndoe@mycomany.com","comment":"John likes Orange"}' \
   --insecure
   ```
+8. Click **entry.find > Call operation** to display all entries. You should see JSON for **Jane Doe** and **John Doe**.
+![entry_find](images/solution13/find_response.png)
 
 ## Create API Connect service
 To prepare for the next steps, you need to create an **API Connect** service on IBM Cloud which will act as the gateway for your API.
 
 1. Launch [IBM Cloud](https://console.bluemix.net) Dashboard
 2. Navigate to **Catalog > APIs > API Connect** and click **Create**
+![entry_find](images/solution13/api_connect.png)
 
 ## Publish API to IBM Cloud
 {: #publish}
@@ -170,6 +163,7 @@ You will use the API Designer to deploy your application to IBM Cloud as a Cloud
 11. Click **Publish** and select your target
 12. Select **Publish application** then select **entries-api**
 13. Click **Publish** and wait 5 minutes for the application to finish publishing.
+![publish](images/solution13/publish.png)
 
 The API application is now published to IBM Cloud as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under [IBM Cloud](https://console.bluemix.net) Dashboard. However, direct access using the URL is not possible as the application is protected.
 
@@ -190,6 +184,8 @@ Next, you will use the **API Connect** service to test your deployed API on IBM 
   ```
 A 200 response should displayed.
 
+![gateway](images/solution13/gateway.png)
+
 Your managed and secure API URL is displayed next to each operation and it should look like 
 ```
 https://us.apiconnect.ibmcloud.com/orgs/ORG-SPACE/catalogs/sb/api/entries**
@@ -202,6 +198,7 @@ In this section,
 3. Expand **Default Plan** and scroll down to **Rate limits** field
 4. Set fields to **10** calls / **1** **Minute**
 5. Select **Enforce hard limit** and click **Save** icon.
+![rate_limit](images/solution13/rate_limit.png)
 6. Follow steps under [Publish API to IBM Cloud](#publish) section to re-pulish your API
 
 Your API is now rate limited to 10 requests per minute.
