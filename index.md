@@ -44,7 +44,7 @@ This tutorial walks you through the creation of a web application using the popu
 
 This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, we deploy a web app "worldcities" to make use of that data and show how to access the cloud database.
 
-### [Create a serverless web application](serverless-api-webapp.html)
+### [Serverless Web Application and API](serverless-api-webapp.html)
 
 Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.
 
