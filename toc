@@ -21,4 +21,5 @@ Solution Tutorials
     android-mobile-push-analytics.md
     serverless-mobile-backend.md
     application-log-analysis.md
+    create-manage-secure-apis.md
     {: .navgroup-end}

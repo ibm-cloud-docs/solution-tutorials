@@ -52,6 +52,10 @@ Create a serverless web application by hosting static website content in GitHub 
 
 Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.
 
+### [Generate, Access and Analyze Application Logs](create-manage-secure-apis.html)
+
+This tutorial demonstrates how to create a new REST API using the LoopBack Node.js API framework and then add management, visibility, security and rate limiting to your API using the API Connect service on IBM Cloud.
+
 ## Mobile
 {: #mobile}
 
