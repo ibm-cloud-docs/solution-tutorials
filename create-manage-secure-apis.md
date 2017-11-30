@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-29"
+lastupdated: "2017-11-30"
 
 ---
 
@@ -17,7 +17,7 @@ lastupdated: "2017-11-29"
 {:pre: .pre}
 
 # Create, Secure and Manage REST APIs
-This tutorial is a walkthrough of creating a new REST API in Node.js using the LoopBack framework, and then using the API Connect service to add management, visibility, security and rate limiting.
+This tutorial demonstrates how to create a new REST API using the LoopBack Node.js API framework and  then add management, visibility, security and rate limiting to your API using the **API Connect** service on IBM Cloud.
 {:shortdesc}
 
 ![](images/solution13/ArchitectureDiagram.png)
@@ -25,7 +25,7 @@ This tutorial is a walkthrough of creating a new REST API in Node.js using the L
 ## Objectives
 * Create a REST API in Node.js
 * Deploy Node.js application
-* Import API Spec to API Connect
+* Import API Specification to API Connect
 * Secure and Manage API
 
 ## Products
@@ -50,12 +50,16 @@ In this section, you will create an API in Node.js using the [LoopBack framework
   ```bash 
   apic loopback
   ```
+
 3.  At the prompt, enter `entries-api` as the project name and press **Enter**.
-  ```bash
+
+  ```sh
   ? What's the name of your application? entries-api
   ```
 4.  Press **Enter** to use a directory with the same name as the project.
+
 5.  Choose the **current** version of LoopBack.
+
 6.  Select **empty-server** for the kind of application.
   ```bash
     ? What kind of application do you have in mind? (Use arrow keys)
@@ -74,24 +78,32 @@ Adding a data source allows you to configure where the data should be persisted.
   cd entries-api
   apic edit
   ```
-2. Click on **Data Sources > Add**. The New LoopBack Data Source window opens.
+
+2. Click on **Data Sources > Add**, A New LoopBack Data Source window opens.
+
 3. Enter `entriesDS` in the **Name** text field and click **New**.
+
 4. Use **in-memory db** for the **Connector** setting. 
-5. Click **All Data Sources** on the top left. The data source will appear in the list of data sources, and the editor updates the server/datasources.json file with settings for the new data source.
+
+5. Click **All Data Sources** on the top left. The data source will appear in the list of data sources.
+
+   The editor automatically updates the server/datasources.json file with settings for the new data source.
+   {:tip}
 
 ![apic_loopback](images/solution13/datastore.png)
 
 ### Add a model
-Models allow you to define and contorl the data structure and schema of your API.
+Models allow you to define and control the structure of data and schema of your API.
 
-1. Click **Models > Add** and enter `entry` in the **Name** text field
-  ![](images/solution13/models-icon.png).
+1. Click **Models > Add** and enter `entry` in the **Name** text field and click **New**
+  ![](images/models-icon.png).
 2. In the **Data Source** field, select **entriesDS**.
-3. In the **Properties**, click the **Add property** icon ![](images/solution13/add-icon.png).
+  ![](images/new-model-1.png)
+3. In the **Properties**, click the **Add property** icon ![](images/add-icon.png).
 4. In the **Property Name** text field, enter `name` and select **Type** of **string**.
 5. Repeat with **Property Name** text field `email` and **Type** of **string**.
 6. Repeat with **Property Name** text field `comment` and **Type** of **string**.
-7. Click the **Save** icon ![](images/solution13/save-icon.png) to save your changes.
+7. Click the **Save** icon ![](images/save-icon.png) to save your changes.
 8. Click **All Models** to finish editing the model.
 
 ![apic_loopback](images/solution13/models.png)
@@ -100,11 +112,15 @@ Models allow you to define and contorl the data structure and schema of your API
 ## Test your LoopBack application
 In this section, you will start a local instance of your Loopback application and test the API by inserting and querying data.
 
-1. Start the local test servers by clicking on the **Start the servers** icon ![](images/solution13/test-icon.png)and wait until **Running** message is displayed.
-  ![](images/solution13/start-server-1.png)
-2. Click the **Explore** icon ![](images/solution13/explore-icon.png) to see the API Designer Explore tool. The sidebar shows all of the REST operations for the LoopBack models in the API.
+1. Start the local test servers.
+  a. In the test console at the bottom of the screen, click the **Start the servers** icon ![](images/test-icon.png):
+  ![](images/start-server-1.png)
+  b. Wait until the Running message is displayed:
+  ![](images/running-server-1.png)
+2. Click the **Explore** icon ![](images/explore-icon.png) to see the API Designer Explore tool. The sidebar shows all of the REST operations for the LoopBack models in the API.
 3. Click the operation **entry.create** in the left pane to display the endpoint.
-  The center pane displays summary information about the endpoint, including its parameters, security, model instance data, and response codes. The right pane provides template code to call the endpoint using the curl command, and languages such as Ruby, Python, Java, and Node.
+  ![](images/explore-test-1.png)
+  The center pane displays summary information about the endpoint, including its parameters, security, model instance data, and response codes. The right pane provides template code to call the endpoint using the cURL command, and languages such as Ruby, Python, Java, and Node.
 4. On the right pane click **Try it**. Scroll down to **Parameters** and enter the following in **data**
   ```
   {
@@ -128,7 +144,7 @@ In this section, you will start a local instance of your Loopback application an
   --data '{"name":"John Doe","email":"johndoe@mycomany.com","comment":"John likes Orange"}' \
   --insecure
   ```
-8. Click **entry.find > Call operation** to display all entries. You should see JSON for **Jane Doe** and **John Doe**.
+8. Click **entry.find** >**Try It**(on the right pane) > **Call operation**  to display all entries. You should see JSON for **Jane Doe** and **John Doe**.
   ![entry_find](images/solution13/find_response.png)
 
 ## Create API Connect service
