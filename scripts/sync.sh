@@ -17,6 +17,7 @@ tar cf - \
   --exclude=.git \
   --exclude=.gitignore \
   --exclude=solution-template.md \
+  --exclude=create-manage-secure-apis.md \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
