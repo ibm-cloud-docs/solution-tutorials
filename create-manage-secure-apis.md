@@ -96,14 +96,13 @@ Adding a data source allows you to configure where the data should be persisted.
 Models allow you to define and control the structure of data and schema of your API.
 
 1. Click **Models > Add** and enter `entry` in the **Name** text field and click **New**
-  ![](images/models-icon.png).
+  ![](images/solution13/models-icon.png).
 2. In the **Data Source** field, select **entriesDS**.
-  ![](images/new-model-1.png)
-3. In the **Properties**, click the **Add property** icon ![](images/add-icon.png).
+3. In the **Properties**, click the **Add property** icon ![](images/solution13/add-icon.png).
 4. In the **Property Name** text field, enter `name` and select **Type** of **string**.
 5. Repeat with **Property Name** text field `email` and **Type** of **string**.
 6. Repeat with **Property Name** text field `comment` and **Type** of **string**.
-7. Click the **Save** icon ![](images/save-icon.png) to save your changes.
+7. Click the **Save** icon ![](images/solution13/save-icon.png) to save your changes.
 8. Click **All Models** to finish editing the model.
 
 ![apic_loopback](images/solution13/models.png)
@@ -113,14 +112,11 @@ Models allow you to define and control the structure of data and schema of your 
 In this section, you will start a local instance of your Loopback application and test the API by inserting and querying data.
 
 1. Start the local test servers.
-  a. In the test console at the bottom of the screen, click the **Start the servers** icon ![](images/test-icon.png):
-  ![](images/start-server-1.png)
-  b. Wait until the Running message is displayed:
-  ![](images/running-server-1.png)
-2. Click the **Explore** icon ![](images/explore-icon.png) to see the API Designer Explore tool. The sidebar shows all of the REST operations for the LoopBack models in the API.
-3. Click the operation **entry.create** in the left pane to display the endpoint.
-  ![](images/explore-test-1.png)
-  The center pane displays summary information about the endpoint, including its parameters, security, model instance data, and response codes. The right pane provides template code to call the endpoint using the cURL command, and languages such as Ruby, Python, Java, and Node.
+  a. In the test console at the bottom of the screen, click the **Start the servers** icon ![](images/solution13/test-icon.png):
+  ![](images/solution13/start-server-1.png)
+  b. Wait until the Running message is displayed.
+2. Click the **Explore** icon ![](images/solution13/explore-icon.png) to see the API Designer Explore tool. The sidebar shows all of the REST operations for the LoopBack models in the API.
+3. Click the operation **entry.create** in the left pane to display the endpoint. The center pane displays summary information about the endpoint, including its parameters, security, model instance data, and response codes. The right pane provides template code to call the endpoint using the cURL command, and languages such as Ruby, Python, Java, and Node.
 4. On the right pane click **Try it**. Scroll down to **Parameters** and enter the following in **data**
   ```
   {
