@@ -46,12 +46,12 @@ This tutorial uses the following products:
 {: #get_code}
 
 1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from the pre-defined `Starter Kits`.
-2. Click on `Starter Kits` and scroll down to select the `Basic` Starter Kit.
+2. Click on **Starter Kits** and scroll down to select the **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
 
 3. Enter a project name, this can be your app name as well.
 
-4. Select `Android` as your language.
+4. Select `Android` as your language and check the mobile services on the right pane.
 
     ![](images/solution9/create_mobile_project.png)
 
@@ -61,7 +61,7 @@ This tutorial uses the following products:
     **Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter.
 
 
-In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
+In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
 
 ## Obtain FCM credentials
