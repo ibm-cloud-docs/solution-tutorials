@@ -87,25 +87,25 @@ You can use APNs in two modes:
 
 You must obtain separate certificates for your development and distribution environments. The certificates are associated with an App ID for the app that is the recipient of remote notifications. For production, you can create up to two certificates. IBM Cloud uses the certificates to establish an SSL connection with APNs.
 
-1. Go to the Apple Developer website, click `Member Center`, and select `Certificates, IDs & Profiles`.
-2. In the `Identifiers` area, click `App IDs`.
+1. Go to the Apple Developer website, click **Member Center**, and select **Certificates, IDs & Profiles**.
+2. In the **Identifiers** area, click **App IDs**.
 3. From your list of App IDs, select your App ID, then select `Edit`.
-4. Select the  `Push Notifications` check-box, and then on **Development SSL certificate** pane, click **Create Certificate**.
-   ​                  ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
+4. Select the  **Push Notifications** check-box, and then on **Development SSL certificate** pane, click **Create Certificate**.
+  ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
 
-5. When the `About Creating a Certificate Signing Request (CSR) screen` displays, follow the instructions shown to create a Certificate Signing Request (CSR) file. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
-6. Click **Continue** and on the Upload CSR file screen, click `Choose File`, and select the file `CertificateSigningRequest.certSigningRequest` you just created. Click `Continue`.
-7. On the Download, Install and Backup pane, click Download. The `aps_development.cer` file is downloaded.
+5. When the **About Creating a Certificate Signing Request (CSR) screen** displays, follow the instructions shown to create a Certificate Signing Request (CSR) file. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
+6. Click **Continue** and on the Upload CSR file screen, click **Choose File**, and select the file **CertificateSigningRequest.certSigningRequest** you just created. Click **Continue**.
+7. On the Download, Install and Backup pane, click Download. The **aps_development.cer** file is downloaded.
      ![Download certificate](images/solution6/push_certificate_download.png)
      ![Generate certificate](images/solution6/generate_certificate.png)
 8. On your mac, open **Keychain Access**, **File**, **Import** and select the downloaded .cer file to install it.
-9. Right-click on the new certificate and private key, and then select `Export` and change the **File Format** to Personal information exchange format (`.p12` format).
+9. Right-click on the new certificate and private key, and then select **Export** and change the **File Format** to Personal information exchange format (`.p12` format).
   ![Export certificate and keys](images/solution6/keychain_export_key.png)
-10. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or `production_apns.p12`, then click Save.
+10. In the **Save As** field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or **production_apns.p12**, then click Save.
   ![Export certificate and keys](images/solution6/certificate_p12v2.png)
-11. In the `Enter a password` field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
+11. In the **Enter a password** field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
     ![Export certificate and keys](images/solution6/export_p12.png)
-12. The `Key Access.app` prompts you to export your key from the `Keychain` screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
+12. The **Key Access.app** prompts you to export your key from the **Keychain** screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
 
    For Production SSL, On **Production SSL certificate** pane, click **Create Certificate** and repeat Steps 5 to 12 above.
    {:tip}
@@ -147,7 +147,8 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 2. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
 3. Select `Sandbox (development)` or `Production (distribution)` as appropriate and then upload the `p.12` certificate that you have created.
 4. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
-   ![](images/solution6/Mobile_push_configure.png)
+
+![](images/solution6/Mobile_push_configure.png)
 
 ## Download the code and setup client SDKs
 If you haven't downloaded the code yet, Click on `Download Code` under Projects > `Your Mobile Project`
