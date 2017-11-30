@@ -188,7 +188,7 @@ A 200 response should displayed.
 
 Your managed and secure API URL is displayed next to each operation and it should look like 
 ```
-https://us.apiconnect.ibmcloud.com/orgs/ORG-SPACE/catalogs/sb/api/entries**
+https://us.apiconnect.ibmcloud.com/orgs/ORG-SPACE/catalogs/sb/api/entries
 ```
 ## Rate Limiting
 In this section, 
@@ -201,7 +201,7 @@ In this section,
 ![rate_limit](images/solution13/rate_limit.png)
 6. Follow steps under [Publish API to IBM Cloud](#publish) section to re-pulish your API
 
-Your API is now rate limited to 10 requests per minute.
+Your API is now rate limited to 10 requests per minute. Explore the API Designer to see all the management features available.
 
 
 ## Related information
