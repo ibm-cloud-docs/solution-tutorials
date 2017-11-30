@@ -20,9 +20,7 @@ lastupdated: "2017-11-29"
 This tutorial is a walkthrough of creating a new REST API in Node.js using the LoopBack framework, and then using the API Connect service to add management, visibility, security and rate limiting.
 {:shortdesc}
 
-<p style="text-align: center;">
 ![](images/solution13/ArchitectureDiagram.png)
-</p>
 
 ## Objectives
 * Create a REST API in Node.js
@@ -45,27 +43,27 @@ In this section, you will create an API in Node.js using the [LoopBack framework
 
 ### Create application
 1.  Install IBM API Connect command line tool.
-	```bash 
-	npm install -g apiconnect
-	```
+  ```bash 
+  npm install -g apiconnect
+  ```
 2. Enter the following command to create the application.
-	```bash 
-	apic loopback
-	```
+  ```bash 
+  apic loopback
+  ```
 3.  At the prompt, enter `entries-api` as the project name and press **Enter**.
-	```bash
-	? What's the name of your application? entries-api
-	```
+  ```bash
+  ? What's the name of your application? entries-api
+  ```
 4.  Press **Enter** to use a directory with the same name as the project.
 5.  Choose the **current** version of LoopBack.
 6.  Select **empty-server** for the kind of application.
-	```bash
+  ```bash
     ? What kind of application do you have in mind? (Use arrow keys)
     ? empty-server (An empty LoopBack API, without any configured models or datasources) 
       hello-world (A project containing a basic working example, including a memory database) 
       notes (A project containing a basic working example, including a memory database)
-	```
-![apic_loopback](images/solution13/apic_loopback.png)
+  ```
+  ![apic_loopback](images/solution13/apic_loopback.png)
 
 
 ### Add a data source
@@ -73,10 +71,10 @@ Adding a data source allows you to configure where the data should be persisted.
 
 1. Change directory to the new project and launch the API Designer.
   ```bash
-	cd entries-api
-	apic edit
-	```
-2. Click on **Data Sources > Add**. The New LoopBack Data Source window opens. ![](images/datasource-icon.png).
+  cd entries-api
+  apic edit
+  ```
+2. Click on **Data Sources > Add**. The New LoopBack Data Source window opens.
 3. Enter `entriesDS` in the **Name** text field and click **New**.
 4. Use **in-memory db** for the **Connector** setting. 
 5. Click **All Data Sources** on the top left. The data source will appear in the list of data sources, and the editor updates the server/datasources.json file with settings for the new data source.
@@ -87,15 +85,14 @@ Adding a data source allows you to configure where the data should be persisted.
 Models allow you to define and contorl the data structure and schema of your API.
 
 1. Click **Models > Add** and enter `entry` in the **Name** text field
-![](images/models-icon.png).
-2. In the **Data Source** field, select **weatherDS**.
-	![](images/new-model-1.png)
-5. In the **Properties**, click the **Add property** icon ![](images/add-icon.png).
-6. In the **Property Name** text field, enter `name` and select **Type** of **string**.
-7. Repeat with **Property Name** text field `email` and **Type** of **string**.
-8. Repeat with **Property Name** text field `comment` and **Type** of **string**.
-9. Click the **Save** icon ![](images/save-icon.png) to save your changes.
-10. Click **All Models** to finish editing the model.
+  ![](images/solution13/models-icon.png).
+2. In the **Data Source** field, select **entriesDS**.
+3. In the **Properties**, click the **Add property** icon ![](images/solution13/add-icon.png).
+4. In the **Property Name** text field, enter `name` and select **Type** of **string**.
+5. Repeat with **Property Name** text field `email` and **Type** of **string**.
+6. Repeat with **Property Name** text field `comment` and **Type** of **string**.
+7. Click the **Save** icon ![](images/solution13/save-icon.png) to save your changes.
+8. Click **All Models** to finish editing the model.
 
 ![apic_loopback](images/solution13/models.png)
 
@@ -103,14 +100,10 @@ Models allow you to define and contorl the data structure and schema of your API
 ## Test your LoopBack application
 In this section, you will start a local instance of your Loopback application and test the API by inserting and querying data.
 
-1. Start the local test servers.
-	a. In the test console at the bottom of the screen, click the **Start the servers** icon ![](images/test-icon.png):
-	![](images/start-server-1.png)
-	b. Wait until the Running message is displayed:
-	![](images/running-server-1.png)
-2. Click the **Explore** icon ![](images/explore-icon.png) to see the API Designer Explore tool. The sidebar shows all of the REST operations for the LoopBack models in the API.
+1. Start the local test servers by clicking on the **Start the servers** icon ![](images/solution13/test-icon.png)and wait until **Running** message is displayed.
+  ![](images/solution13/start-server-1.png)
+2. Click the **Explore** icon ![](images/solution13/explore-icon.png) to see the API Designer Explore tool. The sidebar shows all of the REST operations for the LoopBack models in the API.
 3. Click the operation **entry.create** in the left pane to display the endpoint.
-![](images/explore-test-1.png)
   The center pane displays summary information about the endpoint, including its parameters, security, model instance data, and response codes. The right pane provides template code to call the endpoint using the curl command, and languages such as Ruby, Python, Java, and Node.
 4. On the right pane click **Try it**. Scroll down to **Parameters** and enter the following in **data**
   ```
@@ -121,7 +114,7 @@ In this section, you will start a local instance of your Loopback application an
   }
   ```
 5. Click **Call operation**.
-![apic_loopback](images/solution13/data_entry_1.png)
+  ![apic_loopback](images/solution13/data_entry_1.png)
 6. Confirm successful POST by checking for **Response Code: 200 OK**. 
   **Note:** If you see an error message due to an untrusted certificate for localhost, click the link provided in the error message in API Designer Explore tool to accept the certificate, then proceed to visit the URL in your web browser. The exact procedure depends on the web browser you are using. If you load the REST endpoints directly in your browser, you will see the message: {"name":"PreFlowError","message":"unable to process the request"}. Then, attempt the **Call operation** again.
 7. Add another entry using a curl command. Confirm the port matches your Application port
@@ -136,14 +129,14 @@ In this section, you will start a local instance of your Loopback application an
   --insecure
   ```
 8. Click **entry.find > Call operation** to display all entries. You should see JSON for **Jane Doe** and **John Doe**.
-![entry_find](images/solution13/find_response.png)
+  ![entry_find](images/solution13/find_response.png)
 
 ## Create API Connect service
 To prepare for the next steps, you need to create an **API Connect** service on IBM Cloud which will act as the gateway for your API.
 
 1. Launch [IBM Cloud](https://console.bluemix.net) Dashboard
 2. Navigate to **Catalog > APIs > API Connect** and click **Create**
-![entry_find](images/solution13/api_connect.png)
+  ![entry_find](images/solution13/api_connect.png)
 
 ## Publish API to IBM Cloud
 {: #publish}
@@ -155,15 +148,15 @@ You will use the API Designer to deploy your application to IBM Cloud as a Cloud
 3. Select the **Sandbox** Catalog and click **Next**.
 4. Enter `entries-api-application` under **Type a new application name** and click **+**
 5. Click **entries-api-application** in the list and click **Save**.
-6.  Click **Publish** again and select the newly created target
-7.  Click **Publish**.
+6. Click **Publish** again and select the newly created target
+7. Click **Publish**.
 8. In the API Designer UI, click **APIs > entries-api > Assemble**
 9. In the Assembly editor, click the **Filter policies** icon.
 10. Select **DataPower Gateway policies** and click **Save**.
 11. Click **Publish** and select your target
 12. Select **Publish application** then select **entries-api**
 13. Click **Publish** and wait 5 minutes for the application to finish publishing.
-![publish](images/solution13/publish.png)
+   ![publish](images/solution13/publish.png)
 
 The API application is now published to IBM Cloud as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under [IBM Cloud](https://console.bluemix.net) Dashboard. However, direct access using the URL is not possible as the application is protected.
 
@@ -182,7 +175,7 @@ Next, you will use the **API Connect** service to test your deployed API on IBM 
     "comment": "Entry on the cloud!"
   }
   ```
-A 200 response should displayed.
+  A 200 response should displayed.
 
 ![gateway](images/solution13/gateway.png)
 
@@ -198,7 +191,7 @@ In this section,
 3. Expand **Default Plan** and scroll down to **Rate limits** field
 4. Set fields to **10** calls / **1** **Minute**
 5. Select **Enforce hard limit** and click **Save** icon.
-![rate_limit](images/solution13/rate_limit.png)
+  ![rate_limit](images/solution13/rate_limit.png)
 6. Follow steps under [Publish API to IBM Cloud](#publish) section to re-pulish your API
 
 Your API is now rate limited to 10 requests per minute. Explore the API Designer to see all the management features available.
