@@ -50,16 +50,13 @@ In this section, you will create an API in Node.js using the [LoopBack framework
   ```bash 
   apic loopback
   ```
-
 3.  At the prompt, enter `entries-api` as the project name and press **Enter**.
 
   ```sh
   ? What's the name of your application? entries-api
   ```
 4.  Press **Enter** to use a directory with the same name as the project.
-
 5.  Choose the **current** version of LoopBack.
-
 6.  Select **empty-server** for the kind of application.
   ```bash
     ? What kind of application do you have in mind? (Use arrow keys)
@@ -78,13 +75,9 @@ Adding a data source allows you to configure where the data should be persisted.
   cd entries-api
   apic edit
   ```
-
 2. Click on **Data Sources > Add**, A New LoopBack Data Source window opens.
-
 3. Enter `entriesDS` in the **Name** text field and click **New**.
-
 4. Use **in-memory db** for the **Connector** setting. 
-
 5. Click **All Data Sources** on the top left. The data source will appear in the list of data sources.
 
    The editor automatically updates the server/datasources.json file with settings for the new data source.
@@ -174,9 +167,10 @@ You will use the API Designer to deploy your application to IBM Cloud as a Cloud
 9. Select **DataPower Gateway policies** and click **Save**.
 10. Click **Publish** on the top bar and select your target. Select **Publish application** and Stage or Publish Products > Select **Specific products** > **entries-api**.
 11. Click **Publish** and wait 5 minutes for the application to finish publishing.
-   ![publish](images/solution13/publish.png)You can republish or stage your application anytime by clicking on **publish** anytime.
-
-​      {:tip}
+   ![publish](images/solution13/publish.png)
+   
+   You can republish or stage your application anytime by clicking on **publish** anytime.
+   {:tip}
 
 The API application is now published to IBM Cloud as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under [IBM Cloud](https://console.bluemix.net) Dashboard. However, direct access using the URL is not possible as the application is protected.
 
