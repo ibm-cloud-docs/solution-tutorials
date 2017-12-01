@@ -170,7 +170,7 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    ```
    {: pre}
 5. Add the following commands, substituting your database password for yourPassword (leave the other values unchanged). Then save the file.
-   ```mssql
+   ```sql
    CREATE DATABASE wordpress;
    GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.*
    TO wordpress@localhost
