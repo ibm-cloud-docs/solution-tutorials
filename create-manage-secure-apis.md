@@ -115,8 +115,11 @@ In this section, you will start a local instance of your Loopback application an
   a. In the test console at the bottom of the screen, click the **Start the servers** icon ![](images/solution13/test-icon.png):
   ![](images/solution13/start-server-1.png)
   b. Wait until the Running message is displayed.
+
 2. Click the **Explore** icon ![](images/solution13/explore-icon.png) to see the API Designer Explore tool. The sidebar shows all of the REST operations for the LoopBack models in the API.
+
 3. Click the operation **entry.create** in the left pane to display the endpoint. The center pane displays summary information about the endpoint, including its parameters, security, model instance data, and response codes. The right pane provides template code to call the endpoint using the cURL command, and languages such as Ruby, Python, Java, and Node.
+
 4. On the right pane click **Try it**. Scroll down to **Parameters** and enter the following in **data**
   ```
   {
@@ -125,10 +128,14 @@ In this section, you will start a local instance of your Loopback application an
     "comment": "Jane likes Blue"
   }
   ```
+
 5. Click **Call operation**.
   ![apic_loopback](images/solution13/data_entry_1.png)
+
 6. Confirm successful POST by checking for **Response Code: 200 OK**. 
+
   **Note:** If you see an error message due to an untrusted certificate for localhost, click the link provided in the error message in API Designer Explore tool to accept the certificate, then proceed to visit the URL in your web browser. The exact procedure depends on the web browser you are using. If you load the REST endpoints directly in your browser, you will see the message: {"name":"PreFlowError","message":"unable to process the request"}. Then, attempt the **Call operation** again.
+
 7. Add another entry using a curl command. Confirm the port matches your Application port
   ```bash
   curl --request POST \
@@ -140,11 +147,12 @@ In this section, you will start a local instance of your Loopback application an
   --data '{"name":"John Doe","email":"johndoe@mycomany.com","comment":"John likes Orange"}' \
   --insecure
   ```
+
 8. Click **entry.find** >**Try It**(on the right pane) > **Call operation**  to display all entries. You should see JSON for **Jane Doe** and **John Doe**.
   ![entry_find](images/solution13/find_response.png)
 
 ## Create API Connect service
-To prepare for the next steps, you need to create an **API Connect** service on IBM Cloud which will act as the gateway for your API.
+To prepare for the next steps, you need to create an **API Connect** service on IBM Cloud which will act as the gateway for your API. This service on IBM Cloud will be used to manage,secure and rate limit your API.
 
 1. Launch [IBM Cloud](https://console.bluemix.net) Dashboard
 2. Navigate to **Catalog > APIs > API Connect** and click **Create**
@@ -160,26 +168,26 @@ You will use the API Designer to deploy your application to IBM Cloud as a Cloud
 3. Select the **Sandbox** Catalog and click **Next**.
 4. Enter `entries-api-application` under **Type a new application name** and click **+**
 5. Click **entries-api-application** in the list and click **Save**.
-6. Click **Publish** again and select the newly created target
-7. Click **Publish**.
-8. In the API Designer UI, click **APIs > entries-api > Assemble**
-9. In the Assembly editor, click the **Filter policies** icon.
-10. Select **DataPower Gateway policies** and click **Save**.
-11. Click **Publish** and select your target
-12. Select **Publish application** then select **entries-api**
-13. Click **Publish** and wait 5 minutes for the application to finish publishing.
-   ![publish](images/solution13/publish.png)
+6. Click on the **Menu** icon on the left top most corner > **Projects** > **entries-api** in the list.
+7. In the API Designer UI, click **APIs > entries-api > Assemble**
+8. In the Assembly editor, click the **Filter policies** icon.
+9. Select **DataPower Gateway policies** and click **Save**.
+10. Click **Publish** on the top bar and select your target. Select **Publish application** and Stage or Publish Products > Select **Specific products** > **entries-api**.
+11. Click **Publish** and wait 5 minutes for the application to finish publishing.
+   ![publish](images/solution13/publish.png)You can republish or stage your application anytime by clicking on **publish** anytime.
+
+​      {:tip}
 
 The API application is now published to IBM Cloud as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under [IBM Cloud](https://console.bluemix.net) Dashboard. However, direct access using the URL is not possible as the application is protected.
 
 ## API Gateway
-Next, you will use the **API Connect** service to test your deployed API on IBM Cloud
+Till now, you have been designing and testing your API locally. Next, you will use the **API Connect** service to test your deployed API on IBM Cloud.
 
 1. Launch [IBM Cloud](https://console.bluemix.net) Dashboard
 2. Find and select your **API Connect** service under **Cloud Foundry Services**
 3. Click on **Explore** and select **Sandbox**
 4. Click on **entry.create**
-5. On the right pane click **Try it**. Scroll down to **Parameters** and enter the following in **data**
+5. On the right pane, click **Try it**. Scroll down to **Parameters** and enter the following in **data**
   ```
   {
     "name": "Cloud User",
@@ -204,7 +212,7 @@ In this section,
 4. Set fields to **10** calls / **1** **Minute**
 5. Select **Enforce hard limit** and click **Save** icon.
   ![rate_limit](images/solution13/rate_limit.png)
-6. Follow steps under [Publish API to IBM Cloud](#publish) section to re-pulish your API
+6. Follow steps under [Publish API to IBM Cloud](#publish) section to re-publish your API
 
 Your API is now rate limited to 10 requests per minute. Explore the API Designer to see all the management features available.
 
