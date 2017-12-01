@@ -7,7 +7,7 @@ Solution Tutorials
     {: .navgroup id="learn"}
     index.md
     {: .navgroup-end}
-    
+
     {: .navgroup id="howto"}
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
@@ -17,9 +17,9 @@ Solution Tutorials
     mean-stack.md
     sql-database.md
     serverless-api-webapp.md
+    application-log-analysis.md
+    create-manage-secure-apis.md
     ios-mobile-push-analytics.md
     android-mobile-push-analytics.md
     serverless-mobile-backend.md
-    application-log-analysis.md
-    create-manage-secure-apis.md
     {: .navgroup-end}
