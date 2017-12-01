@@ -84,7 +84,6 @@ You would also need to generate the `google-services.json` file. Complete the fo
 3. Click **ADD APP** > **Add Firebase to your app**.  Include the package name of your application by entering the package name **com.ibm.mysampleapp** then proceed to add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
 
      **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
-
 4. Download the latest config file `google-services.json` under **Your apps**.
 
     ![](images/solution9/google_services.png)
@@ -108,7 +107,6 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
    apply plugin: 'com.google.gms.google-services'
    ```
 4. Copy the `google-services.json` file that you have created and downloaded to your Android application module root directory. Note that the `google-service.json` file includes the added package names.
-
 5. The required permissions are all inside the `AndroidManifest.xml` file and dependencies. Push and Analytics are included in **build.gradle (Module: app)**.
 6. **Firebase Cloud Messaging (FCM)** intent service and intent filters for the `RECEIVE` and `REGISTRATION` event notifications are included in `AndroidManifest.xml`
 
@@ -128,9 +126,9 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
    Logger.storeLogs(true);
    Logger.setLogLevel(Logger.LEVEL.ERROR);
    ```
-   ​
-   For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
-   {:tip}
+  
+For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
+{:tip}
 
 
 ## Configure, send and monitor push notifications.
