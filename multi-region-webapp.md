@@ -24,19 +24,19 @@ This tutorial walks you through creating, securing, and deploying a web applicat
 * Bind an SSL certificate to your application.
 * Monitor application performance.
 
-![HelloWorld](images/solution1/Architecture.png)
+![Architecture](images/solution1/Architecture.png)
 
 ### Apps and Services
-* SDK for Node.js Cloud Foundry App
-* Continuous Delivery Service for DevOps
+* [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
+* [Continuous Delivery Service](https://console.bluemix.net/catalog/services/continuous-delivery) for DevOps
 
 ## Create a Node.js application
 {: #create}
 
 Start by creating a Node.js starter application that runs in a Cloud Foundry environment.
 
-1.  Click **Catalog** from the menu bar in the IBM Cloud console.
-2.  Click **Cloud Foundry Apps** under Platform on the left pane and select **SDK for Node.js** .
+1.  Click **[Catalog](https://console.bluemix.net/catalog/)** from the menu bar in the IBM Cloud console.
+2.  Click **Cloud Foundry Apps** under Platform on the left pane and select **[SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)** .
      ![](images/solution1/SDKforNodejs.png)
 3.  Enter a **unique name** for your application, which will also be your host name, for example: myusername-nodeapp. And click **Create**.
 4.  After the application starts, click the **Visit URL** link on the **Overview** page to see your application LIVE on a new tab.
@@ -127,7 +127,7 @@ Map the custom domain name to the secure endpoint for the IBM Cloud region where
 
 1. Obtain a SSL certificate. For example, you can purchase from https://www.godaddy.com/web-security/ssl-certificate or generate a free one at https://letsencrypt.org/.
 2. Navigate to Application **Overview** > **Routes** > **Manage Domains**.
-3. Click the SSL Certificate upload button and upload the certificate. 
+3. Click the SSL Certificate upload button and upload the certificate.
 5. Access your application with https instead of http.
 
 ## Monitor application performance

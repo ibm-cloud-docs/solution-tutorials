@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-10-27"
+lastupdated: "2017-11-29"
 
 ---
 
@@ -16,19 +16,24 @@ lastupdated: "2017-10-27"
 
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 
-This solution walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, Importing the code to Xcode and then further enhance the application.
+This tutorial walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, importing the code to Xcode and then further enhance the application.
 
 ## Objectives
 
-* Create a mobile project from Basic Swift starter kit.
-* Add Push Notifications and Mobile Analytics services.
+* Create a mobile project with Push Notifications and Mobile Analytics services from Basic Swift starter kit.
 * Obtain APNs credentials and configure Push Notifications service instance.
 * Download the code and setup client SDKs.
 * Instrumenting the app to use Mobile Analytics.
 * Send and monitor push notifications.
 * Monitoring the app with Mobile Analytics.
 
-  ![](images/solution6/ios_architecture.png)
+  ![](images/solution6/iOS_push_analytics_architecture.png)
+
+## Products
+
+This tutorial uses the following products:
+   * [Mobile Analytics](https://console.bluemix.net/catalog/services/mobile-analytics)
+   * [Push Notifications](https://console.bluemix.net/catalog/services/push-notifications)
 
 ## Before you begin
 {: #prereqs}
@@ -36,35 +41,21 @@ This solution walks you through the creation of a mobile starter application, ad
 1. [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
-## Create a mobile project from basic Swift starter kit.
-
+## Create a mobile project from basic Swift starter kit
 {: #get_code}
 
 1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from pre-defined `Starter Kits`.
-2. Click on `Starter Kits` and scroll down to select `Basic` Starter Kit.
+2. Click on **Starter Kits** and scroll down to select **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
 3. Enter a project name which will also be the Xcode project and app name.
-4. Select `Swift` as your language.
+4. Select `Swift` as your language and check the mobile services on the right pane.
     ![](images/solution6/create_new_project.png)
 5. Click on `Create Project` to scaffold an iOS Swift App.
 6. A new `Project` will be created under Projects tab on the left pane.
 
-In the next step, you will add mobile services like Push notifications and Mobile Analytics to accelerate your app.
+​      **Note:** Push Notifications and Mobile Analytics Services should already be added with the Basic Starter.
 
-## Add Push Notifications and Mobile Analytics services.
-{: #create_cos}
-
-**Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter. If not, follow the below steps. Also, Following the below steps you can add other value-add services.
-
-1. Click on `Add Service` and select Mobile to accelerate your app with Mobile services. Click Next to see the available services.
-2. Select `Push Notifications` and Click Next.
-3. Select Lite plan and Click `Create` to provision a Push Notifications service. To understand the pricing, Click on `pricing details`.
-4. Now, you should see Push Notifications service added to your project and also the Credentials.
-5. To add Mobile Analytics service, click on `Add Service` and Select Basic plan.Once you click `Create`, you should see both the Mobile services with credentials.
-
-  ![](images/solution6/mobile_services.png)
-
-6. Click on `Download Code` to download the scaffolded code to Mac. In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
+ In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
 
 ## Obtain APNs credentials and configure Push Notifications service instance.
 
@@ -96,47 +87,28 @@ You can use APNs in two modes:
 
 You must obtain separate certificates for your development and distribution environments. The certificates are associated with an App ID for the app that is the recipient of remote notifications. For production, you can create up to two certificates. IBM Cloud uses the certificates to establish an SSL connection with APNs.
 
-1. Go to the Apple Developer website, click `Member Center`, and select `Certificates, IDs & Profiles`.
-2. In the `Identifiers` area, click `App IDs`.
+1. Go to the Apple Developer website, click **Member Center**, and select **Certificates, IDs & Profiles**.
+2. In the **Identifiers** area, click **App IDs**.
 3. From your list of App IDs, select your App ID, then select `Edit`.
-4. Select the the `Push Notifications` check-box, and then:
+4. Select the  **Push Notifications** check-box, and then on **Development SSL certificate** pane, click **Create Certificate**.
+  ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
 
-     * On Development SSL certificate pane, click Create Certificate...
-     * On Production SSL certificate pane, click Create Certificate...
-
-        ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
-
-5. When the `About Creating a Certificate Signing Request (CSR) screen` displays, start the `Keychain Access` application on your Mac to create a Certificate Signing Request (CSR). Click `Continue`.
-6. For the Upload CSR file option, click `Choose File`, and select file `CertificateSigningRequest.certSigningRequest`. Click `Continue`.
-7. On the Download, Install and Backup pane, click Download. The `aps_development.cer` file is downloaded.
+5. When the **About Creating a Certificate Signing Request (CSR) screen** displays, follow the instructions shown to create a Certificate Signing Request (CSR) file. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
+6. Click **Continue** and on the Upload CSR file screen, click **Choose File**, and select the file **CertificateSigningRequest.certSigningRequest** you just created. Click **Continue**.
+7. On the Download, Install and Backup pane, click Download. The **aps_development.cer** file is downloaded.
      ![Download certificate](images/solution6/push_certificate_download.png)
-8. From the menu, select `Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority…`
-9. In `Certificate Information`, enter the email address that is associated with your App Developer account and a common name. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
-10. Select `Save to disk` to download the `.certSigningRequest` file to your desktop, then click Continue.
-11. In the `Save As` menu option, name the `.certSigningRequest` file and click Save. Click Done. You now have a CSR.
-12. Return to the `About Creating a Certificate Siging Request (CSR)` window and click Continue.
-13. From the `Generate` screen, click `Choose File ...` and select the CSR file that you saved on your desktop. Then, click `Generate`. When your certificate is ready, click `Done`.
-
      ![Generate certificate](images/solution6/generate_certificate.png)
-
-14. On the `Push Notifications` screen, click Download to download your certificate, then click `Done`.
-
-   ![Download certificate](images/solution6/certificate_download.png)
-
-15. On your Mac, go to `Keychain Access > My Certificates`, and locate your newly installed certificate. Double-click the certificate to install it into the Keychain Access.
-16. Select the certificate and private key, and then select `Export` to convert the certificate into the personal information exchange format (`.p12` format).
-
-   ![Export certificate and keys](images/solution6/keychain_export_key.png)
-
-17. In the `Save As` field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or `production_apns.p12`, then click Save.
-
-     ![Export certificate and keys](images/solution6/certificate_p12v2.png)
-
-18. In the `Enter a password` field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
-
+8. On your mac, open **Keychain Access**, **File**, **Import** and select the downloaded .cer file to install it.
+9. Right-click on the new certificate and private key, and then select **Export** and change the **File Format** to Personal information exchange format (`.p12` format).
+  ![Export certificate and keys](images/solution6/keychain_export_key.png)
+10. In the **Save As** field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or **production_apns.p12**, then click Save.
+  ![Export certificate and keys](images/solution6/certificate_p12v2.png)
+11. In the **Enter a password** field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
     ![Export certificate and keys](images/solution6/export_p12.png)
+12. The **Key Access.app** prompts you to export your key from the **Keychain** screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
 
-19. The `Key Access.app` prompts you to export your key from the `Keychain` screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
+   For Production SSL, On **Production SSL certificate** pane, click **Create Certificate** and repeat Steps 5 to 12 above.
+   {:tip}
 
 ### Creating a development provisioning profile
 The provisioning profile works with the App ID to determine which devices can install and run your app and which services your app can access. For each App ID, you create two provisioning profiles: one for development and the other for distribution. Xcode uses the development provisioning profile to determine which developers are allowed to build the application and which devices are allowed to be tested on the application.
@@ -175,73 +147,41 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 2. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
 3. Select `Sandbox (development)` or `Production (distribution)` as appropriate and then upload the `p.12` certificate that you have created.
 4. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
-   ![](images/solution6/Mobile_push_configure.png)
+
+![](images/solution6/Mobile_push_configure.png)
 
 ## Download the code and setup client SDKs
 If you haven't downloaded the code yet, Click on `Download Code` under Projects > `Your Mobile Project`
 The downloaded code comes with **Push Notifications** and **Mobile Analytics** Client SDKs included. The Client SDKs are available on CocoaPods and Carthage. For this solution, you will use CocoaPods.
 
-1. To install or update CocoaPods on your machine, Open the `Terminal` and run the below command.
+1. To install CocoaPods on your machine, Open the `Terminal` and run the below command.
    ```
    sudo gem install cocoapods
    ```
    {: pre:}
-
-2. On the terminal, Navigate to the folder where you downloaded the code
+2. Unzip the downloaded code and using the terminal, navigate to the unzipped folder
 
    ```
-   cd <Name of the Project name>
+   cd <Name of Project>
    ```
    {: pre:}
-
-3. The folder already includes a `podfile` with required dependencies.So run the below command to install the dependencies (Client SDKs)
+3. The folder already includes a `podfile` with required dependencies. Run the below command to install the dependencies (Client SDKs) and the required dependencies will be installed.
 
   ```
   pod install
   ```
   {: pre:}
 
-4. The required dependencies will be installed
 
-  ```
-  Analyzing dependencies
-  Downloading dependencies
-  Using BMSAnalytics (2.2.0)
-  Using BMSAnalyticsAPI (2.2.1)
-  Using BMSCore (2.3.2)
-  Using BMSPush (2.0.3)
-  Generating Pods project
-  Integrating client project
-  Sending stats
-  Pod installation complete! There are 3 dependencies from the Podfile and 4 total pods installed.
-  ```
-  {: pre:}
-
-5. If you navigate to the folder, you should see a `.xcworkspace` file.
-  **Note:** Ensure that you always open the new Xcode workspace, instead of the original Xcode project file: `MyApp.xcworkspace`.
 
 ## Instrumenting the app to use Mobile Analytics.
 
 1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
+  **Note:** Ensure that you always open the new Xcode workspace, instead of the original Xcode project file: `MyApp.xcworkspace`.
    ![](images/solution6/Xcode.png)
 
-2. `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized as follows
-  ```
-  let myBMSClient = BMSClient.sharedInstance
-        myBMSClient.initialize(bluemixRegion: <Region you created the service>)
-        myBMSClient.requestTimeout = 10.0 // seconds
-  ```
-  {: codeblock:}
-
-3. Along with BMSCore, Mobile Analytics SDK is already imported into the project with
-
-  ```
-   import BMSAnalytics
-  ```
-  {: pre:}
-
-4. Analytics initialization code is already included as shown below
-
+  `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized in AppDelegate.swift. Along with BMSCore, Mobile Analytics SDK is already imported into the project.
+2. Analytics initialization code is already included as shown below
   ```
   // Analytics client SDK is configured to record lifecycle events.
          	Analytics.initialize(appName:dictionary["appName"] as? String,
@@ -256,51 +196,22 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
   **Note:** The service credentials are part of `BMSCredentials.plist` file.
 
-5. Gathering usage analytics and using logger - Navigate to `ViewController.swift` to see the below code.
-
-  ```
-   func didBecomeActive(_ notification: Notification) {
+3. Gathering usage analytics and using logger - Navigate to `ViewController.swift` to see the below code.
+   ```
+    func didBecomeActive(_ notification: Notification) {
         Analytics.send()
         Logger.send()
-    }
-  ```
+     }
+   ```
+   For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger)
+   {:tip}
+
 
 ## Send and monitor push notifications.
 
-1. Push notifications SDK is already imported into the project with
-  ```
-   import BMSPush
-  ```
-   {: pre:}
-
-2. Push initialization code can be found under `func application`
-
-  ```
-   let push = BMSPushClient.sharedInstance
-            push.initializeWithAppGUID(appGUID: dictionary["pushAppGuid"] as! String,
-                                       clientSecret: dictionary["pushClientSecret"] as! String)
-  ```
-   {: codeblock:}
-
-3. Registration for notifications happens in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
-
-  ```
-   // Replace USER_ID with a unique end user identifier. This enables specific push notification targeting.
-            push.registerWithDeviceToken(deviceToken: deviceToken, WithUserId: "USER_ID") { (response, statusCode, error) -> Void in
-                if error.isEmpty {
-                    print("Response during device registration : \(response)")
-                    print("status code during device registration : \(statusCode)")
-                } else {
-                    print("Error during device registration \(error)")
-                    print("Error during device registration \n  - status code: \(statusCode) \n  - Error: \(error) \n")
-                }
-            }
-  ```
-   {: codeblock:}
-
-4. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
-
-5. Open Push Notifications service under `Mobile Services` > **Existing services**  on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:
+1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
+2. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
+3. Open Push Notifications service under `Mobile Services` > **Existing services**  on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:
   * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
 
        **Note:** When you select the All Devices option, all devices subscribed to Push Notifications will receive notifications.
@@ -308,16 +219,14 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
   * Click `Send` and verify that your physical devices has received the notification.
     ![](images/solution6/send_notifications.png)
 
-    ​
-
-6. You should see a notification on your iPhone.
+4. You should see a notification on your iPhone.
 
    ![](images/solution6/iphone_notification.png)
 
-7. You can monitor your sent notifications by navigating to `Monitoring` on the Push Notifications Service.
+5. You can monitor your sent notifications by navigating to `Monitoring` on the Push Notifications Service.
 
-  The IBM Push Notifications service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent push notifications, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
-  ![](images/solution6/monitoring_messages.png)
+The IBM Push Notifications service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent push notifications, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
+![](images/solution6/monitoring_messages.png)
 
 ## Monitoring the app with Mobile Analytics.
 You can record application logs and monitor data with the Mobile Analytics Client SDK. Developers can control when to send this data to the Mobile Analytics Service. When data is delivered to Mobile Analytics, you can use the Mobile Analytics console to get analytics insights about your mobile applications, devices, and application logs.

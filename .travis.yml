@@ -1,5 +1,18 @@
+language: node_js
+node_js:
+  - "7"
+
 branches:
   only:
   - master
+  - staging
 
-script: ./sync.sh
+script:
+  - echo "Current branch is ${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
+  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "master" ]; then
+    ./scripts/sync.sh;
+    fi
+  - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "staging" ]; then
+    ./scripts/preview-build.sh;
+    ./scripts/preview-push.sh;
+    fi

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-10-27"
+lastupdated: "2017-11-23"
 
 ---
 
@@ -24,6 +24,14 @@ This tutorial walks you through the creation of a web application using the popu
 - Deploy the Node.js app to the cloud
 - Scale MongoDB Resources
 - Monitor application performance
+
+![Architecture diagram](images/solution7/architecture_MEAN.png)
+
+## Products
+
+This tutorial uses the following products:
+   * [Compose for MongoDB](https://console.bluemix.net/catalog/services/compose-for-mongodb)
+   * [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
 
 ## Before you begin
 

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-10-27"
+lastupdated: "2017-11-23"
 
 ---
 
@@ -27,12 +27,35 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Monitor a LAMP server.
 * Secure the server.
 
+![Architecture diagram](images/solution4/architecture_PHP.png)
+
+## Products
+
+This tutorial uses the following products:
+   * [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
+
+## Before you begin
+
+{: #prereqs}
+
+1. Contact your Infrastructure master user to get the following permissions:
+
+   - Network permission
+
+   Network permission is required to be able to add **Public and Private Network Uplink**  
+
+
 ## Provision a LAMP server
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the Virtual Server service from the Infrastructure section. 
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
+
 2. Select **Public Virtual Server** and then click **Create**.
+
 3. Under **Image**, select **LAMP** latest version under **Ubuntu**. Even though this comes pre-installed with Apache, MySQL, and PHP, we'll re-install PHP and MySQL with the latest version.
+
 4. Under **Network Interface** select the **Public and Private Network Uplink** option.
+   **Note:** Infrastructure network permission is needed to add **Public and Private Network Uplink**.
+
 5. Review the other configuration options and click **Provision** to provision the server.    ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
 
 
@@ -147,7 +170,7 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    ```
    {: pre}
 5. Add the following commands, substituting your database password for yourPassword (leave the other values unchanged). Then save the file.
-   ```mssql
+   ```sql
    CREATE DATABASE wordpress;
    GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.*
    TO wordpress@localhost
@@ -225,3 +248,11 @@ The vulnerability scanner scans the server for any vulnerabilities related to th
 Another way to secure the server is by adding firewall to the server. With IBM Cloud Virtual Servers, you have several firewall options that provide an essential security layer. The firewall options are provisioned on demand without service interruptions. The firewall services prevent unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use.  
 
 Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN. For more information, see [Firewalls](http://knowledgelayer.softlayer.com/topic/firewall).
+
+
+
+## Next steps
+
+Advance to the next tutorial to learn how to
+
+- [Use IBM Cloud Schematics (Infrastructure as Code) to deploy LAMP servers ](infrastructure-as-code.html)

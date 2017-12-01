@@ -26,7 +26,19 @@ The application shown in this tutorial is a simple guestbook website where users
 * Host a static website
 * Optional: Use a custom domain for the REST API
 
-![](./images/solution8/Architecture.png)
+## Products
+
+This tutorial uses the following products:
+   * [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
+   * [Cloud Functions](https://console.bluemix.net/openwhisk)
+
+   ![](./images/solution8/Architecture.png)
+
+1. The user access the application hosted in GitHub Pages.
+2. The web application calls a backend API.
+3. The backend API is defined in API Gateway.
+4. API Gateway forwards the request to [Cloud Functions](https://console.bluemix.net/openwhisk).
+5. The Cloud Functions actions use [Cloudant](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) to store and retrieve guestbook entries.
 
 ## Before you begin
 {: #prereqs}
@@ -198,4 +210,3 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 * [Getting started with Cloud Functions](https://console.bluemix.net/docs/openwhisk/index.html#getting-started-with-openwhisk)
 * [Cloud Functions common use cases](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases)
 * [Create APIs from Cloud Functions actions](https://console.bluemix.net/docs/apis/management/manage_openwhisk_apis.html#manage_openwhisk_apis)
-

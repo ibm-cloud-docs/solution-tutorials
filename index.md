@@ -1,17 +1,20 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-10-30"
+lastupdated: "2017-11-29"
 
 ---
 
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 
-# Tutorials
+# Solution tutorials
 {: #tutorials}
 
 Learn how to build, deploy and scale real-world solutions on IBM Cloud. These guides provide step-by-step instructions on how to implement common patterns based on best practices and proven technologies.
+
+## Websites and Web Apps
+{: #web}
 
 ### [Deploy a secure web application across multiple regions](multi-region-webapp.html)
 
@@ -29,6 +32,10 @@ Host and serve website assets (images, videos, documents) and user generated con
 
 This tutorial walks you through the creation of an Ubuntu **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP (the LAMP stack). To see the LAMP server in action, you will install and configure the [WordPress](https://wordpress.org/) open source application.
 
+### [Automate deployment of environments using Infrastructure as Code](infrastructure-as-code.html)
+
+In this tutorial, you will use a provided template in Schematics to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then configure the template to scale the resources and tune the environment (memory, CPU and disk size). Finish by deleting all of the resources created by the configuration.
+
 ### [Modern Web Applications using MEAN stack](mean-stack.html)
 
 This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a Node.js runtime.
@@ -36,6 +43,21 @@ This tutorial walks you through the creation of a web application using the popu
 ### [SQL Database for Cloud Data](sql-database.html)
 
 This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, we deploy a web app "worldcities" to make use of that data and show how to access the cloud database.
+
+### [Serverless Web Application and API](serverless-api-webapp.html)
+
+Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.
+
+### [Generate, Access and Analyze Application Logs](application-log-analysis.html)
+
+Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.
+
+### [Create, Secure and Manage REST APIs](create-manage-secure-apis.html)
+
+This tutorial demonstrates how to create a new REST API using the LoopBack Node.js API framework and then add management, visibility, security and rate limiting to your API using the API Connect service on IBM Cloud.
+
+## Mobile
+{: #mobile}
 
 ### [iOS mobile app with Push Notifications and Analytics](ios-mobile-push-analytics.html)
 
@@ -45,6 +67,6 @@ Learn how easy it is to quickly create an iOS Swift application with high-value 
 
 Learn how easy it is to quickly create an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 
-### [Create a serverless web application](serverless-api-webapp.html)
+### [Mobile application with a serverless backend](serverless-mobile-backend.html)
 
-Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.
+Learn how to use Cloud Functions along with other cognitive and data services to build a serverless backend for a mobile application.

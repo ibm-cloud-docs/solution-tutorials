@@ -1,12 +1,14 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-10-27"
+lastupdated: "2017-11-22"
 
 ---
 
-{:ios: data-hd-operatingsystem="ios"}
-{:android: data-hd-operatingsystem="android"}
+{:java: #java .ph data-hd-programlang='java'}
+{:swift: #swift .ph data-hd-programlang='swift'}
+{:ios: #ios data-hd-operatingsystem="ios"}
+{:android: #android data-hd-operatingsystem="android"}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -19,10 +21,25 @@ This tutorial...
 {:shortdesc}
 
 ## Objectives
+{: #objectives}
+
 * First objective
 * Second objective
 
-![](images/solutionX/Architecture.png)
+## Products
+{: #products}
+
+This tutorial uses the following products:
+* [IaaS or PaaS service name](https://console.ng.bluemix.net/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://console.ng.bluemix.net/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://console.ng.bluemix.net/catalog/services/ServiceName)
+
+<p style="text-align: center;">
+![](images/solution11/ArchitectureDiagram.png)
+</p>
+
+1. The user does this
+2. Then that
 
 ## Before you begin
 {: #prereqs}
@@ -35,12 +52,15 @@ This tutorial...
 
 Objective description
 
-1. Step 1
+1. Step 1 Click **This** and enter your name.
 
   This is a tip.
   {:tip}
 
-2. Step 2
+2. Keep each step as short as possible.
+3. Do not use blank lines between steps except for tips or images.
+3. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be perscriptive and tell them exactly what to do succinctly, like a lab.
+4. Do not use "I" or "We will". 
 
 ### Sub objective
 
@@ -56,6 +76,13 @@ This paragraph only appears in the iOS documentation
 And this paragraph only appears in the Android documentation
 {: android}
 
+This paragraph only appears for Java code
+{: java}
+
+And this paragraph only appears for Swift code
+{: swift}
+
+
 ## Second Objective
 {: #second_objective}
 
@@ -63,6 +90,9 @@ Objective description
 
 ### Sub objective
 
+## Clean up resources
+
+Steps to take to remove the resources created in this tutorial
 
 ## Related information
 

@@ -1,21 +1,25 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="tutorials" audience="platform" href="/docs/tutorials/index.html"}
-Tutorials
+{: .toc subcollection="solution-tutorials" audience="platform" href="/docs/tutorials/index.html"}
+Solution Tutorials
 
     {: .navgroup id="learn"}
     index.md
     {: .navgroup-end}
-    
+
     {: .navgroup id="howto"}
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
     static-files-cdn.md
     lamp-stack.md
+    infrastructure-as-code.md
     mean-stack.md
     sql-database.md
+    serverless-api-webapp.md
+    application-log-analysis.md
+    create-manage-secure-apis.md
     ios-mobile-push-analytics.md
     android-mobile-push-analytics.md
-    serverless-api-webapp.md
+    serverless-mobile-backend.md
     {: .navgroup-end}
