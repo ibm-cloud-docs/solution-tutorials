@@ -43,11 +43,10 @@ This tutorial uses the following products:
 
 ## Create Android mobile project from starter kit
 {: #get_code}
-The IBM Cloud Mobile Dashboard allows you to fast-track your mobile app development by creating your project from a Starter Kit. 
-1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard).
+The IBM Cloud Mobile Dashboard allows you to fast-track your mobile app development by creating your project from a Starter Kit.
+1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard)
 2. Click on **Starter Kits** and scroll down to select the **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
-
 3. Enter a project name, this can be your app name as well.
 4. Select **Android** as your language and check the mobile services on the right pane.
 
@@ -55,7 +54,6 @@ The IBM Cloud Mobile Dashboard allows you to fast-track your mobile app developm
 5. Click on **Create Project** to scaffold an Android (Java) App.
 6. A new Project will be created under **Projects** tab on the left pane.
     **Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter.
-
 In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
 ## Obtain FCM credentials
@@ -82,7 +80,6 @@ You would also need to generate the `google-services.json` file. Complete the fo
     ![](images/solution9/add_firebase_to_your_app.png)
 
 3. Click **ADD APP** > **Add Firebase to your app**.  Include the package name of your application by entering the package name **com.ibm.mysampleapp** then proceed to add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
-
      **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
 4. Download the latest config file `google-services.json` under **Your apps**.
 
@@ -97,7 +94,6 @@ In the next step, you will download the scaffolded code and setup the Push and A
 ## Download the code and complete required setup
 
 If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to get the code by clicking on the  **Download Code** button under Projects > **Your Mobile Project**.
-
 The downloaded code comes with **Push Notifications** and **Mobile Analytics** client SDKs included. The client SDKs is available on Gradle and Maven. For this tutorial, you will use **Gradle**.
 
 1. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.
@@ -114,7 +110,6 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
 
 1. In Android Studio, navigate to `MainActivity.java`. You should see the following `import` statements already added
 2. The code includes `BMSClient` initialization code with the `Region` parameter. In the initializer, the `Region` value specifies which IBM Cloud deployment you are using, for example, `BMSClient.REGION_US_SOUTH` and `BMSClient.REGION_UK`.
-
     **Note:** Core SDK must be initialized to interact with IBM Cloud Mobile services.
 3. In this code snippet, Analytics is configured to record lifecycle events. Both `app_name` and `apiKey` are pre-configured as part of the code generation process.
    ```
@@ -126,8 +121,8 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
    Logger.storeLogs(true);
    Logger.setLogLevel(Logger.LEVEL.ERROR);
    ```
-  
-For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger) 
+
+For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger)
 {:tip}
 
 
@@ -137,7 +132,7 @@ For advanced Analytics and logging capabilities, Refer [Gathering usage Analytic
 
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
 2. Registration for notifications happens in `MainActivity.java`.  (Optional) Provide an unique USER_ID.
-3. Run the app on a physical device or Emulator to receive notifications. 
+3. Run the app on a physical device or Emulator to receive notifications.
 4. Open Push Notifications service under **Mobile Services** > **Existing services** on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:
    - Click **Manage** > **Configure**.
    - Select **Mobile** and then update the GCM/FCM Push Credentials tab with the Sender ID/Project number and API Key(Server Key) which you initially created on Firebase console.

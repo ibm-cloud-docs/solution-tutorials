@@ -56,8 +56,8 @@ In this section, you will learn the basics of a Terraform configuration by using
 4. Fill in the required values in the Variables section:
   - Add your **Infrastructure (SoftLayer) username** to **softlayer_username**
   - Add your **Infrastructure (SoftLayer) API key** to **softlayer_api_key**. [Retrieve your API key](https://knowledgelayer.softlayer.com/procedure/retrieve-your-api-key)
-  - Add a **description to assign to the SSH key** to **ssh_notes**.
-  - Add **descriptive tags to label** to **tags**.
+  - For **ssh_notes** variable, Add a **description to assign to the SSH key**.
+  - For **tags** variable,Add **descriptive tags to label**.
   - Add your **public SSH key to access the VM** - To copy the public key to your clipboard, you can run the pbcopy < ~/.ssh/id_rsa.pub command in your terminal.
 5. Click **Create** to create the LAMP environment described in this template.
 6. Click **Plan** and then **Apply** deploy the environment.
