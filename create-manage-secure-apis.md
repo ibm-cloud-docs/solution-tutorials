@@ -168,7 +168,7 @@ You will use the API Designer to deploy your application to IBM Cloud as a Cloud
 10. Click **Publish** on the top bar and select your target. Select **Publish application** and Stage or Publish Products > Select **Specific products** > **entries-api**.
 11. Click **Publish** and wait 5 minutes for the application to finish publishing.
    ![publish](images/solution13/publish.png)
-   
+
    You can republish or stage your application anytime by clicking on **publish** anytime.
    {:tip}
 
@@ -214,4 +214,5 @@ Your API is now rate limited to 10 requests per minute. See more info about [Set
 ## Related information
 
 * [Loopback Documentation](https://loopback.io/doc/index.html)
-[Getting started with the IBM Cloud API Connect service](https://console.bluemix.net/docs/services/apiconnect/index.html#index)
+* [Getting started with the IBM Cloud API Connect service](https://console.bluemix.net/docs/services/apiconnect/index.html#index)
+
