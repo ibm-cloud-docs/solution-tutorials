@@ -196,7 +196,7 @@ Your managed and secure API URL is displayed next to each operation and it shoul
 https://us.apiconnect.ibmcloud.com/orgs/ORG-SPACE/catalogs/sb/api/entries
 ```
 ## Rate Limiting
-In this section, 
+Setting rate limits enables you to manage the network traffic for your APIs and for specific operations within your APIs. A rate limit is the maximum number of calls you want to allow in a particular time interval.
 
 1. Back in the API Designer, click **Products > entries-api**.
 2. Select **Default Plan** on the left
@@ -206,10 +206,10 @@ In this section,
   ![rate_limit](images/solution13/rate_limit.png)
 6. Follow steps under [Publish API to IBM Cloud](#publish) section to re-pulish your API
 
-Your API is now rate limited to 10 requests per minute. Explore the API Designer to see all the management features available.
+Your API is now rate limited to 10 requests per minute. See more info about [Setting up rate limits](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_rate_limit.html#setting-up-rate-limits) or explore the API Designer to see all the management features available.
 
 
 ## Related information
 
 * [Loopback Documentation](https://loopback.io/doc/index.html)
-* [Getting Started with API Connect](https://developer.ibm.com/apiconnect/getting-started/)
+[Getting started with the IBM Cloud API Connect service](https://console.bluemix.net/docs/services/apiconnect/index.html#index)
