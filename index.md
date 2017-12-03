@@ -26,7 +26,7 @@ Uses: Multiple Regions, Cloud Foundry, Node.js and Continous Delivery.
 
 This tutorial is a walkthrough of how to scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.
 
-Uses: Docker, Kubernetees, Container Registry, and Java.
+Uses: Docker, Kubernetes, Container Registry, and Java.
 
 ### [Accelerate delivery of static files using Object Storage and CDN](static-files-cdn.html)
 
@@ -36,13 +36,13 @@ Uses: Cloud Foundry, Node.js, Content Delivery Network, and Cloud Object Storage
 
 ### [Web Application on LAMP Stack](lamp-stack.html)
 
-This tutorial walks you through the creation of an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP (the LAMP stack). To see the LAMP server in action, you will install and configure the [WordPress](https://wordpress.org/) open source application.
+This tutorial walks you through the creation of an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP (the LAMP stack). To see the LAMP server in action, you will install and configure the WordPress open source application.
 
 Uses: Virtual Servers, PHP, WordPress and Vulnerability scanner.
 
 ### [Automate deployment of environments using Infrastructure as Code](infrastructure-as-code.html)
 
-In this tutorial, you will use a provided template in Schematics to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then configure the template to scale the resources and tune the environment (memory, CPU and disk size). Finish by deleting all of the resources created by the configuration.
+Use a Schematics template to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then configure the template to scale the resources and tune the environment.
 
 Uses: Schematics, Virtual Servers, PHP and Object Storage.
 
