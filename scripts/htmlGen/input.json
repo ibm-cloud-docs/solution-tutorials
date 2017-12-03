@@ -1,13 +1,11 @@
-[
-    {
+[{
         "name": "Websites and Web Apps",
         "anchor": "websites",
-        "solutions": [
-            {
+        "solutions": [{
                 "name": "Deploy a secure web application across multiple regions",
                 "url": "multi-region-webapp.html",
                 "description": "This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline.",
-                "tags": ["Multiple Regions", "Cloud Foundry", "Node.js", "Continous Delivery"]
+                "tags": ["Cloud Foundry", "Node.js", "Continous Delivery"]
             },
             {
                 "name": "Scalable web app on Kubernetes",
@@ -61,7 +59,7 @@
             {
                 "name": "SQL Database for Cloud Data",
                 "url": "sql-database.html",
-                "description": "This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, we deploy a web app `worldcities` to make use of that data and show how to access the cloud database.",
+                "description": "This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, we deploy a web app to make use of that data and show how to access the cloud database.",
                 "tags": [
                     "Cloud Foundry",
                     "Python",
@@ -103,8 +101,7 @@
     {
         "name": "Mobile",
         "anchor": "mobile",
-        "solutions": [
-            {
+        "solutions": [{
                 "name": "iOS mobile app with Push Notifications and Analytics",
                 "url": "ios-mobile-push-analytics.html",
                 "description": "Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",

@@ -38,6 +38,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         font-size: 12px;
         margin-right: 1px;
         border-radius: 10px;
+        white-space: nowrap;
     }
    .solutionBoxTitle a {
       text-decoration-line:none;
@@ -52,7 +53,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
               <a href = "multi-region-webapp.html">Deploy a secure web application across multiple regions</a>
             </div>
             <p>This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline.</p>
-            <span class="tag-filter category">Multiple Regions</span>
             <span class="tag-filter category">Cloud Foundry</span>
             <span class="tag-filter category">Node.js</span>
             <span class="tag-filter category">Continous Delivery</span>
