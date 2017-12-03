@@ -32,7 +32,7 @@ Uses: Docker, Kubernetees, Container Registry, and Java.
 
 Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.
 
-Uses: Cloud Foundry, Node.js, Content Delivery Network, and Cloud Object Storage..
+Uses: Cloud Foundry, Node.js, Content Delivery Network, and Cloud Object Storage.
 
 ### [Web Application on LAMP Stack](lamp-stack.html)
 
