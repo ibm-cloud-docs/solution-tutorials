@@ -20,8 +20,9 @@ This tutorial walks you through the creation of a load balancer, two application
 - Provision one server for the database
 - Install and configure MySQL
 - Create a file storage for database backups
-- Provision two servers for the PHP front-end
-- Create a file storage to share application files between the front-end servers
+- Provision two servers for the PHP application
+- Create a file storage to share files between the application servers
+- Install and configure the PHP application on the application servers
 - Provision one load balancer server in front of the application servers
 
 ## Products
@@ -54,7 +55,8 @@ In this tutorial, the load balancer is the front door for the application users.
 1. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access)
 1. or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows)
 
-{: tip} You can choose to skip this step. If so make sure to select **Public and Private Network Uplink** when provisioning virtual servers.
+You can choose to skip this step. If so make sure to select **Public and Private Network Uplink** when provisioning virtual servers.
+{: tip}
 
 ### Check account permissions
 
@@ -74,12 +76,15 @@ Contact your Infrastructure master user to get the following permissions:
    - Keep the default compute flavor. You can pick any size, the tutorial has been tested with the smallest flavor.
    - Under **Attached Storage Disks**, select the 25GB boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
-   {: tip} If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
+
+     If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
+     {: tip}
+
    - Review the other configuration options and click **Provision** to provision the server.
    [Configure virtual server](images/solution14/db-server.png)
 
+   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll see the server login credentials. To SSH into the server, you need the server user name, password, and private (when using VPN, public otherwise) IP address.
    {: tip}
-   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll see the server login credentials. To SSH into the server, you need the server user name, password, and public IP address.
 
 ## Install and configure MySQL
 {: #mysql}
@@ -134,6 +139,7 @@ By default MySQL only listens on the local interface. The application servers wi
    ```
 
 ## Create a file storage for database backups
+{: database_backup}
 
 There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial will use crontab entry to regularly dump the database content to disk. The backup files will be stored in a file storage.
 
@@ -188,107 +194,126 @@ TODO(fredL) we could skip the Snapshot here - snapshot would be only needed if w
    ```sh
    mount
    ```
-   {: tip} The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
+   The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
+   {: tip}
 
 ### Setup a backup at regular interval
 
 TODO(fredL) fill in crontal instructions to run mysqldump daily
 
-## Provision two Ubuntu servers and install **P**HP runtime
-
-We need to provision two application servers with the following.
+## Provision two servers for the PHP application
+{: app_servers}
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
-   - Under **Name**, name it app1
-   - Under **Region**, select LON06 - London or any other region best for your application.
-   - Under **Image**, select the **Ubuntu** and the latest version of **Minima**.
-   - Under **Popular Flavors**, select the entry option or higher if you need a higher option. **TODO** - maybe we should select a higher spec. Something we need to revisit.
-   - Under **Attached Storage Disks**, select the entry 25GB or bigger if needed.
-   - Under **Network Interface**, select the **Private Network Uplink and Public IP Address** option.
-   - Review the other configuration options and click **Provision** to provision the server.    
-4. Repeat steps 2 and 3 to provision server two with same configuration except for the **Name**, for the name type app2.
+   - Set **Name** to it **app1**
+   - Select a location where to provision the server. **Use the same location as the database server.**
+   - Select the **Ubuntu Minima** image
+   - Keep the default compute flavor. You can pick any size, the tutorial has been tested with the smallest flavor.
+   - Under **Attached Storage Disks**, select the 25GB boot disk.
+   - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
 
-## Mount file storage for application VM's
+     If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
+     {: tip}
+   - Review the other configuration options and click **Provision** to provision the server.
+   [Configure virtual server](images/solution14/db-server.png)
+4. Repeat these steps to provision another virtual server named **app2**
 
-File storage is going to be used to store the application source code between app1 and app2 servers. The following step will mount file storage to store the application source code:
-1. Downloading and Installing the Components
-  ```sh
-  apt-get -y install nfs-common
-  ```
+## Create a file storage to share files between the application servers
+{: shared_storage}
 
-2. Create a file called mnt-database.mount
+The file storage is going to be used to share the application files between app1 and app2 servers.
 
-  ```sh
-  nano /etc/systemd/system/mnt-www.mount
-  ```
+### Create the file storage
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
+1. Click **Create**
+3. Configure the service with the following:
+   - Under **Storage Type**, Endurance option.
+   - Select the same **Location** as the one where you created the application servers.
+   - Select a billing method
+   - Under **Storage Packages**, select 2 IOPS/GB
+   - Under **Storage Size**, select 20GB
+   - Under **Snapshot Space Size**, select 20GB
+   - Click continue to create the service.
 
-3. Store the following inside the mnt-database.mount file
-  ```sh
-  [Unit]
-  Description = Mount for Container Storage
+### Authorize the application servers to use the file storage
 
-  [Mount]
-  What=<fsf-lon0601a-fz.adn.networklayer.com:/IBM02SEV1329499_109/data01>
-  Where=/mnt/www
-  Type=nfs
-  Options=vers=3,sec=sys,noauto
+1. Select the File Storage from the [list of existing items](https://control.bluemix.net/storage/file)
+1. Under **Authorized Hosts**, click **Authorize Host** to authorize the application servers to use this file storage
 
-  [Install]
-  WantedBy = multi-user.target
-  ```
+### Mount file storage
 
-4. Create a folder called database to store the backup database
-  ```sh
-  mkdir /mnt/www
-  ```
+Repeat the following steps on each application server:
 
-5. Mount the storage
-  ```sh
-  systemctl enable --now /etc/systemd/system/mnt-www.mount
-  ```
+1. Install the NFS client libraries
+   ```sh
+   apt-get update
+   apt-get -y install nfs-common
+   ```
+1. Create a file called `/etc/systemd/system/mnt-www.mount` with the following content, replacing the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*)
+   ```
+   [Unit]
+   Description = Mount for Container Storage
+   
+   [Mount]
+   What=CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT
+   Where=/mnt/www
+   Type=nfs
+   Options=vers=3,sec=sys,noauto
 
-6. Check if the mount was successfully done
-  ```sh
-  mount
-  ```
+   [Install]
+   WantedBy = multi-user.target
+   ```
+1. Create the mount point
+   ```sh
+   mkdir /mnt/www
+   ```
+1. Mount the storage
+   ```sh
+   systemctl enable --now /etc/systemd/system/mnt-www.mount
+   ```
+1. Check if the mount was successfully done
+   ```sh
+   mount
+   ```
+   The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
+   {: tip}
 
+These steps could be automated using a provisioning script or by capturing an image.
+{: tip}
 
-## Install Nginx and PHP
+## Install and configure the PHP application on the application servers
+{: php_application}
+
+This tutorial sets up a Wordpress blog. All Wordpress files will be installed on the shared file storage so that both application servers can access them. Before installing Wordpress, a web server and a PHP runtime need to be configured.
+
+### Install nginx and PHP
+
+Repeat the following steps on each application server:
+
 1. Install nginx
-
    ```
    apt-get -y install nginx
    ```
-
-
 2. Install PHP and mysql client
-
    ```sh
    apt-get -y install php-fpm php-mysql
    ```
-
-
 3. Stop PHP service and nginx
-
    ```sh
    systemctl stop php7.0-fpm
    systemctl stop nginx
    ```
-
-
-4. Set nginx conf, replace content of /etc/nginx/sites-available/default with the following:
-
-  ```sh
-  server {
+4. Replace the content of `/etc/nginx/sites-available/default` with the following:
+   ```sh
+   server {
           listen 80 default_server;
           listen [::]:80 default_server;
 
           root /mnt/www/html;
 
-          # Add index.php to the list if you are using PHP        
-          index index.php index.html index.htm index.nginx-debian.html;
+          index index.php;
 
           server_name _;
 
@@ -308,8 +333,7 @@ File storage is going to be used to store the application source code between ap
                   try_files $uri $uri/ /index.php?$args;
           }
 
-          # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-          #
+          # pass the PHP scripts to the local FastCGI server
           location ~ \.php$ {
                   include snippets/fastcgi-php.conf;
                   fastcgi_pass unix:/run/php/php7.0-fpm.sock;
@@ -322,59 +346,61 @@ File storage is going to be used to store the application source code between ap
 
           # deny access to .htaccess files, if Apache's document root
           # concurs with nginx's one
-          #
           location ~ /\.ht {
                   deny all;
           }
-  }
-  ```
+   }
+   ```
 
-## Install and configure WordPress
+### Install and configure WordPress
 
-1. To install and configure WordPress, run the following commands
+As Wordpress will be installed on the shared file storage, you only need to do the following steps on one of the servers. Let's pick **app1**.
 
+1. Retrieve and extract Wordpress installation files
    ```sh
    apt-get install curl
    cd /tmp
    curl -O https://wordpress.org/latest.tar.gz
    tar xzvf latest.tar.gz
-   touch /tmp/wordpress/.htaccess
-   chmod 660 /tmp/wordpress/.htaccess
+   ```
+1. Prepare the Wordpress files
+   ```sh
    cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
    mkdir /tmp/wordpress/wp-content/upgrade
-
+   ```
+1. Copy the files to the shared file storage
+   ```sh
    rsync -av -P /tmp/wordpress/. /mnt/www/html
-
+   ```
+1. Set permissions
+   ```sh
    chown -R www-data:www-data /mnt/www/html
-
    find /mnt/www/html -type d -exec chmod g+s {} \;
    chmod g+w /mnt/www/html/wp-content
    chmod -R g+w /mnt/www/html/wp-content/themes
    chmod -R g+w /mnt/www/html/wp-content/plugins
    ```
-
-2. Inject the result of this into /var/www/html/wp-config.php
-
+1. Call the following web service and inject the result into `/mnt/www/html/wp-config.php`
    ```sh
    curl -s https://api.wordpress.org/secret-key/1.1/salt/
    ```
+1. Set the database credentials in `/mnt/www/html/wp-config.php`
 
-3. Inject the database credentials in wp-config.php
+Wordpress is configured. To complete the installation, you need to access the Wordpress user interface.
 
-4. Start the service by running the following commands
+On both application servers, start the web server and the PHP runtime:
+1. Start the service by running the following commands
 
    ```sh
    systemctl start php7.0-fpm
    systemctl start nginx
    ```
 
-5. Proceed to wordpress configuration and view your live WordPress site in the browser
+Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the SoftLayer VPN connection) or the public IP address of *app1* or *app2*.
 
-   ```sh
-   http://YourAppServerIPAddress/
-   ```
-
-   ​
+## Provision one load balancer server in front of the application servers
+{: load_balancer}
+TODO
 
 ## Looking further
 
