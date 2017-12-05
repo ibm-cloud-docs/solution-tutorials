@@ -39,7 +39,6 @@ This tutorial uses the following products:
 1. Contact your Infrastructure master user to get the following permissions:
    * Manage CDN Account
    * Manage Storage
-   * Manage CDN File Transfers
    * API Key
 
    These permissions are required to be able to view and use the Storage and CDN services.
@@ -151,7 +150,7 @@ In this section, we will create a CDN service. The CDN service distributes conte
 4. Select **Object Storage** as Origin.
 5. Set the endpoint to your bucket API endpoint, such as *s3-api.us-geo.objectstorage.softlayer.net*.
 6. Set the bucket name to *your-bucket-name*.
-7. Enable HTTP Port 80.
+7. Enable both HTTP (80) and HTTPS (443) ports.
 8. Click **Create**.
 
 ### Access your content through the CDN CNAME
