@@ -400,6 +400,9 @@ Access the Wordpress installation at `http://YourAppServerIPAddress/` using eith
 
 ## Provision one load balancer server in front of the application servers
 {: load_balancer}
+
+At this point, we have two application servers with separate IP addresses. Adding a Load Balancer will make these two servers acting as one from the point of view of the application user. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers. 
+
 TODO
 
 ## Looking further
