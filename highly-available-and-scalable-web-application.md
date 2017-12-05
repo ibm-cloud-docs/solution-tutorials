@@ -11,31 +11,36 @@ lastupdated: "2017-12-05"
 {:tip: .tip}
 {:pre: .pre}
 
-# Deploy a Highly Available and Scalable web application with Load balancer and Backups 
+# Deploy a Highly Available and Scalable web application with Load Balancer and Backups
 
-Deploy a highly available and scalable web application with load balancer and backups using IBM Cloud Infrastructure  services. This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with **P**HP installed, one database server with **M**ySQL database installed, two file storage services, one to store the application source code and second to store the database data for backups. 
+This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with NGINX and **P**HP installed, one **M**ySQL database server, and durable file storage to store application files and backups.
 
 ## Objectives
 
 - Provision one database server and install MySQL
 - Setup VPN and create database
 - Create file storage for database backups
-- Provision two Ubuntu servers and install **P**HP runtime 
-- Create one file storage service to store the source code files for the two application servers 
+- Provision two Ubuntu servers and install **P**HP runtime
+- Create one file storage service to store the source code files for the two application servers
 - Provision one load balancer server and configure the server to load balance the traffic
-
-![Architecture diagram](images/solution14/highly-available-wordpress-architecture.png)
-
-TODO - update the digram 
-
-TODO - Add steps for each case as per diagram 
 
 ## Products
 {: #products}
 
-- [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
-- [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage?taxonomyNavigation=apps)
-- TODO - Add more to this list
+This tutorial uses the following products:
+* [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
+* [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage?taxonomyNavigation=apps)
+* [Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
+
+<p style="text-align: center;">
+![Architecture diagram](images/solution14/highly-available-wordpress-architecture.png)
+</p>
+
+TODO - update the digram
+
+1. The user does this
+2. Then that
+3. TODO - Add steps for each case as per diagram
 
 ## Before you begin
 {: #prereqs}
@@ -44,7 +49,7 @@ Contact your Infrastructure master user to get the following permissions:
 - Network (to add **Public and Private Network Uplink**)
 - TODO - Add more to this list
 
-## Provision a database server 
+## Provision a database server
 
 {: #database_server}
 
@@ -52,19 +57,19 @@ Contact your Infrastructure master user to get the following permissions:
 
 2. Select **Public Virtual Server** and then click **Create**.
 
-3. Configure the server with the following: 
+3. Configure the server with the following:
 
    - Under **Name**, name it db1
 
    - Under **Region**, select LON06 - London or any other region best for your application.
 
-   - Under **Image**, select the **Ubuntu** and the latest version of **Minima**. 
+   - Under **Image**, select the **Ubuntu** and the latest version of **Minima**.
 
-   - Under **Popular Flavors**, select the entry option or higher if you need a higher option. **TODO** - maybe we should select a higher spec. Something we need to revisit. 
+   - Under **Popular Flavors**, select the entry option or higher if you need a higher option. **TODO** - maybe we should select a higher spec. Something we need to revisit.
 
-   - Under **Attached Storage Disks**, select the entry 25GB or bigger if needed. 
+   - Under **Attached Storage Disks**, select the entry 25GB or bigger if needed.
 
-   - Under **Network Interface**, select the **Private Network Uplink** option. 
+   - Under **Network Interface**, select the **Private Network Uplink** option.
 
    - Review the other configuration options and click **Provision** to provision the server.    ![Configure virtual server](images/solution14/db-server.png)
 ```ssh
@@ -72,14 +77,14 @@ Note: The provisioning process can take 2 to 5 minutes for the server to be read
 ```
 
 ## Setup VPN and create database
-Earlier we didn't add a Public IP address for the server, so we need to use the Softlayer VPN first and then we can do SSH to the server. To install and then ssh into the database server, follow the steps below. 
+Earlier we didn't add a Public IP address for the server, so we need to use the Softlayer VPN first and then we can do SSH to the server. To install and then ssh into the database server, follow the steps below.
 
-1. Install the Softlayer VPN application, [Mac](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010), [Windows]() or [others](). 
+1. Install the Softlayer VPN application, [Mac](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010), [Windows]() or [others]().
 
-2. To connect you would need the following: 
+2. To connect you would need the following:
 
   - Under **Name**, type db1.IBM.com
-  - Under **Host**, type vpn.dal09.softlayer.com 
+  - Under **Host**, type vpn.dal09.softlayer.com
   - Under Username and password, add your Infrastructure  username and password.
   - Then click **OK** to connect
 
@@ -89,16 +94,16 @@ Earlier we didn't add a Public IP address for the server, so we need to use the 
    ```
 4. Install MySQL  
   ```sh
-  sudo apt-get update 
-  sudo apt-get install mysql-server 
+  sudo apt-get update
+  sudo apt-get install mysql-server
   ```
 5. Run the following script to help secure MySQL database:
   ```sh
   mysql_secure_installation
   ```
-6. Login to MySQL and create a database called wordpress 
+6. Login to MySQL and create a database called wordpress
   ```sh
-  mysql -u root -p 
+  mysql -u root -p
   CREATE DATABASE wordpress;
   ```
 7. Grant access to database
@@ -109,33 +114,33 @@ Earlier we didn't add a Public IP address for the server, so we need to use the 
   FLUSH PRIVILEGES;
   ```
 
-## Create file storage service 
+## Create file storage service
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 2. From the Infrastructure dashboard, select your server from the list of devices and then click the storage tab and then **file storage**.
-3. Click **order file storage** and then configure the service with the following: 
-   - Under **Storage Type**, Endurance option. 
+3. Click **order file storage** and then configure the service with the following:
+   - Under **Storage Type**, Endurance option.
    - Under **Location**, select Lon06 - London or the location you selected for the database server.
-   - Select the billing option where hourly or monthly 
+   - Select the billing option where hourly or monthly
    - Under **Storage Packages**, select 2 IOPS/GB
-   - Under **Storage Size**, select 100GB 
+   - Under **Storage Size**, select 100GB
    - Under **Snapshot Space Size**, select 40GB
    - Click continue to create the service.
-4. Under the file storage service created, click on it and then click on the menu tab and authorise host to authorise the host. 
+4. Under the file storage service created, click on it and then click on the menu tab and authorise host to authorise the host.
 
 ## Mount file storage for database backups
 
-There are many ways in which backups can be done and stored when comes to MySQL. For this tutorial we are going to use file storage to store the backup database data. Follow the steps below to create file storage and mount it to the server. 
+There are many ways in which backups can be done and stored when comes to MySQL. For this tutorial we are going to use file storage to store the backup database data. Follow the steps below to create file storage and mount it to the server.
 
 1. Downloading and Installing the Components
   ```sh
   apt-get -y install nfs-common
   ```
-2. Create a file called mnt-database.mount 
+2. Create a file called mnt-database.mount
   ```sh
   nano /etc/systemd/system/mnt-database.mount
   ```
-3. Store the following inside the mnt-database.mount file 
+3. Store the following inside the mnt-database.mount file
   ```sh
   [Unit]
   Description = Mount for Container Storage
@@ -149,7 +154,7 @@ There are many ways in which backups can be done and stored when comes to MySQL.
   [Install]
   WantedBy = multi-user.target
   ```
-4. Create a folder called database to store the backup database 
+4. Create a folder called database to store the backup database
   ```sh
   mkdir /mnt/database
   ```
@@ -163,37 +168,37 @@ There are many ways in which backups can be done and stored when comes to MySQL.
   ```
 
 
-## Provision two Ubuntu servers and install **P**HP runtime 
+## Provision two Ubuntu servers and install **P**HP runtime
 
 We need to provision two application servers with the following.
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
-3. Configure the server with the following: 
+3. Configure the server with the following:
    - Under **Name**, name it app1
    - Under **Region**, select LON06 - London or any other region best for your application.
-   - Under **Image**, select the **Ubuntu** and the latest version of **Minima**. 
-   - Under **Popular Flavors**, select the entry option or higher if you need a higher option. **TODO** - maybe we should select a higher spec. Something we need to revisit. 
-   - Under **Attached Storage Disks**, select the entry 25GB or bigger if needed. 
-   - Under **Network Interface**, select the **Private Network Uplink and Public IP Address** option. 
+   - Under **Image**, select the **Ubuntu** and the latest version of **Minima**.
+   - Under **Popular Flavors**, select the entry option or higher if you need a higher option. **TODO** - maybe we should select a higher spec. Something we need to revisit.
+   - Under **Attached Storage Disks**, select the entry 25GB or bigger if needed.
+   - Under **Network Interface**, select the **Private Network Uplink and Public IP Address** option.
    - Review the other configuration options and click **Provision** to provision the server.    
-4. Repeat steps 2 and 3 to provision server two with same configuration except for the **Name**, for the name type app2. 
+4. Repeat steps 2 and 3 to provision server two with same configuration except for the **Name**, for the name type app2.
 
 ## Mount file storage for application VM's
 
-File storage is going to be used to store the application source code between app1 and app2 servers. The following step will mount file storage to store the application source code: 
+File storage is going to be used to store the application source code between app1 and app2 servers. The following step will mount file storage to store the application source code:
 1. Downloading and Installing the Components
   ```sh
   apt-get -y install nfs-common
   ```
 
-2. Create a file called mnt-database.mount 
+2. Create a file called mnt-database.mount
 
   ```sh
   nano /etc/systemd/system/mnt-www.mount
   ```
 
-3. Store the following inside the mnt-database.mount file 
+3. Store the following inside the mnt-database.mount file
   ```sh
   [Unit]
   Description = Mount for Container Storage
@@ -208,7 +213,7 @@ File storage is going to be used to store the application source code between ap
   WantedBy = multi-user.target
   ```
 
-4. Create a folder called database to store the backup database 
+4. Create a folder called database to store the backup database
   ```sh
   mkdir /mnt/www
   ```
@@ -298,9 +303,9 @@ File storage is going to be used to store the application source code between ap
   }
   ```
 
-## Install and configure WordPress 
+## Install and configure WordPress
 
-1. To install and configure WordPress, run the following commands 
+1. To install and configure WordPress, run the following commands
 
    ```sh
    apt-get install curl
@@ -345,7 +350,7 @@ File storage is going to be used to store the application source code between ap
 
    ​
 
-## Looking further 
+## Looking further
 
 - Use a custom domain name by adding a CNAME record pointing to the LB URL
 - [Import your SSL certificates in the load balancer](https://knowledgelayer.softlayer.com/procedure/access-ssl-certificates-screen)
