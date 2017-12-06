@@ -110,7 +110,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             <div class="solutionBoxTitle">
               <a href = "sql-database.html">SQL Database for Cloud Data</a>
             </div>
-            <p>This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, we deploy a web app `worldcities` to make use of that data and show how to access the cloud database.</p>
+            <p>This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, we deploy a web app to make use of that data and show how to access the cloud database.</p>
             <span class="tag-filter category">Cloud Foundry</span>
             <span class="tag-filter category">Python</span>
             <span class="tag-filter category">Db2 Warehouse</span>
@@ -179,3 +179,4 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
 </body>
+
