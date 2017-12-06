@@ -17,7 +17,7 @@
 
 <style>
   body {
-    font-family: 'Arial';
+    font-family: 'IBM Helvetica',"Helvetica Neue Light",Helvetica,Arial,"Lucida Grande",sans-serif;
   }
   main {
     margin: 20px auto;
@@ -37,6 +37,7 @@
   }
   .tip {
     background-color: #f4dba9;
+    padding: 10px;
   }
   img {
     max-width: 100%;
