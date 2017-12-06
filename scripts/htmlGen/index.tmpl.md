@@ -44,7 +44,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
       text-decoration-line:none;
     }
 </style>
-<body>
+<div>
 {{#each categories}}
   <h2 id="{{anchor}}">{{name}}</h2>
     <div class = "solutionBoxContainer">
@@ -61,4 +61,4 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     {{/each}}
     </div>
 {{/each}}
-</body>
+</div>
