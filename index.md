@@ -45,8 +45,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     }
 </style>
 <body>
-  <h2>Websites and Web Apps</h2>
-  {: #websites }
+  <h2 id="websites">Websites and Web Apps</h2>
     <div class = "solutionBoxContainer">
       <div class = "solutionBox">
           <div class="solutionBoxTitle">
@@ -152,8 +151,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
           <span class="tag-filter category">API Connect</span>
       </div>
     </div>
-  <h2>Mobile</h2>
-  {: #mobile }
+  <h2 id="mobile">Mobile</h2>
     <div class = "solutionBoxContainer">
       <div class = "solutionBox">
           <div class="solutionBoxTitle">

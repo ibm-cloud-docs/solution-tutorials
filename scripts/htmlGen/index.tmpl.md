@@ -46,8 +46,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 </style>
 <body>
 {{#each categories}}
-  <h2>{{name}}</h2>
-  {: #{{anchor}} }
+  <h2 id="{{anchor}}">{{name}}</h2>
     <div class = "solutionBoxContainer">
     {{#each solutions}}
       <div class = "solutionBox">
