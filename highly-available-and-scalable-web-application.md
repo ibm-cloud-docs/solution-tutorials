@@ -141,7 +141,7 @@ By default MySQL only listens on the local interface. The application servers wi
 ## Create a file storage for database backups
 {: database_backup}
 
-There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial will use crontab entry to regularly dump the database content to disk. The backup files will be stored in a file storage.
+There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial uses a crontab entry to dump the database content to disk. The backup files will be stored in a file storage.
 
 ### Create the file storage
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
@@ -156,6 +156,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
    - Click continue to create the service.
 
 TODO(fredL) we could skip the Snapshot here - snapshot would be only needed if we want to replicate the backup to another location
+TODO(fredL) we could also use another storage than File Storage - uploading to a Cloud Object Storage bucket would work too and might require less configuration
 
 ### Authorize the database server to use the file storage
 
@@ -199,7 +200,25 @@ TODO(fredL) we could skip the Snapshot here - snapshot would be only needed if w
 
 ### Setup a backup at regular interval
 
-TODO(fredL) fill in crontal instructions to run mysqldump daily
+1. Create `/root/dbbackup.sh` with this content, replacing `CHANGE_ME` with the database password you specified earlier:
+   ```sh
+   #!/bin/bash
+   mysqldump -u root -pCHANGE_ME --all-databases --routines | gzip > /mnt/datamysql/backup-`date '+%m-%d-%Y-%H-%M-%S'`.sql.gz
+   ```
+1. Make sure the file is executable
+   ```sh
+   chmod 700 /root/dbbackup.sh
+   ```
+1. Edit the crontab
+   ```sh
+   crontab -e
+   ```
+1. To have the backup performed every day at 11pm, set the content to the following, save the file and close the editor
+   ```
+   0 23 * * * /root/dbbackup.sh
+   ```
+
+Obviously, this is a simple backup mechanism. If you plan to manage your own MySQL database server in a production environment, you will want to [implement one of the backup strategies described in MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/backup-and-recovery.html)
 
 ## Provision two servers for the PHP application
 {: app_servers}
