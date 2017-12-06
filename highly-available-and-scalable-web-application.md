@@ -37,11 +37,11 @@ This tutorial uses the following products:
 ![Architecture diagram](images/solution14/highly-available-wordpress-architecture.png)
 </p>
 
-TODO - update the digram
-
-1. The user does this
-2. Then that
-3. TODO - Add steps for each case as per diagram
+1. The user connects to the application.
+2. The Load Balancer selects one of the healthy servers to handle the requests.
+3. The elected server accesses the application files stored on a shared file storage.
+4. The server also pulls information from the database and finally renders the page to the user.
+5. At a regular interval, the database content is backed up.
 
 ## Before you begin
 {: #prereqs}
