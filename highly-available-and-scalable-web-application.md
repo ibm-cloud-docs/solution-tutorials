@@ -155,9 +155,6 @@ There are many ways in which backups can be done and stored when it comes to MyS
    - Under **Snapshot Space Size**, select 40GB
    - Click continue to create the service.
 
-TODO(fredL) we could skip the Snapshot here - snapshot would be only needed if we want to replicate the backup to another location
-TODO(fredL) we could also use another storage than File Storage - uploading to a Cloud Object Storage bucket would work too and might require less configuration
-
 ### Authorize the database server to use the file storage
 
 1. Select the File Storage from the [list of existing items](https://control.bluemix.net/storage/file)
@@ -299,7 +296,7 @@ Repeat the following steps on each application server:
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
-These steps could be automated using a provisioning script or by capturing an image.
+These steps could be automated using a [provisioning script](https://knowledgelayer.softlayer.com/procedure/add-custom-provisioning-script) or by [capturing an image](https://knowledgelayer.softlayer.com/learning/introduction-image-templates).
 {: tip}
 
 ## Install and configure the PHP application on the application servers
@@ -420,23 +417,59 @@ Access the Wordpress installation at `http://YourAppServerIPAddress/` using eith
 ## Provision one load balancer server in front of the application servers
 {: load_balancer}
 
-At this point, we have two application servers with separate IP addresses. Adding a Load Balancer will make these two servers acting as one from the point of view of the application user. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers. 
+At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a Load Balancer in front of these servers will make the application visible to the public Internet. The load balancer will also hide the underlying infrastructure to the application users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers. 
 
-TODO
+1. Go to the catalog to provision a [Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
+1. In the **Plan** step, select the same data center as *app1* and *app2*
+1. In **Network Settings**,
+   1. Select the same subnet as the one where *app1* and *app2* where provisioned
+   1. Use the default IBM system pool for the load balancer public IP.
+1. In **Basic**,
+   1. Name the load balancer, e.g. app-lb-1
+   1. Keep the default protocol configuration - by default the load balancer is configured for HTTP.
+      SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://knowledgelayer.softlayer.com/procedure/access-ssl-certificates-screen)
+      {: tip}
+1. In **Server Instances**, add *app1* and *app2* servers
+1. Complete the wizard
 
-## Looking further
+### Change wordpress configuration to use the load balancer URL
 
-- Use a custom domain name by adding a CNAME record pointing to the LB URL
-- [Import your SSL certificates in the load balancer](https://knowledgelayer.softlayer.com/procedure/access-ssl-certificates-screen)
-- Create an image of the first server and use it to provision server 2
-- Use a CDN in front of the load balancer to offload the servers
-- Use Compose for MySQL to remove the need to manage a server or setup HyperDB to have master/slave for MySQL - or setup a MySQL cluster
-- Use a Local Load Balancer and an auto-scaler
+The Wordpress configuration needs to be changed to use the Load Balancer address. Indeed, Wordpress keeps a reference to the blog URL and injects this location in the pages. If you don't change this setting, Wordpress will redirect the users to the backend servers directly, thus bypassing the Load Balancer or not working at all if the servers only have a private IP address.
 
+1. Find the Load Balancer address in its detail page. You can find the Load Balancer you created under [Network / Load Balancing / Local](https://control.bluemix.net/network/loadbalancing/cloud).
+   You can also use your own domain name with the Load Balancer by adding a CNAME record pointing to the Load Balancer address in your DNS configuration.
+   {: tip}
+1. Log as administrator in the Wordpress blog via *app1* or *app2* URL
+1. In Settings / General, set the Wordpress Address (URL) and Site Address (URL) to the Load Balancer address
+1. Save the settings. Wordpress should redirect to the Load Balancer address
+   It may take some time before the Load Balancer address becomes active due to DNS propagation.
+   {: tip}
 
+### Test the Load Balancer behavior
+
+The Load Balancer is configured to check the health of the servers and to redirect users only to healthy servers. To understand how the Load Balancer is working, you can 
+
+1. Watch the nginx logs on both *app1* and *app2* with:
+   ```sh
+   tail -f /var/log/nginx/*.log
+   ```
+
+   You should already see the regular ping from the Load Balancer
+   {: tip}
+1. Access Wordpress through the Load Balancer address and make sure to force a hard reload of the page. Notice in the nginx logs both *app1* and *app2* are serving content for the page. The Load Balancer is redirecting traffic to both servers as expected.
+1. Stop nginx on *app1*
+   ```sh
+   systemctl nginx stop
+   ```
+1. After a short while reload the Wordpress page, notice all hits are going to *app2*.
+1. Stop nginx on *app2*.
+1. Reload the Wordpress page. The Load Balancer will return an error as there is no healthy server.
+1. Restart nginx on *app1*
+   ```sh
+   systemctl nginx start
+   ```
+1. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
 ## Related information
 
-[Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html)
-
-TODO - Add more to this list
+- Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html) for a tutorial implementing a Content Delivery Network.
