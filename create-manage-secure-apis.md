@@ -20,7 +20,7 @@ lastupdated: "2017-11-30"
 This tutorial demonstrates how to create a new REST API using the LoopBack Node.js API framework and  then add management, visibility, security and rate limiting to your API using the **API Connect** service on IBM Cloud.
 {:shortdesc}
 
-![](images/solution13/ArchitectureDiagram.png)
+![](images/solution13/Architecture.png)
 
 ## Objectives
 * Create a REST API in Node.js

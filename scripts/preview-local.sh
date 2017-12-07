@@ -1,4 +1,10 @@
 #!/bin/bash
+
+# Generate index.md
+cd scripts/htmlGen
+node app.js
+cd ../..
+
 mkdir -p builddocs/input
 
 # copy all files to doc input folder

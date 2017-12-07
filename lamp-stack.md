@@ -27,7 +27,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Monitor a LAMP server.
 * Secure the server.
 
-![Architecture diagram](images/solution4/architecture_PHP.png)
+![Architecture diagram](images/solution4/Architecture.png)
 
 ## Products
 

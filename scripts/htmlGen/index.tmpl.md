@@ -40,8 +40,24 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         border-radius: 10px;
         white-space: nowrap;
     }
+    .solutionBoxDescription {
+        display:flex;
+        flex-wrap: wrap;
+    }
    .solutionBoxTitle a {
       text-decoration-line:none;
+    }
+    .descriptionContainer {
+        flex-grow: 1;
+        width: 200px;
+    }
+    .architectureDiagramContainer {
+        width: 300px;
+        padding: 0 10px;
+    }
+    .architectureDiagram {
+        max-height: 200px;
+        padding: 5px;
     }
 </style>
 <div>
@@ -54,10 +70,17 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
           <div class="solutionBoxTitle">
             <a href = "{{url}}">{{name}}</a>
           </div>
-          <p>{{description}}</p>
-          {{#each tags}}
-          <span class="tag-filter category">{{this}}</span>
-          {{/each}}
+          <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>{{description}}</p>
+                {{#each tags}}
+                    <span class="tag-filter category">{{this}}</span>
+                {{/each}}
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "{{imgSrc}}" />
+            </div>
+          </div>
       </div>
     {{/each}}
     </div>

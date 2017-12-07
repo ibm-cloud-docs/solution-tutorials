@@ -27,7 +27,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 * Configure, send, and monitor push notifications.
 * Monitoring the app with mobile analytics.
 
- ![](images/solution9/android_push_analytics_architecture.png)
+ ![](images/solution9/Architecture.png)
 
 ## Products
 

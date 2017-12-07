@@ -25,7 +25,7 @@ In this tutorial, you will use a provided template in Schematics to provision a 
 - Scale resources
 - Delete the environment
 
-![Architecture diagram](images/solution10/IaC_architecture.png)
+![Architecture diagram](images/solution10/Architecture.png)
 
 1. Create or use an existing Terraform configuration to describe the environment and store it in GitHub.
 2. IBM Cloud Schematics reads configuration and creates the environment with LAMP stack and Cloud Object Storage service.

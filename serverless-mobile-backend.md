@@ -43,7 +43,7 @@ This tutorial uses the following products:
    * [Push Notifications](https://console.bluemix.net/catalog/services/imfpush)
 
 <p style="text-align: center;">
-![](images/solution11/ArchitectureDiagram.png)
+![](images/solution11/Architecture.png)
 </p>
 
 1. The user authenticates against [App ID](https://console.bluemix.net/catalog/services/AppID). App ID provides access and identification tokens.

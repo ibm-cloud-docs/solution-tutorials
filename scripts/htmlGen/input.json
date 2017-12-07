@@ -5,18 +5,21 @@
                 "name": "Deploy a secure web application across multiple regions",
                 "url": "multi-region-webapp.html",
                 "description": "This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline.",
+                "imgSrc": "images/solution1/Architecture.png",
                 "tags": ["Cloud Foundry", "Node.js", "Continous Delivery"]
             },
             {
                 "name": "Scalable web app on Kubernetes",
                 "url": "scalable-webapp-kubernetes.html",
                 "description": "This tutorial is a walkthrough of how to scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+                "imgSrc": "images/solution2/Architecture.png",
                 "tags": ["Docker", "Kubernetes", "Container Registry", "Java"]
             },
             {
                 "name": "Accelerate delivery of static files using Object Storage and CDN",
                 "url": "static-files-cdn.html",
                 "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
+                "imgSrc": "images/solution3/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
                     "Node.js",
@@ -28,6 +31,7 @@
                 "name": "Web Application on LAMP Stack",
                 "url": "lamp-stack.html",
                 "description": "This tutorial walks you through the creation of an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP (the LAMP stack). To see the LAMP server in action, you will install and configure the WordPress open source application.",
+                "imgSrc": "images/solution4/Architecture.png",
                 "tags": [
                     "Virtual Servers",
                     "PHP",
@@ -39,6 +43,7 @@
                 "name": "Automate deployment of environments using Infrastructure as Code",
                 "url": "infrastructure-as-code.html",
                 "description": "Use a Schematics template to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then configure the template to scale the resources and tune the environment.",
+                "imgSrc": "images/solution10/Architecture.png",
                 "tags": [
                     "Schematics",
                     "Virtual Servers",
@@ -50,6 +55,7 @@
                 "name": "Deploy a Highly Available and Scalable web application with Load Balancer and Backups",
                 "url": "highly-available-and-scalable-web-application.html",
                 "description": "This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.",
+                "imgSrc": "images/solution1/Architecture.png",
                 "tags": [
                     "Virtual Servers",
                     "Load Balancer",
@@ -60,6 +66,7 @@
                 "name": "Modern Web Applications using MEAN stack",
                 "url": "mean-stack.html",
                 "description": "This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a Mongo DB, Express web framework, Angular front end framework and a Node.js runtime.",
+                "imgSrc": "images/solution7/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
                     "Node.js",
@@ -70,6 +77,7 @@
                 "name": "SQL Database for Cloud Data",
                 "url": "sql-database.html",
                 "description": "This tutorial shows how to provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Then, we deploy a web app to make use of that data and show how to access the cloud database.",
+                "imgSrc": "images/solution5/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
                     "Python",
@@ -80,6 +88,7 @@
                 "name": "Serverless Web Application and API",
                 "url": "serverless-api-webapp.html",
                 "description": "Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.",
+                "imgSrc": "images/solution8/Architecture.png",
                 "tags": [
                     "Cloud Functions",
                     "API Gateway",
@@ -90,6 +99,7 @@
                 "name": "Generate, Access and Analyze Application Logs",
                 "url": "application-log-analysis.html",
                 "description": "Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.",
+                "imgSrc": "images/solution12/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
                     "Python",
@@ -100,6 +110,7 @@
                 "name": "Create, Secure and Manage REST APIs",
                 "url": "create-manage-secure-apis.html",
                 "description": "This tutorial demonstrates how to create a new REST API using the LoopBack Node.js API framework and then add management, visibility, security and rate limiting to your API using the API Connect service on IBM Cloud.",
+                "imgSrc": "images/solution13/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
                     "Node.js",
@@ -115,6 +126,7 @@
                 "name": "iOS mobile app with Push Notifications and Analytics",
                 "url": "ios-mobile-push-analytics.html",
                 "description": "Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
+                "imgSrc": "images/solution6/Architecture.png",
                 "tags": [
                     "iOS",
                     "Swift",
@@ -126,6 +138,7 @@
                 "name": "Android native mobile app with Push Notifications and Analytics",
                 "url": "android-mobile-push-analytics.html",
                 "description": "Learn how easy it is to quickly create an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
+                "imgSrc": "images/solution9/Architecture.png",
                 "tags": [
                     "Android",
                     "Java",
@@ -137,6 +150,7 @@
                 "name": "Mobile application with a serverless backend",
                 "url": "serverless-mobile-backend.html",
                 "description": "Learn how to use Cloud Functions along with other cognitive and data services to build a serverless backend for a mobile application.",
+                "imgSrc": "images/solution11/Architecture.png",
                 "tags": [
                     "Cloud Functions",
                     "App ID",

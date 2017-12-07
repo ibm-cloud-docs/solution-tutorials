@@ -34,7 +34,7 @@ This tutorial uses the following products:
 * [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
 
 <p style="text-align: center;">
-![Architecture diagram](images/solution14/highly-available-wordpress-architecture.png)
+![Architecture diagram](images/solution14/Architecture.png)
 </p>
 
 1. The user connects to the application.

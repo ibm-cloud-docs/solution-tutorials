@@ -25,7 +25,7 @@ This tutorial walks you through how to host and serve website assets (images, vi
 * Make the content globally available with a CDN.
 * Expose files by using a Cloud Foundry web application.
 
-![](images/solution3/Solution3Architecture.png)
+![](images/solution3/Architecture.png)
 
 ## Products
 

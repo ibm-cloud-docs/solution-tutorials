@@ -24,7 +24,7 @@ This tutorial walks you through how to scaffold a web application, run it locall
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
-![](images/solution2/Solution2Architecture.png)
+![](images/solution2/Architecture.png)
 
 ## Before you begin
 {: #prereqs}
