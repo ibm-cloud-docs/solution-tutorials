@@ -44,22 +44,36 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
       text-decoration-line:none;
     }
 </style>
-<div>
 {{#each categories}}
-  <h2 id="{{anchor}}">{{name}}</h2>
+## {{name}}
 {: #{{anchor}} }
-    <div class = "solutionBoxContainer">
-    {{#each solutions}}
-      <div class = "solutionBox">
-          <div class="solutionBoxTitle">
-            <a href = "{{url}}">{{name}}</a>
-          </div>
-          <p>{{description}}</p>
-          {{#each tags}}
-          <span class="tag-filter category">{{this}}</span>
-          {{/each}}
-      </div>
+
+<div class = "solutionBoxContainer">
+{{#each solutions}}
+  <div class = "solutionBox">
+    <h3 id="{{url}}" class="solutionBoxTitle">
+      <a href = "{{url}}">{{name}}</a>
+    </h3>
+    <p>{{description}}</p>
+    {{#each tags}}
+    <span class="tag-filter category">{{this}}</span>
     {{/each}}
-    </div>
+  </div>
 {{/each}}
+</div>
+
+{{/each}}
+
+<div>
+<h2 id="aTitle">A title</h2>
+<h3 id="a subtitle">A subtitle</h3>
+<p>
+and content
+</p>
+
+<h2 id="anotherTitle">Another title</h2>
+<h3 id="another subtitle">Another subtitle</h3>
+<p>
+and content
+</p>
 </div>
