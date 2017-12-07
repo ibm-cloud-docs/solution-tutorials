@@ -63,17 +63,3 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 </div>
 
 {{/each}}
-
-<div>
-<h2 id="aTitle">A title</h2>
-<h3 id="a subtitle">A subtitle</h3>
-<p>
-and content
-</p>
-
-<h2 id="anotherTitle">Another title</h2>
-<h3 id="another subtitle">Another subtitle</h3>
-<p>
-and content
-</p>
-</div>
