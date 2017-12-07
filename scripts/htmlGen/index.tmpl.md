@@ -60,17 +60,16 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         padding: 5px;
     }
 </style>
-<div>
 {{#each categories}}
-  <h2 id="{{anchor}}">{{name}}</h2>
+## {{name}}
 {: #{{anchor}} }
-    <div class = "solutionBoxContainer">
+<div class = "solutionBoxContainer">
     {{#each solutions}}
-      <div class = "solutionBox">
-          <div class="solutionBoxTitle">
+    <div class = "solutionBox">
+        <h3 id="{{url}}" class="solutionBoxTitle">
             <a href = "{{url}}">{{name}}</a>
-          </div>
-          <div class="solutionBoxDescription">
+        </h3>
+        <div class="solutionBoxDescription">
             <div class="descriptionContainer">
                 <p>{{description}}</p>
                 {{#each tags}}
@@ -80,9 +79,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "{{imgSrc}}" />
             </div>
-          </div>
-      </div>
-    {{/each}}
+        </div>
     </div>
-{{/each}}
+    {{/each}}
 </div>
+{{/each}}
