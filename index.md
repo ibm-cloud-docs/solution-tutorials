@@ -24,10 +24,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     .solutionBoxContainer {
     }
     .solutionBoxTitle {
-      margin: 0rem;
-      font-size: 16px;
-      margin-bottom: 10px;
-      font-weight: 600;
+      margin: 0rem !important;
+      font-size: 16px !important;
+      margin-bottom: 10px !important;
+      font-weight: 600 !important;
     }
     .tag-filter.category {
         background: #aaf9e6;
@@ -62,6 +62,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 </style>
 ## Websites and Web Apps
 {: #websites }
+
 <div class = "solutionBoxContainer">
     <div class = "solutionBox">
         <h3 id="multi-region-webapp.html" class="solutionBoxTitle">
@@ -244,8 +245,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
 </div>
+
 ## Mobile
 {: #mobile }
+
 <div class = "solutionBoxContainer">
     <div class = "solutionBox">
         <h3 id="ios-mobile-push-analytics.html" class="solutionBoxTitle">
@@ -300,3 +303,4 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
 </div>
+
