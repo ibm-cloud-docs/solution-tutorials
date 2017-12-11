@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-12-04"
+lastupdated: "2017-12-11"
 
 ---
 
@@ -39,7 +39,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         margin-right: 1px;
         border-radius: 10px;
         white-space: nowrap;
-        line-height: 1.8rem;
     }
     .solutionBoxDescription {
         display:flex;
@@ -300,6 +299,27 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution11/Architecture.png" />
+            </div>
+        </div>
+    </div>
+</div>
+
+## Internet of Things
+{: #iot }
+
+<div class = "solutionBoxContainer">
+    <div class = "solutionBox">
+        <h3 id="gather-visualize-analyze-iot-data.html" class="solutionBoxTitle">
+            <a href = "gather-visualize-analyze-iot-data.html">Gather, Visualize and Analyze IoT data</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you thru setting up an IoT device, gathering large amounts of data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data.</p>
+                    <span class="tag-filter category">Internet of Things Platform</span>
+                    <span class="tag-filter category">Node-RED</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution16/Architecture.png" />
             </div>
         </div>
     </div>
