@@ -35,7 +35,7 @@ This tutorial uses the following products:
 * [IaaS or PaaS service name](https://console.ng.bluemix.net/catalog/services/ServiceName)
 
 <p style="text-align: center;">
-![](images/solution11/ArchitectureDiagram.png)
+![](images/solutionXX/Architecture.png)
 </p>
 
 1. The user does this
@@ -59,8 +59,8 @@ Objective description
 
 2. Keep each step as short as possible.
 3. Do not use blank lines between steps except for tips or images.
-3. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be perscriptive and tell them exactly what to do succinctly, like a lab.
-4. Do not use "I" or "We will". 
+4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be perscriptive and tell them exactly what to do succinctly, like a lab.
+5. Do not use "I" or "We will". 
 
 ### Sub objective
 
