@@ -39,6 +39,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         margin-right: 1px;
         border-radius: 10px;
         white-space: nowrap;
+        line-height: 1.8rem;
     }
     .solutionBoxDescription {
         display:flex;
