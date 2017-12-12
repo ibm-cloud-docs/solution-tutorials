@@ -147,6 +147,17 @@
                 ]
             },
             {
+                "name": "Hybrid Mobile Application with Push and Analytics",
+                "url": "hybrid-mobile-push-analytics.html",
+                "description": "Learn how easy it is to quickly create a hybrid Cordova application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
+                "imgSrc": "images/solution9/Architecture.png",
+                "tags": [
+                    "Cordova",
+                    "Push Notifications",
+                    "Mobile Analytics"
+                ]
+            },
+            {
                 "name": "Mobile application with a serverless backend",
                 "url": "serverless-mobile-backend.html",
                 "description": "Learn how to use Cloud Functions along with other cognitive and data services to build a serverless backend for a mobile application.",

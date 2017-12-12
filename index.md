@@ -285,6 +285,22 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
+        <h3 id="hybrid-mobile-push-analytics.html" class="solutionBoxTitle">
+            <a href = "hybrid-mobile-push-analytics.html">Hybrid Mobile Application with Push and Analytics</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>Learn how easy it is to quickly create a hybrid Cordova application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.</p>
+                    <span class="tag-filter category">Cordova</span>
+                    <span class="tag-filter category">Push Notifications</span>
+                    <span class="tag-filter category">Mobile Analytics</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution9/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
         <h3 id="serverless-mobile-backend.html" class="solutionBoxTitle">
             <a href = "serverless-mobile-backend.html">Mobile application with a serverless backend</a>
         </h3>
