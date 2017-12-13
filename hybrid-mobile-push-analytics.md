@@ -113,10 +113,10 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
     ```
 3. To update Cordova-iOS to the latest version, run the below commands
       ```
-      cordova platform rm ios
+     $ cordova platform rm ios
       ```
       ```
-      cordova platform add ios
+     $ cordova platform add ios
       ```
 4. To launch the app on an Android emulator, run the below command
    ```
@@ -166,7 +166,7 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
 
 ## Configure, send and monitor push notifications
 
-1. In `index.js`, under `onDeviceReady` function, replace the values  `{pushAppGuid}` and
+1. In index.js, under `onDeviceReady` function, replace the values  `{pushAppGuid}` and
 
    `{pushClientSecret} `with push service **credentials** - appGuid and clientSecret.
 
