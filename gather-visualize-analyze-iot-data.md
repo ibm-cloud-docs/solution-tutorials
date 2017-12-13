@@ -17,7 +17,7 @@ lastupdated: "2017-11-22"
 {:pre: .pre}
 
 # Gather, Visualize and Analyze IoT data
-This tutorial walks you thru setting up an IoT device, gathering large amounts of data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data.
+This tutorial walks you thru setting up an IoT device, gathering data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
 {:shortdesc}
 
 ## Objectives
@@ -34,6 +34,7 @@ This tutorial walks you thru setting up an IoT device, gathering large amounts o
 This tutorial uses the following products:
 * [Internet of Things Platform](https://console.bluemix.net/catalog/services/internet-of-things-platform)
 * [Node-RED Node.js Application](https://console.ng.bluemix.net/catalog/services/ServiceName)
+* [Data Science Experience](https://console.bluemix.net/catalog/services/data-science-experience)
 
 <p style="text-align: center;">
 ![](images/solution16/Architecture.png)
@@ -52,7 +53,6 @@ IBM Cloud comes with an [Internet of Things Platform Starter](https://console.bl
 2. Enter a unique **App name**.  For example: `myuserid-iot-starter` and click Create.
 
 ## Configure IoT Platform
-
 {: #configure_iot_platform}
 
 1. Click on **Connections**, and then select your `Internet of Things Platform` service.
@@ -95,10 +95,10 @@ Next, you will create a board and cards to display device data in the dashboard.
 ### Create a board
 {: #createboard}
 
-1.	Open the **IBM Watson IoT Platform dashboard**.
-  2.	Select **Boards** from the left menu, and then click **Create New Board**.
-    3.Enter a name for the board and click **Next** and then **Create**.  
-    4.Double-click the board that you just created to open it.
+1. Open the **IBM Watson IoT Platform dashboard**.
+2. Select **Boards** from the left menu, and then click **Create New Board**.
+3. Enter a name for the board and click **Next** and then **Create**.  
+4. Double-click the board that you just created to open it.
 
 ### Create a card to display temperature
 {: #cardtemp}
@@ -116,4 +116,27 @@ Next, you will create a board and cards to display device data in the dashboard.
    - Max: 50
  5. In the Card Preview page, select **L** for the line chart size, and click **Next**.
  6. In the Card Information page, change the name of the card to **Temperature** and click **Submit**. The temperature card appears on the dashboard and includes a line chart of the live temperature data.
+ 7. In your Node-RED device simulator click on the **Send Data** button several times with 2 second intervals between each click.
+ 8. Back in the **IBM Watson IoT Platform tab**, you should see the chart update with the temperature values.
+
+ ## Store historical data in Cloudant DB
+ 1. Open the **IBM Watson IoT Platform dashboard**.
+ 2. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
+ 3. Select the Cloudant database that was created by the IoT Starter.
+ 4. Enter `TemperatureData` for **Database Name** and click **Done**
+
+## Detect Anomolies using Machine Learning
+{: #data_experience}
+
+You will use the Jupyter Notebook that is available in IBM Data Science Experience to load your historical temperature data and detect anomalies using z-score.
+
+1. Visit **IBM Cloud Dashboard** > **Catalog** and select **Data Science Experience**.
+2. **Create** the service and launch it's dashboard by clicking **Get Started**
+3. Create a **New Project** and enter `Detect Anomoly` as the **Name**.
+4. [TODO] Create and select **Object Storage** and **Spark** services. **Refresh**
+5. **Create**.
+6. **Assets** > **New notebook** > **From URL**
+7. Enter `Anomoly-detection-sample` for the **Name**
+8. Enter `https://github.com/ibm-watson-iot/predictive-analytics-samples/raw/master/Notebook/Anomaly-detection-DSX.ipynb` in the URL.
+9. **Create Notebook**
 
