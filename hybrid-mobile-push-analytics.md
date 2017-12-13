@@ -87,20 +87,22 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
 
 1. On a terminal or command prompt, navigate to the downloaded project and run the below commands one after another. **This is specific to Android**
     ```
-    cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=26.+
+    $ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=26.+
     ```
     Cordova plugin to align various versions of the Android Support libraries specified by other plugins to a specific version.
     {:tip}
+
     ```
-    cordova plugin add cordova.plugins.diagnostic
+    $ cordova plugin add cordova.plugins.diagnostic
     ```
     Cordova plugin to manage device settings.
     {:tip}
+
     ```
-    cordova platform rm android
+    $ cordova platform rm android
     ```
     ```
-    cordova platform add android
+    $ cordova platform add android
     ```
 2. To update bms-push (BMSPush) and bms-core (BMSCore) plugins, run the below commands
     ```
@@ -133,6 +135,7 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
 
    Make the above change only if you see this error - The “Swift Language Version” (SWIFT_VERSION) build setting must be set to a supported value for targets which use Swift. This setting can be set in the build settings editor.
    {:tip}
+
 7. Open the code in an IDE of your choice and navigate to `/www/js/index.js`and comment the below code as you won't require this in the current scenario.
 
    ```
@@ -157,7 +160,7 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
    ```
    BMSLogger.send();
    ```
-   
+
  For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmsanalytics) and [logging](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmslogger)
  {:tip}
 
