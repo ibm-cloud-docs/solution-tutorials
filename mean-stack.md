@@ -60,7 +60,7 @@ In this section, you will run a local MongoDB database, clone a MEAN sample code
    If this results in a connection error, confirm that your **mongod** server is running.
 2. In a terminal window, change to a working directory and run the following command to clone the MEAN sample repository.
   ```sh
-     git clone https://github.com/IBM-Bluemix/nodejs-MEAN-stack
+     git clone https://github.com/IBM-Cloud/nodejs-MEAN-stack
      cd nodejs-MEAN-stack
   ```
 3. Install the required packages.
