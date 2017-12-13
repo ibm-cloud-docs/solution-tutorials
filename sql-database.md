@@ -52,7 +52,7 @@ We need a table to hold the sample data.
 1. In the console for Db2 Warehouse on Cloud click **Explore** in the navigation bar. It takes you to a list of existing schemas in the database.
 2. Locate and click on the schema beginning with "DASH".
 3. Click on **"+ New Table"** to bring up a form for the table name and its columns.
-4. Put in "cities" as table name. Copy the column definitions from the file [cityschema.txt](https://github.com/IBM-Bluemix/cloud-sql-database/blob/master/cityschema.txt) and paste them into box for the columns and data types.
+4. Put in "cities" as table name. Copy the column definitions from the file [cityschema.txt](https://github.com/IBM-Cloud/cloud-sql-database/blob/master/cityschema.txt) and paste them into box for the columns and data types.
 5. Click on **Create** to define the new table.   
    ![](images/solution5/TableCitiesCreated.png)
 
@@ -87,11 +87,11 @@ The data has been loaded into our relational database. There were no errors, but
 4. In the editor select the text of the above statement. Click the **Run Selected** button. Only this statement should be executed now, returning some by country statistics in the results section.
 
 ## Deploy the application code
-The ready-to-run [code for the database app is located in this Github repository](https://github.com/IBM-Bluemix/cloud-sql-database). Clone or download the repository, then push it to the IBM Cloud.
+The ready-to-run [code for the database app is located in this Github repository](https://github.com/IBM-Cloud/cloud-sql-database). Clone or download the repository, then push it to the IBM Cloud.
 
 1. Clone the Github repository:
    ```bash
-   git clone https://github.com/IBM-Bluemix/cloud-sql-database
+   git clone https://github.com/IBM-Cloud/cloud-sql-database
    cd cloud-sql-database
    ```
 2. Push the application to the IBM Cloud. You need to be logged in to the region, org and space to which the database has been provisioned. Copy and paste these commands one line at a time.

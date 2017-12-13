@@ -55,7 +55,7 @@ This section uses a simple web application that links to the files (css, images 
 To start, retrieve the application code:
 
    ```sh
-   git clone https://github.com/IBM-Bluemix/webapp-with-cos-and-cdn
+   git clone https://github.com/IBM-Cloud/webapp-with-cos-and-cdn
    ```
   {: pre}
 
