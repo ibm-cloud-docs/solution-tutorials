@@ -43,7 +43,6 @@ This tutorial uses the following products:
 - [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications.
 - Xcode and Android Studio for importing and enhancing your code.
 
-
 ## Create Cordova mobile project from starter kit
 {: #get_code}
 The IBM Cloud Mobile Dashboard allows you to fast-track your mobile app development by creating your project from a Starter Kit.
@@ -158,8 +157,9 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
    ```
    BMSLogger.send();
    ```
-   For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmsanalytics) and [logging](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmslogger)
-   {:tip}
+   
+ For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmsanalytics) and [logging](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmslogger)
+ {:tip}
 
 ## Configure, send and monitor push notifications
 
