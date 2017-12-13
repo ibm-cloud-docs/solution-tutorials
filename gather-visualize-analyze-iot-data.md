@@ -70,25 +70,18 @@ The IoT platform is now configured to start receiving data. Devices will need to
 {: #confignodered}
 Next, you will need to configure the Node-RED device simulator application. Use the device simulator to send MQTT device messages to IoT Platform. The device simulator sends temperature and humidity information.
 
-  1. In your  IBM Cloud tab, open your Node-RED application by clicking the **Route** link that is listed for your Starter app.  
+1. In your  IBM Cloud tab, open your Node-RED application by clicking the **Route** link that is listed for your Starter app.  
+2. Click **Go to your Node-RED flow editor** to open the editor.
+3. Double-click the blue **Send to IBM IoT Platform** node in the Device Simulator flow.
+4. Enter the **Device Type** `Simulator` and **Device ID** `LivingRoomThermo1` and click **Done**.
+  ![](images/solution16/configure_node_red.png)
+5. Deploy the device by clicking **Deploy**.
+6. Click on the button next to the **Send Data** node to send data to the IoT Platform
+7. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
 
-  2. Click **Go to your Node-RED flow editor** to open the editor.
+  ![](images/solution16/recent_events.png)
 
-  3. Double-click the blue **Send to IBM IoT Platform** node in the Device Simulator flow.
-
-  4. Enter the **Device Type** `Simulator` and **Device ID** `LivingRoomThermo1` and click **Done**.
-
-    ![](images/solution16/configure_node_red.png)
-
-  5. Deploy the device by clicking **Deploy**.
-
-  6. Click on the button next to the **Send Data** node to send data to the IoT Platform
-
-  7. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
-
-     ![](images/solution16/recent_events.png)
-
- ## Display live data in IBM Watson IoT Platform
+## Display live data in IBM Watson IoT Platform
 {: #createcards}
 Next, you will create a board and cards to display device data in the dashboard. For more information about boards and cards, see [Visualizing real-time data by using boards and cards](https://console.ng.bluemix.net/docs/services/IoT/data_visualization.html).
 
@@ -114,26 +107,29 @@ Next, you will create a board and cards to display device data in the dashboard.
    - Precision: 2
    - Min: 0
    - Max: 50
- 5. In the Card Preview page, select **L** for the line chart size, and click **Next**.
- 6. In the Card Information page, change the name of the card to **Temperature** and click **Submit**. The temperature card appears on the dashboard and includes a line chart of the live temperature data.
- 7. In your Node-RED device simulator click on the **Send Data** button several times with 2 second intervals between each click.
- 8. Back in the **IBM Watson IoT Platform tab**, you should see the chart update with the temperature values.
+5. In the Card Preview page, select **L** for the line chart size, and click **Next**.
+6. In the Card Information page, change the name of the card to **Temperature** and click **Submit**. The temperature card appears on the dashboard and includes a line chart of the live temperature data.
+7. In your Node-RED device simulator click on the **Send Data** button several times with 2 second intervals between each click.
+8. Back in the **IBM Watson IoT Platform tab**, you should see the chart update with the temperature values.
 
- ## Store historical data in Cloudant DB
- 1. Open the **IBM Watson IoT Platform dashboard**.
- 2. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
- 3. Select the Cloudant database that was created by the IoT Starter.
- 4. Enter `TemperatureData` for **Database Name** and click **Done**
+## Store historical data in Cloudant DB
+1. Open the **IBM Watson IoT Platform dashboard**.
+2. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
+3. Select the Cloudant database that was created by the IoT Starter.
+4. Enter `TemperatureData` for **Database Name** and click **Done**
 
 ## Detect Anomolies using Machine Learning
 {: #data_experience}
 
 You will use the Jupyter Notebook that is available in IBM Data Science Experience to load your historical temperature data and detect anomalies using z-score.
 
+![](images/solution16/DSX.png)
+
 1. Visit **IBM Cloud Dashboard** > **Catalog** and select **Data Science Experience**.
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
 3. Create a **New Project** and enter `Detect Anomoly` as the **Name**.
 4. [TODO] Create and select **Object Storage** and **Spark** services. **Refresh**
+  ![](images/solution16/define_storage.png)
 5. **Create**.
 6. **Assets** > **New notebook** > **From URL**
 7. Enter `Anomoly-detection-sample` for the **Name**
