@@ -87,7 +87,6 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
 **Note:** BMSAnalytics is part of BMSCore Plugin.
 
 1. On a terminal or command prompt, navigate to the downloaded project and run the below commands one after another. **This is specific to Android**
-
     ```
     cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=26.+
     ```
@@ -104,7 +103,6 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
     ```
     cordova platform add android
     ```
-
 2. To update bms-push (BMSPush) and bms-core (BMSCore) plugins, run the below commands
     ```
     $ cordova plugin rm bms-push
@@ -112,22 +110,17 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
     ```
     $ cordova plugin add bms-push
     ```
-
-3. To update Cordova-iOS to the latest version, run the below commands 
-
+3. To update Cordova-iOS to the latest version, run the below commands
       ```
       cordova platform rm ios
       ```
       ```
       cordova platform add ios
       ```
-
 4. To launch the app on an Android emulator, run the below command
-
    ```
    $ cordova run android
    ```
-
 5. To preview the app in the iOS simulator,
 
    - `cd platforms/ios` and run `pod update`
@@ -135,28 +128,26 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
    ```
    $ open {YOUR_PROJECT_NAME}.xcworkspace/
    ```
-
 6. (Optional) Update `swift language version` for main (BasicCordovaApp) and Pods projects as shown below
 
    ![xcode](images/solution15/xcode.png)
 
    Make the above change only if you see this error - The “Swift Language Version” (SWIFT_VERSION) build setting must be set to a supported value for targets which use Swift. This setting can be set in the build settings editor.
    {:tip}
-
 7. Open the code in an IDE of your choice and navigate to `/www/js/index.js`and comment the below code as you won't require this in the current scenario.
 
    ```
-    mfpLoaded: function() {      
+    mfpLoaded: function() {
         }
    ```
-##Instrumenting the app to use Mobile Analytics.
+
+## Instrumenting the app to use Mobile Analytics.
 
 1. Go to your Mobile dashboard > Projects > Cordova Project, Click on **Show** to unveil Push and Analytics service credentials.
 
    ![mobile dashboard](images/solution15/mobile_dashboard.png)
 
-2. In `index.js`, under `onDeviceReady` function, update the value of `applicationName`with your app name and replace the value of `analyticsApiKey` with Analytics **apiKey**. 
-
+2. In `index.js`, under `onDeviceReady` function, update the value of `applicationName`with your app name and replace the value of `analyticsApiKey` with Analytics **apiKey**.
 3. Just after **BMSAnalytics.initialize** call, add the below code to send analytics data to server
 
       ```
@@ -170,7 +161,7 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
    For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmsanalytics) and [logging](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmslogger)
    {:tip}
 
-##Configure, send and monitor push notifications
+## Configure, send and monitor push notifications
 
 1. In `index.js`, under `onDeviceReady` function, replace the values  `{pushAppGuid}` and
 
@@ -194,22 +185,20 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 3. Select `Sandbox (development)` or `Production (distribution)` as appropriate and then upload the `p.12` certificate that you have created.
 4. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
 
-###FCM - Configure the service instance
+### FCM - Configure the service instance
 
 1. Select **Mobile** and then update the GCM/FCM Push Credentials tab with the Sender ID/Project number and API Key(Server Key) which you initially created on Firebase console.
-
 2. Click **Save**. The push notifications service is now configured.
 
-###Send push notifications
+### Send push notifications
 
 1. Select **Send Notifications**, and compose a message by choosing a send option. The supported options are device by tag, device id, user id, android devices, IOS devices, web notifications, and all devices.
    **Note:** When you select the **All Devices** option, all devices subscribed to Push Notifications will receive notifications.
 
 2. In the **Message** field, compose your message. Choose to configure the optional settings as required.
-
 3. Click **Send** and verify that your physical device has received the notification.
 
-###Monitor sent notifications
+### Monitor sent notifications
 
 You can monitor your sent notifications by navigating to **Monitoring** on the Push Notifications Service.
 The IBM Push Notifications service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent push notifications, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
@@ -231,11 +220,7 @@ You can record application logs and monitor data with the Mobile Analytics Clien
 ## Related Content
 
 [Customize the Push Notifications settings](https://console.bluemix.net/docs/services/mobilepush/push_step_4.html#push_step_4_Android)
-
 [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
-
 [Push Notifications REST APIs](https://console.bluemix.net/docs/services/mobilepush/push_restapi.html#push-api-rest)
-
 [Security in Push Notifications](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
-
-[Exporting Analytics data to Db2 Warehouse](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#dashdb) 
+[Exporting Analytics data to Db2 Warehouse](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#dashdb)
