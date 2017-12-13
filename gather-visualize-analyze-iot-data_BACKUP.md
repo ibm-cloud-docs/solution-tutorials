@@ -1,10 +1,14 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-12-13"
+lastupdated: "2017-11-22"
 
 ---
 
+{:java: #java .ph data-hd-programlang='java'}
+{:swift: #swift .ph data-hd-programlang='swift'}
+{:ios: #ios data-hd-operatingsystem="ios"}
+{:android: #android data-hd-operatingsystem="android"}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -29,50 +33,51 @@ This tutorial walks you thru setting up an IoT device, gathering data in the Wat
 
 This tutorial uses the following products:
 * [Internet of Things Platform](https://console.bluemix.net/catalog/services/internet-of-things-platform)
-* [Node.js Application](https://console.ng.bluemix.net/catalog/)
+* [Node-RED Node.js Application](https://console.ng.bluemix.net/catalog/services/ServiceName)
 * [Data Science Experience](https://console.bluemix.net/catalog/services/data-science-experience)
 
 <p style="text-align: center;">
 ![](images/solution16/Architecture.png)
 </p>
 
-## Create IoT Platform
+## Create IoT Starter
 {: #iot_starter}
 
-To begin, you will create Internet of Things Platform service - The hub which can manage devices, securely connect and **collect data**, and make historical data available for visulizations and applications.
+IBM Cloud comes with an [Internet of Things Platform Starter](https://console.bluemix.net/catalog/starters/internet-of-things-platform-starter) boilerplate to get you up to speed quickly. This  boilerplates comes with:
 
-1. Visit **IBM Cloud Dashboard** > **Catalog** and select **Internet of Things Platform** under the **Internet of Things** section.
-2. Enter `IoT demo hub` as the service name, click **Create** and **Launch** the dashboard.
-3. From the side menu, select **Security > Connection Security** and choose **TLS Optional** under *Default Rule > Security Level**
-3. From the side menu, select **Devices** > **Add Device** > **Device Types**  and **+ Add Device Type**.
-5. Enter `simulator` as the **Name** and click **Next** and **Done**.
+- Internet of Things Platform - The hub which can manage devices, securely connect and **collect data**, and make historical data available for visulizations and applications.
+- Node-RED Node.js Cloud Foundry application - An application with visual tools to **simulate** a device. We will use this application to send data to the hub.
+- Cloudant NoSQL DB - To save any changes made to the simulate application.
+
+1. Visit **IBM Cloud Dashboard** > **Catalog** and select **Internet of Things Platform Starter**.
+2. Enter a unique **App name**.  For example: `myuserid-iot-starter` and click Create.
+
+## Configure IoT Platform
+{: #configure_iot_platform}
+
+1. Click on **Connections**, and then select your `Internet of Things Platform` service.
+2. Click **Launch** to open the dashboard in a new browser tab. 
+3. From the side menu, select **Devices**, and then click **Add Device**.
+4. Then select **Device Types**  and **+ Add Device Type**
+5. Enter `Simulator` as the **Name** and click **Next** and **Done**.
 6. Next, click on **Register Device **
-7. Choose `simulator` for **Select Existing Device Type** and then enter `phone` for **Device ID**.
-8. Cick **Next** until the **Device Security** screen is displayed.
-9. Enter a value for the **Authentication Token**, for example: `myauthtoken` and click **Next**
-10. After clicking **Done**, your connection information is displayed. Keep this tab open.
+7. Choose `Simulator` for **Device Type** and then enter `LivingRoomThermo1` for **Device ID**.
+8. Finish the wizard by clicking **Next** a few times and then **Done**. Keep this tab open.
 
-The IoT platform is now configured to start receiving data. Devices will need to send their data to the IoT Platform with the Device Type, ID and Token specified.
+The IoT platform is now configured to start receiving data. Devices will need to send their data to the IoT Platform with the Device Type and Device ID specified.
 
-## Create device simulator
+## Configure device simulator
 {: #confignodered}
-Next, you will need to configure the simulator. You will deploy a Node.js web application which you will visit on your phone, which will connect to and send data to the IoT Platform.
+Next, you will need to configure the Node-RED device simulator application. Use the device simulator to send MQTT device messages to IoT Platform. The device simulator sends temperature and humidity information.
 
-1. Clone the Github repository:
-   ```bash
-   git clone https://github.com/cloud-dach/iotdeviceconnect
-   cd iotdeviceconnect
-   ```
-2. Push the application to the IBM Cloud.
-   ```bash
-   bx login
-   bx target --cf
-   bx cf push <PICK_UNIQUE_NAME>
-   ```
-3. In a few minutes, your application will be deployed and you should see a URL similar to `<PICK_UNIQUE_NAME>.mybluemix.net`
-4. Visit this URL on your phone using a browser.
-5. Enter the connection information from your IoT Dashboard tab and click **Connect**.
-6. Your phone will start trasmitting data. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
+1. In your  IBM Cloud tab, open your Node-RED application by clicking the **Route** link that is listed for your Starter app.  
+2. Click **Go to your Node-RED flow editor** to open the editor.
+3. Double-click the blue **Send to IBM IoT Platform** node in the Device Simulator flow.
+4. Enter the **Device Type** `Simulator` and **Device ID** `LivingRoomThermo1` and click **Done**.
+  ![](images/solution16/configure_node_red.png)
+5. Deploy the device by clicking **Deploy**.
+6. Click on the button next to the **Send Data** node to send data to the IoT Platform
+7. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
 
   ![](images/solution16/recent_events.png)
 
@@ -94,12 +99,14 @@ Next, you will create a board and cards to display device data in the dashboard.
 2. Select your device from the list, then click **Next**.
 3. Click **Connect new data set**.
 4. In the Create Value Card page, select or enter the following values and click **Next**.
-   - Event: sensorData
-   - Property: ob
-   - Name: OrientationBeta
+   - Event: update
+   - Property: temp
+   - Name: Temperature
    - Type: Float
-   - Min: -180
-   - Max: 180
+   - Unit: °C
+   - Precision: 2
+   - Min: 0
+   - Max: 50
 5. In the Card Preview page, select **L** for the line chart size, and click **Next**.
 6. In the Card Information page, change the name of the card to **Temperature** and click **Submit**. The temperature card appears on the dashboard and includes a line chart of the live temperature data.
 7. In your Node-RED device simulator click on the **Send Data** button several times with 2 second intervals between each click.
