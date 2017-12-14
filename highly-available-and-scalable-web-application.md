@@ -11,7 +11,7 @@ lastupdated: "2017-12-05"
 {:tip: .tip}
 {:pre: .pre}
 
-# Deploy a Highly Available and Scalable web application with Load Balancer and Backups
+# Use Virtual Servers to build highly available and scalable web app 
 
 This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with NGINX and **P**HP installed, one **M**ySQL database server, and durable file storage to store application files and backups.
 
@@ -51,8 +51,8 @@ This tutorial uses the following products:
 In this tutorial, the load balancer is the front door for the application users. The virtual servers do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
 
 1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
-1. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
-1. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
+2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
 
 You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning virtual servers.
 {: tip}
@@ -78,7 +78,7 @@ Contact your Infrastructure master user to get the following permissions:
      If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
      {: tip}
    - Review the other configuration options and click **Provision** to provision the server.
-      
+
       ![Configure virtual server](images/solution14/db-server.png)
 
    Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page. To SSH into the server, you need the server user name, password, and private or public IP address.
@@ -91,14 +91,14 @@ Contact your Infrastructure master user to get the following permissions:
 
 1. Connect to the server by using SSH:
    ```sh
-   ssh root@<Private-IP-Address>
+   ssh root@<Private-OR-Public-IP-Address>
    ```
-1. Install MySQL:
+2. Install MySQL:
    ```sh
    apt-get update
    apt-get install mysql-server
    ```
-1. Run the following script to help secure MySQL database:
+3. Run the following script to help secure MySQL database:
    ```sh
    mysql_secure_installation
    ```
@@ -110,29 +110,48 @@ Contact your Infrastructure master user to get the following permissions:
    mysql -u root -p
    CREATE DATABASE wordpress;
    ```
-1. Grant access to the database:
+
+2. Grant access to the database:
    ```
    GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.*
    TO root@'%'
-   IDENTIFIED BY '<database-password>';
+   IDENTIFIED BY 'root';
    FLUSH PRIVILEGES;
    ```
-1. Make note of the database name, user and password. You will need them when configuring the application servers.
+
+3. Check if database created by using:
+
+   ```sh
+   show databases;
+   ```
+
+4. Exit from the database using:
+
+   ```sh
+   exit
+   ```
+
+5. Make note of the database name, user and password. You will need them when configuring the application servers.
 
 ### Make the MySQL server visible to other servers on the network
 
 By default MySQL only listens on the local interface. The application servers will need to connect to the database so the MySQL configuration needs to be changed to listen on the private network interfaces.
 
-1. Edit `/etc/mysql/my.cnf` and add these lines:
+1. Edit the my.cnf file using `nano /etc/mysql/my.cnf` and add these lines:
    ```
    [mysqld]
    bind-address    = 0.0.0.0
    ```
-1. Restart MySQL:
+
+2. Exit and save the file using Cont+X.
+
+3. Restart MySQL:
+
    ```sh
    systemctl restart mysql
    ```
-1. Confirm MySQL is listening on all interfaces:
+
+4. Confirm MySQL is listening on all interfaces:
    ```sh
    netstat --listen --numeric-ports | grep 3306
    ```
@@ -145,7 +164,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
 ### Create the file storage
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
-1. Click **Create**
+2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
    - Select the same **Location** as the one where you created the database server
@@ -160,7 +179,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
 Before a virtual server can mount a File Storage, it needs to be authorized.
 
 1. Select the newly created File Storage from the [list of existing items](https://control.bluemix.net/storage/file)
-1. Under **Authorized Hosts**, click **Authorize Host** and select the database server.
+2. Under **Authorized Hosts**, click **Authorize Host** and select the database server.
 
 ### Mount the file storage for database backups
 
@@ -170,11 +189,22 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    ```sh
    apt-get -y install nfs-common
    ```
-1. Create a file called `/etc/systemd/system/mnt-database.mount` with the following content, replacing the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*)
+
+2. Create a file called `/etc/systemd/system/mnt-database.mount` 
+   ```bash
+   touch /etc/systemd/system/mnt-database.mount
+   ```
+
+3. Edit the mnt-database.mount by using: 
+   ```
+   nano /etc/systemd/system/mnt-database.mount
+   ```
+
+4. Add the content below to the mnt-database.mount file and replace the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can get the **Mount Point** url under the file storage service created. 
    ```
    [Unit]
    Description = Mount for Container Storage
-   
+
    [Mount]
    What=CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT
    Where=/mnt/database
@@ -184,15 +214,18 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    [Install]
    WantedBy = multi-user.target
    ```
-1. Create the mount point
+
+5. Create the mount point
   ```sh
   mkdir /mnt/database
   ```
-1. Mount the storage
+
+6. Mount the storage
    ```sh
    systemctl enable --now /etc/systemd/system/mnt-database.mount
    ```
-1. Check if the mount was successfully done
+
+7. Check if the mount was successfully done
    ```sh
    mount
    ```
@@ -206,15 +239,15 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    #!/bin/bash
    mysqldump -u root -pCHANGE_ME --all-databases --routines | gzip > /mnt/datamysql/backup-`date '+%m-%d-%Y-%H-%M-%S'`.sql.gz
    ```
-1. Make sure the file is executable
+2. Make sure the file is executable
    ```sh
    chmod 700 /root/dbbackup.sh
    ```
-1. Edit the crontab
+3. Edit the crontab
    ```sh
    crontab -e
    ```
-1. To have the backup performed every day at 11pm, set the content to the following, save the file and close the editor
+4. To have the backup performed every day at 11pm, set the content to the following, save the file and close the editor
    ```
    0 23 * * * /root/dbbackup.sh
    ```
@@ -235,7 +268,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
      If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
      {: tip}
    - Review the other configuration options and click **Provision** to provision the server.
-   [Configure virtual server](images/solution14/db-server.png)
+     [Configure virtual server](images/solution14/db-server.png)
 4. Repeat these steps to provision another virtual server named **app2**
 
 ## Create a file storage to share files between the application servers
@@ -245,7 +278,7 @@ This file storage is used to share the application files between *app1* and *app
 
 ### Create the file storage
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
-1. Click **Create**
+2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
    - Select the same **Location** as the one where you created the application servers
@@ -260,10 +293,10 @@ This file storage is used to share the application files between *app1* and *app
 [Snapshots](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally you can replicate snapshots to another data center.
 
 1. Select the File Storage from the [list of existing items](https://control.bluemix.net/storage/file)
-1. Under **Snapshot Schedules**, edit the snapshot schedule. The schedule could be defined as follow:
-   1. Add a daily snapshot, set the time to 11pm and keep the last 7 snapshots
-   1. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots
+2. Under **Snapshot Schedules**, edit the snapshot schedule. The schedule could be defined as follow:
    1. Add a hourly snapshot, set the minute to 30 and keep the last 24 snapshots 
+   2. Add a daily snapshot, set the time to 11pm and keep the last 7 snapshots
+   3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots
 
 ### Authorize the application servers to use the file storage
 
@@ -278,11 +311,11 @@ Repeat the following steps on each application server:
    apt-get update
    apt-get -y install nfs-common
    ```
-1. Create a file called `/etc/systemd/system/mnt-www.mount` with the following content, replacing the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*)
+2. Create a file called `/etc/systemd/system/mnt-www.mount` with the following content, replacing the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*)
    ```
    [Unit]
    Description = Mount for Container Storage
-   
+
    [Mount]
    What=CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT
    Where=/mnt/www
@@ -292,15 +325,15 @@ Repeat the following steps on each application server:
    [Install]
    WantedBy = multi-user.target
    ```
-1. Create the mount point
+3. Create the mount point
    ```sh
    mkdir /mnt/www
    ```
-1. Mount the storage
+4. Mount the storage
    ```sh
    systemctl enable --now /etc/systemd/system/mnt-www.mount
    ```
-1. Check if the mount was successfully done
+5. Check if the mount was successfully done
    ```sh
    mount
    ```
@@ -378,6 +411,10 @@ Repeat the following steps on each application server:
           }
    }
    ```
+5. Create a `www` folder inside the `/mnt/www` using
+   ```sh
+   mkdir /mnt/www/html
+   ```
 
 ### Install and configure WordPress
 
@@ -390,16 +427,16 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    curl -O https://wordpress.org/latest.tar.gz
    tar xzvf latest.tar.gz
    ```
-1. Prepare the Wordpress files
+2. Prepare the Wordpress files
    ```sh
    cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
    mkdir /tmp/wordpress/wp-content/upgrade
    ```
-1. Copy the files to the shared file storage
+3. Copy the files to the shared file storage
    ```sh
    rsync -av -P /tmp/wordpress/. /mnt/www/html
    ```
-1. Set permissions
+4. Set permissions
    ```sh
    chown -R www-data:www-data /mnt/www/html
    find /mnt/www/html -type d -exec chmod g+s {} \;
@@ -407,11 +444,11 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    chmod -R g+w /mnt/www/html/wp-content/themes
    chmod -R g+w /mnt/www/html/wp-content/plugins
    ```
-1. Call the following web service and inject the result into `/mnt/www/html/wp-config.php`
+5. Call the following web service and inject the result into `/mnt/www/html/wp-config.php`
    ```sh
    curl -s https://api.wordpress.org/secret-key/1.1/salt/
    ```
-1. Set the database credentials in `/mnt/www/html/wp-config.php`
+6. Set the database credentials in `/mnt/www/html/wp-config.php`
 
 Wordpress is configured. To complete the installation, you need to access the Wordpress user interface.
 
@@ -430,18 +467,18 @@ Access the Wordpress installation at `http://YourAppServerIPAddress/` using eith
 
 At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a Load Balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers. 
 
-1. Go to the catalog to create a [Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
-1. In the **Plan** step, select the same data center as *app1* and *app2*
-1. In **Network Settings**,
+1. Go to the catalog to create a [IBM Bluemix Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
+2. In the **Plan** step, select the same data center as *app1* and *app2*
+3. In **Network Settings**,
    1. Select the same subnet as the one where *app1* and *app2* where provisioned
-   1. Use the default IBM system pool for the load balancer public IP.
-1. In **Basic**,
+   2. Use the default IBM system pool for the load balancer public IP.
+4. In **Basic**,
    1. Name the load balancer, e.g. **app-lb-1**
-   1. Keep the default protocol configuration - by default the load balancer is configured for HTTP.
+   2. Keep the default protocol configuration - by default the load balancer is configured for HTTP.
       SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://knowledgelayer.softlayer.com/procedure/access-ssl-certificates-screen)
       {: tip}
-1. In **Server Instances**, add *app1* and *app2* servers
-1. Complete the wizard
+5. In **Server Instances**, add *app1* and *app2* servers
+6. Complete the wizard
 
 ### Change wordpress configuration to use the load balancer URL
 
@@ -451,9 +488,9 @@ The Wordpress configuration needs to be changed to use the Load Balancer address
 
    You can also use your own domain name with the Load Balancer by adding a CNAME record pointing to the Load Balancer address in your DNS configuration.
    {: tip}
-1. Log as administrator in the Wordpress blog via *app1* or *app2* URL
-1. In Settings / General, set the Wordpress Address (URL) and Site Address (URL) to the Load Balancer address
-1. Save the settings. Wordpress should redirect to the Load Balancer address
+2. Log as administrator in the Wordpress blog via *app1* or *app2* URL
+3. In Settings / General, set the Wordpress Address (URL) and Site Address (URL) to the Load Balancer address
+4. Save the settings. Wordpress should redirect to the Load Balancer address
    It may take some time before the Load Balancer address becomes active due to DNS propagation.
    {: tip}
 
@@ -468,25 +505,25 @@ The Load Balancer is configured to check the health of the servers and to redire
 
    You should already see the regular pings from the Load Balancer to check the server health.
    {: tip}
-1. Access Wordpress through the Load Balancer address and make sure to force a hard reload of the page. Notice in the nginx logs both *app1* and *app2* are serving content for the page. The Load Balancer is redirecting traffic to both servers as expected.
-1. Stop nginx on *app1*
+2. Access Wordpress through the Load Balancer address and make sure to force a hard reload of the page. Notice in the nginx logs both *app1* and *app2* are serving content for the page. The Load Balancer is redirecting traffic to both servers as expected.
+3. Stop nginx on *app1*
    ```sh
    systemctl nginx stop
    ```
-1. After a short while reload the Wordpress page, notice all hits are going to *app2*.
-1. Stop nginx on *app2*.
-1. Reload the Wordpress page. The Load Balancer will return an error as there is no healthy server.
-1. Restart nginx on *app1*
+4. After a short while reload the Wordpress page, notice all hits are going to *app2*.
+5. Stop nginx on *app2*.
+6. Reload the Wordpress page. The Load Balancer will return an error as there is no healthy server.
+7. Restart nginx on *app1*
    ```sh
    systemctl nginx start
    ```
-1. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
+8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
 ## Clean up resources
 
 1. Delete the Load Balancer
-1. Cancel *db1*, *app1* and *app2*
-1. Delete the two File Storage services
+2. Cancel *db1*, *app1* and *app2*
+3. Delete the two File Storage services
 
 ## Related information
 
