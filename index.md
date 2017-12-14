@@ -151,7 +151,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="highly-available-and-scalable-web-application.html" class="solutionBoxTitle">
-            <a href = "highly-available-and-scalable-web-application.html">Deploy a Highly Available and Scalable web application with Load Balancer and Backups</a>
+            <a href = "highly-available-and-scalable-web-application.html">Use Virtual Servers to build highly available and scalable web app</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -159,9 +159,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Virtual Servers</span>
                     <span class="tag-filter category">Load Balancer</span>
                     <span class="tag-filter category">File Storage</span>
+                    <span class="tag-filter category">PHP</span>
             </div>
             <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution1/Architecture.png" />
+                <img class="architectureDiagram" src = "images/solution14/Architecture.png" />
             </div>
         </div>
     </div>
