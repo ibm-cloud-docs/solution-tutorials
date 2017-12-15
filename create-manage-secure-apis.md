@@ -20,7 +20,7 @@ lastupdated: "2017-11-30"
 This tutorial demonstrates how to create a new REST API using the LoopBack Node.js API framework and  then add management, visibility, security and rate limiting to your API using the **API Connect** service on IBM Cloud.
 {:shortdesc}
 
-![](images/solution13/ArchitectureDiagram.png)
+![](images/solution13/Architecture.png)
 
 ## Objectives
 * Create a REST API in Node.js
@@ -102,17 +102,12 @@ Models allow you to define and control the structure of data and schema of your 
 
 
 ## Test your LoopBack application
-In this section, you will start a local instance of your Loopback application and test the API by inserting and querying data.
+In this section, you will start a local instance of your Loopback application and test the API by inserting and querying data using the API Designer.
 
-1. Start the local test servers.
-  a. In the test console at the bottom of the screen, click the **Start the servers** icon ![](images/solution13/test-icon.png):
-  ![](images/solution13/start-server-1.png)
-  b. Wait until the Running message is displayed.
-
+1. Start the local server by clicking **Start** icon ![](images/solution13/test-icon.png)  at the bottom of the screen and wait for the **Running** message:
+  ![](images/solution13/start-server-1.png).
 2. Click the **Explore** icon ![](images/solution13/explore-icon.png) to see the API Designer Explore tool. The sidebar shows all of the REST operations for the LoopBack models in the API.
-
 3. Click the operation **entry.create** in the left pane to display the endpoint. The center pane displays summary information about the endpoint, including its parameters, security, model instance data, and response codes. The right pane provides template code to call the endpoint using the cURL command, and languages such as Ruby, Python, Java, and Node.
-
 4. On the right pane click **Try it**. Scroll down to **Parameters** and enter the following in **data**
   ```
   {
@@ -121,10 +116,8 @@ In this section, you will start a local instance of your Loopback application an
     "comment": "Jane likes Blue"
   }
   ```
-
 5. Click **Call operation**.
   ![apic_loopback](images/solution13/data_entry_1.png)
-
 6. Confirm successful POST by checking for **Response Code: 200 OK**. 
 
   **Note:** If you see an error message due to an untrusted certificate for localhost, click the link provided in the error message in API Designer Explore tool to accept the certificate, then proceed to visit the URL in your web browser. The exact procedure depends on the web browser you are using. If you load the REST endpoints directly in your browser, you will see the message: {"name":"PreFlowError","message":"unable to process the request"}. Then, attempt the **Call operation** again.
@@ -144,6 +137,8 @@ In this section, you will start a local instance of your Loopback application an
 8. Click **entry.find** >**Try It**(on the right pane) > **Call operation**  to display all entries. You should see JSON for **Jane Doe** and **John Doe**.
   ![entry_find](images/solution13/find_response.png)
 
+You can also start the application manually by issuing the `npm start` command. Your REST API will be available at http://localhost:3000/api/entires {:tip}
+
 ## Create API Connect service
 To prepare for the next steps, you need to create an **API Connect** service on IBM Cloud which will act as the gateway for your API. This service on IBM Cloud will be used to manage,secure and rate limit your API.
 
@@ -154,7 +149,9 @@ To prepare for the next steps, you need to create an **API Connect** service on 
 ## Publish API to IBM Cloud
 {: #publish}
 
-You will use the API Designer to deploy your application to IBM Cloud as a Cloud Foundry application and also publish your API definition to **API Connect**.
+You will use the API Designer to deploy your application to IBM Cloud as a Cloud Foundry application and also publish your API definition to **API Connect**. The API Designer is your local toolkit. If you closed it, you can relaunch with `apic edit` command from the project directory.
+
+You can also deploy the application manually using the `bx cf push` command. However, it will not be secured. To [import the API](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_rest_landing.html#tut_rest_landing) into API Connect, use the OpenAPI definition file is available in the `definitions` folder. Deploying using the API Designer secures the application and imports the definition automatically. {:tip}
 
 1. Back in the API Designer, click **Publish > Add and Manage Targets > Add IBM Bluemix target**.
 2. Select the **Region** and **Organization** that you want to publish to.
@@ -175,7 +172,7 @@ You will use the API Designer to deploy your application to IBM Cloud as a Cloud
 The API application is now published to IBM Cloud as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under [IBM Cloud](https://console.bluemix.net) Dashboard. However, direct access using the URL is not possible as the application is protected.
 
 ## API Gateway
-Till now, you have been designing and testing your API locally. Next, you will use the **API Connect** service to test your deployed API on IBM Cloud.
+Until now, you have been designing and testing your API locally. Next, you will use the **API Connect** service to test your deployed API on IBM Cloud.
 
 1. Launch [IBM Cloud](https://console.bluemix.net) Dashboard
 2. Find and select your **API Connect** service under **Cloud Foundry Services**

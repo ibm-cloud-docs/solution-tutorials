@@ -174,7 +174,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 
 ## Deploy the web app
 
-1. Fork the Guestbook user interface repository https://github.com/IBM-Bluemix/serverless-guestbook to your public GitHub.
+1. Fork the Guestbook user interface repository https://github.com/IBM-Cloud/serverless-guestbook to your public GitHub.
 2. Modify **docs/guestbook.js** and replace the value of **apiUrl** with the route given by API Connect.
 3. Commit the modified file to your forked repository.
 4. In the Settings page of your repository, scroll to **GitHub Pages**, change the source to **master branch /docs folder** and Save.

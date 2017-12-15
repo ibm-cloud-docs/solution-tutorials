@@ -27,7 +27,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 * Send and monitor push notifications.
 * Monitoring the app with Mobile Analytics.
 
-  ![](images/solution6/iOS_push_analytics_architecture.png)
+  ![](images/solution6/Architecture.png)
 
 ## Products
 
@@ -174,7 +174,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
 
 
 
-## Instrumenting the app to use Mobile Analytics.
+## Instrumenting the app to use Mobile Analytics
 
 1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
   **Note:** Ensure that you always open the new Xcode workspace, instead of the original Xcode project file: `MyApp.xcworkspace`.
@@ -207,10 +207,10 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    {:tip}
 
 
-## Send and monitor push notifications.
+## Send and monitor push notifications
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
-2. Run the app on a physical device as notifications can't be sent to a iPhone Simulator.
+2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.
 3. Open Push Notifications service under `Mobile Services` > **Existing services**  on IBM Cloud Mobile dashboard and to send basic push notifications, complete the following steps:
   * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
 

@@ -27,7 +27,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Monitor a LAMP server.
 * Secure the server.
 
-![Architecture diagram](images/solution4/architecture_PHP.png)
+![Architecture diagram](images/solution4/Architecture.png)
 
 ## Products
 
@@ -132,7 +132,7 @@ Verify Apache, MySQL, and PHP running on the Ubuntu image.
    ```
    {: pre}
 
-   Now you can check the PHP info page you created. Open a browser and go to http://YourPublicIPAddress/info.php. Substitute the public IP address of your virtual server. It should look similar to the following image.
+   Now you can check the PHP info page you created. Open a browser and go to http://{YourPublicIPAddress}/info.php. Substitute the public IP address of your virtual server. It should look similar to the following image.
    ![PHP info](images/solution4/PHPInfo.png)
 
 ## Install and configure WordPress
@@ -189,7 +189,7 @@ If you want to try your LAMP stack, install a sample app. As an example, the fol
    sudo mv /etc/wordpress/config-localhost.php /etc/wordpress/config-default.php
    ```
    {: pre}
-8. Complete the WordPress setup and publish on the platform. Open a browser and go to http://yourVMPublicIPAddress/wordpress. Substitute the public IP address of your VM. It should look similar to the following image.
+8. Complete the WordPress setup and publish on the platform. Open a browser and go to http://{yourVMPublicIPAddress}/wordpress. Substitute the public IP address of your VM. It should look similar to the following image.
    ![WordPress site running](images/solution4/WordPressSiteRunning.png)
 -----------
 

@@ -27,7 +27,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 * Configure, send, and monitor push notifications.
 * Monitoring the app with mobile analytics.
 
- ![](images/solution9/android_push_analytics_architecture.png)
+ ![](images/solution9/Architecture.png)
 
 ## Products
 
@@ -54,7 +54,7 @@ The IBM Cloud Mobile Dashboard allows you to fast-track your mobile app developm
 5. Click on **Create Project** to scaffold an Android (Java) App.
 6. A new Project will be created under **Projects** tab on the left pane.
     **Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter.
-In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
+    In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
 ## Obtain FCM credentials
 
@@ -106,7 +106,7 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
 5. The required permissions are all inside the `AndroidManifest.xml` file and dependencies. Push and Analytics are included in **build.gradle (Module: app)**.
 6. **Firebase Cloud Messaging (FCM)** intent service and intent filters for the `RECEIVE` and `REGISTRATION` event notifications are included in `AndroidManifest.xml`
 
-## Instrumenting the app to use Mobile Analytics.
+## Instrumenting the app to use Mobile Analytics
 
 1. In Android Studio, navigate to `MainActivity.java`. You should see the following `import` statements already added
 2. The code includes `BMSClient` initialization code with the `Region` parameter. In the initializer, the `Region` value specifies which IBM Cloud deployment you are using, for example, `BMSClient.REGION_US_SOUTH` and `BMSClient.REGION_UK`.
@@ -126,7 +126,7 @@ For advanced Analytics and logging capabilities, Refer [Gathering usage Analytic
 {:tip}
 
 
-## Configure, send and monitor push notifications.
+## Configure, send and monitor push notifications
 
 1. Push notifications SDK is already imported into the project and Push initialization code can be found in `MainActivity.java` file.
 

@@ -43,7 +43,7 @@ This tutorial uses the following products:
    * [Push Notifications](https://console.bluemix.net/catalog/services/imfpush)
 
 <p style="text-align: center;">
-![](images/solution11/ArchitectureDiagram.png)
+![](images/solution11/Architecture.png)
 </p>
 
 1. The user authenticates against [App ID](https://console.bluemix.net/catalog/services/AppID). App ID provides access and identification tokens.
@@ -59,7 +59,7 @@ This tutorial uses the following products:
 
 This tutorial uses the IBM Cloud command line tool to provision resources and deploy code. Make sure to install the `bx` command line tool.
 
-* [IBM Cloud Developer Tools](https://github.com/IBM-Bluemix/ibm-cloud-developer-tools) - Script to install bx CLI and required plug-ins (Cloud Foundry and Cloud Functions)
+* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install bx CLI and required plug-ins (Cloud Foundry and Cloud Functions)
 
 Additionally you will need the following software and accounts:
 
@@ -89,13 +89,13 @@ The repository contains both the mobile application and the Cloud Functions acti
 1. Checkout the code from the GitHub repository
 
    ```sh
-   git clone https://github.com/IBM-Bluemix/serverless-followupapp-android
+   git clone https://github.com/IBM-Cloud/serverless-followupapp-android
    ```
    {: pre}
    {: java}
 
    ```sh
-   git clone https://github.com/IBM-Bluemix/serverless-followupapp-ios
+   git clone https://github.com/IBM-Cloud/serverless-followupapp-ios
    ```
    {: pre}
    {: swift}
@@ -104,16 +104,16 @@ The repository contains both the mobile application and the Cloud Functions acti
 
 | File                                     | Description                              |
 | ---------------------------------------- | ---------------------------------------- |
-| [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
-| [**android**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/android) | Code for the mobile application          |
-| [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-android/tree/master/deploy.sh) | Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
+| [**actions**](https://github.com/IBM-Cloud/serverless-followupapp-android/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
+| [**android**](https://github.com/IBM-Cloud/serverless-followupapp-android/tree/master/android) | Code for the mobile application          |
+| [**deploy.sh**](https://github.com/IBM-Cloud/serverless-followupapp-android/tree/master/deploy.sh) | Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
 {: java}
 
 | File                                     | Description                              |
 | ---------------------------------------- | ---------------------------------------- |
-| [**actions**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
-| [**followupapp**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/tree/master/followupapp) | Code for the mobile application          |
-| [**deploy.sh**](https://github.com/IBM-Bluemix/serverless-followupapp-ios/blob/master/deploy.sh) | Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
+| [**actions**](https://github.com/IBM-Cloud/serverless-followupapp-ios/tree/master/actions) | Code for the Cloud Functions actions of the serverless mobile backend |
+| [**followupapp**](https://github.com/IBM-Cloud/serverless-followupapp-ios/tree/master/followupapp) | Code for the mobile application          |
+| [**deploy.sh**](https://github.com/IBM-Cloud/serverless-followupapp-ios/blob/master/deploy.sh) | Helper script to install, uninstall, update the Cloud Functions trigger, actions, rules |
 {: swift}
 
 ## Provision services to handle user authentication, feedback persistence and analysis
