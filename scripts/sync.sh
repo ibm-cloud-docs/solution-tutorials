@@ -17,9 +17,6 @@ tar cf - \
   --exclude=.git \
   --exclude=.gitignore \
   --exclude=solution-template.md \
-  --exclude=hybrid-mobile-push-analytics.md \
-  --exclude=highly-available-and-scalable-web-application.md \
-  --exclude=gather-visualize-analyze-iot-data.md \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
