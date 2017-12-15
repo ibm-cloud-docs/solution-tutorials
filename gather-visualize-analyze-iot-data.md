@@ -100,10 +100,10 @@ Next, you will create a board and cards to display device data in the dashboard.
    - Type: Float
    - Min: -180
    - Max: 180
-5. In the Card Preview page, select **L** for the line chart size, and click **Next**.
-6. In the Card Information page, change the name of the card to **Temperature** and click **Submit**. The temperature card appears on the dashboard and includes a line chart of the live temperature data.
-7. In your Node-RED device simulator click on the **Send Data** button several times with 2 second intervals between each click.
-8. Back in the **IBM Watson IoT Platform tab**, you should see the chart update with the temperature values.
+5. In the Card Preview page, select **L** for the line chart size, and click **Next** > **Submit**
+6. The  card appears on the dashboard and includes a line chart of the live temperature data.
+8. Use your mobile phone to launch the simulator again and slowly tilt the phone forward and backward.
+8. Back in the **IBM Watson IoT Platform tab**, you should see the chart update.
 
 ## Store historical data in Cloudant DB
 1. Open the **IBM Watson IoT Platform dashboard**.
