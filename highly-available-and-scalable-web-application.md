@@ -123,11 +123,12 @@ Contact your Infrastructure master user to get the following permissions:
    CREATE DATABASE wordpress;
    ```
 
-2. Grant access to the database:
+2. Grant access to the database, change the database-username and database-password to what you have set.
+
    ```
    GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.*
-   TO root@'%'
-   IDENTIFIED BY 'root';
+   TO database-username@'%'
+   IDENTIFIED BY 'database-password';
    FLUSH PRIVILEGES;
    ```
 
@@ -264,6 +265,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    0 23 * * * /root/dbbackup.sh
    ```
 
+
 ## Provision two servers for the PHP application
 {: app_servers}
 
@@ -308,7 +310,7 @@ This file storage is used to share the application files between *app1* and *app
 2. Under **Snapshot Schedules**, edit the snapshot schedule. The schedule could be defined as follow:
    1. Add a hourly snapshot, set the minute to 30 and keep the last 24 snapshots 
    2. Add a daily snapshot, set the time to 11pm and keep the last 7 snapshots
-   3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots
+   3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots![Backup snapshots](images/solution14/snapshots.png)
 
 ### Authorize the application servers to use the file storage
 
@@ -323,7 +325,7 @@ Repeat the following steps on each application server:
    apt-get update
    apt-get -y install nfs-common
    ```
-2. Create a file called `/etc/systemd/system/mnt-www.mount` with the following content, replacing the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*)
+2. Create a file called using `touch /etc/systemd/system/mnt-www.mount` and edit using `nano /etc/systemd/system/mnt-www.mount` with the following content, replacing the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*)
    ```
    [Unit]
    Description = Mount for Container Storage
@@ -377,7 +379,7 @@ Repeat the following steps on each application server:
    systemctl stop php7.0-fpm
    systemctl stop nginx
    ```
-4. Replace the content of `/etc/nginx/sites-available/default` with the following:
+4. Replace the content using `nano /etc/nginx/sites-available/default` with the following:
    ```sh
    server {
           listen 80 default_server;
@@ -439,15 +441,18 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    curl -O https://wordpress.org/latest.tar.gz
    tar xzvf latest.tar.gz
    ```
+
 2. Prepare the Wordpress files
    ```sh
    cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
    mkdir /tmp/wordpress/wp-content/upgrade
    ```
+
 3. Copy the files to the shared file storage
    ```sh
    rsync -av -P /tmp/wordpress/. /mnt/www/html
    ```
+
 4. Set permissions
    ```sh
    chown -R www-data:www-data /mnt/www/html
@@ -456,16 +461,25 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    chmod -R g+w /mnt/www/html/wp-content/themes
    chmod -R g+w /mnt/www/html/wp-content/plugins
    ```
+
 5. Call the following web service and inject the result into `/mnt/www/html/wp-config.php`
    ```sh
    curl -s https://api.wordpress.org/secret-key/1.1/salt/
    ```
-6. Set the database credentials in `/mnt/www/html/wp-config.php`
 
-Wordpress is configured. To complete the installation, you need to access the Wordpress user interface.
+6. Set the database credentials using `nano /mnt/www/html/wp-config.php`, update the database credentials: 
+
+   ```
+   define('DB_NAME', 'wordpress');
+   define('DB_USER', 'database-username');
+   define('DB_PASSWORD', 'database-password');
+   define('DB_HOST', 'database-server-ip-address');
+
+   ```
+   Wordpress is configured. To complete the installation, you need to access the Wordpress user interface.
 
 On both application servers, start the web server and the PHP runtime:
-1. Start the service by running the following commands
+7. Start the service by running the following commands
 
    ```sh
    systemctl start php7.0-fpm
@@ -473,6 +487,9 @@ On both application servers, start the web server and the PHP runtime:
    ```
 
 Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the SoftLayer VPN connection) or the public IP address of *app1* or *app2*.
+![Configure virtual server](images/solution14/wordpress.png)
+
+
 
 ## Provision one load balancer server in front of the application servers
 {: load_balancer}
