@@ -51,8 +51,9 @@ This tutorial uses the following products:
 In this tutorial, the load balancer is the front door for the application users. The virtual servers do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
 
 1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
+     
      You should be a **Master User** to enable VPN access or contact master user for access.
-     {: tip}
+     {:tip}
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
 
@@ -95,23 +96,25 @@ Contact your Infrastructure master user to get the following permissions:
    ```sh
    ssh root@<Private-OR-Public-IP-Address>
    ```
-     Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access)based on the **Location** of your virtual-server.
-     {: tip}
+     
+     Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
+     {:tip}
 2. Install MySQL:
    ```sh
    apt-get update
    apt-get install mysql-server
    ```
+     
      You may be prompted for a password. Read through the instructions on the console shown.
-     {: tip}
+     {:tip}
 3. Run the following script to help secure MySQL database:
    ```sh
    mysql_secure_installation
    ```
+     
      You may be prompted with couple of options. Choose wisely based on your requirements.
-     {: tip}
+     {:tip}
    
-
 ### Create a database for the application
 
 1. Login to MySQL and create a database called `wordpress`:
