@@ -51,6 +51,8 @@ This tutorial uses the following products:
 In this tutorial, the load balancer is the front door for the application users. The virtual servers do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
 
 1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
+You should be a **Master User** to enable VPN access or contact master user for access.
+{: tip}
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
 
@@ -81,7 +83,7 @@ Contact your Infrastructure master user to get the following permissions:
 
       ![Configure virtual server](images/solution14/db-server.png)
 
-   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page. To SSH into the server, you need the server user name, password, and private or public IP address.
+   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under Devices > Device list. To SSH into the server, you need the server user name, password, and private or public IP address (Click the arrow next to the device name).
    {: tip}
 
 ## Install and configure MySQL
@@ -93,15 +95,22 @@ Contact your Infrastructure master user to get the following permissions:
    ```sh
    ssh root@<Private-OR-Public-IP-Address>
    ```
+   Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access)based on the **Location** of your virtual-server.
+   {: tip}
 2. Install MySQL:
    ```sh
    apt-get update
    apt-get install mysql-server
    ```
+   You may be prompted for a password. Read through the instructions on the console shown.
+   {: tip}
 3. Run the following script to help secure MySQL database:
    ```sh
    mysql_secure_installation
    ```
+   You may be prompted with couple of options. Choose wisely based on your requirements.
+   {: tip}
+   
 
 ### Create a database for the application
 
