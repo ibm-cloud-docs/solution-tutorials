@@ -19,10 +19,14 @@ This tutorial walks you thru setting up an IoT device, gathering data in the Wat
 ## Objectives
 {: #objectives}
 
-* Set up IoT Simulator
-* Send collection data to Watson IoT Platform
-* Create visualizations
+* Set up IoT Simulator.
+* Send collection data to Watson IoT Platform.
+* Create visualizations.
 * Analyze the device generated data and detect anomalies.
+
+<p style="text-align: center;">
+![](images/solution16/Architecture.png)
+</p>
 
 ## Products
 {: #products}
@@ -33,9 +37,10 @@ This tutorial uses the following products:
 * [Data Science Experience](https://console.bluemix.net/catalog/services/data-science-experience)
 * [Cloudant NoSQL Database](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
-<p style="text-align: center;">
-![](images/solution16/Architecture.png)
-</p>
+## Before you begin
+{: #prereqs}
+
+[IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install bx cli and required plug-ins
 
 ## Create IoT Platform
 {: #iot_starter}
@@ -70,7 +75,7 @@ Next, you will need to configure the simulator. You will deploy a Node.js web ap
    bx target --cf
    bx cf push <PICK_UNIQUE_NAME>
    ```
-     
+
      Before running the above command, Update the **host** and **name** values in manifest.yml file with an unique name.
      {:tip}
 3. In a few minutes, your application will be deployed and you should see a URL similar to `<PICK_UNIQUE_NAME>.mybluemix.net`
@@ -153,6 +158,10 @@ You will use the Jupyter Notebook that is available in IBM Data Science Experien
     You can find the exact database by navigating to the CloudantDB instance you created earlier > Launch Dashboard.
     {:tip}
 9. Save the notebook and execute each code cell one after another and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
-    
+
     You should set the time interval of interest by replacing the year, month and day with your desired values.
     {:tip}
+
+## Related Content
+
+* Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://www.ibm.com/developerworks/analytics/library/iot-deep-learning-anomaly-detection-1/index.html?ca=drs-)
