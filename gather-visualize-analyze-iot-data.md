@@ -70,6 +70,7 @@ Next, you will need to configure the simulator. You will deploy a Node.js web ap
    bx target --cf
    bx cf push <PICK_UNIQUE_NAME>
    ```
+     
      Before running the above command, Update the **host** and **name** values in manifest.yml file with an unique name.
      {:tip}
 3. In a few minutes, your application will be deployed and you should see a URL similar to `<PICK_UNIQUE_NAME>.mybluemix.net`
@@ -143,7 +144,7 @@ You will use the Jupyter Notebook that is available in IBM Data Science Experien
 5. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Play** or **Ctrl+enter** to run the code.
 6. When the installation is complete, restart the Spark kernel by clicking the Restart Kernel icon.
 7. In the next code cell, Import your Cloudant credentials to that cell by completing the following steps:
-  * Click ![](/images/solution16/data_icon.png)
+  * Click ![](images/solution16/data_icon.png)
   * Select the **Connections** tab.
   * Click **Insert to code**. A dictionary called credentials_1" is created with your Cloudant credentials. If the name is not specified as "credentials_1", rename the dictionary to "credentials_1" because this is the name that is required for the notebook code to run.
 
@@ -152,5 +153,6 @@ You will use the Jupyter Notebook that is available in IBM Data Science Experien
     You can find the exact database by navigating to the CloudantDB instance you created earlier > Launch Dashboard.
     {:tip}
 9. Save the notebook and execute each code cell one after another and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
+    
     You should set the time interval of interest by replacing the year, month and day with your desired values.
     {:tip}
