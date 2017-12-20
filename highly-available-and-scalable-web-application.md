@@ -11,7 +11,7 @@ lastupdated: "2017-12-18"
 {:tip: .tip}
 {:pre: .pre}
 
-# Use Virtual Servers to build highly available and scalable web app 
+# Use Virtual Servers to build highly available and scalable web app
 
 This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with NGINX and **P**HP installed, one **M**ySQL database server, and durable file storage to store application files and backups.
 
@@ -51,7 +51,7 @@ This tutorial uses the following products:
 In this tutorial, the load balancer is the front door for the application users. The virtual servers do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
 
 1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
-     
+
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
@@ -96,25 +96,25 @@ Contact your Infrastructure master user to get the following permissions:
    ```sh
    ssh root@<Private-OR-Public-IP-Address>
    ```
-     
+
      Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
      {:tip}
 2. Install MySQL:
    ```sh
    apt-get update
-   apt-get install mysql-server
+   apt-get -y install mysql-server
    ```
-     
+
      You may be prompted for a password. Read through the instructions on the console shown.
      {:tip}
 3. Run the following script to help secure MySQL database:
    ```sh
    mysql_secure_installation
    ```
-     
+
      You may be prompted with couple of options. Choose wisely based on your requirements.
      {:tip}
-   
+
 ### Create a database for the application
 
 1. Login to MySQL and create a database called `wordpress`:
@@ -203,17 +203,17 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    apt-get -y install nfs-common
    ```
 
-2. Create a file called `/etc/systemd/system/mnt-database.mount` 
+2. Create a file called `/etc/systemd/system/mnt-database.mount`
    ```bash
    touch /etc/systemd/system/mnt-database.mount
    ```
 
-3. Edit the mnt-database.mount by using: 
+3. Edit the mnt-database.mount by using:
    ```
    nano /etc/systemd/system/mnt-database.mount
    ```
 
-4. Add the content below to the mnt-database.mount file and replace the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can get the **Mount Point** url under the file storage service created. 
+4. Add the content below to the mnt-database.mount file and replace the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can get the **Mount Point** url under the file storage service created.
    ```
    [Unit]
    Description = Mount for Container Storage
@@ -308,7 +308,7 @@ This file storage is used to share the application files between *app1* and *app
 
 1. Select the File Storage from the [list of existing items](https://control.bluemix.net/storage/file)
 2. Under **Snapshot Schedules**, edit the snapshot schedule. The schedule could be defined as follow:
-   1. Add a hourly snapshot, set the minute to 30 and keep the last 24 snapshots 
+   1. Add a hourly snapshot, set the minute to 30 and keep the last 24 snapshots
    2. Add a daily snapshot, set the time to 11pm and keep the last 7 snapshots
    3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots![Backup snapshots](images/solution14/snapshots.png)
 
@@ -434,11 +434,32 @@ Repeat the following steps on each application server:
 
 As Wordpress will be installed on the File Storage mount, you only need to do the following steps on one of the servers. Let's pick **app1**.
 
-1. Retrieve and extract Wordpress installation files
+1. Retrieve Wordpress installation files
+
+   If your application server has a public network link, you can directly download the Wordpress files from within the virtual server:
+
    ```sh
    apt-get install curl
    cd /tmp
    curl -O https://wordpress.org/latest.tar.gz
+   tar xzvf latest.tar.gz
+   ```
+
+   If the virtual server has only a private network link, you will need to retrieve the installation files from another machine with Internet access and to copy them to the virtual server. Assuming you have retrieved the Wordpress installation files from https://wordpress.org/latest.tar.gz, you can copy it to the virtual server with `scp`:
+
+   ```sh
+   scp latest.tar.gz root@PRIVATE_IP_ADDRESS_OF_THE_SERVER:/tmp
+   ```
+
+   then ssh to the virtual server and change to the `tmp` directory
+
+   ```sh
+   cd /tmp
+   ```
+
+2. Extract the installation files
+
+   ```
    tar xzvf latest.tar.gz
    ```
 
@@ -467,7 +488,9 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    curl -s https://api.wordpress.org/secret-key/1.1/salt/
    ```
 
-6. Set the database credentials using `nano /mnt/www/html/wp-config.php`, update the database credentials: 
+   If your virtual server has no public network link, you can simply open https://api.wordpress.org/secret-key/1.1/salt/ from your web browser.
+
+6. Set the database credentials using `nano /mnt/www/html/wp-config.php`, update the database credentials:
 
    ```
    define('DB_NAME', 'wordpress');
@@ -494,7 +517,7 @@ Access the Wordpress installation at `http://YourAppServerIPAddress/` using eith
 ## Provision one load balancer server in front of the application servers
 {: load_balancer}
 
-At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a Load Balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers. 
+At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a Load Balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
 
 1. Go to the catalog to create a [IBM Bluemix Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
 2. In the **Plan** step, select the same data center as *app1* and *app2*
@@ -525,7 +548,7 @@ The Wordpress configuration needs to be changed to use the Load Balancer address
 
 ### Test the Load Balancer behavior
 
-The Load Balancer is configured to check the health of the servers and to redirect users only to healthy servers. To understand how the Load Balancer is working, you can 
+The Load Balancer is configured to check the health of the servers and to redirect users only to healthy servers. To understand how the Load Balancer is working, you can
 
 1. Watch the nginx logs on both *app1* and *app2* with:
    ```sh
