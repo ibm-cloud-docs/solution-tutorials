@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-12-19"
+lastupdated: "2017-12-20"
 
 ---
 
@@ -34,7 +34,7 @@ This tutorial walks you thru setting up an IoT device, gathering data in the Wat
 This tutorial uses the following products:
 * [Internet of Things Platform](https://console.bluemix.net/catalog/services/internet-of-things-platform)
 * [Node.js Application](https://console.ng.bluemix.net/catalog/)
-* [Data Science Experience](https://console.bluemix.net/catalog/services/data-science-experience)
+* [Data Science Experience](https://console.bluemix.net/catalog/services/data-science-experience) with Spark service and IBM Cloud Object Storage
 * [Cloudant NoSQL Database](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
 ## Before you begin
@@ -146,6 +146,8 @@ You will use the Jupyter Notebook that is available in IBM Data Science Experien
 2. Enter `Anomoly-detection-sample` for the **Name**.
 3. Enter `https://github.com/IBM-Cloud/iot-data-anomaly-detection/blob/master/Anomaly-detection-DSX.ipynb` in the URL.
 4. **Create Notebook**.Check that the notebook is created with metadata and code.
+   ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_dsx.png)
+
 5. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Play** or **Ctrl+enter** to run the code.
 6. When the installation is complete, restart the Spark kernel by clicking the Restart Kernel icon.
 7. In the next code cell, Import your Cloudant credentials to that cell by completing the following steps:
@@ -161,6 +163,8 @@ You will use the Jupyter Notebook that is available in IBM Data Science Experien
 
     You should set the time interval of interest by replacing the year, month and day with your desired values.
     {:tip}
+
+    ![Jupyter Notebook DSX](images/solution16/anomaly_detection.png)
 
 ## Related Content
 
