@@ -123,12 +123,12 @@ Contact your Infrastructure master user to get the following permissions:
    CREATE DATABASE wordpress;
    ```
 
-2. Grant access to the database, change the database-username and database-password to what you have set.
+2. Grant access to the database, replace database-username and database-password with what you have set earlier.
 
    ```
-   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.*
-   TO database-username@'%'
-   IDENTIFIED BY 'database-password';
+   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO database-username@'%' IDENTIFIED BY 'database-password';
+   ```
+   ```
    FLUSH PRIVILEGES;
    ```
 
@@ -156,7 +156,7 @@ By default MySQL only listens on the local interface. The application servers wi
    bind-address    = 0.0.0.0
    ```
 
-2. Exit and save the file using Cont+X.
+2. Exit and save the file using Ctrl+X.
 
 3. Restart MySQL:
 
@@ -164,7 +164,7 @@ By default MySQL only listens on the local interface. The application servers wi
    systemctl restart mysql
    ```
 
-4. Confirm MySQL is listening on all interfaces:
+4. Confirm MySQL is listening on all interfaces by running the following command:
    ```sh
    netstat --listen --numeric-ports | grep 3306
    ```
