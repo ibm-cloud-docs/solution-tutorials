@@ -512,7 +512,8 @@ On both application servers, start the web server and the PHP runtime:
 Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the SoftLayer VPN connection) or the public IP address of *app1* or *app2*.
 ![Configure virtual server](images/solution14/wordpress.png)
 
-
+If you configured the application servers with only a private network link, you will not be able to install Wordpress plugins, themes or upgrades directly from the Wordpress admin console. You will need to upload the files through the Wordpress user interface.
+{: tip}
 
 ## Provision one load balancer server in front of the application servers
 {: load_balancer}
