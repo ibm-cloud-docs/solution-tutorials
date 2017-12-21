@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-12-20"
+lastupdated: "2017-12-21"
 
 ---
 
@@ -151,14 +151,16 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 4. **Create Notebook**.Check that the notebook is created with metadata and code.
    ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_dsx.png)
 
-5. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Play** next to Run or **Ctrl + Enter** to run the code.
+   Recommended version for this notebook is `python 2 with Spark 2.1`. To update, **Kernel** > Change kernel. **Trust** the notebook **File** > Trust Notebook.
+   {:tip}
+5. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Run** or **Ctrl + Enter** to execute the code.
 6. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
 7. In the next code cell, Import your Cloudant credentials to that cell by completing the following steps:
   * Click ![](images/solution16/data_icon.png)
   * Select the **Connections** tab.
-  * Click **Insert to code**. A dictionary called credentials_1" is created with your Cloudant credentials. If the name is not specified as "credentials_1", rename the dictionary to `credentials_1`. `credentials_1` is used in the remaning cells.
+  * Click **Insert to code**. A dictionary called credentials_1" is created with your Cloudant credentials. If the name is not specified as "credentials_1", rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
   * name that is required for the notebook code to run.
-8. In the cell with the database name (dbname) enter the name of the Cloudant database that is the source of data, for example, iotp_yourWatsonIoTPorgId_DBName_Year-month-day.
+8. In the cell with the database name (`dbName`) enter the name of the Cloudant database that is the source of data, for example, *iotp_yourWatsonIoTPorgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
 
     You can find the exact database by navigating to your **iot-db** CloudantDB instance you created earlier > Launch Dashboard.
     {:tip}
