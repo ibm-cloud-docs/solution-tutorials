@@ -117,7 +117,7 @@ Next, you will create a board and cards to display device data in the dashboard.
 3. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
 4. Select the `iot-db `Cloudant database.
 5. Enter `devicedata` for **Database Name** and click **Done**.
-6. A new window should load prompting for authorization. If you don't see this window, disable your pop-up blocker and refresh the page. 
+6. A new window should load prompting for authorization. If you don't see this window, disable your pop-up blocker and refresh the page.
 
 Your device data is now saved in Cloudant. Launch the Cloudant dashboard to see your data.
 
@@ -151,14 +151,14 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 4. **Create Notebook**.Check that the notebook is created with metadata and code.
    ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_dsx.png)
 
-5. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Play** or **Ctrl+enter** to run the code.
+5. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Play** next to Run or **Ctrl + Enter** to run the code.
 6. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
 7. In the next code cell, Import your Cloudant credentials to that cell by completing the following steps:
   * Click ![](images/solution16/data_icon.png)
   * Select the **Connections** tab.
   * Click **Insert to code**. A dictionary called credentials_1" is created with your Cloudant credentials. If the name is not specified as "credentials_1", rename the dictionary to `credentials_1`. `credentials_1` is used in the remaning cells.
   * name that is required for the notebook code to run.
-8. In the cell with the database name (dbname) enter the name of the Cloudant database that is the source of data, for example, iotp_yourWatsonIoTPorgId_DBName_Year-month-day. 
+8. In the cell with the database name (dbname) enter the name of the Cloudant database that is the source of data, for example, iotp_yourWatsonIoTPorgId_DBName_Year-month-day.
 
     You can find the exact database by navigating to your **iot-db** CloudantDB instance you created earlier > Launch Dashboard.
     {:tip}
