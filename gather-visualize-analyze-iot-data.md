@@ -49,25 +49,25 @@ To begin, you will create Internet of Things Platform service - The hub which ca
 
 1. Visit **IBM Cloud Dashboard** > **Catalog** and select **Internet of Things Platform** under the **Internet of Things** section.
 2. Enter `IoT demo hub` as the service name, click **Create** and **Launch** the dashboard.
-3. From the side menu, select **Security > Connection Security** and choose **TLS Optional** under *Default Rule > Security Level** and Click **Save**.
-3. From the side menu, select **Devices** > **Add Device** > **Device Types**  and **+ Add Device Type**.
+3. From the side menu, select **Security > Connection Security** and choose **TLS Optional** under **Default Rule** > **Security Level** and click **Save**.
+4. From the side menu, select **Devices** > **Add Device** > **Device Types**  and **+ Add Device Type**.
 5. Enter `simulator` as the **Name** and click **Next** and **Done**.
 6. Next, click on **Register Device **
 7. Choose `simulator` for **Select Existing Device Type** and then enter `phone` for **Device ID**.
 8. Click **Next** until the **Device Security** (under Security tab) screen is displayed.
-9. Enter a value for the **Authentication Token**, for example: `myauthtoken` and click **Next**
+9. Enter a value for the **Authentication Token**, for example: `myauthtoken` and click **Next**.
 10. After clicking **Done**, your connection information is displayed. Keep this tab open.
 
 The IoT platform is now configured to start receiving data. Devices will need to send their data to the IoT Platform with the Device Type, ID and Token specified.
 
 ## Create device simulator
 {: #confignodered}
-Next, you will need to configure the simulator. You will deploy a Node.js web application which you will visit on your phone, which will connect to and send data to the IoT Platform.
+Next, you will deploy a Node.js web application and visit it on your phone, which will connect to and send device accelerometer and orientation data to the IoT Platform.
 
 1. Clone the Github repository:
    ```bash
-   git clone https://github.com/cloud-dach/iotdeviceconnect
-   cd iotdeviceconnect
+   git clone https://github.com/IBM-Cloud/iot-device-phone-simulator
+   cd iot-device-phone-simulator
    ```
 2. Push the application to the IBM Cloud.
    ```bash
@@ -75,15 +75,11 @@ Next, you will need to configure the simulator. You will deploy a Node.js web ap
    bx target --cf
    bx cf push <PICK_UNIQUE_NAME>
    ```
-
-     Before running the above command, Update the **host** and **name** values in manifest.yml file with an unique name.
-     {:tip}
 3. In a few minutes, your application will be deployed and you should see a URL similar to `<PICK_UNIQUE_NAME>.mybluemix.net`
 4. Visit this URL on your phone using a browser.
 5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
 6. Your phone will start transmitting data. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
-
-  ![](images/solution16/recent_events.png)
+  ![](images/solution16/recent_events_with_phone.png)
 
 ## Display live data in IBM Watson IoT Platform
 {: #createcards}
@@ -111,19 +107,24 @@ Next, you will create a board and cards to display device data in the dashboard.
    - Max: 180
 5. In the Card Preview page, select **L** for the line chart size, and click **Next** > **Submit**
 6. The  card appears on the dashboard and includes a line chart of the live temperature data.
-8. Use your mobile phone browser to launch the simulator again and slowly tilt the phone forward and backward.
+7. Use your mobile phone browser to launch the simulator again and slowly tilt the phone forward and backward.
 8. Back in the **IBM Watson IoT Platform tab**, you should see the chart getting updated.
+   ![](images/solution16/board.png)
 
 ## Store historical data in Cloudant DB
-1. Open the **IBM Watson IoT Platform dashboard**.
-2. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
-3. Select the Cloudant database that was created by the IoT Starter.
-4. Enter `devicedata` for **Database Name** and click **Done**.
+1. Visit **IBM Cloud Dashboard** > **Catalog** > **Cloudant NoSQL DB**, enter `iot-db` for the name click **Create**.
+2. Open the **IBM Watson IoT Platform dashboard**.
+3. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
+4. Select the `iot-db `Cloudant database.
+5. Enter `devicedata` for **Database Name** and click **Done**.
+6. A new window should load prompting for authorization. If you don't see this window, disable your pop-up blocker and refresh the page. 
+
+Your device data is now saved in Cloudant. Launch the Cloudant dashboard to see your data.
 
 ## Detect Anomolies using Machine Learning
 {: #data_experience}
 
-You will use the Jupyter Notebook that is available in IBM Data Science Experience to load your historical temperature data and detect anomalies using z-score.
+In this section, you will use the Jupyter Notebook that is available in the IBM Data Science Experience service to load your historical temperature data and detect anomalies using z-score.
 
 ![](images/solution16/DSX.png)
 
@@ -137,27 +138,27 @@ You will use the Jupyter Notebook that is available in IBM Data Science Experien
 
 ### Connection to CloudantDB for data
 
-1. Click on **Assets**
-2. Click on Add to Project > Connection > Select the CloudantDB where the device data is stored.
-3. Check the credentials > Create
+1. Click on **Assets** > **+ Add to Project** > **Connection**  
+2. Select the **iot-db** Cloudant DB where the device data is stored.
+3. Check the **Credentials** > **Create**
 
 ### Create a jupyter(ipynb) notebook
-1. **New notebook** > **From URL**
+1. Click **New notebook** > **From URL**
 2. Enter `Anomoly-detection-sample` for the **Name**.
-3. Enter `https://github.com/IBM-Cloud/iot-data-anomaly-detection/blob/master/Anomaly-detection-DSX.ipynb` in the URL.
+3. Enter `https://raw.githubusercontent.com/IBM-Cloud/iot-device-phone-simulator/master/anomaly-detection/Anomaly-detection-DSX.ipynb` in the URL.
 4. **Create Notebook**.Check that the notebook is created with metadata and code.
    ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_dsx.png)
 
 5. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Play** or **Ctrl+enter** to run the code.
-6. When the installation is complete, restart the Spark kernel by clicking the Restart Kernel icon.
+6. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
 7. In the next code cell, Import your Cloudant credentials to that cell by completing the following steps:
   * Click ![](images/solution16/data_icon.png)
   * Select the **Connections** tab.
-  * Click **Insert to code**. A dictionary called credentials_1" is created with your Cloudant credentials. If the name is not specified as "credentials_1", rename the dictionary to "credentials_1" because this is the name that is required for the notebook code to run.
+  * Click **Insert to code**. A dictionary called credentials_1" is created with your Cloudant credentials. If the name is not specified as "credentials_1", rename the dictionary to `credentials_1`. `credentials_1` is used in the remaning cells.
+  * name that is required for the notebook code to run.
+8. In the cell with the database name (dbname) enter the name of the Cloudant database that is the source of data, for example, iotp_yourWatsonIoTPorgId_DBName_Year-month-day. 
 
-8. In the cell with the database name (dbname) enter the name of the Cloudant database that is the source of data, for example, iotp_yourWatsonIoTPorgId_DBName_Year-month-day.
-
-    You can find the exact database by navigating to the CloudantDB instance you created earlier > Launch Dashboard.
+    You can find the exact database by navigating to your **iot-db** CloudantDB instance you created earlier > Launch Dashboard.
     {:tip}
 9. Save the notebook and execute each code cell one after another and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
 
