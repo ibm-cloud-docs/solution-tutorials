@@ -151,7 +151,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 4. **Create Notebook**.Check that the notebook is created with metadata and code.
    ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_dsx.png)
 
-   Recommended version for this notebook is `python 2 with Spark 2.1`. To update, **Kernel** > Change kernel. **Trust** the notebook **File** > Trust Notebook.
+   Recommended version for this notebook is `Python 2 with Spark 2.1`. To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
    {:tip}
 5. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Run** or **Ctrl + Enter** to execute the code.
 6. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
