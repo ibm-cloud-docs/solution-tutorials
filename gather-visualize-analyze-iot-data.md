@@ -121,6 +121,8 @@ Next, you will create a board and cards to display device data in the dashboard.
 
 Your device data is now saved in Cloudant. Launch the Cloudant dashboard to see your data.
 
+![](images/solution16/cloudant.png)
+
 ## Detect Anomolies using Machine Learning
 {: #data_experience}
 
