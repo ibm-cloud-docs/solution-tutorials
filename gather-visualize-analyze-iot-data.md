@@ -153,24 +153,26 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
    Recommended version for this notebook is `Python 2 with Spark 2.1`. To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
    {:tip}
-5. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Run** or **Ctrl + Enter** to execute the code.
-6. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
-7. In the next code cell, Import your Cloudant credentials to that cell by completing the following steps:
+
+### Run the notebook and detect anomalies   
+1. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Run** or **Ctrl + Enter** to execute the code.
+2. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
+3. In the next code cell, Import your Cloudant credentials to that cell by completing the following steps:
   * Click ![](images/solution16/data_icon.png)
   * Select the **Connections** tab.
   * Click **Insert to code**. A dictionary called credentials_1" is created with your Cloudant credentials. If the name is not specified as "credentials_1", rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
   * name that is required for the notebook code to run.
-8. In the cell with the database name (`dbName`) enter the name of the Cloudant database that is the source of data, for example, *iotp_yourWatsonIoTPorgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
+4. In the cell with the database name (`dbName`) enter the name of the Cloudant database that is the source of data, for example, *iotp_yourWatsonIoTPorgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
 
     You can find the exact database by navigating to your **iot-db** CloudantDB instance you created earlier > Launch Dashboard.
     {:tip}
-9. Save the notebook and execute each code cell one after another or run all (**Cell** > Run All) and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
+5. Save the notebook and execute each code cell one after another or run all (**Cell** > Run All) and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
 
     You can change the time interval of interest to desired time of the day.Look for `start` and `end` values.
     {:tip}
 
     ![Jupyter Notebook DSX](images/solution16/anomaly_detection_dsx.png)
-10. Along with anomaly detection, the key findings or takeaways from this section are
+6. Along with anomaly detection, the key findings or takeaways from this section are
     * Usage of Spark to prepare the data for visualization.
     * Usage of Pandas for data visualization
     * Bar charts, Histograms for device data.
