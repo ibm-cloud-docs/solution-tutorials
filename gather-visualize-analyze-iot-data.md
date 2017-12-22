@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-12-21"
+lastupdated: "2017-12-22"
 
 ---
 
@@ -13,7 +13,7 @@ lastupdated: "2017-12-21"
 {:pre: .pre}
 
 # Gather, Visualize and Analyze IoT data
-This tutorial walks you thru setting up an IoT device, gathering data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
+This tutorial walks you through setting up an IoT device, gathering data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
 {:shortdesc}
 
 ## Objectives
@@ -164,12 +164,20 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
     You can find the exact database by navigating to your **iot-db** CloudantDB instance you created earlier > Launch Dashboard.
     {:tip}
-9. Save the notebook and execute each code cell one after another and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
+9. Save the notebook and execute each code cell one after another or run all (**Cell** > Run All) and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
 
-    You should set the time interval of interest by replacing the year, month and day with your desired values.
+    You can change the time interval of interest to desired time of the day.Look for `start` and `end` values.
     {:tip}
 
-    ![Jupyter Notebook DSX](images/solution16/anomaly_detection.png)
+    ![Jupyter Notebook DSX](images/solution16/anomaly_detection_dsx.png)
+10. Along with anomaly detection, the key findings or takeaways from this section are
+    * Usage of Spark to prepare the data for visualization.
+    * Usage of Pandas for data visualization
+    * Bar charts, Histograms for device data.
+    * Correlation between two sensors through Correlation matrix.
+    * A box plot for each devices sensor, produced with the Pandas plot function.
+    * Density Plots through Kernel density estimation (KDE).
+    ![](images/solution16/density_plots_sensor_data.png)
 
 ## Related Content
 
