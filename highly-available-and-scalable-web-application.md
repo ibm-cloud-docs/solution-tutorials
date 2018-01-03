@@ -452,6 +452,8 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    ```sh
    scp latest.tar.gz root@PRIVATE_IP_ADDRESS_OF_THE_SERVER:/tmp
    ```
+   Replace `latest` with the filename you downloaded from wordpress website.
+   {: tip}
 
    then ssh to the virtual server and change to the `tmp` directory
 
@@ -485,7 +487,7 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    chmod -R g+w /mnt/www/html/wp-content/plugins
    ```
 
-5. Call the following web service and inject the result into `/mnt/www/html/wp-config.php`
+5. Call the following web service and inject the result into `/mnt/www/html/wp-config.php` using `nano`
    ```sh
    curl -s https://api.wordpress.org/secret-key/1.1/salt/
    ```
@@ -533,9 +535,9 @@ At this point, we have two application servers with separate IP addresses. They 
       SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://knowledgelayer.softlayer.com/procedure/access-ssl-certificates-screen)
       {: tip}
 5. In **Server Instances**, add *app1* and *app2* servers
-6. Complete the wizard
+6. Review and Create to complete the wizard.
 
-### Change wordpress configuration to use the load balancer URL
+### Change Wordpress configuration to use the load balancer URL
 
 The Wordpress configuration needs to be changed to use the Load Balancer address. Indeed, Wordpress keeps a reference to [the blog URL and injects this location in the pages](https://codex.wordpress.org/Settings_General_Screen). If you don't change this setting, Wordpress will redirect the users to the backend servers directly, thus bypassing the Load Balancer or not working at all if the servers only have a private IP address.
 
@@ -544,7 +546,7 @@ The Wordpress configuration needs to be changed to use the Load Balancer address
    You can also use your own domain name with the Load Balancer by adding a CNAME record pointing to the Load Balancer address in your DNS configuration.
    {: tip}
 2. Log as administrator in the Wordpress blog via *app1* or *app2* URL
-3. In Settings / General, set the Wordpress Address (URL) and Site Address (URL) to the Load Balancer address
+3. In Settings / General, set both the Wordpress Address (URL) and Site Address (URL) to the Load Balancer address
 4. Save the settings. Wordpress should redirect to the Load Balancer address
    It may take some time before the Load Balancer address becomes active due to DNS propagation.
    {: tip}
