@@ -191,8 +191,8 @@ There are many ways in which backups can be done and stored when it comes to MyS
 
 Before a virtual server can mount a File Storage, it needs to be authorized.
 
-1. Select the newly created File Storage from the [list of existing items](https://control.bluemix.net/storage/file)
-2. Under **Authorized Hosts**, click **Authorize Host** and select the database server.
+1. Select the newly created File Storage from the [list of existing items](https://control.bluemix.net/storage/file).
+2. Under **Authorized Hosts**, click **Authorize Host** and select the virtual(database) server (Choose **Devices** > Virtual Server as Device Type > Type the name of the server).
 
 ### Mount the file storage for database backups
 
@@ -203,7 +203,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    apt-get -y install nfs-common
    ```
 
-2. Create a file called `/etc/systemd/system/mnt-database.mount`
+2. Create a file called `/etc/systemd/system/mnt-database.mount` by running the following command
    ```bash
    touch /etc/systemd/system/mnt-database.mount
    ```
@@ -212,8 +212,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    ```
    nano /etc/systemd/system/mnt-database.mount
    ```
-
-4. Add the content below to the mnt-database.mount file and replace the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can get the **Mount Point** url under the file storage service created.
+4. Add the content below to the mnt-database.mount file and replace `CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT` of `What` with the **Mount Point** of the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can get the **Mount Point** url under the file storage service created.
    ```
    [Unit]
    Description = Mount for Container Storage
@@ -227,6 +226,8 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    [Install]
    WantedBy = multi-user.target
    ```
+   Use Ctrl+X to save and exit the nano window
+   {: tip}
 
 5. Create the mount point
   ```sh
@@ -247,10 +248,10 @@ The File Storage can be mounted as an NFS drive into the virtual server.
 
 ### Setup a backup at regular interval
 
-1. Create `/root/dbbackup.sh` with the following content, replacing `CHANGE_ME` with the database password you specified earlier:
+1. Create `/root/dbbackup.sh` shell script (use `touch` and `nano`) with the following commands by replacing `CHANGE_ME` with the database password you specified earlier:
    ```sh
    #!/bin/bash
-   mysqldump -u root -pCHANGE_ME --all-databases --routines | gzip > /mnt/datamysql/backup-`date '+%m-%d-%Y-%H-%M-%S'`.sql.gz
+   mysqldump -u root -p CHANGE_ME --all-databases --routines | gzip > /mnt/datamysql/backup-`date '+%m-%d-%Y-%H-%M-%S'`.sql.gz
    ```
 2. Make sure the file is executable
    ```sh
@@ -276,14 +277,14 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    - Select the same location where you provisioned the database server
    - Select the **Ubuntu Minima** image
    - Keep the default compute flavor.
-   - Under **Attached Storage Disks**, select the 25GB boot disk.
+   - Under **Attached Storage Disks**, select 25GB as your boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
 
      If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
      {: tip}
    - Review the other configuration options and click **Provision** to provision the server.
      [Configure virtual server](images/solution14/db-server.png)
-4. Repeat these steps to provision another virtual server named **app2**
+4. Repeat steps 1-3 to provision another virtual server named **app2**
 
 ## Create a file storage to share files between the application servers
 {: shared_storage}
@@ -304,28 +305,29 @@ This file storage is used to share the application files between *app1* and *app
 
 ### Configure regular snapshots
 
-[Snapshots](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally you can replicate snapshots to another data center.
+[Snapshots](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
 
 1. Select the File Storage from the [list of existing items](https://control.bluemix.net/storage/file)
 2. Under **Snapshot Schedules**, edit the snapshot schedule. The schedule could be defined as follow:
    1. Add a hourly snapshot, set the minute to 30 and keep the last 24 snapshots
    2. Add a daily snapshot, set the time to 11pm and keep the last 7 snapshots
-   3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots![Backup snapshots](images/solution14/snapshots.png)
+   3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots and click Save. 
+ ![Backup snapshots](images/solution14/snapshots.png)
 
 ### Authorize the application servers to use the file storage
 
-1. Under **Authorized Hosts**, click **Authorize Host** to authorize the application servers to use this file storage
+1. Under **Authorized Hosts**, click **Authorize Host** to authorize the application servers(app1 and app2) to use this file storage.
 
 ### Mount file storage
 
-Repeat the following steps on each application server:
+Repeat the following steps on each application server(app1 and app2):
 
 1. Install the NFS client libraries
    ```sh
    apt-get update
    apt-get -y install nfs-common
    ```
-2. Create a file called using `touch /etc/systemd/system/mnt-www.mount` and edit using `nano /etc/systemd/system/mnt-www.mount` with the following content, replacing the value of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*)
+2. Create a file using `touch /etc/systemd/system/mnt-www.mount` and edit using `nano /etc/systemd/system/mnt-www.mount` with the following content by replacing `CHANGE_ME_TO_FILE_STORAGE_MOUNT_POINT` of `What` with the **Mount Point** for the file storage (e.g *fsf-lon0601a-fz.adn.networklayer.com:/IBM01SEV12345_100/data01*). You can find the mount points under [list of file storage volumes](https://control.bluemix.net/storage/file)
    ```
    [Unit]
    Description = Mount for Container Storage
