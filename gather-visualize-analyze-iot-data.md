@@ -1,6 +1,6 @@
 ---
 copyright:
-  years: 2017
+  years: 2017, 2018
 lastupdated: "2017-12-22"
 
 ---
@@ -12,7 +12,7 @@ lastupdated: "2017-12-22"
 {:tip: .tip}
 {:pre: .pre}
 
-# Gather, Visualize and Analyze IoT data
+# Gather, visualize, and analyze IoT data
 This tutorial walks you through setting up an IoT device, gathering data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
 {:shortdesc}
 

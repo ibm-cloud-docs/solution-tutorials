@@ -1,6 +1,6 @@
 ---
 copyright:
-  years: 2017
+  years: 2017, 2018
 lastupdated: "2017-11-30"
 
 ---
@@ -16,7 +16,7 @@ lastupdated: "2017-11-30"
 {:tip: .tip}
 {:pre: .pre}
 
-# Create, Secure and Manage REST APIs
+# Create, secure and manage REST APIs
 This tutorial demonstrates how to create a new REST API using the LoopBack Node.js API framework and  then add management, visibility, security and rate limiting to your API using the **API Connect** service on IBM Cloud.
 {:shortdesc}
 
