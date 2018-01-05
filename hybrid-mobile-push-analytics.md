@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-12-13"
+lastupdated: "2018-01-05"
 
 ---
 
@@ -21,7 +21,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 ## Objectives
 
 * Create a mobile project with Push Notifications and Mobile Analytics services.
-* Obtain APNs and FCM credentials.
+* Learn how to obtain APNs and FCM credentials.
 * Download the code and complete required setup.
 * Instrumenting the app to use mobile analytics.
 * Configure, send, and monitor push notifications.
@@ -38,10 +38,11 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-- Cordova [CLI![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/cli/) for adding plugins and Cordova-iOS [Prerequisites](https://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html).
+- Cordova [CLI![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/cli/) for executing Cordova commands.
+- Cordova-iOS [Prerequisites![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html) and Cordova-Android [Prerequisites![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html)
 - Google account to log into Firebase console for Sender ID and Server API Key.
 - [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications.
-- Xcode and Android Studio for importing and enhancing your code.
+- Xcode and Android Studio for importing and further enhancing your code.
 
 ## Create Cordova mobile project from starter kit
 {: #get_code}
@@ -55,93 +56,41 @@ The IBM Cloud Mobile Dashboard allows you to fast-track your mobile app developm
     ![](images/solution15/create_cordova_project.png)
 5. Click on **Create Project** to scaffold an Cordova (Javascript) App.
 6. A new Project will be created under **Projects** tab on the left pane.
+
     **Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter.
 
-In the next step, you will obtain Firebase Cloud Messaging (FCM) and Apple Push Notifications service(APNs) credentials for sending push notifications.
-
-## Obtain FCM and APNs credentials
-
-### Configure Firebase Cloud Messaging (FCM)
-
-1. In the [Firebase console](https://console.firebase.google.com), create a new project. Set the name to **serverlessfollowup**
-2. Navigate to the Project **Settings**
-3. Under the **General** tab, add two applications:
-      1. one with the package name set to: **com.ibm.mobilefirstplatform.clientsdk.android.push**
-      2. and one with the package name set to: **serverlessfollowup.app**
-4. Download the `google-services.json` containing the two defined applications from Firebase console and place this file in the `android/app` folder of the checkout directory.
-5. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
-6. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
-
-### Configure Apple Push Notifications Service (APNs)
-
-1. Go to the [Apple Developer![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en?lang=en)](https://developer.apple.com/) portal and Register an App ID.
-2. Create a development and distribution APNs SSL certificate.
-3. Create a development provisioning profile.
-4. Configure the Push Notifications service instance on IBM Cloud. Refer to [Obtain APNs credentials and configure Push Notifications service](https://console.bluemix.net/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+In the next step, you will download the scaffolded code and complete the required setup.
 
 ## Download the code and complete required setup
 
 If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to get the code by clicking on the **Download Code** button under Projects > **Your Mobile Project**.
 
-**Note:** BMSAnalytics is part of BMSCore Plugin.
+1. In an IDE of your choice, Navigate to `/platforms/android/project.properties` and replace the last two lines (library.1 and library.2) with the lines below
 
-1. On a terminal or command prompt, navigate to the downloaded project and run the below commands one after another. **This is specific to Android**
-    ```
-    $ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=26.+
-    ```
-    Cordova plugin to align various versions of the Android Support libraries specified by other plugins to a specific version.
-    {:tip}
+  ```
+  cordova.system.library.1=com.android.support:appcompat-v7:26.1.0
+  cordova.system.library.2=com.google.firebase:firebase-messaging:10.2.6
+  cordova.system.library.3=com.google.android.gms:play-services-location:10.2.6
+  ```
+  The above changes are specific to Android
+  {: tip}
+2. To launch the app on an Android emulator, run the below command in a terminal or command prompt
+```
+ $ cordova build android
+ $ cordova run android
+```
+ If you see an error, launch an emulator and try running the above command.
+ {: tip}
+3. To preview the app in the iOS simulator, run the below commands in a terminal,
 
     ```
-    $ cordova plugin add cordova.plugins.diagnostic
-    ```
-    Cordova plugin to manage device settings.
-    {:tip}
-
-    ```
-    $ cordova platform rm android
+    $ cordova build ios
     ```
     ```
-    $ cordova platform add android
+    $ open platforms/ios/{YOUR_PROJECT_NAME}.xcworkspace/
     ```
-2. To update bms-push (BMSPush) and bms-core (BMSCore) plugins, run the below commands
-    ```
-    $ cordova plugin rm bms-push
-    ```
-    ```
-    $ cordova plugin add bms-push
-    ```
-3. To update Cordova-iOS to the latest version, run the below commands
-      ```
-     $ cordova platform rm ios
-      ```
-      ```
-     $ cordova platform add ios
-      ```
-4. To launch the app on an Android emulator, run the below command
-   ```
-   $ cordova run android
-   ```
-5. To preview the app in the iOS simulator,
-
-   - `cd platforms/ios` and run `pod update`
-   - Open the workspace file  (`platforms/ios/{YOUR_PROJECT_NAME}.xcworkspace`) from Xcode, *or* from the command line:
-   ```
-   $ open {YOUR_PROJECT_NAME}.xcworkspace/
-   ```
-6. (Optional) Update `swift language version` for main (BasicCordovaApp) and Pods projects as shown below
-
-   ![xcode](images/solution15/xcode.png)
-
-   Make the above change only if you see this error - The “Swift Language Version” (SWIFT_VERSION) build setting must be set to a supported value for targets which use Swift. This setting can be set in the build settings editor.
-   {:tip}
-
-7. Open the code in an IDE of your choice and navigate to `/www/js/index.js`and comment the below code as you won't require this in the current scenario.
-
-   ```
-    mfpLoaded: function() {
-        }
-   ```
+    You can find your project name in `config.xml` file by running `cordova info` command.
+    {: tip}
 
 ## Instrumenting the app to use Mobile Analytics.
 
@@ -149,20 +98,46 @@ If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to g
 
    ![mobile dashboard](images/solution15/mobile_dashboard.png)
 
-2. In `index.js`, under `onDeviceReady` function, update the value of `applicationName`with your app name and replace the value of `analyticsApiKey` with Analytics **apiKey**.
+2. In `index.js`, under `onDeviceReady` function, update the value of `applicationName` with your app name and replace the value of `analyticsApiKey` with Analytics **apiKey**.
 3. Just after **BMSAnalytics.initialize** call, add the below code to send analytics data to server
 
-      ```
-      BMSAnalytics.setUserIdentity("{YOUR_USER_IDENTITY}");
-      BMSAnalytics.send();
-      ```
+    ```
+    BMSAnalytics.setUserIdentity("{YOUR_USER_IDENTITY}");
+    BMSAnalytics.send();
+    ```
 4. For logging, add the below code after **BMSLogger.setLogLevel** call
    ```
    BMSLogger.send();
    ```
+Build and run the app. Navigate to the respective Mobile Analytics service > Manage > `Sessions` to see your app analytics.
 
  For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmsanalytics) and [logging](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmslogger)
  {:tip}
+
+## Obtain FCM and APNs credentials
+
+ ### Configure Firebase Cloud Messaging (FCM)
+
+ 1. In the [Firebase console](https://console.firebase.google.com), create a new project. Set the name to **hybridmobileapp**
+ 2. Navigate to the Project **Settings**
+ 3. Under the **General** tab, add two applications:
+       1. one with the package name set to: **com.ibm.mobilefirstplatform.clientsdk.android.push**
+       2. and one with the package name set to: **io.cordova.hellocordovastarter**
+ 4. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
+ 5. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
+
+ Refer [Obtain FCM credentials](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#obtain-fcm-credentials) for detailed steps.
+ {: tip}
+
+### Configure Apple Push Notifications Service (APNs)
+
+ 1. Go to the [Apple Developer![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en?lang=en)](https://developer.apple.com/) portal and Register an App ID.
+ 2. Create a development and distribution APNs SSL certificate.
+ 3. Create a development provisioning profile.
+ 4. Configure the Push Notifications service instance on IBM Cloud.
+
+ Refer [Obtain APNs credentials and configure Push Notifications service](https://console.bluemix.net/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+ {: tip}
 
 ## Configure, send and monitor push notifications
 
@@ -221,8 +196,6 @@ You can record application logs and monitor data with the Mobile Analytics Clien
 3. [Click here](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#monitoringapps) to set alerts, monitor app crashes, and monitor network requests.
 
 ## Related Content
-
-[Customize the Push Notifications settings](https://console.bluemix.net/docs/services/mobilepush/push_step_4.html#push_step_4_Android)
 
 [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
 
