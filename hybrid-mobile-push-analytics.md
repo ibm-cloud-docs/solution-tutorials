@@ -126,8 +126,9 @@ Build and run the app. Navigate to the respective Mobile Analytics service > Man
  4. Find the Sender ID and Server Key (also called API Key later on) under the **Cloud Messaging** tab.
  5. In the Push Notifications service dashboard, set the value of the Sender ID and API Key.
 
- Refer [Obtain FCM credentials](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#obtain-fcm-credentials) for detailed steps.
- {: tip}
+
+Refer [Obtain FCM credentials](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#obtain-fcm-credentials) for detailed steps.
+{: tip}
 
 ### Configure Apple Push Notifications Service (APNs)
 
@@ -136,8 +137,8 @@ Build and run the app. Navigate to the respective Mobile Analytics service > Man
  3. Create a development provisioning profile.
  4. Configure the Push Notifications service instance on IBM Cloud.
 
- Refer [Obtain APNs credentials and configure Push Notifications service](https://console.bluemix.net/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
- {: tip}
+Refer [Obtain APNs credentials and configure Push Notifications service](https://console.bluemix.net/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+{: tip}
 
 ## Configure, send and monitor push notifications
 
