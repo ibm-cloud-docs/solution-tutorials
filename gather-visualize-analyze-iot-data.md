@@ -170,7 +170,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
     {:tip}
 5. Save the notebook and execute each code cell one after another or run all (**Cell** > Run All) and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
 
-    You can change the time interval of interest to desired time of the day.Look for `start` and `end` values.
+    You can change the time interval of interest to desired time of the day. Look for `start` and `end` values.
     {:tip}
 
     ![Jupyter Notebook DSX](images/solution16/anomaly_detection_dsx.png)
