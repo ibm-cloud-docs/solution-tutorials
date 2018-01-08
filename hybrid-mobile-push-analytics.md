@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-05"
+lastupdated: "2018-01-08"
 
 ---
 
@@ -27,7 +27,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 * Configure, send, and monitor push notifications.
 * Monitoring the app with mobile analytics.
 
- ![](images/solution15/hybrid_mobile_architecture_push_analytics.png)
+ ![](images/solution15/Architecture.png)
 
 ## Products
 

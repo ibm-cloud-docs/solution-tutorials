@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-07"
+lastupdated: "2018-01-08"
 
 ---
 
@@ -298,7 +298,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Mobile Analytics</span>
             </div>
             <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution9/Architecture.png" />
+                <img class="architectureDiagram" src = "images/solution15/Architecture.png" />
             </div>
         </div>
     </div>
@@ -344,4 +344,3 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
 </div>
-
