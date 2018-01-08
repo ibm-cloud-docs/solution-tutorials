@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2017
-lastupdated: "2017-11-29"
+  years: 2017, 2018
+lastupdated: "2018-01-05"
 
 ---
 
@@ -54,101 +54,6 @@ This tutorial uses the following products:
 6. A new `Project` will be created under Projects tab on the left pane.
 
 ​      **Note:** Push Notifications and Mobile Analytics Services should already be added with the Basic Starter.
-
- In the next step, you will obtain Apple Push Notification Service (APNs) credentials.
-
-## Obtain APNs credentials and configure Push Notifications service instance.
-
-For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
-
-You need to obtain and configure your APNs credentials. The APNs certificates are securely managed by Push Notifications service and used to connect to APNs server as a provider.
-
-### Registering an App ID
-
-The App ID (the bundle identifier) is a unique identifier that identifies a specific application. Each application requires an App ID. Services like the Push Notifications service are configured to the App ID.
-Ensure that you have an [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account. This is a mandatory prerequisite.
-
-1. Go to the [Apple Developer![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
-2. Go to `Identifiers` > App IDs section.
-3. In the `Registering App IDs` page, provide the App name in the App ID Description Name field. For example: ACME Push Notifications. Provide a string for the App ID Prefix.
-4. For the App ID Suffix, choose `Explicit App ID` and provide a Bundle ID value. It is recommended that you provide a reverse domain-name style string. For example: com.ACME.push.
-5. Select the `Push Notifications` check-box and click `Continue`.
-6. Go through your settings and click `Register` > `Done`.
-  Your App ID is now registered.
-
-  ![](images/solution6/push_ios_register_appid.png)
-
-### Create a development and distribution APNs SSL certificate
-Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key that you use to sign for your Apple push notifications. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
-You can use APNs in two modes:
-
-  * Sandbox mode for development and testing.
-  * Production mode when distributing applications through the App Store (or other enterprise distribution mechanisms).
-
-You must obtain separate certificates for your development and distribution environments. The certificates are associated with an App ID for the app that is the recipient of remote notifications. For production, you can create up to two certificates. IBM Cloud uses the certificates to establish an SSL connection with APNs.
-
-1. Go to the Apple Developer website, click **Member Center**, and select **Certificates, IDs & Profiles**.
-2. In the **Identifiers** area, click **App IDs**.
-3. From your list of App IDs, select your App ID, then select `Edit`.
-4. Select the  **Push Notifications** check-box, and then on **Development SSL certificate** pane, click **Create Certificate**.
-  ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
-
-5. When the **About Creating a Certificate Signing Request (CSR) screen** displays, follow the instructions shown to create a Certificate Signing Request (CSR) file. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
-6. Click **Continue** and on the Upload CSR file screen, click **Choose File**, and select the file **CertificateSigningRequest.certSigningRequest** you just created. Click **Continue**.
-7. On the Download, Install and Backup pane, click Download. The **aps_development.cer** file is downloaded.
-     ![Download certificate](images/solution6/push_certificate_download.png)
-     ![Generate certificate](images/solution6/generate_certificate.png)
-8. On your mac, open **Keychain Access**, **File**, **Import** and select the downloaded .cer file to install it.
-9. Right-click on the new certificate and private key, and then select **Export** and change the **File Format** to Personal information exchange format (`.p12` format).
-  ![Export certificate and keys](images/solution6/keychain_export_key.png)
-10. In the **Save As** field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or **production_apns.p12**, then click Save.
-  ![Export certificate and keys](images/solution6/certificate_p12v2.png)
-11. In the **Enter a password** field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
-    ![Export certificate and keys](images/solution6/export_p12.png)
-12. The **Key Access.app** prompts you to export your key from the **Keychain** screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
-
-   For Production SSL, On **Production SSL certificate** pane, click **Create Certificate** and repeat Steps 5 to 12 above.
-   {:tip}
-
-### Creating a development provisioning profile
-The provisioning profile works with the App ID to determine which devices can install and run your app and which services your app can access. For each App ID, you create two provisioning profiles: one for development and the other for distribution. Xcode uses the development provisioning profile to determine which developers are allowed to build the application and which devices are allowed to be tested on the application.
-
-Ensure that you have registered an App ID, enabled it for Push Notifications service, and configured it to use a development and production APNs SSL certificate.
-
-Create a development provisioning profile, as follows:
-
-1. Go to the [Apple Developer](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
-2. Go to the [Mac Developer Library](https://developer.apple.com/library/mac/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html#//apple_ref/doc/uid/TP40012582-CH30-SW62site), scroll to the `Creating Development Provisioning Profiles` section, and follow the instructions to create a development profile.
-  **Note:** When you configure a development provision profile, select the following options:
-
-  - **iOS App Development**
-  - **For iOS and watchOS apps**
-
-### Creating a store distribution provisioning profile
-Use the store provisioning profile to submit your app for distribution to the App Store.
-
-1. Go to the [Apple Developer](https://developer.apple.com/), click `Member Center`, and select `Certificates, IDs & Profiles`.
-2. Double-click the downloaded provisioning profile to install it into Xcode.
-  After obtaining the credentials, the next step is to [Configure a service instance](https://console.bluemix.net/docs/services/mobilepush/push_step_2.html).
-
-### Configure the service instance
-
-To use the Push Notifications service to send notifications, upload the .p12 certificates that you had created in the above Step. This certificate contains the private key and SSL certificates that are required to build and publish your application.
-
-**Note:** After the `.cer` file is in your key chain access, export it to your computer to create a `.p12` certificate.
-
-1. Click on `Push Notifications` under Services section or Click on the three vertical dots next to the Push Notifications service and select `Open dashboard`.
-2. On the Push Notifications Dashboard, you should see `Configure` option under `Manage > Send Notifications`.
-  ![](images/solution6/push_configure.png)
-
-To set up APNs on the `Push Notification services` console, complete the steps:
-
-1. Select `Configure` on the Push Notification services Dashboard.
-2. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
-3. Select `Sandbox (development)` or `Production (distribution)` as appropriate and then upload the `p.12` certificate that you have created.
-4. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
-
-![](images/solution6/Mobile_push_configure.png)
 
 ## Download the code and setup client SDKs
 If you haven't downloaded the code yet, Click on `Download Code` under Projects > `Your Mobile Project`
@@ -207,7 +112,104 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** C
    {:tip}
 
 
-## Send and monitor push notifications
+   ## Obtain APNs credentials and configure Push Notifications service instance.
+
+   For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from Push Notifications service instance on IBM Cloud (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
+
+   You need to obtain and configure your APNs credentials. The APNs certificates are securely managed by Push Notifications service and used to connect to APNs server as a provider.
+
+   ### Registering an App ID
+
+   The App ID (the bundle identifier) is a unique identifier that identifies a specific application. Each application requires an App ID. Services like the Push Notifications service are configured to the App ID.
+   Ensure that you have an [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account. This is a mandatory prerequisite.
+
+   1. Go to the [Apple Developer![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
+   2. Go to `Identifiers` > App IDs section.
+   3. In the `Registering App IDs` page, provide the App name in the App ID Description Name field. For example: ACME Push Notifications. Provide a string for the App ID Prefix.
+   4. For the App ID Suffix, choose `Explicit App ID` and provide a Bundle ID value. It is recommended that you provide a reverse domain-name style string. For example: com.ACME.push.
+   5. Select the `Push Notifications` check-box and click `Continue`.
+   6. Go through your settings and click `Register` > `Done`.
+     Your App ID is now registered.
+
+     ![](images/solution6/push_ios_register_appid.png)
+
+  ### Create a development and distribution APNs SSL certificate
+   Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key that you use to sign for your Apple push notifications. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
+   You can use APNs in two modes:
+
+     * Sandbox mode for development and testing.
+     * Production mode when distributing applications through the App Store (or other enterprise distribution mechanisms).
+
+   You must obtain separate certificates for your development and distribution environments. The certificates are associated with an App ID for the app that is the recipient of remote notifications. For production, you can create up to two certificates. IBM Cloud uses the certificates to establish an SSL connection with APNs.
+
+
+   1. Go to the Apple Developer website, click **Member Center**, and select **Certificates, IDs & Profiles**.
+   2. In the **Identifiers** area, click **App IDs**.
+   3. From your list of App IDs, select your App ID, then select `Edit`.
+   4. Select the  **Push Notifications** check-box, and then on **Development SSL certificate** pane, click **Create Certificate**.
+
+     ![Push Notification SSL certificates](images/solution6/certificate_createssl.png)
+
+   5. When the **About Creating a Certificate Signing Request (CSR) screen** displays, follow the instructions shown to create a Certificate Signing Request (CSR) file. Give a meaningful name that helps you identify whether it is a certificate for development (sandbox) or distribution (production); for example, sandbox-apns-certificate or production-apns-certificate.
+   6. Click **Continue** and on the Upload CSR file screen, click **Choose File**, and select the file **CertificateSigningRequest.certSigningRequest** you just created. Click **Continue**.
+   7. On the Download, Install and Backup pane, click Download. The **aps_development.cer** file is downloaded.
+        ![Download certificate](images/solution6/push_certificate_download.png)
+
+        ![Generate certificate](images/solution6/generate_certificate.png)
+   8. On your mac, open **Keychain Access**, **File**, **Import** and select the downloaded .cer file to install it.
+   9. Right-click on the new certificate and private key, and then select **Export** and change the **File Format** to Personal information exchange format (`.p12` format).
+     ![Export certificate and keys](images/solution6/keychain_export_key.png)
+   10. In the **Save As** field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or **production_apns.p12**, then click Save.
+     ![Export certificate and keys](images/solution6/certificate_p12v2.png)
+   11. In the **Enter a password** field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the Push Notifications service console.
+   
+       ![Export certificate and keys](images/solution6/export_p12.png)
+   12. The **Key Access.app** prompts you to export your key from the **Keychain** screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
+
+      For Production SSL, On **Production SSL certificate** pane, click **Create Certificate** and repeat Steps 5 to 12 above.
+      {:tip}
+
+ ### Creating a development provisioning profile
+   The provisioning profile works with the App ID to determine which devices can install and run your app and which services your app can access. For each App ID, you create two provisioning profiles: one for development and the other for distribution. Xcode uses the development provisioning profile to determine which developers are allowed to build the application and which devices are allowed to be tested on the application.
+
+   Ensure that you have registered an App ID, enabled it for Push Notifications service, and configured it to use a development and production APNs SSL certificate.
+
+   Create a development provisioning profile, as follows:
+
+   1. Go to the [Apple Developer](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
+   2. Go to the [Mac Developer Library](https://developer.apple.com/library/mac/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html#//apple_ref/doc/uid/TP40012582-CH30-SW62site), scroll to the `Creating Development Provisioning Profiles` section, and follow the instructions to create a development profile.
+     **Note:** When you configure a development provision profile, select the following options:
+
+     - **iOS App Development**
+     - **For iOS and watchOS apps**
+
+ ### Creating a store distribution provisioning profile
+   Use the store provisioning profile to submit your app for distribution to the App Store.
+
+   1. Go to the [Apple Developer](https://developer.apple.com/), click `Member Center`, and select `Certificates, IDs & Profiles`.
+   2. Double-click the downloaded provisioning profile to install it into Xcode.
+     After obtaining the credentials, the next step is to [Configure a service instance](https://console.bluemix.net/docs/services/mobilepush/push_step_2.html).
+
+ ### Configure the service instance
+
+   To use the Push Notifications service to send notifications, upload the .p12 certificates that you had created in the above Step. This certificate contains the private key and SSL certificates that are required to build and publish your application.
+
+   **Note:** After the `.cer` file is in your key chain access, export it to your computer to create a `.p12` certificate.
+
+   1. Click on `Push Notifications` under Services section or Click on the three vertical dots next to the Push Notifications service and select `Open dashboard`.
+   2. On the Push Notifications Dashboard, you should see `Configure` option under `Manage > Send Notifications`.
+     ![](images/solution6/push_configure.png)
+
+   To set up APNs on the `Push Notification services` console, complete the steps:
+
+   1. Select `Configure` on the Push Notification services Dashboard.
+   2. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
+   3. Select `Sandbox (development)` or `Production (distribution)` as appropriate and then upload the `p.12` certificate that you have created.
+   4. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
+
+   ![](images/solution6/Mobile_push_configure.png)
+
+## Configure,send, and monitor push notifications
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
 2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.

@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2017
-lastupdated: "2017-11-29"
+  years: 2017, 2018
+lastupdated: "2018-01-05"
 
 ---
 
@@ -56,39 +56,6 @@ The IBM Cloud Mobile Dashboard allows you to fast-track your mobile app developm
     **Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter.
     In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
-## Obtain FCM credentials
-
-Firebase Cloud Messaging (FCM) is the gateway used to deliver push notifications to Android devices, Google Chrome browser, and Chrome Apps & Extensions. To set up the Push Notifications service on the console, you need to get your FCM credentials (Sender ID and API key).
-
-The API key is stored securely and used by the Push Notifications service to connect to the FCM server and the sender ID (project number) is used by the Android SDK and the JS SDK for Google Chrome and Mozilla Firefox on the client side. To set up FCM and obtain your credentials, complete the steps:
-
-1. Visit the [Firebase Console ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1)  -  A Google user account is required.
-2. Select **Add project**.
-3. In the **Create a project** window, provide a project name, choose a country/region and click **Create project**.
-4. On the left navigation pane, select **Settings** (Click on Settings Icon next to **Overview**)> **Project settings**.
-5. Choose the Cloud Messaging tab to obtain your project credentials - Server API Key and a Sender ID.
-    **Note:**  Server key listed in FCM is the same as Server API Key.
-    ![](images/solution9/fcm_console.png)
-
-You would also need to generate the `google-services.json` file. Complete the following steps:
-
-1. In the Firebase console, click the **Project Settings** icon > **General** tab  under the project you created above and select **Add Firebase to your Android App**
-
-    ![](images/solution9/firebase_project_settings.png)
-2. In **Add Firebase to your Android** app modal window, add **com.ibm.mobilefirstplatform.clientsdk.android.push** as the Package Name to register push notifications android sdk. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > **Continue** > **Finish**.
-
-    ![](images/solution9/add_firebase_to_your_app.png)
-
-3. Click **ADD APP** > **Add Firebase to your app**.  Include the package name of your application by entering the package name **com.ibm.mysampleapp** then proceed to add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
-     **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
-4. Download the latest config file `google-services.json` under **Your apps**.
-
-    ![](images/solution9/google_services.png)
-
-    **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
-
-*The steps and Firebase console UI is subject to change, refer to Google documentation for the Firebase part if needed*
-
 In the next step, you will download the scaffolded code and setup the Push and Analytics Android SDKs.
 
 ## Download the code and complete required setup
@@ -125,6 +92,38 @@ The downloaded code comes with **Push Notifications** and **Mobile Analytics** c
 For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger)
 {:tip}
 
+## Obtain FCM credentials
+
+Firebase Cloud Messaging (FCM) is the gateway used to deliver push notifications to Android devices, Google Chrome browser, and Chrome Apps & Extensions. To set up the Push Notifications service on the console, you need to get your FCM credentials (Sender ID and API key).
+
+The API key is stored securely and used by the Push Notifications service to connect to the FCM server and the sender ID (project number) is used by the Android SDK and the JS SDK for Google Chrome and Mozilla Firefox on the client side. To set up FCM and obtain your credentials, complete the steps:
+
+1. Visit the [Firebase Console ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1)  -  A Google user account is required.
+2. Select **Add project**.
+3. In the **Create a project** window, provide a project name, choose a country/region and click **Create project**.
+4. On the left navigation pane, select **Settings** (Click on Settings Icon next to **Overview**)> **Project settings**.
+5. Choose the Cloud Messaging tab to obtain your project credentials - Server API Key and a Sender ID.
+    **Note:**  Server key listed in FCM is the same as Server API Key.
+    ![](images/solution9/fcm_console.png)
+
+You would also need to generate the `google-services.json` file. Complete the following steps:
+
+1. In the Firebase console, click the **Project Settings** icon > **General** tab  under the project you created above and select **Add Firebase to your Android App**
+
+    ![](images/solution9/firebase_project_settings.png)
+2. In **Add Firebase to your Android** app modal window, add **com.ibm.mobilefirstplatform.clientsdk.android.push** as the Package Name to register push notifications android sdk. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > **Continue** > **Finish**.
+
+    ![](images/solution9/add_firebase_to_your_app.png)
+
+3. Click **ADD APP** > **Add Firebase to your app**.  Include the package name of your application by entering the package name **com.ibm.mysampleapp** then proceed to add Firebase to your Android app window. The App nickname and SHA-1 fields are optional. Click **REGISTER APP** > Continue > Finish.
+     **Note:** You can find the package name of your application in `AndroidManifest.xml` file once you download the code.
+4. Download the latest config file `google-services.json` under **Your apps**.
+
+    ![](images/solution9/google_services.png)
+
+    **Note**: FCM is the new version of Google Cloud Messaging (GCM). Ensure that you use FCM credentials for new apps. Existing apps would continue to function with GCM configurations.
+
+*The steps and Firebase console UI is subject to change, refer to Google documentation for the Firebase part if needed*
 
 ## Configure, send and monitor push notifications
 

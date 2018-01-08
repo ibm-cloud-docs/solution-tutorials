@@ -14,6 +14,7 @@ Solution Tutorials
     static-files-cdn.md
     lamp-stack.md
     infrastructure-as-code.md
+    highly-available-and-scalable-web-application.md
     mean-stack.md
     sql-database.md
     serverless-api-webapp.md
@@ -22,4 +23,6 @@ Solution Tutorials
     ios-mobile-push-analytics.md
     android-mobile-push-analytics.md
     serverless-mobile-backend.md
+    hybrid-mobile-push-analytics.md
+    gather-visualize-analyze-iot-data.md
     {: .navgroup-end}

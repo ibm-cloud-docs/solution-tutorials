@@ -1,6 +1,6 @@
 ---
 copyright:
-  years: 2017
+  years: 2017, 2018
 lastupdated: "2017-12-11"
 
 ---
@@ -150,6 +150,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
+        <h3 id="highly-available-and-scalable-web-application.html" class="solutionBoxTitle">
+            <a href = "highly-available-and-scalable-web-application.html">Use Virtual Servers to build highly available and scalable web app</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.</p>
+                    <span class="tag-filter category">Virtual Servers</span>
+                    <span class="tag-filter category">Load Balancer</span>
+                    <span class="tag-filter category">PHP</span>
+                    <span class="tag-filter category">File Storage</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution14/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
         <h3 id="mean-stack.html" class="solutionBoxTitle">
             <a href = "mean-stack.html">Modern Web Applications using MEAN stack</a>
         </h3>
@@ -270,6 +287,22 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
+        <h3 id="hybrid-mobile-push-analytics.html" class="solutionBoxTitle">
+            <a href = "hybrid-mobile-push-analytics.html">Hybrid Mobile Application with Push and Analytics</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>Learn how easy it is to quickly create a hybrid Cordova application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.</p>
+                    <span class="tag-filter category">Cordova</span>
+                    <span class="tag-filter category">Push Notifications</span>
+                    <span class="tag-filter category">Mobile Analytics</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution9/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
         <h3 id="serverless-mobile-backend.html" class="solutionBoxTitle">
             <a href = "serverless-mobile-backend.html">Mobile application with a serverless backend</a>
         </h3>
@@ -284,6 +317,27 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution11/Architecture.png" />
+            </div>
+        </div>
+    </div>
+</div>
+
+## Internet of Things
+{: #iot }
+
+<div class = "solutionBoxContainer">
+    <div class = "solutionBox">
+        <h3 id="gather-visualize-analyze-iot-data.html" class="solutionBoxTitle">
+            <a href = "gather-visualize-analyze-iot-data.html">Gather, Visualize and Analyze IoT data</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you thru setting up an IoT device, gathering large amounts of data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data.</p>
+                    <span class="tag-filter category">Internet of Things Platform</span>
+                    <span class="tag-filter category">Node-RED</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution16/Architecture.png" />
             </div>
         </div>
     </div>
