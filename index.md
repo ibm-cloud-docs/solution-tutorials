@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-12-11"
+lastupdated: "2018-01-08"
 
 ---
 
@@ -298,7 +298,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Mobile Analytics</span>
             </div>
             <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution9/Architecture.png" />
+                <img class="architectureDiagram" src = "images/solution15/Architecture.png" />
             </div>
         </div>
     </div>
@@ -333,8 +333,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
                 <p>This tutorial walks you thru setting up an IoT device, gathering large amounts of data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data.</p>
+                    <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">Internet of Things Platform</span>
-                    <span class="tag-filter category">Node-RED</span>
+                    <span class="tag-filter category">Cloudant</span>
+                    <span class="tag-filter category">Data Science Experience</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution16/Architecture.png" />
@@ -342,4 +344,3 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
 </div>
-

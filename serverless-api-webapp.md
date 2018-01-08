@@ -53,8 +53,9 @@ Let's start by creating a Cloudant NoSQL Database. Cloudant NoSQL DB is a fully 
 
 1. In the Catalog, under **Data & Analytics**, select **Cloudant NoSQL DB**.
 2. Set the service name to **guestbook-db** and click **Create**.
-3. **Launch** the Cloudant service console.
-4. Create a database named **guestbook**.
+3. Under **Service Credentials**, create **New credential** and click **Add**.
+4. Click on **Manage** on the left and then **Launch** the Cloudant service console.
+5. Create a database named **guestbook**.
    ![](images/solution8/Create_Database.png)
 
 ## Create Cloud Functions actions
@@ -66,14 +67,15 @@ In this section, you will create serverless actions (commonly termed as Function
 ### Sequence of actions to save the guestbook entry
 
 You will create a **sequence** which is a chain of actions where output of one action acts as an input to the following action and so on. The first sequence you will create is used to persist a guest message. Provided a name, an emailID and a comment, the sequence will:
-
    * Create a document to be persisted.
    * Store the document in the Cloudant NoSQL database.
 
+Start by creating the first action, adding the action to a sequence and then adding the second action to the sequence.
+
 1. Switch to **Functions** on IBM Cloud.
-2. On the left pane, Click on **Develop**.
-3. Create a new Node.js action named **prepare-entry-for-save** by selecting a **blank slate** option to start with.
-4. Replace the existing code with the code snippet below. This is the code for your action.
+2. On the left pane, click on **Actions** and then **Create**.
+3. **Create Action** with name `prepare-entry-for-save` and select **Node.js 6** as the Runtime.
+4. Replace the existing code with the code snippet below and **Save**
    ```js
    /**
     * Prepare the guestbook entry to be persisted
@@ -94,14 +96,13 @@ You will create a **sequence** which is a chain of actions where output of one a
    }
    ```
    {: codeblock}
-4. Click **Make it Live**. In the **Develop** view (https://console.bluemix.net/openwhisk/editor), Click **Link into a sequence** and pick Cloudant **create document**..
-5. Create new binding on the left and set name to **binding-for-guestbook**.
-6. Select the **guestbook-db** Cloudant instance and the **guestbook** database and **Save**.
-7. Click **Add to sequence** and then **This looks good**.
-8. Name the sequence **save-guestbook-entry**
-9. **Save the sequence** and then **Done**
-10. Select the sequence under **My Sequences** and **Run** the sequence with the JSON below to test it
-
+5. Click on **Enclosing Sequences** and then **Add To Sequence**.
+6. For Action name, enter `save-guestbook-entry-sequence` and then click **Create and Add**.
+7. Click on **save-guestbook-entry-sequence** and then click **Add**.
+8. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**
+9. Create **New Binding** and set name to `binding-for-guestbook`.
+10. Select the **guestbook-db** Cloudant instance and the **guestbook** database and **Add** and then **Save**.
+11. To test it, click on **Change Input** and enter the JSON below
     ```json
     {
       "name": "John Smith",
@@ -110,7 +111,8 @@ You will create a **sequence** which is a chain of actions where output of one a
     }
     ```
     {: codeblock}
-11. Check the Cloudant NoSQL database to confirm it contains the new record.
+12. **Apply** and then **Invoke**.
+    ![](images/solution8/Save_Entry_Invoke.png)
 
 ### Sequence of actions to retrieve entries
 
@@ -118,7 +120,8 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    * List all documents from the database.
    * Format the documents and returning them.
 
-1. Create an action to configure the **list documents** call. Name it **set-read-input**
+1. Under **Functions**, **Create** a new Node.js action and name it **set-read-input**.
+2. Replace the existing code with the code snippet below. This action passes the appropriate parameters to the next action.
    ```js
    function main(params) {
      return {
@@ -129,47 +132,51 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    }
    ```
    {: codeblock}
-2. And another action to process the results. Name it **format-entries**
-   ```js
-   const md5 = require('spark-md5');
+3. Click on **Enclosing Sequences**, **Add to Sequence** and **Create New**
+4. Enter `read-guestbook-entries-sequence` for the **Action Name** and click **Create and Add**.
+5. Click on **read-guestbook-entries-sequence** sequence and then click **Add** to create and add the second action to get documents from Cloudant.
+6. Under **Use Public**, choose **Cloudant** and then **list-documents**
+7. Choose **binding-for-guestbook** and **Add** to create and add this public action to your sequence.
+8. Click **Add** again to create and add the third action which will format the documents from Cloudant.
+9. Under **Create New** enter `format-entries` for name and then click **Create and Add**.
+10. Click on **format-entries** and replace the code with below and **Save**
+  ```js
+  const md5 = require('spark-md5');
 
-   function main(params) {
-     return {
-       entries: params.rows.map((row) => { return {
-         name: row.doc.name,
-         email: row.doc.email,
-         comment: row.doc.comment,
-         createdAt: row.doc.createdAt,
-         icon: (row.doc.email ? `https://secure.gravatar.com/avatar/${md5.hash(row.doc.email.trim().toLowerCase())}?s=64` : null)
-       }})
-     };
-   }
-   ```
-   {: codeblock}
-3. Select the **set-read-input** action and then **Link into a sequence**.
-4. Select **Cloudant** then the **list documents** action.
-5. Select **binding-for-guestbook** binding, **Add to Sequence**,  **Extend**,  **My Actions** and **format-entries**.
-6. Click **Add to Sequence** and **This Looks Good**.
-7. Name the sequence **read-guestbook-entries**.
-8. **Save** the action sequence and click **Done**.
+  function main(params) {
+    return {
+      entries: params.rows.map((row) => { return {
+        name: row.doc.name,
+        email: row.doc.email,
+        comment: row.doc.comment,
+        createdAt: row.doc.createdAt,
+        icon: (row.doc.email ? `https://secure.gravatar.com/avatar/${md5.hash(row.doc.email.trim().toLowerCase())}?s=64` : null)
+      }})
+    };
+  }
+  ```
+  {: codeblock}
+11. Choose the sequence by clicking on **Actions** and then **read-guestbook-entries-sequence**.
+12. Click on **Save and then **Invoke**. The output should look like the following:
+   ![](images/solution8/Read_Entries_Invoke.png)
 
 ## Create an API
 
 ![](images/solution8/Cloud_Functions_API.png)
 
 1. Go to Actions https://console.bluemix.net/openwhisk/manage/actions.
-2. Select the **read-guestbook-entries** sequence. Under **Additional details**, check **Enable Web Action**.
-3. Do the same for the **save-guestbook-entry** sequence.
+2. Select the **read-guestbook-entries-sequence** sequence. Under **Additional details**, check **Enable Web Action**.
+3. Do the same for the **save-guestbook-entry-sequence** sequence.
 4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement and **Create Managed API**
 5. Set name to **guestbook** and base path to **/guestbook**
 6. Create an operation to retrieve guestbook entries:
    1. Set **path** to **/entries**
    2. Set **verb** to **GET**
-   3. Select the **read-guestbook-entries** action
+   3. Select the **read-guestbook-entries-sequence** action
 7. Create an operation to persist a guestbook entry:
    1. Set **path** to **/entries**
    2. Set **verb** to **PUT**
-   3. Select the **save-guestbook-entry** action
+   3. Select the **save-guestbook-entry-sequence** action
 8. Save and expose the API.
 
 ## Deploy the web app
