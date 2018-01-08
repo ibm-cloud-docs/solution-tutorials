@@ -99,7 +99,7 @@ Start by creating the first action, adding the action to a sequence and then add
 5. Click on **Enclosing Sequences** and then **Add To Sequence**.
 6. For Action name, enter `save-guestbook-entry` and then click **Create and Add**.
 7. Click on **save-guestbook-entry** and then click **Add**.
-8. Select **Use Public**, **Cloudant** and then choose **create document** under **Actions**
+8. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**
 9. Create **New Binding** and set name to `binding-for-guestbook`.
 10. Select the **guestbook-db** Cloudant instance and the **guestbook** database and **Add** and then **Save**.
 11. To test it, click on **Change Input** and enter the JSON below
