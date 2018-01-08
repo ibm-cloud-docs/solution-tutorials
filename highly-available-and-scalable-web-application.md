@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-12-18"
+lastupdated: "2018-01-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -311,7 +311,7 @@ This file storage is used to share the application files between *app1* and *app
 2. Under **Snapshot Schedules**, edit the snapshot schedule. The schedule could be defined as follow:
    1. Add a hourly snapshot, set the minute to 30 and keep the last 24 snapshots
    2. Add a daily snapshot, set the time to 11pm and keep the last 7 snapshots
-   3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots and click Save. 
+   3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots and click Save.
  ![Backup snapshots](images/solution14/snapshots.png)
 
 ### Authorize the application servers to use the file storage
