@@ -97,8 +97,8 @@ Start by creating the first action, adding the action to a sequence and then add
    ```
    {: codeblock}
 5. Click on **Enclosing Sequences** and then **Add To Sequence**.
-6. For Action name, enter `save-guestbook-entry` and then click **Create and Add**.
-7. Click on **save-guestbook-entry** and then click **Add**.
+6. For Action name, enter `save-guestbook-entry-sequence` and then click **Create and Add**.
+7. Click on **save-guestbook-entry-sequence** and then click **Add**.
 8. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**
 9. Create **New Binding** and set name to `binding-for-guestbook`.
 10. Select the **guestbook-db** Cloudant instance and the **guestbook** database and **Add** and then **Save**.
@@ -133,8 +133,8 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    ```
    {: codeblock}
 3. Click on **Enclosing Sequences**, **Add to Sequence** and **Create New**
-4. Enter `read-guestbook-entries` for the **Action Name** and click **Create and Add**.
-5. Click on **read-guestbook-entries** sequence and then click **Add** to create and add the second action to get documents from Cloudant.
+4. Enter `read-guestbook-entries-sequence` for the **Action Name** and click **Create and Add**.
+5. Click on **read-guestbook-entries-sequence** sequence and then click **Add** to create and add the second action to get documents from Cloudant.
 6. Under **Use Public**, choose **Cloudant** and then **list-documents**
 7. Choose **binding-for-guestbook** and **Add** to create and add this public action to your sequence.
 8. Click **Add** again to create and add the third action which will format the documents from Cloudant.
@@ -156,7 +156,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
   }
   ```
   {: codeblock}
-11. Choose the sequence by clicking on **Actions** and then **read-guestbook-entries**.
+11. Choose the sequence by clicking on **Actions** and then **read-guestbook-entries-sequence**.
 12. Click on **Save and then **Invoke**. The output should look like the following:
    ![](images/solution8/Read_Entries_Invoke.png)
 
@@ -165,18 +165,18 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 ![](images/solution8/Cloud_Functions_API.png)
 
 1. Go to Actions https://console.bluemix.net/openwhisk/manage/actions.
-2. Select the **read-guestbook-entries** sequence. Under **Additional details**, check **Enable Web Action**.
-3. Do the same for the **save-guestbook-entry** sequence.
+2. Select the **read-guestbook-entries-sequence** sequence. Under **Additional details**, check **Enable Web Action**.
+3. Do the same for the **save-guestbook-entry-sequence** sequence.
 4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement and **Create Managed API**
 5. Set name to **guestbook** and base path to **/guestbook**
 6. Create an operation to retrieve guestbook entries:
    1. Set **path** to **/entries**
    2. Set **verb** to **GET**
-   3. Select the **read-guestbook-entries** action
+   3. Select the **read-guestbook-entries-sequence** action
 7. Create an operation to persist a guestbook entry:
    1. Set **path** to **/entries**
    2. Set **verb** to **PUT**
-   3. Select the **save-guestbook-entry** action
+   3. Select the **save-guestbook-entry-sequence** action
 8. Save and expose the API.
 
 ## Deploy the web app
