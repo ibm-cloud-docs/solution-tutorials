@@ -21,15 +21,12 @@ lastupdated: "2018-01-10"
 This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analayze logs.
 {:shortdesc}
 
-
 ## Objectives:
 
 * Create a Kubernetes cluster.
 * Provision the {{site.data.keyword.loganalysisshort}} service.
 * Create logging configurations in the cluster.
 * View, search and analyze logs in Kibana
-
-**Note:** To complete this tutorial, you must complete the pre-requites and the tutorials that are linked from the different steps.
 
 ## Prerequisites
 {: #prereq}
@@ -52,11 +49,14 @@ This tutorial walks you through creating a cluster, configuring the cluster to s
 ## Create a Kubernetes cluster
 {: #step1}
 
-1. Create a standard Kubernetes cluster.
-   * [Create a Kubernetes standard cluster through the UI](/docs/containers/cs_cluster.html#cs_cluster_ui).
-   * [Create a Kubernetes standard cluster by using the CLI](/docs/containers/cs_cluster.html#cs_cluster_cli).
+1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). Create a **free** cluster of type **Lite** while following the guide and skipping the appropriate sections. To bind a custom domain, you must create a **Paid** cluster of type **Standard**.
 
-2. Set up the cluster context in a terminal.
+  For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
+  {:tip}
+
+   ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesClusterCreation.png)
+2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
+
 ### Configure kubectl and helm
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
