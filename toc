@@ -19,6 +19,7 @@ Solution Tutorials
     sql-database.md
     serverless-api-webapp.md
     application-log-analysis.md
+    kubernetes-log-analysis-kibana.md
     create-manage-secure-apis.md
     ios-mobile-push-analytics.md
     android-mobile-push-analytics.md
