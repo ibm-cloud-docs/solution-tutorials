@@ -20,7 +20,7 @@ This tutorial walks you through how to scaffold a web application, run it locall
 * Create a Kubernetes cluster.
 * Scaffold a starter application.
 * Deploy the application to the Kubernetes cluster.
-* Bind a custom domain. 
+* Bind a custom domain.
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
@@ -37,10 +37,10 @@ This tutorial walks you through how to scaffold a web application, run it locall
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). Create a **free** cluster of type **Lite** while following the guide and skipping the appropriate sections. To bind a custom domain, you must create a **Paid** cluster of type **Standard**.
+1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). The largest part of this tutorial can be accomplished with a **free** cluster of type **Lite**. Two optional sections relating to Kubernetes Ingress and custom domain require a **Paid** cluster of type **Standard**.
 
-  For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
-  {:tip}
+   For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
+   {:tip}
 
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesClusterCreation.png)
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
@@ -63,7 +63,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    kubectl cluster-info
    ```
    {: pre}
-5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Initialize Helm in your cluster.
+5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. In the next section, you will use the `bx dev` tooling to create an application. `bx dev` relies on Helm to deploy applications into your cluster. Initialize Helm in your cluster.
    ```bash
    helm init
    ```
