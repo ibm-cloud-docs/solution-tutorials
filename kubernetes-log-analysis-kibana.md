@@ -31,20 +31,9 @@ This tutorial walks you through creating a cluster, configuring the cluster to s
 ## Prerequisites
 {: #prereq}
 
-1. Be a member or an owner of an {{site.data.keyword.Bluemix_notm}} account with permissions to create Kubernetes standard clusters, deploy apps into clusters, and query the logs in {{site.data.keyword.Bluemix_notm}} for advanced analysis in Kibana.
-
-    Your user ID for the {{site.data.keyword.Bluemix_notm}} must have the following policies assigned:
-
-    * An IAM policy for the {{site.data.keyword.containershort}} with *operator* or *administrator* permissions.
-    * An IAM policy for the {{site.data.keyword.loganalysisshort}} service with *viewer* permissions.
-
-    For more information, see [Assign an IAM policy to a user through the IBM Cloud UI](/docs/services/CloudLogAnalysis/security/grant_permissions.html#grant_permissions_ui_account).
-
-3. Install the CLIs to work with the {{site.data.keyword.containershort}} and the {{site.data.keyword.loganalysisshort}}.
-
-    * Install the {{site.data.keyword.Bluemix_notm}} CLI. For more information, see [Install from shell](/docs/cli/reference/bluemix_cli/download_cli.html#download_install).
-    * Install the required CLIs to create and manage your Kubernetes clusters in {{site.data.keyword.containershort}}, and to deploy containerized apps to your cluster. For more information, see [Install the CLI plugins](/docs/containers/cs_cli_install.html#cs_cli_install_steps).
-    * Install the {{site.data.keyword.loganalysisshort}} CLI. For more information, see [Configuring the Log Analysis CLI (IBM Cloud plugin)](/docs/services/CloudLogAnalysis/how-to/manage-logs/config_log_collection_cli_cloud.html#config_log_collection_cli).
+* [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
+* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+* [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
 {: #step1}
@@ -54,8 +43,10 @@ This tutorial walks you through creating a cluster, configuring the cluster to s
   For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
   {:tip}
 
-   ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesClusterCreation.png)
+   ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesPaidClusterCreation.png)
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
+
+**NOTE:** Do not proceed until your workers are ready. This might take up to one hour.
 
 ### Configure kubectl and helm
 
@@ -84,22 +75,26 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 ## Configure your cluster to forward logs to the {{site.data.keyword.loganalysisshort}} service
 {: #step3}
 
-When an application is deployed, logs are collected automatically by the {{site.data.keyword.containershort}}. However, logs are not automatically forwarded to the {{site.data.keyword.loganalysisshort}} service. You must create one or more [logging configurations](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_sources) in your cluster that define:
+When an application is deployed, logs are collected automatically by the {{site.data.keyword.containershort}}. To forward these logs to the {{site.data.keyword.loganalysisshort}} service, you must create one or more [logging configurations](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_sources) in your cluster that define:
 * Where logs are to be forwarded. You can forward logs to the account domain or to a space domain.
 * What logs are forwarded to the {{site.data.keyword.loganalysisshort}} service for analysis.
 
-### Configure your cluster to forward stderr and stdout logs to the {{site.data.keyword.loganalysisshort}} service
+### Configure your cluster to forward stderr and stdout logs
 {: #containerlogs}
 
-1. Run the following command to send *stdout* and *stderr* log files to the {{site.data.keyword.loganalysisshort}} service:
+1. From the IBM Cloud Dashboard, select the **org** and **space** where you want to create your **Log Analysis** service.
+
+2. From the [Catalog](https://console.bluemix.net/catalog/), create a **Log Analysis** service.
+
+3. Run the following command to send *stdout* and *stderr* log files to the {{site.data.keyword.loganalysisshort}} service:
 
     ```
-    bx cs logging-config-create mycluster --logsource container --namespace '*' --type ibm --hostname EndPoint --port 9091 --org OrgName --space SpaceName
+    bx cs logging-config-create mycluster --logsource application --type ibm --hostname EndPoint --port 9091 --org OrgName --space SpaceName
     ```
     {: codeblock}
 
     where
-    * *mycluster* is the name of the cluster.
+    * *mycluster* is the name of your cluster.
     * *EndPoint* is the URL to the logging service in the region where the {{site.data.keyword.loganalysisshort}} service is provisioned. For a list of endpoints, see [Endpoints](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls).
     * *OrgName* is the name of the organization where the space is available.
     * *SpaceName* is the name of the space where the {{site.data.keyword.loganalysisshort}} service is provisioned.
@@ -213,8 +208,7 @@ In this section, we first push the Docker image to the IBM Cloud private contain
    ```
    {: screen}
    alternatively you can use `kubectl describe service [service-name]`. In this example, the port is 32321.
-9. Access the application.
-   `http://worker-ip-address:portnumber/nameofproject`
+9. Access the application by `http://worker-ip-address:portnumber/` or `http://worker-ip-address:portnumber/nameofproject` depending on the type of application.
 
 
 
@@ -222,22 +216,7 @@ In this section, we first push the Docker image to the IBM Cloud private contain
 ## View log data in Kibana
 {: #step8}
 
-1. Launch Kibana in a browser.
-
-    For more information on how to launch Kibana, see [Navigating to Kibana from a web browser](/docs/services/CloudLogAnalysis/kibana/launch.html#launch_Kibana_from_browser).
-
-    To analyze log data for a cluster, you must access Kibana in the cloud Public region where the cluster is created.
-
-    For example, in the German region, enter the following URL to launch Kibana:
-
-	```
-	https://logging.eu-fra.bluemix.net/
-	```
-	{: codeblock}
-
-    Kibana opens.
-
-    **NOTE:** Verify that you launch Kibana in the region where you are forwarding your cluster logs. For information on the URLs per region, see [Logging endpoints](docs/services/CloudLogAnalysis/kibana/analyzing_logs_Kibana.html#urls_kibana).
+1. From the IBM Cloud **Dashboard**, select your **Log Analysis** instance and click **Launch**
 
 2. To view log data that is available in the space domain, complete the following steps:
 
@@ -275,12 +254,12 @@ In this section, we first push the Docker image to the IBM Cloud private contain
                 <td>The value of this field corresponds to the {{site.data.keyword.Bluemix_notm}} region where the log entry is collected.</td>
                 <td>us-south</td>
               </tr>
-			  <tr>
+        	  <tr>
                 <td>*ibm-containers.account_id_str*</td>
                 <td>Account ID</td>
                 <td></td>
               </tr>
-			  <tr>
+        	  <tr>
                 <td>*ibm-containers.cluster_id_str*</td>
                 <td>Cluster ID.</td>
                 <td></td>
@@ -290,7 +269,7 @@ In this section, we first push the Docker image to the IBM Cloud private contain
                 <td>Cluster ID</td>
                 <td></td>
               </tr>
-			  <tr>
+        	  <tr>
                 <td>*kubernetes.namespace_name_str*</td>
                 <td>Namespace name</td>
                 <td>*default* is the default value.</td>
