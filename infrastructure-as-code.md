@@ -164,7 +164,7 @@ You can delete environments by using the options menu. Delete both **My LAMP env
 
 [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
 
-[IBM Cloud Provider](https://ibm-bluemix.github.io/tf-ibm-docs)
+[IBM Cloud Provider](https://ibm-cloud.github.io/tf-ibm-docs/)
 
 [IBM Cloud Schematics](https://github.com/Cloud-Schematics)
 
