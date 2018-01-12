@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-07"
+lastupdated: "2018-01-11"
 ---
 
 {:shortdesc: .shortdesc}
@@ -312,7 +312,7 @@ This file storage is used to share the application files between *app1* and *app
    1. Add a hourly snapshot, set the minute to 30 and keep the last 24 snapshots
    2. Add a daily snapshot, set the time to 11pm and keep the last 7 snapshots
    3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots and click Save.
- ![Backup snapshots](images/solution14/snapshots.png)
+      ![Backup snapshots](images/solution14/snapshots.png)
 
 ### Authorize the application servers to use the file storage
 
@@ -467,18 +467,18 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    tar xzvf latest.tar.gz
    ```
 
-2. Prepare the Wordpress files
+3. Prepare the Wordpress files
    ```sh
    cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
    mkdir /tmp/wordpress/wp-content/upgrade
    ```
 
-3. Copy the files to the shared file storage
+4. Copy the files to the shared file storage
    ```sh
    rsync -av -P /tmp/wordpress/. /mnt/www/html
    ```
 
-4. Set permissions
+5. Set permissions
    ```sh
    chown -R www-data:www-data /mnt/www/html
    find /mnt/www/html -type d -exec chmod g+s {} \;
@@ -487,14 +487,14 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    chmod -R g+w /mnt/www/html/wp-content/plugins
    ```
 
-5. Call the following web service and inject the result into `/mnt/www/html/wp-config.php` using `nano`
+6. Call the following web service and inject the result into `/mnt/www/html/wp-config.php` using `nano`
    ```sh
    curl -s https://api.wordpress.org/secret-key/1.1/salt/
    ```
 
    If your virtual server has no public network link, you can simply open https://api.wordpress.org/secret-key/1.1/salt/ from your web browser.
 
-6. Set the database credentials using `nano /mnt/www/html/wp-config.php`, update the database credentials:
+7. Set the database credentials using `nano /mnt/www/html/wp-config.php`, update the database credentials:
 
    ```
    define('DB_NAME', 'wordpress');
@@ -524,7 +524,7 @@ If you configured the application servers with only a private network link, you 
 
 At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a Load Balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
 
-1. Go to the catalog to create a [IBM Bluemix Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
+1. Go to the catalog to create a [IBM Cloud Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-cloud-load-balancer)
 2. In the **Plan** step, select the same data center as *app1* and *app2*
 3. In **Network Settings**,
    1. Select the same subnet as the one where *app1* and *app2* where provisioned
