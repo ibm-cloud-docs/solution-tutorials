@@ -70,7 +70,7 @@ bx cf logs your-app-name --recent
 ```
 2. The second method is to use the [IBM Cloud console](https://console.bluemix.net). In the overview, navigate to your app, click on its entry to open the details and then go to **Logs**. Current logs are shown with the most recent at the bottom. On the upper right you can search for an entry or filter by log type. Selecting **Application (APP)**
 ![](images/solution12/Dashboard_LogsFilter.png)
-3. The Log Analysis service offers access to the logs. In contrast to the first two, more historial logs from all the apps in a space are available. The logs can be accessed, searched and visualized using a browser-based UI (Kibana dashboard). Using the IBM Cloud dashboard, navigate to **App Name > Logs > Advanced view **. [For details see this section in the Log Analysis documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/analyzing_logs_Kibana.html#launch_Kibana).   
+3. The Log Analysis service offers access to the logs. In contrast to the first two, more historial logs from all the apps in a space are available. The logs can be accessed, searched and visualized using a browser-based UI (Kibana dashboard). Using the IBM Cloud dashboard, navigate to **App Name > Logs > View in Kibana** view. [For details see this section in the Log Analysis documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/analyzing_logs_Kibana.html#launch_Kibana).   
 
 ## Search and Analyze Logs
 
@@ -84,7 +84,7 @@ The Log Analysis / Kibana dashboard, by default shows all available log entries 
 4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.  
 5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
 ```
-message:(CRITICAL|INFO|ERROR|WARN|DEBUG) && message_type_str:ERR
+message:(CRITICAL|INFO|ERROR|WARNING|DEBUG) && message_type_str:ERR
 ```   
 It should look like shown below. The displayed log entries are now filtered based on the search criteria.   
 ![](images/solution12/SearchForMessagesERR.png)   
@@ -98,11 +98,12 @@ Now that you have a query defined, in this section you will use it as foundation
 1. Click on **Visualize** in the left navigation bar.
 2. In the list of offered visualizations Locate **Pie chart** and click on it.
 3. Select the query **ERRlogs** that you saved earlier.
-4. On the next screen, under **Select buckets type**, select **Split Slices**, then for **Aggregation** choose **Filters**. Add 5 filters having the values of **CRITICAL**, **ERROR**, **WARN\*** (with asteriks as wildcard), **INFO** and **DEBUG** as shown here:   
+4. On the next screen, under **Select buckets type**, select **Split Slices**, then for **Aggregation** choose **Filters**. Add 5 filters having the values of **CRITICAL**, **ERROR**, **WARNING**, **INFO** and **DEBUG** as shown here:   
 ![](images/solution12/VisualizationFilters.png)   
 6. Click on **Options** (right to **Data**) and activate **Donut** as view option. Finally, click on the **play** icon to apply all changes to the chart. Now you should see a **Donut Pie Chart** similar to this one:   
 ![](images/solution12/Donut.png)   
-7. Save the visualization as **DonutERR**.
+7. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
+8. Save the visualization as **DonutERR**.
 
 #### Metric
 Next, create another visualization for **Metric**.
@@ -115,7 +116,7 @@ Next, create another visualization for **Metric**.
 Once you have added visualizations, they can be used to compose a dashboard. A dashboard is used to display all important metrics and to help indicate the health of your apps and services.
 1. Click on **Dashboard** in the left navigation panel, then on **Add** to start placing existing visualizations onto the empty dashboard.
 2. Add the log count on the left and the donut chart on the right. Change the size of each component and to move them as desired.
-3. Click on the arrow in the lower left corner of a component to view changes to a table layout and additional information about the underlying request, response and execution statistics are offered. 
+3. Click on the arrow in the lower left corner of a component to view changes to a table layout and additional information about the underlying request, response and execution statistics are offered.
 ![](images/solution12/DashboardTable.png)   
 4. Save the dashboard for future use.
 
