@@ -24,11 +24,19 @@ This tutorial walks you through creating, securing, and deploying a web applicat
 * Bind an SSL certificate to your application.
 * Monitor application performance.
 
-![Architecture](images/solution1/Architecture.png)
+## Products
 
-### Apps and Services
+This tutorial uses the following products:
 * [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
 * [Continuous Delivery Service](https://console.bluemix.net/catalog/services/continuous-delivery) for DevOps
+
+<p style="text-align: center;">
+![Architecture](images/solution1/Architecture.png)
+</p>
+
+This tutorial involves an active/passive scenario where two copies of the application are deployed in two different regions but only one copy is serving client requests. The DNS configuration initially points to the first region. If the first region fails, the DNS configuration should be updated to point to the other region.
+
+Some DNS providers may include capabilities to detect this situation and automatically route traffic to the other region. Another option would be to deploy a global load balancer in front of the applications and have the load balancer spread the traffic. This tutorial does not explore these options.
 
 ## Create a Node.js application
 {: #create}
@@ -140,6 +148,12 @@ Lets check the health of your multi-region application.
    ![](images/solution1/alert_frequency.png)
 
 Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before users are impacted. If you configured a custom route for your application, change the test definition to access your application through its custom domain.
+
+## Clean up resources
+
+* Delete the toolchain
+* Delete the two Cloud Foundry applications deployed in the two regions
+* Delete the DNS configuration
 
 ## Related information
 
