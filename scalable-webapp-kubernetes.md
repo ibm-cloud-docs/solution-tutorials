@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-10-27"
+lastupdated: "2017-01-15"
 
 ---
 
@@ -50,11 +50,13 @@ This tutorial walks you through how to scaffold a web application, run it locall
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
 1. Use `bx login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `bx target` command.
+
 2. When the cluster is ready, retrieve the cluster configuration:
    ```bash
    bx cs cluster-config <cluster-name>
    ```
    {: pre}
+
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
   `echo $KUBECONFIG`
 
@@ -63,9 +65,17 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    kubectl cluster-info
    ```
    {: pre}
+
 5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. In the next section, you will use the `bx dev` tooling to create an application. `bx dev` relies on Helm to deploy applications into your cluster. Initialize Helm in your cluster.
    ```bash
    helm init
+   ```
+   {: pre}
+
+6. Upgrade helm by running: 
+
+   ```bash
+   helm init --upgrade
    ```
    {: pre}
 
@@ -176,7 +186,7 @@ In this section, we first push the Docker image to the IBM Cloud private contain
    kubernetes              10.10.10.1    <none>        443/TCP                         1d
    ```
    {: screen}
-   alternatively you can use `kubectl describe service [service-name]`. In this example, the port is 32321.
+   alternatively you can use `kubectl describe service [service-name]`. In the example above, the port is **32321**.
 9. Access the application.
    `http://worker-ip-address:portnumber/nameofproject`
 
