@@ -15,7 +15,6 @@ lastupdated: "2018-01-10"
 
 
 # Analyze Kubernetes cluster and application logs in Kibana
-{: #kibana_tutorial_1}
 
 This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analayze logs.
 {:shortdesc}
@@ -26,6 +25,8 @@ This tutorial walks you through creating a cluster, configuring the cluster to s
 * Provision the {{site.data.keyword.loganalysisshort}} service.
 * Create logging configurations in the cluster.
 * View, search and analyze logs in Kibana
+
+![](images/solution17/Architecture.png)
 
 ## Prerequisites
 {: #prereq}
@@ -117,19 +118,17 @@ You can build and run the application as you normally would using `mvn` for java
    docker ps
    ```
    {: pre}
-
 2. Change to the generated project directory.
    ```
    cd <project name>
    ```
    {: pre}
-
 3. Edit the file `server/server.js` and add the following code to the bottom of the file. This will output various random types of log message every second.
 
    ```
    setInterval(() => {
      var randomInt = Math.floor(Math.random() * 10);
-     if (randomInt < 5) 
+     if (randomInt < 5)
        logger.info('Cheese is Gouda.');
      else if (randomInt >= 5 && randomInt < 8)
        logger.warn('Cheese is quite smelly.');
@@ -139,9 +138,7 @@ You can build and run the application as you normally would using `mvn` for java
        logger.error('Cheese is too ripe!');
    }, 1000)
    ```
-
 4. Build the application.
-
    ```
    bx dev build
    ```
@@ -208,15 +205,10 @@ For more information about other search fields that are relevant to Kubernetes c
 {: #step8}
 
 1. In the filtering menu on the left, you can filter down to only see message from the container you are interested in by expanding `kubernetes.container_name_str` and clicking on the container name.
-
 2. Click on the **add** button next to **message** to only see the log messages.
-
    ![](images/solution17/message_add.png)
-
 3. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
-
 4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.  
-
 5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
 ```
 message:(WARN|INFO|ERROR|FATAL)
