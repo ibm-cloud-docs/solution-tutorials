@@ -38,10 +38,10 @@ This tutorial walks you through creating a cluster, configuring the cluster to s
 ## Create a Kubernetes cluster
 {: #step1}
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). Create a **Pay-As-You_Go** cluster. Log forwading is *not* enabled for the **Free** cluster.
+1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). Create a **Pay-As-You_Go** cluster. Log forwarding is *not* enabled for the **Free** cluster.
   {:tip}
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution17/KubernetesPaidClusterCreation.png)
-2. For convinience, use the name `mycluster` to be consistent with this tutorial.
+2. For convenience, use the name `mycluster` to be consistent with this tutorial.
 3. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 **NOTE:** Do not proceed until your workers are ready. This might take up to one hour.
@@ -80,9 +80,9 @@ When an application is deployed, logs are collected automatically by the {{site.
 {: #containerlogs}
 
 1. From the IBM Cloud Dashboard, select the **region**, **org** and **space** where you want to create your **Log Analysis** service.
-2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a **Log Analysis** service.
+2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Log Analysis**](https://console.bluemix.net/catalog/services/log-analysis) service.
 3. Run the following command to send *container* log files to the {{site.data.keyword.loganalysisshort}} service:
-    ```
+    ```sh
     bx cs logging-config-create mycluster --logsource container --namespace default --type ibm --hostname EndPoint --port 9091 --org OrgName --space SpaceName
     ```
     {: codeblock}
@@ -107,7 +107,7 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
   ![](images/solution17/bx_dev_create.png)
   This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
 
-![](images/solution2/Contents.png
+![](images/solution2/Contents.png)
 
 ### Build the application
 
