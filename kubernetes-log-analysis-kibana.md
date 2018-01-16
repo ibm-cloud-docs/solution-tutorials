@@ -1,5 +1,4 @@
 ---
-
 copyright:
   years: 2017, 2018
 
@@ -104,8 +103,8 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 2. Select `Backend Service / Web App` > `Node `> `Web App - Express.js Basic` to create a Node.js starter application.
 3. Enter a **name** (`mynodestarter`) and a unique **hostname** (`username-mynodestarter`) for your project.
 4. Select **n** to skip adding services.
-![](images/solution17/bx_dev_create.png)
-This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
+  ![](images/solution17/bx_dev_create.png)
+  This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
 
 ![](images/solution2/Contents.png
 
@@ -118,12 +117,31 @@ You can build and run the application as you normally would using `mvn` for java
    docker ps
    ```
    {: pre}
+
 2. Change to the generated project directory.
    ```
    cd <project name>
    ```
    {: pre}
-3. Build the application.
+
+3. Edit the file `server/server.js` and add the following code to the bottom of the file. This will output various random types of log message every second.
+
+   ```
+   setInterval(() => {
+     var randomInt = Math.floor(Math.random() * 10);
+     if (randomInt < 5) 
+       logger.info('Cheese is Gouda.');
+     else if (randomInt >= 5 && randomInt < 8)
+       logger.warn('Cheese is quite smelly.');
+     else if (randomInt == 8)
+       logger.fatal('Cheese was breeding ground for listeria.');
+     else
+       logger.error('Cheese is too ripe!');
+   }, 1000)
+   ```
+
+4. Build the application.
+
    ```
    bx dev build
    ```
@@ -181,23 +199,30 @@ In this section, we first push the Docker image to the IBM Cloud private contain
 
 The application generates some log data every time you visit its URL. Because of our logging configuration, this data should be forwarded to Log Analysis service and available via Kibana.
 
-1. From the IBM Cloud **Dashboard**, select your **Log Analysis** instance and click **Launch**.
-2. In the **Discover** page, look at the events that are displayed.
-    ![](images/solution17/kibana_home.png)
-    For more information about other search fields that are relevant to Kubernetes clusters, see [Searching logs](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_search).
+From the IBM Cloud **Dashboard**, select your **Log Analysis** instance and click **Launch**.
+
+![](images/solution17/kibana_home.png)
+For more information about other search fields that are relevant to Kubernetes clusters, see [Searching logs](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_search).
 
 ### Filter data by Kubernetes cluster name in Kibana
 {: #step8}
 
 1. In the filtering menu on the left, you can filter down to only see message from the container you are interested in by expanding `kubernetes.container_name_str` and clicking on the container name.
-2. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
-3. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.  
-4. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
+
+2. Click on the **add** button next to **message** to only see the log messages.
+
+   ![](images/solution17/message_add.png)
+
+3. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
+
+4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.  
+
+5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
 ```
-message:(CRITICAL|INFO|ERROR|WARNING|DEBUG) && message_type_str:ERR
-```   
-![](images/solution12/SearchForMessagesERR.png)   
-6. Store the search criteria for future use by clicking **Save** in the configuration bar. Use **ERRlogs** as name.
+message:(WARN|INFO|ERROR|FATAL)
+```
+![](images/solution17/kibana_filter.png)   
+6. Store the search criteria for future use by clicking **Save** in the configuration bar. Use **mylogs** as name.
 
 For more information, see [Filtering logs in Kibana](/docs/services/CloudLogAnalysis/kibana/filter_logs.html#filter_logs).
 ## Visualize Logs
@@ -206,19 +231,19 @@ Now that you have a query defined, in this section you will use it as foundation
 #### Pie Chart as Donut
 1. Click on **Visualize** in the left navigation bar.
 2. In the list of offered visualizations Locate **Pie chart** and click on it.
-3. Select the query **ERRlogs** that you saved earlier.
-4. On the next screen, under **Select buckets type**, select **Split Slices**, then for **Aggregation** choose **Filters**. Add 5 filters having the values of **CRITICAL**, **ERROR**, **WARNING**, **INFO** and **DEBUG** as shown here:   
-![](images/solution12/VisualizationFilters.png)   
-6. Click on **Options** (right to **Data**) and activate **Donut** as view option. Finally, click on the **play** icon to apply all changes to the chart. Now you should see a **Donut Pie Chart** similar to this one:   
-![](images/solution12/Donut.png)   
-7. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
-8. Save the visualization as **DonutERR**.
+3. Select the query **mylogs** that you saved earlier.
+4. On the next screen, under **Select buckets type**, select **Split Slices**, then for **Aggregation** choose **Filters**. Add 4 filters having the values of **INFO**, **WARN**, **ERROR**, and **FATAL** as shown here:   
+  ![](images/solution17/VisualizationFilters.png)   
+5. Click on **Options** (right to **Data**) and activate **Donut** as view option. Finally, click on the **play** icon to apply all changes to the chart. Now you should see a **Donut Pie Chart** similar to this one:   
+  ![](images/solution12/Donut.png)   
+6. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
+7. Save the visualization as **DonutLogs**.
 
 #### Metric
 Next, create another visualization for **Metric**.
-1. Pick **Metric** from the list of offered visualizations. In step 2, on the left side, click on the name beginning with **[logstash-]**.
+1. Click on **New** and pick **Metric** from the list of offered visualizations and click on the link beginning with **[logstash-]**.
 2. On the next screen, expand **Metric** to be able to enter a custom label. Add **Log Entries within 24 hours** and click on the **play** icon to update the shown metric.   
-![](images/solution12/Metric_LogCount24.png)   
+  ![](images/solution12/Metric_LogCount24.png)   
 3. Save the visualization as **LogCount24**.
 
 #### Dashboard
@@ -226,12 +251,12 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 1. Click on **Dashboard** in the left navigation panel, then on **Add** to start placing existing visualizations onto the empty dashboard.
 2. Add the log count on the left and the donut chart on the right. Change the size of each component and to move them as desired.
 3. Click on the arrow in the lower left corner of a component to view changes to a table layout and additional information about the underlying request, response and execution statistics are offered.
-![](images/solution12/DashboardTable.png)   
+  ![](images/solution12/DashboardTable.png)   
 4. Save the dashboard for future use.
 
 ## Expand the Tutorial
 Do you want to learn more? Here are some ideas of what you can do next:
-* Push the same app again with a different name or use the [app deployed in a Kubernetes cluster](https://console.bluemix.net/docs/services/CloudLogAnalysis/containers/tutorials/kibana_tutorial_1.html). Then, the Log Analysis dashboard (Kibana) will show the combined logs of all apps.
+* Deploy another application to the cluster or use an [app deployed in a Cloud Foundry environment](application-log-analysis.html). The Log Analysis dashboard (Kibana) will show the combined logs of all apps.
 * Filter by a single app.
 * Add a saved search and metric only for critical and error events.
 * Build a dashboard for all your apps.
@@ -239,7 +264,6 @@ Do you want to learn more? Here are some ideas of what you can do next:
 
 ## Related Content
 * [Documentation for IBM Cloud Log Analysis](https://console.bluemix.net/docs/services/CloudLogAnalysis/index.html)
-* [Logging facility for Python](https://docs.python.org/3/library/logging.html)
 * [IBM Cloud Log Collection API](https://console.bluemix.net/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction)
 * Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html)
 * Kibana User Guide: [Visualizing Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-visualizing.html)
