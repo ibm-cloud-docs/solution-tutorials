@@ -12,7 +12,7 @@ lastupdated: "2018-01-11"
 {:tip: .tip}
 {:pre: .pre}
 
-# Generate, Access and Analyze Application Logs
+# Generate, Access and Analyze Cloud Foundry Application Logs
 This tutorial shows how the [IBM Cloud Log Analysis](https://console.bluemix.net/catalog/services/log-analysis) service can be used to understand and diagnose activities of a Cloud Foundry app that is deployed in the IBM Cloud. You will deploy a Python Cloud Foundry application, generate different types of logs, and search, analyze and visualize those logs by using Kibana, an open-source tool that is offered by the IBM Cloud Log Analysis service.
 
 ## Objectives

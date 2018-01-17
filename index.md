@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-08"
+lastupdated: "2018-01-16"
 
 ---
 
@@ -216,7 +216,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="application-log-analysis.html" class="solutionBoxTitle">
-            <a href = "application-log-analysis.html">Generate, Access and Analyze Application Logs</a>
+            <a href = "application-log-analysis.html">Generate, Access and Analyze Cloud Foundry Application Logs</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -227,6 +227,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution12/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="kubernetes-log-analysis.html" class="solutionBoxTitle">
+            <a href = "kubernetes-log-analysis.html">Generate, Access and Analyze Kubernetes Application Logs</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analyze logs.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Docker</span>
+                    <span class="tag-filter category">Node.js</span>
+                    <span class="tag-filter category">Log Analysis</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution17/Architecture.png" />
             </div>
         </div>
     </div>
@@ -344,3 +361,4 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
 </div>
+
