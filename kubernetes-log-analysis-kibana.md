@@ -81,7 +81,8 @@ When an application is deployed, logs are collected automatically by the {{site.
 
 1. From the IBM Cloud Dashboard, select the **region**, **org** and **space** where you want to create your **Log Analysis** service.
 2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Log Analysis**](https://console.bluemix.net/catalog/services/log-analysis) service. If you're unable to create the service, check for an existing instance of the Log Analysis service in your space.
-3. Run the following command to send *container* log files to the {{site.data.keyword.loganalysisshort}} service:
+3. Ensure that the API key owner for your cluster `bx cs api-key-info mycluster` has `Developer` and `Manager` Cloud Foundry access to the org and space where the Log Analysis service is created. [Grant user permissions](/docs/services/CloudLogAnalysis/security/grant_permissions.html#grant_permissions_ui_space).
+4. Run the following command to send *container* log files to the {{site.data.keyword.loganalysisshort}} service:
     ```sh
     bx cs logging-config-create mycluster --logsource container --namespace default --type ibm --hostname IngestionHost --port 9091 --org OrgName --space SpaceName
     ```
