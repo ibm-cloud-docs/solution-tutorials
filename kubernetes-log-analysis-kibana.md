@@ -50,7 +50,7 @@ This tutorial walks you through creating a cluster, configuring the cluster to s
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `bx login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `bx target` command.
+1. Use `bx login` to log in interactively. Provide the account under which the cluster is created. You can reconfirm the details by running `bx target` command.
 2. When the cluster is ready, retrieve the cluster configuration:
    ```bash
    bx cs cluster-config <cluster-name>
@@ -80,15 +80,15 @@ When an application is deployed, logs are collected automatically by the {{site.
 {: #containerlogs}
 
 1. From the IBM Cloud Dashboard, select the **region**, **org** and **space** where you want to create your **Log Analysis** service.
-2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Log Analysis**](https://console.bluemix.net/catalog/services/log-analysis) service.
+2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Log Analysis**](https://console.bluemix.net/catalog/services/log-analysis) service. If you're unable to create the service, check for an existing instance of the Log Analysis service in your space.
 3. Run the following command to send *container* log files to the {{site.data.keyword.loganalysisshort}} service:
     ```sh
-    bx cs logging-config-create mycluster --logsource container --namespace default --type ibm --hostname EndPoint --port 9091 --org OrgName --space SpaceName
+    bx cs logging-config-create mycluster --logsource container --namespace default --type ibm --hostname IngestionHost --port 9091 --org OrgName --space SpaceName
     ```
     {: codeblock}
     where
     * *mycluster* is the name of your cluster.
-    * *EndPoint* is the URL to the logging service in the region where the {{site.data.keyword.loganalysisshort}} service is provisioned. For a list of endpoints, see [Endpoints](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls).
+    * *IngestionHost* is the hostname to the logging service in the region where the {{site.data.keyword.loganalysisshort}} service is provisioned. For a list of endpoints, see [Endpoints](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls).
     * *OrgName* and *SpaceName* is the location where the {{site.data.keyword.loganalysisshort}} service is provisioned.
 
 ## Create a starter application
