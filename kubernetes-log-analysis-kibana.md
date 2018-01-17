@@ -16,7 +16,7 @@ lastupdated: "2018-01-10"
 
 # Analyze Kubernetes cluster and application logs in Kibana
 
-This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analayze logs.
+This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analyze logs.
 {:shortdesc}
 
 ## Objectives:
