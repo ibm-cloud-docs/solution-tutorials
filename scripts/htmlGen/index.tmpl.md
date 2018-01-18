@@ -15,11 +15,11 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 <style>
     .solutionBox {
-        margin: 0 10px 20px 0;
-        padding: 10px;
+        margin: 0 10px 20px 0 !important;
+        padding: 10px !important;
         width: 100%;
-        border: 1px #dfe3e6 solid;
-        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
+        border: 1px #dfe3e6 solid !important;
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2) !important;
     }
     .solutionBoxContainer {
     }
