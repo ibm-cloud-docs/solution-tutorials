@@ -13,7 +13,7 @@ lastupdated: "2018-01-10"
 
 # Automate deployment of environments using Infrastructure as Code
 
-IBM Cloud Schematics is a tool that uses [Terraform](https://ibm-bluemix.github.io/tf-ibm-docs/) to provision and manage infrastructure resources, Cloud Foundry applications, services, Kubernetes clusters and much more using code in a configuration file(s).
+IBM Cloud Schematics is a tool that uses [Terraform](https://ibm-cloud.github.io/tf-ibm-docs/) to provision and manage infrastructure resources, Cloud Foundry applications, services, Kubernetes clusters and much more using code in a configuration file(s).
 
 In this tutorial, you will use a provided template in Schematics to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server (LAMP stack). You will then configure the template to add an Object Storage service and scale the resources to tune the environment (memory, CPU and disk size). Finish by deleting all of the resources created by the configuration.
 
