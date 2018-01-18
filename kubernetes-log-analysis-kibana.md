@@ -228,7 +228,7 @@ Now that you have a query defined, in this section you will use it as foundation
 4. On the next screen, under **Select buckets type**, select **Split Slices**, then for **Aggregation** choose **Filters**. Add 4 filters having the values of **INFO**, **WARN**, **ERROR**, and **FATAL** as shown here:   
   ![](images/solution17/VisualizationFilters.png)   
 5. Click on **Options** (right to **Data**) and activate **Donut** as view option. Finally, click on the **play** icon to apply all changes to the chart. Now you should see a **Donut Pie Chart** similar to this one:   
-  ![](images/solution12/Donut.png)   
+  ![](images/solution17/Donut.png)   
 6. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
 7. Save the visualization as **DonutLogs**.
 
@@ -251,7 +251,7 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 Do you want to learn more? Here are some ideas of what you can do next:
 * Deploy another application to the cluster or use an [app deployed in a Cloud Foundry environment](application-log-analysis.html). The Log Analysis dashboard (Kibana) will show the combined logs of all apps.
 * Filter by a single app.
-* Add a saved search and metric only for critical and error events.
+* Add a saved search and metric only for specific error level.
 * Build a dashboard for all your apps.
 
 
