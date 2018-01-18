@@ -100,7 +100,7 @@ It should look like shown below. The displayed log entries are now filtered base
 ## Visualize Logs
 Now that you have a query defined, in this section you will use it as foundation for a chart, a visualization of that data. You will first create visualizations and then use them to compose a dashboard.
 
-#### Pie Chart as Donut
+### Pie Chart as Donut
 1. Click on **Visualize** in the left navigation bar.
 2. In the list of offered visualizations Locate **Pie chart** and click on it.
 3. Select the query **ERRlogs** that you saved earlier.
@@ -111,14 +111,14 @@ Now that you have a query defined, in this section you will use it as foundation
 7. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
 8. Save the visualization as **DonutERR**.
 
-#### Metric
+### Metric
 Next, create another visualization for **Metric**.
 1. Pick **Metric** from the list of offered visualizations. In step 2, on the left side, click on the name beginning with **[logstash-]**.
 2. On the next screen, expand **Metric** to be able to enter a custom label. Add **Log Entries within 24 hours** and click on the **play** icon to update the shown metric.   
 ![](images/solution12/Metric_LogCount24.png)   
 3. Save the visualization as **LogCount24**.
 
-#### Dashboard
+### Dashboard
 Once you have added visualizations, they can be used to compose a dashboard. A dashboard is used to display all important metrics and to help indicate the health of your apps and services.
 1. Click on **Dashboard** in the left navigation panel, then on **Add** to start placing existing visualizations onto the empty dashboard.
 2. Add the log count on the left and the donut chart on the right. Change the size of each component and to move them as desired.

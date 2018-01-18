@@ -221,7 +221,8 @@ For more information, see [Filtering logs in Kibana](/docs/services/CloudLogAnal
 ## Visualize Logs
 Now that you have a query defined, in this section you will use it as foundation for a chart, a visualization of that data. You will first create visualizations and then use them to compose a dashboard.
 
-#### Pie Chart as Donut
+### Pie Chart as Donut
+
 1. Click on **Visualize** in the left navigation bar.
 2. In the list of offered visualizations Locate **Pie chart** and click on it.
 3. Select the query **mylogs** that you saved earlier.
@@ -232,7 +233,8 @@ Now that you have a query defined, in this section you will use it as foundation
 6. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
 7. Save the visualization as **DonutLogs**.
 
-#### Metric
+### Metric
+
 Next, create another visualization for **Metric**.
 1. Click on **New** and pick **Metric** from the list of offered visualizations and click on the link beginning with **[logstash-]**.
 2. On the next screen, expand **Metric** to be able to enter a custom label. Add **Log Entries within 24 hours** and click on the **play** icon to update the shown metric.   
