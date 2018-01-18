@@ -34,7 +34,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         color: #238070;
     }
     .tag-filter {
-        padding: 3px 12px 3px 12px !important;
+        padding: 3px 12px !important;
         font-size: 12px !important;
         margin-right: 1px !important;
         border-radius: 10px;
