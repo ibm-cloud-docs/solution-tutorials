@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-16"
+lastupdated: "2018-01-18"
 
 ---
 
@@ -231,8 +231,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
-        <h3 id="kubernetes-log-analysis.html" class="solutionBoxTitle">
-            <a href = "kubernetes-log-analysis.html">Generate, Access and Analyze Kubernetes Application Logs</a>
+        <h3 id="kubernetes-log-analysis-kibana.html" class="solutionBoxTitle">
+            <a href = "kubernetes-log-analysis-kibana.html">Generate, Access and Analyze Kubernetes Application Logs</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">

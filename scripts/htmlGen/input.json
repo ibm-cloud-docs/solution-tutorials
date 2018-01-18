@@ -109,7 +109,7 @@
             },
             {
                 "name": "Generate, Access and Analyze Kubernetes Application Logs",
-                "url": "kubernetes-log-analysis.html",
+                "url": "kubernetes-log-analysis-kibana.html",
                 "description": "This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analyze logs.",
                 "imgSrc": "images/solution17/Architecture.png",
                 "tags": [
