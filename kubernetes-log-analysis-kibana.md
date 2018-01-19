@@ -38,11 +38,12 @@ This tutorial walks you through creating a cluster, configuring the cluster to s
 ## Create a Kubernetes cluster
 {: #step1}
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). Create a **Pay-As-You_Go** cluster. Log forwarding is *not* enabled for the **Free** cluster.
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Pay-As-You_Go** cluster. Log forwarding is *not* enabled for the **Free** cluster.
   {:tip}
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution17/KubernetesPaidClusterCreation.png)
 2. For convenience, use the name `mycluster` to be consistent with this tutorial.
-3. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
+3. The smallest **Machine Type** with 1 **Worker Nodes** is sufficient for this tutorial. Leave all other options set to defaults.
+4. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 **NOTE:** Do not proceed until your workers are ready. This might take up to one hour.
 
