@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-18"
+lastupdated: "2018-01-19"
 
 ---
 
@@ -34,12 +34,12 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         color: #238070;
     }
     .tag-filter {
-        padding: 3px 12px;
-        font-size: 12px;
-        margin-right: 1px;
+        padding: 3px 12px !important;
+        font-size: 12px !important;
+        margin-right: 1px !important;
         border-radius: 10px;
         white-space: nowrap;
-        line-height: 1.8rem;
+        line-height: 1.8rem !important;
     }
     .solutionBoxDescription {
         display:flex;
