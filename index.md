@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-08"
+lastupdated: "2018-01-19"
 
 ---
 
@@ -15,11 +15,11 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 <style>
     .solutionBox {
-        margin: 0 10px 20px 0;
-        padding: 10px;
-        width: 100%;
-        border: 1px #dfe3e6 solid;
-        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
+        margin: 0 10px 20px 0 !important;
+        padding: 10px !important;
+        width: 100% !important;
+        border: 1px #dfe3e6 solid !important;
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2) !important;
     }
     .solutionBoxContainer {
     }
@@ -30,35 +30,35 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
       font-weight: 600 !important;
     }
     .tag-filter.category {
-        background: #aaf9e6;
-        color: #238070;
+        background: #aaf9e6 !important;
+        color: #238070 !important;
     }
     .tag-filter {
-        padding: 3px 12px;
-        font-size: 12px;
-        margin-right: 1px;
-        border-radius: 10px;
-        white-space: nowrap;
-        line-height: 1.8rem;
+        padding: 3px 12px !important;
+        font-size: 12px !important;
+        margin-right: 1px !important;
+        border-radius: 10px !important;
+        white-space: nowrap !important;
+        line-height: 1.8rem !important;
     }
     .solutionBoxDescription {
-        display:flex;
-        flex-wrap: wrap;
+        display:flex !important;
+        flex-wrap: wrap !important;
     }
    .solutionBoxTitle a {
-      text-decoration-line:none;
+      text-decoration-line:none !important;
     }
     .descriptionContainer {
-        flex-grow: 1;
-        width: 200px;
+        flex-grow: 1 !important;
+        width: 200px !important;
     }
     .architectureDiagramContainer {
-        width: 300px;
-        padding: 0 10px;
+        width: 300px !important;
+        padding: 0 10px !important;
     }
     .architectureDiagram {
-        max-height: 200px;
-        padding: 5px;
+        max-height: 200px !important;
+        padding: 5px !important;
     }
 </style>
 ## Websites and Web Apps
@@ -216,7 +216,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="application-log-analysis.html" class="solutionBoxTitle">
-            <a href = "application-log-analysis.html">Generate, Access and Analyze Application Logs</a>
+            <a href = "application-log-analysis.html">Generate, Access and Analyze Cloud Foundry Application Logs</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -227,6 +227,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution12/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="kubernetes-log-analysis-kibana.html" class="solutionBoxTitle">
+            <a href = "kubernetes-log-analysis-kibana.html">Generate, Access and Analyze Kubernetes Application Logs</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analyze logs.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Docker</span>
+                    <span class="tag-filter category">Node.js</span>
+                    <span class="tag-filter category">Log Analysis</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution17/Architecture.png" />
             </div>
         </div>
     </div>
@@ -344,3 +361,4 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
 </div>
+

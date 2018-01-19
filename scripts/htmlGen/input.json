@@ -97,13 +97,25 @@
                 ]
             },
             {
-                "name": "Generate, Access and Analyze Application Logs",
+                "name": "Generate, Access and Analyze Cloud Foundry Application Logs",
                 "url": "application-log-analysis.html",
                 "description": "Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.",
                 "imgSrc": "images/solution12/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
                     "Python",
+                    "Log Analysis"
+                ]
+            },
+            {
+                "name": "Generate, Access and Analyze Kubernetes Application Logs",
+                "url": "kubernetes-log-analysis-kibana.html",
+                "description": "This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analyze logs.",
+                "imgSrc": "images/solution17/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Docker",
+                    "Node.js",
                     "Log Analysis"
                 ]
             },
@@ -151,7 +163,7 @@
                 "name": "Hybrid Mobile Application with Push and Analytics",
                 "url": "hybrid-mobile-push-analytics.html",
                 "description": "Learn how easy it is to quickly create a hybrid Cordova application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
-                "imgSrc": "images/solution9/Architecture.png",
+                "imgSrc": "images/solution15/Architecture.png",
                 "tags": [
                     "Cordova",
                     "Push Notifications",

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-11-27"
+lastupdated: "2018-01-10"
 ---
 
 {:shortdesc: .shortdesc}
@@ -13,7 +13,7 @@ lastupdated: "2017-11-27"
 
 # Automate deployment of environments using Infrastructure as Code
 
-IBM Cloud Schematics is a tool that uses [Terraform](https://ibm-bluemix.github.io/tf-ibm-docs/) to provision and manage infrastructure resources, Cloud Foundry applications, services, Kubernetes clusters and much more using code in a configuration file(s).
+IBM Cloud Schematics is a tool that uses [Terraform](https://ibm-cloud.github.io/tf-ibm-docs/) to provision and manage infrastructure resources, Cloud Foundry applications, services, Kubernetes clusters and much more using code in a configuration file(s).
 
 In this tutorial, you will use a provided template in Schematics to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server (LAMP stack). You will then configure the template to add an Object Storage service and scale the resources to tune the environment (memory, CPU and disk size). Finish by deleting all of the resources created by the configuration.
 
@@ -88,7 +88,7 @@ In this section, you will modify the code in the LAMP template to create your ow
    }
    ```
    **Note** the label "lamp_storage", we will later look for that in the logs to make sure Object Storage service getting created.
-6. **Save** the **object-storage.tf** file and push your changes to your forked repo.
+5. **Save** the **object-storage.tf** file and push your changes to your forked repo.
    ```
    git add object-storage.tf
    git commit -m "Added object storage"
@@ -110,7 +110,7 @@ In this section, you will create a new environment with your custom configuratio
    - Add a **description to assign to the SSH key** to **ssh_notes**.
    - Add **descriptive tags to label** to **tags**.
    - Add your **public SSH key to access the VM** - To copy the public key to your clipboard, you can run the pbcopy < ~/.ssh/id_rsa.pub command in your terminal.
-  ![Source Control URL](images/solution10/create.png)
+     ![Source Control URL](images/solution10/create.png)
 6. Click **Create**, **Plan** and then **Apply** to create your new environment.
 7. Once the process is completed successfully, you should then see the status changing to **Active**. This may take few minutes.
 8. Click on the **View Log** button to view the logs. You should see Object Storage created.
@@ -164,7 +164,7 @@ You can delete environments by using the options menu. Delete both **My LAMP env
 
 [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
 
-[IBM Cloud Provider](https://ibm-bluemix.github.io/tf-ibm-docs)
+[IBM Cloud Provider](https://ibm-cloud.github.io/tf-ibm-docs/)
 
 [IBM Cloud Schematics](https://github.com/Cloud-Schematics)
 

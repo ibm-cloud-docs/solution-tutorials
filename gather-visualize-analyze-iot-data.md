@@ -183,6 +183,10 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
     * Density Plots through Kernel density estimation (KDE).
     ![](images/solution16/density_plots_sensor_data.png)
 
+## Clean up Resources
+1. Navigate to [Dashboard](https://console.bluemix.net/dashboard/) > choose the region, Org and space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
+2. Under **Services**, delete the respective Internet of Things Platform, Apache Spark, Cloudant NoSQL DB and Cloud Object Storage services which you created for this tutorial.
+
 ## Related Content
 
 * Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://www.ibm.com/developerworks/analytics/library/iot-deep-learning-anomaly-detection-1/index.html?ca=drs-)
