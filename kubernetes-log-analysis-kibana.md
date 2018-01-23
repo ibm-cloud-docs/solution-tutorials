@@ -105,11 +105,13 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 
 2. Select `Backend Service / Web App` > `Node `> `Web App - Express.js Basic` to create a Node.js starter application.
 3. Enter a **name** (`mynodestarter`) and a unique **hostname** (`username-mynodestarter`) for your project.
-4. Select **n** to skip adding services.
   ![](images/solution17/bx_dev_create.png)
-  This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
 
-![](images/solution2/Contents.png)
+4. Select **n** to skip adding services and choose **No DevOps**.
+
+  Once complete, this generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/node_project_contents.html).
+
+![](images/solution17/node_starter_contents.png)
 
 ### Build the application
 
@@ -163,7 +165,7 @@ You can build and run the application as you normally would using `mvn` for java
 ## Deploy application to cluster
 {: #deploy}
 
-In this section, we first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
+The IBM Cloud has a Container Registry that is private to you. Let's push the Docker image there, and then create a Kubernetes deployment pointing to that image.
 
 1. Find your **namespace** by listing all the namespace in the registry.
    ```
@@ -188,10 +190,9 @@ In this section, we first push the Docker image to the IBM Cloud private contain
 4. When prompted, enter your **cluster name**.
 5. Next, enter your **image name**. Use the following format: `<registry_url>/<namespace>/<projectname>`
 6. Wait a few minutes for your application to be deployed.
-7. Visit the URL displayed to access the application by `http://ip-address:portnumber/`
-
-
-![](images/solution17/node_starter_cluster.png)
+7. Visit the URL displayed to access the application by `http://worker-public-ip:portnumber/`. If you do not see a port number, run `kubectl get services` and look for the 5 digit port number next to your application service.
+  ![](images/solution17/kubectl_get_services.png)
+  ![](images/solution17/node_starter_cluster.png)
 
 ## View log data in Kibana
 {: #step8}
