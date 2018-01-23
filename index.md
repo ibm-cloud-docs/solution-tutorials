@@ -216,14 +216,15 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="application-log-analysis.html" class="solutionBoxTitle">
-            <a href = "application-log-analysis.html">Generate, Access and Analyze Cloud Foundry Application Logs</a>
+            <a href = "application-log-analysis.html">Gather and Analyze Logs and Monitor Health of a Cloud Foundry Application</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.</p>
+                <p>Understand and diagnose application problems by using the IBM Cloud Log Analysis and Availability Monitoring services.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">Python</span>
                     <span class="tag-filter category">Log Analysis</span>
+                    <span class="tag-filter category">Availability Monitoring</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution12/Architecture.png" />
@@ -361,4 +362,3 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
 </div>
-
