@@ -113,6 +113,7 @@ In this section, you will learn the basics of a terraform configuration by using
    - [vm.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/vm.tf) - contains the server configurations to deploy the VM with specified variables.
    - [terraform.tfvars](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/terraform.tfvars) - contains **Softlayer** username and api key, these credentials can be added to this file for best practices to avoid reentering the credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
 
+4. Now that we understand what's in each file, open the [vm.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/vm.tf) file with your IDE and modify the file by adding your **public SSH key to access the VM**. To copy the public key to your clipboard, you can run the pbcopy < ~/.ssh/id_rsa.pub command in your terminal.
 
      ```bash
      $ pbcopy < ~/.ssh/id_rsa.pub
@@ -141,7 +142,6 @@ In this section, you will learn the how to create a LAMP stack server from the t
    ```
    terraform apply
    ```
-
 
    You should see an output similar to below, though we've truncated some of the output to save space: ![Source Control URL](images/solution10/created.png)
 
@@ -177,15 +177,20 @@ In this section, we are going to look at how to scale the virtual server resourc
    ```bash
    $ terraform init
    ```
+4. Apply the terraform changes by running:
    ```
+   terraform apply
+   ```
+   Note: after running the terraform apply command successfully, you should see a new a `terraform.tfstate`. file added to your directory. This file contains the full deployment confirmation to keep track of what you last applied and any future modifications to your template. If this file is removed or lost then you will lose your terraform deployment configurations. 
 
 ## Verify VM and Object Storage
 {: #verifyvm}
 
+In this section, you are going to verify the VM and Object Storage to make sure it has been created successfully.
 
 **Verify VM**
 
-1. Using the left side menu, click on **Infrastructure** to view the list of virtual server devices.![Source Control URL](images/solution10/infrastructure.png)
+1. Using the left side menu, click on **Infrastructure** to view the list of virtual server devices.
 2. Click **Devices** -> **Device List** to find the server created. You should see your server device listed.
 3. Click on the server to view more information on the server configuration. Looking at the screenshot below, we can see that the server is successfully created. ![Source Control URL](images/solution10/configuration.png)
 4. Next, let's test the server in the web browser. Open the server public IP address in the web browser. You should see the server default installation page like below.![Source Control URL](images/solution10/LAMP.png)
@@ -200,20 +205,32 @@ In this section, we are going to look at how to scale the virtual server resourc
 
 More info on [IBM Object Storage can be found here](https://ibm-public-cos.github.io/crs-docs/index.html).
 
-
-
-
+## Delete resources
 {: #deleteresources}
 
+The `terraform state rm` command is used to remove items from the [Terraform state](https://www.terraform.io/docs/state/index.html). This command can remove single resources, single instances of a resource, entire modules, and more. We are going to explore deleting the object storage and VM separately to understand how it can work. 
 
+1. Delete the object storage service using the following:
+   ```bash
+   $ terraform state rm module.resources.ibm_object_storage_account.lamp_storage
+   ```
+
+2. Delete the VM using the following:
+   ```bash
+   $ terraform state rm module.resources.ibm_compute_ssh_key.ssh_key
+   ```
+   ![object-storage](images/solution10/cr.png)
+
+   ​
+
+   **Note:** To delete resources, you would need Softlayer admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
 
 
 ## Related information
 
-[IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
+- [Terraform](https://www.terraform.io/)
+- [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
+- [IBM Cloud Provider](https://ibm-cloud.github.io/tf-ibm-docs/)
+- [IBM Cloud Schematics](https://github.com/Cloud-Schematics)
+- [Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html)
 
-[IBM Cloud Provider](https://ibm-cloud.github.io/tf-ibm-docs/)
-
-[IBM Cloud Schematics](https://github.com/Cloud-Schematics)
-
-[Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html)
