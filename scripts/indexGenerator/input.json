@@ -40,12 +40,23 @@
                 ]
             },
             {
-                "name": "Automate deployment of environments using Infrastructure as Code",
+                "name": "Automate deployment of environments using Schematics",
                 "url": "infrastructure-as-code.html",
-                "description": "Use a Schematics template to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then configure the template to scale the resources and tune the environment.",
+                "description": "Use a Schematics template to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.",
                 "imgSrc": "images/solution10/Architecture.png",
                 "tags": [
                     "Schematics",
+                    "Virtual Servers",
+                    "PHP",
+                    "Object Storage"
+                ]
+            },
+            {
+                "name": "Automate deployment of environments using Terraform",
+                "url": "infrastructure-as-code-terraform.html",
+                "description": "Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.",
+                "imgSrc": "images/solution10/Architecture.png",
+                "tags": [
                     "Virtual Servers",
                     "PHP",
                     "Object Storage"
@@ -97,14 +108,15 @@
                 ]
             },
             {
-                "name": "Generate, Access and Analyze Cloud Foundry Application Logs",
+                "name": "Gather and analyze logs and monitor health of a Cloud Foundry application",
                 "url": "application-log-analysis.html",
-                "description": "Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.",
+                "description": "Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana. Understand and diagnose application problems by using the IBM Cloud Log Analysis and Availability Monitoring services.",
                 "imgSrc": "images/solution12/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
                     "Python",
-                    "Log Analysis"
+                    "Log Analysis",
+                    "Availability Monitoring"
                 ]
             },
             {
