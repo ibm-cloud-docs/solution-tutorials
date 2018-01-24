@@ -14,17 +14,20 @@ lastupdated: "2018-01-10"
 {:pre: .pre}
 
 
-# Analyze Kubernetes cluster and application logs in Kibana
+# Analyze Logs and Monitor the health of Kubernetes applications
 
-This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analyze logs.
+This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.
 {:shortdesc}
 
 ## Objectives:
 
 * Create a Kubernetes cluster.
-* Provision the {{site.data.keyword.loganalysisshort}} service.
+* Provision the Log Analysis service.
 * Create logging configurations in the cluster.
+* Provision the Monitoring service
+* Deploy application
 * View, search and analyze logs in Kibana
+* View metrics in Grafana
 
 ![](images/solution17/Architecture.png)
 
@@ -92,6 +95,11 @@ When an application is deployed, logs are collected automatically by the {{site.
     * *mycluster* is the name of your cluster.
     * *IngestionHost* is the hostname to the logging service in the region where the {{site.data.keyword.loganalysisshort}} service is provisioned. For a list of endpoints, see [Endpoints](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls).
     * *OrgName* and *SpaceName* is the location where the {{site.data.keyword.loganalysisshort}} service is provisioned.
+
+## Create the Monitoring service
+
+1. From the IBM Cloud Dashboard, select the **region**, **org** and **space** where you want to create your **Monitoring** service.
+2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Monitoring**](https://console.bluemix.net/catalog/services/monitoring?taxonomyNavigation=apps) service. If you're unable to create the service, check for an existing instance of the Log Analysis service in your space.
 
 ## Create a starter application
 {: #create_application}
@@ -199,7 +207,27 @@ The IBM Cloud has a Container Registry that is private to you. Let's push the Do
 
 The application generates some log data every time you visit its URL. Because of our logging configuration, this data should be forwarded to Log Analysis service and available via Kibana.
 
-From the IBM Cloud **Dashboard**, select your **Log Analysis** instance and click **Launch**.
+1. Open a web browser and launch Kibana using the URL in the table below.
+  <table>
+  <caption>Table 1. URLs to launch Kibana per region</caption>
+  <tr>
+  <th>Region</th>
+  <th>URL</th>
+  </tr>
+  <tr>
+  <td>Germany</td>
+  <td>[https://logging.eu-de.bluemix.net](https://logging.eu-de.bluemix.net) </td>
+  </tr>
+  <tr>
+  <td>United Kingdom</td>
+  <td>[https://logmet.eu-gb.bluemix.net](https://logmet.eu-gb.bluemix.net)</td>
+  </tr>
+  <tr>
+  <td>US South</td>
+  <td>[https://logging.ng.bluemix.net](https://logging.ng.bluemix.net) </td>
+  </tr>
+  </table>
+2. Click on your username in the upper right corner to select the correct **account**, **org** and **space**.
 
 ![](images/solution17/kibana_home.png)
 For more information about other search fields that are relevant to Kubernetes clusters, see [Searching logs](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_search).
@@ -250,6 +278,19 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 3. Click on the arrow in the lower left corner of a component to view changes to a table layout and additional information about the underlying request, response and execution statistics are offered.
   ![](images/solution12/DashboardTable.png)   
 4. Save the dashboard for future use.
+
+## Monitor cluster health using Grafana
+Metrics from the Kubernetes cluster are automatically forwarded to the Monitoring service and are made available to you with Grafana. Grafana is an open source software for time series analytics.
+
+1. Using the IBM Cloud [Dashboard](https://console.bluemix.net/dashboard/apps) find and select your **Monitoring** instance.
+2. Click **Launch** to open up Grafana.
+3. In the top right corner, click on your username and choose **Domain**: **account** and select your **Account**.
+4. Click on **Home** and select the **ClusterMonitoringDashboard_workers** dashboard that has been pre-defined.
+5. Enter the region value (`bx cs regions` to see all regions) where your cluster was created next to **Region** and then enter your cluster name next to **Cluster**.
+   ![](images/solution17/grafana_region_cluster.png)
+6. In a different window, visit your application URL and refresh the page several times to generate some load.
+7. Refresh your Grafana dashboard to see the updated metrics.
+   ![](images/solution17/grafana.png)
 
 ## Expand the Tutorial
 Do you want to learn more? Here are some ideas of what you can do next:
