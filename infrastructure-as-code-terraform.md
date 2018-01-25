@@ -11,7 +11,7 @@ lastupdated: "2018-01-25"
 {:tip: .tip}
 {:pre: .pre}
 
-# Automate deployment of environments using Infrastructure as Code - Terraform
+# Automate deployment of environments using Terraform
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
@@ -26,10 +26,7 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 - Verify updates infrastructure
 - Delete the environment
 
-![Architecture diagram](images/solution10/architecture-2.png)
-
-1. Create or use an existing terraform configuration.
-2. Create LAMP stack server and Cloud Object Storage service from the Terraform configuration.
+![Architecture diagram](images/solution18/Architecture.png)
 
 ## Products
 {: #products}
@@ -51,9 +48,9 @@ Contact your Infrastructure master user to get the following permissions:
 
 Install **Terraform** via [installer](https://www.terraform.io/intro/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
 
-On Windows, follow the below steps to complete terraform setup.
+On **Windows**, follow the below steps to complete terraform setup.
 1. Copy files from the downloaded zip to `C:\terraform`
-2. Open the command prompt as an administrator and set the Path to use terraform binaries       
+2. Open the command prompt as an administrator and set the PATH to use terraform binaries.
      ```
       set PATH=%PATH%;C:\terraform
      ```
@@ -68,15 +65,17 @@ In this section, you will configure the CLI to specify the location of the IBM C
   ```bash
   terraform
   ```
+
 2. Download the appropriate [IBM Cloud Provider](https://github.com/IBM-Cloud/terraform-provider-ibm/releases) plugin for your system and extract the archive. You should see the  `terraform-provider-ibm` binary plugin file.
+
 3. For non-Windows systems, create a `.terraform.d/plugins` directory in your user's home directory and place the binary file inside of it. Use the following commands for reference.
   ```
   mkdir -p $HOME/.terraform.d/plugins
   mv $HOME/Downloads/terraform-provider-ibm $HOME/.terraform.d/plugins/
   ```
-  On Windows, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.
+  On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory. [Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
 
-## Prepare terraform configuration
+## Prepare terraform configuration 
 
 {: #terraformconfig}
 
@@ -88,16 +87,17 @@ In this section, you will learn the basics of a terraform configuration by using
    git clone https://github.com/YOUR_USER_NAME/LAMP-terraform-ibm
    ```
 3. Inspect the configuration files
-   - [install.yml](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/install.yml) - contains server installation configurations, here is where you can add all scripts related to your server install to what to install on the server. See `phpinfo();` injected into this file.
-   - [provider.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/provider.tf) - contains the variables related to the provider where provider username and api key needed.
-   - [vm.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/vm.tf) - contains the server configurations to deploy the VM with specified variables.
-   - [terraform.tfvars](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/terraform.tfvars) - contains **Softlayer** username and api key, these credentials can be added to this file for best practices to avoid re-entering the credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
-4. Now that we understand what's in each file, open the [vm.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/vm.tf) file in an IDE of your choice and modify the file by adding your **public SSH** key to access the VM which will be created by this configuration. To copy the public key to your clipboard, you can run the pbcopy < ~/.ssh/id_rsa.pub command in your terminal.
+   - [install.yml](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/install.yml) - contains server installation configurations, here is where you can add all scripts related to your server install to what to install on the server. See `phpinfo();` injected into this file.
+   - [provider.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/provider.tf) - contains the variables related to the provider where provider username and api key needed.
+   - [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) - contains the server configurations to deploy the VM with specified variables.
+   - [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) - contains **Softlayer** username and api key, these credentials can be added to this file for best practices to avoid re-entering the credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
+4. Now that we understand what's in each file, open the [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) file in an IDE of your choice and modify the file by adding your **public SSH** key. This will be used to access the VM created by this configuration. To copy the public key to your clipboard, you can run the pbcopy < ~/.ssh/id_rsa.pub command in your terminal.
      ```bash
      pbcopy < ~/.ssh/id_rsa.pub
      ```
-     This command will copy the SSH to your clipboard, you can then past that into [vm.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/vm.tf) under the `ssh_key` default variable around line 69.
-5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/terraform.tfvars) file with your IDE, modify the file by adding your `softlayer_username` and `softlayer_api_key`. You can retrieve API key and Softlayer username [here](https://knowledgelayer.softlayer.com/procedure/retrieve-your-api-key).
+     {: pre}
+     This command will copy the SSH to your clipboard, you can then past that into [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) under the `ssh_key` default variable around line 69.
+5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding your `softlayer_username` and `softlayer_api_key`. You can retrieve API key and Softlayer username [here](https://knowledgelayer.softlayer.com/procedure/retrieve-your-api-key).
 
 
 ## Create a LAMP stack server from the terraform configuration
@@ -108,14 +108,17 @@ In this section, you will learn the how to create a LAMP stack server from the t
    ```bash
    $ cd LAMP-terraform-ibm
    ```
+   {: pre}
 2. Initialize the terraform configuration. This will also install `terraform-provider-ibm` plugin.
    ````bash
    $ terraform init
    ````
+   {: pre}
 3. Apply the terraform configuration. This will create the resources defined in the configuration.
    ```
    $ terraform apply
    ```
+   {: pre}
    You should see an output similar to below.![Source Control URL](images/solution10/created.png)
 4. Next, head over to your [infrastructure device list](https://control.bluemix.net/devices) to verify that the server created.![Source Control URL](images/solution10/configuration.png)
 
@@ -131,7 +134,7 @@ In this section, we are going to look at how to scale the virtual server resourc
  - Increase disk size to 100GB
 
 2. Next, we need add a new service, to do that create a new file and name it **object-storage.tf**. Add the code below to the newly created file:
-   ```bash
+   ```
    resource "ibm_object_storage_account" "lamp_storage" {
      count = "${var.object_storage_enabled}"
    }
@@ -140,16 +143,19 @@ In this section, we are going to look at how to scale the virtual server resourc
        default = 1
    }
    ```
+   {: pre}
    **Note:** the label "lamp_storage", we will later look for that in the logs to make sure Object Storage service getting created.
 3.  Initialize the terraform configuration again by running:
 
    ```bash
    $ terraform init
    ```
+   {: pre}
 4. Apply the terraform changes by running:
-   ```
+   ```bash
    $ terraform apply
    ```
+   {: pre}
    **Note:** after running the terraform apply command successfully, you should see a new a `terraform.tfstate`. file added to your directory. This file contains the full deployment confirmation to keep track of what you last applied and any future modifications to your configuration. If this file is removed or lost then you will lose your terraform deployment configurations.
 
 ## Verify VM and Object Storage
@@ -183,10 +189,12 @@ The `terraform state rm` command is used to remove items from the [Terraform sta
    ```bash
    $ terraform state rm module.resources.ibm_object_storage_account.lamp_storage
    ```
+   {: pre}
 2. Delete the VM using the following:
    ```bash
    $ terraform state rm module.resources.ibm_compute_ssh_key.ssh_key
    ```
+   {: pre}
    **Note:** To delete resources, you would need Softlayer admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
 
 
