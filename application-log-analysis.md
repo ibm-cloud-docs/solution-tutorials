@@ -12,7 +12,7 @@ lastupdated: "2018-01-23"
 {:tip: .tip}
 {:pre: .pre}
 
-# Gather and Analyze Logs and Monitor Health of a Cloud Foundry Application
+# Analyze logs and monitor health of a Cloud Foundry application
 This tutorial shows how the [IBM Cloud Log Analysis](https://console.bluemix.net/catalog/services/log-analysis) service can be used to understand and diagnose activities of a Cloud Foundry app that is deployed in the IBM Cloud. You will deploy a Python Cloud Foundry application, generate different types of logs, and search, analyze and visualize those logs by using Kibana, an open-source tool that is offered by the IBM Cloud Log Analysis service. Optionally, you will also setup the [Availability Monitoring](https://console.bluemix.net/catalog/services/availability-monitoring) service to track availability of the deployed application, so that you get notified in the case of application health issues.
 
 ## Objectives

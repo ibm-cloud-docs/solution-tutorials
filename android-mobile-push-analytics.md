@@ -12,7 +12,7 @@ lastupdated: "2018-01-05"
 {:tip: .tip}
 {:pre: .pre}
 
-# Android Native Mobile Application with Push and Analytics
+# Android native mobile application with Push and Analytics
 
 Learn how easy it is to quickly create a native Android application with high-value mobile services like push notifications and mobile analytics on IBM Cloud.
 

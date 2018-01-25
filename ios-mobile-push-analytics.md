@@ -12,7 +12,7 @@ lastupdated: "2018-01-05"
 {:tip: .tip}
 {:pre: .pre}
 
-# iOS Mobile Application with Push and Analytics
+# iOS mobile application with Push and Analytics
 
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.
 

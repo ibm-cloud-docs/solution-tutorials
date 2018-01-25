@@ -14,7 +14,7 @@ lastupdated: "2018-01-10"
 {:pre: .pre}
 
 
-# Analyze Logs and Monitor the health of Kubernetes applications
+# Analyze logs and monitor the health of Kubernetes applications
 
 This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.
 {:shortdesc}

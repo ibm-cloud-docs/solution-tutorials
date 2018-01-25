@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-24"
+lastupdated: "2018-01-25"
 
 ---
 
@@ -117,7 +117,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="lamp-stack.html" class="solutionBoxTitle">
-            <a href = "lamp-stack.html">Web Application on LAMP Stack</a>
+            <a href = "lamp-stack.html">Web application on LAMP stack</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -184,7 +184,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="mean-stack.html" class="solutionBoxTitle">
-            <a href = "mean-stack.html">Modern Web Applications using MEAN stack</a>
+            <a href = "mean-stack.html">Modern web application using MEAN stack</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -216,7 +216,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="serverless-api-webapp.html" class="solutionBoxTitle">
-            <a href = "serverless-api-webapp.html">Serverless Web Application and API</a>
+            <a href = "serverless-api-webapp.html">Serverless web application and API</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -232,7 +232,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="application-log-analysis.html" class="solutionBoxTitle">
-            <a href = "application-log-analysis.html">Gather and analyze logs and monitor health of a Cloud Foundry application</a>
+            <a href = "application-log-analysis.html">Analyze logs and monitor health of Cloud Foundry applications</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -249,7 +249,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="kubernetes-log-analysis-kibana.html" class="solutionBoxTitle">
-            <a href = "kubernetes-log-analysis-kibana.html">Analyze Logs and Monitor the health of Kubernetes applications</a>
+            <a href = "kubernetes-log-analysis-kibana.html">Analyze logs and monitor the health of Kubernetes applications</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -267,7 +267,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="create-manage-secure-apis.html" class="solutionBoxTitle">
-            <a href = "create-manage-secure-apis.html">Create, Secure and Manage REST APIs</a>
+            <a href = "create-manage-secure-apis.html">Create, secure and manage REST APIs</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -323,7 +323,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="hybrid-mobile-push-analytics.html" class="solutionBoxTitle">
-            <a href = "hybrid-mobile-push-analytics.html">Hybrid Mobile Application with Push and Analytics</a>
+            <a href = "hybrid-mobile-push-analytics.html">Hybrid mobile application with Push and Analytics</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -363,7 +363,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     <div class = "solutionBox">
         <h3 id="gather-visualize-analyze-iot-data.html" class="solutionBoxTitle">
-            <a href = "gather-visualize-analyze-iot-data.html">Gather, Visualize and Analyze IoT data</a>
+            <a href = "gather-visualize-analyze-iot-data.html">Gather, visualize and analyze IoT data</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">

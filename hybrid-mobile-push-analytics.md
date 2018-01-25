@@ -12,7 +12,7 @@ lastupdated: "2018-01-08"
 {:tip: .tip}
 {:pre: .pre}
 
-# Hybrid Mobile Application with Push and Analytics
+# Hybrid mobile application with Push and Analytics
 
 Learn how easy it is to quickly create a Hybrid Cordova application with high-value mobile services like push notifications and mobile analytics on IBM Cloud.
 
