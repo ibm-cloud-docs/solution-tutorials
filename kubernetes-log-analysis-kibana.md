@@ -202,6 +202,9 @@ The IBM Cloud has a Container Registry that is private to you. Let's push the Do
   ![](images/solution17/kubectl_get_services.png)
   ![](images/solution17/node_starter_cluster.png)
 
+To set up Ingress and use your own custom domain see the [Use your own custom domain](/docs/tutorials/scalable-webapp-kubernetes.html#custom_domain) section of the [Deploy a scalable web application on Kubernetes. tutorial](/docs/tutorials/scalable-webapp-kubernetes.html)
+
+
 ## View log data in Kibana
 {: #step8}
 
