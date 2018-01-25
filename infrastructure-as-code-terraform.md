@@ -15,7 +15,7 @@ lastupdated: "2018-01-23"
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
-In this tutorial, you will use a sample configuration to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server (LAMP stack). You will then update the configuration to add an Object Storage service and scale the resources to tune the environment (memory, CPU, and disk size). Finish by deleting all of the resources created by the configuration.
+In this tutorial, you will use a sample configuration to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server termed as **LAMP** stack. You will then update the configuration to add an Object Storage service and scale the resources to tune the environment (memory, CPU, and disk size). Finish by deleting all of the resources created by the configuration.
 
 ## Objectives
 
@@ -51,6 +51,12 @@ Contact your Infrastructure master user to get the following permissions:
 
 Install **Terraform** via [installer](https://www.terraform.io/intro/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
 
+On Windows, follow the below steps to complete terraform setup.
+1. Copy files from the downloaded zip to C:\terraform
+2. Open the command prompt as an administrator and set the Path to use terraform binaries       
+     ```
+      set PATH=%PATH%;C:\terraform
+     ```
 ## Terraform setup with IBM Cloud Provider
 
 {: #setup}
@@ -81,11 +87,11 @@ In this section, you will learn the basics of a terraform configuration by using
    git clone https://github.com/YOUR_USER_NAME/LAMP-terraform-ibm
    ```
 3. Inspect the configuration files
-   - [install.yml](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/install.yml) - contains server instillation configurations, here is where you can add all scripts related to your server install to what to install on the server. See `phpinfo();` injected into this file.
+   - [install.yml](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/install.yml) - contains server installation configurations, here is where you can add all scripts related to your server install to what to install on the server. See `phpinfo();` injected into this file.
    - [provider.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/provider.tf) - contains the variables related to the provider where provider username and api key needed.
    - [vm.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/vm.tf) - contains the server configurations to deploy the VM with specified variables.
-   - [terraform.tfvars](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/terraform.tfvars) - contains **Softlayer** username and api key, these credentials can be added to this file for best practices to avoid reentering the credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
-4. Now that we understand what's in each file, open the [vm.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/vm.tf) file with your IDE and modify the file by adding your **public SSH** key to access the VM which will be created by this configuration. To copy the public key to your clipboard, you can run the pbcopy < ~/.ssh/id_rsa.pub command in your terminal.
+   - [terraform.tfvars](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/terraform.tfvars) - contains **Softlayer** username and api key, these credentials can be added to this file for best practices to avoid re-entering the credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
+4. Now that we understand what's in each file, open the [vm.tf](https://github.com/IBM-Cloud/infrastructure-as-code-terraform/blob/master/vm.tf) file in an IDE of your choice and modify the file by adding your **public SSH** key to access the VM which will be created by this configuration. To copy the public key to your clipboard, you can run the pbcopy < ~/.ssh/id_rsa.pub command in your terminal.
      ```bash
      pbcopy < ~/.ssh/id_rsa.pub
      ```
@@ -118,10 +124,10 @@ In this section, you will learn the how to create a LAMP stack server from the t
 
 In this section, we are going to look at how to scale the virtual server resource and add an [Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage) service to your infrastructure environment.
 
-1. Edit the vm.tf file to increase the following and the save the file.
-- Increase number of CPU cores to 4 cores
-- Increase RAM to 4096
-- Increase disk size to 100GB
+1. Edit the `vm.tf` file to increase the following and the save the file.
+ - Increase number of CPU cores to 4 cores
+ - Increase RAM(memory) to 4096
+ - Increase disk size to 100GB
 
 2. Next, we need add a new service, to do that create a new file and name it **object-storage.tf**. Add the code below to the newly created file:
    ```bash
@@ -133,7 +139,7 @@ In this section, we are going to look at how to scale the virtual server resourc
        default = 1
    }
    ```
-   **Note** the label "lamp_storage", we will later look for that in the logs to make sure Object Storage service getting created.
+   **Note:** the label "lamp_storage", we will later look for that in the logs to make sure Object Storage service getting created.
 3.  Initialize the terraform configuration again by running:
 
    ```bash
@@ -143,7 +149,7 @@ In this section, we are going to look at how to scale the virtual server resourc
    ```
    terraform apply
    ```
-   Note: after running the terraform apply command successfully, you should see a new a `terraform.tfstate`. file added to your directory. This file contains the full deployment confirmation to keep track of what you last applied and any future modifications to your configuration. If this file is removed or lost then you will lose your terraform deployment configurations.
+   **Note:** after running the terraform apply command successfully, you should see a new a `terraform.tfstate`. file added to your directory. This file contains the full deployment confirmation to keep track of what you last applied and any future modifications to your configuration. If this file is removed or lost then you will lose your terraform deployment configurations.
 
 ## Verify VM and Object Storage
 {: #verifyvm}
@@ -152,7 +158,7 @@ In this section, you are going to verify the VM and Object Storage to make sure 
 
 **Verify VM**
 
-1. Using the left side menu, click on **Infrastructure** to view the list of virtual server devices.
+1. On the left side menu, click on **Infrastructure** to view the list of virtual server devices.
 2. Click **Devices** -> **Device List** to find the server created. You should see your server device listed.
 3. Click on the server to view more information on the server configuration. Looking at the screenshot below, we can see that the server is successfully created. ![Source Control URL](images/solution10/configuration.png)
 4. Next, let's test the server in the web browser. Open the server public IP address in the web browser. You should see the server default installation page like below.![Source Control URL](images/solution10/LAMP.png)
