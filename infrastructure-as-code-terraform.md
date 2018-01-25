@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-23"
+lastupdated: "2018-01-25"
 ---
 
 {:shortdesc: .shortdesc}
@@ -52,11 +52,12 @@ Contact your Infrastructure master user to get the following permissions:
 Install **Terraform** via [installer](https://www.terraform.io/intro/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
 
 On Windows, follow the below steps to complete terraform setup.
-1. Copy files from the downloaded zip to C:\terraform
+1. Copy files from the downloaded zip to `C:\terraform`
 2. Open the command prompt as an administrator and set the Path to use terraform binaries       
      ```
       set PATH=%PATH%;C:\terraform
      ```
+
 ## Terraform setup with IBM Cloud Provider
 
 {: #setup}
@@ -113,7 +114,7 @@ In this section, you will learn the how to create a LAMP stack server from the t
    ````
 3. Apply the terraform configuration. This will create the resources defined in the configuration.
    ```
-   terraform apply
+   $ terraform apply
    ```
    You should see an output similar to below.![Source Control URL](images/solution10/created.png)
 4. Next, head over to your [infrastructure device list](https://control.bluemix.net/devices) to verify that the server created.![Source Control URL](images/solution10/configuration.png)
@@ -147,7 +148,7 @@ In this section, we are going to look at how to scale the virtual server resourc
    ```
 4. Apply the terraform changes by running:
    ```
-   terraform apply
+   $ terraform apply
    ```
    **Note:** after running the terraform apply command successfully, you should see a new a `terraform.tfstate`. file added to your directory. This file contains the full deployment confirmation to keep track of what you last applied and any future modifications to your configuration. If this file is removed or lost then you will lose your terraform deployment configurations.
 
