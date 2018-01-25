@@ -202,5 +202,6 @@ The `terraform state rm` command is used to remove items from the [Terraform sta
 
 - [Terraform](https://www.terraform.io/)
 - [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
-- [IBM Cloud Provider](https://ibm-cloud.github.io/tf-ibm-docs/)
+- [IBM Cloud Provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/)
 - [Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html)
+
