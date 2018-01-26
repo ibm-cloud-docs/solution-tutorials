@@ -73,10 +73,10 @@ In this section, you will configure the CLI to specify the location of the IBM C
   mkdir -p $HOME/.terraform.d/plugins
   mv $HOME/Downloads/terraform-provider-ibm $HOME/.terraform.d/plugins/
   ```
-  On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.Run the below commands on a command prompt
+   On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.Run the below commands on a command prompt
 [Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
    ```
-  mkdir %USERPROFILE%\AppData\terraform.d\plugins
+  MD %USERPROFILE%\AppData\terraform.d\plugins
   ```
   ```
    MOVE PATH_TO_UNZIPPED_PROVIDER_FILE\terraform-provider-ibm.exe  %USERPROFILE%\AppData\terraform.d\plugins
@@ -105,10 +105,10 @@ In this section, you will learn the basics of a terraform configuration by using
      {: pre}
      This command will copy the SSH to your clipboard, you can then past that into [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) under the `ssh_key` default variable around line 69.
  
-On **Windows**, Download, install, launch [Git Bash](http://gitforwindows.org) and run the below command to copy the public SSH key to your clipboard
-  ```
-   clip < ~/.ssh/id_rsa.pub
-  ```
+    On **Windows**, Download, install, launch [Git Bash](http://gitforwindows.org) and run the below command to copy the public SSH key to your clipboard
+    ```
+     clip < ~/.ssh/id_rsa.pub
+    ```
 5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding your `softlayer_username` and `softlayer_api_key`. You can retrieve API key and Softlayer username [here](https://knowledgelayer.softlayer.com/procedure/retrieve-your-api-key).
 
 
