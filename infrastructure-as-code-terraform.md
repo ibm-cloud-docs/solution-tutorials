@@ -73,7 +73,8 @@ In this section, you will configure the CLI to specify the location of the IBM C
   mkdir -p $HOME/.terraform.d/plugins
   mv $HOME/Downloads/terraform-provider-ibm $HOME/.terraform.d/plugins/
   ```
-  On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.Run the below commands on a command prompt[Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
+  On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.Run the below commands on a command prompt
+[Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
    ```
   mkdir %USERPROFILE%\AppData\terraform.d\plugins
   ```
@@ -103,7 +104,8 @@ In this section, you will learn the basics of a terraform configuration by using
      ```
      {: pre}
      This command will copy the SSH to your clipboard, you can then past that into [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) under the `ssh_key` default variable around line 69.
- On **Windows**, Download, install, launch [Git Bash](http://gitforwindows.org) and run the below command to copy the public SSH key to your clipboard
+ 
+On **Windows**, Download, install, launch [Git Bash](http://gitforwindows.org) and run the below command to copy the public SSH key to your clipboard
   ```
    clip < ~/.ssh/id_rsa.pub
   ```
