@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-10"
+lastupdated: "2018-01-18"
 ---
 
 {:shortdesc: .shortdesc}
@@ -11,7 +11,7 @@ lastupdated: "2018-01-10"
 {:tip: .tip}
 {:pre: .pre}
 
-# Automate deployment of environments using Infrastructure as Code
+# Automate deployment of environments using Schematics
 
 IBM Cloud Schematics is a tool that uses [Terraform](https://ibm-cloud.github.io/tf-ibm-docs/) to provision and manage infrastructure resources, Cloud Foundry applications, services, Kubernetes clusters and much more using code in a configuration file(s).
 

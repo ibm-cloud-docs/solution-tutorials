@@ -28,7 +28,7 @@
                 ]
             },
             {
-                "name": "Web Application on LAMP Stack",
+                "name": "Web application on LAMP stack",
                 "url": "lamp-stack.html",
                 "description": "This tutorial walks you through the creation of an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP (the LAMP stack). To see the LAMP server in action, you will install and configure the WordPress open source application.",
                 "imgSrc": "images/solution4/Architecture.png",
@@ -40,12 +40,23 @@
                 ]
             },
             {
-                "name": "Automate deployment of environments using Infrastructure as Code",
+                "name": "Automate deployment of environments using Schematics",
                 "url": "infrastructure-as-code.html",
-                "description": "Use a Schematics template to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then configure the template to scale the resources and tune the environment.",
+                "description": "Use a Schematics template to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.",
                 "imgSrc": "images/solution10/Architecture.png",
                 "tags": [
                     "Schematics",
+                    "Virtual Servers",
+                    "PHP",
+                    "Object Storage"
+                ]
+            },
+            {
+                "name": "Automate deployment of environments using Terraform",
+                "url": "infrastructure-as-code-terraform.html",
+                "description": "Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.",
+                "imgSrc": "images/solution10/Architecture.png",
+                "tags": [
                     "Virtual Servers",
                     "PHP",
                     "Object Storage"
@@ -64,7 +75,7 @@
                 ]
             },
             {
-                "name": "Modern Web Applications using MEAN stack",
+                "name": "Modern web application using MEAN stack",
                 "url": "mean-stack.html",
                 "description": "This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a Mongo DB, Express web framework, Angular front end framework and a Node.js runtime.",
                 "imgSrc": "images/solution7/Architecture.png",
@@ -86,7 +97,7 @@
                 ]
             },
             {
-                "name": "Serverless Web Application and API",
+                "name": "Serverless web application and API",
                 "url": "serverless-api-webapp.html",
                 "description": "Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.",
                 "imgSrc": "images/solution8/Architecture.png",
@@ -97,30 +108,32 @@
                 ]
             },
             {
-                "name": "Generate, Access and Analyze Cloud Foundry Application Logs",
+                "name": "Analyze logs and monitor health of Cloud Foundry applications",
                 "url": "application-log-analysis.html",
-                "description": "Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.",
+                "description": "Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana. Understand and diagnose application problems by using the IBM Cloud Log Analysis and Availability Monitoring services.",
                 "imgSrc": "images/solution12/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
                     "Python",
-                    "Log Analysis"
+                    "Log Analysis",
+                    "Availability Monitoring"
                 ]
             },
             {
-                "name": "Generate, Access and Analyze Kubernetes Application Logs",
+                "name": "Analyze logs and monitor the health of Kubernetes applications",
                 "url": "kubernetes-log-analysis-kibana.html",
-                "description": "This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analyze logs.",
+                "description": "This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.",
                 "imgSrc": "images/solution17/Architecture.png",
                 "tags": [
                     "Kubernetes",
                     "Docker",
                     "Node.js",
-                    "Log Analysis"
+                    "Log Analysis",
+                    "Monitoring"
                 ]
             },
             {
-                "name": "Create, Secure and Manage REST APIs",
+                "name": "Create, secure and manage REST APIs",
                 "url": "create-manage-secure-apis.html",
                 "description": "This tutorial demonstrates how to create a new REST API using the LoopBack Node.js API framework and then add management, visibility, security and rate limiting to your API using the API Connect service on IBM Cloud.",
                 "imgSrc": "images/solution13/Architecture.png",
@@ -160,7 +173,7 @@
                 ]
             },
             {
-                "name": "Hybrid Mobile Application with Push and Analytics",
+                "name": "Hybrid mobile application with Push and Analytics",
                 "url": "hybrid-mobile-push-analytics.html",
                 "description": "Learn how easy it is to quickly create a hybrid Cordova application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
                 "imgSrc": "images/solution15/Architecture.png",
@@ -188,7 +201,7 @@
         "name": "Internet of Things",
         "anchor": "iot",
         "solutions": [{
-                "name": "Gather, Visualize and Analyze IoT data",
+                "name": "Gather, visualize and analyze IoT data",
                 "url": "gather-visualize-analyze-iot-data.html",
                 "description": "This tutorial walks you thru setting up an IoT device, gathering large amounts of data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data.",
                 "imgSrc": "images/solution16/Architecture.png",

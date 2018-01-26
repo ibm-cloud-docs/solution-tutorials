@@ -14,17 +14,20 @@ lastupdated: "2018-01-10"
 {:pre: .pre}
 
 
-# Analyze Kubernetes cluster and application logs in Kibana
+# Analyze logs and monitor the health of Kubernetes applications
 
-This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analyze logs.
+This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.
 {:shortdesc}
 
 ## Objectives:
 
 * Create a Kubernetes cluster.
-* Provision the {{site.data.keyword.loganalysisshort}} service.
+* Provision the Log Analysis service.
 * Create logging configurations in the cluster.
+* Provision the Monitoring service
+* Deploy application
 * View, search and analyze logs in Kibana
+* View metrics in Grafana
 
 ![](images/solution17/Architecture.png)
 
@@ -38,11 +41,12 @@ This tutorial walks you through creating a cluster, configuring the cluster to s
 ## Create a Kubernetes cluster
 {: #step1}
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). Create a **Pay-As-You_Go** cluster. Log forwarding is *not* enabled for the **Free** cluster.
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Pay-As-You_Go** cluster. Log forwarding is *not* enabled for the **Free** cluster.
   {:tip}
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution17/KubernetesPaidClusterCreation.png)
 2. For convenience, use the name `mycluster` to be consistent with this tutorial.
-3. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
+3. The smallest **Machine Type** with 1 **Worker Nodes** is sufficient for this tutorial. Leave all other options set to defaults.
+4. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 **NOTE:** Do not proceed until your workers are ready. This might take up to one hour.
 
@@ -92,6 +96,11 @@ When an application is deployed, logs are collected automatically by the {{site.
     * *IngestionHost* is the hostname to the logging service in the region where the {{site.data.keyword.loganalysisshort}} service is provisioned. For a list of endpoints, see [Endpoints](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls).
     * *OrgName* and *SpaceName* is the location where the {{site.data.keyword.loganalysisshort}} service is provisioned.
 
+## Create the Monitoring service
+
+1. From the IBM Cloud Dashboard, select the **region**, **org** and **space** where you want to create your **Monitoring** service.
+2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Monitoring**](https://console.bluemix.net/catalog/services/monitoring?taxonomyNavigation=apps) service. If you're unable to create the service, check for an existing instance of the Log Analysis service in your space.
+
 ## Create a starter application
 {: #create_application}
 The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
@@ -104,11 +113,13 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 
 2. Select `Backend Service / Web App` > `Node `> `Web App - Express.js Basic` to create a Node.js starter application.
 3. Enter a **name** (`mynodestarter`) and a unique **hostname** (`username-mynodestarter`) for your project.
-4. Select **n** to skip adding services.
   ![](images/solution17/bx_dev_create.png)
-  This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
 
-![](images/solution2/Contents.png)
+4. Select **n** to skip adding services and choose **No DevOps**.
+
+  Once complete, this generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/node_project_contents.html).
+
+![](images/solution17/node_starter_contents.png)
 
 ### Build the application
 
@@ -162,7 +173,7 @@ You can build and run the application as you normally would using `mvn` for java
 ## Deploy application to cluster
 {: #deploy}
 
-In this section, we first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
+The IBM Cloud has a Container Registry that is private to you. Let's push the Docker image there, and then create a Kubernetes deployment pointing to that image.
 
 1. Find your **namespace** by listing all the namespace in the registry.
    ```
@@ -187,17 +198,39 @@ In this section, we first push the Docker image to the IBM Cloud private contain
 4. When prompted, enter your **cluster name**.
 5. Next, enter your **image name**. Use the following format: `<registry_url>/<namespace>/<projectname>`
 6. Wait a few minutes for your application to be deployed.
-7. Visit the URL displayed to access the application by `http://ip-address:portnumber/`
+7. Visit the URL displayed to access the application by `http://worker-public-ip:portnumber/`. If you do not see a port number, run `kubectl get services` and look for the 5 digit port number next to your application service.
+  ![](images/solution17/kubectl_get_services.png)
+  ![](images/solution17/node_starter_cluster.png)
 
+To set up Ingress and use your own custom domain see the [Use your own custom domain](/docs/tutorials/scalable-webapp-kubernetes.html#custom_domain) section of the [Deploy a scalable web application on Kubernetes. tutorial](/docs/tutorials/scalable-webapp-kubernetes.html)
 
-![](images/solution17/node_starter_cluster.png)
 
 ## View log data in Kibana
 {: #step8}
 
 The application generates some log data every time you visit its URL. Because of our logging configuration, this data should be forwarded to Log Analysis service and available via Kibana.
 
-From the IBM Cloud **Dashboard**, select your **Log Analysis** instance and click **Launch**.
+1. Open a web browser and launch Kibana using the URL in the table below.
+  <table>
+  <caption>Table 1. URLs to launch Kibana per region</caption>
+  <tr>
+  <th>Region</th>
+  <th>URL</th>
+  </tr>
+  <tr>
+  <td>Germany</td>
+  <td>[https://logging.eu-de.bluemix.net](https://logging.eu-de.bluemix.net) </td>
+  </tr>
+  <tr>
+  <td>United Kingdom</td>
+  <td>[https://logmet.eu-gb.bluemix.net](https://logmet.eu-gb.bluemix.net)</td>
+  </tr>
+  <tr>
+  <td>US South</td>
+  <td>[https://logging.ng.bluemix.net](https://logging.ng.bluemix.net) </td>
+  </tr>
+  </table>
+2. Click on your username in the upper right corner to select the correct **account**, **org** and **space**.
 
 ![](images/solution17/kibana_home.png)
 For more information about other search fields that are relevant to Kubernetes clusters, see [Searching logs](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_search).
@@ -248,6 +281,19 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 3. Click on the arrow in the lower left corner of a component to view changes to a table layout and additional information about the underlying request, response and execution statistics are offered.
   ![](images/solution12/DashboardTable.png)   
 4. Save the dashboard for future use.
+
+## Monitor cluster health using Grafana
+Metrics from the Kubernetes cluster are automatically forwarded to the Monitoring service and are made available to you with Grafana. Grafana is an open source software for time series analytics.
+
+1. Using the IBM Cloud [Dashboard](https://console.bluemix.net/dashboard/apps) find and select your **Monitoring** instance.
+2. Click **Launch** to open up Grafana.
+3. In the top right corner, click on your username and choose **Domain**: **account** and select your **Account**.
+4. Click on **Home** and select the **ClusterMonitoringDashboard_workers** dashboard that has been pre-defined.
+5. Enter the region value (`bx cs regions` to see all regions) where your cluster was created next to **Region** and then enter your cluster name next to **Cluster**.
+   ![](images/solution17/grafana_region_cluster.png)
+6. In a different window, visit your application URL and refresh the page several times to generate some load.
+7. Refresh your Grafana dashboard to see the updated metrics.
+   ![](images/solution17/grafana.png)
 
 ## Expand the Tutorial
 Do you want to learn more? Here are some ideas of what you can do next:

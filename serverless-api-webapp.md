@@ -13,7 +13,7 @@ lastupdated: "2017-10-27"
 {:pre: .pre}
 
 
-# Serverless Web Application and API
+# Serverless web application and API
 
 In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and  implementing the application backend using Functions on IBM Cloud.
 

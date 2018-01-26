@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Generate index.md
-cd htmlGen
+cd indexGenerator
 node app.js
 cd ../..
 

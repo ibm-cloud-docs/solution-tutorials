@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-19"
+lastupdated: "2018-01-25"
 
 ---
 
@@ -117,7 +117,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="lamp-stack.html" class="solutionBoxTitle">
-            <a href = "lamp-stack.html">Web Application on LAMP Stack</a>
+            <a href = "lamp-stack.html">Web application on LAMP stack</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -134,12 +134,28 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="infrastructure-as-code.html" class="solutionBoxTitle">
-            <a href = "infrastructure-as-code.html">Automate deployment of environments using Infrastructure as Code</a>
+            <a href = "infrastructure-as-code.html">Automate deployment of environments using Schematics</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>Use a Schematics template to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then configure the template to scale the resources and tune the environment.</p>
+                <p>Use a Schematics template to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.</p>
                     <span class="tag-filter category">Schematics</span>
+                    <span class="tag-filter category">Virtual Servers</span>
+                    <span class="tag-filter category">PHP</span>
+                    <span class="tag-filter category">Object Storage</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution10/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="infrastructure-as-code-terraform.html" class="solutionBoxTitle">
+            <a href = "infrastructure-as-code-terraform.html">Automate deployment of environments using Terraform</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.</p>
                     <span class="tag-filter category">Virtual Servers</span>
                     <span class="tag-filter category">PHP</span>
                     <span class="tag-filter category">Object Storage</span>
@@ -168,7 +184,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="mean-stack.html" class="solutionBoxTitle">
-            <a href = "mean-stack.html">Modern Web Applications using MEAN stack</a>
+            <a href = "mean-stack.html">Modern web application using MEAN stack</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -200,7 +216,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="serverless-api-webapp.html" class="solutionBoxTitle">
-            <a href = "serverless-api-webapp.html">Serverless Web Application and API</a>
+            <a href = "serverless-api-webapp.html">Serverless web application and API</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -216,14 +232,15 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="application-log-analysis.html" class="solutionBoxTitle">
-            <a href = "application-log-analysis.html">Generate, Access and Analyze Cloud Foundry Application Logs</a>
+            <a href = "application-log-analysis.html">Analyze logs and monitor health of Cloud Foundry applications</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.</p>
+                <p>Learn how the IBM Cloud Log Analysis service can be used to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana. Understand and diagnose application problems by using the IBM Cloud Log Analysis and Availability Monitoring services.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">Python</span>
                     <span class="tag-filter category">Log Analysis</span>
+                    <span class="tag-filter category">Availability Monitoring</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution12/Architecture.png" />
@@ -232,15 +249,16 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="kubernetes-log-analysis-kibana.html" class="solutionBoxTitle">
-            <a href = "kubernetes-log-analysis-kibana.html">Generate, Access and Analyze Kubernetes Application Logs</a>
+            <a href = "kubernetes-log-analysis-kibana.html">Analyze logs and monitor the health of Kubernetes applications</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial walks you through creating a cluster, configuring the cluster to send logs to the {site.data.keyword.loganalysisshort}} service, deploying an application to the cluster and then using Kibana to view and analyze logs.</p>
+                <p>This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.</p>
                     <span class="tag-filter category">Kubernetes</span>
                     <span class="tag-filter category">Docker</span>
                     <span class="tag-filter category">Node.js</span>
                     <span class="tag-filter category">Log Analysis</span>
+                    <span class="tag-filter category">Monitoring</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution17/Architecture.png" />
@@ -249,7 +267,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="create-manage-secure-apis.html" class="solutionBoxTitle">
-            <a href = "create-manage-secure-apis.html">Create, Secure and Manage REST APIs</a>
+            <a href = "create-manage-secure-apis.html">Create, secure and manage REST APIs</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -305,7 +323,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="hybrid-mobile-push-analytics.html" class="solutionBoxTitle">
-            <a href = "hybrid-mobile-push-analytics.html">Hybrid Mobile Application with Push and Analytics</a>
+            <a href = "hybrid-mobile-push-analytics.html">Hybrid mobile application with Push and Analytics</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -345,7 +363,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     <div class = "solutionBox">
         <h3 id="gather-visualize-analyze-iot-data.html" class="solutionBoxTitle">
-            <a href = "gather-visualize-analyze-iot-data.html">Gather, Visualize and Analyze IoT data</a>
+            <a href = "gather-visualize-analyze-iot-data.html">Gather, visualize and analyze IoT data</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
