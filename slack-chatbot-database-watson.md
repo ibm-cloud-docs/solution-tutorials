@@ -22,8 +22,8 @@ The chatbot retrieves information from a Db2 database. The data can also be upda
 ## Objectives
 
 * Connect IBM Watson Conversation to Slack using the Conversation connector
-* Create and prepare a Db2 database
 * Create, deploy and bind Node.js actions in IBM Cloud Functions
+* Access a Db2 database from IBM Cloud Functions using Node.js
 
 ## Products
 
@@ -38,8 +38,22 @@ This tutorial uses the following products:
 
 To complete this tutorial you need the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/index.html#overview) and the IBM Cloud Functions [plugin installed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/extend_cli.html#plug-ins).
 
-## Create services
-start with Db2, create table, load data, add credentials
+## Service and Environment Setup
+In the following, we are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on Github.
+
+1. Download or clone the repository https://github.com/IBM-Cloud/UPDATEME. Change into that directory.
+2. If not already done, [login to IBM Cloud and select the organization and space where the services and code should be deployed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login).
+3. 
+
+
+overall flow:
+1. clone repository
+2. run script to create services
+3. run script to set up database and actions
+4. load workspace
+5. adjust credentials in some nodes
+6. deploy conversation to Slack
+7. test
 
 ## Deploy the Conversation to Slack
 
@@ -53,8 +67,8 @@ start with Db2, create table, load data, add credentials
 Want to extend this tutorial? Here are some ideas:
 1.
 2.
-3.
-4.
+3. Add a weather forecast for event data
+4. Export event data as iCalendar ics file.
 
 # Related Content
 * [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) for connecting Watson Conversation to Slack and Facebook Messenger
