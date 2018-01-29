@@ -43,7 +43,16 @@ In the following, we are going to set up the needed services and prepare the env
 
 1. Download or clone the repository https://github.com/IBM-Cloud/UPDATEME. Change into that directory.
 2. If not already done, [login to IBM Cloud and select the organization and space where the services and code should be deployed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login).
-3. 
+3. Create a Db2 Warehouse instance. You can replace **myEventDB** with a name of your choice:
+```
+bx service create dashDB entry myEventDB
+```
+You can also use another than the **Entry** plan.
+4. Create an instance of the Watson Conversation service. We use **eventConversation** as name and the free Lite plan.
+```
+bx service create conversation free eventConversation
+```
+5. 
 
 
 overall flow:
