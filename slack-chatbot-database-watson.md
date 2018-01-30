@@ -38,6 +38,16 @@ This tutorial uses the following products:
 
 To complete this tutorial you need the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/index.html#overview) and the IBM Cloud Functions [plugin installed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/extend_cli.html#plug-ins).
 
+overall flow:
+1. [x] clone repository
+2. [x] run script to create services
+3. [x] run script to set up database and actions
+4. load workspace
+5. adjust credentials in some nodes
+6. deploy conversation to Slack
+7. test
+
+
 ## Service and Environment Setup
 In the following, we are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on Github.
 
@@ -52,17 +62,19 @@ You can also use another than the **Entry** plan.
 ```
 bx service create conversation free eventConversation
 ```
-5. 
+5. The next step is to execute a shell script. It registers actions for IBM Cloud Functions and binds service credentials to those actions. Thereafter, the script invokes an action to create a table in Db2 Warehouse. By using an action of IBM Cloud Functions we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table.
+```
+sh setup.sh
+```
+INCLUDE SCREENSHOT of output
 
+## Load and adapt Conversation Workspace
+In this part of the tutorial we are going to load a pre-defined workspace into the Watson Conversation service. Thereafter, we need to replace service credentials and action names to adapt the workspace to the new environment.   
+1. In the [IBM Cloud dashboard](https://console.bluemix.net) open the overview of your services. Locate the instance of the conversation service created in the previous section. Click on its entry to open the service details. Click on **Launch Tool** to get to the Watson Conversation Tool.
+2. In the tool click on the **Import workspace** icon, right next to the **Create** button. In the popup dialog select the file **conversation-workspace.js** from the local directory. Leave the import option at **Everything (Intents, Entities, and Dialog)**, then click **Import**.
+3. Locate dialog node labeled ... to change action name and credentials.
+4. Repeat for dialog node ... and ...
 
-overall flow:
-1. clone repository
-2. run script to create services
-3. run script to set up database and actions
-4. load workspace
-5. adjust credentials in some nodes
-6. deploy conversation to Slack
-7. test
 
 ## Deploy the Conversation to Slack
 
@@ -70,6 +82,14 @@ overall flow:
 2. Under Deploy Options in the **Deploy with Cloud Functions** click on **Deploy** for Slack.
 3. Click on **Deploy to Slack app** which brings you to a page with instructions on how to create and configure the Slack app.
 4. Follow the instructions on the that page which has about 8 steps on its own. In order to create the Slack app, you need access to a Slack workspace. If you don't have that yet, then you can sign up and create such a workspace as part of that process.
+
+
+## Cleanup
+Executing the cleanup script deletes the event table from Db2 Warehouse and removes the actions from IBM Cloud Functions.
+```
+sh cleanup.sh
+```
+
 
 
 ## Expand the tutorial
