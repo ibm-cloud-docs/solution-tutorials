@@ -54,20 +54,21 @@ This tutorial walks you through creating a cluster and configuring the Log Analy
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `bx login` to log in interactively. Provide the account under which the cluster is created. You can reconfirm the details by running `bx target` command.
-2. When the cluster is ready, retrieve the cluster configuration:
+1. Update your **bx** plugins by running `bx plugin update`.
+2. Use `bx login` to log in interactively. Provide the account under which the cluster is created. You can reconfirm the details by running `bx target` command.
+3. When the cluster is ready, retrieve the cluster configuration:
    ```bash
    bx cs cluster-config <cluster-name>
    ```
    {: pre}
-3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
+4. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
   `echo $KUBECONFIG`
-4. Check that the `kubectl` command is correctly configured
+5. Check that the `kubectl` command is correctly configured
    ```bash
    kubectl cluster-info
    ```
    {: pre}
-5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. After your cluster workers are ready, run the command below to initialize Helm in your cluster.
+6. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. After your cluster workers are ready, run the command below to initialize Helm in your cluster.
    ```bash
    helm init
    ```
