@@ -27,4 +27,5 @@ Solution Tutorials
     serverless-mobile-backend.md
     hybrid-mobile-push-analytics.md
     gather-visualize-analyze-iot-data.md
+    users-teams-applications.md
     {: .navgroup-end}
