@@ -52,7 +52,7 @@ On **Windows**, follow the below steps to complete terraform setup.
 1. Copy files from the downloaded zip to `C:\terraform` (create a folder `terraform`).
 2. Open the command prompt as an administrator and set the PATH to use terraform binaries.
      ```
-      set PATH=%PATH%;C:\terraform
+     set PATH=%PATH%;C:\terraform
      ```
 
 ## Terraform setup with IBM Cloud Provider
@@ -80,21 +80,21 @@ In this section, you will configure the CLI to specify the location of the IBM C
   MD %USERPROFILE%\AppData\terraform.d\plugins
   ```
   ```
-   MOVE  *PATH-TO-UNZIPPED-PROVIDER-FILE*\terraform-provider-ibm.exe  %USERPROFILE%\AppData\terraform.d\plugins
+   MOVE PATH_TO_UNZIPPED_PROVIDER_FILE\terraform-provider-ibm.exe  %USERPROFILE%\AppData\terraform.d\plugins
   ```
    - Launch **Windows Powershell** (Start + R > Powershell) and run the below command to create `terraform.rc` file
    ```
     echo > $env:APPDATA\terraform.rc
    ```
-    At the first prompt, enter the below content 
+   At the first prompt, enter the below content 
    ```
     # ~/.terraformrc
     providers {
-        ibm = "*PATH-TO-YOUR-APPDATA-PLUGINS*/terraform-provider-ibm.exe"
+        ibm = "PATH_TO_YOUR_APPDATA_PLUGINS/terraform-provider-ibm.exe"
     }
    ```
-   The PATH-TO-YOUR-APPDATA-PLUGINS should be an absolute path with forward slash(/). For example , `C:/Users/VMac/AppData/terraform.d/plugins/terraform-provider-ibm.exe`
-{: tip}
+   The PATH_TO_YOUR_APPDATA_PLUGINS should be an absolute path with forward slash(/). For example , `C:/Users/VMac/AppData/terraform.d/plugins/terraform-provider-ibm.exe`
+   {: tip}
   
   - Click enter to exit the prompt.
 
@@ -107,7 +107,7 @@ In this section, you will learn the basics of a terraform configuration by using
 1. Visit https://github.com/IBM-Cloud/LAMP-terraform-ibm and **Fork** your own copy to your account.
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/*YOUR-USER-NAME*/LAMP-terraform-ibm
+   git clone https://github.com/YOUR_USER_NAME/LAMP-terraform-ibm
    ```
 3. Inspect the configuration files
    - [install.yml](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/install.yml) - contains server installation configurations, here is where you can add all scripts related to your server install to what to install on the server. See `phpinfo();` injected into this file.
@@ -121,7 +121,7 @@ In this section, you will learn the basics of a terraform configuration by using
      {: pre}
      This command will copy the SSH to your clipboard, you can then past that into [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) under the `ssh_key` default variable around line 69.
  
-    On **Windows**, Download, install, launch [Git Bash](http://gitforwindows.org) and run the below command to copy the public SSH key to your clipboard.  For more information on generating a new SSH key, follow instructions in [this link](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#platform-windows)
+    On **Windows**, Download, install, launch [Git Bash](https://git-scm.com/download/win) and run the below command to copy the public SSH key to your clipboard.For more information on generating a new SSH key, follow instructions in [this link](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#platform-windows)
 
     ```
      clip < ~/.ssh/id_rsa.pub
