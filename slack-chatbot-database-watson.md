@@ -30,7 +30,7 @@ The chatbot interacts with the Db2 database through {{site.data.keyword.conversa
 This tutorial uses the following products:
    * [{{site.data.keyword.conversationfull}}](https://console.bluemix.net/catalog/services/conversation)
    * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
-   * [Db2 Warehouse on Cloud](https://console.bluemix.net/catalog/services/db2-warehouse)
+   * [{{site.data.keyword.dashdblong}} ](https://console.bluemix.net/catalog/services/db2-warehouse)
    * [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
 ## Before you begin
@@ -44,7 +44,7 @@ In the following, we are going to set up the needed services and prepare the env
 
 1. Download or clone the repository https://github.com/IBM-Cloud/UPDATEME. Change into that directory.
 2. If not already done, [login to {{site.data.keyword.Bluemix_short}} and select the organization and space where the services and code should be deployed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login).
-3. Create a Db2 Warehouse instance. You can replace **myEventDB** with a name of your choice:
+3. Create a {{site.data.keyword.dashdbshort}} instance. You can replace **myEventDB** with a name of your choice:
 ```
 bx service create dashDB entry myEventDB
 ```
@@ -53,7 +53,7 @@ You can also use another than the **Entry** plan.
 ```
 bx service create conversation free eventConversation
 ```
-5. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Thereafter, one of the actions gets invoked to create a table in Db2 Warehouse. By using an action of {{site.data.keyword.openwhisk_short}} we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, copy each line of the file **setup.sh** and execute it on the command line or just simply invoke the script:
+5. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Thereafter, one of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}} we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, copy each line of the file **setup.sh** and execute it on the command line or just simply invoke the script:
 ```
 sh setup.sh
 ```
@@ -74,30 +74,54 @@ The dialog has nodes to handle questions for help and simple Thank You. The node
 
 ## Deploy the Conversation to Slack
 
-1. Click the deploy icon
+1. Click the **Deploy** icon in the left navigation panel.
 2. Under Deploy Options in the **Deploy with Cloud Functions** click on **Deploy** for Slack.
 3. Click on **Deploy to Slack app** which brings you to a page with instructions on how to create and configure the Slack app.
-4. Follow the instructions on the that page which has about 8 steps on its own. In order to create the Slack app, you need access to a Slack workspace. If you don't have that yet, then you can sign up and create such a workspace as part of that process.
+4. Follow the instructions on the that page which has several steps on its own. In order to create the Slack app, you need access to a Slack workspace. If you don't have that yet, then you can sign up and create such a workspace as part of that process. Remember how you name the Slack App and also keep copies of the important links (see instructions on that page).
+5. Once all is done you should have a fully configured Slack app in a messaging workspace. However, the Slackbot is not yet ready to successfully use the entire {{site.data.keyword.conversationshort}} dialog. Some credentials are missing.
+
+## Add custom preprocessor to Conversation connector
+In order to integrate Slack and Facebook Messenger with {{site.data.keyword.conversationshort}}, the [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector) uses a pipeline (sequence) of actions (see flow diagram in their documentation). They transform between the native messages and requests of the utilized communication tool (Slack or Facebook Messenger) and the format needed by {{site.data.keyword.conversationshort}}. All the actions in the sequence are custommizable. We need to adapt one action to retrieve credentials for {{site.data.keyword.openwhisk_short}} and to pass them into the dialog.
+
+1. On the command line, execute the following update an already existing action. Replace **MySlackApp** with the name you used in the previous section.   
+```
+bx wsk action update MySlackApp_starter-code/pre-conversation pre-conversation-APIKey.js
+```
+2. Verify that the new action is in place by retrieving its details:   
+```
+bx wsk action get MySlackApp_starter-code/pre-conversation
+```
+In the output showing the action code should be keywords like **user**, **password** or **icfcreds**. Now the Slackbot is fully deployed and ready for use.
+
+## Test the Slackbot and learn_how
+
+![](images/solution19/SlackSampleChat.png)   
+
+Some things to remember:
+* programmatic calls from Watson Conversation
+* hide secrects, private context
+* universal namespace for actions
+* pre-conversation for retrieving credentials
+* clean context and remove variables
+* easy Db2 / database setup and cleanup via action
 
 
 ## Cleanup
-Executing the cleanup script deletes the event table from Db2 Warehouse and removes the actions from {{site.data.keyword.openwhisk_short}}.
+Executing the cleanup script deletes the event table from {{site.data.keyword.dashdbshort}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script neither changes the deployed Conversation connector nor the {{site.data.keyword.conversationshort}} workspace.   
 ```
 sh cleanup.sh
 ```
 
-
-
 ## Expand the tutorial
-Want to extend this tutorial? Here are some ideas:
-1. Use the Compose PostgreSQL or MySQL service instead of Db2 Warehouse.
-2. E
-3. Add a weather service and retrieve forecast data for the event date and location.
+Want to add to or change this tutorial? Here are some ideas:
+1. Use the Compose PostgreSQL or MySQL service instead of {{site.data.keyword.dashdbshort}}.
+2. Add a weather service and retrieve forecast data for the event date and location.
+3: Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
 4. Export event data as iCalendar ics file.
 
 # Related Content
 * [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) for connecting {{site.data.keyword.conversationshort}} to Slack and Facebook Messenger
-* Documentation: [IBM Knowledge Center for Db2 Warehouse](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
+* Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Frequently asked questions about IBM Db2 on Cloud and IBM Db2 Warehouse on Cloud](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/managed_service.html) answering questions related to managed service, data backup, data encryption and security, and much more.
 * [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
