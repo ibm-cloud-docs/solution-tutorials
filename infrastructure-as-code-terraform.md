@@ -94,8 +94,8 @@ In this section, you will configure the CLI to specify the location of the IBM C
     }
    ```
    
-The PATH_TO_YOUR_APPDATA_PLUGINS should be an absolute path with forward slash(/). For example , `C:/Users/VMac/AppData/terraform.d/plugins/terraform-provider-ibm.exe`
-{: tip}
+        The PATH_TO_YOUR_APPDATA_PLUGINS should be an absolute path with forward slash(/). For  example , `C:/Users/VMac/AppData/terraform.d/plugins/terraform-provider-ibm.exe`
+        {: tip}
   
   - Click enter to exit the prompt.
 
