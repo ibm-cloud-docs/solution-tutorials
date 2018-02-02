@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-25"
+lastupdated: "2018-02-02"
 ---
 
 {:shortdesc: .shortdesc}
@@ -49,7 +49,7 @@ Contact your Infrastructure master user to get the following permissions:
 Install **Terraform** via [installer](https://www.terraform.io/intro/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
 
 On **Windows**, follow the below steps to complete terraform setup.
-1. Copy files from the downloaded zip to `C:\terraform`
+1. Copy files from the downloaded zip to `C:\terraform` (create a folder `terraform`).
 2. Open the command prompt as an administrator and set the PATH to use terraform binaries.
      ```
       set PATH=%PATH%;C:\terraform
@@ -73,15 +73,30 @@ In this section, you will configure the CLI to specify the location of the IBM C
   mkdir -p $HOME/.terraform.d/plugins
   mv $HOME/Downloads/terraform-provider-ibm $HOME/.terraform.d/plugins/
   ```
-   On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.Run the below commands on a command prompt
-[Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
+   On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.
+
+  - Run the below commands on a command prompt [Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
    ```
   MD %USERPROFILE%\AppData\terraform.d\plugins
   ```
   ```
-   MOVE PATH_TO_UNZIPPED_PROVIDER_FILE\terraform-provider-ibm.exe  %USERPROFILE%\AppData\terraform.d\plugins
+   MOVE *PATH_TO_UNZIPPED_PROVIDER_FILE*\terraform-provider-ibm.exe  %USERPROFILE%\AppData\terraform.d\plugins
   ```
-
+   - Launch **Windows Powershell** (Start + R > Powershell) and run the below command to create `terraform.rc` file
+   ```
+    echo > $env:APPDATA\terraform.rc
+   ```
+    At the first prompt, enter the below content 
+   ```
+    # ~/.terraformrc
+    providers {
+        ibm = "*PATH_TO_UNZIPPED_PROVIDER_FILE*/terraform-provider-ibm.exe"
+    }
+   ```
+   The path should have forward slash(/). For example , `C:/Users/VMac/AppData/terraform.d/plugins/terraform-provider-ibm.exe`
+    {:tip}
+  
+  - Click enter to exit the prompt.
 ## Prepare terraform configuration 
 
 {: #terraformconfig}
