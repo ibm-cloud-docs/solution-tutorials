@@ -42,18 +42,23 @@ To complete this tutorial you need the [IBM Cloud CLI](https://console.bluemix.n
 ## Service and Environment Setup
 In the following, we are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on Github.
 
-1. Download or clone the repository https://github.com/IBM-Cloud/UPDATEME. Change into that directory.
+1. Download or clone [this Github repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) to your machine. Change into that new directory.
 2. If not already done, [login to {{site.data.keyword.Bluemix_short}} and select the organization and space where the services and code should be deployed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login).
-3. Create a {{site.data.keyword.dashdbshort}} instance. You can replace **myEventDB** with a name of your choice:
+3. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
 ```
-bx service create dashDB entry myEventDB
+bx service create dashDB entry eventDB
 ```
 You can also use another than the **Entry** plan.
-4. Create an instance of the {{site.data.keyword.conversationshort}} service. We use **eventConversation** as name and the free Lite plan.
+4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, we need the authorization. Thus, we create service credentials and label them **slackbotkey**:   
+```
+bx service key-create eventDB slackbotkey
+```
+
+5. Create an instance of the {{site.data.keyword.conversationshort}} service. We use **eventConversation** as name and the free Lite plan.
 ```
 bx service create conversation free eventConversation
 ```
-5. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Thereafter, one of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}} we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, copy each line of the file **setup.sh** and execute it on the command line or just simply invoke the script:
+6. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Thereafter, one of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}} we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, copy each line of the file **setup.sh** and execute it on the command line or just simply invoke the script:
 ```
 sh setup.sh
 ```
