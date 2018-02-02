@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2017
-lastupdated: "2017-11-22"
+  years: 2018
+lastupdated: "2018-02-28"
 
 ---
 
@@ -16,23 +16,23 @@ lastupdated: "2017-11-22"
 {:tip: .tip}
 {:pre: .pre}
 
-# TUTORIAL TITLE
-This tutorial...
+# Best practices for organizing users, teams, applications
+
+This tutorial gives an overview of the concepts available in IBM Cloud to manage identity and access management. It provides examples on how to organize users, teams and applications.
+
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* First objective
-* Second objective
+* Learn about Identity and Access Management and Cloud Foundry access models
+* Configure a project with clear separation between roles and environments
 
 ## Products
 {: #products}
 
 This tutorial uses the following products:
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
+* [Identity and Access Management](https://console.bluemix.net/docs/iam/index.html)
 
 <p style="text-align: center;">
 ![](images/solutionXX/Architecture.png)
@@ -45,7 +45,6 @@ This tutorial uses the following products:
 {: #prereqs}
 
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
-
 
 ## First Objective
 {: #first_objective}

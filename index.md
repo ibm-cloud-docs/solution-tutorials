@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-25"
+lastupdated: "2018-02-01"
 
 ---
 
@@ -375,6 +375,26 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution16/Architecture.png" />
+            </div>
+        </div>
+    </div>
+</div>
+
+## Security
+{: #security }
+
+<div class = "solutionBoxContainer">
+    <div class = "solutionBox">
+        <h3 id="users-teams-applications.html" class="solutionBoxTitle">
+            <a href = "users-teams-applications.html">Best practices for organizing users, teams, applications</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial gives an overview of the concepts available in IBM Cloud to manage identity and access management. It provides examples on how to organize users, teams and applications.</p>
+                    <span class="tag-filter category">Identity and Access Management</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution20-users-teams-applications/Architecture.png" />
             </div>
         </div>
     </div>
