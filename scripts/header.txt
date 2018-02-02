@@ -35,6 +35,18 @@
   *[data-hd-programlang="swift"]:before {
     content: "[swift only] ";
   }
+   *[data-hd-operatingsystem="macOS"] {
+    background-color: #189dec;
+  }
+  *[data-hd-operatingsystem="macOS"]:before {
+    content: "[macOS only] ";
+  }
+  *[data-hd-operatingsystem="windows"] {
+    background-color: #1bb39f;
+  }
+  *[data-hd-operatingsystem="windows"]:before {
+    content: "[windows only] ";
+  }
   .tip {
     background-color: #f4dba9;
     padding: 10px;
@@ -51,6 +63,8 @@
 <main role="main">
 <div data-hd-programlang="java">Text in this color only show for Java</div>
 <div data-hd-programlang="swift">Text in this color only show for Swift</div>
+<div data-hd-operatingsystem="macOS">Text in this color only show for macOS</div>
+<div data-hd-operatingsystem="windows">Text in this color only show for Windows</div>
 
 <a href="index.html">HOME</a>
 
