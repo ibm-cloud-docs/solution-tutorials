@@ -31,7 +31,7 @@ This tutorial uses the following products:
    * [{{site.data.keyword.conversationfull}}](https://console.bluemix.net/catalog/services/conversation)
    * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
    * [{{site.data.keyword.dashdblong}} ](https://console.bluemix.net/catalog/services/db2-warehouse)
-   * [ {{site.data.keyword.cloudantfull}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
+   * [ {{site.data.keyword.cloudantfull}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
 ## Before you begin
 {: #prereqs}
@@ -102,6 +102,20 @@ In the output showing the action code should be keywords like **user**, **passwo
 
 ## Test the Slackbot and learn_how
 Open up your Slack workspace for a test of the bot.
+
+1. Type **help**.
+2. **new event** to start gathering data for a new event record.
+3. why in quotes? allows entries with spaces, try **"Meetup: IBM Cloud"**
+4. uses sys-location, only cities recognized by WCS, can be changed to accept something like for shortname
+5. any email address or URI for website
+6. Dates are captured as date and time pair. see docs for what is possible
+7. summary is printed and ICF action called, inserts data, then context variables are removed so that entire new entry is possible, done in child node
+
+now it is time to search
+1. walk through one search
+2. show short version of it
+
+
 
 ![](images/solution19/SlackSampleChat.png)   
 TODO expand this section
