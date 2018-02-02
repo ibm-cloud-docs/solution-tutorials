@@ -111,6 +111,11 @@ Open up your Slack workspace for a test of the bot.
 6. Dates are captured as date and time pair. see docs for what is possible
 7. summary is printed and ICF action called, inserts data, then context variables are removed so that entire new entry is possible, done in child node
 
+now repeat a new entry:
+1. type **new event**
+2. label the event **"my meeting"**
+3. to abandon the input process enter **cancel**, **exit** or similar. No further questions should come up, only an acknowledgement of the cancellation.
+
 now it is time to search
 1. walk through one search
 2. show short version of it
@@ -129,6 +134,7 @@ Some things to remember and topics for blog:
 * clean context and remove variables
 * easy Db2 / database setup and cleanup via action
 * cleanup context entries in Cloudant
+* conditions to handle escape routes from slots
 
 
 ## Cleanup
@@ -143,6 +149,7 @@ Want to add to or change this tutorial? Here are some ideas:
 2. Add a weather service and retrieve forecast data for the event date and location.
 3: Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
 4. Export event data as iCalendar ics file.
+5. handle more "escape routes" out of information gathering dialog
 
 # Related Content
 TODO: Add Cloudant, ICF and more
