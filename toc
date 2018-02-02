@@ -27,5 +27,6 @@ Solution Tutorials
     serverless-mobile-backend.md
     hybrid-mobile-push-analytics.md
     gather-visualize-analyze-iot-data.md
+    slack-chatbot-database-watson.md
     users-teams-applications.md
     {: .navgroup-end}
