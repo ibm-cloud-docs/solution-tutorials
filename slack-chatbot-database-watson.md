@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-01-26"
+lastupdated: "2018-02-02"
 
 ---
 
@@ -14,7 +14,7 @@ lastupdated: "2018-01-26"
 
 # Build a database-driven Slackbot with {{site.data.keyword.conversationfull}}
 
-In this solution tutorial we are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. We integrate Slack and {{site.data.keyword.conversationshort}} using the [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) in a serverless way. The connector is based on IBM Cloud Functions and Cloudant NoSQL DB.
+In this solution tutorial we are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. We integrate Slack and {{site.data.keyword.conversationshort}} using the [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) in a serverless way. The connector is based on IBM Cloud Functions and {{site.data.keyword.cloudant_short_notm}}.
 The chatbot interacts with the Db2 database through {{site.data.keyword.conversationshort}}. All (not much) function code is written in Node.js, but other languages could have been easily used, too.
 
 ![](images/solution19/SlackbotArchitecture.png)
@@ -31,7 +31,7 @@ This tutorial uses the following products:
    * [{{site.data.keyword.conversationfull}}](https://console.bluemix.net/catalog/services/conversation)
    * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
    * [{{site.data.keyword.dashdblong}} ](https://console.bluemix.net/catalog/services/db2-warehouse)
-   * [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
+   * [ {{site.data.keyword.cloudantfull}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
 ## Before you begin
 {: #prereqs}
@@ -82,7 +82,9 @@ The dialog has nodes to handle questions for help and simple Thank You. The node
 1. Click the **Deploy** icon in the left navigation panel.
 2. Under Deploy Options in the **Deploy with Cloud Functions** click on **Deploy** for Slack.
 3. Click on **Deploy to Slack app** which brings you to a page with instructions on how to create and configure the Slack app.
-4. Follow the instructions on the that page which has several steps on its own. In order to create the Slack app, you need access to a Slack workspace. If you don't have that yet, then you can sign up and create such a workspace as part of that process. Remember how you name the Slack App and also keep copies of the important links (see instructions on that page).
+4. Follow the instructions on the that page which has several steps on its own. In order to create the Slack app, you need access to a Slack workspace. If you don't have that yet, then you can sign up and create such a workspace as part of that process. During the configuration process keep this in mind:
+ * Remember how you name the Slack App and also keep copies of the important links (see instructions on that **Deploy to Slack app** page).
+ * In the Slack section **Events Subscription** choose at least **message.im** to be able to send direct messages to the bot.
 5. Once all is done you should have a fully configured Slack app in a messaging workspace. However, the Slackbot is not yet ready to successfully use the entire {{site.data.keyword.conversationshort}} dialog. Some credentials are missing.
 
 ## Add custom preprocessor to Conversation connector
@@ -99,16 +101,20 @@ bx wsk action get MySlackApp_starter-code/pre-conversation
 In the output showing the action code should be keywords like **user**, **password** or **icfcreds**. Now the Slackbot is fully deployed and ready for use.
 
 ## Test the Slackbot and learn_how
+Open up your Slack workspace for a test of the bot.
 
 ![](images/solution19/SlackSampleChat.png)   
+TODO expand this section
 
-Some things to remember:
+
+Some things to remember and topics for blog:
 * programmatic calls from Watson Conversation
 * hide secrects, private context
 * universal namespace for actions
 * pre-conversation for retrieving credentials
 * clean context and remove variables
 * easy Db2 / database setup and cleanup via action
+* cleanup context entries in Cloudant
 
 
 ## Cleanup
@@ -125,9 +131,12 @@ Want to add to or change this tutorial? Here are some ideas:
 4. Export event data as iCalendar ics file.
 
 # Related Content
+TODO: Add Cloudant, ICF and more
+
 * [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) for connecting {{site.data.keyword.conversationshort}} to Slack and Facebook Messenger
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Frequently asked questions about IBM Db2 on Cloud and IBM Db2 Warehouse on Cloud](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/managed_service.html) answering questions related to managed service, data backup, data encryption and security, and much more.
 * [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
 * [IBM Data Server Manager](https://www.ibm.com/us-en/marketplace/data-server-manager)
+* {{site.data.keyword.cloudantfull}
