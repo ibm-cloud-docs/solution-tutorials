@@ -102,7 +102,6 @@ In this section, you will configure the CLI to specify the location of the IBM C
         {: tip}
   
   - Click enter to exit the prompt.
-    {:windows}
 
 ## Prepare terraform configuration 
 
