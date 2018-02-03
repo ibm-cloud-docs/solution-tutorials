@@ -380,7 +380,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
 </div>
 
-<!--## Chatbots
+## Chatbots
 {: #chatbots }
 
 <div class = "solutionBoxContainer">
@@ -403,5 +403,5 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
         </div>
     </div>
-</div>-->
+</div>
 
