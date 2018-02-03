@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-25"
+lastupdated: "2018-02-02"
 ---
 
 {:shortdesc: .shortdesc}
@@ -49,38 +49,59 @@ Contact your Infrastructure master user to get the following permissions:
 Install **Terraform** via [installer](https://www.terraform.io/intro/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
 
 On **Windows**, follow the below steps to complete terraform setup.
-1. Copy files from the downloaded zip to `C:\terraform`
+
+1. Copy files from the downloaded zip to `C:\terraform` (create a folder `terraform`).
 2. Open the command prompt as an administrator and set the PATH to use terraform binaries.
+
      ```
-      set PATH=%PATH%;C:\terraform
+     set PATH=%PATH%;C:\terraform
      ```
+      {:pre}
 
 ## Terraform setup with IBM Cloud Provider
-
 {: #setup}
 
 In this section, you will configure the CLI to specify the location of the IBM Cloud plugin.
 
-1. Check Terraform installation by running `terraform` in your terminal window.  You should see a list of `Common commands`.
-  ```bash
+1. Check Terraform installation by running `terraform` in your terminal or command prompt window.  You should see a list of `Common commands`.
+
+  ```
   terraform
   ```
 
 2. Download the appropriate [IBM Cloud Provider](https://github.com/IBM-Cloud/terraform-provider-ibm/releases) plugin for your system and extract the archive. You should see the  `terraform-provider-ibm` binary plugin file.
 
-3. For non-Windows systems, create a `.terraform.d/plugins` directory in your user's home directory and place the binary file inside of it. Use the following commands for reference.
+3. For non-Windows systems, create a `.terraform.d/plugins` directory in your user's home directory and to place the binary file inside of it. Use the following commands for reference.
+
   ```
   mkdir -p $HOME/.terraform.d/plugins
   mv $HOME/Downloads/terraform-provider-ibm $HOME/.terraform.d/plugins/
   ```
-   On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.Run the below commands on a command prompt
-[Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
+   
+    On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.
+   
+  - Run the below commands on a command prompt [Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
    ```
   MD %USERPROFILE%\AppData\terraform.d\plugins
   ```
   ```
    MOVE PATH_TO_UNZIPPED_PROVIDER_FILE\terraform-provider-ibm.exe  %USERPROFILE%\AppData\terraform.d\plugins
   ```
+   - Launch **Windows Powershell** (Start + R > Powershell) and run the below command to create `terraform.rc` file
+   ```
+    echo > $env:APPDATA\terraform.rc
+   ```
+   At the first prompt, enter the below content 
+   ```
+    # ~/.terraformrc
+    providers {
+        ibm = "PATH_TO_YOUR_APPDATA_PLUGINS/terraform-provider-ibm.exe"
+    }
+   ```
+        The PATH_TO_YOUR_APPDATA_PLUGINS should be an absolute path with forward slash(/). For  example , `C:/Users/VMac/AppData/terraform.d/plugins/terraform-provider-ibm.exe`
+        {: tip}
+  
+  - Click enter to exit the prompt.
 
 ## Prepare terraform configuration 
 
@@ -98,19 +119,22 @@ In this section, you will learn the basics of a terraform configuration by using
    - [provider.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/provider.tf) - contains the variables related to the provider where provider username and api key needed.
    - [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) - contains the server configurations to deploy the VM with specified variables.
    - [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) - contains **Softlayer** username and api key, these credentials can be added to this file for best practices to avoid re-entering the credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
-4. Now that we understand what's in each file, open the [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) file in an IDE of your choice and modify the file by adding your **public SSH** key. This will be used to access the VM created by this configuration. To copy the public key to your clipboard, you can run the below command in your terminal.
+4. Now that we understand what's in each file, open the [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) file in an IDE of your choice and modify the file by adding your **public SSH** key. This will be used to access the VM created by this configuration. For information on generating a new SSH key, follow instructions in [this link](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
+
+ To copy the public key to your clipboard, you can run the below command in your terminal.
+
      ```bash
      pbcopy < ~/.ssh/id_rsa.pub
      ```
-     {: pre}
      This command will copy the SSH to your clipboard, you can then past that into [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) under the `ssh_key` default variable around line 69.
  
-    On **Windows**, Download, install, launch [Git Bash](http://gitforwindows.org) and run the below command to copy the public SSH key to your clipboard
+    On **Windows**, Download, install, launch [Git Bash](https://git-scm.com/download/win) and run the below command to copy the public SSH key to your clipboard.
+
     ```
      clip < ~/.ssh/id_rsa.pub
     ```
-5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding your `softlayer_username` and `softlayer_api_key`. You can retrieve API key and Softlayer username [here](https://knowledgelayer.softlayer.com/procedure/retrieve-your-api-key).
 
+5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding your `softlayer_username` and `softlayer_api_key`. You can retrieve API key and Softlayer username [here](https://knowledgelayer.softlayer.com/procedure/retrieve-your-api-key).
 
 ## Create a LAMP stack server from the terraform configuration
 {: #Createserver}

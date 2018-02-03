@@ -2,7 +2,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-01-10"
+lastupdated: "2018-02-02"
 
 ---
 
@@ -54,20 +54,21 @@ This tutorial walks you through creating a cluster and configuring the Log Analy
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `bx login` to log in interactively. Provide the account under which the cluster is created. You can reconfirm the details by running `bx target` command.
-2. When the cluster is ready, retrieve the cluster configuration:
+1. Update your **bx** plugins by running `bx plugin update`.
+2. Use `bx login` to log in interactively. Provide the account under which the cluster is created. You can reconfirm the details by running `bx target` command.
+3. When the cluster is ready, retrieve the cluster configuration:
    ```bash
    bx cs cluster-config <cluster-name>
    ```
    {: pre}
-3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
+4. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
   `echo $KUBECONFIG`
-4. Check that the `kubectl` command is correctly configured
+5. Check that the `kubectl` command is correctly configured
    ```bash
    kubectl cluster-info
    ```
    {: pre}
-5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. After your cluster workers are ready, run the command below to initialize Helm in your cluster.
+6. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. After your cluster workers are ready, run the command below to initialize Helm in your cluster.
    ```bash
    helm init
    ```
@@ -99,7 +100,7 @@ When an application is deployed, logs are collected automatically by the {{site.
 ## Create the Monitoring service
 
 1. From the IBM Cloud Dashboard, select the **region**, **org** and **space** where you want to create your **Monitoring** service.
-2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Monitoring**](https://console.bluemix.net/catalog/services/monitoring?taxonomyNavigation=apps) service. If you're unable to create the service, check for an existing instance of the Log Analysis service in your space.
+2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Monitoring**](https://console.bluemix.net/catalog/services/monitoring?taxonomyNavigation=apps) service. If you're unable to create the service, check for an existing instance of the Monitoring service in your space.
 
 ## Create a starter application
 {: #create_application}
@@ -115,7 +116,7 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 3. Enter a **name** (`mynodestarter`) and a unique **hostname** (`username-mynodestarter`) for your project.
   ![](images/solution17/bx_dev_create.png)
 
-4. Select **n** to skip adding services and choose **No DevOps**.
+4. Choose **No DevOps** and Select **n** to skip adding services.
 
   Once complete, this generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/node_project_contents.html).
 
@@ -202,7 +203,7 @@ The IBM Cloud has a Container Registry that is private to you. Let's push the Do
   ![](images/solution17/kubectl_get_services.png)
   ![](images/solution17/node_starter_cluster.png)
 
-To set up Ingress and use your own custom domain see the [Use your own custom domain](/docs/tutorials/scalable-webapp-kubernetes.html#custom_domain) section of the [Deploy a scalable web application on Kubernetes. tutorial](/docs/tutorials/scalable-webapp-kubernetes.html)
+To set up Ingress and use your own custom domain see the [Use your own custom domain](/docs/tutorials/scalable-webapp-kubernetes.html#custom_domain) section of the [Deploy a scalable web application on Kubernetes](/docs/tutorials/scalable-webapp-kubernetes.html) tutorial.
 
 
 ## View log data in Kibana
