@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-02-02"
+lastupdated: "2018-02-05"
 
 ---
 
@@ -393,7 +393,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <p>Build a database-driven Slackbot with IBM Watson Conversation. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">IBM Watson Conversation</span>
-                    <span class="tag-filter category">Cloudant</span>
+                    <span class="tag-filter category">Cloudant NoSQL DB</span>
                     <span class="tag-filter category">Db2 Warehouse</span>
                     <span class="tag-filter category">IBM Cloud Functions</span>
                     <span class="tag-filter category">Slack</span>
