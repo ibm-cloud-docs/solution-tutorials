@@ -100,41 +100,24 @@ bx wsk action get MySlackApp_starter-code/pre-conversation
 ```
 In the output showing the action code should be keywords like **user**, **password** or **icfcreds**. Now the Slackbot is fully deployed and ready for use.
 
-## Test the Slackbot and learn_how
-Open up your Slack workspace for a test of the bot.
+## Test the Slackbot and learn
+Open up your Slack workspace for a test drive of the chatbot.
 
-1. Type **help**.
-2. **new event** to start gathering data for a new event record.
-3. why in quotes? allows entries with spaces, try **"Meetup: IBM Cloud"**
-4. uses sys-location, only cities recognized by WCS, can be changed to accept something like for shortname
-5. any email address or URI for website
-6. Dates are captured as date and time pair. see docs for what is possible
-7. summary is printed and ICF action called, inserts data, then context variables are removed so that entire new entry is possible, done in child node
-
-now repeat a new entry:
-1. type **new event**
-2. label the event **"my meeting"**
-3. to abandon the input process enter **cancel**, **exit** or similar. No further questions should come up, only an acknowledgement of the cancellation.
-
-now it is time to search
-1. walk through one search
-2. show short version of it
-
-
-
+1. Type **help** into the messaging form. The bot should respond with some guidance.
+2. Now enter **new event** to start gathering data for a new event record. We use {{site.data.keyword.conversationshort}} slots to collect all the necessary input.
+3. First up is the event identifier or name. Quotes are required. They allow to enter more complex names. Enter **"Meetup: IBM Cloud"** as event name.
+4. Next is the event location. Input is based on the [system entity **sys-location**](https://console.bluemix.net/docs/services/conversation/system-entities.html#system-entity-details). As a limitation, only cities recognized by {{site.data.keyword.conversationshort}} can be used. Try **Friedrichshafen** as city.
+5. Contact information such as an email address or URI for a website is asked for in the next step. Start with **https://www.ibm.com/events**. We use a pattern-based entity for that field.
+6. The next questions are gathering date and time for the begin and end. **sys-date** and **sys-time** are used which allow for different input formats. Use **next Thursday** as start date, **6 pm** for the time, **2018-10-21** and **22:00** for the end date and time.
+7. Last, with all data collected, a summary is printed and a server action, implemented as {{site.data.keyword.openwhisk_short}} action, is invoked to insert a new record into Db2. Thereafter, dialog switches to a child node to clean up the processing environment by removing the context variables. The entire input process can be canceled anytime by entering **cancel**, **exit** or similar. In that case the user choice is acknowledged and the environment cleaned up.
 ![](images/solution19/SlackSampleChat.png)   
-TODO expand this section
 
+With some sample data in it is time to search.
+1. Type in **show event information**. Next is a question whether to search by identifier or by date. Enter **name** and for the next question **"Think 2018"**. Now, the chatbot should display information about that event. The dialog has multiple responses to choose from.
+2. With {{site.data.keyword.conversationshort}} as backend it is possible to enter more complex phrases and thereby skipping parts of the dialog. Use **show event by name "Think 2018"** as input. The chatbot directly returns the event record.
+3. Now we are going to search by date. A search is defined by a pair of dates, the event start date has to be between. With **search conference by date in March** as input the result should be the **Think 2018** event again. The entity **March** is interpreted as two dates, March 1st and March 31st, thereby providing input for the start and end of the date range.
 
-Some things to remember and topics for blog:
-* programmatic calls from Watson Conversation
-* hide secrects, private context
-* universal namespace for actions
-* pre-conversation for retrieving credentials
-* clean context and remove variables
-* easy Db2 / database setup and cleanup via action
-* cleanup context entries in Cloudant
-* conditions to handle escape routes from slots
+After some more searches and new event entries, you can revisit the chat history and improve the future dialog. Follow the instructions in the [{{site.data.keyword.conversationshort}} documentation on **Improving understanding**](https://console.bluemix.net/docs/services/conversation/logs.html#about-the-improve-component).
 
 
 ## Cleanup
@@ -152,12 +135,13 @@ Want to add to or change this tutorial? Here are some ideas:
 5. handle more "escape routes" out of information gathering dialog
 
 # Related Content
-TODO: Add Cloudant, ICF and more
+Here are links to additional information on the topics covered in this tutorial.
 
 * [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) for connecting {{site.data.keyword.conversationshort}} to Slack and Facebook Messenger
+* Github repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
+* [{{site.data.keyword.openwhisk_short}} documentation](https://console.bluemix.net/docs/openwhisk/openwhisk_about.html#about-cloud-functions)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Frequently asked questions about IBM Db2 on Cloud and IBM Db2 Warehouse on Cloud](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/managed_service.html) answering questions related to managed service, data backup, data encryption and security, and much more.
 * [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
-* [IBM Data Server Manager](https://www.ibm.com/us-en/marketplace/data-server-manager)
-* {{site.data.keyword.cloudantfull}
+* [{{site.data.keyword.cloudantfull} documentation](https://console.bluemix.net/docs/services/Cloudant/cloudant.html#overview)
