@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-02"
+lastupdated: "2018-02-05"
 
 ---
 
@@ -132,7 +132,6 @@ Want to add to or change this tutorial? Here are some ideas:
 2. Add a weather service and retrieve forecast data for the event date and location.
 3: Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
 4. Export event data as iCalendar ics file.
-5. handle more "escape routes" out of information gathering dialog
 
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.
