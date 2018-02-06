@@ -421,7 +421,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Container Registry</span>
             </div>
             <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution20-users-teams-applications/Architecture.png" />
+                <img class="architectureDiagram" src = "images/solution20-users-teams-applications/multiple-environments.png" />
             </div>
         </div>
     </div>
