@@ -12,7 +12,7 @@ lastupdated: "2018-02-05"
 {:tip: .tip}
 {:pre: .pre}
 
-# Build a database-driven Slackbot with {{site.data.keyword.conversationfull}}
+# Build a database-driven Slackbot
 
 In this solution tutorial we are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. We integrate Slack and {{site.data.keyword.conversationshort}} using the [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) in a serverless way. The connector is based on IBM Cloud Functions and {{site.data.keyword.cloudant_short_notm}}.
 The chatbot interacts with the Db2 database through {{site.data.keyword.conversationshort}}. All (not much) function code is written in Node.js, but other languages could have been easily used, too.
