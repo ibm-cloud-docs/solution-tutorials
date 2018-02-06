@@ -415,7 +415,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial gives an overview of the concepts available in IBM Cloud to manage identity and access management. It provides examples on how to organize users, teams and applications.</p>
+                <p>This tutorial gives an overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.</p>
                     <span class="tag-filter category">Identity and Access Management</span>
                     <span class="tag-filter category">Kubernetes</span>
                     <span class="tag-filter category">Container Registry</span>

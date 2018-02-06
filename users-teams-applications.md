@@ -38,13 +38,6 @@ This tutorial uses the following products:
 * Cloud Foundry
 * Cloudant NoSQL database
 
-<p style="text-align: center;">
-![](images/solutionXX/Architecture.png)
-</p>
-
-1. The user does this
-2. Then that
-
 ## Before you begin
 {: #prereqs}
 
@@ -52,58 +45,31 @@ This tutorial uses the following products:
 
 ## Define a project
 
-Let's consider this application:
-* several microservices deployed in Kubernetes
-* databases
-* file storage
+When building an application, it is very common to define multiple environments reflecting the development lifecycle of a project from a developer committing code to the application code being made available to the end-users. *Sandbox*, *test*, *staging*, *UAT* (user acceptance testing), *pre-production*, *production* are typical names for these environments.
 
-This project defines dev, test and production environments.
+Isolating the underlying resources, implementing governance and access policies, protecting a production workload, validating changes before pushing them to production, are some of the reasons why you would want to create these separate environments.
 
-The project team includes architect, developer, operator, quality tester roles. One person may play several roles. Similar roles may be found in each environment but assigned to different persons.
+Let's consider a sample project with the following components:
+* several microservices deployed in Kubernetes,
+* databases,
+* file storage buckets.
 
-We want strong isolation between the environments.
+In this project, we define three environments:
+* *Development* - this environment is continuously updated with every commit, unit tests, smoke tests are executed. It gives access to the latest and greatest deployment of the project.
+* *Testing* - this environment is built after a stable branch or tag of the code. This is where user acceptance testing is made. It is very close from the production environment, it is loaded with realistic data (anonymized production data as example).
+* *Production* - this environment is updated with the version validated in the previous environment.
 
-### Development
+A build pipeline manages the progression of a build through the environment. It can be fully automated or include manual validation gates to promote builds between environments - this is really open and can be set up to match the company practices and workflows.
 
-Development Environment is continuously updated with every commit, unit tests, smoke tests are executed. It gives access to the latest and greatest deployment of the code
+When it comes to assigning responsibilities to the project team members, we define the following roles and related permissions:
 
-* Developer
-  * can deploy/undeploy apps
-  * can access log files
-  * can view app and service configuration
-* Tester
-  * use the deployed apps
-* Operator
-  * can deploy/undeploy applications
-  * can access log files
-  * can view app and service configuration
+|           | Development | Testing | Production |
+| --------- | ----------- | ------- | ---------- |
+| Developer | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view app and service configuration</li></ul> | <ul><li>can access log files</li><li>can view app and service configuration</li></ul> | <ul><li>no access</li></ul> |
+| Tester    | <ul><li>use the deployed applications</li></ul> | <ul><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
+| Operator  | <ul><li>no access</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view app and service configuration</li></ul> |
 
-### Testing
-
-Test Environment is built after a more stable branch of the code. This is where user acceptance testing is made. It is very close from the production environment, it is loaded with realistic data (anonymous production data as example). All the testing could be automated or include manual validation and acceptance tests before passing the "ready for production" gate.
-* Developer
-* Tester
-  * use the deployed apps
-* Operator
-  * can deploy/undeploy applications
-  * can access log files
-  * can view app and service configuration
-
-### Production
-
-Production Environment is updated with the version validated in the previous environment.
-* Developer
-  * no access
-* Tester
-  * no access
-* Operator
-  * can deploy/undeploy applications
-  * can access log files
-  * can view app and service configuration
-
-Pipeline updates the environment. A complex pipeline may involve manual confirmation steps to proceed to the next step (a LGTM approval workflow).
-
-## Identity and Access Management
+## Identity and Access Management (IAM)
 {: #first_objective}
 
 IBM Cloud Identity and Access Management (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the IBM Cloud platform. A set of IBM Cloud services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and **service IDs** access to the resources within your account.
