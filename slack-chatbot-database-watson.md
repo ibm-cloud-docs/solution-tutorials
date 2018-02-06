@@ -45,28 +45,31 @@ In the following, we are going to set up the needed services and prepare the env
 1. Download or clone [this Github repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) to your machine. Change into that new directory.
 2. If not already done, [login to {{site.data.keyword.Bluemix_short}} and select the organization and space where the services and code should be deployed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login).
 3. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
-```
-bx service create dashDB entry eventDB
-```
-You can also use another than the **Entry** plan.
+   ```
+   bx service create dashDB entry eventDB
+   ```
+   {:codeblock}
+   You can also use another than the **Entry** plan.
 4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, we need the authorization. Thus, we create service credentials and label them **slackbotkey**:   
-```
-bx service key-create eventDB slackbotkey
-```
-
+   ```
+   bx service key-create eventDB slackbotkey
+   ```
+   {:codeblock}
 5. Create an instance of the {{site.data.keyword.conversationshort}} service. We use **eventConversation** as name and the free Lite plan.
-```
-bx service create conversation free eventConversation
-```
+   ```
+   bx service create conversation free eventConversation
+   ```
+   {:codeblock}
 6. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Thereafter, one of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}} we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, copy each line of the file **setup.sh** and execute it on the command line or just simply invoke the script:
-```
-sh setup.sh
-```
-Note: By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script:
-```
-#bx wsk action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r
-```
-
+   ```
+   sh setup.sh
+   ```
+   {:codeblock}   
+   Note: By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script:
+   ```
+   #bx wsk action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r
+   ```
+   {:codeblock}
 
 ## Load the conversation workspace
 In this part of the tutorial we are going to load a pre-defined workspace into the {{site.data.keyword.conversationshort}} service. Thereafter, we need to replace service credentials and action names to adapt the workspace to the new environment.   
@@ -91,14 +94,16 @@ The dialog has nodes to handle questions for help and simple Thank You. The node
 In order to integrate Slack and Facebook Messenger with {{site.data.keyword.conversationshort}}, the [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector) uses a pipeline (sequence) of actions (see flow diagram in their documentation). They transform between the native messages and requests of the utilized communication tool (Slack or Facebook Messenger) and the format needed by {{site.data.keyword.conversationshort}}. All the actions in the sequence are custommizable. We need to adapt one action to retrieve credentials for {{site.data.keyword.openwhisk_short}} and to pass them into the dialog.
 
 1. On the command line, execute the following update an already existing action. Replace **MySlackApp** with the name you used in the previous section.   
-```
-bx wsk action update MySlackApp_starter-code/pre-conversation pre-conversation-APIKey.js
-```
+   ```
+   bx wsk action update MySlackApp_starter-code/pre-conversation pre-conversation-APIKey.js
+   ```
+   {:codeblock}
 2. Verify that the new action is in place by retrieving its details:   
-```
-bx wsk action get MySlackApp_starter-code/pre-conversation
-```
-In the output showing the action code should be keywords like **user**, **password** or **icfcreds**. Now the Slackbot is fully deployed and ready for use.
+   ```
+   bx wsk action get MySlackApp_starter-code/pre-conversation
+   ```
+   {:codeblock}   
+   In the output showing the action code should be keywords like **user**, **password** or **icfcreds**. Now the Slackbot is fully deployed and ready for use.
 
 ## Test the Slackbot and learn
 Open up your Slack workspace for a test drive of the chatbot.
@@ -125,12 +130,13 @@ Executing the cleanup script deletes the event table from {{site.data.keyword.da
 ```
 sh cleanup.sh
 ```
+{:codeblock}
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
 1. Use the Compose PostgreSQL or MySQL service instead of {{site.data.keyword.dashdbshort}}.
 2. Add a weather service and retrieve forecast data for the event date and location.
-3: Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
+3. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
 4. Export event data as iCalendar ics file.
 
 # Related Content
