@@ -1,19 +1,30 @@
-[{
+[
+    {
         "name": "Websites and Web Apps",
         "anchor": "websites",
-        "solutions": [{
+        "solutions": [
+            {
                 "name": "Deploy a secure web application across multiple regions",
                 "url": "multi-region-webapp.html",
                 "description": "This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline.",
                 "imgSrc": "images/solution1/Architecture.png",
-                "tags": ["Cloud Foundry", "Node.js", "Continous Delivery"]
+                "tags": [
+                    "Cloud Foundry",
+                    "Node.js",
+                    "Continous Delivery"
+                ]
             },
             {
                 "name": "Scalable web app on Kubernetes",
                 "url": "scalable-webapp-kubernetes.html",
                 "description": "This tutorial is a walkthrough of how to scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
                 "imgSrc": "images/solution2/Architecture.png",
-                "tags": ["Docker", "Kubernetes", "Container Registry", "Java"]
+                "tags": [
+                    "Docker",
+                    "Kubernetes",
+                    "Container Registry",
+                    "Java"
+                ]
             },
             {
                 "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -148,7 +159,8 @@
     {
         "name": "Mobile",
         "anchor": "mobile",
-        "solutions": [{
+        "solutions": [
+            {
                 "name": "iOS mobile app with Push Notifications and Analytics",
                 "url": "ios-mobile-push-analytics.html",
                 "description": "Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
@@ -197,10 +209,12 @@
                 ]
             }
         ]
-    }, {
+    },
+    {
         "name": "Internet of Things",
         "anchor": "iot",
-        "solutions": [{
+        "solutions": [
+            {
                 "name": "Gather, visualize and analyze IoT data",
                 "url": "gather-visualize-analyze-iot-data.html",
                 "description": "This tutorial walks you thru setting up an IoT device, gathering large amounts of data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data.",
@@ -213,10 +227,12 @@
                 ]
             }
         ]
-    }, {
+    },
+    {
         "name": "Chatbots",
         "anchor": "chatbots",
-        "solutions": [{
+        "solutions": [
+            {
                 "name": "Build a database-driven Slackbot",
                 "url": "slack-chatbot-database-watson.html",
                 "description": "Build a database-driven Slackbot with IBM Watson Conversation. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.",
@@ -228,6 +244,23 @@
                     "Db2 Warehouse",
                     "IBM Cloud Functions",
                     "Slack"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Security",
+        "anchor": "security",
+        "solutions": [
+            {
+                "name": "Best practices for organizing users, teams, applications",
+                "url": "users-teams-applications.html",
+                "description": "This tutorial gives an overview of the concepts available in IBM Cloud to manage identity and access management. It provides examples on how to organize users, teams and applications.",
+                "imgSrc": "images/solution20-users-teams-applications/Architecture.png",
+                "tags": [
+                    "Identity and Access Management",
+                    "Kubernetes",
+                    "Container Registry"
                 ]
             }
         ]
