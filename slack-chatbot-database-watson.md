@@ -48,20 +48,24 @@ In the following, we are going to set up the needed services and prepare the env
 ```
 bx service create dashDB entry eventDB
 ```
+{: codeblock}
 You can also use another than the **Entry** plan.
 4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, we need the authorization. Thus, we create service credentials and label them **slackbotkey**:   
 ```
 bx service key-create eventDB slackbotkey
 ```
+{: codeblock}
 
 5. Create an instance of the {{site.data.keyword.conversationshort}} service. We use **eventConversation** as name and the free Lite plan.
 ```
 bx service create conversation free eventConversation
 ```
+{: codeblock}
 6. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Thereafter, one of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}} we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, copy each line of the file **setup.sh** and execute it on the command line or just simply invoke the script:
 ```
 sh setup.sh
 ```
+{: codeblock}
 Note: By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script:
 ```
 #bx wsk action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r
@@ -94,10 +98,12 @@ In order to integrate Slack and Facebook Messenger with {{site.data.keyword.conv
 ```
 bx wsk action update MySlackApp_starter-code/pre-conversation pre-conversation-APIKey.js
 ```
+{: codeblock}
 2. Verify that the new action is in place by retrieving its details:   
 ```
 bx wsk action get MySlackApp_starter-code/pre-conversation
 ```
+{: codeblock}
 In the output showing the action code should be keywords like **user**, **password** or **icfcreds**. Now the Slackbot is fully deployed and ready for use.
 
 ## Test the Slackbot and learn
@@ -125,6 +131,7 @@ Executing the cleanup script deletes the event table from {{site.data.keyword.da
 ```
 sh cleanup.sh
 ```
+{: codeblock}
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
