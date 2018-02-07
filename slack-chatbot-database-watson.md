@@ -164,6 +164,7 @@ Want to add to or change this tutorial? Here are some ideas:
 4. Export event data as iCalendar **.ics** file.
 5. Connect the chatbot to Facebook Messenger.
 
+
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.
 
@@ -173,11 +174,9 @@ Chatbot-related blog posts:
 * [Building chatbots: more tipcs and tricks](https://www.ibm.com/blogs/bluemix/2017/06/building-chatbots-tips-tricks/)
 
 Documentation and SDKs:
-* [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) for connecting {{site.data.keyword.conversationshort}} to Slack and Facebook Messenger
 * Github repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
 * [{{site.data.keyword.openwhisk_short}} documentation](https://console.bluemix.net/docs/openwhisk/openwhisk_about.html#about-cloud-functions)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [Frequently asked questions about IBM Db2 on Cloud and IBM Db2 Warehouse on Cloud](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/managed_service.html) answering questions related to managed service, data backup, data encryption and security, and much more.
 * [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
 * [{{site.data.keyword.cloudantfull} documentation](https://console.bluemix.net/docs/services/Cloudant/cloudant.html#overview)
