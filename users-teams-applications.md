@@ -78,27 +78,54 @@ A **policy** assigns a user or service ID one or more **roles** with a combinati
 
   ![](./images/solution20-users-teams-applications/governance_ibmcloud_iam.gv.png)
 
+
 Getting Started with IAM
 https://console.bluemix.net/docs/iam/quickstart.html#getstarted
 
+
+  At this time, not all services in the IBM Cloud catalog can be managed by using IAM. For these services, you can continue to use Cloud Foundry for these service instances by providing users access to the org and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.
+  {:tip}
+
+## Mapping the project to IAM
+
+Although the three environments needed by this project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
+
+  ![](./images/solution20-users-teams-applications/one-environment.png)
+
+### let's start with one environment
+
+* have a diagram showing where the resources are attached
+  * cluster is under account
+  * cloud foundry services under org/space
+  * logging and monitoring send logs to a space - link to command to redirect logs to another space
+
+Before you create a cluster, either through the IBM Cloud UI or through the command line, you must log into a specific IBM Cloud region, account, organization, and space. The space where you are logged in is the space where logging and monitoring data for the cluster and its resources is collected.
+
+create org + space
+
+monitoring needs role at account level
+https://internal-ibmcloud.ideas.aha.io/ideas/IDEAINT-I-1082
+
+* build the cluster
 Access management for clusters
 mapping between IAM roles and their permissions in cluster management and kubernetes resources
 https://console.bluemix.net/docs/containers/cs_users.html#users
 
-## Mapping the project to IAM
-
-### let's start with one environment
-
-  ![](./images/solution20-users-teams-applications/one-environment.png)
-
-* typical kube + cf environment diagram
+* create the cf services
+*  use org and space https://console.bluemix.net/docs/iam/cfaccess.html#cfaccess
 * build the cluster and cf services
 * create a dedicated space for the cf services - will help with role setting
 * create a resource group for the cluster and compatible service
 
+
+
+
+
+
 ### set roles
 
 * assign roles to the users
+
 
 * what roles to give dev/test/operator in IAM and in Cloud Foundry? Reuse the tables from IAM/CF docs
 
