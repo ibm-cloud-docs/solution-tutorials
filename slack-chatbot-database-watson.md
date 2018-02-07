@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-06"
+lastupdated: "2018-02-07"
 
 ---
 
@@ -14,9 +14,9 @@ lastupdated: "2018-02-06"
 
 # Build a database-driven Slackbot
 
-In this tutorial, we are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. We integrate Slack and the Watson conversation service using the  [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) using the serverless approach. 
+In this tutorial, we are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. We integrate Slack and {{site.data.keyword.conversationfull}} using the  [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) using the serverless approach.
 
-The  [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) uses IBM Cloud Functions and Cloudant NoSQL DB. The chatbot interacts with the Db2 database through {{site.data.keyword.conversationshort}}. All (not much) function code is using Node.js, but other languages can be used to deliver the same. 
+The  [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) uses {{site.data.keyword.openwhisk_short}} and {{site.data.keyword.cloudantfull}}. The chatbot interacts with the Db2 database through {{site.data.keyword.conversationshort}}. All (not much) function code is using Node.js, but other programming languages can be used to deliver the same.
 
 ![](images/solution19/SlackbotArchitecture.png)
 
@@ -60,7 +60,7 @@ In this section, we are going to set up the needed services and prepare the envi
    {:codeblock}
    You can also use another than the **Entry** plan.
 
-4. To access the database service from {{site.data.keyword.openwhisk_short}}, later on, we need the authorization. Thus, we create service credentials and label them **slackbotkey**:   
+4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, we need the authorization. Thus, we create service credentials and label them **slackbotkey**:   
    ```
    bx service key-create eventDB slackbotkey
    ```
@@ -72,9 +72,9 @@ In this section, we are going to set up the needed services and prepare the envi
    ```
    {:codeblock}
 
-6. Next, we are going to register actions for Cloud Functions and bind service credentials to those actions. 
+6. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
 
-   One of the actions gets invoked to create a table in Db2® Warehouse on Cloud. By using an action of Cloud Functions, we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. 
+   One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions.
 
    ```bash
    sh setup.sh
@@ -84,12 +84,20 @@ In this section, we are going to set up the needed services and prepare the envi
    **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#bx wsk action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
 
 ## Load the conversation workspace
-In this part of the tutorial we are going to load a pre-defined workspace into the {{site.data.keyword.conversationshort}} service. After that, we need to replace service credentials and action names to adapt the workspace to the new environment.   
-1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net) open the overview of your services. Locate the instance of the conversation service created in the previous section. Click on its entry to open the service details. Click on **Launch Tool** to get to the {{site.data.keyword.conversationshort}} Tool. (**ToDo** - suggestion, break this down so user can understand more easily).
-2. In the tool click on the **Import workspace** icon, right next to the **Create** button. In the popup dialog select the file **conversation-workspace.json** from the local directory. Leave the import option at **Everything (Intents, Entities, and Dialog)**, then click **Import**. This creates a new conversation workspace named **SlackBot**. (**ToDo** - suggestion, break this down so user can understand more easily).
-3. Click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown here:   
+In this part of the tutorial we are going to load a pre-defined workspace into the {{site.data.keyword.conversationshort}} service.
+1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net) open the overview of your services. Locate the instance of the conversation service created in the previous section. Click on its entry to open the service details.
+2. Click on **Launch Tool** to get to the {{site.data.keyword.conversationshort}} Tool.
+3. In the tool click on the **Import workspace** icon, right next to the **Create** button.
+4. In the popup dialog select the file **conversation-workspace.json** from the local directory. Leave the import option at **Everything (Intents, Entities, and Dialog)**, then click **Import**. This creates a new conversation workspace named **SlackBot**.
+5. Click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
+
+   The dialog has nodes to handle questions for help and simple Thank You. The node **newEvent** and it's child gather the necessary input and then call an action to insert a new event record into Db2.
+
+   The node **query events** clarifies whether events are searched by their identifier or by date. The actual search and collecting the necessary data are then performed by the child nodes **query events by shortname** and **query event by dates**.
+
+  We come back to explaining some details once everything is set up.
   ![](images/solution19/SlackBot_Dialog.png)   
-  The dialog has nodes to handle questions for help and simple Thank You. The node **newEvent** and it's child gather the necessary input and then call an action to insert a new event record into Db2. The node **query events** clarify whether events are searched by their name or by date. The actual search and collecting the necessary data are then performed by the child nodes **query events by shortname** and **query event by dates**. We come back to explaining some details once everything is set up. (**ToDo** - suggestion, break this down to two paragraph and move this portion to the top above the image.)
+
 
 
 ## Deploy the Conversation to Slack
@@ -98,16 +106,16 @@ In this part of the tutorial we are going to load a pre-defined workspace into t
 2. Click on the **Deploy** for Slack button.
 3. Click on the **Deploy to Slack app** button, this will bring you to the instructions page to create and configure for Slack.
 4. Follow the instructions on that page which has several steps on its own. In order to create the Slack app, you need access to a Slack workspace. If you don't have that yet, then you can sign up and create such a workspace as part of that process. During the configuration process keep this in mind:
- * Remember how you name the Slack App and also keep copies of the important links (see instructions on that **Deploy to Slack app** page). (**ToDo** - explain what important links?)
- * In the Slack section **Events Subscription** choose at least **message.im** to be able to send direct messages to the bot. (**ToDo** - not able to save after adding the **Bot User Event**. Issue already reported…!)
-5. Once all is done, you should have a fully configured Slack app in a messaging workspace. However, the Slackbot is not yet ready to successfully use the entire {{site.data.keyword.conversationshort}} dialog. Some credentials are missing.
+ * Remember how you name the Slack App and also keep copies of the redirect and request URLs (see instructions on that **Deploy to Slack app** page).
+ * In the Slack section **Events Subscription** choose at least **message.im** to be able to send direct messages to the bot.
+5. Once all is done, you should have a fully configured Slack app in a messaging workspace. However, the Slackbot is not yet ready to successfully use the entire {{site.data.keyword.conversationshort}} dialog. Some credentials are missing to invoke the previously defined actions.
 
    ​
 
 ## Add custom preprocessor to Conversation connector
 In order to integrate Slack and Facebook Messenger with {{site.data.keyword.conversationshort}}, the [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector) uses a pipeline (sequence) of actions (see flow diagram in their documentation). They transform between the native messages and requests of the utilized communication tool (Slack or Facebook Messenger) and the format needed by {{site.data.keyword.conversationshort}}. All the actions in the sequence are customisable. We need to modify one action to retrieve credentials for {{site.data.keyword.openwhisk_short}} and to pass them into the dialog.
 
-1. On the command line, execute the following update an already existing action. Replace **MySlackApp** with the name you used in the previous section.   (**ToDo** - need a more explanation to what this command is doing)
+1. On the command line, execute the following. Replace **MySlackApp** with the name you used in the previous section. The command updates the existing action **pre-conversation** in the package **MySlackApp_starter-code** with the code from the file **pre-conversation-APIKey.js**. That action usually is empty, but now, with our code, will obtain and add credentials to the information passed from Slack into the dialog.   
    ```
    bx wsk action update MySlackApp_starter-code/pre-conversation pre-conversation-APIKey.js
    ```
@@ -126,7 +134,7 @@ Open up your Slack workspace for a test drive of the chatbot.
 
 1. Type **help** into the messaging form. The bot should respond with some guidance.
 2. Now enter **new event** to start gathering data for a new event record. We use {{site.data.keyword.conversationshort}} slots to collect all the necessary input.
-3. First up is the event identifier or name. Quotes are required. They allow entering more complex names. Enter **"Meetup: IBM Cloud"** as the event name. (**ToDo** - not able to pass that stage.)
+3. First up is the event identifier or name. Quotes are required. They allow entering more complex names. Enter **"Meetup: IBM Cloud"** as the event name. The event name is defined as a pattern-based entity **eventName**. It supports different kinds of double quotes at the beginning and ending.
 4. Next is the event location. Input is based on the [system entity **sys-location**](https://console.bluemix.net/docs/services/conversation/system-entities.html#system-entity-details). As a limitation, only cities recognized by {{site.data.keyword.conversationshort}} can be used. Try **Friedrichshafen** as a city.
 5. Contact information such as an email address or URI for a website is asked for in the next step. Start with **https://www.ibm.com/events**. We use a pattern-based entity for that field.
 6. The next questions are gathering date and time for the begin and end. **sys-date** and **sys-time** are used which allow for different input formats. Use **next Thursday** as start date, **6 pm** for the time, **2018-10-21** and **22:00** for the end date and time.
@@ -143,7 +151,7 @@ After some more searches and new event entries, you can revisit the chat history
 
 ## Cleanup
 Executing the cleanup script deletes the event table from {{site.data.keyword.dashdbshort}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script neither changes the deployed Conversation connector nor the {{site.data.keyword.conversationshort}} workspace.   
-```
+```bash
 sh cleanup.sh
 ```
 {:codeblock}
@@ -151,13 +159,20 @@ sh cleanup.sh
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
 1. Use the Compose PostgreSQL or MySQL service instead of {{site.data.keyword.dashdbshort}}.
-2. Add a weather service and retrieve forecast data for the event date and location.
-3. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
-4. Export event data as iCalendar ICS file.
+2. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
+3. Add a weather service and retrieve forecast data for the event date and location.
+4. Export event data as iCalendar **.ics** file.
+5. Connect the chatbot to Facebook Messenger.
 
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.
 
+Chatbot-related blog posts:
+* [Chatbots: Some tricks with slots in IBM Watson Conversation](https://www.ibm.com/blogs/bluemix/2018/02/chatbots-some-tricks-with-slots-in-ibm-watson-conversation/)
+* [Lively chatbots: Best Practices](https://www.ibm.com/blogs/bluemix/2017/07/lively-chatbots-best-practices/)
+* [Building chatbots: more tipcs and tricks](https://www.ibm.com/blogs/bluemix/2017/06/building-chatbots-tips-tricks/)
+
+Documentation and SDKs:
 * [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) for connecting {{site.data.keyword.conversationshort}} to Slack and Facebook Messenger
 * Github repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
 * [{{site.data.keyword.openwhisk_short}} documentation](https://console.bluemix.net/docs/openwhisk/openwhisk_about.html#about-cloud-functions)
