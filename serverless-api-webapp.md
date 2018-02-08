@@ -157,7 +157,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
   ```
   {: codeblock}
 11. Choose the sequence by clicking on **Actions** and then **read-guestbook-entries-sequence**.
-12. Click on **Save and then **Invoke**. The output should look like the following:
+12. Click on **Save** and then **Invoke**. The output should look like the following:
    ![](images/solution8/Read_Entries_Invoke.png)
 
 ## Create an API
