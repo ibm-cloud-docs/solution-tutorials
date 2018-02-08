@@ -158,12 +158,12 @@ sh cleanup.sh
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
-1. Use the Compose PostgreSQL or MySQL service instead of {{site.data.keyword.dashdbshort}}.
-2. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
+1. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
+2. Use the Compose PostgreSQL or MySQL service instead of {{site.data.keyword.dashdbshort}}.
 3. Add a weather service and retrieve forecast data for the event date and location.
 4. Export event data as iCalendar **.ics** file.
 5. Connect the chatbot to Facebook Messenger.
-
+6. Add interactive elements, such as buttons, to the output.      
 
 
 # Related Content
