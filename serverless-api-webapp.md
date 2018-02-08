@@ -165,7 +165,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 ![](images/solution8/Cloud_Functions_API.png)
 
 1. Go to Actions https://console.bluemix.net/openwhisk/manage/actions.
-2. Select the **read-guestbook-entries-sequence** sequence. Under **Additional details**, check **Enable Web Action**.
+2. Select the **read-guestbook-entries-sequence** sequence. Under **Endpoints**, check **Enable Web Action**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
 4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement and **Create Managed API**
 5. Set name to **guestbook** and base path to **/guestbook**
