@@ -33,15 +33,15 @@ This tutorial gives an overview of the concepts available in IBM Cloud to manage
 
 This tutorial uses the following products:
 * [Identity and Access Management](https://console.bluemix.net/docs/iam/index.html)
-* Container Service
-* Cloud Object Storage
-* Cloud Foundry
-* Cloudant NoSQL database
+* [Container Service](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+* [Cloud Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
+* [Cloud Foundry](https://console.bluemix.net/catalog/?category=cf-apps&search=foundry)
+* [Cloudant NoSQL database](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
-## Before you begin
+<!-- ## Before you begin
 {: #prereqs}
 
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins -->
 
 ## Define a project
 
@@ -59,15 +59,15 @@ In this project, we define three environments:
 * *Testing* - this environment is built after a stable branch or tag of the code. This is where user acceptance testing is made. It is very close from the production environment, it is loaded with realistic data (anonymized production data as example).
 * *Production* - this environment is updated with the version validated in the previous environment.
 
-A build pipeline manages the progression of a build through the environment. It can be fully automated or include manual validation gates to promote builds between environments - this is really open and can be set up to match the company practices and workflows.
+A build pipeline manages the progression of a build through the environment. It can be fully automated or include manual validation gates to promote approved builds between environments - this is really open and should be set up to match the company best practices and workflows.
 
-When it comes to assigning responsibilities to the project team members, we define the following roles and related permissions:
+When it comes to assigning responsibilities to the project team members, let's define the following roles and related permissions:
 
 |           | Development | Testing | Production |
 | --------- | ----------- | ------- | ---------- |
 | Developer | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view app and service configuration</li></ul> | <ul><li>can access log files</li><li>can view app and service configuration</li></ul> | <ul><li>no access</li></ul> |
 | Tester    | <ul><li>use the deployed applications</li></ul> | <ul><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
-| Operator  | <ul><li>no access</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view app and service configuration</li></ul> |
+| Operator  | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view app and service configuration</li></ul> |
 
 ## Identity and Access Management (IAM)
 {: #first_objective}
@@ -88,16 +88,18 @@ https://console.bluemix.net/docs/iam/quickstart.html#getstarted
 
 ## Mapping the project to IAM
 
-Although the three environments needed by this project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
+Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
   ![](./images/solution20-users-teams-applications/one-environment.png)
 
-### let's start with one environment
+### Let's start with one environment
 
-* have a diagram showing where the resources are attached
+have a diagram showing where the resources are attached
   * cluster is under account
   * cloud foundry services under org/space
   * logging and monitoring send logs to a space - link to command to redirect logs to another space
+
+  ![](./images/solution20-users-teams-applications/resources.png)
 
 Before you create a cluster, either through the IBM Cloud UI or through the command line, you must log into a specific IBM Cloud region, account, organization, and space. The space where you are logged in is the space where logging and monitoring data for the cluster and its resources is collected.
 
