@@ -16,7 +16,8 @@ tar cf - \
   --exclude=build \
   --exclude=.git \
   --exclude=.gitignore \
-  --exclude=solution-template.md \
+  --exclude=solution-template.md \  
+  --exclude=users-teams-applications.md \  
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )

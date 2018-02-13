@@ -251,8 +251,10 @@
     {
         "name": "Security",
         "anchor": "security",
+        "hidden": true,
         "solutions": [
             {
+                "hidden": true,
                 "name": "Best practices for organizing users, teams, applications",
                 "url": "users-teams-applications.html",
                 "description": "This tutorial gives an overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.",
