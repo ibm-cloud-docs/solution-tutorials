@@ -95,7 +95,7 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 5. Select **n** to skip adding services.
 
 ![](images/solution2/bx_dev_create.png)
-This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/java_project_contents.html).
+This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/projects/java_project_contents.html#java-project-files).
 
 ![](images/solution2/Contents.png)
 
@@ -130,7 +130,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
-2. After your container starts, go to http://localhost:9080/[nameofproject]. If you created a Node.js application, use port 3000.
+2. After your container starts, go to `http://localhost:9080/<nameofproject>`. If you created a Node.js application, use port 3000.
   ![](images/solution2/LibertyLocal.png)
 
 ## Deploy application to cluster
