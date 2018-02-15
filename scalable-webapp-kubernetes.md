@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-01-15"
+lastupdated: "2017-02-12"
 
 ---
 
@@ -321,6 +321,9 @@ If you were to try to access your application with HTTPS at this time `https://<
    ```
    {: pre}
    then access the console at http://127.0.0.1:8001/ui.
+   
+    If you see an authentication popup, refer [Launching the Kubernetes dashboard](https://console.bluemix.net/docs/containers/cs_app.html#cli_dashboard)
+    {: tip}
 2. Select **Nodes** and see the **Allocation Resources** to see the health of your nodes.
    ![](images/solution2/KubernetesDashboard.png)
 3. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.

@@ -62,11 +62,13 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     }
 </style>
 {{#each categories}}
+{{#unless hidden}}
 ## {{name}}
 {: #{{anchor}} }
 
 <div class = "solutionBoxContainer">
     {{#each solutions}}
+    {{#unless hidden}}
     <div class = "solutionBox">
         <h3 id="{{url}}" class="solutionBoxTitle">
             <a href = "{{url}}">{{name}}</a>
@@ -83,7 +85,9 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
         </div>
     </div>
+    {{/unless}}
     {{/each}}
 </div>
 
+{{/unless}}
 {{/each}}
