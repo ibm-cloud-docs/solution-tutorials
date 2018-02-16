@@ -1,7 +1,14 @@
+---
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-02-15"
+  years: 2018
+lastupdated: "2018-02-16"
 
+---
+
+{:java: #java .ph data-hd-programlang='java'}
+{:swift: #swift .ph data-hd-programlang='swift'}
+{:ios: #ios data-hd-operatingsystem="ios"}
+{:android: #android data-hd-operatingsystem="android"}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -15,7 +22,6 @@ This tutorial walks you through the process of building a predictive machine lea
 In this tutorial, **Iris flower data set** is used for creating a machine learning model to classify species of flowers. 
 
 In the terminology of machine learning, classification is considered an instance of supervised learning, i.e. learning where a training set of correctly identified observations is available
-
 {:tip}
 
 {:shortdesc} 
@@ -51,20 +57,15 @@ You can create a project to add data and open a data asset in the data refiner f
 **Create a project:**
 
 1. Visit https://dataplatform.ibm.com, login with your IBM id, and Click on [Try out](https://dataplatform.ibm.com/data/discovery?target=offerings&context=analytics) the Watson Data Platform apps.
-
 2. Under Data Science Experience tile, Click on **Try it for free** and Scroll to select **Lite** Plan > Create.
 
    ![](images/solution22-build-machine-learning-model/data_platform_landing.png)
 
 3.  Create a **New Project** (Projects > All Projects > New Project). Add a name and optional description for the project.
-
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as you don't have confidential data.
-
 5. Under **Define Storage**, Click on **Add** and Choose an existing object storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
-
 6. Under **Define compute engine**, Click on **Add** and Choose an existing spark service or create a new one.
-
-6. Click Create. Your new project opens and you can start adding resources to it.
+7. Click Create. Your new project opens and you can start adding resources to it.
 
 **Import data:**
 
@@ -107,9 +108,12 @@ The iris data set contains 3 classes of 50 instances each, where each class refe
    ![](images/solution22-build-machine-learning-model/model_technique.png)
 
 8. Validation split
-| Test | Train | Holdout |
-| :----: |:----:| :----:|
-| 50% | 25% | 25% |
+
+   **Train:** 50%, 
+
+   **Test** 25%, 
+
+   **Holdout:** 25%
 
 9. Click on **Add Estimators** and select **Decision Tree Classifier** > Add. 
 
@@ -131,9 +135,10 @@ The iris data set contains 3 classes of 50 instances each, where each class refe
 **Test:**
 
 1. Under **Test**, you should see input data (Feature data) prepopulated.
-
 2. Click **Predict** and you should see the **Predicted value for species** in a chart. 
 
    ![](images/solution22-build-machine-learning-model/model_predict_test.png)
 
 3. You can change the input data and continue testing your model. 
+
+## Re-train your model

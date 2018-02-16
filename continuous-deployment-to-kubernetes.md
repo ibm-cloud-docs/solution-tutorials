@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-02-14"
+lastupdated: "2018-02-16"
 
 ---
 
@@ -186,21 +186,60 @@ You can build and run the application as you normally would using `mvn` for java
    ![](images/solution21/node_starter_localhost.png)
 
 
-## Explore Vulnerability Advisor 
+## Security using Vulnerability Advisor 
 
-ToDo: add steps
+Vidya: In Progress
 
-Vidy: In progress 
+[Vulnerability Advisor](https://console.bluemix.net/docs/containers/va/va_index.html) checks the security status of container images before deployment,
+and also checks the status of running containers.
 
+1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 
+2. Click on **Add Stage** and change MyStage to **Validate Stage**.
+
+3. Click on JOBS  > **ADD JOB**.
+
+4. Select **Test** as the Job Type and Change **Test** to **Vulnerability advisor** in the box.
+
+5. Under Tester type, select **Vulnerability Advisor**.
+
+6. All the other fields should be populated automatically. 
+
+   Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
+
+   {:tip}
+
+7. Uncheck **Stop running this stage if this job fails** and click **Save**.
+
+8. Click on Settings ![](images/solution21/settings.png) icon of **Validate Stage** and select **Reorder Stage**.
+
+9. Click on the button with left arrow and then click **Done**.
 
 ## Setup Slack notifications 
 
-ToDo: add steps 
+Vidya: In Progress
 
+1. Go to the toolchain you created and click on **Add a Tool**.
 
+2. Search for slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
 
+    ![](images/solution21/configure_slack.png)
 
+3. For **Slack webhook**, follow the steps in this [link](https://my.slack.com/services/new/incoming-webhook/). You need to login with your Slack credentials and provide an existing channel name or create a new one.
+
+4. Once the Incoming webhook integration is added, copy the **Webhook URL** and paste the same under **Slack webhook**.
+
+5. **Slack channel** is the channel name your provided while creating a webhook integration above.
+
+6. **Slack team name** is the team-name(first part) of team-name.slack.com. e.g., kube is the team name in kube.slack.com
+
+7. Click **Create Integration**. A new tile will be added to your toolchain.
+
+    ![](images/solution21/toolchain_slack.png)
+
+8. From now on, whenever your toolchain executes, You should see slack notifications in the channel you configured.
+
+    ![](images/solution21/slack_channel.png)
 
 ## Expand the Tutorial
 
