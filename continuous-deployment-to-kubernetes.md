@@ -12,6 +12,7 @@ lastupdated: "2018-02-16"
 {:codeblock: .codeblock}
 {:screen: .screen}
 {:pre: .pre}
+{:tip: .tip}
 
 
 # Continuous Deployment to Kubernetes
@@ -52,7 +53,7 @@ ToDo: Need to create an architecture digram
 ## Create a Kubernetes cluster
 {: #step1}
 
-1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Lite plan or the paid plan** cluster. 
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Lite plan or the paid plan** cluster.
   {:tip}
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution21/KubernetesPaidClusterCreation.png)
 2. For convenience, use the name `mycluster` to be consistent with this tutorial.
@@ -74,10 +75,10 @@ IBM Cloud offers a selection of starter applications, these starter applications
 
 4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
 
-5. Done, this will create the starter application, we will later clone the code once setting up the pipeline. 
+5. Done, this will create the starter application, we will later clone the code once setting up the pipeline.
 
 
-## Configure DevOps delivery pipeline 
+## Configure DevOps delivery pipeline
 
    1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button. ![](images/solution21/Pipeline.png)
 
@@ -85,11 +86,11 @@ IBM Cloud offers a selection of starter applications, these starter applications
 
    3. Once the pipeline created, click on **View Toolchain** then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
 
-   4.  Once the deploy stages completed, click on the **View logs and history** to see the logs. 
+   4.  Once the deploy stages completed, click on the **View logs and history** to see the logs.
 
    5. Visit the URL displayed to access the application by `http://worker-public-ip:portnumber/`. ![](images/solution21/Logs.png)
 
-## Build and run the application locally 
+## Build and run the application locally
 
 Twana: In progress
 
@@ -136,8 +137,6 @@ In this step, you set up a git source control repository to store your code and 
 11. Click the application **url** under Last Execution result to view your changes live.
 
 Continue making further changes to your application and periodically commit your changes to your git repository. If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
-
-
 
 ### Build the application
 
@@ -186,7 +185,8 @@ You can build and run the application as you normally would using `mvn` for java
    ![](images/solution21/node_starter_localhost.png)
 
 
-## Security using Vulnerability Advisor 
+## Security using Vulnerability Advisor
+{: #vulnerability_advisor}
 
 Vidya: In Progress
 
@@ -203,11 +203,10 @@ and also checks the status of running containers.
 
 5. Under Tester type, select **Vulnerability Advisor**.
 
-6. All the other fields should be populated automatically. 
+6. All the other fields should be populated automatically.
 
-   Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
-
-   {:tip}
+  Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
+  {:tip}
 
 7. Uncheck **Stop running this stage if this job fails** and click **Save**.
 
@@ -215,9 +214,14 @@ and also checks the status of running containers.
 
 9. Click on the button with left arrow and then click **Done**.
 
-## Setup Slack notifications 
+    ![](images/solution21/toolchain.png)
 
-Vidya: In Progress
+10. If your code is still open in an IDE or select Eclipse Orion web IDE tile, open `.bluemix/scripts/container_build.sh` and change $BUILD_NUMBER on lines 57 and 59 to **latest**.
+
+11. Commit and Push the changes.
+
+## Setup Slack notifications
+{: #setup_slack}
 
 1. Go to the toolchain you created and click on **Add a Tool**.
 
