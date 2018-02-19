@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-02-16"
+lastupdated: "2018-02-19"
 
 ---
 
@@ -208,7 +208,7 @@ and also checks the status of running containers.
   Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
   {:tip}
 
-7. Uncheck **Stop running this stage if this job fails** and click **Save**.
+7. Uncheck **Stop running this stage if this job fails** so that the Deploy Stage executes even if the Validate Stage fails. Click **Save** to reflect your changes.
 
 8. Click on Settings ![](images/solution21/settings.png) icon of **Validate Stage** and select **Reorder Stage**.
 
@@ -216,9 +216,15 @@ and also checks the status of running containers.
 
     ![](images/solution21/toolchain.png)
 
-10. If your code is still open in an IDE or select Eclipse Orion web IDE tile, open `.bluemix/scripts/container_build.sh` and change $BUILD_NUMBER on lines 57 and 59 to **latest**.
+10. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `.bluemix/scripts/container_build.sh` and change $BUILD_NUMBER on lines 57 and 59 to **latest**.
 
-11. Commit and Push the changes.
+11. Commit and Push the changes. This should trigger the toolchain.
+
+12. Once the Validate Stage is executed, Click on **View logs and history** to see the vulnerability assessment.
+
+     You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/security/scans)
+     {:tip}
+
 
 ## Setup Slack notifications
 {: #setup_slack}
