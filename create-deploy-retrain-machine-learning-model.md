@@ -73,7 +73,7 @@ As mentioned earlier, you will be using iris data set. Originally published at [
 
 ![](images/solution22-build-machine-learning-model/iris_machinelearning.png)
 
-The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant. [Download](https://www.kaggle.com/uciml/iris/downloads/Iris.csv) the iris.csv.
+The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant. [Download](https://ibm.box.com/s/rtpelxr4767shqmxxjb9amtlgq9xcvx5) the iris.csv.
 
 1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution16/data_icon.png).
 2. Under **Load**, Click on **browse** and upload the downloaded iris.csv
@@ -137,9 +137,7 @@ The iris data set contains 3 classes of 50 instances each, where each class refe
 
    ![](images/solution22-build-machine-learning-model/machine_learning_api.png)
 
-   To start working with API one needs to generate an `access token` using the `username` and `password`
-   available on the Service Credentials tab of the IBM Watson Machine Learning service instance. Follow the instructions mentioned on the API specification page to generate an `access token`.
-
+   To start working with API one needs to generate an `access token` using the `username` and `password`available on the Service Credentials tab of the IBM Watson Machine  Learning service instance. Follow the instructions mentioned on the API specification page to generate an  `access token`.
    {:tip}
 
 5. To make an online prediction, use the `POST /online` API call.
@@ -158,6 +156,7 @@ The iris data set contains 3 classes of 50 instances each, where each class refe
      	]
      }
      ```
+   *  Click on **Try it out** to see the JSON output.
 
 6. Using the API endpoints, you can now call this model from any application.
 

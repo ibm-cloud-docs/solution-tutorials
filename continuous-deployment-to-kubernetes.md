@@ -17,7 +17,7 @@ lastupdated: "2018-02-20"
 
 # Continuous Deployment to Kubernetes
 
-This tutorial walks you thru setting up a continuous deployment and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.
+This tutorial walks you through setting up a continuous deployment and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.
 
 {:shortdesc}
 
@@ -255,10 +255,9 @@ and also checks the status of running containers.
 
 ToDo: add info
 
-
-
 ## Related Content
 
 ToDo: add related content
 
 * [Security](https://console.bluemix.net/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
+* Configuring tool [integrations](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
