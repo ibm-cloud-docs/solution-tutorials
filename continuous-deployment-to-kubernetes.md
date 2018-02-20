@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-02-19"
+lastupdated: "2018-02-20"
 
 ---
 
@@ -31,9 +31,9 @@ This tutorial walks you thru setting up a continuous deployment and delivery pip
 
 * Build and run the application locally - done
 
-* Explore vulnerability advisor - pending  
+* Security using Vulnerability Advisor - done  
 
-* Setup Slack notifications  - pending  
+* Setup Slack notifications  - done
 
 * ToDo (what more can be added?) - ???
 
@@ -260,3 +260,5 @@ ToDo: add info
 ## Related Content
 
 ToDo: add related content
+
+* [Security](https://console.bluemix.net/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.

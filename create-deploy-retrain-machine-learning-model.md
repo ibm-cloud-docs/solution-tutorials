@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-16"
+lastupdated: "2018-02-20"
 
 ---
 
@@ -128,9 +128,38 @@ The iris data set contains 3 classes of 50 instances each, where each class refe
 **Deploy:**
 
 1. Under the created model, Click on **Deployments** > **Add Deployment**.
+
 2. Choose **Web Service**. Add a name and an optional description.
+
 3. Click **Save**. Once the status is changed to Active, you can now check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
-4. Using the API endpoint, you can now call this model from any application.
+
+4. Click on **View API Specification** to see and test IBM Watson Machine Learning API endpoints.
+
+   ![](images/solution22-build-machine-learning-model/machine_learning_api.png)
+
+   To start working with API one needs to generate an `access token` using the `username` and `password`
+   available on the Service Credentials tab of the IBM Watson Machine Learning service instance. Follow the instructions mentioned on the API specification page to generate an `access token`.
+
+   {:tip}
+
+5. To make an online prediction, use the `POST /online` API call.
+
+   * `instance_id` can be found on thee Service Credentials tab of the Machine Learning service. 
+
+   * `deployment_id` and `published_model_id` are under **Overview** of your deployment.
+
+   *  For `online_prediction_input`, use the below JSON
+
+     ```
+     {
+     	"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"],
+     	"values": [
+     		[5.1, 3.5, 1.4, 0.2]
+     	]
+     }
+     ```
+
+6. Using the API endpoints, you can now call this model from any application.
 
 **Test:**
 
