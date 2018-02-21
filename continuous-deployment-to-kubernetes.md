@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-02-20"
+lastupdated: "2018-02-21"
 
 ---
 
@@ -23,21 +23,22 @@ This tutorial walks you through setting up a continuous deployment and delivery 
 
 ## Objectives:
 
-* Create a Kubernetes cluster - done
+* Create a Kubernetes cluster 
 
-* Create a starter application - done
+* Create a starter application 
 
-* Configure DevOps delivery pipeline - done
+* Configure DevOps delivery pipeline 
 
-* Build and run the application locally - done
+* Clone, build and run the application locally 
 
-* Security using Vulnerability Advisor - done  
+* Push application Git repository 
 
-* Setup Slack notifications  - done
+* Security using Vulnerability Advisor 
 
-* ToDo (what more can be added?) - ???
+* Setup Slack notifications
 
   ​
+
 
 ![](images/solution21/Architecture.png)
 
@@ -75,14 +76,14 @@ IBM Cloud offers a selection of starter applications, these starter applications
 
 4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
 
-5. Done, this will create the starter application, we will later clone the code once setting up the pipeline.
+5. Done, this will create the starter application, later you will get the code and setup the pipeline.
 
 
 ## Configure DevOps delivery pipeline
 
    1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button. ![](images/solution21/Pipeline.png)
 
-   2. Select the cluster you created earlier and then click **Create**. This will create the delivery pipeline and setup the toolchain. ![](images/solution21/BindCluster.png)
+   2. Select the cluster you created earlier and then click **Create**. This will create the delivery pipeline and set up the toolchain. ![](images/solution21/BindCluster.png)
 
    3. Once the pipeline created, click on **View Toolchain** then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
 
@@ -90,19 +91,14 @@ IBM Cloud offers a selection of starter applications, these starter applications
 
    5. Visit the URL displayed to access the application by `http://worker-public-ip:portnumber/`. ![](images/solution21/Logs.png)
 
-## Build and run the application locally
+## Clone, build and run the application locally
 
-Twana: In progress
+In this step, you set up a git source control repository, clone the repo, then make some modifications and build/run the application locally.  
 
-In this step, you set up a git source control repository to store your code and then create a pipeline, which deploys any code changes automatically.
+### Clone the application
+2. Select the **Git** tile under **Code**. You're then directed to your git repository page. ![HelloWorld](images/solution21/DevOps_Toolchain.png)
 
-1. Keep the default options and click **Create**. You should now have a default **toolchain** created.
-
-   ![HelloWorld](images/solution21/DevOps_Toolchain.png)
-
-2. Select the **Git** tile under **Code**. You're then directed to your git repository page.
-
-3. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the **add an SSH key** link in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking  **create a personal access token**. Remember to save the key or token for future reference.
+3. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the **add an SSH key** link in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking **create a personal access token**. Remember to save the key or token for future reference.
 
 4. Select SSH or HTTPS and copy the git URL. Clone the source to your local machine.
 
@@ -113,33 +109,9 @@ In this step, you set up a git source control repository to store your code and 
 
    **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 
-5. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Hello World" to something else.
-
-6. Run the application locally by running the commands one after another
-   `npm install`, `npm build`,  `npm start ` and visit ```localhost:<port_number>```in your browser.
-   **<port_number>** as displayed on the console.
-
-7. Push the change to your repository with three simple steps: Add, commit, and push.
-
-   ```bash
-   git add public/index.html
-   git commit -m "my first changes"
-   git push origin master
-   ```
-
-8. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-
-9. Confirm that you see n **BUILD** and **DEPLOY** stage.
-   ![](images/solution21/Delivery-pipeline.png)
-
-10. Wait for the **DEPLOY** stage to complete.
-
-11. Click the application **url** under Last Execution result to view your changes live.
-
-Continue making further changes to your application and periodically commit your changes to your git repository. If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
+5. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Congratulations!" to something else.
 
 ### Build the application
-
 You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
 
 1. Ensure your local Docker engine is started.
@@ -168,7 +140,6 @@ You can build and run the application as you normally would using `mvn` for java
 
    This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
 
-
 ### Run the application locally
 
 1. Run the container.
@@ -181,17 +152,40 @@ You can build and run the application as you normally would using `mvn` for java
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
 
-2. After your container starts, go to http://localhost:3000/
+2. After your container starts, go to http://localhost:3000/ 
    ![](images/solution21/node_starter_localhost.png)
+
+## Push application Git repository 
+
+In this step, you will commit your change to your Git repository. The pipeline will pick up the commit push the changes to the cloud automatically.
+
+1. In your terminal window, make sure you are inside the repo you cloned.  
+
+2. Push the change to your repository with three simple steps: Add, commit, and push.
+
+   ```bash
+   git add public/index.html
+   git commit -m "my first changes"
+   git push origin master
+   ```
+
+3. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
+
+4. Confirm that you see n **BUILD** and **DEPLOY** stage.
+   ![](images/solution21/Delivery-pipeline.png)
+
+5. Wait for the **DEPLOY** stage to complete.
+
+6. Click the application **url** under Last Execution result to view your changes live.
+
+If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
+
 
 
 ## Security using Vulnerability Advisor
 {: #vulnerability_advisor}
 
-Vidya: In Progress
-
-[Vulnerability Advisor](https://console.bluemix.net/docs/containers/va/va_index.html) checks the security status of container images before deployment,
-and also checks the status of running containers.
+In this step, you will explore the [Vulnerability Advisor](https://console.bluemix.net/docs/containers/va/va_index.html). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 
@@ -210,15 +204,19 @@ and also checks the status of running containers.
 
 7. Uncheck **Stop running this stage if this job fails** so that the Deploy Stage executes even if the Validate Stage fails. Click **Save** to reflect your changes.
 
-8. Click on Settings ![](images/solution21/settings.png) icon of **Validate Stage** and select **Reorder Stage**.
-
-9. Click on the button with left arrow and then click **Done**.
+8. Drag and move the **Validate Stage** to the middle.
 
     ![](images/solution21/toolchain.png)
 
 10. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `.bluemix/scripts/container_build.sh` and change $BUILD_NUMBER on lines 57 and 59 to **latest**.
 
-11. Commit and Push the changes. This should trigger the toolchain.
+10. Commit and Push the changes. This should trigger the toolchain.
+
+    ```
+    git add .bluemix/scripts/container_build.sh
+    git commit -m "Change build label"
+    git push origin master
+    ```
 
 12. Once the Validate Stage is executed, Click on **View logs and history** to see the vulnerability assessment.
 
@@ -229,7 +227,7 @@ and also checks the status of running containers.
 ## Setup Slack notifications
 {: #setup_slack}
 
-1. Go to the toolchain you created and click on **Add a Tool**.
+1. Go back to view the list of [toolchains](https://console.bluemix.net/devops/toolchains) and select your toolchain, then click on **Add a Tool**.
 
 2. Search for slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
 
@@ -251,13 +249,9 @@ and also checks the status of running containers.
 
     ![](images/solution21/slack_channel.png)
 
-## Expand the Tutorial
 
-ToDo: add info
 
 ## Related Content
-
-ToDo: add related content
 
 * [Security](https://console.bluemix.net/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
 * Configuring tool [integrations](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
