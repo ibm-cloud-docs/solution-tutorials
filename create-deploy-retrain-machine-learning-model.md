@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-20"
+lastupdated: "2018-02-21"
 
 ---
 
@@ -31,7 +31,8 @@ In the terminology of machine learning, classification is considered an instance
 
 * Import data to a project.
 * Build a machine learning model.
-* Deploy and Test your model.
+* Deploy the model and try out the API.
+* Test the model.
 * Re-train your model - pending.
 
 ## Products
@@ -69,18 +70,18 @@ You can create a project to add data and open a data asset in the data refiner f
 
 **Import data:**
 
-As mentioned earlier, you will be using iris data set. Originally published at [UCI Machine Learning Repository: Iris Data Set](https://archive.ics.uci.edu/ml/datasets/Iris), this small dataset from 1936 is often used for testing out machine learning algorithms and visualizations. The aim is to classify iris flowers among three species (setosa, versicolor or virginica) from measurements of length and width of sepals and petals. 
+As mentioned earlier, you will be using iris data set. Originally published at [UCI Machine Learning Repository: Iris Data Set](https://archive.ics.uci.edu/ml/datasets/Iris), this small dataset from 1936 is often used for testing out machine learning algorithms and visualizations. The aim is to classify iris flowers among three species (setosa, versicolor or virginica) from measurements of length and width of sepals and petals. The [iris data set](https://ibm.box.com/s/rtpelxr4767shqmxxjb9amtlgq9xcvx5) contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 
 ![](images/solution22-build-machine-learning-model/iris_machinelearning.png)
 
-The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant. [Download](https://ibm.box.com/s/rtpelxr4767shqmxxjb9amtlgq9xcvx5) the iris.csv.
+ [Download](https://ibm.box.com/s/nnxx7ozfvpdkjv17x4katwu385cm6k5d) the iris_initial.csv which consists of 40 instances of each class. You will use the rest to re-train your model.
 
 1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution16/data_icon.png).
-2. Under **Load**, Click on **browse** and upload the downloaded iris.csv
+2. Under **Load**, Click on **browse** and upload the downloaded iris_initial.csv
 
       ![](images/solution22-build-machine-learning-model/find_and_add_data.png)
 
-3. Once added, You should see iris.csv under **Data assets** section of the project. Click on the name to see the contents of the data set.
+3. Once added, You should see iris_initial.csv under **Data assets** section of the project. Click on the name to see the contents of the data set.
 
 ## Build a machine learning model
 
@@ -92,22 +93,20 @@ The iris data set contains 3 classes of 50 instances each, where each class refe
 
    ![](images/solution22-build-machine-learning-model/machine_learning_model_creation.png)
 
-3. Select **Model builder** as your model type and **Manual** to manually create a model.
+3. Select **Model builder** as your model type and **Manual** to manually create a model. Click **Create**.
 
    For the automatic method, you rely on automatic data preparation (ADP) completely. For the manual method, in addition to some functions that are handled by the ADP transformer, you can add and configure your own estimators, which are the algorithms used in the analysis. 
    {:tip}
 
-4. Click **Create**.
+5. On the next page, Select **iris_initial.csv** as your data set and click **next**.
 
-5. On the next page, Select **iris.csv** as your data set and click **next**.
-
-6. On the **select technique** page, based on the data set added, Label columns and feature columns are prepopulated .Select **species** as your Label column and petal_length and petal_width as your Feature columns.
+6. On the **select technique** page, based on the data set added, Label columns and feature columns are pre-populated .Select **species** as your Label column and **petal_length** and **petal_width** as your Feature columns.
 
 7. Choose **Multiclass classification** as your suggested technique.
 
    ![](images/solution22-build-machine-learning-model/model_technique.png)
 
-8. Validation split
+8. Validation Split
 
    **Train:** 50%, 
 
@@ -115,17 +114,20 @@ The iris data set contains 3 classes of 50 instances each, where each class refe
 
    **Holdout:** 25%
 
-9. Click on **Add Estimators** and select **Decision Tree Classifier** > Add. 
+8. Click on **Add Estimators** and select **Decision Tree Classifier** > Add. 
 
-10. Click **Next** to train the model.Once you see the status as **Trained & Evaluated**, Click Save.
+    You can evaluate multiple estimators in one go. For example, You can add Decision Tree Classifier and Random Forest Classifier as estimators to train your model and choose the best fit based on the evaluation output.
+    {:tip}
 
-    ![](images/solution22-build-machine-learning-model/trained_model.png)
+9. Click **Next** to train the model.Once you see the status as **Trained & Evaluated**, Click **Save**.
 
-## Deploy and Test your model
+   ![](images/solution22-build-machine-learning-model/trained_model.png)
 
-{:#deploy_test_model}
+10. Click on **Overview** to check the details of the model.
 
-**Deploy:**
+## Deploy the model and try out the API
+
+{:#deploy_model}
 
 1. Under the created model, Click on **Deployments** > **Add Deployment**.
 
@@ -160,13 +162,21 @@ The iris data set contains 3 classes of 50 instances each, where each class refe
 
 6. Using the API endpoints, you can now call this model from any application.
 
-**Test:**
+## Test your model
 
-1. Under **Test**, you should see input data (Feature data) prepopulated.
+{:#test_model}
+
+1. Under **Test**, you should see input data (Feature data) pre-populated.
+
 2. Click **Predict** and you should see the **Predicted value for species** in a chart. 
 
    ![](images/solution22-build-machine-learning-model/model_predict_test.png)
 
-3. You can change the input data and continue testing your model. 
+3. For JSON input and output, click on the icons next to the active input and output.
+
+4. You can change the input data and continue testing your model. 
 
 ## Re-train your model
+
+1. On the top navigation, click on **iris-model** > Evaluation.
+2. Under **Performance Monitoring**, Click on **Configure Performance Monitoring**.
