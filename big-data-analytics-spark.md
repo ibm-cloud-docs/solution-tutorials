@@ -38,7 +38,19 @@ This tutorial uses the following products:
 
 ## Work with the Notebook
 
-   ​
+```Python
+import pixiedust
+```
+{:codeblock}
+
+
+another codeblock
+```Python
+df_all.createOrReplaceTempView('life2000')
+df2=spark.sql("SELECT Life, Country FROM life2000 WHERE Country is not NULL AND Year=2000 AND Life is not NULL ")
+```
+{:codeblock}
+
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
