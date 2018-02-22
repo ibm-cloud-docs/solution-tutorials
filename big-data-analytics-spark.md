@@ -14,7 +14,7 @@ lastupdated: "2018-02-22"
 
 # Big Data Analytics with Apache Spark
 
-In this tutorial, we are going to analyze and visualize data sets using IBM Data Science Experience, Jupyter Notebooks and the Apache Spark service on IBM Cloud.
+In this tutorial, we are going to analyze and visualize data sets using IBM Data Science Experience, Jupyter Notebooks and the Apache Spark service on IBM Cloud. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python.
 
 ![](images/solution23/Architecture.png)
 
@@ -27,9 +27,9 @@ In this tutorial, we are going to analyze and visualize data sets using IBM Data
 ## Products
 
 This tutorial uses the following products:
-   *
-   *
-   *
+   * {{site.data.keyword.sparkl}}
+   * IBM Data Science Experience
+
 
 ## Service and Environment Setup
 First, we are going to provision the two services we are using for this tutorial.
@@ -39,7 +39,7 @@ First, we are going to provision the two services we are using for this tutorial
 
 ## Create a blank Jupyter Notebook
 
-1. create a new notebook
+1. create a new project, create a new notebook, choose Spark service
 2. briefly explain the concept of cells and link to the docs
 3. Import the [**Pixiedust** package](https://ibm-watson-data-lab.github.io/pixiedust/use.html).
    ```Python
@@ -86,6 +86,12 @@ The list of country codes comes in handy later on. It allows to simplify data se
    ```
    {:codeblock}
 
+2. Copy the following lines into the next empty cell and run them. The data frame **df_all** is created by using an **inner join** on the combined life expectancy and population data and the ISO country codes. Utilizing an inner join, the resulting data contains only countries which are found in the ISO list. Thereby, we cleanse the data from regional and other entries.
+   ```Python
+   df_all = df_life_pop.withColumn("Year", df_all["Year"].cast("integer")).join(df_countries, ['Country'], 'inner').orderBy(['Country', 'Year'], ascending=True)
+   df_all.show(30)
+   ```
+   {:codeblock}
 
 ## Analyze data
 put in instruction to transform data and how to visualize
@@ -114,8 +120,9 @@ display(df_life_2010)
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
-1. as
-2. as
+1. Create and visualize a query showing the life expectancy rate relative to population growth for a country of your choice.
+2. Compute and visualize the population growth rates per country on a world map.
+3. Load and integrate further data from the catalog of data sets.
 
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.
