@@ -202,29 +202,38 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
   Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
   {:tip}
 
-7. Uncheck **Stop running this stage if this job fails** so that the Deploy Stage executes even if the Validate Stage fails. Click **Save** to reflect your changes.
+7. Drag and move the **Validate Stage** to the middle.
 
-8. Drag and move the **Validate Stage** to the middle.
+8. Click **Run** ![](images/solution21/run.png) on the **Validate Stage**.You will see that the **Validate stage** fails.
 
     ![](images/solution21/toolchain.png)
 
-10. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `.bluemix/scripts/container_build.sh` and change $BUILD_NUMBER on lines 57 and 59 to **latest**.
+9. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
 
-10. Commit and Push the changes. This should trigger the toolchain.
+    ![](images/solution21/vulnerability_report.png)
+
+    You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/security/scans)
+    {:tip}
+
+10. Let's fix the vulnerabilities by following the corrective action. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `Dockerfile` and add the below command after `EXPOSE 3000`
 
     ```
-    git add .bluemix/scripts/container_build.sh
-    git commit -m "Change build label"
+    RUN apt-get update && apt-get install -y \
+            libc6 \
+            systemd
+    ```
+
+11. Commit and Push the changes. This should trigger the toolchain and fix the **Validate Stage**.
+
+    ```
+    git add Dockerfile
+    git commit -m "Fix Vulnerabilities"
     git push origin master
     ```
 
-12. Once the Validate Stage is executed, Click on **View logs and history** to see the vulnerability assessment.
-
-     You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/security/scans)
-     {:tip}
-
 
 ## Setup Slack notifications
+
 {: #setup_slack}
 
 1. Go back to view the list of [toolchains](https://console.bluemix.net/devops/toolchains) and select your toolchain, then click on **Add a Tool**.
