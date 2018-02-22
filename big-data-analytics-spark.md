@@ -32,6 +32,10 @@ This tutorial uses the following products:
    *
 
 ## Service and Environment Setup
+First, we are going to provision the two services we are using for this tutorial.
+1. Login to the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) and navigate to the [**Data & Analytics** section](https://console.bluemix.net/catalog/?category=data). Locate the **Apache Spark** service and provision a service instance.
+2. Next, in the **Data & Analytics** section of the catalog again, locate and provision an instance of the **Data Science Experience**. Make sure to create it in the same region, organization and space as the **Apache Spark** service.
+
 
 ## Create a blank Jupyter Notebook
 
@@ -68,6 +72,8 @@ In another browser tab go to the [Community](https://dataplatform.ibm.com/commun
   ```
   {:codeblock}
   Copy the code into the next empty notebook cell and run it.
+
+The list of country codes comes in handy later on. It allows to simplify data selection.
 
 ## Transform data
 
