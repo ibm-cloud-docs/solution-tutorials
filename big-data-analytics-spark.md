@@ -86,13 +86,25 @@ put in instruction to transform data and how to visualize
 
 
 
-10. another codeblock
+2. visualize life expectancy in year 2010, display as world map
    ```Python
-   df_all.createOrReplaceTempView('life2000')
-   df2=spark.sql("SELECT Life, Country FROM life2000 WHERE Country is not NULL AND Year=2000 AND Life is not NULL ")
+   df_all.createOrReplaceTempView('life2010')
+   df_life_2010=spark.sql("SELECT Life, Country FROM life2010 WHERE Year=2010 AND Life is not NULL ")
+display(df_life_2010)
    ```
    {:codeblock}
 
+   ![](images/solution23/LifeExpectancyMap2010.png)
+
+3. visualize data, here we show how the life expectancy increased over the recent decades. It increased for all countries, but more significantly in India and China.
+   ```Python
+   df_all.createOrReplaceTempView('l2')
+   dfl2=spark.sql("SELECT Life, Country, Year FROM l2 where CountryCode in ('CN','DE','FR','IN','US')")
+   display(dfl2)
+   ```
+   {:codeblock}
+
+   ![](images/solution23/LifeExpectancy.png)
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
