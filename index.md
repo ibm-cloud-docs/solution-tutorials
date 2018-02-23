@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-02-13"
+lastupdated: "2018-02-23"
 
 ---
 
@@ -129,23 +129,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution4/Architecture.png" />
-            </div>
-        </div>
-    </div>
-    <div class = "solutionBox">
-        <h3 id="infrastructure-as-code.html" class="solutionBoxTitle">
-            <a href = "infrastructure-as-code.html">Automate deployment of environments using Schematics</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>Use a Schematics template to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.</p>
-                    <span class="tag-filter category">Schematics</span>
-                    <span class="tag-filter category">Virtual Servers</span>
-                    <span class="tag-filter category">PHP</span>
-                    <span class="tag-filter category">Object Storage</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution10/Architecture.png" />
             </div>
         </div>
     </div>

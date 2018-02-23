@@ -126,7 +126,7 @@ Your device data is now saved in Cloudant. Launch the Cloudant dashboard to see 
 ## Detect Anomalies using Machine Learning
 {: #data_experience}
 
-In this section, you will use the Jupyter Notebook that is available in the IBM Data Science Experience service to load your historical temperature data and detect anomalies using z-score.
+In this section, you will use the Jupyter Notebook that is available in the IBM Data Science Experience service to load your historical mobile data and detect anomalies using z-score.
 
 ![](images/solution16/DSX.png)
 

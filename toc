@@ -13,7 +13,6 @@ Solution Tutorials
     scalable-webapp-kubernetes.md
     static-files-cdn.md
     lamp-stack.md
-    infrastructure-as-code.md
     infrastructure-as-code-terraform.md
     highly-available-and-scalable-web-application.md
     mean-stack.md
