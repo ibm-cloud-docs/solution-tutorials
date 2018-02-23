@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-21"
+lastupdated: "2018-02-23"
 
 ---
 
@@ -33,7 +33,10 @@ In the terminology of machine learning, classification is considered an instance
 * Build a machine learning model.
 * Deploy the model and try out the API.
 * Test the model.
-* Re-train your model - pending.
+* Create a feedback data connection for continuous learning and model evaluation.
+* Re-train your model.
+* Clean up resources.
+* Related Content.
 
 ## Products
 {: #products}
@@ -42,6 +45,7 @@ In the terminology of machine learning, classification is considered an instance
 * [Apache Spark](https://console.bluemix.net/catalog/services/apache-spark)
 * [Cloud Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
 * [Machine Learning](https://console.bluemix.net/catalog/services/machine-learning)
+* [IBM Db2 Warehouse on Cloud](https://console.bluemix.net/catalog/services/db2-warehouse) 
 
 ## Before you begin
 {: #prereqs}
@@ -49,7 +53,7 @@ In the terminology of machine learning, classification is considered an instance
 
 ## Import data to a project
 
-{:#import_data}
+{:#import_data_project}
 
 A project is how you organize your resources to achieve a particular goal. Your project resources can include data, collaborators, and analytic tools like notebooks and models.
 
@@ -57,16 +61,16 @@ You can create a project to add data and open a data asset in the data refiner f
 
 **Create a project:**
 
-1. Visit https://dataplatform.ibm.com, login with your IBM id, and Click on [Try out](https://dataplatform.ibm.com/data/discovery?target=offerings&context=analytics) the Watson Data Platform apps.
-2. Under Data Science Experience tile, Click on **Try it for free** and Scroll to select **Lite** Plan > Create.
+1. Visit https://dataplatform.ibm.com, login with your IBM id, and click on [Try out](https://dataplatform.ibm.com/data/discovery?target=offerings&context=analytics) the Watson Data Platform apps.
+2. Under Data Science Experience tile, click on **Try it for free** and Scroll to select **Lite** Plan > **Create**.
 
    ![](images/solution22-build-machine-learning-model/data_platform_landing.png)
 
 3.  Create a **New Project** (Projects > All Projects > New Project). Add a name and optional description for the project.
-4. Leave the **Restrict who can be a collaborator** checkbox unchecked as you don't have confidential data.
-5. Under **Define Storage**, Click on **Add** and Choose an existing object storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
-6. Under **Define compute engine**, Click on **Add** and Choose an existing spark service or create a new one.
-7. Click Create. Your new project opens and you can start adding resources to it.
+4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
+5. Under **Define Storage**, Click on **Add** and choose an existing object storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
+6. Under **Define compute engine**, Click on **Add** and choose an existing spark service or create a new one.
+7. Click **Create**. Your new project opens and you can start adding resources to it.
 
 **Import data:**
 
@@ -166,7 +170,7 @@ As mentioned earlier, you will be using iris data set. Originally published at [
 
 {:#test_model}
 
-1. Under **Test**, you should see input data (Feature data) pre-populated.
+1. Under **Test**, you should see input data (Feature data) being populated automatically.
 
 2. Click **Predict** and you should see the **Predicted value for species** in a chart. 
 
@@ -176,7 +180,79 @@ As mentioned earlier, you will be using iris data set. Originally published at [
 
 4. You can change the input data and continue testing your model. 
 
+## Create a feedback data connection
+
+{:#create_feedback_connection}
+
+1. For continuous learning and model evaluation, you need to store new data somewhere. Create a  [IBM Db2 Warehouse on Cloud](https://console.bluemix.net/catalog/services/db2-warehouse) service which acts as our feedback data connection. 
+
+2. On the Db2 warehouse **Manage** page, Click **Open**. On the top navigation, select **Load**.
+
+3. Click on **browse files** under My Computer and upload iris_initial.csv. Click **Next**.
+
+4. Select **DASHXXXX** e.g,. DASH7384 as your Schema and then click on **New Table**. Name it as **IRIS_FEEDBACK** and click **Next**.
+
+5. Datatypes are automatically detected. Click **Next** and then **Begin Load**.
+
+   ![](images/solution22-build-machine-learning-model/define_table.png)
+
+6. A new target **DASHXXXX.IRIS_FEEDBACK** is created.
+
+   You will be using this in the next step where you will be re-training the model for better performance and precision.
+
 ## Re-train your model
 
-1. On the top navigation, click on **iris-model** > Evaluation.
+{:#retrain_model}
+
+1. Return to https://dataplatform.ibm.com and on the top navigation, click on **Projects** > YOUR_PROJECT >  **iris-model** (under assets) > Evaluation.
+
 2. Under **Performance Monitoring**, Click on **Configure Performance Monitoring**.
+
+3. On the configure Performance Monitoring page,
+   * Select the Spark service. Prediction type should be populated automatically.
+
+   * Choose **weightedPrecision** as your metric and set `.98` as the optional threshold.
+
+   * Click on **Create new connection** to point to the IBM Db2 Warehouse on cloud which you created in the above section.
+
+   * Select the Db2 warehouse connection and once the connection details are populated, click **Create**.
+
+     ![](images/solution22-build-machine-learning-model/new_db2_connection.png)
+
+   * Click on **Select source** and point to the IRIS_FEEDBACK table.
+
+     ![](images/solution22-build-machine-learning-model/select_source.png)
+
+   * In the **Record count required for re-evaluation** box, type the minimum number of new records to trigger retraining in this case 10 or leave blank to use the default value of 1000.
+
+   * In the **Auto retrain** box, select one of the following options: 
+
+     - To start automatic retraining whenever model performance is below the threshold that you set, select **when model performance is below threshold**.
+     - To prohibit automatic retraining, select **never**.
+     - To start automatic retraining regardless of performance, select **always**.
+
+   * In the **Auto deploy** box, select one of the following options: 
+
+     - To start automatic deployment whenever model performance is better than the previous version, select **when model performance is better than previous version**.
+     - To prohibit automatic deployment, select **never**.
+     - To start automatic deployment regardless of performance, select **always**.
+
+   * Click **Save**.
+
+     ![](images/solution22-build-machine-learning-model/configure_performance_monitoring.png)
+
+4. Download [iris_retrain.csv](https://ibm.box.com/s/96kvmwhb54700pjcwrd9hd3j6exiqms8) file and Click **Add feedback data**, select the downloaded csv file, and click **Open**. 
+
+5. Click **New evaluation** to begin.
+
+     ![](images/solution22-build-machine-learning-model/retraining_model.png)
+
+6. You can check the **Last Evalution Result** section for the improved **WeightedPrecision** value.
+
+## Clean up resources
+
+## Related Content
+
+{:#related_content}
+
+- ​
