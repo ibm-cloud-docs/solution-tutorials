@@ -12,9 +12,9 @@ lastupdated: "2018-02-22"
 {:tip: .tip}
 {:pre: .pre}
 
-# Big Data Analytics with Apache Spark
+# Analyze and visualize data with Apache Spark
 
-In this tutorial, we are going to analyze and visualize data sets using IBM Data Science Experience, Jupyter Notebooks and the Apache Spark service on IBM Cloud. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python.
+In this tutorial, we are going to analyze and visualize data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.
 
 ![](images/solution23/Architecture.png)
 
@@ -30,16 +30,17 @@ This tutorial uses the following products:
    * {{site.data.keyword.sparkl}}
    * IBM Data Science Experience
 
-
 ## Service and Environment Setup
-First, we are going to provision the two services we are using for this tutorial.
-1. Login to the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) and navigate to the [**Data & Analytics** section](https://console.bluemix.net/catalog/?category=data). Locate the **Apache Spark** service and provision a service instance.
-2. Next, in the **Data & Analytics** section of the catalog again, locate and provision an instance of the **Data Science Experience**. Make sure to create it in the same region, organization and space as the **Apache Spark** service.
+First, we need to provision the services we are using for this tutorial and create a project within the Data Science Experience.
+1. Login to the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) and navigate to the [**Data & Analytics** section](https://console.bluemix.net/catalog/?category=data). Locate the **Data Science Experience**. Once done, click on the **Get Started** button to take you to the **Data Science Experience** dashboard.
+2. In the dashboard, click on the **New project** tile. In the **Name** field, enter **1stProject** as new name. You can leave the description empty.
+3. On the right side of the dialog, there are the sections **Define storage** and **Define compute engine**. If it is a fresh account, then you are asked to add a service each. In that case, click on **Add** and follow the instructions in the new browser tab. Once done with the service creation, click **Refresh**. The new service should be listed now. If you already had provisioned storage or Spark services, they should  be shown.
+4. Once all necessary information is filled in, you can click on **Create**. The project is created and you are taken to the project overview. Something like the following should be shown.   
+   ![](images/solution23/NewProject.png)
 
-
-## Create a blank Jupyter Notebook
-
-1. create a new project, create a new notebook, choose Spark service
+## Create a notebook
+We utilize a Jupyter Notebook as user interface. In there, we can execute code and see the results, including visualizations. Notebooks and other resources are organized in projects. Thus, we begin creating a project.
+1. In the dashboard, click on the **New project** tile. In the **Name** field, enter **1stProject** as new name. You can leave the description empty. ccreate a new project, create a new notebook, choose Spark service
 2. briefly explain the concept of cells and link to the docs
 3. Import the [**Pixiedust** package](https://ibm-watson-data-lab.github.io/pixiedust/use.html).
    ```Python
