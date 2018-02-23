@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-22"
+lastupdated: "2018-02-23"
 
 ---
 
@@ -52,9 +52,9 @@ We utilize a Jupyter Notebook as user interface. In there, we can execute code a
    ![](images/solution23/FirstCell_ImportPixiedust.png)
 
 ## Load data
-Next, we are going to load three data sets and make them available within the notebook. We are using a feature of the **Pixiedust** library to easily [load **CSV** files using an URL](https://ibm-watson-data-lab.github.io/pixiedust/loaddata.html). You need two browser tabs, one for the notebook and one to obtain access links to data sets.
+Next, we are going to load three open data sets and make them available within the notebook. We are using a feature of the **Pixiedust** library to easily [load **CSV** files using an URL](https://ibm-watson-data-lab.github.io/pixiedust/loaddata.html). You need two browser tabs, one for the notebook and one to obtain access links to data sets.
 
-1.  Copy the following line into the next empty cell in your notebook.
+1.  Copy the following line into the next empty cell in your notebook, but don't run it yet.   
    ```Python
    df_pop = pixiedust.sampleData('YourAccessURI')
    ```
