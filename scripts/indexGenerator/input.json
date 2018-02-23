@@ -263,7 +263,7 @@
                 "name": "Analyze and visualize open data with Apache Spark",
                 "url": "big-data-analytics-spark.html",
                 "description": "Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.",
-                "imgSrc": "images/solution23/SlackbotArchitecture.png",
+                "imgSrc": "images/solution23/Architecture.png",
                 "tags": [
                     "Apache Spark",
                     "Data Science Experience",

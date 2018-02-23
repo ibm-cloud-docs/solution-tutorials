@@ -52,7 +52,7 @@ We utilize a Jupyter Notebook as user interface. In there, we can execute code a
    ![](images/solution23/FirstCell_ImportPixiedust.png)
 
 ## Load data
-Next, we are going to load three open data sets and make them available within the notebook. We are using a feature of the **Pixiedust** library to easily [load **CSV** files using an URL](https://ibm-watson-data-lab.github.io/pixiedust/loaddata.html). You need two browser tabs, one for the notebook and one to obtain access links to data sets.
+Next, we are going to load three open data sets and make them available within the notebook. We are using a feature of the **Pixiedust** library to easily [load **CSV** files using an URL](https://ibm-watson-data-lab.github.io/pixiedust/loaddata.html).
 
 1.  Copy the following line into the next empty cell in your notebook, but don't run it yet.   
    ```Python
@@ -76,11 +76,11 @@ In another browser tab go to the [Community](https://dataplatform.ibm.com/commun
   {:codeblock}
   Copy the code into the next empty notebook cell and run it.
 
-The list of country codes comes in handy later on. It allows to simplify data selection.
+The list of country codes comes in handy later on. It allows to simplify data selection by using a country code instead of the written, exact country name.
 
 ## Transform data
-
-1. Define data frame for data with world population. Thereafter, create a view on top of the loaded data and print out the schema.
+After the data is made available, we are going to transform it slightly, then combine the three sets into a single data frame.
+1. First, we redefine the data frame for the population data. This is done with a SQL statement which renames the columns. Thereafter, we create a view and print out the schema. Copy the following code block into the next empty cell, then run it.
    ```Python
    sqlContext.registerDataFrameAsTable(df_pop, "PopTable")
    df_pop = sqlContext.sql("SELECT `Country or Area` as Country, Year, Value as Population FROM PopTable")
@@ -88,13 +88,33 @@ The list of country codes comes in handy later on. It allows to simplify data se
    df_pop.printSchema()
    ```
    {:codeblock}
-
-2. Copy the following lines into the next empty cell and run them. The data frame **df_all** is created by using an **inner join** on the combined life expectancy and population data and the ISO country codes. Utilizing an inner join, the resulting data contains only countries which are found in the ISO list. Thereby, we cleanse the data from regional and other entries.
+2. Repeat the same for the Life Expectancy data. The only difference is that we don't print the schema, but show the first 10 rows of data.   
    ```Python
-   df_all = df_life_pop.withColumn("Year", df_all["Year"].cast("integer")).join(df_countries, ['Country'], 'inner').orderBy(['Country', 'Year'], ascending=True)
-   df_all.show(30)
+   sqlContext.registerDataFrameAsTable(df_life, "lifeTable")
+   df_life = sqlContext.sql("SELECT `Country or Area` as Country, Year, Value as Life FROM lifeTable")
+   df_life = df_life.withColumn("Life", df_life["Life"].cast("double"))
+   df_life.createOrReplaceTempView('life')
+   df_life.show(10)
+
+
+3. Last, repeat the transformation of the schema for the country data.
+   ```Python
+   sqlContext.registerDataFrameAsTable(df_countries, "CountryTable")
+   df_countries = sqlContext.sql("SELECT `Name` as Country, Code as CountryCode FROM CountryTable")
+   df_countries.createOrReplaceTempView('countries')
    ```
    {:codeblock}
+
+4. Now that we have simpler and the same column names across the data sets, we want to combine them into one data frame. First, we perform an **outer** join on the life expectancy and population data. Thereafter, in the same statement, we utilize an **inner** join to bring the just combined data together with the country codes. Everything is ordered by country and year. The output defines the data frame **df_all**.
+ By utilizing an inner join the resulting data contains only countries which are found in the ISO list. Thereby, we cleanse the data from regional and other entries.
+   ```Python
+   df_all = df_life.join(df_pop, ['Country', 'Year'], 'outer').join(df_countries, ['Country'], 'inner').orderBy(['Country', 'Year'], ascending=True)
+   df_all.show(10)
+   ```
+   {:codeblock}
+
+5. Next, we change the data type for **Year** and make it an integer.
+df_all.printSchema()
 
 ## Analyze data
 put in instruction to transform data and how to visualize

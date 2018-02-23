@@ -404,7 +404,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Cloud Object Storage</span>
             </div>
             <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution23/SlackbotArchitecture.png" />
+                <img class="architectureDiagram" src = "images/solution23/Architecture.png" />
             </div>
         </div>
     </div>
