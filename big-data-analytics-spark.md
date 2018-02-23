@@ -12,9 +12,9 @@ lastupdated: "2018-02-22"
 {:tip: .tip}
 {:pre: .pre}
 
-# Analyze and visualize data with Apache Spark
+# Analyze and visualize open data
 
-In this tutorial, we are going to analyze and visualize data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.
+In this tutorial, we are going to analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.
 
 ![](images/solution23/Architecture.png)
 
@@ -37,6 +37,8 @@ First, we need to provision the services we are using for this tutorial and crea
 3. On the right side of the dialog, there are the sections **Define storage** and **Define compute engine**. If it is a fresh account, then you are asked to add a service each. In that case, click on **Add** and follow the instructions in the new browser tab. Once done with the service creation, click **Refresh**. The new service should be listed now. If you already had provisioned storage or Spark services, they should  be shown.
 4. Once all necessary information is filled in, you can click on **Create**. The project is created and you are taken to the project overview. Something like the following should be shown.   
    ![](images/solution23/NewProject.png)
+
+## Add
 
 ## Create a notebook
 We utilize a Jupyter Notebook as user interface. In there, we can execute code and see the results, including visualizations. Notebooks and other resources are organized in projects. Thus, we begin creating a project.
@@ -124,6 +126,7 @@ Want to add to or change this tutorial? Here are some ideas:
 1. Create and visualize a query showing the life expectancy rate relative to population growth for a country of your choice.
 2. Compute and visualize the population growth rates per country on a world map.
 3. Load and integrate further data from the catalog of data sets.
+4. TODO: Link DSX environment to Github repository. Why???
 
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.
