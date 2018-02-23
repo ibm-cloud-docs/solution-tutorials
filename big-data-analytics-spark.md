@@ -12,7 +12,7 @@ lastupdated: "2018-02-22"
 {:tip: .tip}
 {:pre: .pre}
 
-# Analyze and visualize open data
+# Analyze and visualize open data with Apache Spark
 
 In this tutorial, we are going to analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.
 
@@ -38,18 +38,18 @@ First, we need to provision the services we are using for this tutorial and crea
 4. Once all necessary information is filled in, you can click on **Create**. The project is created and you are taken to the project overview. Something like the following should be shown.   
    ![](images/solution23/NewProject.png)
 
-## Add
-
-## Create a notebook
-We utilize a Jupyter Notebook as user interface. In there, we can execute code and see the results, including visualizations. Notebooks and other resources are organized in projects. Thus, we begin creating a project.
-1. In the dashboard, click on the **New project** tile. In the **Name** field, enter **1stProject** as new name. You can leave the description empty. ccreate a new project, create a new notebook, choose Spark service
-2. briefly explain the concept of cells and link to the docs
-3. Import the [**Pixiedust** package](https://ibm-watson-data-lab.github.io/pixiedust/use.html).
+## Create and prepare a notebook
+We utilize a Jupyter Notebook as user interface. In there, we can execute code and see the results, including visualizations. Notebooks and other resources are organized in projects.
+1. In the project overview, click on the **Assets** tab. There, click on **New notebook** to open a dialog for configuring a notebook.
+2. In the dialog, use **Blank** notebook. Enter **MyNotebook** as **Name**. You can leave the description empty. Keep the **Language** selected as **Python**. Also, leave the **Spark version** as suggested. At the bottom, you can pick the preferred Spark service if more than one has been provisioned. Complete the process by clicking **Create Notebook**.
+3. You are taken to a new notebook. If you have never worked with Jupyter Notebooks, then click on the **Docs** icon on the upper right menu. Navigate to the **Analyze data**, then [**Notebooks** section](https://dataplatform.ibm.com/docs/content/analyze-data/notebooks-parent.html?context=analytics) to learn more about [notebooks and their parts](https://dataplatform.ibm.com/docs/content/analyze-data/parts-of-a-notebook.html?context=analytics&linkInPage=true). In short, the field where you can enter text and commands is called a **Cell**. You can execute the content of a cell by either clicking on the **Run** icon in the toolbar or by pressing **Shift+Enter** on the keyboard. Let's try it.
+4. Copy the following code into the empty cell. It is used to import the [**Pixiedust** package](https://ibm-watson-data-lab.github.io/pixiedust/use.html).
    ```Python
    import pixiedust
    ```
    {:codeblock}
-
+   Now run the cell, i.e., execute the **import pixiedust** command. Something like the following should be the result.   
+   ![](images/solution23/FirstCell_ImportPixiedust.png)
 
 ## Load data
 Next, we are going to load three data sets and make them available within the notebook. We are using a feature of the **Pixiedust** library to easily [load **CSV** files using an URL](https://ibm-watson-data-lab.github.io/pixiedust/loaddata.html). You need two browser tabs, one for the notebook and one to obtain access links to data sets.
