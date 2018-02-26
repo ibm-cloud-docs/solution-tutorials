@@ -59,7 +59,7 @@ Next, we are going to load three open data sets and make them available within t
    df_pop = pixiedust.sampleData('YourAccessURI')
    ```
    {:codeblock}
-In another browser tab go to the [Community](https://dataplatform.ibm.com/community?context=analytics) section. Under **Data Sets** search for [**Total population by country** and click on that tile](https://dataplatform.ibm.com/exchange/public/entry/view/889ca053a19986a4445839358a91963e). On the upper right click on the green **link** icon to obtain an access URI. Copy that URI and replace the **YourAccessURI** in the notebook cell with that link. Press **Shift+Enter** or click on the **Run** icon in the toolbar. The load process should start and look similar to this:   
+In another browser tab go to the [Community](https://dataplatform.ibm.com/community?context=analytics) section. Under **Data Sets** search for [**Total population by country**](https://dataplatform.ibm.com/exchange/public/entry/view/889ca053a19986a4445839358a91963e) and click on that tile. On the upper right click on the green **link** icon to obtain an access URI. Copy that URI and replace the **YourAccessURI** in the notebook cell with that link. Press **Shift+Enter** or click on the **Run** icon in the toolbar. The load process should start and look similar to this:   
    ![](images/solution23/LoadData.png)
 
 2. Now we repeat the step for another data set. Copy the following line into the next empty cell in your notebook.
@@ -67,7 +67,7 @@ In another browser tab go to the [Community](https://dataplatform.ibm.com/commun
    df_life = pixiedust.sampleData('YourAccessURI')
    ```
    {:codeblock}
-   In the other browser tab with the **Data Sets** search for [**Life expectancy at birth by country in total years**. Clicking on the result tile will bring you here and click on that tile](https://dataplatform.ibm.com/exchange/public/entry/view/f15be429051727172e0d0c226e2ce895). Obtain the link again and use it to replace **YourAccessURI** in the notebook cell. Thereafter, press **Shift+Enter** to start the load process.
+   In the other browser tab with the **Data Sets** search for [**Life expectancy at birth by country in total years**](https://dataplatform.ibm.com/exchange/public/entry/view/f15be429051727172e0d0c226e2ce895). Clicking on the result tile will bring you here and click on that tile. Obtain the link again and use it to replace **YourAccessURI** in the notebook cell. Thereafter, press **Shift+Enter** to start the load process.
 
 3. As the last of three data sets, we are going to load a list of country names and their ISO codes from a collection of open data sets on Github:   
    ```Python
