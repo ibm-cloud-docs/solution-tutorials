@@ -35,7 +35,7 @@ This tutorial walks you through setting up a continuous deployment and delivery 
 
 * Security using Vulnerability Advisor 
 
-* Setup Slack notifications
+* Setup Slack notifications 
 
   ​
 

@@ -141,6 +141,20 @@
                     "Node.js",
                     "API Connect"
                 ]
+            },
+            {
+                "name": "Continuous Deployment to Kubernetes",
+                "url": "continuous-deployment-to-kubernetes.html",
+                "description": "This tutorial walks you through setting up a continuous deployment and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.",
+                "imgSrc": "images/solution21/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Docker",
+                    "Node.js",
+                    "Slack",
+                    "Vulnerability Advisor", 
+                    "DevOps"
+                ]
             }
         ]
     },
