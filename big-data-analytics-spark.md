@@ -95,7 +95,8 @@ After the data is made available, we are going to transform it slightly, then co
    df_life = df_life.withColumn("Life", df_life["Life"].cast("double"))
    df_life.createOrReplaceTempView('life')
    df_life.show(10)
-
+   ```
+   {:codeblock}
 
 3. Last, repeat the transformation of the schema for the country data.
    ```Python
@@ -114,39 +115,48 @@ After the data is made available, we are going to transform it slightly, then co
    {:codeblock}
 
 5. Next, we change the data type for **Year** and make it an integer.
-df_all.printSchema()
-
-## Analyze data
-put in instruction to transform data and how to visualize
-
-
-
-2. visualize life expectancy in year 2010, display as world map
    ```Python
-   df_all.createOrReplaceTempView('life2010')
-   df_life_2010=spark.sql("SELECT Life, Country FROM life2010 WHERE Year=2010 AND Life is not NULL ")
-display(df_life_2010)
+   df_all = df_all_new.withColumn("Year", df_all["Year"].cast("integer"))
+   df_all.printSchema()
    ```
    {:codeblock}
+   The combined data is ready now to be analyzed.
 
-   ![](images/solution23/LifeExpectancyMap2010.png)
+## Analyze data
+In this part, we are going to use [Pixiedust to visualize the data in different charts](https://ibm-watson-data-lab.github.io/pixiedust/displayapi.html). Let's start by comparing life expectancy for some countries.
 
-3. visualize data, here we show how the life expectancy increased over the recent decades. It increased for all countries, but more significantly in India and China.
+1. Copy the code into the next empty cell and run it.
    ```Python
    df_all.createOrReplaceTempView('l2')
    dfl2=spark.sql("SELECT Life, Country, Year FROM l2 where CountryCode in ('CN','DE','FR','IN','US')")
    display(dfl2)
    ```
-   {:codeblock}
+   {:codeblock}   
+2. Initially, a scrollable table is shown. Click on chart icon directly under the code block and select **Line Chart**. Then, a popup dialog with the **Pixiedust: Line Chart Options** should appear. Enter a **Chart Title** like "Comparison of Life Expectancy". Frome the offered **Fields**, drag **Year** into the **Keys** box, **Life** into the **Values** area. Enter **1000** for **# of Rows to Display**. Last, press **OK** to have the line chart plotted. On the right side, make sure that **mapplotlib** is selected as **Renderer**. Moreover, click on the **Cluster By** selector and choose **Country**. Finally, something like the following should be shown:   
+   ![](images/solution23/LifeExpectancy.png)   
 
-   ![](images/solution23/LifeExpectancy.png)
+3. For the next chart, we are focusing on the year 2010. Copy the code into the next empty cell and run it.
+   ```Python
+   df_all.createOrReplaceTempView('life2010')
+   df_life_2010=spark.sql("SELECT Life, Country FROM life2010 WHERE Year=2010 AND Life is not NULL ")
+display(df_life_2010)
+   ```
+   {:codeblock}   
+4. In the chart selector choose **Map**. In the configuration dialog drag **Country** into the **Keys** area. Thereafter, move **Life** into the **Values** box. Similar to the first chart, increase **# of Rows to Display** to **1000**. Press **OK** to have the map plotted. Choose **brunel** as **Renderer**. A world map colored relative to the life expecta
+should be shown. You can use the mouse to zoom into the map.   
+   ![](images/solution23/LifeExpectancyMap2010.png)
+
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
 1. Create and visualize a query showing the life expectancy rate relative to population growth for a country of your choice.
 2. Compute and visualize the population growth rates per country on a world map.
 3. Load and integrate further data from the catalog of data sets.
-4. TODO: Link DSX environment to Github repository. Why???
+4. Export the combined data to a file or database.
 
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.
+   * [Watson Data Platform](https://dataplatform.ibm.com)
+   * [PixieDust Documentation](https://ibm-watson-data-lab.github.io/pixiedust/)
+   * [Cognitive Class.ai](https://cognitiveclass.ai/): Data Science and Cognitive Computing Courses
+   * [IBM Watson Data Lab](https://ibm-watson-data-lab.github.io/)
