@@ -160,3 +160,4 @@ Here are links to additional information on the topics covered in this tutorial.
    * [PixieDust](https://www.ibm.com/cloud/pixiedust): Open source productivity tool for Jupyter Notebooks
    * [Cognitive Class.ai](https://cognitiveclass.ai/): Data Science and Cognitive Computing Courses
    * [IBM Watson Data Lab](https://ibm-watson-data-lab.github.io/): Things we made with data, so you can too
+   * [Analytics Engine service](https://console.bluemix.net/catalog/services/analytics-engine): Develop and deploy analytics applications using open source Apache Spark and Apache Hadoop
