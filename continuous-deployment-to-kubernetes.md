@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-02-21"
+lastupdated: "2018-02-26"
 
 ---
 
@@ -41,8 +41,6 @@ This tutorial walks you through setting up a continuous deployment and delivery 
 
 
 ![](images/solution21/Architecture.png)
-
-ToDo: Need to create an architecture digram
 
 ## Prerequisites
 {: #prereq}
@@ -257,7 +255,6 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
 8. From now on, whenever your toolchain executes, You should see slack notifications in the channel you configured.
 
     ![](images/solution21/slack_channel.png)
-
 
 
 ## Related Content
