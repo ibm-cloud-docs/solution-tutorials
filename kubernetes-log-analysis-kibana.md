@@ -31,7 +31,7 @@ This tutorial walks you through creating a cluster and configuring the Log Analy
 
 ![](images/solution17/Architecture.png)
 
-## Prerequisites
+## Prerequisites 
 {: #prereq}
 
 * [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
