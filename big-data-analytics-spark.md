@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-23"
+lastupdated: "2018-02-26"
 
 ---
 
@@ -152,11 +152,11 @@ Want to add to or change this tutorial? Here are some ideas:
 1. Create and visualize a query showing the life expectancy rate relative to population growth for a country of your choice.
 2. Compute and visualize the population growth rates per country on a world map.
 3. Load and integrate further data from the catalog of data sets.
-4. Export the combined data to a file or database.
+4. Export the combined data to a file or database.   
 
-# Related Content
+## Related Content
 Here are links to additional information on the topics covered in this tutorial.
-   * [Watson Data Platform](https://dataplatform.ibm.com)
-   * [PixieDust Documentation](https://ibm-watson-data-lab.github.io/pixiedust/)
+   * [Watson Data Platform](https://dataplatform.ibm.com): Use Watson Data Platform to collaborate and build smarter applications. Quickly visualize and discover insights from your data and collaborate across teams.
+   * [PixieDust](https://www.ibm.com/cloud/pixiedust): Open source productivity tool for Jupyter Notebooks
    * [Cognitive Class.ai](https://cognitiveclass.ai/): Data Science and Cognitive Computing Courses
-   * [IBM Watson Data Lab](https://ibm-watson-data-lab.github.io/)
+   * [IBM Watson Data Lab](https://ibm-watson-data-lab.github.io/): Things we made with data, so you can too
