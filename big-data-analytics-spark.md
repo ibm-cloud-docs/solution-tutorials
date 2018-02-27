@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-26"
+lastupdated: "2018-02-28"
 
 ---
 
@@ -14,13 +14,13 @@ lastupdated: "2018-02-26"
 
 # Analyze and visualize open data with Apache Spark
 
-In this tutorial, you will analyze and visualize open data sets using a Jupyter Notebook on IBM Data Science Experience and Apache Spark service for processing. For this use case, you will start by combining data about population growth, life expectancy and country ISO codes into a single data frame. Then, query and visualize that data in several ways using the Pixiedust library for Python.
+In this tutorial, you will analyze and visualize open data sets using a Jupyter Notebook on {{site.data.keyword.DSX_full}} and Apache Spark service for processing. For this use case, you will start by combining data about population growth, life expectancy and country ISO codes into a single data frame. Then, query and visualize that data in several ways using the Pixiedust library for Python.
 
 ![](images/solution23/Architecture.png)
 
 ## Objectives
 
-* Deploy Apache Spark and Data Science Experience on IBM Cloud.
+* Deploy Apache Spark and {{site.data.keyword.DSX_short}} on IBM Cloud.
 * Work with a Jupyter Notebook and a Python kernel.
 * Import, transform, analyze and visualize data sets.
 
@@ -28,16 +28,16 @@ In this tutorial, you will analyze and visualize open data sets using a Jupyter 
 
 This tutorial uses the following products:
    * {{site.data.keyword.sparkl}}
-   * IBM Data Science Experience
+   * {{site.data.keyword.DSX_full}}
    * {{site.data.keyword.cos_full_notm}}
 
 ## Service and Environment Setup
-First, we need to provision the services we are using for this tutorial and create a project within the Data Science Experience.
+First, we need to provision the services we are using for this tutorial and create a project within the {{site.data.keyword.DSX_short}}.
 
-You can provision services for  {{site.data.keyword.Bluemix_short}} from the dashboard and catalog. Another way is to use IBM Data Science Experience. It allows to directly create Data & Analytics services from within its dashboard.
+You can provision services for  {{site.data.keyword.Bluemix_short}} from the dashboard and catalog. Another way is to use {{site.data.keyword.DSX_short}}. It allows to directly create Data & Analytics services from within its dashboard.
 {:tip}   
 
-1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) navigate to the [**Data & Analytics** section](https://console.bluemix.net/catalog/?category=data). Create the **Data Science Experience** service. Click on the **Get Started** button to launch the **Data Science Experience** dashboard.
+1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) navigate to the [**Data & Analytics** section](https://console.bluemix.net/catalog/?category=data). Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
 2. In the dashboard, click on the **New project** tile. In the **Name** field, enter `1stProject` as new name. You can leave the description empty.
 3. On the right side of the page, there are sections to **Define storage** and **Define compute engine**. If you already had provisioned storage or compute services, they should  be shown and selected. If not, click on **Add** and follow the instructions in the new browser tab. Once done with the service creation, click **Refresh** to see the new service.
 4. Once all necessary information is filled in, you can click on **Create**. The project is created and you are taken to the project overview.  
