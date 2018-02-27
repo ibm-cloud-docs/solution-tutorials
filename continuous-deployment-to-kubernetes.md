@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-02-26"
+lastupdated: "2018-02-27"
 
 ---
 
@@ -33,6 +33,8 @@ This tutorial walks you through setting up a continuous deployment and delivery 
 
 * Push application Git repository 
 
+* Deploy to production cluster
+
 * Security using Vulnerability Advisor 
 
 * Setup Slack notifications 
@@ -55,7 +57,7 @@ This tutorial walks you through setting up a continuous deployment and delivery 
 1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Lite plan or the paid plan** cluster.
   {:tip}
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution21/KubernetesPaidClusterCreation.png)
-2. For convenience, use the name `mycluster` to be consistent with this tutorial.
+2. For convenience, use the name `dev-cluster` to be consistent with this tutorial.
 3. The smallest **Machine Type** with 1 **Worker Nodes** is sufficient for this tutorial. Leave all other options set to defaults.
 4. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
@@ -229,6 +231,22 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
     git push origin master
     ```
 
+
+
+
+## Deploy to production cluster 
+
+{: #deploytoproduction}
+
+In this step, you will complete the deployment pipeline to deploy the Kubernetes application to a development and production environment. Ideally, we want to set up an automatic deployment for the development environment and a manual deployment for the production environment. Before we do that, let's explore the two ways in which you can deliver this. It's possible to use one cluster for both development and productions environment. However, it's recommended to have two separate clusters, one for development and one for production. Let's explore setting up a second cluster for production.  
+
+1. Create a new cluster and call it `prod-cluster` follow the step from earlier [step 1](#step1) of the solution guide.
+2. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
+3. Rename the current stage to `Deploy dev` , you can do that under the configure stage section.
+4. Clone the dev stage and name the stage `Deploy prod`.
+5. Change the stage trigger to `Run jobs only when this stage is run manually SAVECANCEL`. ![](images/solution21/prod-stage.png)
+6. Under the Job tab, change the cluster name to the newly created cluster and then save the stage.![](images/solution21/prod-stage.png)
+7. You now should have the full deployment setup, to deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production. ![](images/solution21/full-deploy.png)
 
 ## Setup Slack notifications
 
