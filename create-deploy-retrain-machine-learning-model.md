@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-26"
+lastupdated: "2018-02-27"
 
 ---
 
@@ -17,7 +17,7 @@ lastupdated: "2018-02-26"
 {:pre: .pre}
 
 # Build, Deploy,Test, and retrain a predictive machine learning model
-This tutorial walks you through the process of building a predictive machine learning model then deploy it to be used in applications via an API and retrain the model with feedback data. All of this happening in an Integrated and unified self-service experience on IBM Cloud.
+This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an Integrated and unified self-service experience on IBM Cloud.
 
 In this tutorial, **Iris flower data set** is used for creating a machine learning model to classify species of flowers. 
 
@@ -156,7 +156,7 @@ As mentioned earlier, you will be using iris data set. Originally published at [
 
 {:#create_feedback_connection}
 
-1. For continuous learning and model evaluation, you need to store new data somewhere. Create a  [IBM Db2 Warehouse on Cloud](https://console.bluemix.net/catalog/services/db2-warehouse) service which acts as our feedback data connection. 
+1. For continuous learning and model evaluation, you need to store new data somewhere. Create a  [IBM Db2 Warehouse on Cloud](https://console.bluemix.net/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection. 
 2. On the Db2 warehouse **Manage** page, Click **Open**. On the top navigation, select **Load**.
 3. Click on **browse files** under My Computer and upload iris_initial.csv. Click **Next**.
 4. Select **DASHXXXX** e.g,. DASH7384 as your Schema and then click on **New Table**. Name it as **IRIS_FEEDBACK** and click **Next**.
@@ -178,7 +178,7 @@ As mentioned earlier, you will be using iris data set. Originally published at [
    * Click on **Create new connection** to point to the IBM Db2 Warehouse on cloud which you created in the above section.
    * Select the Db2 warehouse connection and once the connection details are populated, click **Create**.
      ![](images/solution22-build-machine-learning-model/new_db2_connection.png)
-   * Click on **Select source** and point to the IRIS_FEEDBACK table.
+   * Click on **Select source** and point to the IRIS_FEEDBACK table and click **Select**.
      ![](images/solution22-build-machine-learning-model/select_source.png)
    * In the **Record count required for re-evaluation** box, type the minimum number of new records to trigger retraining in this case 10 or leave blank to use the default value of 1000.
    * In the **Auto retrain** box, select one of the following options: 
@@ -198,7 +198,7 @@ As mentioned earlier, you will be using iris data set. Originally published at [
 
 ## Clean up resources
 
-{:cleanup}
+{:#cleanup}
 
 1. Navigate to [Dashboard](https://console.bluemix.net/dashboard/) > choose the region, Org and space where you have created the services. 
 2. Under **Services**, delete the respective Data science experience, Apache Spark, Machine Learning, Db2 Warehouse on cloud and Cloud Object Storage services which you created for this tutorial.
