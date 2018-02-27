@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-02-23"
+lastupdated: "2018-02-26"
 
 ---
 
@@ -261,6 +261,25 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution13/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="continuous-deployment-to-kubernetes.html" class="solutionBoxTitle">
+            <a href = "continuous-deployment-to-kubernetes.html">Continuous Deployment to Kubernetes</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you through setting up a continuous deployment and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Docker</span>
+                    <span class="tag-filter category">Node.js</span>
+                    <span class="tag-filter category">Slack</span>
+                    <span class="tag-filter category">Vulnerability Advisor</span>
+                    <span class="tag-filter category">DevOps</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution21/Architecture.png" />
             </div>
         </div>
     </div>
