@@ -32,9 +32,13 @@ This tutorial uses the following products:
 
 ## Service and Environment Setup
 First, we need to provision the services we are using for this tutorial and create a project within the Data Science Experience.
+
+You can provision services for  {{site.data.keyword.Bluemix_short}} from the dashboard and catalog. Another way is to use IBM Data Science Experience. It allows to directly create Data & Analytics service from within its dashboard.
+{:tip}   
+
 1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) navigate to the [**Data & Analytics** section](https://console.bluemix.net/catalog/?category=data). Create the **Data Science Experience** service. Click on the **Get Started** button to launch the **Data Science Experience** dashboard.
 2. In the dashboard, click on the **New project** tile. In the **Name** field, enter `1stProject` as new name. You can leave the description empty.
-3. On the right side of the page, there are sections to **Define storage** and **Define compute engine**. If you already had provisioned storage or compute services, they should  be shown and selected. If not, click on **Add** and follow the instructions in the new browser tab. Once done with the service creation, click **Refresh** to see the new service. 
+3. On the right side of the page, there are sections to **Define storage** and **Define compute engine**. If you already had provisioned storage or compute services, they should  be shown and selected. If not, click on **Add** and follow the instructions in the new browser tab. Once done with the service creation, click **Refresh** to see the new service.
 4. Once all necessary information is filled in, you can click on **Create**. The project is created and you are taken to the project overview.  
    ![](images/solution23/NewProject.png)
 
