@@ -29,11 +29,12 @@ In this tutorial, you will analyze and visualize open data sets using a Jupyter 
 This tutorial uses the following products:
    * {{site.data.keyword.sparkl}}
    * IBM Data Science Experience
+   * {{site.data.keyword.cos_full_notm}}
 
 ## Service and Environment Setup
 First, we need to provision the services we are using for this tutorial and create a project within the Data Science Experience.
 
-You can provision services for  {{site.data.keyword.Bluemix_short}} from the dashboard and catalog. Another way is to use IBM Data Science Experience. It allows to directly create Data & Analytics service from within its dashboard.
+You can provision services for  {{site.data.keyword.Bluemix_short}} from the dashboard and catalog. Another way is to use IBM Data Science Experience. It allows to directly create Data & Analytics services from within its dashboard.
 {:tip}   
 
 1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) navigate to the [**Data & Analytics** section](https://console.bluemix.net/catalog/?category=data). Create the **Data Science Experience** service. Click on the **Get Started** button to launch the **Data Science Experience** dashboard.
