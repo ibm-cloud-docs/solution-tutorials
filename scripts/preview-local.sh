@@ -22,4 +22,4 @@ marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-fil
 watch-http-server builddocs/output/ &
 
 # stop server and relauch script on *.md file changes
-fswatch -1 -e ".*" -i "\\.md$" . | xargs -n1 -I{} kill $! && ./scripts/$(basename $0) && exit
+fswatch -1 -e ".*" -i "\\.md$" . | xargs -n1 -I{} kill $! && cd ./scripts && ./$(basename $0) && exit
