@@ -31,10 +31,25 @@ This tutorial walks you through setting up a continuous integration and delivery
 * Deploy to production cluster
 * Security using Vulnerability Advisor 
 * Setup Slack notifications 
+* Clean up resources
+
+
 
 ![](images/solution21/Architecture.png)
 
+1. Push code to a private Git repository.
+
+2. Continuous delivery service picks up latest Git push and deploy to a private container image. 
+
+3. Private docker image deployed to a development Kubernetes cluster.
+
+4. Dev branch then pushes to a production cluster.
+
+5. Slack notifications setup for each deployment activities
+
+
 ## Prerequisites
+
 {: #prereq}
 
 * [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
@@ -44,14 +59,12 @@ This tutorial walks you through setting up a continuous integration and delivery
 ## Create a Kubernetes cluster
 {: #step1}
 
-1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Lite plan or the paid plan** cluster.
-  {:tip}
-   ![Kubernetes Cluster Creation on IBM Cloud](images/solution21/KubernetesPaidClusterCreation.png)
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Pay-As-You_Go** cluster. Paid account is needed to complete the full tutorial.
 2. For convenience, use the name `dev-cluster` to be consistent with this tutorial.
 3. The smallest **Machine Type** with 1 **Worker Nodes** is sufficient for this tutorial. Leave all other options set to defaults.
 4. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
-**NOTE:** Do not proceed until your workers are ready. This might take up to one hour.
+**NOTE:** Do not proceed until your workers are ready. 
 
 ## Create a starter application
 
@@ -72,9 +85,11 @@ IBM Cloud offers a selection of starter applications, these starter applications
    4.  Once the deploy stages completed, click on the **View logs and history** to see the logs.
    5. Visit the URL displayed to access the application by `http://worker-public-ip:portnumber/`. ![](images/solution21/Logs.png)
 
+      In the example above we used the dashboard to create the starter applications but we could create the same using the `bx dev`command in the terminal.  The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster. 
+
 ## Clone, build and run the application locally
 
-In this step, you set up a git source control repository, clone the repo, then make some modifications and build/run the application locally.  
+In this step, you will clone the repo, then make some modifications and build/run the application locally.  
 
 ### Clone the application
 1. Select the **Git** tile under **Code**. You're then directed to your git repository page. ![HelloWorld](images/solution21/DevOps_Toolchain.png)
@@ -208,7 +223,37 @@ Deploying manually is one option here giving you a chance to validate your chang
 8. From now on, whenever your toolchain executes, You should see slack notifications in the channel you configured.
     ![](images/solution21/slack_channel.png)
 
-## Related Content
+
+
+## Clean up resources
+
+{: #cleanupresources}
+
+In this step, you will clean up the resources to remove what you created above. 
+
+- Delete the Git repository 
+- Delete the toolchain
+- Delete the two clusters 
+- Delete the Slack channel
+
+## Expand the Tutorial
+
+{: #expandTutorial}
+
+Do you want to learn more? Here are some ideas of what you can do next:
+
+- [Analyze logs and monitor the health of Kubernetes applications using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
+- Add a testing environment and deploy it to a 3rd cluster. 
+- Deploy the production cluster [across multiple regions](multi-region-webapp.html).
+
+## Related Content 
+
+{: #relatedContent}
 
 * [Security](https://console.bluemix.net/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
+
 * Configuring tool [integrations](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
+
+* Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](kubernetes-log-analysis-kibana.html).
+
+  ​
