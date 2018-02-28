@@ -59,28 +59,29 @@ In this project, we define three environments:
 * *Testing* - this environment is built after a stable branch or tag of the code. This is where user acceptance testing is made. It is very close from the production environment, it is loaded with realistic data (anonymized production data as example).
 * *Production* - this environment is updated with the version validated in the previous environment.
 
-A delivery pipeline manages the progression of a build through the environment. It can be fully automated or include manual validation gates to promote approved builds between environments - this is really open and should be set up to match the company best practices and workflows.
+**A delivery pipeline manages the progression of a build through the environment.** It can be fully automated or include manual validation gates to promote approved builds between environments - this is really open and should be set up to match the company best practices and workflows.
 
-To support the execution of the build pipeline,  we introduce **a functional user** - a regular IBM Cloud account but a team member with no real identity in the physical world. This functional user will own the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The functional user will be dedicated to your project and would not change over the lifetime of the project.
+To support the execution of the build pipeline,  we introduce **a functional user** - a regular IBM Cloud user but a team member with no real identity in the physical world. This functional user will own the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The functional user will be dedicated to your project and will not change over the lifetime of the project. The next thing you will want to create is [an API key](https://console.bluemix.net/docs/iam/apikeys.html#manapikey) for this functional user. You will select this API key when you setup the DevOps pipelines, or when you want to run automation scripts, to impersonate the functional user.
 
 When it comes to assigning responsibilities to the project team members, let's define the following roles and related permissions:
 
 |           | Development | Testing | Production |
 | --------- | ----------- | ------- | ---------- |
-| Developer | <ul><li>contributes code</li><li>can access log files</li><li>can view app and service configuration</li><li>use the deployed applications</li></ul> | <ul><li>can access log files</li><li>can view app and service configuration</li></ul> | <ul><li>no access</li></ul> |
+| Developer | <ul><li>contributes code</li><li>can access log files</li><li>can view app and service configuration</li><li>use the deployed applications</li></ul> | <ul><li>can access log files</li><li>can view app and service configuration</li><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
 | Tester    | <ul><li>use the deployed applications</li></ul> | <ul><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
 | Operator  | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view/set app and service configuration</li></ul> |
+| Pipeline Functional User  | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> |
 
 ## Identity and Access Management (IAM)
 {: #first_objective}
 
-IBM Cloud Identity and Access Management (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the IBM Cloud platform. A set of IBM Cloud services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and **service IDs** access to the resources within your account.
+IBM Cloud Identity and Access Management (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the IBM Cloud platform. A set of IBM Cloud services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
 A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
-  ![](./images/solution20-users-teams-applications/iam-model.png)
+  <img src="./images/solution20-users-teams-applications/iam-model.png" height="300" />
 
-At this time, not all services in the IBM Cloud catalog can be managed by using IAM. For these services, you can continue to use Cloud Foundry by providing users access to the org and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.
+At this time, not all services in the IBM Cloud catalog can be managed by using IAM. For these services, you can continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.
 {:tip}
 
 ## Create project environments
@@ -91,12 +92,16 @@ Although the three environments needed by this sample project require different 
 
 ### Create the resources for one environment
 
+Let's start by building the Development environment.
+
 1. [Select an IBM Cloud region](https://console.bluemix.net/dashboard) where to deploy the environment
 1. [Create an organization for the project](https://console.bluemix.net/docs/account/orgs_spaces.html#createorg)
 1. [Create a Cloud Foundry space for the environment](https://console.bluemix.net/docs/account/orgs_spaces.html#spaceinfo)
 1. [Create a new Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/catalog/cluster) dedicated to the environment
+
   Before you create a cluster, either through the IBM Cloud UI or through the command line, you must log into a specific IBM Cloud region, account, organization, and space. The space where you are logged in is the space where logging and monitoring data for the cluster and its resources is collected. If later you want to change the space where a cluster is sending its logging data, you can use the [logging plugin for the bx command line](https://console.bluemix.net/docs/containers/cs_health.html#log_sources_update).
   {: tip}
+
 1. Create the Cloud Foundry services used by the project under the space dedicated to the environment
 
 The following diagram shows where the project resources are created under the account:
@@ -117,11 +122,11 @@ From there, you can replicate similar steps to build the other environments.
 1. Create the required service instances in each space
 1. Create one cluster per environment
 
-  ![](./images/solution20-users-teams-applications/multiple-environments.png)
+  ![Using separate clusters to isolate environments](./images/solution20-users-teams-applications/multiple-environments.png)
 
 Using a combination of tools like the [IBM Cloud `bx` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [HashiCorp's `terraform`](https://www.terraform.io/), the [IBM Cloud provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
-Using separate clusters for the environments comes with good properties:
+Separate Kubernetes clusters for the environments come with good properties:
 * no matter the environment, all clusters will tend to look the same;
 * it is easier to control who has access to a specific cluster;
 * it gives flexibility in the update cycles for deployments and underlying resources; when there is a new Kubernetes version, it gives you the option to update the Development cluster first, validate your application then update the other environment;
@@ -129,7 +134,7 @@ Using separate clusters for the environments comes with good properties:
 
 Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption.
 
-  ![](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png)
+  ![Using separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png)
 
 ### Setup delivery pipeline
 
@@ -140,21 +145,15 @@ When it comes to deploying to the different environments, your continuous integr
  
   ![](./images/solution20-users-teams-applications/cicd.png)
 
-During the build phase, it is critical to properly version the Docker images. You can use the GIT commit SHA as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
-{:tip}
+When configuring the DevOps pipeline, make sure to use the API key of a functional user. Only the functional user should need to have the required rights to deploy apps to your clusters.
+
+During the build phase, it is important to properly version the Docker images. You can use the GIT commit SHA as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
+
+As you gain acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
 
 ## Related information
 
 * [Getting Started with Identity and Access Management](https://console.bluemix.net/docs/iam/quickstart.html#getstarted)
-
-## TODO
-
-* create a resource group for the cluster and compatible service
-
-* you create a resource group including all the resources making your app - not all services can be included into a resource group today
-
-* you can assign policies to users in your account to define their permissions on these resources and resource groups
-
-* use a technical user to run the toolchains, use the toolchain rights to control who can edit the toolchain, or trigger stages
-
-* Create one namespace per environment in the Container Registry. The separate namespaces can be used to promote images between environments through tagging
+* [Analyze logs and monitor the health of Kubernetes applications](./kubernetes-log-analysis-kibana.html)
+* [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
+* [Continuous Deployment to Kubernetes](./continuous-deployment-to-kubernetes.html)
