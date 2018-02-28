@@ -167,7 +167,8 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
     ```
     RUN apt-get update && apt-get install -y \
             libc6 \
-            systemd
+            systemd \
+            sensible-utils
     ```
 11. Commit and Push the changes. This should trigger the toolchain and fix the **Validate Stage**.
     ```
@@ -181,7 +182,7 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
 
 In this step, you will complete the deployment pipeline by deploying the Kubernetes application to development and production environments respectively. Ideally, we want to set up an automatic deployment for the development environment and a manual deployment for the production environment. Before we do that, let's explore the two ways in which you can deliver this. It's possible to use one cluster for both development and production environment. However, it's recommended to have two separate clusters, one for development and one for production. Let's explore setting up a second cluster for production.  
 
-1. Following instructions in [Create a Kubernetes cluster](#step1) step, Create a new cluster and let's name it `prod-cluster` .
+1. Following instructions in [Create a Kubernetes cluster](#step1) step, Create a new cluster and let's name it `prod-cluster`.
 2. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 3. Rename the **Deploy Stage** to `Deploy dev`, you can do that by clicking on settings Icon >  **Configure Stage**.
    ![](images/solution21/deploy_stage.png)
