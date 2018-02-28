@@ -17,7 +17,7 @@ lastupdated: "2018-02-28"
 
 # Continuous Deployment to Kubernetes
 
-This tutorial walks you through setting up a continuous deployment and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.
+This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.
 
 {:shortdesc}
 
@@ -58,7 +58,7 @@ This tutorial walks you through setting up a continuous deployment and delivery 
 {: #create_application}
 IBM Cloud offers a selection of starter applications, these starter applications can be created using the `bx dev` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
-1. From https://console.bluemix.net, use the left side menu option and select [Web Apps](https://console.bluemix.net/developer/appservice/dashboard).
+1. From the [IBM Cloud console](https://console.bluemix.net), use the left side menu option and select [Web Apps](https://console.bluemix.net/developer/appservice/dashboard).
 2. Under **Start from the Web**, section click on the **Get Started** button.
 3. Select the `Express.js Basic` and then `Create Project` to create a Node.js starter application.
 4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
@@ -179,7 +179,7 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
 ## Deploy to production cluster 
 {: #deploytoproduction}
 
-In this step, you will complete the deployment pipeline by deploying the Kubernetes application to development and production environments respectively. Ideally, we want to set up an automatic deployment for the development environment and a manual deployment for the production environment. Before we do that, let's explore the two ways in which you can deliver this. It's possible to use one cluster for both development and productions environment. However, it's recommended to have two separate clusters, one for development and one for production. Let's explore setting up a second cluster for production.  
+In this step, you will complete the deployment pipeline by deploying the Kubernetes application to development and production environments respectively. Ideally, we want to set up an automatic deployment for the development environment and a manual deployment for the production environment. Before we do that, let's explore the two ways in which you can deliver this. It's possible to use one cluster for both development and production environment. However, it's recommended to have two separate clusters, one for development and one for production. Let's explore setting up a second cluster for production.  
 
 1. Following instructions in [Create a Kubernetes cluster](#step1) step, Create a new cluster and let's name it `prod-cluster` .
 2. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
@@ -189,6 +189,8 @@ In this step, you will complete the deployment pipeline by deploying the Kuberne
 5. Change the **stage trigger** to `Run jobs only when this stage is run manually`. ![](images/solution21/prod-stage.png)
 6. Under the **Job** tab, change the cluster name to the newly created cluster and then **Save** the stage.
 7. You now should have the full deployment setup, to deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production. ![](images/solution21/full-deploy.png)
+
+Deploying manually is one option here giving you a chance to validate your changes in the development environment before moving to production. This is a simplification over a more advanced scenario where you would include unit and integration tests as part of your pipeline and gates to promote a build from a development environment to production.
 
 ## Setup Slack notifications
 {: #setup_slack}
