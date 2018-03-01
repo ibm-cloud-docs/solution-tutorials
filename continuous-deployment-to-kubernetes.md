@@ -31,27 +31,36 @@ This tutorial walks you through setting up a continuous integration and delivery
 * Deploy to production cluster
 * Security using Vulnerability Advisor 
 * Setup Slack notifications 
+* Clean up resources
+
+
 
 ![](images/solution21/Architecture.png)
 
+1. Push code to a private Git repository.
+2. Pipeline picks up changes in Git and builds container image. 
+3. Container image uploaded to registry deployed to a development Kubernetes cluster.
+4. Validate changes and deploy to production cluster.
+5. Slack notifications setup for deployment activities.
+
+
 ## Prerequisites
+
 {: #prereq}
 
-* [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+* [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
 {: #step1}
 
-1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Lite plan or the paid plan** cluster.
-  {:tip}
-   ![Kubernetes Cluster Creation on IBM Cloud](images/solution21/KubernetesPaidClusterCreation.png)
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Pay-As-You_Go** cluster. Paid account is needed to complete the full tutorial.
 2. For convenience, use the name `dev-cluster` to be consistent with this tutorial.
 3. The smallest **Machine Type** with 1 **Worker Nodes** is sufficient for this tutorial. Leave all other options set to defaults.
 4. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
-**NOTE:** Do not proceed until your workers are ready. This might take up to one hour.
+**NOTE:** Do not proceed until your workers are ready. 
 
 ## Create a starter application
 
@@ -62,19 +71,20 @@ IBM Cloud offers a selection of starter applications, these starter applications
 2. Under **Start from the Web**, section click on the **Get Started** button.
 3. Select the `Express.js Basic` and then `Create Project` to create a Node.js starter application.
 4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
-5. Done, this will create the starter application, later you will get the code and setup the pipeline.
 
 ## Configure DevOps delivery pipeline
 
    1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button. ![](images/solution21/Pipeline.png)
-   2. Select the cluster you created earlier and then click **Create**. This will create the delivery pipeline and set up the toolchain. ![](images/solution21/BindCluster.png)
+   2. Select the cluster you created earlier and then click **Create**. This will create a toolchain and delivery pipeline. ![](images/solution21/BindCluster.png)
    3. Once the pipeline created, click on **View Toolchain** then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
-   4.  Once the deploy stages completed, click on the **View logs and history** to see the logs.
-   5. Visit the URL displayed to access the application by `http://worker-public-ip:portnumber/`. ![](images/solution21/Logs.png)
+   4. After the deploy stages complete, click on the **View logs and history** to see the logs.
+   5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`). ![](images/solution21/Logs.png)
+
+In the example above we used the App Service UI to create the starter applications but we could also create the same starter project using the `bx dev`command in the terminal.
 
 ## Clone, build and run the application locally
 
-In this step, you set up a git source control repository, clone the repo, then make some modifications and build/run the application locally.  
+In this step, you will clone the repo locally, make code changes and build/run the application locally.  
 
 ### Clone the application
 1. Select the **Git** tile under **Code**. You're then directed to your git repository page. ![HelloWorld](images/solution21/DevOps_Toolchain.png)
@@ -86,9 +96,9 @@ In this step, you set up a git source control repository, clone the repo, then m
    cd <name_of_your_app>
    ```
 
-   **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
+**Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 
-4. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Congratulations!" to something else.
+4. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Update the code - try changing "Congratulations!" to something else.
 
 ### Build the application
 You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
@@ -208,7 +218,37 @@ Deploying manually is one option here giving you a chance to validate your chang
 8. From now on, whenever your toolchain executes, You should see slack notifications in the channel you configured.
     ![](images/solution21/slack_channel.png)
 
-## Related Content
+
+
+## Clean up resources
+
+{: #cleanupresources}
+
+In this step, you will clean up the resources to remove what you created above. 
+
+- Delete the Git repository 
+- Delete the toolchain
+- Delete the two clusters 
+- Delete the Slack channel
+
+## Expand the Tutorial
+
+{: #expandTutorial}
+
+Do you want to learn more? Here are some ideas of what you can do next:
+
+- [Analyze logs and monitor the health of Kubernetes applications using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
+- Add a testing environment and deploy it to a 3rd cluster. 
+- Deploy the production cluster [across multiple regions](multi-region-webapp.html).
+
+## Related Content 
+
+{: #relatedContent}
 
 * [Security](https://console.bluemix.net/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
+
 * Configuring tool [integrations](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
+
+* Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](kubernetes-log-analysis-kibana.html).
+
+  ​
