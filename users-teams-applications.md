@@ -93,7 +93,9 @@ At this time, not all services in the IBM Cloud catalog can be managed by using 
 
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
-  ![](./images/solution20-users-teams-applications/one-environment.png)
+<p style="text-align: center;">
+  <img src="./images/solution20-users-teams-applications/one-environment.png" width="80%" />
+</p>
 
 ### Create the resources for one environment
 
@@ -111,7 +113,9 @@ Let's start by building the Development environment.
 
 The following diagram shows where the project resources are created under the account:
 
-  ![](./images/solution20-users-teams-applications/resources.png)
+<p style="text-align: center;">
+  <img src="./images/solution20-users-teams-applications/resources.png" width="50%"/>
+</p>
 
 ### Assign roles within the environment
 
@@ -127,7 +131,9 @@ From there, you can replicate similar steps to build the other environments.
 1. Create the required service instances in each space
 1. Create one cluster per environment
 
-  ![Using separate clusters to isolate environments](./images/solution20-users-teams-applications/multiple-environments.png)
+<p style="text-align: center;">
+  <img title="Using separate clusters to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments.png" width="80%" />
+</p>
 
 Using a combination of tools like the [IBM Cloud `bx` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [HashiCorp's `terraform`](https://www.terraform.io/), the [IBM Cloud provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
@@ -139,7 +145,9 @@ Separate Kubernetes clusters for the environments come with good properties:
 
 Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption.
 
-  ![Using separate namespaces to isolate environments](./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png)
+<p style="text-align: center;">
+  <img title="Using separate namespaces to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png" width="80%" />
+</p>
 
 ### Setup delivery pipeline
 
@@ -148,13 +156,15 @@ When it comes to deploying to the different environments, your continuous integr
 * promote development builds to the `Testing` environment, either automatically if all tests from the previous stages are OK or through a manual promotion process. Some teams will use different branches too here, merging the working development state to a `stable` branch as example;
 * Repeat a similar process to move to the `Production` environment.
  
-  ![](./images/solution20-users-teams-applications/cicd.png)
+<p style="text-align: center;">
+  <img src="./images/solution20-users-teams-applications/cicd.png" />
+</p>
 
 When configuring the DevOps pipeline, make sure to use the API key of a functional user. Only the functional user should need to have the required rights to deploy apps to your clusters.
 
 During the build phase, it is important to properly version the Docker images. You can use the GIT commit SHA as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
 
-As you gain acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
+As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
 
 ## Related information
 
