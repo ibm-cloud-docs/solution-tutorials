@@ -79,10 +79,15 @@ IBM Cloud Identity and Access Management (IAM) enables you to securely authentic
 
 A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
-  <img src="./images/solution20-users-teams-applications/iam-model.png" height="300" />
+<p style="text-align: center;">
+  <img src="./images/solution20-users-teams-applications/iam-model.png" width="50%" />
+</p>
 
 At this time, not all services in the IBM Cloud catalog can be managed by using IAM. For these services, you can continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.
-{:tip}
+
+<p style="text-align: center;">
+  <img src="./images/solution20-users-teams-applications/cloudfoundry-model.png" width="50%" />
+</p>
 
 ## Create project environments
 
