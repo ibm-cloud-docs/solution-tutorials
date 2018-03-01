@@ -182,7 +182,7 @@ When it comes to deploying to the different environments, your continuous integr
 
 When configuring the DevOps pipeline, make sure to use the API key of a functional user. Only the functional user should need to have the required rights to deploy apps to your clusters.
 
-During the build phase, it is important to properly version the Docker images. You can use the GIT commit SHA as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
+During the build phase, it is important to properly version the Docker images. You can use the Git commit revision as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
 
 As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
 
