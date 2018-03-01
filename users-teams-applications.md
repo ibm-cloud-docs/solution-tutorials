@@ -138,9 +138,10 @@ For the Development environment, the user responsibilities defined earlier could
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 
-<p style="text-align: center;">
-  <img title="Roles for Developer in Development environment" src="./images/solution20-users-teams-applications/edit-policy.png" height="400" />
-</p>
+| |
+|-|
+|<p style="text-align: center;"><img title="" src="./images/solution20-users-teams-applications/edit-policy.png" height="400" /></p>|
+{: caption="Example of IAM roles for Developer in the Development environment" caption-side="top"}
 
 ## Replicate for multiple environments
 
