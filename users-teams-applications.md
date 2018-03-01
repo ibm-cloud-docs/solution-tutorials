@@ -69,7 +69,7 @@ When it comes to assigning responsibilities to the project team members, let's d
 | --------- | ----------- | ------- | ---------- |
 | Developer | <ul><li>contributes code</li><li>can access log files</li><li>can view app and service configuration</li><li>use the deployed applications</li></ul> | <ul><li>can access log files</li><li>can view app and service configuration</li><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
 | Tester    | <ul><li>use the deployed applications</li></ul> | <ul><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
-| Operator  | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can access log files</li><li>can view/set app and service configuration</li></ul> |
+| Operator  | <ul><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can access log files</li><li>can view/set app and service configuration</li></ul> |
 | Pipeline Functional User  | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> |
 
 ## Identity and Access Management (IAM)
@@ -120,8 +120,27 @@ The following diagram shows where the project resources are created under the ac
 ### Assign roles within the environment
 
 1. Invite users to the account
-1. Assign Policies to the users to control who can access the Container Service instance and their permissions. Refer to the [access policy definition](https://console.bluemix.net/docs/containers/cs_users.html#access_policies) to select the right policy for a user in the environment.
+1. Assign Policies to the users to control who can access the Container Service instance and their permissions. Refer to the [access policy definition](https://console.bluemix.net/docs/containers/cs_users.html#access_policies) to select the right policy for a user in the environment. 
 1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://console.bluemix.net/docs/iam/cfaccess.html#cfaccess) to assign the right roles based on the environment.
+
+Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the IBM Cloud Monitoring service maps IAM roles to actions](https://console.bluemix.net/docs/services/cloud-monitoring/security_ov.html#iam_roles).
+
+Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained up to a specific instance of a service, you will discover over time what are the ideal access policies for your project. 
+
+A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/) to configure in-cluster authorizations.
+
+For the Development environment, the user responsibilities defined earlier could translate to the following:
+
+|           | IAM Access policies | Cloud Foundry |
+| --------- | ----------- | ------- |
+| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Auditor*</li></ul> |
+| Tester    | No Access | No Access |
+| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
+| Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
+
+<p style="text-align: center;">
+  <img title="Roles for Developer in Development environment" src="./images/solution20-users-teams-applications/edit-policy.png" height="400" />
+</p>
 
 ### Replicate for multiple environments
 
@@ -170,5 +189,7 @@ As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package man
 
 * [Getting Started with Identity and Access Management](https://console.bluemix.net/docs/iam/quickstart.html#getstarted)
 * [Analyze logs and monitor the health of Kubernetes applications](./kubernetes-log-analysis-kibana.html)
-* [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
 * [Continuous Deployment to Kubernetes](./continuous-deployment-to-kubernetes.html)
+* [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
+* [Develop a microservices application with Kubernetes and Helm
+](https://github.com/open-toolchain/microservices-helm-toolchain)
