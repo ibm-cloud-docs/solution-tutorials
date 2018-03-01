@@ -27,6 +27,7 @@ This tutorial gives an overview of the concepts available in IBM Cloud to manage
 
 * Learn about Identity and Access Management and Cloud Foundry access models
 * Configure a project with separation between roles and environments
+* Setup continuous integration
 
 ## Products
 {: #products}
@@ -89,7 +90,7 @@ At this time, not all services in the IBM Cloud catalog can be managed by using 
   <img src="./images/solution20-users-teams-applications/cloudfoundry-model.png" width="50%" />
 </p>
 
-## Create project environments
+## Create the resources for one environment
 
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
@@ -97,7 +98,6 @@ Although the three environments needed by this sample project require different 
   <img src="./images/solution20-users-teams-applications/one-environment.png" width="80%" />
 </p>
 
-### Create the resources for one environment
 
 Let's start by building the Development environment.
 
@@ -117,7 +117,7 @@ The following diagram shows where the project resources are created under the ac
   <img src="./images/solution20-users-teams-applications/resources.png" width="50%"/>
 </p>
 
-### Assign roles within the environment
+## Assign roles within the environment
 
 1. Invite users to the account
 1. Assign Policies to the users to control who can access the Container Service instance and their permissions. Refer to the [access policy definition](https://console.bluemix.net/docs/containers/cs_users.html#access_policies) to select the right policy for a user in the environment. 
@@ -142,7 +142,7 @@ For the Development environment, the user responsibilities defined earlier could
   <img title="Roles for Developer in Development environment" src="./images/solution20-users-teams-applications/edit-policy.png" height="400" />
 </p>
 
-### Replicate for multiple environments
+## Replicate for multiple environments
 
 From there, you can replicate similar steps to build the other environments.
 
@@ -168,7 +168,7 @@ Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/co
   <img title="Using separate namespaces to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png" width="80%" />
 </p>
 
-### Setup delivery pipeline
+## Setup delivery pipeline
 
 When it comes to deploying to the different environments, your continuous integration / continuous delivery pipeline can be setup to drive the full process:
 * continuously update the `Development` environment with the latest and greatest code from the `development` branch, running unit tests and integration tests on the dedicated cluster;
