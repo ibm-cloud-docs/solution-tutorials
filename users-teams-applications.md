@@ -125,7 +125,7 @@ The following diagram shows where the project resources are created under the ac
 
 Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the IBM Cloud Monitoring service maps IAM roles to actions](https://console.bluemix.net/docs/services/cloud-monitoring/security_ov.html#iam_roles).
 
-Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained up to a specific instance of a service, you will discover over time what are the ideal access policies for your project. 
+Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project. 
 
 A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/) to configure in-cluster authorizations.
 
