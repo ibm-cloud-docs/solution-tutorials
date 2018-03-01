@@ -38,22 +38,18 @@ This tutorial walks you through setting up a continuous integration and delivery
 ![](images/solution21/Architecture.png)
 
 1. Push code to a private Git repository.
-
-2. Continuous delivery service picks up latest Git push and deploy to a private container image. 
-
-3. Private docker image deployed to a development Kubernetes cluster.
-
-4. Dev branch then pushes to a production cluster.
-
-5. Slack notifications setup for each deployment activities
+2. Pipeline picks up changes in Git and builds container image. 
+3. Container image uploaded to registry deployed to a development Kubernetes cluster.
+4. Validate changes and deploy to production cluster.
+5. Slack notifications setup for deployment activities.
 
 
 ## Prerequisites
 
 {: #prereq}
 
-* [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+* [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
@@ -75,21 +71,20 @@ IBM Cloud offers a selection of starter applications, these starter applications
 2. Under **Start from the Web**, section click on the **Get Started** button.
 3. Select the `Express.js Basic` and then `Create Project` to create a Node.js starter application.
 4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
-5. Done, this will create the starter application, later you will get the code and setup the pipeline.
 
 ## Configure DevOps delivery pipeline
 
    1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button. ![](images/solution21/Pipeline.png)
-   2. Select the cluster you created earlier and then click **Create**. This will create the delivery pipeline and set up the toolchain. ![](images/solution21/BindCluster.png)
+   2. Select the cluster you created earlier and then click **Create**. This will create a toolchain and delivery pipeline. ![](images/solution21/BindCluster.png)
    3. Once the pipeline created, click on **View Toolchain** then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
-   4.  Once the deploy stages completed, click on the **View logs and history** to see the logs.
-   5. Visit the URL displayed to access the application by `http://worker-public-ip:portnumber/`. ![](images/solution21/Logs.png)
+   4. After the deploy stages complete, click on the **View logs and history** to see the logs.
+   5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`). ![](images/solution21/Logs.png)
 
-      In the example above we used the dashboard to create the starter applications but we could create the same using the `bx dev`command in the terminal.  The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster. 
+In the example above we used the App Service UI to create the starter applications but we could also create the same starter project using the `bx dev`command in the terminal.
 
 ## Clone, build and run the application locally
 
-In this step, you will clone the repo, then make some modifications and build/run the application locally.  
+In this step, you will clone the repo locally, make code changes and build/run the application locally.  
 
 ### Clone the application
 1. Select the **Git** tile under **Code**. You're then directed to your git repository page. ![HelloWorld](images/solution21/DevOps_Toolchain.png)
@@ -101,9 +96,9 @@ In this step, you will clone the repo, then make some modifications and build/ru
    cd <name_of_your_app>
    ```
 
-   **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
+**Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 
-4. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Congratulations!" to something else.
+4. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Update the code - try changing "Congratulations!" to something else.
 
 ### Build the application
 You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
