@@ -18,14 +18,14 @@ lastupdated: "2018-02-28"
 
 # Best practices for organizing users, teams, applications
 
-This tutorial gives an overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
+This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
 
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* Learn about Identity and Access Management and Cloud Foundry access models
+* Learn about {{site.data.keyword.iamlong}} and Cloud Foundry access models
 * Configure a project with separation between roles and environments
 * Setup continuous integration
 
@@ -33,16 +33,16 @@ This tutorial gives an overview of the concepts available in IBM Cloud to manage
 {: #products}
 
 This tutorial uses the following products:
-* [Identity and Access Management](https://console.bluemix.net/docs/iam/index.html)
+* [{{site.data.keyword.iamlong}}](https://console.bluemix.net/docs/iam/index.html)
 * [Container Service](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-* [Cloud Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
+* [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
 * [Cloud Foundry](https://console.bluemix.net/catalog/?category=cf-apps&search=foundry)
-* [Cloudant NoSQL database](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
+* [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
 <!-- ## Before you begin
 {: #prereqs}
 
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins -->
+* [{{site.data.keyword.cloud_notm}} Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins -->
 
 ## Define a project
 
@@ -62,7 +62,7 @@ In this project, we define three environments:
 
 **A delivery pipeline manages the progression of a build through the environment.** It can be fully automated or include manual validation gates to promote approved builds between environments - this is really open and should be set up to match the company best practices and workflows.
 
-To support the execution of the build pipeline,  we introduce **a functional user** - a regular IBM Cloud user but a team member with no real identity in the physical world. This functional user will own the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The functional user will be dedicated to your project and will not change over the lifetime of the project. The next thing you will want to create is [an API key](https://console.bluemix.net/docs/iam/apikeys.html#manapikey) for this functional user. You will select this API key when you setup the DevOps pipelines, or when you want to run automation scripts, to impersonate the functional user.
+To support the execution of the build pipeline,  we introduce **a functional user** - a regular {{site.data.keyword.cloud_notm}} user but a team member with no real identity in the physical world. This functional user will own the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The functional user will be dedicated to your project and will not change over the lifetime of the project. The next thing you will want to create is [an API key](https://console.bluemix.net/docs/iam/apikeys.html#manapikey) for this functional user. You will select this API key when you setup the DevOps pipelines, or when you want to run automation scripts, to impersonate the functional user.
 
 When it comes to assigning responsibilities to the project team members, let's define the following roles and related permissions:
 
@@ -76,7 +76,7 @@ When it comes to assigning responsibilities to the project team members, let's d
 ## Identity and Access Management (IAM)
 {: #first_objective}
 
-IBM Cloud Identity and Access Management (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the IBM Cloud platform. A set of IBM Cloud services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
+{{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. A set of {{site.data.keyword.cloud_notm}} services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
 A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
@@ -84,7 +84,7 @@ A **policy** assigns a user or service ID one or more **roles** with a combinati
   <img src="./images/solution20-users-teams-applications/iam-model.png" width="50%" />
 </p>
 
-At this time, not all services in the IBM Cloud catalog can be managed by using IAM. For these services, you can continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.
+At this time, not all services in the {{site.data.keyword.cloud_notm}} catalog can be managed by using IAM. For these services, you can continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.
 
 <p style="text-align: center;">
   <img src="./images/solution20-users-teams-applications/cloudfoundry-model.png" width="50%" />
@@ -101,12 +101,12 @@ Although the three environments needed by this sample project require different 
 
 Let's start by building the Development environment.
 
-1. [Select an IBM Cloud region](https://console.bluemix.net/dashboard) where to deploy the environment
+1. [Select an {{site.data.keyword.cloud_notm}} region](https://console.bluemix.net/dashboard) where to deploy the environment
 1. [Create an organization for the project](https://console.bluemix.net/docs/account/orgs_spaces.html#createorg)
 1. [Create a Cloud Foundry space for the environment](https://console.bluemix.net/docs/account/orgs_spaces.html#spaceinfo)
 1. [Create a new Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/catalog/cluster) dedicated to the environment
 
-  Before you create a cluster, either through the IBM Cloud UI or through the command line, you must log into a specific IBM Cloud region, account, organization, and space. The space where you are logged in is the space where logging and monitoring data for the cluster and its resources is collected. If later you want to change the space where a cluster is sending its logging data, you can use the [logging plugin for the bx command line](https://console.bluemix.net/docs/containers/cs_health.html#log_sources_update).
+  Before you create a cluster, either through the {{site.data.keyword.cloud_notm}} UI or through the command line, you must log into a specific {{site.data.keyword.cloud_notm}} region, account, organization, and space. The space where you are logged in is the space where logging and monitoring data for the cluster and its resources is collected. If later you want to change the space where a cluster is sending its logging data, you can use the [logging plugin for the bx command line](https://console.bluemix.net/docs/containers/cs_health.html#log_sources_update).
   {: tip}
 
 1. Create the Cloud Foundry services used by the project under the space dedicated to the environment
@@ -120,7 +120,7 @@ The following diagram shows where the project resources are created under the ac
 ## Assign roles within the environment
 
 1. Invite users to the account
-1. Assign Policies to the users to control who can access the Container Service instance and their permissions. Refer to the [access policy definition](https://console.bluemix.net/docs/containers/cs_users.html#access_policies) to select the right policy for a user in the environment. 
+1. Assign Policies to the users to control who can access the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://console.bluemix.net/docs/containers/cs_users.html#access_policies) to select the right policy for a user in the environment. 
 1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://console.bluemix.net/docs/iam/cfaccess.html#cfaccess) to assign the right roles based on the environment.
 
 Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the IBM Cloud Monitoring service maps IAM roles to actions](https://console.bluemix.net/docs/services/cloud-monitoring/security_ov.html#iam_roles).
@@ -155,7 +155,7 @@ From there, you can replicate similar steps to build the other environments.
   <img title="Using separate clusters to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments.png" width="80%" />
 </p>
 
-Using a combination of tools like the [IBM Cloud `bx` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [HashiCorp's `terraform`](https://www.terraform.io/), the [IBM Cloud provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
+Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `bx` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [HashiCorp's `terraform`](https://www.terraform.io/), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
 Separate Kubernetes clusters for the environments come with good properties:
 * no matter the environment, all clusters will tend to look the same;
@@ -188,7 +188,7 @@ As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package man
 
 ## Related information
 
-* [Getting Started with Identity and Access Management](https://console.bluemix.net/docs/iam/quickstart.html#getstarted)
+* [Getting Started with {{site.data.keyword.iamshort}}](https://console.bluemix.net/docs/iam/quickstart.html#getstarted)
 * [Analyze logs and monitor the health of Kubernetes applications](./kubernetes-log-analysis-kibana.html)
 * [Continuous Deployment to Kubernetes](./continuous-deployment-to-kubernetes.html)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
