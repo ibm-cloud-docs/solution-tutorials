@@ -25,7 +25,7 @@ This tutorial gives an overview of the concepts available in {{site.data.keyword
 ## Objectives
 {: #objectives}
 
-* Learn about {{site.data.keyword.iamlonger}} and Cloud Foundry access models
+* Learn about {{site.data.keyword.iamlong}} and Cloud Foundry access models
 * Configure a project with separation between roles and environments
 * Setup continuous integration
 
@@ -37,7 +37,7 @@ This tutorial uses the following products:
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
 * [Cloud Foundry](https://console.bluemix.net/catalog/?category=cf-apps&search=foundry)
-* [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
+* [{{site.data.keyword.cloudantfull}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
 ## Define a project
 
