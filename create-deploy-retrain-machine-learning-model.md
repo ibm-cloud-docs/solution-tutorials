@@ -73,11 +73,11 @@ You can create a project to add data and open a data asset in the data refiner f
 
 **Import data:**
 
-As mentioned earlier, you will be using the **Iris data set**. Originally published at [UCI Machine Learning Repository: Iris Data Set](https://archive.ics.uci.edu/ml/datasets/Iris), this small dataset from 1936 is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set [iris.csv](https://ibm.box.com/s/rtpelxr4767shqmxxjb9amtlgq9xcvx5) contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
+As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, [The Use of Multiple Measurements in Taxonomic Problems](http://rcs.chemometrics.ru/Tutorials/classification/Fisher.pdf), and can also be found on the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set [iris.csv](https://ibm.box.com/s/rtpelxr4767shqmxxjb9amtlgq9xcvx5) contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 ![](images/solution22-build-machine-learning-model/iris_machinelearning.png)
- Download [iris_initial.csv](https://ibm.box.com/s/nnxx7ozfvpdkjv17x4katwu385cm6k5d) which consists of 40 instances of each class. You will use the rest to re-train your model.
+ **Download** [iris_initial.csv](https://ibm.box.com/s/nnxx7ozfvpdkjv17x4katwu385cm6k5d) which consists of 40 instances of each class. You will use the rest to re-train your model.
 
-1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution16/data_icon.png).
+1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution22-build-machine-learning-model/data_icon.png).
 2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
       ![](images/solution22-build-machine-learning-model/find_and_add_data.png)
 3. Once added, you should see `iris_initial.csv` in the **Data assets** section of the project. Click on the name to see the contents of the data set.
@@ -180,11 +180,11 @@ As mentioned earlier, you will be using the **Iris data set**. Originally publis
      ![](images/solution22-build-machine-learning-model/select_source.png)
    * In the **Record count required for re-evaluation** box, type the minimum number of new records to trigger retraining. Use **10** or leave blank to use the default value of 1000.
    * In the **Auto retrain** box, select one of the following options:
-     - To start automatic retraining whenever model performance is below the threshold that you set, select **when model performance is below threshold**.
+     - To start automatic retraining whenever model performance is below the threshold that you set, select **when model performance is below threshold**. For this tutorial, you will choose this option as our precision is below the threshold (.98).
      - To prohibit automatic retraining, select **never**.
      - To start automatic retraining regardless of performance, select **always**.
    * In the **Auto deploy** box, select one of the following options:
-     - To start automatic deployment whenever model performance is better than the previous version, select **when model performance is better than previous version**.
+     - To start automatic deployment whenever model performance is better than the previous version, select **when model performance is better than previous version**. For this tutorial, you will choose this option as our aim is to continuosly improve the performance of the model.
      - To prohibit automatic deployment, select **never**.
      - To start automatic deployment regardless of performance, select **always**.
    * Click **Save**.
@@ -207,3 +207,4 @@ As mentioned earlier, you will be using the **Iris data set**. Originally publis
 
 - [Detect Anomalies using Machine Learning](https://console.bluemix.net/docs/tutorials/gather-visualize-analyze-iot-data.html#data_experience)
 - [Watson Data Platform Tutorials](https://www.ibm.com/analytics/us/en/watson-data-platform/tutorial/)
+- [Automatic model creation](https://datascience.ibm.com/docs/content/analyze-data/ml-model-builder.html?linkInPage=true)
