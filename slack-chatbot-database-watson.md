@@ -180,4 +180,4 @@ Documentation and SDKs:
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
-* [{{site.data.keyword.cloudantfull} documentation](https://console.bluemix.net/docs/services/Cloudant/cloudant.html#overview)
+* [{{site.data.keyword.cloudantfull}} documentation](https://console.bluemix.net/docs/services/Cloudant/cloudant.html#overview)
