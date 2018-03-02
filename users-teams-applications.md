@@ -34,7 +34,7 @@ This tutorial gives an overview of the concepts available in {{site.data.keyword
 
 This tutorial uses the following products:
 * [{{site.data.keyword.iamlong}}](https://console.bluemix.net/docs/iam/index.html)
-* [Container Service](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
 * [Cloud Foundry](https://console.bluemix.net/catalog/?category=cf-apps&search=foundry)
 * [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
