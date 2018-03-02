@@ -57,7 +57,7 @@ Let's consider a sample project with the following components:
 
 In this project, we define three environments:
 * *Development* - this environment is continuously updated with every commit, unit tests, smoke tests are executed. It gives access to the latest and greatest deployment of the project.
-* *Testing* - this environment is built after a stable branch or tag of the code. This is where user acceptance testing is made. It is very close from the production environment, it is loaded with realistic data (anonymized production data as example).
+* *Testing* - this environment is built after a stable branch or tag of the code. This is where user acceptance testing is made. Its configuration is similar to the production environment. It is loaded with realistic data (anonymized production data as example).
 * *Production* - this environment is updated with the version validated in the previous environment.
 
 **A delivery pipeline manages the progression of a build through the environment.** It can be fully automated or include manual validation gates to promote approved builds between environments - this is really open and should be set up to match the company best practices and workflows.
