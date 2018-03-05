@@ -109,7 +109,7 @@ Let's start by building the Development environment.
 The following diagram shows where the project resources are created under the account:
 
 <p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/resources.png" width="50%"/>
+  <img src="./images/solution20-users-teams-applications/resources.png" style="height: 400px;" />
 </p>
 
 ## Assign roles within the environment
@@ -133,10 +133,11 @@ For the Development environment, the user responsibilities defined earlier could
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 
-| |
-|-|
-|<p style="text-align: center;"><img title="" src="./images/solution20-users-teams-applications/edit-policy.png" height="400" /></p>|
-{: caption="Example of IAM roles for Developer in the Development environment" caption-side="top"}
+The IAM access policies and Cloud Foundry roles are defined in the [Identify and Access Management user interface](https://console.bluemix.net/iam/#/users):
+
+<p style="text-align: center;">
+  <img title="" src="./images/solution20-users-teams-applications/edit-policy.png" height="400" />
+</p>
 
 ## Replicate for multiple environments
 
