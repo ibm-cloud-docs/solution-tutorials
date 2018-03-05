@@ -22,6 +22,7 @@
                 "tags": [
                     "Docker",
                     "Kubernetes",
+                    "Container Service",
                     "Container Registry",
                     "Java"
                 ]
@@ -125,6 +126,7 @@
                 "imgSrc": "images/solution17/Architecture.png",
                 "tags": [
                     "Kubernetes",
+                    "Container Service",
                     "Docker",
                     "Node.js",
                     "Log Analysis",
@@ -149,6 +151,7 @@
                 "imgSrc": "images/solution21/Architecture.png",
                 "tags": [
                     "Kubernetes",
+                    "Container Service",
                     "Docker",
                     "Node.js",
                     "Slack",
@@ -262,7 +265,9 @@
                 "tags": [
                     "Identity and Access Management",
                     "Kubernetes",
-                    "Container Registry"
+                    "Container Service",
+                    "Container Registry",
+                    "DevOps"
                 ]
             }
         ]

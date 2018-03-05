@@ -90,6 +90,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <p>This tutorial is a walkthrough of how to scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.</p>
                     <span class="tag-filter category">Docker</span>
                     <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
                     <span class="tag-filter category">Container Registry</span>
                     <span class="tag-filter category">Java</span>
             </div>
@@ -238,6 +239,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             <div class="descriptionContainer">
                 <p>This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.</p>
                     <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
                     <span class="tag-filter category">Docker</span>
                     <span class="tag-filter category">Node.js</span>
                     <span class="tag-filter category">Log Analysis</span>
@@ -272,6 +274,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             <div class="descriptionContainer">
                 <p>This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.</p>
                     <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
                     <span class="tag-filter category">Docker</span>
                     <span class="tag-filter category">Node.js</span>
                     <span class="tag-filter category">Slack</span>
@@ -420,7 +423,9 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <p>This tutorial gives an overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.</p>
                     <span class="tag-filter category">Identity and Access Management</span>
                     <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
                     <span class="tag-filter category">Container Registry</span>
+                    <span class="tag-filter category">DevOps</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution20-users-teams-applications/architecture.png" />
