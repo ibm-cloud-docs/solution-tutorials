@@ -69,24 +69,17 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    git clone https://github.com/IBM-Cloud/iot-device-phone-simulator
    cd iot-device-phone-simulator
    ```
-
 2. Open the code in an IDE of your choice and change the `name` and `host` values in the **manifest.yml** file to an unique value.
-
 3. Push the application to the IBM Cloud.
-
    ```bash
    bx login
    bx target --cf
    bx cf push
    ```
-
 4. In a few minutes, your application will be deployed and you should see a URL similar to `<UNIQUE_NAME>.mybluemix.net`
-
 5. Visit this URL on your phone using a browser.
-
 6. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
-
-6. Your phone will start transmitting data. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
+7. Your phone will start transmitting data. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
   ![](images/solution16/recent_events_with_phone.png)
 
 ## Display live data in IBM Watson IoT Platform
