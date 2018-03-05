@@ -429,3 +429,27 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
 </div>
 
+## Machine Learning
+{: #analytics }
+
+<div class = "solutionBoxContainer">
+    <div class = "solutionBox">
+        <h3 id="create-deploy-retrain-machine-learning-model.html" class="solutionBoxTitle">
+            <a href = "create-deploy-retrain-machine-learning-model.html">Build, deploy, test, and retrain a predictive machine learning model</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.</p>
+                    <span class="tag-filter category">Machine Learning</span>
+                    <span class="tag-filter category">Apache Spark</span>
+                    <span class="tag-filter category">Data Science Experience</span>
+                    <span class="tag-filter category">Cloud Object Storage</span>
+                    <span class="tag-filter category">Db2 Warehouse</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution22-build-machine-learning-model/architecture_diagram.png" />
+            </div>
+        </div>
+    </div>
+</div>
+
