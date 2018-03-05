@@ -17,7 +17,6 @@ tar cf - \
   --exclude=.git \
   --exclude=.gitignore \
   --exclude=solution-template.md \
-  --exclude=users-teams-applications.md \
   --exclude=big-data-analytics-spark.md \
   --exclude=continuous-deployment-to-kubernetes.md \
   --exclude=create-deploy-retrain-machine-learning-model.md \

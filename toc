@@ -28,6 +28,7 @@ Solution Tutorials
     serverless-mobile-backend.md
     gather-visualize-analyze-iot-data.md
     slack-chatbot-database-watson.md
+    users-teams-applications.md
     big-data-analytics-spark.md
     create-deploy-retrain-machine-learning-model.md
     {: .navgroup-end}
