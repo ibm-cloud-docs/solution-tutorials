@@ -251,9 +251,9 @@
         ]
     },
     {
-        "name": "Security",
-        "anchor": "security",
         "hidden": true,
+        "name": "Identity and Access Management",
+        "anchor": "iam",
         "solutions": [
             {
                 "hidden": true,
@@ -282,6 +282,25 @@
                     "Apache Spark",
                     "Data Science Experience",
                     "Cloud Object Storage"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Machine Learning",
+        "anchor": "ml",
+        "solutions": [
+            {
+                "name": "Build, deploy, test, and retrain a predictive machine learning model",
+                "url": "create-deploy-retrain-machine-learning-model.html",
+                "description": "This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.",
+                "imgSrc": "images/solution22-build-machine-learning-model/architecture_diagram.png",
+                "tags": [
+                    "Machine Learning",
+                    "Apache Spark",
+                    "Data Science Experience",
+                    "Cloud Object Storage",
+                    "Db2 Warehouse"
                 ]
             }
         ]

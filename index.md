@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-02-28"
+lastupdated: "2018-03-05"
 
 ---
 
@@ -430,7 +430,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 </div>
 
 ## Machine Learning
-{: #analytics }
+{: #ml }
 
 <div class = "solutionBoxContainer">
     <div class = "solutionBox">
