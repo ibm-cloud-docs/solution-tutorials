@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-03-05"
+lastupdated: "2018-03-06"
 
 ---
 
@@ -19,7 +19,7 @@ lastupdated: "2018-03-05"
 # Build, deploy, test, and retrain a predictive machine learning model
 This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.
 
-In this tutorial, the [**Iris flower data set**](https://archive.ics.uci.edu/ml/datasets/Iris) is used for creating a machine learning model to classify species of flowers.
+In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
 
 In the terminology of machine learning, classification is considered an instance of supervised learning, i.e. learning where a training set of correctly identified observations is available.
 {:tip}
@@ -62,10 +62,10 @@ You can create a project to add data and open a data asset in the data refiner f
 
 **Create a project:**
 
-1. Visit https://dataplatform.ibm.com, login with your IBM id, and click on [Try out](https://dataplatform.ibm.com/data/discovery?target=offerings&context=analytics) the Watson Data Platform apps.
-2. Under the {{site.data.keyword.DSX_short}} tile, click on **Try it for free** and scroll to select **Lite** Plan > **Create**.
+1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) and select [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **Data & Analytics** section. **Create** the service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
+
    ![](images/solution22-build-machine-learning-model/data_platform_landing.png)
-3. Create a **New Project** (Projects > All Projects > New Project). Add a name and optional description for the project.
+3. Create a **New Project** (Projects > All Projects > New Project). Add a name say `iris_project` and optional description for the project.
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 5. Under **Define Storage**, Click on **Add** and choose an existing object storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 6. Under **Define compute engine**, Click on **Add** and choose an existing Spark service or create a new one.
@@ -73,9 +73,11 @@ You can create a project to add data and open a data asset in the data refiner f
 
 **Import data:**
 
-As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, [The Use of Multiple Measurements in Taxonomic Problems](http://rcs.chemometrics.ru/Tutorials/classification/Fisher.pdf), and can also be found on the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set [iris.csv](https://ibm.box.com/s/rtpelxr4767shqmxxjb9amtlgq9xcvx5) contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
+As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, [The Use of Multiple Measurements in Taxonomic Problems](http://rcs.chemometrics.ru/Tutorials/classification/Fisher.pdf), and can also be found on the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 ![](images/solution22-build-machine-learning-model/iris_machinelearning.png)
- **Download** [iris_initial.csv](https://ibm.box.com/s/nnxx7ozfvpdkjv17x4katwu385cm6k5d) which consists of 40 instances of each class. You will use the rest to re-train your model.
+
+
+**Download** [iris_initial.csv](https://ibm.box.com/shared/static/nnxx7ozfvpdkjv17x4katwu385cm6k5d.csv) which consists of 40 instances of each class. You will use the rest 10 instances of each class to re-train your model.
 
 1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution22-build-machine-learning-model/data_icon.png).
 2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
@@ -116,15 +118,15 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {:#deploy_model}
 
 1. Under the created model, click on **Deployments** > **Add Deployment**.
-2. Choose **Web Service**. Add a name and an optional description.
+2. Choose **Web Service**. Add a name say `iris_model` and an optional description.
 3. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **DEPLOY_SUCCESS**, you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
 4. Click on **View API Specification** to see and test {{site.data.keyword.pm_short}} API endpoints.
    ![](images/solution22-build-machine-learning-model/machine_learning_api.png)
 
-   To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance. Follow the instructions mentioned on the API specification page to generate an **access token**.
+   To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Dashboard](https://console.bluemix.net/dashboard/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
    {:tip}
 5. To make an online prediction, use the `POST /online` API call.
-   * `instance_id` can be found on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service.
+   * `instance_id` can be found on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service under [{{site.data.keyword.Bluemix_short}} Dashboard](https://console.bluemix.net/dashboard/).
    * `deployment_id` and `published_model_id` are under **Overview** of your deployment.
    *  For `online_prediction_input`, use the below JSON
 
@@ -157,7 +159,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 1. For continuous learning and model evaluation, you need to store new data somewhere. Create a  [{{site.data.keyword.dashdbshort}}](https://console.bluemix.net/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection.
 2. On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open**. On the top navigation, select **Load**.
 3. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
-4. Select **DASHXXXX**, e.g., DASH1234 as your **Schema** and then click on **New Table**. Name it **IRIS_FEEDBACK** and click **Next**.
+4. Select **DASHXXXX**, e.g., DASH1234 as your **Schema** and then click on **New Table**. Name it `IRIS_FEEDBACK` and click **Next**.
 5. Datatypes are automatically detected. Click **Next** and then **Begin Load**.
    ![](images/solution22-build-machine-learning-model/define_table.png)
 6. A new target **DASHXXXX.IRIS_FEEDBACK** is created.
@@ -189,7 +191,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
      - To start automatic deployment regardless of performance, select **always**.
    * Click **Save**.
      ![](images/solution22-build-machine-learning-model/configure_performance_monitoring.png)
-4. Download the file [iris_retrain.csv](https://ibm.box.com/s/96kvmwhb54700pjcwrd9hd3j6exiqms8). Thereafter, click **Add feedback data**, select the downloaded csv file, and click **Open**.
+4. Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, click **Add feedback data**, select the downloaded csv file, and click **Open**.
 5. Click **New evaluation** to begin.
      ![](images/solution22-build-machine-learning-model/retraining_model.png)
 6. You can check the **Last Evalution Result** section for the improved **WeightedPrecision** value.
