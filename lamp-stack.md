@@ -255,4 +255,4 @@ Firewalls are available as an add-on feature for all servers on the Infrastructu
 
 Advance to the next tutorial to learn how to
 
-- [Use IBM Cloud Schematics (Infrastructure as Code) to deploy LAMP servers ](infrastructure-as-code.html)
+- [Automate deployment of environments using Terraform](infrastructure-as-code-terraform.html)
