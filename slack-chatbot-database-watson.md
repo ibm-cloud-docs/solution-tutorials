@@ -110,7 +110,7 @@ In this part of the tutorial we are going to load a pre-defined workspace into t
  * In the Slack section **Events Subscription** choose at least **message.im** to be able to send direct messages to the bot.
 5. Once all is done, you should have a fully configured Slack app in a messaging workspace. However, the Slackbot is not yet ready to successfully use the entire {{site.data.keyword.conversationshort}} dialog. Some credentials are missing to invoke the previously defined actions.
 
-Deploying the Conversation to Slack includes authorization of the app. During that process you are asked to sign in to Slack, if not done earlier, and then to approve the app. Make sure to select the correct Slack workspace if you have multiple. The resulting authorization tokens are stored in an **authdb** {{site.data.keyword.cloudant_short_notm database}}. The related service is named **conversation-connector**.
+Deploying the Conversation to Slack includes authorization of the app. During that process you are asked to sign in to Slack, if not done earlier, and then to approve the app. Make sure to select the correct Slack workspace if you have multiple. The resulting authorization tokens are stored in an **authdb** {{site.data.keyword.cloudant_short_notm}} database. The related service is named **conversation-connector**.
 {:tip}
    ​
 
