@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-11"
+lastupdated: "2018-03-09"
 ---
 
 {:shortdesc: .shortdesc}
@@ -42,6 +42,18 @@ This tutorial uses the following products:
 3. The elected server accesses the application files stored on a shared file storage.
 4. The server also pulls information from the database and finally renders the page to the user.
 5. At a regular interval, the database content is backed up. A stand-by database is server is available in case the master fails.
+
+## Cost
+
+{: #cost}
+
+This tutorial uses billable components of IBM Cloud Platform, including: 
+
+- Virtual Server
+- Cloud Load Balancer 
+- File Storage
+
+Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
 
 ## Before you begin
 {: #prereqs}

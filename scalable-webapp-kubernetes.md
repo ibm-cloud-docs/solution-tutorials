@@ -64,6 +64,8 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    ```bash
    kubectl cluster-info
    ```
+   ![](images/solution2/kubectl_cluster-info.png)
+
    {: pre}
 
 5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. In the next section, you will use the `bx dev` tooling to create an application. `bx dev` relies on Helm to deploy applications into your cluster. Initialize Helm in your cluster.
@@ -72,7 +74,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    ```
    {: pre}
 
-6. Upgrade helm by running: 
+6. Upgrade helm by running:
 
    ```bash
    helm init --upgrade
@@ -158,37 +160,12 @@ In this section, we first push the Docker image to the IBM Cloud private contain
    bx dev deploy -t container
    ```
    {: pre}
-4. When prompted, enter an **image name**.
+4. When prompted, enter your **cluster name**.
+5. Next, enter an **image name**.
    Use the following format: `<registry_url>/<namespace>/<projectname>`
-   For example: `registry.ng.bluemix.net/mynamespace/myjavawebapp`
-5. Next, enter your **cluster name**.
-6. Wait a few minutes for your application to be deployed.
-7. Retrieve the **public IP** of your cluster workers.
-   ```
-   bx cs workers <your-cluster>
-   ```
-   {: pre}
-   ```
-   OK
-   ID                                                 Public IP        Private IP      Machine Type   State    Status
-   kube-dal12-cr4a8d8f9f64dedededededdwwdec69a72-w1   169.21.32.14   10.184.220.82   u1c.2x4        normal   Ready
-   ```
-   {: screen}
-8. Retrieve the **port** assigned to your application.
-   ```
-   kubectl get services
-   ```
-   {: pre}
-   and locate your service in the list:
-   ```
-   NAME                    CLUSTER-IP    EXTERNAL-IP   PORT(S)                         AGE
-   myjavawebapp-service   10.10.10.17   <nodes>       9080:32321/TCP,9443:31555/TCP   2m
-   kubernetes              10.10.10.1    <none>        443/TCP                         1d
-   ```
-   {: screen}
-   alternatively you can use `kubectl describe service [service-name]`. In the example above, the port is **32321**.
-9. Access the application.
-   `http://worker-ip-address:portnumber/nameofproject`
+   For example: `registry.ng.bluemix.net/mynamespace/myjavawebapp`.
+6. Wait a few minutes for your application to be deployed. You will see the message 'Your app is hosted at http://worker-ip-address:portnumber/' when complete.
+7. Access the application `http://worker-ip-address:portnumber/nameofproject`.
 
 
 ## Use the IBM-provided domain for your cluster
@@ -321,7 +298,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    ```
    {: pre}
    then access the console at http://127.0.0.1:8001/ui.
-   
+
     If you see an authentication popup, refer [Launching the Kubernetes dashboard](https://console.bluemix.net/docs/containers/cs_app.html#cli_dashboard)
     {: tip}
 2. Select **Nodes** and see the **Allocation Resources** to see the health of your nodes.
@@ -348,7 +325,7 @@ Ingress handles the load balancing between the two replicas.
 
 Refer to Kubernetes documentation for manual and automatic scaling:
 
-   * [Scaliing a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
+   * [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
    * [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
 
 ## Related information

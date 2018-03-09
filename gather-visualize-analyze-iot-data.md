@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-07"
+lastupdated: "2018-03-05"
 
 ---
 
@@ -40,7 +40,7 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-[IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install bx cli and required plug-ins
+[IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Run the script to install bx cli and required plug-ins
 
 ## Create IoT Platform
 {: #iot_starter}
@@ -69,16 +69,17 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    git clone https://github.com/IBM-Cloud/iot-device-phone-simulator
    cd iot-device-phone-simulator
    ```
-2. Push the application to the IBM Cloud.
+2. Open the code in an IDE of your choice and change the `name` and `host` values in the **manifest.yml** file to an unique value.
+3. Push the application to the IBM Cloud.
    ```bash
    bx login
    bx target --cf
-   bx cf push <PICK_UNIQUE_NAME>
+   bx cf push
    ```
-3. In a few minutes, your application will be deployed and you should see a URL similar to `<PICK_UNIQUE_NAME>.mybluemix.net`
-4. Visit this URL on your phone using a browser.
-5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
-6. Your phone will start transmitting data. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
+4. In a few minutes, your application will be deployed and you should see a URL similar to `<UNIQUE_NAME>.mybluemix.net`
+5. Visit this URL on your phone using a browser.
+6. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
+7. Your phone will start transmitting data. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
   ![](images/solution16/recent_events_with_phone.png)
 
 ## Display live data in IBM Watson IoT Platform
@@ -126,12 +127,12 @@ Your device data is now saved in Cloudant. Launch the Cloudant dashboard to see 
 ## Detect Anomalies using Machine Learning
 {: #data_experience}
 
-In this section, you will use the Jupyter Notebook that is available in the IBM Data Science Experience service to load your historical mobile data and detect anomalies using z-score.
+In this section, you will use the Jupyter Notebook that is available in the IBM Data Science Experience service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
 
 ![](images/solution16/DSX.png)
 
 ### Create a new project
-1. Go to the [**IBM Cloud Catalog**](https://console.bluemix.net/catalog/) and select [**Data Science Experience**](https://console.bluemix.net/catalog/services/data-science-experience).
+1. Go to the [**IBM Cloud Catalog**](https://console.bluemix.net/catalog/) and under **Data & Analytics**, select [**Data Science Experience**](https://console.bluemix.net/catalog/services/data-science-experience).
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
 3. Create a **New Project** and enter `Detect Anomaly` as the **Name**.
 4. Create and select **Object Storage** and **Spark** services. **Refresh**
@@ -164,7 +165,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
   * Select the **Connections** tab.
   * Click **Insert to code**. A dictionary called credentials_1" is created with your Cloudant credentials. If the name is not specified as "credentials_1", rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
   * name that is required for the notebook code to run.
-4. In the cell with the database name (`dbName`) enter the name of the Cloudant database that is the source of data, for example, *iotp_yourWatsonIoTPorgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
+4. In the cell with the database name (`dbName`) enter the name of the Cloudant database that is the source of data, for example, *iotp_yourWatsonIoTProgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
 
     You can find the exact database by navigating to your **iot-db** CloudantDB instance you created earlier > Launch Dashboard.
     {:tip}
@@ -189,4 +190,8 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
 ## Related Content
 
+* Overview of [IBM Data Science Experience](https://datascience.ibm.com/docs/content/getting-started/architecture.html?context=analytics)
+* Anomaly Detection [Jupyter Notebook](https://github.com/IBM-Cloud/iot-device-phone-simulator/blob/master/anomaly-detection/Anomaly-detection-DSX.ipynb)
+* Understanding z-score - [wikipedia](https://en.wikipedia.org/wiki/Standard_score)
 * Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://www.ibm.com/developerworks/analytics/library/iot-deep-learning-anomaly-detection-1/index.html?ca=drs-)
+

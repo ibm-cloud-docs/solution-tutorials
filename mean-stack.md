@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-11-23"
+lastupdated: "2018-03-09"
 
 ---
 
@@ -32,6 +32,17 @@ This tutorial walks you through the creation of a web application using the popu
 This tutorial uses the following products:
    * [Compose for MongoDB](https://console.bluemix.net/catalog/services/compose-for-mongodb)
    * [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
+
+## Cost
+
+{: #cost}
+
+This tutorial uses billable components of IBM Cloud Platform, including: 
+
+- SDK for Node.js using Cloud Foundry 
+- Compose for MongoDB
+
+Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
 
 ## Before you begin
 

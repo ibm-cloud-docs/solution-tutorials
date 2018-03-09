@@ -72,7 +72,7 @@ You will create a **sequence** which is a chain of actions where output of one a
 
 Start by creating the first action, adding the action to a sequence and then adding the second action to the sequence.
 
-1. Switch to **Functions** on IBM Cloud.
+1. Switch to **Functions** https://console.bluemix.net/openwhisk.
 2. On the left pane, click on **Actions** and then **Create**.
 3. **Create Action** with name `prepare-entry-for-save` and select **Node.js 6** as the Runtime.
 4. Replace the existing code with the code snippet below and **Save**
@@ -164,10 +164,10 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 
 ![](images/solution8/Cloud_Functions_API.png)
 
-1. Go to Actions https://console.bluemix.net/openwhisk/manage/actions.
-2. Select the **read-guestbook-entries-sequence** sequence. Under **Endpoints**, check **Enable Web Action**.
+1. Go to Actions https://console.bluemix.net/openwhisk/actions.
+2. Select the **read-guestbook-entries-sequence** sequence. Under **Endpoints**, check **Enable Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
-4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement and **Create Managed API**
+4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement and **Create a Cloud Functions API**
 5. Set name to **guestbook** and base path to **/guestbook**
 6. Create an operation to retrieve guestbook entries:
    1. Set **path** to **/entries**
