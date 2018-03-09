@@ -28,6 +28,35 @@
                 ]
             },
             {
+                "name": "Analyze logs and monitor the health of Kubernetes applications",
+                "url": "kubernetes-log-analysis-kibana.html",
+                "description": "This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.",
+                "imgSrc": "images/solution17/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Container Service",
+                    "Docker",
+                    "Node.js",
+                    "Log Analysis",
+                    "Monitoring"
+                ]
+            },
+            {
+                "name": "Continuous Deployment to Kubernetes",
+                "url": "continuous-deployment-to-kubernetes.html",
+                "description": "This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.",
+                "imgSrc": "images/solution21/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Container Service",
+                    "Docker",
+                    "Node.js",
+                    "Slack",
+                    "Vulnerability Advisor", 
+                    "DevOps"
+                ]
+            },
+            {
                 "name": "Accelerate delivery of static files using Object Storage and CDN",
                 "url": "static-files-cdn.html",
                 "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
@@ -120,20 +149,6 @@
                 ]
             },
             {
-                "name": "Analyze logs and monitor the health of Kubernetes applications",
-                "url": "kubernetes-log-analysis-kibana.html",
-                "description": "This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.",
-                "imgSrc": "images/solution17/Architecture.png",
-                "tags": [
-                    "Kubernetes",
-                    "Container Service",
-                    "Docker",
-                    "Node.js",
-                    "Log Analysis",
-                    "Monitoring"
-                ]
-            },
-            {
                 "name": "Create, secure and manage REST APIs",
                 "url": "create-manage-secure-apis.html",
                 "description": "This tutorial demonstrates how to create a new REST API using the LoopBack Node.js API framework and then add management, visibility, security and rate limiting to your API using the API Connect service on IBM Cloud.",
@@ -142,21 +157,6 @@
                     "Cloud Foundry",
                     "Node.js",
                     "API Connect"
-                ]
-            },
-            {
-                "name": "Continuous Deployment to Kubernetes",
-                "url": "continuous-deployment-to-kubernetes.html",
-                "description": "This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.",
-                "imgSrc": "images/solution21/Architecture.png",
-                "tags": [
-                    "Kubernetes",
-                    "Container Service",
-                    "Docker",
-                    "Node.js",
-                    "Slack",
-                    "Vulnerability Advisor", 
-                    "DevOps"
                 ]
             }
         ]
@@ -273,24 +273,7 @@
         ]
     },
     {
-        "name": "Analytics",
-        "anchor": "analytics",
-        "solutions": [
-            {
-                "name": "Analyze and visualize open data with Apache Spark",
-                "url": "big-data-analytics-spark.html",
-                "description": "Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.",
-                "imgSrc": "images/solution23/Architecture.png",
-                "tags": [
-                    "Apache Spark",
-                    "Data Science Experience",
-                    "Cloud Object Storage"
-                ]
-            }
-        ]
-    },
-    {
-        "name": "Machine Learning",
+        "name": "Machine Learning & Analytics",
         "anchor": "ml",
         "solutions": [
             {
@@ -304,6 +287,17 @@
                     "Data Science Experience",
                     "Cloud Object Storage",
                     "Db2 Warehouse"
+                ]
+            },
+            {
+                "name": "Analyze and visualize open data with Apache Spark",
+                "url": "big-data-analytics-spark.html",
+                "description": "Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.",
+                "imgSrc": "images/solution23/Architecture.png",
+                "tags": [
+                    "Apache Spark",
+                    "Data Science Experience",
+                    "Cloud Object Storage"
                 ]
             }
         ]

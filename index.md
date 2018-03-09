@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-05"
+lastupdated: "2018-03-09"
 
 ---
 
@@ -96,6 +96,45 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution2/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="kubernetes-log-analysis-kibana.html" class="solutionBoxTitle">
+            <a href = "kubernetes-log-analysis-kibana.html">Analyze logs and monitor the health of Kubernetes applications</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
+                    <span class="tag-filter category">Docker</span>
+                    <span class="tag-filter category">Node.js</span>
+                    <span class="tag-filter category">Log Analysis</span>
+                    <span class="tag-filter category">Monitoring</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution17/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="continuous-deployment-to-kubernetes.html" class="solutionBoxTitle">
+            <a href = "continuous-deployment-to-kubernetes.html">Continuous Deployment to Kubernetes</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
+                    <span class="tag-filter category">Docker</span>
+                    <span class="tag-filter category">Node.js</span>
+                    <span class="tag-filter category">Slack</span>
+                    <span class="tag-filter category">Vulnerability Advisor</span>
+                    <span class="tag-filter category">DevOps</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution21/Architecture.png" />
             </div>
         </div>
     </div>
@@ -232,25 +271,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
-        <h3 id="kubernetes-log-analysis-kibana.html" class="solutionBoxTitle">
-            <a href = "kubernetes-log-analysis-kibana.html">Analyze logs and monitor the health of Kubernetes applications</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.</p>
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Docker</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Log Analysis</span>
-                    <span class="tag-filter category">Monitoring</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution17/Architecture.png" />
-            </div>
-        </div>
-    </div>
-    <div class = "solutionBox">
         <h3 id="create-manage-secure-apis.html" class="solutionBoxTitle">
             <a href = "create-manage-secure-apis.html">Create, secure and manage REST APIs</a>
         </h3>
@@ -263,26 +283,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution13/Architecture.png" />
-            </div>
-        </div>
-    </div>
-    <div class = "solutionBox">
-        <h3 id="continuous-deployment-to-kubernetes.html" class="solutionBoxTitle">
-            <a href = "continuous-deployment-to-kubernetes.html">Continuous Deployment to Kubernetes</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.</p>
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Docker</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Slack</span>
-                    <span class="tag-filter category">Vulnerability Advisor</span>
-                    <span class="tag-filter category">DevOps</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution21/Architecture.png" />
             </div>
         </div>
     </div>
@@ -434,29 +434,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
 </div>
 
-## Analytics
-{: #analytics }
-
-<div class = "solutionBoxContainer">
-    <div class = "solutionBox">
-        <h3 id="big-data-analytics-spark.html" class="solutionBoxTitle">
-            <a href = "big-data-analytics-spark.html">Analyze and visualize open data with Apache Spark</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.</p>
-                    <span class="tag-filter category">Apache Spark</span>
-                    <span class="tag-filter category">Data Science Experience</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution23/Architecture.png" />
-            </div>
-        </div>
-    </div>
-</div>
-
-## Machine Learning
+## Machine Learning &amp; Analytics
 {: #ml }
 
 <div class = "solutionBoxContainer">
@@ -475,6 +453,22 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution22-build-machine-learning-model/architecture_diagram.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="big-data-analytics-spark.html" class="solutionBoxTitle">
+            <a href = "big-data-analytics-spark.html">Analyze and visualize open data with Apache Spark</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.</p>
+                    <span class="tag-filter category">Apache Spark</span>
+                    <span class="tag-filter category">Data Science Experience</span>
+                    <span class="tag-filter category">Cloud Object Storage</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution23/Architecture.png" />
             </div>
         </div>
     </div>
