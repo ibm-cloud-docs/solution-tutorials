@@ -2,8 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-02-28"
-
+lastupdated: "2018-03-09"
 ---
 
 
@@ -51,6 +50,17 @@ This tutorial walks you through setting up a continuous integration and delivery
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
 * [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
+
+## Cost
+
+{: #cost}
+
+This tutorial uses billable components of IBM Cloud Platform, including: 
+
+- Kubernetes
+- Continuous Delivery
+
+Use the [Pricing Calculator](https://dev-console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
 
 ## Create a Kubernetes cluster
 {: #step1}

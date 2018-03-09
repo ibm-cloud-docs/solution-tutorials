@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-11-23"
+lastupdated: "2018-03-09"
 
 ---
 
@@ -44,6 +44,16 @@ This tutorial uses the following products:
 
    Network permission is required to be able to add **Public and Private Network Uplink**  
 
+
+## Cost
+
+{: #cost}
+
+This tutorial uses billable components of IBM Cloud Platform, including: 
+
+- Virtual Server 
+
+Use the [Pricing Calculator](https://dev-console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
 
 ## Provision a LAMP server
 
