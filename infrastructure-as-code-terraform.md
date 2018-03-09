@@ -44,7 +44,7 @@ This tutorial uses billable components of IBM Cloud Platform, including:
 - Virtual Server
 - Cloud Object Storage 
 
-Use the [Pricing Calculator](https://dev-console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
+Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
 
 ## Before you begin
 {: #prereqs}

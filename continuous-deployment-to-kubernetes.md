@@ -60,7 +60,7 @@ This tutorial uses billable components of IBM Cloud Platform, including:
 - Kubernetes
 - Continuous Delivery
 
-Use the [Pricing Calculator](https://dev-console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
+Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
 
 ## Create a Kubernetes cluster
 {: #step1}
