@@ -228,7 +228,9 @@
                     "Cloud Foundry",
                     "Internet of Things Platform",
                     "Cloudant",
-                    "Data Science Experience"
+                    "Data Science Experience",
+                    "Apache Spark",
+                    "Cloud Object Storage"
                 ]
             }
         ]
