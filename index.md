@@ -377,6 +377,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Internet of Things Platform</span>
                     <span class="tag-filter category">Cloudant</span>
                     <span class="tag-filter category">Data Science Experience</span>
+                    <span class="tag-filter category">Apache Spark</span>
+                    <span class="tag-filter category">Cloud Object Storage</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution16/Architecture.png" />
