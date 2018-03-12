@@ -17,6 +17,7 @@ tar cf - \
   --exclude=.git \
   --exclude=.gitignore \
   --exclude=solution-template.md \
+  --exclude=plan-create-update-deployments.md \
   --exclude=low-latency-real-time-bidding.md \
   --exclude=README.md \
   --exclude=scripts \
