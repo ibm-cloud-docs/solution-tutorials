@@ -100,10 +100,8 @@ Let's start by building the Development environment.
 1. [Create an organization for the project](https://console.bluemix.net/docs/account/orgs_spaces.html#createorg)
 1. [Create a Cloud Foundry space for the environment](https://console.bluemix.net/docs/account/orgs_spaces.html#spaceinfo)
 1. [Create a new Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}
-
-  Before you create a cluster, either through the {{site.data.keyword.cloud_notm}} UI or through the command line, you must log into a specific {{site.data.keyword.cloud_notm}} region, account, organization, and space. The space where you are logged in is the space where logging and monitoring data for the cluster and its resources is collected. If later you want to change the space where a cluster is sending its logging data, you can use the [logging plugin for the bx command line](https://console.bluemix.net/docs/containers/cs_health.html#log_sources_update).
-  {: tip}
-
+1. Select your cluster [in the console](https://console.bluemix.net/containers-kubernetes/clusters)
+1. Use *Enable Logging* to redirect the cluster logs to the Cloud Foundry space created in the previous steps. If later you want to change the space where the cluster is sending its logging data, you can use the [logging plugin for the bx command line](https://console.bluemix.net/docs/containers/cs_health.html#log_sources_update).
 1. Create the Cloud Foundry services used by the project under the space dedicated to the environment
 
 The following diagram shows where the project resources are created under the account:
