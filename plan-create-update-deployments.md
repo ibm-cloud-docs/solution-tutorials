@@ -26,9 +26,9 @@ This tutorial introduces tools to automate the creation and maintenance of multi
 
 * Define an environment we want to deploy/automate
 * Overview of the available tools
-* Configure Terraform for IBM Cloud
 * Review the Terraform files and scripts needed to deploy such an environment
   * with terraform and other tools as terraform can't do everything
+* Configure Terraform for {{site.data.keyword.Bluemix_notm}}
 * Deploy this environment in your account
 
 ## Products
@@ -36,8 +36,9 @@ This tutorial introduces tools to automate the creation and maintenance of multi
 
 This tutorial uses the following products:
 * [IBM Cloud provider for Terraform]()
-* [IBM Cloud Container Service]()
+* [{{site.data.keyword.containershort_notm}}]()
 * [IAM]()
+* [{{site.data.keyword.Bluemix_notm}} command line interface - the `bx` CLI](https://console.bluemix.net/docs/cli/index.html)
 
 <p style="text-align: center;">
 ![](images/solutionXX/Architecture.png)
@@ -57,101 +58,76 @@ This tutorial uses the following products:
 
 Developers do not like to write the same thing twice. Similarly they don't like having to go through tons of clicks in a user interface to setup an environment. Shell scripts have been long used by system administrators and developers to automate repetitive, error-prone and tedious tasks.
 
-https://en.wikipedia.org/wiki/Don%27t_repeat_yourself
+IaaS, PaaS, SaaS, FaaS have given developers high level of abstraction and it became easier to acquire resources like bare metal servers, managed databases, virtual machines, etc. But once you have provisioned these resources, you need to connect them together, to configure user access, etc. Being able to automate all these steps and to repeat the installation, configuration under different environments is a must-have these days.
 
-IaaS, PaaS, SaaS, FaaS have given developers high level of abstraction and it became easier to acquire resources like bare metal servers, managed databases, virtual machines, etc. But once you have provisioned these resources, you need to connect them together, to configure user access, etc.
+Multiple environments are pretty common with slight differences like credentials, capacity, networking. In [this other tutorial](./users-teams-applications.html), we've introduced best practices to organize users, teams and applications and a sample scenario. Building on this, how could we automated the creation of these environments?
 
-Being able to automate all these steps and to repeat the installation, configuration under different environments is a must-have these days.
-
-Multiple environments are pretty common, but slight differences (credentials, capacity, networking)
-
+* DEVELOPMENT
+* TESTING
+* PRODUCTION
 
 ## Overview of the available tools
 
+The first straightforward tool to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `bx` CLI](https://console.bluemix.net/docs/cli/index.html). With `bx` and its plugins, you can automate the creation and configuration of your cloud resources.
 
+Another tool introduced in [this tutorial](./infrastructure-as-code-terraform.html) is [Terraform](https://www.terraform.io/) by HashiCorp. Quoting HashiCorp, *Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.* It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
-The first tool to create repeatable deployments is the IBM Cloud command line tool - the `bx` CLI.
-
-```
-NAME:
-   bx - A command line tool to interact with IBM Cloud
-
-USAGE:
-   [environment variables] bx [global options] command [arguments...] [command options]
-
-VERSION:
-   0.6.4+41cb1aa9-2017-12-19T04:00:09+00:00
-
-COMMANDS:
-   api                    Set or view target API endpoint
-   login                  Log user in
-   logout                 Log user out
-   target                 Set or view the targeted region, account, resource group, org or space
-   info                   View cloud information
-   config                 Write default values to the config
-   update                 Update CLI to the latest version
-   regions                List all the regions
-   cloud-functions, wsk   Bluemix CLI plug-in for IBM Cloud Functions
-   account                Manage accounts, users, orgs and spaces
-   catalog                Manage catalog
-   resource               Manage resource groups and resources
-   iam                    Manage identities and access to resources
-   app                    Manage Cloud Foundry applications and application related domains, routes and certificates
-   service                Manage Cloud Foundry services
-   billing                Retrieve usage and billing information
-   plugin                 Manage plug-ins and plug-in repositories
-   cf                     Run Cloud Foundry CLI with Bluemix CLI context
-   sl                     Gen1 infrastructure Infrastructure services
-   cr                     Commands for interacting with IBM Cloud Container Registry.
-   cs                     Plug-in for the IBM Cloud Container Service.
-   dev                    A CLI plugin to create, manage, and run projects on IBM Cloud
-   schematics             IBM Cloud Schematics plug-in
-   as                     Manage Bluemix auto-scaling service
-   help
-```
-
-With `bx` and the available plugins, you can automate the creation and configuration of your cloud resources.
-
-
-Another tool introduced in [this other tutorial](./infrastructure-as-code-terraform.html) is [Terraform](https://www.terraform.io/) by HashiCorp. Quoting HashiCorp, *Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.* It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
-
-Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. IBM Cloud has [its provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm) enabling users of IBM Cloud to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The IBM Cloud Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS (IBM Cloud Container Service and Kubernetes clusters), PaaS (Cloud Foundry and services) and FaaS (IBM Cloud Functions) resources.
+Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.Bluemix_notm}} has [its provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm) enabling users of {{site.data.keyword.Bluemix_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The IBM Cloud Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS (Cloud Foundry and services) and FaaS ({{site.data.keyword.openwhisk_short}}) resources.
 
 ## Review the Terraform files and scripts needed to deploy such an environment
-  * with terraform and other tools as terraform can't do everything
 
-| Action                                                         | Supported by Terraform |
-| -------------------------------------------------------------- | - |
-| Create resource group                                          | Not supported |
-| Create Cloud Foundry organization                              | OK |
-| Create Cloud Foundry space                                     | OK |
-| Invite users to org/space                                      | OK |
-| Assign user roles to org/space                                 | OK |
-| Assign IAM roles to user on resource group                     | Not supported |
-| Create Kubernetes cluster in resource group with 1 worker node | OK |
-| Provision Cloud Foundry services                               | OK |
-| Add workers to the cluster                                     | OK (same machine type) |
-| Bind the services to the cluster                               | OK |
-| Install Helm in the cluster                                    | Should be feasible but maybe not the right place |
-| Deploy hello world in the cluster                              | Not supported |
+[This Git repository](https://github.com/IBM-Cloud/multiple-environments-as-code) has all the configuration files to setup the environments defined earlier.
 
+```
+git clone https://github.com/IBM-Cloud/multiple-environments-as-code
+```
+
+Structure of the repo
+
+* All of your code should be in version control.
+
+### Infrastructure with Terraform
+
+**Global**
+
+All environments share a common organization. Under the [global](terraform/global)
+
+Only the account owner can create an org in the account so get the account API key to do this part
+
+outputs environment files from terraform to consume them in bx scripts
+
+if you already have an org you want to reuse, you can import its definition in the global state file
+
+
+* import states between components of the same environment, and from global
+
+**Individual Environments**
+
+Terraform has a feature called workspaces. Workspaces are used to use the same terraform files (.tf) with different environments. In our example, we can use *development*, *staging* and *production* as workspace names. We will use the same Terraform definitions but with different configuration variables (different names, different capacities).
+
++ think about reuse, "don't repeat yourself", it is code, think about it as other code
++ think about resource isolation
 + environments
   one folder per environment
   one folder for the global resources - reused by environments
 + modules
   reusable blocks - referenced by the environments, could be versioned
+  not shown here
+  two repos: one for modules, and one for live infrastructure. Let’s look at these one at a time.
 + states
   separate tree for the states with the same layout as environments
 + vars
   tfvars
 
-* All of your code should be in version control. two repos: one for modules, and one for live infrastructure. Let’s look at these one at a time.
-* think about reuse, "don't repeat yourself", it is code, think about it as other code
-* think about resource isolation
-* import states between components of the same environment, and from global
-* persist states in a reliable storage
+use terraform workspace but if you have a larger terraform config, split it in multiple as described in https://www.terraform.io/docs/state/workspaces.html#best-practices
 
-use at least two environments, staging and production
+* persist states in a reliable storage. in the example, we use the local backend to save state files. For production use, you will want to use a different backend to persist the state on a remote location. https://www.terraform.io/docs/backends/types/index.html
+
+Not all IBM Cloud resource types are currently availabe in the {{site.data.keyword.Bluemix_notm}} provider for Terraform
+
+### Policies with IAM
+
+bx iam user-policy-create
 
 ## Deploy this environment in your account
 
@@ -159,16 +135,53 @@ use at least two environments, staging and production
 
 ### Configure variables to match your environments
 
+- get a IBM Cloud API key - to create an org you need the API key of the account user or you can import an existing orgs and only create spaces
+  - get its ID with `bx iam org <org_name> --guid`
+  - then terraform import ibm_org.organization GUID
+
+- pick a location for your cluster with `bx cs locations`
+- use bx cs vlans <location> to find available private and public VLANs for your cluster
+- use bx cs machine-types to figure out what machine types you can use at this location
+
 ### Terraforming!
 
 ### Updating
 
+### using Cloud Object Storage as a backend
+
+Works today thanks to S3 compatibility
+
+1. Provision COS
+2. Create credentials to obtain the access key and secret key https://console.bluemix.net/docs/services/cloud-object-storage/iam/service-credentials.html#service-credentials make sure to add Inline Configuration Parameters (Optional) field: {“HMAC”:true}
+
+```
+terraform {
+  backend "s3" {
+    bucket                      = "terraforming"
+    key                         = "global.tfstate"
+    region                      = "us-geo"
+    skip_region_validation      = true
+    skip_credentials_validation = true
+    skip_get_ec2_platforms      = true
+    skip_requesting_account_id  = true
+    skip_metadata_api_check     = true
+    endpoint                    = "s3-api.us-geo.objectstorage.softlayer.net"
+    access_key                  = "<from-credentials>"
+    secret_key                  = "<from-credentials>"
+  }
+}
+```
+
+with COS, we miss Locking and Versioning
+
+
 ## Clean up resources
+
+Steps to take to remove the resources created in this tutorial
 
 ```
 terraform destroy
 ```
-Steps to take to remove the resources created in this tutorial
 
 ## Related information
 
