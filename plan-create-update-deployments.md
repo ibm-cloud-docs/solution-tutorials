@@ -95,22 +95,50 @@ The repository is structured as follow:
 | [terraform/per-environment](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/per-environment) | Terraform files specific to a given environment |
 | [iam](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam) | Scripts to configure user permissions |
 
-### Infrastructure with Terraform
+### Heavy lifting with Terraform
 
-**Global**
+Our *Development*, *Testing*, *Production* pretty much look the same. They will differ by the allocated capacity and the access rights. Let's start with the core components of these environments, the computing power and the services.
 
-All environments share a common organization. Under the [global](terraform/global)
+   ![](./images/solution26-plan-create-update-deployments/one-environment.png)
 
-Only the account owner can create an org in the account so get the account API key to do this part
+### Global Configuration
 
-outputs environment files from terraform to consume them in bx scripts
+All environments share a common Cloud Foundry organization and each environment has its own space.
 
-if you already have an org you want to reuse, you can import its definition in the global state file
+Under the [terraform/global](terraform/global) directory, you find the Terraform scripts to provision this organization. [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/main.tf) contains the definition for the organization:
 
+   ```sh
+   # create a new organization for the project
+   resource "ibm_org" "organization" {
+     name             = "${var.org_name}"
+     managers         = "${var.org_managers}"
+     users            = "${var.org_users}"
+     auditors         = "${var.org_auditors}"
+     billing_managers = "${var.org_billing_managers}"
+   }
+   ```
+
+In this resource, all properties are configured through variables. In the next sections, you will learn how to set these variables.
+
+To fully deploy our environments, we will use a mix of Terraform and the {{site.data.keyword.Bluemix_notm}} CLI. In the shell scripts written with the CLI we may need to reference this organization or the account by name or ID. The *global* directory also includes a file named [outputs.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/outputs.tf) which will produce a file containing this information as keys/values suitable to be reused in scripting:
+
+   ```sh
+   # generate a property file suitable for shell scripts with useful variables relating to the environment
+   resource "local_file" "output" {
+     content = <<EOF
+ACCOUNT_GUID=${data.ibm_account.account.id}
+ORG_GUID=${ibm_org.organization.id}
+ORG_NAME=${var.org_name}
+EOF
+
+     filename = "../outputs/global.env"
+   }
+   ```
+
+### Individual Environments
 
 * import states between components of the same environment, and from global
 
-**Individual Environments**
 
 Terraform has a feature called workspaces. Workspaces are used to use the same terraform files (.tf) with different environments. In our example, we can use *development*, *staging* and *production* as workspace names. We will use the same Terraform definitions but with different configuration variables (different names, different capacities).
 
@@ -147,6 +175,10 @@ bx iam user-policy-create
 - get a IBM Cloud API key - to create an org you need the API key of the account user or you can import an existing orgs and only create spaces
   - get its ID with `bx iam org <org_name> --guid`
   - then terraform import ibm_org.organization GUID
+
+if you already have an org you want to reuse, you can import its definition in the global state file
+
+Only the account owner can create an org in the account so get the account API key to do this part
 
 - pick a location for your cluster with `bx cs locations`
 - use bx cs vlans <location> to find available private and public VLANs for your cluster
