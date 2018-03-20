@@ -41,7 +41,7 @@ This tutorial uses the following products:
 * [{{site.data.keyword.Bluemix_notm}} command line interface - the `bx` CLI](https://console.bluemix.net/docs/cli/index.html)
 
 <p style="text-align: center;">
-![](images/solutionXX/Architecture.png)
+![](./images/solution26-plan-create-update-deployments/architecture.png)
 </p>
 
 1. The user does this
