@@ -75,17 +75,25 @@ Another tool introduced in [this tutorial](./infrastructure-as-code-terraform.ht
 
 To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.Bluemix_notm}} has [its provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm) enabling users of {{site.data.keyword.Bluemix_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The IBM Cloud Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS (Cloud Foundry and services) and FaaS ({{site.data.keyword.openwhisk_short}}) resources.
 
-## Review the Terraform files and scripts needed to deploy such an environment
+## Write scripts to automate the deployment
+{: #scripts}
 
-[This Git repository](https://github.com/IBM-Cloud/multiple-environments-as-code) has all the configuration files to setup the environments defined earlier.
+As you start describing your infrastructure-as-code, it is critical to treat files you create as regular code, thus storing them in a source control management system. Overtime this will bring good properties such as using the source control review workflow to validate changes before applying them, integrate with a DevOps pipeline to automatically deploy infrastructure changes.
 
-```
-git clone https://github.com/IBM-Cloud/multiple-environments-as-code
-```
+[This Git repository](https://github.com/IBM-Cloud/multiple-environments-as-code) has all the configuration files needed to setup the environments defined earlier. You can clone the repository to follow the next sections as we go through the content of the files.
 
-Structure of the repo
+   ```sh
+   git clone https://github.com/IBM-Cloud/multiple-environments-as-code
+   ```
 
-* All of your code should be in version control.
+The repository is structured as follow:
+
+| Directory | Description |
+| ----------------- | ----------- |
+| [terraform](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform) | Home for the Terraform files |
+| [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global) | Terraform files to provision resources common to the three environments |
+| [terraform/per-environment](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/per-environment) | Terraform files specific to a given environment |
+| [iam](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam) | Scripts to configure user permissions |
 
 ### Infrastructure with Terraform
 
