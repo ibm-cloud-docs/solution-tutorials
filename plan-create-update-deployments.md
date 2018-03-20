@@ -105,7 +105,7 @@ Our *Development*, *Testing*, *Production* pretty much look the same. They will 
 
 All environments share a common Cloud Foundry organization and each environment has its own space.
 
-Under the [terraform/global](terraform/global) directory, you find the Terraform scripts to provision this organization. [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/main.tf) contains the definition for the organization:
+Under the [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global) directory, you find the Terraform scripts to provision this organization. [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/main.tf) contains the definition for the organization:
 
    ```sh
    # create a new organization for the project
@@ -120,7 +120,7 @@ Under the [terraform/global](terraform/global) directory, you find the Terraform
 
 In this resource, all properties are configured through variables. In the next sections, you will learn how to set these variables.
 
-To fully deploy our environments, we will use a mix of Terraform and the {{site.data.keyword.Bluemix_notm}} CLI. In the shell scripts written with the CLI we may need to reference this organization or the account by name or ID. The *global* directory also includes a file named [outputs.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/outputs.tf) which will produce a file containing this information as keys/values suitable to be reused in scripting:
+To fully deploy our environments, we will use a mix of Terraform and the {{site.data.keyword.Bluemix_notm}} CLI. In the shell scripts written with the CLI we may need to reference this organization or the account by name or ID. The *global* directory also includes [outputs.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/outputs.tf) which will produce a file containing this information as keys/values suitable to be reused in scripting:
 
    ```sh
    # generate a property file suitable for shell scripts with useful variables relating to the environment
@@ -137,28 +137,29 @@ EOF
 
 ### Individual Environments
 
-* import states between components of the same environment, and from global
+There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html) you could factor common configuration as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can evolve the *development* environment to test changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository so that you can reference a specific version of a module in your environment files.
 
+Given our environments are rather simple and similar, we are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#best-practices). Workspaces allow to use the same terraform files (.tf) with different environments. In our example, *development*, *testing* and *production* are workspaces. We will use the same Terraform definitions but with different configuration variables (different names, different capacities).
 
-Terraform has a feature called workspaces. Workspaces are used to use the same terraform files (.tf) with different environments. In our example, we can use *development*, *staging* and *production* as workspace names. We will use the same Terraform definitions but with different configuration variables (different names, different capacities).
+Each environment requires:
+* a dedicated Cloud Foundry space
+* a Kubernetes cluster
+* a database
+* a file storage
 
-+ think about reuse, "don't repeat yourself", it is code, think about it as other code
-+ think about resource isolation
-+ environments
-  one folder per environment
-  one folder for the global resources - reused by environments
-+ modules
-  reusable blocks - referenced by the environments, could be versioned
-  not shown here
-  two repos: one for modules, and one for live infrastructure. Let’s look at these one at a time.
-+ states
-  separate tree for the states with the same layout as environments
-+ vars
-  tfvars
+The Cloud Foundry space is linked to the organization created in the previous step. We will need to be able to reference this organization in our Terraform files. This is where [Terraform remote state](https://www.terraform.io/docs/state/remote.html) will help. It allows to reference an existing Terraform state in read-only mode. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf) contains the definition of the *global* remote state used to find the organization created earlier:
 
-use terraform workspace but if you have a larger terraform config, split it in multiple as described in https://www.terraform.io/docs/state/workspaces.html#best-practices
+   ```sh
+   data "terraform_remote_state" "global" {
+      backend = "local"
 
-* persist states in a reliable storage. in the example, we use the local backend to save state files. For production use, you will want to use a different backend to persist the state on a remote location. https://www.terraform.io/docs/backends/types/index.html
+      config {
+        path = "${path.module}/../global/terraform.tfstate"
+      }
+   }
+   ```
+
+This is a very useful construct to split your Terraform configuration in smaller pieces leaving the responsibility of individual chunks to different teams.
 
 Not all IBM Cloud resource types are currently availabe in the {{site.data.keyword.Bluemix_notm}} provider for Terraform
 
@@ -189,6 +190,8 @@ Only the account owner can create an org in the account so get the account API k
 ### Updating
 
 ### using Cloud Object Storage as a backend
+
+* persist states in a reliable storage. in the example, we use the local backend to save state files. For production use, you will want to use a different backend to persist the state on a remote location. https://www.terraform.io/docs/backends/types/index.html
 
 Works today thanks to S3 compatibility
 
