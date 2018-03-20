@@ -147,7 +147,7 @@ Each environment requires:
 * a database
 * a file storage
 
-The Cloud Foundry space is linked to the organization created in the previous step. We will need to be able to reference this organization in our Terraform files. This is where [Terraform remote state](https://www.terraform.io/docs/state/remote.html) will help. It allows to reference an existing Terraform state in read-only mode. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf) contains the definition of the *global* remote state used to find the organization created earlier:
+The Cloud Foundry space is linked to the organization created in the previous step. We will need to be able to reference this organization in our Terraform files. This is where [Terraform remote state](https://www.terraform.io/docs/state/remote.html) will help. It allows to reference an existing Terraform state in read-only mode. This is a very useful construct to split your Terraform configuration in smaller pieces leaving the responsibility of individual pieces to different teams. [backend.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/backend.tf) contains the definition of the *global* remote state used to find the organization created earlier:
 
    ```sh
    data "terraform_remote_state" "global" {
@@ -159,11 +159,68 @@ The Cloud Foundry space is linked to the organization created in the previous st
    }
    ```
 
-This is a very useful construct to split your Terraform configuration in smaller pieces leaving the responsibility of individual chunks to different teams.
+Once we can reference the organization, it is straightforward to create a space within this organization. [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/main.tf) contains the definition of the resources for the environment.
 
-Not all IBM Cloud resource types are currently availabe in the {{site.data.keyword.Bluemix_notm}} provider for Terraform
+   ```sh
+   # a Cloud Foundry space per environment
+   resource "ibm_space" "space" {
+     name       = "${var.environment_name}"
+     org        = "${data.terraform_remote_state.global.org_name}"
+     managers   = "${var.space_managers}"
+     auditors   = "${var.space_auditors}"
+     developers = "${var.space_developers}"
+   }
+   ```
+
+Notice how the organization name is referenced from the *global* remote state. The other properties are taken from configuration variables:
+
+Next comes the Kubernetes cluster. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
+
+   ```sh
+   # a cluster
+   resource "ibm_container_cluster" "cluster" {
+     name            = "${var.environment_name}-cluster"
+     datacenter      = "${var.cluster_datacenter}"
+     org_guid        = "${data.terraform_remote_state.global.org_guid}"
+     space_guid      = "${ibm_space.space.id}"
+     account_guid    = "${data.terraform_remote_state.global.account_guid}"
+     machine_type    = "${var.cluster_machine_type}"
+     workers         = "${var.cluster_workers}"
+     public_vlan_id  = "${var.cluster_public_vlan_id}"
+     private_vlan_id = "${var.cluster_private_vlan_id}"
+   }
+   ```
+
+Again most of the properties will be initialized from configuration variables. We can adjust the datacenter, the number of workers, the type of workers.
+
+Cloud Foundry services can be provisioned too and a Kubernetes binding (secret) can be added too to retrieve the service credentials from your applications:
+
+   ```sh
+   # a database
+   resource "ibm_service_instance" "database" {
+     name       = "database"
+     space_guid = "${ibm_space.space.id}"
+     service    = "cloudantNoSQLDB"
+     plan       = "Lite"
+   }
+
+   # bind the database service to the cluster
+   resource "ibm_container_bind_service" "bind_database" {
+    cluster_name_id             = "${ibm_container_cluster.cluster.id}"
+    service_instance_space_guid = "${ibm_space.space.id}"
+    service_instance_name_id    = "${ibm_service_instance.database.id}"
+    namespace_id                = "default"
+    account_guid                = "${data.terraform_remote_state.global.account_guid}"
+    org_guid                    = "${data.terraform_remote_state.global.org_guid}"
+    space_guid                  = "${ibm_space.space.id}"
+   }
+   ```
+
+At that point we have the resources needed by our application in place. The next step is to configure access to these resources.
 
 ### Policies with IAM
+
+Not all IBM Cloud resource types are currently availabe in the {{site.data.keyword.Bluemix_notm}} provider for Terraform
 
 bx iam user-policy-create
 
@@ -198,23 +255,23 @@ Works today thanks to S3 compatibility
 1. Provision COS
 2. Create credentials to obtain the access key and secret key https://console.bluemix.net/docs/services/cloud-object-storage/iam/service-credentials.html#service-credentials make sure to add Inline Configuration Parameters (Optional) field: {“HMAC”:true}
 
-```
-terraform {
-  backend "s3" {
-    bucket                      = "terraforming"
-    key                         = "global.tfstate"
-    region                      = "us-geo"
-    skip_region_validation      = true
-    skip_credentials_validation = true
-    skip_get_ec2_platforms      = true
-    skip_requesting_account_id  = true
-    skip_metadata_api_check     = true
-    endpoint                    = "s3-api.us-geo.objectstorage.softlayer.net"
-    access_key                  = "<from-credentials>"
-    secret_key                  = "<from-credentials>"
-  }
-}
-```
+   ```sh
+   terraform {
+     backend "s3" {
+       bucket                      = "terraforming"
+       key                         = "global.tfstate"
+       region                      = "us-geo"
+       skip_region_validation      = true
+       skip_credentials_validation = true
+       skip_get_ec2_platforms      = true
+       skip_requesting_account_id  = true
+       skip_metadata_api_check     = true
+       endpoint                    = "s3-api.us-geo.objectstorage.softlayer.net"
+       access_key                  = "<from-credentials>"
+       secret_key                  = "<from-credentials>"
+     }
+   }
+   ```
 
 with COS, we miss Locking and Versioning
 
