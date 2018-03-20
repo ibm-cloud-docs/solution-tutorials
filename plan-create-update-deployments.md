@@ -57,19 +57,17 @@ This tutorial uses the following products:
 * [Install Terraform](https://www.terraform.io/intro/getting-started/install.html)
 * [Install the IBM Cloud Provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
 
-## Define an environment we want to deploy/automate
+## Define an environment to deploy
+{: #define}
 
-Developers do not like to write the same thing twice. Similarly they don't like having to go through tons of clicks in a user interface to setup an environment. Shell scripts have been long used by system administrators and developers to automate repetitive, error-prone and tedious tasks.
+Developers do not like to write the same thing twice. The [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle is one example of this. Similarly they don't like having to go through tons of clicks in a user interface to setup an environment. Shell scripts have been long used by system administrators and developers to automate repetitive, error-prone and tedious tasks.
 
-IaaS, PaaS, SaaS, FaaS have given developers high level of abstraction and it became easier to acquire resources like bare metal servers, managed databases, virtual machines, etc. But once you have provisioned these resources, you need to connect them together, to configure user access, etc. Being able to automate all these steps and to repeat the installation, configuration under different environments is a must-have these days.
+Infrastructure as a Service (IaaS), Platform as a Service (PaaS), Container as a Service (CaaS), Functions as a Service (FaaS) have given developers high level of abstraction and it became easier to acquire resources like bare metal servers, managed databases, virtual machines, Kubernetes clusters, etc. But once you have provisioned these resources, you need to connect them together, to configure user access, to update the configuration over time, etc. Being able to automate all these steps and to repeat the installation, configuration under different environments is a must-have these days.
 
-Multiple environments are pretty common with slight differences like credentials, capacity, networking. In [this other tutorial](./users-teams-applications.html), we've introduced best practices to organize users, teams and applications and a sample scenario. Building on this, how could we automated the creation of these environments?
-
-* DEVELOPMENT
-* TESTING
-* PRODUCTION
+Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial](./users-teams-applications.html), we've introduced best practices to organize users, teams and applications and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How could we automate the creation of these environments? What tools could we use?
 
 ## Overview of the available tools
+{: #tools}
 
 The first straightforward tool to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `bx` CLI](https://console.bluemix.net/docs/cli/index.html). With `bx` and its plugins, you can automate the creation and configuration of your cloud resources.
 
