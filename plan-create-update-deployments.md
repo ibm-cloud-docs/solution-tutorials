@@ -24,28 +24,31 @@ This tutorial introduces tools to automate the creation and maintenance of multi
 ## Objectives
 {: #objectives}
 
-* Define an environment we want to deploy/automate
+* Define an environment to deploy
 * Overview of the available tools
-* Review the Terraform files and scripts needed to deploy such an environment
-  * with terraform and other tools as terraform can't do everything
-* Configure Terraform for {{site.data.keyword.Bluemix_notm}}
+* Write scripts to automate the deployment
+* Configure the tools for your account
 * Deploy this environment in your account
 
 ## Products
 {: #products}
 
 This tutorial uses the following products:
-* [IBM Cloud provider for Terraform]()
-* [{{site.data.keyword.containershort_notm}}]()
-* [IAM]()
+* [IBM Cloud provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
+* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+* [Identity and Access Management](https://console.bluemix.net/iam/#/users)
 * [{{site.data.keyword.Bluemix_notm}} command line interface - the `bx` CLI](https://console.bluemix.net/docs/cli/index.html)
+* [HashiCorp Terraform](https://www.terraform.io/)
 
 <p style="text-align: center;">
 ![](./images/solution26-plan-create-update-deployments/architecture.png)
 </p>
 
-1. The user does this
-2. Then that
+1. A set of Terraform files are created to describe the target infrastructure as code.
+1. An operator uses `terraform apply` to provision the environments.
+1. Shell scripts are written to complete the configuration of the environments.
+1. The operator runs the scripts against the environments
+1. The environments are fully configured, ready to be used.
 
 ## Before you begin
 {: #prereqs}
