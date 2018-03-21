@@ -490,7 +490,7 @@ The `iam/development` directory of the checkout has examples of these commands f
 1. Destroy the resources
 
    ```sh
-   terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
+   terraform destroy -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
 
 1. Repeat the steps for the `testing` and `production` workspaces
