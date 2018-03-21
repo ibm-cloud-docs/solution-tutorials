@@ -218,15 +218,58 @@ Cloud Foundry services can be provisioned too and a Kubernetes binding (secret) 
 
 At that point we have the resources needed by our application in place. The next step is to configure access to these resources.
 
-### Policies with IAM
+### Policies with Identity and Access Management
 
-Not all IBM Cloud resource types are currently availabe in the {{site.data.keyword.Bluemix_notm}} provider for Terraform
+In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, we are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `bx` and the `iam` command.
 
-bx iam user-policy-create
+   ```cmd
+   ~/> bx iam
+   NAME:
+      bx iam - Manage identities and access to resources
+   USAGE:
+      bx iam command [arguments...] [command options]
+
+   COMMANDS:
+      ...
+      user-policies                 List policies of a user
+      user-policy                   Display details of a user policy
+      user-policy-create            Create a user policy for resources in current account
+      user-policy-update            Update a user policy for resources in current account
+      user-policy-delete            Delete a user policy
+      ...
+   ```
+
+For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the user policies we need to define are:
+
+|           | IAM Access policies |
+| --------- | ----------- |
+| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
+| Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> |
+| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
+| Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
+
+For the *Developer* role in the *Development* environment, this translates to:
+
+   ```sh
+   #!/bin/bash
+
+   USER=$1
+
+   # Resource Group: Viewer
+   bx iam user-policy-create $USER --roles Viewer --resource-type resource-group --resource "default"
+
+   # Platform Access Roles in the Resource Group: Viewer
+   bx iam user-policy-create $USER --roles Viewer --resource-group-name "default"
+
+   # Monitoring: Administrator, Editor, Viewer
+   bx iam user-policy-create $USER --roles Administrator,Editor,Viewer --service-name monitoring
+   ```
+
+You can find the scripts for all roles in the *Development environment* under the [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of your checkout.
 
 ## Deploy this environment in your account
 
-### Install bx and Terraform for IBM Cloud
+### Install bx and Terraform for {{site.data.keyword.Bluemix_notm}}
 
 ### Configure variables to match your environments
 
@@ -245,35 +288,6 @@ Only the account owner can create an org in the account so get the account API k
 ### Terraforming!
 
 ### Updating
-
-### using Cloud Object Storage as a backend
-
-* persist states in a reliable storage. in the example, we use the local backend to save state files. For production use, you will want to use a different backend to persist the state on a remote location. https://www.terraform.io/docs/backends/types/index.html
-
-Works today thanks to S3 compatibility
-
-1. Provision COS
-2. Create credentials to obtain the access key and secret key https://console.bluemix.net/docs/services/cloud-object-storage/iam/service-credentials.html#service-credentials make sure to add Inline Configuration Parameters (Optional) field: {“HMAC”:true}
-
-   ```sh
-   terraform {
-     backend "s3" {
-       bucket                      = "terraforming"
-       key                         = "global.tfstate"
-       region                      = "us-geo"
-       skip_region_validation      = true
-       skip_credentials_validation = true
-       skip_get_ec2_platforms      = true
-       skip_requesting_account_id  = true
-       skip_metadata_api_check     = true
-       endpoint                    = "s3-api.us-geo.objectstorage.softlayer.net"
-       access_key                  = "<from-credentials>"
-       secret_key                  = "<from-credentials>"
-     }
-   }
-   ```
-
-with COS, we miss Locking and Versioning
 
 
 ## Clean up resources
