@@ -269,7 +269,28 @@ You can find the scripts for all roles in the *Development environment* under th
 
 ## Deploy this environment in your account
 
-### Install bx and Terraform for {{site.data.keyword.Bluemix_notm}}
+### Install {{site.data.keyword.Bluemix_notm}} CLI
+
+1. Follow [these instructions](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#download_install) to install the CLI
+1. Validate the install by running:
+   ```sh
+   bx
+   ```
+
+### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
+
+1. [Download and install Terraform for your system.](https://www.terraform.io/intro/getting-started/install.html)
+
+1. [Download the Terraform binary for the IBM Cloud provider.](https://github.com/IBM-Bluemix/terraform-provider-ibm/releases)
+
+1. Create a *.terraformrc* file in your home directory that points to the Terraform binary. In the following example, /opt/provider/terraform-provider-ibm is the route to the directory.
+
+   ```sh
+   # ~/.terraformrc
+   providers {
+     ibm = "/opt/provider/terraform-provider-ibm"
+   }
+   ```
 
 ### Configure variables to match your environments
 
