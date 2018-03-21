@@ -354,6 +354,9 @@ To create the parent organization of the three deployment environments, you need
 Once Terraform completes, it will have created:
 * a new Cloud Foundry organization
 * a `global.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
+* the `terraform.tfstate` file
+
+> In this tutorial we use the `local` backend provider for Terraform state but Terraform also supports automatically saving the state to a remote location. Some backends even support versioning and locking. Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html).
 
 ### Reuse an organization you are managing
 
@@ -381,6 +384,8 @@ If you are not the account owner but you manage an organization in the account, 
 
 ### Create per-environment space, cluster and services
 
+We will focus on the `development` environment. The steps will be the same for the other environments, only the values you pick for the variables will differ.
+
 1. Change to the `terraform/per-environment` folder of the checkout
 
 1. Copy the template `tfvars` file. There is one per environment:
@@ -393,6 +398,7 @@ If you are not the account owner but you manage an organization in the account, 
 
 1. Edit `development.tfvars`
    1. Set **environment_name** to the name of the Cloud Foundry space you want to create
+   1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
    1. Set **cluster_datacenter** to the location where you want to create the cluster. Find the available locations with:
       ```sh
       bx cs locations
@@ -416,6 +422,12 @@ If you are not the account owner but you manage an organization in the account, 
 
    ```sh
    terraform workspace new development
+   ```
+
+   Later to switch between environments use
+
+   ```sh
+   terraform workspace select development
    ```
 
 1. Look at the Terraform plan
@@ -444,22 +456,47 @@ Once Terraform completes, it will have created:
 * a storage
 * a Kubernetes secret with the storage credentials
 * a `development.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
+* the environment specific `terraform.tfstate` under `terraform.tfstate.d/development`.
 
-### Updating
+You can repeat the steps for the `testing` and `production`.
 
+### Assign user policies
+
+User policies use the {{site.data.keyword.Bluemix_notm}} CLI and the `iam` command.
+
+As example, to set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you'd use:
+
+   ```sh
+   # Resource Group: Viewer
+   bx iam user-policy-create <USER_EMAIL> --roles Viewer --resource-type resource-group --resource "default"
+
+   # Platform Access Roles in the Resource Group: Viewer
+   bx iam user-policy-create <USER_EMAIL> --roles Viewer --resource-group-name "default"
+
+   # Monitoring: Administrator, Editor, Viewer
+   bx iam user-policy-create <USER_EMAIL> --roles Administrator,Editor,Viewer --service-name monitoring
+   ```
+
+The `iam/development` directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles.
 
 ## Clean up resources
 
-Steps to take to remove the resources created in this tutorial
+1. Activate the `development` workspace
 
-```
-terraform destroy
-```
+   ```sh
+   terraform workspace select development
+   ```
+
+1. Destroy the resources
+
+   ```sh
+   terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
+   ```
+
+1. Repeat the steps for the `testing` and `production` workspaces
 
 ## Related information
 
-* Terraform tutorial
-* Terraform provider
+* [Terraform tutorial](./infrastructure-as-code-terraform.md)
+* [Terraform provider](https://ibm-cloud.github.io/tf-ibm-docs/)
 * [Examples using IBM Cloud Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)
-* IAM documentation
-* CLI documentation
