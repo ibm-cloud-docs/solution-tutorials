@@ -292,21 +292,158 @@ You can find the scripts for all roles in the *Development environment* under th
    }
    ```
 
-### Configure variables to match your environments
+### Get the code
 
-- get a IBM Cloud API key - to create an org you need the API key of the account user or you can import an existing orgs and only create spaces
-  - get its ID with `bx iam org <org_name> --guid`
-  - then terraform import ibm_org.organization GUID
+If you have not done it yet, clone the tutorial repository:
 
-if you already have an org you want to reuse, you can import its definition in the global state file
+   ```sh
+   git clone https://github.com/IBM-Cloud/multiple-environments-as-code
+   ```
 
-Only the account owner can create an org in the account so get the account API key to do this part
+### Set Platform API key
 
-- pick a location for your cluster with `bx cs locations`
-- use bx cs vlans <location> to find available private and public VLANs for your cluster
-- use bx cs machine-types to figure out what machine types you can use at this location
+1. If you don't already have one, obtain a [Platform API key](https://console.bluemix.net/iam/#/apikeys)
+   > If in later steps you plan on creating a new Cloud Foundry organization to host the deployment environments, make sure you are the owner of the account.
+1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars*
+   ```sh
+   cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
+   ```
+1. Edit `terraform/credentials.tfvars` and set the value for `ibmcloud_api_key` to the Platform API key you obtained.
 
-### Terraforming!
+### Create a new organization
+
+To create the parent organization of the three deployment environments, you need to be the account owner.
+
+1. Change to the `terraform/global` directory
+
+1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
+
+   ```sh
+   cp global.tfvars.tmpl global.tfvars
+   ```
+
+1. Edit `global.tfvars`
+   1. Set **org_name** to the organization name to create
+   1. Set **org_managers** to a list of user IDs you want to grant the *Manager* role in the org - the user creating the org is automatically a manager and should not be added to the list
+   1. Set **org_users** to a list of all users you want to invite into the org - users need to be added there if you want to configure their access in further steps
+
+   ```sh
+   org_name = "a-new-organization"
+   org_managers = [ "user1@domain.com", "another-user@anotherdomain.com" ]
+   org_users = [ "user1@domain.com", "another-user@anotherdomain.com", "more-user@domain.com" ]
+   ```
+
+1. Initialize Terraform from the `terraform/global` folder
+
+   ```sh
+   terraform init
+   ```
+
+1. Look at the Terraform plan
+
+   ```sh
+   terraform plan -var-file=../credentials.tfvars -var-file=global.tfvars
+   ```
+
+1. Apply the changes
+
+   ```sh
+   terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
+   ```
+
+Once Terraform completes, it will have created:
+* a new Cloud Foundry organization
+* a `global.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
+
+### Reuse an organization you are managing
+
+If you are not the account owner but you manage an organization in the account, you can also import an existing organization into Terraform
+
+1. Retrieve the organization GUID
+
+   ```sh
+   bx iam org <org_name> --guid
+   ```
+
+1. After initializing Terraform, import the organization into the Terraform state
+
+   ```sh
+   terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization
+   ```
+
+1. Tune `global.tfvars` if needed to match the existing organization structure
+
+1. Apply the changes
+
+   ```sh
+   terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
+   ```
+
+### Create per-environment space, cluster and services
+
+1. Change to the `terraform/per-environment` folder of the checkout
+
+1. Copy the template `tfvars` file. There is one per environment:
+
+   ```sh
+   cp development.tfvars.tmpl development.tfvars
+   cp testing.tfvars.tmpl testing.tfvars
+   cp production.tfvars.tmpl production.tfvars
+   ```
+
+1. Edit `development.tfvars`
+   1. Set **environment_name** to the name of the Cloud Foundry space you want to create
+   1. Set **cluster_datacenter** to the location where you want to create the cluster. Find the available locations with:
+      ```sh
+      bx cs locations
+      ```
+   1. Set the private (**cluster_private_vlan_id**) and public (**cluster_public_vlan_id**) VLANs for the cluster. Find the available VLANs for the location with:
+      ```sh
+      bx cs vlans <location>
+      ```
+   1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
+      ```sh
+      bx cs machine-types <location>
+      ```
+
+1. Initialize Terraform
+
+   ```sh
+   terraform init
+   ```
+
+1. Create a new Terraform workspace for the *development* environment
+
+   ```sh
+   terraform workspace new development
+   ```
+
+1. Look at the Terraform plan
+
+   ```sh
+   terraform plan -var-file=../credentials.tfvars -var-file=development.tfvars
+   ```
+
+   It should report:
+
+   ```
+   Plan: 7 to add, 0 to change, 0 to destroy.
+   ```
+
+1. Apply the changes
+
+   ```sh
+   terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
+   ```
+
+Once Terraform completes, it will have created:
+* a Cloud Foundry space
+* a Kubernetes cluster
+* a database
+* a Kubernetes secret with the database credentials
+* a storage
+* a Kubernetes secret with the storage credentials
+* a `development.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
 
 ### Updating
 
