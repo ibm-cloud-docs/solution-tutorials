@@ -78,7 +78,7 @@ To support a multi-cloud approach, Terraform works with providers. A provider is
 ## Write scripts to automate the deployment
 {: #scripts}
 
-As you start describing your infrastructure-as-code, it is critical to treat files you create as regular code, thus storing them in a source control management system. Overtime this will bring good properties such as using the source control review workflow to validate changes before applying them, integrate with a DevOps pipeline to automatically deploy infrastructure changes.
+As you start describing your infrastructure-as-code, it is critical to treat files you create as regular code, thus storing them in a source control management system. Overtime this will bring good properties such as using the source control review workflow to validate changes before applying them, adding a continuous integration pipeline to automatically deploy infrastructure changes.
 
 [This Git repository](https://github.com/IBM-Cloud/multiple-environments-as-code) has all the configuration files needed to setup the environments defined earlier. You can clone the repository to follow the next sections as we go through the content of the files.
 
