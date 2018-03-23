@@ -356,7 +356,7 @@ Once Terraform completes, it will have created:
 * a `global.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
 * the `terraform.tfstate` file
 
-> In this tutorial we use the `local` backend provider for Terraform state but Terraform also supports automatically saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state.  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
+> In this tutorial we use the `local` backend provider for Terraform state. Handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
 
 ### Reuse an organization you are managing
 
