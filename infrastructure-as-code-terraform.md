@@ -11,7 +11,7 @@ lastupdated: "2018-03-09"
 {:tip: .tip}
 {:pre: .pre}
 
-# Automate deployment of environments using Terraform
+# Deploy a LAMP stack using Terraform
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 

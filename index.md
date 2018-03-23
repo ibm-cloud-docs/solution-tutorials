@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-09"
+lastupdated: "2018-03-23"
 
 ---
 
@@ -174,17 +174,35 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="infrastructure-as-code-terraform.html" class="solutionBoxTitle">
-            <a href = "infrastructure-as-code-terraform.html">Automate deployment of environments using Terraform</a>
+            <a href = "infrastructure-as-code-terraform.html">Deploy a LAMP stack using Terraform</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
                 <p>Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.</p>
+                    <span class="tag-filter category">Terraform</span>
                     <span class="tag-filter category">Virtual Servers</span>
                     <span class="tag-filter category">PHP</span>
                     <span class="tag-filter category">Object Storage</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution10/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="plan-create-update-deployments.html" class="solutionBoxTitle">
+            <a href = "plan-create-update-deployments.html">Plan, create and update deployment environments</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial introduces tools to automate the creation and maintenance of multiple deployment environments.</p>
+                    <span class="tag-filter category">Terraform</span>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Cloud Foundry</span>
+                    <span class="tag-filter category">Identity and Access Management</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution26-plan-create-update-deployments/architecture.png" />
             </div>
         </div>
     </div>
