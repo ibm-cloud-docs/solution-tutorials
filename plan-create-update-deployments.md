@@ -484,16 +484,25 @@ The `iam/development` directory of the checkout has examples of these commands f
 1. Activate the `development` workspace
 
    ```sh
+   cd terraform/per-environment
    terraform workspace select development
    ```
 
-1. Destroy the resources
+1. Destroy the spaces, services, clusters
 
    ```sh
    terraform destroy -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
 
 1. Repeat the steps for the `testing` and `production` workspaces
+
+1. Destroy the organization
+
+   ```sh
+   cd terraform/global
+   terraform destroy -var-file=../credentials.tfvars -var-file=global.tfvars
+   ```
+
 
 ## Related information
 
