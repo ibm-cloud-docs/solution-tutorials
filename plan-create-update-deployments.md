@@ -97,9 +97,11 @@ The repository is structured as follow:
 
 ### Heavy lifting with Terraform
 
-Our *Development*, *Testing*, *Production* pretty much look the same. They will differ by the allocated capacity and the access rights. Let's start with the core components of these environments, the computing power and the services.
+Our *Development*, *Testing* and *Production* environments pretty much look the same. They will differ by the allocated capacity and the access rights. Let's start with the core components of these environments, the computing power and the services.
 
-   ![](./images/solution26-plan-create-update-deployments/one-environment.png)
+<p style="text-align: center;">
+  <img title="" src="./images/solution26-plan-create-update-deployments/one-environment.png" height="400" />
+</p>
 
 ### Global Configuration
 
