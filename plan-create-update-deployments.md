@@ -498,7 +498,7 @@ The `iam/development` directory of the checkout has examples of these commands f
 
 1. Repeat the steps for the `testing` and `production` workspaces
 
-1. Destroy the organization
+1. If you created it, destroy the organization
 
    ```sh
    cd terraform/global
