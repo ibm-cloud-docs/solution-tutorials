@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-23"
+lastupdated: "2018-03-27"
 
 ---
 
@@ -394,7 +394,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">Internet of Things Platform</span>
                     <span class="tag-filter category">Cloudant</span>
-                    <span class="tag-filter category">Data Science Experience</span>
+                    <span class="tag-filter category">Watson Studio</span>
                     <span class="tag-filter category">Apache Spark</span>
                     <span class="tag-filter category">Cloud Object Storage</span>
             </div>
@@ -467,7 +467,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <p>This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.</p>
                     <span class="tag-filter category">Machine Learning</span>
                     <span class="tag-filter category">Apache Spark</span>
-                    <span class="tag-filter category">Data Science Experience</span>
+                    <span class="tag-filter category">Watson Studio</span>
                     <span class="tag-filter category">Cloud Object Storage</span>
                     <span class="tag-filter category">Db2 Warehouse</span>
             </div>
@@ -482,9 +482,9 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.</p>
+                <p>Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Watson Studio and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.</p>
                     <span class="tag-filter category">Apache Spark</span>
-                    <span class="tag-filter category">Data Science Experience</span>
+                    <span class="tag-filter category">Watson Studio</span>
                     <span class="tag-filter category">Cloud Object Storage</span>
             </div>
             <div class="architectureDiagramContainer">
