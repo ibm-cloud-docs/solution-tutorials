@@ -373,7 +373,7 @@ If you are not the account owner but you manage an organization in the account, 
 1. After initializing Terraform, import the organization into the Terraform state
 
    ```sh
-   terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization
+   terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization <guid>
    ```
 
 1. Tune `global.tfvars` if needed to match the existing organization structure
