@@ -508,6 +508,6 @@ The `iam/development` directory of the checkout has examples of these commands f
 
 ## Related information
 
-* [Terraform tutorial](./infrastructure-as-code-terraform.md)
+* [Terraform tutorial](./infrastructure-as-code-terraform.html)
 * [Terraform provider](https://ibm-cloud.github.io/tf-ibm-docs/)
 * [Examples using {{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)
