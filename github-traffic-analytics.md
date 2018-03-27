@@ -14,7 +14,15 @@ lastupdated: "2018-03-27"
 
 # Github Traffic Analytics
 
-In this tutorial, we are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. We integrate Slack and {{site.data.keyword.conversationfull}} using the  [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) using the serverless approach.
+Overall flow:
+- Describe scenario
+- setup database to hold statistics and for multi-tenant user management
+- add App ID, add initial admin user
+- deploy Python app
+- add repo database
+- setup Cloud Functions to collect database
+- add DDE as analytics dashboarding to app
+
 
 
 ![](images/solution24-github-traffic-analytics/Architecture.png)
