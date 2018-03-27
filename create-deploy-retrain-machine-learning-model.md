@@ -32,7 +32,7 @@ In the terminology of machine learning, classification is considered an instance
 
 {: #objectives}
 
-* Import data to a Watson Data Platform project.
+* Import data to a project.
 * Build a machine learning model.
 * Deploy the model and try out the API.
 * Test a machine learning model.
@@ -50,13 +50,15 @@ In the terminology of machine learning, classification is considered an instance
 
 ## Before you begin
 {: #prereqs}
-* Visit [Watson Data Platform](https://dataplatform.ibm.com/) and sign up for Watson Data Platform apps.
+* IBM Watson Studio and Watson Knowledge Catalog are applications that are part of IBM Watson. To create an IBM Watson account, begin by signing up for one or both of these applications. 
+
+   Go to [Try IBM Watson](https://dataplatform.ibm.com/registration/stepone) and sign up for IBM Watson apps.
 
 ## Import data to a project
 
 {:#import_data_project}
 
-A project is how you organize your resources to achieve a particular goal within Watson Data Platform. Your project resources can include data, collaborators, and analytic tools like Jupyter notebooks and machine learning models.
+A project is how you organize your resources to achieve a particular goal. Your project resources can include data, collaborators, and analytic tools like Jupyter notebooks and machine learning models.
 
 You can create a project to add data and open a data asset in the data refiner for cleansing and shaping your data.
 
@@ -226,6 +228,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#related_content}
 
+- [Watson Studio Overview](https://dataplatform.ibm.com/docs/content/getting-started/overview-ws.html?audience=wdp&context=wdp)
 - [Detect Anomalies using Machine Learning](https://console.bluemix.net/docs/tutorials/gather-visualize-analyze-iot-data.html#data_experience)
 - [Watson Data Platform Tutorials](https://www.ibm.com/analytics/us/en/watson-data-platform/tutorial/)
 - [Automatic model creation](https://datascience.ibm.com/docs/content/analyze-data/ml-model-builder.html?linkInPage=true)
