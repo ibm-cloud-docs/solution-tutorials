@@ -18,7 +18,8 @@ lastupdated: "2018-03-31"
 
 # Plan, create and update deployment environments
 
-This tutorial introduces tools to automate the creation and maintenance of multiple deployment environments.
+Multiple deployment environments are common when building a solution. They reflect the lifecycle of a project from development to production. This tutorial introduces tools to automate the creation and maintenance of these deployment environments.
+
 {:shortdesc}
 
 ## Objectives
@@ -49,13 +50,6 @@ This tutorial uses the following products:
 1. Shell scripts are written to complete the configuration of the environments.
 1. The operator runs the scripts against the environments
 1. The environments are fully configured, ready to be used.
-
-## Before you begin
-{: #prereqs}
-
-* [{{site.data.keyword.Bluemix_notm}} Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
-* [Install Terraform](https://www.terraform.io/intro/getting-started/install.html)
-* [Install the {{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
 
 ## Define an environment to deploy
 {: #define}
@@ -97,11 +91,15 @@ The repository is structured as follow:
 
 ### Heavy lifting with Terraform
 
-Our *Development*, *Testing* and *Production* environments pretty much look the same. They will differ by the allocated capacity and the access rights. Let's start with the core components of these environments, the computing power and the services.
+Our *Development*, *Testing* and *Production* environments pretty much look the same.
 
 <p style="text-align: center;">
-  <img title="" src="./images/solution26-plan-create-update-deployments/one-environment.png" height="400" />
+  <img title="" src="./images/solution26-plan-create-update-deployments/one-environment.png" style="height: 400px;" />
 </p>
+
+They share a common organization and environment-specific resources. They will differ by the allocated capacity and the access rights. The terraform files reflect this with a ***global*** configuration to provision the Cloud Foundry organization and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:
+
+![](./images/solution26-plan-create-update-deployments/terraform-workspaces.png)
 
 ### Global Configuration
 
@@ -282,9 +280,7 @@ You can find the scripts for all roles in the *Development environment* under th
 ### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
 
 1. [Download and install Terraform for your system.](https://www.terraform.io/intro/getting-started/install.html)
-
 1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
-
 1. Create a *.terraformrc* file in your home directory that points to the Terraform binary. In the following example, /opt/provider/terraform-provider-ibm is the route to the directory.
 
    ```sh
@@ -317,13 +313,10 @@ If you have not done it yet, clone the tutorial repository:
 To create the parent organization of the three deployment environments, you need to be the account owner.
 
 1. Change to the `terraform/global` directory
-
 1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
-
    ```sh
    cp global.tfvars.tmpl global.tfvars
    ```
-
 1. Edit `global.tfvars`
    1. Set **org_name** to the organization name to create
    1. Set **org_managers** to a list of user IDs you want to grant the *Manager* role in the org - the user creating the org is automatically a manager and should not be added to the list
@@ -334,21 +327,15 @@ To create the parent organization of the three deployment environments, you need
    org_managers = [ "user1@domain.com", "another-user@anotherdomain.com" ]
    org_users = [ "user1@domain.com", "another-user@anotherdomain.com", "more-user@domain.com" ]
    ```
-
 1. Initialize Terraform from the `terraform/global` folder
-
    ```sh
    terraform init
    ```
-
 1. Look at the Terraform plan
-
    ```sh
    terraform plan -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
-
 1. Apply the changes
-
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
@@ -365,21 +352,15 @@ Once Terraform completes, it will have created:
 If you are not the account owner but you manage an organization in the account, you can also import an existing organization into Terraform
 
 1. Retrieve the organization GUID
-
    ```sh
    bx iam org <org_name> --guid
    ```
-
 1. After initializing Terraform, import the organization into the Terraform state
-
    ```sh
    terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization <guid>
    ```
-
 1. Tune `global.tfvars` if needed to match the existing organization structure
-
 1. Apply the changes
-
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
@@ -389,15 +370,12 @@ If you are not the account owner but you manage an organization in the account, 
 We will focus on the `development` environment. The steps will be the same for the other environments, only the values you pick for the variables will differ.
 
 1. Change to the `terraform/per-environment` folder of the checkout
-
 1. Copy the template `tfvars` file. There is one per environment:
-
    ```sh
    cp development.tfvars.tmpl development.tfvars
    cp testing.tfvars.tmpl testing.tfvars
    cp production.tfvars.tmpl production.tfvars
    ```
-
 1. Edit `development.tfvars`
    1. Set **environment_name** to the name of the Cloud Foundry space you want to create
    1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
@@ -413,39 +391,27 @@ We will focus on the `development` environment. The steps will be the same for t
       ```sh
       bx cs machine-types <location>
       ```
-
 1. Initialize Terraform
-
    ```sh
    terraform init
    ```
-
 1. Create a new Terraform workspace for the *development* environment
-
    ```sh
    terraform workspace new development
    ```
-
    Later to switch between environments use
-
    ```sh
    terraform workspace select development
    ```
-
 1. Look at the Terraform plan
-
    ```sh
    terraform plan -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
-
    It should report:
-
    ```
    Plan: 7 to add, 0 to change, 0 to destroy.
    ```
-
 1. Apply the changes
-
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
@@ -484,27 +450,20 @@ The `iam/development` directory of the checkout has examples of these commands f
 ## Clean up resources
 
 1. Activate the `development` workspace
-
    ```sh
    cd terraform/per-environment
    terraform workspace select development
    ```
-
 1. Destroy the spaces, services, clusters
-
    ```sh
    terraform destroy -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
-
 1. Repeat the steps for the `testing` and `production` workspaces
-
 1. If you created it, destroy the organization
-
    ```sh
    cd terraform/global
    terraform destroy -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
-
 
 ## Related information
 
