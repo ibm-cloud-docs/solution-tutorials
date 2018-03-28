@@ -52,7 +52,7 @@
                     "Docker",
                     "Node.js",
                     "Slack",
-                    "Vulnerability Advisor", 
+                    "Vulnerability Advisor",
                     "DevOps"
                 ]
             },
@@ -103,7 +103,7 @@
                     "Cloud Foundry",
                     "Identity and Access Management"
                 ]
-            },            
+            },
             {
                 "name": "Use Virtual Servers to build highly available and scalable web app",
                 "url": "highly-available-and-scalable-web-application.html",
@@ -241,7 +241,7 @@
                     "Cloud Foundry",
                     "Internet of Things Platform",
                     "Cloudant",
-                    "Data Science Experience",
+                    "Watson Studio",
                     "Apache Spark",
                     "Cloud Object Storage"
                 ]
@@ -299,7 +299,7 @@
                 "tags": [
                     "Machine Learning",
                     "Apache Spark",
-                    "Data Science Experience",
+                    "Watson Studio",
                     "Cloud Object Storage",
                     "Db2 Warehouse"
                 ]
@@ -307,11 +307,11 @@
             {
                 "name": "Analyze and visualize open data with Apache Spark",
                 "url": "big-data-analytics-spark.html",
-                "description": "Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.",
+                "description": "Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Watson Studio and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.",
                 "imgSrc": "images/solution23/Architecture.png",
                 "tags": [
                     "Apache Spark",
-                    "Data Science Experience",
+                    "Watson Studio",
                     "Cloud Object Storage"
                 ]
             }
