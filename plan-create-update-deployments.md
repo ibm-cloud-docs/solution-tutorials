@@ -35,7 +35,7 @@ Multiple deployment environments are common when building a solution. They refle
 {: #products}
 
 This tutorial uses the following products:
-* [{{site.data.keyword.Bluemix_notm}}provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
+* [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 * [Identity and Access Management](https://console.bluemix.net/iam/#/users)
 * [{{site.data.keyword.Bluemix_notm}} command line interface - the `bx` CLI](https://console.bluemix.net/docs/cli/index.html)
@@ -280,14 +280,10 @@ You can find the scripts for all roles in the *Development environment* under th
 ### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
 
 1. [Download and install Terraform for your system.](https://www.terraform.io/intro/getting-started/install.html)
-
 1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
-
-   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer this [link](https://console.bluemix.net/docs/tutorials/infrastructure-as-code-terraform.html#setup)
+   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](./infrastructure-as-code-terraform.html#setup)
    {:tip}
-
 1. Create a `.terraformrc` file in your home directory that points to the Terraform binary. In the following example, `/opt/provider/terraform-provider-ibm` is the route to the directory.
-
    ```sh
    # ~/.terraformrc
    providers {
