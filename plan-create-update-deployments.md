@@ -35,7 +35,7 @@ Multiple deployment environments are common when building a solution. They refle
 {: #products}
 
 This tutorial uses the following products:
-* [IBM Cloud provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
+* [{{site.data.keyword.Bluemix_notm}}provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 * [Identity and Access Management](https://console.bluemix.net/iam/#/users)
 * [{{site.data.keyword.Bluemix_notm}} command line interface - the `bx` CLI](https://console.bluemix.net/docs/cli/index.html)
@@ -272,7 +272,7 @@ You can find the scripts for all roles in the *Development environment* under th
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
 
 1. Follow [these instructions](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#download_install) to install the CLI
-1. Validate the install by running:
+1. Validate the installation by running:
    ```sh
    bx
    ```
@@ -280,8 +280,13 @@ You can find the scripts for all roles in the *Development environment* under th
 ### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
 
 1. [Download and install Terraform for your system.](https://www.terraform.io/intro/getting-started/install.html)
+
 1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
-1. Create a *.terraformrc* file in your home directory that points to the Terraform binary. In the following example, /opt/provider/terraform-provider-ibm is the route to the directory.
+
+   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer this [link](https://console.bluemix.net/docs/tutorials/infrastructure-as-code-terraform.html#setup)
+   {:tip}
+
+1. Create a `.terraformrc` file in your home directory that points to the Terraform binary. In the following example, `/opt/provider/terraform-provider-ibm` is the route to the directory.
 
    ```sh
    # ~/.terraformrc
@@ -300,9 +305,9 @@ If you have not done it yet, clone the tutorial repository:
 
 ### Set Platform API key
 
-1. If you don't already have one, obtain a [Platform API key](https://console.bluemix.net/iam/#/apikeys)
+1. If you don't already have one, obtain a [Platform API key](https://console.bluemix.net/iam/#/apikeys) and save the API key for future reference.
    > If in later steps you plan on creating a new Cloud Foundry organization to host the deployment environments, make sure you are the owner of the account.
-1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars*
+1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command
    ```sh
    cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
    ```
