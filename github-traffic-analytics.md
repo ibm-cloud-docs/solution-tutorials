@@ -23,8 +23,6 @@ Overall flow:
 - setup Cloud Functions to collect database
 - add DDE as analytics dashboarding to app
 
-
-
 ![](images/solution24-github-traffic-analytics/Architecture.png)
 
 ## Objectives
@@ -50,6 +48,46 @@ To complete this tutorial, you need the latest version of the [IBM Cloud CLI](ht
 
 
 ## Service and Environment Setup
+In this section, we are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on Github.
+
+1. Clone the [Github repository](https://github.com/IBM-Cloud/github-traffic-stats) and navigate into the cloned directory and its **functions** subdirectory:
+
+   ```bash
+   git clone https://github.com/IBM-Cloud/github-traffic-stats
+   cd github-traffic-stats/functions
+   ```
+
+2. Use `bx login` to log in interactively. You can reconfirm the details by running `bx target` command.
+
+3. Create a {{site.data.keyword.dashdbshort}} instance and name it **ghstatsDB**:
+
+   ```
+   bx service create dashDB Entry ghstatsDB
+   ```
+   {:codeblock}
+   You can also use another than the **Entry** plan.
+
+4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, we need the authorization. Thus, we create service credentials and label them **ghstatskey**:   
+   ```
+   bx service key-create ghstatsDB ghstatskey
+   ```
+   {:codeblock}
+
+5. Create an instance of the {{site.data.keyword.appid_short}} service. We use **ghstatsAppID** as name. The service only offers the **Graduated tier** plan.
+   ```
+   bx service create appID "Graduated tier" ghstatsAppID
+   ```
+   {:codeblock}
+
+6. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
+
+   One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions.
+
+   ```bash
+   sh setup.sh
+   ```
+   {:codeblock}   
+
 
 
 ## Cleanup
