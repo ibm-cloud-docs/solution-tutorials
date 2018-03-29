@@ -88,6 +88,20 @@ In this section, we are going to set up the needed services and prepare the envi
    ```
    {:codeblock}   
 
+## Deploy Python app
+After the service configuration and deployment of the serverless action, we push the management app to the IBM Cloud.
+
+1. Change to the directory with the backend code:
+   ```bash
+   cd ../backend
+   ```
+2. Push the application to the IBM Cloud. The command will use a random application name. If you want to pick one yourself, add it as additional parameter to the command.
+   ```bash
+   bx cf push
+   ```
+
+
+## Configure environment
 
 
 ## Cleanup
