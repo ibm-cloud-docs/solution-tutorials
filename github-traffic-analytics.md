@@ -23,6 +23,8 @@ Overall flow:
 - setup Cloud Functions to collect database
 - add DDE as analytics dashboarding to app
 
+Do we have to distinguish between local and cloud? Focus on cloud!
+
 ![](images/solution24-github-traffic-analytics/Architecture.png)
 
 ## Objectives
@@ -102,6 +104,8 @@ After the service configuration and deployment of the serverless action, we push
 
 
 ## Configure environment
+
+
 
 
 ## Cleanup
