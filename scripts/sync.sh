@@ -17,8 +17,8 @@ tar cf - \
   --exclude=.git \
   --exclude=.gitignore \
   --exclude=solution-template.md \
-  --exclude=plan-create-update-deployments.md \
   --exclude=low-latency-real-time-bidding.md \
+  --exclude=pub-sub-object-storage.md.md \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )

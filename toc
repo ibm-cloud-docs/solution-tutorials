@@ -32,5 +32,4 @@ Solution Tutorials
     users-teams-applications.md
     create-deploy-retrain-machine-learning-model.md
     big-data-analytics-spark.md
-    pub-sub-object-storage.md
     {: .navgroup-end}
