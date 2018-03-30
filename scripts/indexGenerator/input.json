@@ -52,7 +52,7 @@
                     "Docker",
                     "Node.js",
                     "Slack",
-                    "Vulnerability Advisor", 
+                    "Vulnerability Advisor",
                     "DevOps"
                 ]
             },
@@ -81,14 +81,27 @@
                 ]
             },
             {
-                "name": "Automate deployment of environments using Terraform",
+                "name": "Deploy a LAMP stack using Terraform",
                 "url": "infrastructure-as-code-terraform.html",
                 "description": "Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.",
                 "imgSrc": "images/solution10/Architecture.png",
                 "tags": [
+                    "Terraform",
                     "Virtual Servers",
                     "PHP",
                     "Object Storage"
+                ]
+            },
+            {
+                "name": "Plan, create and update deployment environments",
+                "url": "plan-create-update-deployments.html",
+                "description": "This tutorial introduces tools to automate the creation and maintenance of multiple deployment environments.",
+                "imgSrc": "images/solution26-plan-create-update-deployments/architecture.png",
+                "tags": [
+                    "Terraform",
+                    "Kubernetes",
+                    "Cloud Foundry",
+                    "Identity and Access Management"
                 ]
             },
             {
@@ -228,7 +241,7 @@
                     "Cloud Foundry",
                     "Internet of Things Platform",
                     "Cloudant",
-                    "Data Science Experience",
+                    "Watson Studio",
                     "Apache Spark",
                     "Cloud Object Storage"
                 ]
@@ -286,7 +299,7 @@
                 "tags": [
                     "Machine Learning",
                     "Apache Spark",
-                    "Data Science Experience",
+                    "Watson Studio",
                     "Cloud Object Storage",
                     "Db2 Warehouse"
                 ]
@@ -294,11 +307,11 @@
             {
                 "name": "Analyze and visualize open data with Apache Spark",
                 "url": "big-data-analytics-spark.html",
-                "description": "Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Data Science Experience and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.",
+                "description": "Analyze and visualize open data sets using a Jupyter Notebook. It runs on IBM Watson Studio and uses the Apache Spark service on IBM Cloud for processing. First, we combine data about population growth, life expectancy and country ISO codes into a single data frame. Then, we query and visualize that data in several ways using the Pixiedust library for Python. All steps are performed within a notebook.",
                 "imgSrc": "images/solution23/Architecture.png",
                 "tags": [
                     "Apache Spark",
-                    "Data Science Experience",
+                    "Watson Studio",
                     "Cloud Object Storage"
                 ]
             }

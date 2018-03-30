@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-05"
+lastupdated: "2018-03-31"
 
 ---
 
@@ -13,14 +13,14 @@ lastupdated: "2018-03-05"
 {:pre: .pre}
 
 # Gather, visualize, and analyze IoT data
-This tutorial walks you through setting up an IoT device, gathering data in the Watson IoT Platform, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
+This tutorial walks you through setting up an IoT device, gathering data in the {{site.data.keyword.iot_short_notm}}, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
 * Set up IoT Simulator.
-* Send collection data to Watson IoT Platform.
+* Send collection data to {{site.data.keyword.iot_short_notm}}.
 * Create visualizations.
 * Analyze the device generated data and detect anomalies.
 
@@ -32,22 +32,22 @@ This tutorial walks you through setting up an IoT device, gathering data in the 
 {: #products}
 
 This tutorial uses the following products:
-* [Internet of Things Platform](https://console.bluemix.net/catalog/services/internet-of-things-platform)
+* [{{site.data.keyword.iot_full}}](https://console.bluemix.net/catalog/services/internet-of-things-platform)
 * [Node.js Application](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
-* [Data Science Experience](https://console.bluemix.net/catalog/services/data-science-experience) with Spark service and IBM Cloud Object Storage
+* [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience) with Spark service and {{site.data.keyword.Bluemix_notm}} Object Storage
 * [Cloudant NoSQL Database](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
 ## Before you begin
 {: #prereqs}
 
-[IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Run the script to install bx cli and required plug-ins
+[{{site.data.keyword.Bluemix_notm}} Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Run the script to install bx cli and required plug-ins
 
 ## Create IoT Platform
 {: #iot_starter}
 
 To begin, you will create Internet of Things Platform service - The hub which can manage devices, securely connect and **collect data**, and make historical data available for visualizations and applications.
 
-1. Go to the [**IBM Cloud Catalog**](https://console.bluemix.net/catalog/) and select [**Internet of Things Platform**](https://console.bluemix.net/catalog/services/internet-of-things-platform) under the **Internet of Things** section.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [**Internet of Things Platform**](https://console.bluemix.net/catalog/services/internet-of-things-platform) under the **Internet of Things** section.
 2. Enter `IoT demo hub` as the service name, click **Create** and **Launch** the dashboard.
 3. From the side menu, select **Security > Connection Security** and choose **TLS Optional** under **Default Rule** > **Security Level** and click **Save**.
 4. From the side menu, select **Devices** > **Device Types**  and **+ Add Device Type**.
@@ -70,7 +70,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    cd iot-device-phone-simulator
    ```
 2. Open the code in an IDE of your choice and change the `name` and `host` values in the **manifest.yml** file to an unique value.
-3. Push the application to the IBM Cloud.
+3. Push the application to the {{site.data.keyword.Bluemix_notm}}.
    ```bash
    bx login
    bx target --cf
@@ -79,17 +79,17 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 4. In a few minutes, your application will be deployed and you should see a URL similar to `<UNIQUE_NAME>.mybluemix.net`
 5. Visit this URL on your phone using a browser.
 6. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
-7. Your phone will start transmitting data. Back in the **IBM Watson IoT Platform tab**, check for new entires in the **Recent Events** section.
+7. Your phone will start transmitting data. Back in the **IBM {{site.data.keyword.iot_short_notm}} tab**, check for new entires in the **Recent Events** section.
   ![](images/solution16/recent_events_with_phone.png)
 
-## Display live data in IBM Watson IoT Platform
+## Display live data in IBM {{site.data.keyword.iot_short_notm}}
 {: #createcards}
 Next, you will create a board and cards to display device data in the dashboard. For more information about boards and cards, see [Visualizing real-time data by using boards and cards](https://console.ng.bluemix.net/docs/services/IoT/data_visualization.html).
 
 ### Create a board
 {: #createboard}
 
-1. Open the **IBM Watson IoT Platform dashboard**.
+1. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 2. Select **Boards** from the left menu, and then click **Create New Board**.
 3. Enter a name for the board, `Simulators` as example,  and click **Next** and then **Create**.  
 4. Select the board that you just created to open it.
@@ -109,12 +109,12 @@ Next, you will create a board and cards to display device data in the dashboard.
 5. In the Card Preview page, select **L** for the line chart size, and click **Next** > **Submit**
 6. The  card appears on the dashboard and includes a line chart of the live temperature data.
 7. Use your mobile phone browser to launch the simulator again and slowly tilt the phone forward and backward.
-8. Back in the **IBM Watson IoT Platform tab**, you should see the chart getting updated.
+8. Back in the **IBM {{site.data.keyword.iot_short_notm}} tab**, you should see the chart getting updated.
    ![](images/solution16/board.png)
 
 ## Store historical data in Cloudant DB
-1. Go to the [**IBM Cloud Catalog**](https://console.bluemix.net/catalog/) and create a new [Cloudant NoSQL Database](https://console.bluemix.net/catalog/services/cloudant-nosql-db) named `iot-db`.
-2. Open the **IBM Watson IoT Platform dashboard**.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and create a new [Cloudant NoSQL Database](https://console.bluemix.net/catalog/services/cloudant-nosql-db) named `iot-db`.
+2. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 3. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
 4. Select the `iot-db` Cloudant database.
 5. Enter `devicedata` for **Database Name** and click **Done**.
@@ -127,17 +127,24 @@ Your device data is now saved in Cloudant. Launch the Cloudant dashboard to see 
 ## Detect Anomalies using Machine Learning
 {: #data_experience}
 
-In this section, you will use the Jupyter Notebook that is available in the IBM Data Science Experience service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
+In this section, you will use the Jupyter Notebook that is available in the IBM {{site.data.keyword.DSX_short}} service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
 
-![](images/solution16/DSX.png)
+![](images/solution16/watson_studio.png)
 
 ### Create a new project
-1. Go to the [**IBM Cloud Catalog**](https://console.bluemix.net/catalog/) and under **Data & Analytics**, select [**Data Science Experience**](https://console.bluemix.net/catalog/services/data-science-experience).
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **Watson**, select [**{{site.data.keyword.DSX_short}}**](https://console.bluemix.net/catalog/services/data-science-experience).
+
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
-3. Create a **New Project** and enter `Detect Anomaly` as the **Name**.
-4. Create and select **Object Storage** and **Spark** services. **Refresh**
-  ![](images/solution16/define_storage.png)
-5. **Create**.
+
+3. Create a **New Project** > Select **Jupyter Notebooks** and enter `Detect Anomaly` as the **Name**.
+
+   ![](images/solution16/new_project.png)
+
+4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
+
+5. Under **Define Storage**, Click on **Add** and choose an existing object storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
+
+6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Connection to CloudantDB for data
 
@@ -146,9 +153,16 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 3. Check the **Credentials** then click **Create**
 
 ### Create a jupyter(ipynb) notebook
-1. Click **New notebook** > **From URL**
-2. Enter `Anomaly-detection-sample` for the **Name**.
-3. Enter `https://raw.githubusercontent.com/IBM-Cloud/iot-device-phone-simulator/master/anomaly-detection/Anomaly-detection-DSX.ipynb` in the URL.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **Data & Analytics**, select [**Apache Spark**](https://console.bluemix.net/catalog/services/apache-spark?bss_account=3d40d897302501f3391c73e3029701f3&taxonomyNavigation=data) Lite Plan > Click **Create**.
+
+2. Navigate to http://dataplatform.ibm.com, Open the project you created above. Under **Assets** in your project, Click **New notebook** > **From URL**.
+
+3. Enter `Anomaly-detection-sample` for the **Name**.
+
+4. Enter `https://raw.githubusercontent.com/IBM-Cloud/iot-device-phone-simulator/master/anomaly-detection/Anomaly-detection-DSX.ipynb` in the URL.
+
+5. Select the Apache Spark you created above as your runtime.
+
 4. **Create Notebook**.
 
    Check that the notebook is created with metadata and code.
@@ -174,7 +188,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
     You can change the time interval of interest to desired time of the day. Look for `start` and `end` values.
     {:tip}
 
-    ![Jupyter Notebook DSX](images/solution16/anomaly_detection_dsx.png)
+    ![Jupyter Notebook DSX](images/solution16/anomaly_detection_watson_studio.png)
 6. Along with anomaly detection, the key findings or takeaways from this section are
     * Usage of Spark to prepare the data for visualization.
     * Usage of Pandas for data visualization
@@ -190,8 +204,14 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
 ## Related Content
 
-* Overview of [IBM Data Science Experience](https://datascience.ibm.com/docs/content/getting-started/architecture.html?context=analytics)
+* Solution tutorial - [Build, deploy, test, and retrain a predictive machine learning model](https://console.bluemix.net/docs/tutorials/create-deploy-retrain-machine-learning-model.html#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
+
+* Overview of [IBM {{site.data.keyword.DSX_short}}](https://datascience.ibm.com/docs/content/getting-started/overview-ws.html?context=analytics)
+
 * Anomaly Detection [Jupyter Notebook](https://github.com/IBM-Cloud/iot-device-phone-simulator/blob/master/anomaly-detection/Anomaly-detection-DSX.ipynb)
+
 * Understanding z-score - [wikipedia](https://en.wikipedia.org/wiki/Standard_score)
+
 * Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://www.ibm.com/developerworks/analytics/library/iot-deep-learning-anomaly-detection-1/index.html?ca=drs-)
+
 

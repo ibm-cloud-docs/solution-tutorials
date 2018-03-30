@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-07"
+lastupdated: "2018-03-31"
 
 ---
 
@@ -74,7 +74,7 @@ In this section, we are going to set up the needed services and prepare the envi
 
 6. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
 
-   One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions.
+   One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
 
    ```bash
    sh setup.sh
@@ -132,7 +132,7 @@ In order to integrate Slack and Facebook Messenger with {{site.data.keyword.conv
    The output mainly shows the action code. That code, in its text, includes keywords like **user**, **password** or **icfcreds**. Now the Slackbot is fully deployed and ready for use.
 
 ## Test the Slackbot and learn
-Open up your Slack workspace for a test drive of the chatbot.
+Open up your Slack workspace for a test drive of the chatbot. Begin a direct chat with the bot.
 
 1. Type **help** into the messaging form. The bot should respond with some guidance.
 2. Now enter **new event** to start gathering data for a new event record. We use {{site.data.keyword.conversationshort}} slots to collect all the necessary input.
