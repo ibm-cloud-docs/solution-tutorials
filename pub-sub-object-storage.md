@@ -98,33 +98,59 @@ IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic
 3. Click **Create Bucket**.
 4. Set the bucket name to `mybucket` and click **Create**.
 5. Bind this service to your cluster by binding the service instance to the `default` Kubernetes namespace.
- ```
+ ```sh
  bx resource service-alias-create myobjectstorage --instance-name myobjectstorage
  bx cs cluster-service-bind mycluster default myobjectstorage
  ```
 
 ## Deploy the UI application to the cluster
 
-1. Clone the sample application repository locally and change directory to the `webapp` folder.
-```sh
-  git clone https://github.com/IBM-Cloud/pub-sub-demo
-```
-{: pre}
+The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to MessageHub topic "work-topic" that a new file is ready to be processed. 
 
+1. Clone the sample application repository locally and change directory to the `pubsub-ui` folder.
+```sh
+  git clone https://github.com/rvennam/pub-sub-storage-processing
+  cd pubsub-ui
+```
 2. Deploy the application. This command generates a docker images, pushes it to your IBM Cloud Container Registry and then creates a Kubernetes deployment.
 ```sh
 bx dev deploy -t container
 ```
-3. Visit the application and upload a test document.
+3. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open. 
+
+   ![](images/solution25/files_uploaded.png)
 
 ## Deploy the worker application to the cluster
 
-1. Build the docker image and push it to your IBM Container Registry.
+The worker application is a Java application which listens to the Message Hub Kafka "work-topic" topic for messages. On a new message, the worker will retreive the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the "result-work" topic upon completion. The UI application will listen this topic and update the status.
+
+1. Change dir to the `pubsub-worker` directory
 ```sh
-docker build -t registry.ng.bluemix.net/<yournamespace>/myworkerapp worker
-docker push registry.ng.bluemix.net/<yournamespace>/myworkerapp
+cd ../pubsub-worker
 ```
-3. Deploy the application.
+2. Deploy the worker application.
+
 ```
-kubectl create -f worker-deployment.yml
+bx dev deploy -t container
 ```
+
+3. After deployment completes, check the browser again. Note that the files were processed by the workers. 
+
+![](images/solution25/files_processed.png)
+
+## Clean up Resources
+
+Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and delete:
+
+1. Kubernetes cluster `mycluster`
+2. Cloud Object Storage `myobjectstorage`
+3. Message Hub `mymessagehub`
+
+## Related information
+
+[IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
+
+[Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
+
+
+
