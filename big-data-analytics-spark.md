@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-02-28"
+lastupdated: "2018-03-31"
 
 ---
 
@@ -37,7 +37,7 @@ First, we need to provision the services we are using for this tutorial and crea
 You can provision services for  {{site.data.keyword.Bluemix_short}} from the dashboard and catalog. Another way is to use {{site.data.keyword.DSX_short}}. It allows to directly create Data & Analytics services from within its dashboard.
 {:tip}   
 
-1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) navigate to the [**Data & Analytics** section](https://console.bluemix.net/catalog/?category=data). Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
+1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) navigate to the **Watson** section. Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
 2. In the dashboard, click on the **New project** tile. In the **Name** field, enter `1stProject` as new name. You can leave the description empty.
 3. On the right side of the page, there are sections to **Define storage** and **Define compute engine**. If you already had provisioned storage or compute services, they should  be shown and selected. If not, click on **Add** and follow the instructions in the new browser tab. Once done with the service creation, click **Refresh** to see the new service.
 4. Once all necessary information is filled in, you can click on **Create**. The project is created and you are taken to the project overview.  
@@ -77,7 +77,8 @@ In another browser tab go to the [Community](https://dataplatform.ibm.com/commun
 
 3. For the last of three data sets, load a list of country names and their ISO codes from a collection of open data sets on Github:   
    ```Python
-  df_countries = pixiedust.sampleData('https://raw.githubusercontent.com/datasets/country-list/master/data.csv')
+     df_countries = pixiedust.sampleData('https://raw.githubusercontent.com/datasets/country-list/master/data.csv')
+   ```
   ```
   {:codeblock}
   Copy the code into the next empty notebook cell and run it.
@@ -92,7 +93,7 @@ After the data is made available, transform it slightly and combine the three se
    df_pop = sqlContext.sql("SELECT `Country or Area` as Country, Year, Value as Population FROM PopTable")
    df_pop.createOrReplaceTempView('population')
    df_pop.printSchema()
-   ```
+  ```
    {:codeblock}
 2. Repeat the same for the Life Expectancy data. Instead of printing the schema, this code will print first 10 rows.  
    ```Python

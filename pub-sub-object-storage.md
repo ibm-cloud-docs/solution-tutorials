@@ -99,6 +99,7 @@ IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic
 4. Set the bucket name to `mybucket` and click **Create**.
 5. Bind this service to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```
+ bx resource service-alias-create myobjectstorage --instance-name myobjectstorage
  bx cs cluster-service-bind mycluster default myobjectstorage
  ```
 
@@ -109,15 +110,12 @@ IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic
   git clone https://github.com/IBM-Cloud/pub-sub-demo
 ```
 {: pre}
-2. Build the docker image and push it to your IBM Container Registry.
+
+2. Deploy the application. This command generates a docker images, pushes it to your IBM Cloud Container Registry and then creates a Kubernetes deployment.
 ```sh
-docker build -t registry.ng.bluemix.net/<yournamespace>/mywebapp webapp
-docker push registry.ng.bluemix.net/<yournamespace>/mywebapp
+bx dev deploy -t container
 ```
-3. Deploy the application.
-```
-kubectl create -f fibonacci-deployment.yml
-```
+3. Visit the application and upload a test document.
 
 ## Deploy the worker application to the cluster
 
@@ -128,5 +126,5 @@ docker push registry.ng.bluemix.net/<yournamespace>/myworkerapp
 ```
 3. Deploy the application.
 ```
-kubectl create -f fibonacci-deployment.yml
+kubectl create -f worker-deployment.yml
 ```
