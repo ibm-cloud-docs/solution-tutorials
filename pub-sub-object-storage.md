@@ -138,7 +138,7 @@ bx dev deploy -t container
 
 ![](images/solution25/files_processed.png)
 
-In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be Cloud Functions. Applications running on kubernetes are ideal for long running and intensive workloads. 
+In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be [Cloud Functions](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on kubernetes are ideal for long running and intensive workloads, where as Cloud Functions would be a better fit for short lived processes. 
 
 ## Clean up Resources
 
@@ -152,4 +152,8 @@ Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and delete:
 
 [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
 
+[IBM Message Hub](https://console.bluemix.net/docs/services/MessageHub/index.html#messagehub)
+
 [Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
+
+[Message Hub data processing with IBM Cloud Functions](https://github.com/IBM/openwhisk-data-processing-message-hub)
