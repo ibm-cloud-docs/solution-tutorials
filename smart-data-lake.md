@@ -14,19 +14,19 @@ lastupdated: "2018-04-03"
 
 # Build a smart data lake
 
-In this tutorial, you will create a data lake for your organization using {{site.data.keyword.cosdimshort_notm}}. By combining {{site.data.keyword.cosdimshort_notm}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to create rich charts and visualizations. When you're done with your analysis, you can share your datasets with the rest of the organization securely through Knowledge Catalog.
+In this tutorial, you will create a data lake for your organization using {{site.data.keyword.cos_full_notm}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to create rich charts and visualizations. When you're done with your analysis, you can share your datasets with the rest of the organization securely through Knowledge Catalog.
 
 ## Objectives
 
-- Use {{site.data.keyword.cosdimshort_notm}} to store raw data files
-- Query data directly from {{site.data.keyword.cosdimshort_notm}} using SQL Query
+- Use {{site.data.keyword.cos_short}} to store raw data files
+- Query data directly from {{site.data.keyword.cos_short}} using SQL Query
 - Refine and visualize data in {{site.data.keyword.knowledgestudiofull}}
 - Catalog and share data across your organization with Knowledge Catalog
 
 
 ## Services used
 
-  * [{{site.data.keyword.cosdimshort_notm}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
+  * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
   * [SQL Query](https://console.bluemix.net/catalog/services/sql-query)
   * [{{site.data.keyword.knowledgestudiofull}}](https://console.bluemix.net/catalog/services/watson-studio)
   * [Knowledge Catalog](https://console.bluemix.net/catalog/services/knowledge-catalog)
@@ -47,7 +47,7 @@ bx login
 bx target --cf
 ```
 
-2. Create an instance of {{site.data.keyword.cosdimshort_notm}}. {{site.data.keyword.cosdimshort_notm}} stores your raw data files and intermediate data sets created by other services.
+2. Create an instance of {{site.data.keyword.cos_short}}. {{site.data.keyword.cos_short}} stores your raw data files and intermediate data sets created by other services.
 ```sh
 bx resource service-instance-create data-lake-cos cloud-object-storage lite global
 ```
@@ -68,9 +68,9 @@ bx service create datacatalog Lite data-lake-catalog
 ```
 
 ## Uploading data
-In this section, you will begin to upload data to a {{site.data.keyword.cosdimshort_notm}} bucket using built-in {{site.data.keyword.CHSTSshort}}.
+In this section, you will begin to upload data to a {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}.
 
-1. Export the **IAM token:  Bearer** token. The token is needed to execute {{site.data.keyword.cosdimshort_notm}} APIs. 
+1. Export the **IAM token:  Bearer** token. The token is needed to execute {{site.data.keyword.cos_short}} APIs. 
 
 ```sh
 bx iam oauth-tokens
@@ -80,7 +80,7 @@ bx iam oauth-tokens
 export IAM_TOKEN=<REPLACE_WITH_TOKEN>
 ```
 
-2. Obtain the IBM Service Instance ID also used with {{site.data.keyword.cosdimshort_notm}} APIs. (The Service Instance ID begins with `crn:`.)
+2. Obtain the IBM Service Instance ID also used with {{site.data.keyword.cos_short}} APIs. (The Service Instance ID begins with `crn:`.)
 
 ```sh
 bx resource service-instance data-lake-cos
@@ -108,7 +108,7 @@ curl -o traffic-los-angeles.csv https://data.lacity.org/api/views/d5tf-ez2w/rows
 
 You could contine to upload the file directly to the bucket using cURL, but this does not benefit from [{{site.data.keyword.CHSTSshort}} features](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/). {:tip: .tip}
 
-5. In your browser, access the {{site.data.keyword.cosdimshort_notm}} **data-lake-cos** service instance from the [Storage dashboard](https://console.bluemix.net/dashboard/storage).
+5. In your browser, access the {{site.data.keyword.cos_short}} **data-lake-cos** service instance from the [Storage dashboard](https://console.bluemix.net/dashboard/storage).
  - From **Buckets**, select your bucket name.
  - Click the **Add objects** button.
  - Select the **Aspera high-speed transfer** radio button.
@@ -117,7 +117,7 @@ You could contine to upload the file directly to the bucket using cURL, but this
 
 ## Working with data
 
-In this section, you will use SQL Query to manipulate your data where it resides in {{site.data.keyword.cosdimshort_notm}}.
+In this section, you will use SQL Query to manipulate your data where it resides in {{site.data.keyword.cos_short}}.
 
 1. Access the **data-lake-sql** SQL Query service instance from your [Dashboard](https://console.bluemix.net/dashboard/apps).
 
@@ -145,11 +145,11 @@ WHERE
 
  - Replace the URL in the `FROM` clause with your bucket's name.
 
-4. The **Target** will auto-create a {{site.data.keyword.cosdimshort_notm}} bucket to hold the result. Change the **Target** to `cos://us-south/<your-bucket-name>/results`.
+4. The **Target** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result. Change the **Target** to `cos://us-south/<your-bucket-name>/results`.
 
 5. Click the **Run** button. The results will appear below.
 
-6. On the **Query Details** tab, click the **Launch** icon next after the **Result Location** URL to view the intermediate data set that is now also stored on {{site.data.keyword.cosdimshort_notm}}.
+6. On the **Query Details** tab, click the **Launch** icon next after the **Result Location** URL to view the intermediate data set that is now also stored on {{site.data.keyword.cos_short}}.
 
 ## Combine Jupyter Notebooks with SQL Query
 
@@ -174,7 +174,7 @@ import ibmcloudsql
 import pixiedust
 ```
 
-3. Add a {{site.data.keyword.cosdimshort_notm}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cosdimshort_notm}}.
+3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
  - Add the following in the next **In [ ]:** prompt and then **Run**.
 
 ```python
@@ -207,7 +207,7 @@ bx resource service-instance data-lake-sql
 ```
  - Paste the CRN between the single quotes and then **Run**.
 
-5. Add another variable to the Notebook to specify the {{site.data.keyword.cosdimshort_notm}} bucket and **Run**.
+5. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
 
 ```python
 sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
@@ -292,7 +292,7 @@ display(traffic_location)
 
 4. Add `latitude` and `longitude` to **Keys**. Add `id` and `age` to **Values**. Click **OK** to view the map.
 
-5. Click the **Save** icon to save your Notebook to {{site.data.keyword.cosdimshort_notm}}.
+5. Click the **Save** icon to save your Notebook to {{site.data.keyword.cos_short}}.
 
 ## Share your dataset with the organization
 
