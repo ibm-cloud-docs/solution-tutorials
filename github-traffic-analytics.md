@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-04"
 
 ---
 
@@ -13,17 +13,7 @@ lastupdated: "2018-04-03"
 {:pre: .pre}
 
 # Github Traffic Analytics
-
-Overall flow:
-- Describe scenario
-- setup database to hold statistics and for multi-tenant user management
-- add App ID, add initial admin user
-- deploy Python app
-- add repo database
-- setup Cloud Functions to collect database
-- add DDE as analytics dashboarding to app
-
-Do we have to distinguish between local and cloud? Focus on cloud!
+In this tutorial, we are going to create an application to automatically collect Github traffic statistics for repositories. An app manages those repositories and allows view and analyze the traffic data.
 
 ![](images/solution24-github-traffic-analytics/Architecture.png)
 
@@ -35,13 +25,11 @@ Do we have to distinguish between local and cloud? Focus on cloud!
 * Integrate Dynamic Dashboard Embedded for graphical traffic analytics
 
 ## Products
-
 This tutorial uses the following products:
    * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
    * [{{site.data.keyword.dashdblong}}](https://console.bluemix.net/catalog/services/db2-warehouse)
    * [{{site.data.keyword.appid_long}}](https://console.bluemix.net/catalog/services/app-id)
    * [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
-   * Cloud Foundry Python runtime
 
 ## Before you begin
 {: #prereqs}
@@ -164,8 +152,26 @@ With the management app in place, we now deploy an action, a trigger and a rule 
    }
    ```
 
-
 ## Cleanup
+To clean up the resources used for this tutorial, you can delete the related services and app as well as the action, trigger and rule in the reverse order as created:
+
+1. Delete the {{site.data.keyword.openwhisk_short}} rule, trigger and action.
+   ```bash
+   bx wsk rule delete myStatsRule
+   bx wsk trigger delete myDaily
+   bx wsk action delete collectStats
+   ```
+   {:codeblock}   
+2. Delete the Python app and its services.
+   ```bash
+   bx service delete ghstatsAppID
+   bx service delete ghstatsDDE
+   bx service delete ghstatsDB
+   bx cf delete github-traffic-stats
+   ```
+   {:codeblock}   
+
+
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
