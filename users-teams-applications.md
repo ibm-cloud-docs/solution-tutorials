@@ -93,7 +93,6 @@ Although the three environments needed by this sample project require different 
   <img src="./images/solution20-users-teams-applications/one-environment.png" style="width: 80%;" />
 </p>
 
-
 Let's start by building the Development environment.
 
 1. [Select an {{site.data.keyword.cloud_notm}} region](https://console.bluemix.net/dashboard) where to deploy the environment
@@ -114,7 +113,6 @@ The following diagram shows where the project resources are created under the ac
 
 1. Invite users to the account
 1. Assign Policies to the users to control who can access the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://console.bluemix.net/docs/containers/cs_users.html#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://console.bluemix.net/docs/iam/groups.html#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
-
 1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://console.bluemix.net/docs/iam/cfaccess.html#cfaccess) to assign the right roles based on the environment.
 
 Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the IBM Cloud Monitoring service maps IAM roles to actions](https://console.bluemix.net/docs/services/cloud-monitoring/security_ov.html#iam_roles).
