@@ -102,9 +102,9 @@ After the preparation, we now deploy the management app to the IBM Cloud. The ap
    bx cf push
    ```
    {:codeblock}
-   Wait for the deployment to finish. Once the process finishes successfully, the application URI is displayed.
+   Wait for the deployment to finish. The application files are uploaded, the runtime environment created, and the services bound to the application. The service information is taken from the file `manifest.yml`. You need to update that file, if you used other service names. Once the process finishes successfully, the application URI is displayed.
 
-   The above command uses a random, but unique application name. If you want to pick one yourself, add it as additional parameter to the command: `bx cf push your-app-name`.
+   The above command uses a random, but unique application name. If you want to pick one yourself, add it as additional parameter to the command: `bx cf push your-app-name`. You could also edit the file `manifest.yml`, change the **name** and change **random-route** from **true** to **false**.
    {:tip}
 
 2. In a browser, open the URI of the deployed app. You should see a welcome page.
@@ -120,19 +120,49 @@ After the preparation, we now deploy the management app to the IBM Cloud. The ap
 5. Once done, you are taken to the list of managed repositories. You can now add repositories by providing the name of the Github account or organization and the name of the repository. After entering the data, click on **Add repository**. The repository, along with a newly assigned identifier, should appear in the table. You can remove repositories from the system by entering their ID and clicking **Delete repository**.
 
 ## Deploy Cloud Function and Trigger
+With the management app in place, we now deploy an action, a trigger and a rule to connect the two in for {{site.data.keyword.openwhisk_short}}. These objects are used to automatically collect the Github traffic data on the specified schedule. The action connects to the database, iterates over all tenants and their repositories and obtains the view and cloning data for each repository. Those statistics are merged into the database.
 
-Do each step on the command line and explain, don't use the script.
-
-1. Next, we are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
-
-   One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, we neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions.
-
+1. Change into the **functions** directory.
    ```bash
-   sh setup.sh
+   cd ../functions
+   ```
+   {:codeblock}   
+2. Create a new action **collectStats**. It uses a [Python 3 environment](https://console.bluemix.net/docs/openwhisk/openwhisk_reference.html#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
+   ```bash
+   bx wsk action create collectStats --kind python-jessie:3 ghstats.zip
    ```
    {:codeblock}   
 
-
+   If you modify the source code for the action (`__main__.py`), then you can repackage the zip archive with `zip -r ghstats.zip  __main__.py github.py` again. See the file `setup.sh` for details.
+   {:tip}
+3. Bind the action to the database service. We use the instance and the service key that we created during the environment setup.
+   ```bash
+   bx wsk service bind dashDB collectStats --instance ghstatsDB --key ghstatskey
+   ```
+   {:codeblock}   
+4. Create a trigger based on the [alarms package](https://console.bluemix.net/docs/openwhisk/openwhisk_alarms.html#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. We use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC.
+   ```bash
+   bx wsk trigger create mydaily --feed /whisk.system/alarms/alarm --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z" --param stopDate "2018-12-31T00:00:00.000Z"
+   ```
+  {:codeblock}   
+  You could change the trigger from a daily to a weekly schedule by using "0 6 * * 0". This would fire every Sunday at 6am.
+  {:tip}
+5. Finally, we create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
+   ```bash
+   bx wsk rule create myStatsRule myDaily collectStats
+   ```
+   {:codeblock}   
+6. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
+   ```bash
+   bx wsk action invoke collectStats  -r
+   ```
+   {:codeblock}   
+   The output will look like this:
+   ```
+   {
+       "repoCount": 18
+   }
+   ```
 
 
 ## Cleanup
@@ -141,8 +171,8 @@ Do each step on the command line and explain, don't use the script.
 Want to add to or change this tutorial? Here are some ideas:
 1. Expand multi-tenant support
 2. Add support for Github Enterprise
-3.
-4.
+3. foo
+4. bar
 
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.
