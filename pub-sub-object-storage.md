@@ -16,8 +16,8 @@ lastupdated: "2017-11-22"
 {:tip: .tip}
 {:pre: .pre}
 
-# Asynchronous Data Processing Media Using Pub/Sub Messaging
-In this tutorial, you will learn how to use messaging services to orchestrate long running workloads to worker applications running in a Kubernetes cluster. You will create a application which will asynchronously process user uploaded files.
+# Asynchronous data processing using pub/sub messaging
+In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. To simulate this use case, you will first create a UI application which will be used to upload files to object storage and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
 {:shortdesc}
 
 ## Products
@@ -26,17 +26,17 @@ In this tutorial, you will learn how to use messaging services to orchestrate lo
 This tutorial uses the following products:
 * Cloud Object Storage
 * MessageHub
-* Kubernetes
+* IBM Container Service
 
 <p style="text-align: center;">
 ![](images/solution25/Architecture.png)
 </p>
 
-1. The user uploads document using the UI application
-2. Document is saved in Cloud Object Storage
-3. Message is sent to MessageHub
-4. When ready, workers listen up message and begin processing files
-5. Workers send message when complete.
+1. The user uploads file using the UI application
+2. File is saved in Cloud Object Storage
+3. Message is sent to MessageHub topic
+4. When ready, workers listen for message and begin processing files
+5. Workers send message when complete
 
 ## Before you begin
 {: #prereqs}
@@ -105,7 +105,7 @@ IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic
 
 ## Deploy the UI application to the cluster
 
-The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to MessageHub topic "work-topic" that a new file is ready to be processed. 
+The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to MessageHub topic "work-topic" that a new file is ready to be processed.
 
 1. Clone the sample application repository locally and change directory to the `pubsub-ui` folder.
 ```sh
@@ -114,9 +114,9 @@ The UI application is a simple Node.js Express web application which allows the 
 ```
 2. Deploy the application. This command generates a docker images, pushes it to your IBM Cloud Container Registry and then creates a Kubernetes deployment.
 ```sh
-bx dev deploy -t container
+  bx dev deploy -t container
 ```
-3. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open. 
+3. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
 
    ![](images/solution25/files_uploaded.png)
 
@@ -134,9 +134,11 @@ cd ../pubsub-worker
 bx dev deploy -t container
 ```
 
-3. After deployment completes, check the browser again. Note that the files were processed by the workers. 
+3. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 
 ![](images/solution25/files_processed.png)
+
+In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be Cloud Functions. Applications running on kubernetes are ideal for long running and intensive workloads. 
 
 ## Clean up Resources
 
@@ -151,6 +153,3 @@ Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and delete:
 [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
 
 [Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
-
-
-
