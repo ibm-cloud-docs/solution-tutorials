@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2017
-lastupdated: "2017-11-22"
+  years: 2018
+lastupdated: "2018-05-07"
 
 ---
 
@@ -24,19 +24,18 @@ In this tutorial, you will learn how to use an Apache Kafka based messaging serv
 {: #products}
 
 This tutorial uses the following products:
-* Cloud Object Storage
-* MessageHub
-* IBM Container Service
+* {{site.data.keyword.cos_full_notm}}
+* {{site.data.keyword.messagehub}}
+* {{site.data.keyword.containershort_notm}}
 
 <p style="text-align: center;">
 ![](images/solution25/Architecture.png)
 </p>
 
 1. The user uploads file using the UI application
-2. File is saved in Cloud Object Storage
+2. File is saved in {{site.data.keyword.cos_full_notm}}
 3. Message is sent to MessageHub topic
 4. When ready, workers listen for message and begin processing files
-5. Workers send message when complete
 
 ## Before you begin
 {: #prereqs}
@@ -47,9 +46,9 @@ This tutorial uses the following products:
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
 
-1. Create a Kubernetes cluster from the [Catalog](https://console.bluemix.net/containers-kubernetes/launch). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **free** cluster of type **Lite**.
+1. Create a Kubernetes cluster from the [Catalog](https://console.bluemix.net/containers-kubernetes/launch). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster.
 
-   ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesClusterCreation.png)
+   ![Kubernetes Cluster Creation on IBM Cloud](images/solution25/KubernetesClusterCreation.png)
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 ### Configure kubectl
@@ -57,30 +56,28 @@ This tutorial uses the following products:
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
 1. Use `bx login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `bx target` command.
-
 2. When the cluster is ready, retrieve the cluster configuration:
    ```bash
    bx cs cluster-config <cluster-name>
    ```
    {: pre}
-
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
   `echo $KUBECONFIG`
-
 4. Check that the `kubectl` command is correctly configured
    ```bash
    kubectl cluster-info
    ```
+  {: pre}
    ![](images/solution2/kubectl_cluster-info.png)
 
-   {: pre}
+
 
  ## Create a MessageHub instance
  {: #create_messagehub}
 
- IBM Message Hub is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
+{{site.data.keyword.messagehub}} is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
 
- 1. From the dashboard, click on **Create resource** and select **Message Hub** from the Application Services section.
+ 1. From the Dashboard, click on [**Create resource**](https://console.bluemix.net/catalog/) and select [**{{site.data.keyword.messagehub}}**](https://console.bluemix.net/catalog/services/message-hub) from the Application Services section.
  2. Name the service `mymessagehub` and click **Create**.
  3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```
@@ -95,9 +92,9 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 
 {: #create_cos}
 
-IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. Cloud Object Storage provides flexible, cost-effective, and scalable cloud storage for unstructured data. Object Storage combined with a [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) allows you to store and serve ad payloads (images).
+{{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. Object Storage combined with a [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) allows you to store and serve ad payloads (images).
 
-1. From the dashboard, click on **Create resource** and select **Object Storage** from the Storage section.
+1. From the Dashboard, click on [**Create resource**](https://console.bluemix.net/catalog/) and select [**{{site.data.keyword.cos_short}}**](https://console.bluemix.net/catalog/services/cloud-object-storage) from the Storage section.
 2. Name the service `myobjectstorage` click **Create**.
 3. Click **Create Bucket**.
 4. Set the bucket name to `mywebsite` and click **Create**.
@@ -114,9 +111,9 @@ The UI application is a simple Node.js Express web application which allows the 
 1. Clone the sample application repository locally and change directory to the `pubsub-ui` folder.
 ```sh
   git clone https://github.com/rvennam/pub-sub-storage-processing
-  cd pubsub-ui
+  cd pub-sub-storage-processing/pubsub-ui
 ```
-2. Deploy the application. This command generates a docker images, pushes it to your IBM Cloud Container Registry and then creates a Kubernetes deployment.
+2. Deploy the application. This command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment.
 ```sh
   bx dev deploy -t container
 ```
@@ -126,7 +123,7 @@ The UI application is a simple Node.js Express web application which allows the 
 
 ## Deploy the worker application to the cluster
 
-The worker application is a Java application which listens to the Message Hub Kafka "work-topic" topic for messages. On a new message, the worker will retreive the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the "result-work" topic upon completion. The UI application will listen this topic and update the status.
+The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka "work-topic" topic for messages. On a new message, the worker will retreive the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the "result-work" topic upon completion. The UI application will listen this topic and update the status.
 
 1. Change dir to the `pubsub-worker` directory
 ```sh
@@ -142,22 +139,22 @@ bx dev deploy -t container
 
 ![](images/solution25/files_processed.png)
 
-In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be [Cloud Functions](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on kubernetes are ideal for long running and intensive workloads, where as Cloud Functions would be a better fit for short lived processes. 
+In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be [Cloud Functions](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on kubernetes are ideal for long running and intensive workloads, where as Cloud Functions would be a better fit for short lived processes.
 
 ## Clean up Resources
 
 Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and delete:
 
 1. Kubernetes cluster `mycluster`
-2. Cloud Object Storage `myobjectstorage`
-3. Message Hub `mymessagehub`
+2. {{site.data.keyword.cos_full_notm}} `myobjectstorage`
+3. {{site.data.keyword.messagehub}} `mymessagehub`
 
 ## Related information
 
 [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
 
-[IBM Message Hub](https://console.bluemix.net/docs/services/MessageHub/index.html#messagehub)
+[{{site.data.keyword.messagehub_full}}](https://console.bluemix.net/docs/services/MessageHub/index.html#messagehub)
 
 [Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
 
-[Message Hub data processing with IBM Cloud Functions](https://github.com/IBM/openwhisk-data-processing-message-hub)
+[{{site.data.keyword.messagehub}} data processing with IBM Cloud Functions](https://github.com/IBM/openwhisk-data-processing-message-hub)
