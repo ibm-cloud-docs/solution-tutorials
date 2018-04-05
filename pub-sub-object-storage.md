@@ -81,14 +81,18 @@ In this step, you'll configure kubectl to point to your newly created cluster go
  IBM Message Hub is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
 
  1. From the dashboard, click on **Create resource** and select **Message Hub** from the Application Services section.
- 2. Name the service `mymessagehub` and click `Create`.
- 3. Bind this service to your cluster by binding the service instance to the `default` Kubernetes namespace.
+ 2. Name the service `mymessagehub` and click **Create**.
+ 3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```
  bx cs cluster-service-bind mycluster default mymessagehub
  ```
 
+The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-mymessagehub`. See [Integrating Services](https://console.bluemix.net/docs/containers/cs_integrations.html#integrations) for more info
+
+{:tip}
 
 ## Create an Object Storage instance
+
 {: #create_cos}
 
 IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. Cloud Object Storage provides flexible, cost-effective, and scalable cloud storage for unstructured data. Object Storage combined with a [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) allows you to store and serve ad payloads (images).
@@ -96,8 +100,8 @@ IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic
 1. From the dashboard, click on **Create resource** and select **Object Storage** from the Storage section.
 2. Name the service `myobjectstorage` click **Create**.
 3. Click **Create Bucket**.
-4. Set the bucket name to `mybucket` and click **Create**.
-5. Bind this service to your cluster by binding the service instance to the `default` Kubernetes namespace.
+4. Set the bucket name to `mywebsite` and click **Create**.
+5. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```sh
  bx resource service-alias-create myobjectstorage --instance-name myobjectstorage
  bx cs cluster-service-bind mycluster default myobjectstorage
