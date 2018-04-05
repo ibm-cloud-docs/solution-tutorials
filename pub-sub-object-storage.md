@@ -127,16 +127,13 @@ The worker application is a Java application which listens to the {{site.data.ke
 
 1. Change dir to the `pubsub-worker` directory
 ```sh
-cd ../pubsub-worker
+  cd ../pubsub-worker
 ```
 2. Deploy the worker application.
-
 ```
-bx dev deploy -t container
+  bx dev deploy -t container
 ```
-
 3. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
-
 ![](images/solution25/files_processed.png)
 
 In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be [Cloud Functions](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on kubernetes are ideal for long running and intensive workloads, where as Cloud Functions would be a better fit for short lived processes.
