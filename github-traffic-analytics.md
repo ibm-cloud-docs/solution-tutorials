@@ -94,6 +94,7 @@ The following steps are all performed using your Internet browser.
 
    For testing the app locally, the redirect URL would be `http://0.0.0.0:5000/redirect_uri`. You can configure multiple redirect URLs.
    {:tip}
+   
    ![](images/solution24-github-traffic-analytics/ManageIdentityProviders.png)
 4. In the menu on the left, click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Add User** button to add yourself as the first user. We are now done configuring the {{site.data.keyword.appid_short}} service.
 5. Later on, we are collecting traffic statistics for Github repositories. This can be done for repositories for which you have **push** privileges. In order to access your Github account from the program code, we need a **Github access token**. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You will need it during the following application setup.
