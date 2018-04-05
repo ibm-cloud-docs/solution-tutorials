@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-29"
+lastupdated: "2018-04-05"
 
 ---
 
@@ -458,6 +458,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #ml }
 
 <div class = "solutionBoxContainer">
+    <div class = "solutionBox">
+        <h3 id="github-traffic-analytics.html" class="solutionBoxTitle">
+            <a href = "github-traffic-analytics.html">Automatically collect and analyze traffic data for Github repositories</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>Automatically collect traffic statistics for Github repositories. Github only provides access to the traffic data for the last 14 days. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution to manage repositories, automatically collect traffic data on a daily or weekly schedule, and to view and analyze the collected data.</p>
+                    <span class="tag-filter category">Db2 Warehouse</span>
+                    <span class="tag-filter category">App ID</span>
+                    <span class="tag-filter category">IBM Cloud Functions</span>
+                    <span class="tag-filter category">Github</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution24/Architecture.png" />
+            </div>
+        </div>
+    </div>
     <div class = "solutionBox">
         <h3 id="create-deploy-retrain-machine-learning-model.html" class="solutionBoxTitle">
             <a href = "create-deploy-retrain-machine-learning-model.html">Build, deploy, test, and retrain a predictive machine learning model</a>

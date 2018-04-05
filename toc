@@ -7,7 +7,7 @@ Solution Tutorials
     {: .navgroup id="learn"}
     index.md
     {: .navgroup-end}
-
+    
     {: .navgroup id="howto"}
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
@@ -30,6 +30,7 @@ Solution Tutorials
     gather-visualize-analyze-iot-data.md
     slack-chatbot-database-watson.md
     users-teams-applications.md
+    github-traffic-analytics.md
     create-deploy-retrain-machine-learning-model.md
     big-data-analytics-spark.md
     {: .navgroup-end}
