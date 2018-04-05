@@ -85,7 +85,7 @@ In this section, we are going to set up the needed services and prepare the envi
 
 ## Load the conversation workspace
 In this part of the tutorial we are going to load a pre-defined workspace into the {{site.data.keyword.conversationshort}} service.
-1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net) open the overview of your services. Locate the instance of the conversation service created in the previous section. Click on its entry to open the service details.
+1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry to open the service details.
 2. Click on **Launch Tool** to get to the {{site.data.keyword.conversationshort}} Tool.
 3. In the tool click on the **Import workspace** icon, right next to the **Create** button.
 4. In the popup dialog select the file **conversation-workspace.json** from the local directory. Leave the import option at **Everything (Intents, Entities, and Dialog)**, then click **Import**. This creates a new conversation workspace named **SlackBot**.

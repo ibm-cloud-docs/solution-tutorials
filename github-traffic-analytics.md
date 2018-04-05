@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-04"
+lastupdated: "2018-04-05"
 
 ---
 
@@ -13,7 +13,7 @@ lastupdated: "2018-04-04"
 {:pre: .pre}
 
 # Github Traffic Analytics
-In this tutorial, we are going to create an application to automatically collect Github traffic statistics for repositories. An app manages those repositories and allows view and analyze the traffic data.
+In this tutorial, we are going to create an application to automatically collect Github traffic statistics for repositories and provide the foundation for traffic analytics. Github only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution to manage repositories, automatically collect traffic data on a daily or weekly schedule, and to view and analyze the collected data.
 
 ![](images/solution24-github-traffic-analytics/Architecture.png)
 
@@ -91,6 +91,10 @@ The following steps are all performed using your Internet browser.
 1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service created in the previous section. Click on its entry to open the service details.
 2. In the service dashboard, click on **Manage** under **Identity Providers** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory from **Off** to **On**.
 3. At the bottom of that page is the list of redirect URLs. Add the application URI combined with `/redirect_uri` to the list. Make sure that **https** is used in the URL if the app uses it. This is the case for applications hosted at subdomains of **mybluemix.net**. If your app name would be **github-traffic-stats-my-app.mybluemix.net**, then enter `https://github-traffic-stats-my-app.mybluemix.net/redirect_uri`.
+
+   For testing the app locally, the redirect URL would be `http://0.0.0.0:5000/redirect_uri`. You can configure multiple redirect URLs.
+   {:tip}
+   ![](images/solution24-github-traffic-analytics/ManageIdentityProviders.png)
 4. In the menu on the left, click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Add User** button to add yourself as the first user. We are now done configuring the {{site.data.keyword.appid_short}} service.
 5. Later on, we are collecting traffic statistics for Github repositories. This can be done for repositories for which you have **push** privileges. In order to access your Github account from the program code, we need a **Github access token**. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You will need it during the following application setup.
    ![](images/solution24-github-traffic-analytics/GithubAccessToken.png)
@@ -101,15 +105,14 @@ After the preparation, we configure and test the app. The app is written in Pyth
 
 1. In a browser, open the URI of the deployed app. You should see a welcome page.
    ![](images/solution24-github-traffic-analytics/WelcomeScreen.png)
-   TODO: REPLACE once finalized
 
 2. In the browser, add `/admin/initialize-app` to the URI and access the page. It is used to initialize the application and its data. Click on the button **Start initialization**. This will take you to a password-protected configuration page. The email address you log in with is taken as identification for the system administrator.
 
 3. In the configuration page, enter a name (it is used for greetings), your Github user name and the access token that you generated before. Click on **Initialize**. This creates the database tables and inserts some configuration values. Finally, it creates database records for the system administrator and a tenant.
    ![](images/solution24-github-traffic-analytics/InitializeApp.png)
-   TODO: REPLACE once finalized
 
 4. Once done, you are taken to the list of managed repositories. You can now add repositories by providing the name of the Github account or organization and the name of the repository. After entering the data, click on **Add repository**. The repository, along with a newly assigned identifier, should appear in the table. You can remove repositories from the system by entering their ID and clicking **Delete repository**.
+![](images/solution24-github-traffic-analytics/RepositoryList.png)
 
 ## Deploy Cloud Function and Trigger
 With the management app in place, we now deploy an action, a trigger and a rule to connect the two in for {{site.data.keyword.openwhisk_short}}. These objects are used to automatically collect the Github traffic data on the specified schedule. The action connects to the database, iterates over all tenants and their repositories and obtains the view and cloning data for each repository. Those statistics are merged into the database.
@@ -155,6 +158,8 @@ With the management app in place, we now deploy an action, a trigger and a rule 
        "repoCount": 18
    }
    ```
+7. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories.
+   ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 ## Cleanup
 To clean up the resources used for this tutorial, you can delete the related services and app as well as the action, trigger and rule in the reverse order as created:
@@ -178,19 +183,17 @@ To clean up the resources used for this tutorial, you can delete the related ser
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
-1. Expand multi-tenant support
-2. Add support for Github Enterprise
-3. foo
-4. bar
+1. Expand the app for multi-tenant support
+2. Integrate a charting for the data
+3. Use social identity providers.
+4. Add a date picker to the statistics page to filter displayed data.
+5. Use a custom login page for {{site.data.keyword.appid_short}}
 
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.
 
-Blogs:
-*
-*
-
 Documentation and SDKs:
 * [{{site.data.keyword.openwhisk_short}} documentation](https://console.bluemix.net/docs/openwhisk/openwhisk_about.html#about-cloud-functions)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-*
+* [{{site.data.keyword.appid_short}} documentation](https://console.bluemix.net/docs/services/appid/index.html#gettingstarted)
+* [Python runtime on IBM Cloud](https://console.bluemix.net/docs/runtimes/python/index.html#python_runtime)
