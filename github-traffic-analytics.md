@@ -187,6 +187,7 @@ Want to add to or change this tutorial? Here are some ideas:
 2. Integrate a charting for the data
 3. Use social identity providers.
 4. Add a date picker to the statistics page to filter displayed data.
+5. Use a custom login page for {{site.data.keyword.appid_short}}
 
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.
@@ -194,5 +195,5 @@ Here are links to additional information on the topics covered in this tutorial.
 Documentation and SDKs:
 * [{{site.data.keyword.openwhisk_short}} documentation](https://console.bluemix.net/docs/openwhisk/openwhisk_about.html#about-cloud-functions)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [{{site.data.keyword.appid_short} documentation](https://console.bluemix.net/docs/services/appid/index.html#gettingstarted)
+* [{{site.data.keyword.appid_short}} documentation](https://console.bluemix.net/docs/services/appid/index.html#gettingstarted)
 * [Python runtime on IBM Cloud](https://console.bluemix.net/docs/runtimes/python/index.html#python_runtime)
