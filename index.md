@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-05"
+lastupdated: "2018-04-06"
 
 ---
 
@@ -471,7 +471,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Github</span>
             </div>
             <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution24/Architecture.png" />
+                <img class="architectureDiagram" src = "images/solution24-github-traffic-analytics/Architecture.png" />
             </div>
         </div>
     </div>

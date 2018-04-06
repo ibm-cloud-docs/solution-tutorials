@@ -295,7 +295,7 @@
               "name": "Automatically collect and analyze traffic data for Github repositories",
               "url": "github-traffic-analytics.html",
               "description": "Automatically collect traffic statistics for Github repositories. Github only provides access to the traffic data for the last 14 days. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution to manage repositories, automatically collect traffic data on a daily or weekly schedule, and to view and analyze the collected data.",
-              "imgSrc": "images/solution24/Architecture.png",
+              "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
               "tags": [
                   "Db2 Warehouse",
                   "App ID",
