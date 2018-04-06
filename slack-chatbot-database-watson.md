@@ -18,6 +18,8 @@ In this tutorial, we are going to build a Slackbot to create and search Db2 data
 
 The  [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) uses {{site.data.keyword.openwhisk_short}} and {{site.data.keyword.cloudantfull}}. The chatbot interacts with the Db2 database through {{site.data.keyword.conversationshort}}. All (not much) function code is using Node.js, but other programming languages can be used to deliver the same.
 
+Note that deploying to Slack is not available in all regions. Please check [this part of the {{site.data.keyword.conversationshort}} documentation](https://console.bluemix.net/docs/services/conversation/conversation-connector.html#deploying-to-a-channel-with-the-conversation-connector) for details on availability before you begin.
+
 ![](images/solution19/SlackbotArchitecture.png)
 
 ## Objectives
