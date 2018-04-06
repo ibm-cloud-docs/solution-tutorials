@@ -159,7 +159,7 @@ With the management app in place, we now deploy an action, a trigger and a rule 
        "repoCount": 18
    }
    ```
-7. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories.
+7. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories. You could enter a date and an organization name and then sort by viewcount to list the top scorers for a particular day.
    ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 ## Cleanup
