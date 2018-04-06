@@ -156,6 +156,24 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
+        <h3 id="pub-sub-object-storage.html" class="solutionBoxTitle">
+            <a href = "pub-sub-object-storage.html">Asynchronous data processing using object storage and pub/sub messaging</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Node.js</span>
+                    <span class="tag-filter category">Java</span>
+                    <span class="tag-filter category">Message hub</span>
+                    <span class="tag-filter category">Cloud Object Storage</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution25/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
         <h3 id="lamp-stack.html" class="solutionBoxTitle">
             <a href = "lamp-stack.html">Web application on LAMP stack</a>
         </h3>

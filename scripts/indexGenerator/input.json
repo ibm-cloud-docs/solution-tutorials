@@ -69,6 +69,19 @@
                 ]
             },
             {
+              "name": "Asynchronous data processing using object storage and pub/sub messaging",
+              "url": "pub-sub-object-storage.html",
+              "description": "Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.",
+              "imgSrc": "images/solution25/Architecture.png",
+              "tags": [
+                  "Kubernetes",
+                  "Node.js",
+                  "Java",
+                  "Message hub",
+                  "Cloud Object Storage"
+              ]
+            },
+            {
                 "name": "Web application on LAMP stack",
                 "url": "lamp-stack.html",
                 "description": "This tutorial walks you through the creation of an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP (the LAMP stack). To see the LAMP server in action, you will install and configure the WordPress open source application.",
