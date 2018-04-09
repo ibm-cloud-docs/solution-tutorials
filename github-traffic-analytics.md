@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-06"
+lastupdated: "2018-04-09"
 
 ---
 
@@ -68,21 +68,19 @@ In this section, we are going to set up the needed services and prepare the envi
    bx service create appID "Graduated tier" ghstatsAppID
    ```
    {:codeblock}
-   TODO: May need service key
 6. Create an instance of the {{site.data.keyword.dynamdashbemb_short}} service using the **lite** plan.
    ```
    bx service create dynamic-dashboard-embedded lite ghstatsDDE
    ```
    {:codeblock}
-   TODO: May need service key
-7. In the **backend** directory, push the application to the IBM Cloud. The command uses a random application name.
+7. In the **backend** directory, push the application to the IBM Cloud. The command uses a random route for your application.
    ```bash
    bx cf push
    ```
    {:codeblock}
    Wait for the deployment to finish. The application files are uploaded, the runtime environment created, and the services bound to the application. The service information is taken from the file `manifest.yml`. You need to update that file, if you used other service names. Once the process finishes successfully, the application URI is displayed.
 
-   The above command uses a random, but unique application name. If you want to pick one yourself, add it as additional parameter to the command: `bx cf push your-app-name`. You could also edit the file `manifest.yml`, change the **name** and change **random-route** from **true** to **false**.
+   The above command uses a random, but unique route for the application. If you want to pick one yourself, add it as additional parameter to the command, e.g., `bx cf push your-app-name`. You could also edit the file `manifest.yml`, change the **name** and change **random-route** from **true** to **false**.
    {:tip}
 
 ## App ID and Github configuration (browser)
@@ -133,12 +131,12 @@ With the management app in place, we now deploy an action, a trigger and a rule 
    {:tip}
 3. Bind the action to the database service. We use the instance and the service key that we created during the environment setup.
    ```bash
-   bx wsk service bind dashDB collectStats --instance ghstatsDB --key ghstatskey
+   bx wsk service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
    ```
    {:codeblock}   
 4. Create a trigger based on the [alarms package](https://console.bluemix.net/docs/openwhisk/openwhisk_alarms.html#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. We use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC.
    ```bash
-   bx wsk trigger create mydaily --feed /whisk.system/alarms/alarm --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z" --param stopDate "2018-12-31T00:00:00.000Z"
+   bx wsk trigger create myDaily --feed /whisk.system/alarms/alarm --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z" --param stopDate "2018-12-31T00:00:00.000Z"
    ```
   {:codeblock}   
   You could change the trigger from a daily to a weekly schedule by using "0 6 * * 0". This would fire every Sunday at 6am.
