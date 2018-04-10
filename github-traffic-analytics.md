@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-09"
+lastupdated: "2018-04-10"
 
 ---
 
@@ -12,16 +12,16 @@ lastupdated: "2018-04-09"
 {:tip: .tip}
 {:pre: .pre}
 
-# Github Traffic Analytics
-In this tutorial, we create an application to automatically collect Github traffic statistics for repositories and provide the foundation for traffic analytics. Github only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution to manage repositories, automatically collect traffic data on a daily or weekly schedule, and to view and analyze the collected data.
+# GitHub Traffic Analytics
+In this tutorial, you create an application to automatically collect GitHub traffic statistics for repositories and provide the foundation for traffic analytics. GitHub only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution to manage repositories, automatically collect traffic data on a daily or weekly schedule, and to view and analyze the collected data.
 
 ![](images/solution24-github-traffic-analytics/Architecture.png)
 
 ## Objectives
 
 * Deploy Python database app with multi-tenant support
-* Integrate App ID as openID Connect-based authentication provider
-* Set up automated, serverless collection of Github traffic statistics
+* Integrate App ID as OpenID Connect-based authentication provider
+* Set up automated, serverless collection of GitHub traffic statistics
 * Integrate Dynamic Dashboard Embedded for graphical traffic analytics
 
 ## Products
@@ -37,10 +37,9 @@ This tutorial uses the following products:
 To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/index.html#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/extend_cli.html#plug-ins).
 
 ## Service and Environment Setup (shell)
-In this section, we are going to set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
+In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
 
-1. Clone the [Github repository](https://github.com/IBM-Cloud/github-traffic-stats) and navigate into the cloned directory and its **backend** subdirectory:
-
+1. Clone the [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) and navigate into the cloned directory and its **backend** subdirectory:
    ```bash
    git clone https://github.com/IBM-Cloud/github-traffic-stats
    cd github-traffic-stats/backend
@@ -50,20 +49,18 @@ In this section, we are going to set up the needed services and prepare the envi
 2. Use `bx login` to log in interactively into . You can reconfirm the details by running `bx target` command.
 
 3. Create a {{site.data.keyword.dashdbshort}} instance with the **Entry** plan and name it **ghstatsDB**:
-
    ```
    bx service create dashDB Entry ghstatsDB
    ```
    {:codeblock}
-   You can also use another than the **Entry** plan.
 
-4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, we need the authorization. Thus, we create service credentials and label them **ghstatskey**:   
+4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **ghstatskey**:   
    ```
    bx service key-create ghstatsDB ghstatskey
    ```
    {:codeblock}
 
-5. Create an instance of the {{site.data.keyword.appid_short}} service. We use **ghstatsAppID** as name. Use the offered **Graduated tier** plan.
+5. Create an instance of the {{site.data.keyword.appid_short}} service. Use **ghstatsAppID** as name and the **Graduated tier** plan.
    ```
    bx service create appID "Graduated tier" ghstatsAppID
    ```
@@ -83,7 +80,7 @@ In this section, we are going to set up the needed services and prepare the envi
    The above command uses a random, but unique route for the application. If you want to pick one yourself, add it as additional parameter to the command, e.g., `bx cf push your-app-name`. You could also edit the file `manifest.yml`, change the **name** and change **random-route** from **true** to **false**.
    {:tip}
 
-## App ID and Github configuration (browser)
+## App ID and GitHub configuration (browser)
 The following steps are all performed using your Internet browser.
 
 1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service created in the previous section. Click on its entry to open the service details. If the page is almost empty and showing a text **alias of**, then click on the link of that alias. It brings you to the correct service dashboard.
@@ -94,27 +91,27 @@ The following steps are all performed using your Internet browser.
    {:tip}
 
    ![](images/solution24-github-traffic-analytics/ManageIdentityProviders.png)
-4. In the menu on the left, click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Add User** button to add yourself as the first user. We are now done configuring the {{site.data.keyword.appid_short}} service.
-5. Later on, we are collecting traffic statistics for Github repositories. This can be done for repositories for which you have **push** privileges. In order to access your Github account from the program code, we need a **Github access token**. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You will need it during the following application setup.
+4. In the menu on the left, click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Add User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
+5. Later on, you collect traffic statistics for GitHub repositories. This can be done for repositories for which you have **push** privileges. In order to access your GitHub account from the program code, you need a **GitHub access token**. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You will need it during the following application setup.
    ![](images/solution24-github-traffic-analytics/GithubAccessToken.png)
 
 
 ## Configure and test Python app
-After the preparation, we configure and test the app. The app is written in Python using the popular [Flask](http://flask.pocoo.org/) microframework. Using the application, repositories can be added to and removed from statistics collection. The traffic data can be accessed in a tabular view.
+After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](http://flask.pocoo.org/) microframework. Using the application, repositories can be added to and removed from statistics collection. The traffic data can be accessed in a tabular view.
 
 1. In a browser, open the URI of the deployed app. You should see a welcome page.
    ![](images/solution24-github-traffic-analytics/WelcomeScreen.png)
 
 2. In the browser, add `/admin/initialize-app` to the URI and access the page. It is used to initialize the application and its data. Click on the button **Start initialization**. This will take you to a password-protected configuration page. The email address you log in with is taken as identification for the system administrator. Use the email address and password that you configured earlier.
 
-3. In the configuration page, enter a name (it is used for greetings), your Github user name and the access token that you generated before. Click on **Initialize**. This creates the database tables and inserts some configuration values. Finally, it creates database records for the system administrator and a tenant.
+3. In the configuration page, enter a name (it is used for greetings), your GitHub user name and the access token that you generated before. Click on **Initialize**. This creates the database tables and inserts some configuration values. Finally, it creates database records for the system administrator and a tenant.
    ![](images/solution24-github-traffic-analytics/InitializeApp.png)
 
-4. Once done, you are taken to the list of managed repositories. You can now add repositories by providing the name of the Github account or organization and the name of the repository. After entering the data, click on **Add repository**. The repository, along with a newly assigned identifier, should appear in the table. You can remove repositories from the system by entering their ID and clicking **Delete repository**.
+4. Once done, you are taken to the list of managed repositories. You can now add repositories by providing the name of the GitHub account or organization and the name of the repository. After entering the data, click on **Add repository**. The repository, along with a newly assigned identifier, should appear in the table. You can remove repositories from the system by entering their ID and clicking **Delete repository**.
 ![](images/solution24-github-traffic-analytics/RepositoryList.png)
 
 ## Deploy Cloud Function and Trigger
-With the management app in place, we now deploy an action, a trigger and a rule to connect the two in for {{site.data.keyword.openwhisk_short}}. These objects are used to automatically collect the Github traffic data on the specified schedule. The action connects to the database, iterates over all tenants and their repositories and obtains the view and cloning data for each repository. Those statistics are merged into the database.
+With the management app in place, deploy an action, a trigger and a rule to connect the two in for {{site.data.keyword.openwhisk_short}}. These objects are used to automatically collect the GitHub traffic data on the specified schedule. The action connects to the database, iterates over all tenants and their repositories and obtains the view and cloning data for each repository. Those statistics are merged into the database.
 
 1. Change into the **functions** directory.
    ```bash
@@ -129,19 +126,20 @@ With the management app in place, we now deploy an action, a trigger and a rule 
 
    If you modify the source code for the action (`__main__.py`), then you can repackage the zip archive with `zip -r ghstats.zip  __main__.py github.py` again. See the file `setup.sh` for details.
    {:tip}
-3. Bind the action to the database service. We use the instance and the service key that we created during the environment setup.
+3. Bind the action to the database service. Use the instance and the service key that you created during the environment setup.
    ```bash
    bx wsk service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
    ```
    {:codeblock}   
-4. Create a trigger based on the [alarms package](https://console.bluemix.net/docs/openwhisk/openwhisk_alarms.html#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. We use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC.
+4. Create a trigger based on the [alarms package](https://console.bluemix.net/docs/openwhisk/openwhisk_alarms.html#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC.
    ```bash
    bx wsk trigger create myDaily --feed /whisk.system/alarms/alarm --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z" --param stopDate "2018-12-31T00:00:00.000Z"
    ```
   {:codeblock}   
+
   You could change the trigger from a daily to a weekly schedule by using "0 6 * * 0". This would fire every Sunday at 6am.
   {:tip}
-5. Finally, we create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
+5. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
    ```bash
    bx wsk rule create myStatsRule myDaily collectStats
    ```
