@@ -71,7 +71,7 @@ To begin, you will create {{site.data.keyword.conversationshort}} service on IBM
 6. Click **Import workspace** ![](images/solution28-watson-chatbot-android/import_icon.png) icon and choose the JSON file downloaded above.
    ![](images/solution28-watson-chatbot-android/import_workspace.png)
 7. Select **Everything** option and click **Import**. A new workspace is created with predefined intents, entities and dialog flow. 
-8. On the left pane, click on ![](images/solution28-watson-chatbot-android/workspaces_icon.png) icon to see all your workspaces.Click ![icon](/Users/VMac/Documents/VMAC/Code/Github-Enterprise/solutions/images/solution28-watson-chatbot-android/workspace_more.png) icon on the `Ana` workspace to **View details** of the workspace. Copy and save the `Workspace ID` for future reference.
+8. On the left pane, click on ![](images/solution28-watson-chatbot-android/workspaces_icon.png) icon to see all your workspaces.Click ![](images/solution28-watson-chatbot-android/workspace_more.png) icon on the `Ana` workspace to **View details** of the workspace. Copy and save the `Workspace ID` for future reference.
 
 ## Define an intent
 
