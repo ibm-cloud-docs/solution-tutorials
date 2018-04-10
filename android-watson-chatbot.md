@@ -53,8 +53,7 @@ This tutorial uses the following products:
 
 {: #prereqs}
 
-- [Android Studio![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html)
-- [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+- Download and install [Android Studio![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html)
 
 ## Create a workspace
 
@@ -177,14 +176,12 @@ The repository contains Android application code with required gradle dependenci
 3. Open `app/src/main/res/values/config.xml` to see the placeholders for service credentials.
 4. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
 5. Build the project and Start the application on a real device or with a simulator.
+ <p style="text-align: center; width:200">
    ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)
+ </p>
 6. To convert the text to speech, just tap on any conversation.
 7. To change the voice, edit lines 185 and 187 of `mainactivity.java`
-
- <p style="text-align: center;">
    ![](images/solution28-watson-chatbot-android/android_studio.png)
- </p>
-   
 8. Click on the **mic** icon in the left bottom corner of the app to input speech as an input that gets converted to text.
 
 ## Add mobile analytics to track usage
