@@ -30,8 +30,8 @@ This tutorial walks you through the process of defining intents and entities and
 - Define an intent
 - Define an entity
 - Build the dialog flow
-- Get and configure the Android app
 - Create {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services
+- Get and configure the Android app
 - Add mobile analytics to track usage
 
 ## Products
@@ -175,7 +175,20 @@ The repository contains Android application code with required gradle dependenci
    ```
 2. Launch the code in Android Studio and wait for the gradle build to complete without any errors.
 3. Open `app/src/main/res/values/config.xml` to see the placeholders for service credentials.
-4. Enter the service credentials in their respective placeholders and save the file.
+4. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
+5. Build the project and Start the application on a real device or with a simulator.
+   ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)
+6. To convert the text to speech, just tap on any conversation.
+7. To change the voice, edit lines 185 and 187 of `mainactivity.java`
+
+ <p style="text-align: center;">
+   ![](images/solution28-watson-chatbot-android/android_studio.png)
+ </p>
+   
+8. Click on the **mic** icon in the left bottom corner of the app to input speech as an input that gets converted to text.
+
+## Add mobile analytics to track usage
+
 
 ## Clean up resources
 {:#cleanup}
