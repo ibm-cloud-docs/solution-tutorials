@@ -30,8 +30,8 @@ This tutorial walks you through the process of defining intents and entities and
 - Define an intent
 - Define an entity
 - Build the dialog flow
-- Enable Speech to Text
-- Enable Text to Speech
+- Get and configure the Android app
+- Create {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services
 - Add mobile analytics to track usage
 
 ## Products
@@ -62,22 +62,22 @@ This tutorial uses the following products:
 
 To begin, you will create {{site.data.keyword.conversationshort}} service on IBM Cloud and add a workspace. A workspace is a container for the artifacts that define the conversation flow. Download the JSON with predefined intents,entities and dialog flow.
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.conversationshort}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation) service > Lite plan under **Watson**. Click **Create**.
-2. Click on **Launch tool** to see the {{site.data.keyword.conversationshort}} dashboard.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.conversationshort}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation) service > **Lite** plan under **Watson**. Click **Create**.
+2. Click **Service credentials** on the left pane and add a **New credential**.
+3. Click **View Credentials** to see the credentials. Save the credentials in a text editor for quick reference.
+4. Navigate to **Manage** on the left pane, Click on **Launch tool** to see the {{site.data.keyword.conversationshort}} dashboard.
    ![](images/solution28-watson-chatbot-android/watson_assistant_launch_tool.png)
-
-3. Click on **Workspaces** tab.
-4. Click on **Import workspace** ![](images/solution28-watson-chatbot-android/import_icon.png) icon and choose the JSON file downloaded above.
+5. Click on **Workspaces** tab.
+6. Click on **Import workspace** ![](images/solution28-watson-chatbot-android/import_icon.png) icon and choose the JSON file downloaded above.
    ![](images/solution28-watson-chatbot-android/import_workspace.png)
-
-5. Select **Everything** option and click **Import**.
-6. A new workspace is created with predefined intents, entities and dialog flow.
+7. Select **Everything** option and click **Import**. A new workspace is created with predefined intents, entities and dialog flow. 
+8. On the left pane, click on ![](images/solution28-watson-chatbot-android/workspaces_icon.png) icon to see all your workspaces.Click ![icon](/Users/VMac/Documents/VMAC/Code/Github-Enterprise/solutions/images/solution28-watson-chatbot-android/workspace_more.png) icoon on the `Ana` workspace to **View details** of the workspace. Copy ans save the `Workspace ID` for future reference.
 
 ## Define an intent
 
 {:#define_intent}
 
-An intent represents the purpose of a user's input, such as answering a question or processing a bill payment. You define an intent for each type of user request you want your application to support.By recognizing the intent expressed in a user's input, the Watson Assistant service can choose the correct dialog flow for responding to it.
+An intent represents the purpose of a user's input, such as answering a question or processing a bill payment. You define an intent for each type of user request you want your application to support.By recognizing the intent expressed in a user's input, the Watson Assistant service can choose the correct dialog flow for responding to it. In the tool, the name of an intent is always prefixed with the `#` character. 
 
 Simply put, intents are the intentions of the end-user. The following are examples of intent names.
  - `#weather_conditions`
@@ -85,21 +85,18 @@ Simply put, intents are the intentions of the end-user. The following are exampl
  - `#escalate_to_agent`
 
 1. Click on the newly create Workspace- **Ana**.
-  
+
    Ana is an insurance bot for users to query their health benefits and file claims.
    {:tip}
 2. Click on the first tab to see all the **Intents**.
-3. Click on **Add intent** to create a new intent. Enter `cancel_policy` as your intent name after `#`and provide an optional description.
+3. Click on **Add intent** to create a new intent. Enter `Cancel_Policy` as your intent name after `#`and provide an optional description.
    ![](images/solution28-watson-chatbot-android/add_intent.png)
 
 4. Click **Create intent**.
-5. Add user examples to cancel a policy
-
+5. Add user examples when requested to cancel a policy
    - `Procedure to cancel my policy`
    - `Drop my policy now`
-   - `How much is the penalty to cancel my car insurance policy early?`
    - `I wish to stop making payments on my policy.`
-
 6. Add user examples one after another and click **add example**. Repeat this for all the other user examples.
 
    Remember to add atleast 5 user examples to train your bot better.
@@ -115,12 +112,17 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 
 {:#define_entity}
 
-An entity represents a term or object that is relevant to your intents and that provides a specific context for an intent. You list the possible values for each entity and synonyms that users might enter. By recognizing the entities that are mentioned in the user's input, the Watson Assistant service can choose the specific actions to take to fulfill an intent.
+An entity represents a term or object that is relevant to your intents and that provides a specific context for an intent. You list the possible values for each entity and synonyms that users might enter. By recognizing the entities that are mentioned in the user's input, the Watson Assistant service can choose the specific actions to take to fulfill an intent.In the tool, the name of an entity is always prefixed with the `@` character.
+
+The following are examples of entity names
+ - `@location`
+ - `@menu_item`
+ - `@product`
 
 1. Click **Entities** tab to see the existing entities.
 2. Click **Add entity** and enter the name of the entity as `location` after `@`. Click **Create entity**.
 3. Enter `address` as the value name and select **Synonyms**.
-4. Add `place` as a synonym and click the ![](images/solution28-watson-chatbot-android/plus_icon.png)icon. Repeat with synonyms `office`,`centre` etc., and Click **Add Value**.
+4. Add `place` as a synonym and click the ![](images/solution28-watson-chatbot-android/plus_icon.png)icon. Repeat with synonyms `office`,`centre`,`branch` etc., and Click **Add Value**.
    ![](images/solution28-watson-chatbot-android/add_entity.png)
 5. Click **close** ![](images/solution28-watson-chatbot-android/close_icon.png) to save the changes.
 6. Click **System entities** tab to check the common entities created by IBM that could be used across any use case.
@@ -128,7 +130,60 @@ An entity represents a term or object that is relevant to your intents and that 
 
 ## Build the dialog flow
 
+{:#build_dialog}
 
+A dialog is a branching conversation flow that defines how your application responds when it 
+recognizes the defined intents and entities. You use the dialog builder in the tool to create conversations with users, providing responses based on the intents and entities that you recognize in their input.
+
+1. Click on **Dialog** tab to see the existing dialog flow with intents and entities.
+2. Click **Add node** to add a new node to the dialog. 
+3. Under **if bot recognizes:** on the right, enter `#Cancel_Policy`. 
+4. under **Then respond with:** , enter a response say `This facility is not available online. Please visit our nearest branch to cancel your policy.` 
+5. Click on ![](images/solution28-watson-chatbot-android/save_node.png) to close and save the node.
+6. Scroll to see `#greeting` node. Click on the node to see the details.
+   ![](images/solution28-watson-chatbot-android/build_dialog.png)
+7. Click the ![](images/solution28-watson-chatbot-android/add_condition.png) icon to **add a new condition**. Select `or` from the dropdown and enter `#General_Greetings` as the intent. **Then respond with section** shows the bot's response if the bot is greeted by the user.
+   ![](images/solution28-watson-chatbot-android/apply_condition.png)
+
+   A context variable is a variable that you define in a node, and optionally specify a default value for. Other nodes or application logic can subsequently set or change the value of the context variable.The application can pass information to the dialog, and the dialog can update this information and pass it back to the application, or to a 
+   subsequent node. The dialog does so by using context variables.
+   {:tip}
+
+8. Test the dialog flow by clicking ![](images/solution28-watson-chatbot-android/ask_watson.png)
+
+## Create {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services 
+
+{:#create_speech_services}
+
+The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on IBM Cloud.
+
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://console.bluemix.net/catalog/services/speech-to-text) service > **Lite** plan under **Watson**. Click **Create**.
+
+2. Click **Service credentials** on the left pane and add a **New credential**.
+
+3. Click **View Credentials** to see the credentials and save the credentials in a text editor.
+
+4. Repeat steps 1 to 3 to create [{{site.data.keyword.texttospeechshort}}](https://console.bluemix.net/catalog/services/text-to-speech) service.The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation.
+
+    It is available in several voices and can be configured in the Android app which you will configure in the next step.
+
+## Get and configure the Android app
+
+{:#get_configure_android_app}
+
+The repository contains Android application code with required gradle dependencies
+
+1. Run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/chatbot-watson-android)
+
+   ```bash
+   git clone https://github.com/IBM-Cloud/chatbot-watson-android
+   ```
+
+2. Launch the code in Android Studio and wait for the gradle build to complete without any errors.
+
+3. Open`app/src/main/res/values/config.xml` to see the placeholders for service credentials.
+
+4. Enter the service credentials in their respective placeholders and save the file.
 ## Clean up resources
 
 
@@ -136,3 +191,4 @@ An entity represents a term or object that is relevant to your intents and that 
 ## Related information
 
 - [Planning your Intents and Entities](https://console.bluemix.net/docs/services/conversation/intents-entities.html#planning-your-entities)
+- [Context Variables](https://console.bluemix.net/docs/services/conversation/dialog-runtime.html#context)
