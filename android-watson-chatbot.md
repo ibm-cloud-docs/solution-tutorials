@@ -1,9 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-09"
-
-
+lastupdated: "2018-04-10"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -31,7 +29,7 @@ This tutorial walks you through the process of defining intents and entities and
 - Create a workspace
 - Define an intent
 - Define an entity
-- Build a dialog flow
+- Build the dialog flow
 - Enable Speech to Text
 - Enable Text to Speech
 - Add mobile analytics to track usage
@@ -55,6 +53,7 @@ This tutorial uses the following products:
 
 {: #prereqs}
 
+- [Android Studio![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html)
 - [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
 
 ## Create a workspace
@@ -68,7 +67,7 @@ To begin, you will create {{site.data.keyword.conversationshort}} service on IBM
    ![](images/solution28-watson-chatbot-android/watson_assistant_launch_tool.png)
 
 3. Click on **Workspaces** tab.
-4. Click on **Import workspace** ![](images/solution28-watson-chatbot-android/import_icon.png) icon and choose the JSON file downloaded above. 
+4. Click on **Import workspace** ![](images/solution28-watson-chatbot-android/import_icon.png) icon and choose the JSON file downloaded above.
    ![](images/solution28-watson-chatbot-android/import_workspace.png)
 
 5. Select **Everything** option and click **Import**.
@@ -78,17 +77,18 @@ To begin, you will create {{site.data.keyword.conversationshort}} service on IBM
 
 {:#define_intent}
 
-An intent represents the purpose of a user's input, such as answering a question or processing a bill payment. You define an intent for each type of user request you want your application to support.By recognizing the intent expressed in a user's input, the Watson Assistant service can choose the correct dialog flow for responding to it. 
+An intent represents the purpose of a user's input, such as answering a question or processing a bill payment. You define an intent for each type of user request you want your application to support.By recognizing the intent expressed in a user's input, the Watson Assistant service can choose the correct dialog flow for responding to it.
 
 Simply put, intents are the intentions of the end-user. The following are examples of intent names.
-    - `#weather_conditions`
-    - `#pay_bill`
-    - `#escalate_to_agent`
+ - `#weather_conditions`
+ - `#pay_bill`
+ - `#escalate_to_agent`
+
 1. Click on the newly create Workspace- **Ana**.
   
    Ana is an insurance bot for users to query their health benefits and file claims.
    {:tip}
-2. Click on the first tab to see all the **Intents**. 
+2. Click on the first tab to see all the **Intents**.
 3. Click on **Add intent** to create a new intent. Enter `cancel_policy` as your intent name after `#`and provide an optional description.
    ![](images/solution28-watson-chatbot-android/add_intent.png)
 
@@ -119,9 +119,14 @@ An entity represents a term or object that is relevant to your intents and that 
 
 1. Click **Entities** tab to see the existing entities.
 2. Click **Add entity** and enter the name of the entity as `location` after `@`. Click **Create entity**.
-3. Enter `address` as the value name and select **Synonyms**. 
-4. Add `place` as a synonym and click the ![](images/solution28-watson-chatbot-android/plus_icon.png)icon. Repeat with synonyms `office`,`centre`etc., and Click **Add Value**.
+3. Enter `address` as the value name and select **Synonyms**.
+4. Add `place` as a synonym and click the ![](images/solution28-watson-chatbot-android/plus_icon.png)icon. Repeat with synonyms `office`,`centre` etc., and Click **Add Value**.
    ![](images/solution28-watson-chatbot-android/add_entity.png)
+5. Click **close** ![](images/solution28-watson-chatbot-android/close_icon.png) to save the changes.
+6. Click **System entities** tab to check the common entities created by IBM that could be used across any use case.
+7. Toggle the **Status** from off to `on` for @sys-person and @sys-location system entities.
+
+## Build the dialog flow
 
 
 ## Clean up resources
