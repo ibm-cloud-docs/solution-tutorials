@@ -15,7 +15,7 @@ lastupdated: "2018-04-10"
 {:tip: .tip}
 {:pre: .pre}
 
-# Build a voice-enabled Android Chatbot
+# Build a voice-enabled Android Chatbot powered by Watson services
 
 Learn how easy it is to quickly create a voice-enabled Android native chatbot with Watson Assistant (formerly Conversation), Text-to-Speech, Speech-to-Text and mobile analytics services on IBM Cloud.
 
@@ -68,10 +68,10 @@ To begin, you will create {{site.data.keyword.conversationshort}} service on IBM
 4. Navigate to **Manage** on the left pane, Click on **Launch tool** to see the {{site.data.keyword.conversationshort}} dashboard.
    ![](images/solution28-watson-chatbot-android/watson_assistant_launch_tool.png)
 5. Click on **Workspaces** tab.
-6. Click on **Import workspace** ![](images/solution28-watson-chatbot-android/import_icon.png) icon and choose the JSON file downloaded above.
+6. Click **Import workspace** ![](images/solution28-watson-chatbot-android/import_icon.png) icon and choose the JSON file downloaded above.
    ![](images/solution28-watson-chatbot-android/import_workspace.png)
 7. Select **Everything** option and click **Import**. A new workspace is created with predefined intents, entities and dialog flow. 
-8. On the left pane, click on ![](images/solution28-watson-chatbot-android/workspaces_icon.png) icon to see all your workspaces.Click ![icon](/Users/VMac/Documents/VMAC/Code/Github-Enterprise/solutions/images/solution28-watson-chatbot-android/workspace_more.png) icoon on the `Ana` workspace to **View details** of the workspace. Copy ans save the `Workspace ID` for future reference.
+8. On the left pane, click on ![](images/solution28-watson-chatbot-android/workspaces_icon.png) icon to see all your workspaces.Click ![icon](/Users/VMac/Documents/VMAC/Code/Github-Enterprise/solutions/images/solution28-watson-chatbot-android/workspace_more.png) icon on the `Ana` workspace to **View details** of the workspace. Copy and save the `Workspace ID` for future reference.
 
 ## Define an intent
 
@@ -94,7 +94,7 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 
 4. Click **Create intent**.
 5. Add user examples when requested to cancel a policy
-   - `Procedure to cancel my policy`
+   - `I want to cancel my policy`
    - `Drop my policy now`
    - `I wish to stop making payments on my policy.`
 6. Add user examples one after another and click **add example**. Repeat this for all the other user examples.
@@ -145,8 +145,7 @@ recognizes the defined intents and entities. You use the dialog builder in the t
 7. Click the ![](images/solution28-watson-chatbot-android/add_condition.png) icon to **add a new condition**. Select `or` from the dropdown and enter `#General_Greetings` as the intent. **Then respond with section** shows the bot's response if the bot is greeted by the user.
    ![](images/solution28-watson-chatbot-android/apply_condition.png)
 
-   A context variable is a variable that you define in a node, and optionally specify a default value for. Other nodes or application logic can subsequently set or change the value of the context variable.The application can pass information to the dialog, and the dialog can update this information and pass it back to the application, or to a 
-   subsequent node. The dialog does so by using context variables.
+   A context variable is a variable that you define in a node, and optionally specify a default value for. Other nodes or application logic can subsequently set or change the value of the context variable.The application can pass information to the dialog, and the dialog can update this information and pass it back to the application, or to a subsequent node. The dialog does so by using context variables.
    {:tip}
 
 8. Test the dialog flow by clicking ![](images/solution28-watson-chatbot-android/ask_watson.png)
@@ -158,11 +157,8 @@ recognizes the defined intents and entities. You use the dialog builder in the t
 The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on IBM Cloud.
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://console.bluemix.net/catalog/services/speech-to-text) service > **Lite** plan under **Watson**. Click **Create**.
-
 2. Click **Service credentials** on the left pane and add a **New credential**.
-
 3. Click **View Credentials** to see the credentials and save the credentials in a text editor.
-
 4. Repeat steps 1 to 3 to create [{{site.data.keyword.texttospeechshort}}](https://console.bluemix.net/catalog/services/text-to-speech) service.The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation.
 
     It is available in several voices and can be configured in the Android app which you will configure in the next step.
@@ -174,21 +170,18 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 The repository contains Android application code with required gradle dependencies
 
 1. Run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/chatbot-watson-android)
-
    ```bash
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
-
 2. Launch the code in Android Studio and wait for the gradle build to complete without any errors.
-
-3. Open`app/src/main/res/values/config.xml` to see the placeholders for service credentials.
-
+3. Open `app/src/main/res/values/config.xml` to see the placeholders for service credentials.
 4. Enter the service credentials in their respective placeholders and save the file.
+
 ## Clean up resources
-
-
+{:#cleanup}
 
 ## Related information
+{:#related_content}
 
 - [Planning your Intents and Entities](https://console.bluemix.net/docs/services/conversation/intents-entities.html#planning-your-entities)
 - [Context Variables](https://console.bluemix.net/docs/services/conversation/dialog-runtime.html#context)
