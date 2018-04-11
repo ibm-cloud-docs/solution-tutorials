@@ -38,7 +38,7 @@ This tutorial walks you through the process of defining intents and entities and
 
 This tutorial uses the following products:
 
-- [{{site.data.keyword.conversationfull}}](https://console.bluemix.net/catalog/services/ServiceName)
+- [{{site.data.keyword.conversationfull}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation)
 - [{{site.data.keyword.speechtotextfull}}](https://console.bluemix.net/catalog/services/speech-to-text)
 - [{{site.data.keyword.texttospeechfull}}](https://console.bluemix.net/catalog/services/text-to-speech)
 - [{{site.data.keyword.mobileanalytics_full}}](https://console.bluemix.net/catalog/services/mobile-analytics)
@@ -57,7 +57,7 @@ This tutorial uses the following products:
 
 To begin, you will create {{site.data.keyword.conversationshort}} service on IBM Cloud and add a workspace. A workspace is a container for the artifacts that define the conversation flow. 
 
-Save the [JSON](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_workspace.json) with predefined intents,entities and dialog flow to your machine.
+Save the [Ana_workspace.json](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_workspace.json) file with predefined intents,entities and dialog flow to your machine.
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.conversationshort}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation) service > **Lite** plan under **Watson**. Click **Create**.
 2. Click **Service credentials** on the left pane and add a **New credential**.
