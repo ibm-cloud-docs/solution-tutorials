@@ -153,8 +153,7 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 2. Click **Service credentials** on the left pane and add a **New credential**.
 3. Click **View Credentials** to see the credentials and save the credentials in a text editor for future reference.
 4. Repeat steps 1 to 3 to create [{{site.data.keyword.texttospeechshort}}](https://console.bluemix.net/catalog/services/text-to-speech) service and save the credentials. The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation.
-
-    It is available in several voices and can be configured in the Android app which you will configure in the next step.
+    The service provides several voices and can be configured in the Android app.
 
 
 ## Configure and run the Android app
