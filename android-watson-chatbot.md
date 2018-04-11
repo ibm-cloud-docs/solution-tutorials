@@ -15,7 +15,7 @@ lastupdated: "2018-04-11"
 {:tip: .tip}
 {:pre: .pre}
 
-# Build a voice-enabled Android chatbot powered by Watson services
+# Build a voice-enabled Android chatbot
 
 Learn how easy it is to quickly create a voice-enabled Android native chatbot with Watson Assistant (formerly Conversation), Text-to-Speech, Speech-to-Text and mobile analytics services on IBM Cloud.
 
@@ -30,7 +30,7 @@ This tutorial walks you through the process of defining intents and entities and
 - Define an entity
 - Build the dialog flow
 - Create {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services
-- Get and configure the Android app
+- Configure and run the Android app
 - Add mobile analytics to track usage
 
 ## Products
@@ -44,7 +44,7 @@ This tutorial uses the following products:
 - [{{site.data.keyword.mobileanalytics_full}}](https://console.bluemix.net/catalog/services/mobile-analytics)
 
 <p style="text-align: center;">
-![]()
+![](images/solution28-watson-chatbot-android/architecture.png)
 </p>
 
 ## Before you begin
@@ -55,7 +55,9 @@ This tutorial uses the following products:
 ## Create a workspace
 {: #create_workspace}
 
-To begin, you will create {{site.data.keyword.conversationshort}} service on IBM Cloud and add a workspace. A workspace is a container for the artifacts that define the conversation flow. Download the JSON with predefined intents,entities and dialog flow.
+To begin, you will create {{site.data.keyword.conversationshort}} service on IBM Cloud and add a workspace. A workspace is a container for the artifacts that define the conversation flow. 
+
+Save the [JSON](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_workspace.json) with predefined intents,entities and dialog flow to your machine.
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.conversationshort}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation) service > **Lite** plan under **Watson**. Click **Create**.
 2. Click **Service credentials** on the left pane and add a **New credential**.
@@ -129,7 +131,7 @@ recognizes the defined intents and entities. You use the dialog builder in the t
 
 1. Click on **Dialog** tab to see the existing dialog flow with intents and entities.
 2. Click **Add node** to add a new node to the dialog. 
-3. Under **if bot recognizes:** on the right, enter `#Cancel_Policy`. 
+3. Under **if bot recognizes: **, enter `#Cancel_Policy`. 
 4. under **Then respond with:** , enter a response say `This facility is not available online. Please visit our nearest branch to cancel your policy.` 
 5. Click on ![](images/solution28-watson-chatbot-android/save_node.png) to close and save the node.
 6. Scroll to see `#greeting` node. Click on the node to see the details.
@@ -150,13 +152,13 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://console.bluemix.net/catalog/services/speech-to-text) service > **Lite** plan under **Watson**. Click **Create**.
 2. Click **Service credentials** on the left pane and add a **New credential**.
 3. Click **View Credentials** to see the credentials and save the credentials in a text editor for future reference.
-4. Repeat steps 1 to 3 to create [{{site.data.keyword.texttospeechshort}}](https://console.bluemix.net/catalog/services/text-to-speech) service.The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation.
+4. Repeat steps 1 to 3 to create [{{site.data.keyword.texttospeechshort}}](https://console.bluemix.net/catalog/services/text-to-speech) service and save the credentials. The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation.
 
     It is available in several voices and can be configured in the Android app which you will configure in the next step.
 
 
-## Get and configure the Android app
-{:#get_configure_android_app}
+## Configure and run the Android app
+{:#configure_run_android_app}
 
 The repository contains Android application code with required gradle dependencies
 
@@ -182,26 +184,19 @@ The repository contains Android application code with required gradle dependenci
 Using {{site.data.keyword.mobileanalytics_short}}, you can gain insight into how your Android chatbot is performing and how it is being used. 
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.mobileanalytics_short}}](https://console.bluemix.net/catalog/services/mobile-analytics) service > **Lite** plan under **Mobile**. Click **Create**.
-
 2. Click **Service credentials** on the left pane and add a **New credential**.
-
 3. Click **View Credentials** to see the credentials and copy the `apiKey` value.
-
 4. Open `app/src/main/res/values/config.xml` and update the `mobileanalytics_apikey` string value.
-
 5. On line 106 of `app/src/main/java/com/example/vmac/WatBot/MainActivity.java`, change the BMSClient region to the region in which the {{site.data.keyword.mobileanalytics_short}} service is created.
-
 6. Build and run the android chatbot app.
-
 7. Click **Manage** on {{site.data.keyword.mobileanalytics_short}} service dashboard to see Users, Sessions, Troubleshooting and other App Data.
-
    ![](images/solution28-watson-chatbot-android/mobile_analytics.png)
 
 
 ## Clean up resources
 {:#cleanup}
 
-1. Navigate to [Dashboard](https://console.bluemix.net/dashboard/) > choose the region, Org and space where you have created the services. 
+1. Navigate to [Dashboard,](https://console.bluemix.net/dashboard/) choose the region, org and space where you have created the services. 
 2. Under **Cloud Foundry Services**, delete the respective Watson and Mobile services which you created for this tutorial.
 3. Remember to clean up the credentials which you saved in the text editor for quick reference.
 
@@ -214,3 +209,4 @@ Using {{site.data.keyword.mobileanalytics_short}}, you can gain insight into how
 - [Monitoring the app with Mobile Analytics](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#monitoring-the-app-with-mobile-analytics-)
 - [Gathering information with slots](https://console.bluemix.net/docs/services/conversation/dialog-slots.html#dialog-slots)
 - [Deployment options](https://console.bluemix.net/docs/services/conversation/deploy.html#deployment-overview)
+- [Conversation Statistics](https://console.bluemix.net/docs/services/conversation/logs.html#about-the-improve-component)
