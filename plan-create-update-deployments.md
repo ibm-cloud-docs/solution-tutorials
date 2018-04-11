@@ -276,6 +276,7 @@ You can find the scripts for all roles in the *Development environment* under th
    ```sh
    bx
    ```
+   {: codeblock}
 
 ### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
 
@@ -290,6 +291,7 @@ You can find the scripts for all roles in the *Development environment* under th
      ibm = "/opt/provider/terraform-provider-ibm"
    }
    ```
+   {: codeblock}
 
 ### Get the code
 
@@ -298,6 +300,7 @@ If you have not done it yet, clone the tutorial repository:
    ```sh
    git clone https://github.com/IBM-Cloud/multiple-environments-as-code
    ```
+   {: codeblock}
 
 ### Set Platform API key
 
@@ -307,6 +310,7 @@ If you have not done it yet, clone the tutorial repository:
    ```sh
    cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
    ```
+   {: codeblock}
 1. Edit `terraform/credentials.tfvars` and set the value for `ibmcloud_api_key` to the Platform API key you obtained.
 
 ### Create a new organization
@@ -318,6 +322,7 @@ To create the parent organization of the three deployment environments, you need
    ```sh
    cp global.tfvars.tmpl global.tfvars
    ```
+   {: codeblock}
 1. Edit `global.tfvars`
    1. Set **org_name** to the organization name to create
    1. Set **org_managers** to a list of user IDs you want to grant the *Manager* role in the org - the user creating the org is automatically a manager and should not be added to the list
@@ -328,18 +333,22 @@ To create the parent organization of the three deployment environments, you need
    org_managers = [ "user1@domain.com", "another-user@anotherdomain.com" ]
    org_users = [ "user1@domain.com", "another-user@anotherdomain.com", "more-user@domain.com" ]
    ```
+   {: codeblock}
 1. Initialize Terraform from the `terraform/global` folder
    ```sh
    terraform init
    ```
+   {: codeblock}
 1. Look at the Terraform plan
    ```sh
    terraform plan -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
+   {: codeblock}
 1. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
+   {: codeblock}
 
 Once Terraform completes, it will have created:
 * a new Cloud Foundry organization
@@ -356,15 +365,29 @@ If you are not the account owner but you manage an organization in the account, 
    ```sh
    bx iam org <org_name> --guid
    ```
+   {: codeblock}
+1. Change to the `terraform/global` directory
+1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
+   ```sh
+   cp global.tfvars.tmpl global.tfvars
+   ```
+   {: codeblock}
+1. Initialize Terraform
+   ```sh
+   terraform init
+   ```
+   {: codeblock}
 1. After initializing Terraform, import the organization into the Terraform state
    ```sh
    terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization <guid>
    ```
-1. Tune `global.tfvars` if needed to match the existing organization structure
+   {: codeblock}
+1. Tune `global.tfvars` to match the existing organization structure
 1. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
+   {: codeblock}
 
 ### Create per-environment space, cluster and services
 
@@ -377,6 +400,7 @@ We will focus on the `development` environment. The steps will be the same for t
    cp testing.tfvars.tmpl testing.tfvars
    cp production.tfvars.tmpl production.tfvars
    ```
+   {: codeblock}
 1. Edit `development.tfvars`
    1. Set **environment_name** to the name of the Cloud Foundry space you want to create
    1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
@@ -384,38 +408,47 @@ We will focus on the `development` environment. The steps will be the same for t
       ```sh
       bx cs locations
       ```
+      {: codeblock}
    1. Set the private (**cluster_private_vlan_id**) and public (**cluster_public_vlan_id**) VLANs for the cluster. Find the available VLANs for the location with:
       ```sh
       bx cs vlans <location>
       ```
+      {: codeblock}
    1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
       ```sh
       bx cs machine-types <location>
       ```
+      {: codeblock}
 1. Initialize Terraform
    ```sh
    terraform init
    ```
+   {: codeblock}
 1. Create a new Terraform workspace for the *development* environment
    ```sh
    terraform workspace new development
    ```
+   {: codeblock}
    Later to switch between environments use
    ```sh
    terraform workspace select development
    ```
+   {: codeblock}
 1. Look at the Terraform plan
    ```sh
    terraform plan -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
+   {: codeblock}
    It should report:
    ```
    Plan: 7 to add, 0 to change, 0 to destroy.
    ```
+   {: codeblock}
 1. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
+   {: codeblock}
 
 Once Terraform completes, it will have created:
 * a Cloud Foundry space
@@ -455,16 +488,19 @@ The `iam/development` directory of the checkout has examples of these commands f
    cd terraform/per-environment
    terraform workspace select development
    ```
+   {: codeblock}
 1. Destroy the spaces, services, clusters
    ```sh
    terraform destroy -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
+   {: codeblock}
 1. Repeat the steps for the `testing` and `production` workspaces
 1. If you created it, destroy the organization
    ```sh
    cd terraform/global
    terraform destroy -var-file=../credentials.tfvars -var-file=global.tfvars
    ```
+   {: codeblock}
 
 ## Related information
 
