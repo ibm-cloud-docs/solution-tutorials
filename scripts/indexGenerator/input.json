@@ -268,15 +268,28 @@
             {
                 "name": "Build a database-driven Slackbot",
                 "url": "slack-chatbot-database-watson.html",
-                "description": "Build a database-driven Slackbot with IBM Watson Conversation. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.",
+                "description": "Build a database-driven Slackbot with IBM Watson Assistant. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.",
                 "imgSrc": "images/solution19/SlackbotArchitecture.png",
                 "tags": [
                     "Cloud Foundry",
-                    "IBM Watson Conversation",
+                    "IBM Watson Assistant",
                     "Cloudant NoSQL DB",
                     "Db2 Warehouse",
                     "IBM Cloud Functions",
                     "Slack"
+                ]
+            },
+            {
+                "name": "Build a voice-enabled Android chatbot",
+                "url": "android-watson-chatbot.html",
+                "description": "This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer's queries. You will learn how to enable speech to text and text to speech services for easy interaction with the Android app. Also, track the usage metrics through mobile analytics service.",
+                "imgSrc": "images/solution28-watson-chatbot-android/architecture.png",
+                "tags": [
+                    "IBM Watson Assistant",
+                    "Speech to Text",
+                    "Text to Speech",
+                    "Mobile Analytics",
+                    "Android"
                 ]
             }
         ]

@@ -17,9 +17,9 @@ lastupdated: "2018-04-11"
 
 # Build a voice-enabled Android chatbot
 
-Learn how easy it is to quickly create a voice-enabled Android native chatbot with Watson Assistant (formerly Conversation), Text-to-Speech, Speech-to-Text and mobile analytics services on IBM Cloud.
+Learn how easy it is to quickly create a voice-enabled Android native chatbot with Watson Assistant (formerly Conversation), Text to Speech, Speech to Text and mobile analytics services on IBM Cloud.
 
-This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer's queries. You will learn how to enable speech-to-text and text-to-speech services for easy interaction with the Android app. Also, track the usage metrics through mobile analytics service.
+This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer's queries. You will learn how to enable speech to text and text to speech services for easy interaction with the Android app. Also, track the usage metrics through mobile analytics service.
 {:shortdesc}
 
 ## Objectives

@@ -433,9 +433,9 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>Build a database-driven Slackbot with IBM Watson Conversation. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.</p>
+                <p>Build a database-driven Slackbot with IBM Watson Assistant. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">IBM Watson Conversation</span>
+                    <span class="tag-filter category">IBM Watson Assistant</span>
                     <span class="tag-filter category">Cloudant NoSQL DB</span>
                     <span class="tag-filter category">Db2 Warehouse</span>
                     <span class="tag-filter category">IBM Cloud Functions</span>
@@ -443,6 +443,24 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="android-watson-chatbot.html" class="solutionBoxTitle">
+            <a href = "android-watson-chatbot.html">Build a voice-enabled Android chatbot</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer&#x27;s queries. You will learn how to enable speech to text and text to speech services for easy interaction with the Android app. Also, track the usage metrics through mobile analytics service.</p>
+                    <span class="tag-filter category">IBM Watson Assistant</span>
+                    <span class="tag-filter category">Speech to Text</span>
+                    <span class="tag-filter category">Text to Speech</span>
+                    <span class="tag-filter category">Mobile Analytics</span>
+                    <span class="tag-filter category">Android</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" />
             </div>
         </div>
     </div>
