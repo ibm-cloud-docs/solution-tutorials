@@ -20,21 +20,21 @@ In this tutorial, you will create a data lake for your organization using {{site
 
 - Use {{site.data.keyword.cos_short}} to store raw data files
 - Query data directly from {{site.data.keyword.cos_short}} using SQL Query
-- Refine and analyze data in {{site.data.keyword.knowledgestudiofull}}
+- Refine and analyze data in {{site.data.keyword.DSX_full}}
 - Share data across your organization with {{site.data.keyword.dynamdashbemb_notm}}
 
 ## Services used
 
   * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
   * [SQL Query](https://console.bluemix.net/catalog/services/sql-query)
-  * [{{site.data.keyword.knowledgestudiofull}}](https://console.bluemix.net/catalog/services/watson-studio)
+  * [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio)
   * [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
 
 ![Architecture](images/solution29/architecture.png)
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}
 2. Data is reduced and refined with SQL Query
-3. Data analysis occurs in {{site.data.keyword.knowledgestudiofull}}
+3. Data analysis occurs in {{site.data.keyword.DSX}}
 4. Line of business accesses a web application
 5. Refined data is pulled from {{site.data.keyword.cos_short}}
 6. Line of business charts are built using {{site.data.keyword.dynamdashbemb_notm}}
@@ -76,7 +76,7 @@ bx resource service-instance-create data-lake-sql sql-query beta us-south
 ```
 {:pre: .pre}
 
-4. Create an instance of [{{site.data.keyword.knowledgestudiofull}}](https://console.bluemix.net/catalog/services/watson-studio).
+4. Create an instance of [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio).
 ```sh
 bx service create data-science-experience free-v1 data-lake-studio
 ```
@@ -216,8 +216,8 @@ WHERE
 
 In this section, you will create a SQL Query client within a Jupyter Notebook. This will allow you to create intermediate datasets that can be visualized.
 
-1. Create a new Jupyter Notebook in {{site.data.keyword.knowledgestudioshort}}.
- - In a browser, open [{{site.data.keyword.knowledgestudioshort}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
+1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
+ - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
  - Select the **New project** tile followed by **Jupyter Notebooks**.
  - Select **OK** and then provide a **Project name**.
  - Ensure **Storage** is set to **data-lake-cos**.
