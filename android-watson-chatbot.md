@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-11"
+lastupdated: "2018-04-12"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -87,7 +87,6 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 2. Click on the first tab to see all the **Intents**.
 3. Click on **Add intent** to create a new intent. Enter `Cancel_Policy` as your intent name after `#`and provide an optional description.
    ![](images/solution28-watson-chatbot-android/add_intent.png)
-
 4. Click **Create intent**.
 5. Add user examples when requested to cancel a policy
    - `I want to cancel my policy`
@@ -152,6 +151,7 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://console.bluemix.net/catalog/services/speech-to-text) service > **Lite** plan under **Watson**. Click **Create**.
 2. Click **Service credentials** on the left pane and add a **New credential**.
 3. Click **View Credentials** to see the credentials and save the credentials in a text editor for future reference.
+    ![](images/solution28-watson-chatbot-android/speech_to_text.png)
 4. Repeat steps 1 to 3 to create [{{site.data.keyword.texttospeechshort}}](https://console.bluemix.net/catalog/services/text-to-speech) service and save the credentials. The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation.
     The service provides several voices and can be configured in the Android app.
 
