@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-11"
 
 ---
 
@@ -12,33 +12,44 @@ lastupdated: "2018-04-03"
 {:tip: .tip}
 {:pre: .pre}
 
-# Build a smart data lake
+# Build a smart data lake using object storage
 
-In this tutorial, you will create a data lake for your organization using {{site.data.keyword.cos_full_notm}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to create rich charts and visualizations. When you're done with your analysis, you can share your datasets with the rest of the organization securely through Knowledge Catalog.
+In this tutorial, you will create a data lake for your organization using {{site.data.keyword.cos_full_notm}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to create their own charts using {{site.data.keyword.dynamdashbemb_notm}}.
 
 ## Objectives
 
 - Use {{site.data.keyword.cos_short}} to store raw data files
 - Query data directly from {{site.data.keyword.cos_short}} using SQL Query
-- Refine and visualize data in {{site.data.keyword.knowledgestudiofull}}
-- Catalog and share data across your organization with Knowledge Catalog
-
+- Refine and analyze data in {{site.data.keyword.knowledgestudiofull}}
+- Share data across your organization with {{site.data.keyword.dynamdashbemb_notm}}
 
 ## Services used
 
   * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
   * [SQL Query](https://console.bluemix.net/catalog/services/sql-query)
   * [{{site.data.keyword.knowledgestudiofull}}](https://console.bluemix.net/catalog/services/watson-studio)
-  * [Knowledge Catalog](https://console.bluemix.net/catalog/services/knowledge-catalog)
+  * [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
+
+![Dashboard Landing Page](/images/solution/architecture.png)
+
+1. Raw data is stored on {{site.data.keyword.cos_short}}
+2. Data is reduced and refined with SQL Query
+3. Data analysis occurs in {{site.data.keyword.knowledgestudiofull}}
+4. Line of business accesses a web application
+5. Refined data is pulled from {{site.data.keyword.cos_short}}
+6. Line of business charts are built using {{site.data.keyword.dynamdashbemb_notm}}
 
 ## Before you begin
 
-1. [Install Bluemix Command Line Tool](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-2. [Install cURL](https://curl.haxx.se/download.html)
-3. [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
+1. [Install Git](https://git-scm.com/)
+2. [Install Bluemix Command Line Tool](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+3. [Install cURL](https://curl.haxx.se/download.html)
+4. [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
 
 ## Create required services
 In this section, you will create the services required to build your smart data lake.
+
+This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links. {:tip: .tip}
 
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
 
@@ -46,26 +57,65 @@ In this section, you will create the services required to build your smart data 
 bx login
 bx target --cf
 ```
+{:pre: .pre}
 
-2. Create an instance of {{site.data.keyword.cos_short}}. {{site.data.keyword.cos_short}} stores your raw data files and intermediate data sets created by other services.
+2. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a `lite` service instance, use the `standard` plan.
 ```sh
 bx resource service-instance-create data-lake-cos cloud-object-storage lite global
 ```
+{:pre: .pre}
 
-3. Create an instance of SQL Query. SQL Query converts native data files (CSV or JSON) into SQL executable data sets.
+```sh
+bx resource service-alias-create dashboard-nodejs-cos --instance-name data-lake-cos
+```
+{:pre: .pre}
+
+3. Create an instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
 ```sh
 bx resource service-instance-create data-lake-sql sql-query beta us-south
 ```
+{:pre: .pre}
 
-4. Create an instance of {{site.data.keyword.knowledgestudiofull}}. {{site.data.keyword.knowledgestudioshort}} provides access to Jupyter Notebooks that contain live code, equations, visualizations and narrative text.
+4. Create an instance of [{{site.data.keyword.knowledgestudiofull}}](https://console.bluemix.net/catalog/services/watson-studio).
 ```sh
 bx service create data-science-experience free-v1 data-lake-studio
 ```
+{:pre: .pre}
 
-5. Create an instance of Knowledge Catalog. Knowledge Catalog is used to classify and govern access to data.
+5. Create an instance of {{site.data.keyword.dynamdashbemb_notm}} with a Cloud Foundry alias.
+
 ```sh
-bx service create datacatalog Lite data-lake-catalog
+bx resource service-instance-create data-lake-dde dynamic-dashboard-embedded lite us-south
 ```
+{:pre: .pre}
+
+```sh
+bx resource service-alias-create dashboard-nodejs-dde --instance-name data-lake-dde
+```
+{:pre: .pre}
+
+6. Change to a working directory and run the following command to clone the dashboard application's repository. Then push the application to your Cloud Foundy organization.
+```sh
+git clone https://github.ibm.com/van-staub/github-dashboard
+cd github-dashboard
+```
+{:pre: .pre}
+
+```sh
+npm install
+```
+{:pre: .pre}
+
+```sh
+npm run push
+```
+{:pre: .pre}
+
+After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `bx cf app dashboard-nodejs routes` to see routes. {: tip}
+
+7. Confirm the application is active by accessing its public URL in the browser.
+
+![Dashboard Landing Page](images/solution/dashboard-start.png)
 
 ## Uploading data
 In this section, you will begin to upload data to a {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}.
@@ -75,40 +125,47 @@ In this section, you will begin to upload data to a {{site.data.keyword.cos_shor
 ```sh
 bx iam oauth-tokens
 ```
+{:pre: .pre}
 
 ```sh
 export IAM_TOKEN=<REPLACE_WITH_TOKEN>
 ```
+{:pre: .pre}
 
-2. Obtain the IBM Service Instance ID also used with {{site.data.keyword.cos_short}} APIs. (The Service Instance ID begins with `crn:`.)
+2. Obtain the IBM Service Instance ID used with {{site.data.keyword.cos_short}} APIs. (The Service Instance ID begins with `crn:`.)
 
 ```sh
 bx resource service-instance data-lake-cos
 ```
+{:pre: .pre}
 
 ```sh
 export COS_SERVICE_ID=<REPLACE_WITH_ID_VALUE>
 ```
+{:pre: .pre}
 
-3. Create a bucket in the *us-south* region to store data. {{site.data.keyword.CHSTSshort}} is only available for buckets created in the [us-south region](https://console.bluemix.net/docs/services/cloud-object-storage/basics/endpoints.html) at this time.
+3. Create a bucket name in the `us-south` region to store data. {{site.data.keyword.CHSTSshort}} is only available for buckets created in the [us-south region](https://console.bluemix.net/docs/services/cloud-object-storage/basics/endpoints.html) at this time. If you recevied an *AccessDenied* error, try with a more unique bucket name.
 
 ```sh
 export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
 ```
+{:pre: .pre}
 
 ```sh
 curl -X "PUT" "https://s3.us-south.objectstorage.softlayer.net/$BUCKET_NAME" -H "Authorization: Bearer $IAM_TOKEN" -H "ibm-service-instance-id: $COS_SERVICE_ID"
 ```
+{:pre: .pre}
 
 4. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://catalog.data.gov/dataset/traffic-collision-data-from-2010-to-present/resource/643d0e98-5f40-4db3-8427-02641dd05fd9?inner_span=True) CSV file. The file is 77MB and may take a few minutes depending on your download speed.
 
 ```sh
 curl -o traffic-los-angeles.csv https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD
 ```
+{:pre: .pre}
 
 You could contine to upload the file directly to the bucket using cURL, but this does not benefit from [{{site.data.keyword.CHSTSshort}} features](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/). {:tip: .tip}
 
-5. In your browser, access the {{site.data.keyword.cos_short}} **data-lake-cos** service instance from the [Storage dashboard](https://console.bluemix.net/dashboard/storage).
+5. In your browser, access the {{site.data.keyword.cos_short}} **data-lake-cos** service instance from the [Dashboard](https://console.bluemix.net/dashboard).
  - From **Buckets**, select your bucket name.
  - Click the **Add objects** button.
  - Select the **Aspera high-speed transfer** radio button.
@@ -142,6 +199,7 @@ WHERE
  `Victim Age` >= 20 AND 
  `Victim Age` <= 35
 ```
+{:codeblock: .codeblock}
 
  - Replace the URL in the `FROM` clause with your bucket's name.
 
@@ -173,6 +231,7 @@ In this section, you will create a SQL Query client within a Jupyter Notebook. T
 import ibmcloudsql
 import pixiedust
 ```
+{:codeblock: .codeblock}
 
 3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
  - Add the following in the next **In [ ]:** prompt and then **Run**.
@@ -181,12 +240,15 @@ import pixiedust
 import getpass
 cloud_api_key = getpass.getpass('Enter your IBM Cloud API Key')
 ```
+{:codeblock: .codeblock}
 
  - From the terminal, create an API key.
 
 ```sh
 bx iam api-key-create data-lake-cos-key
 ```
+{:pre: .pre}
+
 
  - Copy the **API Key** to the clipboard.
  - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
@@ -199,12 +261,15 @@ You should also store the API Key to a secure, permanent location; the Notebook 
 ```python
 sql_crn = '<SQL_QUERY_CRN>'
 ```
+{:codeblock: .codeblock}
 
  - From the terminal, copy the CRN from the **ID** property to your clipboard.
 
 ```sh
 bx resource service-instance data-lake-sql
 ```
+{:pre: .pre}
+
  - Paste the CRN between the single quotes and then **Run**.
 
 5. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
@@ -212,6 +277,7 @@ bx resource service-instance data-lake-sql
 ```python
 sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
 ```
+{:codeblock: .codeblock}
 
 6. Execute the following commands in another **In [ ]:** prompt and **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
 
@@ -236,6 +302,7 @@ WHERE
 traffic_collisions = sqlClient.run_sql(query)
 traffic_collisions.head()
 ```
+{:codeblock: .codeblock}
 
 ## Visualize data using PixieDust
 
@@ -281,12 +348,14 @@ WHERE
 traffic_location = sqlClient.run_sql(query)
 traffic_location.head()
 ```
+{:codeblock: .codeblock}
 
 2. In the next **In [ ]:** prompt **Run** the `display` command to view the result using PixieDust.
 
 ```python
 display(traffic_location)
 ```
+{:codeblock: .codeblock}
 
 3. Select the chart dropdown button; then select **Map**.
 
@@ -296,43 +365,86 @@ display(traffic_location)
 
 ## Share your dataset with the organization
 
-Since you've created a new dataset using SQL Query and your Notebook, you should catalog this so others can re-use it.
+Since you've created a new dataset using SQL Query, allow non-technical users to gain insight from it using {{site.data.keyword.dynamdashbemb_notm}}.
 
-1. Use the **Catalog** link in the header to **View All Catalogs**.
+1. Access the public URL of the dashboard application you pushed previously.
+2. Select a template that matches your intended layout. (The following steps use the second layout in the first row.)
+3. Use the `Add a source` button that appears in the `Selected sources`,  expand `bucket name` accoridan and click one of the `accidents/jobid=...` table entries. Close the dialog using the X icon in the upper right.
+4. On left, click the `Visualizations` icon and then click `Summary`.
+5. Select the `accidents/jobid=...` source, expand `Table` and create a chart.
+  - Drag and drop `id` on the **Value** row.
+  - Collapse the chart using the icon on the upper corner.
 
-2. Create a new catalog using the **New Catalog** button.
- - Provide a catalog **Name** and **Description**.
- - Ensure `data-lake-cos` is the **Object storage instance** and click **Create**.
+  Even though the `id` column has numeric values, it acts as an identifier. To specify which columns are identifiers, update the `COLUMN_IDS` property in manifest.yml. {: tip}
 
-3. Click **Add to Catalog** then **Connection** and finally **Cloud Object Storage**.
+7. Again from `Visualizations` create a 'Tree map' chart:
+  - Drag and drop `area` on the **Area hierarchy** row.
+  - Drag and drop `id` on the **Size** row.
+  - Collapse the chart to view the result.
 
-4. Create Service Credentials to provide the information needed for the previous step.
- - In a new browser tab, access your **data-lake-cos** service instance from the [Storage dashboard](https://console.bluemix.net/dashboard/storage) and select **Service credentials** from the navigation.
- - Click the **New credential** button.
- - Assign the **Name** `data-lake-catalog-credentials` and set **Access role** to `Writer`.
- - Select **Create New Service ID** from **Select Service ID (Optional)**.
- - Provide **Name** `data-lake-catalog-serviceID` and **Description** `Service ID to access orgs COS data lakes`.
- - Enter `{"HMAC":true}` in the **Add Inline Configuration Parameters (Optional)** text area.
- - Click **Add** to create the credentials.
+![Dashboard Landing Page](/images/solution/dashboard.png)
 
-5. Copy the information in the new service ID's **View Credentials** to the **New Connection (Cloud Object Storage)** page in Knowledge Catalog.
- - Copy the `resource_instance_id` value to **Resource Instance ID**.
- - Copy the `apikey` value to **API Key**.
- - Enter `https://s3.us-south.objectstorage.softlayer.net` as the **Login URL**. (This is the us-south region originally used when you created data-lake-cos.)
- - Enter the **Name** `data-lake-cos1` and click the **Create** button.
+## Explore your dashboard
 
-6. Click **Add to Catalog** then **Connected Data**.
- - Click **Select Source** then **data-lake-cos1** > **your_bucket_name** > **traffic-los-angeles.csv** and click **Select**.
- - Provide the **Name** `Los Angeles Traffic from 2010`.
- - Provide the **Description** `This dataset reflects traffic collision incidents in the City of Los Angeles dating back to 2010.`
- - Add the **Tags** `vehicle_collisions` and `traffic_incidents` to further classify the dataset.
- - Click the **Add** button to share with your organization.
+In this section, you'll take a few additional steps to explore the features of the dashboard application and {{site.data.keyword.dynamdashbemb_notm}}.
+
+1. Click the **Mode** button in the sample application's toolbar to change the mode view `VIEW`.
+
+2. Click any of the colored tiles in the lower chart or `area` values in the chart's legend. This applies a local filter to the tab, which causes the other chart(s) to show data specific to the filter.
+
+3. Click the **Save** button in the toolbar.
+  - Enter your dashboard's name in the corresponding input field.
+  - Select the **Spec** tab to view this dashboard's specification. A spec is the native file format for {{site.data.keyword.dynamdashbemb_notm}}. In it you will find information about the charts you created as well as the {{site.data.keyword.cos_short}} data source used.
+
+  In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/dynamic-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).  {: tip}
+
+  - Save your dashboard to the browser's local storage using the dialog's **Save** button.
+
+4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
 ## Expand the tutorial
- - Visualize your CSV objects using the [{{site.data.keyword.dynamdashbemb_notm}} service](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
+ - Experiment with additional datasets using SQL Query
+ - Edit the dashboard application's code to store dashboard specifications to {{site.data.keyword.cloudant_short_notm}} or {{site.data.keyword.cos_short}}
+ - Create a service instance of {{site.data.keyword.appid_full_notm}} to enable security in the dashboard application
 
 ## Related information
  - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
  - [Jupyter Notebooks](http://jupyter.org/)
  - [Mapbox](https://console.bluemix.net/catalog/services/mapbox-maps)
  - [PixieDust](https://www.ibm.com/cloud/pixiedust)
+
+## Uninstall
+
+1. Run the following commands to remove services, applicatons and keys used.
+```sh
+bx resource service-binding-delete dashboard-nodejs-dde dashboard-nodejs
+```
+```sh
+bx resource service-binding-delete dashboard-nodejs-cos dashboard-nodejs
+```
+```sh
+bx resource service-alias-delete dashboard-nodejs-dde
+```
+```sh
+bx resource service-alias-delete dashboard-nodejs-cos
+```
+```sh
+bx iam api-key-delete data-lake-cos-key
+```
+```sh
+bx resource service-instance-delete data-lake-dde
+```
+```sh
+bx resource service-instance-delete data-lake-cos
+```
+```sh
+bx resource service-instance-delete data-lake-sql
+```
+```sh
+bx service delete data-lake-studio
+```
+```sh
+bx app delete dashboard-nodejs
+```
+
+
