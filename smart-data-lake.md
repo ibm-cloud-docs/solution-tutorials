@@ -82,7 +82,7 @@ bx service create data-science-experience free-v1 data-lake-studio
 ```
 {:pre: .pre}
 
-5. Create an instance of {{site.data.keyword.dynamdashbemb_notm}} with a Cloud Foundry alias.
+5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded) with a Cloud Foundry alias.
 
 ```sh
 bx resource service-instance-create data-lake-dde dynamic-dashboard-embedded lite us-south
