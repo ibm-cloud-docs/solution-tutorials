@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-11"
+lastupdated: "2018-04-12"
 
 ---
 
@@ -494,6 +494,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #ml }
 
 <div class = "solutionBoxContainer">
+    <div class = "solutionBox">
+        <h3 id="smart-data-lake.html" class="solutionBoxTitle">
+            <a href = "smart-data-lake.html">Build a smart data lake with Object Storage</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Knowledge Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.</p>
+                    <span class="tag-filter category">Dynamic Dashboard Embedded</span>
+                    <span class="tag-filter category">Cloud Object Storage</span>
+                    <span class="tag-filter category">SQL Query</span>
+                    <span class="tag-filter category">Watson Studio</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution29/architecture.png" />
+            </div>
+        </div>
+    </div>
     <div class = "solutionBox">
         <h3 id="github-traffic-analytics.html" class="solutionBoxTitle">
             <a href = "github-traffic-analytics.html">Automatically collect and analyze traffic data for Github repositories</a>
