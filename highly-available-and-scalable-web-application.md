@@ -575,17 +575,23 @@ The Load Balancer is configured to check the health of the servers and to redire
    You should already see the regular pings from the Load Balancer to check the server health.
    {: tip}
 2. Access Wordpress through the Load Balancer address and make sure to force a hard reload of the page. Notice in the nginx logs both *app1* and *app2* are serving content for the page. The Load Balancer is redirecting traffic to both servers as expected.
+
 3. Stop nginx on *app1*
    ```sh
    systemctl nginx stop
    ```
+
 4. After a short while reload the Wordpress page, notice all hits are going to *app2*.
+
 5. Stop nginx on *app2*.
+
 6. Reload the Wordpress page. The Load Balancer will return an error as there is no healthy server.
+
 7. Restart nginx on *app1*
    ```sh
    systemctl nginx start
    ```
+
 8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
 ## Clean up resources

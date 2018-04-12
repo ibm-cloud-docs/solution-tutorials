@@ -234,12 +234,12 @@ The `terraform state rm` command is used to remove items from the [Terraform sta
 
 1. Delete the object storage service using the following:
    ```bash
-   terraform state rm module.resources.ibm_object_storage_account.lamp_storage
+   terraform destroy module.resources.ibm_object_storage_account.lamp_storage
    ```
    {: pre}
 2. Delete the VM using the following:
    ```bash
-   terraform state rm module.resources.ibm_compute_ssh_key.ssh_key
+   terraform destroy module.resources.ibm_compute_ssh_key.ssh_key
    ```
    {: pre}
    **Note:** To delete resources, you would need Softlayer admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
