@@ -30,7 +30,7 @@ In this tutorial, you will create a data lake for your organization using {{site
   * [{{site.data.keyword.knowledgestudiofull}}](https://console.bluemix.net/catalog/services/watson-studio)
   * [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
 
-![Dashboard Landing Page](/images/solution/architecture.png)
+![Architecture](images/solution29/architecture.png)
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}
 2. Data is reduced and refined with SQL Query
@@ -115,7 +115,7 @@ After deployment, the application will be public and listening on a random hostn
 
 7. Confirm the application is active by accessing its public URL in the browser.
 
-![Dashboard Landing Page](images/solution/dashboard-start.png)
+![Dashboard Landing Page](images/solution29/dashboard-start.png)
 
 ## Uploading data
 In this section, you will begin to upload data to a {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}.
@@ -208,6 +208,9 @@ WHERE
 5. Click the **Run** button. The results will appear below.
 
 6. On the **Query Details** tab, click the **Launch** icon next after the **Result Location** URL to view the intermediate data set that is now also stored on {{site.data.keyword.cos_short}}.
+
+![Notebook](images/solution29/sql-query.png)
+
 
 ## Combine Jupyter Notebooks with SQL Query
 
@@ -363,6 +366,9 @@ display(traffic_location)
 
 5. Click the **Save** icon to save your Notebook to {{site.data.keyword.cos_short}}.
 
+![Notebook](images/solution29/notebook-mapbox.png)
+
+
 ## Share your dataset with the organization
 
 Since you've created a new dataset using SQL Query, allow non-technical users to gain insight from it using {{site.data.keyword.dynamdashbemb_notm}}.
@@ -382,7 +388,7 @@ Since you've created a new dataset using SQL Query, allow non-technical users to
   - Drag and drop `id` on the **Size** row.
   - Collapse the chart to view the result.
 
-![Dashboard Landing Page](/images/solution/dashboard.png)
+![Dashboard Chart](images/solution29/dashboard-chart.png)
 
 ## Explore your dashboard
 
@@ -405,7 +411,7 @@ In this section, you'll take a few additional steps to explore the features of t
 ## Expand the tutorial
  - Experiment with additional datasets using SQL Query
  - Edit the dashboard application's code to store dashboard specifications to {{site.data.keyword.cloudant_short_notm}} or {{site.data.keyword.cos_short}}
- - Create a service instance of {{site.data.keyword.appid_full_notm}} to enable security in the dashboard application
+ - Create an {{site.data.keyword.appid_full_notm}} service instance to enable security in the dashboard application
 
 ## Related information
  - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
@@ -415,7 +421,8 @@ In this section, you'll take a few additional steps to explore the features of t
 
 ## Uninstall
 
-1. Run the following commands to remove services, applicatons and keys used.
+Run the following commands to remove services, applications and keys used.
+
 ```sh
 bx resource service-binding-delete dashboard-nodejs-dde dashboard-nodejs
 ```
