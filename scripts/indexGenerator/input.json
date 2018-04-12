@@ -318,6 +318,18 @@
         "anchor": "ml",
         "solutions": [
           {
+              "name": "Build a smart data lake with Object Storage",
+              "url": "smart-data-lake.html",
+              "description": "This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Knowledge Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.",
+              "imgSrc": "images/solution29/architecture.png",
+              "tags": [
+                  "Dynamic Dashboard Embedded",
+                  "Cloud Object Storage",
+                  "SQL Query",
+                  "Watson Studio"
+              ]
+          },
+          {
               "name": "Automatically collect and analyze traffic data for Github repositories",
               "url": "github-traffic-analytics.html",
               "description": "Automatically collect traffic statistics for Github repositories. Github only provides access to the traffic data for the last 14 days. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution to manage repositories, automatically collect traffic data on a daily or weekly schedule, and to view and analyze the collected data.",
