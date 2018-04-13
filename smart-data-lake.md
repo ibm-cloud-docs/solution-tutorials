@@ -355,8 +355,8 @@ In this section, you'll take a few additional steps to explore the features of t
 
 ## Expand the tutorial
 - Experiment with additional datasets using SQL Query
-- Edit the dashboard application's code to store dashboard specifications to {{site.data.keyword.cloudant_short_notm}} or {{site.data.keyword.cos_short}}
-- Create an {{site.data.keyword.appid_full_notm}} service instance to enable security in the dashboard application
+- Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
+- Create an [{{site.data.keyword.appid_full_notm}}](https://console.bluemix.net/catalog/services/app-id) service instance to enable security in the dashboard application
 
 ## Related information
 - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
