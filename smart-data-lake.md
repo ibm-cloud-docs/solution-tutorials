@@ -181,7 +181,7 @@ In this section, you will use SQL Query to manipulate your data where it resides
 2. Select **Open UI**.
 
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
- - Enter the following SQL into the **Type SQL here ...** text area.
+- Enter the following SQL into the **Type SQL here ...** text area.
 
 ```sql
 SELECT
