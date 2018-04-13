@@ -49,7 +49,8 @@ In this tutorial, you will create a data lake for your organization using {{site
 ## Create required services
 In this section, you will create the services required to build your smart data lake.
 
-This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links. {:tip}
+This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
+{:tip}
 
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
@@ -99,7 +100,8 @@ This section uses the command line to create service instances. Alternatively, y
     npm run push
     ```
     {: pre}
-    After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `bx cf app dashboard-nodejs routes` to see routes. {:tip}
+    After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `bx cf app dashboard-nodejs routes` to see routes.
+    {:tip}
 7. Confirm the application is active by accessing its public URL in the browser.
 
 ![Dashboard Landing Page](images/solution29/dashboard-start.png)
@@ -140,7 +142,8 @@ In this section, you will begin to upload data to a {{site.data.keyword.cos_shor
     ```
     {: pre}
 
-    You could contine to upload the file directly to the bucket using cURL, but this does not benefit from [{{site.data.keyword.CHSTSshort}} features](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/). {:tip}
+    You could contine to upload the file directly to the bucket using cURL, but this does not benefit from [{{site.data.keyword.CHSTSshort}} features](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/).
+    {:tip}
 
 5. Upload the CSV file to {{site.data.keyword.cos_short}}.
     - Access the **data-lake-cos** service instance from the [Dashboard](https://console.bluemix.net/dashboard).
@@ -218,7 +221,8 @@ In this section, you will create a SQL Query client within a Jupyter Notebook. T
     {: pre}
     - Copy the **API Key** to the clipboard.
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
-    You should also store the API Key to a secure, permanent location; the Notebook does not store the API key. {:tip}
+    You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
+    {:tip}
 4. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
     - In the next **In [ ]:** prompt, assign the CRN to a variable in your Notebook.
         ```python
@@ -326,7 +330,8 @@ Since you've created a new dataset using SQL Query, allow non-technical users to
 5. Select the `accidents/jobid=...` source, expand `Table` and create a chart.
     - Drag and drop `id` on the **Value** row.
     - Collapse the chart using the icon on the upper corner.
-    Even though the `id` column has numeric values, it acts as an identifier. To specify which columns are identifiers, update the `COLUMN_IDS` property in manifest.yml. {:tip}
+    Even though the `id` column has numeric values, it acts as an identifier. To specify which columns are identifiers, update the `COLUMN_IDS` property in manifest.yml.
+    {:tip}
 7. Again from `Visualizations` create a 'Tree map' chart:
     - Drag and drop `area` on the **Area hierarchy** row.
     - Drag and drop `id` on the **Size** row.
@@ -343,7 +348,8 @@ In this section, you'll take a few additional steps to explore the features of t
 3. Click the **Save** button in the toolbar.
     - Enter your dashboard's name in the corresponding input field.
     - Select the **Spec** tab to view this dashboard's specification. A spec is the native file format for {{site.data.keyword.dynamdashbemb_notm}}. In it you will find information about the charts you created as well as the {{site.data.keyword.cos_short}} data source used.
-    In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/dynamic-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information). {:tip}
+    In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/dynamic-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
+    {:tip}
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
