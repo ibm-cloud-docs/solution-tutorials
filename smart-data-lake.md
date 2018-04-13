@@ -180,23 +180,23 @@ In this section, you will use SQL Query to manipulate your data where it resides
 2. Select **Open UI**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
 - Enter the following SQL into the **Type SQL here ...** text area.
-```sql
-SELECT
- `Dr Number` AS id,
- `Date Occurred` AS date,
- `Time Occurred` AS time, 
- `Area Name` AS area, 
- `Victim Age` AS age, 
- `Victim Sex` AS sex, 
- `Location` AS location
-FROM cos://us-south/<your-bucket-name>/traffic-los-angeles.csv 
-WHERE 
- `Time Occurred` >= 1700 AND 
- `Time Occurred` <= 2000 AND 
- `Victim Age` >= 20 AND 
- `Victim Age` <= 35
-```
-{:codeblock: .codeblock}
+    ```sql
+    SELECT
+    `Dr Number` AS id,
+    `Date Occurred` AS date,
+    `Time Occurred` AS time, 
+    `Area Name` AS area, 
+    `Victim Age` AS age, 
+    `Victim Sex` AS sex, 
+    `Location` AS location
+    FROM cos://us-south/<your-bucket-name>/traffic-los-angeles.csv 
+    WHERE 
+    `Time Occurred` >= 1700 AND 
+    `Time Occurred` <= 2000 AND 
+    `Victim Age` >= 20 AND 
+    `Victim Age` <= 35
+    ```
+    {:codeblock: .codeblock}
 - Replace the URL in the `FROM` clause with your bucket's name.
 4. The **Target** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result. Change the **Target** to `cos://us-south/<your-bucket-name>/results`.
 5. Click the **Run** button. The results will appear below.
