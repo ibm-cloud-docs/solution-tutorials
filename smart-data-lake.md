@@ -161,23 +161,23 @@ In this section, you will use SQL Query to manipulate your data where it resides
 2. Select **Open UI**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Enter the following SQL into the **Type SQL here ...** text area.
-    ```sql
-    SELECT
-    `Dr Number` AS id,
-    `Date Occurred` AS date,
-    `Time Occurred` AS time, 
-    `Area Name` AS area, 
-    `Victim Age` AS age, 
-    `Victim Sex` AS sex, 
-    `Location` AS location
-    FROM cos://us-south/<your-bucket-name>/traffic-los-angeles.csv 
-    WHERE 
-    `Time Occurred` >= 1700 AND 
-    `Time Occurred` <= 2000 AND 
-    `Victim Age` >= 20 AND 
-    `Victim Age` <= 35
-    ```
-    {: codeblock}
+        ```sql
+        SELECT
+        `Dr Number` AS id,
+        `Date Occurred` AS date,
+        `Time Occurred` AS time, 
+        `Area Name` AS area, 
+        `Victim Age` AS age, 
+        `Victim Sex` AS sex, 
+        `Location` AS location
+        FROM cos://us-south/<your-bucket-name>/traffic-los-angeles.csv 
+        WHERE 
+        `Time Occurred` >= 1700 AND 
+        `Time Occurred` <= 2000 AND 
+        `Victim Age` >= 20 AND 
+        `Victim Age` <= 35
+        ```
+        {: codeblock}
     - Replace the URL in the `FROM` clause with your bucket's name.
 4. The **Target** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result. Change the **Target** to `cos://us-south/<your-bucket-name>/results`.
 5. Click the **Run** button. The results will appear below.
@@ -209,16 +209,16 @@ In this section, you will create a SQL Query client within a Jupyter Notebook. T
     {: codeblock}
 3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
     - Add the following in the next **In [ ]:** prompt and then **Run**.
-    ```python
-    import getpass
-    cloud_api_key = getpass.getpass('Enter your IBM Cloud API Key')
-    ```
-    {: codeblock}
+        ```python
+        import getpass
+        cloud_api_key = getpass.getpass('Enter your IBM Cloud API Key')
+        ```
+        {: codeblock}
     - From the terminal, create an API key.
-    ```sh
-    bx iam api-key-create data-lake-cos-key
-    ```
-    {: pre}
+        ```sh
+        bx iam api-key-create data-lake-cos-key
+        ```
+        {: pre}
     - Copy the **API Key** to the clipboard.
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
     You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
