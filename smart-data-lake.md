@@ -121,17 +121,14 @@ After deployment, the application will be public and listening on a random hostn
 In this section, you will begin to upload data to a {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}.
 
 1. Export the **IAM token:  Bearer** token. The token is needed to execute {{site.data.keyword.cos_short}} APIs. 
-
 ```sh
 bx iam oauth-tokens
 ```
 {:pre: .pre}
-
 ```sh
 export IAM_TOKEN=<REPLACE_WITH_TOKEN>
 ```
 {:pre: .pre}
-
 2. Obtain the IBM Service Instance ID used with {{site.data.keyword.cos_short}} APIs. (The Service Instance ID begins with `crn:`.)
 
 ```sh
