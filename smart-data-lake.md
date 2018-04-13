@@ -201,7 +201,7 @@ WHERE
 ```
 {:codeblock: .codeblock}
 
- - Replace the URL in the `FROM` clause with your bucket's name.
+- Replace the URL in the `FROM` clause with your bucket's name.
 
 4. The **Target** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result. Change the **Target** to `cos://us-south/<your-bucket-name>/results`.
 
