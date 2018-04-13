@@ -57,59 +57,59 @@ This section uses the command line to create service instances. Alternatively, y
 bx login
 bx target --cf
 ```
-{:pre: .pre}
+{: pre}
 
 2. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a `lite` service instance, use the `standard` plan.
 ```sh
 bx resource service-instance-create data-lake-cos cloud-object-storage lite global
 ```
-{:pre: .pre}
+{: pre}
 
 ```sh
 bx resource service-alias-create dashboard-nodejs-cos --instance-name data-lake-cos
 ```
-{:pre: .pre}
+{: pre}
 
 3. Create an instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
 ```sh
 bx resource service-instance-create data-lake-sql sql-query beta us-south
 ```
-{:pre: .pre}
+{: pre}
 
 4. Create an instance of [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio).
 ```sh
 bx service create data-science-experience free-v1 data-lake-studio
 ```
-{:pre: .pre}
+{: pre}
 
 5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded) with a Cloud Foundry alias.
 
 ```sh
 bx resource service-instance-create data-lake-dde dynamic-dashboard-embedded lite us-south
 ```
-{:pre: .pre}
+{: pre}
 
 ```sh
 bx resource service-alias-create dashboard-nodejs-dde --instance-name data-lake-dde
 ```
-{:pre: .pre}
+{: pre}
 
 6. Change to a working directory and run the following command to clone the dashboard application's repository. Then push the application to your Cloud Foundy organization.
 ```sh
 git clone https://github.com/IBM-Cloud/nodejs-data-lake-dashboard.git
 cd nodejs-data-lake-dashboard
 ```
-{:pre: .pre}
+{: pre}
 
 ```sh
 npm install
 ```
-{:pre: .pre}
+{: pre}
 
 ```sh
 npm run push
 ```
-{:pre: .pre}
+{: pre}
 
 After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `bx cf app dashboard-nodejs routes` to see routes. {: tip}
 
@@ -124,41 +124,41 @@ In this section, you will begin to upload data to a {{site.data.keyword.cos_shor
 ```sh
 bx iam oauth-tokens
 ```
-{:pre: .pre}
+{: pre}
 ```sh
 export IAM_TOKEN=<REPLACE_WITH_TOKEN>
 ```
-{:pre: .pre}
+{: pre}
 2. Obtain the IBM Service Instance ID used with {{site.data.keyword.cos_short}} APIs. (The Service Instance ID begins with `crn:`.)
 
 ```sh
 bx resource service-instance data-lake-cos
 ```
-{:pre: .pre}
+{: pre}
 
 ```sh
 export COS_SERVICE_ID=<REPLACE_WITH_ID_VALUE>
 ```
-{:pre: .pre}
+{: pre}
 
 3. Create a bucket name in the `us-south` region to store data. {{site.data.keyword.CHSTSshort}} is only available for buckets created in the [us-south region](https://console.bluemix.net/docs/services/cloud-object-storage/basics/endpoints.html) at this time. If you recevied an *AccessDenied* error, try with a more unique bucket name.
 
 ```sh
 export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
 ```
-{:pre: .pre}
+{: pre}
 
 ```sh
 curl -X "PUT" "https://s3.us-south.objectstorage.softlayer.net/$BUCKET_NAME" -H "Authorization: Bearer $IAM_TOKEN" -H "ibm-service-instance-id: $COS_SERVICE_ID"
 ```
-{:pre: .pre}
+{: pre}
 
 4. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://catalog.data.gov/dataset/traffic-collision-data-from-2010-to-present/resource/643d0e98-5f40-4db3-8427-02641dd05fd9?inner_span=True) CSV file. The file is 77MB and may take a few minutes depending on your download speed.
 
 ```sh
 curl -o traffic-los-angeles.csv https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD
 ```
-{:pre: .pre}
+{: pre}
 
 You could contine to upload the file directly to the bucket using cURL, but this does not benefit from [{{site.data.keyword.CHSTSshort}} features](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/). {:tip: .tip}
 
@@ -193,7 +193,7 @@ In this section, you will use SQL Query to manipulate your data where it resides
     `Victim Age` >= 20 AND 
     `Victim Age` <= 35
     ```
-    {:codeblock: .codeblock}
+    {: codeblock}
 - Replace the URL in the `FROM` clause with your bucket's name.
 4. The **Target** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result. Change the **Target** to `cos://us-south/<your-bucket-name>/results`.
 5. Click the **Run** button. The results will appear below.
@@ -224,7 +224,7 @@ In this section, you will create a SQL Query client within a Jupyter Notebook. T
 import ibmcloudsql
 import pixiedust
 ```
-{:codeblock: .codeblock}
+{: codeblock}
 
 3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
  - Add the following in the next **In [ ]:** prompt and then **Run**.
@@ -233,14 +233,14 @@ import pixiedust
 import getpass
 cloud_api_key = getpass.getpass('Enter your IBM Cloud API Key')
 ```
-{:codeblock: .codeblock}
+{: codeblock}
 
  - From the terminal, create an API key.
 
 ```sh
 bx iam api-key-create data-lake-cos-key
 ```
-{:pre: .pre}
+{: pre}
 
 
  - Copy the **API Key** to the clipboard.
@@ -254,14 +254,14 @@ You should also store the API Key to a secure, permanent location; the Notebook 
 ```python
 sql_crn = '<SQL_QUERY_CRN>'
 ```
-{:codeblock: .codeblock}
+{: codeblock}
 
  - From the terminal, copy the CRN from the **ID** property to your clipboard.
 
 ```sh
 bx resource service-instance data-lake-sql
 ```
-{:pre: .pre}
+{: pre}
 
  - Paste the CRN between the single quotes and then **Run**.
 
@@ -270,7 +270,7 @@ bx resource service-instance data-lake-sql
 ```python
 sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
 ```
-{:codeblock: .codeblock}
+{: codeblock}
 
 6. Execute the following commands in another **In [ ]:** prompt and **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
 
@@ -295,7 +295,7 @@ WHERE
 traffic_collisions = sqlClient.run_sql(query)
 traffic_collisions.head()
 ```
-{:codeblock: .codeblock}
+{: codeblock}
 
 ## Visualize data using PixieDust
 
@@ -341,14 +341,14 @@ WHERE
 traffic_location = sqlClient.run_sql(query)
 traffic_location.head()
 ```
-{:codeblock: .codeblock}
+{: codeblock}
 
 2. In the next **In [ ]:** prompt **Run** the `display` command to view the result using PixieDust.
 
 ```python
 display(traffic_location)
 ```
-{:codeblock: .codeblock}
+{: codeblock}
 
 3. Select the chart dropdown button; then select **Map**.
 
@@ -416,30 +416,39 @@ Run the following commands to remove services, applications and keys used.
 ```sh
 bx resource service-binding-delete dashboard-nodejs-dde dashboard-nodejs
 ```
+{: pre}
 ```sh
 bx resource service-binding-delete dashboard-nodejs-cos dashboard-nodejs
 ```
+{: pre}
 ```sh
 bx resource service-alias-delete dashboard-nodejs-dde
 ```
+{: pre}
 ```sh
 bx resource service-alias-delete dashboard-nodejs-cos
 ```
+{: pre}
 ```sh
 bx iam api-key-delete data-lake-cos-key
 ```
+{: pre}
 ```sh
 bx resource service-instance-delete data-lake-dde
 ```
+{: pre}
 ```sh
 bx resource service-instance-delete data-lake-cos
 ```
+{: pre}
 ```sh
 bx resource service-instance-delete data-lake-sql
 ```
+{: pre}
 ```sh
 bx service delete data-lake-studio
 ```
+{: pre}
 ```sh
 bx app delete dashboard-nodejs
 ```
