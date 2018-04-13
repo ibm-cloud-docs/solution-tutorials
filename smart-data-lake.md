@@ -100,6 +100,7 @@ This section uses the command line to create service instances. Alternatively, y
     npm run push
     ```
     {: pre}
+
     After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `bx cf app dashboard-nodejs routes` to see routes.
     {:tip}
 7. Confirm the application is active by accessing its public URL in the browser.
@@ -326,13 +327,14 @@ Since you've created a new dataset using SQL Query, allow non-technical users to
 1. Access the public URL of the dashboard application you pushed previously.
 2. Select a template that matches your intended layout. (The following steps use the second layout in the first row.)
 3. Use the `Add a source` button that appears in the `Selected sources`,  expand `bucket name` accoridan and click one of the `accidents/jobid=...` table entries. Close the dialog using the X icon in the upper right.
-4. On left, click the `Visualizations` icon and then click `Summary`.
+4. On left, click the `Visualizations` icon and then click **Summary**.
 5. Select the `accidents/jobid=...` source, expand `Table` and create a chart.
     - Drag and drop `id` on the **Value** row.
     - Collapse the chart using the icon on the upper corner.
+
     Even though the `id` column has numeric values, it acts as an identifier. To specify which columns are identifiers, update the `COLUMN_IDS` property in manifest.yml.
     {:tip}
-7. Again from `Visualizations` create a 'Tree map' chart:
+7. Again from `Visualizations` create a **Tree map** chart:
     - Drag and drop `area` on the **Area hierarchy** row.
     - Drag and drop `id` on the **Size** row.
     - Collapse the chart to view the result.
