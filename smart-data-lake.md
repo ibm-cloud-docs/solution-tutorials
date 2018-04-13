@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-11"
+lastupdated: "2018-04-13"
 
 ---
 
@@ -96,8 +96,8 @@ bx resource service-alias-create dashboard-nodejs-dde --instance-name data-lake-
 
 6. Change to a working directory and run the following command to clone the dashboard application's repository. Then push the application to your Cloud Foundy organization.
 ```sh
-git clone https://github.ibm.com/van-staub/github-dashboard
-cd github-dashboard
+git clone https://github.com/IBM-Cloud/nodejs-data-lake-dashboard.git
+cd nodejs-data-lake-dashboard
 ```
 {:pre: .pre}
 
