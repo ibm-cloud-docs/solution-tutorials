@@ -407,5 +407,4 @@ bx service delete data-lake-studio
 ```sh
 bx app delete dashboard-nodejs
 ```
-
-
+{: pre}
