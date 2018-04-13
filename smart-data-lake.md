@@ -177,12 +177,9 @@ You could contine to upload the file directly to the bucket using cURL, but this
 In this section, you will use SQL Query to manipulate your data where it resides in {{site.data.keyword.cos_short}}.
 
 1. Access the **data-lake-sql** SQL Query service instance from your [Dashboard](https://console.bluemix.net/dashboard/apps).
-
 2. Select **Open UI**.
-
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
 - Enter the following SQL into the **Type SQL here ...** text area.
-
 ```sql
 SELECT
  `Dr Number` AS id,
@@ -200,13 +197,9 @@ WHERE
  `Victim Age` <= 35
 ```
 {:codeblock: .codeblock}
-
 - Replace the URL in the `FROM` clause with your bucket's name.
-
 4. The **Target** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result. Change the **Target** to `cos://us-south/<your-bucket-name>/results`.
-
 5. Click the **Run** button. The results will appear below.
-
 6. On the **Query Details** tab, click the **Launch** icon next after the **Result Location** URL to view the intermediate data set that is now also stored on {{site.data.keyword.cos_short}}.
 
 ![Notebook](images/solution29/sql-query.png)
