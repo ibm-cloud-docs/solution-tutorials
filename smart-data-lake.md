@@ -14,7 +14,7 @@ lastupdated: "2018-04-13"
 
 # Build a smart data lake using object storage
 
-In this tutorial, you will create a data lake for your organization using {{site.data.keyword.cos_full_notm}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to create their own charts using {{site.data.keyword.dynamdashbemb_notm}}.
+In this tutorial, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to create their own charts using {{site.data.keyword.dynamdashbemb_notm}}.
 
 ## Objectives
 
@@ -25,7 +25,7 @@ In this tutorial, you will create a data lake for your organization using {{site
 
 ## Services used
 
-* [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
+* [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
 * [SQL Query](https://console.bluemix.net/catalog/services/sql-query)
 * [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio)
 * [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
