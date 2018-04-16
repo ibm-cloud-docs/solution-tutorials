@@ -222,6 +222,7 @@ In this section, you will create a SQL Query client within a Jupyter Notebook. T
         {: pre}
     - Copy the **API Key** to the clipboard.
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
+    
     You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
     {:tip}
 4. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
