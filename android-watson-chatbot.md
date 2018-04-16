@@ -168,7 +168,6 @@ The repository contains Android application code with required gradle dependenci
    ```bash
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
-
 2. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.
 3. **Gradle** build will automatically be triggered and all the dependencies will be downloaded.
 4. Open `app/src/main/res/values/config.xml` to see the placeholders for service credentials.
@@ -177,12 +176,10 @@ The repository contains Android application code with required gradle dependenci
    <p style="text-align: center; width:200">
    ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)
     </p>
-
 7. **Enter your query** in the space provided below and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
 8. To convert the text to speech, just tap on any conversation.
 9. To change the voice, edit lines 185 and 187 of `app/src/main/java/com/example/vmac/WatBot/MainActivity.java`
    ![](images/solution28-watson-chatbot-android/android_studio.png)
-
 10. Click on the **mic** icon in the left bottom corner of the app to input speech as an input that gets converted to text.
 
 ## Add mobile analytics to track usage
@@ -213,19 +210,10 @@ The service includes the {{site.data.keyword.mobileanalytics_short}} Console whe
 {:#related_content}
 
 - [Creating entities, Synonyms, System entities](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities)
-
 - [Monitoring an Android app with Mobile Analytics](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#monitoring-the-app-with-mobile-analytics-)
-
 - [Planning your Intents and Entities](https://console.bluemix.net/docs/services/conversation/intents-entities.html#planning-your-entities)
-
 - [Context Variables](https://console.bluemix.net/docs/services/conversation/dialog-runtime.html#context)
-
 - [Building a complex dialog](https://console.bluemix.net/docs/services/conversation/tutorial.html#tutorial)
-
 - [Gathering information with slots](https://console.bluemix.net/docs/services/conversation/dialog-slots.html#dialog-slots)
-
 - [Deployment options](https://console.bluemix.net/docs/services/conversation/deploy.html#deployment-overview)
-
 - [Conversation Statistics](https://console.bluemix.net/docs/services/conversation/logs.html#about-the-improve-component)
-
-  ​
