@@ -30,22 +30,18 @@ This tutorial walks you through how to host and serve website assets (images, vi
 ## Products
 
 This tutorial uses the following products:
-   * [Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
+   * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
    * [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai)
 
 ## Before you begin
 {: #prereqs}
 
-1. Contact your Infrastructure master user to get the following permissions:
+Contact your Infrastructure master user to get the following permissions:
    * Manage CDN Account
    * Manage Storage
    * API Key
 
-   These permissions are required to be able to view and use the Storage and CDN services.
-2. Ensure that you have access to storage resources in the {{site.data.keyword.Bluemix}} console:
-   * Go to https://control.bluemix.net.
-   * Confirm that you can see the Storage > Object Storage sections.
-     ![](images/solution3/Infrastructure_Dashboard.png)
+These permissions are required to be able to view and use the Storage and CDN services.
 
 ## Get the web application code
 {: #get_code}
@@ -70,7 +66,7 @@ Cloud Object Storage provides flexible, cost-effective, and scalable cloud stora
 1. Go to the catalog in the console, and select **Object Storage** from the Storage section.
 2. Click **Create** and **Create**.
 4. Click **Create Bucket**.
-5. Set the bucket name to `mywebsite` and click **Create**. Avoid dots (.) in the bucket name.
+5. Set a unique bucket name such as `username-mywebsite` and click **Create**. Avoid dots (.) in the bucket name.
 
 ## Upload files to a bucket
 {: #upload}
@@ -191,8 +187,8 @@ Using a CDN with an Object Storage is a powerful combination which lets you host
 
 ## Related information
 
-[IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
+[{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
 
-[Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
+[Manage Access to Object Storage](https://console.bluemix.net/docs/services/cloud-object-storage/iam/overview.html#getting-started-with-iam)
 
 [Getting Started with CDN](https://console.bluemix.net/docs/infrastructure/CDN/getting-started.html)
