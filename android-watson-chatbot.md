@@ -55,7 +55,7 @@ This tutorial uses the following products:
 ## Create a workspace
 {: #create_workspace}
 
-To begin, you will create {{site.data.keyword.conversationshort}} service on IBM Cloud and add a workspace. A workspace is a container for the artifacts that define the conversation flow. 
+To begin, you will create {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}} and add a workspace. A workspace is a container for the artifacts that define the conversation flow. 
 
 Save the [Ana_workspace.json](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_workspace.json) file with predefined intents,entities and dialog flow to your machine.
 
@@ -73,7 +73,7 @@ Save the [Ana_workspace.json](https://github.com/IBM-Cloud/chatbot-watson-androi
 ## Define an intent
 {:#define_intent}
 
-An intent represents the purpose of a user's input, such as answering a question or processing a bill payment. You define an intent for each type of user request you want your application to support.By recognizing the intent expressed in a user's input, the Watson Assistant service can choose the correct dialog flow for responding to it. In the tool, the name of an intent is always prefixed with the `#` character. 
+An intent represents the purpose of a user's input, such as answering a question or processing a bill payment. You define an intent for each type of user request you want your application to support.By recognizing the intent expressed in a user's input, the {{site.data.keyword.conversationshort}} service can choose the correct dialog flow for responding to it. In the tool, the name of an intent is always prefixed with the `#` character. 
 
 Simply put, intents are the intentions of the end-user. The following are examples of intent names.
  - `#weather_conditions`
@@ -106,7 +106,7 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 ## Define an entity
 {:#define_entity}
 
-An entity represents a term or object that is relevant to your intents and that provides a specific context for an intent. You list the possible values for each entity and synonyms that users might enter. By recognizing the entities that are mentioned in the user's input, the Watson Assistant service can choose the specific actions to take to fulfill an intent.In the tool, the name of an entity is always prefixed with the `@` character.
+An entity represents a term or object that is relevant to your intents and that provides a specific context for an intent. You list the possible values for each entity and synonyms that users might enter. By recognizing the entities that are mentioned in the user's input, the {{site.data.keyword.conversationshort}} service can choose the specific actions to take to fulfill an intent.In the tool, the name of an entity is always prefixed with the `@` character.
 
 The following are examples of entity names
  - `@location`
