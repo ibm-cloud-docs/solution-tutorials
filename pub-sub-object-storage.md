@@ -97,7 +97,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 1. From the Dashboard, click on [**Create resource**](https://console.bluemix.net/catalog/) and select [**{{site.data.keyword.cos_short}}**](https://console.bluemix.net/catalog/services/cloud-object-storage) from the Storage section.
 2. Name the service `myobjectstorage` click **Create**.
 3. Click **Create Bucket**.
-4. Set the bucket name to `mywebsite` and click **Create**.
+4. Set the bucket name to a unique name such as `userid-mybucket` and click **Create**.
 5. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```sh
  bx resource service-alias-create myobjectstorage --instance-name myobjectstorage
@@ -113,11 +113,12 @@ The UI application is a simple Node.js Express web application which allows the 
   git clone https://github.com/rvennam/pub-sub-storage-processing
   cd pub-sub-storage-processing/pubsub-ui
 ```
-2. Deploy the application. This command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment.
+2. Open `config.js` and update COSBucketName with your bucket name.
+3. Deploy the application. This command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment.
 ```sh
   bx dev deploy -t container
 ```
-3. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
+4. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
 
    ![](images/solution25/files_uploaded.png)
 
@@ -136,7 +137,7 @@ The worker application is a Java application which listens to the {{site.data.ke
 3. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 ![](images/solution25/files_processed.png)
 
-In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be [Cloud Functions](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on kubernetes are ideal for long running and intensive workloads, where as Cloud Functions would be a better fit for short lived processes.
+In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be [Cloud Functions](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as Cloud Functions would be a better fit for short lived processes.
 
 ## Clean up Resources
 
