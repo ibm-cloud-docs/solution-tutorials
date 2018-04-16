@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-12"
+lastupdated: "2018-04-16"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -17,9 +17,9 @@ lastupdated: "2018-04-12"
 
 # Build a voice-enabled Android chatbot
 
-Learn how easy it is to quickly create a voice-enabled Android native chatbot with Watson Assistant (formerly Conversation), Text to Speech, Speech to Text and mobile analytics services on IBM Cloud.
+Learn how easy it is to quickly create a voice-enabled Android native chatbot with {{site.data.keyword.conversationshort}}, {{site.data.keyword.texttospeechshort}}, {{site.data.keyword.speechtotextshort}} and mobile analytics services on {{site.data.keyword.Bluemix_short}}.
 
-This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer's queries. You will learn how to enable speech to text and text to speech services for easy interaction with the Android app. Also, track the usage metrics through mobile analytics service.
+This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer's queries. You will learn how to enable {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services for easy interaction with the Android app. Also, track the usage metrics through {{site.data.keyword.mobileanalytics_short}} service.
 {:shortdesc}
 
 ## Objectives
@@ -31,7 +31,7 @@ This tutorial walks you through the process of defining intents and entities and
 - Build the dialog flow
 - Create {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services
 - Configure and run the Android app
-- Add mobile analytics to track usage
+- Add {{site.data.keyword.mobileanalytics_short}} to track usage
 
 ## Products
 {: #products}
@@ -60,7 +60,7 @@ To begin, you will create {{site.data.keyword.conversationshort}} service on IBM
 Save the [Ana_workspace.json](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_workspace.json) file with predefined intents,entities and dialog flow to your machine.
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.conversationshort}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation) service > **Lite** plan under **Watson**. Click **Create**.
-2. Click **Service credentials** on the left pane and add a **New credential**.
+2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
 3. Click **View Credentials** to see the credentials. Save the credentials in a text editor for quick reference.
 4. Navigate to **Manage** on the left pane, Click on **Launch tool** to see the {{site.data.keyword.conversationshort}} dashboard.
    ![](images/solution28-watson-chatbot-android/watson_assistant_launch_tool.png)
@@ -120,6 +120,9 @@ The following are examples of entity names
    ![](images/solution28-watson-chatbot-android/add_entity.png)
 5. Click **close** ![](images/solution28-watson-chatbot-android/close_icon.png) to save the changes.
 6. Click **System entities** tab to check the common entities created by IBM that could be used across any use case.
+
+   System entities can be used to recognize a broad range of values for the object types they represent. For example, the `@sys-number` system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words.
+   {:tip}
 7. Toggle the **Status** from off to `on` for @sys-person and @sys-location system entities.
 
 ## Build the dialog flow
@@ -130,8 +133,8 @@ recognizes the defined intents and entities. You use the dialog builder in the t
 
 1. Click on **Dialog** tab to see the existing dialog flow with intents and entities.
 2. Click **Add node** to add a new node to the dialog. 
-3. Under **if bot recognizes: **, enter `#Cancel_Policy`. 
-4. under **Then respond with:** , enter a response say `This facility is not available online. Please visit our nearest branch to cancel your policy.` 
+3. Under **if bot recognizes: **,  enter `#Cancel_Policy`. 
+4. under **Then respond with:**,  enter a response say `This facility is not available online. Please visit our nearest branch to cancel your policy.` 
 5. Click on ![](images/solution28-watson-chatbot-android/save_node.png) to close and save the node.
 6. Scroll to see `#greeting` node. Click on the node to see the details.
    ![](images/solution28-watson-chatbot-android/build_dialog.png)
@@ -146,10 +149,10 @@ recognizes the defined intents and entities. You use the dialog builder in the t
 ## Create {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services 
 {:#create_speech_services}
 
-The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on IBM Cloud.
+The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}}.
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://console.bluemix.net/catalog/services/speech-to-text) service > **Lite** plan under **Watson**. Click **Create**.
-2. Click **Service credentials** on the left pane and add a **New credential**.
+2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
 3. Click **View Credentials** to see the credentials and save the credentials in a text editor for future reference.
     ![](images/solution28-watson-chatbot-android/speech_to_text.png)
 4. Repeat steps 1 to 3 to create [{{site.data.keyword.texttospeechshort}}](https://console.bluemix.net/catalog/services/text-to-speech) service and save the credentials. The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation.
@@ -165,29 +168,36 @@ The repository contains Android application code with required gradle dependenci
    ```bash
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
-2. Launch the code in Android Studio and wait for the gradle build to complete without any errors.
-3. Open `app/src/main/res/values/config.xml` to see the placeholders for service credentials.
-4. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
-5. Build the project and Start the application on a real device or with a simulator.
- <p style="text-align: center; width:200">
+
+2. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.
+3. **Gradle** build will automatically be triggered and all the dependencies will be downloaded.
+4. Open `app/src/main/res/values/config.xml` to see the placeholders for service credentials.
+5. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
+6. Build the project and start the application on a real device or with a simulator.
+   <p style="text-align: center; width:200">
    ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)
- </p>
-6. To convert the text to speech, just tap on any conversation.
-7. To change the voice, edit lines 185 and 187 of `app/src/main/java/com/example/vmac/WatBot/MainActivity.java`
+    </p>
+
+7. **Enter your query** in the space provided below and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
+8. To convert the text to speech, just tap on any conversation.
+9. To change the voice, edit lines 185 and 187 of `app/src/main/java/com/example/vmac/WatBot/MainActivity.java`
    ![](images/solution28-watson-chatbot-android/android_studio.png)
-8. Click on the **mic** icon in the left bottom corner of the app to input speech as an input that gets converted to text.
+
+10. Click on the **mic** icon in the left bottom corner of the app to input speech as an input that gets converted to text.
 
 ## Add mobile analytics to track usage
 {:#mobile_analytics}
 
-Using {{site.data.keyword.mobileanalytics_short}}, you can gain insight into how your Android chatbot is performing and how it is being used. 
+The {{site.data.keyword.mobileanalytics_short}} service provides key application usage and performance insights for mobile application developers and application owners. By using Mobile Analytics application owners and developers can understand what is happening on the user side, and they can use this insight to build better applications that are hyper-relevant to users and that stand out in the veritable sea of mobile applications. 
+
+The service includes the {{site.data.keyword.mobileanalytics_short}} Console where developers and application owners can monitor mobile application performance, see usage statistics, and search device logs. 
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.mobileanalytics_short}}](https://console.bluemix.net/catalog/services/mobile-analytics) service > **Lite** plan under **Mobile**. Click **Create**.
-2. Click **Service credentials** on the left pane and add a **New credential**.
+2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
 3. Click **View Credentials** to see the credentials and copy the `apiKey` value.
-4. Open `app/src/main/res/values/config.xml` and update the `mobileanalytics_apikey` string value.
+4. On Android studio, open `app/src/main/res/values/config.xml` and update the `mobileanalytics_apikey` string value.
 5. On line 106 of `app/src/main/java/com/example/vmac/WatBot/MainActivity.java`, change the BMSClient region to the region in which the {{site.data.keyword.mobileanalytics_short}} service is created.
-6. Build and run the android chatbot app.
+6. Build and run the android chatbot app .
 7. Click **Manage** on {{site.data.keyword.mobileanalytics_short}} service dashboard to see Users, Sessions, Troubleshooting and other App Data.
    ![](images/solution28-watson-chatbot-android/mobile_analytics.png)
 
@@ -202,10 +212,20 @@ Using {{site.data.keyword.mobileanalytics_short}}, you can gain insight into how
 ## Related Content
 {:#related_content}
 
+- [Creating entities, Synonyms, System entities](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities)
+
+- [Monitoring an Android app with Mobile Analytics](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#monitoring-the-app-with-mobile-analytics-)
+
 - [Planning your Intents and Entities](https://console.bluemix.net/docs/services/conversation/intents-entities.html#planning-your-entities)
+
 - [Context Variables](https://console.bluemix.net/docs/services/conversation/dialog-runtime.html#context)
+
 - [Building a complex dialog](https://console.bluemix.net/docs/services/conversation/tutorial.html#tutorial)
-- [Monitoring the app with Mobile Analytics](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#monitoring-the-app-with-mobile-analytics-)
+
 - [Gathering information with slots](https://console.bluemix.net/docs/services/conversation/dialog-slots.html#dialog-slots)
+
 - [Deployment options](https://console.bluemix.net/docs/services/conversation/deploy.html#deployment-overview)
+
 - [Conversation Statistics](https://console.bluemix.net/docs/services/conversation/logs.html#about-the-improve-component)
+
+  ​
