@@ -38,7 +38,7 @@ Looking at the diagram below, let's first identify the components within the exi
 - Database as service, the advantage of using a Database as service is that you no longer need to handle manual backups and database scaling, which comes out of the box with most IBM database as service offerings. For this tutorial we will use [Compose for MySQL](https://console.bluemix.net/catalog/services/compose-for-mysql) but you can any other database as service like Compose for MongoDB or Cloudant. See full list of IBM Databases services in the [catalog](https://console.bluemix.net/catalog/?category=data). 
 
 <p style="text-align: center;">
-![Architecture diagram](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution29/Architecture.png)
+![Architecture diagram](images/solution29/Architecture.png)
 </p>
 
 ## Objectives:
