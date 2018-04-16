@@ -11,9 +11,9 @@ lastupdated: "2018-04-16"
 {:tip: .tip}
 {:pre: .pre}
 
-# Move existing infrastructure applications to Kubernetes
+# Move an existing infrastructure application to Kubernetes
 
-In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details [here](highly-available-and-scalable-web-application.html), we will explore all the components when moving to Kubernetes. You will learn how to handle application Kubernetes worker nodes, file storage, databases, scaling, and backups. 
+In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details [here](highly-available-and-scalable-web-application.html). We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. 
 
 Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating. Most production applications have some of these components, a number of application servers, load balancer, auto-scaler, database, file storage and backup system, so let's cover these base components when running such application on Kubernetes.
 
@@ -38,7 +38,7 @@ Looking at the diagram below, let's first identify the components within the exi
 - Database as service, the advantage of using a Database as service is that you no longer need to handle manual backups and database scaling, which comes out of the box with most IBM database as service offerings. For this tutorial we will use [Compose for MySQL](https://console.bluemix.net/catalog/services/compose-for-mysql) but you can any other database as service like Compose for MongoDB or Cloudant. See full list of IBM Databases services in the [catalog](https://console.bluemix.net/catalog/?category=data). 
 
 <p style="text-align: center;">
-![Architecture diagram](images/solution29/Architecture.png)
+![Architecture diagram](images/solution30/Architecture.png)
 </p>
 
 ## Objectives:

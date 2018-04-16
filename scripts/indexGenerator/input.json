@@ -42,6 +42,22 @@
                 ]
             },
             {
+                "name": "Move an existing infrastructure application to Kubernetes",
+                "url": "infrastructure-to-kubernetes.html",
+                "description": "In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details in previous solutions. We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating.",
+                "imgSrc": "images/solution30/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Container Service",
+                    "Docker",
+                    "PHP",
+                    "Compose for MySQL",
+                    "Slack",
+                    "Vulnerability Advisor",
+                    "DevOps"
+                ]
+            },
+            {
                 "name": "Continuous Deployment to Kubernetes",
                 "url": "continuous-deployment-to-kubernetes.html",
                 "description": "This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.",
