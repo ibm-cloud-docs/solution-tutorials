@@ -312,6 +312,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 
     Even though the `id` column has numeric values, it acts as an identifier. To specify which columns are identifiers, update the `COLUMN_IDS` property in the dashboard application's manifest.yml file.
     {:tip}
+
 7. Again from `Visualizations` create a **Tree map** chart:
     - Drag and drop `area` on the **Area hierarchy** row.
     - Drag and drop `id` on the **Size** row.
@@ -328,8 +329,10 @@ In this section, you'll take a few additional steps to explore the features of t
 3. Click the **Save** button in the toolbar.
     - Enter your dashboard's name in the corresponding input field.
     - Select the **Spec** tab to view this dashboard's specification. A spec is the native file format for {{site.data.keyword.dynamdashbemb_notm}}. In it you will find information about the charts you created as well as the {{site.data.keyword.cos_short}} data source used.
+
     In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/dynamic-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
     {:tip}
+
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
