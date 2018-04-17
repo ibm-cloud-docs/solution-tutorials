@@ -517,7 +517,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     <div class = "solutionBox">
         <h3 id="smart-data-lake.html" class="solutionBoxTitle">
-            <a href = "smart-data-lake.html">Build a smart data lake with Object Storage</a>
+            <a href = "smart-data-lake.html">Build a data lake with Object Storage</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">

@@ -334,7 +334,7 @@
         "anchor": "ml",
         "solutions": [
           {
-              "name": "Build a smart data lake with Object Storage",
+              "name": "Build a data lake with Object Storage",
               "url": "smart-data-lake.html",
               "description": "This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.",
               "imgSrc": "images/solution29/architecture.png",
