@@ -25,11 +25,8 @@ This tutorial walks you through the process of defining intents and entities and
 ## Objectives
 {: #objectives}
 
-- Create a workspace
-- Define an intent
-- Define an entity
-- Build the dialog flow
-- Create {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services
+- Create a chatbot: create a workspace, define an intent and entity, build the dialog flow
+- Allow end users to interact with chatbot using voice and audio
 - Configure and run the Android app
 - Add {{site.data.keyword.mobileanalytics_short}} to track usage
 
