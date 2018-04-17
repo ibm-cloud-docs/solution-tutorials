@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-16"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -203,7 +203,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Object Storage</span>
             </div>
             <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution10/Architecture.png" />
+                <img class="architectureDiagram" src = "images/solution10/architecture-2.png" />
             </div>
         </div>
     </div>
