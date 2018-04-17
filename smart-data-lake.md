@@ -12,9 +12,9 @@ lastupdated: "2018-04-13"
 {:tip: .tip}
 {:pre: .pre}
 
-# Build a smart data lake using object storage
+# Build a data lake using object storage
 
-In this tutorial, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to create their own charts using {{site.data.keyword.dynamdashbemb_notm}}.
+Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights using {{site.data.keyword.dynamdashbemb_notm}}.
 
 ## Objectives
 
@@ -33,7 +33,7 @@ In this tutorial, you will create a data lake for your organization using {{site
 ![Architecture](images/solution29/architecture.png)
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}
-2. Data is reduced and refined with SQL Query
+2. Data is reduced, enhanced or refined with SQL Query
 3. Data analysis occurs in {{site.data.keyword.DSX}}
 4. Line of business accesses a web application
 5. Refined data is pulled from {{site.data.keyword.cos_short}}
@@ -42,12 +42,11 @@ In this tutorial, you will create a data lake for your organization using {{site
 ## Before you begin
 
 1. [Install Git](https://git-scm.com/)
-2. [Install Bluemix Command Line Tool](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-3. [Install cURL](https://curl.haxx.se/download.html)
-4. [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
+2. [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+3. [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
 
 ## Create required services
-In this section, you will create the services required to build your smart data lake.
+In this section, you will create the services required to build your data lake.
 
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
 {:tip}
@@ -55,10 +54,13 @@ This section uses the command line to create service instances. Alternatively, y
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
     bx login
+    ```
+    {: pre}
+    ```sh
     bx target --cf
     ```
     {: pre}
-2. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a `lite` service instance, use the `standard` plan.
+2. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a service instance, run the `service-alias-create` command with the existing service name.
     ```sh
     bx resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
@@ -86,9 +88,12 @@ This section uses the command line to create service instances. Alternatively, y
     bx resource service-alias-create dashboard-nodejs-dde --instance-name data-lake-dde
     ```
     {: pre}
-6. Change to a working directory and run the following command to clone the dashboard application's repository. Then push the application to your Cloud Foundy organization.
+6. Change to a working directory and run the following command to clone the dashboard application's [GitHub repository](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard). Then push the application to your Cloud Foundy organization. The application will automatically bind the required services from above using its [manifest.yml](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard/blob/master/manifest.yml) file.
     ```sh
     git clone https://github.com/IBM-Cloud/nodejs-data-lake-dashboard.git
+    ```
+    {: pre}
+    ```sh
     cd nodejs-data-lake-dashboard
     ```
     {: pre}
@@ -108,55 +113,28 @@ This section uses the command line to create service instances. Alternatively, y
 ![Dashboard Landing Page](images/solution29/dashboard-start.png)
 
 ## Uploading data
-In this section, you will begin to upload data to a {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}.
+In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/).
 
-1. Export the **IAM token:  Bearer** token. The token is needed to execute {{site.data.keyword.cos_short}} APIs. 
-    ```sh
-    bx iam oauth-tokens
-    ```
-    {: pre}
-    ```sh
-    export IAM_TOKEN=<REPLACE_WITH_TOKEN>
-    ```
-    {: pre}
-2. Obtain the IBM Service Instance ID used with {{site.data.keyword.cos_short}} APIs. (The Service Instance ID begins with `crn:`.)
-    ```sh
-    bx resource service-instance data-lake-cos
-    ```
-    {: pre}
-    ```sh
-    export COS_SERVICE_ID=<REPLACE_WITH_ID_VALUE>
-    ```
-    {: pre}
-3. Create a bucket name in the `us-south` region to store data. {{site.data.keyword.CHSTSshort}} is only available for buckets created in the [us-south region](https://console.bluemix.net/docs/services/cloud-object-storage/basics/endpoints.html) at this time. If you recevied an *AccessDenied* error, try with a more unique bucket name.
-    ```sh
-    export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
-    ```
-    {: pre}
-    ```sh
-    curl -X "PUT" "https://s3.us-south.objectstorage.softlayer.net/$BUCKET_NAME" -H "Authorization: Bearer $IAM_TOKEN" -H "ibm-service-instance-id: $COS_SERVICE_ID"
-    ```
-    {: pre}
-4. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://catalog.data.gov/dataset/traffic-collision-data-from-2010-to-present/resource/643d0e98-5f40-4db3-8427-02641dd05fd9?inner_span=True) CSV file. The file is 77MB and may take a few minutes depending on your download speed.
-    ```sh
-    curl -o traffic-los-angeles.csv https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD
-    ```
-    {: pre}
-
-    You could contine to upload the file directly to the bucket using cURL, but this does not benefit from [{{site.data.keyword.CHSTSshort}} features](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/).
-    {:tip}
-
-5. Upload the CSV file to {{site.data.keyword.cos_short}}.
-    - Access the **data-lake-cos** service instance from the [Dashboard](https://console.bluemix.net/dashboard).
-    - From **Buckets**, select your bucket name.
-    - Click the **Add objects** button.
+1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://catalog.data.gov/dataset/traffic-collision-data-from-2010-to-present/resource/643d0e98-5f40-4db3-8427-02641dd05fd9?inner_span=True) CSV file. The file is 81MB and may take a few minutes to download.
+2. In your browser, access the **data-lake-cos** service instance from the [Dashboard](https://console.bluemix.net/dashboard).
+3. Create a new bucket to store data.
+    - Click the **Create a bucket** button.
+    - Select **Region** from the **Resiliency** drop down.
+    - Select **us-south** from the **Location**. {{site.data.keyword.CHSTSshort}} is only available for buckets created in the `us-south` region at this time. Alternatively, choose another location and use the **Standard** transfer type in the next section.
+    - Provide a bucket **Name** and click **Create** If you receive an *AccessDenied* error, try with a more unique bucket name.
+4. Upload the CSV file to {{site.data.keyword.cos_short}}.
+    - From your bucket, click the **Add objects** button.
     - Select the **Aspera high-speed transfer** radio button.
-    - Click the **Add files** button. (This will open the Aspera plugin, which will be in a separate window - possibly behind your browser window.)
-    - Browse to and select the previously downloaded **traffic-los-angeles.csv** file.
+    - Click the **Add files** button. This will open the Aspera plugin, which will be in a separate window - possibly behind your browser window.
+    - Browse to and select the previously downloaded CSV file.
+
+![Bucket with CSV file](images/solution29/cos-bucket.png)
 
 ## Working with data
 
-In this section, you will use SQL Query to manipulate your data where it resides in {{site.data.keyword.cos_short}}.
+In this section, you will convert the original, raw dataset into a targetted cohort based on time and age attributes. This is helpful to consumers of the data lake who have specific interests or would struggle with very large datasets.
+
+You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familar SQL statements. SQL Query has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
 1. Access the **data-lake-sql** SQL Query service instance from your [Dashboard](https://console.bluemix.net/dashboard/apps).
 2. Select **Open UI**.
@@ -171,7 +149,7 @@ In this section, you will use SQL Query to manipulate your data where it resides
         `Victim Age` AS age, 
         `Victim Sex` AS sex, 
         `Location` AS location
-        FROM cos://us-south/<your-bucket-name>/traffic-los-angeles.csv 
+        FROM cos://us-south/<your-bucket-name>/Traffic_Collision_Data_from_2010_to_Present.csv.csv 
         WHERE 
         `Time Occurred` >= 1700 AND 
         `Time Occurred` <= 2000 AND 
@@ -182,14 +160,13 @@ In this section, you will use SQL Query to manipulate your data where it resides
     - Replace the URL in the `FROM` clause with your bucket's name.
 4. The **Target** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result. Change the **Target** to `cos://us-south/<your-bucket-name>/results`.
 5. Click the **Run** button. The results will appear below.
-6. On the **Query Details** tab, click the **Launch** icon next after the **Result Location** URL to view the intermediate data set that is now also stored on {{site.data.keyword.cos_short}}.
+6. On the **Query Details** tab, click the **Launch** icon next after the **Result Location** URL to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
 
 ![Notebook](images/solution29/sql-query.png)
 
-
 ## Combine Jupyter Notebooks with SQL Query
 
-In this section, you will create a SQL Query client within a Jupyter Notebook. This will allow you to create intermediate datasets that can be visualized.
+In this section, you will use the SQL Query client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} within a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be used with {{site.data.keyword.dynamdashbemb_notm}}.
 
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
     - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
@@ -246,7 +223,7 @@ In this section, you will create a SQL Query client within a Jupyter Notebook. T
     ```python
     sqlClient = ibmcloudsql.SQLQuery(cloud_api_key, sql_crn, sql_cos_endpoint + '/accidents')
 
-    data_source = sql_cos_endpoint + "/traffic-los-angeles.csv"
+    data_source = sql_cos_endpoint + "/Traffic_Collision_Data_from_2010_to_Present.csv.csv"
 
     query = """
     SELECT 
@@ -268,7 +245,7 @@ In this section, you will create a SQL Query client within a Jupyter Notebook. T
 
 ## Visualize data using PixieDust
 
-In this section, you will visualize the previous result set using PixieDust and Mapbox.
+In this section, you will visualize the previous result set using PixieDust and Mapbox to better identify patterns or hot spots for traffic incidents.
 
 1. Create a common table expression to convert the `location` column to separate `latitude` and `longitude` columns. **Run** the following from the Notebook's prompt.
     ```python
@@ -323,17 +300,17 @@ In this section, you will visualize the previous result set using PixieDust and 
 
 ## Share your dataset with the organization
 
-Since you've created a new dataset using SQL Query, allow non-technical users to gain insight from it using {{site.data.keyword.dynamdashbemb_notm}}.
+Not every user of the data lake is a data scientist. You can allow non-technical users to gain insight from the data lake using {{site.data.keyword.dynamdashbemb_notm}}. Similar to SQL Query, {{site.data.keyword.dynamdashbemb_notm}} can read data directly from {{site.data.keyword.cos_short}} using pre-built dashboards. This section presents a solution that allows any user to access the data lake and build a custom dashboard.
 
-1. Access the public URL of the dashboard application you pushed previously.
+1. Access the public URL of the dashboard application you pushed to {{site.data.keyword.Bluemix_notm}} previously.
 2. Select a template that matches your intended layout. (The following steps use the second layout in the first row.)
-3. Use the `Add a source` button that appears in the `Selected sources`,  expand `bucket name` accoridan and click one of the `accidents/jobid=...` table entries. Close the dialog using the X icon in the upper right.
+3. Use the `Add a source` button that appears in the `Selected sources` side shelf, expand the `bucket name` accoridan and click one of the `accidents/jobid=...` table entries. Close the dialog using the X icon in the upper right.
 4. On left, click the `Visualizations` icon and then click **Summary**.
 5. Select the `accidents/jobid=...` source, expand `Table` and create a chart.
     - Drag and drop `id` on the **Value** row.
     - Collapse the chart using the icon on the upper corner.
 
-    Even though the `id` column has numeric values, it acts as an identifier. To specify which columns are identifiers, update the `COLUMN_IDS` property in manifest.yml.
+    Even though the `id` column has numeric values, it acts as an identifier. To specify which columns are identifiers, update the `COLUMN_IDS` property in the dashboard application's manifest.yml file.
     {:tip}
 7. Again from `Visualizations` create a **Tree map** chart:
     - Drag and drop `area` on the **Area hierarchy** row.
@@ -346,7 +323,7 @@ Since you've created a new dataset using SQL Query, allow non-technical users to
 
 In this section, you'll take a few additional steps to explore the features of the dashboard application and {{site.data.keyword.dynamdashbemb_notm}}.
 
-1. Click the **Mode** button in the sample application's toolbar to change the mode view `VIEW`.
+1. Click the **Mode** button in the sample dashboard application's toolbar to change the mode view `VIEW`.
 2. Click any of the colored tiles in the lower chart or `area` values in the chart's legend. This applies a local filter to the tab, which causes the other chart(s) to show data specific to the filter.
 3. Click the **Save** button in the toolbar.
     - Enter your dashboard's name in the corresponding input field.
@@ -357,6 +334,7 @@ In this section, you'll take a few additional steps to explore the features of t
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
 ## Expand the tutorial
+Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 - Experiment with additional datasets using SQL Query
 - Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://console.bluemix.net/catalog/services/app-id) service instance to enable security in the dashboard application
