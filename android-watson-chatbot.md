@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-16"
+lastupdated: "2018-04-17"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -57,7 +57,7 @@ This tutorial uses the following products:
 
 To begin, you will create {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}} and add a workspace. A workspace is a container for the artifacts that define the conversation flow.
 
-Save the [Ana_workspace.json](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_workspace.json) file with predefined intents, entities and dialog flow to your machine.
+For this tutorial, you will save and use [Ana_workspace.json](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_workspace.json) file with predefined intents, entities and dialog flow to your machine.
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.conversationshort}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation) service > **Lite** plan under **Watson**. Click **Create**.
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
@@ -167,19 +167,18 @@ The repository contains Android application code with required gradle dependenci
    ```bash
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
-2. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.
-3. **Gradle** build will automatically be triggered and all the dependencies will be downloaded.
-4. Open `app/src/main/res/values/config.xml` to see the placeholders for service credentials.
-5. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
-6. Build the project and start the application on a real device or with a simulator.
+2. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
+3. Open `app/src/main/res/values/config.xml` to see the placeholders for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
+4. Build the project and start the application on a real device or with a simulator.
    <p style="text-align: center; width:200">
-   ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)
+   ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)![](images/solution28-watson-chatbot-android/android_chatbot.png)
+
     </p>
-7. **Enter your query** in the space provided below and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
-8. To convert the text to speech, just tap on any conversation.
-9. To change the voice, edit lines 185 and 187 of `app/src/main/java/com/example/vmac/WatBot/MainActivity.java`
+5. **Enter your query** in the space provided below and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
+6. The response will be passed to {{site.data.keyword.texttospeechshort}} service and you should hear a voice reading out the response.
+7. To change the voice, edit lines 185 and 187 of `app/src/main/java/com/example/vmac/WatBot/MainActivity.java`
    ![](images/solution28-watson-chatbot-android/android_studio.png)
-10. Click on the **mic** icon in the left bottom corner of the app to input speech as an input that gets converted to text.
+8. Click the **mic** icon in the left bottom corner of the app to input speech that gets converted to text and then can be sent to {{site.data.keyword.conversationshort}} service by clicking the arrow icon.
 
 ## Add {{site.data.keyword.mobileanalytics_short}} to track usage
 {:#mobile_analytics}
