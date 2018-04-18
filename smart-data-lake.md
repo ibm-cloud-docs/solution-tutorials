@@ -107,7 +107,7 @@ This section uses the command line to create service instances. Alternatively, y
     {: pre}
 
     After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `bx cf app dashboard-nodejs routes` to see routes.
-    {:tip }
+    {: tip}
 
 7. Confirm the application is active by accessing its public URL in the browser.
 
@@ -334,7 +334,7 @@ In this section, you'll take a few additional steps to explore the features of t
 
     In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/dynamic-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
     {: tip}
-    
+
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
