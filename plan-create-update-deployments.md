@@ -172,7 +172,7 @@ Once you can reference the organization, it is straightforward to create a space
    }
    ```
 
-Notice how the organization name is referenced from the *global* remote state. The other properties are taken from configuration variables:
+Notice how the organization name is referenced from the *global* remote state. The other properties are taken from configuration variables.
 
 Next comes the Kubernetes cluster. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
 
@@ -231,15 +231,34 @@ In the previous steps, roles in Cloud Foundry organization and spaces could be c
 
    COMMANDS:
       ...
-      user-policies                 List policies of a user
-      user-policy                   Display details of a user policy
-      user-policy-create            Create a user policy for resources in current account
-      user-policy-update            Update a user policy for resources in current account
-      user-policy-delete            Delete a user policy
+      access-groups                    List access groups under current account
+      access-group-create              Create an access group
+      access-group                     Show details of an access group
+      access-group-delete              Delete an access group
+      access-group-update              Update an access group
+      access-group-users               List users of an access group
+      access-group-user-add            Add user(s) to an access group
+      access-group-user-remove         Remove a user from an access group
+      access-group-user-purge          Remove user from all access groups
+      access-group-service-ids         List service IDs of an access group
+      access-group-service-id-add      Add service ID(s) to an access group
+      access-group-service-id-remove   Remove a service ID from an access group
+      access-group-service-id-purge    Remove service ID from all access groups
+      access-group-policies            List policies of an access group
+      access-group-policy              Show details of an access group policy
+      access-group-policy-create       Create an access group policy
+      access-group-policy-update       Update an access group policy
+      access-group-policy-delete       Delete an access group policy
+      ...
+      user-policies                    List policies of a user
+      user-policy                      Display details of a user policy
+      user-policy-create               Create a user policy for resources in current account
+      user-policy-update               Update a user policy for resources in current account
+      user-policy-delete               Delete a user policy
       ...
    ```
 
-For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the user policies to define are:
+For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the policies to define are:
 
 |           | IAM Access policies |
 | --------- | ----------- |
@@ -248,21 +267,36 @@ For the *Development* environment as defined in [this tutorial](./users-teams-ap
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
 
+Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://console.bluemix.net/docs/iam/groups.html#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
+
 For the *Developer* role in the *Development* environment, this translates to:
 
    ```sh
    #!/bin/bash
 
    USER=$1
+   GROUP="Example-Developer-Role"
 
-   # Resource Group: Viewer
-   bx iam user-policy-create $USER --roles Viewer --resource-type resource-group --resource "default"
+   # Check if the group exist
+   if bx iam access-group $GROUP >/dev/null; then
+     echo "Role already exists"
+   else
+     # Create the access group for the role if the group does not exist
+     bx iam access-group-create $GROUP --description "used by the multiple-environments-as-code tutorial"
 
-   # Platform Access Roles in the Resource Group: Viewer
-   bx iam user-policy-create $USER --roles Viewer --resource-group-name "default"
+     # Set the permissions for this group
+     # Resource Group: Viewer
+     bx iam access-group-policy-create $GROUP --roles Viewer --resource-type resource-group --resource "default"
 
-   # Monitoring: Administrator, Editor, Viewer
-   bx iam user-policy-create $USER --roles Administrator,Editor,Viewer --service-name monitoring
+     # Platform Access Roles in the Resource Group: Viewer
+     bx iam access-group-policy-create $GROUP --roles Viewer --resource-group-name "default"
+
+     # Monitoring: Administrator, Editor, Viewer
+     bx iam access-group-policy-create $GROUP --roles Administrator,Editor,Viewer --service-name monitoring
+   fi
+
+   # Add the user to the group
+   bx iam access-group-user-add $GROUP $USER
    ```
 
 You can find the scripts for all roles in the *Development environment* under the [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of your checkout.
