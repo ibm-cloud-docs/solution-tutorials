@@ -500,20 +500,14 @@ You can repeat the steps for the `testing` and `production`.
 
 User policies use the {{site.data.keyword.Bluemix_notm}} CLI and the `iam` command.
 
-As example, to set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you'd use:
+The `iam/development` directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles. To set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you can use the script `add-developer.sh`:
 
    ```sh
-   # Resource Group: Viewer
-   bx iam user-policy-create <USER_EMAIL> --roles Viewer --resource-type resource-group --resource "default"
-
-   # Platform Access Roles in the Resource Group: Viewer
-   bx iam user-policy-create <USER_EMAIL> --roles Viewer --resource-group-name "default"
-
-   # Monitoring: Administrator, Editor, Viewer
-   bx iam user-policy-create <USER_EMAIL> --roles Administrator,Editor,Viewer --service-name monitoring
+   cd iam/development
+   ./add-developer user@domain.com
    ```
 
-The `iam/development` directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles.
+The script will create an access group for the Developer role and add the user to this group.
 
 ## Clean up resources
 
