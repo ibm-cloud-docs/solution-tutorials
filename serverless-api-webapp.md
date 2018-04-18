@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-10-27"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -15,7 +15,7 @@ lastupdated: "2017-10-27"
 
 # Serverless web application and API
 
-In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and  implementing the application backend using Functions on IBM Cloud.
+In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and  implementing the application backend using {{site.data.keyword.openwhisk}}.
 
 The application shown in this tutorial is a simple guestbook website where users can post messages.
 
@@ -31,6 +31,10 @@ The application shown in this tutorial is a simple guestbook website where users
 This tutorial uses the following products:
    * [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
    * [Cloud Functions](https://console.bluemix.net/openwhisk)
+
+As an event-driven platform, {{site.data.keyword.openwhisk}} supports a [variety of use cases](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases). Building web applications and APIs is one of them. With web apps, events are the interactions between the web browsers (or REST clients) and your web app, the HTTP requests. Instead of provisioning a virtual machine, a container or a Cloud Foundry runtime to deploy your backend, you can implement your backend API with a serverless platform. This can be a good solution to avoid paying for idle time and to let the platform scale as needed.
+
+Any action (or function) in {{site.data.keyword.openwhisk}} can be turned into a HTTP endpoint ready to be consumed by web clients. When enabled for web, these actions are called *web actions*. Once you have web actions, you can assemble them into a full-featured API with API Gateway. API Gateway is a component of {{site.data.keyword.openwhisk}} to expose APIs. It comes with security, OAuth support, rate limiting, custom domain support.
 
    ![](./images/solution8/Architecture.png)
 
@@ -58,9 +62,9 @@ Let's start by creating a Cloudant NoSQL Database. Cloudant NoSQL DB is a fully 
 5. Create a database named **guestbook**.
    ![](images/solution8/Create_Database.png)
 
-## Create Cloud Functions actions
+## Create serverless actions
 
-In this section, you will create serverless actions (commonly termed as Functions). IBM Cloud Functions (based on Apache OpenWhisk) is a Function-as-a-Service (FaaS) platform which executes functions in response to incoming events and costs nothing when not in use.
+In this section, you will create serverless actions (commonly termed as Functions). {{site.data.keyword.openwhisk}} (based on Apache OpenWhisk) is a Function-as-a-Service (FaaS) platform which executes functions in response to incoming events and costs nothing when not in use.
 
 ![](images/solution8/Functions.png)
 
@@ -214,6 +218,6 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 
 ## Related Content
 * [More guides and samples on serverless](https://developer.ibm.com/code/journey/category/serverless/)
-* [Getting started with Cloud Functions](https://console.bluemix.net/docs/openwhisk/index.html#getting-started-with-openwhisk)
-* [Cloud Functions common use cases](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases)
-* [Create APIs from Cloud Functions actions](https://console.bluemix.net/docs/apis/management/manage_openwhisk_apis.html#manage_openwhisk_apis)
+* [Getting started with {{site.data.keyword.openwhisk}}](https://console.bluemix.net/docs/openwhisk/index.html#getting-started-with-openwhisk)
+* [{{site.data.keyword.openwhisk}} common use cases](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases)
+* [Create APIs from actions](https://console.bluemix.net/docs/apis/management/manage_openwhisk_apis.html#manage_openwhisk_apis)
