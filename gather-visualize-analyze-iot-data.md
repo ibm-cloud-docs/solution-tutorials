@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-31"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -133,17 +133,11 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
 ### Create a new project
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **Watson**, select [**{{site.data.keyword.DSX_short}}**](https://console.bluemix.net/catalog/services/data-science-experience).
-
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
-
 3. Create a **New Project** > Select **Jupyter Notebooks** and enter `Detect Anomaly` as the **Name**.
-
    ![](images/solution16/new_project.png)
-
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
-
 5. Under **Define Storage**, Click on **Add** and choose an existing object storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
-
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Connection to CloudantDB for data
@@ -154,17 +148,11 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
 ### Create a jupyter(ipynb) notebook
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **Data & Analytics**, select [**Apache Spark**](https://console.bluemix.net/catalog/services/apache-spark?bss_account=3d40d897302501f3391c73e3029701f3&taxonomyNavigation=data) Lite Plan > Click **Create**.
-
 2. Navigate to http://dataplatform.ibm.com, Open the project you created above. Under **Assets** in your project, Click **New notebook** > **From URL**.
-
 3. Enter `Anomaly-detection-sample` for the **Name**.
-
 4. Enter `https://raw.githubusercontent.com/IBM-Cloud/iot-device-phone-simulator/master/anomaly-detection/Anomaly-detection-DSX.ipynb` in the URL.
-
 5. Select the Apache Spark you created above as your runtime.
-
-4. **Create Notebook**.
-
+6. **Create Notebook**.
    Check that the notebook is created with metadata and code.
    ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_dsx.png)
 
@@ -205,13 +193,9 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 ## Related Content
 
 * Solution tutorial - [Build, deploy, test, and retrain a predictive machine learning model](https://console.bluemix.net/docs/tutorials/create-deploy-retrain-machine-learning-model.html#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
-
 * Overview of [IBM {{site.data.keyword.DSX_short}}](https://datascience.ibm.com/docs/content/getting-started/overview-ws.html?context=analytics)
-
 * Anomaly Detection [Jupyter Notebook](https://github.com/IBM-Cloud/iot-device-phone-simulator/blob/master/anomaly-detection/Anomaly-detection-DSX.ipynb)
-
 * Understanding z-score - [wikipedia](https://en.wikipedia.org/wiki/Standard_score)
-
 * Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://www.ibm.com/developerworks/analytics/library/iot-deep-learning-anomaly-detection-1/index.html?ca=drs-)
 
 
