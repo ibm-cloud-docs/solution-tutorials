@@ -504,7 +504,7 @@ The `iam/development` directory of the checkout has examples of these commands f
 
    ```sh
    cd iam/development
-   ./add-developer user@domain.com
+   ./add-developer.sh user@domain.com
    ```
 
 The script will create an access group for the Developer role and add the user to this group.
