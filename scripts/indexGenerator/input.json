@@ -42,6 +42,7 @@
                 ]
             },
             {
+                "hidden": true,
                 "name": "Move an existing infrastructure application to Kubernetes",
                 "url": "infrastructure-to-kubernetes.html",
                 "description": "In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details in previous solutions. We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating.",
@@ -85,6 +86,7 @@
                 ]
             },
             {
+              "hidden": true,
               "name": "Asynchronous data processing using object storage and pub/sub messaging",
               "url": "pub-sub-object-storage.html",
               "description": "Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.",
@@ -296,6 +298,7 @@
                 ]
             },
             {
+                "hidden": true,
                 "name": "Build a voice-enabled Android chatbot",
                 "url": "android-watson-chatbot.html",
                 "description": "This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer's queries. You will learn how to enable speech to text and text to speech services for easy interaction with the Android app. Also, track the usage metrics through mobile analytics service.",
@@ -334,6 +337,7 @@
         "anchor": "ml",
         "solutions": [
           {
+              "hidden": true,
               "name": "Build a data lake with Object Storage",
               "url": "smart-data-lake.html",
               "description": "This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.",
@@ -346,6 +350,7 @@
               ]
           },
           {
+              "hidden": true,
               "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
               "url": "github-traffic-analytics.html",
               "description": "This tutorial provides serverless functionality for automated data retrieval and a Cloud Foundry app for data analytics. Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",

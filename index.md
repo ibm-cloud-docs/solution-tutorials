@@ -119,27 +119,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
-        <h3 id="infrastructure-to-kubernetes.html" class="solutionBoxTitle">
-            <a href = "infrastructure-to-kubernetes.html">Move an existing infrastructure application to Kubernetes</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details in previous solutions. We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating.</p>
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Docker</span>
-                    <span class="tag-filter category">PHP</span>
-                    <span class="tag-filter category">Compose for MySQL</span>
-                    <span class="tag-filter category">Slack</span>
-                    <span class="tag-filter category">Vulnerability Advisor</span>
-                    <span class="tag-filter category">DevOps</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution30/Architecture.png" />
-            </div>
-        </div>
-    </div>
-    <div class = "solutionBox">
         <h3 id="continuous-deployment-to-kubernetes.html" class="solutionBoxTitle">
             <a href = "continuous-deployment-to-kubernetes.html">Continuous Deployment to Kubernetes</a>
         </h3>
@@ -173,24 +152,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution3/Architecture.png" />
-            </div>
-        </div>
-    </div>
-    <div class = "solutionBox">
-        <h3 id="pub-sub-object-storage.html" class="solutionBoxTitle">
-            <a href = "pub-sub-object-storage.html">Asynchronous data processing using object storage and pub/sub messaging</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.</p>
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Java</span>
-                    <span class="tag-filter category">Message hub</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution25/Architecture.png" />
             </div>
         </div>
     </div>
@@ -467,24 +428,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
         </div>
     </div>
-    <div class = "solutionBox">
-        <h3 id="android-watson-chatbot.html" class="solutionBoxTitle">
-            <a href = "android-watson-chatbot.html">Build a voice-enabled Android chatbot</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer&#x27;s queries. You will learn how to enable speech to text and text to speech services for easy interaction with the Android app. Also, track the usage metrics through mobile analytics service.</p>
-                    <span class="tag-filter category">IBM Watson Assistant</span>
-                    <span class="tag-filter category">Speech to Text</span>
-                    <span class="tag-filter category">Text to Speech</span>
-                    <span class="tag-filter category">Mobile Analytics</span>
-                    <span class="tag-filter category">Android</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" />
-            </div>
-        </div>
-    </div>
 </div>
 
 ## Identity and Access Management
@@ -515,41 +458,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #ml }
 
 <div class = "solutionBoxContainer">
-    <div class = "solutionBox">
-        <h3 id="smart-data-lake.html" class="solutionBoxTitle">
-            <a href = "smart-data-lake.html">Build a data lake with Object Storage</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.</p>
-                    <span class="tag-filter category">Dynamic Dashboard Embedded</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
-                    <span class="tag-filter category">SQL Query</span>
-                    <span class="tag-filter category">Watson Studio</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution29/architecture.png" />
-            </div>
-        </div>
-    </div>
-    <div class = "solutionBox">
-        <h3 id="github-traffic-analytics.html" class="solutionBoxTitle">
-            <a href = "github-traffic-analytics.html">Combining serverless and Cloud Foundry for data retrieval and analytics</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>This tutorial provides serverless functionality for automated data retrieval and a Cloud Foundry app for data analytics. Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.</p>
-                    <span class="tag-filter category">Db2 Warehouse</span>
-                    <span class="tag-filter category">App ID</span>
-                    <span class="tag-filter category">IBM Cloud Functions</span>
-                    <span class="tag-filter category">Dynamic Dashboard Embedded</span>
-                    <span class="tag-filter category">GitHub</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution24-github-traffic-analytics/Architecture.png" />
-            </div>
-        </div>
-    </div>
     <div class = "solutionBox">
         <h3 id="create-deploy-retrain-machine-learning-model.html" class="solutionBoxTitle">
             <a href = "create-deploy-retrain-machine-learning-model.html">Build, deploy, test, and retrain a predictive machine learning model</a>
