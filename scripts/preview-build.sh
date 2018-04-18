@@ -20,6 +20,9 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.
 # remove all files from gh-pages
 (cd builddocs/output && git rm -rf .)
 
+# generate a md helping with the conref
+(cd scripts/conref && npm install && node tomd.js ../../builddocs/input)
+
 # generate the new files
 npm install -g marked-it-cli
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt --conref-file=builddocs/cloudoeconrefs.yml
