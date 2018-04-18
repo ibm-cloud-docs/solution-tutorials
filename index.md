@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-29"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -178,7 +178,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.</p>
+                <p>Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and the IBM Cloud Object Storage service. You will then update the configuration to scale the resources and tune the environment.</p>
                     <span class="tag-filter category">Terraform</span>
                     <span class="tag-filter category">Virtual Servers</span>
                     <span class="tag-filter category">PHP</span>
@@ -415,9 +415,9 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>Build a database-driven Slackbot with IBM Watson Conversation. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.</p>
+                <p>Build a database-driven Slackbot with IBM Watson Assistant. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">IBM Watson Conversation</span>
+                    <span class="tag-filter category">IBM Watson Assistant</span>
                     <span class="tag-filter category">Cloudant NoSQL DB</span>
                     <span class="tag-filter category">Db2 Warehouse</span>
                     <span class="tag-filter category">IBM Cloud Functions</span>

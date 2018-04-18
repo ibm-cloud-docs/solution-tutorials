@@ -42,6 +42,23 @@
                 ]
             },
             {
+                "hidden": true,
+                "name": "Move an existing infrastructure application to Kubernetes",
+                "url": "infrastructure-to-kubernetes.html",
+                "description": "In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details in previous solutions. We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating.",
+                "imgSrc": "images/solution30/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Container Service",
+                    "Docker",
+                    "PHP",
+                    "Compose for MySQL",
+                    "Slack",
+                    "Vulnerability Advisor",
+                    "DevOps"
+                ]
+            },
+            {
                 "name": "Continuous Deployment to Kubernetes",
                 "url": "continuous-deployment-to-kubernetes.html",
                 "description": "This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.",
@@ -69,6 +86,20 @@
                 ]
             },
             {
+              "hidden": true,
+              "name": "Asynchronous data processing using object storage and pub/sub messaging",
+              "url": "pub-sub-object-storage.html",
+              "description": "Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.",
+              "imgSrc": "images/solution25/Architecture.png",
+              "tags": [
+                  "Kubernetes",
+                  "Node.js",
+                  "Java",
+                  "Message hub",
+                  "Cloud Object Storage"
+              ]
+            },
+            {
                 "name": "Web application on LAMP stack",
                 "url": "lamp-stack.html",
                 "description": "This tutorial walks you through the creation of an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP (the LAMP stack). To see the LAMP server in action, you will install and configure the WordPress open source application.",
@@ -83,7 +114,7 @@
             {
                 "name": "Deploy a LAMP stack using Terraform",
                 "url": "infrastructure-as-code-terraform.html",
-                "description": "Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.",
+                "description": "Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and the IBM Cloud Object Storage service. You will then update the configuration to scale the resources and tune the environment.",
                 "imgSrc": "images/solution10/Architecture.png",
                 "tags": [
                     "Terraform",
@@ -255,15 +286,29 @@
             {
                 "name": "Build a database-driven Slackbot",
                 "url": "slack-chatbot-database-watson.html",
-                "description": "Build a database-driven Slackbot with IBM Watson Conversation. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.",
+                "description": "Build a database-driven Slackbot with IBM Watson Assistant. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.",
                 "imgSrc": "images/solution19/SlackbotArchitecture.png",
                 "tags": [
                     "Cloud Foundry",
-                    "IBM Watson Conversation",
+                    "IBM Watson Assistant",
                     "Cloudant NoSQL DB",
                     "Db2 Warehouse",
                     "IBM Cloud Functions",
                     "Slack"
+                ]
+            },
+            {
+                "hidden": true,
+                "name": "Build a voice-enabled Android chatbot",
+                "url": "android-watson-chatbot.html",
+                "description": "This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer's queries. You will learn how to enable speech to text and text to speech services for easy interaction with the Android app. Also, track the usage metrics through mobile analytics service.",
+                "imgSrc": "images/solution28-watson-chatbot-android/architecture.png",
+                "tags": [
+                    "IBM Watson Assistant",
+                    "Speech to Text",
+                    "Text to Speech",
+                    "Mobile Analytics",
+                    "Android"
                 ]
             }
         ]
@@ -291,7 +336,34 @@
         "name": "Machine Learning & Analytics",
         "anchor": "ml",
         "solutions": [
-            {
+          {
+              "hidden": true,
+              "name": "Build a data lake with Object Storage",
+              "url": "smart-data-lake.html",
+              "description": "This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.",
+              "imgSrc": "images/solution29/architecture.png",
+              "tags": [
+                  "Dynamic Dashboard Embedded",
+                  "Cloud Object Storage",
+                  "SQL Query",
+                  "Watson Studio"
+              ]
+          },
+          {
+              "hidden": true,
+              "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
+              "url": "github-traffic-analytics.html",
+              "description": "This tutorial provides serverless functionality for automated data retrieval and a Cloud Foundry app for data analytics. Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",
+              "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
+              "tags": [
+                  "Db2 Warehouse",
+                  "App ID",
+                  "IBM Cloud Functions",
+                  "Dynamic Dashboard Embedded",
+                  "GitHub"
+              ]
+          },
+          {
                 "name": "Build, deploy, test, and retrain a predictive machine learning model",
                 "url": "create-deploy-retrain-machine-learning-model.html",
                 "description": "This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.",

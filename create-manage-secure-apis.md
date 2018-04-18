@@ -137,7 +137,8 @@ In this section, you will start a local instance of your Loopback application an
 8. Click **entry.find** >**Try It**(on the right pane) > **Call operation**  to display all entries. You should see JSON for **Jane Doe** and **John Doe**.
   ![entry_find](images/solution13/find_response.png)
 
-You can also start the application manually by issuing the `npm start` command. Your REST API will be available at http://localhost:3000/api/entires {:tip}
+You can also start the application manually by issuing the `npm start` command. Your REST API will be available at http://localhost:3000/api/entries
+{:tip}
 
 ## Create API Connect service
 To prepare for the next steps, you need to create an **API Connect** service on IBM Cloud which will act as the gateway for your API. This service on IBM Cloud will be used to manage,secure and rate limit your API.

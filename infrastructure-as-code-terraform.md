@@ -15,14 +15,14 @@ lastupdated: "2018-03-09"
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
-In this tutorial, you will use a sample configuration to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server termed as **LAMP** stack. You will then update the configuration to add an Object Storage service and scale the resources to tune the environment (memory, CPU, and disk size). Finish by deleting all of the resources created by the configuration.
+In this tutorial, you will use a sample configuration to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server termed as **LAMP** stack. You will then update the configuration to add the IBM Cloud Object Storage service and scale the resources to tune the environment (memory, CPU, and disk size). Finish by deleting all of the resources created by the configuration.
 
 ## Objectives
 
 - Terraform setup with IBM Cloud Provider
 - Prepare terraform configuration
 - Create a LAMP stack from the terraform configuration
-- Update configuration to add Object Storage and scale resources
+- Update configuration to add the IBM Cloud Object Storage and scale the resources
 - Verify updates infrastructure
 - Delete the environment
 
@@ -31,9 +31,9 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 ## Products
 {: #products}
 
-- [Terraform](https://console.bluemix.net/schematics)
+- [Terraform](https://www.terraform.io/)
 - [IBM Cloud Infrastructure](https://console.bluemix.net/dashboard/ibm-iaas-g1)
-- [Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
+- [IBM Cloud Object Storage](https://console.bluemix.net/catalog/services/cloud-object-storage)
 
 ## Cost
 
@@ -42,7 +42,7 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 This tutorial uses billable components of IBM Cloud Platform, including: 
 
 - Virtual Server
-- Cloud Object Storage 
+- IBM Cloud Object Storage 
 
 Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
 
@@ -129,10 +129,8 @@ In this section, you will learn the basics of a terraform configuration by using
    - [install.yml](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/install.yml) - contains server installation configurations, here is where you can add all scripts related to your server install to what to install on the server. See `phpinfo();` injected into this file.
    - [provider.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/provider.tf) - contains the variables related to the provider where provider username and api key needed.
    - [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) - contains the server configurations to deploy the VM with specified variables.
-   - [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) - contains **Softlayer** username and api key, these credentials can be added to this file for best practices to avoid re-entering the credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
-4. Now that we understand what's in each file, open the [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) file in an IDE of your choice and modify the file by adding your **public SSH** key. This will be used to access the VM created by this configuration. For information on Creating SSH keys, follow instructions in [this link](https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html)
-
- To copy the public key to your clipboard, you can run the below command in your terminal.
+   - [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) - contains **Softlayer** username and api key, IBM Cloud API Key and your space/org names. These credentials can be added to this file for best practices to avoid re-entering these credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
+4. Now that we understand what's in each file, open the [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) file in an IDE of your choice and modify the file by adding your **public SSH** key. This will be used to access the VM created by this configuration. For information on Creating SSH keys, follow instructions in [this link](https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html) To copy the public key to your clipboard, you can run the below command in your terminal.
 
      ```bash
      pbcopy < ~/.ssh/id_rsa.pub
@@ -141,11 +139,11 @@ In this section, you will learn the basics of a terraform configuration by using
      
     On **Windows**, Download, install, launch [Git Bash](https://git-scm.com/download/win) and run the below command to copy the public SSH key to your clipboard.
     
-    ​```
+    ```
      clip < ~/.ssh/id_rsa.pub
-    ​```
+    ```
 
-5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding your `softlayer_username` and `softlayer_api_key`. You can find steps to retrieve API key and Softlayer username [here](https://knowledgelayer.softlayer.com/procedure/retrieve-your-api-key).
+5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding all the credentials listed, adding these credentials in that files means you don't need to renter these credentials every time running terraform apply. You must add all the five credentials listed in the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file in order to complete the rest of this tutorial.
 
 ## Create a LAMP stack server from the terraform configuration
 {: #Createserver}
@@ -169,35 +167,53 @@ In this section, you will learn the how to create a LAMP stack server from the t
    You should see an output similar to below.![Source Control URL](images/solution10/created.png)
 4. Next, head over to your [infrastructure device list](https://control.bluemix.net/devices) to verify that the server created.![Source Control URL](images/solution10/configuration.png)
 
-## Update configuration to add Object Storage and scale resources
+## Update configuration to add the IBM Cloud Object Storage and scale the resources
 
 {: #modify}
 
-In this section, we are going to look at how to scale the virtual server resource and add an [Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage) service to your infrastructure environment.
+In this section, we are going to look at how to scale the virtual server resource and add an [IBM Cloud Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage) service to your infrastructure environment.
 
 1. Edit the `vm.tf` file to increase the following and the save the file.
  - Increase number of CPU cores to 4 cores
  - Increase RAM(memory) to 4096
  - Increase disk size to 100GB
 
-2. Next, we need add a new service, to do that create a new file and name it **object-storage.tf**. Add the code below to the newly created file:
+2. Next, we need to add a new [IBM Cloud Object Storage](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable name for the org name and space name, then these two variable names used to retrieve the space guid in which needed to create the service. When creating the IBM Cloud Object Storage, you need set a name for the service, where we named it `lamp_objectstorage`, then we need a space guid, service fully qualified name and plan type. The code below will create a premium plan given it is a pay-as-you-go plan anyway. You can also use the Lite plan, but note that the Lite plan is limited to only one service per account. 
+
    ```
-   resource "ibm_object_storage_account" "lamp_storage" {
-     count = "${var.object_storage_enabled}"
+   variable "org_name" {
+     description = "Enter your IBM Cloud org name, you can get your org name under your IBM Cloud dashboard account: https://console.bluemix.net/dashboard"
    }
 
-   variable "object_storage_enabled" {
-       default = 1
+   variable "space_name" {
+     description = "Enter your IBM Cloud space name, you can get your space name under your IBM Cloud dashboard account: https://console.bluemix.net/dashboard"
+   }
+
+   data "ibm_space" "space" {
+     space = "${var.space_name}"
+     org   = "${var.org_name}"
+   }
+
+   # a cloud object storage
+   resource "ibm_service_instance" "objectstorage" {
+     name       = "lamp_objectstorage"
+     space_guid = "${data.ibm_space.space.id}"
+     service    = "cloud-object-storage"
+
+     # you can only have one Lite plan per account so let's use the Premium - it is pay-as-you-go
+     plan = "Premium"
    }
    ```
    {: pre}
-   **Note:** the label "lamp_storage", we will later look for that in the logs to make sure Object Storage service getting created.
-3.  Initialize the terraform configuration again by running:
+   **Note:** the label "lamp_objectstorage", we will later look for that in the logs to make sure IBM Cloud Object Storage created successfully.
+
+3. Initialize the terraform configuration again by running:
 
    ```bash
     terraform init
    ```
    {: pre}
+
 4. Apply the terraform changes by running:
    ```bash
     terraform apply
@@ -218,28 +234,20 @@ In this section, you are going to verify the VM and Object Storage to make sure 
 4. Next, let's test the server in the web browser. Open the server public IP address in the web browser. You should see the server default installation page like below.![Source Control URL](images/solution10/LAMP.png)
 
 
-**Verify Object Storage**
+**Verify IBM Cloud Object Storage**
 
-1. From the **Infrastructure** section, click on the **Object Storage** button. You should see object storage service created.![object-storage](images/solution10/object-storage.png)
-2. Click on the **Object Storage** name to view the full list of regions Object Storage is available on.
-3. Object Storage is available from different regions, click on **Dallas 5** to get to the dashboard. ![object-storage](images/solution10/regions.png)
-4. Click on **View Credentials** to view your Object Storage credentials and API end points.  ![object-storage](images/solution10/ob-dashboard.png)
+1. From the **IBM Cloud Dashboard**, you should see an instance of the IBM Cloud Object Storage service been created for you and ready for use. ![object-storage](images/solution10/ibm-cloud-object-storage.png)
 
-More info on [IBM Object Storage can be found here](https://ibm-public-cos.github.io/crs-docs/index.html).
+   More info on IBM Cloud Object Storage can be found [here](https://console.bluemix.net/docs/services/ibm-cos/index.html).
 
 ## Delete resources
 {: #deleteresources}
 
-The `terraform state rm` command is used to remove items from the [Terraform state](https://www.terraform.io/docs/state/index.html). This command can remove single resources, single instances of a resource, entire modules, and more. We are going to explore deleting the object storage and VM separately to understand how it can work.
+The `terraform state rm` command is used to remove items from the [Terraform state](https://www.terraform.io/docs/state/index.html). This command can remove single resources, single instances of a resource, entire modules, and more. We are going to run one command to delete destroy meaning delete the VM and the IBM Cloud Object Storage service.  
 
-1. Delete the object storage service using the following:
+1. Delete resources using the following command:
    ```bash
-   terraform state rm module.resources.ibm_object_storage_account.lamp_storage
-   ```
-   {: pre}
-2. Delete the VM using the following:
-   ```bash
-   terraform state rm module.resources.ibm_compute_ssh_key.ssh_key
+   terraform destroy
    ```
    {: pre}
    **Note:** To delete resources, you would need Softlayer admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
@@ -248,7 +256,7 @@ The `terraform state rm` command is used to remove items from the [Terraform sta
 ## Related information
 
 - [Terraform](https://www.terraform.io/)
-- [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
+- [IBM Cloud Object Storage](https://console.bluemix.net/docs/services/ibm-cos/index.html)
 - [IBM Cloud Provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/)
-- [Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html)
+- [Accelerate delivery of static files using a CDN - IBM Cloud Object Storage](static-files-cdn.html)
 
