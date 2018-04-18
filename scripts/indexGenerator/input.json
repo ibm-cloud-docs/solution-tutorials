@@ -113,7 +113,7 @@
                 "name": "Deploy a LAMP stack using Terraform",
                 "url": "infrastructure-as-code-terraform.html",
                 "description": "Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and the IBM Cloud Object Storage service. You will then update the configuration to scale the resources and tune the environment.",
-                "imgSrc": "images/solution10/Architecture.png",
+                "imgSrc": "images/solution10/architecture-2.png",
                 "tags": [
                     "Terraform",
                     "Virtual Servers",
