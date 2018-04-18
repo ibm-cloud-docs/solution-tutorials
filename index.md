@@ -119,6 +119,27 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
+        <h3 id="infrastructure-to-kubernetes.html" class="solutionBoxTitle">
+            <a href = "infrastructure-to-kubernetes.html">Move an existing infrastructure application to Kubernetes</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details in previous solutions. We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
+                    <span class="tag-filter category">Docker</span>
+                    <span class="tag-filter category">PHP</span>
+                    <span class="tag-filter category">Compose for MySQL</span>
+                    <span class="tag-filter category">Slack</span>
+                    <span class="tag-filter category">Vulnerability Advisor</span>
+                    <span class="tag-filter category">DevOps</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution30/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
         <h3 id="continuous-deployment-to-kubernetes.html" class="solutionBoxTitle">
             <a href = "continuous-deployment-to-kubernetes.html">Continuous Deployment to Kubernetes</a>
         </h3>
@@ -196,7 +217,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.</p>
+                <p>Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and the IBM Cloud Object Storage service. You will then update the configuration to scale the resources and tune the environment.</p>
                     <span class="tag-filter category">Terraform</span>
                     <span class="tag-filter category">Virtual Servers</span>
                     <span class="tag-filter category">PHP</span>
@@ -496,7 +517,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     <div class = "solutionBox">
         <h3 id="smart-data-lake.html" class="solutionBoxTitle">
-            <a href = "smart-data-lake.html">Build a smart data lake with Object Storage</a>
+            <a href = "smart-data-lake.html">Build a data lake with Object Storage</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
@@ -513,15 +534,16 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="github-traffic-analytics.html" class="solutionBoxTitle">
-            <a href = "github-traffic-analytics.html">Automatically collect and analyze traffic data for Github repositories</a>
+            <a href = "github-traffic-analytics.html">Combining serverless and Cloud Foundry for data retrieval and analytics</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>Automatically collect traffic statistics for Github repositories. Github only provides access to the traffic data for the last 14 days. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution to manage repositories, automatically collect traffic data on a daily or weekly schedule, and to view and analyze the collected data.</p>
+                <p>This tutorial provides serverless functionality for automated data retrieval and a Cloud Foundry app for data analytics. Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.</p>
                     <span class="tag-filter category">Db2 Warehouse</span>
                     <span class="tag-filter category">App ID</span>
                     <span class="tag-filter category">IBM Cloud Functions</span>
-                    <span class="tag-filter category">Github</span>
+                    <span class="tag-filter category">Dynamic Dashboard Embedded</span>
+                    <span class="tag-filter category">GitHub</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution24-github-traffic-analytics/Architecture.png" />

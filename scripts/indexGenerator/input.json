@@ -42,6 +42,22 @@
                 ]
             },
             {
+                "name": "Move an existing infrastructure application to Kubernetes",
+                "url": "infrastructure-to-kubernetes.html",
+                "description": "In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details in previous solutions. We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating.",
+                "imgSrc": "images/solution30/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Container Service",
+                    "Docker",
+                    "PHP",
+                    "Compose for MySQL",
+                    "Slack",
+                    "Vulnerability Advisor",
+                    "DevOps"
+                ]
+            },
+            {
                 "name": "Continuous Deployment to Kubernetes",
                 "url": "continuous-deployment-to-kubernetes.html",
                 "description": "This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.",
@@ -96,7 +112,7 @@
             {
                 "name": "Deploy a LAMP stack using Terraform",
                 "url": "infrastructure-as-code-terraform.html",
-                "description": "Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and Object Storage. You will then update the configuration to scale the resources and tune the environment.",
+                "description": "Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and the IBM Cloud Object Storage service. You will then update the configuration to scale the resources and tune the environment.",
                 "imgSrc": "images/solution10/architecture-2.png",
                 "tags": [
                     "Terraform",
@@ -318,7 +334,7 @@
         "anchor": "ml",
         "solutions": [
           {
-              "name": "Build a smart data lake with Object Storage",
+              "name": "Build a data lake with Object Storage",
               "url": "smart-data-lake.html",
               "description": "This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.",
               "imgSrc": "images/solution29/architecture.png",
@@ -330,15 +346,16 @@
               ]
           },
           {
-              "name": "Automatically collect and analyze traffic data for Github repositories",
+              "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
               "url": "github-traffic-analytics.html",
-              "description": "Automatically collect traffic statistics for Github repositories. Github only provides access to the traffic data for the last 14 days. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution to manage repositories, automatically collect traffic data on a daily or weekly schedule, and to view and analyze the collected data.",
+              "description": "This tutorial provides serverless functionality for automated data retrieval and a Cloud Foundry app for data analytics. Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",
               "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
               "tags": [
                   "Db2 Warehouse",
                   "App ID",
                   "IBM Cloud Functions",
-                  "Github"
+                  "Dynamic Dashboard Embedded",
+                  "GitHub"
               ]
           },
           {
