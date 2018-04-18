@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -533,8 +533,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
-        <h3 id="github-traffic-analytics.html" class="solutionBoxTitle">
-            <a href = "github-traffic-analytics.html">Combining serverless and Cloud Foundry for data retrieval and analytics</a>
+        <h3 id="serverless-github-traffic-analytics.html" class="solutionBoxTitle">
+            <a href = "serverless-github-traffic-analytics.html">Combining serverless and Cloud Foundry for data retrieval and analytics</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">

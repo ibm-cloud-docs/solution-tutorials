@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -161,9 +161,10 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 ## Conclusions
-In this tutorial, you deployed a serverless action and a related trigger and rule. They allow to automatically retrieve traffic data for GitHub repositories. Information about those repositories, including the tenant-specific access token, is stored in a SQL database ({{site.data.keyword.dashdbshort}}). That database is used by the Cloud Foundry app to manage users, repositories and to present the traffic statistics in the app portal. Users can see the data in a searchable table or in their own dashboard ({{site.data.keyword.dynamdashbemb_short}} service). It is also possible to download the list of repositories and the traffic data as CSV files.
+In this tutorial, you deployed a serverless action and a related trigger and rule. They allow to automatically retrieve traffic data for GitHub repositories. Information about those repositories, including the tenant-specific access token, is stored in a SQL database ({{site.data.keyword.dashdbshort}}). That database is used by the Cloud Foundry app to manage users, repositories and to present the traffic statistics in the app portal. Users can see the traffic statistics in searchable tables or visualized in an embedded dashboard ({{site.data.keyword.dynamdashbemb_short}} service, see image below). It is also possible to download the list of repositories and the traffic data as CSV files.
 
 The Cloud Foundry app manages access through an OpenID Connect client connecting to {{site.data.keyword.appid_short}}.
+![](images/solution24-github-traffic-analytics/EmbeddedDashboard.png)
 
 ## Cleanup
 To clean up the resources used for this tutorial, you can delete the related services and app as well as the action, trigger and rule in the reverse order as created:
@@ -177,8 +178,8 @@ To clean up the resources used for this tutorial, you can delete the related ser
    {:codeblock}   
 2. Delete the Python app and its services.
    ```bash
-   bx service delete ghstatsAppID
-   bx service delete ghstatsDDE
+   bx resource service-instance-delete ghstatsAppID
+   bx resource service-instance-delete ghstatsDDE
    bx service delete ghstatsDB
    bx cf delete github-traffic-stats
    ```
