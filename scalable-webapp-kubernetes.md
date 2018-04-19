@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-02-12"
+lastupdated: "2017-04-19"
 
 ---
 
@@ -37,13 +37,14 @@ This tutorial walks you through how to scaffold a web application, run it locall
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). The largest part of this tutorial can be accomplished with a **Free** cluster. Two optional sections relating to Kubernetes Ingress and custom domain require a **Paid** cluster of type **Standard**.
+1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). The major portion of this tutorial can be accomplished with a **Free** cluster. Two optional sections relating to Kubernetes Ingress and custom domain require a **Paid** cluster of type **Standard**.
 
    For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
    {:tip}
 
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesClusterCreation.png)
-2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
+2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster.
+3.  Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 ### Configure kubectl and helm
 
@@ -286,19 +287,13 @@ If you were to try to access your application with HTTPS at this time `https://<
 ## Monitor application health
 {: #monitor_application}
 
-1. Use the **Kubernetes console** to watch your application health:
-   ```
-   kubectl proxy
-   ```
-   {: pre}
-   then access the console at http://127.0.0.1:8001/ui.
-
-    If you see an authentication popup, refer [Launching the Kubernetes dashboard](https://console.bluemix.net/docs/containers/cs_app.html#cli_dashboard)
-    {: tip}
-2. Select **Nodes** and see the **Allocation Resources** to see the health of your nodes.
+1. To check the health of your application, navigate to [clusters](https://console.bluemix.net/containers-kubernetes/clusters) to see a list of clusters and click on the cluster you created above.
+2. Click **Kubernetes Dashboard** to launch the dashboard in a new tab.
+   ![](images/solution2/launch_kubernetes_dashboard.png)
+3. Select **Nodes** on the left pane, click the **Name** of the nodes and see the **Allocation Resources** to see the health of your nodes.
    ![](images/solution2/KubernetesDashboard.png)
-3. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.
-4. To **ssh** into the container, identify your pod name from the previous step and run
+4. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.
+5. To **ssh** into the container, identify your pod name from the previous step and run
    ```
    kubectl exec -it <pod-name> -- bash
    ```
