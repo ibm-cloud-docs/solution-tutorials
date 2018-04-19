@@ -5,7 +5,7 @@ const Handlebars = require('handlebars');
 const destination = process.argv[2] || './conref.md'
 
 // Get document, or throw exception on error
-const doc = yaml.safeLoad(fs.readFileSync('../builddocs/cloudoeconrefs.yml', 'utf8'));
+const doc = yaml.safeLoad(fs.readFileSync('../../builddocs/cloudoeconrefs.yml', 'utf8'));
 // console.log(doc);
 
 const templateSource = fs.readFileSync('./tomd.tmpl.md');
