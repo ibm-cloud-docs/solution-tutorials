@@ -30,7 +30,7 @@ This tutorial walks you through creating a cluster and configuring the Log Analy
 
 ![](images/solution17/Architecture.png)
 
-## Prerequisites 
+## Prerequisites
 {: #prereq}
 
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
@@ -40,7 +40,7 @@ This tutorial walks you through creating a cluster and configuring the Log Analy
 ## Create a Kubernetes cluster
 {: #create_cluster}
 
-1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster. 
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
 
    Log forwarding is *not* enabled for the **Free** cluster.
    {:tip}
@@ -116,7 +116,7 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 
   Once complete, this generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/node_project_contents.html).
 
-![](images/solution17/node_starter_contents.png)
+  ![](images/solution17/node_starter_contents.png)
 
 ### Build the application
 
@@ -221,12 +221,12 @@ For more information about other search fields that are relevant to Kubernetes c
 2. Click on the **add** button next to **message** to only see the log messages.
    ![](images/solution17/message_add.png)
 3. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
-4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.  
-5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
+4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.
+5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:
 ```
 message:(WARN|INFO|ERROR|FATAL)
 ```
-![](images/solution17/kibana_filter.png)   
+![](images/solution17/kibana_filter.png)
 6. Store the search criteria for future use by clicking **Save** in the configuration bar. Use **mylogs** as name.
 
 For more information, see [Filtering logs in Kibana](/docs/services/CloudLogAnalysis/kibana/filter_logs.html#filter_logs).
@@ -238,10 +238,10 @@ Now that you have a query defined, in this section you will use it as foundation
 1. Click on **Visualize** in the left navigation bar.
 2. In the list of offered visualizations Locate **Pie chart** and click on it.
 3. Select the query **mylogs** that you saved earlier.
-4. On the next screen, under **Select buckets type**, select **Split Slices**, then for **Aggregation** choose **Filters**. Add 4 filters having the values of **INFO**, **WARN**, **ERROR**, and **FATAL** as shown here:   
-  ![](images/solution17/VisualizationFilters.png)   
-5. Click on **Options** (right to **Data**) and activate **Donut** as view option. Finally, click on the **play** icon to apply all changes to the chart. Now you should see a **Donut Pie Chart** similar to this one:   
-  ![](images/solution17/Donut.png)   
+4. On the next screen, under **Select buckets type**, select **Split Slices**, then for **Aggregation** choose **Filters**. Add 4 filters having the values of **INFO**, **WARN**, **ERROR**, and **FATAL** as shown here:
+  ![](images/solution17/VisualizationFilters.png)
+5. Click on **Options** (right to **Data**) and activate **Donut** as view option. Finally, click on the **play** icon to apply all changes to the chart. Now you should see a **Donut Pie Chart** similar to this one:
+  ![](images/solution17/Donut.png)
 6. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
 7. Save the visualization as **DonutLogs**.
 
@@ -249,8 +249,8 @@ Now that you have a query defined, in this section you will use it as foundation
 
 Next, create another visualization for **Metric**.
 1. Click on **New** and pick **Metric** from the list of offered visualizations and click on the link beginning with **[logstash-]**.
-2. On the next screen, expand **Metric** to be able to enter a custom label. Add **Log Entries within 24 hours** and click on the **play** icon to update the shown metric.   
-  ![](images/solution12/Metric_LogCount24.png)   
+2. On the next screen, expand **Metric** to be able to enter a custom label. Add **Log Entries within 24 hours** and click on the **play** icon to update the shown metric.
+  ![](images/solution12/Metric_LogCount24.png)
 3. Save the visualization as **LogCount24**.
 
 #### Dashboard
@@ -258,7 +258,7 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 1. Click on **Dashboard** in the left navigation panel, then on **Add** to start placing existing visualizations onto the empty dashboard.
 2. Add the log count on the left and the donut chart on the right. Change the size of each component and to move them as desired.
 3. Click on the arrow in the lower left corner of a component to view changes to a table layout and additional information about the underlying request, response and execution statistics are offered.
-  ![](images/solution12/DashboardTable.png)   
+  ![](images/solution12/DashboardTable.png)
 4. Save the dashboard for future use.
 
 ## Monitor cluster health using Grafana
