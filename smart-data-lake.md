@@ -49,7 +49,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 In this section, you will create the services required to build your data lake.
 
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
-{:tip}
+{: tip}
 
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
@@ -107,7 +107,8 @@ This section uses the command line to create service instances. Alternatively, y
     {: pre}
 
     After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `bx cf app dashboard-nodejs routes` to see routes.
-    {:tip}
+    {: tip}
+
 7. Confirm the application is active by accessing its public URL in the browser.
 
 ![Dashboard Landing Page](images/solution29/dashboard-start.png)
@@ -201,7 +202,8 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
     
     You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
-    {:tip}
+    {: tip}
+
 4. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
     - In the next **In [ ]:** prompt, assign the CRN to a variable in your Notebook.
         ```python
@@ -311,7 +313,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
     - Collapse the chart using the icon on the upper corner.
 
     Even though the `id` column has numeric values, it acts as an identifier. To specify which columns are identifiers, update the `COLUMN_IDS` property in the dashboard application's manifest.yml file.
-    {:tip}
+    {: tip}
 
 7. Again from `Visualizations` create a **Tree map** chart:
     - Drag and drop `area` on the **Area hierarchy** row.
@@ -331,7 +333,7 @@ In this section, you'll take a few additional steps to explore the features of t
     - Select the **Spec** tab to view this dashboard's specification. A spec is the native file format for {{site.data.keyword.dynamdashbemb_notm}}. In it you will find information about the charts you created as well as the {{site.data.keyword.cos_short}} data source used.
 
     In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/dynamic-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
-    {:tip}
+    {: tip}
 
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
