@@ -13,5 +13,5 @@ Copy/paste from this table
 | Keyword | Description | markdown |
 | ------- | ----------- | -------- |
 {{#each keywords}}
-| {{this}} | {{#value this}}{{/value}} | \{{ site.data.keyword.{{this}} }} |
+| {{this}} | {{#value this}}{{/value}} | `\{{ site.data.keyword.{{this}} }}` |
 {{/each}}
