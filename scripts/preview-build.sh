@@ -28,7 +28,7 @@ npm install -g marked-it-cli
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt --conref-file=builddocs/cloudoeconrefs.yml
 
 # check that there is no "{{"" not replaced in the output, ignoring binaries
-if grep -rI "{{" builddocs/output
+if grep -rI "{{" --exclude=conref.html builddocs/output
 then
   echo "Found incorrect references"
   exit 1
