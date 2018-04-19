@@ -21,7 +21,7 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.
 (cd builddocs/output && git rm -rf .)
 
 # generate a md helping with the conref
-(cd scripts/conref && npm install && node tomd.js ../../builddocs/input)
+(cd scripts/conref && npm install && node tomd.js ../../builddocs/input/conref.md)
 
 # generate the new files
 npm install -g marked-it-cli
