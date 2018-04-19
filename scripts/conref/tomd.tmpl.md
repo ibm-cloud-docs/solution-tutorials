@@ -8,10 +8,10 @@ lastupdated: "2018-04-18"
 # Conref Table
 {: conref}
 
-Copy/paste from this table
+Copy/paste from this table. Triple-click in Markdown cells
 
-| Keyword | Description | markdown |
+| Keyword | Description | Markdown |
 | ------- | ----------- | -------- |
 {{#each keywords}}
-| {{this}} | {{#value this}}{{/value}} | `\{{ site.data.keyword.{{this}} }}` |
+| {{this}} | {{#value this}}{{/value}} | `\{{`site.data.keyword.{{this}}`}}` |
 {{/each}}
