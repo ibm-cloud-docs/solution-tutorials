@@ -65,9 +65,10 @@ Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a
 ## Create a Kubernetes cluster
 {: #step1}
 
-1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Pay-As-You_Go** cluster. Paid account is needed to complete the full tutorial.
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Standard** cluster. Paid account is needed to complete the full tutorial.
+   ![](images/solution21/KubernetesPaidClusterCreation.png)
 2. For convenience, use the name `dev-cluster` to be consistent with this tutorial.
-3. The smallest **Machine Type** with 1 **Worker Nodes** is sufficient for this tutorial. Leave all other options set to defaults.
+3. The smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** is sufficient for this tutorial. Select 1 **Worker node** and leave all other options set to defaults. Click **Create Cluster**.
 4. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 **NOTE:** Do not proceed until your workers are ready. 
@@ -180,6 +181,7 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
     ![](images/solution21/toolchain.png)
 9. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
     ![](images/solution21/vulnerability_report.png)
+    
     You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/security/scans)
     {:tip}
 
@@ -228,8 +230,6 @@ Deploying manually is one option here giving you a chance to validate your chang
 8. From now on, whenever your toolchain executes, You should see slack notifications in the channel you configured.
     ![](images/solution21/slack_channel.png)
 
-
-
 ## Clean up resources
 
 {: #cleanupresources}
@@ -256,9 +256,5 @@ Do you want to learn more? Here are some ideas of what you can do next:
 {: #relatedContent}
 
 * [Security](https://console.bluemix.net/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
-
 * Configuring tool [integrations](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
-
 * Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](kubernetes-log-analysis-kibana.html).
-
-  ​
