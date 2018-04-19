@@ -15,7 +15,7 @@ lastupdated: "2018-04-18"
 
 # Serverless web application and API
 
-In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and  implementing the application backend using {{site.data.keyword.openwhisk}}.
+In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and implementing the application backend using {{site.data.keyword.openwhisk}}.
 
 The application shown in this tutorial is a simple guestbook website where users can post messages.
 
@@ -29,8 +29,8 @@ The application shown in this tutorial is a simple guestbook website where users
 ## Products
 
 This tutorial uses the following products:
-   * [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
-   * [Cloud Functions](https://console.bluemix.net/openwhisk)
+   * [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
+   * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk)
 
 As an event-driven platform, {{site.data.keyword.openwhisk}} supports a [variety of use cases](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases). Building web applications and APIs is one of them. With web apps, events are the interactions between the web browsers (or REST clients) and your web app, the HTTP requests. Instead of provisioning a virtual machine, a container or a Cloud Foundry runtime to deploy your backend, you can implement your backend API with a serverless platform. This can be a good solution to avoid paying for idle time and to let the platform scale as needed.
 
@@ -41,8 +41,8 @@ Any action (or function) in {{site.data.keyword.openwhisk}} can be turned into a
 1. The user access the application hosted in GitHub Pages.
 2. The web application calls a backend API.
 3. The backend API is defined in API Gateway.
-4. API Gateway forwards the request to [Cloud Functions](https://console.bluemix.net/openwhisk).
-5. The Cloud Functions actions use [Cloudant](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) to store and retrieve guestbook entries.
+4. API Gateway forwards the request to [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk).
+5. The {{site.data.keyword.openwhisk_short}} actions use [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) to store and retrieve guestbook entries.
 
 ## Before you begin
 {: #prereqs}
@@ -51,14 +51,14 @@ This guide uses GitHub Pages to host the static website. Make sure you have a pu
 
 ## Create the Guestbook database
 
-Let's start by creating a Cloudant NoSQL Database. Cloudant NoSQL DB is a fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema. Cloudant is built upon and compatible with Apache CouchDB and accessible through a secure HTTPS API, which scales as your application grows.
+Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data.keyword.cloudant_short_notm}} is a fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB and accessible through a secure HTTPS API, which scales as your application grows.
 
 ![](images/solution8/Catalog_Cloudant.png)
 
-1. In the Catalog, under **Data & Analytics**, select **Cloudant NoSQL DB**.
+1. In the Catalog, under **Data & Analytics**, select **{{site.data.keyword.cloudant_short_notm}}**.
 2. Set the service name to **guestbook-db** and click **Create**.
 3. Under **Service Credentials**, create **New credential** and click **Add**.
-4. Click on **Manage** on the left and then **Launch** the Cloudant service console.
+4. Click on **Manage** on the left and then **Launch** the {{site.data.keyword.cloudant_short_notm}} service console.
 5. Create a database named **guestbook**.
    ![](images/solution8/Create_Database.png)
 
@@ -72,7 +72,7 @@ In this section, you will create serverless actions (commonly termed as Function
 
 You will create a **sequence** which is a chain of actions where output of one action acts as an input to the following action and so on. The first sequence you will create is used to persist a guest message. Provided a name, an emailID and a comment, the sequence will:
    * Create a document to be persisted.
-   * Store the document in the Cloudant NoSQL database.
+   * Store the document in the {{site.data.keyword.cloudant_short_notm}} database.
 
 Start by creating the first action, adding the action to a sequence and then adding the second action to the sequence.
 
@@ -105,7 +105,7 @@ Start by creating the first action, adding the action to a sequence and then add
 7. Click on **save-guestbook-entry-sequence** and then click **Add**.
 8. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**
 9. Create **New Binding** and set name to `binding-for-guestbook`.
-10. Select the **guestbook-db** Cloudant instance and the **guestbook** database and **Add** and then **Save**.
+10. Select the **guestbook-db** {{site.data.keyword.cloudant_short_notm}} instance and the **guestbook** database and **Add** and then **Save**.
 11. To test it, click on **Change Input** and enter the JSON below
     ```json
     {
@@ -139,9 +139,9 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 3. Click on **Enclosing Sequences**, **Add to Sequence** and **Create New**
 4. Enter `read-guestbook-entries-sequence` for the **Action Name** and click **Create and Add**.
 5. Click on **read-guestbook-entries-sequence** sequence and then click **Add** to create and add the second action to get documents from Cloudant.
-6. Under **Use Public**, choose **Cloudant** and then **list-documents**
+6. Under **Use Public**, choose **{{site.data.keyword.cloudant_short_notm}}** and then **list-documents**
 7. Choose **binding-for-guestbook** and **Add** to create and add this public action to your sequence.
-8. Click **Add** again to create and add the third action which will format the documents from Cloudant.
+8. Click **Add** again to create and add the third action which will format the documents from {{site.data.keyword.cloudant_short_notm}}.
 9. Under **Create New** enter `format-entries` for name and then click **Create and Add**.
 10. Click on **format-entries** and replace the code with below and **Save**
   ```js
@@ -171,7 +171,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 1. Go to Actions https://console.bluemix.net/openwhisk/actions.
 2. Select the **read-guestbook-entries-sequence** sequence. Under **Endpoints**, check **Enable Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
-4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement and **Create a Cloud Functions API**
+4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement and **Create a {{site.data.keyword.openwhisk_short}} API**
 5. Set name to **guestbook** and base path to **/guestbook**
 6. Create an operation to retrieve guestbook entries:
    1. Set **path** to **/entries**
@@ -186,7 +186,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 ## Deploy the web app
 
 1. Fork the Guestbook user interface repository https://github.com/IBM-Cloud/serverless-guestbook to your public GitHub.
-2. Modify **docs/guestbook.js** and replace the value of **apiUrl** with the route given by API Connect.
+2. Modify **docs/guestbook.js** and replace the value of **apiUrl** with the route given by API Gateway.
 3. Commit the modified file to your forked repository.
 4. In the Settings page of your repository, scroll to **GitHub Pages**, change the source to **master branch /docs folder** and Save.
 5. Access the public page for your repository.
