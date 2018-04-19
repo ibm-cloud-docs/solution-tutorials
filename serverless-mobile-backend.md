@@ -29,10 +29,10 @@ This tutorial is configurable based on your target platform. You are currently v
 
 ## Objectives
 
-* Provision services to handle user authentication, feedback persistence and analysis.
-* Configure {{site.data.keyword.mobilepushshort}}.
-* Deploy a serverless backend.
-* Configure and run a native mobile application to collect user feedback.
+* Deploy a serverless mobile backend with {{site.data.keyword.openwhisk}}.
+* Add user authentication to a mobile app with {{site.data.keyword.appid_short}}.
+* Analyze user feedback with {{site.data.keyword.toneanalyzershort}}.
+* Send notifications with {{site.data.keyword.mobilepushshort}}.
 
 ## Products
 
@@ -42,6 +42,10 @@ This tutorial uses the following products:
    * [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
    * [{{site.data.keyword.toneanalyzershort}}](https://console.bluemix.net/catalog/services/tone_analyzer)
    * [{{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/catalog/services/imfpush)
+
+Not all mobile developers have experience managing server-side logic, or a server to start with. They would prefer to focus their efforts on the app they are building. Now what if they could reuse their existing development skills to write their mobile backend?
+
+{{site.data.keyword.openwhisk}} is a serverless event-driven platform. As [highlighted in this example](./serverless-api-webapp.html), the actions you deploy can easily be turned into HTTP endpoints as *web actions* to build a web application backend API. A web application being just a client the REST API, it is easy to take this example a step further and apply the same approach to build a backend for a mobile app. And with {{site.data.keyword.openwhisk}}, mobile developers can write the actions in the same language used for their mobile app, Java for Android, and Swift for iOS.
 
 <p style="text-align: center;">
 ![](images/solution11/Architecture.png)
