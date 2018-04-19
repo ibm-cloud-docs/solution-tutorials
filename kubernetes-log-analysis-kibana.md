@@ -81,8 +81,8 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 
 When an application is deployed to a container in a **standard** cluster, logs are collected automatically by the {{site.data.keyword.containershort}}. To forward these logs to the {{site.data.keyword.loganalysisshort}} service, you must enable in your cluster that define:
 
-- Where logs are to be forwarded. You can forward logs to the account domain or to a space domain.
-- What logs are forwarded to the {{site.data.keyword.loganalysisshort}} service for analysis.
+  - Where logs are to be forwarded. You can forward logs to the account domain or to a space domain.
+  - What logs are forwarded to the {{site.data.keyword.loganalysisshort}} service for analysis.
 
 1. To **enable logging**, navigate to [clusters](https://console.bluemix.net/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
 2. Under **Summary**, click **Enable logging.**
