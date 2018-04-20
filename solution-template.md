@@ -42,7 +42,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 intro sentence
 
 <p style="text-align: center;">
-![](images/solutionXX/Architecture.png)
+
+  ![Architecture](images/solution1/Architecture.png)
 </p>
 
 1. The user does this
