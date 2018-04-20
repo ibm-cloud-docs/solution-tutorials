@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-16"
+lastupdated: "2018-04-20"
 ---
 
 {:shortdesc: .shortdesc}
@@ -11,78 +11,183 @@ lastupdated: "2018-04-16"
 {:tip: .tip}
 {:pre: .pre}
 
-# Move an existing infrastructure application to Kubernetes
+# Understand how to move a VM based application to Kubernetes
 
-In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details [here](highly-available-and-scalable-web-application.html). We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. 
+In this tutorial, you will learn the process of migrating a VM based WordPress application to Kubernetes. For this example, we have selected an [existing solution tutorial](highly-available-and-scalable-web-application.html) that contains multiple VM's running a WordPress application with a MySQL database server, FileStorage for backups, and a load balancer. We will explore the process involved when moving these components to Kubernetes. 
 
-Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating. Most production applications have some of these components, a number of application servers, load balancer, auto-scaler, database, file storage and backup system, so let's cover these base components when running such application on Kubernetes.
 
-**How to plan a migration and what to consider?**
 
-Looking at the diagram below, let's first identify the components within the existing infrastructure application and compare that with the Kubernetes section, let's outline the different components for each setup. 
+## Architecture
 
-**1. Infrastructure components:** 
+{:#architecture}
 
-- Multiple virtual servers to host the application
-- Separate file storage service to store files between application servers
-- Load balancer service to load balance traffic between application servers 
-- Database installed and setup on a virtual server  
-- Another file storage service to backup database data
-
-**2. Kubernetes components:** 
-
-- One Kubernetes cluster to manage application nodes 
-- Multiple worker nodes to store the application, think of this like virtual servers in the Infrastructure components step one.
-- PersistentVolume to share files worker nodes, this comes built in with Kubernetes and no service is needed for this.
-- Kubernetes Ingress Controller used to load balance between worker nodes, this comes built in with Kubernetes and no need for a separate load balancer service.
-- Database as service, the advantage of using a Database as service is that you no longer need to handle manual backups and database scaling, which comes out of the box with most IBM database as service offerings. For this tutorial we will use [Compose for MySQL](https://console.bluemix.net/catalog/services/compose-for-mysql) but you can any other database as service like Compose for MongoDB or Cloudant. See full list of IBM Databases services in the [catalog](https://console.bluemix.net/catalog/?category=data). 
+The following diagram outlines the system's high-level architecture.
 
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/Architecture.png)
 </p>
 
+Above architecture diagram contains two sections, the top section is what we have, and the bottom part is what we want to accomplish. First, let's understand the components of each section. 
+
+**1. VM base components:** 
+
+- Two virtual servers to host the application
+- File storage service to store files between application servers
+- Load balancer service to load balance traffic between application servers 
+- MySQL database installed on a Virtual Server 
+- File storage service to backup database data
+
+**2. Kubernetes components:** 
+
+- One Kubernetes cluster configured to hold up to 4 worker nodes, when setting up the cluster, you can select any number of nodes needed, but we selected four nodes to cover beyond the need of this tutorial example for safety reasons. 
+- Two worker nodes to store the application, the cluster capacity set to be able to increase the node replicate up to 4 nodes. 
+- PersistenVolume storage to share files worker nodes, this comes built in with Kubernetes on IBM Cloud. Using the paid cluster on IBM Cloud, a storage service gets created with the requested PersistenVolume size. 
+- Kubernetes Ingress controller used to load balance between worker nodes.
+- Compose For MySQL service to store the database. With Kubernetes you have the option to run a database on a separate node inside docker, but we have selected the Database As Service option for few reasons. IBM Compose database services and many other databases as services come with built-in backup snapshots and auto-scaling, so we don't need to worry about backups and scaling. For that reason, we have selected the Database as a service option. You can find many databases as services on IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data). 
+
+Following this tutorial results in:
+
+- Understand the process involved when moving applications to Kubernetes. 
+- Your VM based application, packaged as a Docker container and pushed to your cluster.
+
 ## Objectives:
 
-- Create a Kubernetes cluster 
-- Configure a PersistentVolume in the Kubernetes cluster
-  - [Create volumes.yml]()
-  - [Create your Kubernetes volumes]()
-- Create Compose for MySQL service 
-  - Configure Compose for MySQL service 
-- Deploy WordPress to Kubernetes
-  - [Configure the Docker file]()
-  - [Build & push the Docker image]()
-  - [Create wordpress.yml]()
-  - [Details of wordpress.yml]()
-  - [Create your WP instance on Kubernetes]()
-- Use Ingress Controller to load balance between nodes 
-  - Configure Ingress Controller 
-- Scale application nodes 
-- Configure DevOps delivery pipeline (optional)
-- Setup Slack notifications (optional)
-- Advantages of Kubernetes
-  - Scaling 
-  - Management and flexibility 
-  - Security using Vulnerability Advisor 
-  - … add more here
-- Clean up resources
+{: #objectives}
 
-## Cost
+- Why use Kubernetes, what to migrate and how to plan a migration.
+- Create a Kubernetes cluster, gain access to your cluster, download the tools required.
+- Create and configure Compose for MySQL service, copy existing database.
+- Prepare Kubernetes deployment templates, create PersistentVolume storage.
+- Deploy the packaged Docker container to your cluster.
+- Manually scale application worker nodes and test the load balancer.
+- Expand the tutorial by adding, DevOps continuous delivery pipeline, slack notifications and, monitoring services.
+
+## Products
+
+{: #products}
+
+This tutorial uses the following products:
+
+- [Kubernetes](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create)
+- [Compose for MySQL](https://console.bluemix.net/catalog/services/compose-for-mysql)
+
+## Cost 
 
 {: #cost}
 
 This tutorial uses billable components of IBM Cloud Platform, including: 
 
 - [Kubernetes](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create)
-- [Compose for MySQL](https://console.bluemix.net/catalog/services/compose-for-mysql)
 
 Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
 
+## Why use Kubernetes, what to migrate and how to plan a migration
+
+{: #why_kubernetes}
+
+Before we talk about what to migrate and how, let's discuss the why use Kubernetes. 
+
+**Why use Kubernetes**
+
+- High availability, Kubernetes delivers high availability is by treating each instance of software as a disposable entity in which called [Pods](https://kubernetes.io/docs/concepts/workloads/pods/pod/). 
+- Performance and Scalability, Kubernetes makes it easy to run many copies of the same service with [Deployments and Replica Sets](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+- Security, Kubernetes provides really powerful tools to specify what containers are allowed to do via [pod security policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/) and [network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/).
+- Load Balancing traffic, Ingress controller, can handle load balancing traffic between worker nodes simultaneously. 
+
+**What to migrate**
+
+In the VM's based application, there are components like the application VM's, load balancer, database server, file storage. For this given solution example, we are going to migrate everything and move the full application to Kubernetes, but this can not always be the case, sometimes you may only want to migrate the application runtime and keep the database in your existing environment or just migrate a microservice within your application. 
+
+**How to plan migration**
+
+Planning your migration is probably the most important of all, let's cover the steps required to plan a migration. 
+
+1. Breakdown the existing solution into separate components. In the existing VM based application, we identified the following, application VM's, load balancer, file storage to share files between applications, Database server, and backup.
+
+2. Understand existing component and if moved to Kubernetes. 
+
+3. Migration order process:
+
+   - Backup existing application database and source code. 
+   - Setup your Kubernetes cluster, gain access to your cluster, download the tools required.
+   - Create and configure Compose for MySQL service, copy existing database to the newly created database as a service.
+   - Prepare Kubernetes deployment templates, create PersistentVolume storage.
+   - Deploy the packaged Docker container to your cluster.
+
+4. Test the application, test the database, test the load balancer, configure database backup policies. 
+
+5. Next, you should explore what else can be added when using Kubernetes, things like auto-scaling, setup DevOps pipeline, monitoring, and security. We will cover these additional improvements forwarder down the tutorial.
+
+   ​
+
+## Create a Kubernetes cluster 
+
+{: #create_cluster}
+
+ToDo... 
+
+## Create and configure a Database 
+
+{: #create_database}
+
+ToDo... 
+
+### Configure Compose for MySQL service 
+
+ToDo... 
+
+### Copy Database to the newly created database service 
+
+ToDo... 
+
+## Create Kubernetes deployment templates
+
+{: #create_deployment}
+
+ToDo... 
+
+### Configure a PersistentVolume in the Kubernetes cluster
+
+{: #configure_persistent_volume}
+
+ToDo... 
+
+## Deploy WordPress to Kubernetes
+
+{: #deploy_to_kubernetes}
+
+ToDo... 
+
+### Build & push the Docker image
+
+ToDo... 
+
+### Deploy to Kubernetes 
+
+ToDo... 
+
+## Manually scale application, test the load balancer
+{: #scaling_and_testing}
+
+ToDo... 
+
+## Expand the tutorial 
+
+{: #expand_tutorial}
+
+ToDo... add pointers to other solutions for 
+- DevOps - continuous delivery pipeline
+- Monitoring
+- Security 
+- Slack notifications 
 
 
-Solution Development Steps 
+## Clean up resources
+{: #clean_up_resources}
 
-Step 1) 
+ToDo... 
 
+## Related Content
+{: #related_content}
 
-
+ToDo... 
