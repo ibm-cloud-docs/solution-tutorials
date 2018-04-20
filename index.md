@@ -119,6 +119,27 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
+        <h3 id="infrastructure-to-kubernetes.html" class="solutionBoxTitle">
+            <a href = "infrastructure-to-kubernetes.html">Move an existing infrastructure application to Kubernetes</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details in previous solutions. We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
+                    <span class="tag-filter category">Docker</span>
+                    <span class="tag-filter category">PHP</span>
+                    <span class="tag-filter category">Compose for MySQL</span>
+                    <span class="tag-filter category">Slack</span>
+                    <span class="tag-filter category">Vulnerability Advisor</span>
+                    <span class="tag-filter category">DevOps</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution30/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
         <h3 id="continuous-deployment-to-kubernetes.html" class="solutionBoxTitle">
             <a href = "continuous-deployment-to-kubernetes.html">Continuous Deployment to Kubernetes</a>
         </h3>
@@ -152,6 +173,24 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution3/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="pub-sub-object-storage.html" class="solutionBoxTitle">
+            <a href = "pub-sub-object-storage.html">Asynchronous data processing using object storage and pub/sub messaging</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Node.js</span>
+                    <span class="tag-filter category">Java</span>
+                    <span class="tag-filter category">Message hub</span>
+                    <span class="tag-filter category">Cloud Object Storage</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution25/Architecture.png" />
             </div>
         </div>
     </div>
