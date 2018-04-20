@@ -155,7 +155,7 @@ Lets check the health of your multi-region application.
 
 Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before users are impacted. If you configured a custom route for your application, change the test definition to access your application through its custom domain.
 
-## Remove services
+## Remove resources
 
 * Delete the toolchain
 * Delete the two Cloud Foundry applications deployed in the two regions

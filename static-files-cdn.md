@@ -201,7 +201,7 @@ The application contains a public/index.html web page that includes references t
 
 Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination which lets you host files and serve them to users from around the world. You can also use {{site.data.keyword.cos_full_notm}} to store any files your users upload to your application.
 
-## Remove services
+## Remove resources
 
 * Delete the Cloud Foundry application
 * Delete the Content Delivery Network service

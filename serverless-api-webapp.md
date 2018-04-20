@@ -225,7 +225,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
 11. Commit the modified file.
 12. Your application now access the API through your custom domain.
 
-## Remove services
+## Remove resources
 
 * Delete {{site.data.keyword.cloudant_short_notm}} service
 * Delete API from {{site.data.keyword.openwhisk_short}}

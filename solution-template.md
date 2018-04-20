@@ -98,7 +98,7 @@ Introductory statement that overviews the section
 
 ### Sub section
 
-## Remove services
+## Remove resources
 
 Steps to take to remove the resources created in this tutorial
 
