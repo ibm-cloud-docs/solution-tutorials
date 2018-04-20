@@ -30,6 +30,8 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 
 Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to estimate costs for the following paid services: {{site.data.keyword.BluVirtServers_short}}.
 
+## Architecture
+
 ![Architecture diagram](images/solution4/Architecture.png)
 
 1. End user accesses the LAMP server and applications using a web browser

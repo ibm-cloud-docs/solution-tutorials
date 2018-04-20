@@ -30,6 +30,8 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 - [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio)
 - [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
 
+## Architecture
+
 ![Architecture](images/solution29/architecture.png)
 
 1. Raw data is stored on {{site.data.keyword.cos_short}}
@@ -340,14 +342,7 @@ Congratulations, you have built a data lake using {{site.data.keyword.cos_short}
 - Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://console.bluemix.net/catalog/services/app-id) service instance to enable security in the dashboard application
 
-## Related information
-
-- [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
-- [Jupyter Notebooks](http://jupyter.org/)
-- [Mapbox](https://console.bluemix.net/catalog/services/mapbox-maps)
-- [PixieDust](https://www.ibm.com/cloud/pixiedust)
-
-## Uninstall
+## Remove resources
 
 Run the following commands to remove services, applications and keys used.
 
@@ -391,3 +386,10 @@ bx service delete data-lake-studio
 bx app delete dashboard-nodejs
 ```
 {: pre}
+
+## Related information
+
+- [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
+- [Jupyter Notebooks](http://jupyter.org/)
+- [Mapbox](https://console.bluemix.net/catalog/services/mapbox-maps)
+- [PixieDust](https://www.ibm.com/cloud/pixiedust)
