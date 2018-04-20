@@ -13,9 +13,35 @@ lastupdated: "2018-04-20"
 
 # Understand how to move a VM based application to Kubernetes
 
-In this tutorial, you will learn the process of migrating a VM based WordPress application to Kubernetes. For this example, we have selected an [existing solution tutorial](highly-available-and-scalable-web-application.html) that contains multiple VM's running a WordPress application with a MySQL database server, FileStorage for backups, and a load balancer. We will explore the process involved when moving these components to Kubernetes. 
+This tutorial walks you through the process of moving a VM based application to IBM Cloud Kubernetes cluster. You will do that by packaging the application into different Docker container files, run it locally and then deploy it to a Kubernetes cluster.  For this example, we have selected an [existing WordPress application](highly-available-and-scalable-web-application.html) that contains multiple VM's with a MySQL database server, File Storage, and a load balancer. 
 
+Following this tutorial results in:
 
+- Understand the process involved when moving VM based applications to Kubernetes. 
+- Your VM based application, packaged as a Docker container and pushed to your cluster.
+
+## Objectives:
+
+{: #objectives}
+
+- Why use Kubernetes, what to migrate and how to plan a migration.
+- Create a Kubernetes cluster, gain access to your cluster, download the tools required.
+- Create and configure Compose for MySQL service, copy existing database.
+- Prepare Kubernetes deployment templates, create PersistentVolume storage.
+- Deploy the packaged Docker container to your cluster.
+- Manually scale application worker nodes and test the load balancer.
+- Expand the tutorial by adding, DevOps continuous delivery pipeline, slack notifications and, monitoring services.
+
+## Services used
+
+{: #products}
+
+This tutorial uses the following products:
+
+- [Kubernetes](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create)
+- [Compose for MySQL](https://console.bluemix.net/catalog/services/compose-for-mysql)
+
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -45,42 +71,6 @@ Above architecture diagram contains two sections, the top section is what we hav
 - Kubernetes Ingress controller used to load balance between worker nodes.
 - Compose For MySQL service to store the database. With Kubernetes you have the option to run a database on a separate node inside docker, but we have selected the Database As Service option for few reasons. IBM Compose database services and many other databases as services come with built-in backup snapshots and auto-scaling, so we don't need to worry about backups and scaling. For that reason, we have selected the Database as a service option. You can find many databases as services on IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data). 
 
-Following this tutorial results in:
-
-- Understand the process involved when moving applications to Kubernetes. 
-- Your VM based application, packaged as a Docker container and pushed to your cluster.
-
-## Objectives:
-
-{: #objectives}
-
-- Why use Kubernetes, what to migrate and how to plan a migration.
-- Create a Kubernetes cluster, gain access to your cluster, download the tools required.
-- Create and configure Compose for MySQL service, copy existing database.
-- Prepare Kubernetes deployment templates, create PersistentVolume storage.
-- Deploy the packaged Docker container to your cluster.
-- Manually scale application worker nodes and test the load balancer.
-- Expand the tutorial by adding, DevOps continuous delivery pipeline, slack notifications and, monitoring services.
-
-## Products
-
-{: #products}
-
-This tutorial uses the following products:
-
-- [Kubernetes](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create)
-- [Compose for MySQL](https://console.bluemix.net/catalog/services/compose-for-mysql)
-
-## Cost 
-
-{: #cost}
-
-This tutorial uses billable components of IBM Cloud Platform, including: 
-
-- [Kubernetes](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create)
-
-Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
-
 ## Why use Kubernetes, what to migrate and how to plan a migration
 
 {: #why_kubernetes}
@@ -90,9 +80,9 @@ Before we talk about what to migrate and how, let's discuss the why use Kubernet
 **Why use Kubernetes**
 
 - High availability, Kubernetes delivers high availability is by treating each instance of software as a disposable entity in which called [Pods](https://kubernetes.io/docs/concepts/workloads/pods/pod/). 
-- Performance and Scalability, Kubernetes makes it easy to run many copies of the same service with [Deployments and Replica Sets](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
-- Security, Kubernetes provides really powerful tools to specify what containers are allowed to do via [pod security policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/) and [network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/).
 - Load Balancing traffic, Ingress controller, can handle load balancing traffic between worker nodes simultaneously. 
+- Performance and Scalability
+- Security
 
 **What to migrate**
 
@@ -182,7 +172,7 @@ ToDo... add pointers to other solutions for
 - Slack notifications 
 
 
-## Clean up resources
+## Remove Services
 {: #clean_up_resources}
 
 ToDo... 
