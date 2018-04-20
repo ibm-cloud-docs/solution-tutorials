@@ -23,7 +23,7 @@ In this tutorial, you will learn how to use {{site.data.keyword.openwhisk}} alon
 
 Not all mobile developers have experience managing server-side logic, or a server to start with. They would prefer to focus their efforts on the app they are building. Now what if they could reuse their existing development skills to write their mobile backend?
 
-{{site.data.keyword.openwhisk}} is a serverless event-driven platform. As [highlighted in this example](./serverless-api-webapp.html), the actions you deploy can easily be turned into HTTP endpoints as *web actions* to build a web application backend API. A web application being just a client the REST API, it is easy to take this example a step further and apply the same approach to build a backend for a mobile app. And with {{site.data.keyword.openwhisk}}, mobile developers can write the actions in the same language used for their mobile app, Java for Android, and Swift for iOS.
+{{site.data.keyword.openwhisk_short}} is a serverless event-driven platform. As [highlighted in this example](./serverless-api-webapp.html), the actions you deploy can easily be turned into HTTP endpoints as *web actions* to build a web application backend API. A web application being a client to the REST API, it is easy to take this example a step further and apply the same approach to build a backend for a mobile app. And with {{site.data.keyword.openwhisk_short}}, mobile developers can write the actions in the same language used for their mobile app, Java for Android, and Swift for iOS.
 
 This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **iOS / Swift** version of this tutorial. Use the drop down switcher at the top of this documentation to select the **Android / Java** version of this tutorial.
 {: swift}
@@ -34,7 +34,7 @@ This tutorial is configurable based on your target platform. You are currently v
 ## Objectives
 {: #objectives}
 
-* Deploy a serverless mobile backend with {{site.data.keyword.openwhisk}}.
+* Deploy a serverless mobile backend with {{site.data.keyword.openwhisk_short}}.
 * Add user authentication to a mobile app with {{site.data.keyword.appid_short}}.
 * Analyze user feedback with {{site.data.keyword.toneanalyzershort}}.
 * Send notifications with {{site.data.keyword.mobilepushshort}}.
@@ -43,7 +43,7 @@ This tutorial is configurable based on your target platform. You are currently v
 {: #services}
 
 This tutorial uses the following runtimes and services:
-   * [{{site.data.keyword.openwhisk}}](https://console.bluemix.net/openwhisk)
+   * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk)
    * [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID)
    * [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
    * [{{site.data.keyword.toneanalyzershort}}](https://console.bluemix.net/catalog/services/tone_analyzer)
@@ -125,8 +125,7 @@ The repository contains both the mobile application and the {{site.data.keyword.
 
 | File                                     | Description                              |
 | ---------------------------------------- | ---------------------------------------- |
-| [**actions**](https://github.com/IBM-Cloud/serverless-followupapp-ios/tree/master/actions) | Code for the {{site.data.keyword.openwhisk_short}}
- actions of the serverless mobile backend |
+| [**actions**](https://github.com/IBM-Cloud/serverless-followupapp-ios/tree/master/actions) | Code for the {{site.data.keyword.openwhisk_short}} actions of the serverless mobile backend |
 | [**followupapp**](https://github.com/IBM-Cloud/serverless-followupapp-ios/tree/master/followupapp) | Code for the mobile application          |
 | [**deploy.sh**](https://github.com/IBM-Cloud/serverless-followupapp-ios/blob/master/deploy.sh) | Helper script to install, uninstall, update the {{site.data.keyword.openwhisk_short}} trigger, actions, rules |
 {: swift}
@@ -340,6 +339,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 ## Related content
 
 * {{site.data.keyword.appid_short}} provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](../services/appid/identity-providers.html). You will also be able to [customize the login widget](../services/appid/login-widget.html#login-widget).
+
 
 * When you create an OpenWhisk Swift action with a Swift source file(.swift files under `actions` folder), it has to be compiled into a binary before the action is run. Once done, subsequent calls to the action are much faster until the container that holds your action is purged. This delay is known as the cold-start delay.
   To avoid the cold-start delay, you can compile your Swift file into a binary and then upload to OpenWhisk in a zip file. As you need the OpenWhisk scaffolding, the easiest way to create the binary is to build it within the same environment it runs in. refer [Package an Action as a Swift executable](https://console.bluemix.net/docs/openwhisk/openwhisk_actions.html#creating-swift-actions) for further steps.
