@@ -16,7 +16,7 @@ lastupdated: "2018-04-20"
 
 This tutorial walks you through creating, securing, and deploying a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline. 
 
-Apps or parts of your apps will have outages - it is a fact. It can be a problem in your code, a planned maintenance impacting the resources used by your app, a hardware failure bringing down a zone, a region, a data center where your app is hosted. Any of these will happen and you have to be prepared. With {{site.data.keyword.Bluemix_notm}}, you can deploy your application to [multiple regions](https://console.bluemix.net/docs/overview/ibm-cloud.html#ov_intro_reg) to increase your application resilience. With applications in multiple regions, you can also redirect user traffic to the nearest region to reduce latency.
+Apps or parts of your apps will have outages - it is a fact. It can be a problem in your code, a planned maintenance impacting the resources used by your app, a hardware failure bringing down a zone, a region, a data center where your app is hosted. Any of these will happen and you have to be prepared. With {{site.data.keyword.Bluemix_notm}}, you can deploy your application to [multiple regions](https://console.bluemix.net/docs/overview/ibm-cloud.html#ov_intro_reg) to increase your application resilience. And with your application now running in multiple locations, you can also redirect user traffic to the nearest region to reduce latency.
 
 ## Objectives
 
