@@ -48,7 +48,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 1. The user accesses the application
 2. The application includes content distributed through a Content Delivery Network
-3. If the content is not available locally or has expired, the CDN pulls the content from the origin.
+3. If the content is not available in the CDN or has expired, the CDN pulls the content from the origin.
   
 ## Before you begin
 {: #prereqs}
