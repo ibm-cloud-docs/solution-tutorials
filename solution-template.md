@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017
-lastupdated: "2017-11-22"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -23,16 +23,23 @@ This tutorial...
 ## Objectives
 {: #objectives}
 
-* First objective
-* Second objective
+* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
+* Short and informational (do not use sentences)
 
-## Products
-{: #products}
+## Services used
+{: #services}
 
-This tutorial uses the following products:
+This tutorial uses the following runtimes and services:
 * [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
 * [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
 * [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
+
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
+## Architecture
+{: #architecture}
+
+intro sentence
 
 <p style="text-align: center;">
 ![](images/solutionXX/Architecture.png)
@@ -47,10 +54,10 @@ This tutorial uses the following products:
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
 
 
-## First Objective
-{: #first_objective}
+## Solution Specific Section
+{: #section_one}
 
-Objective description
+Introductory statement that overviews the section
 
 1. Step 1 Click **This** and enter your name.
 
@@ -62,7 +69,7 @@ Objective description
 4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
 5. Do not use "I" or "We will".
 
-### Sub objective
+### Sub section
 
    ```bash
    some shellscript
@@ -83,17 +90,17 @@ And this paragraph only appears for Swift code
 {: swift}
 
 
-## Second Objective
-{: #second_objective}
+## Another Solution Specific Section
+{: #section_two}
 
-Objective description
+Introductory statement that overviews the section
 
-### Sub objective
+### Sub section
 
-## Clean up resources
+## Remove services
 
 Steps to take to remove the resources created in this tutorial
 
-## Related information
+## Related content
 
 * [Relevant links](https://blah)
