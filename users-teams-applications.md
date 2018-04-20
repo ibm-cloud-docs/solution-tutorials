@@ -19,8 +19,11 @@ lastupdated: "2018-02-28"
 # Best practices for organizing users, teams, applications
 
 This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
-
 {:shortdesc}
+
+When building an application, it is very common to define multiple environments reflecting the development lifecycle of a project from a developer committing code to the application code being made available to the end-users. *Sandbox*, *test*, *staging*, *UAT* (user acceptance testing), *pre-production*, *production* are typical names for these environments.
+
+Isolating the underlying resources, implementing governance and access policies, protecting a production workload, validating changes before pushing them to production, are some of the reasons why you would want to create these separate environments.
 
 ## Objectives
 {: #objectives}
@@ -29,21 +32,19 @@ This tutorial gives an overview of the concepts available in {{site.data.keyword
 * Configure a project with separation between roles and environments
 * Setup continuous integration
 
-## Products
-{: #products}
+## Services used
+{: #services}
 
-This tutorial uses the following products:
+This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.iamlong}}](https://console.bluemix.net/docs/iam/index.html)
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
 * [Cloud Foundry](https://console.bluemix.net/catalog/?category=cf-apps&search=foundry)
 * [{{site.data.keyword.cloudantfull}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
 ## Define a project
-
-When building an application, it is very common to define multiple environments reflecting the development lifecycle of a project from a developer committing code to the application code being made available to the end-users. *Sandbox*, *test*, *staging*, *UAT* (user acceptance testing), *pre-production*, *production* are typical names for these environments.
-
-Isolating the underlying resources, implementing governance and access policies, protecting a production workload, validating changes before pushing them to production, are some of the reasons why you would want to create these separate environments.
 
 Let's consider a sample project with the following components:
 * several microservices deployed in {{site.data.keyword.containershort_notm}},
