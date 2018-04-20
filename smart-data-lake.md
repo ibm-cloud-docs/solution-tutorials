@@ -387,7 +387,7 @@ bx app delete dashboard-nodejs
 ```
 {: pre}
 
-## Related information
+## Related content
 
 - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
 - [Jupyter Notebooks](http://jupyter.org/)
