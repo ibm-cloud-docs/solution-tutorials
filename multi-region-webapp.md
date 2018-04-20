@@ -31,6 +31,8 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.sdk4node}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
 * [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) for DevOps
 
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
 ## Architecture
 
 This tutorial involves an active/passive scenario where two copies of the application are deployed in two different regions but only one copy is serving client requests. The DNS configuration initially points to the first region. If the first region fails, the DNS configuration should be updated to point to the other region.
