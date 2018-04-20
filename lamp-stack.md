@@ -39,7 +39,7 @@ Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to estimate c
 {: #prereqs}
 
 1. Contact your infrastructure administrator to get the following permissions.
-* Network permission required to complete the **Public and Private Network Uplink**
+  * Network permission required to complete the **Public and Private Network Uplink**
 
 ## Create services
 
