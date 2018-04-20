@@ -115,7 +115,7 @@
                 "name": "Deploy a LAMP stack using Terraform",
                 "url": "infrastructure-as-code-terraform.html",
                 "description": "Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and the IBM Cloud Object Storage service. You will then update the configuration to scale the resources and tune the environment.",
-                "imgSrc": "images/solution10/Architecture.png",
+                "imgSrc": "images/solution10/architecture-2.png",
                 "tags": [
                     "Terraform",
                     "Virtual Servers",
@@ -298,7 +298,6 @@
                 ]
             },
             {
-                "hidden": true,
                 "name": "Build a voice-enabled Android chatbot",
                 "url": "android-watson-chatbot.html",
                 "description": "This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer's queries. You will learn how to enable speech to text and text to speech services for easy interaction with the Android app. Also, track the usage metrics through mobile analytics service.",
@@ -337,7 +336,6 @@
         "anchor": "ml",
         "solutions": [
           {
-              "hidden": true,
               "name": "Build a data lake with Object Storage",
               "url": "smart-data-lake.html",
               "description": "This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.",
@@ -350,9 +348,8 @@
               ]
           },
           {
-              "hidden": true,
               "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
-              "url": "github-traffic-analytics.html",
+              "url": "serverless-github-traffic-analytics.html",
               "description": "This tutorial provides serverless functionality for automated data retrieval and a Cloud Foundry app for data analytics. Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",
               "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
               "tags": [

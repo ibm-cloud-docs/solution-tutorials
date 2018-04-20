@@ -1,0 +1,17 @@
+---
+copyright:
+  years: 2018
+lastupdated: "2018-04-18"
+
+---
+
+# Conref Table
+{: conref}
+
+Copy/paste from this table. Triple-click in Markdown cells
+
+| Keyword | Description | Markdown |
+| ------- | ----------- | -------- |
+{{#each keywords}}
+| {{this}} | {{#value this}}{{/value}} | `\{{`site.data.keyword.{{this}}`}}` |
+{{/each}}

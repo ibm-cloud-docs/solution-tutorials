@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-03-09"
+lastupdated: "2018-04-19"
 ---
 
 
@@ -22,14 +22,14 @@ This tutorial walks you through setting up a continuous integration and delivery
 
 ## Objectives:
 
-* Create a Kubernetes cluster 
-* Create a starter application 
-* Configure DevOps delivery pipeline 
-* Clone, build and run the application locally 
-* Push application Git repository 
+* Create a Kubernetes cluster
+* Create a starter application
+* Configure DevOps delivery pipeline
+* Clone, build and run the application locally
+* Push application Git repository
 * Deploy to production cluster
-* Security using Vulnerability Advisor 
-* Setup Slack notifications 
+* Security using Vulnerability Advisor
+* Setup Slack notifications
 * Clean up resources
 
 
@@ -37,7 +37,7 @@ This tutorial walks you through setting up a continuous integration and delivery
 ![](images/solution21/Architecture.png)
 
 1. Push code to a private Git repository.
-2. Pipeline picks up changes in Git and builds container image. 
+2. Pipeline picks up changes in Git and builds container image.
 3. Container image uploaded to registry deployed to a development Kubernetes cluster.
 4. Validate changes and deploy to production cluster.
 5. Slack notifications setup for deployment activities.
@@ -55,22 +55,23 @@ This tutorial walks you through setting up a continuous integration and delivery
 
 {: #cost}
 
-This tutorial uses billable components of IBM Cloud Platform, including: 
+This tutorial uses billable components of IBM Cloud Platform, including:
 
 - Kubernetes
 - Continuous Delivery
 
-Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
+Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Create a Kubernetes cluster
 {: #step1}
 
-1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Pay-As-You_Go** cluster. Paid account is needed to complete the full tutorial.
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Standard** cluster. Paid account is needed to complete the full tutorial.
+   ![](images/solution21/KubernetesPaidClusterCreation.png)
 2. For convenience, use the name `dev-cluster` to be consistent with this tutorial.
-3. The smallest **Machine Type** with 1 **Worker Nodes** is sufficient for this tutorial. Leave all other options set to defaults.
+3. The smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** is sufficient for this tutorial. Select 1 **Worker node** and leave all other options set to defaults. Click **Create Cluster**.
 4. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
-**NOTE:** Do not proceed until your workers are ready. 
+**NOTE:** Do not proceed until your workers are ready.
 
 ## Create a starter application
 
@@ -94,7 +95,7 @@ In the example above we used the App Service UI to create the starter applicatio
 
 ## Clone, build and run the application locally
 
-In this step, you will clone the repo locally, make code changes and build/run the application locally.  
+In this step, you will clone the repo locally, make code changes and build/run the application locally.
 
 ### Clone the application
 1. Select the **Git** tile under **Code**. You're then directed to your git repository page. ![HelloWorld](images/solution21/DevOps_Toolchain.png)
@@ -140,13 +141,13 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
-2. After your container starts, go to http://localhost:3000/ 
+2. After your container starts, go to http://localhost:3000/
    ![](images/solution21/node_starter_localhost.png)
 
-## Push application Git repository 
+## Push application Git repository
 
 In this step, you will commit your change to your Git repository. The pipeline will pick up the commit and push the changes to the cloud automatically.
-1. In your terminal window, make sure you are inside the repo you cloned. 
+1. In your terminal window, make sure you are inside the repo you cloned.
 2. Push the change to your repository with three simple steps: Add, commit, and push.
    ```bash
    git add public/index.html
@@ -180,6 +181,7 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
     ![](images/solution21/toolchain.png)
 9. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
     ![](images/solution21/vulnerability_report.png)
+
     You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/security/scans)
     {:tip}
 
@@ -197,10 +199,10 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
     git push origin master
     ```
 
-## Deploy to production cluster 
+## Deploy to production cluster
 {: #deploytoproduction}
 
-In this step, you will complete the deployment pipeline by deploying the Kubernetes application to development and production environments respectively. Ideally, we want to set up an automatic deployment for the development environment and a manual deployment for the production environment. Before we do that, let's explore the two ways in which you can deliver this. It's possible to use one cluster for both development and production environment. However, it's recommended to have two separate clusters, one for development and one for production. Let's explore setting up a second cluster for production.  
+In this step, you will complete the deployment pipeline by deploying the Kubernetes application to development and production environments respectively. Ideally, we want to set up an automatic deployment for the development environment and a manual deployment for the production environment. Before we do that, let's explore the two ways in which you can deliver this. It's possible to use one cluster for both development and production environment. However, it's recommended to have two separate clusters, one for development and one for production. Let's explore setting up a second cluster for production.
 
 1. Following instructions in [Create a Kubernetes cluster](#step1) step, Create a new cluster and let's name it `prod-cluster`.
 2. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
@@ -228,17 +230,15 @@ Deploying manually is one option here giving you a chance to validate your chang
 8. From now on, whenever your toolchain executes, You should see slack notifications in the channel you configured.
     ![](images/solution21/slack_channel.png)
 
-
-
 ## Clean up resources
 
 {: #cleanupresources}
 
-In this step, you will clean up the resources to remove what you created above. 
+In this step, you will clean up the resources to remove what you created above.
 
-- Delete the Git repository 
+- Delete the Git repository
 - Delete the toolchain
-- Delete the two clusters 
+- Delete the two clusters
 - Delete the Slack channel
 
 ## Expand the Tutorial
@@ -248,17 +248,13 @@ In this step, you will clean up the resources to remove what you created above.
 Do you want to learn more? Here are some ideas of what you can do next:
 
 - [Analyze logs and monitor the health of Kubernetes applications using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
-- Add a testing environment and deploy it to a 3rd cluster. 
+- Add a testing environment and deploy it to a 3rd cluster.
 - Deploy the production cluster [across multiple regions](multi-region-webapp.html).
 
-## Related Content 
+## Related Content
 
 {: #relatedContent}
 
 * [Security](https://console.bluemix.net/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
-
 * Configuring tool [integrations](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
-
 * Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](kubernetes-log-analysis-kibana.html).
-
-  ​

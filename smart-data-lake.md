@@ -25,10 +25,10 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 
 ## Services used
 
-* [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
-* [SQL Query](https://console.bluemix.net/catalog/services/sql-query)
-* [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio)
-* [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
+- [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
+- [SQL Query](https://console.bluemix.net/catalog/services/sql-query)
+- [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio)
+- [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
 
 ![Architecture](images/solution29/architecture.png)
 
@@ -46,10 +46,11 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 3. [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
 
 ## Create required services
+
 In this section, you will create the services required to build your data lake.
 
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
-{:tip}
+{: tip}
 
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
@@ -107,12 +108,14 @@ This section uses the command line to create service instances. Alternatively, y
     {: pre}
 
     After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `bx cf app dashboard-nodejs routes` to see routes.
-    {:tip}
+    {: tip}
+
 7. Confirm the application is active by accessing its public URL in the browser.
 
 ![Dashboard Landing Page](images/solution29/dashboard-start.png)
 
 ## Uploading data
+
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/).
 
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://catalog.data.gov/dataset/traffic-collision-data-from-2010-to-present/resource/643d0e98-5f40-4db3-8427-02641dd05fd9?inner_span=True) CSV file. The file is 81MB and may take a few minutes to download.
@@ -144,16 +147,16 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
         SELECT
         `Dr Number` AS id,
         `Date Occurred` AS date,
-        `Time Occurred` AS time, 
-        `Area Name` AS area, 
-        `Victim Age` AS age, 
-        `Victim Sex` AS sex, 
+        `Time Occurred` AS time,
+        `Area Name` AS area,
+        `Victim Age` AS age,
+        `Victim Sex` AS sex,
         `Location` AS location
-        FROM cos://us-south/<your-bucket-name>/Traffic_Collision_Data_from_2010_to_Present.csv.csv 
-        WHERE 
-        `Time Occurred` >= 1700 AND 
-        `Time Occurred` <= 2000 AND 
-        `Victim Age` >= 20 AND 
+        FROM cos://us-south/<your-bucket-name>/Traffic_Collision_Data_from_2010_to_Present.csv.csv
+        WHERE
+        `Time Occurred` >= 1700 AND
+        `Time Occurred` <= 2000 AND
+        `Victim Age` >= 20 AND
         `Victim Age` <= 35
         ```
         {: codeblock}
@@ -199,9 +202,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
         {: pre}
     - Copy the **API Key** to the clipboard.
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
-    
-    You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
-    {:tip}
+    - You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
 4. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
     - In the next **In [ ]:** prompt, assign the CRN to a variable in your Notebook.
         ```python
@@ -226,15 +227,15 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     data_source = sql_cos_endpoint + "/Traffic_Collision_Data_from_2010_to_Present.csv.csv"
 
     query = """
-    SELECT 
-        `Time Occurred` AS time, 
-        `Area Name` AS area, 
-        `Victim Age` AS age, 
-        `Victim Sex` AS sex, 
-        `Location` AS location 
+    SELECT
+        `Time Occurred` AS time,
+        `Area Name` AS area,
+        `Victim Age` AS age,
+        `Victim Sex` AS sex,
+        `Location` AS location
     FROM  {}
-    WHERE 
-        `Time Occurred` >= 1700 AND `Time Occurred` <= 2000 AND 
+    WHERE
+        `Time Occurred` >= 1700 AND `Time Occurred` <= 2000 AND
         `Victim Age` >= 20 AND `Victim Age` <= 35
     """.format(data_source)
 
@@ -250,36 +251,36 @@ In this section, you will visualize the previous result set using PixieDust and 
 1. Create a common table expression to convert the `location` column to separate `latitude` and `longitude` columns. **Run** the following from the Notebook's prompt.
     ```python
     query = """
-    WITH location AS ( 
-        SELECT 
-            id, 
-            cast(split(coordinates, ',')[0] as float) as latitude, 
-            cast(split(coordinates, ',')[1] as float) as longitude 
-        FROM (SELECT 
-                `Dr Number` as id, 
-                regexp_replace(Location, '[()]', '') as coordinates 
+    WITH location AS (
+        SELECT
+            id,
+            cast(split(coordinates, ',')[0] as float) as latitude,
+            cast(split(coordinates, ',')[1] as float) as longitude
+        FROM (SELECT
+                `Dr Number` as id,
+                regexp_replace(Location, '[()]', '') as coordinates
             FROM {0}
-        ) 
-    ) 
-    SELECT  
-        d.`Dr Number` as id, 
-        d.`Date Occurred` as date, 
-        d.`Time Occurred` AS time, 
-        d.`Area Name` AS area, 
-        d.`Victim Age` AS age, 
-        d.`Victim Sex` AS sex, 
-        l.latitude, 
-        l.longitude 
-    FROM {0} AS d 
-        JOIN 
-        location AS l 
-        ON l.id = d.`Dr Number` 
-    WHERE 
-        d.`Time Occurred` >= 1700 AND 
-        d.`Time Occurred` <= 2000 AND 
-        d.`Victim Age` >= 20 AND 
-        d.`Victim Age` <= 35 AND 
-        l.latitude != 0.0000 AND 
+        )
+    )
+    SELECT
+        d.`Dr Number` as id,
+        d.`Date Occurred` as date,
+        d.`Time Occurred` AS time,
+        d.`Area Name` AS area,
+        d.`Victim Age` AS age,
+        d.`Victim Sex` AS sex,
+        l.latitude,
+        l.longitude
+    FROM {0} AS d
+        JOIN
+        location AS l
+        ON l.id = d.`Dr Number`
+    WHERE
+        d.`Time Occurred` >= 1700 AND
+        d.`Time Occurred` <= 2000 AND
+        d.`Victim Age` >= 20 AND
+        d.`Victim Age` <= 35 AND
+        l.latitude != 0.0000 AND
         l.latitude != 0.0000
     """.format(data_source)
 
@@ -309,11 +310,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 5. Select the `accidents/jobid=...` source, expand `Table` and create a chart.
     - Drag and drop `id` on the **Value** row.
     - Collapse the chart using the icon on the upper corner.
-
-    Even though the `id` column has numeric values, it acts as an identifier. To specify which columns are identifiers, update the `COLUMN_IDS` property in the dashboard application's manifest.yml file.
-    {:tip}
-
-7. Again from `Visualizations` create a **Tree map** chart:
+6. Again from `Visualizations` create a **Tree map** chart:
     - Drag and drop `area` on the **Area hierarchy** row.
     - Drag and drop `id` on the **Size** row.
     - Collapse the chart to view the result.
@@ -329,20 +326,22 @@ In this section, you'll take a few additional steps to explore the features of t
 3. Click the **Save** button in the toolbar.
     - Enter your dashboard's name in the corresponding input field.
     - Select the **Spec** tab to view this dashboard's specification. A spec is the native file format for {{site.data.keyword.dynamdashbemb_notm}}. In it you will find information about the charts you created as well as the {{site.data.keyword.cos_short}} data source used.
-
-    In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/dynamic-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
-    {:tip}
-
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
+In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/dynamic-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
+{: tip}
+
 ## Expand the tutorial
+
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
+
 - Experiment with additional datasets using SQL Query
 - Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://console.bluemix.net/catalog/services/app-id) service instance to enable security in the dashboard application
 
 ## Related information
+
 - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
 - [Jupyter Notebooks](http://jupyter.org/)
 - [Mapbox](https://console.bluemix.net/catalog/services/mapbox-maps)

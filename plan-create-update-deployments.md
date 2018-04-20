@@ -58,7 +58,7 @@ Developers do not like to write the same thing twice. The [DRY](https://en.wikip
 
 Infrastructure as a Service (IaaS), Platform as a Service (PaaS), Container as a Service (CaaS), Functions as a Service (FaaS) have given developers high level of abstraction and it became easier to acquire resources like bare metal servers, managed databases, virtual machines, Kubernetes clusters, etc. But once you have provisioned these resources, you need to connect them together, to configure user access, to update the configuration over time, etc. Being able to automate all these steps and to repeat the installation, configuration under different environments is a must-have these days.
 
-Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial](./users-teams-applications.html), we've introduced best practices to organize users, teams and applications and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How could we automate the creation of these environments? What tools could we use?
+Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial](./users-teams-applications.html), we've introduced best practices to organize users, teams and applications and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How to automate the creation of these environments? What tools could be used?
 
 ## Overview of the available tools
 {: #tools}
@@ -74,7 +74,7 @@ To support a multi-cloud approach, Terraform works with providers. A provider is
 
 As you start describing your infrastructure-as-code, it is critical to treat files you create as regular code, thus storing them in a source control management system. Overtime this will bring good properties such as using the source control review workflow to validate changes before applying them, adding a continuous integration pipeline to automatically deploy infrastructure changes.
 
-[This Git repository](https://github.com/IBM-Cloud/multiple-environments-as-code) has all the configuration files needed to setup the environments defined earlier. You can clone the repository to follow the next sections as we go through the content of the files.
+[This Git repository](https://github.com/IBM-Cloud/multiple-environments-as-code) has all the configuration files needed to setup the environments defined earlier. You can clone the repository to follow the next sections detailing the content of the files.
 
    ```sh
    git clone https://github.com/IBM-Cloud/multiple-environments-as-code
@@ -91,7 +91,7 @@ The repository is structured as follow:
 
 ### Heavy lifting with Terraform
 
-Our *Development*, *Testing* and *Production* environments pretty much look the same.
+The *Development*, *Testing* and *Production* environments pretty much look the same.
 
 <p style="text-align: center;">
   <img title="" src="./images/solution26-plan-create-update-deployments/one-environment.png" style="height: 400px;" />
@@ -120,7 +120,7 @@ Under the [terraform/global](https://github.com/IBM-Cloud/multiple-environments-
 
 In this resource, all properties are configured through variables. In the next sections, you will learn how to set these variables.
 
-To fully deploy our environments, we will use a mix of Terraform and the {{site.data.keyword.Bluemix_notm}} CLI. In the shell scripts written with the CLI we may need to reference this organization or the account by name or ID. The *global* directory also includes [outputs.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/outputs.tf) which will produce a file containing this information as keys/values suitable to be reused in scripting:
+To fully deploy the environments, you will use a mix of Terraform and the {{site.data.keyword.Bluemix_notm}} CLI. Shell scripts written with the CLI may need to reference this organization or the account by name or ID. The *global* directory also includes [outputs.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/outputs.tf) which will produce a file containing this information as keys/values suitable to be reused in scripting:
 
    ```sh
    # generate a property file suitable for shell scripts with useful variables relating to the environment
@@ -139,7 +139,7 @@ EOF
 
 There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html) you could factor common configuration as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can evolve the *development* environment to test changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository so that you can reference a specific version of a module in your environment files.
 
-Given our environments are rather simple and similar, we are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#best-practices). Workspaces allow to use the same terraform files (.tf) with different environments. In our example, *development*, *testing* and *production* are workspaces. They will use the same Terraform definitions but with different configuration variables (different names, different capacities).
+Given the environments are rather simple and similar, you are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#best-practices). Workspaces allow to use the same terraform files (.tf) with different environments. In the example, *development*, *testing* and *production* are workspaces. They will use the same Terraform definitions but with different configuration variables (different names, different capacities).
 
 Each environment requires:
 * a dedicated Cloud Foundry space
@@ -159,7 +159,7 @@ The Cloud Foundry space is linked to the organization created in the previous st
    }
    ```
 
-Once we can reference the organization, it is straightforward to create a space within this organization. [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/main.tf) contains the definition of the resources for the environment.
+Once you can reference the organization, it is straightforward to create a space within this organization. [main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/per-environment/main.tf) contains the definition of the resources for the environment.
 
    ```sh
    # a Cloud Foundry space per environment
@@ -172,7 +172,7 @@ Once we can reference the organization, it is straightforward to create a space 
    }
    ```
 
-Notice how the organization name is referenced from the *global* remote state. The other properties are taken from configuration variables:
+Notice how the organization name is referenced from the *global* remote state. The other properties are taken from configuration variables.
 
 Next comes the Kubernetes cluster. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
 
@@ -191,7 +191,7 @@ Next comes the Kubernetes cluster. The {{site.data.keyword.Bluemix_notm}} provid
    }
    ```
 
-Again most of the properties will be initialized from configuration variables. We can adjust the datacenter, the number of workers, the type of workers.
+Again most of the properties will be initialized from configuration variables. You can adjust the datacenter, the number of workers, the type of workers.
 
 Cloud Foundry services can be provisioned and a Kubernetes binding (secret) can be added to retrieve the service credentials from your applications:
 
@@ -216,11 +216,11 @@ Cloud Foundry services can be provisioned and a Kubernetes binding (secret) can 
    }
    ```
 
-At that point we have the resources needed by our application in place. The next step is to configure access to these resources.
+At that point you have the resources needed by the application in place. The next step is to configure access to these resources.
 
 ### Policies with Identity and Access Management
 
-In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, we are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `bx` and the `iam` command.
+In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `bx` and the `iam` command.
 
    ```cmd
    ~/> bx iam
@@ -231,15 +231,34 @@ In the previous steps, roles in Cloud Foundry organization and spaces could be c
 
    COMMANDS:
       ...
-      user-policies                 List policies of a user
-      user-policy                   Display details of a user policy
-      user-policy-create            Create a user policy for resources in current account
-      user-policy-update            Update a user policy for resources in current account
-      user-policy-delete            Delete a user policy
+      access-groups                    List access groups under current account
+      access-group-create              Create an access group
+      access-group                     Show details of an access group
+      access-group-delete              Delete an access group
+      access-group-update              Update an access group
+      access-group-users               List users of an access group
+      access-group-user-add            Add user(s) to an access group
+      access-group-user-remove         Remove a user from an access group
+      access-group-user-purge          Remove user from all access groups
+      access-group-service-ids         List service IDs of an access group
+      access-group-service-id-add      Add service ID(s) to an access group
+      access-group-service-id-remove   Remove a service ID from an access group
+      access-group-service-id-purge    Remove service ID from all access groups
+      access-group-policies            List policies of an access group
+      access-group-policy              Show details of an access group policy
+      access-group-policy-create       Create an access group policy
+      access-group-policy-update       Update an access group policy
+      access-group-policy-delete       Delete an access group policy
+      ...
+      user-policies                    List policies of a user
+      user-policy                      Display details of a user policy
+      user-policy-create               Create a user policy for resources in current account
+      user-policy-update               Update a user policy for resources in current account
+      user-policy-delete               Delete a user policy
       ...
    ```
 
-For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the user policies we need to define are:
+For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the policies to define are:
 
 |           | IAM Access policies |
 | --------- | ----------- |
@@ -248,21 +267,36 @@ For the *Development* environment as defined in [this tutorial](./users-teams-ap
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
 
+Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://console.bluemix.net/docs/iam/groups.html#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
+
 For the *Developer* role in the *Development* environment, this translates to:
 
    ```sh
    #!/bin/bash
 
    USER=$1
+   GROUP="Example-Developer-Role"
 
-   # Resource Group: Viewer
-   bx iam user-policy-create $USER --roles Viewer --resource-type resource-group --resource "default"
+   # Check if the group exist
+   if bx iam access-group $GROUP >/dev/null; then
+     echo "Role already exists"
+   else
+     # Create the access group for the role if the group does not exist
+     bx iam access-group-create $GROUP --description "used by the multiple-environments-as-code tutorial"
 
-   # Platform Access Roles in the Resource Group: Viewer
-   bx iam user-policy-create $USER --roles Viewer --resource-group-name "default"
+     # Set the permissions for this group
+     # Resource Group: Viewer
+     bx iam access-group-policy-create $GROUP --roles Viewer --resource-type resource-group --resource "default"
 
-   # Monitoring: Administrator, Editor, Viewer
-   bx iam user-policy-create $USER --roles Administrator,Editor,Viewer --service-name monitoring
+     # Platform Access Roles in the Resource Group: Viewer
+     bx iam access-group-policy-create $GROUP --roles Viewer --resource-group-name "default"
+
+     # Monitoring: Administrator, Editor, Viewer
+     bx iam access-group-policy-create $GROUP --roles Administrator,Editor,Viewer --service-name monitoring
+   fi
+
+   # Add the user to the group
+   bx iam access-group-user-add $GROUP $USER
    ```
 
 You can find the scripts for all roles in the *Development environment* under the [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of your checkout.
@@ -355,7 +389,7 @@ Once Terraform completes, it will have created:
 * a `global.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
 * the `terraform.tfstate` file
 
-> In this tutorial we use the `local` backend provider for Terraform state. Handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
+> This tutorial uses the `local` backend provider for Terraform state. Handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
 
 ### Reuse an organization you are managing
 
@@ -391,7 +425,7 @@ If you are not the account owner but you manage an organization in the account, 
 
 ### Create per-environment space, cluster and services
 
-We will focus on the `development` environment. The steps will be the same for the other environments, only the values you pick for the variables will differ.
+This section will focus on the `development` environment. The steps will be the same for the other environments, only the values you pick for the variables will differ.
 
 1. Change to the `terraform/per-environment` folder of the checkout
 1. Copy the template `tfvars` file. There is one per environment:
@@ -466,20 +500,14 @@ You can repeat the steps for the `testing` and `production`.
 
 User policies use the {{site.data.keyword.Bluemix_notm}} CLI and the `iam` command.
 
-As example, to set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you'd use:
+The `iam/development` directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles. To set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you can use the script `add-developer.sh`:
 
    ```sh
-   # Resource Group: Viewer
-   bx iam user-policy-create <USER_EMAIL> --roles Viewer --resource-type resource-group --resource "default"
-
-   # Platform Access Roles in the Resource Group: Viewer
-   bx iam user-policy-create <USER_EMAIL> --roles Viewer --resource-group-name "default"
-
-   # Monitoring: Administrator, Editor, Viewer
-   bx iam user-policy-create <USER_EMAIL> --roles Administrator,Editor,Viewer --service-name monitoring
+   cd iam/development
+   ./add-developer.sh user@domain.com
    ```
 
-The `iam/development` directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles.
+The script will create an access group for the Developer role and add the user to this group.
 
 ## Clean up resources
 

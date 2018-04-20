@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-10-27"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -15,12 +15,12 @@ lastupdated: "2017-10-27"
 
 # Accelerate delivery of static files using a CDN
 
-This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage, and how to use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.
+This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.
 
 ## Objectives
 {: #objectives}
 
-* Create a Cloud Object Storage S3 bucket.
+* Create a {{site.data.keyword.cos_full_notm}} bucket.
 * Upload files to a bucket.
 * Make the content globally available with a CDN.
 * Expose files by using a Cloud Foundry web application.
@@ -36,17 +36,26 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-Contact your Infrastructure master user to get the following permissions:
+Contact the master user of your Infrastructure account to get the following permissions:
    * Manage CDN Account
    * Manage Storage
    * API Key
 
 These permissions are required to be able to view and use the Storage and CDN services.
 
+## About Content Delivery Network
+
+Web applications have different types of content: HTML content, images, videos, cascading style sheets, JavaScript files, user-generated content. Some contents change often, others not so much, some are accessed very often by lot of users, others occasionally. As the audience for the application grows, you may want to offload serving these contents to another component, freeing resources for your main application. You may also want to have these contents served from a location close to your application users, wherever they are in the world.
+
+There are many reasons why you would use a Content Delivery Network in these situations:
+* the CDN will cache the content, pulling the content from the origin (your servers) only it is not available in its cache or if it has expired;
+* with multiple data centers across the world, the CDN will serve the cached content from the closest location for your users;
+* running on a different domain that your main application, the browser will be able to load more contents in parallel - most browsers have a limit in the number of connections per hostname.
+
 ## Get the web application code
 {: #get_code}
 
-This section uses a simple web application that links to the files (css, images and videos) served by a CDN.
+Let's consider a simple web application with different types of content like images, videos and cascading style sheets. You will store the content in a storage bucket and configure the CDN to use the bucket as its origin.
 
 To start, retrieve the application code:
 
@@ -55,23 +64,22 @@ To start, retrieve the application code:
    ```
   {: pre}
 
-
 ## Create an Object Storage
 {: #create_cos}
 
-Cloud Object Storage provides flexible, cost-effective, and scalable cloud storage for unstructured data.
+{{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data.
 
 ![](images/solution3/Storage_Catalog.png)
 
-1. Go to the catalog in the console, and select **Object Storage** from the Storage section.
-2. Click **Create** and **Create**.
-4. Click **Create Bucket**.
+1. Go to the [catalog](https://console.bluemix.net/catalog/) in the console, and select [**Object Storage**](https://console.bluemix.net/catalog/services/cloud-object-storage) from the Storage section.
+2. Create a new instance of {{site.data.keyword.cos_full_notm}}
+4. In the service dashboard, click **Create Bucket**.
 5. Set a unique bucket name such as `username-mywebsite` and click **Create**. Avoid dots (.) in the bucket name.
 
 ## Upload files to a bucket
 {: #upload}
 
-In this section, we'll use the command line tool **curl** to upload files to the bucket.
+In this section, you will use the command line tool **curl** to upload files to the bucket.
 
 1. Log in to {{site.data.keyword.Bluemix_notm}} from the CLI and get a token from IBM Cloud IAM.
    ```sh
@@ -130,7 +138,7 @@ In this section, we'll use the command line tool **curl** to upload files to the
 
 ## Make the files globally available with a CDN
 
-In this section, we will create a CDN service. The CDN service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (our bucket in Cloud Object Storage) to the network and stays there for other users to access it quickly without the network latency to reach the host server again.
+In this section, you will create a CDN service. The CDN service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (your bucket in {{site.data.keyword.cos_full_notm}}) to the network and stays there for other users to access it quickly without the network latency to reach the host server again.
 
 ### Create a CDN instance
 
@@ -157,7 +165,7 @@ In this section, we will create a CDN service. The CDN service distributes conte
 
 ## Deploy the Cloud Foundry application
 
-The application contains a public/index.html web page that includes references to the files now hosted in the Cloud Object Storage. The backend `app.js` serves this web page and replaces a placeholder with the actual location of your CDN. This way, all assets that are used by the web page are served by the CDN.
+The application contains a public/index.html web page that includes references to the files now hosted in the {{site.data.keyword.cos_full_notm}}. The backend `app.js` serves this web page and replaces a placeholder with the actual location of your CDN. This way, all assets that are used by the web page are served by the CDN.
 
 1. From a terminal, go in the directory where you checked out the code.
    ```
@@ -183,12 +191,12 @@ The application contains a public/index.html web page that includes references t
 
 ![](images/solution3/Application.png)
 
-Using a CDN with an Object Storage is a powerful combination which lets you host files and serve them to users from around the world. You can also use Object Storage to store any files your users upload to your application.
+Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination which lets you host files and serve them to users from around the world. You can also use {{site.data.keyword.cos_full_notm}} to store any files your users upload to your application.
 
 ## Related information
 
 [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
 
-[Manage Access to Object Storage](https://console.bluemix.net/docs/services/cloud-object-storage/iam/overview.html#getting-started-with-iam)
+[Manage Access to {{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/iam/overview.html#getting-started-with-iam)
 
 [Getting Started with CDN](https://console.bluemix.net/docs/infrastructure/CDN/getting-started.html)

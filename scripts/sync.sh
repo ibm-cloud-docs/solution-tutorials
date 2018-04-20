@@ -20,7 +20,6 @@ tar cf - \
   --exclude=low-latency-real-time-bidding.md \
   --exclude=pub-sub-object-storage.md \
   --exclude=autoscale-virtual-server.md \
-  --exclude=github-traffic-analytics.md \
   --exclude=infrastructure-to-kubernetes.md \
   --exclude=README.md \
   --exclude=scripts \

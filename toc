@@ -29,7 +29,10 @@ Solution Tutorials
     serverless-mobile-backend.md
     gather-visualize-analyze-iot-data.md
     slack-chatbot-database-watson.md
+    android-watson-chatbot.md
     users-teams-applications.md
+    smart-data-lake.md
+    serverless-github-traffic-analytics.md
     create-deploy-retrain-machine-learning-model.md
     big-data-analytics-spark.md
     {: .navgroup-end}

@@ -2,15 +2,15 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-02"
+lastupdated: "2018-04-19"
 
 ---
-
 
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
 {:screen: .screen}
+{:tip: .tip}
 {:pre: .pre}
 
 
@@ -24,14 +24,13 @@ This tutorial walks you through creating a cluster and configuring the Log Analy
 * Create a Kubernetes cluster.
 * Provision the Log Analysis service.
 * Create logging configurations in the cluster.
-* Provision the Monitoring service
 * Deploy application
 * View, search and analyze logs in Kibana
 * View metrics in Grafana
 
 ![](images/solution17/Architecture.png)
 
-## Prerequisites 
+## Prerequisites
 {: #prereq}
 
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
@@ -39,16 +38,19 @@ This tutorial walks you through creating a cluster and configuring the Log Analy
 * [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
-{: #step1}
+{: #create_cluster}
 
-1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch) and choose the **Pay-As-You_Go** cluster. Log forwarding is *not* enabled for the **Free** cluster.
-  {:tip}
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
+
+   Log forwarding is *not* enabled for the **Free** cluster.
+   {:tip}
+
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution17/KubernetesPaidClusterCreation.png)
 2. For convenience, use the name `mycluster` to be consistent with this tutorial.
-3. The smallest **Machine Type** with 1 **Worker Nodes** is sufficient for this tutorial. Leave all other options set to defaults.
-4. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
+3. The smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** is sufficient for this tutorial. Select 1 **Worker node** and leave all other options set to defaults. Click **Create Cluster**.
+4. Check the status of your **Cluster** and **Worker Node** and wait for them to be **ready**.
 
-**NOTE:** Do not proceed until your workers are ready. This might take up to one hour.
+**NOTE:** Do not proceed until your workers are ready.
 
 ### Configure kubectl and helm
 
@@ -77,30 +79,24 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 ## Configure your cluster to forward logs to the {{site.data.keyword.loganalysisshort}} service
 {: #forwardlogs}
 
-When an application is deployed, logs are collected automatically by the {{site.data.keyword.containershort}}. To forward these logs to the {{site.data.keyword.loganalysisshort}} service, you must create one or more [logging configurations](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_sources) in your cluster that define:
-* Where logs are to be forwarded. You can forward logs to the account domain or to a space domain.
-* What logs are forwarded to the {{site.data.keyword.loganalysisshort}} service for analysis.
+When an application is deployed to a container in a **standard** cluster, logs are collected automatically by the {{site.data.keyword.containershort}}. To forward these logs to the {{site.data.keyword.loganalysisshort}} service, you must enable in your cluster that define:
 
-### Configure your cluster to forward logs
-{: #containerlogs}
+  - Where logs are to be forwarded. You can forward logs to the account domain or to a space domain.
+  - What logs are forwarded to the {{site.data.keyword.loganalysisshort}} service for analysis.
 
-1. From the IBM Cloud Dashboard, select the **region**, **org** and **space** where you want to create your **Log Analysis** service.
-2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Log Analysis**](https://console.bluemix.net/catalog/services/log-analysis) service. If you're unable to create the service, check for an existing instance of the Log Analysis service in your space.
-3. Ensure that the API key owner for your cluster `bx cs api-key-info mycluster` has `Developer` and `Manager` Cloud Foundry access to the org and space where the Log Analysis service is created. [Grant user permissions](/docs/services/CloudLogAnalysis/security/grant_permissions.html#grant_permissions_ui_space).
-4. Run the following command to send *container* log files to the {{site.data.keyword.loganalysisshort}} service:
-    ```sh
-    bx cs logging-config-create mycluster --logsource container --namespace default --type ibm --hostname IngestionHost --port 9091 --org OrgName --space SpaceName
-    ```
-    {: codeblock}
-    where
-    * *mycluster* is the name of your cluster.
-    * *IngestionHost* is the hostname to the logging service in the region where the {{site.data.keyword.loganalysisshort}} service is provisioned. For a list of endpoints, see [Endpoints](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls).
-    * *OrgName* and *SpaceName* is the location where the {{site.data.keyword.loganalysisshort}} service is provisioned.
+1. To **enable logging**, navigate to [clusters](https://console.bluemix.net/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
+2. Under **Summary**, click **Enable logging.**
+3. On **Create Logging Configuration** window, select the appropriate Cloud Foundry **Org** and **Space.**
 
-## Create the Monitoring service
+ To enable logging at the account level, you must use CLI. Refer **Enabling log forwarding** section of [logging and monitoring](https://console.bluemix.net/docs/containers/cs_health.html#logging)
+ {:tip}
 
-1. From the IBM Cloud Dashboard, select the **region**, **org** and **space** where you want to create your **Monitoring** service.
-2. From the [Catalog](https://console.bluemix.net/catalog/), select and create a [**Monitoring**](https://console.bluemix.net/catalog/services/monitoring?taxonomyNavigation=apps) service. If you're unable to create the service, check for an existing instance of the Monitoring service in your space.
+4. Enable all the **Log sources** and click **Create**.
+
+   ![](images/solution17/cluster_logging.png)
+
+If you specified a space when you created the cluster then both the account owner and IBM Cloud Container Service key owner need `Manager`, `Developer`, or `Auditor` permissions in that space, refer **before you begin** section of [logging and monitoring](https://console.bluemix.net/docs/containers/cs_health.html#logging)
+{:tip}
 
 ## Create a starter application
 {: #create_application}
@@ -120,7 +116,7 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
 
   Once complete, this generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/node_project_contents.html).
 
-![](images/solution17/node_starter_contents.png)
+  ![](images/solution17/node_starter_contents.png)
 
 ### Build the application
 
@@ -209,29 +205,11 @@ To set up Ingress and use your own custom domain see the [Use your own custom do
 ## View log data in Kibana
 {: #step8}
 
-The application generates some log data every time you visit its URL. Because of our logging configuration, this data should be forwarded to Log Analysis service and available via Kibana.
+The application generates some log data every time you visit its URL. Because of our logging configuration, this data should be forwarded to {{site.data.keyword.loganalysisshort}} service and available via Kibana.
 
-1. Open a web browser and launch Kibana using the URL in the table below.
-  <table>
-  <caption>Table 1. URLs to launch Kibana per region</caption>
-  <tr>
-  <th>Region</th>
-  <th>URL</th>
-  </tr>
-  <tr>
-  <td>Germany</td>
-  <td>[https://logging.eu-fra.bluemix.net](https://logging.eu-fra.bluemix.net) </td>
-  </tr>
-  <tr>
-  <td>United Kingdom</td>
-  <td>[https://logmet.eu-gb.bluemix.net](https://logmet.eu-gb.bluemix.net)</td>
-  </tr>
-  <tr>
-  <td>US South</td>
-  <td>[https://logging.ng.bluemix.net](https://logging.ng.bluemix.net) </td>
-  </tr>
-  </table>
-2. Click on your username in the upper right corner to select the correct **account**, **org** and **space**.
+1. To view **log data**, navigate to [clusters](https://console.bluemix.net/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
+2. Next to **Logs**, click **View**. This should launch Kibana in a new tab.
+3. Click on your username in the upper right corner to select the correct **account**, **org** and **space**.
 
 ![](images/solution17/kibana_home.png)
 For more information about other search fields that are relevant to Kubernetes clusters, see [Searching logs](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_search).
@@ -243,12 +221,12 @@ For more information about other search fields that are relevant to Kubernetes c
 2. Click on the **add** button next to **message** to only see the log messages.
    ![](images/solution17/message_add.png)
 3. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
-4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.  
-5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
+4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.
+5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:
 ```
 message:(WARN|INFO|ERROR|FATAL)
 ```
-![](images/solution17/kibana_filter.png)   
+![](images/solution17/kibana_filter.png)
 6. Store the search criteria for future use by clicking **Save** in the configuration bar. Use **mylogs** as name.
 
 For more information, see [Filtering logs in Kibana](/docs/services/CloudLogAnalysis/kibana/filter_logs.html#filter_logs).
@@ -260,10 +238,10 @@ Now that you have a query defined, in this section you will use it as foundation
 1. Click on **Visualize** in the left navigation bar.
 2. In the list of offered visualizations Locate **Pie chart** and click on it.
 3. Select the query **mylogs** that you saved earlier.
-4. On the next screen, under **Select buckets type**, select **Split Slices**, then for **Aggregation** choose **Filters**. Add 4 filters having the values of **INFO**, **WARN**, **ERROR**, and **FATAL** as shown here:   
-  ![](images/solution17/VisualizationFilters.png)   
-5. Click on **Options** (right to **Data**) and activate **Donut** as view option. Finally, click on the **play** icon to apply all changes to the chart. Now you should see a **Donut Pie Chart** similar to this one:   
-  ![](images/solution17/Donut.png)   
+4. On the next screen, under **Select buckets type**, select **Split Slices**, then for **Aggregation** choose **Filters**. Add 4 filters having the values of **INFO**, **WARN**, **ERROR**, and **FATAL** as shown here:
+  ![](images/solution17/VisualizationFilters.png)
+5. Click on **Options** (right to **Data**) and activate **Donut** as view option. Finally, click on the **play** icon to apply all changes to the chart. Now you should see a **Donut Pie Chart** similar to this one:
+  ![](images/solution17/Donut.png)
 6. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
 7. Save the visualization as **DonutLogs**.
 
@@ -271,8 +249,8 @@ Now that you have a query defined, in this section you will use it as foundation
 
 Next, create another visualization for **Metric**.
 1. Click on **New** and pick **Metric** from the list of offered visualizations and click on the link beginning with **[logstash-]**.
-2. On the next screen, expand **Metric** to be able to enter a custom label. Add **Log Entries within 24 hours** and click on the **play** icon to update the shown metric.   
-  ![](images/solution12/Metric_LogCount24.png)   
+2. On the next screen, expand **Metric** to be able to enter a custom label. Add **Log Entries within 24 hours** and click on the **play** icon to update the shown metric.
+  ![](images/solution12/Metric_LogCount24.png)
 3. Save the visualization as **LogCount24**.
 
 #### Dashboard
@@ -280,16 +258,16 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 1. Click on **Dashboard** in the left navigation panel, then on **Add** to start placing existing visualizations onto the empty dashboard.
 2. Add the log count on the left and the donut chart on the right. Change the size of each component and to move them as desired.
 3. Click on the arrow in the lower left corner of a component to view changes to a table layout and additional information about the underlying request, response and execution statistics are offered.
-  ![](images/solution12/DashboardTable.png)   
+  ![](images/solution12/DashboardTable.png)
 4. Save the dashboard for future use.
 
 ## Monitor cluster health using Grafana
-Metrics from the Kubernetes cluster are automatically forwarded to the Monitoring service and are made available to you with Grafana. Grafana is an open source software for time series analytics.
+Metrics for standard clusters are located in the {{site.data.keyword.Bluemix_notm}} account that was logged in to when the Kubernetes cluster was created. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster, then metrics are located in that space. Container metrics are collected automatically for all containers that are deployed in a cluster. These metrics are sent and are made available through Grafana.
 
-1. Using the IBM Cloud [Dashboard](https://console.bluemix.net/dashboard/apps) find and select your **Monitoring** instance.
-2. Click **Launch** to open up Grafana.
+1. To view **metrics**, navigate to [clusters](https://console.bluemix.net/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
+2. Next to **Metrics**, click **View**. This should launch Grafana in a new tab.
 3. In the top right corner, click on your username and choose **Domain**: **account** and select your **Account**.
-4. Click on **Home** and select the **ClusterMonitoringDashboard_workers** dashboard that has been pre-defined.
+4. Click on **Home** and select the **ClusterMonitoringDashboard_V1** dashboard that has been pre-defined.
 5. Enter the region value (`bx cs regions` to see all regions) where your cluster was created next to **Region** and then enter your cluster name next to **Cluster**.
    ![](images/solution17/grafana_region_cluster.png)
 6. In a different window, visit your application URL and refresh the page several times to generate some load.
@@ -305,6 +283,7 @@ Do you want to learn more? Here are some ideas of what you can do next:
 
 
 ## Related Content
+* [Logging and Monitoring](https://console.bluemix.net/docs/containers/cs_health.html#view_metrics)
 * [Documentation for IBM Cloud Log Analysis](https://console.bluemix.net/docs/services/CloudLogAnalysis/index.html)
 * [IBM Cloud Log Collection API](https://console.bluemix.net/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction)
 * Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html)
