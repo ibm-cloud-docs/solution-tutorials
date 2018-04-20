@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-19"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -120,19 +120,16 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="infrastructure-to-kubernetes.html" class="solutionBoxTitle">
-            <a href = "infrastructure-to-kubernetes.html">Move an existing infrastructure application to Kubernetes</a>
+            <a href = "infrastructure-to-kubernetes.html">Understand how to move a VM based application to Kubernetes</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details in previous solutions. We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating.</p>
+                <p>In this tutorial, you will learn the process of migrating a VM based WordPress application to Kubernetes. For this example, we have selected an existing solution tutorial that contains multiple VM&#x27;s running a WordPress application with a MySQL database server, FileStorage for backups, and a load balancer. We will explore the process involved when moving these components to Kubernetes.</p>
                     <span class="tag-filter category">Kubernetes</span>
                     <span class="tag-filter category">Container Service</span>
                     <span class="tag-filter category">Docker</span>
                     <span class="tag-filter category">PHP</span>
                     <span class="tag-filter category">Compose for MySQL</span>
-                    <span class="tag-filter category">Slack</span>
-                    <span class="tag-filter category">Vulnerability Advisor</span>
-                    <span class="tag-filter category">DevOps</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution30/Architecture.png" />
