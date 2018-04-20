@@ -27,7 +27,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 {: #objectives}
 
 * Upload files to a {{site.data.keyword.cos_full_notm}} bucket.
-* Make the content globally available with a CDN.
+* Make content globally available with a CDN.
 * Expose files by using a Cloud Foundry web application.
 
 ## Services used
