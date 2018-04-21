@@ -13,18 +13,24 @@ lastupdated: "2018-04-20"
 
 # Understand how to move a VM based application to Kubernetes
 
-This tutorial walks you through the process of moving a VM based application to IBM Cloud Kubernetes cluster. You will do that by packaging the application into different Docker container files, run it locally and then deploy it to a Kubernetes cluster.  
+This tutorial walks you through the process of moving a VM based application to IBM Cloud Kubernetes cluster. You will do that by packaging the application into different Docker container files, run it locally and then deploy it to a Kubernetes cluster.  For this example, we have selected an [existing WordPress application](highly-available-and-scalable-web-application.html) that contains multiple VM's with a MySQL database server, File Storage, and a load balancer. 
 
-- ToDo: Some words be about the trend to move from monolith to microservices, modernization of existing applications, the need for smaller application deliverables achieved through container images. VMs are still there somewhere - worker nodes run on VSI 
-- ToDo: Why move to Kubernetes…
+Following this tutorial results in:
+
+- Understand the process involved when moving VM based applications to Kubernetes. 
+- Your VM based application, packaged as a Docker container and pushed to your cluster.
 
 ## Objectives:
 
 {: #objectives}
 
-- How to map components between VM and Kubernetes.
-- Repackaging an existing VM based application into a Kubernetes deployment.
-- Deploy the Kubernetes application to IBM Cloud Container Service.
+- Why use Kubernetes, what to migrate and how to plan a migration.
+- Create a Kubernetes cluster, gain access to your cluster, download the tools required.
+- Create and configure Compose for MySQL service, copy existing database.
+- Prepare Kubernetes deployment templates, create PersistentVolume storage.
+- Deploy the packaged Docker container to your cluster.
+- Manually scale application worker nodes and test the load balancer.
+- Expand the tutorial by adding, DevOps continuous delivery pipeline, slack notifications and, monitoring services.
 
 ## Services used
 
@@ -43,10 +49,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 The following diagram outlines the system's high-level architecture.
 
-For this example, we have selected an [existing WordPress application](highly-available-and-scalable-web-application.html) that contains multiple VM's with a MySQL database server, File Storage, and a load balancer. 
-
-ToDo: Update digram.
-
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/Architecture.png)
 </p>
@@ -61,13 +63,7 @@ Above architecture diagram contains two sections, the top section is what we hav
 - MySQL database installed on a Virtual Server 
 - File storage service to backup database data
 
-How the mapping is done?
-
-Show the 2nd digram 
-
-Then show the steps for the Kubernetes digram 
-
-2. Kubernetes components:** 
+**2. Kubernetes components:** 
 
 - One Kubernetes cluster configured to hold up to 4 worker nodes, when setting up the cluster, you can select any number of nodes needed, but we selected four nodes to cover beyond the need of this tutorial example for safety reasons. 
 - Two worker nodes to store the application, the cluster capacity set to be able to increase the node replicate up to 4 nodes. 
@@ -75,27 +71,9 @@ Then show the steps for the Kubernetes digram
 - Kubernetes Ingress controller used to load balance between worker nodes.
 - Compose For MySQL service to store the database. With Kubernetes you have the option to run a database on a separate node inside docker, but we have selected the Database As Service option for few reasons. IBM Compose database services and many other databases as services come with built-in backup snapshots and auto-scaling, so we don't need to worry about backups and scaling. For that reason, we have selected the Database as a service option. You can find many databases as services on IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data). 
 
-
-
-Notes/ToDo's:
-
-Talk about the code changes needed 
-
-How storage storage is handled 
-
-Create the docker images, Load balancer controller.
-
-Run docker image locally
-
-… At the end send user to a repo with steps to deploy the Kubernetes app
-
-
-
 ## Why use Kubernetes, what to migrate and how to plan a migration
 
 {: #why_kubernetes}
-
-ToDo: This section will be moved above the digram...
 
 Before we talk about what to migrate and how, let's discuss the why use Kubernetes. 
 
@@ -103,8 +81,8 @@ Before we talk about what to migrate and how, let's discuss the why use Kubernet
 
 - High availability, Kubernetes delivers high availability is by treating each instance of software as a disposable entity in which called [Pods](https://kubernetes.io/docs/concepts/workloads/pods/pod/). 
 - Load Balancing traffic, Ingress controller, can handle load balancing traffic between worker nodes simultaneously. 
-- Performance and Scalability.
-- Security.
+- Performance and Scalability
+- Security
 
 **What to migrate**
 
@@ -115,7 +93,9 @@ In the VM's based application, there are components like the application VM's, l
 Planning your migration is probably the most important of all, let's cover the steps required to plan a migration. 
 
 1. Breakdown the existing solution into separate components. In the existing VM based application, we identified the following, application VM's, load balancer, file storage to share files between applications, Database server, and backup.
+
 2. Understand existing component and if moved to Kubernetes. 
+
 3. Migration order process:
 
    - Backup existing application database and source code. 
@@ -123,8 +103,12 @@ Planning your migration is probably the most important of all, let's cover the s
    - Create and configure Compose for MySQL service, copy existing database to the newly created database as a service.
    - Prepare Kubernetes deployment templates, create PersistentVolume storage.
    - Deploy the packaged Docker container to your cluster.
+
 4. Test the application, test the database, test the load balancer, configure database backup policies. 
+
 5. Next, you should explore what else can be added when using Kubernetes, things like auto-scaling, setup DevOps pipeline, monitoring, and security. We will cover these additional improvements forwarder down the tutorial.
+
+   ​
 
 ## Create a Kubernetes cluster 
 
@@ -146,9 +130,7 @@ ToDo...
 
 ToDo... 
 
-## Create Docker images 
-
-Run the Docker application locally 
+## Create Kubernetes deployment templates
 
 {: #create_deployment}
 
