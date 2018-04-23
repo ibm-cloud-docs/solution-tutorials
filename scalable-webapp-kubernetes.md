@@ -44,9 +44,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 1. A developer generates a starter application with {{site.data.keyword.dev_cli_notm}}.
 1. Building the application produces a Docker container image.
-1. The image is pushed to a namespace in {{site.data.keyword.containershort_notm}}
-1. The application is deployed to a Kubernetes cluster
-1. Users access the application
+1. The image is pushed to a namespace in {{site.data.keyword.containershort_notm}}.
+1. The application is deployed to a Kubernetes cluster.
+1. Users access the application.
 
 ## Before you begin
 {: #prereqs}
@@ -108,12 +108,12 @@ The `bx dev` tooling greatly cuts down on development time by generating applica
    bx dev create
    ```
    {: pre}
-2. Select `Web App` > `Basic Web` > `Java - MicroProfile / JavaEE` to create a Java starter. (To create a Node.js starter instead, use `Web App` > `Basic Web` > `Node` )
-3. Enter a **name** for your project.
-4. Enter unique **hostname** for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
-5. Select **n** to skip adding services.
+1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Web App - Java MicroProfile / Java EE Basic` to create a Java starter. (To create a Node.js starter instead, use `Web App` > `Basic Web` > `Node` )
+1. Enter a **name** for your project.
+1. Enter unique **hostname** for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
+1. Do not add a DevOps toolchain, select **manual deployment**.
+1. Do not add additional services.
 
-![](images/solution2/bx_dev_create.png)
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/projects/java_project_contents.html#java-project-files).
 
 ![](images/solution2/Contents.png)
