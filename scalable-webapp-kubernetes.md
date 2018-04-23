@@ -163,7 +163,7 @@ You can build and run the application as you normally would using `mvn` for java
 ## Deploy application to cluster
 {: #deploy}
 
-In this section, we first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
+In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
 
 1. Find your **namespace** by listing all the namespace in the registry.
    ```
@@ -276,7 +276,7 @@ See [Using the Ingress controller with a custom domain](https://console.bluemix.
 
 ### with HTTPS
 
-If you were to try to access your application with HTTPS at this time `https://<customdomain>/<nameofproject>`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress we just configured would not know how to direct HTTPS traffic.
+If you were to try to access your application with HTTPS at this time `https://<customdomain>/<nameofproject>`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
 1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key:
   https://console.bluemix.net/docs/containers/cs_apps.html#custom_domain_cert
