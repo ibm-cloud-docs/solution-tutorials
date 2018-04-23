@@ -13,7 +13,7 @@ lastupdated: "2018-04-23"
 {:pre: .pre}
 
 # Deploy a scalable web application on Kubernetes
-This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to a Kubernetes cluster created with {{site.data.keyword.containershort_notm}}. Additionally, we'll show you how to bind a custom domain, monitor the health of the environment, and scale.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster). Additionally, you will learn how to bind a custom domain, monitor the health of the environment, and scale.
 {:shortdesc}
 
 ## Objectives
@@ -51,10 +51,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 ## Before you begin
 {: #prereqs}
 
-* [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
-* [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
-
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
+* [Install {{site.data.keyword.dev_cli_notm}}](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+* [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
