@@ -50,7 +50,7 @@ The following diagram outlines the system's high-level architecture. For this ex
 
 
 <p style="text-align: center;">
-![Architecture diagram](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution30/existing-architecture.png)
+![Architecture diagram](images/solution30/existing-architecture.png)
 </p>
 
 - Two virtual servers to host the application.
