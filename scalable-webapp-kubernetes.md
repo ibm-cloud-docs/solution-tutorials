@@ -347,7 +347,7 @@ Refer to Kubernetes documentation for manual and automatic scaling:
 
 ## Remove resources
 
-* Delete the cluster or only delete the Kubernetes artifacts created for the application.
+* Delete the cluster or only delete the Kubernetes artifacts created for the application if you plan to reuse the cluster.
 
 ## Related content
 
