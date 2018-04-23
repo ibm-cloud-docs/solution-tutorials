@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-04-19"
+lastupdated: "2018-04-23"
 
 ---
 
@@ -13,18 +13,40 @@ lastupdated: "2017-04-19"
 {:pre: .pre}
 
 # Deploy a scalable web application on Kubernetes
-This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to an IBM Cloud Kubernetes cluster. Additionally, we'll show you how to bind a custom domain, monitor the health of the environment, and scale.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to a Kubernetes cluster created with {{site.data.keyword.containershort_notm}}. Additionally, we'll show you how to bind a custom domain, monitor the health of the environment, and scale.
 {:shortdesc}
 
 ## Objectives
-* Create a Kubernetes cluster.
+{: #objectives}
+
 * Scaffold a starter application.
 * Deploy the application to the Kubernetes cluster.
 * Bind a custom domain.
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
-![](images/solution2/Architecture.png)
+## Services used
+{: #services}
+
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
+* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
+## Architecture
+{: #architecture}
+
+<p style="text-align: center;">
+
+  ![Architecture](images/solution2/Architecture.png)
+</p>
+
+1. A developer generates a starter application with {{site.data.keyword.dev_cli_notm}}.
+1. Building the application produces a Docker container image.
+1. The image is pushed to a namespace in {{site.data.keyword.containershort_notm}}
+1. The application is deployed to a Kubernetes cluster
+1. Users access the application
 
 ## Before you begin
 {: #prereqs}
@@ -317,7 +339,11 @@ Refer to Kubernetes documentation for manual and automatic scaling:
    * [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
    * [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
 
-## Related information
+## Remove resources
+
+* Delete the cluster
+
+## Related content
 
 * [IBM Container Service](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
 * [IBM Cloud App Service](https://console.bluemix.net/docs/cloudnative/index.html#web-mobile)
