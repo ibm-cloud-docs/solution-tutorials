@@ -20,12 +20,8 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 ## Objectives
 {: #objectives}
 
-- Terraform setup with IBM Cloud Provider
-- Prepare terraform configuration
-- Create a LAMP stack from the terraform configuration
-- Update configuration to add the IBM Cloud Object Storage and scale the resources
-- Verify updates infrastructure
-- Delete the environment
+- Configure Terraform and the IBM Cloud Provider for Terraform
+- Use Terraform to create, update, scale and finally destroy a LAMP stack configuration
 
 ## Services used
 {: #services}
