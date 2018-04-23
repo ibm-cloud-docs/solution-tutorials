@@ -99,9 +99,11 @@ Introductory statement that overviews the section
 ### Sub section
 
 ## Remove resources
+{:removeresources}
 
 Steps to take to remove the resources created in this tutorial
 
 ## Related content
+{:related}
 
 * [Relevant links](https://blah)

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-09"
+lastupdated: "2018-04-23"
 ---
 
 {:shortdesc: .shortdesc}
@@ -18,6 +18,7 @@ lastupdated: "2018-03-09"
 In this tutorial, you will use a sample configuration to provision a **L**inux virtual server, with **A**pache web server, **M**ySQL, and **P**HP server termed as **LAMP** stack. You will then update the configuration to add the IBM Cloud Object Storage service and scale the resources to tune the environment (memory, CPU, and disk size). Finish by deleting all of the resources created by the configuration.
 
 ## Objectives
+{: #objectives}
 
 - Terraform setup with IBM Cloud Provider
 - Prepare terraform configuration
@@ -26,25 +27,23 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 - Verify updates infrastructure
 - Delete the environment
 
-![Architecture diagram](images/solution18/Architecture.png)
+## Services used
+{: #services}
 
-## Products
-{: #products}
+This tutorial uses the following runtimes and services:
+* [Terraform](https://www.terraform.io/)
+* [IBM Cloud Infrastructure](https://console.bluemix.net/dashboard/ibm-iaas-g1)
+* [IBM Cloud Object Storage](https://console.bluemix.net/catalog/services/cloud-object-storage)
 
-- [Terraform](https://www.terraform.io/)
-- [IBM Cloud Infrastructure](https://console.bluemix.net/dashboard/ibm-iaas-g1)
-- [IBM Cloud Object Storage](https://console.bluemix.net/catalog/services/cloud-object-storage)
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
-## Cost
+## Architecture
+{: #architecture}
 
-{: #cost}
+<p style="text-align: center;">
 
-This tutorial uses billable components of IBM Cloud Platform, including: 
-
-- Virtual Server
-- IBM Cloud Object Storage 
-
-Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
+  ![Architecture diagram](images/solution18/Architecture.png)
+</p>
 
 ## Before you begin
 {: #prereqs}
@@ -240,7 +239,7 @@ In this section, you are going to verify the VM and Object Storage to make sure 
 
    More info on IBM Cloud Object Storage can be found [here](https://console.bluemix.net/docs/services/ibm-cos/index.html).
 
-## Delete resources
+## Remove resources
 {: #deleteresources}
 
 The `terraform state rm` command is used to remove items from the [Terraform state](https://www.terraform.io/docs/state/index.html). This command can remove single resources, single instances of a resource, entire modules, and more. We are going to run one command to delete destroy meaning delete the VM and the IBM Cloud Object Storage service.  
@@ -253,7 +252,7 @@ The `terraform state rm` command is used to remove items from the [Terraform sta
    **Note:** To delete resources, you would need Softlayer admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
 
 
-## Related information
+## Related content
 
 - [Terraform](https://www.terraform.io/)
 - [IBM Cloud Object Storage](https://console.bluemix.net/docs/services/ibm-cos/index.html)
