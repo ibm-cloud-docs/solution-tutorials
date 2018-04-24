@@ -96,7 +96,7 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
   {: pre}
   ```sh
    php -v
-   ```
+  ```
    {: pre}
 4. Run the following script to secure the MySQL database.
   ```sh
