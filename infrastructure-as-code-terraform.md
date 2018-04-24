@@ -241,15 +241,13 @@ In this section, you are going to verify the VM and {{site.data.keyword.cos_shor
 ## Remove resources
 {: #deleteresources}
 
-The `terraform state rm` command is used to remove items from the [Terraform state](https://www.terraform.io/docs/state/index.html). This command can remove single resources, single instances of a resource, entire modules, and more. We are going to run one command to delete destroy meaning delete the VM and the {{site.data.keyword.cos_full_notm}} service.  
-
-1. Delete resources using the following command:
+Delete resources using the following command:
    ```bash
    terraform destroy
    ```
    {: pre}
-   **Note:** To delete resources, you would need Softlayer admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
 
+**Note:** To delete resources, you would need Softlayer admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
 
 ## Related content
 
