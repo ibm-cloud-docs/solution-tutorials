@@ -27,7 +27,6 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [Terraform](https://www.terraform.io/)
 * [{{site.data.keyword.virtualmachinesshort}}
 ](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
@@ -59,20 +58,19 @@ Contact your Infrastructure master user to get the following permissions:
 
 Install **Terraform** via [installer](https://www.terraform.io/intro/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
 
-On **Windows**, follow the below steps to complete terraform setup.
+On **Windows**, follow these steps to complete terraform setup:
+   1. Copy files from the downloaded zip to `C:\terraform` (create a folder `terraform`).
+   2. Open the command prompt as an administrator and set the PATH to use terraform binaries.
 
-1. Copy files from the downloaded zip to `C:\terraform` (create a folder `terraform`).
-2. Open the command prompt as an administrator and set the PATH to use terraform binaries.
-
-     ```
-     set PATH=%PATH%;C:\terraform
-     ```
+      ```
+      set PATH=%PATH%;C:\terraform
+      ```
       {:pre}
 
-## Terraform setup with {{site.data.keyword.Bluemix_notm}} Provider
+## Configure the {{site.data.keyword.Bluemix_notm}} Provider for Terraform
 {: #setup}
 
-In this section, you will configure the CLI to specify the location of the {{site.data.keyword.Bluemix_notm}} plugin.
+To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. In this section, you will configure the CLI to specify the location of the {{site.data.keyword.Bluemix_notm}} provider.
 
 1. Check Terraform installation by running `terraform` in your terminal or command prompt window.  You should see a list of `Common commands`.
 
@@ -167,7 +165,7 @@ In this section, you will learn the how to create a LAMP stack server from the t
    You should see an output similar to below.![Source Control URL](images/solution10/created.png)
 4. Next, head over to your [infrastructure device list](https://control.bluemix.net/devices) to verify that the server created.![Source Control URL](images/solution10/configuration.png)
 
-## Update configuration to add the {{site.data.keyword.cos_full_notm}} and scale the resources
+## Add the {{site.data.keyword.cos_full_notm}} service and scale the resources
 
 {: #modify}
 
