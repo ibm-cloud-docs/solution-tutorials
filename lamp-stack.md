@@ -26,9 +26,11 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 
 ## Services used
 
+This tutorial uses the following runtimes and services:
+
 * [{{site.data.keyword.BluVirtServers_short}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 
-Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to estimate costs for the following paid services: {{site.data.keyword.BluVirtServers_short}}.
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
