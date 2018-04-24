@@ -52,8 +52,29 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
+* [Install Git](https://git-scm.com/)
+* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
 
+## Create services
+{: setup}
+
+In this section, you will create the services required to ...
+
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+    ```sh
+    bx login
+    ```
+    {: pre}
+    ```sh
+    bx target --cf
+    ```
+    {: pre}
+2. Create an instance of [Service A](https://console.bluemix.net/catalog/services/the-service-name).
+  ```sh
+  bx resource service-instance-create service-instance-name service-name lite global
+  ```
+3. Create an instance of [Service B](https://console.bluemix.net/catalog/services/the-service-name).
 
 ## Solution Specific Section
 {: #section_one}
@@ -68,7 +89,9 @@ Introductory statement that overviews the section
 2. Keep each step as short as possible.
 3. Do not use blank lines between steps except for tips or images.
 4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I" or "We will".
+5. Do not use "I", "We will", "Let's", "We'll", etc.
+6. Another step
+7. Try to limit to 7 steps.
 
 ### Sub section
 
