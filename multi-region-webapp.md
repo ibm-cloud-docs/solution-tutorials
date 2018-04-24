@@ -14,7 +14,7 @@ lastupdated: "2018-04-20"
 
 # Deploy a secure web application across multiple regions
 
-This tutorial walks you through creating, securing, and deploying a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline. 
+This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline. 
 
 Apps or parts of your apps will have outages - it is a fact. It can be a problem in your code, a planned maintenance impacting the resources used by your app, a hardware failure bringing down a zone, a region, a data center where your app is hosted. Any of these will happen and you have to be prepared. With {{site.data.keyword.Bluemix_notm}}, you can deploy your application to [multiple regions](https://console.bluemix.net/docs/overview/ibm-cloud.html#ov_intro_reg) to increase your application resilience. And with your application now running in multiple locations, you can also redirect user traffic to the nearest region to reduce latency.
 
@@ -22,6 +22,7 @@ Apps or parts of your apps will have outages - it is a fact. It can be a problem
 
 * Deploy a Cloud Foundry application to multiple regions with {{site.data.keyword.contdelivery_short}}.
 * Map a custom domain to the application.
+* Load balance across regions.
 * Bind an SSL certificate to your application.
 * Monitor application performance.
 
@@ -30,16 +31,17 @@ Apps or parts of your apps will have outages - it is a fact. It can be a problem
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.sdk4node}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
 * [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) for DevOps
+* [{{site.data.keyword.cis}}](https://console.bluemix.net/catalog/services/internet-services) for Internet services
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
-This tutorial involves an active/passive scenario where two copies of the application are deployed in two different regions but only one copy is serving client requests. The DNS configuration initially points to the first region. If the first region fails, the DNS configuration should be updated to point to the other region.
+This tutorial involves an active/active scenario where two copies of the application are deployed in two different regions and the two copies are serving customer requests in a round-robin way. The DNS configuration initially points to the first region. The DNS configuration automatically points to the healthy region if one copy fails.
 
 <p style="text-align: center;">
 
-   ![Architecture](./images/solution1/Architecture.png)
+   ![Architecture](./images/solution1/Architecture_cis.png)
 </p>
 
 Some DNS providers may include capabilities to detect this situation and automatically route traffic to the other region. Another option would be to deploy a global load balancer in front of the applications and have the load balancer spread the traffic. This tutorial does not explore these options.
@@ -114,27 +116,77 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
    ![HelloWorld](images/solution1/DeployToUK.png)
 7. Click **Save** and run the new stage by clicking the **Play button**.
 
-## Configure custom domain to your application
-{: #add_domain}
+## Register a custom domain with IBM Cloud Internet Services
 
-When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided mybluemix.net domain.
+{: #domain_cis}
+
+When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided mybluemix.net domain. After you have a custom domain, you can use the DNS servers provided by IBM Cloud Internet Services.
 
 1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
-2. Switch to the US region by clicking your account name from the menu bar in the {{site.data.keyword.Bluemix_notm}} console.
-3. Navigate to Application **Overview** > **Routes** > **Manage Domains**.
+2. Open another browser tab and navigate to the [Internet Services application](https://console.bluemix.net/catalog/services/internet-services) in the Bluemix catalog. 
+2. Enter a service name, and click **Create** to create an instance of the service.
+3. When the service instance is provisioned, add your domain URL to the Domain name field, and click **Add domain**.
 
-   ![HelloWorld](images/solution1/ApplicationRoutes.png)
-4. Click **Add Domain** and enter your domain URL.
-5. Navigate to Application **Overview** > **Edit Routes** > **Choose your domain**.
+   ![Add domain](https://console.bluemix.net/docs/api/content/infrastructure/cis/images/overview-add-domain.png?lang=en-US)
+4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+5. After you've configured your registrar or DNS provider, it may require up to 24 hours for the changes to take effect: the domain's status changes from Pending to Active. You can also use the `dig <your_domain_name> ns` command to check whether the name servers have taken effect.
 
 ## Map the custom domain to the {{site.data.keyword.Bluemix_notm}} system domain
 {: #map_domain}
 
 Map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} region where your application is running.
 
-1. Set up a 'CNAME' record for the custom domain name on your DNS server. The steps for setting up the CNAME record vary depending on your DNS provider. For example, if you are using GoDaddy, you follow the [Domains Help ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://www.godaddy.com/help/add-a-cname-record-19236)guidance from GoDaddy.
-2. Set the CNAME record to the US-South endpoint. `secure.us-south.bluemix.net`
-  For more information, see the [related documentation](https://console.bluemix.net/docs/).
+1. In the Cloud Internet Services application, navigate to **Reliability** > **DNS**. 
+2. Select **CNAME** from the **Type** drop-down list, type an alias for your application in the Name field, and the application URL in the domain name field. For example, `cisnodejs.mybluemix.net` in the US-South region can be mapped to `cisnodejs`. 
+3. Click **Add Record**. Do not switch the PROXY toggle to ON, as the Global Load Balancer will require non-proxied origins.
+2. Similarly, set the `CNAME` record for the UK endpoint.
+   ![CNAME records](images/solution1/cnames.png)
+
+## Configure custom domain and routes to your application
+
+{: #add_domain}
+
+1. In the Bluemix catalog, switch to the US region by clicking your account name from the menu bar in the {{site.data.keyword.Bluemix_notm}} console.
+2. Navigate to application **Overview** > **Routes** > **Manage Domains**.
+   ![HelloWorld](images/solution1/ApplicationRoutes.png)  
+3. On the Cloud account page, click **Domain** in the Actions column. Click **Add a domain** and enter your domain acquired from the registrar. 
+4. Select the right region and click **Save**.
+4. Return to the application overview page, click **Route** > **Edit Routes**, and click **Add Route**.
+5. Enter the mapped CNAME of your application, for example, `cisnodejs` in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
+6. At this point, you can access the application through the custom domain, for example, `http://cisnodejs.<your_domain_name>`.
+7. Similarly, configure the domain and routes for the application in the UK region.
+
+ 
+## Add Global Load Balancing to the application
+
+{: #add_glb}
+
+You can use a Global Load Balancer (GLB) to manage the traffic across multiple regions. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
+
+Create a health check.
+
+1. In the Cloud Internet Services application, navigate to the bottom of the application, and click **Create health check**.
+2. Enter the path that you want to monitor, for example, `/images/newapp-icon.png`, and select a type (HTTP or HTTPS). Click **Provision 1 Instance**.
+   ![Health Check](images/solution1/health_check.png)
+
+Create an origin pool with two origins.
+
+1. Click **Create Pool**.
+2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your node.js application.
+3.  Enter a name for the first origin, for example, `us-origion`, and the host name (the URL with the custom domain) for the application in the US region. 
+4. Similarly, add another origin with the origin address pointint to the application in the UK region. 
+5. Click **Provision 1 Instance**.
+   ![Origin Pool](images/solution1/origin_pool.png)
+
+Create a Global Load Balancer. 
+
+1. Click **Create Load Balancer**. 
+2. Enter a name for the Global Load Balancer, for example, `glb`. 
+3. Click **Add pool** and select the origin pool that you have just created. 
+4. Click **Provision 1 Instance**.
+   ![Global Load Balancer](images/solution1/load_balancer.png)
+
+At this point, you can go back to the Cloud Foundary application in US and UK regions, and add another route with the URL of the global load balancer, for example, `glb.<your_domain_name>` in both regions.
 
 ## Bind SSL certificate to your application
 {: #ssl}
@@ -166,3 +218,5 @@ Availability Monitoring runs synthetic tests from locations around the world, ar
 [Adding a Cloudant Database](https://console.bluemix.net/docs/services/Cloudant/tutorials/create_service.html)
 
 [Auto-Scaling Cloud Foundry applications](https://console.bluemix.net/docs/services/Auto-Scaling/index.html)
+
+[Cloud Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
