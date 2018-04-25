@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-04-24"
 
 ---
 
@@ -139,7 +139,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    ```
   {:codeblock}   
 
-  You could change the trigger from a daily to a weekly schedule by applying "0 6 * * 0". This would fire every Sunday at 6am.
+  You could change the trigger from a daily to a weekly schedule by applying `"0 6 * * 0"`. This would fire every Sunday at 6am.
   {:tip}
 5. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
    ```bash

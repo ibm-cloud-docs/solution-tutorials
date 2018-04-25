@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-07"
+lastupdated: "2018-05-24"
 
 ---
 
@@ -97,12 +97,14 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 1. From the Dashboard, click on [**Create resource**](https://console.bluemix.net/catalog/) and select [**{{site.data.keyword.cos_short}}**](https://console.bluemix.net/catalog/services/cloud-object-storage) from the Storage section.
 2. Name the service `myobjectstorage` click **Create**.
 3. Click **Create Bucket**.
-4. Set the bucket name to a unique name such as `userid-mybucket` and click **Create**.
-5. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
+4. Set the bucket name to a unique name such as `username-mybucket`.
+5. Select **Cross Region** Resiliency and **us-geo** Location and click **Create**
+6. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```sh
  bx resource service-alias-create myobjectstorage --instance-name myobjectstorage
  bx cs cluster-service-bind mycluster default myobjectstorage
  ```
+![](images/solution25/cos_bucket.png)
 
 ## Deploy the UI application to the cluster
 
@@ -110,12 +112,13 @@ The UI application is a simple Node.js Express web application which allows the 
 
 1. Clone the sample application repository locally and change directory to the `pubsub-ui` folder.
 ```sh
-  git clone https://github.com/rvennam/pub-sub-storage-processing
+  git clone https://github.com/IBM-Cloud/pub-sub-storage-processing
   cd pub-sub-storage-processing/pubsub-ui
 ```
 2. Open `config.js` and update COSBucketName with your bucket name.
-3. Deploy the application. This command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment.
+3. Build and deploy the application. The deploy command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment.
 ```sh
+  bx dev build
   bx dev deploy -t container
 ```
 4. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
@@ -130,8 +133,10 @@ The worker application is a Java application which listens to the {{site.data.ke
 ```sh
   cd ../pubsub-worker
 ```
-2. Deploy the worker application.
+2. Open `resources/cos.properties` and update `bucket.name`,  property with your bucket name.
+2. Build and deploy the worker application.
 ```
+  bx dev build
   bx dev deploy -t container
 ```
 3. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
@@ -141,18 +146,16 @@ In this tutorial we showed how you can use Kafka based MessageHub to implement a
 
 ## Clean up Resources
 
-Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and delete:
+Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and
+1. delete Kubernetes cluster `mycluster`
+2. delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
+3. delete {{site.data.keyword.messagehub}} `mymessagehub`
+4. select **Containers** from the left menu, **Private Repositories** and then delete `pubsub-xxx` repositories.
 
-1. Kubernetes cluster `mycluster`
-2. {{site.data.keyword.cos_full_notm}} `myobjectstorage`
-3. {{site.data.keyword.messagehub}} `mymessagehub`
 
 ## Related information
 
 [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
-
 [{{site.data.keyword.messagehub_full}}](https://console.bluemix.net/docs/services/MessageHub/index.html#messagehub)
-
 [Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
-
 [{{site.data.keyword.messagehub}} data processing with IBM Cloud Functions](https://github.com/IBM/openwhisk-data-processing-message-hub)

@@ -43,11 +43,11 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 
 ## Before you begin
 
-1. [Install Git](https://git-scm.com/)
-2. [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-3. [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
+- [Install Git](https://git-scm.com/)
+- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+- [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
 
-## Create required services
+## Create services
 
 In this section, you will create the services required to build your data lake.
 
