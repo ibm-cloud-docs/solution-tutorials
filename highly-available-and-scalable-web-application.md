@@ -18,21 +18,17 @@ This tutorial walks you through the creation of a load balancer, two application
 ## Objectives
 {: #objectives}
 
-- Provision one server for the database
-- Install and configure MySQL
-- Create a file storage for database backups
-- Provision two servers for the PHP application
-- Create a file storage to share files between the application servers
-- Install and configure the PHP application on the application servers
-- Provision one load balancer in front of the application servers
+* Create {{site.data.keyword.virtualmachinesshort}} and install PHP and MySQL
+* Use {{site.data.keyword.filestorage_short}} to persist application files and database backups
+* Provision a {{site.data.keyword.loadbalancer_short}} to distribute requests to the application servers
 
 ## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
-* [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
-* [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
+* [{{site.data.keyword.loadbalancer_short}}](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
+* [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -45,7 +41,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 </p>
 
 1. The user connects to the application.
-2. The Load Balancer selects one of the healthy servers to handle the request.
+2. The {{site.data.keyword.loadbalancer_short}} selects one of the healthy servers to handle the request.
 3. The elected server accesses the application files stored on a shared file storage.
 4. The server also pulls information from the database and finally renders the page to the user.
 5. At a regular interval, the database content is backed up. A stand-by database is server is available in case the master fails.
@@ -55,7 +51,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 ### Configure the SoftLayer VPN
 
-In this tutorial, the load balancer is the front door for the application users. The virtual servers do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
+In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
 
 1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
 
@@ -64,18 +60,18 @@ In this tutorial, the load balancer is the front door for the application users.
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
 
-You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning virtual servers.
+You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning {{site.data.keyword.virtualmachinesshort}}.
 {: tip}
 
 ### Check account permissions
 
 Contact your Infrastructure master user to get the following permissions:
-- **Network** so that you can create virtual servers with **Public and Private Network Uplink** (this permission is not required if you use the VPN to connect to the servers)
+- **Network** so that you can create {{site.data.keyword.virtualmachinesshort}} with **Public and Private Network Uplink** (this permission is not required if you use the VPN to connect to the servers)
 
 ## Provision one server for the database
 {: #database_server}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
    - Set **Name** to **db1**
@@ -183,7 +179,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
 
 ### Create the file storage
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
@@ -277,7 +273,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
 ## Provision two servers for the PHP application
 {: app_servers}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
    - Set **Name** to **app1**
@@ -299,7 +295,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
 This file storage is used to share the application files between *app1* and *app2* servers.
 
 ### Create the file storage
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
@@ -529,9 +525,9 @@ If you configured the application servers with only a private network link, you 
 ## Provision one load balancer server in front of the application servers
 {: load_balancer}
 
-At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a Load Balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
+At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a load balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
 
-1. Go to the catalog to create a [IBM Cloud Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-cloud-load-balancer)
+1. Go to the catalog to create a [{{site.data.keyword.loadbalancer_short}}](https://console.bluemix.net/catalog/infrastructure/ibm-cloud-load-balancer)
 2. In the **Plan** step, select the same data center as *app1* and *app2*
 3. In **Network Settings**,
    1. Select the same subnet as the one where *app1* and *app2* where provisioned
