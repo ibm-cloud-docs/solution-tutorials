@@ -32,8 +32,8 @@ This tutorial walks you through the creation of a mobile starter application, ad
 ## Products
 
 This tutorial uses the following products:
-   * [IBM {{site.data.keyword.mobileanalytics_short}}](https://console.bluemix.net/catalog/services/mobile-analytics)
-   * [IBM {{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/catalog/services/push-notifications)
+   * [{{site.data.keyword.mobilepushfull}}](https://console.bluemix.net/catalog/services/mobile-analytics)
+   * [{{site.data.keyword.mobileanalytics_full}}](https://console.bluemix.net/catalog/services/push-notifications)
 
 ## Before you begin
 {: #prereqs}
