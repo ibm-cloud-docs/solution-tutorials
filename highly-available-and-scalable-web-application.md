@@ -13,12 +13,14 @@ lastupdated: "2018-04-25"
 
 # Use Virtual Servers to build highly available and scalable web app
 
-This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.
+Adding more servers to an application is a common pattern to handle additional load and to increase availability - provided the application is designed accordingly. In such scenario, the traffic is distributed among multiple application server instances, and to healthy instances only so that globally you serve more clients and improve availability.
+
+This tutorial walks you through this scenario with the creation of a load balancer, two web application servers, one MySQL database server, and a durable file storage to store application files and backups.
 
 ## Objectives
 {: #objectives}
 
-* Create {{site.data.keyword.virtualmachinesshort}} and install PHP and MySQL
+* Create {{site.data.keyword.virtualmachinesshort}} to install PHP and MySQL
 * Use {{site.data.keyword.filestorage_short}} to persist application files and database backups
 * Provision a {{site.data.keyword.loadbalancer_short}} to distribute requests to the application servers
 
@@ -26,7 +28,7 @@ This tutorial walks you through the creation of a load balancer, two application
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.loadbalancer_short}}](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
+* [{{site.data.keyword.loadbalancer_short}}](https://console.bluemix.net/catalog/infrastructure/load-balancer-group)
 * [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 
@@ -34,6 +36,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 ## Architecture
 {: #architecture}
+
+The application is a simple PHP frontend - a Wordpress blog - with a MySQL database. Several frontend servers handle the requests.
 
 <p style="text-align: center;">
 
@@ -44,14 +48,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 2. The {{site.data.keyword.loadbalancer_short}} selects one of the healthy servers to handle the request.
 3. The elected server accesses the application files stored on a shared file storage.
 4. The server also pulls information from the database and finally renders the page to the user.
-5. At a regular interval, the database content is backed up. A stand-by database is server is available in case the master fails.
+5. At a regular interval, the database content is backed up. A stand-by database server is available in case the master fails.
 
 ## Before you begin
 {: #prereqs}
 
 ### Configure the SoftLayer VPN
 
-In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
+In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they can be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
 
 1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
 
@@ -71,12 +75,14 @@ Contact your Infrastructure master user to get the following permissions:
 ## Provision one server for the database
 {: #database_server}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
+In this section, you configure one server to act as the master database.
+
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
    - Set **Name** to **db1**
    - Select a location where to provision the server. **All other servers and resources created in this tutorial will need to be created in the same location.**
-   - Select the **Ubuntu Minima** image
+   - Select the **Ubuntu Minimal** image
    - Keep the default compute flavor. The tutorial has been tested with the smallest flavor but should work with any flavor.
    - Under **Attached Storage Disks**, select the 25GB boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
@@ -87,11 +93,13 @@ Contact your Infrastructure master user to get the following permissions:
 
       ![Configure virtual server](images/solution14/db-server.png)
 
-   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under Devices > Device list. To SSH into the server, you need the server user name, password, and private or public IP address (Click the arrow next to the device name).
+   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under **Devices > Device List**. To SSH into the server, you need the server private or public IP address, user name and password (Click the arrow next to the device name).
    {: tip}
 
 ## Install and configure MySQL
 {: #mysql}
+
+The server does not come with a database. In this section, you install MySQL on the server.
 
 ### Install MySQL
 
@@ -100,23 +108,23 @@ Contact your Infrastructure master user to get the following permissions:
    ssh root@<Private-OR-Public-IP-Address>
    ```
 
-     Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
-     {:tip}
+   Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
+   {:tip}
 2. Install MySQL:
    ```sh
    apt-get update
    apt-get -y install mysql-server
    ```
 
-     You may be prompted for a password. Read through the instructions on the console shown.
-     {:tip}
+   You may be prompted for a password. Read through the instructions on the console shown.
+   {:tip}
 3. Run the following script to help secure MySQL database:
    ```sh
    mysql_secure_installation
    ```
 
-     You may be prompted with couple of options. Choose wisely based on your requirements.
-     {:tip}
+   You may be prompted with couple of options. Choose wisely based on your requirements.
+   {:tip}
 
 ### Create a database for the application
 
@@ -269,16 +277,17 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    0 23 * * * /root/dbbackup.sh
    ```
 
-
 ## Provision two servers for the PHP application
 {: app_servers}
+
+In this section, you will create two web application servers.
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
    - Set **Name** to **app1**
    - Select the same location where you provisioned the database server
-   - Select the **Ubuntu Minima** image
+   - Select the **Ubuntu Minimal** image
    - Keep the default compute flavor.
    - Under **Attached Storage Disks**, select 25GB as your boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
