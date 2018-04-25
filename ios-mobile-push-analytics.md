@@ -5,6 +5,10 @@ lastupdated: "2018-04-25"
 
 ---
 
+{:java: #java .ph data-hd-programlang='java'}
+{:swift: #swift .ph data-hd-programlang='swift'}
+{:ios: #ios data-hd-operatingsystem="ios"}
+{:android: #android data-hd-operatingsystem="android"}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -17,19 +21,22 @@ lastupdated: "2018-04-25"
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} on {{site.data.keyword.Bluemix_short}}.
 
 This tutorial walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, importing the code to Xcode and then further enhance the application.
+{:shortdesc: .shortdesc}
 
 ## Objectives
+{:#objectives}
 
-* Create a mobile project with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services from Basic Swift starter kit.
-* Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
-* Download the code and setup client SDKs.
-* Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}.
-* Send and monitor {{site.data.keyword.mobilepushshort}}.
-* Monitoring the app with {{site.data.keyword.mobileanalytics_short}}.
+- Create a mobile project with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services from Basic Swift starter kit.
+- Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
+- Download the code and setup client SDKs.
+- Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}.
+- Send and monitor {{site.data.keyword.mobilepushshort}}.
+- Monitoring the app with {{site.data.keyword.mobileanalytics_short}}.
 
   ![](images/solution6/Architecture.png)
 
 ## Products
+{:#products}
 
 This tutorial uses the following products:
    * [{{site.data.keyword.mobilepushfull}}](https://console.bluemix.net/catalog/services/mobile-analytics)
@@ -78,7 +85,6 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
   {: pre:}
 
 
-
 ## Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}
 
 1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
@@ -112,13 +118,13 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
    {:tip}
 
 
-   ## Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
+## Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
 
    For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
 
    You need to obtain and configure your APNs credentials. The APNs certificates are securely managed by {{site.data.keyword.mobilepushshort}} service and used to connect to APNs server as a provider.
 
-   ### Registering an App ID
+### Registering an App ID
 
    The App ID (the bundle identifier) is a unique identifier that identifies a specific application. Each application requires an App ID. Services like the {{site.data.keyword.mobilepushshort}} service are configured to the App ID.
    Ensure that you have an [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account. This is a mandatory prerequisite.
@@ -133,7 +139,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
 
      ![](images/solution6/push_ios_register_appid.png)
 
-  ### Create a development and distribution APNs SSL certificate
+### Create a development and distribution APNs SSL certificate
    Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key that you use to sign for your Apple {{site.data.keyword.mobilepushshort}}. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
    You can use APNs in two modes:
 
@@ -158,8 +164,10 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
         ![Generate certificate](images/solution6/generate_certificate.png)
    8. On your mac, open **Keychain Access**, **File**, **Import** and select the downloaded .cer file to install it.
    9. Right-click on the new certificate and private key, and then select **Export** and change the **File Format** to Personal information exchange format (`.p12` format).
+   
      ![Export certificate and keys](images/solution6/keychain_export_key.png)
    10. In the **Save As** field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or **production_apns.p12**, then click Save.
+   
      ![Export certificate and keys](images/solution6/certificate_p12v2.png)
    11. In the **Enter a password** field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the {{site.data.keyword.mobilepushshort}} service console.
    
@@ -169,7 +177,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
       For Production SSL, On **Production SSL certificate** pane, click **Create Certificate** and repeat Steps 5 to 12 above.
       {:tip}
 
- ### Creating a development provisioning profile
+### Creating a development provisioning profile
    The provisioning profile works with the App ID to determine which devices can install and run your app and which services your app can access. For each App ID, you create two provisioning profiles: one for development and the other for distribution. Xcode uses the development provisioning profile to determine which developers are allowed to build the application and which devices are allowed to be tested on the application.
 
    Ensure that you have registered an App ID, enabled it for {{site.data.keyword.mobilepushshort}} service, and configured it to use a development and production APNs SSL certificate.
@@ -183,14 +191,14 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
      - **iOS App Development**
      - **For iOS and watchOS apps**
 
- ### Creating a store distribution provisioning profile
+### Creating a store distribution provisioning profile
    Use the store provisioning profile to submit your app for distribution to the App Store.
 
    1. Go to the [Apple Developer](https://developer.apple.com/), click `Member Center`, and select `Certificates, IDs & Profiles`.
    2. Double-click the downloaded provisioning profile to install it into Xcode.
      After obtaining the credentials, the next step is to [Configure a service instance](https://console.bluemix.net/docs/services/mobilepush/push_step_2.html).
 
- ### Configure the service instance
+### Configure the service instance
 
    To use the {{site.data.keyword.mobilepushshort}} service to send notifications, upload the .p12 certificates that you had created in the above Step. This certificate contains the private key and SSL certificates that are required to build and publish your application.
 
