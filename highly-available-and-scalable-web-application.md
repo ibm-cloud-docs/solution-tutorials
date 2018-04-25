@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-09"
+lastupdated: "2018-04-25"
 ---
 
 {:shortdesc: .shortdesc}
@@ -13,9 +13,10 @@ lastupdated: "2018-03-09"
 
 # Use Virtual Servers to build highly available and scalable web app
 
-This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with NGINX and **P**HP installed, one **M**ySQL database server, and durable file storage to store application files and backups.
+This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.
 
 ## Objectives
+{: #objectives}
 
 - Provision one server for the database
 - Install and configure MySQL
@@ -25,16 +26,22 @@ This tutorial walks you through the creation of a load balancer, two application
 - Install and configure the PHP application on the application servers
 - Provision one load balancer in front of the application servers
 
-## Products
-{: #products}
+## Services used
+{: #services}
 
-This tutorial uses the following products:
+This tutorial uses the following runtimes and services:
 * [Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
 * [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 * [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
 
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
+## Architecture
+{: #architecture}
+
 <p style="text-align: center;">
-![Architecture diagram](images/solution14/Architecture.png)
+
+  ![Architecture diagram](images/solution14/Architecture.png)
 </p>
 
 1. The user connects to the application.
@@ -42,18 +49,6 @@ This tutorial uses the following products:
 3. The elected server accesses the application files stored on a shared file storage.
 4. The server also pulls information from the database and finally renders the page to the user.
 5. At a regular interval, the database content is backed up. A stand-by database is server is available in case the master fails.
-
-## Cost
-
-{: #cost}
-
-This tutorial uses billable components of IBM Cloud Platform, including: 
-
-- Virtual Server
-- Cloud Load Balancer 
-- File Storage
-
-Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
 
 ## Before you begin
 {: #prereqs}
@@ -594,13 +589,15 @@ The Load Balancer is configured to check the health of the servers and to redire
 
 8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
-## Clean up resources
+## Remove resources
+{:removeresources}
 
 1. Delete the Load Balancer
 2. Cancel *db1*, *app1* and *app2*
 3. Delete the two File Storage services
 
-## Related information
+## Related content
+{:related}
 
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html) for a tutorial implementing a Content Delivery Network.
 - In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [SoftLayer Auto Scale](https://knowledgelayer.softlayer.com/learning/introduction-softlayer-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
