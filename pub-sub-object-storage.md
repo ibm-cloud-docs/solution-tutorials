@@ -104,6 +104,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
  bx resource service-alias-create myobjectstorage --instance-name myobjectstorage
  bx cs cluster-service-bind mycluster default myobjectstorage
  ```
+![](images/solution25/cos_bucket.png)
 
 ## Deploy the UI application to the cluster
 
