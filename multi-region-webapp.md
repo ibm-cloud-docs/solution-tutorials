@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-20"
+lastupdated: "2018-04-25"
 
 ---
 
@@ -37,7 +37,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 ## Architecture
 
-This tutorial involves an active/active scenario where two copies of the application are deployed in two different regions and the two copies are serving customer requests in a round-robin way. The DNS configuration initially points to the first region. The DNS configuration automatically points to the healthy region if one copy fails.
+This tutorial involves an active/active scenario where two copies of the application are deployed in two different regions and the two copies are serving customer requests in a round-robin way. The DNS configuration automatically points to the healthy region if one copy fails.
 
 <p style="text-align: center;">
 
@@ -129,52 +129,26 @@ When deploying a real world application, you will likely want to use your own do
 
    ![Add domain](https://console.bluemix.net/docs/api/content/infrastructure/cis/images/overview-add-domain.png?lang=en-US)
 4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-5. After you've configured your registrar or DNS provider, it may require up to 24 hours for the changes to take effect: the domain's status changes from Pending to Active. You can also use the `dig <your_domain_name> ns` command to check whether the name servers have taken effect.
+5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect. When the domain's status changes from Pending to Active, you can also use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect.
 
-## Map the custom domain to the {{site.data.keyword.Bluemix_notm}} system domain
-{: #map_domain}
-
-Map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} region where your application is running.
-
-1. In the Cloud Internet Services application, navigate to **Reliability** > **DNS**. 
-2. Select **CNAME** from the **Type** drop-down list, type an alias for your application in the Name field, and the application URL in the domain name field. For example, `cisnodejs.mybluemix.net` in the US-South region can be mapped to `cisnodejs`. 
-3. Click **Add Record**. Do not switch the PROXY toggle to ON, as the Global Load Balancer will require non-proxied origins.
-2. Similarly, set the `CNAME` record for the UK endpoint.
-   ![CNAME records](images/solution1/cnames.png)
-
-## Configure custom domain and routes to your application
-
-{: #add_domain}
-
-1. In the Bluemix catalog, switch to the US region by clicking your account name from the menu bar in the {{site.data.keyword.Bluemix_notm}} console.
-2. Navigate to application **Overview** > **Routes** > **Manage Domains**.
-   ![HelloWorld](images/solution1/ApplicationRoutes.png)  
-3. On the Cloud account page, click **Domain** in the Actions column. Click **Add a domain** and enter your domain acquired from the registrar. 
-4. Select the right region and click **Save**.
-4. Return to the application overview page, click **Route** > **Edit Routes**, and click **Add Route**.
-5. Enter the mapped CNAME of your application, for example, `cisnodejs` in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
-6. At this point, you can access the application through the custom domain, for example, `http://cisnodejs.<your_domain_name>`.
-7. Similarly, configure the domain and routes for the application in the UK region.
-
- 
 ## Add Global Load Balancing to the application
 
 {: #add_glb}
 
-You can use a Global Load Balancer (GLB) to manage the traffic across multiple regions. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
+Use a Global Load Balancer (GLB) in IBM Cloud Internet Services to manage the traffic across multiple regions. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
 
-Create a health check.
+Before creating a GLB, create a health check for the GLB.
 
-1. In the Cloud Internet Services application, navigate to the bottom of the application, and click **Create health check**.
+1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
 2. Enter the path that you want to monitor, for example, `/images/newapp-icon.png`, and select a type (HTTP or HTTPS). Click **Provision 1 Instance**.
    ![Health Check](images/solution1/health_check.png)
 
-Create an origin pool with two origins.
+After that, create an origin pool with two origins.
 
 1. Click **Create Pool**.
 2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your node.js application.
-3.  Enter a name for the first origin, for example, `us-origion`, and the host name (the URL with the custom domain) for the application in the US region. 
-4. Similarly, add another origin with the origin address pointint to the application in the UK region. 
+3.  Enter a name for the first origin, for example, `us-origion`, and the host name for the application in the US region, for example `cisnodejs.mybluemix.net`. 
+4. Similarly, add another origin with the origin address pointing to the application in the UK region, for example, cisnodejs. `eu-gb.mybluemix.net`.
 5. Click **Provision 1 Instance**.
    ![Origin Pool](images/solution1/origin_pool.png)
 
@@ -186,7 +160,22 @@ Create a Global Load Balancer.
 4. Click **Provision 1 Instance**.
    ![Global Load Balancer](images/solution1/load_balancer.png)
 
-At this point, you can go back to the Cloud Foundary application in US and UK regions, and add another route with the URL of the global load balancer, for example, `glb.<your_domain_name>` in both regions.
+
+## Configure custom domain and routes to your application
+
+{: #add_domain}
+
+1. In the Bluemix catalog, switch to your account name from the menu bar in the {{site.data.keyword.Bluemix_notm}} console.
+2. On the Cloud account page, navigate to application **Cloud Froundry Orgs**, and select **Domains** from the Actions column.
+3. Click **Add a domain** and enter your domain acquired from the registrar. 
+4. Select the right region and click **Save**.
+5. Similarly, add the custom domain to the UK region.
+4. Return to the Bluemix dashboard and click on the application in the US region, click **Route** > **Edit Routes**, and click **Add Route**.
+   ![Add a route](images/solution1/ApplicationRoutes.png) 
+5. Enter the mapped Global Load Balancer of your application, for example, type `glb` in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
+6. Similarly, configure the domain and routes for the application in the UK region.
+
+At this point, you can visit your application with the URL `glb.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-region applications.
 
 ## Bind SSL certificate to your application
 {: #ssl}
@@ -211,6 +200,7 @@ Availability Monitoring runs synthetic tests from locations around the world, ar
 
 * Delete the toolchain
 * Delete the two Cloud Foundry applications deployed in the two regions
+* Delete the GLB, origin pools, and the health check
 * Delete the DNS configuration
 
 ## Related content
