@@ -178,7 +178,7 @@ Create a Global Load Balancer.
 5. Enter the mapped GLB hostname of your application, for example, type `glb` in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
 6. Similarly, configure the domain and routes for the application in the UK region.
 
-At this point, you can visit your application with the URL `glb.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-region applications.
+At this point, you can visit your application with the URL `glb.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-region applications. You can verify this by stopping your application in the US-South region, keeping the UK application on, and accessing the application through the Global Load Balancer. 
 
 Although this works at this moment, as we have configured continuous delivery in the previous steps, the configuration can be overwritten when another build is trigged. To make these changes persistent, go back to the toolchains and modify the *manifest.yml* file:
 
