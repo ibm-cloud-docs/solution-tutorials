@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-09"
+lastupdated: "2018-04-25"
 ---
 
 {:shortdesc: .shortdesc}
@@ -13,54 +13,49 @@ lastupdated: "2018-03-09"
 
 # Use Virtual Servers to build highly available and scalable web app
 
-This tutorial walks you through the creation of a load balancer, two application servers running on Ubuntu with NGINX and **P**HP installed, one **M**ySQL database server, and durable file storage to store application files and backups.
+Adding more servers to an application is a common pattern to handle additional load and to increase availability - provided the application is designed accordingly. In such scenario, the traffic is distributed among multiple application server instances, and to healthy instances only so that globally you serve more clients and improve availability.
+
+This tutorial walks you through this scenario with the creation of a load balancer, two web application servers, one MySQL database server, and a durable file storage to store application files and backups.
 
 ## Objectives
+{: #objectives}
 
-- Provision one server for the database
-- Install and configure MySQL
-- Create a file storage for database backups
-- Provision two servers for the PHP application
-- Create a file storage to share files between the application servers
-- Install and configure the PHP application on the application servers
-- Provision one load balancer in front of the application servers
+* Create {{site.data.keyword.virtualmachinesshort}} to install PHP and MySQL
+* Use {{site.data.keyword.filestorage_short}} to persist application files and database backups
+* Provision a {{site.data.keyword.loadbalancer_short}} to distribute requests to the application servers
 
-## Products
-{: #products}
+## Services used
+{: #services}
 
-This tutorial uses the following products:
-* [Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
-* [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
-* [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.loadbalancer_short}}](https://console.bluemix.net/catalog/infrastructure/load-balancer-group)
+* [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
+
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
+## Architecture
+{: #architecture}
+
+The application is a simple PHP frontend - a Wordpress blog - with a MySQL database. Several frontend servers handle the requests.
 
 <p style="text-align: center;">
-![Architecture diagram](images/solution14/Architecture.png)
+
+  ![Architecture diagram](images/solution14/Architecture.png)
 </p>
 
 1. The user connects to the application.
-2. The Load Balancer selects one of the healthy servers to handle the request.
+2. The {{site.data.keyword.loadbalancer_short}} selects one of the healthy servers to handle the request.
 3. The elected server accesses the application files stored on a shared file storage.
 4. The server also pulls information from the database and finally renders the page to the user.
-5. At a regular interval, the database content is backed up. A stand-by database is server is available in case the master fails.
-
-## Cost
-
-{: #cost}
-
-This tutorial uses billable components of IBM Cloud Platform, including: 
-
-- Virtual Server
-- Cloud Load Balancer 
-- File Storage
-
-Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
+5. At a regular interval, the database content is backed up. A stand-by database server is available in case the master fails.
 
 ## Before you begin
 {: #prereqs}
 
 ### Configure the SoftLayer VPN
 
-In this tutorial, the load balancer is the front door for the application users. The virtual servers do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
+In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they can be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
 
 1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
 
@@ -69,23 +64,25 @@ In this tutorial, the load balancer is the front door for the application users.
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
 
-You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning virtual servers.
+You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning {{site.data.keyword.virtualmachinesshort}}.
 {: tip}
 
 ### Check account permissions
 
 Contact your Infrastructure master user to get the following permissions:
-- **Network** so that you can create virtual servers with **Public and Private Network Uplink** (this permission is not required if you use the VPN to connect to the servers)
+- **Network** so that you can create {{site.data.keyword.virtualmachinesshort}} with **Public and Private Network Uplink** (this permission is not required if you use the VPN to connect to the servers)
 
 ## Provision one server for the database
 {: #database_server}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
+In this section, you configure one server to act as the master database.
+
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
    - Set **Name** to **db1**
    - Select a location where to provision the server. **All other servers and resources created in this tutorial will need to be created in the same location.**
-   - Select the **Ubuntu Minima** image
+   - Select the **Ubuntu Minimal** image
    - Keep the default compute flavor. The tutorial has been tested with the smallest flavor but should work with any flavor.
    - Under **Attached Storage Disks**, select the 25GB boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
@@ -96,11 +93,13 @@ Contact your Infrastructure master user to get the following permissions:
 
       ![Configure virtual server](images/solution14/db-server.png)
 
-   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under Devices > Device list. To SSH into the server, you need the server user name, password, and private or public IP address (Click the arrow next to the device name).
+   Note: The provisioning process can take 2 to 5 minutes for the server to be ready for use. After the server is created, you'll find the server credentials in the server detail page under **Devices > Device List**. To SSH into the server, you need the server private or public IP address, user name and password (Click the arrow next to the device name).
    {: tip}
 
 ## Install and configure MySQL
 {: #mysql}
+
+The server does not come with a database. In this section, you install MySQL on the server.
 
 ### Install MySQL
 
@@ -109,23 +108,23 @@ Contact your Infrastructure master user to get the following permissions:
    ssh root@<Private-OR-Public-IP-Address>
    ```
 
-     Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
-     {:tip}
+   Remember to connect to the VPN client with the right [site address](https://www.softlayer.com/VPN-Access) based on the **Location** of your virtual-server.
+   {:tip}
 2. Install MySQL:
    ```sh
    apt-get update
    apt-get -y install mysql-server
    ```
 
-     You may be prompted for a password. Read through the instructions on the console shown.
-     {:tip}
+   You may be prompted for a password. Read through the instructions on the console shown.
+   {:tip}
 3. Run the following script to help secure MySQL database:
    ```sh
    mysql_secure_installation
    ```
 
-     You may be prompted with couple of options. Choose wisely based on your requirements.
-     {:tip}
+   You may be prompted with couple of options. Choose wisely based on your requirements.
+   {:tip}
 
 ### Create a database for the application
 
@@ -188,7 +187,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
 
 ### Create the file storage
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
@@ -278,16 +277,17 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    0 23 * * * /root/dbbackup.sh
    ```
 
-
 ## Provision two servers for the PHP application
 {: app_servers}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
+In this section, you will create two web application servers.
+
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
    - Set **Name** to **app1**
    - Select the same location where you provisioned the database server
-   - Select the **Ubuntu Minima** image
+   - Select the **Ubuntu Minimal** image
    - Keep the default compute flavor.
    - Under **Attached Storage Disks**, select 25GB as your boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
@@ -304,7 +304,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
 This file storage is used to share the application files between *app1* and *app2* servers.
 
 ### Create the file storage
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
@@ -534,9 +534,9 @@ If you configured the application servers with only a private network link, you 
 ## Provision one load balancer server in front of the application servers
 {: load_balancer}
 
-At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a Load Balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
+At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a load balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
 
-1. Go to the catalog to create a [IBM Cloud Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-cloud-load-balancer)
+1. Go to the catalog to create a [{{site.data.keyword.loadbalancer_short}}](https://console.bluemix.net/catalog/infrastructure/ibm-cloud-load-balancer)
 2. In the **Plan** step, select the same data center as *app1* and *app2*
 3. In **Network Settings**,
    1. Select the same subnet as the one where *app1* and *app2* where provisioned
@@ -594,13 +594,15 @@ The Load Balancer is configured to check the health of the servers and to redire
 
 8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
-## Clean up resources
+## Remove resources
+{:removeresources}
 
 1. Delete the Load Balancer
 2. Cancel *db1*, *app1* and *app2*
 3. Delete the two File Storage services
 
-## Related information
+## Related content
+{:related}
 
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html) for a tutorial implementing a Content Delivery Network.
 - In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [SoftLayer Auto Scale](https://knowledgelayer.softlayer.com/learning/introduction-softlayer-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.

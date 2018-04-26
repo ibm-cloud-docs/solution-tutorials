@@ -19,9 +19,9 @@ This tutorial walks you through how to host and serve website assets (images, vi
 Web applications have different types of content: HTML content, images, videos, cascading style sheets, JavaScript files, user-generated content. Some contents change often, others not so much, some are accessed very often by lot of users, others occasionally. As the audience for the application grows, you may want to offload serving these contents to another component, freeing resources for your main application. You may also want to have these contents served from a location close to your application users, wherever they are in the world.
 
 There are many reasons why you would use a Content Delivery Network in these situations:
-* the CDN will cache the content, pulling the content from the origin (your servers) only it is not available in its cache or if it has expired;
+* the CDN will cache the content, pulling the content from the origin (your servers) only if it is not available in its cache or if it has expired;
 * with multiple data centers across the world, the CDN will serve the cached content from the closest location for your users;
-* running on a different domain that your main application, the browser will be able to load more contents in parallel - most browsers have a limit in the number of connections per hostname.
+* running on a different domain than your main application, the browser will be able to load more contents in parallel - most browsers have a limit in the number of connections per hostname.
 
 ## Objectives
 {: #objectives}
@@ -49,7 +49,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 1. The user accesses the application
 2. The application includes content distributed through a Content Delivery Network
 3. If the content is not available in the CDN or has expired, the CDN pulls the content from the origin.
-  
+
 ## Before you begin
 {: #prereqs}
 
