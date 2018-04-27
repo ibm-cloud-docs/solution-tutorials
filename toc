@@ -14,6 +14,7 @@ Solution Tutorials
     kubernetes-log-analysis-kibana.md
     continuous-deployment-to-kubernetes.md
     static-files-cdn.md
+    pub-sub-object-storage.md
     lamp-stack.md
     infrastructure-as-code-terraform.md
     plan-create-update-deployments.md

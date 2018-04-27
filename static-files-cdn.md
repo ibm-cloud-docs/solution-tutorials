@@ -12,26 +12,43 @@ lastupdated: "2018-04-18"
 {:tip: .tip}
 {:pre: .pre}
 
-
 # Accelerate delivery of static files using a CDN
 
-This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.
+This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [Content Delivery Network (CDN)](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
+
+Web applications have different types of content: HTML content, images, videos, cascading style sheets, JavaScript files, user-generated content. Some contents change often, others not so much, some are accessed very often by lot of users, others occasionally. As the audience for the application grows, you may want to offload serving these contents to another component, freeing resources for your main application. You may also want to have these contents served from a location close to your application users, wherever they are in the world.
+
+There are many reasons why you would use a Content Delivery Network in these situations:
+* the CDN will cache the content, pulling the content from the origin (your servers) only if it is not available in its cache or if it has expired;
+* with multiple data centers across the world, the CDN will serve the cached content from the closest location for your users;
+* running on a different domain than your main application, the browser will be able to load more contents in parallel - most browsers have a limit in the number of connections per hostname.
 
 ## Objectives
 {: #objectives}
 
-* Create a {{site.data.keyword.cos_full_notm}} bucket.
-* Upload files to a bucket.
-* Make the content globally available with a CDN.
+* Upload files to a {{site.data.keyword.cos_full_notm}} bucket.
+* Make content globally available with a CDN.
 * Expose files by using a Cloud Foundry web application.
 
-![](images/solution3/Architecture.png)
-
-## Products
+## Services used
+{: #services}
 
 This tutorial uses the following products:
    * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
    * [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai)
+
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
+## Architecture
+
+<p style="text-align: center;">
+
+![Architecture](images/solution3/Architecture.png)
+</p>
+
+1. The user accesses the application
+2. The application includes content distributed through a Content Delivery Network
+3. If the content is not available in the CDN or has expired, the CDN pulls the content from the origin.
 
 ## Before you begin
 {: #prereqs}
@@ -42,15 +59,6 @@ Contact the master user of your Infrastructure account to get the following perm
    * API Key
 
 These permissions are required to be able to view and use the Storage and CDN services.
-
-## About Content Delivery Network
-
-Web applications have different types of content: HTML content, images, videos, cascading style sheets, JavaScript files, user-generated content. Some contents change often, others not so much, some are accessed very often by lot of users, others occasionally. As the audience for the application grows, you may want to offload serving these contents to another component, freeing resources for your main application. You may also want to have these contents served from a location close to your application users, wherever they are in the world.
-
-There are many reasons why you would use a Content Delivery Network in these situations:
-* the CDN will cache the content, pulling the content from the origin (your servers) only it is not available in its cache or if it has expired;
-* with multiple data centers across the world, the CDN will serve the cached content from the closest location for your users;
-* running on a different domain that your main application, the browser will be able to load more contents in parallel - most browsers have a limit in the number of connections per hostname.
 
 ## Get the web application code
 {: #get_code}
@@ -193,7 +201,13 @@ The application contains a public/index.html web page that includes references t
 
 Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination which lets you host files and serve them to users from around the world. You can also use {{site.data.keyword.cos_full_notm}} to store any files your users upload to your application.
 
-## Related information
+## Remove resources
+
+* Delete the Cloud Foundry application
+* Delete the Content Delivery Network service
+* Delete the {{site.data.keyword.cos_full_notm}} service or bucket
+
+## Related content
 
 [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
 

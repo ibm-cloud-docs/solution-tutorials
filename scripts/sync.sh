@@ -18,7 +18,6 @@ tar cf - \
   --exclude=.gitignore \
   --exclude=solution-template.md \
   --exclude=low-latency-real-time-bidding.md \
-  --exclude=pub-sub-object-storage.md \
   --exclude=autoscale-virtual-server.md \
   --exclude=infrastructure-to-kubernetes.md \
   --exclude=README.md \

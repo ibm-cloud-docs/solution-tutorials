@@ -43,19 +43,16 @@
             },
             {
                 "hidden": true,
-                "name": "Move an existing infrastructure application to Kubernetes",
+                "name": "Understand how to move a VM based application to Kubernetes",
                 "url": "infrastructure-to-kubernetes.html",
-                "description": "In this tutorial, you will learn the process of moving an existing WordPress infrastructure application to Kubernetes. You will learn the process of containerizing a WordPress infrastructure applications. For this example, we are going to move a current infrastructure WordPress site that covered in details in previous solutions. We will explore all the components needed when moving to Kubernetes. You will learn how to handle Kubernetes worker nodes, file storage, databases, scaling, and backups. Migrating legacy applications to Kubernetes can be different from application to application, but the process is the same, so we will focus on the process and not so much the type of application we are migrating.",
+                "description": "This tutorial walks you through the process of moving a VM based application to IBM Cloud Kubernetes cluster. You will do that by packaging the application into different Docker container files, run it locally and then deploy it to a Kubernetes cluster.",
                 "imgSrc": "images/solution30/Architecture.png",
                 "tags": [
                     "Kubernetes",
                     "Container Service",
                     "Docker",
                     "PHP",
-                    "Compose for MySQL",
-                    "Slack",
-                    "Vulnerability Advisor",
-                    "DevOps"
+                    "Compose for MySQL"
                 ]
             },
             {
@@ -86,7 +83,6 @@
                 ]
             },
             {
-              "hidden": true,
               "name": "Asynchronous data processing using object storage and pub/sub messaging",
               "url": "pub-sub-object-storage.html",
               "description": "Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.",

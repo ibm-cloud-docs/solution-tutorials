@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-10-27"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -14,27 +14,33 @@ lastupdated: "2017-10-27"
 
 # Deploy a secure web application across multiple regions
 
-This tutorial walks you through creating, securing, and deploying a web application across multiple regions by using a continuous delivery pipeline. Among many other starter applications in IBM Cloud, you use a Node.js starter application for this tutorial.
+This tutorial walks you through creating, securing, and deploying a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline. 
+
+Apps or parts of your apps will have outages - it is a fact. It can be a problem in your code, a planned maintenance impacting the resources used by your app, a hardware failure bringing down a zone, a region, a data center where your app is hosted. Any of these will happen and you have to be prepared. With {{site.data.keyword.Bluemix_notm}}, you can deploy your application to [multiple regions](https://console.bluemix.net/docs/overview/ibm-cloud.html#ov_intro_reg) to increase your application resilience. And with your application now running in multiple locations, you can also redirect user traffic to the nearest region to reduce latency.
 
 ## Objectives
-* Create a starter Node.js application.
-* Set up source control and continuous delivery.
-* Deploy to another region.
-* Map a custom domain to your application.
+
+* Deploy a Cloud Foundry application to multiple regions with {{site.data.keyword.contdelivery_short}}.
+* Map a custom domain to the application.
 * Bind an SSL certificate to your application.
 * Monitor application performance.
 
-## Products
+## Services used
 
-This tutorial uses the following products:
-* [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
-* [Continuous Delivery Service](https://console.bluemix.net/catalog/services/continuous-delivery) for DevOps
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.sdk4node}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
+* [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) for DevOps
 
-<p style="text-align: center;">
-![Architecture](images/solution1/Architecture.png)
-</p>
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
+## Architecture
 
 This tutorial involves an active/passive scenario where two copies of the application are deployed in two different regions but only one copy is serving client requests. The DNS configuration initially points to the first region. If the first region fails, the DNS configuration should be updated to point to the other region.
+
+<p style="text-align: center;">
+
+   ![Architecture](./images/solution1/Architecture.png)
+</p>
 
 Some DNS providers may include capabilities to detect this situation and automatically route traffic to the other region. Another option would be to deploy a global load balancer in front of the applications and have the load balancer spread the traffic. This tutorial does not explore these options.
 
@@ -43,24 +49,24 @@ Some DNS providers may include capabilities to detect this situation and automat
 
 Start by creating a Node.js starter application that runs in a Cloud Foundry environment.
 
-1.  Click **[Catalog](https://console.bluemix.net/catalog/)** from the menu bar in the IBM Cloud console.
-2.  Click **Cloud Foundry Apps** under Platform on the left pane and select **[SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)** .
+1. Click **[Catalog](https://console.bluemix.net/catalog/)** in the {{site.data.keyword.Bluemix_notm}} console.
+2. Click **Cloud Foundry Apps** under the **Platform** category and select **[{{site.data.keyword.sdk4node}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)** .
      ![](images/solution1/SDKforNodejs.png)
-3.  Enter a **unique name** for your application, which will also be your host name, for example: myusername-nodeapp. And click **Create**.
+3. Enter a **unique name** for your application, which will also be your host name, for example: myusername-nodeapp. And click **Create**.
 4.  After the application starts, click the **Visit URL** link on the **Overview** page to see your application LIVE on a new tab.
 
 ![HelloWorld](images/solution1/HelloWorld.png)
 
-Great start! You have your very own Node.js starter application running in IBM Cloud.
+Great start! You have your very own Node.js starter application running in {{site.data.keyword.Bluemix_notm}}.
 
 Next, let's push the source code of your application to a repository and deploy your changes automatically.
 
-## Set up source control and continuous delivery
+## Set up source control and {{site.data.keyword.contdelivery_short}}
 {: #devops}
 
 In this step, you set up a git source control repository to store your code and then create a pipeline, which deploys any code changes automatically.
 
-1. On the left pane of your application you just created, select **Overview** and scroll to find **Continuous delivery**. Click **Enable**.
+1. On the left pane of your application you just created, select **Overview** and scroll to find **{{site.data.keyword.contdelivery_short}}**. Click **Enable**.
 
    ![HelloWorld](images/solution1/Enable_Continuous_Delivery.png)
 2. Keep the default options and click **Create**. You should now have a default **toolchain** created.
@@ -95,7 +101,7 @@ Continue making further changes to your application and periodically commit your
 ## Deploy to another region
 {: #deploy_another_region}
 
-Next, we will deploy the same application to a different IBM Cloud region. We can use the same toolchain but will add another DEPLOY stage to handle the deployment of the application to another region.
+Next, we will deploy the same application to a different {{site.data.keyword.Bluemix_notm}} region. We can use the same toolchain but will add another DEPLOY stage to handle the deployment of the application to another region.
 
 1. Navigate to Application **Overview** and scroll to find **View toolchain**.
 2. Select **Delivery Pipeline** from Deliver.
@@ -114,17 +120,17 @@ Next, we will deploy the same application to a different IBM Cloud region. We ca
 When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided mybluemix.net domain.
 
 1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
-2. Switch to the US region by clicking your account name from the menu bar in the IBM Cloud console.
+2. Switch to the US region by clicking your account name from the menu bar in the {{site.data.keyword.Bluemix_notm}} console.
 3. Navigate to Application **Overview** > **Routes** > **Manage Domains**.
 
    ![HelloWorld](images/solution1/ApplicationRoutes.png)
 4. Click **Add Domain** and enter your domain URL.
 5. Navigate to Application **Overview** > **Edit Routes** > **Choose your domain**.
 
-## Map the custom domain to the IBM Cloud system domain
+## Map the custom domain to the {{site.data.keyword.Bluemix_notm}} system domain
 {: #map_domain}
 
-Map the custom domain name to the secure endpoint for the IBM Cloud region where your application is running.
+Map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} region where your application is running.
 
 1. Set up a 'CNAME' record for the custom domain name on your DNS server. The steps for setting up the CNAME record vary depending on your DNS provider. For example, if you are using GoDaddy, you follow the [Domains Help ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://www.godaddy.com/help/add-a-cname-record-19236)guidance from GoDaddy.
 2. Set the CNAME record to the US-South endpoint. `secure.us-south.bluemix.net`
@@ -149,13 +155,13 @@ Lets check the health of your multi-region application.
 
 Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before users are impacted. If you configured a custom route for your application, change the test definition to access your application through its custom domain.
 
-## Clean up resources
+## Remove resources
 
 * Delete the toolchain
 * Delete the two Cloud Foundry applications deployed in the two regions
 * Delete the DNS configuration
 
-## Related information
+## Related content
 
 [Adding a Cloudant Database](https://console.bluemix.net/docs/services/Cloudant/tutorials/create_service.html)
 
