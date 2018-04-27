@@ -20,10 +20,9 @@ lastupdated: "2018-05-24"
 In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. To simulate this use case, you will first create a UI application which will be used to upload files to object storage and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
 {:shortdesc}
 
-## Products
-{: #products}
+## Services used
+{: #services}
 
-This tutorial uses the following products:
 * {{site.data.keyword.cos_full_notm}}
 * {{site.data.keyword.messagehub}}
 * {{site.data.keyword.containershort_notm}}
@@ -47,7 +46,6 @@ This tutorial uses the following products:
 {: #create_kube_cluster}
 
 1. Create a Kubernetes cluster from the [Catalog](https://console.bluemix.net/containers-kubernetes/launch). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster.
-
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution25/KubernetesClusterCreation.png)
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
@@ -155,7 +153,7 @@ Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and
 
 ## Related information
 
-[IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
-[{{site.data.keyword.messagehub_full}}](https://console.bluemix.net/docs/services/MessageHub/index.html#messagehub)
-[Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
-[{{site.data.keyword.messagehub}} data processing with IBM Cloud Functions](https://github.com/IBM/openwhisk-data-processing-message-hub)
+* [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
+* [{{site.data.keyword.messagehub_full}}](https://console.bluemix.net/docs/services/MessageHub/index.html#messagehub)
+* [Manage Access to Object Storage](https://ibm-public-cos.github.io/crs-docs/manage-access)
+* [{{site.data.keyword.messagehub}} data processing with IBM Cloud Functions](https://github.com/IBM/openwhisk-data-processing-message-hub)
