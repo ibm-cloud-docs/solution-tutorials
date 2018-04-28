@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-25"
+lastupdated: "2018-04-26"
 
 ---
 
@@ -115,24 +115,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution17/Architecture.png" />
-            </div>
-        </div>
-    </div>
-    <div class = "solutionBox">
-        <h3 id="infrastructure-to-kubernetes.html" class="solutionBoxTitle">
-            <a href = "infrastructure-to-kubernetes.html">Understand how to move a VM based application to Kubernetes</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>This tutorial walks you through the process of moving a VM based application to IBM Cloud Kubernetes cluster. You will do that by packaging the application into different Docker container files, run it locally and then deploy it to a Kubernetes cluster.</p>
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Docker</span>
-                    <span class="tag-filter category">PHP</span>
-                    <span class="tag-filter category">Compose for MySQL</span>
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution30/Architecture.png" />
             </div>
         </div>
     </div>
