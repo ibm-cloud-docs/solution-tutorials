@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-25"
+lastupdated: "2018-04-28"
 
 ---
 
@@ -120,19 +120,18 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 
 {: #domain_cis}
 
-IBM [Cloud Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage DNS/GLB/WAF/DDoS for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.  
+IBM [Cloud Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.  
 
 When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided mybluemix.net domain. In this step, after you have a custom domain, you can use the DNS servers provided by IBM Cloud Internet Services.
 
 1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
-2. Open another browser tab and navigate to the [Internet Services application](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog. 
+2. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog. 
 2. Enter a service name, and click **Create** to create an instance of the service.
 3. When the service instance is provisioned, add your domain URL to the Domain name field, and click **Add domain**.
 
    ![Add domain](https://console.bluemix.net/docs/api/content/infrastructure/cis/images/overview-add-domain.png?lang=en-US)
 4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-
-Come back to the tutorial one day later. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect. When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect. {:tip}
+5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect. When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect. {:tip}
 
 ## Add Global Load Balancing to the application
 
@@ -140,33 +139,34 @@ Come back to the tutorial one day later. After you've configured your registrar 
 
 Use a Global Load Balancer (GLB) in IBM Cloud Internet Services to manage the traffic across multiple regions. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
 
-Before creating a GLB, create a health check for the GLB.
+1. Before creating a GLB, create a health check for the GLB.
 
-1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
-2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**.
-   ![Health Check](images/solution1/health_check.png)
+	1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
+	2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**.
+	   ![Health Check](images/solution1/health_check.png)
+2. After that, create an origin pool with two origins.
 
-After that, create an origin pool with two origins.
+	1. Click **Create Pool**.
+	2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your node.js application.
+	3.  Enter a name for the first origin and the host name for the application in the US region. 
+	4. Similarly, add another origin with the origin address pointing to the application in the UK region.
+	5. Click **Provision 1 Instance**.
+	   ![Origin Pool](images/solution1/origin_pool.png)
+3. Create a Global Load Balancer (GLB). 
 
-1. Click **Create Pool**.
-2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your node.js application.
-3.  Enter a name for the first origin, for example, `us-origin`, and the host name for the application in the US region, for example `cisnodejs.mybluemix.net`. 
-4. Similarly, add another origin with the origin address pointing to the application in the UK region, for example, `cisnodejs.eu-gb.mybluemix.net`.
-5. Click **Provision 1 Instance**.
-   ![Origin Pool](images/solution1/origin_pool.png)
+	1. Click **Create Load Balancer**. 
+	2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region. 
+	3. Click **Add pool** and select the origin pool that you have just created. 
+	4. Click **Provision 1 Instance**.
+	   ![Global Load Balancer](images/solution1/load_balancer.png)
 
-Create a Global Load Balancer. 
-
-1. Click **Create Load Balancer**. 
-2. Enter a name for the Global Load Balancer, for example, `glb`. This name will also be part of your universal application URL, for example, `http://glb.<your_domain_name>`, regardless of the region. 
-3. Click **Add pool** and select the origin pool that you have just created. 
-4. Click **Provision 1 Instance**.
-   ![Global Load Balancer](images/solution1/load_balancer.png)
-
+At this stage, the GLB is configured but the Cloud Foundry applications are not ready yet to reply to requests from the configured GLB domain name. So you must go back to your application to map the custom domain and routes to the application.
 
 ## Configure custom domain and routes to your application
 
 {: #add_domain}
+
+In this step, you will ,ap the custom domain name to the secure endpoint for the IBM Cloud region where your application is running.
 
 1. In the {{site.data.keyword.Bluemix_notm}} catalog, switch to your account name from the menu bar in the [console](https://console.bluemix.net/dashboard/apps).
 2. On the Cloud account page, navigate to application **Cloud Foundry Orgs**, and select **Domains** from the Actions column.
@@ -175,7 +175,7 @@ Create a Global Load Balancer.
 5. Similarly, add the custom domain name to the UK region.
 4. Return to the {{site.data.keyword.Bluemix_notm}} [dashboard](https://console.bluemix.net/dashboard/apps) and click on the application in the US region, click **Route** > **Edit Routes**, and click **Add Route**.
    ![Add a route](images/solution1/ApplicationRoutes.png) 
-5. Enter the mapped GLB hostname of your application, for example, type `glb` in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
+5. Enter the GLB hostname you configured earlier in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
 6. Similarly, configure the domain and routes for the application in the UK region.
 
 At this point, you can visit your application with the URL `glb.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-region applications. You can verify this by stopping your application in the US-South region, keeping the UK application on, and accessing the application through the Global Load Balancer. 
@@ -209,7 +209,7 @@ It is possible that you do not want to utilize a Global Load Balancer in front o
 With the Cloud Intenet Services application, take the following steps to set up `CNAME` records for your application:
 
 1. In the Cloud Internet Services application, navigate to **Reliability** > **DNS**. 
-2. Select **CNAME** from the **Type** drop-down list, type an alias for your application in the Name field, and the application URL in the domain name field. For example, `cisnodejs.mybluemix.net` in the US-South region can be mapped to `cisnodejs`. 
+2. Select **CNAME** from the **Type** drop-down list, type an alias for your application in the Name field, and the application URL in the domain name field. Th application `cisnodejs.mybluemix.net` in the US-South region can be mapped to a CNAME `cisnodejs`. 
 3. Click **Add Record**. Switch the PROXY toggle to ON to enhance security of your application.
 2. Similarly, set the `CNAME` record for the UK endpoint.
    ![CNAME records](images/solution1/cnames.png)
