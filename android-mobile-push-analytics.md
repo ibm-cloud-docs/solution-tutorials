@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-01-05"
+lastupdated: "2018-04-30"
 
 ---
 
@@ -20,7 +20,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 
 ## Objectives
 
-* Create a mobile project with Push Notifications and Mobile Analytics services.
+* Create a mobile app with Push Notifications and Mobile Analytics services.
 * Obtain FCM credentials.
 * Download the code and complete required setup.
 * Instrumenting the app to use mobile analytics.
@@ -41,18 +41,18 @@ This tutorial uses the following products:
 - [Android Studio![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html) for importing and enhancing your code.
 - Google account to log into Firebase console for Sender ID and Server API Key.
 
-## Create Android mobile project from starter kit
+## Create Android mobile app from starter kit
 {: #get_code}
-The IBM Cloud Mobile Dashboard allows you to fast-track your mobile app development by creating your project from a Starter Kit.
+The IBM Cloud Mobile Dashboard allows you to fast-track your mobile app development by creating your app from a Starter Kit.
 1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard)
 2. Click on **Starter Kits** and scroll down to select the **Basic** Starter Kit.
-    ![](images/solution6/mobile_dashboard.png)
-3. Enter a project name, this can be your app name as well.
+    ![](images/solution9/mobile_dashboard.png)
+3. Enter a app name, this can be your app name as well.
 4. Select **Android** as your language and check the mobile services on the right pane.
 
     ![](images/solution9/create_mobile_project.png)
-5. Click on **Create Project** to scaffold an Android (Java) App.
-6. A new Project will be created under **Projects** tab on the left pane.
+5. Click on **Create** to scaffold an Android (Java) App.
+6. A new App will be created under **Apps** tab on the left pane.
     **Note:** Push Notifications and Mobile Analytics Services should be added with the Basic Starter.
     In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
@@ -60,7 +60,7 @@ In the next step, you will download the scaffolded code and setup the Push and A
 
 ## Download the code and complete required setup
 
-If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to get the code by clicking on the  **Download Code** button under Projects > **Your Mobile Project**.
+If you haven't downloaded the code yet, then use IBM Cloud Mobile dashboard to get the code by clicking on the  **Download Code** button under Apps > **Your Mobile App**.
 The downloaded code comes with **Push Notifications** and **Mobile Analytics** client SDKs included. The client SDKs is available on Gradle and Maven. For this tutorial, you will use **Gradle**.
 
 1. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.
@@ -127,7 +127,7 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
 ## Configure, send and monitor push notifications
 
-1. Push notifications SDK is already imported into the project and Push initialization code can be found in `MainActivity.java` file.
+1. Push notifications SDK is already imported into the app and Push initialization code can be found in `MainActivity.java` file.
 
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
 2. Registration for notifications happens in `MainActivity.java`.  (Optional) Provide an unique USER_ID.
@@ -154,7 +154,7 @@ You would also need to generate the `google-services.json` file. Complete the fo
 ## Monitoring the app with Mobile Analytics.
 
 You can record application logs and monitor data with the Mobile Analytics Client SDK. Developers can control when to send this data to the Mobile Analytics Service. When data is delivered to Mobile Analytics, you can use the Mobile Analytics console to get analytics insights about your mobile applications, devices, and application logs.
-1. Open the **Mobile Analytics** service from the mobile project you created or click on the three vertical dots next to the service and select **Open Dashboard**.
+1. Open the **Mobile Analytics** service from the mobile app you created or click on the three vertical dots next to the service and select **Open Dashboard**.
 2. You should see LIVE Users, Sessions and other App Data by disabling **Demo Mode**. You can filter the analytics information by
    - Date.
    - Application.

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-25"
+lastupdated: "2018-04-30"
 
 ---
 
@@ -26,7 +26,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 ## Objectives
 {:#objectives}
 
-- Create a mobile project with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services from Basic Swift starter kit.
+- Create a mobile app with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services from Basic Swift starter kit.
 - Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
 - Download the code and setup client SDKs.
 - Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}.
@@ -48,22 +48,22 @@ This tutorial uses the following products:
 1. [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
-## Create a mobile project from basic Swift starter kit
+## Create a mobile app from basic Swift starter kit
 {: #get_code}
 
-1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from pre-defined `Starter Kits`.
+1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `App` from pre-defined `Starter Kits`.
 2. Click on **Starter Kits** and scroll down to select **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
-3. Enter a project name which will also be the Xcode project and app name.
-4. Select `Swift` as your language and check the mobile services on the right pane.
+3. Enter a app name which will also be the Xcode project and app name.
+4. Select `iOS-Swift` as your language and check the mobile services on the right pane.
     ![](images/solution6/create_new_project.png)
-5. Click on `Create Project` to scaffold an iOS Swift App.
-6. A new `Project` will be created under Projects tab on the left pane.
+5. Click on **Create** to scaffold an iOS Swift App.
+6. A new App will be created under **Apps** tab on the left pane.
 
 ​      **Note:** {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} Services should already be added with the Basic Starter.
 
 ## Download the code and setup client SDKs
-If you haven't downloaded the code yet, Click on `Download Code` under Projects > `Your Mobile Project`
+If you haven't downloaded the code yet, Click on `Download Code` under Apps > `Your Mobile App`
 The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{{site.data.keyword.mobileanalytics_short}}** Client SDKs included. The Client SDKs are available on CocoaPods and Carthage. For this solution, you will use CocoaPods.
 
 1. To install CocoaPods on your machine, Open the `Terminal` and run the below command.
@@ -243,7 +243,7 @@ The {{site.data.keyword.mobileanalytics_short}} service provides key application
 
 The service includes the {{site.data.keyword.mobileanalytics_short}} Console where developers and application owners can monitor mobile application performance, see usage statistics, and search device logs.
 
-1. Open the `{{site.data.keyword.mobileanalytics_short}}` service from the mobile project you created or click on the three vertical dots next to the service and select `Open Dashboard`.
+1. Open the `{{site.data.keyword.mobileanalytics_short}}` service from the mobile app you created or click on the three vertical dots next to the service and select `Open Dashboard`.
 2. You should see LIVE Users, Sessions and other App Data by disabling `Demo Mode`. You can filter the analytics information by
     * Date.
     * Application.
