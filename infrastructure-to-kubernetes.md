@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-23"
+lastupdated: "2018-05-01"
 ---
 
 {:shortdesc: .shortdesc}
@@ -13,14 +13,14 @@ lastupdated: "2018-04-23"
 
 # Understand how to move a VM based application to Kubernetes
 
-This tutorial walks you through the process of moving a VM based application to IBM Cloud Kubernetes cluster. You will do that by packaging the application into different Docker container files, run it locally and then deploy it to a Kubernetes cluster.  
+This tutorial walks you through the process of moving a VM based application to IBM Cloud Kubernetes cluster. You will learn how to containerize an existing VM based applications, run it locally, then push it to a Kubernetes cluster. You will then learn some of the benefits comes with Kubernetes. Moving existing applications to the container and Kubernetes world can be different from an application to allocation. However, the process is always the same. In this tutorial guide, you will the process and what to prepare for. 
 
-- Moving existing your VM based applications to the Docker container world, then push them on a Kubernetes cluster can be different from application to application. There are few options depending on the type of application you have:  
+There are two main options when moving applications to Kubernetes, these are: 
 
- - Move from the monolith approach to the microservices approach. With this approach, you will need to break out the monolith application into many microservices run these microservices in a managed Kubernetes Cluster on IBM Cloud, these microservices are packaged inside a Docker container file and then pushed to Kubernetes cluster. Sometimes, you may well keep the core application running as it is and only run few microservices inside a Kubernetes cluster in the Cloud. This can solution works very well if you want to leverage some of the IBM Cloud services while keeping your application core as it is. 
- - The second option would be to move the complete application to the Cloud, this means dockerizing your complete application and run it inside a Kubernetes cluster. In this tutorial, you will learn how to tackle this approach. Although this approach can sometimes require an extensive amount of code changes, however, it would have many benefits. 
+- For large monolith applications, sometimes you may want to only move a portion of the application to the Cloud and leave the core application in your current data center. This means that you will select a small portion of the application running as a microservice in the cloud. To do that you would need to containerize that microservice and then run inside a Kubernetes cluster. You will repeat that process by breaking the monolith application into many microservices all running in the cloud inside a Kubernetes cluster.
+- The second option would be to move the complete application to the Cloud, this can take little longer and often require you to make an extensive amount of code modifications, but in most cases, this would be the preferred option. With this approach, you will containerize the complete application into some Docker container images, and then run it inside a Kubernetes cluster. In this tutorial, you will learn how to tackle this approach. You will learn how to take an existing application and move it entirely to the cloud, containerize it and run it inside a Kubernetes Cluster.
 
-How container world works is that your old VM based application will now be packaged as Docker container file running inside a Kubernetes cluster. The Kubernetes cluster consists of one or more worker nodes where the docker containers live, and these worker nods are just a collection VMs or physical machines. You as a developer no longer need to worry about this lower level meaning the infrastructure and focus on the application layer.  
+A Kubernetes cluster consists of one or more worker nodes, and each worker nodes can have many pods, and inside each pod, you will have the docker contents image. A worker nods are just a collection VMs or physical machines.
 
 ## Objectives:
 
@@ -45,7 +45,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 {:#architecture}
 
-The following diagram outlines the system's high-level architecture. For this example, an [existing WordPress application](highly-available-and-scalable-web-application.html) been selected that contains multiple VM's with a MySQL database server, File Storage, and a load balancer. Below you see two architecture digram, first you will look at the existing application digram and then explain how to map that when moving to Kubernetes. 
+The following diagram outlines the system's high-level architecture. For this example, an [existing WordPress application](highly-available-and-scalable-web-application.html) been selected that contains multiple VM's with a MySQL database server, File Storage, and a load balancer. Below you see two architecture diagram. First, you will look at the existing application diagram and then explain how to map that when moving to Kubernetes. 
 
 
 
@@ -74,11 +74,11 @@ Now let's explore how to map the same when moving to the Kubernetes world.
 </p>
 
 1. The user connects to the application.
-2. Ingress controller load balance traffic between available workers nodes
+2. Ingress controller load balance traffic between available workers nodes.
 3. Pods within a worker node share a storage volume outside the scope of the pod managed by a storage service on IBM Cloud. 
 4. Compose for MySQL service available to server the application with data. 
 
-Components:**
+**Components:**
 
 - Two worker nodes to host the application. A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal. Following this tutorial, you will set up a cluster with two worker nodes.
 - Persistent volume subsystem to share files between worker nodes. This comes built in with Kubernetes on IBM Cloud when using a paid cluster on IBM Cloud. A storage service gets created on the fly when storage is requested. You will later cover the concepts of PersistentVolumes and PersistentVolumeClaim in the storage section. 
@@ -100,15 +100,28 @@ A Kubernetes cluster manages a collection of worker nodes, and a worker nodes is
 
 {: #plan_a_migration}
 
-In this section, we will cover the fundamentals of moving VM based applications to Kubernetes. You will learn what code to modify, how to handle file storage in the Docker world, how to create docker images, how to configure ingress controller to load balancer between worker nodes and then run it all locally before pushing it to the Cloud. Once you fully understand the fundamentals of moving to Kubernetes, then you can run the existing WordPress application on a Kubernetes cluster and see how it has been done. 
+In this section, we will cover the fundamentals of moving VM based applications to Kubernetes. You will learn how to create A development/production cluster with the appropriate amount of resources need. You will learn what code to modifications needed, and things like creating docker files and Kubernetes deployments files. Next, you will learn how to handle file storage in Kubernetes, how to handle traffic load balancing, where to store your databases and the options available, finally then how to run your application locally before pushing to the Cluster on IBM Cloud. 
+
+###Configure Resources
+
+To run a production application in the Cloud using Kubernetes, there are few items in which you need to think about and these are: 
+
+1. How many clusters you need, you may want to have three clusters, one for development, one testing and one for production.
+2. Should these clusters be in a shared virtual server, dedicated server or bare metal. 
+3. How much CPU and RAM needed for each cluster worker node, think of a worker node like a VM. On IBM Cloud you can configure these very easily, you can start from a 4GB RAM all the way to 242GB RAM. 
+4. How many worker nodes you need. If running a production app and to gain good resiliency, you should consider minimum of two worker nodes.
+
+Above some of the questions you need to think about before configuring clusters. If we to look the WordPress example,  assuming that this is a production application with high load of traffic. Let's explore what resources you would need:
+
+1. Setup three clusters, one for development, one testing and one for production.
+2. Development and testing cluster can use the **shared virtual server**, minimum RAM and CPU option like 2 CPUs and 4GB of RAM should be ok. And one worker node for each. 
+3. For the production server you may want more resources for resiliency. For the production server, you can select any of the three hardware options shared, dedicated or bare metal. CPU and RAM you should have at least 4 CPUs and 16GB of RAM, and 2 workers nodes.
 
 ###Modify your code 
 
-ToDo: add what code changes a developer would make on a high level. (How to copy existing code over).
+ToDo: add what code changes a developer would make on a high level. How to handle service credentials 
 
-ToDo: working on this...
-
-###Manage application file storage 
+###How to handle file storage 
 
 ToDo: managing storage, PersistentVolumes, PersistentVolumeClaim. How all that works. (How to copy existing files over).
 
@@ -122,9 +135,11 @@ ToDo: How to run all this locally before pushing it to the cloud.
 
 Now that you understand the fundamentals of moving application to Kubernetes, next you will explore creating a cluster and run the WordPress example. 
 
-###Create Kubernetes deployment files and configure the load balancer controller
+###Create Kubernetes deployment files 
 
 ToDo: 
+
+### Create Kubernetes deployment files 
 
 ## Run the WordPress example on IBM Cloud 
 
