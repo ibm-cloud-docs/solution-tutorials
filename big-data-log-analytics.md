@@ -280,7 +280,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     ```sql
     -- What are the top 10 web pages on NASA from July 1995? Which mission might be significant?
     SELECT REQUEST, COUNT(REQUEST)
-    FROM cos://us-geo/webserver-logs-tutorial/http-logs.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE REQUEST LIKE '%.htm%'
     GROUP BY REQUEST
     ORDER BY 2 DESC
@@ -299,7 +299,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     ```sql
     -- Who are the top 5 viewers?
     SELECT HOST, COUNT(*)
-    FROM cos://us-geo/webserver-logs-tutorial/http-logs.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     GROUP BY HOST
     ORDER BY 2 DESC
     LIMIT 5
@@ -309,7 +309,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     ```sql
     -- Which viewer has suspicious activity based on application failures?
     SELECT HOST, COUNT(*)
-    FROM cos://us-geo/webserver-logs-tutorial/http-logs.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE `responseCode` == 500
     GROUP BY HOST
     ORDER BY 2 DESC;
@@ -328,7 +328,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     ```sql
     -- What are the top 10 largest files?
     SELECT DISTINCT REQUEST, BYTES
-    FROM cos://us-geo/webserver-logs-tutorial/http-logs.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE BYTES > 0
     ORDER BY BYTES ASC
     LIMIT 10
@@ -338,7 +338,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     ```sql
     -- What is the distribution of total traffic by hour?
     SELECT SUBSTRING(TIMESTAMP, 13, 2), COUNT(*)
-    FROM cos://us-geo/webserver-logs-tutorial/http-logs.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     GROUP BY 1
     ORDER BY 1 ASC
     ```
@@ -347,7 +347,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     ```sql
     -- Why did the previous result return an empty hour? Hint, find the malformed hostname.
     SELECT HOST, REQUEST
-    FROM cos://us-geo/webserver-logs-tutorial/http-logs.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE SUBSTRING(TIMESTAMP, 13, 2) == ''
     ```
     {: pre}
