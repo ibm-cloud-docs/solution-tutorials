@@ -215,7 +215,7 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
       responseCode == 200
       ```
       {: pre}
-    * With your mouse, draw a line from the **{site.data.keyword.messagehub}}** node's output (right side) to your **OK** node's input (left side).
+    * With your mouse, draw a line from the **{{site.data.keyword.messagehub}}** node's output (right side) to your **OK** node's input (left side).
     * From the **Nodes** palette, drag the **Debug** node found under **TARGETS** to the canvas.
     * Connect the **Debug** node to the **OK** node by drawing a line between the two.
 3. Repeat the process to create a `Not OK` filter using the same nodes and the following condition statement.
@@ -356,7 +356,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
 
 {: #expand}
 
-Congratulations, you have built a log analysis pipeline with {site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
+Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
 
 * Use [SendGrid](https://console.bluemix.net/catalog/services/sendgrid) with the Streams flow's email node to alert on-call engineers
 * Follow the [Build a data lake using Object Storage](https://console.bluemix.net/docs/tutorials/smart-data-lake.html#build-a-data-lake-using-object-storage) tutorial to add a dashboard to log data
