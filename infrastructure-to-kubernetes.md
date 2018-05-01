@@ -109,37 +109,37 @@ To run a production application in the Cloud using Kubernetes, there are few ite
 1. How many clusters you need, you may want to have three clusters, one for development, one testing and one for production.
 2. Should these clusters be in a shared virtual server, dedicated server or bare metal. 
 3. How much CPU and RAM needed for each cluster worker node, think of a worker node like a VM. On IBM Cloud you can configure these very easily, you can start from a 4GB RAM all the way to 242GB RAM. 
-4. How many worker nodes you need. If running a production app and to gain good resiliency, you should consider minimum of two worker nodes.
+4. How many worker nodes you need. If running a production app and to gain good resiliency, you should consider a minimum of two worker nodes.
 
-Above some of the questions you need to think about before configuring clusters. If we to look the WordPress example,  assuming that this is a production application with high load of traffic. Let's explore what resources you would need:
+Above some of the questions, you need to think about before configuring clusters. If we to look the WordPress example,  assuming that this is a production application with a high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one testing and one for production.
-2. Development and testing cluster can use the **shared virtual server**, minimum RAM and CPU option like 2 CPUs and 4GB of RAM should be ok. And one worker node for each. 
-3. For the production server you may want more resources for resiliency. For the production server, you can select any of the three hardware options shared, dedicated or bare metal. CPU and RAM you should have at least 4 CPUs and 16GB of RAM, and 2 workers nodes.
+2. Development and testing cluster can use the shared virtual server, minimum RAM and CPU option like 2 CPUs and 4GB of RAM should be ok. And one worker node for each. 
+3. For the production server, you may want more resources for resiliency. For the production server, you can select any of the three hardware options shared, dedicated or bare metal. CPU and RAM you should have at least 4 CPUs and 16GB of RAM, and two workers nodes.
 
 ###Modify your code 
 
-ToDo: add what code changes a developer would make on a high level. How to handle service credentials 
-
-###How to handle file storage 
-
-ToDo: managing storage, PersistentVolumes, PersistentVolumeClaim. How all that works. (How to copy existing files over).
+ToDo: add what code changes a developer would make on a high level. How to handle service credentials.
 
 ###Create your docker images 
 
 ToDo: What is a docker container file consist off, how to create one based on an existing application, how ingress works and how to configure it. 
 
-###Run your dockerized application locally
+### Create Kubernetes deployment files 
 
 ToDo: How to run all this locally before pushing it to the cloud. 
 
+### How to handle file storage
+
+ToDo: managing storage, PersistentVolumes, PersistentVolumeClaim. How all that works. (How to copy existing files over).
+
+### Run the application locally then push it to the Cloud 
+
+ToDo: How to run all this locally before pushing it to the cloud. 
+
+
+
 Now that you understand the fundamentals of moving application to Kubernetes, next you will explore creating a cluster and run the WordPress example. 
-
-###Create Kubernetes deployment files 
-
-ToDo: 
-
-### Create Kubernetes deployment files 
 
 ## Run the WordPress example on IBM Cloud 
 
