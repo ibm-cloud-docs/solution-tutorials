@@ -351,6 +351,9 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     ```
     {: pre}
 
+FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAME/` to run SQL queries on all files in the bucket.
+{: tip}
+
 ## Expand the tutorial
 
 {: #expand}
