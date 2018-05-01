@@ -366,7 +366,7 @@ Congratulations, you have built a log analysis pipeline with {{site.data.keyword
 
 {: #removal}
 
-From the [Dashboard](https://console.bluemix.net/dashboard), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following services.
+From the [Dashboard](https://console.bluemix.net/dashboard), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
 
 * streaming-analytics-dsx
 * log-analysis-hub
