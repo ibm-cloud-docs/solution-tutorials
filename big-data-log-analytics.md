@@ -155,9 +155,9 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     ssl.endpoint.identification.algorithm=HTTPS
     ```
     {: pre}
-3. Access the **log-analysis-hub** service instance from the [Dashboard](https://console.bluemix.net/dashboard).
-4. Select **Service Credentials** from the side navigation and the **View Credentials** dropdown for the **apsx-data** key. This key was created automatically when you created your Streams flow.
-5. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the `user` and `password` values seen in **Service Credentials**.
+3. Access the `log-analysis-hub` service instance from the [Dashboard](https://console.bluemix.net/dashboard).
+4. Select **Service Credentials** from the side navigation and then **View Credentials** dropdown for the `apsx-data` key. This key was created automatically when you created your Streams flow.
+5. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the `user` and `password` values seen in **Service Credentials**. Save `message-hub.config`.
 6. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
     ```sh
       kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL --producer.config message-hub.config --topic webserver
@@ -241,14 +241,14 @@ To view conditional handling in your Streams flow, you will increase the message
     {: pre}
 2. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](http://ita.ee.lbl.gov/html/contrib/NASA-HTTP.html) log file from NASA.
 3. Retrieve your {{site.data.keyword.messagehub}} **Service Credentials**.
-    * Access the **log-analysis-hub** service instance from the [Dashboard](https://console.bluemix.net/dashboard).
-    * Select **Service Credentials** from the side navigation and the **View Credentials** dropdown for the **apsx-data** key.
+    * Access the `log-analysis-hub` service instance from the [Dashboard](https://console.bluemix.net/dashboard).
+    * Select **Service Credentials** from the side navigation and the **View Credentials** dropdown for the `apsx-data` key.
 4. Change directory to the simulator and run the following commands setup the simulator and produce log event messages using the NASA log file. Replace `LOGFILE` with the file you downloaded. Replace `BROKERLIST` and `APIKEY` with the corresponding **Service Credentials**. An example is provided.
     ```sh
     npm install
     ```
     ```sh
-    npm build
+    npm run build
     ```
     ```sh
     node dist/index.js --file LOGFILE --parser httpd --broker-list BROKERLIST --api-key APIKEY --topic webserver --rate 100
@@ -275,7 +275,7 @@ Depending on the number of messages sent by the simulator, the log file on {{sit
 Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0fptwsp) to {{site.data.keyword.cos_short}} to get started immediately.
 {: tip}
 
-1. Access the **log-analysis-sql** service instance from the [Dashboard](https://console.bluemix.net/dashboard). Select **Open UI** to launch SQL Query.
+1. Access the `log-analysis-sql` service instance from the [Dashboard](https://console.bluemix.net/dashboard). Select **Open UI** to launch SQL Query.
 2. Enter the following SQL into the **Type SQL here ...** text area.
     ```sql
     -- What are the top 10 web pages on NASA from July 1995? Which mission might be significant?
@@ -288,7 +288,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     ```
     {: pre}
 3. Retrieve the Object SQL URL from the logs file.
-    * From the [Dashboard](https://console.bluemix.net/dashboard), select the **log-analysis-cos** service instance.
+    * From the [Dashboard](https://console.bluemix.net/dashboard), select the `log-analysis-cos` service instance.
     * Select the bucket you created previously.
     * Click the overflow menu on the `http-logs_TIME.csv` file and select **Object SQL URL**.
     * **Copy** the URL to the clipboard.
@@ -320,8 +320,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     -- Which requests showed a page not found error to the user?
     SELECT DISTINCT REQUEST
     FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
-    WHERE
-    `responseCode` == 404
+    WHERE `responseCode` == 404
     ```
     {: pre}
 
@@ -330,7 +329,7 @@ Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0f
     SELECT DISTINCT REQUEST, BYTES
     FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE BYTES > 0
-    ORDER BY BYTES ASC
+    ORDER BY CAST(BYTES as Integer) DESC
     LIMIT 10
     ```
     {: pre}
