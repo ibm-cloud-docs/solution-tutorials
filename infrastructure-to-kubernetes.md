@@ -21,7 +21,7 @@ There are two options for moving applications to Kubernetes:
 - Identify single component of a large monolith application which can be separated into its own micro-service. Containerize and deploy micro-service to Kubernetes. Repeat.
 - Containerize the entire application and deploy it on a Kubernetes cluster.
 
-In this tutorial, you will exercise the latter option using a popular Java e-commerce application **JPetStore**. After moving it to Kubernetes, you will extend it using IBM Cloud services.
+In this tutorial, you will exercise the latter option using a popular Java e-commerce application **JPetStore**. After moving it to Kubernetes, you will extend it using IBM Cloud services. 
 
 ## Objectives:
 
@@ -30,7 +30,7 @@ In this tutorial, you will exercise the latter option using a popular Java e-com
 - Understand how to map components between VM and Kubernetes.
 - Containerize application
 - Deploy the containerized application to IBM Cloud Container Service.
-- Extend the application with cloud services.
+- Extend the application with IBM Cloud services.
 
 ## Services used
 
@@ -57,8 +57,9 @@ The following diagram outlines the system's high-level architecture. For this ex
 
 - Java Application servers to host the application.
 - MySQL database installed on a Virtual Server.
+- ...
 
-In a real production application, you would most likely have a load balancer, auto-scaling capabilities, file storage and a backup system. Given the PetStore demo is a very old app, it does not have any of these components, however, when moving it to Kubernetes in the Cloud, it will gain all of these capabilities with a very minimum effort. Let's see how this will look if moved to Kubernetes.
+
 
 With a Kubernetes architecture, this may end up looking more like this:
 
@@ -82,7 +83,9 @@ With a Kubernetes architecture, this may end up looking more like this:
 
 As you enter the world of containers and Kubernetes, you will discover new resources and terminologies.
 
-A Kubernetes cluster manages a collection of worker nodes, and a worker nodes is just a collection of VM's or physical machines. Inside that worker nodes you would then have a pod that has the Docker container image of your application. You as a developer will focus on your application and not so much worker nodes. To add to this, there is one more thing in which you need to understand, and that's Kubernetes Deployments. Kubernetes Deployments handles the creation of the pods and inserting the docker images inside the pod for you, but not only that, Kubernetes Deployments do more than just that for you.
+ToDo: Add somewhere content here **containers VS VM's** 
+
+A Kubernetes cluster manages a collection of worker nodes, and a worker nodes is just a collection of VM's or physical machines. Inside that worker nodes you would then have a pod that has the Docker container image of your application. You as a developer will focus on your application and not so much worker nodes. Kubernetes Deployments handles the creation of the pods and inserting the docker images inside the pod for you, but not only that, Kubernetes Deployments do more than just that for you.
 
 - The Deployment instructs Kubernetes how to create and update instances of your application pods. This provides a self-healing mechanism to address machine failure or maintenance. In the VM based application world, installation scripts would often be used to start the applications, but sometimes recovery from machine failures not even counted and handled. Now, Kubernetes in the other hand offers a much better solution to this because of the way Kubernetes works. This is by having a Deployment to create your application instances and keeping them running across Nodes, it makes sure that your pods are running at all times and if one pod failed then it will create another one. Kubernetes does that with the ReplicationController.
 - A *ReplicationController* ensures that a specified number of pod replicas are running at any one time. In other words, a ReplicationController makes sure that a pod or a homogeneous set of pods is always up and available. so this means If there are too many pods, the ReplicationController terminates the extra pods. If there are too few, the ReplicationController starts more pods.
@@ -105,28 +108,45 @@ To run a production application in the Cloud using Kubernetes, there are few ite
 Above are some of the questions, you need to think about before configuring your clusters. Assuming you want to run the PetStore application in the Cloud for a production use, and expect a high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one testing and one for production.
-2. Development and testing cluster can use the shared virtual server, minimum RAM and CPU option like 2 CPUs and 4GB of RAM should be ok. And one worker node for each.
-3. For the production server, you may want more resources for resiliency. For the production server, you can select any of the three hardware options shared, dedicated or bare metal. CPU and RAM you should have at least 4 CPUs and 16GB of RAM, and two workers nodes.
+2. Development and testing cluster can start with minimum RAM and CPU option like 2 CPUs and 4GB of RAM should be ok. And one worker node for each.
+3. For the production server, you may want more resources for resiliency. For the production server, you can select any of the three hardware options shared, dedicated or bare metal. CPU and RAM you should have at least 4 CPUs and 16GB of RAM, and 4 workers nodes. 
 
-###Modify your code
+### Containerize the application
 
-ToDo: add what code changes a developer would make on a high level. How to handle service credentials.
-
-###Create docker images
+**Create docker container images**
 
 ToDo: What is a docker container file consist off, how to create one based on an existing application, how ingress works and how to configure it.
 
+Point to the docker file. 
+
+### Modify your code
+
+1) Cover 12 factor methodologies
+
+2) Save Credentials outside the app - https://12factor.net/config
+The Twelve-Factor App
+A methodology for building modern, scalable, maintainable software-as-a-service apps.
+
+3) https://12factor.net/backing-services
+12factor.net
+The Twelve-Factor App
+A methodology for building modern, scalable, maintainable software-as-a-service apps.
+
+4) Don't write to disk - use volume or database, or object storage
+
+managing storage, PersistentVolumes, PersistentVolumeClaim. How all that works. (How to copy existing files over).
+
+
+
 ### Create Kubernetes deployment files
 
-ToDo: How to run all this locally before pushing it to the cloud.
+Point to the deployment file. 
 
-### How to handle file storage
+### Push your deployment  
 
-ToDo: managing storage, PersistentVolumes, PersistentVolumeClaim. How all that works. (How to copy existing files over).
+ToDo… 
 
-### Push it to the Cloud
 
-ToDo...
 
 Now that you understand the fundamentals of moving application to Kubernetes, next you will explore creating a cluster and run the PetStore application in a Kubernetes cluster.
 
@@ -147,6 +167,8 @@ ToDo...
 ## Expand the tutorial
 
 {: #expand_tutorial}
+
+Wait for now… 
 
 ToDo...
 - DevOps - continuous delivery pipeline
