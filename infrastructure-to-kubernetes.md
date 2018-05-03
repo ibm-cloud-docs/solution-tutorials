@@ -46,18 +46,21 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 {:#architecture}
 
-The following diagram outlines the system's high-level architecture. For this example, an existing [Java PetStore application](https://github.ibm.com/ibmcloud/ModernizeDemo) has been selected. The Java PetStore application runs on Java applciation server with a MySQL database. Let's look at how the existing application was deployed, and it's components.
+The following diagram outlines the system's high-level architecture. For this example, an existing [https://github.com/mybatis/jpetstore-6) has been selected. The Java PetStore application runs on Java applciation server with a MySQL database. Let's look at how the existing application was deployed, and it's components.
 
-** TODO: This should show how it would look like on a production vm workload.**
 <p style="text-align: center;">
-![Architecture diagram](images/solution30/PetStore.png)
+![Architecture diagram](images/solution30/JPetStore.png)
 </p>
+
+1. The user connects to the application.
+2. The Load Balancer selects one of the healthy servers to handle the request.
+3. The server also pulls information from the database and finally renders the page to the user.
 
 **Components:**
 
-- Java Application servers to host the application.
+- Two Java app VM's to host the application, application files stored within the VM.
+- Load balancer service to load balance traffic between application servers.
 - MySQL database installed on a Virtual Server.
-- ...
 
 
 
