@@ -13,7 +13,7 @@ lastupdated: "2018-04-30"
 
 # Big data logs with streaming analytics and SQL
 
-In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, SQL Query and {{site.data.keyword.streaminganalyticsshort}}.
+In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, SQL Query and {{site.data.keyword.streaminganalyticsshort}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
 
 With {{site.data.keyword.messagehub}} the pipeline scales to receive millions of log records from a variety of producers. By applying {{site.data.keyword.streaminganalyticsshort}} log data can be inspected in realtime to integrate business processes. Log messages can also be easily redirected to long term storage using {{site.data.keyword.cos_short}} where developers, support staff and auditors can work directly with data using SQL Query.
 
@@ -84,17 +84,19 @@ This section uses the command line to create service instances. Alternatively, y
     bx target --cf
     ```
     {: pre}
-2. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage).
+2. Create a Lite instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage).
     ```sh
-    bx resource service-instance-create log-analysis-cos cloud-object-storage lite global
+    bx resource service-instance-create log-analysis-cos cloud-object-storage \
+    lite global
     ```
     {: pre}
-3. Create an instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
+3. Create a Beta instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
     ```sh
-    bx resource service-instance-create log-analysis-sql sql-query beta us-south
+    bx resource service-instance-create log-analysis-sql sql-query beta \
+    us-south
     ```
     {: pre}
-4. Create an instance of [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/message-hub).
+4. Create a Standard instance of [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/message-hub).
     ```sh
     bx service create messagehub standard log-analysis-hub
     ```
@@ -160,15 +162,24 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
 5. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the `user` and `password` values seen in **Service Credentials**. Save `message-hub.config`.
 6. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
     ```sh
-      kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL --producer.config message-hub.config --topic webserver
+      kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL \
+      --producer.config message-hub.config --topic webserver
     ```
     {: pre}
     ```sh
-    kafka-console-producer.sh --broker-list kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,kafka05-prod02.messagehub.services.us-south.bluemix.net:9093,kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,kafka03-prod02.messagehub.services.us-south.bluemix.net:9093 --producer.config message-hub.config --topic webserver
+    kafka-console-producer.sh --broker-list \
+    kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,\
+    kafka05-prod02.messagehub.services.us-south.bluemix.net:9093,\
+    kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,\
+    kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,\
+    kafka03-prod02.messagehub.services.us-south.bluemix.net:9093 \
+    --producer.config message-hub.config --topic webserver
     ```
 7. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}. Notice the sent messages also display on the `webserver-flow` **Preview Data** page.
     ```javascript
-    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
+    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", \
+    "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, \
+    "bytes": 6245 }
     ```
     {: pre}
 ![Preview page](images/solution31/preview_data.png)
@@ -193,7 +204,9 @@ In this section, you will complete the streams flow configuration by defining a 
 4. Click the play button to **Start the streams flow**.
 5. After the flow is started, again send multiple log messages from the Kafka console tool. You can watch as messages arrive by viewing the `webserver-flow` in Streams Designer.
     ```javascript
-    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
+    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", \
+    "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, \
+    "bytes": 6245 }
     ```
     {: pre}
 6. Return to your bucket in {{site.data.keyword.cos_short}}. A new `log.csv` file will exist after enough messages have entered the flow.
@@ -243,7 +256,7 @@ To view conditional handling in your Streams flow, you will increase the message
 3. Retrieve your {{site.data.keyword.messagehub}} **Service Credentials**.
     * Access the `log-analysis-hub` service instance from the [Dashboard](https://console.bluemix.net/dashboard).
     * Select **Service Credentials** from the side navigation and the **View Credentials** dropdown for the `apsx-data` key.
-4. Change directory to the simulator and run the following commands setup the simulator and produce log event messages using the NASA log file. Replace `LOGFILE` with the file you downloaded. Replace `BROKERLIST` and `APIKEY` with the corresponding **Service Credentials**. An example is provided.
+4. Change to the simulator's directory and run the following commands to setup the simulator and produce log event messages. Replace `LOGFILE` with the file you downloaded. Replace `BROKERLIST` and `APIKEY` with the corresponding **Service Credentials**. An example is provided.
     ```sh
     npm install
     ```
@@ -251,15 +264,24 @@ To view conditional handling in your Streams flow, you will increase the message
     npm run build
     ```
     ```sh
-    node dist/index.js --file LOGFILE --parser httpd --broker-list BROKERLIST --api-key APIKEY --topic webserver --rate 100
+    node dist/index.js --file LOGFILE --parser httpd --broker-list BROKERLIST \
+    --api-key APIKEY --topic webserver --rate 100
     ```
     {: pre}
     ```sh
-    node dist/index.js --file /Users/ibmcloud/Downloads/NASA_access_log_Jul95 --parser httpd --broker-list "kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,kafka05-prod02.messagehub.services.us-south.bluemix.net:9093,kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,kafka03-prod02.messagehub.services.us-south.bluemix.net:9093" --api-key Np15YZKN3SCdABUsOpJYtpue6jgJ7CwYgsoCWaPbuyFbdM4R --topic webserver --rate 100
+    node dist/index.js --file /Users/ibmcloud/Downloads/NASA_access_log_Jul95 \
+    --parser httpd --broker-list \
+    "kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,\
+    kafka05-prod02.messagehub.services.us-south.bluemix.net:9093,\
+    kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,\
+    kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,\
+    kafka03-prod02.messagehub.services.us-south.bluemix.net:9093" \
+    --api-key Np15YZKN3SCdABUsOpJYtpue6jgJ7CwYgsoCWaPbuyFbdM4R \
+    --topic webserver --rate 100
     ```
 5. In your browser, return to your `webserver-flow` after the simulator begins producing messages.
 6. Stop the simulator after a desired number of messages have gone through the conditional branches using `control+C`.
-7. Experiment by increasing or decreasing the `--rate` value.
+7. Experiment with {{site.data.keyword.messagehub}} scaling by increasing or decreasing the `--rate` value.
 
 The simulator will delay sending the next message based on the elapsed time in the webserver log. Setting `--rate 1` sends events in realtime. Setting `--rate 100` means that for every 1 second of elapsed time in the webserver log a 10ms delay between messages is used.
 {: tip}
@@ -272,13 +294,14 @@ The simulator will delay sending the next message based on the elapsed time in t
 
 Depending on the number of messages sent by the simulator, the log file on {{site.data.keyword.cos_short}} has certainly grown in file size. You will now act as an investigator answering audit or compliance questions by combining SQL Query with your log file. The benefit of using SQL Query is that the log file is directly accessible - no additional transformations or database servers are necessary.
 
-Upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0fptwsp) to {{site.data.keyword.cos_short}} to get started immediately.
+If you prefer not to wait for the simulator to send all log messages, upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0fptwsp) to {{site.data.keyword.cos_short}} to get started immediately.
 {: tip}
 
 1. Access the `log-analysis-sql` service instance from the [Dashboard](https://console.bluemix.net/dashboard). Select **Open UI** to launch SQL Query.
 2. Enter the following SQL into the **Type SQL here ...** text area.
     ```sql
-    -- What are the top 10 web pages on NASA from July 1995? Which mission might be significant?
+    -- What are the top 10 web pages on NASA from July 1995?
+    -- Which mission might be significant?
     SELECT REQUEST, COUNT(REQUEST)
     FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE REQUEST LIKE '%.htm%'
