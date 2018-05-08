@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-07"
+lastupdated: "2018-05-08"
 ---
 
 {:shortdesc: .shortdesc}
@@ -162,12 +162,12 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
 5. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the `user` and `password` values seen in **Service Credentials**. Save `message-hub.config`.
 6. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
     ```sh
-      kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL \
-      --producer.config message-hub.config --topic webserver
+    ./kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL \
+    --producer.config message-hub.config --topic webserver
     ```
     {: pre}
     ```sh
-    kafka-console-producer.sh --broker-list \
+    ./kafka-console-producer.sh --broker-list \
     kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,\
     kafka05-prod02.messagehub.services.us-south.bluemix.net:9093,\
     kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,\
@@ -177,9 +177,7 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     ```
 7. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}. Notice the sent messages also display on the `webserver-flow` **Preview Data** page.
     ```javascript
-    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", \
-    "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, \
-    "bytes": 6245 }
+    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
     {: pre}
 ![Preview page](images/solution31/preview_data.png)
@@ -204,9 +202,7 @@ In this section, you will complete the streams flow configuration by defining a 
 4. Click the play button to **Start the streams flow**.
 5. After the flow is started, again send multiple log messages from the Kafka console tool. You can watch as messages arrive by viewing the `webserver-flow` in Streams Designer.
     ```javascript
-    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", \
-    "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, \
-    "bytes": 6245 }
+    { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
     {: pre}
 6. Return to your bucket in {{site.data.keyword.cos_short}}. A new `log.csv` file will exist after enough messages have entered the flow.
@@ -367,7 +363,8 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     {: pre}
 
     ```sql
-    -- Why did the previous result return an empty hour? Hint, find the malformed hostname.
+    -- Why did the previous result return an empty hour?
+    -- Hint, find the malformed hostname.
     SELECT HOST, REQUEST
     FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE SUBSTRING(TIMESTAMP, 13, 2) == ''
