@@ -143,11 +143,10 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
    Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key that you use to sign for your Apple {{site.data.keyword.mobilepushshort}}. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
    You can use APNs in two modes:
 
-     * Sandbox mode for development and testing.
-     * Production mode when distributing applications through the App Store (or other enterprise distribution mechanisms).
+- Sandbox mode for development and testing.
+- Production mode when distributing applications through the App Store (or other enterprise distribution mechanisms).
 
    You must obtain separate certificates for your development and distribution environments. The certificates are associated with an App ID for the app that is the recipient of remote notifications. For production, you can create up to two certificates. {{site.data.keyword.Bluemix_short}} uses the certificates to establish an SSL connection with APNs.
-
 
    1. Go to the Apple Developer website, click **Member Center**, and select **Certificates, IDs & Profiles**.
    2. In the **Identifiers** area, click **App IDs**.
@@ -164,13 +163,10 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
         ![Generate certificate](images/solution6/generate_certificate.png)
    8. On your mac, open **Keychain Access**, **File**, **Import** and select the downloaded .cer file to install it.
    9. Right-click on the new certificate and private key, and then select **Export** and change the **File Format** to Personal information exchange format (`.p12` format).
-   
      ![Export certificate and keys](images/solution6/keychain_export_key.png)
    10. In the **Save As** field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or **production_apns.p12**, then click Save.
-   
      ![Export certificate and keys](images/solution6/certificate_p12v2.png)
    11. In the **Enter a password** field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the {{site.data.keyword.mobilepushshort}} service console.
-   
        ![Export certificate and keys](images/solution6/export_p12.png)
    12. The **Key Access.app** prompts you to export your key from the **Keychain** screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
 
@@ -204,14 +200,14 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
 
    **Note:** After the `.cer` file is in your key chain access, export it to your computer to create a `.p12` certificate.
 
-      1. Click on `{{site.data.keyword.mobilepushshort}}` under Services section or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
-      2. On the {{site.data.keyword.mobilepushshort}} Dashboard, you should see `Configure` option under `Manage`.
+1. Click on {{site.data.keyword.mobilepushshort}} under Services section or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
+2. On the {{site.data.keyword.mobilepushshort}} Dashboard, you should see `Configure` option under `Manage`.
 
-   To set up APNs on the `Push Notification services` console, complete the steps:
+To set up APNs on the `Push Notification services` console, complete the steps:
 
-      1. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
-      2. Select `Sandbox/Development APNs Server` or `Production APNs Server` as appropriate and then upload the `.p12` certificate that you have created.
-      3. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
+1. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
+2. Select `Sandbox/Development APNs Server` or `Production APNs Server` as appropriate and then upload the `.p12` certificate that you have created.
+3. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
 
 ![](images/solution6/Mobile_push_configure.png)
 
