@@ -204,18 +204,16 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
 
    **Note:** After the `.cer` file is in your key chain access, export it to your computer to create a `.p12` certificate.
 
-   1. Click on `{{site.data.keyword.mobilepushshort}}` under Services section or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
-   2. On the {{site.data.keyword.mobilepushshort}} Dashboard, you should see `Configure` option under `Manage > Send Notifications`.
-     ![](images/solution6/push_configure.png)
+      1. Click on `{{site.data.keyword.mobilepushshort}}` under Services section or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
+      2. On the {{site.data.keyword.mobilepushshort}} Dashboard, you should see `Configure` option under `Manage`.
 
    To set up APNs on the `Push Notification services` console, complete the steps:
 
-   1. Select `Configure` on the Push Notification services Dashboard.
-   2. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
-   3. Select `Sandbox (development)` or `Production (distribution)` as appropriate and then upload the `p.12` certificate that you have created.
-   4. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
+      1. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
+      2. Select `Sandbox/Development APNs Server` or `Production APNs Server` as appropriate and then upload the `.p12` certificate that you have created.
+      3. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
 
-   ![](images/solution6/Mobile_push_configure.png)
+![](images/solution6/Mobile_push_configure.png)
 
 ## Configure,send, and monitor {{site.data.keyword.mobilepushshort}}
 
