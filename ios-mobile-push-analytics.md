@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-30"
+lastupdated: "2018-05-08"
 
 ---
 
@@ -54,7 +54,7 @@ This tutorial uses the following products:
 1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `App` from pre-defined `Starter Kits`.
 2. Click on **Starter Kits** and scroll down to select **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
-3. Enter a app name which will also be the Xcode project and app name.
+3. Enter an app name which will also be the Xcode project and app name.
 4. Select `iOS-Swift` as your language and check the mobile services on the right pane.
     ![](images/solution6/create_new_project.png)
 5. Click on **Create** to scaffold an iOS Swift App.
@@ -222,7 +222,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
 2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.
 3. Open {{site.data.keyword.mobilepushshort}} service under `Mobile Services` > **Existing services**  on {{site.data.keyword.Bluemix_short}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
-  * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
+  * Select `Messages`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, All Devices and other browsers.
 
        **Note:** When you select the All Devices option, all devices subscribed to {{site.data.keyword.mobilepushshort}} will receive notifications.
   * In the `Message` field, compose your message. Choose to configure the optional settings as required.
