@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-25"
+lastupdated: "2018-05-08"
 
 ---
 
@@ -26,7 +26,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 ## Objectives
 {:#objectives}
 
-- Create a mobile project with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services from Basic Swift starter kit.
+- Create a mobile app with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services from Basic Swift starter kit.
 - Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
 - Download the code and setup client SDKs.
 - Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}.
@@ -48,22 +48,22 @@ This tutorial uses the following products:
 1. [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
-## Create a mobile project from basic Swift starter kit
+## Create a mobile app from basic Swift starter kit
 {: #get_code}
 
-1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `Project` from pre-defined `Starter Kits`.
+1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `App` from pre-defined `Starter Kits`.
 2. Click on **Starter Kits** and scroll down to select **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
-3. Enter a project name which will also be the Xcode project and app name.
-4. Select `Swift` as your language and check the mobile services on the right pane.
+3. Enter an app name which will also be the Xcode project and app name.
+4. Select `iOS-Swift` as your language and check the mobile services on the right pane.
     ![](images/solution6/create_new_project.png)
-5. Click on `Create Project` to scaffold an iOS Swift App.
-6. A new `Project` will be created under Projects tab on the left pane.
+5. Click on **Create** to scaffold an iOS Swift App.
+6. A new App will be created under **Apps** tab on the left pane.
 
 ​      **Note:** {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} Services should already be added with the Basic Starter.
 
 ## Download the code and setup client SDKs
-If you haven't downloaded the code yet, Click on `Download Code` under Projects > `Your Mobile Project`
+If you haven't downloaded the code yet, Click on `Download Code` under Apps > `Your Mobile App`
 The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{{site.data.keyword.mobileanalytics_short}}** Client SDKs included. The Client SDKs are available on CocoaPods and Carthage. For this solution, you will use CocoaPods.
 
 1. To install CocoaPods on your machine, Open the `Terminal` and run the below command.
@@ -143,11 +143,10 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
    Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key that you use to sign for your Apple {{site.data.keyword.mobilepushshort}}. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
    You can use APNs in two modes:
 
-     * Sandbox mode for development and testing.
-     * Production mode when distributing applications through the App Store (or other enterprise distribution mechanisms).
+- Sandbox mode for development and testing.
+- Production mode when distributing applications through the App Store (or other enterprise distribution mechanisms).
 
    You must obtain separate certificates for your development and distribution environments. The certificates are associated with an App ID for the app that is the recipient of remote notifications. For production, you can create up to two certificates. {{site.data.keyword.Bluemix_short}} uses the certificates to establish an SSL connection with APNs.
-
 
    1. Go to the Apple Developer website, click **Member Center**, and select **Certificates, IDs & Profiles**.
    2. In the **Identifiers** area, click **App IDs**.
@@ -164,13 +163,10 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
         ![Generate certificate](images/solution6/generate_certificate.png)
    8. On your mac, open **Keychain Access**, **File**, **Import** and select the downloaded .cer file to install it.
    9. Right-click on the new certificate and private key, and then select **Export** and change the **File Format** to Personal information exchange format (`.p12` format).
-   
      ![Export certificate and keys](images/solution6/keychain_export_key.png)
    10. In the **Save As** field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or **production_apns.p12**, then click Save.
-   
      ![Export certificate and keys](images/solution6/certificate_p12v2.png)
    11. In the **Enter a password** field, enter a password to protect the exported items, then click OK. You can use this password to configure your APNs settings on the {{site.data.keyword.mobilepushshort}} service console.
-   
        ![Export certificate and keys](images/solution6/export_p12.png)
    12. The **Key Access.app** prompts you to export your key from the **Keychain** screen. Enter your administrative password for your Mac to allow your system to export these items, and then select the `Always Allow` option. A `.p12` certificate is generated on your desktop.
 
@@ -204,25 +200,23 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
 
    **Note:** After the `.cer` file is in your key chain access, export it to your computer to create a `.p12` certificate.
 
-   1. Click on `{{site.data.keyword.mobilepushshort}}` under Services section or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
-   2. On the {{site.data.keyword.mobilepushshort}} Dashboard, you should see `Configure` option under `Manage > Send Notifications`.
-     ![](images/solution6/push_configure.png)
+1. Click on {{site.data.keyword.mobilepushshort}} under Services section or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
+2. On the {{site.data.keyword.mobilepushshort}} Dashboard, you should see `Configure` option under `Manage`.
 
-   To set up APNs on the `Push Notification services` console, complete the steps:
+To set up APNs on the `Push Notification services` console, complete the steps:
 
-   1. Select `Configure` on the Push Notification services Dashboard.
-   2. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
-   3. Select `Sandbox (development)` or `Production (distribution)` as appropriate and then upload the `p.12` certificate that you have created.
-   4. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
+1. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
+2. Select `Sandbox/Development APNs Server` or `Production APNs Server` as appropriate and then upload the `.p12` certificate that you have created.
+3. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
 
-   ![](images/solution6/Mobile_push_configure.png)
+![](images/solution6/Mobile_push_configure.png)
 
 ## Configure,send, and monitor {{site.data.keyword.mobilepushshort}}
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
 2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.
 3. Open {{site.data.keyword.mobilepushshort}} service under `Mobile Services` > **Existing services**  on {{site.data.keyword.Bluemix_short}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
-  * Select `Send Notifications`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, and All Devices.
+  * Select `Messages`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, All Devices and other browsers.
 
        **Note:** When you select the All Devices option, all devices subscribed to {{site.data.keyword.mobilepushshort}} will receive notifications.
   * In the `Message` field, compose your message. Choose to configure the optional settings as required.
@@ -243,7 +237,7 @@ The {{site.data.keyword.mobileanalytics_short}} service provides key application
 
 The service includes the {{site.data.keyword.mobileanalytics_short}} Console where developers and application owners can monitor mobile application performance, see usage statistics, and search device logs.
 
-1. Open the `{{site.data.keyword.mobileanalytics_short}}` service from the mobile project you created or click on the three vertical dots next to the service and select `Open Dashboard`.
+1. Open the `{{site.data.keyword.mobileanalytics_short}}` service from the mobile app you created or click on the three vertical dots next to the service and select `Open Dashboard`.
 2. You should see LIVE Users, Sessions and other App Data by disabling `Demo Mode`. You can filter the analytics information by
     * Date.
     * Application.

@@ -18,6 +18,9 @@ lastupdated: "2018-02-14"
 
 # Low latency Real-Time Bidding environment
 {:shortdesc}
+
+## UNDER CONSTRUCTION
+
 This tutorial covers the type of environment you would need to set up in order to achieve the 100ms response time requirements of auction in  Real-Time Bidding process. This involves multi-region kubernetes clusters with replicated databases, caching and object storage.
 
 When a user visits a website and advertisements are displayed, a lot goes on under the covers to determine what ad to display.

@@ -165,7 +165,7 @@ If you don't see your application updating, check the logs of the DEPLOY and BUI
 ## Security using Vulnerability Advisor
 {: #vulnerability_advisor}
 
-In this step, you will explore the [Vulnerability Advisor](https://console.bluemix.net/docs/containers/va/va_index.html). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
+In this step, you will explore the [Vulnerability Advisor](https://console.bluemix.net/docs/services/va/va_index.html). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 2. Click on **Add Stage** and change MyStage to **Validate Stage**.
