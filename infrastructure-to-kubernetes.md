@@ -282,7 +282,7 @@ To create a PV and matching PVC, follow these steps below:
    metadata:
      name: mypvc
      annotations:
-       volume.beta.kubernetes.io/storage-class: "ibmc-file-silver"
+       volume.beta.kubernetes.io/storage-class: "ibmc-file-retain-silver"
      labels:
        billingType: "monthly"
    spec:
@@ -305,59 +305,80 @@ To create a PV and matching PVC, follow these steps below:
    $ kubectl describe pvc mypvc
    ```
 
+For more details on creating custom storages classes checkout the main cluster storage [docs](https://console.bluemix.net/docs/containers/cs_storage.html#create).
+
+ **Setting up backup and restore solutions for NFS file shares and block storage**
+
+File shares and block storage are provisioned into the same location as your cluster. The storage is hosted on clustered servers by IBM to provide availability in case a server goes down. However, file shares and block storage are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups that you can use to restore your data when needed.
+
+Review the following [backup and restore](https://console.bluemix.net/docs/containers/cs_storage.html#backup_restore) options for your NFS file shares and block storage.
+
 **Move existing data over**
 
-ToDo: 
+Copy data to and from pods and containers
 
+You can use the `kubectl cp` command to copy files and directories to and from pods or specific containers in your cluster.
 
+You can use the command in various ways:
 
-### Create Kubernetes deployment files
+- Copy data from your local machine to a pod in your cluster: `kubectl cp<local_filepath>/<filename> <namespace>/<pod>:<pod_filepath>`
+- Copy data from a pod in your cluster to your local machine: `kubectl cp <namespace>/<pod>:<pod_filepath>/<filename> <local_filepath>/<filename>`
+- Copy data from a pod in your cluster to a specific container in another pod another: `kubectl cp<namespace>/<pod>:<pod_filepath> <namespace>/<other_pod>:<pod_filepath> -c<container>`
 
-Point to the deployment file. 
+### Create Kubernetes deployment yaml
 
-### Push your deployment  
+A *Deployment* controller provides declarative updates for Pods and ReplicaSets. You describe a *desired state* in a Deployment object, and the Deployment controller changes the actual state to the desired state at a controlled rate. You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments. 
 
-ToDo… 
+Looking at the [JPetStore deployment YAML](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore.yaml), you have things like: 
 
-Now that you understand the fundamentals of moving application to Kubernetes, next you will explore creating a cluster and run the PetStore application in a Kubernetes cluster.
+- Two services, one for the database and second for the web to exposes the pod to the outside.
+- Two deployments, one for each service defined. 
+- Ingress controller to load balancer the traffic across the different nodes.
 
-## Run the application  
+You may have multiple deployment YAML files, one for each micro service. 
+
+A Deployments yaml contain things like services to expose your node to the outside world, Deployment
+
+### Push deployments  
+
+You can push a deployment files using the command:
+
+```bash
+$ kubectl create -f <yaml-file-name>.yaml
+```
+
+Verify your deployment, pods and services using: 
+
+```bash
+ $ kubectl get deployments
+ $ kubectl get services
+ $ kubectl get pods
+```
+
+Now that you understand the fundamentals of moving application to Kubernetes, next you can run the JPetStore application in a Kubernetes cluster and use everything you learned so far.
+
+## Run the JPetStore in your cluster   
 
 {: #run_application} 
 
-ToDo...
+Follow the JPetStore GitHub repo for steps to run the application in your cluster.  This application demo allows you to take an existing Java web application (JPetStore) that runs on WebSphere Application Server, containerize it and move it to Kubernetes, and then extend it with an Messaging interface using [Twilio](https://www.twilio.com/) to provide a Watson Visual Recognition capabilities.
 
-Here it will send user to the [PetStore repo](https://github.ibm.com/ibmcloud/ModernizeDemo) to run the application or add the steps here…
-
-## Extend the application
-
-{: #extend_application}
-
-ToDo...
-
-## Expand the tutorial
-
-{: #expand_tutorial}
-
-Wait for now… 
-
-ToDo...
-- DevOps - continuous delivery pipeline
-- Monitoring
-- Security
-- Slack notifications
+Run the JPetStore using [this repo](https://github.ibm.com/ibmcloud/ModernizeDemo). 
 
 
 ## Remove Services
 {: #clean_up_resources}
 
-ToDo...
+In this step, you will clean up the resources to remove what you created above.
+
+- Delete the storage PV and PVC. 
 
 ## Related Content
 {: #related_content}
 
 - [Get started with Kubernetes and IBM Cloud Container Service](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/)
-- [http://kubernetes.io/](http://kubernetes.io/)
+- Kubernetes main [docs](http://kubernetes.io/)
+- [Cluster Storage](https://console.bluemix.net/docs/containers/cs_storage.html)
 
 
 
