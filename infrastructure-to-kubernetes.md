@@ -28,7 +28,7 @@ In this tutorial, you will exercise the latter option using a popular Java e-com
 {: #objectives}
 
 - Understand how to map components between VM and Kubernetes.
-- Containerize application
+- Containerize application.
 - Deploy the containerized application to IBM Cloud Container Service.
 - Extend the application with IBM Cloud services.
 
@@ -61,8 +61,6 @@ The following diagram outlines the system's high-level architecture. For this ex
 - Two Java app VM's to host the application, application files stored within the VM.
 - Load balancer service to load balance traffic between application servers.
 - MySQL database installed on a Virtual Server.
-
-
 
 With a Kubernetes architecture, this may end up looking more like this:
 
@@ -156,7 +154,7 @@ To run a production application in the Cloud using Kubernetes, there are few ite
 3. How much CPU and RAM needed for each cluster worker node, think of a worker node like a VM. On IBM Cloud you can configure these very easily, you can start from a 4GB RAM all the way to 242GB RAM.
 4. How many worker nodes you need. If running a production app and to gain good resiliency, you should consider a minimum of two worker nodes.
 
-Above are some of the questions, you need to think about before configuring your clusters. Assuming you want to run the PetStore application in the Cloud for a production use, and expect a high load of traffic. Let's explore what resources you would need:
+Above are some of the questions, you need to think about before configuring your clusters. Assuming you want to run the JPetStore application in the Cloud for a production use, and expect a high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one testing and one for production.
 2. Development and testing cluster can start with minimum RAM and CPU option like 2 CPU's, 4GB of RAM and one worker node for each cluster.
@@ -339,7 +337,7 @@ You may have multiple deployment YAML files, one for each micro service.
 
 A Deployments yaml contain things like services to expose your node to the outside world, Deployment
 
-### Push deployments  
+### Push Deployments  
 
 You can push a deployment files using the command:
 
