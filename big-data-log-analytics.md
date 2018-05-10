@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-08"
+lastupdated: "2018-05-10"
 ---
 
 {:shortdesc: .shortdesc}
@@ -108,10 +108,10 @@ This section uses the command line to create service instances. Alternatively, y
 
 Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keyword.cos_short}} bucket. Topics define where applications deliver messages in publish-subscribe messaging systems. After messages are received and processed, they will be stored within a file located in an {{site.data.keyword.cos_short}} bucket.
 
-1. In your browser, access the **log-analysis-hub** service instance from the [Dashboard](https://console.bluemix.net/dashboard).
+1. In your browser, access the `log-analysis-hub` service instance from the [Dashboard](https://console.bluemix.net/dashboard).
 2. Click the **+** button to create a topic.
 3. Enter the **Topic Name** `webserver` and click the **Create topic** button.
-4. Back in the [Dashboard](https://console.bluemix.net/dashboard), select the **log-analysis-cos** service instance.
+4. Back in the [Dashboard](https://console.bluemix.net/dashboard), select the `log-analysis-cos` service instance.
 5. Click **Create bucket**.
     * Enter a unique **Name** for the bucket.
     * Click **Create**.
