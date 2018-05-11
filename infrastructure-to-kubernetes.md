@@ -13,11 +13,13 @@ lastupdated: "2018-05-10"
 
 # Understand how to move a VM based application to Kubernetes
 
-This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing Java application (JPetStore), containerize it, move it to Kubernetes, and then extend it using other IBM Cloud services. Though migrating existing applications to the containers and Kubernetes can be different from an application to application, this tutorial aims to outline the path with an example. 
+This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services. Though migrating existing applications to Kubernetes can be different from an application to application, this tutorial aims to outline the path with an example. 
 
-Kubernetes is a container orchestrator to provision, manage, and scale applications. Kubernetes allows you to manage the lifecycle of containerized applications in a cluster of nodes (which are a collection of worker machines, for example, VMs or physical machines). Kubernetes supports a wide spectrum of languages allowing you to develop locally, scale globally. Kubernetes packs all the fundamental components to build cloud native apps locally. With Kubernetes you get things like built-in scaling features, load balancing, auto-recovery, quick deployment rollout and more. 
+[Kubernetes](https://kubernetes.io/) is a container orchestrator to provision, manage, and scale applications. Kubernetes allows you to manage the lifecycle of containerized applications in a cluster of nodes. With Kubernetes you get built-in scaling features, load balancing, auto-recovery, quick deployment rollout and more. 
 
-There are two options for moving applications to Kubernetes:
+[IBM Cloud Container Service](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security insight into images and containers, and integration with Watson, IoT, and data.
+
+There are two options for moving an application to Kubernetes:
 - Identify single component of a large monolith application which can be separated into its own micro-service. Containerize and deploy micro-service to Kubernetes. Repeat.
 - Containerize the entire application and deploy it on a Kubernetes cluster.
 
@@ -27,9 +29,9 @@ In this tutorial, you will exercise the latter option using a popular Java e-com
 
 {: #objectives}
 
-- Understand how to map components between VM and Kubernetes.
+- Understand how to map components between VMs and Kubernetes.
 - Containerize application.
-- Deploy the containerized application to IBM Cloud Container Service.
+- Deploy the container to Kubernetes cluster on IBM Cloud Container Service.
 - Extend the application with IBM Cloud services.
 
 ## Services used
@@ -46,15 +48,16 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 {:#architecture}
 
-The following diagram outlines the system's high-level architecture. For this example, an existing [https://github.com/mybatis/jpetstore-6) has been selected. The Java PetStore application runs on Java applciation server with a MySQL database. Let's look at how the existing application was deployed, and it's components.
+The following diagram outlines the traditonal architecture of application. 
 
 <p style="text-align: center;">
-![Architecture diagram](images/solution30/JPetStore.png)
+![Architecture diagram](images/solution30/traditional_architecture.png)
+
 </p>
 
-1. The user connects to the application.
-2. The Load Balancer selects one of the healthy servers to handle the request.
-3. The server also pulls information from the database and finally renders the page to the user.
+1. The user sends a request to the endpoint.
+2. The Load Balancer selects one of the healthy application running in VM to handle the request.
+3. The application server is backed by another VM running a database. 
 
 **Components:**
 
@@ -62,29 +65,26 @@ The following diagram outlines the system's high-level architecture. For this ex
 - Load balancer service to load balance traffic between application servers.
 - MySQL database installed on a Virtual Server.
 
-With a Kubernetes architecture, this may end up looking more like this:
+With a modern Kubernetes architecture, this would look similar to:
 
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/Architecture.png)
 </p>
 
-1. The user connects to the application.
-2. Ingress controller load balance traffic between available workers nodes.
-3. Pods within a worker node share a storage volume outside the scope of the pod managed by a storage service on IBM Cloud.
-4. Compose for MySQL managed database as a service.
+1. The user sends a request to the endpoint.
+2. Ingress load balances traffic to  workloads in the cluster
+3. The data layer is an external managed database service.
 
 **Components:**
 
-- Two worker nodes to host the application. A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal. Following this tutorial, you will set up a cluster with two worker nodes.
-- Persistent volume subsystem to share files between worker nodes. This comes built in with Kubernetes on IBM Cloud when using a paid cluster on IBM Cloud. A storage service gets created on the fly when storage is requested. You will later cover the concepts of PersistentVolumes and PersistentVolumeClaim in the storage section.
-- Kubernetes ingress controller manages the load balancing between worker nodes. This comes built in with Kubernetes and no additional service needed for this.
-- Compose For MySQL service to store the database. With Kubernetes you have the option to run the database on inside a cluster, but there is a more favorable option. This is by using the Database as a service option. For this tutorial example a database as service option been selected for two of reasons. One backup and two scaling. Many Databases as services options on IBM Cloud come with built-in backup snapshots and auto-scaling, so we don't need to worry about backups data and to scale the database. You can find many databases as service options on IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data).
+- A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal. Following this tutorial, you will set up a cluster with two worker nodes.
+- Persistent volumes and other options available for saving and sharing data between app instances.
+- Kubernetes ingress controller manages the load balancing between worker nodes. This comes built in with Kubernetes and no additional service needed for this. [THIS NEEDS WORK]
+- Compose For MySQL service to store the database. With Kubernetes you can run your own database inside the cluster, but it might be more favorable to use a managed database-as-a service for reasons such as built-in backups and scaling. You can find many different types databases in IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data).
 
-## The world of VM's, containers and Kubernetes
+## The world of VM's, containers and Kubernetes [sounds like a blog]
 
-### Virtual machines
-
-Before containers were used, most infrastructure ran not on bare metal, but on hypervisors that managed multiple virtualized operating systems (OSs). This arrangement allowed isolation of applications from one another on a higher level than that provided by the OS. These virtualized operating systems recognize what looks like their own exclusive hardware. However, this also means that each of these virtual operating systems are replicating an entire OS, which requires more disk space.
+Before containers were used, most infrastructure ran not on bare metal, but on hypervisors that managed multiple virtualized operating systems (OS) [what about before hypervisors? it still indirectly runs on baremetal.]. This arrangement allowed isolation of applications from one another on a higher level than that provided by the OS. These virtualized operating systems recognize what looks like their own exclusive hardware. However, this also means that each of these virtual operating systems are replicating an entire OS, which requires more disk space. [we still provide baremetal and vm's. i suggest to remove this section..not sure what you're trying to get across]
 
 IBM Cloud provides the capability to run applications in containers on Kubernetes. The IBM Cloud Container Service runs Kubernetes clusters that deliver the following tools and functions:
 
@@ -93,13 +93,13 @@ IBM Cloud provides the capability to run applications in containers on Kubernete
 - Cloud services that include cognitive capabilities from IBM® Watson™
 - Ability to manage dedicated cluster resources for both stateless applications and stateful workloads
 
-### Containers
 
-Containers provide isolation similar to virtual machines (VMs), except provided by the OS and at the process level. Each container is a process or group of processes that are run in isolation. Typical containers explicitly run only a single process because they have no need for the standard system services. What they usually need to do can be provided by system calls to the base OS kernel.
+
+### Virtual machines vs containers 
+
+Containers provide isolation similar to virtual machines (VMs), except provided by the OS and at the process level [confusing]. Each container is a process or group of processes that are run in isolation. Typical containers explicitly run only a single process because they have no need for the standard system services. What they usually need to do can be provided by system calls to the base OS kernel.
 
 The isolation on Linux is provided by a feature called namespaces. Each different kind of isolation, that is, user and cgroups, is provided by a different namespace.
-
-### Virtual machines VS containers 
 
 Traditional applications are run on native hardware. A single application does not typically use the full resources of a single machine. Most organizations try to run multiple applications on a single machine to avoid wasting resources. You could run multiple copies of the same application, but to provide isolation, you can use VMs to run multiple application instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
 
@@ -107,7 +107,7 @@ However, containers allow you to share the host OS. This reduces duplication whi
 
 ### Kubernetes orchestration
 
-Now that you know what containers are, let’s define what Kubernetes is. Kubernetes is a container orchestrator to provision, manage, and scale applications. In other words, Kubernetes allows you to manage the lifecycle of containerized applications in a cluster of nodes (which are a collection of worker machines, for example, VMs or physical machines). Your applications might need many other resources to run such as Volumes, Networks, and Secrets that will help you to do things such as connect to databases, talk to firewalled backends, and secure keys. Kubernetes helps you add these resources to your application. Infrastructure resources needed by applications are managed declaratively.
+Kubernetes is a container orchestrator to provision, manage, and scale applications. In other words, Kubernetes allows you to manage the lifecycle of containerized applications in a cluster of nodes. Your applications might need many other resources to run such as Volumes, Networks, and Secrets that will help you connect to databases, talk to firewalled backends, and secure keys. Kubernetes helps you add these resources to your application. Infrastructure resources needed by applications are managed declaratively.
 
 The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes will do it's best to make it happen. If you need five instances, you do not start five separate instances on your own but rather tell Kubernetes that you need five instances, and Kubernetes will reconcile the state automatically. At this point, you simply need to know that you declare the state that you want and Kubernetes makes that happen. If something goes wrong with one of your instances and it crashes, Kubernetes still knows the desired state and creates new instances on an available node.
 
@@ -139,7 +139,11 @@ The following diagram shows how applications are deployed in a Kubernetes enviro
 
 Now that you know virtual machines VS containers and the fundamental of Kubernetes, next let's explore how to plan the move to Kubernetes.
 
-## How to plan the move
+
+
+[I think this is way too much information about kubernetes. we should just cover the basics and point them to the right resource. The audience of this tutorial doesnt need to learn about API, Scheduler, Kubelet and proxies to understand the move process.]
+
+## Plan the move
 
 {: #plan_the_move}
 
@@ -162,9 +166,11 @@ Above are some of the questions, you need to think about before configuring your
 
 ### Containerize the application 
 
-To containerize your application, you need to create a file called Dockerfile inside the root of the application. A Dockerfile is a text document that contains all the commands you can execute to assemble an image.
+[You need to make any code changes according to the 12 factor principles before you containerize your app]
 
-To build one based on your existing application, you may need to define the following: 
+To containerize your application, you need to create a Dockerfile inside the root of the application. A Dockerfile is a text document that contains commands which are executed by Docker to build an image.
+
+To build one based on your existing application, you may need to the following common commands.
 
 - FROM - to define an official runtime as parent image.
 - ADD/COPY - to copy the current directory contents into the container
@@ -176,7 +182,7 @@ To build one based on your existing application, you may need to define the foll
 
 For more information on creating a Dockerfile, checkout the docker [file reference](https://docs.docker.com/engine/reference/builder/#usage).
 
-To containerize the JPetStore application, below [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) been used.
+To containerize the JPetStore application, the following [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) been used.
 
 ```bash
 # Build JPetStore war
