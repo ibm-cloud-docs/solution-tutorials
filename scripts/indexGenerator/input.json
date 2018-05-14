@@ -42,17 +42,18 @@
                 ]
             },
             {
-                "hidden": true,
                 "name": "Understand how to move a VM based application to Kubernetes",
-                "url": "infrastructure-to-kubernetes.html",
-                "description": "This tutorial walks you through the process of moving a VM based application to IBM Cloud Kubernetes cluster. You will do that by packaging the application into different Docker container files, run it locally and then deploy it to a Kubernetes cluster.",
+                "url": "vm-to-containers-and-kubernetes.html",
+                "description": "This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services.",
                 "imgSrc": "images/solution30/Architecture.png",
                 "tags": [
                     "Kubernetes",
                     "Container Service",
-                    "Docker",
-                    "PHP",
-                    "Compose for MySQL"
+                    "Watson Visual Recognition",
+                    "File Storage",
+                    "Twilio",
+                    "MySQL",
+                    "Java"
                 ]
             },
             {

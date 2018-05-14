@@ -41,6 +41,8 @@ In this tutorial, you will exercise the latter option using a popular Java e-com
 This tutorial uses the following products:
 
 - [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+- [{{site.data.keyword.visualrecognitionfull}}](https://console.bluemix.net/catalog/services/visual-recognition)
+- [Twilio](https://www.twilio.com/)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -365,15 +367,13 @@ You will extend the **JPetStore** application to be able to send a picture of a 
 
 To extend **JPetStore** application you need to do the following: 
 
-1. Visit [Twilio](http://twilio.com/) and sign up for a free account and **Buy a Number** with MMS capabilties.
+1. Visit [Twilio](http://twilio.com/) and sign up for a free account and **Buy a Number** with MMS capabilties then from the IBM Cloud catalog create a **Watson Visual Recognition** service.
 
-2. From the IBM Cloud catalog create a **Watson Visual Recognition** service.
+2. Go to the service credentials page and retrieve credentials for each. 
 
-3. Go to the service credentials page and retrieve credentials for each. 
+3. Create two new files **mmsSearch and watson-secrets** and copy the JSON credential to each file. Reference to the [twilio-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/twilio-secrets) and [watson-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/watson-secrets) files here.
 
-4. Create two new files **mmsSearch and watson-secrets** and copy the JSON credential to each file. Reference to the [twilio-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/twilio-secrets) and [watson-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/watson-secrets) files here.
-
-5. Create secrets required to access Watson MMS Service and Twilio Service, create secrets for both in Kubernetes using the command:
+4. Create secrets required to access Watson MMS Service and Twilio Service, create secrets for both in Kubernetes using the command:
 
    ```bash
    # from the directory in which you created these two files
@@ -385,9 +385,9 @@ To extend **JPetStore** application you need to do the following:
 
    The JPetStore extend functionality been written in Go programming language to demonstrate different part of the application can be written in different programming languages. **This can be found [here](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/main.go).**
 
-6. Once the extend script implemented in your programming language of choice or in GO with the sample given, next you would need to create a **[Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/Dockerfile)** and a Kubernetes [deployment.yaml](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore-watson.yaml) file.
+5. Once the extend script implemented in your programming language of choice or in GO with the sample given, next you would need to create a **[Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/Dockerfile)** and a Kubernetes [deployment.yaml](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore-watson.yaml) file.
 
-7. Build and push the **mmssearch** image to IBM Cloud container registry and push it Kubernetes.
+6. Build and push the **mmssearch** image to IBM Cloud container registry and push it Kubernetes.
 
    ```bash
    // Build and push the mmssearch image 
@@ -399,7 +399,7 @@ To extend **JPetStore** application you need to do the following:
    $ kubectl create -f jpetstore-watson.yaml
    ```
 
-8. To verify, send a text message to your Twilio number with an image of a pet and you should receive a response if the pet is available or not with the name of the pet. <p style="text-align: center;">
+7. To verify, send a text message to your Twilio number with an image of a pet and you should receive a response if the pet is available or not with the name of the pet. <p style="text-align: center;">
 
    ![Architecture diagram](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution30/sms.png)
    </p>
