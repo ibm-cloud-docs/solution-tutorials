@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-10"
+lastupdated: "2018-05-14"
 ---
 
 {:shortdesc: .shortdesc}
@@ -17,13 +17,13 @@ This tutorial walks you through the process of moving a VM based application to 
 
 [Kubernetes](https://kubernetes.io/) is a container orchestrator to provision, manage, and scale applications. Kubernetes allows you to manage the lifecycle of containerized applications in a cluster of nodes. With Kubernetes you get built-in scaling features, load balancing, auto-recovery, quick deployment rollout and more. 
 
-[IBM Cloud Container Service](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security insight into images and containers, and integration with Watson, IoT, and data.
+[IBM Cloud Container Service](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security insight into images and containers, and integration with Watson, IoT, and data. 
 
-There are two options for moving an application to Kubernetes:
-- Identify single component of a large monolith application which can be separated into its own micro-service. Containerize and deploy micro-service to Kubernetes. Repeat.
-- Containerize the entire application and deploy it on a Kubernetes cluster.
+There are two options for moving an application to Kubernetes: 
+- Identify single component of a large monolith application which can be separated into its own micro-service. Containerize and deploy micro-service to Kubernetes. Repeat. 
+- Containerize the entire application and deploy it on a Kubernetes cluster. 
 
-In this tutorial, you will exercise the latter option using a popular Java e-commerce application **JPetStore**. After moving it to Kubernetes, you will extend it using IBM Cloud services. 
+In this tutorial, you will exercise the latter option using a popular Java e-commerce application **JPetStore**. After moving it to Kubernetes, you will extend it using IBM Cloud services.
 
 ## Objectives:
 
@@ -82,9 +82,7 @@ With a modern Kubernetes architecture, this would look similar to:
 - Kubernetes ingress controller manages the load balancing between worker nodes. This comes built in with Kubernetes and no additional service needed for this. [THIS NEEDS WORK]
 - Compose For MySQL service to store the database. With Kubernetes you can run your own database inside the cluster, but it might be more favorable to use a managed database-as-a service for reasons such as built-in backups and scaling. You can find many different types databases in IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data).
 
-## The world of VM's, containers and Kubernetes [sounds like a blog]
-
-Before containers were used, most infrastructure ran not on bare metal, but on hypervisors that managed multiple virtualized operating systems (OS) [what about before hypervisors? it still indirectly runs on baremetal.]. This arrangement allowed isolation of applications from one another on a higher level than that provided by the OS. These virtualized operating systems recognize what looks like their own exclusive hardware. However, this also means that each of these virtual operating systems are replicating an entire OS, which requires more disk space. [we still provide baremetal and vm's. i suggest to remove this section..not sure what you're trying to get across]
+## VM's, containers and Kubernetes
 
 IBM Cloud provides the capability to run applications in containers on Kubernetes. The IBM Cloud Container Service runs Kubernetes clusters that deliver the following tools and functions:
 
@@ -93,15 +91,11 @@ IBM Cloud provides the capability to run applications in containers on Kubernete
 - Cloud services that include cognitive capabilities from IBM® Watson™
 - Ability to manage dedicated cluster resources for both stateless applications and stateful workloads
 
-
-
 ### Virtual machines vs containers 
 
-Containers provide isolation similar to virtual machines (VMs), except provided by the OS and at the process level [confusing]. Each container is a process or group of processes that are run in isolation. Typical containers explicitly run only a single process because they have no need for the standard system services. What they usually need to do can be provided by system calls to the base OS kernel.
+**Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
-The isolation on Linux is provided by a feature called namespaces. Each different kind of isolation, that is, user and cgroups, is provided by a different namespace.
-
-Traditional applications are run on native hardware. A single application does not typically use the full resources of a single machine. Most organizations try to run multiple applications on a single machine to avoid wasting resources. You could run multiple copies of the same application, but to provide isolation, you can use VMs to run multiple application instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
+**VM's**, traditional applications are run on native hardware. A single application does not typically use the full resources of a single machine. Most organizations try to run multiple applications on a single machine to avoid wasting resources. You could run multiple copies of the same application, but to provide isolation, you can use VMs to run multiple application instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
 
 However, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. If SSHD or LIBC are not installed, they cannot be exploited.
 
@@ -111,11 +105,7 @@ Kubernetes is a container orchestrator to provision, manage, and scale applicati
 
 The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes will do it's best to make it happen. If you need five instances, you do not start five separate instances on your own but rather tell Kubernetes that you need five instances, and Kubernetes will reconcile the state automatically. At this point, you simply need to know that you declare the state that you want and Kubernetes makes that happen. If something goes wrong with one of your instances and it crashes, Kubernetes still knows the desired state and creates new instances on an available node.
 
-The main entry point for the Kubernetes project is at [http://kubernetes.io](http://kubernetes.io/), and the source code can be found at [https://github.com/kubernetes](https://github.com/kubernetes).
-
-### Kubernetes resource model
-
-Kubernetes infrastructure defines a resource for every purpose. Each resource is monitored and processed by a Controller. When you define your application, it contains a collection of these resources. This collection will then be read by Controllers to build your applications actual backing instances. Some of the resources that you might work with described in the following list. For a complete list, go to [https://kubernetes.io/docs/concepts](https://kubernetes.io/docs/concepts). In this tutorial, you will learn some of these resources, such as pod and deployment.
+The main entry point for the Kubernetes project is at [http://kubernetes.io](http://kubernetes.io/), and IBM Cloud GitHub source code located [here](https://github.com/IBM/container-service-getting-started-wt).
 
 ### Key resources and pods
 
@@ -137,11 +127,7 @@ The following diagram shows how applications are deployed in a Kubernetes enviro
 6. A Kubelet on a node detects a pod with an assignment to itself and deploys the requested containers through the container runtime, for example, Docker. Each node watches the storage to see what pods it is assigned to run. The node takes necessary actions on the resources assigned to it such as to create or delete pods.
 7. Kubeproxy manages network traffic for the pods, including service discovery and load balancing. Kubeproxy is responsible for communication between pods that want to interact.
 
-Now that you know virtual machines VS containers and the fundamental of Kubernetes, next let's explore how to plan the move to Kubernetes.
-
-
-
-[I think this is way too much information about kubernetes. we should just cover the basics and point them to the right resource. The audience of this tutorial doesnt need to learn about API, Scheduler, Kubelet and proxies to understand the move process.]
+Now that you understand virtual machines VS containers and the fundamental of Kubernetes, next let's explore how to plan the move to Kubernetes.
 
 ## Plan the move
 
@@ -369,20 +355,76 @@ Follow the JPetStore GitHub repo for steps to run the application in your cluste
 
 Run the JPetStore using [this repo](https://github.ibm.com/ibmcloud/ModernizeDemo). 
 
+## Extend the application 
+
+{: #extend_application} 
+
+Once an application is containerizd and pushed to a Kubernetes cluster then extending it can be very simple. Now that the application running on a Kubernetes cluster, you have the possibility to extend the different part of the application without too much of effort. In this section you will learn how the **JPetStore** can be extend it with an Messaging interface service [Twilio](https://www.twilio.com/) and [Watson Visual Recognition](https://console.bluemix.net/catalog/services/visual-recognition) service. 
+
+You will extend the **JPetStore** application to be able to send a picture of a pet to your Twilio number via your phone. The application should respond with an available pet from the store or no pet of that type message. The **JPetStore** has a list of pets in the database and no modifications is made to the core **JPetStore** application, all you will do is use some services to enhance the application functionality. 
+
+To extend **JPetStore** application you need to do the following: 
+
+1. Visit [Twilio](http://twilio.com/) and sign up for a free account and **Buy a Number** with MMS capabilties.
+
+2. From the IBM Cloud catalog create a **Watson Visual Recognition** service.
+
+3. Go to the service credentials page and retrieve credentials for each. 
+
+4. Create two new files **mmsSearch and watson-secrets** and copy the JSON credential to each file. Reference to the [twilio-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/twilio-secrets) and [watson-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/watson-secrets) files here.
+
+5. Create secrets required to access Watson MMS Service and Twilio Service, create secrets for both in Kubernetes using the command:
+
+   ```bash
+   # from the directory in which you created these two files
+   $ kubectl create secret generic mms-secret \
+     --from-file=watson-secrets=./watson-secrets --from-file=twilio-secrets=./twilio-secrets
+   ```
+
+   You have now created the services needed, created the secrets in Kubernetes, and your cluster is ready to use these services. Next, you would need to write the functionality to respond to the user via a text message with a reply if the pet they requested is available in the database or not. The user sends the pet image they want, the MMS message received by Twilio and sent to Watson Visual Recognition to verify the image of the pet sent and that then checked in the database where if this pet exists or not in the catalog, the user then gets a text message response. You would need to write the functionality to check the database and send back the response to Twilio to send to the user. You can write this functionality in the language in which app be written with where in this case been Java or in any other programming languages. 
+
+   The JPetStore extend functionality been written in Go programming language to demonstrate different part of the application can be written in different programming languages. **This can be found [here](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/main.go).**
+
+6. Once the extend script implemented in your programming language of choice or in GO with the sample given, next you would need to create a **[Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/Dockerfile)** and a Kubernetes [deployment.yaml](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore-watson.yaml) file.
+
+7. Build and push the **mmssearch** image to IBM Cloud container registry and push it Kubernetes.
+
+   ```bash
+   // Build and push the mmssearch image 
+   $ cd ../../mmsSearch
+   $ docker build . -t registry.ng.bluemix.net/${MYNAMESPACE}/mmssearch
+   $ docker push registry.ng.bluemix.net/${MYNAMESPACE}/mmssearch
+   
+   // Push to Kubernetes
+   $ kubectl create -f jpetstore-watson.yaml
+   ```
+
+8. To verify, send a text message to your Twilio number with an image of a pet and you should receive a response if the pet is available or not with the name of the pet. <p style="text-align: center;">
+
+   ![Architecture diagram](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution30/sms.png)
+   </p>
+
+   In **summary**, you were able to create a MMSSearch microservice written in a different language, deploy it and provide extended functionality without needing to modify the core Java PerStore application. For more detailed steps check out the JPetStore demo on **[GitHub](https://github.ibm.com/ibmcloud/ModernizeDemo)**.
 
 ## Remove Services
+
 {: #clean_up_resources}
 
 In this step, you will clean up the resources to remove what you created above.
 
+- Delete Kubernetes deployments. 
+- Delete Kubernetes secrets. 
 - Delete the storage PV and PVC. 
+- Delete Watson visual recognition service.
+- Delete Twilio MMS.
 
 ## Related Content
 {: #related_content}
 
-- [Get started with Kubernetes and IBM Cloud Container Service](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/)
-- Kubernetes main [docs](http://kubernetes.io/)
-- [Cluster Storage](https://console.bluemix.net/docs/containers/cs_storage.html)
+- [Get started](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) with Kubernetes and IBM Cloud Container Service.
+- IBM Cloud Container Service labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
+- Kubernetes main [docs](http://kubernetes.io/).
+- IBM Cloud [docs](https://console.bluemix.net/docs/containers/cs_storage.html) managing storage on a cluster.
 
 
 
