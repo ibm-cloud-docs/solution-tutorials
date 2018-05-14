@@ -15,7 +15,7 @@ lastupdated: "2018-05-14"
 
 This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services. Though migrating existing applications to Kubernetes can be different from an application to application, this tutorial aims to outline the path with an example. 
 
-[Kubernetes](https://kubernetes.io/) is a container orchestrator to provision, manage, and scale applications. Kubernetes allows you to manage the lifecycle of containerized applications in a cluster of nodes. With Kubernetes you get built-in scaling features, load balancing, auto-recovery, quick deployment rollout and more. 
+[Kubernetes](https://kubernetes.io/) is a container orchestrator to provision, manage, and scale applications. Kubernetes allows you to manage the lifecycle of containerized applications in a cluster of multiple worker machines called nodes. With Kubernetes you get built-in scaling features, load balancing, auto-recovery, quick deployment rollout and more. 
 
 [IBM Cloud Container Service](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security insight into images and containers, and integration with Watson, IoT, and data. 
 
@@ -41,6 +41,7 @@ In this tutorial, you will exercise the latter option using a popular Java e-com
 This tutorial uses the following products:
 
 - [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+- Compose For MySQL
 - [{{site.data.keyword.visualrecognitionfull}}](https://console.bluemix.net/catalog/services/visual-recognition)
 - [Twilio](https://www.twilio.com/)
 
@@ -50,7 +51,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 {:#architecture}
 
-The following diagram outlines the traditonal architecture of application. 
+The following diagram outlines a traditonal architecture of an application running on virtual machines. 
 
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/traditional_architecture.png)
@@ -81,8 +82,8 @@ With a modern Kubernetes architecture, this would look similar to:
 
 - A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal. Following this tutorial, you will set up a cluster with two worker nodes.
 - Persistent volumes and other options available for saving and sharing data between app instances.
-- Kubernetes ingress controller manages the load balancing between worker nodes. This comes built in with Kubernetes and no additional service needed for this. [THIS NEEDS WORK]
-- Compose For MySQL service to store the database. With Kubernetes you can run your own database inside the cluster, but it might be more favorable to use a managed database-as-a service for reasons such as built-in backups and scaling. You can find many different types databases in IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data).
+- Kubernetes ingress controller manages the load balancing between worker nodes. This comes built in with Kubernetes and no additional service needed for this. **>>>THIS NEEDS WORK<<<**
+- Compose For MySQL service to store the database. With Kubernetes you can run your own database inside the cluster, but it might be more favorable to use a managed database-as-a service for reasons such as operational simplicity, built-in backups and scaling. You can find many different types databases in IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data).
 
 ## VM's, containers and Kubernetes
 
@@ -95,30 +96,36 @@ IBM Cloud provides the capability to run applications in containers on Kubernete
 
 ### Virtual machines vs containers 
 
+**VM's**, traditional applications are run on native hardware.  A single application does not typically use the full resources of a single machine. Most organizations try to run multiple applications on a single machine to avoid wasting resources. You could run multiple copies of the same application, but to provide isolation, you can use VMs to run multiple application instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
+
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
-**VM's**, traditional applications are run on native hardware. A single application does not typically use the full resources of a single machine. Most organizations try to run multiple applications on a single machine to avoid wasting resources. You could run multiple copies of the same application, but to provide isolation, you can use VMs to run multiple application instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
-
-However, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. If SSHD or LIBC are not installed, they cannot be exploited.
+However, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. 
 
 ### Kubernetes orchestration
 
-Kubernetes is a container orchestrator to provision, manage, and scale applications. In other words, Kubernetes allows you to manage the lifecycle of containerized applications in a cluster of nodes. Your applications might need many other resources to run such as Volumes, Networks, and Secrets that will help you connect to databases, talk to firewalled backends, and secure keys. Kubernetes helps you add these resources to your application. Infrastructure resources needed by applications are managed declaratively.
+[Kubernetes](http://kubernetes.io) is a container orchestrator to manage the lifecycle of containerized applications in a cluster of nodes. Your applications might need many other resources to run such as Volumes, Networks, and Secrets that will help you connect to databases, talk to firewalled backends, and secure keys. Kubernetes helps you add these resources to your application. Infrastructure resources needed by applications are managed declaratively.
 
-The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes will do it's best to make it happen. If you need five instances, you do not start five separate instances on your own but rather tell Kubernetes that you need five instances, and Kubernetes will reconcile the state automatically. At this point, you simply need to know that you declare the state that you want and Kubernetes makes that happen. If something goes wrong with one of your instances and it crashes, Kubernetes still knows the desired state and creates new instances on an available node.
+The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes will attempt to conform and maintain the described state. Kubernetes provides APIs and tooling for users to provide the desired state of your cluster including container images, networking, services, volumes, etc.
 
-The main entry point for the Kubernetes project is at [http://kubernetes.io](http://kubernetes.io/), and IBM Cloud GitHub source code located [here](https://github.com/IBM/container-service-getting-started-wt).
+Run through this [lab](https://github.com/IBM/container-service-getting-started-wt) to get more hands on experience with Kubernetes. 
 
-### Key resources and pods
+### Kubernetes basic components
 
-A pod is the smallest object model that you can create and run. You can add labels to a pod to identify a subset to run operations on. When you are ready to scale your application, you can use the label to tell Kubernetes which Pod you need to scale. A pod typically represents a process in your cluster. Pods contain at least one container that runs the job and additionally might have other containers in it called sidecars for monitoring, logging, and so on. Essentially, a pod is a group of containers. An application is a group of pods. Although an entire application can be run in a single pod, you usually build multiple pods that talk to each other to make a useful application. Services define how to expose your application as a DNS entry to have a stable reference. Kubernetes provides a client interface through the kubectl command-line interface. Kubectl commands allow you to manage your applications, and manage cluster and cluster resources by modifying the model in the data store.
+Pod: A pod is the smallest object model that you can create and run. A pod typically represents a process in your cluster. Pods contain at least one container that runs the job and additionally might have other containers in it called sidecars for monitoring, logging, and so on. Essentially, a pod is an instance of a micro-service consisting of one or more containers that need to run together.  
+
+Service: A Service defines how to expose your application as a DNS entry to have a stable reference. 
+
+kubectl: Kubernetes provides a client interface through the kubectl command-line interface. Kubectl commands allow you to manage your applications, and manage cluster and cluster resources.
+
+**>>>Clean up this above section<<<**
 
 ### Kubernetes application deployment workflow
 
 The following diagram shows how applications are deployed in a Kubernetes environment.
 
 <p style="text-align: center;">
-![Architecture diagram](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution30/app_deploy_workflow.png)
+![Architecture diagram](images/solution30/app_deploy_workflow.png)
 </p>
 
 1. Deploy a new application by using the kubectl CLI. Kubectl sends the request to the API server.
@@ -129,7 +136,7 @@ The following diagram shows how applications are deployed in a Kubernetes enviro
 6. A Kubelet on a node detects a pod with an assignment to itself and deploys the requested containers through the container runtime, for example, Docker. Each node watches the storage to see what pods it is assigned to run. The node takes necessary actions on the resources assigned to it such as to create or delete pods.
 7. Kubeproxy manages network traffic for the pods, including service discovery and load balancing. Kubeproxy is responsible for communication between pods that want to interact.
 
-Now that you understand virtual machines VS containers and the fundamental of Kubernetes, next let's explore how to plan the move to Kubernetes.
+**>>>Suggest to remove this section. Way too much detail into Kubernetes that a user doesn't have to know**<<<
 
 ## Plan the move
 
@@ -141,24 +148,23 @@ In this section, you will learn what to consider when configuring a cluster, how
 
 To run a production application in the Cloud using Kubernetes, there are few items in which you need to think about and these are:
 
-1. How many clusters you need, you may want to have three clusters, one for development, one testing and one for production.
-2. Should these clusters be in a shared virtual server, dedicated server or bare metal.
-3. How much CPU and RAM needed for each cluster worker node, think of a worker node like a VM. On IBM Cloud you can configure these very easily, you can start from a 4GB RAM all the way to 242GB RAM.
-4. How many worker nodes you need. If running a production app and to gain good resiliency, you should consider a minimum of two worker nodes.
+1. How many clusters do you need? You may want to have three clusters, one for development, one testing and one for production.
+2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do I need for my worker nodes?  Virtual machines or Bare Metal?
+3. How many worker nodes do you need? If running a production app and to gain good resiliency, you should consider a minimum of two worker nodes.
 
-Above are some of the questions, you need to think about before configuring your clusters. Assuming you want to run the JPetStore application in the Cloud for a production use, and expect a high load of traffic. Let's explore what resources you would need:
+Above are some of the questions you need to think about before configuring your clusters. Assuming you want to run the JPetStore application in the Cloud for a production use, and expect a high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one testing and one for production.
-2. Development and testing cluster can start with minimum RAM and CPU option like 2 CPU's, 4GB of RAM and one worker node for each cluster.
-3. For the production server, you may want to have more resources for resiliency. With the production server, you can select any of the three hardware options shared, dedicated or bare metal. For the CPU and RAM you should have at least 4 CPU's, 16GB of RAM, and four workers nodes. 
+2. Development and testing cluster can start with minimum RAM and CPU option such like 2 CPU's, 4GB of RAM and one worker node for each cluster.
+3. For the production cluster, you may want to have more resources for performance, HA and resiliency. Choose Dedicated or Bare Metal options for better performance and at least 4 CPU's, 16GB of RAM, and four workers nodes. **[[you said TWO in the previous section for production]]**
 
 ### Containerize the application 
 
-[You need to make any code changes according to the 12 factor principles before you containerize your app]
+**[You need to make any code changes according to the 12 factor principles before you containerize your app]**
 
 To containerize your application, you need to create a Dockerfile inside the root of the application. A Dockerfile is a text document that contains commands which are executed by Docker to build an image.
 
-To build one based on your existing application, you may need to the following common commands.
+To build one based on your existing application, you may use following common commands.
 
 - FROM - to define an official runtime as parent image.
 - ADD/COPY - to copy the current directory contents into the container
@@ -170,7 +176,7 @@ To build one based on your existing application, you may need to the following c
 
 For more information on creating a Dockerfile, checkout the docker [file reference](https://docs.docker.com/engine/reference/builder/#usage).
 
-To containerize the JPetStore application, the following [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) been used.
+To containerize the JPetStore application, the following [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) has been used.
 
 ```bash
 # Build JPetStore war
@@ -189,7 +195,7 @@ RUN mkdir -p /config/lib/global
 COPY lib/mysql-connector-java-3.0.17-ga-bin.jar /config/lib/global
 ```
 
-Once a Dockerfile created, next you would need to build and push the docker images. The docker images for each of the microservices need to be built and the images need to be pushed to a container registry. These steps are for pushing to your IBM Cloud private registry, but you can also push them to a public registry.
+Once a Dockerfile created, next you would need to build and push the docker images. The docker images for each of the microservices need to be built and the images need to be pushed to a container registry. These steps are for building the image and pushing it IBM Cloud private registry, but you can also push them to a public registry.
 
 1. Identify your registry namespace with `bx cr namespaces` or create a new one using `bx cr namespace-add <NAMESPACE>`
 
@@ -202,16 +208,16 @@ Once a Dockerfile created, next you would need to build and push the docker imag
 
 ### Modify your code
 
-There are few items in which you must handle when moving to Kubernetes:
+There are a few items which you must handle when moving to Kubernetes:
 
-- Service credentials, how to handle sensitive service, databases credentials within the cluster.
-- High availability storage, how to handle data storage, where to store data in your cluster. 
+- Service credentials: How to handle sensitive service, databases credentials within the cluster.
+- Storage: Where to store data in your cluster. 
 
 **Service Credentials**
 
-In Kubernetes, it's not a good practice to store credentials within the application but instead you should use what's called **[secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**. An objects of type `secret` are intended to hold sensitive information, such as passwords, OAuth tokens, and ssh keys. Putting this information in a `secret` is safer and more flexible than putting it verbatim in a `pod` definition or in a docker image. An application can have many different credentials like database credentials, 3rd party service credentials and more. These credentials should be distributed securely outside the application. 
+It's not a good practice to store credentials within the application. Kubernetes provides **[secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**, intended to hold sensitive information, such as passwords, OAuth tokens, and ssh keys. Putting this information in a `secret` is safer and more flexible than putting it verbatim in a `pod` definition or in a docker image. An application can have many different credentials like passwords, tokens, keys and more. These credentials should be distributed securely outside the application. 
 
-Let's explore how to create a secret if you to add a Watson visual recognition service.
+Let's explore how to create a secret if you to add a Watson Visual Recognition service.
 
 1. Create a new file called `watson-secrets.txt` and add the service credentials, you can get service credentials from the IBM Cloud dashboard or using the CLI.
 
@@ -234,11 +240,11 @@ Let's explore how to create a secret if you to add a Watson visual recognition s
    $ kubectl get secrets
    ```
 
-   The secret created can now be referenced from the Kubernetes deployment file. You will later learn about the Kubernetes deployment files and how the secret been referenced in the Kubernetes deployment file.  
+The secret created can now be referenced from the Kubernetes deployment file. You will later learn about the Kubernetes deployment files and how the secret been referenced.  
 
 **Saving data in your cluster**
 
-In IBM Cloud Container Service, you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in situations where a component in your cluster or a whole site fails.
+In IBM Cloud Container Service, you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in disaster situations.
 
 **Non-persistent data storage options**
 
