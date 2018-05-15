@@ -406,6 +406,22 @@ To extend **JPetStore** application you need to do the following:
 
    In summary, you were able to create a MMSSearch microservice written in a different language, deploy it and provide extended functionality without needing to modify the core Java PerStore application. For more detailed steps check out the JPetStore demo on **[GitHub](https://github.ibm.com/ibmcloud/ModernizeDemo)**.
 
+
+
+**THINGS YOU SHOULD TALK ABOUT:**
+
+How do I connect on-premise data behind a firewall to ibm cloud?
+
+Using API management to modernize exsting applications https://www.ca.com/en/blog-highlight/modernizing-legacy-application-architecture.html
+
+Using multiple clusters across regions 
+
+Why move? Agile, Cost, etc. You don't have to go to Kube. You can lift and shift using VMWare on IBM Cloud.
+
+More content from: https://cloudpatterns.w3bmix.ibm.com/#862581D00083790B/862581D000837AFF
+
+
+
 ## Remove Services
 
 {: #clean_up_resources}
