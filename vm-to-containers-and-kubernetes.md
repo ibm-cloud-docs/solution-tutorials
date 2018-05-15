@@ -244,15 +244,11 @@ The secret created can now be referenced from the Kubernetes deployment file. Yo
 
 **Saving data in your cluster**
 
-In IBM Cloud Container Service, you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in disaster situations.
+With the IBM Cloud Container Service, you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in disaster situations.
 
-**Non-persistent data storage options**
+Non-persistent data storage: Containers and pods are, by design, short-lived and can fail unexpectedly. However, you can write data to the local file system of the container to store data throughout the lifecycle of the container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. 
 
-Containers and pods are, by design, short-lived and can fail unexpectedly. However, you can write data to the local file system of the container to store data throughout the lifecycle of the container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. 
-
-**Persistent data storage options for high availability**
-
-Create a persistent volume claim (PVC) to provision NFS file storage or block storage for your cluster. Then, mount this claim to a persistent volume (PV) to ensure that data is available even if the pods crash or shut down.
+Persistent data storage: Create a persistent volume claim (PVC) to provision NFS file storage or block storage for your cluster. Then, mount this claim to a persistent volume (PV) to ensure that data is available even if the pods crash or shut down.
 
 The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
 
@@ -263,16 +259,16 @@ To create a PV and matching PVC, follow these steps below:
 1. Review the available storage classes. See full list of storage classes [here](https://console.bluemix.net/docs/containers/cs_storage.html#create) with storage capacity breakdown.
 
    ```bash
-   $ kubectl get storageclasses
+   kubectl get storageclasses
    ```
 
-2. Create a `retain-silver ` storage class. The **retain** options means that the storage will not be removed altering deleting the PVC.
+2. See details about the `retain-silver ` storage class. The **retain** storage options will not be removed altering deleting the PVC. **[[CONFUSING]]** 
 
    ```bash
-   $ kubectl describe storageclasses ibmc-file-retain-silver 
+   kubectl describe storageclasses ibmc-file-retain-silver 
    ```
 
-3. Create a new file and name it mypvc.yaml file with the following.
+3. Create a new file called `mypvc.yaml` with the following contents:
 
    ```bash
    apiVersion: v1
@@ -294,18 +290,18 @@ To create a PV and matching PVC, follow these steps below:
 4. Create the PVC.
 
    ```bash
-   $ kubectl apply -f mypvc.yaml
+   kubectl apply -f mypvc.yaml
    ```
 
 5. Verify that your PVC is created and bound to the PV. This process can take a few minutes.
 
    ```bash
-   $ kubectl describe pvc mypvc
+   kubectl describe pvc mypvc
    ```
 
-For more details on creating custom storages classes checkout the main cluster storage [docs](https://console.bluemix.net/docs/containers/cs_storage.html#create).
+For more details on creating custom storages classes checkout the cluster storage [documentation](https://console.bluemix.net/docs/containers/cs_storage.html#create).
 
- **Setting up backup and restore solutions for NFS file shares and block storage**
+**Setting up backup and restore solutions for NFS file shares and block storage**
 
 File shares and block storage are provisioned into the same location as your cluster. The storage is hosted on clustered servers by IBM to provide availability in case a server goes down. However, file shares and block storage are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups that you can use to restore your data when needed.
 
@@ -319,33 +315,33 @@ You can use the `kubectl cp` command to copy files and directories to and from p
 
 You can use the command in various ways:
 
-- Copy data from your local machine to a pod in your cluster: `kubectl cp<local_filepath>/<filename> <namespace>/<pod>:<pod_filepath>`
+- Copy data from your local machine to a pod in your cluster: `kubectl cp <local_filepath>/<filename> <namespace>/<pod>:<pod_filepath>`
 - Copy data from a pod in your cluster to your local machine: `kubectl cp <namespace>/<pod>:<pod_filepath>/<filename> <local_filepath>/<filename>`
 - Copy data from a pod in your cluster to a specific container in another pod another: `kubectl cp<namespace>/<pod>:<pod_filepath> <namespace>/<other_pod>:<pod_filepath> -c<container>`
+
+**[[this section was confusing. why am i copying to my pod? shouldn't I be copying to the "mypvc" i created above?]]**
 
 ### Create Kubernetes deployment yaml
 
 A *Deployment* controller provides declarative updates for Pods and ReplicaSets. You describe a *desired state* in a Deployment object, and the Deployment controller changes the actual state to the desired state at a controlled rate. You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments. 
 
-Looking at the [JPetStore deployment YAML](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore.yaml), you have things like: 
+Note the following sections in the [JPetStore deployment YAML](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore.yaml) file
 
-- Two services, one for the database and second for the web to exposes the pod to the outside.
-- Two deployments, one for each service defined. 
-- Ingress controller to load balancer the traffic across the different nodes.
+- Two deployments to create the database and the web micro-services
+- Two services for exposing the micro-services
+- Ingress controller to manage the traffic to the services.
 
 You may have multiple deployment YAML files, one for each micro service. 
 
-A Deployments yaml contain things like services to expose your node to the outside world, Deployment
-
 ### Push Deployments  
 
-You can push a deployment files using the command:
+You can create a deploying from the yaml file using the command:
 
 ```bash
 $ kubectl create -f <yaml-file-name>.yaml
 ```
 
-Verify your deployment, pods and services using: 
+Verify your deployment and the associated pods and services by using: 
 
 ```bash
  $ kubectl get deployments
@@ -359,7 +355,7 @@ Now that you understand the fundamentals of moving application to Kubernetes, ne
 
 {: #run_application} 
 
-Follow the JPetStore GitHub repo for steps to run the application in your cluster.  This application demo allows you to take an existing Java web application (JPetStore) that runs on WebSphere Application Server, containerize it and move it to Kubernetes, and then extend it with an Messaging interface using [Twilio](https://www.twilio.com/) to provide a Watson Visual Recognition capabilities.
+Follow the README in the JPetStore GitHub repository for steps to run the application in your cluster.  This application demo allows you to take an existing Java web application (JPetStore) that runs on WebSphere Application Server, containerize it and move it to Kubernetes, and then extend it with an Messaging interface using [Twilio](https://www.twilio.com/) to provide a Watson Visual Recognition capabilities.
 
 Run the JPetStore using [this repo](https://github.ibm.com/ibmcloud/ModernizeDemo). 
 
@@ -367,19 +363,17 @@ Run the JPetStore using [this repo](https://github.ibm.com/ibmcloud/ModernizeDem
 
 {: #extend_application} 
 
-Once an application is containerizd and pushed to a Kubernetes cluster then extending it can be very simple. Now that the application running on a Kubernetes cluster, you have the possibility to extend the different part of the application without too much of effort. In this section you will learn how the **JPetStore** can be extend it with an Messaging interface service [Twilio](https://www.twilio.com/) and [Watson Visual Recognition](https://console.bluemix.net/catalog/services/visual-recognition) service. 
+Once an application is containerized and pushed to a Kubernetes cluster on IBM Cloud, the application can be easily extended. In this section you will learn how the **JPetStore** can be extended with the text messaging interface service [Twilio](https://www.twilio.com/) and [Watson Visual Recognition](https://console.bluemix.net/catalog/services/visual-recognition) service. 
 
-You will extend the **JPetStore** application to be able to send a picture of a pet to your Twilio number via your phone. The application should respond with an available pet from the store or no pet of that type message. The **JPetStore** has a list of pets in the database and no modifications is made to the core **JPetStore** application, all you will do is use some services to enhance the application functionality. 
+You will extend the **JPetStore** application to be able to query for availability and price by simply sending a text message of a pet. The **JPetStore** has a list of pets in the database and no modifications is made to the core **JPetStore** application. This shows how you can enhance the application functionality by adding additional microservices on top of an existing application.
 
 To extend **JPetStore** application you need to do the following: 
 
 1. Visit [Twilio](http://twilio.com/) and sign up for a free account and **Buy a Number** with MMS capabilties then from the IBM Cloud catalog create a **Watson Visual Recognition** service.
 
-2. Go to the service credentials page and retrieve credentials for each. 
+2. Create two new files **mmsSearch and watson-secrets** and copy the JSON credentials to each file. Reference the [twilio-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/twilio-secrets) and [watson-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/watson-secrets) files here.
 
-3. Create two new files **mmsSearch and watson-secrets** and copy the JSON credential to each file. Reference to the [twilio-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/twilio-secrets) and [watson-secrets](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/watson-secrets) files here.
-
-4. Create secrets required to access Watson MMS Service and Twilio Service, create secrets for both in Kubernetes using the command:
+3. Create secret objects in Kubernetes for the Watson and Twilio Service using the files. Create secrets for both in Kubernetes using the command:
 
    ```bash
    # from the directory in which you created these two files
@@ -387,13 +381,13 @@ To extend **JPetStore** application you need to do the following:
      --from-file=watson-secrets=./watson-secrets --from-file=twilio-secrets=./twilio-secrets
    ```
 
-   You have now created the services needed, created the secrets in Kubernetes, and your cluster is ready to use these services. Next, you would need to write the functionality to respond to the user via a text message with a reply if the pet they requested is available in the database or not. The user sends the pet image they want, the MMS message received by Twilio and sent to Watson Visual Recognition to verify the image of the pet sent and that then checked in the database where if this pet exists or not in the catalog, the user then gets a text message response. You would need to write the functionality to check the database and send back the response to Twilio to send to the user. You can write this functionality in the language in which app be written with where in this case been Java or in any other programming languages. 
+   You have now created the services needed, created the secrets in Kubernetes, and your cluster is ready to use these services. Next, you would need to write the functionality to respond to the user via a text message with a reply if the pet they requested is available in the database or not. The user sends the pet image they want, the MMS message received by Twilio and sent to Watson Visual Recognition to verify the image of the pet sent and that then checked in the database where if this pet exists or not in the catalog, the user then gets a text message response. You would need to write the functionality to check the database and send back the response to Twilio to send to the user. You can write this functionality in the language in which app be written with where in this case been Java or in any other programming languages. **[[Clean this up. It's not clear what the user is supposed to be doing. Just tell them that the GO app uses these secrets. ]]**
 
    The JPetStore extend functionality been written in Go programming language to demonstrate different part of the application can be written in different programming languages. **This can be found [here](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/main.go).**
 
-5. Once the extend script implemented in your programming language of choice or in GO with the sample given, next you would need to create a **[Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/Dockerfile)** and a Kubernetes [deployment.yaml](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore-watson.yaml) file.
+4. Once the extend script implemented in your programming language of choice or in GO with the sample given, next you would need to create a **[Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/mmsSearch/Dockerfile)** and a Kubernetes [deployment.yaml](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore-watson.yaml) file for the new application. **[[Confusing. Remove the first part and tell them ]]**
 
-6. Build and push the **mmssearch** image to IBM Cloud container registry and push it Kubernetes.
+5. Build and push the **mmssearch** image to IBM Cloud container registry and push it Kubernetes.
 
    ```bash
    // Build and push the mmssearch image 
@@ -405,12 +399,12 @@ To extend **JPetStore** application you need to do the following:
    $ kubectl create -f jpetstore-watson.yaml
    ```
 
-7. To verify, send a text message to your Twilio number with an image of a pet and you should receive a response if the pet is available or not with the name of the pet. <p style="text-align: center;">
+6. To verify, send a text message to your Twilio number with an image of a pet and you should receive a response. <p style="text-align: center;">
 
-   ![Architecture diagram](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution30/sms.png)
+   ![Architecture diagram](images/solution30/sms.png)
    </p>
 
-   In **summary**, you were able to create a MMSSearch microservice written in a different language, deploy it and provide extended functionality without needing to modify the core Java PerStore application. For more detailed steps check out the JPetStore demo on **[GitHub](https://github.ibm.com/ibmcloud/ModernizeDemo)**.
+   In summary, you were able to create a MMSSearch microservice written in a different language, deploy it and provide extended functionality without needing to modify the core Java PerStore application. For more detailed steps check out the JPetStore demo on **[GitHub](https://github.ibm.com/ibmcloud/ModernizeDemo)**.
 
 ## Remove Services
 
