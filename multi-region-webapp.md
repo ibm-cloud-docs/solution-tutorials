@@ -147,8 +147,8 @@ In this section, you will use the Global Load Balancer (GLB) in IBM Cloud Intern
 
 1. Click **Create Pool**.
 2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your node.js application.
-3.  Enter a name for the first origin and the host name for the application in the US region. 
-4. Similarly, add another origin with the origin address pointing to the application in the UK region.
+3.  Enter a name for the first origin and the host name for the application in the US region `<your_app>.mybluemix.net`. 
+4. Similarly, add another origin with the origin address pointing to the application in the UK region `<your_app>.eu-gb.mybluemix.net`.
 5. Click **Provision 1 Instance**.
    ![Origin Pool](images/solution1/origin_pool.png)
 
@@ -166,10 +166,10 @@ At this stage, the GLB is configured but the Cloud Foundry applications are not 
 
 {: #add_domain}
 
-In this step, you will ,ap the custom domain name to the secure endpoint for the IBM Cloud region where your application is running.
+In this step, you will map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} region where your application is running.
 
 1. In the {{site.data.keyword.Bluemix_notm}} catalog, switch to your account name from the menu bar in the [console](https://console.bluemix.net/dashboard/apps).
-2. On the Cloud account page, navigate to application **Cloud Foundry Orgs**, and select **Domains** from the Actions column.
+2. On the account page, navigate to application **Cloud Foundry Orgs**, and select **Domains** from the Actions column.
 3. Click **Add a domain** and enter your custom domain name acquired from the registrar. 
 4. Select the right region and click **Save**.
 5. Similarly, add the custom domain name to the UK region.
@@ -178,7 +178,7 @@ In this step, you will ,ap the custom domain name to the secure endpoint for the
 5. Enter the GLB hostname you configured earlier in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
 6. Similarly, configure the domain and routes for the application in the UK region.
 
-At this point, you can visit your application with the URL `glb.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-region applications. You can verify this by stopping your application in the US-South region, keeping the UK application on, and accessing the application through the Global Load Balancer. 
+At this point, you can visit your application with the URL `<glb_name>.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-region applications. You can verify this by stopping your application in the US-South region, keeping the UK application on, and accessing the application through the Global Load Balancer. 
 
 Although this works at this moment, as we have configured continuous delivery in the previous steps, the configuration can be overwritten when another build is trigged. To make these changes persistent, go back to the toolchains and modify the *manifest.yml* file:
 
@@ -190,16 +190,16 @@ Although this works at this moment, as we have configured continuous delivery in
    ```
    applications:
    - path: .
-	  name: cisnodejs
+	  name: <your_app>
 	  memory: 256M
 	  instances: 1
 	  routes:
-	  - route: cisnodejs.mybluemix.net
-	  - route: <your_domain_name>
-	  - route: glb.<your_domain_name>
+	  - route: <your_app>.mybluemix.net
+	  - route: <glb_name>.<your_domain_name>
 	  disk_quota: 1024M
-  ```
-  {: pre}
+   ```
+   {: pre}
+  
 5. Commit the changes and make sure the builds for both regions succeed.  
 
 ## Alternative: Map the custom domain to the IBM Cloud system domain
@@ -209,12 +209,27 @@ It is possible that you do not want to utilize a Global Load Balancer in front o
 With the Cloud Intenet Services application, take the following steps to set up `CNAME` records for your application:
 
 1. In the Cloud Internet Services application, navigate to **Reliability** > **DNS**. 
-2. Select **CNAME** from the **Type** drop-down list, type an alias for your application in the Name field, and the application URL in the domain name field. Th application `cisnodejs.mybluemix.net` in the US-South region can be mapped to a CNAME `cisnodejs`. 
+2. Select **CNAME** from the **Type** drop-down list, type an alias for your application in the Name field, and the application URL in the domain name field. Th application `<your_app>.mybluemix.net` in the US-South region can be mapped to a CNAME `<your_app>`. 
 3. Click **Add Record**. Switch the PROXY toggle to ON to enhance security of your application.
 2. Similarly, set the `CNAME` record for the UK endpoint.
    ![CNAME records](images/solution1/cnames.png)
 
 If you are using a different DNS provider, the steps for setting up the CNAME record vary depending on your DNS provider. For example, if you are using GoDaddy, you follow the [Domains Help](https://www.godaddy.com/help/add-a-cname-record-19236) guidance from GoDaddy.
+
+For your Cloud Foundry applications to be reachable through the custom domain, you will need to add the custom domain to the [list of domains in the Cloud Foundry organization where the applications are deployed](https://console.bluemix.net/docs/apps/updapps.html#updatingapps). Once done you can add the routes to the application manifests:
+
+   ```
+   applications:
+   - path: .
+	  name: <your_app>
+	  memory: 256M
+	  instances: 1
+	  routes:
+	  - route: <your_app>.mybluemix.net
+	  - route: <your_app>.<your_domain_name>
+	  disk_quota: 1024M
+   ```
+   {: pre}
 
 ## Bind SSL certificate to your application
 {: #ssl}
@@ -241,6 +256,7 @@ Availability Monitoring runs synthetic tests from locations around the world, ar
 * Delete the two Cloud Foundry applications deployed in the two regions
 * Delete the GLB, origin pools, and the health check
 * Delete the DNS configuration
+* Delete the Internet Services instance
 
 ## Related content
 
