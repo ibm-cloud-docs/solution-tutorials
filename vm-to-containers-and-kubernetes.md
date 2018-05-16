@@ -118,13 +118,18 @@ Service: A Service defines how to expose your application as a DNS entry to have
 
 Kubectl: The Kubectl is a command line interface for running commands against Kubernetes clusters. Kubernetes provides a client interface through the kubectl command-line interface. Kubectl commands allow for managing applications and cluster resources.
 
-Agile, Cost, etc. You don't have to go to Kube. You can lift and shift using VMWare on IBM Cloud.
-
 ## Plan the move
 
 {: #plan_the_move}
 
 In this section, you will learn what to consider when configuring a cluster, how to containerize the application and how to create Kubernetes deployment files. 
+
+By using Kubernetes clusters with IBM Cloud Container Service, you get the following benefits: 
+
+- Multiple data centers where you can deploy your clusters 
+- Support for Ingress and Load balancer networking options 
+- Dynamic persistent volume support 
+- Highly available, IBM-managed Kubernetes masters 
 
 ###Configure Resources
 
@@ -133,7 +138,10 @@ To run a production application in the Cloud using Kubernetes, there are few ite
 1. How many clusters do you need? You may want to have three clusters, one for development, one testing and one for production.
 2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do I need for my worker nodes?  Virtual machines or Bare Metal?
 3. How many worker nodes do you need? This depends on the applications scale, it's true that the more nodes you have the more resiliency your application will have. 
-4. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. Checkout the solution guide on how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
+4. How many replicas of your cluster do you want for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure.
+5. What does the app need at minimum to startup? Testyourapptofindoutthe amount of memory and CPU that your app requires to run. Your worker node should have enough resources to deploy and start up the app. Set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app. 
+6. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. Checkout the solution guide on how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
+7. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an IBM Cloud database service to your pod. For either option, when a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other pods. 
 
 Above are some of the questions you need to think about before configuring your clusters. Assuming you want to run the JPetStore application in the Cloud for a production use, and expect a high load of traffic. Let's explore what resources you would need:
 
