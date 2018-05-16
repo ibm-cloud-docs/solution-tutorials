@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-14"
+lastupdated: "2018-05-16"
 
 ---
 
@@ -67,11 +67,11 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     <div class = "solutionBox">
         <h3 id="multi-region-webapp.html" class="solutionBoxTitle">
-            <a href = "multi-region-webapp.html">Deploy a secure web application across multiple regions</a>
+            <a href = "multi-region-webapp.html">Secure web application across multiple regions</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline.</p>
+                <p>This tutorial is a walkthrough of how to create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">Node.js</span>
                     <span class="tag-filter category">Continous Delivery</span>

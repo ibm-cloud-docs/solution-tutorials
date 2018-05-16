@@ -12,7 +12,7 @@ lastupdated: "2018-04-23"
 {:tip: .tip}
 {:pre: .pre}
 
-# Deploy a scalable web application on Kubernetes
+# Scalable web application on Kubernetes
 
 This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster). Additionally, you will learn how to bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}

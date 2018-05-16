@@ -4,9 +4,9 @@
         "anchor": "websites",
         "solutions": [
             {
-                "name": "Deploy a secure web application across multiple regions",
+                "name": "Secure web application across multiple regions",
                 "url": "multi-region-webapp.html",
-                "description": "This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline.",
+                "description": "This tutorial is a walkthrough of how to create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
                 "imgSrc": "images/solution1/Architecture.png",
                 "tags": [
                     "Cloud Foundry",

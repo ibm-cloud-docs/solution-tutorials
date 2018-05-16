@@ -12,7 +12,7 @@ lastupdated: "2018-04-28"
 {:tip: .tip}
 {:pre: .pre}
 
-# Deploy a secure web application across multiple regions
+# Secure web application across multiple regions
 
 This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline. 
 
