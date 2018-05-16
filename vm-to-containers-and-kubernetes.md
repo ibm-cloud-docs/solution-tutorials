@@ -82,7 +82,7 @@ With a modern Kubernetes architecture, this would look similar to:
 
 - A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal. Following this tutorial, you will set up a cluster with two worker nodes.
 - Persistent volumes and other options available for saving and sharing data between app instances.
-- Kubernetes ingress controller used to manage the load balancing between worker nodes. Ingress is a collection of rules that allow inbound connections to reach the cluster services. Ingress load balance the traffic between worker nodes internally.
+- Kubernetes ingress controller used to manage the load balancing between worker nodes. Ingress is a collection of rules that allow inbound connections to reach the cluster services. Ingress balances the traffic between worker nodes internally.
 - Compose For MySQL service to store the database. With Kubernetes you can run your own database inside the cluster, but it might be more favorable to use a managed database-as-a service for reasons such as operational simplicity, built-in backups and scaling. You can find many different types databases in IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data).
 
 ## VM's, containers and Kubernetes
@@ -100,7 +100,7 @@ IBM Cloud provides the capability to run applications in containers on Kubernete
 
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
-However, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. 
+In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. 
 
 ### Kubernetes orchestration
 
@@ -139,7 +139,7 @@ To run a production application in the Cloud using Kubernetes, there are few ite
 2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do I need for my worker nodes?  Virtual machines or Bare Metal?
 3. How many worker nodes do you need? This depends on the applications scale, it's true that the more nodes you have the more resiliency your application will have. 
 4. How many replicas of your cluster do you want for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure.
-5. What does the app need at minimum to startup? Testyourapptofindoutthe amount of memory and CPU that your app requires to run. Your worker node should have enough resources to deploy and start up the app. Set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app. 
+5. What does the app need at minimum to startup? Test your app to find out the amount of memory and CPU that your app requires to run. Your worker node should have enough resources to deploy and start up the app. Set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app. 
 6. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. Checkout the solution guide on how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
 7. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an IBM Cloud database service to your pod. For either option, when a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other pods. 
 
@@ -231,7 +231,7 @@ There are a few items which you must handle when moving to Kubernetes:
 
 It's not a good practice to store credentials within the application. Kubernetes provides **[secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**, intended to hold sensitive information, such as passwords, OAuth tokens, and ssh keys. Putting this information in a `secret` is safer and more flexible than putting it verbatim in a `pod` definition or in a docker image. An application can have many different credentials like passwords, tokens, keys and more. These credentials should be distributed securely outside the application. 
 
-Let's explore how to create a secret if you to add a Watson Visual Recognition service.
+Let's explore how to create a secret if you want to add a Watson Visual Recognition service.
 
 1. Create a new file called `watson-secrets.txt` and add the service credentials, you can get service credentials from the IBM Cloud dashboard or using the CLI.
 
@@ -266,7 +266,7 @@ Persistent data storage: Create a persistent volume claim (PVC) to provision NFS
 
 The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
 
-In Kubernetes, the way this can is by using `PersistentVolume` to store the data in a [NFS-based file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) and then use `PersistentVolumeClaim` to make that storage available to your pods. 
+In Kubernetes, the way this can done is by using `PersistentVolume` to store the data in a [NFS-based file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) and then use `PersistentVolumeClaim` to make that storage available to your pods. 
 
 To create a PV and matching PVC, follow these steps below: 
 
