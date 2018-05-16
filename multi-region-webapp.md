@@ -44,8 +44,6 @@ This tutorial involves an active/active scenario where two copies of the applica
    ![Architecture](./images/solution1/Architecture.png)
 </p>
 
-Some DNS providers may include capabilities to detect this situation and automatically route traffic to the other region. Another option would be to deploy a global load balancer in front of the applications and have the load balancer spread the traffic. This tutorial does not explore these options.
-
 ## Create a Node.js application
 {: #create}
 
@@ -127,40 +125,42 @@ When deploying a real world application, you will likely want to use your own do
 1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
 2. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog. 
 2. Enter a service name, and click **Create** to create an instance of the service.
-3. When the service instance is provisioned, add your domain URL to the Domain name field, and click **Add domain**.
-
-   ![Add domain](https://console.bluemix.net/docs/api/content/infrastructure/cis/images/overview-add-domain.png?lang=en-US)
+3. When the service instance is provisioned, set your domain name and click **Add domain**.
 4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect. When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect. {:tip}
+5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+  When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect.
+  {:tip}
 
 ## Add Global Load Balancing to the application
 
 {: #add_glb}
 
-Use a Global Load Balancer (GLB) in IBM Cloud Internet Services to manage the traffic across multiple regions. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
+In this section, you will use the Global Load Balancer (GLB) in IBM Cloud Internet Services to manage the traffic across multiple regions. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
 
-1. Before creating a GLB, create a health check for the GLB.
+### Before creating a GLB, create a health check for the GLB.
 
-	1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
-	2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**.
-	   ![Health Check](images/solution1/health_check.png)
-2. After that, create an origin pool with two origins.
+1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
+2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**.
+   ![Health Check](images/solution1/health_check.png)
 
-	1. Click **Create Pool**.
-	2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your node.js application.
-	3.  Enter a name for the first origin and the host name for the application in the US region. 
-	4. Similarly, add another origin with the origin address pointing to the application in the UK region.
-	5. Click **Provision 1 Instance**.
-	   ![Origin Pool](images/solution1/origin_pool.png)
-3. Create a Global Load Balancer (GLB). 
+### After that, create an origin pool with two origins.
 
-	1. Click **Create Load Balancer**. 
-	2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region. 
-	3. Click **Add pool** and select the origin pool that you have just created. 
-	4. Click **Provision 1 Instance**.
-	   ![Global Load Balancer](images/solution1/load_balancer.png)
+1. Click **Create Pool**.
+2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your node.js application.
+3.  Enter a name for the first origin and the host name for the application in the US region. 
+4. Similarly, add another origin with the origin address pointing to the application in the UK region.
+5. Click **Provision 1 Instance**.
+   ![Origin Pool](images/solution1/origin_pool.png)
 
-At this stage, the GLB is configured but the Cloud Foundry applications are not ready yet to reply to requests from the configured GLB domain name. So you must go back to your application to map the custom domain and routes to the application.
+### Create a Global Load Balancer (GLB). 
+
+1. Click **Create Load Balancer**. 
+2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region. 
+3. Click **Add pool** and select the origin pool that you have just created. 
+4. Click **Provision 1 Instance**.
+   ![Global Load Balancer](images/solution1/load_balancer.png)
+
+At this stage, the GLB is configured but the Cloud Foundry applications are not ready yet to reply to requests from the configured GLB domain name. To complete the configuration, you will update the applications with routes using the custom domain.
 
 ## Configure custom domain and routes to your application
 
