@@ -152,7 +152,7 @@ spec.containers[].resources.limits.cp
 spec.containers[].resources.limits.memory
 ```
 
-You can read more more compute resources [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/).
+You can read more on compute resources [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/).
 
 ### Apply 12 factor principles to your app 
 
@@ -326,6 +326,8 @@ You can use the command in various ways:
 - Copy data from your local machine to a pod in your cluster: `kubectl cp <local_filepath>/<filename> <namespace>/<pod>:<pod_filepath>`
 - Copy data from a pod in your cluster to your local machine: `kubectl cp <namespace>/<pod>:<pod_filepath>/<filename> <local_filepath>/<filename>`
 - Copy data from a pod in your cluster to a specific container in another pod another: `kubectl cp<namespace>/<pod>:<pod_filepath> <namespace>/<other_pod>:<pod_filepath> -c<container>`
+
+**ToDo:** Need to add steps to copy data to File Storage.
 
 ### Create Kubernetes deployment yaml
 
