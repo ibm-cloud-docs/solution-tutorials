@@ -321,19 +321,19 @@ Use the `kubectl cp` command to copy files and directories to and from pods or s
 
 ### Create the Kubernetes deployment yaml
 
-A *Deployment* controller provides declarative updates for Pods and ReplicaSets. You describe a *desired state* in a Deployment object, and the Deployment controller changes the actual state to the desired state at a controlled rate. You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments. 
+A *Deployment* Controller provides declarative updates for Pods and ReplicaSets. You describe a *desired state* in a Deployment object, and the Deployment Controller changes the actual state to the desired state at a controlled rate. It allows you to define deployments to create new ReplicaSets, or to remove existing deployments and adopt all their resources with new deployments. 
 
-Note the following sections in the [JPetStore deployment YAML](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore.yaml) file
+Note that the [JPetStore deployment YAML](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/jpetstore.yaml) file contains:
 
-- Two deployments to create the database and the web micro-services
-- Two services for exposing the micro-services
-- Ingress controller to manage the traffic to the services.
+- Two deployments to create the database and the web microservices
+- Two services for exposing the microservices
+- An Ingress controller to manage the traffic to the services.
 
-You may have multiple deployment YAML files, one for each micro service. 
+Kubernetes allows you to have multiple deployment YAML files, one for each microservice. 
 
-### Push Deployments  
+### Push Deployments
 
-You can create a deployment from the yaml file using the command:
+You can create a deployment from the yaml file using the `kubectl` command:
 
 ```bash
 kubectl create -f <yaml-file-name>.yaml
@@ -347,7 +347,7 @@ kubectl get services
 kubectl get pods
 ```
 
-Now that you understand the fundamentals of moving application to Kubernetes, next you can run the JPetStore application in a Kubernetes cluster and use everything you learned so far.
+Now that you understand the fundamentals of moving application to Kubernetes, you can run the JPetStore application in a Kubernetes cluster and apply the concepts you've learned.
 
 ## Run the JPetStore in your cluster   
 
