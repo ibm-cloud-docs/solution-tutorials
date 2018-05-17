@@ -13,9 +13,9 @@ lastupdated: "2018-05-17"
 
 # Understand how to move a VM based application to Kubernetes
 
-This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.
+This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.
 
-The [IBM Cloud Container Service](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security, as well as insights into images and containers.
+The [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security, as well as insights into images and containers.
 
 There are two options for moving an application to Kubernetes:
 
@@ -30,7 +30,7 @@ In this tutorial, you will exercise the latter option using a popular Java e-com
 
 - Understand how to map components between VMs and Kubernetes.
 - Containerize the application.
-- Deploy the container to a Kubernetes cluster on the IBM Cloud Container Service.
+- Deploy the container to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}.
 - Extend the application with IBM Cloud services.
 
 ## Services used
@@ -86,7 +86,7 @@ A modern container architecture would look similar to:
 
 ## VMs, containers and Kubernetes
 
-IBM Cloud provides the capability to run applications in containers on Kubernetes. The IBM Cloud Container Service runs Kubernetes clusters that deliver the following tools and functions:
+IBM Cloud provides the capability to run applications in containers on Kubernetes. The {{site.data.keyword.containershort_notm}} runs Kubernetes clusters that deliver the following tools and functions:
 
 - Intuitive user experience and powerful tools
 - Built-in security and isolation to enable rapid delivery of secure applications
@@ -113,7 +113,7 @@ This [2-hour self-paced course](https://developer.ibm.com/courses/all/get-starte
 
 In this section, you will learn how to configure a Kubernetes cluster, how to containerize the application and how to create the required Kubernetes deployment files.
 
-By using Kubernetes clusters with the IBM Cloud Container Service, you get the following benefits:
+By using Kubernetes clusters with the {{site.data.keyword.containershort_notm}}, you get the following benefits:
 
 - Multiple data centers where you can deploy your clusters
 - Support for ingress and load balancer networking options
@@ -246,7 +246,7 @@ The secret created can now be referenced from the Kubernetes deployment file. Yo
 
 **Saving data in your cluster**
 
-With the IBM Cloud Container Service, you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in disaster situations.
+With the {{site.data.keyword.containershort_notm}}, you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in disaster situations.
 
 Non-persistent data storage: Containers and pods are, by design, short-lived and can fail unexpectedly. However, you can write data to the local file system of the container to store data throughout the lifecycle of the container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. 
 
@@ -445,8 +445,8 @@ In this step, you will clean up the resources to remove what you created above.
 ## Related Content
 {: #related_content}
 
-- [Get started](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) with Kubernetes and IBM Cloud Container Service.
-- IBM Cloud Container Service labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
+- [Get started](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
+- {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
 - Kubernetes main [docs](http://kubernetes.io/).
 - IBM Cloud [docs](https://console.bluemix.net/docs/containers/cs_storage.html) managing storage on a cluster.
 - [Best practices solution guide](users-teams-applications.html) for organizing users, teams and applications.
