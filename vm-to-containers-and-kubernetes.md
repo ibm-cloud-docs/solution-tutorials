@@ -210,18 +210,18 @@ Once a Dockerfile created, next you would need to build and push the docker imag
 
 ### Modify your code
 
-There are a few items which you must handle when moving to Kubernetes:
+When moving to a container-based microservice architecture, (at least) two topics have to be handled differently from a traditional VM-based application:
 
-- Service credentials: How to handle sensitive service, databases credentials within the cluster.
-- Storage: Where to store data in your cluster. 
+-	**Service credentials**: How to handle and store sensitive information (e.g. credentials) to access databases or other backing services.
+    **Storage**: Where and how to store data in your cluster.
 
 **Service Credentials**
 
-It's not a good practice to store credentials within the application. Kubernetes provides **[secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**, intended to hold sensitive information, such as passwords, OAuth tokens, and ssh keys. Putting this information in a `secret` is safer and more flexible than putting it verbatim in a `pod` definition or in a docker image. An application can have many different credentials like passwords, tokens, keys and more. These credentials should be distributed securely outside the application. 
+For several reasons, it's never good practice to store credentials within the application. Instead, Kubernetes provides so called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**, which are intended to hold sensitive information (e.g. passwords, OAuth tokens or ssh keys). Putting this information in a `secret` is safer and more flexible than putting it verbatim into a `pod` definition or in a docker image.
 
-Let's explore how to create a secret if you want to add a Watson Visual Recognition service.
+Let's explore how to create a secret. In this case we want to add the [Watson Visual Recognition](https://www.ibm.com/watson/services/visual-recognition/) service to our application:
 
-1. Create a new file called `watson-secrets.txt` and add the service credentials, you can get service credentials from the IBM Cloud dashboard or using the CLI.
+1. Create a new file called `watson-secrets.txt` and add the service credential (which you can obtain from the IBM Cloud dashboard or using the CLI):
 
    ```bash
    {
@@ -230,35 +230,33 @@ Let's explore how to create a secret if you want to add a Watson Visual Recognit
    }
    ```
 
-2. Create a secret from the file by running:
+   .	Next, create a secret from the file by running:
 
    ```bash
    kubectl create secret generic watson-visual-secret --from-file=watson-secrets.txt=./watson-secrets.txt
    ```
 
-3. To verify secret been created, run the command: 
+   .	To verify that the secret has been created, run the command:
 
    ```bash
    kubectl get secrets
    ```
 
-The secret created can now be referenced from the Kubernetes deployment file. You will later learn about the Kubernetes deployment files and how the secret been referenced.  
+The secret can now be referenced from the Kubernetes deployment file. We will go over the Kubernetes deployment files and how the secret can been referenced a bit later in this tutorial.
 
 **Saving data in your cluster**
 
-With the {{site.data.keyword.containershort_notm}}, you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in disaster situations.
+The {{site.data.keyword.containershort_notm}} allows you to choose from several options of storage and then sharing it across pods in your cluster. Not all storage options offer the same level of persistence and availability in disaster situations.
 
-Non-persistent data storage: Containers and pods are, by design, short-lived and can fail unexpectedly. However, you can write data to the local file system of the container to store data throughout the lifecycle of the container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. 
+**Non-persistent data storage**: Containers and pods are, by design, short-lived and can fail unexpectedly. While you can store data in the local file system of the container, this only stores it throughout the lifecycle of the container. This data (inside a container) can not be shared with other containers or pods and is lost when the container crashes or is removed. 
 
-Persistent data storage: Create a persistent volume claim (PVC) to provision NFS file storage or block storage for your cluster. Then, mount this claim to a persistent volume (PV) to ensure that data is available even if the pods crash or shut down.
-
-The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
+**Persistent data storage**: To persist data, you need to create a persistent volume claim (PVC), which will provision [NFS](https://en.wikipedia.org/wiki/Network_File_System) file storage or block storage for your cluster. This mount is then claimed to a persistent volume (PV) to ensure that data is available, even if the pods crash or shut down. The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define various aspects, such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
 
 In Kubernetes, the way this can be done is by using `PersistentVolume` to store the data in a [NFS-based file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) and then use `PersistentVolumeClaim` to make that storage available to your pods. 
 
-To create a PV and matching PVC, follow these steps below: 
+To create a PV and matching PVC, follow these steps: 
 
-1. Review the available storage classes. See full list of storage classes [here](https://console.bluemix.net/docs/containers/cs_storage.html#create) with storage capacity breakdown.
+1. Review the available storage classes (full list of storage classes [here](https://console.bluemix.net/docs/containers/cs_storage.html#create) with storage capacity breakdown).
 
    ```bash
    kubectl get storageclasses
@@ -266,13 +264,13 @@ To create a PV and matching PVC, follow these steps below:
 
 2. Run the command below to decide the storage class. 
 
-   Note: The **retain** options means that the storage class will not be removed even after deleting the `PersistentVolumeClaim`. 
+   Note: The **retain** options means that the storage class will not be removed, even after deleting the `PersistentVolumeClaim`. 
 
    ```bash
    kubectl describe storageclasses ibmc-file-retain-silver 
    ```
 
-3. Create a new file called `mypvc.yaml` with the following contents:
+3. Create a new file called `mypvc.yaml` with the following content:
 
    ```bash
    apiVersion: v1
@@ -291,41 +289,37 @@ To create a PV and matching PVC, follow these steps below:
          storage: 24Gi
    ```
 
-4. Create the PVC.
+4. Create the PVC:
 
    ```bash
    kubectl apply -f mypvc.yaml
    ```
 
-5. Verify that your PVC is created and bound to the PV. This process can take a few minutes.
+5. Verify that your PVC is created and bound to the PV (this process can take a few minutes):
 
    ```bash
    kubectl describe pvc mypvc
    ```
 
-For more details on creating custom storages classes checkout the cluster storage [documentation](https://console.bluemix.net/docs/containers/cs_storage.html#create).
+For more details on creating custom storages classes, please see the [cluster storage documentation](https://console.bluemix.net/docs/containers/cs_storage.html#create).
 
 **Setting up backup and restore solutions for NFS file shares and block storage**
 
-File shares and block storage are provisioned into the same location as your cluster. The storage is hosted on clustered servers by IBM to provide availability in case a server goes down. However, file shares and block storage are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups that you can use to restore your data when needed.
+File shares and block storage are provisioned into the same location as your cluster. The storage itself is hosted on clustered servers by IBM to provide high availability. However, file shares and block storage are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups, which you can use to restore your data when needed.
 
-Review the following [backup and restore](https://console.bluemix.net/docs/containers/cs_storage.html#backup_restore) options for your NFS file shares and block storage.
+Please review the following [backup and restore](https://console.bluemix.net/docs/containers/cs_storage.html#backup_restore) options for your NFS file shares and block storage.
 
-**Move existing data over**
+**Moving existing data**
 
-Copy data to and from pods and containers
-
-You can use the `kubectl cp` command to copy files and directories to and from pods or specific containers in your cluster.
-
-You can use the command in various ways:
+Use the `kubectl cp` command to copy files and directories to and from pods or specific containers in your cluster. The command has various options:
 
 - Copy data from your local machine to a pod in your cluster: `kubectl cp <local_filepath>/<filename> <namespace>/<pod>:<pod_filepath>`
 - Copy data from a pod in your cluster to your local machine: `kubectl cp <namespace>/<pod>:<pod_filepath>/<filename> <local_filepath>/<filename>`
-- Copy data from a pod in your cluster to a specific container in another pod another: `kubectl cp<namespace>/<pod>:<pod_filepath> <namespace>/<other_pod>:<pod_filepath> -c<container>`
+- Copy data from a pod in your cluster to a specific container in another pod: `kubectl cp<namespace>/<pod>:<pod_filepath> <namespace>/<other_pod>:<pod_filepath> -c<container>`
 
 **ToDo:** Need to add steps to copy data to File Storage.
 
-### Create Kubernetes deployment yaml
+### Create the Kubernetes deployment yaml
 
 A *Deployment* controller provides declarative updates for Pods and ReplicaSets. You describe a *desired state* in a Deployment object, and the Deployment controller changes the actual state to the desired state at a controlled rate. You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments. 
 
