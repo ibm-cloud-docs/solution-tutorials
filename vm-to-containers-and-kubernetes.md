@@ -351,7 +351,7 @@ You may have multiple deployment YAML files, one for each micro service.
 
 ### Push Deployments  
 
-You can create a deploying from the yaml file using the command:
+You can create a deployment from the yaml file using the command:
 
 ```bash
 kubectl create -f <yaml-file-name>.yaml
