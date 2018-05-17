@@ -13,32 +13,31 @@ lastupdated: "2018-05-17"
 
 # Understand how to move a VM based application to Kubernetes
 
-This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services. Though migrating existing applications to Kubernetes can be different from an application to application, this tutorial aims to outline the path with an example. 
+This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.
 
-[Kubernetes](https://kubernetes.io/) is a container orchestrator to provision, manage, and scale applications. Kubernetes allows you to manage the lifecycle of containerized applications in a cluster of multiple worker machines called nodes. With Kubernetes you get built-in scaling features, load balancing, auto-recovery, quick deployment rollout and more. 
+The [IBM Cloud Container Service](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security, as well as insights into images and containers.
 
-[IBM Cloud Container Service](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security insight into images and containers, and integration with Watson, IoT, and data. 
+There are two options for moving an application to Kubernetes:
 
-There are two options for moving an application to Kubernetes: 
-- Identify single component of a large monolith application which can be separated into its own micro-service. Containerize and deploy micro-service to Kubernetes. Repeat. 
-- Containerize the entire application and deploy it on a Kubernetes cluster. 
+1. Identify components of a large monolith application, which can be separated into their own micro-service, containerized and deployed to Kubernetes.
+2. Containerize the entire application and deploy it on a Kubernetes cluster.
 
-In this tutorial, you will exercise the latter option using a popular Java e-commerce application **JPetStore**. After moving it to Kubernetes, you will extend it using IBM Cloud services.
+In this tutorial, you will exercise the latter option using a popular Java e-commerce application **JPetStore**. After moving it to Kubernetes, you will extend it by using IBM Cloud services.
 
 ## Objectives:
 
 {: #objectives}
 
 - Understand how to map components between VMs and Kubernetes.
-- Containerize application.
-- Deploy the container to Kubernetes cluster on IBM Cloud Container Service.
+- Containerize the application.
+- Deploy the container to a Kubernetes cluster on the IBM Cloud Container Service.
 - Extend the application with IBM Cloud services.
 
 ## Services used
 
 {: #products}
 
-This tutorial uses the following products:
+This tutorial uses the following cloud services:
 
 - [{{site.data.keyword.containershort}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 - [{{site.data.keyword.composeForMySQL_full}}](https://console.bluemix.net/catalog/services/compose-for-mysql)
@@ -51,7 +50,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 {:#architecture}
 
-The following diagram outlines a traditonal architecture of an application running on virtual machines. 
+The following diagram outlines a traditonal application architecture, based on virtual machines.
 
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/traditional_architecture.png)
@@ -59,31 +58,31 @@ The following diagram outlines a traditonal architecture of an application runni
 </p>
 
 1. The user sends a request to the endpoint.
-2. The Load Balancer selects one of the healthy application running in VM to handle the request.
-3. The application server is backed by another VM running a database. 
+2. The load balancer selects one of the healthy application instances, running on VMs to handle the request.
+3. The application server is backed by another VM, running a database.
 
 **Components:**
 
 - Two VMs to host the Java application, the application files are stored within the VMs.
-- A load balancer service to load balance traffic between application servers.
-- A MySQL database, installed on a Virtual Server.
+- A load balancer service to balance traffic between the two application servers.
+- A MySQL database, installed on a virtual server.
 
-With a modern Kubernetes architecture, this would look similar to:
+A modern container architecture would look similar to:
 
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/Architecture.png)
 </p>
 
 1. The user sends a request to the endpoint.
-2. Ingress load balances traffic to  workloads in the cluster
+2. Ingress load balances traffic to workloads in the cluster
 3. The data layer is an external managed database service.
 
 **Components:**
 
-- A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal. Following this tutorial, you will set up a cluster with two worker nodes.
-- Persistent volumes and other options available for saving and sharing data between app instances.
-- Kubernetes ingress controller used to manage the load balancing between worker nodes. Ingress is a collection of rules that allow inbound connections to reach the cluster services. Ingress balances the traffic between worker nodes internally.
-- Compose For MySQL service to store the database. With Kubernetes you can run your own database inside the cluster, but it might be more favorable to use a managed database-as-a service for reasons such as operational simplicity, built-in backups and scaling. You can find many different types databases in IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data).
+- A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal machine. In this tutorial, you will set up a cluster with two worker nodes.
+- Persistent volumes for saving and sharing data between the application instances.
+- A Kubernetes ingress controller to manage balancing the load between worker nodes. Ingress is a collection of rules that allow inbound connections to reach the cluster services. Ingress balances the traffic between worker nodes internally.
+- A MySQL service, acting as the database. While Kubernetes allows you to run your own database inside the cluster, it is usually more favorable to use a managed database-as-a service. This is operationally simpler and allows for "built in" backups and scaling. You can find many different types databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
 
 ## VMs, containers and Kubernetes
 
@@ -104,75 +103,64 @@ In addition, containers allow you to share the host OS. This reduces duplication
 
 ### Kubernetes orchestration
 
-[Kubernetes](http://kubernetes.io) is a container orchestrator to manage the lifecycle of containerized applications in a cluster of nodes. Your applications might need many other resources to run such as Volumes, Networks, and Secrets that will help you connect to databases, talk to firewalled backends, and secure keys. Kubernetes helps you add these resources to your application. Infrastructure resources needed by applications are managed declaratively.
+[Kubernetes](http://kubernetes.io/) is a container orchestrator to manage the lifecycle of containerized applications in a cluster of nodes. Your applications might need many other resources to run such as volumes, networks, and secrets (which will help you connect to other cloud services), talk to firewalled backends, and secure keys. Kubernetes helps you add these resources to your application. The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes will attempt to conform to, and then maintain the described state.
 
-The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes will attempt to conform and maintain the described state. Kubernetes provides APIs and tooling for users to provide the desired state of your cluster including container images, networking, services, volumes, etc.
-
-Run through this [lab](https://github.com/IBM/container-service-getting-started-wt) to get more hands on experience with Kubernetes. 
-
-### Kubernetes basic components
-
-Pod: A pod is the smallest object model that you can create and run. A pod typically represents a process in your cluster. Pods contain at least one container that runs the job and additionally might have other containers in it called sidecars for monitoring, logging, and so on. Essentially, a pod is an instance of a micro-service consisting of one or more containers that need to run together.  
-
-Service: A Service defines how to expose your application as a DNS entry to have a stable reference. 
-
-Kubectl: The Kubectl is a command line interface for running commands against Kubernetes clusters. Kubernetes provides a client interface through the kubectl command-line interface. Kubectl commands allow for managing applications and cluster resources.
+This [2-hour self-paced course](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) will help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
 
 ## Plan the move
 
 {: #plan_the_move}
 
-In this section, you will learn what to consider when configuring a cluster, how to containerize the application and how to create Kubernetes deployment files. 
+In this section, you will learn how to configure a Kubernetes cluster, how to containerize the application and how to create the required Kubernetes deployment files.
 
-By using Kubernetes clusters with IBM Cloud Container Service, you get the following benefits: 
+By using Kubernetes clusters with the IBM Cloud Container Service, you get the following benefits:
 
-- Multiple data centers where you can deploy your clusters 
-- Support for Ingress and Load balancer networking options 
-- Dynamic persistent volume support 
-- Highly available, IBM-managed Kubernetes masters 
+- Multiple data centers where you can deploy your clusters
+- Support for ingress and load balancer networking options
+- Dynamic persistent volume support
+- Highly available, IBM-managed Kubernetes masters
 
 ### Configure Resources
 
-To run a production application in the Cloud using Kubernetes, there are few items in which you need to think about and these are:
+To run a production application in the cloud using Kubernetes, there are several items to consider:
 
-1. How many clusters do you need? You may want to have three clusters, one for development, one testing and one for production.
-2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do I need for my worker nodes?  Virtual machines or Bare Metal?
-3. How many worker nodes do you need? This depends on the applications scale, it's true that the more nodes you have the more resiliency your application will have. 
-4. How many replicas of your cluster do you want for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure.
-5. What does the app need at minimum to startup? Test your app to find out the amount of memory and CPU that your app requires to run. Your worker node should have enough resources to deploy and start up the app. Set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app. 
-6. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. Checkout the solution guide on how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
-7. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an IBM Cloud database service to your pod. For either option, when a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other pods. 
+1. How many clusters do you need? A good starting point might be three clusters, one for development, one for testing and one for production.
+2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do I need for my worker nodes? Virtual machines or Bare Metal?
+3. How many worker nodes do you need? This depends highly on the applications scale, the more nodes you have the more resilient your application will be.
+4. How many replicas should you have for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments. **<<ToDo: Needs 2nd review>>**
+5. Which is the minimal set of resources your app needs to startup? You might wantg to test your application for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
+6. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
+7. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an IBM Cloud database service to your pod. For either option, when a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other pods.
 
-Above are some of the questions you need to think about before configuring your clusters. Assuming you want to run the JPetStore application in the Cloud for a production use, and expect a high load of traffic. Let's explore what resources you would need:
+To make the above more specific, let's assume you want to run the JPetStore application in the cloud for production use and expect a high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one testing and one for production.
-2. Development and testing cluster can start with minimum RAM and CPU option such like 2 CPU's, 4GB of RAM and one worker node for each cluster.
-3. For the production cluster, you may want to have more resources for performance, HA and resiliency. Choose Dedicated or Bare Metal options for better performance and at least 4 CPU's, 16GB of RAM, and two workers nodes.
+2. The development and testing clusters can start with minimum RAM and CPU option (e.g. 2 CPU's, 4GB of RAM and one worker node for each cluster).
+3. For the production cluster, you may want to have more resources for performance, high availability and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPU's, 16GB of RAM, and two workers nodes.
 
-## Managing Compute Resources 
+###Managing Compute Resources
 
-When you specify a Pod, you can optionally specify how much CPU and memory (RAM) each Container needs. When Containers have resource requests specified, the scheduler can make better decisions about which nodes to place Pods on. And when Containers have their limits specified, contention for resources on a node can be handled in a specified manner. This can also help cost savings as well as not allowing pods to eat all of the resources.
+When specifying a pod, you have the option to specify how much CPU and memory (RAM) each container needs. If containers have resource requests specified, the scheduler can make better decisions about which nodes to place pods on. 
 
- Each Container of a Pod can specify one or more of the following:
+Each container of a pod can specify one or more of the following:
 
 ```bash
 spec.containers[].resources.limits.cp
 spec.containers[].resources.limits.memory
 ```
 
-You can read more on compute resources [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/).
+There is lot's more information about managing Kubernetes compute resources [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/).
 
-### Apply 12 factor principles to your app 
+### Applying the 12 factor principle to your app
 
-The twelve-factor principles is a methodology for building software-as-a-service apps that uses declarative formats for setup automation and to minimize time and cost. When moving applications to the container world and Kubernetes, you should consider applying the 12 factor principles. 
+The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native applications and you should understand and apply it when moving applications to containers and orchestrating these via Kubernetes.
 
-Here are some of the key must applied principles: 
+Here are some of key principles that apply to this tutorial:
 
-- **Codebase** - Application code to live inside a Git repository so it can be easily tracked and version controlled. With this you can also integrate DevOps delivery pipeline to build and test the application before deploying to the cluster. Checkout the solution guide [Continuous Deployment to Kubernetes](continuous-deployment-to-kubernetes.html) to learn how to set up a continuous integration and delivery pipeline for containerized applications running in a Kubernetes cluster. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.
-- **Config** - Store config in an environment variables, do not hardcode service credentials within the application. This is covered in more depth in the later section of this solution guide. 
-- **Backing Services** - Your application code can talk to many services, like a database for example. A database can be installed locally in a separate node or a database as a service, in both cases the Database service is referenced by a simple endpoint (URL) with service credentials.  The point is, your code shouldn’t know the difference.
-
-There are many more important 12 factor principles are covered in depth [here](https://12factor.net/) and you should read and consider apply them into your application. 
+- **Codebase** - All source code and configuration files are tracked inside a version control system (e.g. a GIT repository).
+- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the application before deploying it to the cluster. Checkout the [Continuous Deployment to Kubernetes tutorial](continuous-deployment-to-kubernetes.html) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and will show you how to add integrations such as security scanners, notifications, and analytics.
+- **Config** - All configuration information is stored in environment variables, and no service credentials are hardcoded within the application.
+- **Backing Services** - Your application code can connect to many services, such as databases, messaging queues or even AI services. These services (e.g. a database) can be installed locally in a separate node or used "as a service" in the cloud. In either case, the service is referenced by a simple endpoint (URL) and accessed through service credentials. Your code shouldn’t know the difference.
 
 ### Containerize the application 
 
@@ -190,7 +178,7 @@ To build one based on your existing application, you may use following common co
 
 For more information on creating a Dockerfile, checkout the docker [file reference](https://docs.docker.com/engine/reference/builder/#usage).
 
-To containerize the JPetStore application, the following [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) has been used.
+To containerize the JPetStore application, the following [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) has been used. **<<ToDo: Dockerfile link to be updated public repo available>>**
 
 ```bash
 # Build JPetStore war
@@ -266,7 +254,7 @@ Persistent data storage: Create a persistent volume claim (PVC) to provision NFS
 
 The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
 
-In Kubernetes, the way this can done is by using `PersistentVolume` to store the data in a [NFS-based file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) and then use `PersistentVolumeClaim` to make that storage available to your pods. 
+In Kubernetes, the way this can be done is by using `PersistentVolume` to store the data in a [NFS-based file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) and then use `PersistentVolumeClaim` to make that storage available to your pods. 
 
 To create a PV and matching PVC, follow these steps below: 
 
@@ -429,16 +417,29 @@ Do you want to learn more? Here are some ideas of what you can do next:
 - Deploy the production cluster [across multiple regions](multi-region-webapp.html).
 - Use [multiple clusters across multiple regions](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-locations) for high availability. 
 
-## Remove Services
+## Remove services and resources
 
 {: #clean_up_resources}
 
 In this step, you will clean up the resources to remove what you created above.
 
-- Delete Kubernetes deployments. 
-- Delete Kubernetes secrets. 
+- Delete Kubernetes deployments.
+  `kubectl get deployments`
+  `kubectl delete deployments <DEPLOYMENT_NAME>`
+  {: tip} If you wish to delete all the deployments in one go, use --all in place of <DEPLOYMENT_NAME>
+
+- Delete Kubernetes secrets.
+  `kubectl get secrets`
+  `kubectl delete secrets <SECRET_NAME>`
+
 - Delete the storage PV and PVC. 
+
+  `kubectl get pvc`
+
+  `kubectl delete <PVC_NAME> `
+
 - Delete Watson visual recognition service.
+
 - Delete Twilio MMS.
 
 ## Related Content
@@ -448,6 +449,7 @@ In this step, you will clean up the resources to remove what you created above.
 - IBM Cloud Container Service labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
 - Kubernetes main [docs](http://kubernetes.io/).
 - IBM Cloud [docs](https://console.bluemix.net/docs/containers/cs_storage.html) managing storage on a cluster.
+- [Best practices solution guide](users-teams-applications.html) for organizing users, teams and applications.
 
 
 
