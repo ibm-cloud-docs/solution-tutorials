@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-16"
+lastupdated: "2018-05-17"
 ---
 
 {:shortdesc: .shortdesc}
@@ -40,8 +40,8 @@ In this tutorial, you will exercise the latter option using a popular Java e-com
 
 This tutorial uses the following products:
 
-- [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-- Compose For MySQL
+- [{{site.data.keyword.containershort}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+- [{{site.data.keyword.composeForMySQL_full}}](https://console.bluemix.net/catalog/services/compose-for-mysql)
 - [{{site.data.keyword.visualrecognitionfull}}](https://console.bluemix.net/catalog/services/visual-recognition)
 - [Twilio](https://www.twilio.com/)
 
@@ -64,9 +64,9 @@ The following diagram outlines a traditonal architecture of an application runni
 
 **Components:**
 
-- Two Java app VM's to host the application, application files stored within the VM.
-- Load balancer service to load balance traffic between application servers.
-- MySQL database installed on a Virtual Server.
+- Two VMs to host the Java application, the application files are stored within the VMs.
+- A load balancer service to load balance traffic between application servers.
+- A MySQL database, installed on a Virtual Server.
 
 With a modern Kubernetes architecture, this would look similar to:
 
@@ -85,7 +85,7 @@ With a modern Kubernetes architecture, this would look similar to:
 - Kubernetes ingress controller used to manage the load balancing between worker nodes. Ingress is a collection of rules that allow inbound connections to reach the cluster services. Ingress balances the traffic between worker nodes internally.
 - Compose For MySQL service to store the database. With Kubernetes you can run your own database inside the cluster, but it might be more favorable to use a managed database-as-a service for reasons such as operational simplicity, built-in backups and scaling. You can find many different types databases in IBM Cloud [catalog](https://console.bluemix.net/catalog/?category=data).
 
-## VM's, containers and Kubernetes
+## VMs, containers and Kubernetes
 
 IBM Cloud provides the capability to run applications in containers on Kubernetes. The IBM Cloud Container Service runs Kubernetes clusters that deliver the following tools and functions:
 
@@ -96,7 +96,7 @@ IBM Cloud provides the capability to run applications in containers on Kubernete
 
 ### Virtual machines vs containers 
 
-**VM's**, traditional applications are run on native hardware.  A single application does not typically use the full resources of a single machine. Most organizations try to run multiple applications on a single machine to avoid wasting resources. You could run multiple copies of the same application, but to provide isolation, you can use VMs to run multiple application instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
+**VMs**, traditional applications are run on native hardware.  A single application does not typically use the full resources of a single machine. Most organizations try to run multiple applications on a single machine to avoid wasting resources. You could run multiple copies of the same application, but to provide isolation, you can use VMs to run multiple application instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
 
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
