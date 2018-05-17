@@ -131,7 +131,7 @@ By using Kubernetes clusters with IBM Cloud Container Service, you get the follo
 - Dynamic persistent volume support 
 - Highly available, IBM-managed Kubernetes masters 
 
-###Configure Resources
+### Configure Resources
 
 To run a production application in the Cloud using Kubernetes, there are few items in which you need to think about and these are:
 
