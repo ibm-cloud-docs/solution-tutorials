@@ -436,7 +436,21 @@ Do you want to learn more? Here are some ideas of what you can do next:
 In this step, you will clean up the resources to remove what you created above.
 
 - Delete Kubernetes deployments. 
+    ```
+    kubectl get deployments
+    ```
+     ```
+    kubectl delete deployments <DEPLOYMENT_NAME>
+     ```
+    If you wish to delete all the deployments in one go, use `--all` in place of `<DEPLOYMENT_NAME>`
+    {: tip}
 - Delete Kubernetes secrets. 
+   ```
+    kubectl get secrets
+   ```
+     ```
+    kubectl delete secrets <SECRET_NAME>
+     ```
 - Delete the storage PV and PVC. 
 - Delete Watson visual recognition service.
 - Delete Twilio MMS.
