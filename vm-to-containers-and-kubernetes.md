@@ -217,7 +217,7 @@ When moving to a container-based microservice architecture, (at least) two topic
 
 **Service Credentials**
 
-For several reasons, it's never good practice to store credentials within the application. Instead, Kubernetes provides so called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**, which are intended to hold sensitive information (e.g. passwords, OAuth tokens or ssh keys). Putting this information in a `secret` is safer and more flexible than putting it verbatim into a `pod` definition or in a docker image.
+For several reasons, it's never good practice to store credentials within the application. Instead, Kubernetes provides so called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**, which are intended to hold sensitive information (e.g. passwords, OAuth tokens or ssh keys). Putting this information in a `secret` is safer and more flexible than putting it verbatim into a `pod` definition or in a docker image.
 
 Let's explore how to create a secret. In this case we want to add the [Watson Visual Recognition](https://www.ibm.com/watson/services/visual-recognition/) service to our application:
 
