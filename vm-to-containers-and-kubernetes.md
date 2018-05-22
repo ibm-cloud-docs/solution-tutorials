@@ -120,10 +120,10 @@ By using Kubernetes clusters with the {{site.data.keyword.containershort_notm}},
 
 To run a production application in the cloud using Kubernetes, there are several items to consider:
 
-1. How many clusters do you need? A good starting point might be three clusters, one for development, one for testing and one for production.
+1. How many clusters do you need? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments.
 2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do I need for my worker nodes? Virtual machines or Bare Metal?
 3. How many worker nodes do you need? This depends highly on the applications scale, the more nodes you have the more resilient your application will be.
-4. How many replicas should you have for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments.
+4. How many replicas should you have for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure. 
 5. Which is the minimal set of resources your app needs to startup? You might want to test your application for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
 6. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
 
