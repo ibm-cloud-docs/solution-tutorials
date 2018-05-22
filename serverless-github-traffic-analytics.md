@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-24"
+lastupdated: "2018-05-22"
 
 ---
 
@@ -29,7 +29,7 @@ This tutorial uses the following products:
    * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
    * [{{site.data.keyword.dashdblong}}](https://console.bluemix.net/catalog/services/db2-warehouse)
    * [{{site.data.keyword.appid_long}}](https://console.bluemix.net/catalog/services/app-id)
-   * [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
+   * [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/ibm-cognos-dashboard-embedded)
 
 ## Before you begin
 {: #prereqs}
