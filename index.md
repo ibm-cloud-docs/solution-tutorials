@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-17"
+lastupdated: "2018-05-22"
 
 ---
 
@@ -537,8 +537,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.</p>
-                    <span class="tag-filter category">Dynamic Dashboard Embedded</span>
+                <p>This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using {{site.data.keyword.dynamdashbemb_short}}.</p>
+                    <span class="tag-filter category">{{site.data.keyword.dynamdashbemb_short}}</span>
                     <span class="tag-filter category">Cloud Object Storage</span>
                     <span class="tag-filter category">SQL Query</span>
                     <span class="tag-filter category">Watson Studio</span>
@@ -558,7 +558,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Db2 Warehouse</span>
                     <span class="tag-filter category">App ID</span>
                     <span class="tag-filter category">IBM Cloud Functions</span>
-                    <span class="tag-filter category">Dynamic Dashboard Embedded</span>
+                    <span class="tag-filter category">{{site.data.keyword.dynamdashbemb_short}}</span>
                     <span class="tag-filter category">GitHub</span>
             </div>
             <div class="architectureDiagramContainer">
