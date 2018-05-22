@@ -22,7 +22,7 @@ In this tutorial, you create an application to automatically collect GitHub traf
 * Deploy a Python database app with multi-tenant support and secured access
 * Integrate App ID as OpenID Connect-based authentication provider
 * Set up automated, serverless collection of GitHub traffic statistics
-* Integrate Dynamic Dashboard Embedded for graphical traffic analytics
+* Integrate {{site.data.keyword.dynamdashbemb_short}} for graphical traffic analytics
 
 ## Products
 This tutorial uses the following products:
