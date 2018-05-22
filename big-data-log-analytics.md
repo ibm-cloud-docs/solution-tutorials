@@ -123,14 +123,16 @@ Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keywo
 In this section, you will begin configuring a Streams flow that receives log messages. The {{site.data.keyword.streaminganalyticsshort}} service is powered by {{site.data.keyword.streamsshort}}, which can analyze millions of events per second, enabling sub-millisecond response times and instant decision-making.
 
 1. In your browser, access [Watson Data Platform](https://dataplatform.ibm.com).
-2. Select the **New project** tile, then the **Streams Designer** tile and click **OK**.
+2. Select the **New project** tile, then the **Basic** tile and click **OK**.
     * Enter the **Name** `webserver-logs`.
     * The **Storage** option should be set to `log-analysis-cos`.
     * Click the **Create** button.
-3. On the resulting page, click the **Add to project** dropdown and select **Streams flow**.
+3. On the resulting page, click the **Tools** then **Streams Designer** from the top navigation bar.
+    * Select the **Project Name** you just created from the dropdown list.
     * Click the **Associate an IBM Streaming Analytics instance**.
-    * Select **streaming-analytics-dsx** from the **Existing Service Instance** dropdown.
-    * Enter the **Name** `webserver-flow`.
+    * Create a new {{site.data.keyword.streaminganalyticsshort}} instance by selecting the **Lite** radio button and clicking **Create**.
+    * Provide the **Service name** as `streaming-analytics-dsx` and click **Confirm**.
+    * Enter the streams flow **Name** as `webserver-flow`.
     * Finish by clicking **Create**.
 4. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
     * Click **Add Connection** and select your `log-analysis-hub` {{site.data.keyword.messagehub}} instance.
