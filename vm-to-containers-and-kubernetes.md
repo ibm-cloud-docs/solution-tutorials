@@ -50,7 +50,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 {:#architecture}
 
-The following diagram outlines a traditonal application architecture, based on virtual machines.
+The following diagram outlines a traditional application architecture, based on virtual machines.
 
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/traditional_architecture.png)
@@ -82,7 +82,7 @@ A modern container architecture would look similar to:
 - A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal machine. In this tutorial, you will set up a cluster with two worker nodes.
 - Persistent volumes for saving and sharing data between the application instances.
 - A Kubernetes ingress controller to manage balancing the load between worker nodes. Ingress is a collection of rules that allow inbound connections to reach the cluster services. Ingress balances the traffic between worker nodes internally.
-- A MySQL service, acting as the database. While Kubernetes allows you to run your own database inside the cluster, it is usually more favorable to use a managed database-as-a service. This is operationally simpler and allows for "built in" backups and scaling. You can find many different types databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
+- A MySQL service, acting as the database. While Kubernetes allows you to run your own database inside the cluster, it is usually more favorable to use a managed database-as-a-service. This is operationally simpler and allows for "built-in" backups and scaling. You can find many different types databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
 
 ###VMs, containers and Kubernetes
 
@@ -124,14 +124,14 @@ To run a production application in the cloud using Kubernetes, there are several
 2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do I need for my worker nodes? Virtual machines or Bare Metal?
 3. How many worker nodes do you need? This depends highly on the applications scale, the more nodes you have the more resilient your application will be.
 4. How many replicas should you have for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments.
-5. Which is the minimal set of resources your app needs to startup? You might wantg to test your application for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
+5. Which is the minimal set of resources your app needs to startup? You might want to test your application for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
 6. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
 
 To make the above more specific, let's assume you want to run the JPetStore application in the cloud for production use and expect a high load of traffic. Let's explore what resources you would need:
 
-1. Setup three clusters, one for development, one testing and one for production.
+1. Setup three clusters, one for development, one for testing and one for production.
 2. The development and testing clusters can start with minimum RAM and CPU option (e.g. 2 CPU's, 4GB of RAM and one worker node for each cluster).
-3. For the production cluster, you may want to have more resources for performance, high availability and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPU's, 16GB of RAM, and two workers nodes.
+3. For the production cluster, you may want to have more resources for performance, high availability, and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPU's, 16GB of RAM, and two workers nodes.
 
 ##Decide where and how to store data
 
@@ -141,13 +141,13 @@ The {{site.data.keyword.containershort_notm}} allows you to choose from several 
 
 ###Non-persistent data storage
 
-Containers and pods are, by design, short-lived and can fail unexpectedly. While you can store data in the local file system of the container, this only stores it throughout the lifecycle of the container. This data (inside a container) can not be shared with other containers or pods and is lost when the container crashes or is removed. 
+Containers and pods are, by design, short-lived and can fail unexpectedly. While you can store data in the local file system of the container, this only stores it throughout the lifecycle of the container. This data (inside a container) cannot be shared with other containers or pods and is lost when the container crashes or is removed. 
 
 ###Persistent data storage
 
 To persist data, you need to create a persistent volume claim (PVC), which will provision [NFS](https://en.wikipedia.org/wiki/Network_File_System) file storage or block storage for your cluster. This mount is then claimed to a persistent volume (PV) to ensure that data is available, even if the pods crash or shut down. The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define various aspects, such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
 
-In Kubernetes, the way this can be done is by using `PersistentVolume` to store the data in a [NFS-based file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) and then use `PersistentVolumeClaim` to make that storage available to your pods. 
+In Kubernetes, the way this can be done is by using `PersistentVolume` to store the data in an [NFS-based file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) and then use `PersistentVolumeClaim` to make that storage available to your pods. 
 
 To create a PV and matching PVC, follow these steps: 
 
@@ -200,27 +200,56 @@ For more details on creating custom storages classes, please see the [cluster st
 
 ###Move existing data over
 
-To copy data from your local machine to the storage volume, first you need to mount the storage volume to a pod and then use the `kubectl cp` command to copy the files to that pod that been mooted to the storage volume. 
+To copy data from your local machine to the storage volume first, you need to mount the storage volume to a pod and then use the `kubectl cp` command to copy the files to that pod that been mooted to the storage volume. 
 
-1. Mount the PVC to a pod using:
+1. Create a Pod that uses the PersistentVolumeClaim as a volume. Create a new file called `storage_pod.yaml` with the following content: 
+
+   ```
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: task-pv-pod
+   spec:
+     volumes:
+       - name: task-pv-storage
+         persistentVolumeClaim:
+          claimName: mypvc
+     containers:
+       - name: task-pv-container
+         image: nginx
+         ports:
+           - containerPort: 80
+             name: "http-server"
+         volumeMounts:
+           - mountPath: "/mnt/data"
+             name: task-pv-storage
+   ```
+
+2. Create the pod: 
 
    ```bash
-   ToDo: 
+   kubectl create -f storage_pod.yaml
    ```
 
-2. Copy data from your local machine to a pod in your cluster:
+   Verify that the Container in the Pod is running `kubectl get <pod_name>`
 
-   ```
+3. Copy data from your local machine to a pod in your cluster:
+
+   ```bash
     kubectl cp <local_filepath>/<filename> <namespace>/<pod>:<pod_filepath>
    ```
 
-3. Copy data from a pod in your cluster to your local machine:
+4. Copy data from a pod in your cluster to your local machine:
 
    ```bash
    kubectl cp <namespace>/<pod>:<pod_filepath>/<filename> <local_filepath>/<filename>
    ```
 
-If you need to copy files before the application starts then you would need to mount the storage volume to an empty pod and copy the files before pushing the application.
+5. To verify files been copied, access shell to the Container running in your Pod: 
+
+   ```bash
+   kubectl exec -it <pod_name> -- /bin/bash
+   ```
 
 ###Set up data backups
 
@@ -232,17 +261,17 @@ Please review the following [backup and restore](https://console.bluemix.net/doc
 
 {: #prepare_code}
 
-### Apply the 12 factor principles
+### Apply the 12-factor principles
 
 The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native applications and you should understand and apply it when moving applications to containers and orchestrating these via Kubernetes.
 
-Here are some of key principles that apply to this tutorial:
+Here are some of the key principles that apply to this tutorial:
 
 - **Codebase** - All source code and configuration files are tracked inside a version control system (e.g. a GIT repository).
 
-- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the application before deploying it to the cluster. Checkout the [Continuous Deployment to Kubernetes tutorial](continuous-deployment-to-kubernetes.html) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and will show you how to add integrations such as security scanners, notifications, and analytics.
+- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the application before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](continuous-deployment-to-kubernetes.html) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and will show you how to add integrations such as security scanners, notifications, and analytics.
 
-- **Backing Services** - Your application code can connect to many services, such as databases, messaging queues or even AI services. These services (e.g. a database) can be installed locally in a separate node or used "as a service" in the cloud. In either case, the service is referenced by a simple endpoint (URL) and accessed through service credentials. Your code shouldn’t know the difference.
+- **Backing Services** - Your application code can connect to many services, such as databases, message queues or even AI services. These services (e.g. a database) can be installed locally in a separate node or used "as a service" in the cloud. In either case, the service is referenced by a simple endpoint (URL) and accessed through service credentials. Your code shouldn’t know the difference.
 
 - **Config** - All configuration information is stored in environment variables, and no service credentials are hardcoded within the application. 
 
@@ -290,9 +319,7 @@ To build one based on your existing application, you may use following common co
 
 For more information on creating a Dockerfile, checkout the docker [file reference](https://docs.docker.com/engine/reference/builder/#usage).
 
-To containerize the JPetStore application, the following [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) has been used.
-
- **ToDo: Dockerfile link to be updated before going live**
+To containerize the JPetStore application, the following [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) has been used. **ToDo: Dockerfile link to be updated before going live**
 
 ```bash
 # Build JPetStore war
@@ -371,7 +398,7 @@ kubectl get pods
 
 ###What's next
 
-Now that you understand the fundamentals of moving application to Kubernetes, next you should run the **JPetStore** application in your Kubernetes cluster and apply the concepts you've learned. Running the JPetStore demo, you will also learn how to extend a Kubernetes application using Watson services. 
+Now that you understand the fundamentals of moving the application to Kubernetes, next you should run the **JPetStore** application in your Kubernetes cluster and apply the concepts you've learned. Running the JPetStore demo, you will also learn how to extend a Kubernetes application using Watson services. 
 
 The **JPetStore** demo can be found [here](https://github.ibm.com/ibmcloud/ModernizeDemo/). **ToDo: update the JPetStore link** 
 
