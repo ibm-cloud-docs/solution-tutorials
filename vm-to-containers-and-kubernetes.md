@@ -22,7 +22,7 @@ There are two options for moving an application to Kubernetes:
 1. Identify components of a large monolith application, which can be separated into their own micro-service, containerized and deployed to Kubernetes.
 2. Containerize the entire application and deploy it on a Kubernetes cluster.
 
-In this tutorial, you will exercise the latter option using a popular Java e-commerce application **JPetStore**. After moving it to Kubernetes, you will extend it by using IBM Cloud services.
+In this tutorial, you will review the high-level steps you would need to go through to move an application to Kubernetes. It provides general guidance on what to look for.
 
 ## Objectives
 
@@ -31,7 +31,6 @@ In this tutorial, you will exercise the latter option using a popular Java e-com
 - Understand how to map components between VMs and Kubernetes.
 - Containerize the application.
 - Deploy the container to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}.
-- Extend the application with IBM Cloud services.
 
 ## Services used
 
@@ -41,8 +40,6 @@ This tutorial uses the following cloud services:
 
 - [{{site.data.keyword.containershort}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 - [{{site.data.keyword.composeForMySQL_full}}](https://console.bluemix.net/catalog/services/compose-for-mysql)
-- [{{site.data.keyword.visualrecognitionfull}}](https://console.bluemix.net/catalog/services/visual-recognition)
-- [Twilio](https://www.twilio.com/)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -51,6 +48,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 {:#architecture}
 
 The following diagram outlines a traditional application architecture, based on virtual machines.
+
+**TODO: add numbered steps to the digram below.** 
 
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/traditional_architecture.png)
@@ -69,20 +68,23 @@ The following diagram outlines a traditional application architecture, based on 
 
 A modern container architecture would look similar to:
 
+**TODO: update the digram to better.**
+
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/Architecture.png)
 </p>
 
 1. The user sends a request to the endpoint.
-2. Ingress load balances traffic to workloads in the cluster
-3. The data layer is an external managed database service.
+2. Ingress load balances traffic to workloads in the cluster.
+3. Persistent volumes for saving and sharing data between the application instances.
+4. The data layer is an externally managed database service.
 
 **Components:**
 
-- A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal machine. In this tutorial, you will set up a cluster with two worker nodes.
+- A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal machine. For this example, a cluster would have two worker nodes.
 - Persistent volumes for saving and sharing data between the application instances.
 - A Kubernetes ingress controller to manage balancing the load between worker nodes. Ingress is a collection of rules that allow inbound connections to reach the cluster services. Ingress balances the traffic between worker nodes internally.
-- A MySQL service, acting as the database. While Kubernetes allows you to run your own database inside the cluster, it is usually more favorable to use a managed database-as-a-service. This is operationally simpler and allows for "built-in" backups and scaling. You can find many different types databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
+- A MySQL service, acting as the database. While Kubernetes allows you to run your own database inside the cluster, it is usually more favorable to use a managed database-as-a-service (DBaaS). This is operationally simpler and allows for "built-in" backups and scaling. You can find many different types databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
 
 ###VMs, containers and Kubernetes
 
@@ -99,7 +101,7 @@ IBM Cloud provides the capability to run applications in containers on Kubernete
 
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
-In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. 
+In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers [here](https://www.ibm.com/support/knowledgecenter/en/linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.html).
 
 ### Kubernetes orchestration
 
@@ -114,20 +116,20 @@ By using Kubernetes clusters with the {{site.data.keyword.containershort_notm}},
 - Dynamic persistent volume support
 - Highly available, IBM-managed Kubernetes masters
 
-##Define your cluster size
+##Define your clusters
 
 {: #define_cluster}
 
 To run a production application in the cloud using Kubernetes, there are several items to consider:
 
 1. How many clusters do you need? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments.
-2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do I need for my worker nodes? Virtual machines or Bare Metal?
+2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do you need for the worker nodes? virtual machines or bare metal?
 3. How many worker nodes do you need? This depends highly on the applications scale, the more nodes you have the more resilient your application will be.
 4. How many replicas should you have for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure. 
 5. Which is the minimal set of resources your app needs to startup? You might want to test your application for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
 6. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
 
-To make the above more specific, let's assume you want to run the JPetStore application in the cloud for production use and expect a high load of traffic. Let's explore what resources you would need:
+To make the above more specific, let's assume you want to run the JPetStore application in the cloud for production use and expect a medium to high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one for testing and one for production.
 2. The development and testing clusters can start with minimum RAM and CPU option (e.g. 2 CPU's, 4GB of RAM and one worker node for each cluster).
@@ -149,6 +151,8 @@ To persist data, you need to create a persistent volume claim (PVC), which will 
 
 In Kubernetes, the way this can be done is by using `PersistentVolume` to store the data in an [NFS-based file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) and then use `PersistentVolumeClaim` to make that storage available to your pods. 
 
+Persistent data storage can be used to store application data like dynamic images and other files that is outside static application files like icons and etc. 
+
 To create a PV and matching PVC, follow these steps: 
 
 1. Review the available storage classes (full list of storage classes [here](https://console.bluemix.net/docs/containers/cs_storage.html#create) with storage capacity breakdown).
@@ -159,7 +163,7 @@ To create a PV and matching PVC, follow these steps:
 
 2. Run the command below to decide the storage class. 
 
-   Note: The **retain** options means that the storage class will not be removed, even after deleting the `PersistentVolumeClaim`. 
+   Note: The storage classes with the word "retain" means that the storage will not be removed, even after deleting the `PersistentVolumeClaim`. 
 
    ```bash
    kubectl describe storageclasses ibmc-file-retain-silver 
@@ -263,9 +267,9 @@ Please review the following [backup and restore](https://console.bluemix.net/doc
 
 ### Apply the 12-factor principles
 
-The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native applications and you should understand and apply it when moving applications to containers and orchestrating these via Kubernetes.
+The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native applications and you should understand and apply it when moving applications to containers and orchestrating these via Kubernetes. When moving applications to the container world, you need to apply some of these 12-factor principles. 
 
-Here are some of the key principles that apply to this tutorial:
+Here are some of the key principles:
 
 - **Codebase** - All source code and configuration files are tracked inside a version control system (e.g. a GIT repository).
 
@@ -276,7 +280,7 @@ Here are some of the key principles that apply to this tutorial:
 - **Config** - All configuration information is stored in environment variables, and no service credentials are hardcoded within the application. 
 
 ### Use secrets for credentials 
-For several reasons, it's never good practice to store credentials within the application. Instead, Kubernetes provides so called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**, which are intended to hold sensitive information (e.g. passwords, OAuth tokens or ssh keys). Putting this information in a `secret` is safer and more flexible than putting it verbatim into a `pod` definition or in a docker image.
+It's never good practice to store credentials within the application. Instead, Kubernetes provides so called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**, which are intended to hold sensitive information (e.g. passwords, OAuth tokens or ssh keys). Putting this information in a `secret` is safer and more flexible than putting it verbatim into a `pod` definition or in a docker image.
 
 1. Create a new file called `watson-secrets.txt` and add the service credential (which you can obtain from the IBM Cloud dashboard or using the CLI):
 
@@ -319,7 +323,7 @@ To build one based on your existing application, you may use following common co
 
 For more information on creating a Dockerfile, checkout the docker [file reference](https://docs.docker.com/engine/reference/builder/#usage).
 
-To containerize the JPetStore application, the following [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) has been used. **ToDo: Dockerfile link to be updated before going live**
+To containerize the JPetStore application, the following [Dockerfile](https://github.ibm.com/ibmcloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) has been used. **TODO: the Dockerfile link to be updated to the public GitHub repo URL.**
 
 ```bash
 # Build JPetStore war
@@ -338,7 +342,7 @@ RUN mkdir -p /config/lib/global
 COPY lib/mysql-connector-java-3.0.17-ga-bin.jar /config/lib/global
 ```
 
-Once a Dockerfile created, next you would need to build and push the docker images. The docker images for each of the microservices need to be built and the images need to be pushed to a container registry. These steps are for building the image and pushing it IBM Cloud private registry, but you can also push them to a public registry.
+Once a Dockerfile created, you would need to build and push the docker images. The docker images for the microservices needs to be built and then pushed to a container registry. Below are the steps are for building and pushing the images to IBM Cloud private registry, but you can also push them to a public registry.
 
 1. Identify your registry namespace with `bx cr namespaces` or create a new one using `bx cr namespace-add <NAMESPACE>`
 
@@ -396,11 +400,22 @@ kubectl get services
 kubectl get pods
 ```
 
+###Summary
+
+In summary, you have learned: 
+
+- The differences between VMs, containers and Kubernetes. 
+- How to define clusters for different environment types(dev, test, and production). 
+- How to handle data storage and the importance of persistent data storage. 
+- Apply the 12-factor principles to your application and use secrets for credentials in Kubernetes. 
+- Build docker images and push them to IBM Cloud container registry. 
+- Create Kubernetes deployment files and deploy the docker image to Kubernetes. 
+
 ###What's next
 
-Now that you understand the fundamentals of moving the application to Kubernetes, next you should run the **JPetStore** application in your Kubernetes cluster and apply the concepts you've learned. Running the JPetStore demo, you will also learn how to extend a Kubernetes application using Watson services. 
+To put everything you've learned in practice, you should run the **JPetStore** application on your cluster and apply the concepts learned. Running the **JPetStore** demo will also show you how to extend the application using Watson services. 
 
-The **JPetStore** demo can be found [here](https://github.ibm.com/ibmcloud/ModernizeDemo/). **ToDo: update the JPetStore link** 
+The **JPetStore** demo can be found [here](https://github.ibm.com/ibmcloud/ModernizeDemo/), see step by step guide to how to deploy the **JPetStore** demo in your cluster. **TODO: update the JPetStore URL to the public GitHub URL.** 
 
 ## Related Content
 {: #related_content}
