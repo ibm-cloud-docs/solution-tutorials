@@ -17,11 +17,15 @@ lastupdated: "2018-05-24"
 {:pre: .pre}
 
 # Asynchronous data processing using object storage and pub/sub messaging
-In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. To simulate this use case, you will first create a UI application which will be used to upload files to object storage and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
+In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. You will simulate this using a file processing example. First create a UI application which will be used to upload files to object storage and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
+
 {:shortdesc}
 
-## Services used
-{: #services}
+This pattern is used to decouple your application allowing greater control over scaling and performance. Message Hub can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks. In this example, the UI application is written in Node.js and the worker application is written in Java highliting the flexibily of this pattern. Even though both applications are running in the same Kubernetes cluster in this example, either piece could have also been implemented as a Cloud Foundry application or serverless function.
+
+## Products
+
+{: #products}
 
 * {{site.data.keyword.cos_full_notm}}
 * {{site.data.keyword.messagehub}}
@@ -33,8 +37,8 @@ In this tutorial, you will learn how to use an Apache Kafka based messaging serv
 
 1. The user uploads file using the UI application
 2. File is saved in {{site.data.keyword.cos_full_notm}}
-3. Message is sent to MessageHub topic
-4. When ready, workers listen for message and begin processing files
+3. Message is sent to MessageHub topic indicating the new file is awaiting processing.
+4. When ready, workers listen for messages and begin processing the new file.
 
 ## Before you begin
 {: #prereqs}
@@ -90,7 +94,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 
 {: #create_cos}
 
-{{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. Object Storage combined with a [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) allows you to store and serve ad payloads (images).
+{{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. We will use this to store the files uploaded by the UI.
 
 1. From the Dashboard, click on [**Create resource**](https://console.bluemix.net/catalog/) and select [**{{site.data.keyword.cos_short}}**](https://console.bluemix.net/catalog/services/cloud-object-storage) from the Storage section.
 2. Name the service `myobjectstorage` click **Create**.

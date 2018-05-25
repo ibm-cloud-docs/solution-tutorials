@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-08"
+lastupdated: "2018-05-22"
 
 ---
 
@@ -67,11 +67,11 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     <div class = "solutionBox">
         <h3 id="multi-region-webapp.html" class="solutionBoxTitle">
-            <a href = "multi-region-webapp.html">Deploy a secure web application across multiple regions</a>
+            <a href = "multi-region-webapp.html">Secure web application across multiple regions</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline.</p>
+                <p>This tutorial is a walkthrough of how to create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">Node.js</span>
                     <span class="tag-filter category">Continous Delivery</span>
@@ -115,6 +115,26 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution17/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="vm-to-containers-and-kubernetes.html" class="solutionBoxTitle">
+            <a href = "vm-to-containers-and-kubernetes.html">Understand how to move a VM based application to Kubernetes</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
+                    <span class="tag-filter category">Watson Visual Recognition</span>
+                    <span class="tag-filter category">File Storage</span>
+                    <span class="tag-filter category">Twilio</span>
+                    <span class="tag-filter category">MySQL</span>
+                    <span class="tag-filter category">Java</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution30/Architecture.png" />
             </div>
         </div>
     </div>
@@ -517,8 +537,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.</p>
-                    <span class="tag-filter category">Dynamic Dashboard Embedded</span>
+                <p>This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using {{site.data.keyword.dynamdashbemb_short}}.</p>
+                    <span class="tag-filter category">{{site.data.keyword.dynamdashbemb_short}}</span>
                     <span class="tag-filter category">Cloud Object Storage</span>
                     <span class="tag-filter category">SQL Query</span>
                     <span class="tag-filter category">Watson Studio</span>
@@ -538,7 +558,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Db2 Warehouse</span>
                     <span class="tag-filter category">App ID</span>
                     <span class="tag-filter category">IBM Cloud Functions</span>
-                    <span class="tag-filter category">Dynamic Dashboard Embedded</span>
+                    <span class="tag-filter category">{{site.data.keyword.dynamdashbemb_short}}</span>
                     <span class="tag-filter category">GitHub</span>
             </div>
             <div class="architectureDiagramContainer">

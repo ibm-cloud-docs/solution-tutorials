@@ -4,9 +4,9 @@
         "anchor": "websites",
         "solutions": [
             {
-                "name": "Deploy a secure web application across multiple regions",
+                "name": "Secure web application across multiple regions",
                 "url": "multi-region-webapp.html",
-                "description": "This tutorial is a walkthrough of how to create, secure, and deploy a web application across multiple regions using a continuous delivery pipeline.",
+                "description": "This tutorial is a walkthrough of how to create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
                 "imgSrc": "images/solution1/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
@@ -42,17 +42,18 @@
                 ]
             },
             {
-                "hidden": true,
                 "name": "Understand how to move a VM based application to Kubernetes",
-                "url": "infrastructure-to-kubernetes.html",
-                "description": "This tutorial walks you through the process of moving a VM based application to IBM Cloud Kubernetes cluster. You will do that by packaging the application into different Docker container files, run it locally and then deploy it to a Kubernetes cluster.",
+                "url": "vm-to-containers-and-kubernetes.html",
+                "description": "This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services.",
                 "imgSrc": "images/solution30/Architecture.png",
                 "tags": [
                     "Kubernetes",
                     "Container Service",
-                    "Docker",
-                    "PHP",
-                    "Compose for MySQL"
+                    "Watson Visual Recognition",
+                    "File Storage",
+                    "Twilio",
+                    "MySQL",
+                    "Java"
                 ]
             },
             {
@@ -346,10 +347,10 @@
             {
               "name": "Build a data lake with Object Storage",
               "url": "smart-data-lake.html",
-              "description": "This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using Dynamic Dashboard Embedded.",
+              "description": "This tutorial presents a data lake solution using IBM Cloud Object Storage. Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using {{site.data.keyword.dynamdashbemb_short}}.",
               "imgSrc": "images/solution29/architecture.png",
               "tags": [
-                  "Dynamic Dashboard Embedded",
+                  "{{site.data.keyword.dynamdashbemb_short}}",
                   "Cloud Object Storage",
                   "SQL Query",
                   "Watson Studio"
@@ -364,7 +365,7 @@
                   "Db2 Warehouse",
                   "App ID",
                   "IBM Cloud Functions",
-                  "Dynamic Dashboard Embedded",
+                  "{{site.data.keyword.dynamdashbemb_short}}",
                   "GitHub"
               ]
           },

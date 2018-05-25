@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-24"
+lastupdated: "2018-05-24"
 
 ---
 
@@ -22,14 +22,14 @@ In this tutorial, you create an application to automatically collect GitHub traf
 * Deploy a Python database app with multi-tenant support and secured access
 * Integrate App ID as OpenID Connect-based authentication provider
 * Set up automated, serverless collection of GitHub traffic statistics
-* Integrate Dynamic Dashboard Embedded for graphical traffic analytics
+* Integrate {{site.data.keyword.dynamdashbemb_short}} for graphical traffic analytics
 
 ## Products
 This tutorial uses the following products:
    * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
    * [{{site.data.keyword.dashdblong}}](https://console.bluemix.net/catalog/services/db2-warehouse)
    * [{{site.data.keyword.appid_long}}](https://console.bluemix.net/catalog/services/app-id)
-   * [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
+   * [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/ibm-cognos-dashboard-embedded)
 
 ## Before you begin
 {: #prereqs}
@@ -46,7 +46,7 @@ In this section, you set up the needed services and prepare the environment. All
    ```
    {:codeblock}
 
-2. Use `bx login` to log in interactively into . You can reconfirm the details by running `bx target` command.
+2. Use `bx login` to log in interactively into {{site.data.keyword.Bluemix_short}}. You can reconfirm the details by running `bx target` command. You need to have an organization and space set.
 
 3. Create a {{site.data.keyword.dashdbshort}} instance with the **Entry** plan and name it **ghstatsDB**:
    ```
@@ -65,11 +65,22 @@ In this section, you set up the needed services and prepare the environment. All
    bx resource service-instance-create ghstatsAppID appid graduated-tier us-south
    ```
    {:codeblock}
+   Thereafter, create an alias of that new service instance in the Cloud Foundry space. Replace **YOURSPACE** with the space you are deploying to.
+   ```
+   bx resource service-alias-create ghstatsAppID --instance-name ghstatsAppID -s YOURSPACE
+   ```
+  {:codeblock}
+
 6. Create an instance of the {{site.data.keyword.dynamdashbemb_short}} service using the **lite** plan.
    ```
    bx resource service-instance-create ghstatsDDE dynamic-dashboard-embedded lite us-south
    ```
    {:codeblock}
+   Again, create an alias of that new service instance and replace **YOURSPACE**.
+   ```
+   bx resource service-alias-create ghstatsDDE --instance-name ghstatsDDE -s YOURSPACE
+   ```
+  {:codeblock}
 7. In the **backend** directory, push the application to the IBM Cloud. The command uses a random route for your application.
    ```bash
    bx cf push

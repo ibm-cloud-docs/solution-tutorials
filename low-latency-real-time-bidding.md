@@ -47,7 +47,7 @@ In order for the advertisers to determine the ad they want to show and the biddi
 ## Create Kubernetes clusters
 {: #first_objective}
 
-The first step of creating the environment is the compute which will run your bidding application. Use IBM Cloud Container Service with Kubernetes to deploy highly available apps using the power and flexibility of clusters. Developers provide containerized applications and Kubernetes on IBM Cloud will handle deployment, scaling, and management aspects. Multiple instances of your application can run in a single cluster. We'll create multiple clusters to load balancer based on proximity of the request.
+The first step of creating the environment is the compute which will run your bidding application. Use {{site.data.keyword.containershort}} with Kubernetes to deploy highly available apps using the power and flexibility of clusters. Developers provide containerized applications and Kubernetes on IBM Cloud will handle deployment, scaling, and management aspects. Multiple instances of your application can run in a single cluster. We'll create multiple clusters to load balancer based on proximity of the request.
 
 In this section, we'll create two Kubernetes clusters, one in `US South` and another in `United Kingdom`.
 
@@ -71,26 +71,26 @@ We'll create a managed Redis services close to each of the Kubernetes clusters. 
 1. Compose for Redis instances are grouped using Cloud Foundry org and spaces. Start by creating a space called "RTB-space" by visiting **Manage > Account > Cloud Foundry Orgs > View Details** next to your org.
 2. From the dashboard, click on **Create resource**. In the **Data & Analytics** category, select **Compose for Redis**.
 3. Select `US South` region, and your new `RTB-space` space.
-4. Create. 
+4. Create.
 5. Repeat the steps to create another Redis instance in the `United Kingdom` region.
 
 
 ## Add Cloudant NoSQL DB
 {: #second_objective}
 
-When a bidding request comes in, user demographic location, website, history and other such information is provided. It is up to your application to use this information along with your own data such as inventory, pricing, and any saved user profiles to make bidding decisions and calculate your bidding price. Cloudant NoSQL DB can be used to persist this data in a fully-managed database-as-a-service with a wide variety of indexing options and replication capabilities. Create an instance of Cloudant near each of your Kubernetes cluster and then set up replication to keep the data in sync. 
+When a bidding request comes in, user demographic location, website, history and other such information is provided. It is up to your application to use this information along with your own data such as inventory, pricing, and any saved user profiles to make bidding decisions and calculate your bidding price. Cloudant NoSQL DB can be used to persist this data in a fully-managed database-as-a-service with a wide variety of indexing options and replication capabilities. Create an instance of Cloudant near each of your Kubernetes cluster and then set up replication to keep the data in sync.
 
 1. From the dashboard, click on **Create resource**. In the **Data & Analytics** category, select **Cloudant NoSQL DB**.
 2. Select `US South` region, and your `RTB-space` space.
-3. Create. 
+3. Create.
 4. Repeat the steps to create another **Cloudant NoSQL DB**. instance in the `United Kingdom` region.
-5. Follow the [Replication](https://console.bluemix.net/docs/services/Cloudant/api/replication.html) guide to set up replication between the two instances. 
+5. Follow the [Replication](https://console.bluemix.net/docs/services/Cloudant/api/replication.html) guide to set up replication between the two instances.
 
 
 ## Create an Object Storage
 {: #create_cos}
 
-IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. Cloud Object Storage provides flexible, cost-effective, and scalable cloud storage for unstructured data. Object Storage combined with a [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) allows you to store and serve ad payloads (images). 
+IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. Cloud Object Storage provides flexible, cost-effective, and scalable cloud storage for unstructured data. Object Storage combined with a [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) allows you to store and serve ad payloads (images).
 
 1. From the dashboard, click on **Create resource** and select **Object Storage** from the Storage section.
 2. Click **Create** and **Create**.
@@ -100,7 +100,7 @@ IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic
 ### Configure Content Delivery Network
 The Content Delivery Network service distributes content where it is needed. The first time content is requested, it’s pulled from the host server (Object Storage) to the network and stays there for other users to access it. This allows the end-users receive the ad content with less delay.
 
-1. From the dashboard, click on **Create resource** and select **Content Delivery Network** from the Network section. 
+1. From the dashboard, click on **Create resource** and select **Content Delivery Network** from the Network section.
 2. Create a Content Delivery Network instance.
 3. Select **Akamai** as the CDN Provider and click **Start Provision**.
 4. Set the **hostname** for the CDN to your custom domain. Although you set a custom domain, you can still access the CDN contents through the IBM provided CNAME. So if you don't plan to use custom domain, you can set an arbitrary name.
@@ -113,7 +113,7 @@ The Content Delivery Network service distributes content where it is needed. The
 11. Click **Create**.
 
 ## Conclusion
-Real-time bidding has data and performance requirements which make it unique to traditional web applications. RTB architecture on IBM Cloud allows you to leverage the broad range of cloud services and capabilities to build a scalable, low latency environment that can be used to run ad campaigns around the world. 
+Real-time bidding has data and performance requirements which make it unique to traditional web applications. RTB architecture on IBM Cloud allows you to leverage the broad range of cloud services and capabilities to build a scalable, low latency environment that can be used to run ad campaigns around the world.
 
 ## Related information
 

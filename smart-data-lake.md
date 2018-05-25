@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-05-22"
 
 ---
 
@@ -28,7 +28,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 - [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
 - [SQL Query](https://console.bluemix.net/catalog/services/sql-query)
 - [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio)
-- [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded)
+- [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/ibm-cognos-dashboard-embedded)
 
 ## Architecture
 
@@ -82,7 +82,7 @@ This section uses the command line to create service instances. Alternatively, y
     bx service create data-science-experience free-v1 data-lake-studio
     ```
     {: pre}
-5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/dynamic-dashboard-embedded) with a Cloud Foundry alias.
+5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
     ```sh
     bx resource service-instance-create data-lake-dde dynamic-dashboard-embedded lite us-south
     ```
@@ -331,7 +331,7 @@ In this section, you'll take a few additional steps to explore the features of t
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
-In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/dynamic-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
+In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/cognos-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
 {: tip}
 
 ## Expand the tutorial

@@ -95,7 +95,7 @@ When an application is deployed to a container in a **standard** cluster, logs a
 
    ![](images/solution17/cluster_logging.png)
 
-If you specified a space when you created the cluster then both the account owner and IBM Cloud Container Service key owner need `Manager`, `Developer`, or `Auditor` permissions in that space, refer **before you begin** section of [logging and monitoring](https://console.bluemix.net/docs/containers/cs_health.html#logging)
+If you specified a space when you created the cluster then both the account owner and {{site.data.keyword.containershort}} key owner need `Manager`, `Developer`, or `Auditor` permissions in that space, refer **before you begin** section of [logging and monitoring](https://console.bluemix.net/docs/containers/cs_health.html#logging)
 {:tip}
 
 ## Create a starter application
