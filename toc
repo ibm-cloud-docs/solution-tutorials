@@ -12,6 +12,7 @@ Solution Tutorials
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
     kubernetes-log-analysis-kibana.md
+    vm-to-containers-and-kubernetes.md
     continuous-deployment-to-kubernetes.md
     static-files-cdn.md
     pub-sub-object-storage.md
