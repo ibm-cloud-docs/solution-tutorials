@@ -43,7 +43,6 @@
             },
             {
                 "name": "Understand how to move a VM based application to Kubernetes",
-                "hidden": true,
                 "url": "vm-to-containers-and-kubernetes.html",
                 "description": "This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services.",
                 "imgSrc": "images/solution30/Architecture.png",
