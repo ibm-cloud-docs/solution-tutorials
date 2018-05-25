@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-17"
+lastupdated: "2018-05-25"
 ---
 
 {:shortdesc: .shortdesc}
@@ -49,8 +49,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 The following diagram outlines a traditional application architecture, based on virtual machines.
 
-**TODO: add numbered steps to the digram below.** 
-
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/traditional_architecture.png)
 
@@ -68,10 +66,8 @@ The following diagram outlines a traditional application architecture, based on 
 
 A modern container architecture would look similar to:
 
-**TODO: update the digram to better.**
-
 <p style="text-align: center;">
-![Architecture diagram](images/solution30/Architecture.png)
+![Architecture diagram](images/solution30/modern_architecture.png)
 </p>
 
 1. The user sends a request to the endpoint.
