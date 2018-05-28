@@ -163,37 +163,35 @@ You can build and run the application as you normally would using `mvn` for java
 In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
 
 1. Find your **namespace** by listing all the namespace in the registry.
-   ```
+   ```sh
    ibmcloud cr namespaces
    ```
    {: pre}
    If you have a namespace, make note of the name for use later. If you don't have one, create it.
-   ```
+   ```sh
    ibmcloud cr namespace-add <Name>
    ```
    {: pre}
-
 2. Set MYNAMESPACE and MYPROJECT environment variables to your namespace and project name respectively
 
-    ```
+    ```sh
     export MYNAMESPACE=<NAMESPACE>
     ```
-    ```
+    ```sh
     export MYPROJECT=<PROJECTNAME>
     ```
-
 3. Identify your **Container Registry** (e.g. registry.ng.bluemix.net) by running `ibmcloud cr info`
 4. Set MYREGISTRY env var to your registry.
-   ```
+   ```sh
    export MYREGISTRY=<REGISTRY>
    ```
 
 5. Tag the docker image that is used to create a container to run your app locally
-   ```
+   ```sh
    docker images
    ```
 
-   ```
+   ```sh
    docker tag <DOCKER IMAGE NAME> ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
 
@@ -201,10 +199,9 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {:tip}
 
 6. Push the docker image to your container registry on IBM Cloud
-   ```
+   ```sh
    docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
-
 7. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
 
    For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
@@ -218,13 +215,12 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {:tip}
 
 9. To install a Helm chart, run the below command
-  ````
+  ````sh
   helm install . --name ${MYPROJECT}
   ````
-
 10. You should see `==> v1/Service`. Remember the Nodeport which is a 6-digit number(e.g., 31569) under `PORT(S)`. This is your portnumber.
 11. For the public IP of worker node, run the below command
-   ```
+   ```sh
    ibmcloud cs workers <CLUSTER NAME>
    ```
 12. Access the application `http://worker-ip-address:portnumber/nameofproject`.
