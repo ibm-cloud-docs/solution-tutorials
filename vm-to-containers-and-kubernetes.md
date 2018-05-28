@@ -11,7 +11,7 @@ lastupdated: "2018-05-25"
 {:tip: .tip}
 {:pre: .pre}
 
-# Understand how to move a VM based application to Kubernetes
+# Move a VM based application to Kubernetes
 
 This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}. You will learn the process of taking an existing application, containerize it, deploy it to a Kubernetes cluster. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.
 
@@ -105,7 +105,7 @@ In addition, containers allow you to share the host OS. This reduces duplication
 
 This [2-hour self-paced course](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) will help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
 
-##Sizing your clusters 
+##Sizing clusters 
 
 {: #sizing_clusters}
 
