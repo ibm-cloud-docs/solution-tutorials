@@ -13,7 +13,7 @@ lastupdated: "2018-05-25"
 
 # Understand how to move a VM based application to Kubernetes
 
-This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.
+This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}. You will learn the process of taking an existing application, containerize it, deploy it to a Kubernetes cluster. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.
 
 The [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security, as well as insights into images and containers.
 
