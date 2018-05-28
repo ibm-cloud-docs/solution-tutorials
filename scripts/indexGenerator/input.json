@@ -42,7 +42,7 @@
                 ]
             },
             {
-                "name": "Understand how to move a VM based application to Kubernetes",
+                "name": "Move a VM based application to Kubernetes",
                 "url": "vm-to-containers-and-kubernetes.html",
                 "description": "This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}. You will learn the process of taking an existing application, containerize it, deploy it to a Kubernetes cluster. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.",
                 "imgSrc": "images/solution30/modern_architecture.png",

@@ -120,7 +120,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="vm-to-containers-and-kubernetes.html" class="solutionBoxTitle">
-            <a href = "vm-to-containers-and-kubernetes.html">Understand how to move a VM based application to Kubernetes</a>
+            <a href = "vm-to-containers-and-kubernetes.html">Move a VM based application to Kubernetes</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
