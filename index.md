@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-24"
+lastupdated: "2018-05-28"
 
 ---
 
@@ -120,21 +120,19 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     <div class = "solutionBox">
         <h3 id="vm-to-containers-and-kubernetes.html" class="solutionBoxTitle">
-            <a href = "vm-to-containers-and-kubernetes.html">Understand how to move a VM based application to Kubernetes</a>
+            <a href = "vm-to-containers-and-kubernetes.html">Move a VM based application to Kubernetes</a>
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the IBM Cloud Container Service. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services.</p>
+                <p>This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}. You will learn the process of taking an existing application, containerize it, deploy it to a Kubernetes cluster. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.</p>
                     <span class="tag-filter category">Kubernetes</span>
                     <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Watson Visual Recognition</span>
                     <span class="tag-filter category">File Storage</span>
-                    <span class="tag-filter category">Twilio</span>
                     <span class="tag-filter category">MySQL</span>
                     <span class="tag-filter category">Java</span>
             </div>
             <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "images/solution30/Architecture.png" />
+                <img class="architectureDiagram" src = "images/solution30/modern_architecture.png" />
             </div>
         </div>
     </div>

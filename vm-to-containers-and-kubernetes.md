@@ -11,9 +11,9 @@ lastupdated: "2018-05-25"
 {:tip: .tip}
 {:pre: .pre}
 
-# Understand how to move a VM based application to Kubernetes
+# Move a VM based application to Kubernetes
 
-This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}. You will learn how to take an existing application, containerize it, deploy it to a Kubernetes cluster, and then extend it using IBM Cloud services. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.
+This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}. You will learn the process of taking an existing application, containerize it, deploy it to a Kubernetes cluster. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.
 
 The [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security, as well as insights into images and containers.
 
@@ -67,7 +67,7 @@ The following diagram outlines a traditional application architecture, based on 
 A modern container architecture would look similar to:
 
 <p style="text-align: center;">
-![Architecture diagram](images/solution30/modern_architecture.png)
+![Architecture diagram](images/solution30/modern_architecture.png) 
 </p>
 
 1. The user sends a request to the endpoint.
@@ -105,31 +105,48 @@ In addition, containers allow you to share the host OS. This reduces duplication
 
 This [2-hour self-paced course](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) will help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
 
-By using Kubernetes clusters with the {{site.data.keyword.containershort_notm}}, you get the following benefits:
+## Sizing clusters 
 
-- Multiple data centers where you can deploy your clusters
-- Support for ingress and load balancer networking options
-- Dynamic persistent volume support
-- Highly available, IBM-managed Kubernetes masters
+{: #sizing_clusters}
 
-##Define your clusters
-
-{: #define_cluster}
+As you design your cluster architecture, you want to balance costs against availability, reliability, complexity, and recovery. Kubernetes clusters within the IBM Container Service provide architectural options based on the needs of your apps. With a bit of planning, you can get the most out of your cloud resources without over-architecting or over-spending. Even if you over or underestimate, you can easily scale up or down your cluster, either with additional worker nodes or larger worker nodes.
 
 To run a production application in the cloud using Kubernetes, there are several items to consider:
 
-1. How many clusters do you need? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments.
-2. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do you need for the worker nodes? virtual machines or bare metal?
-3. How many worker nodes do you need? This depends highly on the applications scale, the more nodes you have the more resilient your application will be.
-4. How many replicas should you have for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure.
-5. Which is the minimal set of resources your app needs to startup? You might want to test your application for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
-6. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
+1. Do you expect traffic from a specific geographic region? If yes, select the region that is physically closest to you for best performance.
+2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments. 
+3. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do you need for the worker nodes? virtual machines or bare metal?
+4. How many worker nodes do you need? This depends highly on the applications scale, the more nodes you have the more resilient your application will be.
+5. How many replicas should you have for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure.
+6. Which is the minimal set of resources your app needs to startup? You might want to test your application for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
+7. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
+8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind a IBM Cloud database service to your pod. 
 
 To make the above more specific, let's assume you want to run the JPetStore application in the cloud for production use and expect a medium to high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one for testing and one for production.
 2. The development and testing clusters can start with minimum RAM and CPU option (e.g. 2 CPU's, 4GB of RAM and one worker node for each cluster).
 3. For the production cluster, you may want to have more resources for performance, high availability, and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPU's, 16GB of RAM, and two workers nodes.
+
+### Quick-and-dirty calculator
+
+You can think about the needs of a worker node in relation to an app with the following formula. This highly simplistic formula can help you conceptualize your workload but is not intended for exact sizings. After simulating and observing load and failures, you can adjust the sizing in your dev environment. 
+
+- (Number of replicas needed) + (2 for high availability) = Number of worker nodes needed. 
+
+- (App memory) + (CPU requirements) = Size of each worker node.
+
+### Adjusting for the real thing 
+After observing the workload on your app, you can control the primary drivers for your workload with resource requests and resource limits. You can choose to over-commit your processing power, which guarantees resources will be available. Thus, you can consequently have fewer clusters and worker nodes. Watch for utilization around 70% capacity, giving you 30% headroom. If you're under 50%, increase density for your cluster. If you're over 70% capacity, increase the capacity of the cluster. A negative indicator is when you can't schedule a pod; you need bigger nodes to support the app's workload.
+
+### What IBM's doing for you
+
+By using Kubernetes clusters with IBM Container Service, you get the following benefits:
+
+- Multiple data centers where you can deploy your clusters.
+- Support for ingress and load balancer networking options.
+- Dynamic persistent volume support.
+- Highly available, IBM-managed Kubernetes masters.
 
 ##Decide where and how to store data
 

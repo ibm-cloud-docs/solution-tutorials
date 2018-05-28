@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-24"
+lastupdated: "2018-05-28"
 
 ---
 
@@ -46,49 +46,49 @@ In this section, you set up the needed services and prepare the environment. All
    ```
    {:codeblock}
 
-2. Use `bx login` to log in interactively into {{site.data.keyword.Bluemix_short}}. You can reconfirm the details by running `bx target` command. You need to have an organization and space set.
+2. Use `ibmcloud login` to log in interactively into {{site.data.keyword.Bluemix_short}}. You can reconfirm the details by running `ibmcloud target` command. You need to have an organization and space set.
 
 3. Create a {{site.data.keyword.dashdbshort}} instance with the **Entry** plan and name it **ghstatsDB**:
    ```
-   bx service create dashDB Entry ghstatsDB
+   ibmcloud service create dashDB Entry ghstatsDB
    ```
    {:codeblock}
 
 4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **ghstatskey**:   
    ```
-   bx service key-create ghstatsDB ghstatskey
+   ibmcloud service key-create ghstatsDB ghstatskey
    ```
    {:codeblock}
 
 5. Create an instance of the {{site.data.keyword.appid_short}} service. Use **ghstatsAppID** as name and the **Graduated tier** plan.
    ```
-   bx resource service-instance-create ghstatsAppID appid graduated-tier us-south
+   ibmcloud resource service-instance-create ghstatsAppID appid graduated-tier us-south
    ```
    {:codeblock}
    Thereafter, create an alias of that new service instance in the Cloud Foundry space. Replace **YOURSPACE** with the space you are deploying to.
    ```
-   bx resource service-alias-create ghstatsAppID --instance-name ghstatsAppID -s YOURSPACE
+   ibmcloud resource service-alias-create ghstatsAppID --instance-name ghstatsAppID -s YOURSPACE
    ```
   {:codeblock}
 
 6. Create an instance of the {{site.data.keyword.dynamdashbemb_short}} service using the **lite** plan.
    ```
-   bx resource service-instance-create ghstatsDDE dynamic-dashboard-embedded lite us-south
+   ibmcloud resource service-instance-create ghstatsDDE dynamic-dashboard-embedded lite us-south
    ```
    {:codeblock}
    Again, create an alias of that new service instance and replace **YOURSPACE**.
    ```
-   bx resource service-alias-create ghstatsDDE --instance-name ghstatsDDE -s YOURSPACE
+   ibmcloud resource service-alias-create ghstatsDDE --instance-name ghstatsDDE -s YOURSPACE
    ```
   {:codeblock}
 7. In the **backend** directory, push the application to the IBM Cloud. The command uses a random route for your application.
    ```bash
-   bx cf push
+   ibmcloud cf push
    ```
    {:codeblock}
    Wait for the deployment to finish. The application files are uploaded, the runtime environment created, and the services bound to the application. The service information is taken from the file `manifest.yml`. You need to update that file, if you used other service names. Once the process finishes successfully, the application URI is displayed.
 
-   The above command uses a random, but unique route for the application. If you want to pick one yourself, add it as additional parameter to the command, e.g., `bx cf push your-app-name`. You could also edit the file `manifest.yml`, change the **name** and change **random-route** from **true** to **false**.
+   The above command uses a random, but unique route for the application. If you want to pick one yourself, add it as additional parameter to the command, e.g., `ibmcloud cf push your-app-name`. You could also edit the file `manifest.yml`, change the **name** and change **random-route** from **true** to **false**.
    {:tip}
 
 ## App ID and GitHub configuration (browser)
@@ -131,7 +131,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    {:codeblock}   
 2. Create a new action **collectStats**. It uses a [Python 3 environment](https://console.bluemix.net/docs/openwhisk/openwhisk_reference.html#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
    ```bash
-   bx wsk action create collectStats --kind python-jessie:3 ghstats.zip
+   ibmcloud wsk action create collectStats --kind python-jessie:3 ghstats.zip
    ```
    {:codeblock}   
 
@@ -139,27 +139,27 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    {:tip}
 3. Bind the action to the database service. Use the instance and the service key that you created during the environment setup.
    ```bash
-   bx wsk service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
+   ibmcloud wsk service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
    ```
    {:codeblock}   
-4. Create a trigger based on the [alarms package](https://console.bluemix.net/docs/openwhisk/openwhisk_alarms.html#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC.
+4. Create a trigger based on the [alarms package](https://console.bluemix.net/docs/openwhisk/openwhisk_alarms.html#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
    ```bash
-   bx wsk trigger create myDaily --feed /whisk.system/alarms/alarm \
+   ibmcloud wsk trigger create myDaily --feed /whisk.system/alarms/alarm \
               --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
               --param stopDate "2018-12-31T00:00:00.000Z"
    ```
   {:codeblock}   
 
-  You could change the trigger from a daily to a weekly schedule by applying `"0 6 * * 0"`. This would fire every Sunday at 6am.
+  You can change the trigger from a daily to a weekly schedule by applying `"0 6 * * 0"`. This would fire every Sunday at 6am.
   {:tip}
 5. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
    ```bash
-   bx wsk rule create myStatsRule myDaily collectStats
+   ibmcloud wsk rule create myStatsRule myDaily collectStats
    ```
    {:codeblock}   
 6. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
    ```bash
-   bx wsk action invoke collectStats  -r
+   ibmcloud wsk action invoke collectStats  -r
    ```
    {:codeblock}   
    The output will look like this:
@@ -182,17 +182,17 @@ To clean up the resources used for this tutorial, you can delete the related ser
 
 1. Delete the {{site.data.keyword.openwhisk_short}} rule, trigger and action.
    ```bash
-   bx wsk rule delete myStatsRule
-   bx wsk trigger delete myDaily
-   bx wsk action delete collectStats
+   ibmcloud wsk rule delete myStatsRule
+   ibmcloud wsk trigger delete myDaily
+   ibmcloud wsk action delete collectStats
    ```
    {:codeblock}   
 2. Delete the Python app and its services.
    ```bash
-   bx resource service-instance-delete ghstatsAppID
-   bx resource service-instance-delete ghstatsDDE
-   bx service delete ghstatsDB
-   bx cf delete github-traffic-stats
+   ibmcloud resource service-instance-delete ghstatsAppID
+   ibmcloud resource service-instance-delete ghstatsDDE
+   ibmcloud service delete ghstatsDB
+   ibmcloud cf delete github-traffic-stats
    ```
    {:codeblock}   
 
