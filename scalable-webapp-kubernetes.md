@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-23"
+lastupdated: "2018-05-28"
 
 ---
 
@@ -57,7 +57,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 {: #prereqs}
 
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
-* [Install {{site.data.keyword.dev_cli_notm}}](https://console.bluemix.net/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+* [Install {{site.data.keyword.dev_cli_notm}}](https://console.bluemix.net/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
@@ -80,10 +80,10 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `bx login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `bx target` command.
+1. Use `ibmcloud login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
 2. When the cluster is ready, retrieve the cluster configuration:
    ```bash
-   bx cs cluster-config <cluster-name>
+   ibmcloud cs cluster-config <CLUSTER NAME>
    ```
    {: pre}
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
@@ -95,31 +95,28 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    {: pre}
    ![](images/solution2/kubectl_cluster-info.png)
 
-5. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. In the next section, you will use the `bx dev` tooling to create an application. `bx dev` relies on Helm to deploy applications into your cluster. Initialize Helm in your cluster.
-   ```bash
-   helm init
-   ```
-   {: pre}
-6. Upgrade helm by running:
-   ```bash
-   helm init --upgrade
-   ```
-   {: pre}
+   
+
 
 ## Create a starter application
 {: #create_application}
 
-The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
+The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
-1. Start the `bx dev` wizard.
+1. Start the `ibmcloud dev` wizard.
    ```
    bx dev create
    ```
    {: pre}
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Web App - Java MicroProfile / Java EE Basic` to create a Java starter. (To create a Node.js starter instead, use `Web App` > `Basic Web` > `Node` )
+
+1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Web App - Java MicroProfile / Java EE Basic` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Basic Web` > `Node`> `Web App - Express.js Basic` )
+
 1. Enter a **name** for your project.
+
 1. Enter unique **hostname** for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
+
 1. Do not add a DevOps toolchain, select **manual deployment**.
+
 1. Do not add additional services.
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/projects/java_project_contents.html#java-project-files).
@@ -142,7 +139,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 3. Build the application.
    ```
-   bx dev build
+   ibmcloud dev build
    ```
    {: pre}
 
@@ -152,7 +149,7 @@ You can build and run the application as you normally would using `mvn` for java
 
 1. Run the container.
    ```
-   bx dev run
+   ibmcloud dev run
    ```
    {: pre}
 
@@ -166,32 +163,67 @@ You can build and run the application as you normally would using `mvn` for java
 In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
 
 1. Find your **namespace** by listing all the namespace in the registry.
-   ```
-   bx cr namespaces
+   ```sh
+   ibmcloud cr namespaces
    ```
    {: pre}
    If you have a namespace, make note of the name for use later. If you don't have one, create it.
-   ```
-   bx cr namespace-add <name>
-   ```
-   {: pre}
-2. Find the **Container Registry** information by running.
-   ```
-   bx cr info
+   ```sh
+   ibmcloud cr namespace-add <Name>
    ```
    {: pre}
-3. Deploy to your Kubernetes cluster:
-   ```
-   bx dev deploy -t container
-   ```
-   {: pre}
-4. When prompted, enter your **cluster name**.
-5. Next, enter an **image name**.
-   Use the following format: `<registry_url>/<namespace>/<projectname>`
-   For example: `registry.ng.bluemix.net/mynamespace/myjavawebapp`.
-6. Wait a few minutes for your application to be deployed. You will see the message 'Your app is hosted at http://worker-ip-address:portnumber/' when complete.
-7. Access the application `http://worker-ip-address:portnumber/nameofproject`.
+2. Set MYNAMESPACE and MYPROJECT environment variables to your namespace and project name respectively
 
+    ```sh
+    export MYNAMESPACE=<NAMESPACE>
+    ```
+    ```sh
+    export MYPROJECT=<PROJECTNAME>
+    ```
+3. Identify your **Container Registry** (e.g. registry.ng.bluemix.net) by running `ibmcloud cr info`
+4. Set MYREGISTRY env var to your registry.
+   ```sh
+   export MYREGISTRY=<REGISTRY>
+   ```
+
+5. Tag the docker image that is used to create a container to run your app locally
+   ```sh
+   docker images
+   ```
+
+   ```sh
+   docker tag <DOCKER IMAGE NAME> ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
+   ```
+
+   For Java app, replace `<DOCKER IMAGE NAME>` with your project name and for node app with the name of the image ending with `-run`.
+   {:tip}
+
+6. Push the docker image to your container registry on IBM Cloud
+   ```sh
+   docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
+   ```
+7. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
+
+   For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
+
+8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Initialize Helm by navigating to `chart\YOUR PROJECT NAME` and running the below command in your cluster 
+
+   ```bash
+   helm init
+   ```
+   To upgrade helm, run this command `helm init --upgrade`
+   {:tip}
+
+9. To install a Helm chart, run the below command
+  ````sh
+  helm install . --name ${MYPROJECT}
+  ````
+10. You should see `==> v1/Service`. Remember the Nodeport which is a 6-digit number(e.g., 31569) under `PORT(S)`. This is your portnumber.
+11. For the public IP of worker node, run the below command
+   ```sh
+   ibmcloud cs workers <CLUSTER NAME>
+   ```
+12. Access the application `http://worker-ip-address:portnumber/nameofproject`.
 
 ## Use the IBM-provided domain for your cluster
 {: #ibm_domain}
@@ -206,7 +238,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 1. Identify your IBM-provided **Ingress domain**
    ```
-   bx cs cluster-get <cluster-name>
+   ibmcloud cs cluster-get <cluster-name>
    ```
    {: pre}
    to find
@@ -334,9 +366,8 @@ If you were to try to access your application with HTTPS at this time `https://<
 As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
 
    ```
-   kubectl scale deployment <nameofproject>-deployment --replicas=2
+ kubectl scale deployment <nameofproject>-deployment --replicas=2
    ```
-    {: pre}
 
 After a shortwhile, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handles the load balancing between the two replicas. Horizontal scaling can also be made automatic.
 
@@ -351,5 +382,6 @@ Refer to Kubernetes documentation for manual and automatic scaling:
 
 ## Related content
 
-* [IBM Container Service](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
+* [IBM Cloud Kubernetes Service](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
 * [IBM Cloud App Service](https://console.bluemix.net/docs/cloudnative/index.html#web-mobile)
+* [Continuous Deployment to Kubernetes](https://console.bluemix.net/docs/tutorials/continuous-deployment-to-kubernetes.html#continuous-deployment-to-kubernetes)
