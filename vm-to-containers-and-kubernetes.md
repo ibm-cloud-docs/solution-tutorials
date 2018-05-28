@@ -67,7 +67,7 @@ The following diagram outlines a traditional application architecture, based on 
 A modern container architecture would look similar to:
 
 <p style="text-align: center;">
-![Architecture diagram](images/solution30/modern_architecture.png)
+![Architecture diagram](images/solution30/modern_architecture.png) 
 </p>
 
 1. The user sends a request to the endpoint.
