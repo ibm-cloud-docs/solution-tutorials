@@ -105,7 +105,7 @@ In addition, containers allow you to share the host OS. This reduces duplication
 
 This [2-hour self-paced course](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) will help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
 
-##Sizing clusters 
+## Sizing clusters 
 
 {: #sizing_clusters}
 
@@ -128,7 +128,7 @@ To make the above more specific, let's assume you want to run the JPetStore appl
 2. The development and testing clusters can start with minimum RAM and CPU option (e.g. 2 CPU's, 4GB of RAM and one worker node for each cluster).
 3. For the production cluster, you may want to have more resources for performance, high availability, and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPU's, 16GB of RAM, and two workers nodes.
 
-###Quick-and-dirty calculator
+### Quick-and-dirty calculator
 
 You can think about the needs of a worker node in relation to an app with the following formula. This highly simplistic formula can help you conceptualize your workload but is not intended for exact sizings. After simulating and observing load and failures, you can adjust the sizing in your dev environment. 
 
