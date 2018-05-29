@@ -138,43 +138,40 @@ By using Kubernetes clusters with IBM Container Service, you get the following b
 - Dynamic persistent volume support.
 - Highly available, IBM-managed Kubernetes masters.
 
-##Decide where and how to store data
+##Decide where to store app data
 
 {: #decide_where_to_store_data}
 
-The {{site.data.keyword.containershort_notm}} allows you to choose from several options of storage and then sharing it across pods in your cluster. Not all storage options offer the same level of persistence and availability in disaster situations.
+{{site.data.keyword.containershort_notm}} provides several options to store and share data across pods. Not all storage options offer the same level of persistence and availability in disaster situations.
 
 ###Non-persistent data storage
 
-Containers and pods are, by design, short-lived and can fail unexpectedly. While you can store data in the local file system of the container, this only stores it throughout the lifecycle of the container. This data (inside a container) cannot be shared with other containers or pods and is lost when the container crashes or is removed.
+Containers and pods are, by design, short-lived and can fail unexpectedly. You can store data in the local file system of a container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. 
 
 ###Persistent data storage
 
-To persist data, you need to create a persistent volume claim (PVC), which will provision [NFS](https://en.wikipedia.org/wiki/Network_File_System) file storage or block storage for your cluster. This mount is then claimed to a persistent volume (PV) to ensure that data is available, even if the pods crash or shut down. The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define various aspects, such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
+You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) by using native Kubernetes persistent volumes. To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data rentention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.Bluemix_notm}}. You can mount the PVC to your pod to read from and write to the PV. 
 
-In Kubernetes, the way this can be done is by using `PersistentVolume` to store the data in an [NFS-based file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) and then use `PersistentVolumeClaim` to make that storage available to your pods.
+Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data.
 
-Persistent data storage can be used to store application data like dynamic images and other files that is outside static application files like icons and etc.
+To create a PVC:
 
-To create a PV and matching PVC, follow these steps:
-
-1. Review the available storage classes (full list of storage classes [here](https://console.bluemix.net/docs/containers/cs_storage.html#create) with storage capacity breakdown).
-
-   ```bash
+1. Review available storage classes. To find a detailed list of storage classes with a storage capacity breadown, see [here](https://console.bluemix.net/docs/containers/cs_storage.html#create). 
+   ```
    kubectl get storageclasses
    ```
+   {: pre}
 
-2. Run the command below to decide the storage class.
+2. View the details of a storage class. **Note:** If you provision storage with a storage class that includes the word `retain`, your data is not removed, even when you delete the PVC or the entire cluster.
 
-   Note: The storage classes with the word "retain" means that the storage will not be removed, even after deleting the `PersistentVolumeClaim`.
-
-   ```bash
+   Example command for the `ibmc-file-retain-silver` storage class: 
+   ```
    kubectl describe storageclasses ibmc-file-retain-silver
    ```
+   {: pre}
 
-3. Create a new file called `mypvc.yaml` with the following content:
-
-   ```bash
+3. Create a configuration file that is named `mypvc.yaml`. The following example is a request for 24 gigabyte of NFS file storage that is billed monthly. 
+   ```
    apiVersion: v1
    kind: PersistentVolumeClaim
    metadata:
@@ -190,20 +187,23 @@ To create a PV and matching PVC, follow these steps:
        requests:
          storage: 24Gi
    ```
+   {: codeblock}
 
-4. Create the PVC:
-
-   ```bash
+4. Create the PVC. 
+   ```
    kubectl apply -f mypvc.yaml
    ```
+   {: pre}
 
-5. Verify that your PVC is created and bound to the PV (this process can take a few minutes):
-
-   ```bash
+5. Verify that your PVC is created and bound to a PV. This process might take a few minutes. 
+   ```
    kubectl describe pvc mypvc
    ```
+   {: pre}
+   
+6. [Mount your PVC to a pod](/docs/containers/cs_storage.html#app_volume_mount) in your cluster. 
 
-For more details on creating custom storages classes, please see the [cluster storage documentation](https://console.bluemix.net/docs/containers/cs_storage.html#create).
+For more information about how to customize storage classes, or how to use existing NFS file storage or block storage, see the [{{site.data.keyword.containershort_notm}} storage documentation](https://console.bluemix.net/docs/containers/cs_storage.html#create).
 
 ###Move existing data over
 
