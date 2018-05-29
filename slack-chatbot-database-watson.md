@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-03-31"
+lastupdated: "2018-05-29"
 
 ---
 
@@ -52,25 +52,25 @@ In this section, we are going to set up the needed services and prepare the envi
    cd slack-chatbot-database-watson
    ```
 
-2. Use `bx login` to log in interactively. You can reconfirm the details by running `bx target` command.
+2. Use `ibmcloud login` to log in interactively. You can reconfirm the details by running `ibmcloud target` command.
 
 3. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
 
    ```
-   bx service create dashDB Entry eventDB
+   ibmcloud service create dashDB Entry eventDB
    ```
    {:codeblock}
    You can also use another than the **Entry** plan.
 
 4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, we need the authorization. Thus, we create service credentials and label them **slackbotkey**:   
    ```
-   bx service key-create eventDB slackbotkey
+   ibmcloud service key-create eventDB slackbotkey
    ```
    {:codeblock}
 
 5. Create an instance of the {{site.data.keyword.conversationshort}} service. We use **eventConversation** as name and the free Lite plan.
    ```
-   bx service create conversation free eventConversation
+   ibmcloud service create conversation free eventConversation
    ```
    {:codeblock}
 
@@ -83,7 +83,7 @@ In this section, we are going to set up the needed services and prepare the envi
    ```
    {:codeblock}   
 
-   **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#bx wsk action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
+   **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud wsk action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
 
 ## Load the conversation workspace
 In this part of the tutorial we are going to load a pre-defined workspace into the {{site.data.keyword.conversationshort}} service.
@@ -121,13 +121,13 @@ In order to integrate Slack and Facebook Messenger with {{site.data.keyword.conv
 
 1. On the command line, execute the following. Replace **MySlackApp** with the name you used in the previous section. The command updates the existing action **pre-conversation** in the package **MySlackApp_starter-code** with the code from the file **pre-conversation-APIKey.js**. That action usually is empty, but now, with our code, will obtain and add credentials to the information passed from Slack into the dialog.   
    ```
-   bx wsk action update MySlackApp_starter-code/pre-conversation pre-conversation-APIKey.js
+   ibmcloud wsk action update MySlackApp_starter-code/pre-conversation pre-conversation-APIKey.js
    ```
    {:codeblock}
 
 2. Verify that the new action is in place by retrieving its details:   
    ```
-   bx wsk action get MySlackApp_starter-code/pre-conversation
+   ibmcloud wsk action get MySlackApp_starter-code/pre-conversation
    ```
    {:codeblock}   
 
