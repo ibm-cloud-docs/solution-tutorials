@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2017
-lastupdated: "2018-04-20"
+  years: 2018
+lastupdated: "2018-05-29"
 
 ---
 
@@ -27,7 +27,7 @@ This tutorial highlights how Cloud Internet Services can be integrated with Kube
 
 
 * Build/Tag docker image and push it to IBM Cloud Registry
-* Create Kebernetes Clusters across multiple regions on IBM Cloud
+* Create Kubernetes Clusters across multiple regions on IBM Cloud
 * Deploy and scale application, build Kebernetes services
 * Configuire Global Load Balancer of CIS and ALB/Ingress of IKE
 * Configure DDoS/WAF of CIS to secure application
