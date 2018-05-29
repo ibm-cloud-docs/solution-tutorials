@@ -24,21 +24,25 @@ This tutorial highlights how Cloud Internet Services can be integrated with Kube
 * IBM Cloud Kubernetes Service(IKE) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
 ## Objectives
+{: #objectives}
 
+* Use CIS in front of a kubernetes cluster
+to implement 
+  * content caching with CDN
+  * and security with WAF
 
-* Build/Tag docker image and push it to IBM Cloud Registry
-* Create Kubernetes Clusters across multiple regions on IBM Cloud
-* Deploy and scale application, build Kebernetes services
-* Configuire Global Load Balancer of CIS and ALB/Ingress of IKE
-* Configure DDoS/WAF of CIS to secure application
+* Use CIS as global load-balancer with multiple cluster deployment
+  * use GLB to load balance between clusters
+  * use GLB Geo targets to send users to the closest cluster
 
 ## Services used
+{: #services}
 
 
 This tutorial uses the following runtimes and services:
+* IBM Cloud [Internet services](https://console.bluemix.net/catalog/services/internet-services)
 * [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-* [Internet services](https://console.bluemix.net/catalog/services/internet-services)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -47,18 +51,18 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution32/Architecture.png)
+  ![Architecture](images/other/cis-iks.Architecture.png)
 </p>
 
-intro sentence
+First of all, create IKS clusters across multipls regions and instance of CIS service, then -
 
-<p style="text-align: center;">
+1. The developer builds the application produces a Docker container image and pushes the image to IBM Container Registry
 
-  ![Architecture](images/solution1/Architecture.png)
-</p>
+2. Deployed image from IBM Container Registry to corresponding clusters in {{site.data.keyword.containershort_notm}} 
 
-1. The user does this
-2. Then that
+3. Run application, scale up and expose service for access
+
+4. Create CIS GLB and IKS Ingress so the requests can be distributed to application hosted among different multi-region clusters
 
 ## Before you begin
 {: #prereqs}
@@ -66,6 +70,10 @@ intro sentence
 * [Install Git](https://git-scm.com/)
 * [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
+
+* [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create services
 {: setup}
