@@ -11,76 +11,66 @@ lastupdated: "2018-05-25"
 {:tip: .tip}
 {:pre: .pre}
 
-# Move a VM based application to Kubernetes
+# Moving a VM based app to Kubernetes
 
-This tutorial walks you through the process of moving a VM based application to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}. You will learn the process of taking an existing application, containerize it, deploy it to a Kubernetes cluster. While the specific steps to migrate an existing application will vary, this tutorial aims to outline the general path with an example.
+This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/container_index.html) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
-The [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/container_index.html) offers managed Kubernetes clusters with isolation and hardware choice, operational tools, integrated security, as well as insights into images and containers.
+The lessons in this tutorial include instructions for how to take an existing app, containerize the app, and deploy the app to a Kubernetes cluster. To containerize your VM based app, you can choose between the following options. 
 
-There are two options for moving an application to Kubernetes:
+1. Identify components of a large monolith app that can be separated into their own micro-service. You can containerize these micro-services and deploy them to a Kubernetes cluster.
+2. Containerize the entire app and deploy the app to a Kubernetes cluster.
 
-1. Identify components of a large monolith application, which can be separated into their own micro-service, containerized and deployed to Kubernetes.
-2. Containerize the entire application and deploy it on a Kubernetes cluster.
-
-In this tutorial, you will review the high-level steps you would need to go through to move an application to Kubernetes. It provides general guidance on what to look for.
+Depending on the type of app that you have, the steps to migrate your app might vary. You can use this tutorial to learn about the general steps that you have to take and things that you have to consider before migrating your app.
 
 ## Objectives
 
 {: #objectives}
 
-- Understand how to map components between VMs and Kubernetes.
-- Containerize the application.
-- Deploy the container to a Kubernetes cluster on the {{site.data.keyword.containershort_notm}}.
+- Understand how to idendify micro-services in a VM based app and learn how to map components between VMs and Kubernetes.
+- Containerize a VM based app.
+- Deploy the container to a Kubernetes cluster in {{site.data.keyword.containershort_notm}}.
 
 ## Services used
 
 {: #products}
 
-This tutorial uses the following cloud services:
+This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 - [{{site.data.keyword.containershort}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 - [{{site.data.keyword.composeForMySQL_full}}](https://console.bluemix.net/catalog/services/compose-for-mysql)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
 {:#architecture}
 
-The following diagram outlines a traditional application architecture, based on virtual machines.
+### Traditional app architecture with VMs
+
+The following diagram shows an example of a traditional app architecture that is based on virtual machines.
 
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/traditional_architecture.png)
 
 </p>
 
-1. The user sends a request to the endpoint.
-2. The load balancer selects one of the healthy application instances, running on VMs to handle the request.
-3. The application server is backed by another VM, running a database.
+1. The user sends a request to the public endpoint of the Java app. The public endpoint is represented by a load balancer service that load balances incoming network traffic between available app server instances. 
+2. The load balancer selects one of the healthy app server instances that run on a VM and forwards the request. 
+3. The app server stores app data in a MySQL database that runs on a VM. App server instances host the Java app and run on a VM. App files, such as the app code, configuration files, and dependencies are stored on the VM.
 
-**Components:**
+### Containerized architecture
 
-- Two VMs to host the Java application, the application files are stored within the VMs.
-- A load balancer service to balance traffic between the two application servers.
-- A MySQL database, installed on a virtual server.
-
-A modern container architecture would look similar to:
+The following diagram shows an example of a modern container architecture that runs in a Kubernetes cluster. 
 
 <p style="text-align: center;">
 ![Architecture diagram](images/solution30/modern_architecture.png) 
 </p>
 
-1. The user sends a request to the endpoint.
-2. Ingress load balances traffic to workloads in the cluster.
-3. Persistent volumes for saving and sharing data between the application instances.
-4. The data layer is an externally managed database service.
+1. The user sends a request to the public endpoint of the Java app. The public endpoint is represented by an Ingress application load balancer (ALB) that load balances incoming network traffic across app pods in the cluster. The ALB is a collection of rules that allow inbound network traffic to a publicly exposed app. 
+2. The ALB forwards the request to one of the available app pods in the cluster. App pods run on worker nodes that can be a virtual or physical machine. 
+3. App pods store data in persistent volumes. Persistent volumes can be used to share data between app instances or worker nodes. 
+4. App pods store data in an {{site.data.keyword.Bluemix_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed dabase-as-a-service (DBasS) is usually easier to configure and provices built-in backups and scaling. You can find many different types databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
 
-**Components:**
-
-- A cluster can have one or more worker nodes. A worker node is a virtual server, physical server or bare metal machine. For this example, a cluster would have two worker nodes.
-- Persistent volumes for saving and sharing data between the application instances.
-- A Kubernetes ingress controller to manage balancing the load between worker nodes. Ingress is a collection of rules that allow inbound connections to reach the cluster services. Ingress balances the traffic between worker nodes internally.
-- A MySQL service, acting as the database. While Kubernetes allows you to run your own database inside the cluster, it is usually more favorable to use a managed database-as-a-service (DBaaS). This is operationally simpler and allows for "built-in" backups and scaling. You can find many different types databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
 
 ###VMs, containers and Kubernetes
 
