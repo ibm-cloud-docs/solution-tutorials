@@ -14,6 +14,7 @@ lastupdated: "2018-05-25"
 # Moving a VM based app to Kubernetes
 
 This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/container_index.html) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+{: shortdesc}
 
 The lessons in this tutorial include instructions for how to take an existing app, containerize the app, and deploy the app to a Kubernetes cluster. To containerize your VM based app, you can choose between the following options. 
 
@@ -143,14 +144,18 @@ By using Kubernetes clusters with IBM Container Service, you get the following b
 {: #decide_where_to_store_data}
 
 {{site.data.keyword.containershort_notm}} provides several options to store and share data across pods. Not all storage options offer the same level of persistence and availability in disaster situations.
+{: shortdesc}
 
 ###Non-persistent data storage
 
 Containers and pods are, by design, short-lived and can fail unexpectedly. You can store data in the local file system of a container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. 
 
-###Persistent data storage
+###Create persistent data storage for your app
 
-You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) by using native Kubernetes persistent volumes. To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data rentention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.Bluemix_notm}}. You can mount the PVC to your pod to read from and write to the PV. 
+You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) by using native Kubernetes persistent volumes. 
+{: shortdesc}
+
+To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data rentention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.Bluemix_notm}}. You can mount the PVC to your pod to read from and write to the PV. 
 
 Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data.
 
@@ -200,16 +205,15 @@ To create a PVC:
    kubectl describe pvc mypvc
    ```
    {: pre}
-   
-6. [Mount your PVC to a pod](/docs/containers/cs_storage.html#app_volume_mount) in your cluster. 
 
 For more information about how to customize storage classes, or how to use existing NFS file storage or block storage, see the [{{site.data.keyword.containershort_notm}} storage documentation](https://console.bluemix.net/docs/containers/cs_storage.html#create).
 
-###Move existing data over
+###Move existing data to persistent storage
 
-To copy data from your local machine to the storage volume first, you need to mount the storage volume to a pod and then use the `kubectl cp` command to copy the files to that pod that been mooted to the storage volume.
+To copy data from your local machine to your persistent storage, you must mount the PVC to a pod. Then, you can copy data from your local machine to the persistent volume in your pod. 
+{: shortdesc}
 
-1. Create a Pod that uses the PersistentVolumeClaim as a volume. Create a new file called `storage_pod.yaml` with the following content:
+1. Create a configuration file that is named `storage_pod.yaml` to define a pod that mounts the PVC that you created earlier as a volume.
 
    ```
    kind: Pod
@@ -231,38 +235,55 @@ To copy data from your local machine to the storage volume first, you need to mo
            - mountPath: "/mnt/data"
              name: task-pv-storage
    ```
+   {: codeblock}
 
-2. Create the pod:
-
-   ```bash
+2. Create the pod. 
+   ```
    kubectl create -f storage_pod.yaml
    ```
+   {: pre}
+   
+3. Verify that the container in the pod is running. 
+   ```
+   kubectl get pods
+   ```
+   {: pre}
 
-   Verify that the Container in the Pod is running `kubectl get <pod_name>`
-
-3. Copy data from your local machine to a pod in your cluster:
-
-   ```bash
+4. Copy data from your local machine to the pod. 
+   ```
     kubectl cp <local_filepath>/<filename> <namespace>/<pod>:<pod_filepath>
    ```
+   {: pre}
 
-4. Copy data from a pod in your cluster to your local machine:
-
-   ```bash
+5. Copy data from a pod in your cluster to your local machine:
+   ```
    kubectl cp <namespace>/<pod>:<pod_filepath>/<filename> <local_filepath>/<filename>
    ```
+   {: pre}
 
-5. To verify files been copied, access shell to the Container running in your Pod:
-
-   ```bash
+5. Log in to the container that runs in your pod. 
+   ```
    kubectl exec -it <pod_name> -- /bin/bash
    ```
+   {: pre}
+   
+6. Navigate to your container mount path and verify that the files were copied.
+   ```
+   cd "mnt/data"
+   ```
+   {: pre}
+   
+   ```
+   ls
+   ```
+   {: pre}
+   
 
-###Set up data backups
+###Set up backups for persistent storage
 
 File shares and block storage are provisioned into the same location as your cluster. The storage itself is hosted on clustered servers by IBM to provide high availability. However, file shares and block storage are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups, which you can use to restore your data when needed.
 
-Please review the following [backup and restore](https://console.bluemix.net/docs/containers/cs_storage.html#backup_restore) options for your NFS file shares and block storage.
+For more information, see [backup and restore](https://console.bluemix.net/docs/containers/cs_storage.html#backup_restore) options for NFS file storage and block storage.
 
 ##Prepare your code
 
@@ -270,91 +291,107 @@ Please review the following [backup and restore](https://console.bluemix.net/doc
 
 ### Apply the 12-factor principles
 
-The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native applications and you should understand and apply it when moving applications to containers and orchestrating these via Kubernetes. When moving applications to the container world, you need to apply some of these 12-factor principles.
+The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native apps. When you want to containerize an app, move this app to the cloud, and orchestrate the app with Kubernetes, it is important to understand and apply these principles. Some of these principles are required in {{site.data.keyword.Bluemix_notm}}. 
+{: shortdesc}
 
 Here are some of the key principles:
 
-- **Codebase** - All source code and configuration files are tracked inside a version control system (e.g. a GIT repository).
+- **Codebase** - All source code and configuration files are tracked inside a version control system (for example a GIT repository).
 
-- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the application before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](continuous-deployment-to-kubernetes.html) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and will show you how to add integrations such as security scanners, notifications, and analytics.
+- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](continuous-deployment-to-kubernetes.html) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
 
-- **Backing Services** - Your application code can connect to many services, such as databases, message queues or even AI services. These services (e.g. a database) can be installed locally in a separate node or used "as a service" in the cloud. In either case, the service is referenced by a simple endpoint (URL) and accessed through service credentials. Your code shouldn’t know the difference.
+- **Backing Services** - Your app code can connect to many services, such as databases, message queues or even AI services. These services can be installed locally in a separate node or used "as a service" in the cloud. In either case, the service is referenced by a simple endpoint (URL) and accessed by using service credentials. Your app code shouldn’t know the difference.
 
-- **Config** - All configuration information is stored in environment variables, and no service credentials are hardcoded within the application.
+- **Config** - All configuration information is stored in environment variables. No service credentials are hardcoded within the app code. To store credentials, you can use Kubernetes secrets. 
 
-### Use secrets for credentials
-It's never good practice to store credentials within the application. Instead, Kubernetes provides so called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)**, which are intended to hold sensitive information (e.g. passwords, OAuth tokens or ssh keys). Putting this information in a `secret` is safer and more flexible than putting it verbatim into a `pod` definition or in a docker image.
+### Store credentials in Kubernetes secrets
+It's never good practice to store credentials within the app code. Instead, Kubernetes provides so called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as  passwords, OAuth tokens, or ssh keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a docker image.
 
-1. Create a new file called `watson-secrets.txt` and add the service credential (which you can obtain from the IBM Cloud dashboard or using the CLI):
-
-   ```bash
+1. Create a file that is called `watson-secrets.txt` and add the service credentials. 
+   ```
    {
        "url": "https://gateway-a.watsonplatform.net/visual-recognition/api",
-       "api_key": ""
+       "api_key": <api_key>
    }
    ```
+   {: codeblock}
 
-2. Next, create a secret from the file by running:
-
-   ```bash
+2. Create a Kubernetes secret. 
+   ```
    kubectl create secret generic watson-visual-secret --from-file=watson-secrets.txt=./watson-secrets.txt
    ```
+   {: pre}
 
-3. To verify that the secret has been created, run the command:
-
-   ```bash
+3. Verify that the secret is created successfully. 
+   ```
    kubectl get secrets
    ```
+   {: pre} 
 
-The secret can now be referenced from the Kubernetes deployment file. We will go over the Kubernetes deployment files and how the secret can been referenced a bit later in this tutorial.
+The secret can now be referenced from the Kubernetes deployment file. We go over the Kubernetes deployment file and how to use the secret a bit later in this tutorial.
 
 ##Build your Docker images
 
 {: #build_docker_images}
 
-To containerize your application, you need to create a Dockerfile inside the root of the application. A Dockerfile is a text document that contains commands which are executed by Docker to build an image.
+To containerize your app, you must create a Docker image. 
+{: shortdesc}
 
-To build one based on your existing application, you may use following common commands.
+An image is created from a [Dockerfile](https://docs.docker.com/engine/reference/builder/#usage), which is a file that contains instructions and commands to build the image. A Dockerfile might reference build artifacts in its instructions that are stored separately, such as an app, the app's configuration, and its dependencies.
 
-- FROM - to define an official runtime as parent image.
-- ADD/COPY - to copy the current directory contents into the container
-- WORKDIR - Set the working directory
-- RUN - to Install any needed packages
-- EXPOSE - Make port available to the world outside this container
-- ENV NAME - Define the environment variable
-- CMD - Run application when the container launches
+To build your own Dockerfile for your existing app, you might use the following commands: 
 
-For more information on creating a Dockerfile, checkout the docker [file reference](https://docs.docker.com/engine/reference/builder/#usage).
+- FROM - Choose a parent image to define the container runtime.
+- ADD/COPY - Copy the content of a directory into the container.
+- WORKDIR - Set the working directory inside the container. 
+- RUN - Install software packages that the apps needs during runtime. 
+- EXPOSE - Make a port available outside the container. 
+- ENV NAME - Define environment variables. 
+- CMD - Define commands that run when the container launches. 
 
-To containerize the JPetStore application, the following [Dockerfile](https://github.com/ibm-cloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) has been used.
+Images are typically stored in a registry that can either be accessible by the public (public registry) or set up with limited access for a small group of users (private registry). Public registries, such as Docker Hub, can be used to get started with Docker and Kubernetes to create your first containerized app in a cluster. But when it comes to enterprise apps, use a private registry, like the one provided in {{site.data.keyword.registrylong_notm}} to protect your images from being used and changed by unauthorized users. 
 
-```bash
-# Build JPetStore war
-FROM openjdk:8 as builder
-COPY . /src
-WORKDIR /src
-RUN ./build.sh all
+To containerize the JPetStore app and store it in {{site.data.keyword.registrylong_notm}}: 
 
-# Use WebSphere Liberty base image from the Docker Store
-FROM websphere-liberty:latest
-
-# Copy war from build stage and server.xml into image
-COPY --from=builder /src/dist/jpetstore.war /opt/ibm/wlp/usr/servers/defaultServer/apps/
-COPY --from=builder /src/server.xml /opt/ibm/wlp/usr/servers/defaultServer/
-RUN mkdir -p /config/lib/global
-COPY lib/mysql-connector-java-3.0.17-ga-bin.jar /config/lib/global
-```
-
-Once a Dockerfile created, you would need to build and push the docker images. The docker images for the microservices needs to be built and then pushed to a container registry. Below are the steps are for building and pushing the images to IBM Cloud private registry, but you can also push them to a public registry.
-
-1. Identify your registry namespace with `bx cr namespaces` or create a new one using `bx cr namespace-add <NAMESPACE>`
-
-2. Build and push the **jpetstoreweb** image:
-
-   ```bash
-   $ docker build . -t registry.ng.bluemix.net/<NAMESPACE>/jpetstoreweb
-   $ docker push registry.ng.bluemix.net/<NAMESPACE>/jpetstoreweb
+1. Create a [Dockerfile](https://github.com/ibm-cloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) is used.
    ```
+   # Build JPetStore war
+   FROM openjdk:8 as builder
+   COPY . /src
+   WORKDIR /src
+   RUN ./build.sh all
+
+   # Use WebSphere Liberty base image from the Docker Store
+   FROM websphere-liberty:latest
+
+   # Copy war from build stage and server.xml into image
+   COPY --from=builder /src/dist/jpetstore.war /opt/ibm/wlp/usr/servers/defaultServer/apps/
+   COPY --from=builder /src/server.xml /opt/ibm/wlp/usr/servers/defaultServer/
+   RUN mkdir -p /config/lib/global
+   COPY lib/mysql-connector-java-3.0.17-ga-bin.jar /config/lib/global
+   ```
+   {: codeblock}
+   
+2. List available namespaces. 
+   ```
+   bx cr namspaces
+   ```
+   {: pre}
+   
+   If you do not have a namespace yet, you can create one by running `bx cs namespace-add <namespace>`. 
+   {: tip}
+   
+3. Build your container image and push it to {{site.data.keyword.registrylong_notm}}. Replace `<image_name>` with a name for your image including the full path to your registry namespace. 
+   ```
+   bx cr build -t <image_name> <directory_of_Dockerfile>
+   ```
+   {: pre}
+   
+   Example: 
+   ```
+   bx cr build -t registry.ng.bluemix.net/mynamespace/myimage:v1 .
+   ```
+   {: codeblock}
 
 ##Deploy to Kubernetes
 
