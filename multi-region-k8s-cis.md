@@ -17,27 +17,38 @@ lastupdated: "2018-04-20"
 {:pre: .pre}
 
 # Secure and resilient multi-region Kubernetes clusters with Cloud Internet Services
-This tutorial...
-{:shortdesc}
+This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a secure and resilient solution across multiple regions. 
+
+* IBM Cloud Internet Services(CIS) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications. 
+
+* IBM Cloud Kubernetes Service(IKE) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
 ## Objectives
-{: #objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+
+* Build/Tag docker image and push it to IBM Cloud Registry
+* Create Kebernetes Clusters across multiple regions on IBM Cloud
+* Deploy and scale application, build Kebernetes services
+* Configuire Global Load Balancer of CIS and ALB/Ingress of IKE
+* Configure DDoS/WAF of CIS to secure application
 
 ## Services used
-{: #services}
+
 
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
+* [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
+* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+* [Internet services](https://console.bluemix.net/catalog/services/internet-services)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
+
+<p style="text-align: center;">
+
+  ![Architecture](images/solution32/Architecture.png)
+</p>
 
 intro sentence
 
