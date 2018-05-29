@@ -218,7 +218,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
   ````sh
   helm install . --name ${MYPROJECT}
   ````
-10. You should see `==> v1/Service`. Remember the Nodeport which is a 6-digit number(e.g., 31569) under `PORT(S)`. This is your portnumber.
+10. You should see `==> v1/Service`. Remember the Nodeport which is a 5-digit number(e.g., 31569) under `PORT(S)`. This is your portnumber.
 11. For the public IP of worker node, run the below command
    ```sh
    ibmcloud cs workers <CLUSTER NAME>
