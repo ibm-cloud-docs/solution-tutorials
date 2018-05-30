@@ -76,7 +76,7 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster.
 3.  Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
-### Configure kubectl and helm
+### Configure kubectl
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
@@ -151,7 +151,7 @@ You can build and run the application as you normally would using `mvn` for java
 2. After your container starts, go to `http://localhost:9080/<nameofproject>`. If you created a Node.js application, use port 3000.
   ![](images/solution2/LibertyLocal.png)
 
-## Deploy application to cluster
+## Deploy application to cluster using helm chart
 {: #deploy}
 
 In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
@@ -187,11 +187,11 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```sh
    docker images
    ```
-    {: pre}
+   {: pre}
    ```sh
    docker tag <DOCKER IMAGE NAME> ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
-    {: pre}
+   {: pre}
    For Java app, replace `<DOCKER IMAGE NAME>` with your project name and for node app with the name of the image ending with `-run`.
    {:tip}
 
@@ -199,7 +199,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```sh
    docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
-    {: pre}
+   {: pre}
 7. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
 
    For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
