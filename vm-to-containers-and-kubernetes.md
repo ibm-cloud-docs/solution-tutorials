@@ -76,49 +76,49 @@ The following diagram shows an example of a modern container architecture that r
 
 ###VMs, containers and Kubernetes
 
-IBM Cloud provides the capability to run applications in containers on Kubernetes. The {{site.data.keyword.containershort_notm}} runs Kubernetes clusters that deliver the following tools and functions:
+{{site.data.keyword.containershort_notm}} provides the capability to run containerized apps in Kubernetes clusters and delivers the following tools and functions:
 
 - Intuitive user experience and powerful tools
 - Built-in security and isolation to enable rapid delivery of secure applications
 - Cloud services that include cognitive capabilities from IBM® Watson™
 - Ability to manage dedicated cluster resources for both stateless applications and stateful workloads
 
-### Virtual machines vs containers
+#### Virtual machines vs containers
 
-**VMs**, traditional applications are run on native hardware.  A single application does not typically use the full resources of a single machine. Most organizations try to run multiple applications on a single machine to avoid wasting resources. You could run multiple copies of the same application, but to provide isolation, you can use VMs to run multiple application instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
+**VMs**, traditional apps run on native hardware. A single app does not typically use the full resources of a single compute host. Most organizations try to run multiple apps on a single compute host to avoid wasting resources. You could run multiple copies of the same app, but to provide isolation, you can use VMs to run multiple app instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
 
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
 In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers [here](https://www.ibm.com/support/knowledgecenter/en/linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.html).
 
-### Kubernetes orchestration
+#### Kubernetes orchestration
 
-[Kubernetes](http://kubernetes.io/) is a container orchestrator to manage the lifecycle of containerized applications in a cluster of nodes. Your applications might need many other resources to run such as volumes, networks, and secrets (which will help you connect to other cloud services), talk to firewalled backends, and secure keys. Kubernetes helps you add these resources to your application. The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes will attempt to conform to, and then maintain the described state.
+[Kubernetes](http://kubernetes.io/) is a container orchestrator to manage the lifecycle of containerized apps in a cluster of worker nodes. Your apps might need many other resources to run, such as volumes, networks, and secrets which will help you connect to other cloud services, and secure keys. Kubernetes helps you to add these resources to your app. The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes attempts to conform to, and then maintains the described state.
 
-This [2-hour self-paced course](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) will help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
+This [2-hour self-paced course](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) can help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
 
 ## Sizing clusters 
 
 {: #sizing_clusters}
 
-As you design your cluster architecture, you want to balance costs against availability, reliability, complexity, and recovery. Kubernetes clusters within the IBM Container Service provide architectural options based on the needs of your apps. With a bit of planning, you can get the most out of your cloud resources without over-architecting or over-spending. Even if you over or underestimate, you can easily scale up or down your cluster, either with additional worker nodes or larger worker nodes.
+As you design your cluster architecture, you want to balance costs against availability, reliability, complexity, and recovery. Kubernetes clusters in {{site.data.keyword.containerlong_notm}} provide architectural options based on the needs of your apps. With a bit of planning, you can get the most out of your cloud resources without over-architecting or over-spending. Even if you over or underestimate, you can easily scale up or down your cluster, either with additional worker nodes or larger worker nodes.
 
-To run a production application in the cloud using Kubernetes, there are several items to consider:
+To run a production app in the cloud by using Kubernetes, consider the following items:
 
 1. Do you expect traffic from a specific geographic region? If yes, select the region that is physically closest to you for best performance.
 2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments. 
-3. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do you need for the worker nodes? virtual machines or bare metal?
-4. How many worker nodes do you need? This depends highly on the applications scale, the more nodes you have the more resilient your application will be.
+3. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
+4. How many worker nodes do you need? This depends highly on the apps scale, the more nodes you have the more resilient your app will be.
 5. How many replicas should you have for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure.
-6. Which is the minimal set of resources your app needs to startup? You might want to test your application for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource requests as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
-7. When to increase the number of nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
+6. Which is the minimal set of resources your app needs to startup? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
+7. When to increase the number of worder nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](analyze-logs-and-monitor-the-health-of-kubernetes-applications.html).
 8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind a IBM Cloud database service to your pod. 
 
-To make the above more specific, let's assume you want to run the JPetStore application in the cloud for production use and expect a medium to high load of traffic. Let's explore what resources you would need:
+To make the above more specific, let's assume you want to run the JPetStore app in the cloud for production use and expect a medium to high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one for testing and one for production.
 2. The development and testing clusters can start with minimum RAM and CPU option (e.g. 2 CPU's, 4GB of RAM and one worker node for each cluster).
-3. For the production cluster, you may want to have more resources for performance, high availability, and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPU's, 16GB of RAM, and two workers nodes.
+3. For the production cluster, you might want to have more resources for performance, high availability, and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPU's, 16GB of RAM, and two workers nodes.
 
 ### Quick-and-dirty calculator
 
@@ -133,7 +133,7 @@ After observing the workload on your app, you can control the primary drivers fo
 
 ### What IBM's doing for you
 
-By using Kubernetes clusters with IBM Container Service, you get the following benefits:
+By using Kubernetes clusters with {{site.data.keyword.containerlong_notm}}, you get the following benefits:
 
 - Multiple data centers where you can deploy your clusters.
 - Support for ingress and load balancer networking options.
@@ -354,7 +354,7 @@ Images are typically stored in a registry that can either be accessible by the p
 
 To containerize the JPetStore app and store it in {{site.data.keyword.registrylong_notm}}: 
 
-1. Create a [Dockerfile](https://github.com/ibm-cloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) is used.
+1. Create the [Dockerfile](https://github.com/ibm-cloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) for the JPetStore.
    ```
    # Build JPetStore war
    FROM openjdk:8 as builder
@@ -439,17 +439,15 @@ When you create a deployment resource in Kubernetes, a deployment controller is 
 In this tutorial, you learned the following: 
 
 - The differences between VMs, containers and Kubernetes.
-- How to define clusters for different environment types(dev, test, and production).
+- How to define clusters for different environment types (dev, test, and production).
 - How to handle data storage and the importance of persistent data storage.
-- Apply the 12-factor principles to your application and use secrets for credentials in Kubernetes.
-- Build docker images and push them to IBM Cloud container registry.
-- Create Kubernetes deployment files and deploy the docker image to Kubernetes.
+- Apply the 12-factor principles to your app and use secrets for credentials in Kubernetes.
+- Build docker images and push them to {{site.data.keyword.registrylong_notm}}.
+- Create Kubernetes deployment files and deploy the Docker image to Kubernetes.
 
 ###What's next
 
-To put everything you've learned in practice, you should run the **JPetStore** application on your cluster and apply the concepts learned. Running the **JPetStore** demo will also show you how to extend the application using Watson services.
-
-The **JPetStore** demo can be found [here](https://github.com/ibm-cloud/ModernizeDemo/), see step by step guide to how to deploy the **JPetStore** demo in your cluster.
+To put everything you've learned in practice, follow the [demo](https://github.com/ibm-cloud/ModernizeDemo/) to run the **JPetStore** app on your cluster and apply the concepts learned. Running the **JPetStore** demo also shows you how to extend the app using Watson services.
 
 ## Related Content
 {: #related_content}
@@ -457,9 +455,9 @@ The **JPetStore** demo can be found [here](https://github.com/ibm-cloud/Moderniz
 - [Get started](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
 - Kubernetes main [docs](http://kubernetes.io/).
-- IBM Cloud [docs](https://console.bluemix.net/docs/containers/cs_storage.html) managing storage on a cluster.
-- [Best practices solution guide](users-teams-applications.html) for organizing users, teams and applications.
-- [Analyze logs and monitor the health of Kubernetes applications using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
-- Set up [continuous integration and delivery pipeline](continuous-deployment-to-kubernetes.html) for containerized applications running in Kubernetes.
+- [Persistent storage](https://console.bluemix.net/docs/containers/cs_storage.html) in {{site.data.keyword.containershort_notm}}.
+- [Best practices solution guide](users-teams-applications.html) for organizing users, teams and apps.
+- [Analyze logs and monitor the health of Kubernetes apps by using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
+- Set up [continuous integration and delivery pipeline](continuous-deployment-to-kubernetes.html) for containerized apps that run in Kubernetes.
 - Deploy the production cluster [across multiple regions](multi-region-webapp.html).
 - Use [multiple clusters across multiple regions](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-locations) for high availability.
