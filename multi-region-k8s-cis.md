@@ -106,6 +106,8 @@ First of all, create IKS clusters across multipls regions and instance of CIS se
 **Notes:** repeat below steps for UK region and US region
 
 ## Prepare IBM Cloud CLI and IBM Cloud Registry
+{: #pre_IBC_ICR}
+
 ### Login IBM Cloud CLI and set context for kubenetes cluster in your CLI
 1. Get the command to set the environment variable and download the Kubernetes configuration files.
     ```bash
@@ -130,6 +132,7 @@ First of all, create IKS clusters across multipls regions and instance of CIS se
 3. Since Container Registry is repository storing Docker images, create custom namespace per your requirement. Please be aware that following operations need to run agaist the same namespace. Record the **namespace**
 
 ## Build and deploy application to Kubernetes Clusters
+{: #run_app_in_kubernete_cluster}
 
 ### Build application producing Docker image and deploy it to Kubernete cluster
 Refer step 1/2 and step6/7/8 of tutorial [Deploying single instance apps to Kubernetes clusters](https://console.bluemix.net/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1) to push Docker image into IBM Cloud Registry.  
@@ -173,63 +176,23 @@ Refer step 1/2 and step6/7/8 of tutorial [Deploying single instance apps to Kube
     ```
     {: pre}
 
-## Create Kubenetes Cluster Ingress and CIS GLB, distribute requests via GLB to access applications located among different clusters across multi-regions
+## Create Kubenetes Cluster Ingress and CIS GLB, distribute requests via GLB to access applications located among different clusters across multi-regions 
+{: #GLB_setting}
 
-### create ingress
+* _in working_ - Introductory statement that overviews the section
+
+### create Ingress
+* _in working_ 
 
 ### create GLB
-
-## Solution Specific Section
-{: #section_one}
-
-Introductory statement that overviews the section
-
-1. Step 1 Click **This** and enter your name.
-
-    This is a tip.
-    {:tip}
-
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
-
-### Sub section
-
-   ```bash
-   some shellscript
-   ```
-   {: pre}
-
-
-This paragraph only appears in the iOS documentation
-{: ios}
-
-And this paragraph only appears in the Android documentation
-{: android}
-
-This paragraph only appears for Java code
-{: java}
-
-And this paragraph only appears for Swift code
-{: swift}
-
-
-## Another Solution Specific Section
-{: #section_two}
-
-Introductory statement that overviews the section
-
-### Sub section
+* _In working_
+ 
 
 ## Remove resources
 {:removeresources}
 
-Steps to take to remove the resources created in this tutorial
+* _In working - Steps to take to remove the resources created in this tutorial_
 
 ## Related content
-{:related}
-
+* _In working - {:related}_
 * [Relevant links](https://blah)
