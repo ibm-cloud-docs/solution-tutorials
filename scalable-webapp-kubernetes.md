@@ -171,17 +171,17 @@ In this section, you first push the Docker image to the IBM Cloud private contai
     ```sh
     export MYNAMESPACE=<NAMESPACE>
     ```
-     {: pre}
+    {: pre}
     ```sh
     export MYPROJECT=<PROJECTNAME>
     ```
-     {: pre}
+    {: pre}
 3. Identify your **Container Registry** (e.g. registry.ng.bluemix.net) by running `ibmcloud cr info`
 4. Set MYREGISTRY env var to your registry.
    ```sh
    export MYREGISTRY=<REGISTRY>
    ```
-    {: pre}
+   {: pre}
 
 5. Tag the docker image that is used to create a container to run your app locally
    ```sh
@@ -223,7 +223,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```sh
    ibmcloud cs workers <CLUSTER NAME>
    ```
-    {: pre}
+   {: pre}
 12. Access the application `http://worker-ip-address:portnumber/nameofproject`.
 
 ## Use the IBM-provided domain for your cluster
