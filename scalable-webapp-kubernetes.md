@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-28"
+lastupdated: "2018-05-30"
 
 ---
 
@@ -67,7 +67,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 The major portion of this tutorial can be accomplished with a **Free** cluster. Two optional sections relating to Kubernetes Ingress and custom domain require a **Paid** cluster of type **Standard**.
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). 
+1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch).
 
    For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
    {:tip}
@@ -95,8 +95,6 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    {: pre}
    ![](images/solution2/kubectl_cluster-info.png)
 
-   
-
 
 ## Create a starter application
 {: #create_application}
@@ -105,7 +103,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
 1. Start the `ibmcloud dev` wizard.
    ```
-   bx dev create
+   ibmcloud dev create
    ```
    {: pre}
 
@@ -206,7 +204,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 
    For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
 
-8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Initialize Helm by navigating to `chart\YOUR PROJECT NAME` and running the below command in your cluster 
+8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Initialize Helm by navigating to `chart\YOUR PROJECT NAME` and running the below command in your cluster
 
    ```bash
    helm init
