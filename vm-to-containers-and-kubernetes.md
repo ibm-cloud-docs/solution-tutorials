@@ -38,6 +38,7 @@ Depending on the type of app that you have, the steps to migrate your app might 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 - [{{site.data.keyword.containershort}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+- [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/registry/private) 
 - [{{site.data.keyword.composeForMySQL_full}}](https://console.bluemix.net/catalog/services/compose-for-mysql)
 
 **Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
@@ -393,56 +394,49 @@ To containerize the JPetStore app and store it in {{site.data.keyword.registrylo
    ```
    {: codeblock}
 
-##Deploy to Kubernetes
-
+##Deploy your app to a Kubernetes cluster
 {: #deploy_to_kubernetes}
 
-In this section, you will learn the process deploying the application to Kubernetes.
+Now that your container image is created and stored in {{site.data.keyword.registrylong_notm}}, you can deploy your containerized app to your Kubernetes cluster. 
+{: shortdesc} 
 
 ### Create the Kubernetes deployment yaml
 
-A *Deployment* Controller provides declarative updates for Pods and ReplicaSets. You describe a *desired state* in a Deployment object, and the Deployment Controller changes the actual state to the desired state at a controlled rate. It allows you to define deployments to create new ReplicaSets, or to remove existing deployments and adopt all their resources with new deployments.
+When you create a deployment resource in Kubernetes, a deployment controller is deployed for you. The deployment controller monitors the pods in a replica set. If a pod is removed or becomes unavailable, the deployment controller automatically reschedules the pod to maintain the desired number of pods in the replica set. 
 
-Note that the [JPetStore deployment YAML](https://github.com/ibm-cloud/ModernizeDemo/blob/master/jpetstore/jpetstore.yaml) file contains:
+1. Get the [JPetStore deployment YAML](https://github.com/ibm-cloud/ModernizeDemo/blob/master/jpetstore/jpetstore.yaml). The yaml file defines the following components: 
+   - Two deployments to create the database and the JPetStore microservice
+   - Two Kubernetes services that expose the microservices 
+   - An Ingress resouce that defines the routing rules for the JPetStore microservice
+   
+2. Define [resource quotas](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for your containers to specify how much CPU and memory each container needs to properly start. If containers have resource quotas specified, the Kubernetes scheduler can make better decisions about the worker node where to place your pods on. 
 
-- Two deployments to create the database and the web microservices
-- Two services for exposing the microservices
-- An Ingress controller to manage the traffic to the services.
+3. Create your deployment. 
+   ```
+   kubectl create -f <filepath/deployment.yaml>
+   ```
+   {: pre}
 
-Kubernetes allows you to have multiple deployment YAML files, one for each microservice.
+4. Verify that your deployment is created, and that your pods and services are up and running. 
+   ```
+   kubectl get deployments
+   ```
+   {: pre}
+   
+   ```
+   kubectl get services
+   ```
+   {: pre}
+   
+   ```
+   kubectl get pods
+   ```
+   {: pre}
 
-### Define resource limits
 
-When specifying a pod, you have the option to specify how much CPU and memory (RAM) each container needs. If containers have resource requests specified, the scheduler can make better decisions about which nodes to place pods on.
+##Summary
 
-Each container of a pod can specify one or more of the following:
-
-```bash
-spec.containers[].resources.limits.cp
-spec.containers[].resources.limits.memory
-```
-
-There is lot's more information about managing Kubernetes compute resources [here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/).
-
-### Push Deployments
-
-You can create a deployment from the yaml file using the `kubectl` command:
-
-```bash
-kubectl create -f <yaml-file-name>.yaml
-```
-
-Verify your deployment and the associated pods and services by using:
-
-```bash
-kubectl get deployments
-kubectl get services
-kubectl get pods
-```
-
-###Summary
-
-In summary, you have learned:
+In this tutorial, you learned the following: 
 
 - The differences between VMs, containers and Kubernetes.
 - How to define clusters for different environment types(dev, test, and production).
