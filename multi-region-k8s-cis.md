@@ -61,9 +61,7 @@ First of all, create IKS clusters across multiple regions and instance of CIS, t
 
 3. Run application, scale up and expose service for access
 
-4. Create CIS GLB and IKS Ingress so the requests can be distributed to application hosted among different multi-region clusters
-
-5. Enable DDoS protection and caching service
+4. Create CIS GLB and IKS Ingress so the requests can be distributed to application hosted among different multi-region clusters. Besides, enable DDoS protection and caching service
 
 ## Before you begin
 {: #prereqs}
