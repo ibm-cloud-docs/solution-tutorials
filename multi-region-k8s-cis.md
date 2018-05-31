@@ -32,7 +32,7 @@ This tutorial highlights how Cloud Internet Services can be integrated with Kube
 
 * Use CIS in front of a kubernetes cluster to implement 
   * content caching with CDN
-  * and security with WAF
+  * and security with DDoS, WAF
 
 ## Services used
 {: #services}
@@ -43,7 +43,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial would incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -53,7 +53,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
   ![Architecture](images/other/cis-iks.Architecture.png)
 </p>
 
-First of all, create IKS clusters across multipls regions and instance of CIS service, then -
+First of all, create IKS clusters across multiple regions and instance of CIS, then -
 
 1. The developer builds the application produces a Docker container image and pushes the image to IBM Container Registry
 
@@ -62,6 +62,8 @@ First of all, create IKS clusters across multipls regions and instance of CIS se
 3. Run application, scale up and expose service for access
 
 4. Create CIS GLB and IKS Ingress so the requests can be distributed to application hosted among different multi-region clusters
+
+5. Enable DDoS protection and caching service
 
 ## Before you begin
 {: #prereqs}
@@ -75,21 +77,23 @@ First of all, create IKS clusters across multipls regions and instance of CIS se
 ## Create Kubernetes clusters
 {: #create_clusters}
 
-### Create Kubernetes clusters in region `United Kingdom`
+### Create Kubernetes cluster in one region, e.g.`United Kingdom`
 1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
 
    ![Kubernetes Cluster Creation on IBM Cloud](images/other/IKS.Cluster.Creation.GUI.png)
-2. Select region `United Kingdom`. For convenience, use the name `my-uk-cluster` to be consistent with this tutorial.
-3. The smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** is sufficient for this tutorial. Select 3 **Worker node** and leave all other options set to defaults. Click **Create Cluster**.
+2. Select region `United Kingdom`. For convenience, use the name `my-<region>-cluster` to be consistent with this tutorial, specify \<region> to match with region selected, e.g. uk
+3. The smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** is sufficient for this tutorial. Select 2 **Worker node** and leave all other options set to defaults. Click **Create Cluster**.
 4. Check the status of your **Cluster** and **Worker Node** and wait for them to be **ready**.
 
-### Create Kubernetes clusters in region `US South`
-* Repeat step above while region seleted is `US South` and name `my-us-cluster`
+### Create Kubernetes cluster in other regions, e.g.`US South`
+* Repeat step above for the other regions you'd like to have cluster, select different region, e.g. `US South`, specify cluster name `my-<region>-cluster`, e.g. replace \<region> with us
 
 **NOTE:** Do not proceed until your workers are ready.
 
 ## Create Instance of IBM Cloud Internet Services and register the custom domain 
 {: #domain_cis}
+
+Cloud Internet Servcies(CIS) is one stop-shop service providing GLB, Caching, WAF/Page rule to secure your applications when ensurig the reliability and performace for your Cloud applicatios.
 
 1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
 2. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog. 
@@ -101,10 +105,12 @@ First of all, create IKS clusters across multipls regions and instance of CIS se
     When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect.
     {:tip}
 
-**Notes:** repeat below steps for UK region and US region
-
-## Traget IBM Cloud CLI for your cluster and login IBM Cloud Registry
+## Target IBM Cloud CLI for your cluster and login IBM Cloud Registry correspondingnly
 {: #prep_steps}
+
+IBM Cloud CLI is working environment for Kuberetes cluster, different context of CLI for different Kuberetes cluster. Ensure to work with the resources within cluster context for specific Kubernetes cluster, such as deployment, services, pod, etc..
+
+**Notes:** Don't switch IBM Cloud CLI context until needed resources configured for your specific Kubernetes cluster. Since there are different clusters across multiple regions, repeat this step for clusters one by one which contain the applications being as the targets to receive distributed requests from load balancer. 
 
 ### Login IBM Cloud CLI and set context for kubenetes cluster in your CLI
 1. Get the command to set the environment variable and download the Kubernetes configuration files.
@@ -117,19 +123,22 @@ First of all, create IKS clusters across multipls regions and instance of CIS se
     export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-<location>-<cluster_name>.yml
     ```
     {: pre}
-3. Check Cluster region and specify it via `bx cs region-set` when needed
-
-### Login IBM Container Registry and create namespace(optional)
+3. Check cluster region and specify it via `bx cs region-set` when needed
+### Login IBM Container Registry and create namespace
 1. Login to IBM Container Registry CLI 
     ```bash
     bx cr login
     ```
     {: pre}
-2. Check Container Registry Region and ensure it is the same as the one for cluster in previous step for IBM Cloud CLI. When needed, specify the region via `bx cr region-set`. Take note for the **region** which will be used in following steps.
+2. Check Container Registry Region and ensure it is the same as the one of cluster in previous step via IBM Cloud CLI. If not matching, specify Container Registry region via `bx cr region-set`. Take note for the **region** which will be used for following steps.
+3. Container Registry is the repository containing the Docker images for containerized applications in Kubernetes cluster, create custom namespace per your requirement. 
+    ```bash
+    bx cr namespace-add <your_namespace>
+    ```
+    {: pre}
+    Please be aware that following steps need to run agaist the same namespace. Take note of **namespace** via `br cr namespaces` 
 
-3. Since Container Registry is repository storing Docker images, create custom namespace per your requirement. Please be aware that following operations need to run agaist the same namespace. Take note for  the **namespace**
-
-## Build and deploy application to Kubernetes Clusters
+## Build and deploy application to Kubernetes Cluster
 {: #run_app_in_kubernete_cluster}
 
 ### Build application producing Docker image and deploy it to Kubernete cluster
@@ -148,7 +157,6 @@ Refer step 1/2 and step6/7/8 of tutorial [Deploying single instance apps to Kube
     * If you are using Docker Community Edition, no action is needed.
     * If you are using Linux, follow the [Docker documentation](https://docs.docker.com/config/daemon/) to find instructions about how to start Docker depending on the Linux distribution that you use.
     * If you are using Docker Toolbox on Windows or OSX, you can use the Docker Quickstart Terminal, which starts Docker for you. Use the Docker Quickstart Terminal for the next few steps to run the Docker commands and then switch back to the CLI where you set the KUBECONFIG session variable.
-
 4. Build a Docker image that includes the app files of the `Lab 1` directory. If you need to make a change to the app in the future, repeat these steps to create another version of the image. 
     ```bash
     docker build --tag registry.<region>.bluemix.net/<namespace>/hello-world:1 .
@@ -174,44 +182,46 @@ Refer step 1/2 and step6/7/8 of tutorial [Deploying single instance apps to Kube
     ```
     {: pre}
 
-## Create Kubenetes Cluster Ingress and CIS GLB
+## Create Kubenetes Cluster Ingress Resource and CIS GLB
 {: #LB_setting}
 
-For now, your applications have been running within the kubernetes clusters across different regions. To expose its public access of cluster, Ingress resource will be created and configured. Cluster public IP and Cluster  you will use the Global Load Balancer (GLB) in IBM Cloud Internet Services to manage the traffic across multiple regions. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins. To distribute the requests among these applications, GLB and Ingress are configured. This way, it provides high availability and ensures the reliability of the applications.
+For now, your applications have been running within the kubernetes clusters across different regions. To expose its public access of cluster and route access to corresponding application, Ingress resource will be created and configured. Either with Kubernetes cluster's ALB public IP or its Ingress Sub-domain, Global Load Balancer (GLB) in IBM Cloud Internet Services will be created to manage the traffic across multiple regions. The GLB utilizes an origin pool which allows for the traffic to be distributed to multiple origins. This way, it provides high availability and ensures the reliability of the applications cross multiple regions.
 
-### create Ingress for Kubernets clusters per regions
-* _in working_ 
-
+### Take notes of Kubernetes cluster ALB IP, Ingress Sub-domain 
+1. When Kubernetes cluster gets created, its Application Load Balancer(ALB) public IP, Sub-domain are generated automatically. Take notes of IP and sub-domain for each clusters. Kubernetes cluster name can be got via `bx cs clusters`
+    ```bash
+    bx cs albs -cluster <cluster-name>
+    bx cs cluster-get <cluster-name>
+    ```
 
 ### create Global Load Balancer of Cloud Internet Services
 {: #add_glb}
-
-Before GLB creation, take notes of the IP address or the hostname of cluster in different regions. The IP address can be got via `kubectl get ingress`
 
 #### Before creating a GLB, create a health check for the GLB.
 
 1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
 2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**.
-   ![Health Check](images/solution1/health_check.png)
 
-##### After that, create an origin pool with two origins.
+##### After that, create an origin pool with needed origins.
 
 1. Click **Create Pool**.
 2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your kubernetes cluster.
-3.  Enter a name for the first origin and the either IP address of Kubernetes or host name for the application in the US region `<your_app>.mybluemix.net`. 
-4. Similarly, add another origin with the origin address pointing to the application in the UK region `<your_app>.eu-gb.mybluemix.net`.
+3. Enter a name for the first origin, put either ALB IP address of Kubernetes cluster or sub-domain for the application in certain region, e.g. <cluster-name>-id.<region>.containers.appdomain.cloud
+4. Similarly, add other origins with corresponding ALB public IP address or sub-domain of Kubernetes cluster of different regions.
 5. Click **Provision 1 Instance**.
-   ![Origin Pool](images/solution1/origin_pool.png)
 
 ##### Create a Global Load Balancer (GLB). 
 
 1. Click **Create Load Balancer**. 
 2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region. 
 3. Click **Add pool** and select the origin pool that you have just created. 
-4. Click **Provision 1 Instance**.
-   ![Global Load Balancer](images/solution1/load_balancer.png)
+4. Expand section of **Configure geo routes(optional)**, click **Add route**, select a region and click **Add**, then click **Add pool** to add origin pool for this Region. Region refers to where requests submmited and origin pool includes the application to serve the requests.{:tip}
+5. Click **Provision 1 Instance**.
 
- 
+
+### create Ingress for Kubernets clusters per regions
+* _in working_ 
+
 
 ## Remove resources
 {:removeresources}
