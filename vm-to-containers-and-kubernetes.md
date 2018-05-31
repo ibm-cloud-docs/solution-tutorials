@@ -23,13 +23,16 @@ The lessons in this tutorial include instructions for how to take an existing ap
 
 Depending on the type of app that you have, the steps to migrate your app might vary. You can use this tutorial to learn about the general steps that you have to take and things that you have to consider before migrating your app.
 
+**Note:** This solution tutorial is not a step by step guide where you don't need to run the commands outlined in the section steps. This solution is designed to give you an overall understanding of the things in which you need to do when moving apps to Kubernetes. For step by step guide on running a containerize app, we recommend you to complete the [last section](vm-to-containers-and-kubernetes.html#runthejpetstore) of the solution where you will run the JPetStore demo app in your cluster and explore the concepts learned in this solution guide. 
+
 ## Objectives
 
 {: #objectives}
 
 - Understand how to idendify micro-services in a VM based app and learn how to map components between VMs and Kubernetes.
-- Containerize a VM based app.
-- Deploy the container to a Kubernetes cluster in {{site.data.keyword.containershort_notm}}.
+- Learn how containerize a VM based app.
+- Learn how to deploy the container to a Kubernetes cluster in {{site.data.keyword.containershort_notm}}.
+- Put everything learned in practice, run the **JPetStore** app in your cluster.
 
 ## Services used
 
@@ -97,6 +100,15 @@ In addition, containers allow you to share the host OS. This reduces duplication
 
 This [2-hour self-paced course](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) can help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
 
+### What IBM's doing for you
+
+By using Kubernetes clusters with {{site.data.keyword.containerlong_notm}}, you get the following benefits:
+
+- Multiple data centers where you can deploy your clusters.
+- Support for ingress and load balancer networking options.
+- Dynamic persistent volume support.
+- Highly available, IBM-managed Kubernetes masters.
+
 ## Sizing clusters 
 
 {: #sizing_clusters}
@@ -131,16 +143,22 @@ You can think about the needs of a worker node in relation to an app with the fo
 ### Adjusting for the real thing 
 After observing the workload on your app, you can control the primary drivers for your workload with resource requests and resource limits. You can choose to over-commit your processing power, which guarantees resources will be available. Thus, you can consequently have fewer clusters and worker nodes. Watch for utilization around 70% capacity, giving you 30% headroom. If you're under 50%, increase density for your cluster. If you're over 70% capacity, increase the capacity of the cluster. A negative indicator is when you can't schedule a pod; you need bigger nodes to support the app's workload.
 
-### What IBM's doing for you
+## Decide what Database option to use  
 
-By using Kubernetes clusters with {{site.data.keyword.containerlong_notm}}, you get the following benefits:
+{: #database_options}
 
-- Multiple data centers where you can deploy your clusters.
-- Support for ingress and load balancer networking options.
-- Dynamic persistent volume support.
-- Highly available, IBM-managed Kubernetes masters.
+With Kubernetes, you have two options for handling databases: 
 
-##Decide where to store app data
+1. You can run your database inside the Kubernetes cluster, to do that you would need to create a microservice to run the database. If using MySQL database example, you need to do the following: 
+   - Create a MySQ  [Dockerfile](https://github.com/IBM-Cloud/ModernizeDemo/blob/master/jpetstore/db/Dockerf]) with the type and version of the database required. 
+   - Use secrets to store the database credential, see how it's been done for the [JPetStore](https://github.com/IBM-Cloud/ModernizeDemo/blob/master/jpetstore/db/Dockerfile.secret) example.
+   - Create a [deployment.yaml](https://github.com/IBM-Cloud/ModernizeDemo/blob/master/jpetstore/jpetstore.yaml) with the database service and deployment. 
+2. The second option would be to use the managed database-as-a-service (DBasS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data). To use this option, you would need to do the following: 
+   - Create a managed database-as-a-service (DBasS) from the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
+   - Store database credentials inside a secret, see more details on creating secrets [here](vm-to-containers-and-kubernetes.html#secrets).
+   - Use the database-as-a-service (DBasS) in your application.
+
+##Decide where to store application files
 
 {: #decide_where_to_store_data}
 
@@ -151,7 +169,7 @@ By using Kubernetes clusters with {{site.data.keyword.containerlong_notm}}, you 
 
 Containers and pods are, by design, short-lived and can fail unexpectedly. You can store data in the local file system of a container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. 
 
-###Create persistent data storage for your app
+###Learn how to create persistent data storage for your app
 
 You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) by using native Kubernetes persistent volumes. 
 {: shortdesc}
@@ -292,20 +310,19 @@ For more information, see [backup and restore](https://console.bluemix.net/docs/
 
 ### Apply the 12-factor principles
 
-The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native apps. When you want to containerize an app, move this app to the cloud, and orchestrate the app with Kubernetes, it is important to understand and apply these principles. Some of these principles are required in {{site.data.keyword.Bluemix_notm}}. 
+The [twelve-factor app](https://12factor.net/) is a methodology for building cloud native apps. When you want to containerize an app, move this app to the cloud, and orchestrate the app with Kubernetes, it is important to understand and apply some of these principles. Some of these principles are required in {{site.data.keyword.Bluemix_notm}}. 
 {: shortdesc}
 
-Here are some of the key principles:
+Here are some of the key principles required:
 
-- **Codebase** - All source code and configuration files are tracked inside a version control system (for example a GIT repository).
-
+- **Codebase** - All source code and configuration files are tracked inside a version control system (for example a GIT repository), this is required if using DevOps pipeline for deployment.
 - **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](continuous-deployment-to-kubernetes.html) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
-
-- **Backing Services** - Your app code can connect to many services, such as databases, message queues or even AI services. These services can be installed locally in a separate node or used "as a service" in the cloud. In either case, the service is referenced by a simple endpoint (URL) and accessed by using service credentials. Your app code shouldn’t know the difference.
-
-- **Config** - All configuration information is stored in environment variables. No service credentials are hardcoded within the app code. To store credentials, you can use Kubernetes secrets. 
+- **Config** - All configuration information is stored in environment variables. No service credentials are hardcoded within the app code. To store credentials, you can use Kubernetes secrets. More on credentials covered below.
 
 ### Store credentials in Kubernetes secrets
+
+{: secrets}
+
 It's never good practice to store credentials within the app code. Instead, Kubernetes provides so called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as  passwords, OAuth tokens, or ssh keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a docker image.
 
 1. Create a file that is called `watson-secrets.txt` and add the service credentials. 
@@ -329,9 +346,9 @@ It's never good practice to store credentials within the app code. Instead, Kube
    ```
    {: pre} 
 
-The secret can now be referenced from the Kubernetes deployment file. We go over the Kubernetes deployment file and how to use the secret a bit later in this tutorial.
+The secret can now be referenced from the Kubernetes deployment file. 
 
-##Build your Docker images
+##Containerize your app
 
 {: #build_docker_images}
 
@@ -352,7 +369,7 @@ To build your own Dockerfile for your existing app, you might use the following 
 
 Images are typically stored in a registry that can either be accessible by the public (public registry) or set up with limited access for a small group of users (private registry). Public registries, such as Docker Hub, can be used to get started with Docker and Kubernetes to create your first containerized app in a cluster. But when it comes to enterprise apps, use a private registry, like the one provided in {{site.data.keyword.registrylong_notm}} to protect your images from being used and changed by unauthorized users. 
 
-To containerize the JPetStore app and store it in {{site.data.keyword.registrylong_notm}}: 
+To containerize an app and store it in {{site.data.keyword.registrylong_notm}}: 
 
 1. Create the [Dockerfile](https://github.com/ibm-cloud/ModernizeDemo/blob/master/jpetstore/Dockerfile) for the JPetStore.
    ```
@@ -433,8 +450,9 @@ When you create a deployment resource in Kubernetes, a deployment controller is 
    ```
    {: pre}
 
-
 ##Summary
+
+{: #summary}
 
 In this tutorial, you learned the following: 
 
@@ -445,9 +463,11 @@ In this tutorial, you learned the following:
 - Build docker images and push them to {{site.data.keyword.registrylong_notm}}.
 - Create Kubernetes deployment files and deploy the Docker image to Kubernetes.
 
-###What's next
+##Run the JPetStore app in your cluster
 
-To put everything you've learned in practice, follow the [demo](https://github.com/ibm-cloud/ModernizeDemo/) to run the **JPetStore** app on your cluster and apply the concepts learned. Running the **JPetStore** demo also shows you how to extend the app using Watson services.
+{: #runthejpetstore}
+
+To put everything you've learned in practice, follow the [demo](https://github.com/ibm-cloud/ModernizeDemo/) to run the **JPetStore** app on your cluster and apply the concepts learned. Running the **JPetStore** demo will show you how to extend the app using IBM Watson services running as a separate microservice. 
 
 ## Related Content
 {: #related_content}
