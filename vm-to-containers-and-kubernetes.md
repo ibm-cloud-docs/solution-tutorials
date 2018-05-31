@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-25"
+lastupdated: "2018-05-31"
 ---
 
 {:shortdesc: .shortdesc}
@@ -22,8 +22,6 @@ The lessons in this tutorial include instructions for how to take an existing ap
 2. Containerize the entire app and deploy the app to a Kubernetes cluster.
 
 Depending on the type of app that you have, the steps to migrate your app might vary. You can use this tutorial to learn about the general steps that you have to take and things that you have to consider before migrating your app.
-
-**Note:** This solution tutorial is not a step by step guide where you don't need to run the commands outlined in the section steps. This solution is designed to give you an overall understanding of the things in which you need to do when moving apps to Kubernetes. For step by step guide on running a containerize app, we recommend you to complete the [last section](vm-to-containers-and-kubernetes.html#runthejpetstore) of the solution where you will run the JPetStore demo app in your cluster and explore the concepts learned in this solution guide. 
 
 ## Objectives
 
