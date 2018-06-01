@@ -213,10 +213,10 @@ For now, your applications have been running within the kubernetes clusters acro
 2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**.
 
 #### After that, create origin pool with needed origins.
-Repeat below five steps to create multple pools per your requirements. The origins in the same pool get the forwarded requests in Round-robin way. For this tutorial, three pools are defined - _A).iks_all_origins_; _B).iks_us_pool_; _C).iks_uk_pool._
+Repeat below five steps to create multiple pools per your requirements. The origins in the same pool get the forwarded requests in Round-robin way. For this tutorial, three pools are defined - _A).iks_all_origins_; _B).iks_us_pool_; _C).iks_uk_pool._
 1. Click **Create Pool**.
 2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your kubernetes cluster.
-3. Enter a name for the first origin in **Origin Name**, e.g._iks_uk_pool_, put either ALB IP address or sub-domain like _<cluster-name>-id.<region>.containers.appdomain.cloud_ of Kubernetes cluster in the **Origin Address**, e.g. `my_uk_cluster.eu-gb.containers.appdomain.cloud`
+3. Enter a name for the first origin in **Origin Name**, e.g. _iks_uk_pool_, put either ALB IP address or sub-domain like `<cluster-name>-id.<region>.containers.appdomain.cloud` of Kubernetes cluster in the **Origin Address**, e.g. `my_uk_cluster.eu-gb.containers.appdomain.cloud`
 4. (Optional)Similarly, add other origins with corresponding ALB public IP address or sub-domain of Kubernetes cluster.
 5. Click **Provision 1 Instance**.
 
