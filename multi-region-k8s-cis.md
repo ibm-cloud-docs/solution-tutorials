@@ -59,7 +59,7 @@ First of all, ensure IKS cluster and instance of CIS are available. Or, create I
 
 2. Deploy image from IBM Container Registry to corresponding clusters in {{site.data.keyword.containershort_notm}} 
 
-3. Run application, scale up and expose service for access
+3. Scale up and expose service for containerized appliation so being able to access
 
 4. Create CIS GLB and IKS Ingress so the requests can be distributed to application hosted among different multi-region clusters. Besides, enable DDoS protection and caching service
 
