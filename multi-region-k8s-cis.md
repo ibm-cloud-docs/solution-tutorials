@@ -57,7 +57,7 @@ First of all, create IKS clusters across multiple regions and instance of CIS, t
 
 1. The developer builds the application produces a Docker container image and pushes the image to IBM Container Registry
 
-2. Deployed image from IBM Container Registry to corresponding clusters in {{site.data.keyword.containershort_notm}} 
+2. Deploy image from IBM Container Registry to corresponding clusters in {{site.data.keyword.containershort_notm}} 
 
 3. Run application, scale up and expose service for access
 
@@ -140,8 +140,8 @@ IBM Cloud CLI is working environment for Kuberetes cluster, different context of
 {: #run_app_in_kubernete_cluster}
 
 ### Build application producing Docker image and deploy it to Kubernete cluster
-Refer step 1/2 and step6/7/8 of tutorial [Deploying single instance apps to Kubernetes clusters](https://console.bluemix.net/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1) to push Docker image into IBM Cloud Registry.  
-1. Clone the source code for the [Hello world app](https://github.com/IBM/container-service-getting-started-wt) to your user home directory. The repository contains different versions of a similar app in folders that each start with Lab.
+Refer step 1/2 and step6/7/8 of tutorial [Deploying single instance apps to Kubernetes clusters](https://console.bluemix.net/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1){:new_windows} to push Docker image into IBM Cloud Registry.  
+1. Clone the source code for the [Hello world app](https://github.com/IBM/container-service-getting-started-wt){:new_windows} to your user home directory. The repository contains different versions of a similar app in folders that each start with Lab.
     ```bash
     git clone https://github.com/IBM/container-service-getting-started-wt.git
    ```
@@ -185,7 +185,7 @@ Refer step 1/2 and step6/7/8 of tutorial [Deploying single instance apps to Kube
     ```
     {: pre}
 
-## Create Kubenetes Cluster Ingress Resource and CIS GLB
+## Create CIS GLB and Kubenetes Cluster Ingress Resource
 {: #LB_setting}
 
 For now, your applications have been running within the kubernetes clusters across different regions. To expose its public access of cluster and route access to corresponding application, Ingress resource will be created and configured. Either with Kubernetes cluster's ALB public IP or its Ingress Sub-domain, Global Load Balancer (GLB) in IBM Cloud Internet Services will be created to manage the traffic across multiple regions. The GLB utilizes an origin pool which allows for the traffic to be distributed to multiple origins. This way, it provides high availability and ensures the reliability of the applications cross multiple regions.
@@ -223,13 +223,58 @@ For now, your applications have been running within the kubernetes clusters acro
 
 
 ### Create Ingress Resource for Kubernets clusters per region
-* _in working_ 
 
+Ingress resource is Kubernetes resource and managed by the IBM-provided application load balancer in IBM® Cloud Kubernetes Service. It defines routes for the containerized application in Kuberentes by specifying the path to your app service, which is appended to the public route to form a unique app URL such as mycluster.us-south.containers.appdomain.cloud/myapp. More to refer [Managing network traffic by using Ingress](https://console.bluemix.net/docs/containers/cs_ingress.html#ingress).
+
+* Create Ingress yaml file
+    1. input Ingress Resource **name**
+    2. specify **host** with GLB url created above
+    3. enter app path of the request
+        *  **serviceName** - containerized app name, get it via `kubectl get services`
+        *  **servicePort** - the port to access your specified path of app, get it via `kubectl get services`
+    ```bash
+   apiVersion: extensions/v1beta1
+   kind: Ingress
+    metadata:
+      name: ing-uk-hui
+    spec:
+      rules:
+        - host: glb-helloworld.mycistest4.com
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: <application-service-name> 
+                servicePort: 80
+    ```
+* Create Ingress resource for cluster. Ensure IBM Cloud CLI context for your cluster{:tip}
+    ```bash
+    kubectl create -f <Ingress_resource_filename>.yaml
+    ```
+    It returns message like `ingress.extention "ingress_name" created`
+* List Ingress resource created, newly created ingress would be shown
+    ```bash
+    kubectl get ingress
+    ```
+
+
+## Secure Cluster from DDoS with CIS proxy
+{: #proxy_setting}
 
 ## Remove resources
 {:removeresources}
 
-* _In working - Steps to take to remove the resources created in this tutorial_
+Remove Kubernetes Cluster resources
+* remove ingress
+* remove pods
+* remove service
+* remove worknodes
+* remove clusters
+
+Remove CIS resources
+* remove GLB
+* remove origin pool
+* remove health check
 
 ## Related content
 {:related}_
