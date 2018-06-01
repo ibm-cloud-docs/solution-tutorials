@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-30"
+lastupdated: "2018-06-01"
 
 ---
 
@@ -340,6 +340,7 @@ In production applications, encrypt information such as URLs, usernames and pass
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
 - Experiment with additional datasets using SQL Query
+- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://console.bluemix.net/docs/tutorials/big-data-log-analytics.html)
 - Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://console.bluemix.net/catalog/services/app-id) service instance to enable security in the dashboard application
 
