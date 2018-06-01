@@ -181,12 +181,15 @@ This step shows how to prepare Docker image for Kubernetes cluster containerized
     ```bash
     kubectl scale deployment/hello-world-deployment --replicas=2
     ```
-     {: pre}
+     {: pre} 
+     It returns message like `deployment.extentions "deployment/hello-world-deployment" scaled`.
+     
 2. Make the app accessible by exposing the deployment as a NodePort service. 
     ```bash
     kubectl expose deployment/hello-world-deployment --type=NodePort --port=80 --name=hello-world-service --target-port=8080
     ```
-    {: pre}
+    {: pre} 
+    It returns message like `service "hello-world-service" exposed`.
 
 ## Create CIS GLB for clusters and create Kubenetes Cluster Ingress Resource per region
 {: #LB_setting}
@@ -262,7 +265,6 @@ Ingress resource is Kubernetes resource and managed by the IBM-provided applicat
     ```bash
     kubectl get ingress
     ```
-
 Congratulations! For now, CIS GLB is configured before Kubernetes cluster across multiple-regions (for this example, *`United Kindom`* and *`US South`*). So the requests would be routed to cluster according to location of request and GLB pool setting(geo route and default pools) and then to application per rule defined in Kubernetes cluster ingress resource.
 
 ## Secure applications in Kubernetes clusters 
