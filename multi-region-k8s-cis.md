@@ -100,7 +100,7 @@ Create two clusters, one in UK region and one in US region. It simulates the sce
 
 Repeat steps above for the other region you'd like to have cluster by selecting different **region**, e.g. repeat the previous steps to deploy another cluster in US South, select **regionn** `US South`, specify cluster name *my-us-cluster*.
 
-`**CHECKPOINT 1**` - Now Kubernetes cluster across two regions are ready, keep moving with below steps to build, deployment and run containerized applications within the clusters.
+**`CHECKPOINT 1`** - Now Kubernetes cluster across two regions are ready, keep moving with below steps to build, deployment and run containerized applications within the clusters.
 
 ## Target IBM Cloud CLI for your cluster and login IBM Cloud Registry correspondingly
 {: #prep_steps}
@@ -194,7 +194,7 @@ Repeat the above steps to deploy the image and the application to the other regi
 
 **Notes:**Remember to switch CLI for target cluster and login correspoding container registry in other region accordingly.
 
-`**CHECKPOINT 2**` - the applications are deployed to different clusters across multiple regions, e.g. `United Kindom` and `US South`. 
+**`CHECKPOINT 2`** - the applications are deployed to different clusters across multiple regions, e.g. `United Kindom` and `US South`. 
 
 ## Create Instance of IBM Cloud Internet Services and register the custom domain 
 {: #create_cis_instance}
@@ -289,7 +289,7 @@ For now, GLB is configured to distribute the requests to corresponding clusters 
     ```
 Repeat above steps to create Ingress for other region cluster, e.g. cluster in region `US South`
 
-`**CHECKPOINT 3**` - **Congratulations!** For now, CIS GLB is configured before Kubernetes cluster across multiple-regions (for this example, *`United Kindom`* and *`US South`*). So the requests would be routed to cluster according to location of request and GLB pool setting(geo route and default pools) and then to application per rule defined in Kubernetes cluster ingress resource.
+**`CHECKPOINT 3`** - **Congratulations!** For now, CIS GLB is configured before Kubernetes cluster across multiple-regions (for this example, *`United Kindom`* and *`US South`*). So the requests would be routed to cluster according to location of request and GLB pool setting(geo route and default pools) and then to application per rule defined in Kubernetes cluster ingress resource.
 
 ## Secure applications in Kubernetes clusters 
 {: #proxy_setting}
@@ -299,7 +299,7 @@ Toggle ON proxy besides CIS GLB, it enables DDoS protection and caching for GLB 
    ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis.proxy.png)
 [Best practice to secure traffic and internet application via CIS](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#manage-your-ibm-cis-for-optimal-security)
 
-`**CHECKPOINT 4**` - DDoS protection and cachinng are enabled for application runnning in cluster. After proxy is enabled and when access submmited via GLB URL plus application path, similar page like below shown which tell all access to your application would be under DDoS protection.    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
+**`CHECKPOINT 4`** - DDoS protection and cachinng are enabled for application runnning in cluster. After proxy is enabled and when access submmited via GLB URL plus application path, similar page like below shown which tell all access to your application would be under DDoS protection.    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
 
 ## Remove resources
 {:removeresources}
