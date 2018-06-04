@@ -91,18 +91,15 @@ This tutorial would incur costs. Use the [Pricing Calculator](https://console.bl
 
 Create two clusters, one in UK region and one in US region. It simulates the scenario of containerized apps running in different regions with {{site.data.keyword.containerlong}} on IBM Cloud. 
 
-### Create Kubernetes cluster in one region, e.g.`United Kingdom`
+### Create Kubernetes cluster per region
 1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
-
-   ![Kubernetes Cluster Creation on IBM Cloud](images/solution32-multi-region-k8s-cis/IKS.Cluster.Creation.GUI.png)
-2. Select **Region** `United Kingdom`. For convenience, use the name 　*`my-<region>-cluster`* to be consistent with this tutorial, specify *\<region>* to match with region selected, e.g. *uk* so cluster name looks like *my-uk-cluster*.
+2. Select **Region**, e.g. `United Kingdom`. For convenience, use the name 　*`my-<region>-cluster`* to be consistent with this tutorial, specify *\<region>* to match with region selected, e.g. *uk* so cluster name looks like *my-uk-cluster*.
 3. The smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** is sufficient for this tutorial. Select 2 **Worker nodes** and leave all other options set to defaults. Click **Create Cluster**.
 4. Check the status of your **Cluster** and **Worker Node** and wait for them to be **ready**.
 
-### Create Kubernetes cluster in other regions, e.g.`US South`
-* Repeat steps above for the other region you'd like to have cluster by selecting different **region**, e.g. `US South`, specify cluster name `my-<region>-cluster`, \<region> could be *us*
-
 **NOTE:** Do not proceed until your workers are ready.
+
+Repeat steps above for the other region you'd like to have cluster by selecting different **region**, e.g. repeat the previous steps to deploy another cluster in US South, select **regionn** `US South`, specify cluster name *my-us-cluster*.
 
 ## Target IBM Cloud CLI for your cluster and login IBM Cloud Registry correspondingly
 {: #prep_steps}
@@ -248,8 +245,7 @@ Repeat below five steps to create multiple pools per your requirements. The orig
 5. Click **Provision 1 Instance**.
 
 ### Create Ingress Resource for Kubernets clusters per region
-
-Repeat Ingress resource creation for clusters per regions.
+Repeat Ingress resource creation for clusters per regions.
 
 * Create Ingress yaml file
     1. input Ingress Resource **name**
