@@ -325,13 +325,13 @@ The web application firewall(WAF) protects web application against ISO Layer 7 a
 
 ### Define Page Rules in CIS for certain URL to ensure performance, security and reliability 
 Page rule is defined and functions to specific application URL referencing with domain. Like mentioned above, CIS is one-stop shop providing reliable, permant, secure ensurance for internet application and website. It provides page rules from all these three dimentions as well. For this tutorial -
-    1. In the Cloud Internet Services application, navigate to **Performance** > **Page Rules**
-    2. Click **Create rule**, the button right above the rules table
-    3. Section `Page Rule`, specify **URL match** to URL `/`
-    4. Section `Rule Behavior`, select **Web Application Firewall** under **Security**, toggle ON for **Set as**
-    5. Click **Add Setting**, select **TLS** under **Performance**, choose **Client-to-edge**, this provides the encrypted access via TLS between requester and GLB(or proxy) server.
-    6. Click **Add Setting**, select **Cache Level** under **Performance**, choose **Cache everything**
-    7. Click **Add Setting**, select **Edge Cache TTL** under **Performance**, select **1 day** which content will be cached at edge server for 1 day the fetch content to sync with content on origins.
+1. In the Cloud Internet Services application, navigate to **Performance** > **Page Rules**
+2. Click **Create rule**, the button right above the rules table
+3. Section `Page Rule`, specify **URL match** to URL `/`
+4. Section `Rule Behavior`, select **Web Application Firewall** under **Security**, toggle ON for **Set as**
+5. Click **Add Setting**, select **TLS** under **Performance**, choose **Client-to-edge**, this provides the encrypted access via TLS between requester and GLB(or proxy) server.
+6. Click **Add Setting**, select **Cache Level** under **Performance**, choose **Cache everything**
+7. Click **Add Setting**, select **Edge Cache TTL** under **Performance**, select **1 day** which content will be cached at edge server for 1 day the fetch content to sync with content on origins.
 
 [Best practice to secure traffic and internet application via CIS](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#manage-your-ibm-cis-for-optimal-security)
 
