@@ -309,7 +309,7 @@ Bascially, for caching, the edge services are enabled with proxy mode. The conte
     4. **Caching Level**, select `No query string`, cached content returns for the requests without query string.  
     5. **Browser Expiration**, select `1 day`, the cached content would be stored in user's broswer within 1 day ensuring the access performance while keeping relative up-to date content. It can be specified per requirement.
 
-**`CHECKPOINT 4`** - DDoS protection and cachinng are enabled for application runnning in cluster. After proxy is enabled and when access submmited via GLB URL plus application path, similar page like below shown which tell all access to your application would be under DDoS protection.    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
+**`CHECKPOINT 4`** - DDoS protection and cachinng are enabled for application runnning in cluster. After proxy is enabled and when access submmited via GLB URL plus application path, similar page like below shown which tell all access to your application would be under DDoS protection.    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
 
 ### Define WAF in CIS to secure the internet access 
 The web application firewall(WAF) protects web application against ISO Layer 7 attacks. Usually, it is combined with grouped rule-sets, these rule-sets aim to protect against vulnerabilities in the application by filtering out malicious traffic. 
