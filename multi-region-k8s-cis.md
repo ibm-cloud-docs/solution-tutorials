@@ -75,16 +75,16 @@ This tutorial would incur costs. Use the [Pricing Calculator](https://console.bl
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Overal Work Flow
-* Create clusters                                       *CHECKPOINT 1*
+* Create clusters                                       【*CHECKPOINT 1*】
 * Build images and push to regional registries          
-* Deploy app to both clusters                           *CHECKPOINT 2*
+* Deploy app to both clusters                           【*CHECKPOINT 2*】
 * Configure CIS with custom domain
 * Configure CIS global balancer
     * Create health check
     * Create origin pools
         * refer to the option to configure geo-pool to route users to closest cluster
-    * Deploy custom domain Ingress                       *CHECKPOINT 3*
-* Enable CIS DDOS + WAF                                  *CHECKPOINT 4*
+    * Deploy custom domain Ingress                       【*CHECKPOINT 3*】
+* Enable CIS DDOS + WAF                                  【*CHECKPOINT 4*】
 
 ## Create Kubernetes clusters per region
 {: #create_clusters}
