@@ -17,7 +17,7 @@ lastupdated: "2018-05-29"
 {:pre: .pre}
 
 # Secure and resilient multi-region Kubernetes clusters with Cloud Internet Services
-Generally, Kubernetes cluster ensures containerized appliation HA with multiple workers grouped within cluster. When certain worker does not work, the other workers within the same cluster will serve the internet requests which is apprarent to users. Furthermore, to provide HA at zone level by putting workers in multiple zones within the same region and eventually you would want more regions. This is not only for resiliency but also serving the requests closer to the users. 
+Generally, Kubernetes cluster ensures containerized appliation HA with multiple workers grouped within cluster. When certain worker does not work, the other workers within the same cluster will serve the internet requests which is apprarent to users. Furthermore, to provide HA at zone level, workers can be put in multiple zones within the same region but eventually you would want more regions. This is not only for resiliency but also serving the requests closer to the users. 
 
 This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a secure and resilient solution across multiple regions.  
 
@@ -52,7 +52,7 @@ This tutorial would incur costs. Use the [Pricing Calculator](https://console.bl
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution32-multi-region-k8s-cis/cis-iks.Architecture.png)
+  ![Architecture](images/solution32-multi-region-k8s-cis/cis-iks.Architecture2.png)
 </p>
 
 1. The developer builds the application produces a Docker container image and pushes the image to IBM Container Registry
@@ -315,15 +315,15 @@ Bascially, for caching, the edge services are enabled with proxy mode. The conte
 The web application firewall(WAF) protects web application against ISO Layer 7 attacks. Usually, it is combined with grouped rule-sets, these rule-sets aim to protect against vulnerabilities in the application by filtering out malicious traffic. 
 1. In the Cloud Internet Services application, navigate to **Security**, on the Security **Manage** page > **Web Application Firewall** section
 2. Click **View OWASP Rule Set**, in page **OWASP Core rule set**, OWASP rules have been listed in the table. Each rule set can be disabled or enabled per your application. When enabled, if incomimg request triggers the rule, the threat score will be increased and finally reflects to **Sensitivity**, then trigger **Action** defined. For this tutorial - 
-    * leave default OWASP rule sets as it is
-    * set **Sensitivity** to `Low`
-    * set **Action** to `Simulate` to log all the events
-    * click **Back to Security**
+    * Leave default OWASP rule sets as it is
+    * Set **Sensitivity** to `Low`
+    * Set **Action** to `Simulate` to log all the events
+    * Click **Back to Security**
 3. Click **View CIS Rule Set** besides **View OWASP Rule Set**, **CIS Rule Set** page shows with the rules built with technology hosting website. Per type of web application, enable rule sets and specify the **Mode** when needed. For this tutorial, ensure **IBM Specials** is enabled
     * Toggle ON(Enable) for **IBM Specials** 
-    * Expand it, scroll down to the last several rows with `SQLi` included in the description(e.g. starting from ID `100008`), notict all are blocked as **Default Mode** which protect application from SQL injection request.
+    * Expand it, scroll down to the last several rows with `SQLi` included in the description(e.g. starting from ID `100008`), notice all are blocked as **Default Mode** which protect application from SQL injection request.
 
-### Define page rules in CIS to secure the internet access 
+### Define Page Rules in CIS for certain URL to ensure performance, security and reliability 
 Page rule is defined and functions to specific application URL referencing with domain. Like mentioned above, CIS is one-stop shop providing reliable, permant, secure ensurance for internet application and website. It provides page rules from all these three dimentions as well. For this tutorial -
     1. In the Cloud Internet Services application, navigate to **Performance** > **Page Rules**
     2. Click **Create rule**, the button right above the rules table
