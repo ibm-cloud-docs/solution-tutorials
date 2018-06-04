@@ -63,7 +63,7 @@ This tutorial would incur costs. Use the [Pricing Calculator](https://console.bl
 
 4. CIS GLB intercepts the requests and routes them to the regional clusters。Inside the cluster, the Kubernetes Ingress balances the requests between the worker nodes. 
 
-5. Enable proxy to protect application from DDoS attach with caching service; configure WAF and Page Rule to secure cluster and application from internet access.
+5. Enable proxy to protect application from DDoS attach with caching service; configure WAF and Page Rule to secure internet access for application. 
 
 ## Before you begin
 {: #prereqs}
