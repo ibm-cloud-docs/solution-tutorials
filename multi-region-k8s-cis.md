@@ -17,11 +17,13 @@ lastupdated: "2018-05-29"
 {:pre: .pre}
 
 # Secure and resilient multi-region Kubernetes clusters with Cloud Internet Services
+Generally, containerized appliations would be runninng with multiple workers grouped in Kubernetes cluster to ensure the high availability. When certain worker does not work, the other workers within the same cluster will serve the internet requests which is apprarent to users. To provide HA at zone level, put workers in multiple zones within the same region but eventually you would want more regions. It is for resiliency but also it serves the requests closer to the users. 
+
 This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a secure and resilient solution across multiple regions.  
 
 * IBM Cloud Internet Services(CIS) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications.  
 
-* IBM Cloud Kubernetes Service(IKS) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+* {{site.data.keyword.containershort}}(IKS) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
 ## Objectives
 {: #objectives}
@@ -50,10 +52,8 @@ This tutorial would incur costs. Use the [Pricing Calculator](https://console.bl
 
 <p style="text-align: center;">
 
-  ![Architecture](images/other/cis-iks.Architecture.png)
+  ![Architecture](images/solution32-multi-region-k8s-cis/cis-iks.Architecture.png)
 </p>
-
-First of all, ensure IKS cluster and instance of CIS are available. Or, create IKS clusters across multiple regions and instance of CIS. After that
 
 1. The developer builds the application produces a Docker container image and pushes the image to IBM Container Registry
 
@@ -61,7 +61,9 @@ First of all, ensure IKS cluster and instance of CIS are available. Or, create I
 
 3. Scale up and expose service for containerized appliation so being able to access
 
-4. Create CIS GLB and IKS Ingress so the requests can be distributed to application hosted among different multi-region clusters. Besides, enable DDoS protection and caching service
+4. CIS GLB intercepts the requests and routes them to the regional clusters。Inside the cluster, the Kubernetes Ingress balances the requests between the worker nodes. 
+
+5. When proxy mode is enabled, CIS GLB is in DDoS protection also caching service.
 
 ## Before you begin
 {: #prereqs}
@@ -72,28 +74,27 @@ First of all, ensure IKS cluster and instance of CIS are available. Or, create I
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
-## Create Instance of IBM Cloud Internet Services and register the custom domain 
-{: #create_cis_instance}
-
-Cloud Internet Servcies(CIS) is one stop-shop service providing GLB, Caching, WAF/Page rule to secure your applications when ensurig the reliability and performace for your Cloud applicatios. 1st step to create instance per domain and then register the domain.
-
-1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
-2. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog. 
-2. Enter a service name, and click **Create** to create an instance of the service.
-3. When the service instance is provisioned, set your domain name and click **Add domain**.
-4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
-  
-    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect.
-    {:tip}
+## Overal Flow
+* Create clusters
+* Build images and push to regional registries
+* Deploy app to both clusters
+* Configure CIS with custom domain
+* Configure CIS global balancer
+    * Create health check
+    * Create origin pools
+        * refer to the option to configure geo-pool to route users to closest cluster
+    * Deploy custom domain Ingress
+* Enable CIS DDOS + WAF
 
 ## Create Kubernetes clusters
 {: #create_clusters}
 
+Create two clusters, one in UK region and one in US region. It simulates the scenario of containerized apps running in different regions with {{site.data.keyword.containerlong}} on IBM Cloud. 
+
 ### Create Kubernetes cluster in one region, e.g.`United Kingdom`
 1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
 
-   ![Kubernetes Cluster Creation on IBM Cloud](images/other/IKS.Cluster.Creation.GUI.png)
+   ![Kubernetes Cluster Creation on IBM Cloud](images/solution32-multi-region-k8s-cis/IKS.Cluster.Creation.GUI.png)
 2. Select **Region** `United Kingdom`. For convenience, use the name 　*`my-<region>-cluster`* to be consistent with this tutorial, specify *\<region>* to match with region selected, e.g. *uk* so cluster name looks like *my-uk-cluster*.
 3. The smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** is sufficient for this tutorial. Select 2 **Worker nodes** and leave all other options set to defaults. Click **Create Cluster**.
 4. Check the status of your **Cluster** and **Worker Node** and wait for them to be **ready**.
@@ -191,7 +192,22 @@ This step shows how to prepare Docker image for Kubernetes cluster containerized
     {: pre} 
     It returns message like `service "hello-world-service" exposed`.
 
-## Create CIS GLB for clusters and create Kubenetes Cluster Ingress Resource per region
+## Create Instance of IBM Cloud Internet Services and register the custom domain 
+{: #create_cis_instance}
+
+Cloud Internet Services(CIS) is one stop-shop service providing GLB, Caching, WAF/Page rule to secure your applications when ensurig the reliability and performace for your Cloud applicatios. 1st step to create instance per domain and then register the domain.
+
+1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
+2. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog. 
+2. Enter a service name, and click **Create** to create an instance of the service.
+3. When the service instance is provisioned, set your domain name and click **Add domain**.
+4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+  
+    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the IBM Cloud name servers have taken effect.
+    {:tip}
+
+## Configure CIS GLB for clusters and create Kubenetes Cluster Ingress Resource per region
 {: #LB_setting}
 
 For now, your applications have been running within the kubernetes clusters across different regions. To expose its public access of cluster and route access to corresponding application, Ingress resource will be created and configured. Either with Kubernetes cluster's ALB public IP or its Ingress Sub-domain, Global Load Balancer (GLB) in IBM Cloud Internet Services will be created to manage the traffic across multiple regions. The GLB utilizes an origin pool which allows for the traffic to be distributed to multiple origins. This way, it provides high availability and ensures the reliability of the applications cross multiple regions.
@@ -232,8 +248,8 @@ Repeat below five steps to create multiple pools per your requirements. The orig
 5. Click **Provision 1 Instance**.
 
 ### Create Ingress Resource for Kubernets clusters per region
-
-Ingress resource is Kubernetes resource and managed by the IBM-provided application load balancer in IBM® Cloud Kubernetes Service. It defines routes for the containerized application in Kuberentes by specifying the path to your app service, which is appended to the public route to form a unique app URL such as mycluster.us-south.containers.appdomain.cloud/myapp. More to refer [Managing network traffic by using Ingress](https://console.bluemix.net/docs/containers/cs_ingress.html#ingress).
+
+Repeat Ingress resource creation for clusters per regions.
 
 * Create Ingress yaml file
     1. input Ingress Resource **name**
@@ -264,7 +280,9 @@ Ingress resource is Kubernetes resource and managed by the IBM-provided applicat
 * List Ingress resource created, newly created ingress would be shown
     ```bash
     kubectl get ingress
-    ```
+  ```
+Repeat above steps to configure GLB and create Ingress for clusters per region, e.g. cluster in region `US South`
+
 Congratulations! For now, CIS GLB is configured before Kubernetes cluster across multiple-regions (for this example, *`United Kindom`* and *`US South`*). So the requests would be routed to cluster according to location of request and GLB pool setting(geo route and default pools) and then to application per rule defined in Kubernetes cluster ingress resource.
 
 ## Secure applications in Kubernetes clusters 
@@ -272,7 +290,7 @@ Congratulations! For now, CIS GLB is configured before Kubernetes cluster across
 
 Enable proxy mode providing DDoS protection and Caching
 Toggle ON proxy besides CIS GLB, it enables DDoS protection and caching for GLB so to applications defined in Kubernetes cluster. Use `dig _<glb_name>.<domain_name>`, original IP address is hid. All of your clients connect to CIS proxies.
-   ![CIS Proxy Toggle ON](images/other/cis.proxy.png)
+   ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis.proxy.png)
 [Best practice to secure traffic and internet application via CIS](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#manage-your-ibm-cis-for-optimal-security)
 
 ## Remove resources
@@ -294,5 +312,5 @@ Remove CIS resources
 {:related}_
 * IBM Cloud [Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
 * [Manage your IBM CIS for optimal security](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#best-practice-2-configure-your-security-level-selectively)
-* [IBM Cloud Kubernetes Service](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
-* [IBM Cloud Container Registry Basic](https://console.bluemix.net/docs/services/Registry/registry_overview.html#registry_planning)
+* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
+* [{{site.data.keyword.registrylong_notm}} Basic](https://console.bluemix.net/docs/services/Registry/registry_overview.html#registry_planning)
