@@ -303,11 +303,11 @@ Toggle ON proxy besides CIS GLB, it enables DDoS protection and caching for GLB 
    ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis.proxy.png)
 
 Bascially, for caching, the edge services are enabled with proxy mode. The content(static web content) will be caching at edge closest to visitor which apprarent to user. While for specific caching setting to certain URL, e.g. edge cache TTL, it can be set via **Page Rule** in following section. In the meanwhile, some general caching setting can be configured -
-    1. In Cloud Internet Services, navigate to **Performance** > **Caching**
-    2. **Purge Cache**, to get the latest update of application, choose **Single single files** for certain URL or **Purge All**
-    3. **Serve Stale Content**, toggle ON so it provides cached content to user when origin not available.
-    4. **Caching Level**, select `No query string`, cached content returns for the requests without query string.  
-    5. **Browser Expiration**, select `1 day`, the cached content would be stored in user's broswer within 1 day ensuring the access performance while keeping relative up-to date content. It can be specified per requirement.
+1. In Cloud Internet Services, navigate to **Performance** > **Caching**
+2. **Purge Cache**, to get the latest update of application, choose **Single single files** for certain URL or **Purge All**
+3. **Serve Stale Content**, toggle ON so it provides cached content to user when origin not available.
+4. **Caching Level**, select `No query string`, cached content returns for the requests without query string.  
+5. **Browser Expiration**, select `1 day`, the cached content would be stored in user's broswer within 1 day ensuring the access performance while keeping relative up-to date content. It can be specified per requirement.
 
 **`CHECKPOINT 4`** - DDoS protection and cachinng are enabled for application runnning in cluster. After proxy is enabled and when access submmited via GLB URL plus application path, similar page like below shown which tell all access to your application would be under DDoS protection.    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
 
