@@ -17,7 +17,7 @@ lastupdated: "2018-05-29"
 {:pre: .pre}
 
 # Secure and resilient multi-region Kubernetes clusters with Cloud Internet Services
-Generally, containerized appliations would be runninng with multiple workers grouped in Kubernetes cluster to ensure the high availability. When certain worker does not work, the other workers within the same cluster will serve the internet requests which is apprarent to users. To provide HA at zone level, put workers in multiple zones within the same region but eventually you would want more regions. It is for resiliency but also it serves the requests closer to the users. 
+Generally, Kubernetes cluster ensures containerized appliation HA with multiple workers grouped within cluster. When certain worker does not work, the other workers within the same cluster will serve the internet requests which is apprarent to users. Furthermore, to provide HA at zone level by putting workers in multiple zones within the same region and eventually you would want more regions. This is not only for resiliency but also serving the requests closer to the users. 
 
 This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a secure and resilient solution across multiple regions.  
 
@@ -86,12 +86,11 @@ This tutorial would incur costs. Use the [Pricing Calculator](https://console.bl
     * Deploy custom domain Ingress
 * Enable CIS DDOS + WAF
 
-## Create Kubernetes clusters
+## Create Kubernetes clusters per region
 {: #create_clusters}
 
 Create two clusters, one in UK region and one in US region. It simulates the scenario of containerized apps running in different regions with {{site.data.keyword.containerlong}} on IBM Cloud. 
 
-### Create Kubernetes cluster per region
 1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
 2. Select **Region**, e.g. `United Kingdom`. For convenience, use the name 　*`my-<region>-cluster`* to be consistent with this tutorial, specify *\<region>* to match with region selected, e.g. *uk* so cluster name looks like *my-uk-cluster*.
 3. The smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** is sufficient for this tutorial. Select 2 **Worker nodes** and leave all other options set to defaults. Click **Create Cluster**.
@@ -100,6 +99,8 @@ Create two clusters, one in UK region and one in US region. It simulates the sce
 **NOTE:** Do not proceed until your workers are ready.
 
 Repeat steps above for the other region you'd like to have cluster by selecting different **region**, e.g. repeat the previous steps to deploy another cluster in US South, select **regionn** `US South`, specify cluster name *my-us-cluster*.
+
+Now Kubernetes cluster across two regions are ready, keep moving with below steps to build, deployment and run containerized applications within the clusters.
 
 ## Target IBM Cloud CLI for your cluster and login IBM Cloud Registry correspondingly
 {: #prep_steps}
@@ -120,7 +121,7 @@ IBM Cloud CLI is working environment for Kuberetes cluster, different context of
     ```
     {: pre}
 3. Check cluster region and specify it via `bx cs region-set` when needed
-### Login IBM Container Registry and Create Namespace
+### Login IBM Container Registry and Create Namespace correspondingly
 1. Login to IBM Container Registry CLI 
     ```bash
     bx cr login
@@ -137,15 +138,15 @@ IBM Cloud CLI is working environment for Kuberetes cluster, different context of
 ## Build and Deploy application to Kubernetes Clusters across different regions
 {: #run_app_in_kubernete_cluster}
 
-Docker image is built and tagged then pushed to certain IBM Container Registry. After that, it is deployed to corresponding Kubernetes cluster in the same region as IBM Container Registry, e.g. `United Kingdom`. For multiple worker nodes, scale the containerized app via `ReplicaSet`. Expose the accessible port by specifying `NodeType` service. Then repeat these steps against different Region such as `US South` with the same image built. So the application will be running in different cluster among multiple regions.
+Docker image is built and tagged then pushed to certain IBM Container Registry. After that, it is deployed to corresponding Kubernetes cluster in the same region as IBM Container Registry, e.g. `United Kingdom`. For multiple workers, scale the containerized app via `ReplicaSet`. Expose the accessible port by specifying `NodeType` service. Then repeat these steps against different Region such as `US South` with the same image built. So the application will be running in different cluster among multiple regions.
 
 ### Build application producing Docker image and deploy it to Kubernete clusters
-This step shows how to prepare Docker image for Kubernetes cluster containerized application.   HelloWorld simulates real application. Refer step 1/2 and step6/7/8 of tutorial [Deploying single instance apps to Kubernetes clusters](https://console.bluemix.net/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1){:new_windows} to build, tag and push Docker image into IBM Cloud Registry which would be refered during deployment for containerized app.
+This step shows how to prepare Docker image for Kubernetes cluster containerized application.   HelloWorld simulates real application. Refer step 1/2 and step6/7/8 of IKS tutorial [Deploying single instance apps to Kubernetes clusters](https://console.bluemix.net/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1){:new_windows} to build, tag and push Docker image into IBM Cloud Registry which would be refered during deployment for containerized app.
 
 1. Clone the source code for the [Hello world app](https://github.com/IBM/container-service-getting-started-wt){:new_windows} to your user home directory. The repository contains different versions of a similar app in folders that each start with Lab.
     ```bash
     git clone https://github.com/IBM/container-service-getting-started-wt.git
-   ```
+    ```
    {: pre} 
 2. Navigate to the `Lab 1` directory.
     ```bash
@@ -163,7 +164,7 @@ This step shows how to prepare Docker image for Kubernetes cluster containerized
         ```
         {: pre}
         Ensure the period `.` at the end of the command.{:tip} 
-    * Push docker image built above to Container Registry. It will be referred by containerized application in pods. Be sure login CR before push via `bx cr login`.
+    * Push docker image built above to Container Registry. It will be referred by containerized application in pods. Be sure to login CR before push via `bx cr login`.
         ```bash
         docker push registry.<region>.bluemix.net/<namespace>/hello-world:1
         ```
@@ -188,6 +189,12 @@ This step shows how to prepare Docker image for Kubernetes cluster containerized
     ```
     {: pre} 
     It returns message like `service "hello-world-service" exposed`.
+
+Repeat the above steps to deploy the image and the application to the other region like `US South`. 
+
+**Notes:**Remember to switch CLI for target cluster and login correspoding container registry in other region accordingly.
+
+For now, the applications are deployed within different clusters across multiple regions, e.g. `United Kindom` and `US South`. 
 
 ## Create Instance of IBM Cloud Internet Services and register the custom domain 
 {: #create_cis_instance}
@@ -217,36 +224,40 @@ For now, your applications have been running within the kubernetes clusters acro
     bx cs cluster-get <cluster-name>
     ```
 
-### Create Global Load Balancer of Cloud Internet Services
+### Create and Configure Global Load Balancer(GLB) of Cloud Internet Services
 {: #add_glb}
 
-#### Before creating GLB, create health check for the GLB.
+As pre-requisites to configure GLB, first to create heath check and origin pools. 
 
+#### Create health check for the GLB.
 1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
-2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**.
+2. Enter "/" as the path to monitor and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**. 
 
-#### After that, create origin pool with needed origins.
-Repeat below five steps to create multiple pools per your requirements. The origins in the same pool get the forwarded requests in Round-robin way. For this tutorial, three pools are defined - _A).iks_all_origins_; _B).iks_us_pool_; _C).iks_uk_pool._
+    The path can be specified per your application and requirement.{:Tips}
+
+#### Define origin pools with needed origin.
 1. Click **Create Pool**.
-2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your kubernetes cluster.
-3. Enter a name for the first origin in **Origin Name**, e.g. _iks_uk_pool_, put either ALB IP address or sub-domain like `<cluster-name>-id.<region>.containers.appdomain.cloud` of Kubernetes cluster in the **Origin Address**, e.g. `my_uk_cluster.eu-gb.containers.appdomain.cloud`
-4. (Optional)Similarly, add other origins with corresponding ALB public IP address or sub-domain of Kubernetes cluster.
+2. Set **name** to `_iks_uk_pool_` for the pool, select the health check that you've just created, and a region that is close to the region of your kubernetes cluster.
+3. Set **Origin Name** to `_iks_uk_pool_`. 
+4. Set **Origin Address** to `my_uk_cluster.eu-gb.containers.appdomain.cloud` which is UK cluster sub-domain or its ALB IP address.
 5. Click **Provision 1 Instance**.
+After the 1st pool `_iks_uk_pool_` created, repeat above five steps by set right pool name, **Original Name** and **Original Address** so to create other two pools, naming `_iks_us_pool_`, `iks_all_origins` accordingly.
+    The origins in the same pool get the forwarded requests in Round-robin way.{:Tips}
 
-
-#### Create Global Load Balancer (GLB). 
-
+#### With origin pools defined to complete GLB creation and configuration
 1. Click **Create Load Balancer**. 
 2. Enter a name under **Balancer hostname** for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region. 
-3. Click **Add pool** under **Default origin pools** and select the origin pool that you have just created, e.g._iks_all_origins_.
+3. Click **Add pool** under **Default origin pools** and select the origin pool that you have just created `_iks_all_origins_`.
 4. Expand section of **Configure geo routes(optional)**, click **Add route**, select a region and click **Add**, then click **Add pool** to add origin pool for this Region. Region refers to where requests submmited and origin pool includes the application to serve the requests. For this tutorial, 
-    * add route for region *Northeast Asia* and regionn *Southeast Asia* with origin pointing to UK cluster. The requests submmited from Asia will be routed the nearest applications running in region UK.
+    * add route for region *Northeast Asia* and regionn *Southeast Asia* with origin pointing to UK cluster `_iks_uk_pool_`. The requests submmited from Asia will be routed to the nearest applications running in region United Kingdom.
+    * add route for region *Eastern North America* and regionn *Western North America* with origin pointing to US cluster `_iks_us_pool_`. The requests submmited from North America will be routed to the nearest applications running in region US South.
     * if request submitted not matching any definend region in route, it will be distributed to origins defined in **Default origin pools**.
 5. Click **Provision 1 Instance**.
 
-### Create Ingress Resource for Kubernets clusters per region
-Repeat Ingress resource creation for clusters per regions.
+For now, GLB is configured to distribute the requests to corresponding clusters across multiple regions via origin pools. According to geo routes, requests will be routed to the closest region, e.g. for requests submmited in Asia, those will be routed to the closest `United Kingdom` region.
 
+### Create Ingress Resource for Kubernetes clusters per region
+
 * Create Ingress yaml file
     1. input Ingress Resource **name**
     2. specify **host** with GLB url created above
@@ -276,8 +287,8 @@ Repeat below five steps to create multiple pools per your requirements. The orig
 * List Ingress resource created, newly created ingress would be shown
     ```bash
     kubectl get ingress
-  ```
-Repeat above steps to configure GLB and create Ingress for clusters per region, e.g. cluster in region `US South`
+    ```
+Repeat above steps to create Ingress for other region cluster, e.g. cluster in region `US South`
 
 Congratulations! For now, CIS GLB is configured before Kubernetes cluster across multiple-regions (for this example, *`United Kindom`* and *`US South`*). So the requests would be routed to cluster according to location of request and GLB pool setting(geo route and default pools) and then to application per rule defined in Kubernetes cluster ingress resource.
 
