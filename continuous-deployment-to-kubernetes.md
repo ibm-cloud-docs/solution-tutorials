@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-04-19"
+lastupdated: "2018-06-05"
 ---
 
 
@@ -47,7 +47,7 @@ This tutorial walks you through setting up a continuous integration and delivery
 
 {: #prereq}
 
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 * [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
@@ -76,7 +76,7 @@ Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a
 ## Create a starter application
 
 {: #create_application}
-IBM Cloud offers a selection of starter applications, these starter applications can be created using the `bx dev` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
+IBM Cloud offers a selection of starter applications, these starter applications can be created using the `ibmcloud dev` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
 1. From the [IBM Cloud console](https://console.bluemix.net), use the left side menu option and select [Web Apps](https://console.bluemix.net/developer/appservice/dashboard).
 2. Under **Start from the Web**, section click on the **Get Started** button.
@@ -91,7 +91,7 @@ IBM Cloud offers a selection of starter applications, these starter applications
    4. After the deploy stages complete, click on the **View logs and history** to see the logs.
    5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`). ![](images/solution21/Logs.png)
 
-In the example above we used the App Service UI to create the starter applications but we could also create the same starter project using the `bx dev`command in the terminal.
+In the example above we used the App Service UI to create the starter applications but we could also create the same starter project using the `ibmcloud dev`command in the terminal.
 
 ## Clone, build and run the application locally
 
@@ -126,7 +126,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 3. Build the application.
    ```
-   bx dev build
+   ibmcloud dev build
    ```
    {: pre}
 
@@ -136,7 +136,7 @@ You can build and run the application as you normally would using `mvn` for java
 
 1. Run the container.
    ```
-   bx dev run
+   ibmcloud dev run
    ```
    {: pre}
 

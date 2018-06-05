@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2017-11-27"
+lastupdated: "2018-06-05"
 
 ---
 
@@ -73,7 +73,7 @@ The application shown in this tutorial is a feedback app that smartly analyses t
 
 This tutorial uses the {{site.data.keyword.Bluemix_notm}} command line tool to provision resources and deploy code. Make sure to install the `bx` command line tool.
 
-* [{{site.data.keyword.Bluemix_notm}} Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install bx CLI and required plug-ins (Cloud Foundry and {{site.data.keyword.openwhisk_short}})
+* [{{site.data.keyword.Bluemix_notm}} Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install ibmcloud CLI and required plug-ins (Cloud Foundry and {{site.data.keyword.openwhisk_short}})
 
 Additionally you will need the following software and accounts:
 
@@ -150,62 +150,62 @@ It is recommended that you create a new space to provision the services and depl
 With the command line, run the following commands to provision the services and retrieve their credentials:
 
    ```sh
-   bx cf create-service cloudantNoSQLDB Lite serverlessfollowup-db
+   ibmcloud cf create-service cloudantNoSQLDB Lite serverlessfollowup-db
    ```
    {: pre}
 
    ```sh
-   bx cf create-service-key serverlessfollowup-db for-cli
+   ibmcloud cf create-service-key serverlessfollowup-db for-cli
    ```
    {: pre}
 
    ```sh
-   bx cf service-key serverlessfollowup-db for-cli
+   ibmcloud cf service-key serverlessfollowup-db for-cli
    ```
    {: pre}
 
    ```sh
-   bx cf create-service tone_analyzer standard serverlessfollowup-tone
+   ibmcloud cf create-service tone_analyzer standard serverlessfollowup-tone
    ```
    {: pre}
 
    ```sh
-   bx cf create-service-key serverlessfollowup-tone for-cli
+   ibmcloud cf create-service-key serverlessfollowup-tone for-cli
    ```
    {: pre}
 
    ```sh
-   bx cf service-key serverlessfollowup-tone for-cli
+   ibmcloud cf service-key serverlessfollowup-tone for-cli
    ```
    {: pre}
 
    ```sh
-   bx cf create-service AppID "Graduated tier" serverlessfollowup-appid
+   ibmcloud cf create-service AppID "Graduated tier" serverlessfollowup-appid
    ```
    {: pre}
 
    ```sh
-   bx cf create-service-key serverlessfollowup-appid for-cli
+   ibmcloud cf create-service-key serverlessfollowup-appid for-cli
    ```
    {: pre}
 
    ```sh
-   bx cf service-key serverlessfollowup-appid for-cli
+   ibmcloud cf service-key serverlessfollowup-appid for-cli
    ```
    {: pre}
 
    ```sh
-   bx cf create-service imfpush lite serverlessfollowup-mobilepush
+   ibmcloud cf create-service imfpush lite serverlessfollowup-mobilepush
    ```
    {: pre}
 
    ```sh
-   bx cf create-service-key serverlessfollowup-mobilepush for-cli
+   ibmcloud cf create-service-key serverlessfollowup-mobilepush for-cli
    ```
    {: pre}
 
    ```sh
-   bx cf service-key serverlessfollowup-mobilepush for-cli
+   ibmcloud cf service-key serverlessfollowup-mobilepush for-cli
    ```
    {: pre}
 
@@ -277,7 +277,7 @@ With all the services configured, you can now deploy the serverless backend. The
    cp template.local.env local.env
    ```
 3. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}}
- and {{site.data.keyword.appid_short}} services from the {{site.data.keyword.Bluemix_notm}} dashboard (or the output of the bx commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+ and {{site.data.keyword.appid_short}} services from the {{site.data.keyword.Bluemix_notm}} dashboard (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
 4. Deploy the actions to {{site.data.keyword.openwhisk_short}}. `deploy.sh` loads the credentials from `local.env` to create the {{site.data.keyword.cloudant_short_notm}} databases (users, feedback and moods) and deploy the {{site.data.keyword.openwhisk_short}} artifacts for the application.
    ```sh
    ./deploy.sh --install
@@ -300,7 +300,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
    {: tip}
 5. Watch the {{site.data.keyword.openwhisk_short}} in the background
    ```sh
-   bx wsk activation poll
+   ibmcloud wsk activation poll
    ```
    {: pre}
 6. In the application, select **Log in** to authenticate with a Facebook or Google account. Once logged in, type a feedback message and press the **Send Feedback** button. Few seconds after the feedback has been sent, you should receive a push notifications on the device. The notification text can be customized by modifying the template documents in the `moods` database in the {{site.data.keyword.cloudant_short_notm}} service instance. Use the **View token** button to inspect the access and identification tokens generated by {{site.data.keyword.appid_short}} upon login.
@@ -319,7 +319,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 6. Start the application on a real device or with a simulator.
 7. Watch the {{site.data.keyword.openwhisk_short}} in the background by running the below command on a Terminal.
    ```sh
-   bx wsk activation poll
+   ibmcloud wsk activation poll
    ```
    {: pre}
 8. In the application, select **Log in** to authenticate with a Facebook or Google account. Once logged in, type a feedback message and press the **Send Feedback** button. Few seconds after the feedback has been sent, you should receive a push notifications on the device. The notification text can be customized by modifying the template documents in the `moods` database in the {{site.data.keyword.cloudant_short_notm}} service instance. Use the **View token** button to inspect the access and identification tokens generated by {{site.data.keyword.appid_short}} upon login.

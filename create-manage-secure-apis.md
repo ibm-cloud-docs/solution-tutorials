@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-23"
+lastupdated: "2018-06-05"
 
 ---
 
@@ -72,8 +72,8 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
 6. Select **empty-server** for the kind of application.
   ```bash
     ? What kind of application do you have in mind? (Use arrow keys)
-    ? empty-server (An empty LoopBack API, without any configured models or datasources) 
-      hello-world (A project containing a basic working example, including a memory database) 
+    ? empty-server (An empty LoopBack API, without any configured models or datasources)
+      hello-world (A project containing a basic working example, including a memory database)
       notes (A project containing a basic working example, including a memory database)
   ```
   ![APIC Loopback scaffolding](images/solution13/apic_loopback.png)
@@ -165,7 +165,7 @@ To prepare for the next steps, you need to create an **{{site.data.keyword.apico
 {: #publish}
 You will use the API Designer to deploy your application to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application and also publish your API definition to **{{site.data.keyword.apiconnect_short}}**. The API Designer is your local toolkit. If you closed it, relaunch it with `apic edit` from the project directory.
 
-You can also deploy the application manually using the `bx cf push` command; however, it will not be secured. To [import the API](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_rest_landing.html#tut_rest_landing) into {{site.data.keyword.apiconnect_short}}, use the OpenAPI definition file is available in the `definitions` folder. Deploying using the API Designer secures the application and imports the definition automatically. {:tip}
+You can also deploy the application manually using the `ibmcloud cf push` command; however, it will not be secured. To [import the API](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_rest_landing.html#tut_rest_landing) into {{site.data.keyword.apiconnect_short}}, use the OpenAPI definition file is available in the `definitions` folder. Deploying using the API Designer secures the application and imports the definition automatically. {:tip}
 
 1. Back in the API Designer, click **Publish > Add and Manage Targets > Add IBM Bluemix target**.
 2. Select the **Region** and **Organization** that you want to publish to.

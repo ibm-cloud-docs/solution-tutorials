@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-24"
+lastupdated: "2018-06-05"
 
 ---
 
@@ -57,10 +57,10 @@ This pattern is used to decouple your application allowing greater control over 
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `bx login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `bx target` command.
+1. Use `ibmcloud login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
 2. When the cluster is ready, retrieve the cluster configuration:
    ```bash
-   bx cs cluster-config <cluster-name>
+   ibmcloud cs cluster-config <cluster-name>
    ```
    {: pre}
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
@@ -83,7 +83,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
  2. Name the service `mymessagehub` and click **Create**.
  3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```
- bx cs cluster-service-bind mycluster default mymessagehub
+ ibmcloud cs cluster-service-bind mycluster default mymessagehub
  ```
 
 The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-mymessagehub`. See [Integrating Services](https://console.bluemix.net/docs/containers/cs_integrations.html#integrations) for more info
@@ -103,8 +103,8 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 5. Select **Cross Region** Resiliency and **us-geo** Location and click **Create**
 6. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```sh
- bx resource service-alias-create myobjectstorage --instance-name myobjectstorage
- bx cs cluster-service-bind mycluster default myobjectstorage
+ ibmcloud resource service-alias-create myobjectstorage --instance-name myobjectstorage
+ ibmcloud cs cluster-service-bind mycluster default myobjectstorage
  ```
 ![](images/solution25/cos_bucket.png)
 
@@ -120,8 +120,8 @@ The UI application is a simple Node.js Express web application which allows the 
 2. Open `config.js` and update COSBucketName with your bucket name.
 3. Build and deploy the application. The deploy command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment.
 ```sh
-  bx dev build
-  bx dev deploy -t container
+  ibmcloud dev build
+  ibmcloud dev deploy -t container
 ```
 4. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
 
@@ -138,8 +138,8 @@ The worker application is a Java application which listens to the {{site.data.ke
 2. Open `resources/cos.properties` and update `bucket.name`,  property with your bucket name.
 2. Build and deploy the worker application.
 ```
-  bx dev build
-  bx dev deploy -t container
+  ibmcloud dev build
+  ibmcloud dev deploy -t container
 ```
 3. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 ![](images/solution25/files_processed.png)

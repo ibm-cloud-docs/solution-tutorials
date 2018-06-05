@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-06-05"
 
 ---
 
@@ -40,7 +40,7 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-[{{site.data.keyword.Bluemix_notm}} Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Run the script to install bx cli and required plug-ins
+[{{site.data.keyword.Bluemix_notm}} Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Run the script to install ibmcloud cli and required plug-ins
 
 ## Create IoT Platform
 {: #iot_starter}
@@ -72,9 +72,9 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 2. Open the code in an IDE of your choice and change the `name` and `host` values in the **manifest.yml** file to an unique value.
 3. Push the application to the {{site.data.keyword.Bluemix_notm}}.
    ```bash
-   bx login
-   bx target --cf
-   bx cf push
+   ibmcloud login
+   ibmcloud target --cf
+   ibmcloud cf push
    ```
 4. In a few minutes, your application will be deployed and you should see a URL similar to `<UNIQUE_NAME>.mybluemix.net`
 5. Visit this URL on your phone using a browser.
@@ -197,5 +197,3 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 * Anomaly Detection [Jupyter Notebook](https://github.com/IBM-Cloud/iot-device-phone-simulator/blob/master/anomaly-detection/Anomaly-detection-DSX.ipynb)
 * Understanding z-score - [wikipedia](https://en.wikipedia.org/wiki/Standard_score)
 * Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://www.ibm.com/developerworks/analytics/library/iot-deep-learning-anomaly-detection-1/index.html?ca=drs-)
-
-

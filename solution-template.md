@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2017
-lastupdated: "2018-04-20"
+  years: 2018
+lastupdated: "2018-06-05"
 
 ---
 
@@ -54,7 +54,7 @@ intro sentence
 
 * [Install Git](https://git-scm.com/)
 * [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 
 ## Create services
 {: setup}
@@ -63,16 +63,16 @@ In this section, you will create the services required to ...
 
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
-    bx login
+    ibmcloud login
     ```
     {: pre}
     ```sh
-    bx target --cf
+    ibmcloud target --cf
     ```
     {: pre}
 2. Create an instance of [Service A](https://console.bluemix.net/catalog/services/the-service-name).
   ```sh
-  bx resource service-instance-create service-instance-name service-name lite global
+  ibmcloud resource service-instance-create service-instance-name service-name lite global
   ```
 3. Create an instance of [Service B](https://console.bluemix.net/catalog/services/the-service-name).
 

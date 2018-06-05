@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-09"
+lastupdated: "2018-06-05"
 
 ---
 
@@ -37,9 +37,9 @@ This tutorial uses the following products:
 
 {: #cost}
 
-This tutorial uses billable components of IBM Cloud Platform, including: 
+This tutorial uses billable components of IBM Cloud Platform, including:
 
-- SDK for Node.js using Cloud Foundry 
+- SDK for Node.js using Cloud Foundry
 - Compose for MongoDB
 
 Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
@@ -90,14 +90,14 @@ In this section, you will run a local MongoDB database, clone a MEAN sample code
 In this section, we will create a Compose for MongoDB database on the cloud using the command line.
 1. Login to the IBM cloud via the command line and target your IBM Cloud account. [More info](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
   ```sh
-     bx login
-     bx target --cf
+     ibmcloud login
+     ibmcloud target --cf
   ```
 
 2. Create the instance of Compose for MongoDB. This can also be done using the [UI](https://console.bluemix.net/catalog/services/compose-for-mongodb?env_id=ibm:yp:us-south). It is important that you call this service **mean-starter-mongodb** as the application is configured to look for this service by this name.
 
   ```sh
-     bx cf create-service compose-for-mongodb Standard mean-starter-mongodb
+     ibmcloud cf create-service compose-for-mongodb Standard mean-starter-mongodb
   ```
 
 ## Deploy the Node.js app
@@ -105,7 +105,7 @@ In this section, we will create a Compose for MongoDB database on the cloud usin
 Next, you will deploy the node.js application to the cloud. When running in the cloud, the application is configured to look for the "compose-for-mongodb" database service and connect to it.
 
 ```sh
-   bx cf push
+   ibmcloud cf push
 ```
 
 The source code contains a **manifest.yml** file which is configured to connect the "mongodb" service to this application. This will allow the application to read the database credentials using the VCAP_SERVICES environment variable.
