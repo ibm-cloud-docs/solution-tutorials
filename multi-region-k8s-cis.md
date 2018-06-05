@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-29"
+lastupdated: "2018-06-05"
 
 ---
 
@@ -17,6 +17,7 @@ lastupdated: "2018-05-29"
 {:pre: .pre}
 
 # Secure and resilient multi-region Kubernetes clusters with Cloud Internet Services
+
 Generally, Kubernetes cluster ensures containerized appliation HA with multiple workers grouped within cluster. When certain worker does not work, the other workers within the same cluster will serve the internet requests which is apprarent to users. Furthermore, to provide HA at zone level, workers can be put in multiple zones within the same region but eventually you would want more regions. This is not only for resiliency but also serving the requests closer to the users. 
 
 This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a secure and resilient solution across multiple regions.  
@@ -39,31 +40,26 @@ This tutorial highlights how Cloud Internet Services can be integrated with Kube
 ## Services used
 {: #services}
 
-
 This tutorial uses the following runtimes and services:
 * IBM Cloud [Internet services](https://console.bluemix.net/catalog/services/internet-services)
 * [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 
-This tutorial would incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution32-multi-region-k8s-cis/cis-iks.Architecture2.png)
+  ![Architecture](images/solution32-multi-region-k8s-cis/Architecture.png)
 </p>
 
-1. The developer builds the application produces a Docker container image and pushes the image to IBM Container Registry
-
-2. Deploy image from IBM Container Registry to corresponding clusters in {{site.data.keyword.containershort_notm}} 
-
-3. Scale up and expose service for containerized appliation so being able to access
-
-4. CIS GLB intercepts the requests and routes them to the regional clusters。Inside the cluster, the Kubernetes Ingress balances the requests between the worker nodes. 
-
-5. Enable proxy to protect application from DDoS attach with caching service; configure WAF and Page Rule to secure internet access for application. 
+1. The developer builds Docker images for the application.
+2. The images are pushed to {{site.data.keyword.registryshort_notm}} in the US and UK regions.
+3. The application is deployed to Kubernetes clusters in both regions.
+4. End-users access the application. 
+5. Cloud Internet Services is configured to intercept requests to the application and to spread the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
 
 ## Before you begin
 {: #prereqs}
@@ -74,22 +70,10 @@ This tutorial would incur costs. Use the [Pricing Calculator](https://console.bl
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
-## Overall Work Flow
-* Create clusters                                       【*CHECKPOINT 1*】
-* Build images and push to regional registries          
-* Deploy app to both clusters                           【*CHECKPOINT 2*】
-* Configure CIS with custom domain
-* Configure CIS global balancer
-    * Create health check
-    * Create origin pools
-        * refer to the option to configure geo-pool to route users to closest cluster
-    * Deploy custom domain Ingress                       【*CHECKPOINT 3*】
-* Enable CIS DDOS + WAF                                  【*CHECKPOINT 4*】
-
 ## Create Kubernetes clusters per region
 {: #create_clusters}
 
-Create two clusters, one in UK region and one in US region. It simulates the scenario of containerized apps running in different regions with {{site.data.keyword.containerlong}} on IBM Cloud. 
+Create two clusters, one in UK region and one in US region. It simulates the scenario of containerized apps running in different regions with {{site.data.keyword.containerlong}} on {{site.data.keyword.cloud_notm}}. 
 
 1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
 2. Select **Region**, e.g. `United Kingdom`. For convenience, use the name 　*`my-<region>-cluster`* to be consistent with this tutorial, specify *\<region>* to match with region selected, e.g. *uk* so **cluster name** looks like *my-uk-cluster*.
