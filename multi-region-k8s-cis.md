@@ -74,7 +74,7 @@ This tutorial would incur costs. Use the [Pricing Calculator](https://console.bl
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
-## Overal Work Flow
+## Overall Work Flow
 * Create clusters                                       【*CHECKPOINT 1*】
 * Build images and push to regional registries          
 * Deploy app to both clusters                           【*CHECKPOINT 2*】
