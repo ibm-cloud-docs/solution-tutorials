@@ -30,7 +30,7 @@ Depending on the type of app that you have, the steps to migrate your app might 
 - Understand how to idendify micro-services in a VM based app and learn how to map components between VMs and Kubernetes.
 - Learn how containerize a VM based app.
 - Learn how to deploy the container to a Kubernetes cluster in {{site.data.keyword.containershort_notm}}.
-- Put everything learned into practice, run the **JPetStore** app in your cluster.
+- Put everything learned to practice, run the **JPetStore** app in your cluster.
 
 ## Services used
 
@@ -72,10 +72,10 @@ The following diagram shows an example of a modern container architecture that r
 1. The user sends a request to the public endpoint of the Java app. The public endpoint is represented by an Ingress application load balancer (ALB) that load balances incoming network traffic across app pods in the cluster. The ALB is a collection of rules that allow inbound network traffic to a publicly exposed app.
 2. The ALB forwards the request to one of the available app pods in the cluster. App pods run on worker nodes that can be a virtual or physical machine.
 3. App pods store data in persistent volumes. Persistent volumes can be used to share data between app instances or worker nodes.
-4. App pods store data in an {{site.data.keyword.Bluemix_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed dabase-as-a-service (DBasS) is usually easier to configure and provices built-in backups and scaling. You can find many different types databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
+4. App pods store data in an {{site.data.keyword.Bluemix_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed database-as-a-service (DBasS) is usually easier to configure and provices built-in backups and scaling. You can find many different types of databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
 
 
-###VMs, containers and Kubernetes
+###VMs, containers, and Kubernetes
 
 {{site.data.keyword.containershort_notm}} provides the capability to run containerized apps in Kubernetes clusters and delivers the following tools and functions:
 
@@ -88,7 +88,7 @@ The following diagram shows an example of a modern container architecture that r
 
 **VMs**, traditional apps run on native hardware. A single app does not typically use the full resources of a single compute host. Most organizations try to run multiple apps on a single compute host to avoid wasting resources. You could run multiple copies of the same app, but to provide isolation, you can use VMs to run multiple app instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
 
-**Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
+**Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, runtime, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
 In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers [here](https://www.ibm.com/support/knowledgecenter/en/linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.html).
 
@@ -161,7 +161,7 @@ Containers and pods are, by design, short-lived and can fail unexpectedly. You c
 You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/details) or [block storage](https://www.ibm.com/cloud/block-storage) by using native Kubernetes persistent volumes.
 {: shortdesc}
 
-To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data rentention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.Bluemix_notm}}. You can mount the PVC to your pod to read from and write to the PV. Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data.
+To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data retention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.Bluemix_notm}}. You can mount the PVC to your pod to read from and write to the PV. Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data.
 
 To learn how to create a PVC, follow the steps covered in the [{{site.data.keyword.containershort_notm}} storage documentation](https://console.bluemix.net/docs/containers/cs_storage.html#create).
 
@@ -170,7 +170,7 @@ To learn how to create a PVC, follow the steps covered in the [{{site.data.keywo
 To copy data from your local machine to your persistent storage, you must mount the PVC to a pod. Then, you can copy data from your local machine to the persistent volume in your pod.
 {: shortdesc}
 
-1. To copy date, first, you would need create a configuration that looks like something like this: 
+1. To copy date, first, you would need to create a configuration that looks like something like this: 
 
    ```bash
    kind: Pod
@@ -232,7 +232,7 @@ Here are some of the key principles required:
 
 {: secrets}
 
-It's never good practice to store credentials within the app code. Instead, Kubernetes provides so called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as  passwords, OAuth tokens, or ssh keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a docker image.
+It's never good practice to store credentials within the app code. Instead, Kubernetes provides so-called **["secrets"](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)** that hold sensitive information, such as passwords, OAuth tokens, or ssh keys. Kubernetes secrets are encrypted by default which makes secrets a safer and a more flexible option to store sensitive data than to store this data verbatim in a `pod` definition or in a docker image.
 
 One way of using secrets in Kubernetes in by doing something like this:
 
@@ -331,14 +331,14 @@ To create Kubernetes deployment.yaml files, you would need to do something like 
 
 In this tutorial, you learned the following:
 
-- The differences between VMs, containers and Kubernetes.
+- The differences between VMs, containers, and Kubernetes.
 - How to define clusters for different environment types (dev, test, and production).
 - How to handle data storage and the importance of persistent data storage.
 - Apply the 12-factor principles to your app and use secrets for credentials in Kubernetes.
 - Build docker images and push them to {{site.data.keyword.registrylong_notm}}.
 - Create Kubernetes deployment files and deploy the Docker image to Kubernetes.
 
-##Put everything learned into practice, run the JPetStore app in your cluster
+##Put everything learned to practice, run the JPetStore app in your cluster
 
 {: #runthejpetstore}
 
