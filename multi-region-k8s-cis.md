@@ -92,13 +92,13 @@ This tutorial would incur costs. Use the [Pricing Calculator](https://console.bl
 Create two clusters, one in UK region and one in US region. It simulates the scenario of containerized apps running in different regions with {{site.data.keyword.containerlong}} on IBM Cloud. 
 
 1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
-2. Select **Region**, e.g. `United Kingdom`. For convenience, use the name 　*`my-<region>-cluster`* to be consistent with this tutorial, specify *\<region>* to match with region selected, e.g. *uk* so cluster name looks like *my-uk-cluster*.
+2. Select **Region**, e.g. `United Kingdom`. For convenience, use the name 　*`my-<region>-cluster`* to be consistent with this tutorial, specify *\<region>* to match with region selected, e.g. *uk* so **cluster name** looks like *my-uk-cluster*.
 3. The smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** is sufficient for this tutorial. Select 2 **Worker nodes** and leave all other options set to defaults. Click **Create Cluster**.
 4. Check the status of your **Cluster** and **Worker Node** and wait for them to be **ready**.
 
 **NOTE:** Do not proceed until your workers are ready.
 
-Repeat steps above for the other region you'd like to have cluster by selecting different **region**, e.g. repeat the previous steps to deploy another cluster in US South, select **regionn** `US South`, specify cluster name *my-us-cluster*.
+Repeat steps above for the other region you'd like to have cluster by selecting different **region**, e.g. repeat the previous steps to deploy another cluster in US South, select **region** `US South`, specify **cluster name** *my-us-cluster*.
 
 **`CHECKPOINT 1`** - Now Kubernetes cluster across two regions are ready, keep moving with below steps to build, deployment and run containerized applications within the clusters.
 
@@ -233,24 +233,24 @@ As pre-requisites to configure GLB, first to create heath check and origin pools
 1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
 2. Enter "/" as the path to monitor and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**. 
 
-    The path can be specified per your application and requirement.{:Tips}
+    The path can be specified per your application and requirement.{:tip}
 
 #### Define origin pools with needed origin.
 1. Click **Create Pool**.
-2. Set **name** to `_iks_uk_pool_` for the pool, select the health check that you've just created, and a region that is close to the region of your kubernetes cluster.
-3. Set **Origin Name** to `_iks_uk_pool_`. 
+2. Set **name** to _`iks_uk_pool`_ for the pool, select the health check that you've just created, and a region that is close to the region of your kubernetes cluster.
+3. Set **Origin Name** to _`iks_uk_pool`_. 
 4. Set **Origin Address** to `my_uk_cluster.eu-gb.containers.appdomain.cloud` which is UK cluster sub-domain or its ALB IP address.
 5. Click **Provision 1 Instance**.
-After the 1st pool `_iks_uk_pool_` created, repeat above five steps by set right pool name, **Original Name** and **Original Address** so to create other two pools, naming `_iks_us_pool_`, `iks_all_origins` accordingly.
-    The origins in the same pool get the forwarded requests in Round-robin way.{:Tips}
+After the 1st pool _`iks_uk_pool`_ created, repeat above five steps by set right pool name, **Original Name** and **Original Address** so to create other two pools, naming _`iks_us_pool`_, _`iks_all_origins`_ accordingly.
+    The origins in the same pool get the forwarded requests in Round-robin way.{:tip}
 
 #### With origin pools defined to complete GLB creation and configuration
 1. Click **Create Load Balancer**. 
 2. Enter a name under **Balancer hostname** for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region. 
-3. Click **Add pool** under **Default origin pools** and select the origin pool that you have just created `_iks_all_origins_`.
+3. Click **Add pool** under **Default origin pools** and select the origin pool that you have just created _`iks_all_origins`_.
 4. Expand section of **Configure geo routes(optional)**, click **Add route**, select a region and click **Add**, then click **Add pool** to add origin pool for this Region. Region refers to where requests submmited and origin pool includes the application to serve the requests. For this tutorial, 
-    * add route for region *Northeast Asia* and regionn *Southeast Asia* with origin pointing to UK cluster `_iks_uk_pool_`. The requests submmited from Asia will be routed to the nearest applications running in region United Kingdom.
-    * add route for region *Eastern North America* and regionn *Western North America* with origin pointing to US cluster `_iks_us_pool_`. The requests submmited from North America will be routed to the nearest applications running in region US South.
+    * add route for region *Northeast Asia* and regionn *Southeast Asia* with origin pointing to UK cluster _`iks_uk_pool`_. The requests submmited from Asia will be routed to the nearest applications running in region United Kingdom.
+    * add route for region *Eastern North America* and regionn *Western North America* with origin pointing to US cluster _`iks_us_pool`_. The requests submmited from North America will be routed to the nearest applications running in region US South.
     * if request submitted not matching any definend region in route, it will be distributed to origins defined in **Default origin pools**.
 5. Click **Provision 1 Instance**.
 
@@ -323,7 +323,7 @@ The web application firewall(WAF) protects web application against ISO Layer 7 a
     * Toggle ON(Enable) for **IBM Specials** 
     * Expand it, scroll down to the last several rows with `SQLi` included in the description(e.g. starting from ID `100008`), notice all are blocked as **Default Mode** which protect application from SQL injection request.
 
-### Define Page Rules in CIS for certain URL to ensure performance, security and reliability 
+### Configure Page Rules in CIS for certain URL to ensure performance, security and reliability 
 Page rule is defined and functions to specific application URL referencing with domain. Like mentioned above, CIS is one-stop shop providing reliable, permant, secure ensurance for internet application and website. It provides page rules from all these three dimentions as well. For this tutorial -
 1. In the Cloud Internet Services application, navigate to **Performance** > **Page Rules**
 2. Click **Create rule**, the button right above the rules table
