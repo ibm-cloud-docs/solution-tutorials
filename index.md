@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-28"
+lastupdated: "2018-06-05"
 
 ---
 
@@ -74,7 +74,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <p>This tutorial is a walkthrough of how to create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Continous Delivery</span>
+                    <span class="tag-filter category">Continuous Delivery</span>
+                    <span class="tag-filter category">Cloud Internet Services</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution1/Architecture.png" />
