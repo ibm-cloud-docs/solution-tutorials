@@ -291,11 +291,6 @@ And one pool with both clusters:
    1. one with **Origin Name** set to **uk-cluster** and the **Origin Address** set to the Ingress subdomain of the UK cluster
 1. Click **Provision 1 Instance**.
 
-<!-- ### Configure CIS GLB for clusters and create Kubernetes Cluster Ingress Resource per region
-{: #LB_setting}
-
-For now, your applications have been running within the kubernetes clusters across different regions. To expose its public access of cluster and route access to corresponding application, Ingress resource will be created and configured. Either with Kubernetes cluster's ALB public IP or its Ingress Sub-domain, Global Load Balancer (GLB) in IBM Cloud Internet Services will be created to manage the traffic across multiple regions. The GLB utilizes an origin pool which allows for the traffic to be distributed to multiple origins. This way, it provides high availability and ensures the reliability of the applications cross multiple regions. -->
-
 ### Create the Global Load Balancer
 
 With the origin pools defined, you can complete the configuration of the load balancing.
@@ -366,7 +361,7 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
 1. Click **Back to Security**
 1. Click **View CIS Rule Set**. This page shows additional rules built around common technology stacks for hosting websites.
 
-### Protect from Denial of Service attacks and increase performance
+### Increase performance and protect from Denial of Service attacks and 
 {: #proxy_setting}
 
 A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. CIS is equipped to protect your domain from DDoS.
@@ -381,13 +376,7 @@ Your GLB is now protected. An immediate benefit is that the origin IP address of
 If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirect to your application:
    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
 
-In addition, you can now control what content gets cached by CIS and how long it stays cached. Go to **Performance** > **Caching** to define the caching level and the browser expiration.
-
-### Configure custom Page Rules
-
-You can customize the global security and caching rules with **Page Rules**. Page Rules enable fine-grained configuration using specific domain paths.
-
-As example with Page Rules, you could decide to cache all contents under **/assets** for **3 days**:
+In addition, you can now control what content gets cached by CIS and how long it stays cached. Go to **Performance** > **Caching** to define the global caching level and the browser expiration. You can customize the global security and caching rules with **Page Rules**. Page Rules enable fine-grained configuration using specific domain paths. As example with Page Rules, you could decide to cache all contents under **/assets** for **3 days**:
    ![page rules](images/solution32-multi-region-k8s-cis/cis-pagerules.png)
 
 ## Remove resources
