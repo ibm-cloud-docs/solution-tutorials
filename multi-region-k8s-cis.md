@@ -18,24 +18,18 @@ lastupdated: "2018-06-05"
 
 # Secure and resilient multi-region Kubernetes clusters with Cloud Internet Services
 
-Generally, Kubernetes cluster ensures containerized appliation HA with multiple workers grouped within cluster. When certain worker does not work, the other workers within the same cluster will serve the internet requests which is apprarent to users. Furthermore, to provide HA at zone level, workers can be put in multiple zones within the same region but eventually you would want more regions. This is not only for resiliency but also serving the requests closer to the users. 
+Your users are less likely to experience downtime when you distribute your setup across multiple worker nodes and clusters. Built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency.
 
-This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a secure and resilient solution across multiple regions.  
-
-* IBM Cloud Internet Services(CIS) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications.  
-
-* {{site.data.keyword.containershort}}(IKS) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+This tutorial highlights how Cloud Internet Services (CIS), a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications, can be integrated with Kubernetes clusters to support this scenario and to deliver a secure and resilient solution across multiple regions.
 
 ## Objectives
 {: #objectives}
 
-* Use CIS as global load-balancer with multiple cluster deployment
-  * use GLB to load balance between clusters
-  * use GLB Geo targets to send users to the closest cluster
-
-* Use CIS in front of a kubernetes cluster for application to implement
-  * content caching with CDN
-  * and security with DDoS, WAF and Page Rule
+* Deploy an application on multiple Kubernetes clusters in different region
+* Distribute traffic across multiple clusters with a Global Load Balancer
+* Route users to the closest cluster
+* Protect your application from security threats
+* Increase application performance with caching
 
 ## Services used
 {: #services}
