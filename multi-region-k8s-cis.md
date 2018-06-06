@@ -301,19 +301,18 @@ With the origin pools defined, you can complete the configuration of the load ba
 1. Expand the section of **Configure geo routes(optional)**
    1. Click **Add route**, select **Western Europe** and click **Add**
    1. Click **Add pool** to select the **UK** pool
-   1. Configure additional routes as follow:
+   1. Configure additional routes as shown in the following table and click **Provision 1 Instance**
 
-      | Region               | Origin Pool |
-      | :---------------:    | :---------: |
-      |Western Europe        |     UK      |
-      |Eastern Europe        |     UK      |
-      |Northeast Asia        |     UK      |
-      |Southeast Asia        |     UK      |
-      |Western North America |     US      |
-      |Eastern North America |     US      |
+| Region               | Origin Pool |
+| :---------------:    | :---------: |
+|Western Europe        |     UK      |
+|Eastern Europe        |     UK      |
+|Northeast Asia        |     UK      |
+|Southeast Asia        |     UK      |
+|Western North America |     US      |
+|Eastern North America |     US      |
 
-      With this configuration, users in Europe and in Asia will be redirected to the UK cluster, users in US to the US South cluster. When a request does not match any of the defined route, it will be redirected to the **Default origin pools**.
-1. Click **Provision 1 Instance**.
+With this configuration, users in Europe and in Asia will be redirected to the UK cluster, users in US to the US South cluster. When a request does not match any of the defined route, it will be redirected to the **Default origin pools**.
 
 The Global Load Balancer is now ready to serve requests. All health checks should be green.
 
