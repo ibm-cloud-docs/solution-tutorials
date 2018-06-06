@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-26"
+lastupdated: "2018-05-29"
 
 ---
 
@@ -56,9 +56,9 @@ The ready-to-run [code for the logging app is located in this Github repository]
    {:codeblock }
 2. Push the application to {{site.data.keyword.Bluemix_notm}}. You need to be logged in to the region, org and space in which the {{site.data.keyword.loganalysisshort}} service was created. Copy and paste these commands one line at a time.
    ```bash
-   bx login
-   bx target --cf
-   bx cf push your-app-name
+   ibmcloud login
+   ibmcloud target --cf
+   ibmcloud cf push your-app-name
    ```
    {:codeblock }
 
@@ -75,7 +75,7 @@ Next, in order to work with application logs, you first need to generate some. T
 
 1. The first is using the command line. The following displays the recent logs. It is a great method to investigate errors when an app after the push is not starting:
 ```bash
-bx cf logs your-app-name --recent
+ibmcloud cf logs your-app-name --recent
 ```
 2. The second method is to use the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net). In the overview, navigate to your app, click on its entry to open the details and then go to **Logs**. Current logs are shown with the most recent at the bottom. On the upper right you can search for an entry or filter by log type. Selecting **Application (APP)**
 ![](images/solution12/Dashboard_LogsFilter.png)

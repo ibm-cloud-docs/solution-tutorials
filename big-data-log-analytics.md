@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-10"
+lastupdated: "2018-06-05"
 ---
 
 {:shortdesc: .shortdesc}
@@ -77,28 +77,28 @@ This section uses the command line to create service instances. Alternatively, y
 
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
-    bx login
+    ibmcloud login
     ```
     {: pre}
     ```sh
-    bx target --cf
+    ibmcloud target --cf
     ```
     {: pre}
 2. Create a Lite instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage).
     ```sh
-    bx resource service-instance-create log-analysis-cos cloud-object-storage \
+    ibmcloud resource service-instance-create log-analysis-cos cloud-object-storage \
     lite global
     ```
     {: pre}
 3. Create a Beta instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
     ```sh
-    bx resource service-instance-create log-analysis-sql sql-query beta \
+    ibmcloud resource service-instance-create log-analysis-sql sql-query beta \
     us-south
     ```
     {: pre}
 4. Create a Standard instance of [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/message-hub).
     ```sh
-    bx service create messagehub standard log-analysis-hub
+    ibmcloud service create messagehub standard log-analysis-hub
     ```
     {: pre}
 

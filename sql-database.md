@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-25"
+lastupdated: "2018-05-29"
 
 ---
 
@@ -102,9 +102,9 @@ The ready-to-run [code for the database app is located in this Github repository
    ```
 2. Push the application to the IBM Cloud. You need to be logged in to the region, org and space to which the database has been provisioned. Copy and paste these commands one line at a time.
    ```bash
-   bx login
-   bx target --cf
-   bx cf push your-app-name
+   ibmcloud login
+   ibmcloud target --cf
+   ibmcloud cf push your-app-name
    ```
 3. Once the push process is finished you should be able to access the app. No further configuration is needed. The file `manifest.yml` tells the IBM Cloud to bind the app and the database service named "sqldatabase" together.
 

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-03-31"
+lastupdated: "2018-06-05"
 
 ---
 
@@ -223,11 +223,11 @@ At that point you have the resources needed by the application in place. The nex
 In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `bx` and the `iam` command.
 
    ```cmd
-   ~/> bx iam
+   ~/> ibmcloud iam
    NAME:
-      bx iam - Manage identities and access to resources
+      ibmcloud iam - Manage identities and access to resources
    USAGE:
-      bx iam command [arguments...] [command options]
+      ibmcloud iam command [arguments...] [command options]
 
    COMMANDS:
       ...
@@ -278,25 +278,25 @@ For the *Developer* role in the *Development* environment, this translates to:
    GROUP="Example-Developer-Role"
 
    # Check if the group exist
-   if bx iam access-group $GROUP >/dev/null; then
+   if ibmcloud iam access-group $GROUP >/dev/null; then
      echo "Role already exists"
    else
      # Create the access group for the role if the group does not exist
-     bx iam access-group-create $GROUP --description "used by the multiple-environments-as-code tutorial"
+     ibmcloud iam access-group-create $GROUP --description "used by the multiple-environments-as-code tutorial"
 
      # Set the permissions for this group
      # Resource Group: Viewer
-     bx iam access-group-policy-create $GROUP --roles Viewer --resource-type resource-group --resource "default"
+     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-type resource-group --resource "default"
 
      # Platform Access Roles in the Resource Group: Viewer
-     bx iam access-group-policy-create $GROUP --roles Viewer --resource-group-name "default"
+     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-group-name "default"
 
      # Monitoring: Administrator, Editor, Viewer
-     bx iam access-group-policy-create $GROUP --roles Administrator,Editor,Viewer --service-name monitoring
+     ibmcloud iam access-group-policy-create $GROUP --roles Administrator,Editor,Viewer --service-name monitoring
    fi
 
    # Add the user to the group
-   bx iam access-group-user-add $GROUP $USER
+   ibmcloud iam access-group-user-add $GROUP $USER
    ```
 
 You can find the scripts for all roles in the *Development environment* under the [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of your checkout.
@@ -397,7 +397,7 @@ If you are not the account owner but you manage an organization in the account, 
 
 1. Retrieve the organization GUID
    ```sh
-   bx iam org <org_name> --guid
+   ibmcloud iam org <org_name> --guid
    ```
    {: codeblock}
 1. Change to the `terraform/global` directory
@@ -440,17 +440,17 @@ This section will focus on the `development` environment. The steps will be the 
    1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
    1. Set **cluster_datacenter** to the location where you want to create the cluster. Find the available locations with:
       ```sh
-      bx cs locations
+      ibmcloud cs locations
       ```
       {: codeblock}
    1. Set the private (**cluster_private_vlan_id**) and public (**cluster_public_vlan_id**) VLANs for the cluster. Find the available VLANs for the location with:
       ```sh
-      bx cs vlans <location>
+      ibmcloud cs vlans <location>
       ```
       {: codeblock}
    1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
       ```sh
-      bx cs machine-types <location>
+      ibmcloud cs machine-types <location>
       ```
       {: codeblock}
 1. Initialize Terraform

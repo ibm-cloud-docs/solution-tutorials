@@ -2,7 +2,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-04-19"
+lastupdated: "2018-05-31"
 
 ---
 
@@ -16,7 +16,12 @@ lastupdated: "2018-04-19"
 
 # Analyze logs and monitor the health of Kubernetes applications
 
-This tutorial walks you through creating a cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.
+This tutorial walks you through creating a Kubernetes cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.
+
+For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions. In addition to generating starter application code, Docker container image and CloudFoundry assets, the code generators used by the dev CLI and web console generate files to aid deployment into [Kubernetes](https://kubernetes.io/) environments. The templates generate [Helm](https://github.com/kubernetes/helm) charts that describe the application’s initial Kubernetes deployment configuration, and are easily extended to create multi-image or complex deployments as needed.
+
+Additionally, setting up logging and monitoring in [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster) will help you in troubleshooting issues and improve the health and performance of your Kubernetes clusters and apps.
+
 {:shortdesc}
 
 ## Objectives:
@@ -33,7 +38,7 @@ This tutorial walks you through creating a cluster and configuring the Log Analy
 ## Prerequisites
 {: #prereq}
 
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, bx cli and required plug-ins
+* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 * [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
 * [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
@@ -52,15 +57,15 @@ This tutorial walks you through creating a cluster and configuring the Log Analy
 
 **NOTE:** Do not proceed until your workers are ready.
 
-### Configure kubectl and helm
+### Configure kubectl
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Update your **bx** plugins by running `bx plugin update`.
-2. Use `bx login` to log in interactively. Provide the account under which the cluster is created. You can reconfirm the details by running `bx target` command.
+1. Update your **ibmcloud** plugins by running `ibmcloud plugin update`.
+2. Use `ibmcloud login` to log in interactively. Provide the account under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
 3. When the cluster is ready, retrieve the cluster configuration:
    ```bash
-   bx cs cluster-config <cluster-name>
+   ibmcloud cs cluster-config <cluster-name>
    ```
    {: pre}
 4. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
@@ -68,11 +73,6 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 5. Check that the `kubectl` command is correctly configured
    ```bash
    kubectl cluster-info
-   ```
-   {: pre}
-6. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. After your cluster workers are ready, run the command below to initialize Helm in your cluster.
-   ```bash
-   helm init
    ```
    {: pre}
 
@@ -100,17 +100,17 @@ If you specified a space when you created the cluster then both the account owne
 
 ## Create a starter application
 {: #create_application}
-The `bx dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
+The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
-1. Start the `bx dev` wizard.
+1. Start the `ibmcloud dev` wizard.
    ```
-   bx dev create
+   ibmcloud dev create
    ```
    {: pre}
 
 2. Select `Backend Service / Web App` > `Node `> `Web App - Express.js Basic` to create a Node.js starter application.
 3. Enter a **name** (`mynodestarter`) and a unique **hostname** (`username-mynodestarter`) for your project.
-  ![](images/solution17/bx_dev_create.png)
+  ![](images/solution17/ibmcloud_dev_create.png)
 
 4. Choose **No DevOps** and Select **n** to skip adding services.
 
@@ -149,7 +149,7 @@ You can build and run the application as you normally would using `mvn` for java
    ```
 4. Build the application.
    ```
-   bx dev build
+   ibmcloud dev build
    ```
    {: pre}
 
@@ -159,7 +159,7 @@ You can build and run the application as you normally would using `mvn` for java
 
 1. Run the container.
    ```
-   bx dev run
+   ibmcloud dev run
    ```
    {: pre}
 
@@ -167,36 +167,80 @@ You can build and run the application as you normally would using `mvn` for java
 2. After your container starts, go to http://localhost:3000/
   ![](images/solution17/node_starter_localhost.png)
 
-## Deploy application to cluster
+## Deploy application to cluster using a helm chart
 {: #deploy}
 
-The IBM Cloud has a Container Registry that is private to you. Let's push the Docker image there, and then create a Kubernetes deployment pointing to that image.
+In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
 
 1. Find your **namespace** by listing all the namespace in the registry.
-   ```
-   bx cr namespaces
+   ```sh
+   ibmcloud cr namespaces
    ```
    {: pre}
    If you have a namespace, make note of the name for use later. If you don't have one, create it.
-   ```
-   bx cr namespace-add <name>
-   ```
-   {: pre}
-2. Find the **Container Registry** information by running.
-   ```
-   bx cr info
+   ```sh
+   ibmcloud cr namespace-add <Name>
    ```
    {: pre}
-3. Deploy to your Kubernetes cluster:
-   ```
-   bx dev deploy -t container
+2. Set MYNAMESPACE and MYPROJECT environment variables to your namespace and project name respectively
+
+    ```sh
+    export MYNAMESPACE=<NAMESPACE>
+    ```
+    {: pre}
+    ```sh
+    export MYPROJECT=<PROJECTNAME>
+    ```
+    {: pre}
+3. Identify your **Container Registry** (e.g. registry.ng.bluemix.net) by running `ibmcloud cr info`
+4. Set MYREGISTRY env var to your registry.
+   ```sh
+   export MYREGISTRY=<REGISTRY>
    ```
    {: pre}
-4. When prompted, enter your **cluster name**.
-5. Next, enter your **image name**. Use the following format: `<registry_url>/<namespace>/<projectname>`
-6. Wait a few minutes for your application to be deployed.
-7. Visit the URL displayed to access the application by `http://worker-public-ip:portnumber/`. If you do not see a port number, run `kubectl get services` and look for the 5 digit port number next to your application service.
-  ![](images/solution17/kubectl_get_services.png)
+
+5. Tag the docker image that is used to create a container to run your app locally
+   ```sh
+   docker images
+   ```
+   {: pre}
+   ```sh
+   docker tag <DOCKER IMAGE NAME> ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
+   ```
+   {: pre}
+   Replace `<DOCKER IMAGE NAME>` with the name of the image ending with `-run`.
+   {:tip}
+
+6. Push the docker image to your container registry on IBM Cloud
+   ```sh
+   docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
+   ```
+   {: pre}
+7. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
+
+   For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
+
+8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Initialize Helm by navigating to `chart\YOUR PROJECT NAME` and running the below command in your cluster
+
+   ```bash
+   helm init
+   ```
+   {: pre}
+   To upgrade helm, run this command `helm init --upgrade`
+   {:tip}
+
+9. To install a Helm chart, run the below command
+  ```sh
+  helm install . --name ${MYPROJECT}
+  ```
+  {: pre}
+10. You should see `==> v1/Service`. Remember the Nodeport which is a 5-digit number(e.g., 31569) under `PORT(S)` next to your application. This is your portnumber.
+11. For the public IP of worker node, run the below command
+   ```sh
+   ibmcloud cs workers <CLUSTER NAME>
+   ```
+   {: pre}
+12. Access the application `http://worker-ip-address:portnumber`
   ![](images/solution17/node_starter_cluster.png)
 
 To set up Ingress and use your own custom domain see the [Use your own custom domain](/docs/tutorials/scalable-webapp-kubernetes.html#custom_domain) section of the [Deploy a scalable web application on Kubernetes](/docs/tutorials/scalable-webapp-kubernetes.html) tutorial.
@@ -268,7 +312,7 @@ Metrics for standard clusters are located in the {{site.data.keyword.Bluemix_not
 2. Next to **Metrics**, click **View**. This should launch Grafana in a new tab.
 3. In the top right corner, click on your username and choose **Domain**: **account** and select your **Account**.
 4. Click on **Home** and select the **ClusterMonitoringDashboard_V1** dashboard that has been pre-defined.
-5. Enter the region value (`bx cs regions` to see all regions) where your cluster was created next to **Region** and then enter your cluster name next to **Cluster**.
+5. Enter the region value (`ibmcloud cs regions` to see all regions) where your cluster was created next to **Region** and then enter your cluster name next to **Cluster**.
    ![](images/solution17/grafana_region_cluster.png)
 6. In a different window, visit your application URL and refresh the page several times to generate some load.
 7. Refresh your Grafana dashboard to see the updated metrics.

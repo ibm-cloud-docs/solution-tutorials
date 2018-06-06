@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-28"
+lastupdated: "2018-05-30"
 
 ---
 
@@ -67,7 +67,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 The major portion of this tutorial can be accomplished with a **Free** cluster. Two optional sections relating to Kubernetes Ingress and custom domain require a **Paid** cluster of type **Standard**.
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). 
+1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch).
 
    For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
    {:tip}
@@ -76,7 +76,7 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster.
 3.  Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
-### Configure kubectl and helm
+### Configure kubectl
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
@@ -95,8 +95,6 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    {: pre}
    ![](images/solution2/kubectl_cluster-info.png)
 
-   
-
 
 ## Create a starter application
 {: #create_application}
@@ -105,18 +103,14 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
 1. Start the `ibmcloud dev` wizard.
    ```
-   bx dev create
+   ibmcloud dev create
    ```
    {: pre}
 
 1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Web App - Java MicroProfile / Java EE Basic` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Basic Web` > `Node`> `Web App - Express.js Basic` )
-
 1. Enter a **name** for your project.
-
 1. Enter unique **hostname** for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
-
 1. Do not add a DevOps toolchain, select **manual deployment**.
-
 1. Do not add additional services.
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/projects/java_project_contents.html#java-project-files).
@@ -157,7 +151,7 @@ You can build and run the application as you normally would using `mvn` for java
 2. After your container starts, go to `http://localhost:9080/<nameofproject>`. If you created a Node.js application, use port 3000.
   ![](images/solution2/LibertyLocal.png)
 
-## Deploy application to cluster
+## Deploy application to cluster using helm chart
 {: #deploy}
 
 In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
@@ -177,24 +171,27 @@ In this section, you first push the Docker image to the IBM Cloud private contai
     ```sh
     export MYNAMESPACE=<NAMESPACE>
     ```
+    {: pre}
     ```sh
     export MYPROJECT=<PROJECTNAME>
     ```
+    {: pre}
 3. Identify your **Container Registry** (e.g. registry.ng.bluemix.net) by running `ibmcloud cr info`
 4. Set MYREGISTRY env var to your registry.
    ```sh
    export MYREGISTRY=<REGISTRY>
    ```
+   {: pre}
 
 5. Tag the docker image that is used to create a container to run your app locally
    ```sh
    docker images
    ```
-
+   {: pre}
    ```sh
    docker tag <DOCKER IMAGE NAME> ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
-
+   {: pre}
    For Java app, replace `<DOCKER IMAGE NAME>` with your project name and for node app with the name of the image ending with `-run`.
    {:tip}
 
@@ -202,27 +199,31 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```sh
    docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
+   {: pre}
 7. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
 
    For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
 
-8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Initialize Helm by navigating to `chart\YOUR PROJECT NAME` and running the below command in your cluster 
+8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Initialize Helm by navigating to `chart\YOUR PROJECT NAME` and running the below command in your cluster
 
    ```bash
    helm init
    ```
+   {: pre}
    To upgrade helm, run this command `helm init --upgrade`
    {:tip}
 
 9. To install a Helm chart, run the below command
-  ````sh
+  ```sh
   helm install . --name ${MYPROJECT}
-  ````
-10. You should see `==> v1/Service`. Remember the Nodeport which is a 6-digit number(e.g., 31569) under `PORT(S)`. This is your portnumber.
+  ```
+  {: pre}
+10. You should see `==> v1/Service`. Remember the Nodeport which is a 5-digit number(e.g., 31569) under `PORT(S)`. This is your portnumber.
 11. For the public IP of worker node, run the below command
    ```sh
    ibmcloud cs workers <CLUSTER NAME>
    ```
+   {: pre}
 12. Access the application `http://worker-ip-address:portnumber/nameofproject`.
 
 ## Use the IBM-provided domain for your cluster

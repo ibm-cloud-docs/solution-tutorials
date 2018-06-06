@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-06-05"
 
 ---
 
@@ -91,8 +91,8 @@ In this section, you will use the command line tool **curl** to upload files to 
 
 1. Log in to {{site.data.keyword.Bluemix_notm}} from the CLI and get a token from IBM Cloud IAM.
    ```sh
-   bx login
-   bx iam oauth-tokens
+   ibmcloud login
+   ibmcloud iam oauth-tokens
    ```
    {: pre}
 2. Copy the token from the output of the command in the previous step.
@@ -182,17 +182,17 @@ The application contains a public/index.html web page that includes references t
    {: pre}
 2. Push the application without starting it.
    ```
-   bx cf push --no-start
+   ibmcloud cf push --no-start
    ```
    {: pre}
 3. Configure the CDN_NAME environment variable so the app can reference the CDN contents.
    ```
-   bx cf set-env webapp-with-cos-and-cdn CDN_CNAME your-cdn.cdnedge.bluemix.net
+   ibmcloud cf set-env webapp-with-cos-and-cdn CDN_CNAME your-cdn.cdnedge.bluemix.net
    ```
    {: pre}
 4. Start the app.
    ```
-   bx cf start webapp-with-cos-and-cdn
+   ibmcloud cf start webapp-with-cos-and-cdn
    ```
    {: pre}
 5. Access the app with your web browser, the page stylesheet, a picture and a video are loaded from the CDN.

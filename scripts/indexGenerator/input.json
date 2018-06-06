@@ -11,7 +11,8 @@
                 "tags": [
                     "Cloud Foundry",
                     "Node.js",
-                    "Continous Delivery"
+                    "Continuous Delivery",
+                    "Cloud Internet Services"
                 ]
             },
             {
@@ -25,6 +26,18 @@
                     "Container Service",
                     "Container Registry",
                     "Java"
+                ]
+            },
+            {
+                "hidden": true,
+                "name": "Secure and resilient multi-region Kubernetes clusters",
+                "url": "multi-region-k8s-cis.html",
+                "description": "This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a secure and resilient solution across multiple regions.",
+                "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Container Registry",
+                    "Cloud Internet Services"
                 ]
             },
             {

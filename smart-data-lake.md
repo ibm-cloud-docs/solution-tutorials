@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-22"
+lastupdated: "2018-06-01"
 
 ---
 
@@ -46,6 +46,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 - [Install Git](https://git-scm.com/)
 - [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
 - [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
+- [Install Node.js and NPM](https://nodejs.org)
 
 ## Create services
 
@@ -56,39 +57,39 @@ This section uses the command line to create service instances. Alternatively, y
 
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
-    bx login
+    ibmcloud login
     ```
     {: pre}
     ```sh
-    bx target --cf
+    ibmcloud target --cf
     ```
     {: pre}
 2. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a service instance, run the `service-alias-create` command with the existing service name.
     ```sh
-    bx resource service-instance-create data-lake-cos cloud-object-storage lite global
+    ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
     {: pre}
     ```sh
-    bx resource service-alias-create dashboard-nodejs-cos --instance-name data-lake-cos
+    ibmcloud resource service-alias-create dashboard-nodejs-cos --instance-name data-lake-cos
     ```
     {: pre}
 3. Create an instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
     ```sh
-    bx resource service-instance-create data-lake-sql sql-query beta us-south
+    ibmcloud resource service-instance-create data-lake-sql sql-query beta us-south
     ```
     {: pre}
 4. Create an instance of [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio).
     ```sh
-    bx service create data-science-experience free-v1 data-lake-studio
+    ibmcloud service create data-science-experience free-v1 data-lake-studio
     ```
     {: pre}
 5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
     ```sh
-    bx resource service-instance-create data-lake-dde dynamic-dashboard-embedded lite us-south
+    ibmcloud resource service-instance-create data-lake-dde dynamic-dashboard-embedded lite us-south
     ```
     {: pre}
     ```sh
-    bx resource service-alias-create dashboard-nodejs-dde --instance-name data-lake-dde
+    ibmcloud resource service-alias-create dashboard-nodejs-dde --instance-name data-lake-dde
     ```
     {: pre}
 6. Change to a working directory and run the following command to clone the dashboard application's [GitHub repository](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard). Then push the application to your Cloud Foundy organization. The application will automatically bind the required services from above using its [manifest.yml](https://github.com/IBM-Cloud/nodejs-data-lake-dashboard/blob/master/manifest.yml) file.
@@ -109,7 +110,7 @@ This section uses the command line to create service instances. Alternatively, y
     ```
     {: pre}
 
-    After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `bx cf app dashboard-nodejs routes` to see routes.
+    After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `ibmcloud cf app dashboard-nodejs routes` to see routes.
     {: tip}
 
 7. Confirm the application is active by accessing its public URL in the browser.
@@ -154,7 +155,7 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
         `Victim Age` AS age,
         `Victim Sex` AS sex,
         `Location` AS location
-        FROM cos://us-south/<your-bucket-name>/Traffic_Collision_Data_from_2010_to_Present.csv.csv
+        FROM cos://us-south/<your-bucket-name>/Traffic_Collision_Data_from_2010_to_Present.csv
         WHERE
         `Time Occurred` >= 1700 AND
         `Time Occurred` <= 2000 AND
@@ -199,7 +200,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
         {: codeblock}
     - From the terminal, create an API key.
         ```sh
-        bx iam api-key-create data-lake-cos-key
+        ibmcloud iam api-key-create data-lake-cos-key
         ```
         {: pre}
     - Copy the **API Key** to the clipboard.
@@ -213,7 +214,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
         {: codeblock}
     - From the terminal, copy the CRN from the **ID** property to your clipboard.
         ```sh
-        bx resource service-instance data-lake-sql
+        ibmcloud resource service-instance data-lake-sql
         ```
         {: pre}
     - Paste the CRN between the single quotes and then **Run**.
@@ -226,7 +227,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     ```python
     sqlClient = ibmcloudsql.SQLQuery(cloud_api_key, sql_crn, sql_cos_endpoint + '/accidents')
 
-    data_source = sql_cos_endpoint + "/Traffic_Collision_Data_from_2010_to_Present.csv.csv"
+    data_source = sql_cos_endpoint + "/Traffic_Collision_Data_from_2010_to_Present.csv"
 
     query = """
     SELECT
@@ -339,6 +340,7 @@ In production applications, encrypt information such as URLs, usernames and pass
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
 - Experiment with additional datasets using SQL Query
+- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://console.bluemix.net/docs/tutorials/big-data-log-analytics.html)
 - Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://console.bluemix.net/catalog/services/app-id) service instance to enable security in the dashboard application
 
@@ -347,43 +349,43 @@ Congratulations, you have built a data lake using {{site.data.keyword.cos_short}
 Run the following commands to remove services, applications and keys used.
 
 ```sh
-bx resource service-binding-delete dashboard-nodejs-dde dashboard-nodejs
+ibmcloud resource service-binding-delete dashboard-nodejs-dde dashboard-nodejs
 ```
 {: pre}
 ```sh
-bx resource service-binding-delete dashboard-nodejs-cos dashboard-nodejs
+ibmcloud resource service-binding-delete dashboard-nodejs-cos dashboard-nodejs
 ```
 {: pre}
 ```sh
-bx resource service-alias-delete dashboard-nodejs-dde
+ibmcloud resource service-alias-delete dashboard-nodejs-dde
 ```
 {: pre}
 ```sh
-bx resource service-alias-delete dashboard-nodejs-cos
+ibmcloud resource service-alias-delete dashboard-nodejs-cos
 ```
 {: pre}
 ```sh
-bx iam api-key-delete data-lake-cos-key
+ibmcloud iam api-key-delete data-lake-cos-key
 ```
 {: pre}
 ```sh
-bx resource service-instance-delete data-lake-dde
+ibmcloud resource service-instance-delete data-lake-dde
 ```
 {: pre}
 ```sh
-bx resource service-instance-delete data-lake-cos
+ibmcloud resource service-instance-delete data-lake-cos
 ```
 {: pre}
 ```sh
-bx resource service-instance-delete data-lake-sql
+ibmcloud resource service-instance-delete data-lake-sql
 ```
 {: pre}
 ```sh
-bx service delete data-lake-studio
+ibmcloud service delete data-lake-studio
 ```
 {: pre}
 ```sh
-bx app delete dashboard-nodejs
+ibmcloud app delete dashboard-nodejs
 ```
 {: pre}
 
