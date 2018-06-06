@@ -358,62 +358,57 @@ At this stage, you have successfully configured a Global Load Balancer with Kube
 
 ## Secure the application
 {: #secure_via_CIS}
-Besides GLB to ensure across-region reliability for Kubernetes cluster, CIS also provides needed performance for internet applications via caching option. Along the way, secure internet access to application via Web Application Firewall(WAF) and page rule setting, protect the application from DDoS attack.
 
-### Enable proxy mode providing DDoS protection and caching
+### Turn the Web Application Firewall On
+
+The Web Application Firewall(WAF) protects your web application against ISO Layer 7 attacks. Usually, it is combined with grouped rule-sets, these rule-sets aim to protect against vulnerabilities in the application by filtering out malicious traffic.
+
+1. In the Cloud Internet Services dashboard, navigate to **Security**, then on the **Manage** tab
+1. In the **Web Application Firewall** section, ensure the WAF is enabled
+1. Click **View OWASP Rule Set**. From this page, you can review the **OWASP Core Rule Set** and individually enable or disable rules. When a rule is enabled, if an incomimg request triggers the rule, the global threat score will be increased. The **Sensitivity** setting will decide whether an **Action** is triggered for the request.
+   1. Leave default OWASP rule sets as it is
+   1. Set **Sensitivity** to `Low`
+   1. Set **Action** to `Simulate` to log all the events
+1. Click **Back to Security**
+1. Click **View CIS Rule Set**. This page shows additional rules built around common technology stacks for hosting websites.
+
+### Protect from Denial of Service attacks and increase performance
 {: #proxy_setting}
-A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic.
 
-Toggle ON proxy besides CIS GLB, it enables DDoS protection and caching for GLB so to applications defined in Kubernetes cluster. Use `dig _<glb_name>.<domain_name>`, original IP address is hid. All of your clients connect to CIS proxies.
+A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. CIS is equipped to protect your domain from DDoS.
+
+1. In the CIS dashboard, select **Reliability** > **Global Load Balancer**
+1. Locate the GLB you created in the **Load Balancers** table,
+1. Enable the Security and Performance features in the **Proxy** column
    ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis.proxy.png)
 
-Bascially, for caching, the edge services are enabled with proxy mode. The content(static web content) will be caching at edge closest to visitor which apprarent to user. While for specific caching setting to certain URL, e.g. edge cache TTL, it can be set via **Page Rule** in following section. In the meanwhile, some general caching setting can be configured -
-1. In Cloud Internet Services, navigate to **Performance** > **Caching**
-2. **Purge Cache**, to get the latest update of application, choose **Single single files** for certain URL or **Purge All**
-3. **Serve Stale Content**, toggle ON so it provides cached content to user when origin not available.
-4. **Caching Level**, select `No query string`, cached content returns for the requests without query string.  
-5. **Browser Expiration**, select `1 day`, the cached content would be stored in user's broswer within 1 day ensuring the access performance while keeping relative up-to date content. It can be specified per requirement.
+Your GLB is now protected. An immediate benefit is that the origin IP address of your clusters will be hidden from the clients.
 
-**`CHECKPOINT 4`** - DDoS protection and cachinng are enabled for application runnning in cluster. After proxy is enabled and when access submmited via GLB URL plus application path, similar page like below shown which tell all access to your application would be under DDoS protection.    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
+If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirect to your application:
+   ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
 
-### Define WAF in CIS to secure the internet access
-The web application firewall(WAF) protects web application against ISO Layer 7 attacks. Usually, it is combined with grouped rule-sets, these rule-sets aim to protect against vulnerabilities in the application by filtering out malicious traffic.
-1. In the Cloud Internet Services application, navigate to **Security**, on the Security **Manage** page > **Web Application Firewall** section
-2. Click **View OWASP Rule Set**, in page **OWASP Core rule set**, OWASP rules have been listed in the table. Each rule set can be disabled or enabled per your application. When enabled, if incomimg request triggers the rule, the threat score will be increased and finally reflects to **Sensitivity**, then trigger **Action** defined. For this tutorial -
-    * Leave default OWASP rule sets as it is
-    * Set **Sensitivity** to `Low`
-    * Set **Action** to `Simulate` to log all the events
-    * Click **Back to Security**
-3. Click **View CIS Rule Set** besides **View OWASP Rule Set**, **CIS Rule Set** page shows with the rules built with technology hosting website. Per type of web application, enable rule sets and specify the **Mode** when needed. For this tutorial, ensure **IBM Specials** is enabled
-    * Toggle ON(Enable) for **IBM Specials**
-    * Expand it, scroll down to the last several rows with `SQLi` included in the description(e.g. starting from ID `100008`), notice all are blocked as **Default Mode** which protect application from SQL injection request.
+In addition, you can now control what content gets cached by CIS and how long it stays cached. Go to **Performance** > **Caching** to define the caching level and the browser expiration.
 
-### Configure Page Rules in CIS for certain URL to ensure performance, security and reliability
-Page rule is defined and functions to specific application URL referencing with domain. Like mentioned above, CIS is one-stop shop providing reliable, permant, secure ensurance for internet application and website. It provides page rules from all these three dimentions as well. For this tutorial -
-1. In the Cloud Internet Services application, navigate to **Performance** > **Page Rules**
-2. Click **Create rule**, the button right above the rules table
-3. Section `Page Rule`, specify **URL match** to URL `/`
-4. Section `Rule Behavior`, select **Web Application Firewall** under **Security**, toggle ON for **Set as**
-5. Click **Add Setting**, select **TLS** under **Performance**, choose **Client-to-edge**, this provides the encrypted access via TLS between requester and GLB(or proxy) server.
-6. Click **Add Setting**, select **Cache Level** under **Performance**, choose **Cache everything**
-7. Click **Add Setting**, select **Edge Cache TTL** under **Performance**, select **1 day** which content will be cached at edge server for 1 day the fetch content to sync with content on origins.
+### Configure custom Page Rules
 
-[Best practice to secure traffic and internet application via CIS](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#manage-your-ibm-cis-for-optimal-security)
+You can customize the global security and caching rules with **Page Rules**. Page Rules enable fine-grained configuration using specific domain paths.
+
+As example with Page Rules, you could decide to cache all contents under **/assets** for **3 days**:
+   ![page rules](images/solution32-multi-region-k8s-cis/cis-pagerules.png)
 
 ## Remove resources
 {:removeresources}
 
-Remove Kubernetes Cluster resources
-* remove ingress
-* remove pods
-* remove service
-* remove worknodes
-* remove clusters
+1. Remove Kubernetes Cluster resources
+   1. Remove ingress
+   1. Remove service
+   1. Remove deployment
+   1. Delete clusters if you created them specifically for this tutorial
 
-Remove CIS resources
-* remove GLB
-* remove origin pool
-* remove health check
+1. Remove CIS resources
+   1. remove GLB
+   1. remove origin pool
+   1. remove health check
 
 ## Related content
 {:related}
@@ -423,3 +418,4 @@ Remove CIS resources
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
 * [{{site.data.keyword.registrylong_notm}} Basic](https://console.bluemix.net/docs/services/Registry/registry_overview.html#registry_planning)
 * [Deploying single instance apps to Kubernetes clusters](https://console.bluemix.net/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1)
+* [Best practice to secure traffic and internet application via CIS](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#manage-your-ibm-cis-for-optimal-security)
