@@ -302,6 +302,7 @@ With the origin pools defined, you can complete the configuration of the load ba
    1. Click **Add route**, select **Western Europe** and click **Add**
    1. Click **Add pool** to select the **UK** pool
    1. Configure additional routes as follow:
+
       | Region               | Origin Pool |
       | :---------------:    | :---------: |
       |Western Europe        |     UK      |
@@ -310,6 +311,7 @@ With the origin pools defined, you can complete the configuration of the load ba
       |Southeast Asia        |     UK      |
       |Western North America |     US      |
       |Eastern North America |     US      |
+
       With this configuration, users in Europe and in Asia will be redirected to the UK cluster, users in US to the US South cluster. When a request does not match any of the defined route, it will be redirected to the **Default origin pools**.
 1. Click **Provision 1 Instance**.
 
