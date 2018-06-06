@@ -322,7 +322,7 @@ The Global Load Balancer is now ready to serve requests. All health checks shoul
 There is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer. You need to define an Ingress resource to handle requests from the GLB domain.
 
 * Create an Ingress resource file named **glb-ingress.yaml**
-   ```bash
+   ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
    metadata:
@@ -337,6 +337,7 @@ There is one last configuration step required on the Kubernetes clusters to corr
               serviceName: hello-world-service
               servicePort: 80
     ```
+    {: pre}
     Replace <glb_name>.<your_domain_name> with the URL you defined in the previous section.
 * Deploy this resource in both UK and US South clusters, after setting the KUBECONFIG variable for the respective region clusters:
    ```bash
