@@ -364,7 +364,7 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
 1. Click **Back to Security**
 1. Click **View CIS Rule Set**. This page shows additional rules built around common technology stacks for hosting websites.
 
-### Increase performance and protect from Denial of Service attacks and 
+### Increase performance and protect from Denial of Service attacks 
 {: #proxy_setting}
 
 A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. CIS is equipped to protect your domain from DDoS.
