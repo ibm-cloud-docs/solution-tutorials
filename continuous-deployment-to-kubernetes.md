@@ -51,7 +51,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 1. Push code to a private Git repository.
 2. Pipeline picks up changes in Git and builds container image.
 3. Container image uploaded to registry deployed to a development Kubernetes cluster.
-4. Validate changes and deploy to production cluster.
+4. Validate changes and deploy to the production cluster.
 5. Slack notifications setup for deployment activities.
 
 
@@ -77,7 +77,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
    ![](images/solution21/KubernetesPaidClusterCreation.png)
 
-2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster. The smallest **Machine type** with 2 **CPUs**, 4 **GB RAM** and 1 **Worker Nodes** is sufficient for this tutorial. All other options can be left to their defaults. 
+2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster. The smallest **Machine type** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial. All other options can be left to their defaults. 
 
 3. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
@@ -107,7 +107,7 @@ Done, you've used the App Service UI to create the starter applications, and con
 ## Clone, build and run the application locally
 {: #cloneandbuildapp}
 
-In this section, you will use the starter app created in earlier section, clone it to your local machine, modify the code and then build/run it locally.
+In this section, you will use the starter app created in the earlier section, clone it to your local machine, modify the code and then build/run it locally.
 {: shortdesc}
 
 ### Clone the application
@@ -124,7 +124,7 @@ In this section, you will use the starter app created in earlier section, clone 
 
    {: codeblock}
 
-   **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
+   **Note:** If you're prompted for a username, provide your git username. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 
 4. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Update the code by trying to change "Congratulations!" to something else and the save the file.
 
@@ -208,7 +208,7 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
 
 7. Drag and move the **Validate Stage** to the middle.
 
-8. Click **Run** ![](images/solution21/run.png) on the **Validate Stage**.You will see that the **Validate stage** fails.
+8. Click **Run** ![](images/solution21/run.png) on the **Validate Stage**. You will see that the **Validate stage** fails.
     ![](images/solution21/toolchain.png)
 
 9. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
@@ -252,7 +252,7 @@ In this section, you will complete the deployment pipeline by deploying the Kube
 6. Under the **Job** tab, change the cluster name to the newly created cluster and then **Save** the stage.
 7. You now should have the full deployment setup, to deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production. ![](images/solution21/full-deploy.png)
 
-Done, you've now created a production cluster and configured the pipeline to push updates to your production cluster manually. This is a simplification process stage over a more advanced scenarios where you would include unit tests and integration tests as part of the pipeline. 
+Done, you've now created a production cluster and configured the pipeline to push updates to your production cluster manually. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline. 
 
 ## Setup Slack notifications
 {: #setup_slack}
@@ -262,7 +262,7 @@ Done, you've now created a production cluster and configured the pipeline to pus
     ![](images/solution21/configure_slack.png)
 3. For **Slack webhook**, follow the steps in this [link](https://my.slack.com/services/new/incoming-webhook/). You need to login with your Slack credentials and provide an existing channel name or create a new one.
 4. Once the Incoming webhook integration is added, copy the **Webhook URL** and paste the same under **Slack webhook**.
-5. **Slack channel** is the channel name your provided while creating a webhook integration above.
+5. The slack channel is the channel name you provided while creating a webhook integration above.
 6. **Slack team name** is the team-name(first part) of team-name.slack.com. e.g., kube is the team name in kube.slack.com
 7. Click **Create Integration**. A new tile will be added to your toolchain.
     ![](images/solution21/toolchain_slack.png)
