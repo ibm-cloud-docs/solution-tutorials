@@ -70,16 +70,16 @@
             {
                 "name": "Continuous Deployment to Kubernetes",
                 "url": "continuous-deployment-to-kubernetes.html",
-                "description": "This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.",
+                "description": "This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like security scanners, Slack notifications, and analytics.",
                 "imgSrc": "images/solution21/Architecture.png",
                 "tags": [
                     "Kubernetes",
                     "Container Service",
                     "Docker",
-                    "Node.js",
                     "Slack",
-                    "Vulnerability Advisor",
-                    "DevOps"
+                    "DevOps",
+                    "Node.js",
+                    "Vulnerability Advisor"
                 ]
             },
             {

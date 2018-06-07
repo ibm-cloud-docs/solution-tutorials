@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-06-07"
 
 ---
 
@@ -143,14 +143,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.</p>
+                <p>This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like security scanners, Slack notifications, and analytics.</p>
                     <span class="tag-filter category">Kubernetes</span>
                     <span class="tag-filter category">Container Service</span>
                     <span class="tag-filter category">Docker</span>
-                    <span class="tag-filter category">Node.js</span>
                     <span class="tag-filter category">Slack</span>
-                    <span class="tag-filter category">Vulnerability Advisor</span>
                     <span class="tag-filter category">DevOps</span>
+                    <span class="tag-filter category">Node.js</span>
+                    <span class="tag-filter category">Vulnerability Advisor</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution21/Architecture.png" />
