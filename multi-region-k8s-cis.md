@@ -241,15 +241,15 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
    ibmcloud cs cluster-get <uk-cluster-name>
    ```
    {: pre}
-1. Retrieve the public IP address of its application load balancer
-   ```bash
-   ibmcloud cs albs -cluster <uk-cluster-name>
-   ```
-   {: pre}
+   Look for the `Ingress Subdomain` value.
+1. Repeat the steps for the cluster in the US South region (*us-south*).
 
-Repeat the steps for the cluster in the US South region (*us-south*).
+This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also swap the subdomain for the public Application Load Balancer IP address (`ibmcloud cs albs -cluster <uk-cluster-name>`). Both options are be supported.
+{: tip}
 
 ### Configure Health Check for the Global Load Balancer
+
+A health check helps gain insight into the availability of pools so that traffic can be routed to the healthy ones. These checks periodically send HTTP/HTTPS requests and monitor the responses.
 
 1. In the Cloud Internet Services dashboard, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
 1. Set **Path** to **/**
@@ -261,9 +261,9 @@ Repeat the steps for the cluster in the US South region (*us-south*).
 
 ### Define Origin Pools
 
-With clusters in the United Kingdom and United States, you can define regional pools and configure CIS to redirect users to the closest clusters if it can detect the geographical location of the user requests.
+A pool is a group of origin servers that traffic is intelligently routed to when attached to a GLB. With clusters in the United Kingdom and United States, you can define regional pools and configure CIS to redirect users to the closest clusters if it can detect the geographical location of the user requests.
 
-One pool for the cluster in the UK region:
+#### One pool for the cluster in the UK region
 1. Click **Create Pool**.
 1. Set **Name** to **UK**
 1. Set **Health check** to the one created in the previous section
@@ -272,7 +272,7 @@ One pool for the cluster in the UK region:
 1. Set **Origin Address** to the Ingress subdomain of the UK cluster, e.g. *my_uk_cluster.eu-gb.containers.appdomain.cloud*
 1. Click **Provision 1 Instance**.
 
-One pool for the cluster in the US South region:
+#### One pool for the cluster in the US South region
 1. Click **Create Pool**.
 1. Set **Name** to **US**
 1. Set **Health check** to the one created in the previous section
@@ -281,7 +281,7 @@ One pool for the cluster in the US South region:
 1. Set **Origin Address** to the Ingress subdomain of the US cluster, e.g. *my_us_cluster.us-south.containers.appdomain.cloud*
 1. Click **Provision 1 Instance**.
 
-And one pool with both clusters:
+#### And one pool with both clusters
 1. Click **Create Pool**.
 1. Set **Name** to **All**
 1. Set **Health check** to the one created in the previous section
@@ -293,7 +293,7 @@ And one pool with both clusters:
 
 ### Create the Global Load Balancer
 
-With the origin pools defined, you can complete the configuration of the load balancing.
+With the origin pools defined, you can complete the configuration of the load balancer.
 
 1. Click **Create Load Balancer**.
 1. Enter a name under **Balancer hostname** for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region.
@@ -314,13 +314,11 @@ With the origin pools defined, you can complete the configuration of the load ba
 
 With this configuration, users in Europe and in Asia will be redirected to the UK cluster, users in US to the US South cluster. When a request does not match any of the defined route, it will be redirected to the **Default origin pools**.
 
-The Global Load Balancer is now ready to serve requests. All health checks should be green.
-
 ### Create Ingress Resource for Kubernetes clusters per region
 
-There is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer. You need to define an Ingress resource to handle requests from the GLB domain.
+The Global Load Balancer is now ready to serve requests. All health checks should be green. But there is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer: you need to define an Ingress resource to handle requests from the GLB domain.
 
-* Create an Ingress resource file named **glb-ingress.yaml**
+1. Create an Ingress resource file named **glb-ingress.yaml**
    ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
@@ -337,13 +335,13 @@ There is one last configuration step required on the Kubernetes clusters to corr
               servicePort: 80
     ```
     {: pre}
-    Replace <glb_name>.<your_domain_name> with the URL you defined in the previous section.
-* Deploy this resource in both UK and US South clusters, after setting the KUBECONFIG variable for the respective region clusters:
+    Replace `<glb_name>.<your_domain_name>` with the URL you defined in the previous section.
+1. Deploy this resource in both UK and US South clusters, after setting the KUBECONFIG variable for the respective region clusters:
    ```bash
    kubectl create -f glb-ingress.yaml
    ```
    {: pre}
-   It returns message like `ingress.extention "glb-ingress" created`
+   It outputs the message `ingress.extension "glb-ingress" created`.
 
 At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across multiple regions. You can access the GLB URL `http://<glb_name>.<your_domain_name>` to view your application. Based on your location, you are redirected to the closest cluster - or a cluster from the default pool if CIS was not able to map your IP address to a specific region.
 
@@ -371,11 +369,9 @@ A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-
 1. In the CIS dashboard, select **Reliability** > **Global Load Balancer**
 1. Locate the GLB you created in the **Load Balancers** table,
 1. Enable the Security and Performance features in the **Proxy** column
-   ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis.proxy.png)
+   ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis-proxy.png)
 
-Your GLB is now protected. An immediate benefit is that the origin IP address of your clusters will be hidden from the clients.
-
-If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirect to your application:
+**Your GLB is now protected**. An immediate benefit is that the origin IP address of your clusters will be hidden from the clients. If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirect to your application:
    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
 
 In addition, you can now control what content gets cached by CIS and how long it stays cached. Go to **Performance** > **Caching** to define the global caching level and the browser expiration. You can customize the global security and caching rules with **Page Rules**. Page Rules enable fine-grained configuration using specific domain paths. As example with Page Rules, you could decide to cache all contents under **/assets** for **3 days**:
