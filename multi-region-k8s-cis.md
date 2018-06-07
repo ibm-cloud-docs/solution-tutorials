@@ -381,15 +381,15 @@ In addition, you can now control what content gets cached by CIS and how long it
 {:removeresources}
 
 1. Remove Kubernetes Cluster resources
-   1. Remove ingress
-   1. Remove service
-   1. Remove deployment
-   1. Delete clusters if you created them specifically for this tutorial
+   1. Remove the Ingress
+   1. Remove the service
+   1. Remove the deployment
+   1. Delete the clusters if you created them specifically for this tutorial
 
 1. Remove CIS resources
-   1. remove GLB
-   1. remove origin pool
-   1. remove health check
+   1. Remove the GLB
+   1. Remove the origin pools
+   1. Remove the health checks
 
 ## Related content
 {:related}
