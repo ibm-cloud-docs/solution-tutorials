@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-06-07"
 
 ---
 
@@ -18,7 +18,7 @@ lastupdated: "2018-06-05"
 
 # Secure and resilient multi-region Kubernetes clusters with Cloud Internet Services
 
-Your users are less likely to experience downtime when you distribute your setup across multiple worker nodes and clusters. Built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency.
+Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency.
 
 This tutorial highlights how Cloud Internet Services (CIS), a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications, can be integrated with Kubernetes clusters to support this scenario and to deliver a secure and resilient solution across multiple regions.
 
@@ -53,7 +53,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 2. The images are pushed to {{site.data.keyword.registryshort_notm}} in the US and UK regions.
 3. The application is deployed to Kubernetes clusters in both regions.
 4. End-users access the application. 
-5. Cloud Internet Services is configured to intercept requests to the application and to spread the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
+5. Cloud Internet Services is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
 
 ## Before you begin
 {: #prereqs}
@@ -69,18 +69,17 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 ## Create Kubernetes clusters in multiple regions
 {: #create_clusters}
 
-This tutorial simulates a Kubernetes application deployed to clusters in multiple regions. In this section, you will create two clusters, one in the United Kingdom region and one in the US South region. 
+This tutorial deploys a Kubernetes application to clusters in multiple regions. In this section, you will create two clusters, one in the United Kingdom region and one in the US South region. 
 
 To create a first cluster in the UK region:
-1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create)
+1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create)
 1. Set **Region** to **United Kingdom**
 1. Select **Standard** cluster
 1. Select one or more zones as **Location**
 1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial
 1. Use **2** worker nodes
 1. Set **Cluster name** to **my-uk-cluster**. Use the naming pattern *`my-<region>-cluster`* to be consistent with this tutorial
-
-Repeat the steps above to create a cluster in the US South region. Name the cluster **my-us-cluster**.
+1. Repeat the steps above to create a cluster in the US South region. Name the cluster **my-us-cluster**.
 
 While the clusters are getting ready, you are going to prepare the application.
 
@@ -100,8 +99,7 @@ In this section, you will build and push Docker images to the {{site.data.keywor
    ibmcloud cr namespace-add <your_namespace>
    ```
    {: pre}
-
-Repeat the steps with the US South (us-south) region as target.
+1. Repeat the steps with the US South (us-south) region as target.
 
 If you already have namespaces in both regions, you can also reuse them. You can list existing namespaces with `ibmcloud cr namespaces`.
 {: tip}
@@ -126,7 +124,8 @@ This step builds the application into a Docker image. It is a simple HelloWorld 
    ```
    {: pre}
 
-Prepare the image to be pushed to the regional registry:
+### Prepare the image to be pushed to the regional registry
+
 1. for United Kingdom:
    ```bash
    docker tag multi-region-hello-world:1 registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1
@@ -185,7 +184,7 @@ At that stage, the two clusters should be ready. You can check their status in t
    ibmcloud cs cluster-config <uk-cluster-name>
    ```
    {: pre}
-1. Copy and paste the output to set the KUBECONFIG environment variable
+1. Copy and paste the output to set the KUBECONFIG environment variable. The variable is used by `kubectl`.
 1. Run the application in the cluster with two replicas:
    ```bash
    kubectl run hello-world-deployment --image=registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1 --replicas=2
@@ -198,12 +197,13 @@ At that stage, the two clusters should be ready. You can check their status in t
    ```
    {: pre}
    It returns message like `service "hello-world-service" exposed`.
+1. Repeat the steps to deploy the application in the US South region using *us-south* as target and *registry.ng.bluemix.net* as registry.
 
-Repeat the steps to deploy the application in the US South region (*us-south* and *registry.ng.bluemix.net*).
+Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
 
 ## Configure multi-region load-balancing
 
-In this section, you will configure Cloud Internet Services (CIS) to balance the load between the two clusters. CIS is one stop-shop service providing Global Load Balancer (GLB), Caching, Web Application Firewall (WAF) and Page rule to secure your applications while ensuring the reliability and performance for your Cloud applications.
+In this section, you will configure Cloud Internet Services (CIS) to distribute the load between the two clusters. CIS is a one stop-shop service providing Global Load Balancer (GLB), Caching, Web Application Firewall (WAF) and Page rule to secure your applications while ensuring the reliability and performance for your Cloud applications.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to CIS name servers,
@@ -216,7 +216,7 @@ To configure a global load balancer, you will need:
 
 The first step is to create an instance of CIS and to point your custom domain to CIS name servers.
 
-1. If you do not own a domain, you can buy one from a registrar such as [http://godaddy.com](http://godaddy.com).
+1. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
 1. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 1. Set the service name, and click **Create** to create an instance of the service.
 1. When the service instance is provisioned, set your domain name and click **Add domain**.
