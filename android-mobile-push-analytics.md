@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-08"
+lastupdated: "2018-06-07"
 
 ---
 
@@ -166,12 +166,9 @@ You can record application logs and monitor data with the {{site.data.keyword.mo
 
 ## Related Content
 
-[Customize the {{site.data.keyword.mobilepushshort}} settings](https://console.bluemix.net/docs/services/mobilepush/push_step_4.html#push_step_4_Android)
+- [Customize the {{site.data.keyword.mobilepushshort}} settings](https://console.bluemix.net/docs/services/mobilepush/push_step_4.html#push_step_4_Android)
+- [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
+- [{{site.data.keyword.mobilepushshort}} REST APIs](https://console.bluemix.net/docs/services/mobilepush/push_restapi.html#push-api-rest)
+- [Security in {{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
+- [Exporting Analytics data to Db2 Warehouse](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#dashdb)
 
-[Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
-
-[{{site.data.keyword.mobilepushshort}} REST APIs](https://console.bluemix.net/docs/services/mobilepush/push_restapi.html#push-api-rest)
-
-[Security in {{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
-
-[Exporting Analytics data to Db2 Warehouse](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#dashdb)
