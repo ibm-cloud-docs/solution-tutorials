@@ -21,7 +21,7 @@ In this tutorial, you will learn how to use an Apache Kafka based messaging serv
 
 {:shortdesc}
 
-This pattern is used to decouple your application allowing greater control over scaling and performance. Message Hub can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks. In this example, the UI application is written in Node.js and the worker application is written in Java highliting the flexibily of this pattern. Even though both applications are running in the same Kubernetes cluster in this example, either piece could have also been implemented as a Cloud Foundry application or serverless function.
+This pattern is used to decouple your application allowing greater control over scaling and performance. {{site.data.keyword.messagehub}} can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks. In this example, the UI application is written in Node.js and the worker application is written in Java highliting the flexibily of this pattern. Even though both applications are running in the same Kubernetes cluster in this example, either piece could have also been implemented as a Cloud Foundry application or serverless function.
 
 ## Services used
 {: #services}
@@ -43,7 +43,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 1. The user uploads file using the UI application
 2. File is saved in {{site.data.keyword.cos_full_notm}}
-3. Message is sent to MessageHub topic indicating the new file is awaiting processing.
+3. Message is sent to {{site.data.keyword.messagehub}} topic indicating the new file is awaiting processing.
 4. When ready, workers listen for messages and begin processing the new file.
 
 ## Before you begin
@@ -79,7 +79,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 
 
 
- ## Create a MessageHub instance
+ ## Create a {{site.data.keyword.messagehub}} instance
  {: #create_messagehub}
 
 {{site.data.keyword.messagehub}} is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
@@ -115,7 +115,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 
 ## Deploy the UI application to the cluster
 
-The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to MessageHub topic "work-topic" that a new file is ready to be processed.
+The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to {{site.data.keyword.messagehub}} topic "work-topic" that a new file is ready to be processed.
 
 1. Clone the sample application repository locally and change directory to the `pubsub-ui` folder.
 ```sh
@@ -149,7 +149,7 @@ The worker application is a Java application which listens to the {{site.data.ke
 3. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 ![](images/solution25/files_processed.png)
 
-In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be [Cloud Functions](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as Cloud Functions would be a better fit for short lived processes.
+In this tutorial we showed how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be [Cloud Functions](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as Cloud Functions would be a better fit for short lived processes.
 
 ## Remove resources
 {:removeresources}
