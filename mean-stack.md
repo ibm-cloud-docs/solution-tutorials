@@ -61,7 +61,7 @@ And to develop and run the application locally:
 1. [Install Node.js and NPM](https://nodejs.org/)
 2. [Install and run MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
 
-## Run MEAN application locally
+## Run MEAN app locally
 
 {: #runapplocally}
 
@@ -100,7 +100,7 @@ In this section, you will run a local MongoDB database, clone a MEAN sample code
 
 6. Access your application, create a new user and log in
 
-## Create a database service in the cloud
+## Create instance of MongoDB database in the cloud
 
 {: #createdatabase}
 
@@ -125,7 +125,7 @@ In this section, you will create a {{site.data.keyword.composeForMongoDB}} datab
   ```
   {: codeblock}
 
-## Deploy the app to IBM Cloud
+## Deploy app to the cloud
 
 {: #deployapp}
 
@@ -178,4 +178,3 @@ To check the health of your application, you can use the built-in Availability M
 - Set up source control and [continuous delivery](multi-region-webapp.html#devops).
 - Secure web application across [multiple regions](multi-region-webapp.html).
 - Create, secure and manage [REST APIs](create-manage-secure-apis.html).
-
