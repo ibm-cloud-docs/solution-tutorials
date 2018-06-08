@@ -96,12 +96,11 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 ## Configure DevOps delivery pipeline
 {: #create_application}
 
-      1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button. 
-      2. Selecting the Kubernetes Cluster deployment method, select the cluster created earlier and then click **Create**. This will create a toolchain and delivery pipeline for you. ![](images/solution21/BindCluster.png)
-      3. Once the pipeline created, click on **View Toolchain** and then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
-      4. After the deploy stages complete, click on the **View logs and history** to see the logs.
-      5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`). ![](images/solution21/Logs.png)
-
+1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button. 
+2. Selecting the Kubernetes Cluster deployment method, select the cluster created earlier and then click **Create**. This will create a toolchain and delivery pipeline for you. ![](images/solution21/BindCluster.png)
+3. Once the pipeline created, click on **View Toolchain** and then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
+4. After the deploy stages complete, click on the **View logs and history** to see the logs.
+5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`). ![](images/solution21/Logs.png)
 Done, you've used the App Service UI to create the starter applications, and configured the pipeline to build and deploy the application to your cluster. 
 
 ## Clone, build and run the application locally

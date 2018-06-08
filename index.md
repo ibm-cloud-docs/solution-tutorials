@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-07"
+lastupdated: "2018-06-08"
 
 ---
 
@@ -266,7 +266,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a Mongo DB, Express web framework, Angular front end framework and a Node.js runtime.</p>
+                <p>This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a Mongo DB, Express web framework, Angular front end framework and a Node.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and monitor the application.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">Node.js</span>
                     <span class="tag-filter category">Compose for MongoDB</span>
