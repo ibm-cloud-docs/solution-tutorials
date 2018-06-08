@@ -34,11 +34,8 @@ This tutorial walks you through the process setting up a continuous integration 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 - [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
-
 - [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-
 - [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery)
-
 - Slack
 
 **Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
@@ -114,16 +111,13 @@ In this section, you will use the starter app created in the earlier section, cl
 
 2. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the **add an SSH key** link in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking **create a personal access token**. Remember to save the key or token for future reference.
 
-3. Select SSH or HTTPS and copy the git URL. Clone the source to your local machine.
+3. Select SSH or HTTPS and copy the git URL. Clone the source to your local machine. If you're prompted for a username, provide your git username. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 
    ```bash
    git clone <your_repo_url>
    cd <name_of_your_app>
    ```
-
    {: codeblock}
-
-   **Note:** If you're prompted for a username, provide your git username. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 
 4. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Update the code by trying to change "Congratulations!" to something else and the save the file.
 
@@ -192,48 +186,43 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 
-2. Click on **Add Stage** and change MyStage to **Validate Stage**.
+2. Click on **Add Stage** and change MyStage to **Validate Stage** and then click on the JOBS  > **ADD JOB**.
 
-3. Click on JOBS  > **ADD JOB**.
+3. Select **Test** as the Job Type and Change **Test** to **Vulnerability advisor** in the box.
 
-4. Select **Test** as the Job Type and Change **Test** to **Vulnerability advisor** in the box.
+4. Under Tester type, select **Vulnerability Advisor**. All the other fields should be populated automatically.
 
-5. Under Tester type, select **Vulnerability Advisor**.
+   Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
+   {:tip}
 
-6. All the other fields should be populated automatically.
+5. Drag and move the **Validate Stage** to the middle then click **Run** ![](images/solution21/run.png) on the **Validate Stage**. You will see that the **Validate stage** fails.
 
-  Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
-  {:tip}
+   ![](images/solution21/toolchain.png)
 
-7. Drag and move the **Validate Stage** to the middle.
-
-8. Click **Run** ![](images/solution21/run.png) on the **Validate Stage**. You will see that the **Validate stage** fails.
-    ![](images/solution21/toolchain.png)
-
-9. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
+6. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
     ![](images/solution21/vulnerability_report.png)
 
     You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/security/scans)
     {:tip}
 
-10. Let's fix the vulnerabilities by following the corrective action. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `Dockerfile` and add the below command after `EXPOSE 3000`
+7. Let's fix the vulnerabilities by following the corrective action. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `Dockerfile` and add the below command after `EXPOSE 3000`
+  ```
+  RUN apt-get update && apt-get install -y \
+  libc6 \
+  systemd \
+  sensible-utils
+  ```
+  {: codeblock}
+
+8. Commit and Push the changes. This should trigger the toolchain and fix the **Validate Stage**.
+
    ```
-   RUN apt-get update && apt-get install -y \
-           libc6 \
-           systemd \
-           sensible-utils
+   git add Dockerfile
+   git commit -m "Fix Vulnerabilities"
+   git push origin master
    ```
+
    {: codeblock}
-
-11. Commit and Push the changes. This should trigger the toolchain and fix the **Validate Stage**.
-
-    ```
-    git add Dockerfile
-    git commit -m "Fix Vulnerabilities"
-    git push origin master
-    ```
-
-    {: codeblock}
 
 ## Create production Kubernetes cluster
 
