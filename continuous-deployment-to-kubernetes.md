@@ -283,7 +283,7 @@ Do you want to learn more? Here are some ideas of what you can do next:
 
 * [Security](https://console.bluemix.net/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
 
-* Configuring tool [integrations](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
+* Toolchain [integrations](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
 
 * Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](kubernetes-log-analysis-kibana.html).
 
