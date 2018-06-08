@@ -19,6 +19,8 @@ This tutorial walks you through the creation of a web application using the popu
 
 ## Objectives
 
+{: #objectives}
+
 - Create and run a starter Node.js app locally.
 - Create a managed database-as-a-service (DBasS).
 - Deploy the Node.js app to the cloud.
@@ -160,9 +162,9 @@ If your service needs additional storage, or you want to reduce the amount of st
 ## Monitor application performance
 {: #monitorapplication}
 
-To check the health of your application, you can use the built-in Availability Monitoring service. The Availability Monitoring service is automatically attached to your applications in the cloud. 
+To check the health of your application, you can use the built-in Availability Monitoring service. The Availability Monitoring service is automatically attached to your applications in the cloud. The availability Monitoring service runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact your visitors. Follow the steps below to get to the monitoring dashboard.
 
-The availability Monitoring service runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact your visitors. Follow the steps below to get to the monitoring dashboard.
+{: shortdesc}
 
 1. Using the console dashboard, under your application, select the **Monitoring** tab.
 2. Click **View All Tests** to view the tests.
