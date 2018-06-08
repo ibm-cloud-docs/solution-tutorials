@@ -23,16 +23,22 @@ In this tutorial, you will learn how to use an Apache Kafka based messaging serv
 
 This pattern is used to decouple your application allowing greater control over scaling and performance. Message Hub can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks. In this example, the UI application is written in Node.js and the worker application is written in Java highliting the flexibily of this pattern. Even though both applications are running in the same Kubernetes cluster in this example, either piece could have also been implemented as a Cloud Foundry application or serverless function.
 
-## Products
+## Services used
+{: #services}
 
-{: #products}
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.cos_full_notm}}](https://console.ng.bluemix.net/catalog/services/cloud-object-storage)
+* [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/messagehub)
+* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/catalog/infrastructure/containers-kubernetes)
 
-* {{site.data.keyword.cos_full_notm}}
-* {{site.data.keyword.messagehub}}
-* {{site.data.keyword.containershort_notm}}
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
+## Architecture
+{: #architecture}
 
 <p style="text-align: center;">
-![](images/solution25/Architecture.png)
+
+   ![](images/solution25/Architecture.png)
 </p>
 
 1. The user uploads file using the UI application
@@ -44,7 +50,6 @@ This pattern is used to decouple your application allowing greater control over 
 {: #prereqs}
 
 * [IBM Cloud Developer Tools](https://console.bluemix.net/docs/cli/idt/setting_up_idt.html#add-cli) - Tool to install IBM Cloud CLI, Kubernetes, Helm, and Docker.
-
 
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
@@ -146,7 +151,8 @@ The worker application is a Java application which listens to the {{site.data.ke
 
 In this tutorial we showed how you can use Kafka based MessageHub to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. In this example, we used a Java application running on Kubernetes to handle the processing, but these applications can also be [Cloud Functions](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as Cloud Functions would be a better fit for short lived processes.
 
-## Clean up Resources
+## Remove resources
+{:removeresources}
 
 Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and
 1. delete Kubernetes cluster `mycluster`
@@ -154,8 +160,8 @@ Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and
 3. delete {{site.data.keyword.messagehub}} `mymessagehub`
 4. select **Containers** from the left menu, **Private Repositories** and then delete `pubsub-xxx` repositories.
 
-
-## Related information
+## Related content
+{:related}
 
 * [IBM Object Storage](https://ibm-public-cos.github.io/crs-docs/index.html)
 * [{{site.data.keyword.messagehub_full}}](https://console.bluemix.net/docs/services/MessageHub/index.html#messagehub)
