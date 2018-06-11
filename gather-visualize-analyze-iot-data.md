@@ -30,7 +30,7 @@ This tutorial walks you through setting up an IoT device, gathering data in the 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.iot_full}}](https://console.bluemix.net/catalog/services/internet-of-things-platform)
 * [Node.js Application](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
-* [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience) with Spark service and {{site.data.keyword.Bluemix_notm}} Object Storage
+* [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience) with Spark service and {{site.data.keyword.cos_full_notm}}
 * [Cloudant NoSQL Database](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
@@ -151,13 +151,13 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 5. Under **Define Storage**, Click on **Add** and choose an existing object storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
-### Connection to CloudantDB for data
+### Connection to {{site.data.keyword.cloudant_short_notm}} for data
 
 1. Click on **Assets** > **+ Add to Project** > **Connection**  
 2. Select the **iot-db** Cloudant DB where the device data is stored.
 3. Check the **Credentials** then click **Create**
 
-### Create a jupyter(ipynb) notebook
+### Create a Jupyter (ipynb) notebook
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **Data & Analytics**, select [**Apache Spark**](https://console.bluemix.net/catalog/services/apache-spark?bss_account=3d40d897302501f3391c73e3029701f3&taxonomyNavigation=data) Lite Plan > Click **Create**.
 2. Navigate to http://dataplatform.ibm.com, Open the project you created above. Under **Assets** in your project, Click **New notebook** > **From URL**.
 3. Enter `Anomaly-detection-sample` for the **Name**.
@@ -180,7 +180,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
   * name that is required for the notebook code to run.
 4. In the cell with the database name (`dbName`) enter the name of the Cloudant database that is the source of data, for example, *iotp_yourWatsonIoTProgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
 
-    You can find the exact database by navigating to your **iot-db** CloudantDB instance you created earlier > Launch Dashboard.
+    You can find the exact database by navigating to your **iot-db** {{site.data.keyword.cloudant_short_notm}} instance you created earlier > Launch Dashboard.
     {:tip}
 5. Save the notebook and execute each code cell one after another or run all (**Cell** > Run All) and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
 
@@ -201,7 +201,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 {:removeresources}
 
 1. Navigate to [Dashboard](https://console.bluemix.net/dashboard/) > choose the region, Org and space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
-2. Under **Services**, delete the respective Internet of Things Platform, Apache Spark, Cloudant NoSQL DB and Cloud Object Storage services which you created for this tutorial.
+2. Under **Services**, delete the respective Internet of Things Platform, Apache Spark, {{site.data.keyword.cloudant_short_notm}} and {{site.data.keyword.cos_full_notm}} services which you created for this tutorial.
 
 ## Related content
 {:related}
