@@ -2,7 +2,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-05-31"
+lastupdated: "2018-06-11"
 
 ---
 
@@ -18,29 +18,55 @@ lastupdated: "2018-05-31"
 
 This tutorial walks you through creating a Kubernetes cluster and configuring the Log Analysis and the Monitoring service. Then, you will deploy an application to the cluster, use Kibana to view and analyze logs, and use Grafana to view health and metrics.
 
-For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions. In addition to generating starter application code, Docker container image and CloudFoundry assets, the code generators used by the dev CLI and web console generate files to aid deployment into [Kubernetes](https://kubernetes.io/) environments. The templates generate [Helm](https://github.com/kubernetes/helm) charts that describe the application’s initial Kubernetes deployment configuration, and are easily extended to create multi-image or complex deployments as needed.
+For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your solutions. In addition to generating starter application code, Docker container image, and CloudFoundry assets, the code generators used by the dev CLI and web console generate files to aid deployment into Kubernetes environments. The templates generate Helm charts that describe the application’s initial Kubernetes deployment configuration and are easily extended to create multi-image or complex deployments as needed.
 
-Additionally, setting up logging and monitoring in [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster) will help you in troubleshooting issues and improve the health and performance of your Kubernetes clusters and apps.
+Additionally, setting up logging and monitoring in {{site.data.keyword.containershort_notm}} will help you in troubleshooting issues and improve the health and performance of your Kubernetes clusters and apps.
 
 {:shortdesc}
 
-## Objectives:
+## Objectives
+
+{: #objectives}
 
 * Create a Kubernetes cluster.
 * Provision the Log Analysis service.
 * Create logging configurations in the cluster.
-* Deploy application
-* View, search and analyze logs in Kibana
-* View metrics in Grafana
+* Deploy application.
+* View, search and analyze logs in Kibana.
+* View metrics in Grafana.
+
+## Services used
+
+{: #services}
+
+This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
+
+- [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
+- [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+- [{{site.data.keyword.loganalysislong_notm}}](https://console.bluemix.net/catalog/services/log-analysis)
+- [{{site.data.keyword.monitoringshort_notm}}](https://console.bluemix.net/catalog/services/monitoring)
+
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
+## Architecture
+
+{: #architecture}
 
 ![](images/solution17/Architecture.png)
 
+1. Use scaffold application, build and run locally inside a Docker container image. 
+2. Push the local Docker container image to a private Git repository in the cloud.
+3. Push container image to a Kubernetes cluster.
+4. Create logging and monitoring configuration. 
+5. View log analysis and monitoring dashboard in the browser.
+
 ## Prerequisites
+
 {: #prereq}
 
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
-* [Container registry with namespace configured](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
-* [Basic understanding of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
+* [Install {{site.data.keyword.dev_cli_notm}}](https://console.bluemix.net/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
+* [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
 {: #create_cluster}
@@ -110,7 +136,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
 2. Select `Backend Service / Web App` > `Node `> `Web App - Express.js Basic` to create a Node.js starter application.
 3. Enter a **name** (`mynodestarter`) and a unique **hostname** (`username-mynodestarter`) for your project.
-  ![](images/solution17/ibmcloud_dev_create.png)
+  ![](images/solution17/ibmcloud_dev_create2.png)
 
 4. Choose **No DevOps** and Select **n** to skip adding services.
 
@@ -262,19 +288,27 @@ For more information about other search fields that are relevant to Kubernetes c
 {: #step8}
 
 1. In the filtering menu on the left, you can filter down to only see message from the container you are interested in by expanding `kubernetes.container_name_str` and clicking on the container name.
+
 2. Click on the **add** button next to **message** to only see the log messages.
    ![](images/solution17/message_add.png)
+
 3. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
+
 4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.
+
 5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:
-```
-message:(WARN|INFO|ERROR|FATAL)
-```
+
+   ```sh
+   message:(WARN|INFO|ERROR|FATAL)
+   ```
 ![](images/solution17/kibana_filter.png)
 6. Store the search criteria for future use by clicking **Save** in the configuration bar. Use **mylogs** as name.
 
 For more information, see [Filtering logs in Kibana](/docs/services/CloudLogAnalysis/kibana/filter_logs.html#filter_logs).
 ## Visualize Logs
+
+{: #visualizelogs}
+
 Now that you have a query defined, in this section you will use it as foundation for a chart, a visualization of that data. You will first create visualizations and then use them to compose a dashboard.
 
 ### Pie Chart as Donut
@@ -318,18 +352,34 @@ Metrics for standard clusters are located in the {{site.data.keyword.Bluemix_not
 7. Refresh your Grafana dashboard to see the updated metrics.
    ![](images/solution17/grafana.png)
 
+## Remove resources
+
+{: #removeresources}
+
+In this step, you will clean up the resources to remove what you created above.
+
+- Delete the site.data.keyword.loganalysislong_notm}} service.
+- Delete the {{site.data.keyword.monitoringshort_notm}} service.
+- Delete the cluster.
+- Delete the registry container image.
+
 ## Expand the Tutorial
+
+{: #expandTutorial}
+
 Do you want to learn more? Here are some ideas of what you can do next:
 * Deploy another application to the cluster or use an [app deployed in a Cloud Foundry environment](application-log-analysis.html). The Log Analysis dashboard (Kibana) will show the combined logs of all apps.
 * Filter by a single app.
 * Add a saved search and metric only for specific error level.
 * Build a dashboard for all your apps.
 
-
 ## Related Content
-* [Logging and Monitoring](https://console.bluemix.net/docs/containers/cs_health.html#view_metrics)
-* [Documentation for IBM Cloud Log Analysis](https://console.bluemix.net/docs/services/CloudLogAnalysis/index.html)
-* [IBM Cloud Log Collection API](https://console.bluemix.net/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction)
-* Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html)
-* Kibana User Guide: [Visualizing Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-visualizing.html)
-* Kibana User Guide: [Putting it all Together with Dashboards](https://www.elastic.co/guide/en/kibana/5.1/tutorial-dashboard.html)
+
+{: #related}
+
+* [Logging and Monitoring](https://console.bluemix.net/docs/containers/cs_health.html#view_metrics).
+* [Documentation for IBM Cloud Log Analysis](https://console.bluemix.net/docs/services/CloudLogAnalysis/index.html).
+* [IBM Cloud Log Collection API](https://console.bluemix.net/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction).
+* Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html).
+* Kibana User Guide: [Visualizing Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-visualizing.html).
+* Kibana User Guide: [Putting it all Together with Dashboards](https://www.elastic.co/guide/en/kibana/5.1/tutorial-dashboard.html).
