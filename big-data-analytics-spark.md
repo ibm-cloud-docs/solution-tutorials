@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-03-31"
+lastupdated: "2018-06-11"
 
 ---
 
@@ -16,23 +16,30 @@ lastupdated: "2018-03-31"
 
 In this tutorial, you will analyze and visualize open data sets using a Jupyter Notebook on {{site.data.keyword.DSX_full}} and Apache Spark service for processing. For this use case, you will start by combining data about population growth, life expectancy and country ISO codes into a single data frame. Then, query and visualize that data in several ways using the Pixiedust library for Python.
 
-![](images/solution23/Architecture.png)
+<p style="text-align: center;">
+
+  ![](images/solution23/Architecture.png)
+</p>
 
 ## Objectives
+{: #objectives}
 
 * Deploy Apache Spark and {{site.data.keyword.DSX_short}} on IBM Cloud.
 * Work with a Jupyter Notebook and a Python kernel.
 * Import, transform, analyze and visualize data sets.
 
-## Products
+## Services used
+{: #services}
 
-This tutorial uses the following products:
+This tutorial uses the following runtimes and services:
    * {{site.data.keyword.sparkl}}
    * {{site.data.keyword.DSX_full}}
    * {{site.data.keyword.cos_full_notm}}
 
+This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+
 ## Service and Environment Setup
-First, we need to provision the services we are using for this tutorial and create a project within the {{site.data.keyword.DSX_short}}.
+First, you need to provision the services you are using for this tutorial and create a project within the {{site.data.keyword.DSX_short}}.
 
 You can provision services for  {{site.data.keyword.Bluemix_short}} from the dashboard and catalog. Another way is to use {{site.data.keyword.DSX_short}}. It allows to directly create Data & Analytics services from within its dashboard.
 {:tip}   
@@ -79,9 +86,8 @@ In another browser tab go to the [Community](https://dataplatform.ibm.com/commun
    ```Python
      df_countries = pixiedust.sampleData('https://raw.githubusercontent.com/datasets/country-list/master/data.csv')
    ```
-  ```
-  {:codeblock}
-  Copy the code into the next empty notebook cell and run it.
+   {:codeblock}
+   Copy the code into the next empty notebook cell and run it.
 
 The list of country codes comes in handy later on. It allows to simplify data selection by using a country code instead of the written, exact country name.
 
@@ -93,7 +99,7 @@ After the data is made available, transform it slightly and combine the three se
    df_pop = sqlContext.sql("SELECT `Country or Area` as Country, Year, Value as Population FROM PopTable")
    df_pop.createOrReplaceTempView('population')
    df_pop.printSchema()
-  ```
+   ```
    {:codeblock}
 2. Repeat the same for the Life Expectancy data. Instead of printing the schema, this code will print first 10 rows.  
    ```Python
@@ -145,7 +151,7 @@ In this part, use [Pixiedust to visualize the data in different charts](https://
    ```Python
    df_all.createOrReplaceTempView('life2010')
    df_life_2010=spark.sql("SELECT Life, Country FROM life2010 WHERE Year=2010 AND Life is not NULL ")
-display(df_life_2010)
+   display(df_life_2010)
    ```
    {:codeblock}   
 4. In the chart selector choose **Map**. In the configuration dialog drag **Country** into the **Keys** area. Thereafter, move **Life** into the **Values** box. Similar to the first chart, increase **# of Rows to Display** to **1000**. Press **OK** to have the map plotted. Choose **brunel** as **Renderer**. A world map colored relative to the life expectancy
@@ -160,7 +166,8 @@ Want to add to or change this tutorial? Here are some ideas:
 3. Load and integrate further data from the catalog of data sets.
 4. Export the combined data to a file or database.   
 
-## Related Content
+## Related content
+{:related}
 Here are links to additional information on the topics covered in this tutorial.
    * [Watson Data Platform](https://dataplatform.ibm.com): Use Watson Data Platform to collaborate and build smarter applications. Quickly visualize and discover insights from your data and collaborate across teams.
    * [PixieDust](https://www.ibm.com/cloud/pixiedust): Open source productivity tool for Jupyter Notebooks
