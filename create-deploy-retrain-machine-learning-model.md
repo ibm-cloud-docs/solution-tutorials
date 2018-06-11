@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-16"
+lastupdated: "2018-06-11"
 
 ---
 
@@ -26,10 +26,12 @@ In the terminology of machine learning, classification is considered an instance
 
 {:shortdesc}
 
-![](images/solution22-build-machine-learning-model/architecture_diagram.png)
+<p style="text-align: center;">
+
+  ![](images/solution22-build-machine-learning-model/architecture_diagram.png)
+</p>
 
 ## Objectives
-
 {: #objectives}
 
 * Import data to a project.
@@ -39,9 +41,10 @@ In the terminology of machine learning, classification is considered an instance
 * Create a feedback data connection for continuous learning and model evaluation.
 * Retrain your model.
 
-## Products
-{: #products}
+## Services used
+{: #services}
 
+This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience)
 * [{{site.data.keyword.sparkl}}](https://console.bluemix.net/catalog/services/apache-spark)
 * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
@@ -217,16 +220,14 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
      ![](images/solution22-build-machine-learning-model/retraining_model.png)
 6. Once the evaluation completes. You can check the **Last Evalution Result** section for the improved **WeightedPrecision** value.
 
-## Clean up resources
-
-{:#cleanup}
+## Remove resources
+{:removeresources}
 
 1. Navigate to [Dashboard](https://console.bluemix.net/dashboard/) > choose the region, Org and space where you have created the services.
 2. Under **Services**, delete the respective {{site.data.keyword.DSX_short}}, {{site.data.keyword.sparks}}, {{site.data.keyword.pm_short}}, {{site.data.keyword.dashdbshort}} and {{site.data.keyword.cos_short}} services which you created for this tutorial.
 
-## Related Content
-
-{:#related_content}
+## Related content
+{:related}
 
 - [Watson Studio Overview](https://dataplatform.ibm.com/docs/content/getting-started/overview-ws.html?audience=wdp&context=wdp)
 - [Detect Anomalies using Machine Learning](https://console.bluemix.net/docs/tutorials/gather-visualize-analyze-iot-data.html#data_experience)
