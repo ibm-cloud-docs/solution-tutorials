@@ -23,6 +23,12 @@ In this tutorial, you will learn how to use an Apache Kafka based messaging serv
 
 You will simulate this pattern using a file processing example. First create a UI application which will be used to upload files to object storage and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
 
+## Objectives
+{: #objectives}
+
+* Implement a producer-consumer pattern with {{site.data.keyword.messagehub}}
+* Bind services to a Kubernetes cluster
+
 ## Services used
 {: #services}
 
@@ -78,8 +84,6 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    ```
   {: pre}
    ![](images/solution2/kubectl_cluster-info.png)
-
-
 
  ## Create a {{site.data.keyword.messagehub}} instance
  {: #create_messagehub}
