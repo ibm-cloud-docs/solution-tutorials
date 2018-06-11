@@ -31,7 +31,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.iot_full}}](https://console.bluemix.net/catalog/services/internet-of-things-platform)
 * [Node.js Application](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
 * [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience) with Spark service and {{site.data.keyword.cos_full_notm}}
-* [Cloudant NoSQL Database](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
+* [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -123,15 +123,15 @@ Next, you will create a board and cards to display device data in the dashboard.
 8. Back in the **IBM {{site.data.keyword.iot_short_notm}} tab**, you should see the chart getting updated.
    ![](images/solution16/board.png)
 
-## Store historical data in Cloudant DB
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and create a new [Cloudant NoSQL Database](https://console.bluemix.net/catalog/services/cloudant-nosql-db) named `iot-db`.
+## Store historical data in {{site.data.keyword.cloudant_short_notm}}
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db) named `iot-db`.
 2. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 3. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
-4. Select the `iot-db` Cloudant database.
+4. Select the `iot-db` {{site.data.keyword.cloudant_short_notm}} database.
 5. Enter `devicedata` for **Database Name** and click **Done**.
 6. A new window should load prompting for authorization. If you don't see this window, disable your pop-up blocker and refresh the page.
 
-Your device data is now saved in Cloudant. Launch the Cloudant dashboard to see your data.
+Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. Launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
 
 ![](images/solution16/cloudant.png)
 
@@ -154,7 +154,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 ### Connection to {{site.data.keyword.cloudant_short_notm}} for data
 
 1. Click on **Assets** > **+ Add to Project** > **Connection**  
-2. Select the **iot-db** Cloudant DB where the device data is stored.
+2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
 3. Check the **Credentials** then click **Create**
 
 ### Create a Jupyter (ipynb) notebook
@@ -173,12 +173,12 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 ### Run the notebook and detect anomalies   
 1. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Run** or **Ctrl + Enter** to execute the code.
 2. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
-3. In the next code cell, Import your Cloudant credentials to that cell by completing the following steps:
+3. In the next code cell, Import your {{site.data.keyword.cloudant_short_notm}} credentials to that cell by completing the following steps:
   * Click ![](images/solution16/data_icon.png)
   * Select the **Connections** tab.
-  * Click **Insert to code**. A dictionary called credentials_1" is created with your Cloudant credentials. If the name is not specified as "credentials_1", rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
+  * Click **Insert to code**. A dictionary called credentials_1" is created with your {{site.data.keyword.cloudant_short_notm}} credentials. If the name is not specified as "credentials_1", rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
   * name that is required for the notebook code to run.
-4. In the cell with the database name (`dbName`) enter the name of the Cloudant database that is the source of data, for example, *iotp_yourWatsonIoTProgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
+4. In the cell with the database name (`dbName`) enter the name of the {{site.data.keyword.cloudant_short_notm}} database that is the source of data, for example, *iotp_yourWatsonIoTProgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
 
     You can find the exact database by navigating to your **iot-db** {{site.data.keyword.cloudant_short_notm}} instance you created earlier > Launch Dashboard.
     {:tip}
