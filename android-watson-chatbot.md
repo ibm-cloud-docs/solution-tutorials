@@ -30,8 +30,8 @@ This tutorial walks you through the process of defining intents and entities and
 - Configure and run the Android app
 - Add {{site.data.keyword.mobileanalytics_short}} to track usage
 
-## Products
-{: #products}
+## Services used
+{: #services}
 
 This tutorial uses the following products:
 
@@ -40,9 +40,18 @@ This tutorial uses the following products:
 - [{{site.data.keyword.texttospeechfull}}](https://console.bluemix.net/catalog/services/text-to-speech)
 - [{{site.data.keyword.mobileanalytics_full}}](https://console.bluemix.net/catalog/services/mobile-analytics)
 
+## Architecture
+{: #architecture}
+
 <p style="text-align: center;">
+
 ![](images/solution28-watson-chatbot-android/architecture.png)
 </p>
+
+* Users interact with a mobile application using their voice.
+* The audio is transcribed to text with {{site.data.keyword.speechtotextfull}}.
+* The text is passed to {{site.data.keyword.conversationfull}}.
+* The reply from {{site.data.keyword.conversationfull}} is converted to audio by {{site.data.keyword.texttospeechfull}} and the result sent back to the mobile application.
 
 ## Before you begin
 {: #prereqs}
@@ -194,15 +203,15 @@ The service includes the {{site.data.keyword.mobileanalytics_short}} Console whe
    ![](images/solution28-watson-chatbot-android/mobile_analytics.png)
 
 
-## Clean up resources
-{:#cleanup}
+## Remove resources
+{:removeresources}
 
 1. Navigate to [Dashboard,](https://console.bluemix.net/dashboard/) choose the region, org and space where you have created the services.
 2. Under **Cloud Foundry Services**, delete the respective Watson and Mobile services which you created for this tutorial.
 3. Remember to clean up the credentials which you saved in the text editor for quick reference.
 
-## Related Content
-{:#related_content}
+## Related content
+{:related}
 
 - [Creating entities, Synonyms, System entities](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities)
 - [Monitoring an Android app with Mobile Analytics](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#monitoring-the-app-with-mobile-analytics-)
