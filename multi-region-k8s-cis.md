@@ -25,11 +25,11 @@ This tutorial highlights how Cloud Internet Services (CIS), a uniform platform t
 ## Objectives
 {: #objectives}
 
-* Deploy an application on multiple Kubernetes clusters in different region
-* Distribute traffic across multiple clusters with a Global Load Balancer
-* Route users to the closest cluster
-* Protect your application from security threats
-* Increase application performance with caching
+* Deploy an application on multiple Kubernetes clusters in different region.
+* Distribute traffic across multiple clusters with a Global Load Balancer.
+* Route users to the closest cluster.
+* Protect your application from security threats.
+* Increase application performance with caching.
 
 ## Services used
 {: #services}
@@ -72,13 +72,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 This tutorial deploys a Kubernetes application to clusters in multiple regions. In this section, you will create two clusters, one in the United Kingdom region and one in the US South region. 
 
 To create a first cluster in the UK region:
-1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create)
-1. Set **Region** to **United Kingdom**
-1. Select **Standard** cluster
-1. Select one or more zones as **Location**
-1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial
-1. Use **2** worker nodes
-1. Set **Cluster name** to **my-uk-cluster**. Use the naming pattern *`my-<region>-cluster`* to be consistent with this tutorial
+1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create).
+1. Set **Region** to **United Kingdom**.
+1. Select **Standard** cluster.
+1. Select one or more zones as **Location**.
+1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
+1. Use **2** worker nodes.
+1. Set **Cluster name** to **my-uk-cluster**. Use the naming pattern *`my-<region>-cluster`* to be consistent with this tutorial.
 1. Repeat the steps above to create a cluster in the US South region. Name the cluster **my-us-cluster**.
 
 While the clusters are getting ready, you are going to prepare the application.
@@ -89,12 +89,12 @@ In this section, you will build and push Docker images to the {{site.data.keywor
 
 ### Create a namespace in {{site.data.keyword.registryshort_notm}}
 
-1. Target the {{site.data.keyword.Bluemix_notm}} CLI to the United Kingdom region
+1. Target the {{site.data.keyword.Bluemix_notm}} CLI to the United Kingdom region.
    ```bash
    ibmcloud target -r eu-gb
    ```
    {: pre}
-1. Create a namespace for the application
+1. Create a namespace for the application.
    ```bash
    ibmcloud cr namespace-add <your_namespace>
    ```
@@ -139,32 +139,32 @@ This step builds the application into a Docker image. It is a simple HelloWorld 
 
 ### Push the images to the regional registries
 
-1. Log in the {{site.data.keyword.registryshort_notm}} in the United Kingdom region
+1. Log in the {{site.data.keyword.registryshort_notm}} in the United Kingdom region.
    ```bash
    ibmcloud target -r eu-gb
    ```
    {: pre}
-1. Ensure your local Docker engine can push to the United Kingdom registry
+1. Ensure your local Docker engine can push to the United Kingdom registry.
    ```bash
    ibmcloud cr login
    ```
    {: pre}
-1. Push the image
+1. Push the image.
    ```bash
    docker push registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1
    ```
    {: pre}
-1. Log in the {{site.data.keyword.registryshort_notm}} in the US South region
+1. Log in the {{site.data.keyword.registryshort_notm}} in the US South region.
    ```bash
    ibmcloud target -r us-south
    ```
    {: pre}
-1. Ensure your local Docker engine can push to the US South registry
+1. Ensure your local Docker engine can push to the US South registry.
    ```bash
    ibmcloud cr login
    ```
    {: pre}
-1. Push the image
+1. Push the image.
    ```bash
    docker push registry.ng.bluemix.net/<your_US-South_namespace>/hello-world:1
    ```
@@ -190,7 +190,7 @@ At that stage, the two clusters should be ready. You can check their status in t
    kubectl run hello-world-deployment --image=registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1 --replicas=2
    ```
    {: pre}
-   Example output: `deployment "hello-world-deployment" created`
+   Example output: `deployment "hello-world-deployment" created`.
 1. Make the application accessible by exposing the deployment as a NodePort service.
    ```bash
    kubectl expose deployment/hello-world-deployment --type=NodePort --port=80 --name=hello-world-service --target-port=8080
@@ -253,7 +253,7 @@ A health check helps gain insight into the availability of pools so that traffic
 
 1. In the Cloud Internet Services dashboard, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
 1. Set **Path** to **/**
-1. Set **Monitor Type** to **HTTP**
+1. Set **Monitor Type** to **HTTP**.
 1. Click **Provision 1 Instance**.
 
    When building your own applications, you could define a dedicated health endpoint such as */heathz* where you would report the application state.
@@ -333,7 +333,7 @@ The Global Load Balancer is now ready to serve requests. All health checks shoul
             backend:
               serviceName: hello-world-service
               servicePort: 80
-    ```
+   ```
     {: pre}
     Replace `<glb_name>.<your_domain_name>` with the URL you defined in the previous section.
 1. Deploy this resource in both UK and US South clusters, after setting the KUBECONFIG variable for the respective region clusters:
@@ -352,8 +352,8 @@ At this stage, you have successfully configured a Global Load Balancer with Kube
 
 The Web Application Firewall(WAF) protects your web application against ISO Layer 7 attacks. Usually, it is combined with grouped rule-sets, these rule-sets aim to protect against vulnerabilities in the application by filtering out malicious traffic.
 
-1. In the Cloud Internet Services dashboard, navigate to **Security**, then on the **Manage** tab
-1. In the **Web Application Firewall** section, ensure the WAF is enabled
+1. In the Cloud Internet Services dashboard, navigate to **Security**, then on the **Manage** tab.
+1. In the **Web Application Firewall** section, ensure the WAF is enabled.
 1. Click **View OWASP Rule Set**. From this page, you can review the **OWASP Core Rule Set** and individually enable or disable rules. When a rule is enabled, if an incomimg request triggers the rule, the global threat score will be increased. The **Sensitivity** setting will decide whether an **Action** is triggered for the request.
    1. Leave default OWASP rule sets as it is
    1. Set **Sensitivity** to `Low`
