@@ -301,7 +301,8 @@ With the origin pools defined, you can complete the configuration of the load ba
 1. Expand the section of **Configure geo routes(optional)**:
    1. Click **Add route**, select **Western Europe** and click **Add**.
    1. Click **Add pool** to select the **UK** pool.
-   1. Configure additional routes as shown in the following table and click **Provision 1 Instance**.
+   1. Configure additional routes as shown in the following table.
+   1. Click **Provision 1 Instance**.
 
 | Region               | Origin Pool |
 | :---------------:    | :---------: |
