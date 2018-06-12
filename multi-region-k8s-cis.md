@@ -59,11 +59,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 {: #prereqs}
 
 * Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers.
-* [Install Git](https://git-scm.com/)
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
-* [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
+* [Install Git](https://git-scm.com/).
+* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
+* [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 
 ## Create Kubernetes clusters in multiple regions
@@ -297,11 +297,11 @@ With the origin pools defined, you can complete the configuration of the load ba
 
 1. Click **Create Load Balancer**.
 1. Enter a name under **Balancer hostname** for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region.
-1. Under **Default origin pools**, click **Add pool** and add the pool named **All**
-1. Expand the section of **Configure geo routes(optional)**
-   1. Click **Add route**, select **Western Europe** and click **Add**
-   1. Click **Add pool** to select the **UK** pool
-   1. Configure additional routes as shown in the following table and click **Provision 1 Instance**
+1. Under **Default origin pools**, click **Add pool** and add the pool named **All**.
+1. Expand the section of **Configure geo routes(optional)**:
+   1. Click **Add route**, select **Western Europe** and click **Add**.
+   1. Click **Add pool** to select the **UK** pool.
+   1. Configure additional routes as shown in the following table and click **Provision 1 Instance**.
 
 | Region               | Origin Pool |
 | :---------------:    | :---------: |
@@ -355,10 +355,10 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
 1. In the Cloud Internet Services dashboard, navigate to **Security**, then on the **Manage** tab.
 1. In the **Web Application Firewall** section, ensure the WAF is enabled.
 1. Click **View OWASP Rule Set**. From this page, you can review the **OWASP Core Rule Set** and individually enable or disable rules. When a rule is enabled, if an incomimg request triggers the rule, the global threat score will be increased. The **Sensitivity** setting will decide whether an **Action** is triggered for the request.
-   1. Leave default OWASP rule sets as it is
-   1. Set **Sensitivity** to `Low`
-   1. Set **Action** to `Simulate` to log all the events
-1. Click **Back to Security**
+   1. Leave default OWASP rule sets as it is.
+   1. Set **Sensitivity** to `Low`.
+   1. Set **Action** to `Simulate` to log all the events.
+1. Click **Back to Security**.
 1. Click **View CIS Rule Set**. This page shows additional rules built around common technology stacks for hosting websites.
 
 ### Increase performance and protect from Denial of Service attacks 
@@ -366,9 +366,9 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
 
 A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. CIS is equipped to protect your domain from DDoS.
 
-1. In the CIS dashboard, select **Reliability** > **Global Load Balancer**
-1. Locate the GLB you created in the **Load Balancers** table,
-1. Enable the Security and Performance features in the **Proxy** column
+1. In the CIS dashboard, select **Reliability** > **Global Load Balancer**.
+1. Locate the GLB you created in the **Load Balancers** table.
+1. Enable the Security and Performance features in the **Proxy** column:
    ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis-proxy.png)
 
 **Your GLB is now protected**. An immediate benefit is that the origin IP address of your clusters will be hidden from the clients. If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirect to your application:
@@ -380,16 +380,16 @@ In addition, you can now control what content gets cached by CIS and how long it
 ## Remove resources
 {:removeresources}
 
-1. Remove Kubernetes Cluster resources
-   1. Remove the Ingress
-   1. Remove the service
-   1. Remove the deployment
-   1. Delete the clusters if you created them specifically for this tutorial
+### Remove Kubernetes Cluster resources
+1. Remove the Ingress.
+1. Remove the service.
+1. Remove the deployment.
+1. Delete the clusters if you created them specifically for this tutorial.
 
-1. Remove CIS resources
-   1. Remove the GLB
-   1. Remove the origin pools
-   1. Remove the health checks
+### Remove CIS resources
+1. Remove the GLB.
+1. Remove the origin pools.
+1. Remove the health checks.
 
 ## Related content
 {:related}
