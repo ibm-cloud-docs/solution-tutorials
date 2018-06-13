@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-06-12"
 
 ---
 
@@ -16,20 +16,20 @@ lastupdated: "2018-06-05"
 {:tip: .tip}
 {:pre: .pre}
 
-# Secure and resilient multi-region Kubernetes clusters with Cloud Internet Services
+# Resilient and secure multi-region Kubernetes clusters with Cloud Internet Services
 
-Your users are less likely to experience downtime when you distribute your setup across multiple worker nodes and clusters. Built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency.
+Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency.
 
 This tutorial highlights how Cloud Internet Services (CIS), a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications, can be integrated with Kubernetes clusters to support this scenario and to deliver a secure and resilient solution across multiple regions.
 
 ## Objectives
 {: #objectives}
 
-* Deploy an application on multiple Kubernetes clusters in different region
-* Distribute traffic across multiple clusters with a Global Load Balancer
-* Route users to the closest cluster
-* Protect your application from security threats
-* Increase application performance with caching
+* Deploy an application on multiple Kubernetes clusters in different region.
+* Distribute traffic across multiple clusters with a Global Load Balancer.
+* Route users to the closest cluster.
+* Protect your application from security threats.
+* Increase application performance with caching.
 
 ## Services used
 {: #services}
@@ -53,62 +53,55 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 2. The images are pushed to {{site.data.keyword.registryshort_notm}} in the US and UK regions.
 3. The application is deployed to Kubernetes clusters in both regions.
 4. End-users access the application. 
-5. Cloud Internet Services is configured to intercept requests to the application and to spread the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
+5. Cloud Internet Services is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
 
 ## Before you begin
 {: #prereqs}
 
 * Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers.
-* [Install Git](https://git-scm.com/)
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html)
-* [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
+* [Install Git](https://git-scm.com/).
+* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
+* [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
+## Deploy an application to one region
 
-## Create Kubernetes clusters in multiple regions
-{: #create_clusters}
+This tutorial deploys a Kubernetes application to clusters in multiple regions. You will start with one region, US South, and then repeat these steps for the United Kingdom region. 
 
-This tutorial simulates a Kubernetes application deployed to clusters in multiple regions. In this section, you will create two clusters, one in the United Kingdom region and one in the US South region. 
+### Create a Kubernetes cluster
+{: #create_cluster}
 
-To create a first cluster in the UK region:
-1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create)
-1. Set **Region** to **United Kingdom**
-1. Select **Standard** cluster
-1. Select one or more zones as **Location**
-1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial
-1. Use **2** worker nodes
-1. Set **Cluster name** to **my-uk-cluster**. Use the naming pattern *`my-<region>-cluster`* to be consistent with this tutorial
+To create a cluster:
+1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create).
+1. Set **Region** to **US South**.
+1. Select **Standard** cluster.
+1. Select one or more zones as **Location**.
+1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
+1. Use **2** worker nodes.
+1. Set **Cluster name** to **my-us-cluster**. Use the naming pattern *`my-<region>-cluster`* to be consistent with this tutorial.
 
-Repeat the steps above to create a cluster in the US South region. Name the cluster **my-us-cluster**.
-
-While the clusters are getting ready, you are going to prepare the application.
-
-## Build and push the application Docker images
-
-In this section, you will build and push Docker images to the {{site.data.keyword.registryshort_notm}} in the United Kingdom and US South regions.
+While the cluster is getting ready, you are going to prepare the application.
 
 ### Create a namespace in {{site.data.keyword.registryshort_notm}}
 
-1. Target the {{site.data.keyword.Bluemix_notm}} CLI to the United Kingdom region
+1. Target the {{site.data.keyword.Bluemix_notm}} CLI to the US South region.
    ```bash
-   ibmcloud target -r eu-gb
+   ibmcloud target -r us-south
    ```
    {: pre}
-1. Create a namespace for the application
+1. Create a namespace for the application.
    ```bash
    ibmcloud cr namespace-add <your_namespace>
    ```
    {: pre}
 
-Repeat the steps with the US South (us-south) region as target.
-
-If you already have namespaces in both regions, you can also reuse them. You can list existing namespaces with `ibmcloud cr namespaces`.
+You can also reuse an existing namespace if you have one in the region. You can list existing namespaces with `ibmcloud cr namespaces`.
 {: tip}
 
 ### Build the application
 
-This step builds the application into a Docker image. It is a simple HelloWorld app.
+This step builds the application into a Docker image. You can skip this step if you are configuring the second cluster. It is a simple HelloWorld app.
 
 1. Clone the source code for the [Hello world app](https://github.com/IBM/container-service-getting-started-wt){:new_windows} to your user home directory. The repository contains different versions of a similar app in folders that each start with Lab.
    ```bash
@@ -126,84 +119,80 @@ This step builds the application into a Docker image. It is a simple HelloWorld 
    ```
    {: pre}
 
-Prepare the image to be pushed to the regional registry:
-1. for United Kingdom:
-   ```bash
-   docker tag multi-region-hello-world:1 registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1
-   ```
-   {: pre}
-1. for US South:
+### Prepare the image to be pushed to the regional registry
+
+Tag the image with the target registry:
+
    ```bash
    docker tag multi-region-hello-world:1 registry.ng.bluemix.net/<your_US-South_namespace>/hello-world:1
    ```
    {: pre}
 
-### Push the images to the regional registries
+### Push the image to the regional registry
 
-1. Log in the {{site.data.keyword.registryshort_notm}} in the United Kingdom region
-   ```bash
-   ibmcloud target -r eu-gb
-   ```
-   {: pre}
-1. Ensure your local Docker engine can push to the United Kingdom registry
+1. Ensure your local Docker engine can push to the US South registry.
    ```bash
    ibmcloud cr login
    ```
    {: pre}
-1. Push the image
-   ```bash
-   docker push registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1
-   ```
-   {: pre}
-1. Log in the {{site.data.keyword.registryshort_notm}} in the US South region
-   ```bash
-   ibmcloud target -r us-south
-   ```
-   {: pre}
-1. Ensure your local Docker engine can push to the US South registry
-   ```bash
-   ibmcloud cr login
-   ```
-   {: pre}
-1. Push the image
+1. Push the image.
    ```bash
    docker push registry.ng.bluemix.net/<your_US-South_namespace>/hello-world:1
    ```
    {: pre}
 
-## Deploy the application to the Kubernetes clusters
+### Deploy the application to the Kubernetes cluster
 
-At that stage, the two clusters should be ready. You can check their status in the [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/clusters) console.
+At that stage, the cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/clusters) console.
 
-1. Target the United Kingdom region:
-   ```bash
-   ibmcloud target -r eu-gb
-   ```
-   {: pre}
 1. Retrieve the configuration of the cluster:
    ```bash
-   ibmcloud cs cluster-config <uk-cluster-name>
+   ibmcloud cs cluster-config <us-cluster-name>
    ```
    {: pre}
-1. Copy and paste the output to set the KUBECONFIG environment variable
+1. Copy and paste the output to set the KUBECONFIG environment variable. The variable is used by `kubectl`.
 1. Run the application in the cluster with two replicas:
    ```bash
-   kubectl run hello-world-deployment --image=registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1 --replicas=2
+   kubectl run hello-world-deployment --image=registry.ng.bluemix.net/<your_US-South_namespace>/hello-world:1 --replicas=2
    ```
    {: pre}
-   Example output: `deployment "hello-world-deployment" created`
-1. Make the application accessible by exposing the deployment as a NodePort service.
+   Example output: `deployment "hello-world-deployment" created`.
+1. Make the application accessible within the cluster
    ```bash
-   kubectl expose deployment/hello-world-deployment --type=NodePort --port=80 --name=hello-world-service --target-port=8080
+   kubectl expose deployment/hello-world-deployment --type=ClusterIP --port=80 --name=hello-world-service --target-port=8080
    ```
    {: pre}
    It returns message like `service "hello-world-service" exposed`.
 
-Repeat the steps to deploy the application in the US South region (*us-south* and *registry.ng.bluemix.net*).
+### Get the domain name and IP address assigned to the cluster
+{: #CSALB_IP_subdomain}
+
+When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg. *my-us-cluster.us-south.containers.appdomain.cloud*) and a public Application Load Balancer IP address.
+
+1. Retrieve the Ingress subdomain of the cluster:
+   ```bash
+   ibmcloud cs cluster-get <us-cluster-name>
+   ```
+   {: pre}
+   Look for the `Ingress Subdomain` value.
+1. Make note of this information for a later step.
+
+This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also swap the subdomain for the public Application Load Balancer IP address (`ibmcloud cs albs -cluster <uk-cluster-name>`). Both options are be supported.
+{: tip}
+
+## And then to another region
+
+Repeat the previous steps in the United Kingdom region replacing:
+* the region name *US South* with **United Kingdom**;
+* the region alias *us-south* with **eu-gb**;
+* the registry *registry.ng.bluemix.net* with **registry.eu-gb.bluemix.net**;
+* and the cluster name *my-us-cluster* with **my-uk-cluster**.
 
 ## Configure multi-region load-balancing
 
-In this section, you will configure Cloud Internet Services (CIS) to balance the load between the two clusters. CIS is one stop-shop service providing Global Load Balancer (GLB), Caching, Web Application Firewall (WAF) and Page rule to secure your applications while ensuring the reliability and performance for your Cloud applications.
+Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
+
+In this section, you will configure Cloud Internet Services (CIS) to distribute the load between the two clusters. CIS is a one stop-shop service providing Global Load Balancer (GLB), Caching, Web Application Firewall (WAF) and Page rule to secure your applications while ensuring the reliability and performance for your Cloud applications.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to CIS name servers,
@@ -216,7 +205,7 @@ To configure a global load balancer, you will need:
 
 The first step is to create an instance of CIS and to point your custom domain to CIS name servers.
 
-1. If you do not own a domain, you can buy one from a registrar such as [http://godaddy.com](http://godaddy.com).
+1. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
 1. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 1. Set the service name, and click **Create** to create an instance of the service.
 1. When the service instance is provisioned, set your domain name and click **Add domain**.
@@ -226,34 +215,13 @@ The first step is to create an instance of CIS and to point your custom domain t
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {:tip}
 
-### Get the domain names and IP addresses assigned to your Kubernetes clusters
-{: #CSALB_IP_subdomain}
-
-When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg. *my-uk-cluster.eu-gb.containers.appdomain.cloud*) and a public Application Load Balancer IP address. You will need this information to configure a global load balancer.
-
-1. Target the United Kingdom region:
-   ```bash
-   ibmcloud target -r eu-gb
-   ```
-   {: pre}
-1. Retrieve the Ingress subdomain of the cluster:
-   ```bash
-   ibmcloud cs cluster-get <uk-cluster-name>
-   ```
-   {: pre}
-1. Retrieve the public IP address of its application load balancer
-   ```bash
-   ibmcloud cs albs -cluster <uk-cluster-name>
-   ```
-   {: pre}
-
-Repeat the steps for the cluster in the US South region (*us-south*).
-
 ### Configure Health Check for the Global Load Balancer
+
+A health check helps gain insight into the availability of pools so that traffic can be routed to the healthy ones. These checks periodically send HTTP/HTTPS requests and monitor the responses.
 
 1. In the Cloud Internet Services dashboard, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
 1. Set **Path** to **/**
-1. Set **Monitor Type** to **HTTP**
+1. Set **Monitor Type** to **HTTP**.
 1. Click **Provision 1 Instance**.
 
    When building your own applications, you could define a dedicated health endpoint such as */heathz* where you would report the application state.
@@ -261,9 +229,9 @@ Repeat the steps for the cluster in the US South region (*us-south*).
 
 ### Define Origin Pools
 
-With clusters in the United Kingdom and United States, you can define regional pools and configure CIS to redirect users to the closest clusters if it can detect the geographical location of the user requests.
+A pool is a group of origin servers that traffic is intelligently routed to when attached to a GLB. With clusters in the United Kingdom and United States, you can define regional pools and configure CIS to redirect users to the closest clusters if it can detect the geographical location of the user requests.
 
-One pool for the cluster in the UK region:
+#### One pool for the cluster in the UK region
 1. Click **Create Pool**.
 1. Set **Name** to **UK**
 1. Set **Health check** to the one created in the previous section
@@ -272,7 +240,7 @@ One pool for the cluster in the UK region:
 1. Set **Origin Address** to the Ingress subdomain of the UK cluster, e.g. *my_uk_cluster.eu-gb.containers.appdomain.cloud*
 1. Click **Provision 1 Instance**.
 
-One pool for the cluster in the US South region:
+#### One pool for the cluster in the US South region
 1. Click **Create Pool**.
 1. Set **Name** to **US**
 1. Set **Health check** to the one created in the previous section
@@ -281,7 +249,7 @@ One pool for the cluster in the US South region:
 1. Set **Origin Address** to the Ingress subdomain of the US cluster, e.g. *my_us_cluster.us-south.containers.appdomain.cloud*
 1. Click **Provision 1 Instance**.
 
-And one pool with both clusters:
+#### And one pool with both clusters
 1. Click **Create Pool**.
 1. Set **Name** to **All**
 1. Set **Health check** to the one created in the previous section
@@ -293,34 +261,34 @@ And one pool with both clusters:
 
 ### Create the Global Load Balancer
 
-With the origin pools defined, you can complete the configuration of the load balancing.
+With the origin pools defined, you can complete the configuration of the load balancer.
 
 1. Click **Create Load Balancer**.
 1. Enter a name under **Balancer hostname** for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region.
-1. Under **Default origin pools**, click **Add pool** and add the pool named **All**
-1. Expand the section of **Configure geo routes(optional)**
-   1. Click **Add route**, select **Western Europe** and click **Add**
-   1. Click **Add pool** to select the **UK** pool
-   1. Configure additional routes as follow:
-      | Region               | Origin Pool |
-      | :---------------:    | :---------: |
-      |Western Europe        |     UK      |
-      |Eastern Europe        |     UK      |
-      |Northeast Asia        |     UK      |
-      |Southeast Asia        |     UK      |
-      |Western North America |     US      |
-      |Eastern North America |     US      |
-      With this configuration, users in Europe and in Asia will be redirected to the UK cluster, users in US to the US South cluster. When a request does not match any of the defined route, it will be redirected to the **Default origin pools**.
-1. Click **Provision 1 Instance**.
+1. Under **Default origin pools**, click **Add pool** and add the pool named **All**.
+1. Expand the section of **Configure geo routes(optional)**:
+   1. Click **Add route**, select **Western Europe** and click **Add**.
+   1. Click **Add pool** to select the **UK** pool.
+   1. Configure additional routes as shown in the following table.
+   1. Click **Provision 1 Instance**.
 
-The Global Load Balancer is now ready to serve requests. All health checks should be green.
+| Region               | Origin Pool |
+| :---------------:    | :---------: |
+|Western Europe        |     UK      |
+|Eastern Europe        |     UK      |
+|Northeast Asia        |     UK      |
+|Southeast Asia        |     UK      |
+|Western North America |     US      |
+|Eastern North America |     US      |
+
+With this configuration, users in Europe and in Asia will be redirected to the UK cluster, users in US to the US South cluster. When a request does not match any of the defined route, it will be redirected to the **Default origin pools**.
 
 ### Create Ingress Resource for Kubernetes clusters per region
 
-There is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer. You need to define an Ingress resource to handle requests from the GLB domain.
+The Global Load Balancer is now ready to serve requests. All health checks should be green. But there is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer: you need to define an Ingress resource to handle requests from the GLB domain.
 
-* Create an Ingress resource file named **glb-ingress.yaml**
-   ```bash
+1. Create an Ingress resource file named **glb-ingress.yaml**
+   ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
    metadata:
@@ -334,14 +302,15 @@ There is one last configuration step required on the Kubernetes clusters to corr
             backend:
               serviceName: hello-world-service
               servicePort: 80
-    ```
-    Replace <glb_name>.<your_domain_name> with the URL you defined in the previous section.
-* Deploy this resource in both UK and US South clusters, after setting the KUBECONFIG variable for the respective region clusters:
+   ```
+    {: pre}
+    Replace `<glb_name>.<your_domain_name>` with the URL you defined in the previous section.
+1. Deploy this resource in both UK and US South clusters, after setting the KUBECONFIG variable for the respective region clusters:
    ```bash
    kubectl create -f glb-ingress.yaml
    ```
    {: pre}
-   It returns message like `ingress.extention "glb-ingress" created`
+   It outputs the message `ingress.extension "glb-ingress" created`.
 
 At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across multiple regions. You can access the GLB URL `http://<glb_name>.<your_domain_name>` to view your application. Based on your location, you are redirected to the closest cluster - or a cluster from the default pool if CIS was not able to map your IP address to a specific region.
 
@@ -352,46 +321,47 @@ At this stage, you have successfully configured a Global Load Balancer with Kube
 
 The Web Application Firewall(WAF) protects your web application against ISO Layer 7 attacks. Usually, it is combined with grouped rule-sets, these rule-sets aim to protect against vulnerabilities in the application by filtering out malicious traffic.
 
-1. In the Cloud Internet Services dashboard, navigate to **Security**, then on the **Manage** tab
-1. In the **Web Application Firewall** section, ensure the WAF is enabled
+1. In the Cloud Internet Services dashboard, navigate to **Security**, then on the **Manage** tab.
+1. In the **Web Application Firewall** section, ensure the WAF is enabled.
 1. Click **View OWASP Rule Set**. From this page, you can review the **OWASP Core Rule Set** and individually enable or disable rules. When a rule is enabled, if an incomimg request triggers the rule, the global threat score will be increased. The **Sensitivity** setting will decide whether an **Action** is triggered for the request.
-   1. Leave default OWASP rule sets as it is
-   1. Set **Sensitivity** to `Low`
-   1. Set **Action** to `Simulate` to log all the events
-1. Click **Back to Security**
+   1. Leave default OWASP rule sets as it is.
+   1. Set **Sensitivity** to `Low`.
+   1. Set **Action** to `Simulate` to log all the events.
+1. Click **Back to Security**.
 1. Click **View CIS Rule Set**. This page shows additional rules built around common technology stacks for hosting websites.
 
-### Increase performance and protect from Denial of Service attacks and 
+### Increase performance and protect from Denial of Service attacks 
 {: #proxy_setting}
 
 A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. CIS is equipped to protect your domain from DDoS.
 
-1. In the CIS dashboard, select **Reliability** > **Global Load Balancer**
-1. Locate the GLB you created in the **Load Balancers** table,
-1. Enable the Security and Performance features in the **Proxy** column
-   ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis.proxy.png)
+1. In the CIS dashboard, select **Reliability** > **Global Load Balancer**.
+1. Locate the GLB you created in the **Load Balancers** table.
+1. Enable the Security and Performance features in the **Proxy** column:
 
-Your GLB is now protected. An immediate benefit is that the origin IP address of your clusters will be hidden from the clients.
+   ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis-proxy.png)
 
-If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirect to your application:
+**Your GLB is now protected**. An immediate benefit is that the origin IP address of your clusters will be hidden from the clients. If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirect to your application:
+
    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
 
 In addition, you can now control what content gets cached by CIS and how long it stays cached. Go to **Performance** > **Caching** to define the global caching level and the browser expiration. You can customize the global security and caching rules with **Page Rules**. Page Rules enable fine-grained configuration using specific domain paths. As example with Page Rules, you could decide to cache all contents under **/assets** for **3 days**:
+
    ![page rules](images/solution32-multi-region-k8s-cis/cis-pagerules.png)
 
 ## Remove resources
 {:removeresources}
 
-1. Remove Kubernetes Cluster resources
-   1. Remove ingress
-   1. Remove service
-   1. Remove deployment
-   1. Delete clusters if you created them specifically for this tutorial
+### Remove Kubernetes Cluster resources
+1. Remove the Ingress.
+1. Remove the service.
+1. Remove the deployment.
+1. Delete the clusters if you created them specifically for this tutorial.
 
-1. Remove CIS resources
-   1. remove GLB
-   1. remove origin pool
-   1. remove health check
+### Remove CIS resources
+1. Remove the GLB.
+1. Remove the origin pools.
+1. Remove the health checks.
 
 ## Related content
 {:related}

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-06-13"
 
 ---
 
@@ -101,6 +101,22 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     <div class = "solutionBox">
+        <h3 id="multi-region-k8s-cis.html" class="solutionBoxTitle">
+            <a href = "multi-region-k8s-cis.html">Resilient and secure multi-region Kubernetes clusters</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Registry</span>
+                    <span class="tag-filter category">Cloud Internet Services</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
         <h3 id="kubernetes-log-analysis-kibana.html" class="solutionBoxTitle">
             <a href = "kubernetes-log-analysis-kibana.html">Analyze logs and monitor the health of Kubernetes applications</a>
         </h3>
@@ -143,14 +159,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.</p>
+                <p>This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like security scanners, Slack notifications, and analytics.</p>
                     <span class="tag-filter category">Kubernetes</span>
                     <span class="tag-filter category">Container Service</span>
                     <span class="tag-filter category">Docker</span>
-                    <span class="tag-filter category">Node.js</span>
                     <span class="tag-filter category">Slack</span>
-                    <span class="tag-filter category">Vulnerability Advisor</span>
                     <span class="tag-filter category">DevOps</span>
+                    <span class="tag-filter category">Node.js</span>
+                    <span class="tag-filter category">Vulnerability Advisor</span>
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution21/Architecture.png" />
@@ -266,7 +282,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </h3>
         <div class="solutionBoxDescription">
             <div class="descriptionContainer">
-                <p>This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a Mongo DB, Express web framework, Angular front end framework and a Node.js runtime.</p>
+                <p>This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a Mongo DB, Express web framework, Angular front end framework and a Node.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and monitor the application.</p>
                     <span class="tag-filter category">Cloud Foundry</span>
                     <span class="tag-filter category">Node.js</span>
                     <span class="tag-filter category">Compose for MongoDB</span>

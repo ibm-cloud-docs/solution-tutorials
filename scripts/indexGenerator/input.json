@@ -29,10 +29,9 @@
                 ]
             },
             {
-                "hidden": true,
-                "name": "Secure and resilient multi-region Kubernetes clusters",
+                "name": "Resilient and secure multi-region Kubernetes clusters",
                 "url": "multi-region-k8s-cis.html",
-                "description": "This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a secure and resilient solution across multiple regions.",
+                "description": "This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
                 "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
                 "tags": [
                     "Kubernetes",
@@ -70,16 +69,16 @@
             {
                 "name": "Continuous Deployment to Kubernetes",
                 "url": "continuous-deployment-to-kubernetes.html",
-                "description": "This tutorial walks you through setting up a continuous integration and delivery pipeline for containerized applications running in Kubernetes. This will cover the set up of source control, build, test and deploy stages as well as adding integrations such as security scanners, notifications, and analytics.",
+                "description": "This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like security scanners, Slack notifications, and analytics.",
                 "imgSrc": "images/solution21/Architecture.png",
                 "tags": [
                     "Kubernetes",
                     "Container Service",
                     "Docker",
-                    "Node.js",
                     "Slack",
-                    "Vulnerability Advisor",
-                    "DevOps"
+                    "DevOps",
+                    "Node.js",
+                    "Vulnerability Advisor"
                 ]
             },
             {
@@ -158,7 +157,7 @@
             {
                 "name": "Modern web application using MEAN stack",
                 "url": "mean-stack.html",
-                "description": "This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a Mongo DB, Express web framework, Angular front end framework and a Node.js runtime.",
+                "description": "This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a Mongo DB, Express web framework, Angular front end framework and a Node.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and monitor the application.",
                 "imgSrc": "images/solution7/Architecture.png",
                 "tags": [
                     "Cloud Foundry",

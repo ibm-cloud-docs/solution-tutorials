@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-06-08"
 
 ---
 
@@ -15,34 +15,39 @@ lastupdated: "2018-06-05"
 
 # Modern web application using MEAN stack
 
-This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a Node.js runtime.
+This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a Node.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and monitor the application.  
 
 ## Objectives
 
-- Create and run a starter Node.js app locally
-- Create a MongoDB database on the IBM cloud
-- Deploy the Node.js app to the cloud
-- Scale MongoDB Resources
-- Monitor application performance
+{: #objectives}
 
-![Architecture diagram](images/solution7/Architecture.png)
+- Create and run a starter Node.js app locally.
+- Create a managed database-as-a-service (DBasS).
+- Deploy the Node.js app to the cloud.
+- Scale MongoDB resources.
+- Learn how to monitor application performance.
 
-## Products
+## Services used
 
-This tutorial uses the following products:
-   * [Compose for MongoDB](https://console.bluemix.net/catalog/services/compose-for-mongodb)
-   * [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
+{: #products}
 
-## Cost
+This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
-{: #cost}
+- [{{site.data.keyword.composeForMongoDB}}](https://console.bluemix.net/catalog/services/compose-for-mongodb)
+- [{{site.data.keyword.sdk4node}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
 
-This tutorial uses billable components of IBM Cloud Platform, including:
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
-- SDK for Node.js using Cloud Foundry
-- Compose for MongoDB
+## Architecture
 
-Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
+{:#architecture}
+
+<p style="text-align: center;">
+
+![Architecture diagram](images/solution7/Architecture.png)</p>
+
+1. User access the application using a web browser.
+2. The Node.js app goes to the {{site.data.keyword.composeForMongoDB}} database to fetch data.
 
 ## Before you begin
 
@@ -56,105 +61,120 @@ And to develop and run the application locally:
 1. [Install Node.js and NPM](https://nodejs.org/)
 2. [Install and run MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
 
-## Apps and Services
-- SDK for Node.js Cloud Foundry App
-- Compose for MongoDB database
+## Run MEAN app locally
 
+{: #runapplocally}
 
-## Run MEAN application locally
-In this section, you will run a local MongoDB database, clone a MEAN sample code and start the application which will use the local database.
+In this section, you will run a local MongoDB database, clone a MEAN sample code, and run the application locally to use the local MongoDB database.
 
-1. Install and run MongoDB using the instructions [here](https://docs.mongodb.com/manual/administration/install-community/). Confirm your database is running with the following command.
+{: shortdesc}
+
+1. Follow the instructions [here](https://docs.mongodb.com/manual/administration/install-community/) to install and run MongoDB database locally. Once installation completed, use the command below to confirm that **mongod** server is running. using the  Confirm your database is running with the following command.
   ```sh
-     mongo
+  mongo
   ```
-   If this results in a connection error, confirm that your **mongod** server is running.
-2. In a terminal window, change to a working directory and run the following command to clone the MEAN sample repository.
+  {: codeblock}
+
+2. Clone the MEAN starter code.
+
   ```sh
-     git clone https://github.com/IBM-Cloud/nodejs-MEAN-stack
-     cd nodejs-MEAN-stack
+  git clone https://github.com/IBM-Cloud/nodejs-MEAN-stack
+  cd nodejs-MEAN-stack
   ```
+  {: codeblock}
+
 3. Install the required packages.
+
   ```sh
-     npm install
+  npm install
   ```
-4. Copy .env.example file to .env. Edit the contents as needed, at a minimum adding your own SESSION_SECRET.
+  {: codeblock}
+
+4. Copy .env.example file to .env. Edit the information needed, at a minimum add your own SESSION_SECRET.
+
 5. Run node server.js to start your app
+  ```sh
+  node server.js
   ```
-     node server.js
-  ```
+  {: codeblock}
+
 6. Access your application, create a new user and log in
 
-## Create a MongoDB service on the cloud
+## Create instance of MongoDB database in the cloud
 
-In this section, we will create a Compose for MongoDB database on the cloud using the command line.
-1. Login to the IBM cloud via the command line and target your IBM Cloud account. [More info](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+{: #createdatabase}
+
+In this section, you will create a {{site.data.keyword.composeForMongoDB}} database in the cloud. {{site.data.keyword.composeForMongoDB}} is database-as-a-service that usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).  To create {{site.data.keyword.composeForMongoDB}} follow the steps below.
+
+{: shortdesc}
+
+1. Login to your {{site.data.keyword.cloud_notm}} account via the command line and target your {{site.data.keyword.cloud_notm}} account. 
+
   ```sh
-     ibmcloud login
-     ibmcloud target --cf
+  ibmcloud login
+  ibmcloud target --cf
   ```
+  {: codeblock}
 
-2. Create the instance of Compose for MongoDB. This can also be done using the [UI](https://console.bluemix.net/catalog/services/compose-for-mongodb?env_id=ibm:yp:us-south). It is important that you call this service **mean-starter-mongodb** as the application is configured to look for this service by this name.
+  You can find more CLI commands [here.](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+
+2. Create an instance of {{site.data.keyword.composeForMongoDB}}. This can also be done using the [console UI](https://console.bluemix.net/catalog/services/compose-for-mongodb). The service name must be named **mean-starter-mongodb** as the application is configured to look for this service by this name.
 
   ```sh
-     ibmcloud cf create-service compose-for-mongodb Standard mean-starter-mongodb
+  ibmcloud cf create-service compose-for-mongodb Standard mean-starter-mongodb
   ```
+  {: codeblock}
 
-## Deploy the Node.js app
+## Deploy app to the cloud
 
-Next, you will deploy the node.js application to the cloud. When running in the cloud, the application is configured to look for the "compose-for-mongodb" database service and connect to it.
+{: #deployapp}
 
-```sh
+In this section, you will deploy the node.js app to the {{site.data.keyword.cloud_notm}} that used the managed MongoDB database. The source code contains a [**manifest.yml**](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/manifest.yml) file that been configured to use the "mongodb" service created earlier. The application uses VCAP_SERVICES environment variable to access the Compose MongoDB database credentials. This can be viewed in the [server.js file](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/server.js). 
+
+{: shortdesc}
+
+1. Push code to the cloud.
+
+   ```sh
    ibmcloud cf push
-```
+   ```
 
-The source code contains a **manifest.yml** file which is configured to connect the "mongodb" service to this application. This will allow the application to read the database credentials using the VCAP_SERVICES environment variable.
+   {: codeblock}
 
-Once the code been pushed, you should be able to view the app in your dashboard. After deployment, a random host name is generated and will look something like: **https://mean-random-name.mybluemix.net**
-
-![Live App](images/solution7/live-app.png)
+2. Once the code been pushed, you should be able to view the app in your browser. A random host name been generated that can look like: **https://mean-random-name.mybluemix.net**. You can get your application URL from the console dashboard or command line.![Live App](images/solution7/live-app.png)
 
 
-## Scaling MongoDB Resources
-{: #database}
+## Scaling MongoDB database resources
+{: #scaledatabase}
 
 If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
-1. In the application **Dashboard**, go to **Connections** -> **Click on the MongoDB instance**
-2. In the **Deployment Details** panel, click **Scale Resources**.
+
+{: shortdesc}
+
+1. Using the console **dashboard**, go to **connections** section and click on the **MongoDB instance** database.
+2. In the **deployment details** panel, click on the  **scale resources** option.
   ![](images/solution7/mongodb-scale-show.png)
-3. Adjust the **slider** to raise or lower the storage allocated to the Compose for MongoDB service.
-4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. A 'Scaling initiated' message appears at the top of the page to let you know the rescaling is in progress and the Deployment Details pane also shows the scaling in progress.
-  ![](images/solution7/scaling-in-progress.png)When the scaling is complete the Deployment Details pane updates to show the current usage and the new value for the available storage.
+3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.composeForMongoDB}} database service.
+4. Click **Scale Deployment** to trigger the rescaling and return to the dashboard overview. A 'Scaling initiated' message will appear at the top of the page to let you know the rescaling is in progress.
+  ![](images/solution7/scaling-in-progress.png)
 
 
 ## Monitor application performance
-{: #monitor}
+{: #monitorapplication}
 
-Lets check the health of your application,
+To check the health of your application, you can use the built-in Availability Monitoring service. The Availability Monitoring service is automatically attached to your applications in the cloud. The availability Monitoring service runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact your visitors. Follow the steps below to get to the monitoring dashboard.
 
-1. In the application dashboard, select **Monitoring**
-2. Click **View All Tests**
+{: shortdesc}
+
+1. Using the console dashboard, under your application, select the **Monitoring** tab.
+2. Click **View All Tests** to view the tests.
    ![](images/solution7/alert_frequency.png)
 
-Availability Monitoring runs synthetic tests from locations around the world, around the clock to proactively detect and fix performance issues before they impact users.
 
-## Summary
+## Related Content
 
-In this tutorial, you deployed a MEAN stack application using Compose for MongoDB to the IBM Cloud. We also covered how to scale the database and monitor the application performance.
+{: #related}
 
-You learned how to:
-
-- Create and run a basic Node.js app locally
-- Create a Compose for MongoDB database on the IBM Cloud
-- Deploy the Node.js app to the IBM Cloud
-- Scale MongoDB Resources
-- Monitor application performance
-
-
-
-
-## Next steps
-
-Advance to the next tutorial to learn how to:
-
-- [Set up source control and continuous delivery](multi-region-webapp.html#devops)
+- Set up source control and [continuous delivery](multi-region-webapp.html#devops).
+- Secure web application across [multiple regions](multi-region-webapp.html).
+- Create, secure and manage [REST APIs](create-manage-secure-apis.html).
