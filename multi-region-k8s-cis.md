@@ -65,33 +65,29 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
+## Deploy an application to one region
 
-## Create Kubernetes clusters in multiple regions
-{: #create_clusters}
+This tutorial deploys a Kubernetes application to clusters in multiple regions. You will start with one region, US South, and then repeat these steps for the United Kingdom region. 
 
-This tutorial deploys a Kubernetes application to clusters in multiple regions. In this section, you will create two clusters, one in the United Kingdom region and one in the US South region. 
+### Create a Kubernetes cluster
+{: #create_cluster}
 
-To create a first cluster in the UK region:
+To create a cluster:
 1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create).
-1. Set **Region** to **United Kingdom**.
+1. Set **Region** to **US South**.
 1. Select **Standard** cluster.
 1. Select one or more zones as **Location**.
 1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
 1. Use **2** worker nodes.
-1. Set **Cluster name** to **my-uk-cluster**. Use the naming pattern *`my-<region>-cluster`* to be consistent with this tutorial.
-1. Repeat the steps above to create a cluster in the US South region. Name the cluster **my-us-cluster**.
+1. Set **Cluster name** to **my-us-cluster**. Use the naming pattern *`my-<region>-cluster`* to be consistent with this tutorial.
 
-While the clusters are getting ready, you are going to prepare the application.
-
-## Build and push the application Docker images
-
-In this section, you will build and push Docker images to the {{site.data.keyword.registryshort_notm}} in the United Kingdom and US South regions.
+While the cluster is getting ready, you are going to prepare the application.
 
 ### Create a namespace in {{site.data.keyword.registryshort_notm}}
 
-1. Target the {{site.data.keyword.Bluemix_notm}} CLI to the United Kingdom region.
+1. Target the {{site.data.keyword.Bluemix_notm}} CLI to the US South region.
    ```bash
-   ibmcloud target -r eu-gb
+   ibmcloud target -r us-south
    ```
    {: pre}
 1. Create a namespace for the application.
@@ -99,14 +95,13 @@ In this section, you will build and push Docker images to the {{site.data.keywor
    ibmcloud cr namespace-add <your_namespace>
    ```
    {: pre}
-1. Repeat the steps with the US South (us-south) region as target.
 
-If you already have namespaces in both regions, you can also reuse them. You can list existing namespaces with `ibmcloud cr namespaces`.
+You can also reuse an existing namespace if you have one in the region. You can list existing namespaces with `ibmcloud cr namespaces`.
 {: tip}
 
 ### Build the application
 
-This step builds the application into a Docker image. It is a simple HelloWorld app.
+This step builds the application into a Docker image. You can skip this step if you are configuring the second cluster. It is a simple HelloWorld app.
 
 1. Clone the source code for the [Hello world app](https://github.com/IBM/container-service-getting-started-wt){:new_windows} to your user home directory. The repository contains different versions of a similar app in folders that each start with Lab.
    ```bash
@@ -126,39 +121,15 @@ This step builds the application into a Docker image. It is a simple HelloWorld 
 
 ### Prepare the image to be pushed to the regional registry
 
-1. for United Kingdom:
-   ```bash
-   docker tag multi-region-hello-world:1 registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1
-   ```
-   {: pre}
-1. for US South:
+Tag the image with the target registry:
+
    ```bash
    docker tag multi-region-hello-world:1 registry.ng.bluemix.net/<your_US-South_namespace>/hello-world:1
    ```
    {: pre}
 
-### Push the images to the regional registries
+### Push the image to the regional registry
 
-1. Log in the {{site.data.keyword.registryshort_notm}} in the United Kingdom region.
-   ```bash
-   ibmcloud target -r eu-gb
-   ```
-   {: pre}
-1. Ensure your local Docker engine can push to the United Kingdom registry.
-   ```bash
-   ibmcloud cr login
-   ```
-   {: pre}
-1. Push the image.
-   ```bash
-   docker push registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1
-   ```
-   {: pre}
-1. Log in the {{site.data.keyword.registryshort_notm}} in the US South region.
-   ```bash
-   ibmcloud target -r us-south
-   ```
-   {: pre}
 1. Ensure your local Docker engine can push to the US South registry.
    ```bash
    ibmcloud cr login
@@ -170,24 +141,19 @@ This step builds the application into a Docker image. It is a simple HelloWorld 
    ```
    {: pre}
 
-## Deploy the application to the Kubernetes clusters
+### Deploy the application to the Kubernetes clusters
 
-At that stage, the two clusters should be ready. You can check their status in the [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/clusters) console.
+At that stage, the cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/clusters) console.
 
-1. Target the United Kingdom region:
-   ```bash
-   ibmcloud target -r eu-gb
-   ```
-   {: pre}
 1. Retrieve the configuration of the cluster:
    ```bash
-   ibmcloud cs cluster-config <uk-cluster-name>
+   ibmcloud cs cluster-config <us-cluster-name>
    ```
    {: pre}
 1. Copy and paste the output to set the KUBECONFIG environment variable. The variable is used by `kubectl`.
 1. Run the application in the cluster with two replicas:
    ```bash
-   kubectl run hello-world-deployment --image=registry.eu-gb.bluemix.net/<your_United-Kingdom_namespace>/hello-world:1 --replicas=2
+   kubectl run hello-world-deployment --image=registry.ng.bluemix.net/<your_US-South_namespace>/hello-world:1 --replicas=2
    ```
    {: pre}
    Example output: `deployment "hello-world-deployment" created`.
@@ -197,11 +163,34 @@ At that stage, the two clusters should be ready. You can check their status in t
    ```
    {: pre}
    It returns message like `service "hello-world-service" exposed`.
-1. Repeat the steps to deploy the application in the US South region using *us-south* as target and *registry.ng.bluemix.net* as registry.
 
-Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
+### Get the domain names and IP addresses assigned to your Kubernetes cluster
+{: #CSALB_IP_subdomain}
+
+When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg. *my-us-cluster.us-south.containers.appdomain.cloud*) and a public Application Load Balancer IP address.
+
+1. Retrieve the Ingress subdomain of the cluster:
+   ```bash
+   ibmcloud cs cluster-get <us-cluster-name>
+   ```
+   {: pre}
+   Look for the `Ingress Subdomain` value.
+1. Make note of this information for a later step.
+
+This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also swap the subdomain for the public Application Load Balancer IP address (`ibmcloud cs albs -cluster <uk-cluster-name>`). Both options are be supported.
+{: tip}
+
+## And then to another region
+
+Repeat the previous steps in the United Kingdom region replacing:
+* the region name *US South* with **United Kingdom**;
+* the region alias *us-south* with **eu-gb**;
+* the registry *registry.ng.bluemix.net* with **registry.eu-gb.bluemix.net**;
+* and the cluster name *my-us-cluster* with **my-uk-cluster**.
 
 ## Configure multi-region load-balancing
+
+Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
 
 In this section, you will configure Cloud Internet Services (CIS) to distribute the load between the two clusters. CIS is a one stop-shop service providing Global Load Balancer (GLB), Caching, Web Application Firewall (WAF) and Page rule to secure your applications while ensuring the reliability and performance for your Cloud applications.
 
@@ -225,27 +214,6 @@ The first step is to create an instance of CIS and to point your custom domain t
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {:tip}
-
-### Get the domain names and IP addresses assigned to your Kubernetes clusters
-{: #CSALB_IP_subdomain}
-
-When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg. *my-uk-cluster.eu-gb.containers.appdomain.cloud*) and a public Application Load Balancer IP address. You will need this information to configure a global load balancer.
-
-1. Target the United Kingdom region:
-   ```bash
-   ibmcloud target -r eu-gb
-   ```
-   {: pre}
-1. Retrieve the Ingress subdomain of the cluster:
-   ```bash
-   ibmcloud cs cluster-get <uk-cluster-name>
-   ```
-   {: pre}
-   Look for the `Ingress Subdomain` value.
-1. Repeat the steps for the cluster in the US South region (*us-south*).
-
-This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also swap the subdomain for the public Application Load Balancer IP address (`ibmcloud cs albs -cluster <uk-cluster-name>`). Both options are be supported.
-{: tip}
 
 ### Configure Health Check for the Global Load Balancer
 
