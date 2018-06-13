@@ -141,7 +141,7 @@ Tag the image with the target registry:
    ```
    {: pre}
 
-### Deploy the application to the Kubernetes clusters
+### Deploy the application to the Kubernetes cluster
 
 At that stage, the cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/clusters) console.
 
@@ -164,7 +164,7 @@ At that stage, the cluster should be ready. You can check its status in the [{{s
    {: pre}
    It returns message like `service "hello-world-service" exposed`.
 
-### Get the domain names and IP addresses assigned to your Kubernetes cluster
+### Get the domain name and IP address assigned to the cluster
 {: #CSALB_IP_subdomain}
 
 When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg. *my-us-cluster.us-south.containers.appdomain.cloud*) and a public Application Load Balancer IP address.
