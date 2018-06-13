@@ -157,9 +157,9 @@ At that stage, the cluster should be ready. You can check its status in the [{{s
    ```
    {: pre}
    Example output: `deployment "hello-world-deployment" created`.
-1. Make the application accessible by exposing the deployment as a NodePort service.
+1. Make the application accessible within the cluster
    ```bash
-   kubectl expose deployment/hello-world-deployment --type=NodePort --port=80 --name=hello-world-service --target-port=8080
+   kubectl expose deployment/hello-world-deployment --type=ClusterIP --port=80 --name=hello-world-service --target-port=8080
    ```
    {: pre}
    It returns message like `service "hello-world-service" exposed`.
