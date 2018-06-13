@@ -11,6 +11,7 @@ Solution Tutorials
     {: .navgroup id="howto"}
     multi-region-webapp.md
     scalable-webapp-kubernetes.md
+    multi-region-k8s-cis.md
     kubernetes-log-analysis-kibana.md
     vm-to-containers-and-kubernetes.md
     continuous-deployment-to-kubernetes.md

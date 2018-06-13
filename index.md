@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-08"
+lastupdated: "2018-06-13"
 
 ---
 
@@ -97,6 +97,22 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
             <div class="architectureDiagramContainer">
                 <img class="architectureDiagram" src = "images/solution2/Architecture.png" />
+            </div>
+        </div>
+    </div>
+    <div class = "solutionBox">
+        <h3 id="multi-region-k8s-cis.html" class="solutionBoxTitle">
+            <a href = "multi-region-k8s-cis.html">Resilient and secure multi-region Kubernetes clusters</a>
+        </h3>
+        <div class="solutionBoxDescription">
+            <div class="descriptionContainer">
+                <p>This tutorial highlights how Cloud Internet Services can be integrated with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.</p>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Registry</span>
+                    <span class="tag-filter category">Cloud Internet Services</span>
+            </div>
+            <div class="architectureDiagramContainer">
+                <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" />
             </div>
         </div>
     </div>

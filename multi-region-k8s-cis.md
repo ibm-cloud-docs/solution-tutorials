@@ -16,7 +16,7 @@ lastupdated: "2018-06-12"
 {:tip: .tip}
 {:pre: .pre}
 
-# Secure and resilient multi-region Kubernetes clusters with Cloud Internet Services
+# Resilient and secure multi-region Kubernetes clusters with Cloud Internet Services
 
 Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency.
 
