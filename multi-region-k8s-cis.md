@@ -177,7 +177,7 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
    Look for the `Ingress Subdomain` value.
 1. Make note of this information for a later step.
 
-This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also swap the subdomain for the public Application Load Balancer IP address (`ibmcloud cs albs -cluster <uk-cluster-name>`). Both options are be supported.
+This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also swap the subdomain for the public Application Load Balancer IP address (`ibmcloud cs albs -cluster <us-cluster-name>`). Both options are be supported.
 {: tip}
 
 ## And then to another region
