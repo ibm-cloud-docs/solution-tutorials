@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-11"
+lastupdated: "2018-06-19"
 
 ---
 
@@ -103,7 +103,7 @@ The {{site.data.keyword.loganalysisshort}} / Kibana dashboard, by default shows 
 5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
 ```
 message:(CRITICAL|INFO|ERROR|WARNING|DEBUG) && message_type_str:ERR
-```   
+```
 It should look like shown below. The displayed log entries are now filtered based on the search criteria.   
 ![](images/solution12/SearchForMessagesERR.png)   
 6. Store the search criteria for future use by clicking **Save** in the configuration bar. Use **ERRlogs** as name.
@@ -138,14 +138,49 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 ![](images/solution12/DashboardTable.png)   
 4. Save the dashboard for future use.
 
-## Optional: Add {{site.data.keyword.prf_hubshort}}
-In the following, you are going to add {{site.data.keyword.prf_hubshort}} to the application. The service regularly checks the availability and response time of the app. It can be configured to raise alerts of different severity when thresholds are passed.
+## Add {{site.data.keyword.prf_hubshort}}
+In the following, you are going to add {{site.data.keyword.prf_hubshort}} to the application. The service regularly checks the availability and response time of the app. It can be configured to raise alerts of different severity when thresholds are passed. You can also run synthetics tests to measure performance of webpage loads, API calls and simulated user flows through scripted browser interaction using Selenium. 
 1. Add the {{site.data.keyword.prf_hubshort}} by accessing the dashboard in the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) and then either provision it as a new service in your organization and space, or by clicking on the application to open the details page and then clicking on **Monitoring**. Use the approach via the application details. The following shows that no tests have been run, but one default test is present.   
-![](images/solution12/AvailabilityMonitoringAdded.png)   
+  ![](images/solution12/AvailabilityMonitoringAdded.png)   
 2. Click on **View All Tests** to switch to the monitoring dashboard.
 3. On the tile with the default test click on the menu in the upper right to **Edit** the test.
 4. In the settings change the interval from 15 minutes to 1 hour. Add another test location by clicking on a city name. Also **Add Condition** to check the header response code for anything greater or equal to 400. Click **Finish** to be taken back to the monitoring dashboard.
 5. Click the **configure** icon on the upper right. In the pop out you can access the account usage, enable alter notification and change the dashboard refresh rate. Alert notifications allow to set up notification rules and integrations with various communication tools.
+
+### Monitor a REST API URL
+
+To monitor a REST API URL, complete these steps:
+
+1. Scroll down below the map view to the Synthetic Tests section.
+2. Select **Add New Test**.
+3. Click **Load Time** and select **REST API**.
+4. Enter a name to identify the test.
+5. Select the type of method from the **Method** list.
+6. Enter or paste the URL for the REST API call; for example, `https://website/search`.
+7. If the REST API requires a user login, select the **Does it require a user name and password** check box. Enter the user name and password.
+8. To complete the configuration, click **Add**.
+
+### Run synthetics tests with {{site.data.keyword.prf_hubshort}}
+
+To monitor user interactions with your web application through automated Selenium test scripts that mimic the behavior, complete these steps:
+
+1. Scroll down below the map view to the Synthetic Tests section.
+
+2. Select **Add New Test**.
+
+3. Click **Scripted Behavior**.
+
+4. Enter a name and description for the script.
+
+5. Browse to the script file and upload it.
+
+   **Note:** The acceptable formats are `.zip` or `.html`. Files must be smaller than 1 MB.
+
+6. If required, enter values for variables that are defined in your test script. For example, if your script requires a user name and password to connect to a website, you can enter the values for those variables.
+
+7. To complete the configuration, click **Add**.
+
+For more on synthetics tests, check out the [Monitor your application with IBM Cloud Availability Monitoring](https://www.ibm.com/cloud/garage/tutorials/tutorial_bam) tutorial. 
 
 ## Expand the tutorial
 Do you want to learn more? Here are some ideas of what you can do next:
@@ -154,7 +189,7 @@ Do you want to learn more? Here are some ideas of what you can do next:
 * Add a saved search and metric only for critical and error events.
 * Build a dashboard for all your apps.
 * Add more availability tests.
-* Configure alert notifications.
+* Configure alert notifications, follow the [steps](https://www.ibm.com/cloud/garage/tutorials/tutorial_bam?task=5) here to do that.
 
 
 ## Related content
@@ -166,3 +201,4 @@ Do you want to learn more? Here are some ideas of what you can do next:
 * Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html)
 * Kibana User Guide: [Visualizing Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-visualizing.html)
 * Kibana User Guide: [Putting it all Together with Dashboards](https://www.elastic.co/guide/en/kibana/5.1/tutorial-dashboard.html)
+* [Monitor your application with IBM Cloud Availability Monitoring](ibm.com/cloud/garage/tutorials/tutorial_bam?task=0)
