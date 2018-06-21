@@ -262,9 +262,11 @@ If you have not done it yet, clone the tutorial repository:
    {: codeblock}
 1. Edit `terraform/credentials.tfvars` and set the value for `ibmcloud_api_key` to the Platform API key you obtained.
 
-### Create a new organization
+### Create or reuse a Cloud Foundry organization
 
-To create the parent organization of the three deployment environments, you need to be the account owner.
+You can choose either to create a new organization or to reuse (import) an existing one. To create the parent organization of the three deployment environments, **you need to be the account owner**.
+
+#### To create a new organization
 
 1. Change to the `terraform/global` directory
 1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
@@ -306,7 +308,7 @@ Once Terraform completes, it will have created:
 
 > This tutorial uses the `local` backend provider for Terraform state. Handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
 
-### Reuse an organization you are managing
+#### To reuse an organization you are managing
 
 If you are not the account owner but you manage an organization in the account, you can also import an existing organization into Terraform
 
@@ -331,7 +333,7 @@ If you are not the account owner but you manage an organization in the account, 
    terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization <guid>
    ```
    {: codeblock}
-1. Tune `global.tfvars` to match the existing organization structure
+1. Tune `global.tfvars` to match the existing organization name and structure
 1. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
