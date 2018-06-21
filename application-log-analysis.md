@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-11"
+lastupdated: "2018-06-19"
 
 ---
 
@@ -13,7 +13,7 @@ lastupdated: "2018-06-11"
 {:pre: .pre}
 
 # Analyze logs and monitor health of a Cloud Foundry application
-This tutorial shows how the [{{site.data.keyword.loganalysislong_notm}}](https://console.bluemix.net/catalog/services/log-analysis) service can be used to understand and diagnose activities of a Cloud Foundry app that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python Cloud Foundry application, generate different types of logs. Then, you will search, analyze and visualize those logs by using Kibana, an open-source tool that is offered by the {{site.data.keyword.loganalysisshort}} service. Optionally, you will also setup the [{{site.data.keyword.prf_hubshort}}](https://console.bluemix.net/catalog/services/availability-monitoring) service to track availability of the deployed application, so that you get notified in the case of application health issues.
+This tutorial shows how the [{{site.data.keyword.loganalysislong_notm}}](https://console.bluemix.net/catalog/services/log-analysis) service can be used to understand and diagnose activities of a Cloud Foundry app that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python Cloud Foundry application, generate different types of logs. Then, you will search, analyze and visualize those logs by using Kibana, an open-source tool that is offered by the {{site.data.keyword.loganalysisshort}} service. Moreover, you will also setup the [{{site.data.keyword.prf_hubshort}}](https://console.bluemix.net/catalog/services/availability-monitoring) service to track availability of the deployed application, so that you get notified in the case of application health issues.
 
 ## Objectives
 * Provision the {{site.data.keyword.loganalysisshort}} service
@@ -138,8 +138,12 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 ![](images/solution12/DashboardTable.png)   
 4. Save the dashboard for future use.
 
-## Optional: Add {{site.data.keyword.prf_hubshort}}
+## Add {{site.data.keyword.prf_hubshort}}
 In the following, you are going to add {{site.data.keyword.prf_hubshort}} to the application. The service regularly checks the availability and response time of the app. It can be configured to raise alerts of different severity when thresholds are passed.
+
+You can also run synthetic tests to measure performance of webpage loads, API calls and simulated user flows through scripted browser interaction using Selenium. See [**Creating a REST API test**](https://console.bluemix.net/docs/services/AvailabilityMonitoring/avmon_create_api_test.html#avmon_rest_api) and how to **create a test script** from either an [uploaded file](https://console.bluemix.net/docs/services/AvailabilityMonitoring/avmon_create_script_test.html#avmon_upload_script_test) or from a [GitHub repository](https://console.bluemix.net/docs/services/AvailabilityMonitoring/avmon_create_script_test_github.html#avmon_git_script_test) in the [{{site.data.keyword.prf_hubshort}} docs](https://console.bluemix.net/docs/services/AvailabilityMonitoring/index.html#avmon_gettingstarted).
+{:tip}   
+
 1. Add the {{site.data.keyword.prf_hubshort}} by accessing the dashboard in the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) and then either provision it as a new service in your organization and space, or by clicking on the application to open the details page and then clicking on **Monitoring**. Use the approach via the application details. The following shows that no tests have been run, but one default test is present.   
 ![](images/solution12/AvailabilityMonitoringAdded.png)   
 2. Click on **View All Tests** to switch to the monitoring dashboard.
@@ -154,13 +158,14 @@ Do you want to learn more? Here are some ideas of what you can do next:
 * Add a saved search and metric only for critical and error events.
 * Build a dashboard for all your apps.
 * Add more availability tests.
-* Configure alert notifications.
+* [Configure alert notifications](https://console.bluemix.net/docs/services/AvailabilityMonitoring/avmon_notifications.html#avmon_notifications).
 
 
 ## Related content
 {:related}
 
 * [Documentation for {{site.data.keyword.loganalysislong_notm}}](https://console.bluemix.net/docs/services/CloudLogAnalysis/index.html)
+* [Documentation for {{site.data.keyword.prf_hubshort}}](https://console.bluemix.net/docs/services/AvailabilityMonitoring/index.html#avmon_gettingstarted)
 * [Logging facility for Python](https://docs.python.org/3/library/logging.html)
 * [IBM Cloud Log Collection API](https://console.bluemix.net/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction)
 * Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html)
