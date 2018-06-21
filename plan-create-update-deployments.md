@@ -216,91 +216,6 @@ Cloud Foundry services can be provisioned and a Kubernetes binding (secret) can 
    }
    ```
 
-At that point you have the resources needed by the application in place. The next step is to configure access to these resources.
-
-### Policies with Identity and Access Management
-
-In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `ibmcloud` and the `iam` command.
-
-   ```cmd
-   ~/> ibmcloud iam
-   NAME:
-      ibmcloud iam - Manage identities and access to resources
-   USAGE:
-      ibmcloud iam command [arguments...] [command options]
-
-   COMMANDS:
-      ...
-      access-groups                    List access groups under current account
-      access-group-create              Create an access group
-      access-group                     Show details of an access group
-      access-group-delete              Delete an access group
-      access-group-update              Update an access group
-      access-group-users               List users of an access group
-      access-group-user-add            Add user(s) to an access group
-      access-group-user-remove         Remove a user from an access group
-      access-group-user-purge          Remove user from all access groups
-      access-group-service-ids         List service IDs of an access group
-      access-group-service-id-add      Add service ID(s) to an access group
-      access-group-service-id-remove   Remove a service ID from an access group
-      access-group-service-id-purge    Remove service ID from all access groups
-      access-group-policies            List policies of an access group
-      access-group-policy              Show details of an access group policy
-      access-group-policy-create       Create an access group policy
-      access-group-policy-update       Update an access group policy
-      access-group-policy-delete       Delete an access group policy
-      ...
-      user-policies                    List policies of a user
-      user-policy                      Display details of a user policy
-      user-policy-create               Create a user policy for resources in current account
-      user-policy-update               Update a user policy for resources in current account
-      user-policy-delete               Delete a user policy
-      ...
-   ```
-
-For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the policies to define are:
-
-|           | IAM Access policies |
-| --------- | ----------- |
-| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
-| Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> |
-| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
-| Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
-
-Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://console.bluemix.net/docs/iam/groups.html#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
-
-For the *Developer* role in the *Development* environment, this translates to:
-
-   ```sh
-   #!/bin/bash
-
-   USER=$1
-   GROUP="Example-Developer-Role"
-
-   # Check if the group exist
-   if ibmcloud iam access-group $GROUP >/dev/null; then
-     echo "Role already exists"
-   else
-     # Create the access group for the role if the group does not exist
-     ibmcloud iam access-group-create $GROUP --description "used by the multiple-environments-as-code tutorial"
-
-     # Set the permissions for this group
-     # Resource Group: Viewer
-     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-type resource-group --resource "default"
-
-     # Platform Access Roles in the Resource Group: Viewer
-     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-group-name "default"
-
-     # Monitoring: Administrator, Editor, Viewer
-     ibmcloud iam access-group-policy-create $GROUP --roles Administrator,Editor,Viewer --service-name monitoring
-   fi
-
-   # Add the user to the group
-   ibmcloud iam access-group-user-add $GROUP $USER
-   ```
-
-You can find the scripts for all roles in the *Development environment* under the [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of your checkout.
-
 ## Deploy this environment in your account
 
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
@@ -498,16 +413,91 @@ You can repeat the steps for the `testing` and `production`.
 
 ### Assign user policies
 
-User policies use the {{site.data.keyword.Bluemix_notm}} CLI and the `iam` command.
+In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `ibmcloud` and the `iam` command.
 
-The `iam/development` directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles. To set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you can use the script `add-developer.sh`:
+   ```cmd
+   ~/> ibmcloud iam
+   NAME:
+      ibmcloud iam - Manage identities and access to resources
+   USAGE:
+      ibmcloud iam command [arguments...] [command options]
+
+   COMMANDS:
+      ...
+      access-groups                    List access groups under current account
+      access-group-create              Create an access group
+      access-group                     Show details of an access group
+      access-group-delete              Delete an access group
+      access-group-update              Update an access group
+      access-group-users               List users of an access group
+      access-group-user-add            Add user(s) to an access group
+      access-group-user-remove         Remove a user from an access group
+      access-group-user-purge          Remove user from all access groups
+      access-group-service-ids         List service IDs of an access group
+      access-group-service-id-add      Add service ID(s) to an access group
+      access-group-service-id-remove   Remove a service ID from an access group
+      access-group-service-id-purge    Remove service ID from all access groups
+      access-group-policies            List policies of an access group
+      access-group-policy              Show details of an access group policy
+      access-group-policy-create       Create an access group policy
+      access-group-policy-update       Update an access group policy
+      access-group-policy-delete       Delete an access group policy
+      ...
+      user-policies                    List policies of a user
+      user-policy                      Display details of a user policy
+      user-policy-create               Create a user policy for resources in current account
+      user-policy-update               Update a user policy for resources in current account
+      user-policy-delete               Delete a user policy
+      ...
+   ```
+
+For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the policies to define are:
+
+|           | IAM Access policies |
+| --------- | ----------- |
+| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
+| Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> |
+| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
+| Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
+
+Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://console.bluemix.net/docs/iam/groups.html#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
+
+For the *Developer* role in the *Development* environment, this translates to:
+
+   ```sh
+   #!/bin/bash
+
+   USER=$1
+   GROUP="Example-Developer-Role"
+
+   # Check if the group exist
+   if ibmcloud iam access-group $GROUP >/dev/null; then
+     echo "Role already exists"
+   else
+     # Create the access group for the role if the group does not exist
+     ibmcloud iam access-group-create $GROUP --description "used by the multiple-environments-as-code tutorial"
+
+     # Set the permissions for this group
+     # Resource Group: Viewer
+     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-type resource-group --resource "default"
+
+     # Platform Access Roles in the Resource Group: Viewer
+     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-group-name "default"
+
+     # Monitoring: Administrator, Editor, Viewer
+     ibmcloud iam access-group-policy-create $GROUP --roles Administrator,Editor,Viewer --service-name monitoring
+   fi
+
+   # Add the user to the group
+   ibmcloud iam access-group-user-add $GROUP $USER
+   ```
+
+The [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles. To set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you can use the script `add-developer.sh`:
 
    ```sh
    cd iam/development
    ./add-developer.sh user@domain.com
    ```
-
-The script will create an access group for the Developer role and add the user to this group.
 
 ## Remove resources
 
