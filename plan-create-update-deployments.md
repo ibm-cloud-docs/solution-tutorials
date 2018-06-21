@@ -365,6 +365,7 @@ This section will focus on the `development` environment. The steps will be the 
       ibmcloud cs vlans <location>
       ```
       {: codeblock}
+      If you don't have any VLANs, keep the empty values, new VLANs will be created.
    1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
       ```sh
       ibmcloud cs machine-types <location>
