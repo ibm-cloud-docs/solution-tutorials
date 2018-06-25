@@ -71,7 +71,7 @@ The application shown in this tutorial is a feedback app that smartly analyses t
 ## Before you begin
 {: #prereqs}
 
-This tutorial uses the {{site.data.keyword.Bluemix_notm}} command line tool to provision resources and deploy code. Make sure to install the `bx` command line tool.
+This tutorial uses the {{site.data.keyword.Bluemix_notm}} command line tool to provision resources and deploy code. Make sure to install the `ibmcloud` command line tool.
 
 * [{{site.data.keyword.Bluemix_notm}} Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install ibmcloud CLI and required plug-ins (Cloud Foundry and {{site.data.keyword.openwhisk_short}})
 
@@ -133,7 +133,7 @@ The repository contains both the mobile application and the {{site.data.keyword.
 ## Provision services to handle user authentication, feedback persistence and analysis
 {: #provision_services}
 
-In this section, you will provision the services used by the application. You can choose to provision the services from the {{site.data.keyword.Bluemix_notm}} catalog or using the `bx` command line.
+In this section, you will provision the services used by the application. You can choose to provision the services from the {{site.data.keyword.Bluemix_notm}} catalog or using the `ibmcloud` command line.
 
 It is recommended that you create a new space to provision the services and deploy the serverless backend. This helps to keep all the resources together.
 

@@ -41,7 +41,7 @@ This tutorial uses the following products:
 * [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
 * [Identity and Access Management](https://console.bluemix.net/iam/#/users)
-* [{{site.data.keyword.Bluemix_notm}} command line interface - the `bx` CLI](https://console.bluemix.net/docs/cli/index.html)
+* [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://console.bluemix.net/docs/cli/index.html)
 * [HashiCorp Terraform](https://www.terraform.io/)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
@@ -63,7 +63,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 ## Overview of the available tools
 {: #tools}
 
-The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `bx` CLI](https://console.bluemix.net/docs/cli/index.html). With `bx` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
+The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://console.bluemix.net/docs/cli/index.html). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
 
 Another tool introduced in [this tutorial](./infrastructure-as-code-terraform.html) is [Terraform](https://www.terraform.io/) by HashiCorp. Quoting HashiCorp, *Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.* It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
@@ -216,11 +216,207 @@ Cloud Foundry services can be provisioned and a Kubernetes binding (secret) can 
    }
    ```
 
-At that point you have the resources needed by the application in place. The next step is to configure access to these resources.
+## Deploy this environment in your account
 
-### Policies with Identity and Access Management
+### Install {{site.data.keyword.Bluemix_notm}} CLI
 
-In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `bx` and the `iam` command.
+1. Follow [these instructions](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#download_install) to install the CLI
+1. Validate the installation by running:
+   ```sh
+   ibmcloud
+   ```
+   {: codeblock}
+
+### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
+
+1. [Download and install Terraform for your system.](https://www.terraform.io/intro/getting-started/install.html)
+1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
+   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](./infrastructure-as-code-terraform.html#setup)
+   {:tip}
+1. Create a `.terraformrc` file in your home directory that points to the Terraform binary. In the following example, `/opt/provider/terraform-provider-ibm` is the route to the directory.
+   ```sh
+   # ~/.terraformrc
+   providers {
+     ibm = "/opt/provider/terraform-provider-ibm"
+   }
+   ```
+   {: codeblock}
+
+### Get the code
+
+If you have not done it yet, clone the tutorial repository:
+
+   ```sh
+   git clone https://github.com/IBM-Cloud/multiple-environments-as-code
+   ```
+   {: codeblock}
+
+### Set Platform API key
+
+1. If you don't already have one, obtain a [Platform API key](https://console.bluemix.net/iam/#/apikeys) and save the API key for future reference.
+   > If in later steps you plan on creating a new Cloud Foundry organization to host the deployment environments, make sure you are the owner of the account.
+1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command
+   ```sh
+   cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
+   ```
+   {: codeblock}
+1. Edit `terraform/credentials.tfvars` and set the value for `ibmcloud_api_key` to the Platform API key you obtained.
+
+### Create or reuse a Cloud Foundry organization
+
+You can choose either to create a new organization or to reuse (import) an existing one. To create the parent organization of the three deployment environments, **you need to be the account owner**.
+
+#### To create a new organization
+
+1. Change to the `terraform/global` directory
+1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
+   ```sh
+   cp global.tfvars.tmpl global.tfvars
+   ```
+   {: codeblock}
+1. Edit `global.tfvars`
+   1. Set **org_name** to the organization name to create
+   1. Set **org_managers** to a list of user IDs you want to grant the *Manager* role in the org - the user creating the org is automatically a manager and should not be added to the list
+   1. Set **org_users** to a list of all users you want to invite into the org - users need to be added there if you want to configure their access in further steps
+
+   ```sh
+   org_name = "a-new-organization"
+   org_managers = [ "user1@domain.com", "another-user@anotherdomain.com" ]
+   org_users = [ "user1@domain.com", "another-user@anotherdomain.com", "more-user@domain.com" ]
+   ```
+   {: codeblock}
+1. Initialize Terraform from the `terraform/global` folder
+   ```sh
+   terraform init
+   ```
+   {: codeblock}
+1. Look at the Terraform plan
+   ```sh
+   terraform plan -var-file=../credentials.tfvars -var-file=global.tfvars
+   ```
+   {: codeblock}
+1. Apply the changes
+   ```sh
+   terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
+   ```
+   {: codeblock}
+
+Once Terraform completes, it will have created:
+* a new Cloud Foundry organization
+* a `global.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
+* the `terraform.tfstate` file
+
+> This tutorial uses the `local` backend provider for Terraform state. Handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
+
+#### To reuse an organization you are managing
+
+If you are not the account owner but you manage an organization in the account, you can also import an existing organization into Terraform
+
+1. Retrieve the organization GUID
+   ```sh
+   ibmcloud iam org <org_name> --guid
+   ```
+   {: codeblock}
+1. Change to the `terraform/global` directory
+1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
+   ```sh
+   cp global.tfvars.tmpl global.tfvars
+   ```
+   {: codeblock}
+1. Initialize Terraform
+   ```sh
+   terraform init
+   ```
+   {: codeblock}
+1. After initializing Terraform, import the organization into the Terraform state
+   ```sh
+   terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization <guid>
+   ```
+   {: codeblock}
+1. Tune `global.tfvars` to match the existing organization name and structure
+1. Apply the changes
+   ```sh
+   terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
+   ```
+   {: codeblock}
+
+### Create per-environment space, cluster and services
+
+This section will focus on the `development` environment. The steps will be the same for the other environments, only the values you pick for the variables will differ.
+
+1. Change to the `terraform/per-environment` folder of the checkout
+1. Copy the template `tfvars` file. There is one per environment:
+   ```sh
+   cp development.tfvars.tmpl development.tfvars
+   cp testing.tfvars.tmpl testing.tfvars
+   cp production.tfvars.tmpl production.tfvars
+   ```
+   {: codeblock}
+1. Edit `development.tfvars`
+   1. Set **environment_name** to the name of the Cloud Foundry space you want to create
+   1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
+   1. Set **cluster_datacenter** to the location where you want to create the cluster. Find the available locations with:
+      ```sh
+      ibmcloud cs locations
+      ```
+      {: codeblock}
+   1. Set the private (**cluster_private_vlan_id**) and public (**cluster_public_vlan_id**) VLANs for the cluster. Find the available VLANs for the location with:
+      ```sh
+      ibmcloud cs vlans <location>
+      ```
+      {: codeblock}
+      If you don't have any VLANs, keep the empty values, new VLANs will be created.
+   1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
+      ```sh
+      ibmcloud cs machine-types <location>
+      ```
+      {: codeblock}
+1. Initialize Terraform
+   ```sh
+   terraform init
+   ```
+   {: codeblock}
+1. Create a new Terraform workspace for the *development* environment
+   ```sh
+   terraform workspace new development
+   ```
+   {: codeblock}
+   Later to switch between environments use
+   ```sh
+   terraform workspace select development
+   ```
+   {: codeblock}
+1. Look at the Terraform plan
+   ```sh
+   terraform plan -var-file=../credentials.tfvars -var-file=development.tfvars
+   ```
+   {: codeblock}
+   It should report:
+   ```
+   Plan: 7 to add, 0 to change, 0 to destroy.
+   ```
+   {: codeblock}
+1. Apply the changes
+   ```sh
+   terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
+   ```
+   {: codeblock}
+
+Once Terraform completes, it will have created:
+* a Cloud Foundry space
+* a Kubernetes cluster
+* a database
+* a Kubernetes secret with the database credentials
+* a storage
+* a Kubernetes secret with the storage credentials
+* a `development.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
+* the environment specific `terraform.tfstate` under `terraform.tfstate.d/development`.
+
+You can repeat the steps for the `testing` and `production`.
+
+### Assign user policies
+
+In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `ibmcloud` and the `iam` command.
 
    ```cmd
    ~/> ibmcloud iam
@@ -299,215 +495,12 @@ For the *Developer* role in the *Development* environment, this translates to:
    ibmcloud iam access-group-user-add $GROUP $USER
    ```
 
-You can find the scripts for all roles in the *Development environment* under the [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of your checkout.
-
-## Deploy this environment in your account
-
-### Install {{site.data.keyword.Bluemix_notm}} CLI
-
-1. Follow [these instructions](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#download_install) to install the CLI
-1. Validate the installation by running:
-   ```sh
-   bx
-   ```
-   {: codeblock}
-
-### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
-
-1. [Download and install Terraform for your system.](https://www.terraform.io/intro/getting-started/install.html)
-1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
-   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](./infrastructure-as-code-terraform.html#setup)
-   {:tip}
-1. Create a `.terraformrc` file in your home directory that points to the Terraform binary. In the following example, `/opt/provider/terraform-provider-ibm` is the route to the directory.
-   ```sh
-   # ~/.terraformrc
-   providers {
-     ibm = "/opt/provider/terraform-provider-ibm"
-   }
-   ```
-   {: codeblock}
-
-### Get the code
-
-If you have not done it yet, clone the tutorial repository:
-
-   ```sh
-   git clone https://github.com/IBM-Cloud/multiple-environments-as-code
-   ```
-   {: codeblock}
-
-### Set Platform API key
-
-1. If you don't already have one, obtain a [Platform API key](https://console.bluemix.net/iam/#/apikeys) and save the API key for future reference.
-   > If in later steps you plan on creating a new Cloud Foundry organization to host the deployment environments, make sure you are the owner of the account.
-1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command
-   ```sh
-   cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
-   ```
-   {: codeblock}
-1. Edit `terraform/credentials.tfvars` and set the value for `ibmcloud_api_key` to the Platform API key you obtained.
-
-### Create a new organization
-
-To create the parent organization of the three deployment environments, you need to be the account owner.
-
-1. Change to the `terraform/global` directory
-1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
-   ```sh
-   cp global.tfvars.tmpl global.tfvars
-   ```
-   {: codeblock}
-1. Edit `global.tfvars`
-   1. Set **org_name** to the organization name to create
-   1. Set **org_managers** to a list of user IDs you want to grant the *Manager* role in the org - the user creating the org is automatically a manager and should not be added to the list
-   1. Set **org_users** to a list of all users you want to invite into the org - users need to be added there if you want to configure their access in further steps
-
-   ```sh
-   org_name = "a-new-organization"
-   org_managers = [ "user1@domain.com", "another-user@anotherdomain.com" ]
-   org_users = [ "user1@domain.com", "another-user@anotherdomain.com", "more-user@domain.com" ]
-   ```
-   {: codeblock}
-1. Initialize Terraform from the `terraform/global` folder
-   ```sh
-   terraform init
-   ```
-   {: codeblock}
-1. Look at the Terraform plan
-   ```sh
-   terraform plan -var-file=../credentials.tfvars -var-file=global.tfvars
-   ```
-   {: codeblock}
-1. Apply the changes
-   ```sh
-   terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
-   ```
-   {: codeblock}
-
-Once Terraform completes, it will have created:
-* a new Cloud Foundry organization
-* a `global.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
-* the `terraform.tfstate` file
-
-> This tutorial uses the `local` backend provider for Terraform state. Handy when discovering Terraform or working alone on a project, but when working in a team, or on larger infrastructure, Terraform also supports saving the state to a remote location. Given the Terraform state is critical to Terraform operations, it is recommended to use a remote, highly available, resilient storage for the Terraform state  Refer to [Terraform Backend Types](https://www.terraform.io/docs/backends/types/index.html) for a list of available options. Some backends even support versioning and locking of Terraform states.
-
-### Reuse an organization you are managing
-
-If you are not the account owner but you manage an organization in the account, you can also import an existing organization into Terraform
-
-1. Retrieve the organization GUID
-   ```sh
-   ibmcloud iam org <org_name> --guid
-   ```
-   {: codeblock}
-1. Change to the `terraform/global` directory
-1. Copy [global.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/global/global.tfvars.tmpl) to `global.tfvars`
-   ```sh
-   cp global.tfvars.tmpl global.tfvars
-   ```
-   {: codeblock}
-1. Initialize Terraform
-   ```sh
-   terraform init
-   ```
-   {: codeblock}
-1. After initializing Terraform, import the organization into the Terraform state
-   ```sh
-   terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization <guid>
-   ```
-   {: codeblock}
-1. Tune `global.tfvars` to match the existing organization structure
-1. Apply the changes
-   ```sh
-   terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
-   ```
-   {: codeblock}
-
-### Create per-environment space, cluster and services
-
-This section will focus on the `development` environment. The steps will be the same for the other environments, only the values you pick for the variables will differ.
-
-1. Change to the `terraform/per-environment` folder of the checkout
-1. Copy the template `tfvars` file. There is one per environment:
-   ```sh
-   cp development.tfvars.tmpl development.tfvars
-   cp testing.tfvars.tmpl testing.tfvars
-   cp production.tfvars.tmpl production.tfvars
-   ```
-   {: codeblock}
-1. Edit `development.tfvars`
-   1. Set **environment_name** to the name of the Cloud Foundry space you want to create
-   1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
-   1. Set **cluster_datacenter** to the location where you want to create the cluster. Find the available locations with:
-      ```sh
-      ibmcloud cs locations
-      ```
-      {: codeblock}
-   1. Set the private (**cluster_private_vlan_id**) and public (**cluster_public_vlan_id**) VLANs for the cluster. Find the available VLANs for the location with:
-      ```sh
-      ibmcloud cs vlans <location>
-      ```
-      {: codeblock}
-   1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
-      ```sh
-      ibmcloud cs machine-types <location>
-      ```
-      {: codeblock}
-1. Initialize Terraform
-   ```sh
-   terraform init
-   ```
-   {: codeblock}
-1. Create a new Terraform workspace for the *development* environment
-   ```sh
-   terraform workspace new development
-   ```
-   {: codeblock}
-   Later to switch between environments use
-   ```sh
-   terraform workspace select development
-   ```
-   {: codeblock}
-1. Look at the Terraform plan
-   ```sh
-   terraform plan -var-file=../credentials.tfvars -var-file=development.tfvars
-   ```
-   {: codeblock}
-   It should report:
-   ```
-   Plan: 7 to add, 0 to change, 0 to destroy.
-   ```
-   {: codeblock}
-1. Apply the changes
-   ```sh
-   terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
-   ```
-   {: codeblock}
-
-Once Terraform completes, it will have created:
-* a Cloud Foundry space
-* a Kubernetes cluster
-* a database
-* a Kubernetes secret with the database credentials
-* a storage
-* a Kubernetes secret with the storage credentials
-* a `development.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
-* the environment specific `terraform.tfstate` under `terraform.tfstate.d/development`.
-
-You can repeat the steps for the `testing` and `production`.
-
-### Assign user policies
-
-User policies use the {{site.data.keyword.Bluemix_notm}} CLI and the `iam` command.
-
-The `iam/development` directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles. To set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you can use the script `add-developer.sh`:
+The [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles. To set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you can use the script `add-developer.sh`:
 
    ```sh
    cd iam/development
    ./add-developer.sh user@domain.com
    ```
-
-The script will create an access group for the Developer role and add the user to this group.
 
 ## Remove resources
 

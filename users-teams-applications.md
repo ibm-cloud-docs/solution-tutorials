@@ -149,7 +149,7 @@ From there, you can replicate similar steps to build the other environments.
   <img title="Using separate clusters to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments.png" style="width: 80%;" />
 </p>
 
-Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `bx` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [HashiCorp's `terraform`](https://www.terraform.io/), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
+Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [HashiCorp's `terraform`](https://www.terraform.io/), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
 
 Separate Kubernetes clusters for the environments come with good properties:
 * no matter the environment, all clusters will tend to look the same;

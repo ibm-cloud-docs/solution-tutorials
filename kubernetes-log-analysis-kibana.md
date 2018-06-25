@@ -2,7 +2,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-06-11"
+lastupdated: "2018-06-15"
 
 ---
 
@@ -224,19 +224,12 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    export MYREGISTRY=<REGISTRY>
    ```
    {: pre}
+5. Build and tag (`-t`)the docker image
 
-5. Tag the docker image that is used to create a container to run your app locally
    ```sh
-   docker images
+   docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
    {: pre}
-   ```sh
-   docker tag <DOCKER IMAGE NAME> ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
-   ```
-   {: pre}
-   Replace `<DOCKER IMAGE NAME>` with the name of the image ending with `-run`.
-   {:tip}
-
 6. Push the docker image to your container registry on IBM Cloud
    ```sh
    docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
