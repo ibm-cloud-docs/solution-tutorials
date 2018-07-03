@@ -352,7 +352,8 @@
                     "Message Hub",
                     "SQL Query",
                     "Streaming Analytics"
-                ]
+                ],
+                "hidden": true
             },
             {
               "name": "Build a data lake with Object Storage",
