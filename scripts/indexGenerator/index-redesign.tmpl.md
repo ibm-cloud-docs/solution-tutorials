@@ -24,6 +24,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     .detailContentArea {
         max-width: 100% !important;
     }
+    .allCategories {
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .categoryBox {
+        flex-grow: 1;
+        width: calc(33% - 20px);
+        text-decoration: none !important;
+        margin: 0 10px 20px 0 !important;
+        padding: 20px !important;
+        border: 1px #dfe6eb solid !important;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1) !important;
+        text-align: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
     .solutionBoxContainer {}
     .solutionBoxContainer a {
         text-decoration: none;
@@ -39,10 +56,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     }
     @media screen and (min-width: 960px) {
         .solutionBox {
-        width: calc(50% - 2%) !important;
+        width: calc(50% - 3%) !important;
         }
         .solutionBox.solutionBoxFeatured {
-        width: calc(50% - 2%) !important;
+        width: calc(50% - 3%) !important;
         }
         .solutionBoxContent {
         height: 270px !important;
@@ -57,7 +74,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         }
     }
     .solutionBox:hover {
-        border-color: #3d70b2 !important;
+        border-color: rgb(136, 151, 162) !important;
     }
     .solutionBoxContent {
         display: flex;
@@ -65,10 +82,11 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     }
     .solutionBoxTitle {
         margin: 0rem !important;
+        margin-bottom: 5px !important;
         font-size: 14px !important;
         font-weight: 700 !important;
         line-height: 16px;
-        height: 38px;
+        height: 32px;
         text-overflow: ellipsis;
         overflow: hidden;
         display: -webkit-box;
@@ -81,7 +99,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         flex-direction: column;
     }
     .descriptionContainer {
-        flex-grow: 1 !important;
     }
     .descriptionContainer p {
         margin: 0;
@@ -96,15 +113,20 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         max-height: 70px;
     }
     .architectureDiagramContainer {
+        flex-grow: 1;
         min-width: 250px !important;
         padding: 0 10px !important;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     .architectureDiagram {
-        max-height: 125px !important;
+        max-height: 175px !important;
         padding: 5px !important;
     }
     .tagsContainer {
+        display: none;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -124,6 +146,15 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     }
 -->
 </style>
+
+<!-- <div class="allCategories">
+{{#each categories}}
+{{#unless hidden}}
+    <a class="categoryBox" href="#{{anchor}}">{{name}}</a>
+{{/unless}}
+{{/each}}
+</div> -->
+
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
     {{#each featured}}
@@ -131,22 +162,22 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <a href = "{{url}}">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
-        <h3 id="{{url}}" class="solutionBoxTitle">
-            {{name}}
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>{{description}}</p>
+            <h3 id="{{url}}" class="solutionBoxTitle">
+                {{name}}
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>{{description}}</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "{{imgSrc}}" />
+                </div>
             </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "{{imgSrc}}" />
+            <div class="tagsContainer">
+                {{#each tags}}
+                    <span class="tag-filter category">{{this}}</span>
+                {{/each}}
             </div>
-        </div>
-        <div class="tagsContainer">
-            {{#each tags}}
-                <span class="tag-filter category">{{this}}</span>
-            {{/each}}
-        </div>
         </div>
     </div>
     </a>
@@ -165,22 +196,22 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <a href = "{{url}}">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
-        <h3 id="{{url}}" class="solutionBoxTitle">
-            {{name}}
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>{{description}}</p>
+            <h3 id="{{url}}" class="solutionBoxTitle">
+                {{name}}
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>{{description}}</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "{{imgSrc}}" />
+                </div>
             </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "{{imgSrc}}" />
+            <div class="tagsContainer">
+                {{#each tags}}
+                    <span class="tag-filter category">{{this}}</span>
+                {{/each}}
             </div>
-        </div>
-        <div class="tagsContainer">
-            {{#each tags}}
-                <span class="tag-filter category">{{this}}</span>
-            {{/each}}
-        </div>
         </div>
     </div>
     </a>
