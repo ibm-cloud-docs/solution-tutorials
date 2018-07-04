@@ -37,7 +37,8 @@
                     "Kubernetes",
                     "Container Registry",
                     "Cloud Internet Services"
-                ]
+                ],
+                "featuredPosition": 1
             },
             {
                 "name": "Analyze logs and monitor the health of Kubernetes applications",
@@ -174,7 +175,8 @@
                     "Cloud Foundry",
                     "Python",
                     "Db2 Warehouse"
-                ]
+                ],
+                "featuredPosition": 2
             },
             {
                 "name": "Serverless web application and API",

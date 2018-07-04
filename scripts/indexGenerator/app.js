@@ -7,24 +7,30 @@ Handlebars.registerHelper('replace', function( find, replace, options) {
   return string.replace( find, replace );
 });
 
-console.log('Writing index.md');
+const categories = require('./input.json');
+const featured = categories
+  .reduce((previousValue, currentValue) => {
+    return previousValue.concat(currentValue.solutions);
+  }, [])
+  .filter((solution) => solution.featuredPosition)
+  .sort((sol1, sol2) => sol1.featuredPosition - sol2.featuredPosition);
 
-const indexTemplateSource = fs.readFileSync('./index.tmpl.md');
-const indexTemplate = Handlebars.compile(`${indexTemplateSource}`);
 
-fs.writeFileSync('../../index.md', indexTemplate({
-  categories: require('./input.json'),
-  date: moment().format('YYYY-MM-DD'),
-}));
+function writeFile(templateFile, dest) {
+  console.log(`Writing ${dest}`);
 
-console.log('Writing toc');
+  const indexTemplateSource = fs.readFileSync(templateFile);
+  const indexTemplate = Handlebars.compile(`${indexTemplateSource}`);
 
-const tocTemplateSource = fs.readFileSync('./toc.tmpl.md');
-const tocTemplate = Handlebars.compile(`${tocTemplateSource}`);
+  fs.writeFileSync(dest, indexTemplate({
+    date: moment().format('YYYY-MM-DD'),
+    categories,
+    featured,
+  }));
+}
 
-fs.writeFileSync('../../toc', tocTemplate({
-  categories: require('./input.json'),
-  date: moment().format('YYYY-MM-DD'),
-}));
+writeFile('./index.tmpl.md', '../../index.md');
+writeFile('./index-redesign.tmpl.md', '../../index-redesign.md');
+writeFile('./toc.tmpl.md', '../../toc');
 
 console.log('Done!');
