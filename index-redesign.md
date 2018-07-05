@@ -154,7 +154,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <a class="categoryBox" href="#iot">Internet of Things</a>
     <a class="categoryBox" href="#chatbots">Chatbots</a>
     <a class="categoryBox" href="#iam">Identity and Access Management</a>
-    <a class="categoryBox" href="#ml">Machine Learning &amp; Analytics</a>
+    <a class="categoryBox" href="#ml">Machine Learning and Analytics</a>
 </div> -->
 
 ## Featured Tutorials
@@ -819,7 +819,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </a>
 </div>
 
-## Machine Learning &amp; Analytics
+## Machine Learning and Analytics
 {: #ml }
 
 <div class = "solutionBoxContainer">

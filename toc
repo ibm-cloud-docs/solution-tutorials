@@ -49,7 +49,7 @@ Solution Tutorials
         users-teams-applications.md
 
     {: .topicgroup}
-    Machine Learning &amp; Analytics
+    Machine Learning and Analytics
         smart-data-lake.md
         serverless-github-traffic-analytics.md
         create-deploy-retrain-machine-learning-model.md
