@@ -58,17 +58,6 @@ Solution Tutorials
     
     {: .navgroup id="howto"}
     {: .topicgroup}
-    Kubernetes
-        scalable-webapp-kubernetes.md
-        multi-region-k8s-cis.md
-        kubernetes-log-analysis-kibana.md
-        vm-to-containers-and-kubernetes.md
-        continuous-deployment-to-kubernetes.md
-        pub-sub-object-storage.md
-        plan-create-update-deployments.md
-        users-teams-applications.md
-
-    {: .topicgroup}
     Cloud Foundry
         multi-region-webapp.md
         static-files-cdn.md
@@ -87,13 +76,15 @@ Solution Tutorials
         slack-chatbot-database-watson.md
 
     {: .topicgroup}
-    Cloud Object Storage
-        static-files-cdn.md
+    Kubernetes
+        scalable-webapp-kubernetes.md
+        multi-region-k8s-cis.md
+        kubernetes-log-analysis-kibana.md
+        vm-to-containers-and-kubernetes.md
+        continuous-deployment-to-kubernetes.md
         pub-sub-object-storage.md
-        gather-visualize-analyze-iot-data.md
-        smart-data-lake.md
-        create-deploy-retrain-machine-learning-model.md
-        big-data-analytics-spark.md
+        plan-create-update-deployments.md
+        users-teams-applications.md
 
     {: .topicgroup}
     Virtual Servers
