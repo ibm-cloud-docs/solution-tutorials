@@ -11,11 +11,14 @@ Solution Tutorials
     {: .navgroup id="howto"}
 {{#each categories}}
 {{#unless hidden}}
-  {{#each solutions}}
-  {{#unless hidden}}
-    {{#replace ".html" ".md"}}{{url}}{{/replace}}
-  {{/unless}}
-  {{/each}}
+    {: .topicgroup}
+    {{name}}
+    {{#each solutions}}
+    {{#unless hidden}}
+        {{#replace ".html" ".md"}}{{url}}{{/replace}}
+    {{/unless}}
+    {{/each}}
+
 {{/unless}}
 {{/each}}
     {: .navgroup-end}

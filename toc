@@ -9,33 +9,51 @@ Solution Tutorials
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
-    multi-region-webapp.md
-    scalable-webapp-kubernetes.md
-    multi-region-k8s-cis.md
-    kubernetes-log-analysis-kibana.md
-    vm-to-containers-and-kubernetes.md
-    continuous-deployment-to-kubernetes.md
-    static-files-cdn.md
-    pub-sub-object-storage.md
-    lamp-stack.md
-    infrastructure-as-code-terraform.md
-    plan-create-update-deployments.md
-    highly-available-and-scalable-web-application.md
-    mean-stack.md
-    sql-database.md
-    serverless-api-webapp.md
-    application-log-analysis.md
-    create-manage-secure-apis.md
-    ios-mobile-push-analytics.md
-    android-mobile-push-analytics.md
-    hybrid-mobile-push-analytics.md
-    serverless-mobile-backend.md
-    gather-visualize-analyze-iot-data.md
-    slack-chatbot-database-watson.md
-    android-watson-chatbot.md
-    users-teams-applications.md
-    smart-data-lake.md
-    serverless-github-traffic-analytics.md
-    create-deploy-retrain-machine-learning-model.md
-    big-data-analytics-spark.md
+    {: .topicgroup}
+    Websites and Web Apps
+        multi-region-webapp.md
+        scalable-webapp-kubernetes.md
+        multi-region-k8s-cis.md
+        kubernetes-log-analysis-kibana.md
+        vm-to-containers-and-kubernetes.md
+        continuous-deployment-to-kubernetes.md
+        static-files-cdn.md
+        pub-sub-object-storage.md
+        lamp-stack.md
+        infrastructure-as-code-terraform.md
+        plan-create-update-deployments.md
+        highly-available-and-scalable-web-application.md
+        mean-stack.md
+        sql-database.md
+        serverless-api-webapp.md
+        application-log-analysis.md
+        create-manage-secure-apis.md
+
+    {: .topicgroup}
+    Mobile
+        ios-mobile-push-analytics.md
+        android-mobile-push-analytics.md
+        hybrid-mobile-push-analytics.md
+        serverless-mobile-backend.md
+
+    {: .topicgroup}
+    Internet of Things
+        gather-visualize-analyze-iot-data.md
+
+    {: .topicgroup}
+    Chatbots
+        slack-chatbot-database-watson.md
+        android-watson-chatbot.md
+
+    {: .topicgroup}
+    Identity and Access Management
+        users-teams-applications.md
+
+    {: .topicgroup}
+    Machine Learning &amp; Analytics
+        smart-data-lake.md
+        serverless-github-traffic-analytics.md
+        create-deploy-retrain-machine-learning-model.md
+        big-data-analytics-spark.md
+
     {: .navgroup-end}

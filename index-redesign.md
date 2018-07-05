@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-04"
+lastupdated: "2018-07-05"
 
 ---
 
@@ -26,33 +26,33 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     }
     .allCategories {
         display: flex !important;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
     }
     .categoryBox {
-        flex-grow: 1;
-        width: calc(33% - 20px);
+        flex-grow: 1 !important;
+        width: calc(33% - 20px) !important;
         text-decoration: none !important;
         margin: 0 10px 20px 0 !important;
         padding: 20px !important;
         border: 1px #dfe6eb solid !important;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1) !important;
-        text-align: center;
-        text-overflow: ellipsis;
-        overflow: hidden;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important;
+        text-align: center !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
     }
     .solutionBoxContainer {}
     .solutionBoxContainer a {
-        text-decoration: none;
+        text-decoration: none !important;
         border: none !important;
     }
     .solutionBox {
-        display: inline-block;
+        display: inline-block !important;
         width: 100% !important;
         margin: 0 10px 20px 0 !important;
         padding: 10px !important;
         border: 1px #dfe6eb solid !important;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important;
     }
     @media screen and (min-width: 960px) {
         .solutionBox {
@@ -77,60 +77,61 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         border-color: rgb(136, 151, 162) !important;
     }
     .solutionBoxContent {
-        display: flex;
-        flex-direction: column;
+        display: flex !important;
+        flex-direction: column !important;
     }
     .solutionBoxTitle {
         margin: 0rem !important;
         margin-bottom: 5px !important;
         font-size: 14px !important;
         font-weight: 700 !important;
-        line-height: 16px;
-        height: 32px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+        line-height: 16px !important;
+        height: 37px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
     }
     .solutionBoxDescription {
-        flex-grow: 1;
+        flex-grow: 1 !important;
         display: flex !important;
-        flex-direction: column;
+        flex-direction: column !important;
     }
     .descriptionContainer {
     }
     .descriptionContainer p {
-        margin: 0;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
+        margin: 0 !important;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 4 !important;
+        -webkit-box-orient: vertical !important;
         font-size: 12px !important;
         font-weight: 400 !important;
-        line-height: 1.5;
-        letter-spacing: 0;
-        max-height: 70px;
+        line-height: 1.5 !important;
+        letter-spacing: 0 !important;
+        max-height: 70px !important;
     }
     .architectureDiagramContainer {
-        flex-grow: 1;
+        flex-grow: 1 !important;
         min-width: 250px !important;
         padding: 0 10px !important;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
     }
     .architectureDiagram {
         max-height: 175px !important;
         padding: 5px !important;
+        margin: 0 auto !important;
     }
     .tagsContainer {
-        display: none;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        padding-top: 10px;
+        display: none !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
+        padding-top: 10px !important;
     }
     .tag-filter.category {
         background: #e5ebf5 !important;
@@ -188,7 +189,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Deploy a web app to make use of that data and show how to access the cloud database.</p>
+                    <p>Provision a SQL relational database service, create a table, and load a large data set into the database. Deploy a web app to make use of that data and show how to access the cloud database.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution5/Architecture.png" />
@@ -334,7 +335,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Set up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}. Set up source control, then build, test and deploy the code to different deployment stages. Add integrations to other services like security scanners, Slack notifications, and analytics.</p>
+                    <p>Set up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}. Add integrations to other services like security scanners, Slack notifications, and analytics.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution21/Architecture.png" />
@@ -407,7 +408,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP (the LAMP stack). Then install and configure the WordPress open source application on the LAMP stack.</p>
+                    <p>Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution4/Architecture.png" />
@@ -430,7 +431,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Use a terraform configuration to provision a Linux virtual server, with Apache web server, MySQL, and PHP server (LAMP stack) and the IBM Cloud Object Storage service. Update the configuration to scale the resources and tune the environment.</p>
+                    <p>Use Terraform to provision a Linux virtual server, with Apache web server, MySQL, PHP and the IBM Cloud Object Storage service. Update the configuration to scale the resources and tune the environment.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution10/architecture-2.png" />
@@ -499,7 +500,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Build a web application using the popular MEAN (Mongo DB, Express, Angular, Node.js) stack. Run the app locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and monitor the application.</p>
+                    <p>Build a web application using the popular MEAN stack - Mongo DB, Express, Angular, Node.js. Run the app locally, create and use a database-as-a-service, deploy the app and monitor the application.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution7/Architecture.png" />
@@ -521,7 +522,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Provision a SQL (relational) database service, create a table, and load a large data set (city information) into the database. Deploy a web app to make use of that data and show how to access the cloud database.</p>
+                    <p>Provision a SQL relational database service, create a table, and load a large data set into the database. Deploy a web app to make use of that data and show how to access the cloud database.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution5/Architecture.png" />
@@ -565,7 +566,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Use IBM Cloud Log Analysis to understand and diagnose activities of an app deployed in the IBM Cloud. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana. Understand and diagnose application problems.</p>
+                    <p>Use IBM Cloud Log Analysis to understand and diagnose application activities. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution12/Architecture.png" />
@@ -588,7 +589,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to your API using the API Connect service on IBM Cloud.</p>
+                    <p>Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution13/Architecture.png" />
@@ -745,7 +746,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Build a database-driven Slackbot with IBM Watson Assistant. The Conversation connector, Cloudant and IBM Cloud Functions are used for a serverless integration of the Conversation service with Slack. IBM Cloud Functions are also utilized for server actions within a dialog to reach out to Db2.</p>
+                    <p>Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" />
@@ -770,7 +771,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Define intents, entities and build a dialog flow for your chatbot to respond to customer&#x27;s queries. Enable speech to text and text to speech services for easy interaction with the Android app.</p>
+                    <p>Define intents, entities and build a dialog flow for the chatbot to respond to customer&#x27;s queries. Enable speech to text and text to speech services for easy interaction with the Android app.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" />
@@ -830,7 +831,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Provide tools to data scientists to query data where it lies using SQL Query and conduct analysis in Watson Studio. Then share data and insights across your organization through interactive charts using {{site.data.keyword.dynamdashbemb_short}}.</p>
+                    <p>Provide tools to data scientists to query data using SQL Query and conduct analysis in Watson Studio. Share data and insights through interactive charts using {{site.data.keyword.dynamdashbemb_short}}.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution29/architecture.png" />

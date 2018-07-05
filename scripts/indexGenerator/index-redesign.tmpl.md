@@ -26,33 +26,33 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     }
     .allCategories {
         display: flex !important;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
     }
     .categoryBox {
-        flex-grow: 1;
-        width: calc(33% - 20px);
+        flex-grow: 1 !important;
+        width: calc(33% - 20px) !important;
         text-decoration: none !important;
         margin: 0 10px 20px 0 !important;
         padding: 20px !important;
         border: 1px #dfe6eb solid !important;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1) !important;
-        text-align: center;
-        text-overflow: ellipsis;
-        overflow: hidden;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important;
+        text-align: center !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
     }
     .solutionBoxContainer {}
     .solutionBoxContainer a {
-        text-decoration: none;
+        text-decoration: none !important;
         border: none !important;
     }
     .solutionBox {
-        display: inline-block;
+        display: inline-block !important;
         width: 100% !important;
         margin: 0 10px 20px 0 !important;
         padding: 10px !important;
         border: 1px #dfe6eb solid !important;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important;
     }
     @media screen and (min-width: 960px) {
         .solutionBox {
@@ -77,60 +77,61 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         border-color: rgb(136, 151, 162) !important;
     }
     .solutionBoxContent {
-        display: flex;
-        flex-direction: column;
+        display: flex !important;
+        flex-direction: column !important;
     }
     .solutionBoxTitle {
         margin: 0rem !important;
         margin-bottom: 5px !important;
         font-size: 14px !important;
         font-weight: 700 !important;
-        line-height: 16px;
-        height: 32px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+        line-height: 16px !important;
+        height: 37px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
     }
     .solutionBoxDescription {
-        flex-grow: 1;
+        flex-grow: 1 !important;
         display: flex !important;
-        flex-direction: column;
+        flex-direction: column !important;
     }
     .descriptionContainer {
     }
     .descriptionContainer p {
-        margin: 0;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
+        margin: 0 !important;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 4 !important;
+        -webkit-box-orient: vertical !important;
         font-size: 12px !important;
         font-weight: 400 !important;
-        line-height: 1.5;
-        letter-spacing: 0;
-        max-height: 70px;
+        line-height: 1.5 !important;
+        letter-spacing: 0 !important;
+        max-height: 70px !important;
     }
     .architectureDiagramContainer {
-        flex-grow: 1;
+        flex-grow: 1 !important;
         min-width: 250px !important;
         padding: 0 10px !important;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
     }
     .architectureDiagram {
         max-height: 175px !important;
         padding: 5px !important;
+        margin: 0 auto !important;
     }
     .tagsContainer {
-        display: none;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        padding-top: 10px;
+        display: none !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
+        padding-top: 10px !important;
     }
     .tag-filter.category {
         background: #e5ebf5 !important;
