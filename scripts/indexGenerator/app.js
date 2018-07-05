@@ -7,14 +7,24 @@ Handlebars.registerHelper('replace', function( find, replace, options) {
   return string.replace( find, replace );
 });
 
-const categories = require('./input.json');
-const featured = categories
-  .reduce((previousValue, currentValue) => {
-    return previousValue.concat(currentValue.solutions);
-  }, [])
+Handlebars.registerHelper('hasTag', function( solution, tag, options) {
+  const string = options.fn(this);
+  return (solution.tags.indexOf(tag) >= 0) ? string : null;
+});
+
+const input = require('./input.json');
+const categories = input.categories;
+const solutions = categories.reduce((previousValue, currentValue) => {
+  return previousValue.concat(currentValue.solutions);
+}, []);
+const featured = solutions
   .filter((solution) => solution.featuredPosition)
   .sort((sol1, sol2) => sol1.featuredPosition - sol2.featuredPosition);
 
+// const tagsSet = new Set();
+// solutions.forEach((solution) => solution.tags.forEach((tag) => tagsSet.add(tag)));
+// const tags = Array.from(tagsSet).sort();
+// console.log(tags);
 
 function writeFile(templateFile, dest) {
   console.log(`Writing ${dest}`);
@@ -26,6 +36,7 @@ function writeFile(templateFile, dest) {
     date: moment().format('YYYY-MM-DD'),
     categories,
     featured,
+    tags: input.tags,
   }));
 }
 

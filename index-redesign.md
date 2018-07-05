@@ -8,7 +8,7 @@ lastupdated: "2018-07-05"
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 
-# Solution tutorials
+# Solution tutorials (NEW DESIGN)
 {: #tutorials}
 
 Learn how to build, deploy and scale real-world solutions on IBM Cloud. These guides provide step-by-step instructions on how to use IBM Cloud to implement common patterns based on best practices and proven technologies.
@@ -757,7 +757,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">IBM Watson Assistant</span>
                     <span class="tag-filter category">Cloudant NoSQL DB</span>
                     <span class="tag-filter category">Db2 Warehouse</span>
-                    <span class="tag-filter category">IBM Cloud Functions</span>
+                    <span class="tag-filter category">Cloud Functions</span>
                     <span class="tag-filter category">Slack</span>
             </div>
         </div>

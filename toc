@@ -6,9 +6,8 @@ Solution Tutorials
 
     {: .navgroup id="learn"}
     index.md
-    {: .navgroup-end}
-    
-    {: .navgroup id="howto"}
+    index-redesign.md
+
     {: .topicgroup}
     Websites and Web Apps
         multi-region-webapp.md
@@ -55,5 +54,51 @@ Solution Tutorials
         serverless-github-traffic-analytics.md
         create-deploy-retrain-machine-learning-model.md
         big-data-analytics-spark.md
+    {: .navgroup-end}
+    
+    {: .navgroup id="howto"}
+    {: .topicgroup}
+    Kubernetes
+        scalable-webapp-kubernetes.md
+        multi-region-k8s-cis.md
+        kubernetes-log-analysis-kibana.md
+        vm-to-containers-and-kubernetes.md
+        continuous-deployment-to-kubernetes.md
+        pub-sub-object-storage.md
+        plan-create-update-deployments.md
+        users-teams-applications.md
+
+    {: .topicgroup}
+    Cloud Foundry
+        multi-region-webapp.md
+        static-files-cdn.md
+        plan-create-update-deployments.md
+        mean-stack.md
+        sql-database.md
+        application-log-analysis.md
+        create-manage-secure-apis.md
+        gather-visualize-analyze-iot-data.md
+        slack-chatbot-database-watson.md
+
+    {: .topicgroup}
+    Cloud Functions
+        serverless-api-webapp.md
+        serverless-mobile-backend.md
+        slack-chatbot-database-watson.md
+
+    {: .topicgroup}
+    Cloud Object Storage
+        static-files-cdn.md
+        pub-sub-object-storage.md
+        gather-visualize-analyze-iot-data.md
+        smart-data-lake.md
+        create-deploy-retrain-machine-learning-model.md
+        big-data-analytics-spark.md
+
+    {: .topicgroup}
+    Virtual Servers
+        lamp-stack.md
+        infrastructure-as-code-terraform.md
+        highly-available-and-scalable-web-application.md
 
     {: .navgroup-end}
