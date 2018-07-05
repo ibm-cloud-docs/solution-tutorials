@@ -14,14 +14,20 @@ lastupdated: "2018-07-05"
 Learn how to build, deploy and scale real-world solutions on IBM Cloud. These guides provide step-by-step instructions on how to use IBM Cloud to implement common patterns based on best practices and proven technologies.
 <style>
 <!--
-    .doesNotExist, #doc-content, #single-content {
+    #tutorials { /* hide the page header */
+        display: none !important
+    }
+    p.last-updated { /* hide the last updated */
+        display: none !important;
+    }
+    .doesNotExist, #doc-content, #single-content { /* use full width */
         width: calc(100% - 8%) !important;
         max-width: calc(100% - 8%) !important;
     }
-    aside.side-nav, #topic-toc-wrapper {
+    aside.side-nav, #topic-toc-wrapper { /* no need for side-nav */
         display: none !important;
     }
-    .detailContentArea {
+    .detailContentArea { /* use full width */
         max-width: 100% !important;
     }
     .allCategories {
@@ -150,11 +156,11 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 <!-- <div class="allCategories">
     <a class="categoryBox" href="#websites">Websites and Web Apps</a>
-    <a class="categoryBox" href="#mobile">Mobile</a>
-    <a class="categoryBox" href="#iot">Internet of Things</a>
     <a class="categoryBox" href="#chatbots">Chatbots</a>
-    <a class="categoryBox" href="#iam">Identity and Access Management</a>
+    <a class="categoryBox" href="#mobile">Mobile</a>
     <a class="categoryBox" href="#ml">Machine Learning and Analytics</a>
+    <a class="categoryBox" href="#iot">Internet of Things</a>
+    <a class="categoryBox" href="#iam">Identity and Access Management</a>
 </div> -->
 
 ## Featured Tutorials
@@ -605,6 +611,61 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </a>
 </div>
 
+## Chatbots
+{: #chatbots }
+
+<div class = "solutionBoxContainer">
+    <a href = "slack-chatbot-database-watson.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 id="slack-chatbot-database-watson.html" class="solutionBoxTitle">
+                Build a database-driven Slackbot
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" />
+                </div>
+            </div>
+            <div class="tagsContainer">
+                    <span class="tag-filter category">Cloud Foundry</span>
+                    <span class="tag-filter category">IBM Watson Assistant</span>
+                    <span class="tag-filter category">Cloudant NoSQL DB</span>
+                    <span class="tag-filter category">Db2 Warehouse</span>
+                    <span class="tag-filter category">Cloud Functions</span>
+                    <span class="tag-filter category">Slack</span>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "android-watson-chatbot.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 id="android-watson-chatbot.html" class="solutionBoxTitle">
+                Build a voice-enabled Android chatbot
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Define intents, entities and build a dialog flow for the chatbot to respond to customer&#x27;s queries. Enable speech to text and text to speech services for easy interaction with the Android app.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" />
+                </div>
+            </div>
+            <div class="tagsContainer">
+                    <span class="tag-filter category">IBM Watson Assistant</span>
+                    <span class="tag-filter category">Speech to Text</span>
+                    <span class="tag-filter category">Text to Speech</span>
+                    <span class="tag-filter category">Mobile Analytics</span>
+                    <span class="tag-filter category">Android</span>
+            </div>
+        </div>
+    </div>
+    </a>
+</div>
+
 ## Mobile
 {: #mobile }
 
@@ -697,122 +758,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Cloudant NoSQL DB</span>
                     <span class="tag-filter category">Watson Tone Analyzer</span>
                     <span class="tag-filter category">Push Notifications</span>
-            </div>
-        </div>
-    </div>
-    </a>
-</div>
-
-## Internet of Things
-{: #iot }
-
-<div class = "solutionBoxContainer">
-    <a href = "gather-visualize-analyze-iot-data.html">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 id="gather-visualize-analyze-iot-data.html" class="solutionBoxTitle">
-                Gather, visualize and analyze IoT data
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Set up an IoT device, gather large amounts of data in the Watson IoT Platform, analyze data with machine learning and create visualizations.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution16/Architecture.png" />
-                </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Internet of Things Platform</span>
-                    <span class="tag-filter category">Cloudant</span>
-                    <span class="tag-filter category">Watson Studio</span>
-                    <span class="tag-filter category">Apache Spark</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
-            </div>
-        </div>
-    </div>
-    </a>
-</div>
-
-## Chatbots
-{: #chatbots }
-
-<div class = "solutionBoxContainer">
-    <a href = "slack-chatbot-database-watson.html">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 id="slack-chatbot-database-watson.html" class="solutionBoxTitle">
-                Build a database-driven Slackbot
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" />
-                </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">IBM Watson Assistant</span>
-                    <span class="tag-filter category">Cloudant NoSQL DB</span>
-                    <span class="tag-filter category">Db2 Warehouse</span>
-                    <span class="tag-filter category">Cloud Functions</span>
-                    <span class="tag-filter category">Slack</span>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "android-watson-chatbot.html">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 id="android-watson-chatbot.html" class="solutionBoxTitle">
-                Build a voice-enabled Android chatbot
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Define intents, entities and build a dialog flow for the chatbot to respond to customer&#x27;s queries. Enable speech to text and text to speech services for easy interaction with the Android app.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" />
-                </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">IBM Watson Assistant</span>
-                    <span class="tag-filter category">Speech to Text</span>
-                    <span class="tag-filter category">Text to Speech</span>
-                    <span class="tag-filter category">Mobile Analytics</span>
-                    <span class="tag-filter category">Android</span>
-            </div>
-        </div>
-    </div>
-    </a>
-</div>
-
-## Identity and Access Management
-{: #iam }
-
-<div class = "solutionBoxContainer">
-    <a href = "users-teams-applications.html">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 id="users-teams-applications.html" class="solutionBoxTitle">
-                Best practices for organizing users, teams, applications
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>An overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution20-users-teams-applications/architecture.png" />
-                </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Identity and Access Management</span>
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Container Registry</span>
-                    <span class="tag-filter category">DevOps</span>
             </div>
         </div>
     </div>
@@ -912,6 +857,67 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <span class="tag-filter category">Apache Spark</span>
                     <span class="tag-filter category">Watson Studio</span>
                     <span class="tag-filter category">Cloud Object Storage</span>
+            </div>
+        </div>
+    </div>
+    </a>
+</div>
+
+## Internet of Things
+{: #iot }
+
+<div class = "solutionBoxContainer">
+    <a href = "gather-visualize-analyze-iot-data.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 id="gather-visualize-analyze-iot-data.html" class="solutionBoxTitle">
+                Gather, visualize and analyze IoT data
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Set up an IoT device, gather large amounts of data in the Watson IoT Platform, analyze data with machine learning and create visualizations.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution16/Architecture.png" />
+                </div>
+            </div>
+            <div class="tagsContainer">
+                    <span class="tag-filter category">Cloud Foundry</span>
+                    <span class="tag-filter category">Internet of Things Platform</span>
+                    <span class="tag-filter category">Cloudant</span>
+                    <span class="tag-filter category">Watson Studio</span>
+                    <span class="tag-filter category">Apache Spark</span>
+                    <span class="tag-filter category">Cloud Object Storage</span>
+            </div>
+        </div>
+    </div>
+    </a>
+</div>
+
+## Identity and Access Management
+{: #iam }
+
+<div class = "solutionBoxContainer">
+    <a href = "users-teams-applications.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 id="users-teams-applications.html" class="solutionBoxTitle">
+                Best practices for organizing users, teams, applications
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>An overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution20-users-teams-applications/architecture.png" />
+                </div>
+            </div>
+            <div class="tagsContainer">
+                    <span class="tag-filter category">Identity and Access Management</span>
+                    <span class="tag-filter category">Kubernetes</span>
+                    <span class="tag-filter category">Container Service</span>
+                    <span class="tag-filter category">Container Registry</span>
+                    <span class="tag-filter category">DevOps</span>
             </div>
         </div>
     </div>

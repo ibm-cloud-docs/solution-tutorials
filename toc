@@ -29,6 +29,11 @@ Solution Tutorials
         create-manage-secure-apis.md
 
     {: .topicgroup}
+    Chatbots
+        slack-chatbot-database-watson.md
+        android-watson-chatbot.md
+
+    {: .topicgroup}
     Mobile
         ios-mobile-push-analytics.md
         android-mobile-push-analytics.md
@@ -36,24 +41,19 @@ Solution Tutorials
         serverless-mobile-backend.md
 
     {: .topicgroup}
-    Internet of Things
-        gather-visualize-analyze-iot-data.md
-
-    {: .topicgroup}
-    Chatbots
-        slack-chatbot-database-watson.md
-        android-watson-chatbot.md
-
-    {: .topicgroup}
-    Identity and Access Management
-        users-teams-applications.md
-
-    {: .topicgroup}
     Machine Learning and Analytics
         smart-data-lake.md
         serverless-github-traffic-analytics.md
         create-deploy-retrain-machine-learning-model.md
         big-data-analytics-spark.md
+
+    {: .topicgroup}
+    Internet of Things
+        gather-visualize-analyze-iot-data.md
+
+    {: .topicgroup}
+    Identity and Access Management
+        users-teams-applications.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
@@ -66,14 +66,14 @@ Solution Tutorials
         sql-database.md
         application-log-analysis.md
         create-manage-secure-apis.md
-        gather-visualize-analyze-iot-data.md
         slack-chatbot-database-watson.md
+        gather-visualize-analyze-iot-data.md
 
     {: .topicgroup}
     Cloud Functions
         serverless-api-webapp.md
-        serverless-mobile-backend.md
         slack-chatbot-database-watson.md
+        serverless-mobile-backend.md
 
     {: .topicgroup}
     Kubernetes

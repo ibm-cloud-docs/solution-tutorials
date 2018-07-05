@@ -14,14 +14,20 @@ lastupdated: "{{date}}"
 Learn how to build, deploy and scale real-world solutions on IBM Cloud. These guides provide step-by-step instructions on how to use IBM Cloud to implement common patterns based on best practices and proven technologies.
 <style>
 <!--
-    .doesNotExist, #doc-content, #single-content {
+    #tutorials { /* hide the page header */
+        display: none !important
+    }
+    p.last-updated { /* hide the last updated */
+        display: none !important;
+    }
+    .doesNotExist, #doc-content, #single-content { /* use full width */
         width: calc(100% - 8%) !important;
         max-width: calc(100% - 8%) !important;
     }
-    aside.side-nav, #topic-toc-wrapper {
+    aside.side-nav, #topic-toc-wrapper { /* no need for side-nav */
         display: none !important;
     }
-    .detailContentArea {
+    .detailContentArea { /* use full width */
         max-width: 100% !important;
     }
     .allCategories {
