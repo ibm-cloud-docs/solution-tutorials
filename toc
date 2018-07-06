@@ -74,6 +74,7 @@ Solution Tutorials
         serverless-api-webapp.md
         slack-chatbot-database-watson.md
         serverless-mobile-backend.md
+        serverless-github-traffic-analytics.md
 
     {: .topicgroup}
     Kubernetes

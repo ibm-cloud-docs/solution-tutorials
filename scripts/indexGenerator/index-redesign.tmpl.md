@@ -132,35 +132,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         padding: 5px !important;
         margin: 0 auto !important;
     }
-    .tagsContainer {
-        display: none !important;
-        overflow: hidden !important;
-        white-space: nowrap !important;
-        text-overflow: ellipsis !important;
-        padding-top: 10px !important;
-    }
-    .tag-filter.category {
-        background: #e5ebf5 !important;
-        color: #15232c !important;
-    }
-    .tag-filter {
-        padding: 3px 12px !important;
-        font-size: 12px !important;
-        margin-right: 1px !important;
-        border-radius: 10px !important;
-        white-space: nowrap !important;
-        line-height: 1.8rem !important;
-    }
 -->
 </style>
-
-<!-- <div class="allCategories">
-{{#each categories}}
-{{#unless hidden}}
-    <a class="categoryBox" href="#{{anchor}}">{{name}}</a>
-{{/unless}}
-{{/each}}
-</div> -->
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
@@ -179,11 +152,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "{{imgSrc}}" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                {{#each tags}}
-                    <span class="tag-filter category">{{this}}</span>
-                {{/each}}
             </div>
         </div>
     </div>
@@ -213,11 +181,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "{{imgSrc}}" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                {{#each tags}}
-                    <span class="tag-filter category">{{this}}</span>
-                {{/each}}
             </div>
         </div>
     </div>

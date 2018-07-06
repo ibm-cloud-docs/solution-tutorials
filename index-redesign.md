@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-05"
+lastupdated: "2018-07-06"
 
 ---
 
@@ -132,36 +132,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         padding: 5px !important;
         margin: 0 auto !important;
     }
-    .tagsContainer {
-        display: none !important;
-        overflow: hidden !important;
-        white-space: nowrap !important;
-        text-overflow: ellipsis !important;
-        padding-top: 10px !important;
-    }
-    .tag-filter.category {
-        background: #e5ebf5 !important;
-        color: #15232c !important;
-    }
-    .tag-filter {
-        padding: 3px 12px !important;
-        font-size: 12px !important;
-        margin-right: 1px !important;
-        border-radius: 10px !important;
-        white-space: nowrap !important;
-        line-height: 1.8rem !important;
-    }
 -->
 </style>
-
-<!-- <div class="allCategories">
-    <a class="categoryBox" href="#websites">Websites and Web Apps</a>
-    <a class="categoryBox" href="#chatbots">Chatbots</a>
-    <a class="categoryBox" href="#mobile">Mobile</a>
-    <a class="categoryBox" href="#ml">Machine Learning and Analytics</a>
-    <a class="categoryBox" href="#iot">Internet of Things</a>
-    <a class="categoryBox" href="#iam">Identity and Access Management</a>
-</div> -->
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
@@ -179,11 +151,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Registry</span>
-                    <span class="tag-filter category">Cloud Internet Services</span>
-            </div>
         </div>
     </div>
     </a>
@@ -200,11 +167,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution5/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Python</span>
-                    <span class="tag-filter category">Db2 Warehouse</span>
             </div>
         </div>
     </div>
@@ -229,12 +191,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution1/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Continuous Delivery</span>
-                    <span class="tag-filter category">Cloud Internet Services</span>
-            </div>
         </div>
     </div>
     </a>
@@ -251,13 +207,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution2/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Docker</span>
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Container Registry</span>
-                    <span class="tag-filter category">Java</span>
             </div>
         </div>
     </div>
@@ -276,11 +225,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Registry</span>
-                    <span class="tag-filter category">Cloud Internet Services</span>
-            </div>
         </div>
     </div>
     </a>
@@ -297,14 +241,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution17/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Docker</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Log Analysis</span>
-                    <span class="tag-filter category">Monitoring</span>
             </div>
         </div>
     </div>
@@ -323,13 +259,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution30/modern_architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">File Storage</span>
-                    <span class="tag-filter category">MySQL</span>
-                    <span class="tag-filter category">Java</span>
-            </div>
         </div>
     </div>
     </a>
@@ -346,15 +275,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution21/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Docker</span>
-                    <span class="tag-filter category">Slack</span>
-                    <span class="tag-filter category">DevOps</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Vulnerability Advisor</span>
             </div>
         </div>
     </div>
@@ -373,12 +293,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution3/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Content Delivery Network</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
-            </div>
         </div>
     </div>
     </a>
@@ -395,13 +309,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution25/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Java</span>
-                    <span class="tag-filter category">Message hub</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
             </div>
         </div>
     </div>
@@ -420,12 +327,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution4/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Virtual Servers</span>
-                    <span class="tag-filter category">PHP</span>
-                    <span class="tag-filter category">WordPress</span>
-                    <span class="tag-filter category">Vulnerability Scanner</span>
-            </div>
         </div>
     </div>
     </a>
@@ -442,12 +343,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution10/architecture-2.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Terraform</span>
-                    <span class="tag-filter category">Virtual Servers</span>
-                    <span class="tag-filter category">PHP</span>
-                    <span class="tag-filter category">Object Storage</span>
             </div>
         </div>
     </div>
@@ -466,12 +361,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution26-plan-create-update-deployments/architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Terraform</span>
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Identity and Access Management</span>
-            </div>
         </div>
     </div>
     </a>
@@ -488,12 +377,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution14/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Virtual Servers</span>
-                    <span class="tag-filter category">Load Balancer</span>
-                    <span class="tag-filter category">PHP</span>
-                    <span class="tag-filter category">File Storage</span>
             </div>
         </div>
     </div>
@@ -512,11 +395,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution7/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">Compose for MongoDB</span>
-            </div>
         </div>
     </div>
     </a>
@@ -533,11 +411,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution5/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Python</span>
-                    <span class="tag-filter category">Db2 Warehouse</span>
             </div>
         </div>
     </div>
@@ -556,11 +429,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution8/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Functions</span>
-                    <span class="tag-filter category">API Gateway</span>
-                    <span class="tag-filter category">Cloudant NoSQL DB</span>
-            </div>
         </div>
     </div>
     </a>
@@ -578,12 +446,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution12/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Python</span>
-                    <span class="tag-filter category">Log Analysis</span>
-                    <span class="tag-filter category">Availability Monitoring</span>
-            </div>
         </div>
     </div>
     </a>
@@ -600,11 +462,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution13/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Node.js</span>
-                    <span class="tag-filter category">API Connect</span>
             </div>
         </div>
     </div>
@@ -629,14 +486,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">IBM Watson Assistant</span>
-                    <span class="tag-filter category">Cloudant NoSQL DB</span>
-                    <span class="tag-filter category">Db2 Warehouse</span>
-                    <span class="tag-filter category">Cloud Functions</span>
-                    <span class="tag-filter category">Slack</span>
-            </div>
         </div>
     </div>
     </a>
@@ -653,13 +502,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">IBM Watson Assistant</span>
-                    <span class="tag-filter category">Speech to Text</span>
-                    <span class="tag-filter category">Text to Speech</span>
-                    <span class="tag-filter category">Mobile Analytics</span>
-                    <span class="tag-filter category">Android</span>
             </div>
         </div>
     </div>
@@ -684,12 +526,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution6/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">iOS</span>
-                    <span class="tag-filter category">Swift</span>
-                    <span class="tag-filter category">Push Notifications</span>
-                    <span class="tag-filter category">Mobile Analytics</span>
-            </div>
         </div>
     </div>
     </a>
@@ -706,12 +542,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution9/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Android</span>
-                    <span class="tag-filter category">Java</span>
-                    <span class="tag-filter category">Push Notifications</span>
-                    <span class="tag-filter category">Mobile Analytics</span>
             </div>
         </div>
     </div>
@@ -730,11 +560,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution15/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cordova</span>
-                    <span class="tag-filter category">Push Notifications</span>
-                    <span class="tag-filter category">Mobile Analytics</span>
-            </div>
         </div>
     </div>
     </a>
@@ -751,13 +576,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution11/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Functions</span>
-                    <span class="tag-filter category">App ID</span>
-                    <span class="tag-filter category">Cloudant NoSQL DB</span>
-                    <span class="tag-filter category">Watson Tone Analyzer</span>
-                    <span class="tag-filter category">Push Notifications</span>
             </div>
         </div>
     </div>
@@ -782,12 +600,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution29/architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">{{site.data.keyword.dynamdashbemb_short}}</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
-                    <span class="tag-filter category">SQL Query</span>
-                    <span class="tag-filter category">Watson Studio</span>
-            </div>
         </div>
     </div>
     </a>
@@ -804,13 +616,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution24-github-traffic-analytics/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Db2 Warehouse</span>
-                    <span class="tag-filter category">App ID</span>
-                    <span class="tag-filter category">IBM Cloud Functions</span>
-                    <span class="tag-filter category">{{site.data.keyword.dynamdashbemb_short}}</span>
-                    <span class="tag-filter category">GitHub</span>
             </div>
         </div>
     </div>
@@ -829,13 +634,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution22-build-machine-learning-model/architecture_diagram.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Machine Learning</span>
-                    <span class="tag-filter category">Apache Spark</span>
-                    <span class="tag-filter category">Watson Studio</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
-                    <span class="tag-filter category">Db2 Warehouse</span>
-            </div>
         </div>
     </div>
     </a>
@@ -852,11 +650,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution23/Architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Apache Spark</span>
-                    <span class="tag-filter category">Watson Studio</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
             </div>
         </div>
     </div>
@@ -881,14 +674,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <img class="architectureDiagram" src = "images/solution16/Architecture.png" />
                 </div>
             </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Cloud Foundry</span>
-                    <span class="tag-filter category">Internet of Things Platform</span>
-                    <span class="tag-filter category">Cloudant</span>
-                    <span class="tag-filter category">Watson Studio</span>
-                    <span class="tag-filter category">Apache Spark</span>
-                    <span class="tag-filter category">Cloud Object Storage</span>
-            </div>
         </div>
     </div>
     </a>
@@ -911,13 +696,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution20-users-teams-applications/architecture.png" />
                 </div>
-            </div>
-            <div class="tagsContainer">
-                    <span class="tag-filter category">Identity and Access Management</span>
-                    <span class="tag-filter category">Kubernetes</span>
-                    <span class="tag-filter category">Container Service</span>
-                    <span class="tag-filter category">Container Registry</span>
-                    <span class="tag-filter category">DevOps</span>
             </div>
         </div>
     </div>
