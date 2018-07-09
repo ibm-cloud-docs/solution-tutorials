@@ -21,10 +21,10 @@ const featured = solutions
   .filter((solution) => solution.featuredPosition)
   .sort((sol1, sol2) => sol1.featuredPosition - sol2.featuredPosition);
 
-// const tagsSet = new Set();
-// solutions.forEach((solution) => solution.tags.forEach((tag) => tagsSet.add(tag)));
-// const tags = Array.from(tagsSet).sort();
-// console.log(tags);
+const tagsSet = new Set();
+solutions.forEach((solution) => solution.tags.forEach((tag) => tagsSet.add(tag)));
+const tags = Array.from(tagsSet).sort();
+console.log(tags);
 
 function writeFile(templateFile, dest) {
   console.log(`Writing ${dest}`);
@@ -41,7 +41,6 @@ function writeFile(templateFile, dest) {
 }
 
 writeFile('./index.tmpl.md', '../../index.md');
-writeFile('./index-redesign.tmpl.md', '../../index-redesign.md');
 writeFile('./toc.tmpl.md', '../../toc');
 
 console.log('Done!');

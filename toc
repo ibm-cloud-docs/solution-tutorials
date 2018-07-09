@@ -6,7 +6,6 @@ Solution Tutorials
 
     {: .navgroup id="learn"}
     index.md
-    index-redesign.md
 
     {: .topicgroup}
     Websites and Web Apps

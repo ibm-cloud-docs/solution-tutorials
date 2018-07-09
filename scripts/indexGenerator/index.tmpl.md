@@ -12,55 +12,154 @@ lastupdated: "{{date}}"
 {: #tutorials}
 
 Learn how to build, deploy and scale real-world solutions on IBM Cloud. These guides provide step-by-step instructions on how to use IBM Cloud to implement common patterns based on best practices and proven technologies.
-
 <style>
-    .solutionBox {
-        margin: 0 10px 20px 0 !important;
-        padding: 10px !important;
-        width: 100% !important;
-        border: 1px #dfe3e6 solid !important;
-        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2) !important;
+<!--
+    #tutorials { /* hide the page header */
+        display: none !important
     }
-    .solutionBoxContainer {
+    p.last-updated { /* hide the last updated */
+        display: none !important;
     }
-    .solutionBoxTitle {
-      margin: 0rem !important;
-      font-size: 16px !important;
-      margin-bottom: 10px !important;
-      font-weight: 600 !important;
+    .doesNotExist, #doc-content, #single-content { /* use full width */
+        width: calc(100% - 8%) !important;
+        max-width: calc(100% - 8%) !important;
     }
-    .tag-filter.category {
-        background: #aaf9e6 !important;
-        color: #238070 !important;
+    aside.side-nav, #topic-toc-wrapper { /* no need for side-nav */
+        display: none !important;
     }
-    .tag-filter {
-        padding: 3px 12px !important;
-        font-size: 12px !important;
-        margin-right: 1px !important;
-        border-radius: 10px !important;
-        white-space: nowrap !important;
-        line-height: 1.8rem !important;
+    .detailContentArea { /* use full width */
+        max-width: 100% !important;
     }
-    .solutionBoxDescription {
-        display:flex !important;
+    .allCategories {
+        display: flex !important;
+        flex-direction: row !important;
         flex-wrap: wrap !important;
     }
-   .solutionBoxTitle a {
-      text-decoration-line:none !important;
+    .categoryBox {
+        flex-grow: 1 !important;
+        width: calc(33% - 20px) !important;
+        text-decoration: none !important;
+        margin: 0 10px 20px 0 !important;
+        padding: 20px !important;
+        border: 1px #dfe6eb solid !important;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important;
+        text-align: center !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
+    }
+    .solutionBoxContainer {}
+    .solutionBoxContainer a {
+        text-decoration: none !important;
+        border: none !important;
+    }
+    .solutionBox {
+        display: inline-block !important;
+        width: 100% !important;
+        margin: 0 10px 20px 0 !important;
+        padding: 10px !important;
+        border: 1px #dfe6eb solid !important;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important;
+    }
+    @media screen and (min-width: 960px) {
+        .solutionBox {
+        width: calc(50% - 3%) !important;
+        }
+        .solutionBox.solutionBoxFeatured {
+        width: calc(50% - 3%) !important;
+        }
+        .solutionBoxContent {
+        height: 270px !important;
+        }
+    }
+    @media screen and (min-width: 1298px) {
+        .solutionBox {
+        width: calc(33% - 2%) !important;
+        }
+        .solutionBoxContent {
+        min-height: 270px !important;
+        }
+    }
+    .solutionBox:hover {
+        border-color: rgb(136, 151, 162) !important;
+    }
+    .solutionBoxContent {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .solutionBoxTitle {
+        margin: 0rem !important;
+        margin-bottom: 5px !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        line-height: 16px !important;
+        height: 37px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+    }
+    .solutionBoxDescription {
+        flex-grow: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
     .descriptionContainer {
-        flex-grow: 1 !important;
-        width: 200px !important;
+    }
+    .descriptionContainer p {
+        margin: 0 !important;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 4 !important;
+        -webkit-box-orient: vertical !important;
+        font-size: 12px !important;
+        font-weight: 400 !important;
+        line-height: 1.5 !important;
+        letter-spacing: 0 !important;
+        max-height: 70px !important;
     }
     .architectureDiagramContainer {
-        width: 300px !important;
+        flex-grow: 1 !important;
+        min-width: 250px !important;
         padding: 0 10px !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
     }
     .architectureDiagram {
-        max-height: 200px !important;
+        max-height: 175px !important;
         padding: 5px !important;
+        margin: 0 auto !important;
     }
+-->
 </style>
+
+## Featured Tutorials
+<div class = "solutionBoxContainer">
+    {{#each featured}}
+    {{#unless hidden}}
+    <a href = "{{url}}">
+    <div class = "solutionBox solutionBoxFeatured">
+        <div class = "solutionBoxContent">
+            <h3 id="{{url}}" class="solutionBoxTitle">
+                {{name}}
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>{{description}}</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "{{imgSrc}}" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    {{/unless}}
+    {{/each}}
+</div>
+
 {{#each categories}}
 {{#unless hidden}}
 ## {{name}}
@@ -69,22 +168,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     {{#each solutions}}
     {{#unless hidden}}
+    <a href = "{{url}}">
     <div class = "solutionBox">
-        <h3 id="{{url}}" class="solutionBoxTitle">
-            <a href = "{{url}}">{{name}}</a>
-        </h3>
-        <div class="solutionBoxDescription">
-            <div class="descriptionContainer">
-                <p>{{description}}</p>
-                {{#each tags}}
-                    <span class="tag-filter category">{{this}}</span>
-                {{/each}}
-            </div>
-            <div class="architectureDiagramContainer">
-                <img class="architectureDiagram" src = "{{imgSrc}}" />
+        <div class = "solutionBoxContent">
+            <h3 id="{{url}}" class="solutionBoxTitle">
+                {{name}}
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>{{description}}</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "{{imgSrc}}" />
+                </div>
             </div>
         </div>
     </div>
+    </a>
     {{/unless}}
     {{/each}}
 </div>
