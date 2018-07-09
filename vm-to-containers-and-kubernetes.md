@@ -28,7 +28,7 @@ Depending on the type of app that you have, the steps to migrate your app might 
 {: #objectives}
 
 - Understand how to idendify micro-services in a VM based app and learn how to map components between VMs and Kubernetes.
-- Learn how containerize a VM based app.
+- Learn how to containerize a VM based app.
 - Learn how to deploy the container to a Kubernetes cluster in {{site.data.keyword.containershort_notm}}.
 - Put everything learned to practice, run the **JPetStore** app in your cluster.
 
