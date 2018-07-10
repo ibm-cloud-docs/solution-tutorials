@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-09"
+lastupdated: "2018-07-10"
 
 ---
 
@@ -137,10 +137,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
-    <a href = "multi-region-k8s-cis.html">
+    <a href = "multi-region-k8s-cis.html?pos&#x3D;2">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
-            <h3 id="multi-region-k8s-cis.html" class="solutionBoxTitle">
+            <h3 id="multi-region-k8s-cis.html?pos&#x3D;2" class="solutionBoxTitle">
                 Resilient and secure multi-region Kubernetes clusters
             </h3>
             <div class="solutionBoxDescription">
@@ -211,10 +211,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "multi-region-k8s-cis.html">
+    <a href = "multi-region-k8s-cis.html?pos&#x3D;2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
-            <h3 id="multi-region-k8s-cis.html" class="solutionBoxTitle">
+            <h3 id="multi-region-k8s-cis.html?pos&#x3D;2" class="solutionBoxTitle">
                 Resilient and secure multi-region Kubernetes clusters
             </h3>
             <div class="solutionBoxDescription">
