@@ -298,7 +298,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
    ibmcloud wsk property get --apihost
    ```
    {: pre}
-3. Open `android/app/src/main/java/serverlessfollowup/app/LoginActivity.java` and `LoginAndRegistrationListener.java` and update the push notifications service(BMSClient) region and AppID region.
+3. Open `android/app/src/main/java/serverlessfollowup/app/LoginActivity.java` and `LoginAndRegistrationListener.java` and update the push notifications service(BMSClient)region and AppID region depending on the location in which your service instances are created.
 4. Build the project.
 5. Start the application on a real device or with an emulator.
    For the emulator to receive push notifications, make sure to pick an image with the Google APIs and to log in with a Google account within the emulator.
@@ -325,7 +325,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
    ibmcloud wsk property get --apihost
    ```
    {: pre}
-5. Open `AppDelegate.swift` and update the push notifications service(BMSClient) region and AppID region.
+5. Open `AppDelegate.swift` and update the push notifications service(BMSClient) region and AppID region depending on the location in which your service instances are created.
 6. Build the project.
 7. Start the application on a real device or with a simulator.
 8. Watch the {{site.data.keyword.openwhisk_short}} in the background by running the below command on a Terminal.
