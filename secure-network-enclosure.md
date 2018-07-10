@@ -18,7 +18,7 @@ lastupdated: "2018-06-05"
 # Secure Network Enclosure on the IBM Cloud
 Security is a major consideration for workloads deployed on public cloud. The need to create an isolated and secure 
 network environment is central to the IaaS model of application deployment. Firewalls, routing and VPNs are all necessary  
-components in creating an isolated secure enclosure, within which virtual machines and bare-metal servers can be deployed in multi-tier 
+components in creating an isolated secure enclosure, within which virtual machines and bare-metal servers can be securely deployed in multi-tier 
 application topologies, while proving protection from risks on the public internet.  
 
 This tutorial highlights how a Virtual Router Appliance (VRA) can be configured on the IBM Cloud to create a secure enclosure. 
@@ -64,8 +64,26 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
-* [Contact your Infrastructure master user to get the following permissions:
- -- Network (to add **Public and Private Network Uplink**)
+### Configure the SoftLayer VPN
+
+In this tutorial, the load balancer is the front door for the application users. The virtual servers do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
+
+1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
+
+     You should be a **Master User** to enable VPN access or contact master user for access.
+     {:tip}
+2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
+
+You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning virtual servers.
+{: tip}
+
+### Check account permissions
+
+Contact your Infrastructure master user to get the following permissions:
+- Quick Permissions - Basic User
+- **Network** so that you can create and configure the enclosure, All Network Permissions are required. 
+- **Services** manage SSH Keys
 
 ## Create environment
 {: setup}
@@ -112,17 +130,7 @@ Introductory statement that overviews the section
    {: pre}
 
 
-This paragraph only appears in the iOS documentation
-{: ios}
 
-And this paragraph only appears in the Android documentation
-{: android}
-
-This paragraph only appears for Java code
-{: java}
-
-And this paragraph only appears for Swift code
-{: swift}
 
 
 ## Another Solution Specific Section
