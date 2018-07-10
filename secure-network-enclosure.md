@@ -55,17 +55,19 @@ intro sentence
   ![Architecture](images/solution1/Architecture.png)
 </p>
 
-1. The user does this
-2. Then that
+1. The administrator configures IBM Cloud VPN Logon
+2. An SSH key is uploaded to the IBM management platform
+3. The VRA is deployed
+4. VLANs are assigned to the VRA
+5. The VRA is secured
 
 ## Before you begin
 {: #prereqs}
 
-* [Install Git](https://git-scm.com/)
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
+* [Contact your Infrastructure master user to get the following permissions:
+ -- Network (to add **Public and Private Network Uplink**)
 
-## Create services
+## Create environment
 {: setup}
 
 In this section, you will create the services required to ...
