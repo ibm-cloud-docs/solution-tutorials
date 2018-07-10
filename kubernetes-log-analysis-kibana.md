@@ -351,7 +351,7 @@ Metrics for standard clusters are located in the {{site.data.keyword.Bluemix_not
 
 In this step, you will clean up the resources to remove what you created above.
 
-- Delete the site.data.keyword.loganalysislong_notm}} service.
+- Delete the {{site.data.keyword.loganalysislong_notm}} service.
 - Delete the {{site.data.keyword.monitoringshort_notm}} service.
 - Delete the cluster.
 - Delete the registry container image.

@@ -6,16 +6,25 @@ Solution Tutorials
 
     {: .navgroup id="learn"}
     index.md
+{{#each categories}}
+{{#unless hidden}}
+
+    {: .topicgroup}
+    {{name}}
+    {{#each solutions}}
+    {{#unless hidden}}
+        {{#replace ".html" ".md"}}{{url}}{{/replace}}
+    {{/unless}}
+    {{/each}}
+{{/unless}}
+{{/each}}
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
-{{#each categories}}
-{{#unless hidden}}
-  {{#each solutions}}
-  {{#unless hidden}}
-    {{#replace ".html" ".md"}}{{url}}{{/replace}}
-  {{/unless}}
-  {{/each}}
-{{/unless}}
+{{#each tags as |tag|}}
+    {: .topicgroup}
+    {{tag}}
+{{#each ../categories}}{{#unless hidden}}{{#each solutions as |solution|}}{{#unless solution.hidden}}{{#hasTag solution tag}}{{#replace ".html" ".md"}}        {{solution.url}}
+{{/replace}}{{/hasTag}}{{/unless}}{{/each}}{{/unless}}{{/each}}
 {{/each}}
     {: .navgroup-end}
