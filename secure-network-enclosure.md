@@ -45,7 +45,7 @@ Options are presented for enhancing the enclosure with the configuration of site
 This tutorial uses the following service:
 * [Virtual Router Appliance](https://console.bluemix.net/catalog/services/ServiceName)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial will incur costs. The VRA is only available on a monthly pricing plan. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -88,70 +88,42 @@ Contact your Infrastructure master user to get the following permissions:
 Upload the SSH public key via the [Portal](https://console.bluemix.net/docs/infrastructure/ssh-keys/index.html) that will be used to access and administer the VRA and private network.  
 
 
-## Create environment
-{: setup}
+## Provision Virtual Router Appliance
 
-In this section, you will create the services required to ...
+{: VRA}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [Service A](https://console.bluemix.net/catalog/services/the-service-name).
-  ```sh
-  ibmcloud resource service-instance-create service-instance-name service-name lite global
-  ```
-3. Create an instance of [Service B](https://console.bluemix.net/catalog/services/the-service-name).
+The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible by an IBM Cloud provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from this VLAN to the secure private enclosure VLANs.  In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
 
-## Solution Specific Section
-{: #section_one}
+1. Go to the catalog to create a [IBM Virtual Router Appliance](https://console.bluemix.net/catalog/infrastructure/virtual-router-appliance)
+2. Click on **Create** to go to the **Gateway Appliances** page.  
+3. On the top right of the page click **Order Gateway**
+4. You will be redirected to the ordering screen where the target data center and the VRA Server type can be selected. For a production environment it is recommended to use at a minimum: Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM
 
-Introductory statement that overviews the section
-
-1. Step 1 Click **This** and enter your name.
-
-  This is a tip.
-  {:tip}
-
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
-
-### Sub section
-
-   ```bash
-   some shellscript
-   ```
-   {: pre}
+   1. Select the target data center in the drop down at the top of the page
+   2. Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA 
+   3. RAM. Select 64GB minimum for production
+   4. Operating System. Select the only option
+        Virtual Router Appliance 5.x (up to 20Gbps) Subscription Edition (64 Bit) 
+   5. Uplink Port Speeds. Take default or if required select 1Gbps, 10Gbps  and redundant links
+   6. Click **Add To Order**
+   
+ 5. You will be directed to the Checkout screen
+   1. Validate or change the choices already made.   
+   2. Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down select the SSH key you specified earlier. 
+   3. Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
+   4. Click **Submit Order** 
+      
 
 
-
-
-
-## Another Solution Specific Section
-{: #section_two}
-
-Introductory statement that overviews the section
-
-### Sub section
-
-## Remove resources
-{:removeresources}
-
-Steps to take to remove the resources created in this tutorial
- * 
 
 ### Test the private network behavior
 
 
+## Remove resources
+{:removeresources}
+Steps to take to remove the resources created in this tutorial. The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month.     
+1. Cancel any virtual servers of bare-metal servers
+2. Cancel the VRA
 
 ## Related content
 {:related}
