@@ -183,10 +183,13 @@ By default the VRA firewall is stateless. Stateful firewalls are used in this tu
 # set security firewall global-state-policy tcp
 # commit
 ```
+
 Save the configuration
+
 ```
 # save
 ```
+
 To proceed with the creation of the private enclosure, user VLANs for the provisioning of virtual and bare-metal servers must be first assigned to the VRA.
 
 ### Ordering the first virtual server and VLAN
@@ -243,6 +246,7 @@ The additional work to configure the enclosure and routing is now performed dire
 1. Configure the VRA virtual interface to route new subnet to the VLAN via the VRA. 
 
 SSH into the VRA: 
+
 ```
 SSH vyatta@<VRA Private IP Address>
 ```
@@ -256,6 +260,7 @@ $ configure
 ```
 
 The show interfaces command will list the new virtual interface (vif): 
+
 ```
 # show interfaces
 ```
@@ -281,12 +286,15 @@ Saving or rolling back the running configuration
 Committing the configuration, only changes the running configuration. It does not change the configuration used at boot time. If access is lost to the VRA due to a configuration change, rebooting the VRA (from the IBM Cloud UI) will return the VRA to the previous save of the default boot configuration file. This could be from some time previously. 
 
 Only  save the configuration to the default system configuration file when you are satisfied that the changes perform the desired effect and do not affect operation or access to the VRA. Save the configuration to the default boot configuration file:
+
+```
 # save
+```
 
 If it is desired to return to a previous working configuration, by default the last 20 commit points can be viewed, compared or restored.  See the Vyatta Network OS
 Basic System Configuration Guide for more details of commiting and saving the configuration.  
 
-``
+```
 # show system commit 
 # rollback n
 # compare
@@ -341,6 +349,7 @@ This is followed by the zones and assignment of the previously created firewall 
 ```
 
 Only at this stage can the configuration be committed:
+
 ```
 # commit
 ```
@@ -387,6 +396,7 @@ To validate the APP-TO-INSIDE firewall is allowing ICMP and udp/tcp traffic, pin
 ```
 
 Validate continued access to the VRA management interface via SSH is all is OK, review and save the configuration:
+
 ```
 # show security  
 # save
