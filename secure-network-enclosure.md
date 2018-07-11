@@ -119,8 +119,7 @@ For a production environment it is recommended to use at a minimum - Dual Intel 
 
 ### Review deployed VRA
 
-Inspect the new VRA.  
-On the [Infrastructure Dashboard](https://control.bluemix.net) Select **Network** in the left hand pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Select the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page. 
+Inspect the new VRA. On the [Infrastructure Dashboard](https://control.bluemix.net) Select **Network** in the left hand pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Select the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page. 
 
 ![](images/Gateway-detail.png)
 
@@ -176,7 +175,7 @@ The following parameters should be configured:
 # set security firewall broadcast-ping disable
 ```
 
-By default the VRA firewall is stateless. Stateful firewalls are used in this guide and set with the following commands. 
+By default the VRA firewall is stateless. Stateful firewalls are used in this tutorial and set with the following commands. 
 
 ```
 # set security firewall global-state-policy icmp
@@ -208,7 +207,7 @@ Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virt
 
 2. Click tick box to accept the Third-Party service agreements. 
 3. Click **Provision**
-4. Monitor for completion on the **Devices > Device List** page or via email. 
+4. Monitor for completion on the [Devices](https://control.bluemix.net/devices) page or via email. 
 5. Make note of the *Private IP address* of the VSI for a later step. 
 6. Verify access to the VSI via the IBM Cloud private network using `ping` and `SSH` from your local workstation over the VPN. 
    ```
@@ -219,43 +218,22 @@ Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virt
 ### Adding the user VLAN to the VRA
 A private VLAN and IP Subnet will have been automatically provisioned by IBM Cloud for the virtual server and you will now route this via the VRA to create the secure private network. 
 
-Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Locate the **Associate a VLAN** section on the Gateway detail page. The drop down box, ‘Select VLAN’ should be enabled and if selected the newly provisioned VLAN can be selected. 
+1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Locate the **Associate a VLAN** section on the lower half of the page. The drop down box, ‘Select VLAN’ should be enabled and if selected the newly provisioned VLAN can be selected. 
 
 ![](images/Gateway-Associate-VLAN.png)
 
-If no eligible VLAN is shown, the VSI has been created on a different frontend customer router to the VRA. This will require a ticket to be raised to request a private VLAN on the same router as the VRA and this VLAN to be deleted.{tip}
+2. If no eligible VLAN is shown, the VSI has been created on a different frontend customer router to the VRA. This will require a [support ticket](https://control.bluemix.net/support/unifiedConsole/tickets/add) to be raised to request a private VLAN on the same router as the VRA and for this VLAN to be deleted.{tip}
 
-If an eligible VLAN is shown, click **Associate** to tell IBM Cloud that the IP routing this VLAN will now be manged by this VRA.
+3. If an eligible VLAN is shown, click **Associate** to tell IBM Cloud that the IP routing for this VLAN will now be manged by this VRA.
 
+Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the IBM Cloud Private network. The status of VLAN will be shown as *Bypassed*.{tip}
 
- 
+4. Route the VLAN/Subnet via the VRA by selecting **Actions** in the right hand column, then **Route VLAN**. Routing will take a few minutes, where upon a screen refresh will show it is Routed. 
 
-Initial VLAN association may take a couple of minutes to complete. Once finished the VLAN should be shown under the Associated VLANs heading. At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the IBM Cloud Private network. It is shown with a Status of *Bypassed*.  
+5. Select the VLAN name to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Network> IP Management > VLAN. Make a note of the Private VLAN ID <nnnn> (1199 in this example) as this will be used in a late step. 
+6. Select the subnet to see the subnet details. Record the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. Also record the VSI IP address. 
 
-
- 
-
-To route the VLAN/Subnet via the VRA, select Actions > Route VLAN as below 
-
- 
-
-Routing will take a few minutes, where upon a screen refresh will show it is Routed. 
-
-
- 
-
-Select the VLAN name to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Network> IP Management > VLANs
-
- 
-
-Record the Private VLAN ID <nnnn> (1199 in this example). Select the subnet to see the subnet details. 
-
- 
-
-
-Record the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. Also record the VSI IP address. 
-
-At this time the VSI is now inaccessible via the private or management networks as the internal VRA routing for this subnet has not been configured. A ping of the VSI should timeout if the VLAN has been successfully associated with the VRA and IP traffic for the subnet routed to the VRA.  
+At this time the VSI is now inaccessible via the private or management networks as the internal VRA routing for this subnet has not been configured. A ping of the VSI should timeout if the VLAN has been successfully associated with the VRA and IP traffic for the subnet routed to the VRA.{tip}  
 
 The additional work to configure the enclosure and routing is now performed directly on the VRA via SSH. 
 
