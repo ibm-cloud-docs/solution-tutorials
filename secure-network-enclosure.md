@@ -190,6 +190,84 @@ By default the VRA firewall is stateless. Stateful firewalls are used in this gu
 # set security firewall global-state-policy tcp
 # commit
 ```
+Save the configuration
+```
+# save
+```
+To proceed with the creation of the private enclosure, user VLANs for the provisioning of virtual and bare-metal servers must be first assigned to the VRA.
+
+
+###Ordering the first virtual server and VLAN
+Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) from the Compute category of the IBM cloud services catalog. This will create the first private user VLAN and IP subnet.  
+
+1. Select ‘Public Virtual Server’.   Click **Create**.
+
+  On the Virtual Server ordering page specify:
+  - Hostname
+  - Domain
+  - Location (Data Center as per the VRA)
+  - Device Flavor – allow to default
+  - SSH Key
+  - Image – allow to default to CentOS
+  - Network Interface. The network interface must be changed from the default of *public and private* to only specify a Private Network Uplink. 
+<Image> 
+
+2. Click tick box to accept the Third-Party service agreements. 
+3. Click **Provision**
+4. Monitor for completion on the **Devices > Device List** page or via email. 
+5. Record the *Private IP address* of the VSI. 
+6. Verify access to the VSI via the IBM Cloud mgmt network using ping and SSH from your local workstation.  
+   ```
+   ping \<VSI Private IP Address\>
+   SSH root@\<VSI Private IP Address\>
+   ``` 
+
+###Adding the user VLAN to the VRA
+A private VLAN will have been automatically provisioned by IBM Cloud for the virtual server and can be routed via the VRA to create the secure private network. 
+
+On the Gateway detail page (Network > Gateway Appliances: gateway1 ), the user VLAN can be associated with the VRA to create the enclosure.  Find the Associate a VLAN section on the Gateway detail page. The drop down box, ‘Select VLAN’ should be enabled and if selected the newly provisioned VLAN can be selected. 
+
+
+ 
+
+NOTE: If no eligible VLAN is shown, the VSI has been created on a different frontend customer router to the VRA. This will require a ticket to be raised to request a private VLAN on the same router as the VRA and this VLAN to be deleted. See the instructions relating to multi-tier network topology for raising a ticket for multiple VLANs and specifying the target VLAN for VSI creation. 
+
+If an eligible VLAN is shown, click **Associate** to tell IBM Cloud that the IP routing this VLAN will now be manged by this VRA.
+
+
+ 
+
+Initial VLAN association may take a couple of minutes to complete. Once finished the VLAN should be shown under the Associated VLANs heading. At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the IBM Cloud Private network. It is shown with a Status of *Bypassed*.  
+
+
+ 
+
+To route the VLAN/Subnet via the VRA, select Actions > Route VLAN as below 
+
+ 
+
+Routing will take a few minutes, where upon a screen refresh will show it is Routed. 
+
+
+ 
+
+Select the VLAN name to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Network> IP Management > VLANs
+
+ 
+
+Record the Private VLAN ID <nnnn> (1199 in this example). Select the subnet to see the subnet details. 
+
+ 
+
+
+Record the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. Also record the VSI IP address. 
+
+At this time the VSI is now inaccessible via the private or management networks as the internal VRA routing for this subnet has not been configured. A ping of the VSI should timeout if the VLAN has been successfully associated with the VRA and IP traffic for the subnet routed to the VRA.  
+
+The additional work to configure the enclosure and routing is now performed directly on the VRA via SSH. 
+
+
+
 
 
 
