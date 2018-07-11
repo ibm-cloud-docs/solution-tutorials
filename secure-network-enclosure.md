@@ -59,8 +59,9 @@ intro sentence
 
 
 1. The VRA is deployed
-2. VLANs are assigned to the VRA
-3. The VRA is secured
+2. Initial VRA setup
+2. Ordering the first server and VLAN
+3. VRA configuration
 
 ## Before you begin
 {: #prereqs}
@@ -114,11 +115,79 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
    2. Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down select the SSH key you specified earlier. 
    3. Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
    4. Click **Submit Order** 
-      
+
+6. Monitor for creation on the Devices page or via email. VRA creation may take a number of hours to complete. 
 
 
+### Review deployed VRA
+The new VRA can be inspected on the Network -> Gateway Appliances page 
 
-### Test the private network behavior
+Clicking the Gateway name (gateway1) in the Gateway column, takes you to the Gateway Details page
+
+Record the Private and Public IP addresses of the VRA for future use.
+
+<< Screenshot >>
+
+Record the Private and Public IP addresses of the VRA for future use
+  
+
+### Initial VRA setup
+Using the SSL VPN login to the VRA from your workstation using the Vyatta account accepting the SSH security prompts. Once SSH login is successful via the private network, public network access will be removed. 
+
+```SSH vyatta@<VRA Private IP Address>
+```
+Setup of the VRA requires the VRA to be placed into [edit] mode using the `configure` or `conf` command. When in [edit] mode the prompt changes from $ to #. After successful VRA command execution the change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command.  
+
+If at any stage before the `save` command is entered, access is lost due to configuration changes restarting the VRA will return it back to the last save point, restoring access. 
+
+Disable standard user/password logins with the following commands:
+
+```vyatta@gateway1:-$ 	configure
+[edit]
+vyatta@gateway1# 	set service ssh disable-password-authentication
+[edit]
+vyatta@gateway1# 	commit
+[edit]
+vyatta@gateway1# 	save
+[edit]
+vyatta@gateway1# 	exit
+logout
+vyatta@gateway1:-$ 
+```
+
+When in [edit] mode the prompt changes from $ to #. Return to the system command prompt with exit. 
+
+The VRA is pre-configured for the IBM Cloud IaaS environment. This includes
+
+- NTP server
+- Name servers
+- SSH
+- HTTPS web server 
+- Default time-zone US/Chicago
+
+Set local time zone as required. Auto-complete with the tab key will list the potential time zone values
+
+```$ configure 
+# set system time-zone <timezone>
+# commit 
+```
+
+The following parameters should be configured:
+
+```# set security firewall all-ping enable
+# set security firewall broadcast-ping disable
+```
+
+By default the VRA firewall is stateless. Stateful firewalls are used in this guide and set with the following commands. 
+
+
+```# set security firewall global-state-policy icmp
+# set security firewall global-state-policy udp
+# set security firewall global-state-policy tcp
+# commit
+```
+
+
 
 
 ## Remove resources
