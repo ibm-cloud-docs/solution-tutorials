@@ -154,7 +154,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "slack-chatbot-database-watson.html">
+    <a href = "slack-chatbot-database-watson.html?pos=2">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -177,7 +177,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #websites }
 
 <div class = "solutionBoxContainer">
-    <a href = "multi-region-webapp.html">
+    <a href = "multi-region-webapp.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -279,7 +279,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "static-files-cdn.html">
+    <a href = "static-files-cdn.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -472,7 +472,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #chatbots }
 
 <div class = "solutionBoxContainer">
-    <a href = "slack-chatbot-database-watson.html">
+    <a href = "slack-chatbot-database-watson.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -563,7 +563,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "serverless-mobile-backend.html">
+    <a href = "serverless-mobile-backend.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -603,7 +603,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "serverless-github-traffic-analytics.html">
+    <a href = "serverless-github-traffic-analytics.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
