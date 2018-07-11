@@ -24,7 +24,7 @@ Solution Tutorials
 {{#each tags as |tag|}}
     {: .topicgroup}
     {{tag}}
-{{#each ../categories}}{{#unless hidden}}{{#each solutions as |solution|}}{{#unless solution.hidden}}{{#hasTag solution tag}}{{#html2md}}        {{solution.url}}{{/html2md}}
+{{#each ../categories}}{{#unless hidden}}{{#each solutions as |solution|}}{{#unless solution.hidden}}{{#hasTag solution tag}}        {{#html2md}}{{solution.url}}{{/html2md}}
 {{/hasTag}}{{/unless}}{{/each}}{{/unless}}{{/each}}
 {{/each}}
     {: .navgroup-end}

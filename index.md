@@ -153,7 +153,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
         </div>
     </div>
-    ](/docs/tutorials/multi-region-k8s-cis.html)
+    ](./multi-region-k8s-cis.html)
     [
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
@@ -211,7 +211,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "/docs/tutorials/multi-region-k8s-cis.html">
+    <a href = "./multi-region-k8s-cis.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
