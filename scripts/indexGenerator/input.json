@@ -37,7 +37,7 @@
             },
             {
                 "name": "Resilient and secure multi-region Kubernetes clusters",
-                "url": "multi-region-k8s-cis.html?pos=2",
+                "url": "multi-region-k8s-cis.html?pos=2#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services",
                 "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
                 "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
                 "tags": [

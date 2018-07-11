@@ -11,7 +11,7 @@ Solution Tutorials
     Websites and Web Apps
         multi-region-webapp.md
         scalable-webapp-kubernetes.md
-        multi-region-k8s-cis.md?pos&#x3D;2
+        multi-region-k8s-cis.md
         kubernetes-log-analysis-kibana.md
         vm-to-containers-and-kubernetes.md
         continuous-deployment-to-kubernetes.md
@@ -78,7 +78,7 @@ Solution Tutorials
     {: .topicgroup}
     Kubernetes
         scalable-webapp-kubernetes.md
-        multi-region-k8s-cis.md?pos&#x3D;2
+        multi-region-k8s-cis.md
         kubernetes-log-analysis-kibana.md
         vm-to-containers-and-kubernetes.md
         continuous-deployment-to-kubernetes.md
