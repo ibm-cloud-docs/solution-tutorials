@@ -245,19 +245,19 @@ The additional work to configure the enclosure and routing is now performed dire
 
 1. Configure the VRA virtual interface to route new subnet to the VLAN via the VRA. 
 
-SSH into the VRA: 
+	SSH into the VRA: 
 
-```
-SSH vyatta@<VRA Private IP Address>
-```
+	```
+	SSH vyatta@<VRA Private IP Address>
+	```
 
-Enter configuration mode and virtual interface with the private VLAN ID, subnet gateway IP address and CIDR recorded in the previous step. The CIDR will typically be /26. The form of the command is:
+2. Enter configuration mode to create a new virtual interface with the private VLAN ID, subnet gateway IP address and CIDR recorded in the earlier steps. The CIDR will typically be /26. 
 
-```
-$ configure
-# set interfaces bonding dp0bond0 vif <VLAN ID> address <Subnet Gateway IP>/<CIDR>
-# commit
-```
+	```
+	$ configure
+	# set interfaces bonding dp0bond0 vif <VLAN ID> address <Subnet Gateway IP>/<CIDR>
+	# commit
+	```
 
 The show interfaces command will list the new virtual interface (vif): 
 
@@ -281,15 +281,9 @@ interfaces {
 
 Now the private subnet is routed to the VLAN via the VRA, the VSI will once again be accessible via the management network. Validate by pinging the VSI at its private IP address.  
 
-Saving or rolling back the running configuration
-
 Committing the configuration, only changes the running configuration. It does not change the configuration used at boot time. If access is lost to the VRA due to a configuration change, rebooting the VRA (from the IBM Cloud UI) will return the VRA to the previous save of the default boot configuration file. This could be from some time previously. 
 
-Only  save the configuration to the default system configuration file when you are satisfied that the changes perform the desired effect and do not affect operation or access to the VRA. Save the configuration to the default boot configuration file:
-
-```
-# save
-```
+Only  save the configuration to the default system configuration file when you are satisfied that the changes perform the desired effect and do not affect operation or access to the VRA. Save the configuration to the default boot configuration file. 
 
 If it is desired to return to a previous working configuration, by default the last 20 commit points can be viewed, compared or restored.  See the Vyatta Network OS
 Basic System Configuration Guide for more details of commiting and saving the configuration.  
