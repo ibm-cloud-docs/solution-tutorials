@@ -15,23 +15,24 @@ lastupdated: "2018-06-05"
 {:tip: .tip}
 {:pre: .pre}
 
-# Secure Network Enclosure on the IBM Cloud
-Security is a major consideration for workloads deployed on public cloud. The need to create an isolated and secure 
-network environment is central to the IaaS model of application deployment. Firewalls, routing and VPNs are all necessary  
-components in creating an isolated secure enclosure, within which virtual machines and bare-metal servers can be securely deployed in multi-tier 
-application topologies, while proving protection from risks on the public internet.  
+# Secure Private Network on the IBM Cloud
+Networking and security are major considerations for workloads deployed on public cloud. The need to create an isolated and secure private network environment is central to the IaaS model of application deployment. Firewalls, VLANS, routing and VPNs are all necessary components in creating an isolated private environment, within which virtual machines and bare-metal servers can be securely deployed in multi-tier application topologies, while proving protection from risks on the public internet.  
 
-This tutorial highlights how a Virtual Router Appliance (VRA) can be configured on the IBM Cloud to create a secure enclosure. 
-The enclosure creates an isolated and secure environment within which complex application topologies can be created, using 
-routing, VLANs, IP subnets and firewall rules. This enclosure can then be further enhanced through the provision of site-to-site 
-VPN for secure data center connectivity and Network Address Translation (SNAT) for access to Internet services. 
+This tutorial highlights how a Virtual Router Appliance (VRA) <link> can be configured on the IBM Cloud to create a simple secure private network (enclosure). The enclosure creates an isolated network environment within which complex application topologies can be created, using the familiar and well known networking technologies IP routing, VLANs, IP subnets and firewall rules. 
+
+This tutorial is a starting point for classic networking on the IBM Cloud and should not be considered a production capability as is. Additional capabilities that might be considered are:
+* Direct Link <link>
+* Hardware firewall appliances (Shared and Dedicated) <link>
+* Hardware VPN appliances <link>
+* High Availability with clustered routers and dual uplinks <link>
+Options am presented for enhancing the enclosure with the configuration of site-to-site VPN for secure data center connectivity and Network Address Translation (SNAT) for access to Internet services. 
 
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* Create a secure enclosure within which virtual machines and bare-metal servers can be deployed
+* Create a secure private network within which virtual machines and bare-metal servers can be deployed
 * Deploy a Virtual Router Appliance (VRA)
 * Configure VLANs and IP subnets
 * Secure the VRA and enclosure
@@ -55,18 +56,17 @@ intro sentence
   ![Architecture](images/solution1/Architecture.png)
 </p>
 
-1. The administrator configures IBM Cloud VPN Logon
-2. An SSH key is uploaded to the IBM management platform
-3. The VRA is deployed
-4. VLANs are assigned to the VRA
-5. The VRA is secured
+
+1. The VRA is deployed
+2. VLANs are assigned to the VRA
+3. The VRA is secured
 
 ## Before you begin
 {: #prereqs}
 
 ### Configure the SoftLayer VPN
 
-In this tutorial, the load balancer is the front door for the application users. The virtual servers do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
+In this tutorial this network is not visible on the public Internet. The VRA and any servers will only be accessible via private IP addresses and you will use your SoftLayer VPN for connectivity. 
 
 1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
 
