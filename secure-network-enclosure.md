@@ -20,7 +20,7 @@ Networking and security are major considerations for workloads deployed on publi
 
 This tutorial highlights how a Virtual Router Appliance (VRA) <link> can be configured on the IBM Cloud to create a simple secure private network (enclosure). The enclosure creates an isolated network environment within which complex application topologies can be created, using the familiar and well known networking technologies IP routing, VLANs, IP subnets and firewall rules. 
 
-This tutorial is a starting point for classic networking on the IBM Cloud and should not be considered a production capability as is. Additional capabilities that might be considered are:
+This tutorial is a starting point for classic networking on the IBM Cloud and should not be considered a production capability as described here. Additional capabilities that might be considered are:
 * Direct Link <link>
 * Hardware firewall appliances (Shared and Dedicated) <link>
 * Hardware VPN appliances <link>
@@ -74,25 +74,25 @@ In this tutorial this network is not visible on the public Internet. The VRA and
      You should be a **Master User** to enable VPN access or contact your master user for access.
      {:tip}
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or preferably use your local workstation with a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows). Use an FQDN of a single data center VPN access point from the previous of the form vpn.xxxnn.softlayer.com.  
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or preferably use your local workstation with a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows). Use the FQDN of a single data center VPN access point from the previous of the form vpn.xxxnn.softlayer.com.  
 
 ### Check account permissions
 
 Contact your Infrastructure master user to get the following permissions:
-- Quick Permissions - Basic User
+- **Quick Permissions** - Basic User
 - **Network** so that you can create and configure the enclosure, All Network Permissions are required. 
 - **Services** manage SSH Keys
 
 ### Upload SSH keys
 
-Upload the SSH public key via the [Portal](https://console.bluemix.net/docs/infrastructure/ssh-keys/index.html) that will be used to access and administer the VRA and private network.  
+Via the portal [Upload the SSH public key](https://console.bluemix.net/docs/infrastructure/ssh-keys/index.html) that will be used to access and administer the VRA and private network.  
 
 
 ## Provision Virtual Router Appliance
 
 {: VRA}
 
-The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible by an IBM Cloud provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from this VLAN to the secure private enclosure VLANs.  In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
+The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an IBM Cloud provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
 
 1. Go to the catalog to create a [IBM Virtual Router Appliance](https://console.bluemix.net/catalog/infrastructure/virtual-router-appliance)
 2. Click on **Create** to go to the **Gateway Appliances** page.  
@@ -103,11 +103,12 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
    2. Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA 
    3. RAM. Select 64GB minimum for production
    4. Operating System. Select the only option
-        Virtual Router Appliance 5.x (up to 20Gbps) Subscription Edition (64 Bit) 
-   5. Uplink Port Speeds. Take default or if required select 1Gbps, 10Gbps  and redundant links
+        - Virtual Router Appliance 5.x (up to 20Gbps) Subscription Edition (64 Bit) 
+   5. Uplink Port Speeds. Take the default or if required select 1Gbps, 10Gbps  and redundant links
    6. Click **Add To Order**
    
  5. You will be directed to the Checkout screen
+ 
    1. Validate or change the choices already made.   
    2. Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down select the SSH key you specified earlier. 
    3. Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
