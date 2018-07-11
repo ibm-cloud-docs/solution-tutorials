@@ -97,7 +97,8 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 1. Go to the catalog to create a [IBM Virtual Router Appliance](https://console.bluemix.net/catalog/infrastructure/virtual-router-appliance)
 2. Click on **Create** to go to the **Gateway Appliances** page.  
 3. On the top right of the page click **Order Gateway**
-4. You will be redirected to the ordering screen where the target data center and the VRA Server type can be selected. For a production environment it is recommended to use at a minimum: Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM
+4. You will be redirected to the ordering screen where the target data center and the VRA Server type can be selected. For a production environment it is recommended to use at a minimum: 
+- Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM
 
    1. Select the target data center in the drop down at the top of the page
    2. Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA 
@@ -107,7 +108,7 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
    5. Uplink Port Speeds. Take the default or if required select 1Gbps, 10Gbps  and redundant links
    6. Click **Add To Order**
    
- 5. You will be directed to the Checkout screen
+5. You will be directed to the Checkout screen
  
    1. Validate or change the choices already made.   
    2. Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down select the SSH key you specified earlier. 
