@@ -12,7 +12,7 @@
         "solutions": [
             {
                 "name": "Secure web application across multiple regions",
-                "url": "multi-region-webapp.html",
+                "url": "multi-region-webapp.html?pos=2",
                 "description": "Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
                 "imgSrc": "images/solution1/Architecture.png",
                 "tags": [
@@ -37,7 +37,7 @@
             },
             {
                 "name": "Resilient and secure multi-region Kubernetes clusters",
-                "url": "multi-region-k8s-cis.html",
+                "url": "multi-region-k8s-cis.html?pos=2",
                 "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
                 "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
                 "tags": [
@@ -91,7 +91,7 @@
             },
             {
                 "name": "Accelerate delivery of static files using Object Storage and CDN",
-                "url": "static-files-cdn.html",
+                "url": "static-files-cdn.html?pos=2",
                 "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
                 "imgSrc": "images/solution3/Architecture.png",
                 "tags": [
@@ -226,7 +226,7 @@
         "solutions": [
             {
                 "name": "Build a database-driven Slackbot",
-                "url": "slack-chatbot-database-watson.html",
+                "url": "slack-chatbot-database-watson.html?pos=2",
                 "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
                 "imgSrc": "images/solution19/SlackbotArchitecture.png",
                 "featuredPosition": 2,
@@ -295,7 +295,7 @@
             },
             {
                 "name": "Mobile application with a serverless backend",
-                "url": "serverless-mobile-backend.html",
+                "url": "serverless-mobile-backend.html?pos=2",
                 "description": "Use Cloud Functions with cognitive and data services to build a serverless backend for a mobile application.",
                 "imgSrc": "images/solution11/Architecture.png",
                 "tags": [
@@ -339,7 +339,7 @@
           },
           {
               "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
-              "url": "serverless-github-traffic-analytics.html",
+              "url": "serverless-github-traffic-analytics.html?pos=2",
               "description": "Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.",
               "imgSrc": "images/solution24-github-traffic-analytics/Architecture.png",
               "tags": [

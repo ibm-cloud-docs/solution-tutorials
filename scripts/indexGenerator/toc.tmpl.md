@@ -13,7 +13,7 @@ Solution Tutorials
     {{name}}
     {{#each solutions}}
     {{#unless hidden}}
-        {{#replace ".html" ".md"}}{{url}}{{/replace}}
+        {{#html2md}}{{url}}{{/html2md}}
     {{/unless}}
     {{/each}}
 {{/unless}}
@@ -24,7 +24,7 @@ Solution Tutorials
 {{#each tags as |tag|}}
     {: .topicgroup}
     {{tag}}
-{{#each ../categories}}{{#unless hidden}}{{#each solutions as |solution|}}{{#unless solution.hidden}}{{#hasTag solution tag}}{{#replace ".html" ".md"}}        {{solution.url}}
-{{/replace}}{{/hasTag}}{{/unless}}{{/each}}{{/unless}}{{/each}}
+{{#each ../categories}}{{#unless hidden}}{{#each solutions as |solution|}}{{#unless solution.hidden}}{{#hasTag solution tag}}        {{#html2md}}{{solution.url}}{{/html2md}}
+{{/hasTag}}{{/unless}}{{/each}}{{/unless}}{{/each}}
 {{/each}}
     {: .navgroup-end}

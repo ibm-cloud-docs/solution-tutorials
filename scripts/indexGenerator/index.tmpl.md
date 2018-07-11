@@ -139,10 +139,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     {{#each featured}}
     {{#unless hidden}}
-    <a href = "{{url}}">
+    <a href = "{{{url}}}">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
-            <h3 id="{{url}}" class="solutionBoxTitle">
+            <h3 class="solutionBoxTitle">
                 {{name}}
             </h3>
             <div class="solutionBoxDescription">
@@ -168,10 +168,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     {{#each solutions}}
     {{#unless hidden}}
-    <a href = "{{url}}">
+    <a href = "{{{url}}}">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
-            <h3 id="{{url}}" class="solutionBoxTitle">
+            <h3 class="solutionBoxTitle">
                 {{name}}
             </h3>
             <div class="solutionBoxDescription">

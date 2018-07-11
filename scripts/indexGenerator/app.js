@@ -7,6 +7,21 @@ Handlebars.registerHelper('replace', function( find, replace, options) {
   return string.replace( find, replace );
 });
 
+Handlebars.registerHelper('html2md', function(options) {
+  let string = options.fn(this);
+  string = string.replace('.html', '.md');
+
+  const slash = string.lastIndexOf('/');
+  if (slash >= 0) {
+    string = string.substring(slash + 1);
+  }
+  const query = string.indexOf('?');
+  if (query >= 0) {
+    string = string.substring(0, query);
+  }
+  return string;
+});
+
 Handlebars.registerHelper('hasTag', function( solution, tag, options) {
   const string = options.fn(this);
   return (solution.tags.indexOf(tag) >= 0) ? string : null;
