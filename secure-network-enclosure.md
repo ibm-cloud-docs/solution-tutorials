@@ -117,15 +117,14 @@ For a production environment it is recommended to use at a minimum - Dual Intel 
 
 6. Monitor for creation on the Devices page or via email. VRA creation may take a number of hours to complete. 
 
-
 ### Review deployed VRA
-The new VRA can be inspected on the Network -> Gateway Appliances page 
 
-Clicking the Gateway name in the Gateway column, takes you to the Gateway Details page
-
-Record the Private and Public IP addresses of the VRA for future use.
+Inspect the new VRA.  
+On the [Infrastructure Dashboard](https://control.bluemix.net) Select **Network** in the left hand pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Select the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page. 
 
 ![](images/Gateway-detail.png)
+
+Record the Private and Public IP addresses of the VRA for future use.
 
 ## Initial VRA setup
 Using the SSL VPN login to the VRA from your workstation using the default **vyatta** account accepting the SSH security prompts. To increase security, once SSH login is successful via the private network, public network access to the VRA is removed along with userid/password authentication. 
@@ -203,14 +202,14 @@ Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virt
   - Device Flavor – allow to default
   - SSH Key - key as uploaded earlier
   - Image – allow to default to CentOS
-  - Network Interface. The network interface must be changed from the default of *public and private* to only specify a Private Network Uplink. This ensures that the new server has no direct access to the Internet, and access is controlled by rules on the VRA.  
+  - Network Interface. The network interface must be changed from the default of *public and private* to only specify a Private Network Uplink. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA.  
 
 ![](images/vsi-private-network-ordering.png)
 
 2. Click tick box to accept the Third-Party service agreements. 
 3. Click **Provision**
 4. Monitor for completion on the **Devices > Device List** page or via email. 
-5. Make not of the *Private IP address* of the VSI for a later step. 
+5. Make note of the *Private IP address* of the VSI for a later step. 
 6. Verify access to the VSI via the IBM Cloud private network using `ping` and `SSH` from your local workstation over the VPN. 
    ```
    ping <VSI Private IP Address>
@@ -218,12 +217,11 @@ Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virt
    ``` 
 
 ### Adding the user VLAN to the VRA
-A private VLAN will have been automatically provisioned by IBM Cloud for the virtual server and will be routed via the VRA to create the secure private network. 
+A private VLAN and IP Subnet will have been automatically provisioned by IBM Cloud for the virtual server and you will now route this via the VRA to create the secure private network. 
 
-On the [Infrastructure Dashboard](https://control.bluemix.net) Select **Network** in the left hand pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Select the name of the newly created VRA to proceed to the Gateway Details page. , the user VLAN can be associated with the VRA to create the enclosure.  Find the Associate a VLAN section on the Gateway detail page. The drop down box, ‘Select VLAN’ should be enabled and if selected the newly provisioned VLAN can be selected. 
+Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Locate the **Associate a VLAN** section on the Gateway detail page. The drop down box, ‘Select VLAN’ should be enabled and if selected the newly provisioned VLAN can be selected. 
 
-![](images/solution3/Storage_Catalog.png)
- 
+![](images/Gateway-Associate-VLAN.png)
 
 If no eligible VLAN is shown, the VSI has been created on a different frontend customer router to the VRA. This will require a ticket to be raised to request a private VLAN on the same router as the VRA and this VLAN to be deleted.{tip}
 
