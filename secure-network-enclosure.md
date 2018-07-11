@@ -136,9 +136,9 @@ Using the SSL VPN login to the VRA from your workstation using the Vyatta accoun
 
 ```SSH vyatta@<VRA Private IP Address>
 ```
-Setup of the VRA requires the VRA to be placed into [edit] mode using the `configure` or `conf` command. When in [edit] mode the prompt changes from $ to #. After successful VRA command execution a change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command. To return to the Vyatta system command prompt use `exit`. 
+Setup of the VRA requires the VRA to be placed into [edit] mode using the `configure` or `conf` command. When in [edit] mode the prompt changes from $ to #. After successful VRA command execution a change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command. To return to the Vyatta system command prompt $, use `exit`. 
 
-If at any stage before the `save` command is entered, access is lost due to committing configuration changes, restarting the VRA will return it back to the last save point, restoring access. 
+If at any stage before the `save` command is entered, access is lost due to committing a configuration change, rebooting the VRA will return it back to the last save point, restoring access. 
 
 First disable standard user/password login:
 
