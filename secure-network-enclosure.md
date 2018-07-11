@@ -134,7 +134,8 @@ Record the Private and Public IP addresses of the VRA for future use
 ### Initial VRA setup
 Using the SSL VPN login to the VRA from your workstation using the Vyatta account accepting the SSH security prompts. Once SSH login is successful via the private network, public network access will be removed. 
 
-```SSH vyatta@<VRA Private IP Address>
+```
+SSH vyatta@<VRA Private IP Address>
 ```
 Setup of the VRA requires the VRA to be placed into [edit] mode using the `configure` or `conf` command. When in [edit] mode the prompt changes from $ to #. After successful VRA command execution a change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command. To return to the Vyatta system command prompt $, use `exit`. 
 
@@ -142,7 +143,8 @@ If at any stage before the `save` command is entered, access is lost due to comm
 
 First disable standard user/password login:
 
-```vyatta@gateway1:-$ configure
+```
+vyatta@gateway1:-$ configure
 [edit]
 vyatta@gateway1# set service ssh disable-password-authentication
 [edit]
@@ -151,7 +153,6 @@ vyatta@gateway1# commit
 vyatta@gateway1# save
 [edit]
 vyatta@gateway1# exit
-logout
 vyatta@gateway1:-$ 
 ```
 From this point in this tutorial it is assumed that all VRA commands are entered at the \[edit\] # prompt. 
@@ -167,21 +168,24 @@ The VRA is pre-configured for the IBM Cloud IaaS environment. This includes
 
 Set local time zone as required. Auto-complete with the tab key will list the potential time zone values
 
-```$ configure 
+```
+$ configure 
 # set system time-zone <timezone>
 # commit 
 ```
 
 The following parameters should be configured:
 
-```# set security firewall all-ping enable
+```
+# set security firewall all-ping enable
 # set security firewall broadcast-ping disable
 ```
 
 By default the VRA firewall is stateless. Stateful firewalls are used in this guide and set with the following commands. 
 
 
-```# set security firewall global-state-policy icmp
+```
+# set security firewall global-state-policy icmp
 # set security firewall global-state-policy udp
 # set security firewall global-state-policy tcp
 # commit
