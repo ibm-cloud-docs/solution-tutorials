@@ -139,7 +139,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     {{#each featured}}
     {{#unless hidden}}
-    <a href = "{{url}}">
+    [
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -155,7 +155,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
         </div>
     </div>
-    </a>
+    ]({{url}})
     {{/unless}}
     {{/each}}
 </div>

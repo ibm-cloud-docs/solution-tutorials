@@ -10,6 +10,11 @@ Handlebars.registerHelper('replace', function( find, replace, options) {
 Handlebars.registerHelper('html2md', function(options) {
   let string = options.fn(this);
   string = string.replace('.html', '.md');
+
+  const slash = string.lastIndexOf('/');
+  if (slash >= 0) {
+    string = string.substring(slash + 1);
+  }
   const query = string.indexOf('?');
   if (query >= 0) {
     string = string.substring(0, query);

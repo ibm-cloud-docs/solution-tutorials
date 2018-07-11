@@ -137,7 +137,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
-    <a href = "multi-region-k8s-cis.html?pos&#x3D;2#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services">
+    [
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -153,8 +153,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
         </div>
     </div>
-    </a>
-    <a href = "slack-chatbot-database-watson.html">
+    ](/docs/tutorials/multi-region-k8s-cis.html)
+    [
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -170,7 +170,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </div>
         </div>
     </div>
-    </a>
+    ](slack-chatbot-database-watson.html)
 </div>
 
 ## Websites and Web Apps
@@ -211,7 +211,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "multi-region-k8s-cis.html?pos&#x3D;2#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services">
+    <a href = "/docs/tutorials/multi-region-k8s-cis.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
