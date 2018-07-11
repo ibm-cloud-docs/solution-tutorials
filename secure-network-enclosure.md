@@ -25,7 +25,8 @@ This tutorial is a starting point for classic networking on the IBM Cloud and sh
 * Hardware firewall appliances (Shared and Dedicated) <link>
 * Hardware VPN appliances <link>
 * High Availability with clustered routers and dual uplinks <link>
-Options am presented for enhancing the enclosure with the configuration of site-to-site VPN for secure data center connectivity and Network Address Translation (SNAT) for access to Internet services. 
+
+Options are presented for enhancing the enclosure with the configuration of site-to-site VPN for secure data center connectivity and Network Address Translation (SNAT) for access to Internet services. 
 
 {:shortdesc}
 
@@ -68,12 +69,12 @@ intro sentence
 
 In this tutorial this network is not visible on the public Internet. The VRA and any servers will only be accessible via private IP addresses and you will use your SoftLayer VPN for connectivity. 
 
-1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
+1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn) and configured for SSL. 
 
-     You should be a **Master User** to enable VPN access or contact master user for access.
+     You should be a **Master User** to enable VPN access or contact your master user for access.
      {:tip}
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or preferably use your local workstation with a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows). Use an FQDN of a single data center VPN access point from the previous of the form vpn.xxxnn.softlayer.com.  
 
 ### Check account permissions
 
@@ -81,6 +82,11 @@ Contact your Infrastructure master user to get the following permissions:
 - Quick Permissions - Basic User
 - **Network** so that you can create and configure the enclosure, All Network Permissions are required. 
 - **Services** manage SSH Keys
+
+### Upload SSH keys
+
+Upload the SSH public key via the [Portal](https://console.bluemix.net/docs/infrastructure/ssh-keys/index.html) that will be used to access and administer the VRA and private network.  
+
 
 ## Create environment
 {: setup}
@@ -141,6 +147,11 @@ Introductory statement that overviews the section
 {:removeresources}
 
 Steps to take to remove the resources created in this tutorial
+ * 
+
+### Test the private network behavior
+
+
 
 ## Related content
 {:related}
