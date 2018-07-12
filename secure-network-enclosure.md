@@ -59,8 +59,9 @@ This tutorial will incur costs. The VRA is only available on a monthly pricing p
 
 1. The VRA is deployed
 2. Initial VRA setup
-3. Ordering the first server and VLAN
-4. VRA configuration
+3. Order the first server and VLAN
+4. Add VLAN to VRA
+5. Enclosure configuration
 
 
 ## Before you begin
@@ -142,7 +143,7 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
     If at any stage before the `save` command is entered, access is lost due to committing a configuration change, rebooting the VRA will return it back to the last save point, restoring access.{tip}
 
-2. To enhance security, now that SSH login is successful via the private network, public network access to the VRA is removed along with userid/password authentication. 
+2. To enhance security, now that SSH login is successful via the private network, userid/password authentication is disabled.
 
     ```
     vyatta@gateway1:-$ configure
@@ -179,14 +180,14 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
     # commit 
     ```
 
-5. The following parameters should be configured:
+5. Set ping behaviour. Ping is not disabled to aid in routing and firewall troubleshooting. 
 
     ```
     # set security firewall all-ping enable
     # set security firewall broadcast-ping disable
     ```
 
-6. By default the VRA firewall is stateless. Stateful firewalls are used in this tutorial and set with the following commands. 
+6. Enable stateful firewall operation. By default the VRA firewall is stateless. 
 
     ```
     # set security firewall global-state-policy icmp
@@ -203,10 +204,11 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
 To proceed with the creation of the private enclosure, user VLANs for the provisioning of virtual and bare-metal servers must be first assigned to the VRA.
 
-### Ordering the first virtual server and VLAN
-Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) from the Compute category of the IBM cloud services catalog. This will create the first private user VLAN and IP subnet.  <Link to portable and static IPs>
+## Order the first virtual server and VLAN
 
-1. Select ‘Public Virtual Server’. Click **Create**.
+1. Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) from the Compute category of the IBM cloud services catalog. This will create the first private user VLAN and primary IP subnet.  
+
+2. Select ‘Public Virtual Server’. Click **Create**.
 
   On the Virtual Server ordering page specify:
   - Hostname
@@ -219,37 +221,41 @@ Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virt
 
     ![](images/vsi-private-network-ordering.png)
 
-2. Click tick box to accept the Third-Party service agreements. 
-3. Click **Provision**
-4. Monitor for completion on the [Devices](https://control.bluemix.net/devices) page or via email. 
-5. Make note of the *Private IP address* of the VSI for a later step. 
-6. Verify access to the VSI via the IBM Cloud private network using `ping` and `SSH` from your local workstation over the VPN.
+3. Click tick box to accept the Third-Party service agreements. 
+4. Click **Provision**
+5. Monitor for completion on the [Devices](https://control.bluemix.net/devices) page or via email. 
+6. Make note of the *Private IP address* of the VSI for a later step. 
+7. Verify access to the VSI via the IBM Cloud private network using `ping` and `SSH` from your local workstation over the VPN.
 
    ```
    ping <VSI Private IP Address>
    SSH root@<VSI Private IP Address>
    ``` 
 
-### Adding a user VLAN to the VRA
-A private VLAN and IP Subnet will have been automatically provisioned by IBM Cloud for the virtual server and you will now route this via the VRA to create the secure private network. 
+## Adding VLAN to the VRA
+A private VLAN and primary IP Subnet will have been automatically provisioned by IBM Cloud for the virtual server and you will now route this via the VRA to create the secure private network. 
 
 1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Locate the **Associate a VLAN** section on the lower half of the page. The drop down box, ‘Select VLAN’ should be enabled and the newly provisioned VLAN can be selected. 
 
     ![](images/Gateway-Associate-VLAN.png)
 
-If no eligible VLAN is shown, the VSI has been created on a different frontend customer router to the VRA. This will require a [support ticket](https://control.bluemix.net/support/unifiedConsole/tickets/add) to be raised to request a private VLAN on the same router as the VRA and for this VLAN to be deleted.{tip}
+    If no eligible VLAN is shown, the VSI has been created on a different frontend customer router to the VRA. This will require a [support ticket](https://control.bluemix.net/support/unifiedConsole/tickets/add) to be raised to request a private VLAN on the same router as the VRA and for this VLAN to be deleted.{tip}
 
 2. Click **Associate** to tell IBM Cloud that the IP routing for this VLAN will now be manged by this VRA.
 
     Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the IBM Cloud Private network. The status of VLAN will be shown as *Bypassed*.{tip}
 
-3. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes, where upon a screen refresh will show it is Routed. 
+3. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes. A screen refresh will show it is Routed. 
 4. Select the [VLAN name](https://control.bluemix.net/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN ID <nnnn> (1199 in this example) as this will be used in a later step. 
 6. Select the [subnet}(https://control.bluemix.net/network/subnets) to see the IP subnet details. Make a note of the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. 
 
     64 Primary IP addresses are provisioned on the private network and it may require selecting page 2 or 3 to find the required entries.{tip}
 
-At this time the VSI is now inaccessible via the private or management networks as the internal VRA routing for this subnet has not been configured. A ping of the VSI should timeout if the VLAN has been successfully associated with the VRA and IP traffic for the subnet routed to the VRA.{tip}  
+
+7. Validate the that the subnet/VLAN is routed to the VRA and the VSI is not accessible via the management network from your workstation. 
+
+    `ping <VSI Private IP Address>`
+    
 
 The additional work to configure the enclosure and routing is now performed directly on the VRA via SSH. 
 
@@ -257,7 +263,7 @@ The additional work to configure the enclosure and routing is now performed dire
 
 Committing the VRA configuration only changes the running configuration. It does not change the configuration used at boot time. If access is lost to the VRA due to a configuration change, rebooting the VRA (from the IBM Cloud UI) will return the VRA to the previous save of the default boot configuration file. This could be from some time previously. 
 
-Only  save the configuration to the default system configuration file when you are satisfied that the changes perform the desired effect and do not affect operation or access to the VRA. Save the configuration to the default boot configuration file. 
+Only  save the configuration to the default system configuration file when you are satisfied that the changes perform the desired effect and do not affect operation or access to the VRA. Then save the configuration to the default boot configuration file. 
 
 If it is desired to return to a previous working configuration, by default the last 20 commit points can be viewed, compared or restored.  See the [Vyatta Network OS Basic System Configuration Guide[(https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation) for more details of commiting and saving the configuration.  
 
@@ -267,8 +273,11 @@ If it is desired to return to a previous working configuration, by default the l
     # compare
     ```
 
+### Configure VRA IP routing
 
-1. Configure the VRA virtual interface to route new subnet to the VLAN via the VRA: 
+Configure the VRA virtual interface to route to the new subnet from IBM private network via the VRA: 
+
+1. Login to the VRA by SSH. 
 
     ```
     SSH vyatta@<VRA Private IP Address>
@@ -301,13 +310,14 @@ If it is desired to return to a previous working configuration, by default the l
 	vrrp  ……
     ```
 
-4.  Validate the VSI is once again be accessible via the management network. 
+4.  Validate the VSI is once again be accessible via the management network from your workstation. 
 
     `ping <VSI Private IP Address>`
 
 
-
 ### Configure secure enclosure
+
+The secure private network enclosure is created though creation of zones and firewall rules.
 
 1. Define the basic deny all firewalls rules.
 
@@ -321,11 +331,12 @@ If it is desired to return to a previous working configuration, by default the l
     # commit
     ```
 
-2. Create the firewall address group that defines the IBM Cloud private networks that can access the enclosure and the networks that can be reached from the enclosure. 
+2. Create the IBM Cloud private network resource group. This address group defines the IBM Cloud private networks that can access the enclosure and the networks that can be reached from the enclosure. 
 
-    Initially two sets of IP addresses need access to and from the secure enclosure, these are the SSL VPN Data centers and on the IBM Cloud Service Network (backend/private network). [IBM Cloud IP Ranges](https://console.bluemix.net/docs/infrastructure/hardware-firewall-dedicated/ips.html) provides the full list of IP ranges that need to be allowed. SSL VPN address are for the data center you VPN in via, and other VPN access points in the regional cluster. 
+    Two sets of IP addresses need access to and from the secure enclosure, these are the SSL VPN Data centers and the IBM Cloud Service Network (backend/private network). [IBM Cloud IP Ranges](https://console.bluemix.net/docs/infrastructure/hardware-firewall-dedicated/ips.html) provides the full list of IP ranges that need to be allowed. 
     
-    From the SSL VPN section of IBM Cloud IP Ranges select the VPN access points for your data center or DC cluster. The example here shows the VPN address ranges for the IBM Cloud London data centers.
+    
+    - Define the SSL VPN address of the data centers you will VPN via. From the SSL VPN section of IBM Cloud IP Ranges select the VPN access points for your data center or DC cluster. The example here shows the VPN address ranges for the IBM Cloud London data centers.
 
     ```
     # set resources group address-group ibmprivate address 10.2.220.0/24
@@ -333,7 +344,7 @@ If it is desired to return to a previous working configuration, by default the l
     # set resources group address-group ibmprivate address 10.3.200.0/24
     ```
 
-3. The second set of required address ranges is the ‘Service Network (on backend/private network)’
+    - Define the address ranges for the IBM Cloud ‘Service Network (on backend/private network)’
 for WDC04, DAL01 and your target data center. The example here is WDC04 (two addresses), DAL01 and LON06.
  
     ``` 
@@ -344,7 +355,7 @@ for WDC04, DAL01 and your target data center. The example here is WDC04 (two add
     # commit
     ```
 
-4. Create Firewall zones and assign previously created firewall rules. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below. 
+3. Create zones and assign previously created firewall rules. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below. 
 
     ```
     # set security zone-policy zone INSIDE description "IBM Internal network"
@@ -359,19 +370,19 @@ for WDC04, DAL01 and your target data center. The example here is WDC04 (two add
     # set security zone-policy zone APP to INSIDE firewall APP-TO-INSIDE 
     ```
 
-5. Commit the configuration:
+4. Commit the configuration:
 
     ```
     # commit
     ```
 
-6. Verify that the firewall is now denying traffic
+5. Verify that the firewall is now denying traffic via the VRA to the VSI from your workstation. 
 
 
     `ping <VSI Private IP Address>`
     
     
-7. Define firewall access rules
+6. Define firewall access rules
 
     ```
     # set security firewall name INSIDE-TO-APP rule 200 protocol icmp
@@ -403,31 +414,36 @@ for WDC04, DAL01 and your target data center. The example here is WDC04 (two add
     # commit
     ```
 
-8. Validate the INSIDE-TO-APP firewall is now allowing ICMP and udp/tcp traffic, from your local machine 
+7. Validate the INSIDE-TO-APP firewall is now allowing ICMP and udp/tcp traffic, from your local machine 
 
     ```
     ping <VSI Private IP Address>
     SSH root@<VSI Private IP Address>
     ```
 
-9. Validate the APP-TO-INSIDE firewall is allowing ICMP and udp/tcp traffic, ping one of the IBM Cloud name servers at 10.0.80.11 and 10.0.80.12. 
+8. Validate the APP-TO-INSIDE firewall is allowing ICMP and udp/tcp traffic. Ping one of the IBM Cloud name servers at 10.0.80.11 and 10.0.80.12. 
 
     ```
     SSH root@<VSI Private IP Address>
     [root@vsi  ~]# ping 10.0.80.11 
     ```
 
-10. Validate continued access to the VRA management interface via SSH is all is OK, 
+9. Validate continued access to the VRA management interface via SSH from your workstation
 
-
-11. Review and save the configuration:
+    ```
+    SSH vyatta@<VRA Private IP Address>
+    ```
+    
+10. Review and save the configuration:
 
     ```
     # show security  
     # save
     ```
 
-    The firewall logs can be viewed from the VRA operational command prompt. By default no logging of traffic is performed. In this configuration, only dropped traffic for each Zone is logged to aid in diagnosis of firewall misconfiguration.  
+### Debugging firewall rules
+
+The firewall logs can be viewed from the VRA operational command prompt. By default no logging of traffic is performed. In this configuration, only dropped traffic for each Zone is logged to aid in diagnosis of firewall misconfiguration.  
 
     ```
     $ show log firewall name INSIDE-TO-APP
@@ -444,28 +460,23 @@ By default policy based zoning does not secure access to the VRA itself. This is
 
 After this rule set is merged, a new firewall rule set named ‘CPP’ will be added.
 
-Due to an outstanding defect it is not recommended to use ‘set service SSH listen-address x.x.x.x’ to limit SSH administrative access over the public network. Alternatively external access can be blocked via the CPP firewall for the range of public IP addresses used by the VRA public interface. The <VRA Public IP Subnet> is the same as the VRA Public IP with the last octet being zero (x.x.x.0).{note:}
+Due to an outstanding issue it is not recommended to use ‘set service SSH listen-address x.x.x.x’ to limit SSH administrative access over the public network. Alternatively external access can be blocked via the CPP firewall for the range of public IP addresses used by the VRA public interface. The <VRA Public IP Subnet> used here is the same as the <VRA Public IP Address> with the last octet being zero (x.x.x.0).{note:}
 
-```
-# set security firewall name CPP rule 900 action drop
-# set security firewall name CPP rule 900 destination address <VRA Public IP Subnet>/24
-# set security firewall name CPP rule 900 protocol tcp
-# set security firewall name CPP rule 900 destination port 22
-# commit 
-```
+    ```
+    # set security firewall name CPP rule 900 action drop
+    # set security firewall name CPP rule 900 destination address <VRA Public IP Subnet>/24
+    # set security firewall name CPP rule 900 protocol tcp
+    # set security firewall name CPP rule 900 destination port 22
+    # commit 
+    ```
 
 Validate VRA SSH administrative access over IBM Internal network. If access is lost check the parameters entered especially the VRA Public IP Subnet, the VRA can be rebooted from the IBM Cloud console and the previous saved configuration restored. If OK, save. 
 
-```
-# save
-```
+    ```
+    # save
+    ```
 
 This completes initial setup of the secure enclosure. 
-
-
-
-
-
 
 
 ## Remove resources
