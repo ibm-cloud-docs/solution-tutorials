@@ -23,11 +23,10 @@ This tutorial highlights how a [Virtual Router Appliance](https://console.bluemi
 This tutorial is a starting point for classic networking on the IBM Cloud and should not be considered a production capability as is. Additional capabilities that might be considered are:
 * [Direct Link](https://console.bluemix.net/docs/infrastructure/direct-link/getting-started.html#get-started-with-ibm-cloud-direct-link)
 * [Hardware firewall appliances](https://console.bluemix.net/docs/infrastructure/fortigate-10g/explore-firewalls.html)
-* [IPSec VPN](https://console.bluemix.net/catalog/infrastructure/ipsec-vpn)
+* [IPSec VPN](https://console.bluemix.net/catalog/infrastructure/ipsec-vpn) for secure connectivity to your data center.
 * High Availability with clustered VRAs and dual uplinks
 * Logging and auditing of security events
 
-~~Options are presented for enhancing the enclosure with the configuration of site-to-site VPN for secure data center connectivity and Network Address Translation (SNAT) for access to Internet services.~~
 {:shortdesc}
 
 
