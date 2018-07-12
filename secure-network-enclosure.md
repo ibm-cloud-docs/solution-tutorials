@@ -508,7 +508,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 ## Related content
 {:related}
-[IBM Virtual Router Appliance](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-basics.html#vra-basics)
-[Static and Portable IP Subnets](https://console.bluemix.net/docs/infrastructure/subnets/about.html)
-[IBM QRadar Security Intelligence Platform](http://www-01.ibm.com/support/knowledgecenter/SS42VS)
-[Vyatta documentation](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation)
+- [IBM Virtual Router Appliance](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-basics.html#vra-basics)
+- [Static and Portable IP Subnets](https://console.bluemix.net/docs/infrastructure/subnets/about.html)
+- [IBM QRadar Security Intelligence Platform](http://www-01.ibm.com/support/knowledgecenter/SS42VS)
+- [Vyatta documentation](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation)
