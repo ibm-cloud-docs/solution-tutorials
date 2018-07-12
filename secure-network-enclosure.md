@@ -275,11 +275,11 @@ Only save the configuration to the default system configuration file when you ar
 
 If it is desired to return to a previous working configuration, by default the last 20 commit points can be viewed, compared or restored.  See the [Vyatta Network OS Basic System Configuration Guide[(https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation) for more details of commiting and saving the configuration.  
 
-    ```
-    # show system commit 
-    # rollback n
-    # compare
-    ```
+   ```
+   # show system commit 
+   # rollback n
+   # compare
+   ```
 
 ### Configure VRA IP routing
 
