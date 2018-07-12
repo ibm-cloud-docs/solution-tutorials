@@ -97,27 +97,27 @@ Via the portal [Upload the SSH public key](https://console.bluemix.net/docs/infr
 
 The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an IBM Cloud provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
 
-1. Go to the catalog to create a [IBM Virtual Router Appliance](https://console.bluemix.net/catalog/infrastructure/virtual-router-appliance)
+1. From the catalog select a [IBM Virtual Router Appliance](https://console.bluemix.net/catalog/infrastructure/virtual-router-appliance)
 2. Click on **Create** to go to the **Gateway Appliances** page.  
 3. On the top right of the page click **Order Gateway**
-4. You will be redirected to the ordering screen where the target data center and the VRA Server type can be selected. 
+4. On the ordering screen, the target data center and the VRA Server type can be selected. 
 
-For a production environment it is recommended to use at a minimum - Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM.{tip}
+    For a production environment it is recommended to use at a minimum - Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM.{tip}
 
-   1. Select the target data center in the drop down at the top of the page
-   2. Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA 
-   3. RAM.
-   4. Operating System. Select the only option
+    * Select the target data center in the drop down at the top of the page
+    * Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA 
+    * RAM.
+    * Operating System. Select the only option
         - Virtual Router Appliance 5.x (up to 20Gbps) Subscription Edition (64 Bit) 
-   5. Uplink Port Speeds. Take the default or if required select 1Gbps, 10Gbps  and redundant links
-   6. Click **Add To Order**
+    * Uplink Port Speeds. Take the default or if required select 1Gbps, 10Gbps  and redundant links
+    * Click **Add To Order**
    
-5. You will be directed to the Checkout screen
+5. On the Checkout screen
  
-   1. Validate or change the choices already made.   
-   2. Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. 
-   3. Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
-   4. Click **Submit Order** 
+    * Validate or change the choices already made.   
+    * Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. 
+    * Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
+    * Click **Submit Order** 
 
 6. Monitor for creation on the Devices page or via email. VRA creation may take a number of hours to complete. 
 
@@ -134,72 +134,72 @@ For a production environment it is recommended to use at a minimum - Dual Intel 
 
 1. From your workstation, via the SSL VPN, login to the VRA using the default **vyatta** account, accepting the SSH security prompts. 
 
-```
-SSH vyatta@<VRA Private IP Address>
-```
+    ```
+    SSH vyatta@<VRA Private IP Address>
+    ```
 
-Setup of the VRA requires the VRA to be placed into \[edit\] mode using the `configure` or `conf` command. When in \[edit\] mode the prompt changes from $ to #. After successful VRA command execution a change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command. To return to the Vyatta system command prompt $, type `exit`. 
+    Setup of the VRA requires the VRA to be placed into \[edit\] mode using the `configure` or `conf` command. When in \[edit\] mode the prompt changes from $ to #. After successful VRA command execution a change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command. To return to the Vyatta system command prompt $, type `exit`. 
 
-If at any stage before the `save` command is entered, access is lost due to committing a configuration change, rebooting the VRA will return it back to the last save point, restoring access.{tip}
+    If at any stage before the `save` command is entered, access is lost due to committing a configuration change, rebooting the VRA will return it back to the last save point, restoring access.{tip}
 
 2. To enhance security, now that SSH login is successful via the private network, public network access to the VRA is removed along with userid/password authentication. 
 
-```
-vyatta@gateway1:-$ configure
-[edit]
-vyatta@gateway1# set service ssh disable-password-authentication
-[edit]
-vyatta@gateway1# commit
-[edit]
-vyatta@gateway1# save
-[edit]
-vyatta@gateway1# exit
-vyatta@gateway1:-$ 
-```
-From this point in this tutorial it is assumed that all VRA commands are entered at the \[edit\] # prompt, subsequent to entering `configure`. 
-
-The VRA is pre-configured for the IBM Cloud IaaS environment. This includes
-
-- NTP server
-- Name servers
-- SSH
-- HTTPS web server 
-- Default time-zone US/Chicago
-
+    ```
+    vyatta@gateway1:-$ configure
+    [edit]
+    vyatta@gateway1# set service ssh disable-password-authentication
+    [edit]
+    vyatta@gateway1# commit
+    [edit]
+    vyatta@gateway1# save
+    [edit]
+    vyatta@gateway1# exit
+    vyatta@gateway1:-$ 
+    ```
+    From this point in this tutorial it is assumed that all VRA commands are entered at the \[edit\] # prompt, subsequent to entering `configure`. 
+    
 3. Review the initial configuration
 
-```
-show
-```
+    ```
+    # show
+    ```    
+
+    The VRA is pre-configured for the IBM Cloud IaaS environment. This includes
+
+    - NTP server
+    - Name servers
+    - SSH
+    - HTTPS web server 
+    - Default time-zone US/Chicago
 
 4. Set local time zone as required. Auto-complete with the tab key will list the potential time zone values
 
-```
-# set system time-zone **<timezone>**
-# commit 
-```
+    ```
+    # set system time-zone <timezone>
+    # commit 
+    ```
 
 5. The following parameters should be configured:
 
-```
-# set security firewall all-ping enable
-# set security firewall broadcast-ping disable
-```
+    ```
+    # set security firewall all-ping enable
+    # set security firewall broadcast-ping disable
+    ```
 
 6. By default the VRA firewall is stateless. Stateful firewalls are used in this tutorial and set with the following commands. 
 
-```
-# set security firewall global-state-policy icmp
-# set security firewall global-state-policy udp
-# set security firewall global-state-policy tcp
-# commit
-```
+    ```
+    # set security firewall global-state-policy icmp
+    # set security firewall global-state-policy udp
+    # set security firewall global-state-policy tcp
+    # commit
+    ```
 
 7. Save the configuration
 
-```
-# save
-```
+    ```
+    # save
+    ```
 
 To proceed with the creation of the private enclosure, user VLANs for the provisioning of virtual and bare-metal servers must be first assigned to the VRA.
 
@@ -223,7 +223,8 @@ Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virt
 3. Click **Provision**
 4. Monitor for completion on the [Devices](https://control.bluemix.net/devices) page or via email. 
 5. Make note of the *Private IP address* of the VSI for a later step. 
-6. Verify access to the VSI via the IBM Cloud private network using `ping` and `SSH` from your local workstation over the VPN. 
+6. Verify access to the VSI via the IBM Cloud private network using `ping` and `SSH` from your local workstation over the VPN.
+
    ```
    ping <VSI Private IP Address>
    SSH root@<VSI Private IP Address>
