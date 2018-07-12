@@ -53,15 +53,15 @@ This tutorial will incur costs. The VRA is only available on a monthly pricing p
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution1/Architecture.png)
+  ![Architecture](images/secure_private_network.png)
 </p>
 
 
-1. The VRA is deployed
-2. Initial VRA setup
-3. Order the first server and VLAN
+1. Configure VPN
+2. Deploy VRA 
+3. Create Virtual Server
 4. Add VLAN to VRA
-5. Enclosure configuration
+5. Configure enclosure firewall
 
 
 ## Before you begin
