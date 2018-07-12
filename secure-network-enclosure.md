@@ -494,7 +494,7 @@ Validate VRA SSH administrative access over IBM Internal network. If access is l
 # save
 ```
 
-This completes initial setup of the secure enclosure. 
+This completes setup of the secure private network enclosure. Additional tutorials in this series illustrate show the enclosure can be securely connected by VPN to a client data center and enabled to access services on the public internet. 
 
 
 ## Remove resources
