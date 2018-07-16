@@ -282,6 +282,7 @@ set security zone-policy zone TUNNEL interface tun0
 set security zone-policy zone TUNNEL to APP firewall TUNNEL-TO-APP 
 set security zone-policy zone APP to TUNNEL firewall APP-TO-TUNNEL 
 commit
+save
 ```
 {: codeblock}
 
@@ -292,6 +293,7 @@ ping the gateway address of the remote subnet.
 ssh root@<VSI Private IP>
 ping <Remote Subnet Gateway IP>
 ```
+{: codeblock}
 
 This completes setup of the VPN from the secure private network enclosure. Additional tutorials in this series illustrate how the enclosure can access services on the public internet. 
 
