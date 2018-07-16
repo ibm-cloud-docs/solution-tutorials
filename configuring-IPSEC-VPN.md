@@ -50,14 +50,6 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
   ![Architecture](images/sec-priv-vpn.png)
 </p>
 
-
-1. Configure VPN
-2. Deploy VRA 
-3. Create Virtual Server
-4. Add VLAN to VRA
-5. Configure enclosure firewall
-
-
 1.	Document VPN Configuration
 2.	Create IPSec VPN on a VRA
 3.	Configuration of data center VPN and tunnel
