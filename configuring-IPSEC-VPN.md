@@ -83,7 +83,7 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 
 
 | Item | Description |
-| --- | --- | 
+| ------------------------ | ------------------------------------------------------------------------------ | 
 | <ike group name> | Name given to the IKE group for the connection. |
 | <ike encryption> | Agreed ike encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
 | <ike hash> | Agreed ike hash between IBM Cloud and client data center, typically ‘sha1’. |
