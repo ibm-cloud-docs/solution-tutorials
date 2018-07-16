@@ -3,7 +3,7 @@ IaaS platform’s private network is a common requirement. Most typically this c
 transfers, private workloads or administration of systems on the {{site.data.keyword.Bluemix_notm}}. A site-to-site Virtual 
 Private Network (VPN) tunnel is the usual approach to securing connectivity between networks. 
 
-{{site.data.keyword.Bluemix_notm}}provides a number of options for site-to-site data center connectivity, either using a 
+{{site.data.keyword.Bluemix_notm}} provides a number of options for site-to-site data center connectivity, either using a 
 VPN over the public internet or via a private dedicated network connection. 
 
 See [IBM Cloud Direct Link]( https://console.bluemix.net/docs/infrastructure/direct-link/getting-started.html#get-started-with-ibm-cloud-direct-link) 
@@ -35,6 +35,7 @@ be found in the [supplemental VRA documentation]( https://console.bluemix.net/do
 {: #products}
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
+
 •	[Virtual Router Appliance VPN](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
 
 **Attention:** This tutorial might incur costs. The VRA is only available on a monthly pricing plan. Use the 
@@ -81,24 +82,23 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 192.168.1.2. Any arbitrary subnet may be used with agreement of the on-site networking team. (192.168.1.1/24).
 
 
-*Item* | *Description*
---- | --- 
-<ike group name> | Name given to the IKE group for the connection 
-<ike encryption> | Agreed ike encryption standard between IBM Cloud and client data center, typically ‘aes256’
-<ike hash> | Agreed ike hash between IBM Cloud and client data center, typically ‘sha1’
-<ike-lifetime> | Ike lifetime from client data center, typically 3600
-<esp group name> | Name given to ESP group for the connection 
-<esp encryption> | Agreed esp encryption standard between IBM Cloud and client data center, typically ‘aes256’
-<esp hash> | Agreed esp hash between IBM Cloud and client data center, typically ‘sha1’
-<esp-lifetime> | Esp lifetime from client data center, typically 1800
-<DC VPN Public IP>  | Internet facing public IP address of the VPN gateway at the client data centre 
-<VRA Public IP> | Public IP address of the VRA created earlier
-<Remote tunnel IP/24> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict 
-with IP Cloud or client data center.  192.168.1.1/24.
-<Local tunnel IP/24> | IP address assigned to local end of IPSec tunnel.  192.168.1.2/24.
-<DC Subnet/CIDR> | IP address of subnet to be accessed in client data center and CIDR
-<App Zone subnet/CIDR> | Network IP address and CIDR of the App Zone subnet created with the VSI. 
-<Shared-Secret> | Shared encryption key to be used between IBM Cloud and client data center
+| Item | Description |
+| --- | --- | 
+| <ike group name> | Name given to the IKE group for the connection. |
+| <ike encryption> | Agreed ike encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
+| <ike hash> | Agreed ike hash between IBM Cloud and client data center, typically ‘sha1’. |
+| <ike-lifetime> | Ike lifetime from client data center, typically 3600. |
+| <esp group name> | Name given to ESP group for the connection. |
+| <esp encryption> | Agreed esp encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
+| <esp hash> | Agreed esp hash between IBM Cloud and client data center, typically ‘sha1’. |
+| <esp-lifetime> | Esp lifetime from client data center, typically 1800. |
+| <DC VPN Public IP>  | Internet facing public IP address of the VPN gateway at the client data centre. | 
+| <VRA Public IP> | Public IP address of the VRA created earlier. |
+| <Remote tunnel IP/24> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  192.168.1.1/24. |
+| <Local tunnel IP/24> | IP address assigned to local end of IPSec tunnel.  192.168.1.2/24. |
+| <DC Subnet/CIDR> | IP address of subnet to be accessed in client data center and CIDR. |
+| <App Zone subnet/CIDR> | Network IP address and CIDR of the App Zone subnet created with the VSI. | 
+| <Shared-Secret> | Shared encryption key to be used between IBM Cloud and client data center. |
 
 
 ## Configure IPSec VPN on a VRA
@@ -108,7 +108,7 @@ To create the VPN on the {{site.data.keyword.Bluemix_notm}}, the commands and al
 highlighted below. The changes are identified line by line, for each line that needs to be changed. Values come from the 
 table. 
 
-1.	SSH into VRA and enter \[edit\] mode.
+1. SSH into VRA and enter \[edit\] mode.
 
 ```bash
 SSH vyatta@<VRA Private IP Address>
@@ -116,9 +116,9 @@ configure
 ```
 {: codeblock}
 
-2.	Create Internet Key Exchange (IKE) group.
+2. Create Internet Key Exchange (IKE) group.
 
-```bash
+```
 set security vpn ipsec ike-group <ike group name> proposal 1
 set security vpn ipsec ike-group <ike group name> proposal 1 encryption <ike encryption>
 set security vpn ipsec ike-group <ike group name> proposal 1 hash <ike hash>
@@ -127,7 +127,7 @@ set security vpn ipsec ike-group <ike group name> lifetime <ike-lifetime>
 ```
 {: codeblock}
 
-3.	Create Encapsulating Security Payload (ESP) group
+3. Create Encapsulating Security Payload (ESP) group
 
 ```bash 
 set security vpn ipsec esp-group <esp group name> proposal 1 encryption <esp encryption>
@@ -138,9 +138,9 @@ set security vpn ipsec esp-group <esp group name> pfs enable
 ```
 {: codeblock}
 
-4.	Define site-to-site connection
+4. Define site-to-site connection
 
-```bash
+```
 set security vpn ipsec site-to-site peer <DC VPN Public IP>   authentication mode pre- shared-secret
 set security vpn ipsec site-to-site peer <DC VPN Public IP>  authentication pre-shared-secret <Shared-Secret>
 set security vpn ipsec site-to-site peer <DC VPN Public IP>  connection-type initiate
@@ -156,11 +156,11 @@ save
 ## Configure data center VPN and tunnel
 {: #Configure_DC_VPN}
 
-1.	The network team at the client data centre will configure an identical IPSec VPN connection with the <DC VPN Public IP> 
+1. The network team at the client data centre will configure an identical IPSec VPN connection with the <DC VPN Public IP> 
 and <VRA Public IP> swapped, the local and remote tunnel address and also the <DC Subnet/CIDR> and <App Zone subnet/CIDR> 
 parameters swapped. The specific configuration commands at the client data center will depend on the vendor of the VPN. 
 
-2.	When data center configuration is complete, the IPSec link should come up automatically. Verify the status of the 
+2. When data center configuration is complete, the IPSec link should come up automatically. Verify the status of the 
 connection from the VRA operational command line:
 
 ```bash
@@ -169,7 +169,7 @@ show vpn ipsec status
 ```
 {: codeblock}
 
-3.	If the link is not been created, validate that the local and remote addresses have been correctly specified and other 
+3. If the link is not been created, validate that the local and remote addresses have been correctly specified and other 
 parameters:
 
 ``` bash
@@ -180,7 +180,7 @@ show vpn debug
 ## Define GRE tunnel 
 {: #Define_Tunnel}
 
-1.	Create the GRE tunnel in VRA edit mode.
+1. Create the GRE tunnel in VRA edit mode.
 
 ```bash
 set interfaces tunnel tun0 address <Local tunnel IP/24>
@@ -192,7 +192,7 @@ commit
 {: codeblock}
 
 
-2.	Check the operations state of tunnel from VRA ops mode.
+2. Check the operations state of tunnel from VRA ops mode.
 
 ```bash
 show interfaces tunnel
@@ -208,7 +208,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 
 1.	Create static route in VRA edit mode.
 
-```bash
+```
 set protocols static route <DC Subnet/CIDR>  next-hop <Remote tunnel IP> 
 ```
 {: codeblock}
@@ -227,7 +227,7 @@ show ip route
 
 1.	Create firewall rules for traffic to the remote subnet in VRA edit mode.
 
-```bash
+```
 set security firewall name APP-TO-TUNNEL action drop 
 set security firewall name APP-TO-TUNNEL default-log 
 
@@ -250,7 +250,7 @@ commit
 ```
 {: codeblock}
 
-```bash
+```
 set security firewall name TUNNEL-TO-APP action drop 
 set security firewall name TUNNEL-TO-APP default-log 
 
@@ -274,7 +274,7 @@ commit
 
 2.	Create Zone for tunnel and associate firewalls for traffic initiated in either zone.  
 
-```bash
+```
 set security zone-policy zone TUNNEL description "GRE Tunnel"
 set security zone-policy zone TUNNEL default-action drop
 set security zone-policy zone TUNNEL interface tun0
@@ -291,7 +291,7 @@ ping the gateway address of the remote subnet.
 ```bash
 ssh root@<VSI Private IP>
 ping <Remote Subnet Gateway IP>
-	```
+```
 
 This completes setup of the VPN from the secure private network enclosure. Additional tutorials in this series illustrate how the 
 enclosure can access services on the public internet. 
