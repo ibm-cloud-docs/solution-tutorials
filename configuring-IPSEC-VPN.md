@@ -83,22 +83,22 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 
 
 | Item | Description |
-| ------------------------ | ------------------------------------------------------------------------------ | 
-| <ike group name> | Name given to the IKE group for the connection. |
-| <ike encryption> | Agreed ike encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
-| <ike hash> | Agreed ike hash between IBM Cloud and client data center, typically ‘sha1’. |
-| <ike-lifetime> | Ike lifetime from client data center, typically 3600. |
-| <esp group name> | Name given to ESP group for the connection. |
-| <esp encryption> | Agreed esp encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
-| <esp hash> | Agreed esp hash between IBM Cloud and client data center, typically ‘sha1’. |
-| <esp-lifetime> | Esp lifetime from client data center, typically 1800. |
-| <DC VPN Public IP>  | Internet facing public IP address of the VPN gateway at the client data centre. | 
-| <VRA Public IP> | Public IP address of the VRA created earlier. |
-| <Remote tunnel IP/24> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  192.168.1.1/24. |
-| <Local tunnel IP/24> | IP address assigned to local end of IPSec tunnel.  192.168.1.2/24. |
-| <DC Subnet/CIDR> | IP address of subnet to be accessed in client data center and CIDR. |
-| <App Zone subnet/CIDR> | Network IP address and CIDR of the App Zone subnet created with the VSI. | 
-| <Shared-Secret> | Shared encryption key to be used between IBM Cloud and client data center. |
+|:------------------------ |:------------------------------------------------------------------------------ | 
+| \<ike group name\> | Name given to the IKE group for the connection. |
+| \<ike encryption\> | Agreed ike encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
+| \<ike hash\> | Agreed ike hash between IBM Cloud and client data center, typically ‘sha1’. |
+| \<ike-lifetime\> | Ike lifetime from client data center, typically 3600. |
+| \<esp group name\> | Name given to ESP group for the connection. |
+| \<esp encryption\> | Agreed esp encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
+| \<esp hash\> | Agreed esp hash between IBM Cloud and client data center, typically ‘sha1’. |
+| \<esp-lifetime\> | Esp lifetime from client data center, typically 1800. |
+| \<DC VPN Public IP\>  | Internet facing public IP address of the VPN gateway at the client data centre. | 
+| \<VRA Public IP\> | Public IP address of the VRA created earlier. |
+| \<Remote tunnel IP/24\> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  192.168.1.1/24. |
+| \<Local tunnel IP/24\> | IP address assigned to local end of IPSec tunnel.  192.168.1.2/24. |
+| \<DC Subnet/CIDR\> | IP address of subnet to be accessed in client data center and CIDR. |
+| \<App Zone subnet/CIDR\> | Network IP address and CIDR of the App Zone subnet created with the VSI. | 
+| \<Shared-Secret\> | Shared encryption key to be used between IBM Cloud and client data center. |
 
 
 ## Configure IPSec VPN on a VRA
