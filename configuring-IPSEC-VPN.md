@@ -40,11 +40,22 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 **Attention:** This tutorial might incur costs. The VRA is only available on a monthly pricing plan. Use the 
 [Pricing Calculator](https://console.bluemix.net/pricing/)  to generate a cost estimate based on your projected usage.
-Architecture
+
+  
+## Architecture
 {: #architecture}
 
-Image:   
+<p style="text-align: center;">
 
+  ![Architecture](images/sec-priv-vpn.png)
+</p>
+
+
+1. Configure VPN
+2. Deploy VRA 
+3. Create Virtual Server
+4. Add VLAN to VRA
+5. Configure enclosure firewall
 
 
 1.	Document VPN Configuration
