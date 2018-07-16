@@ -52,7 +52,7 @@ This tutorial will incur costs. The VRA is only available on a monthly pricing p
 
 <p style="text-align: center;">
 
-  ![Architecture](images/secure_private_network.png)
+  ![Architecture](images/Secure-priv-enc.png)
 </p>
 
 
