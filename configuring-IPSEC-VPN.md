@@ -82,8 +82,8 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 192.168.1.2. Any arbitrary subnet may be used with agreement of the on-site networking team. (192.168.1.1/24).
 
 
-| Item | Description |
-|:------------------------ |:------------------------------------------------------------------------------ | 
+| Item  | Description |
+|:------ |:--- | 
 | \<ike group name\> | Name given to the IKE group for the connection. |
 | \<ike encryption\> | Agreed ike encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
 | \<ike hash\> | Agreed ike hash between IBM Cloud and client data center, typically ‘sha1’. |
@@ -94,8 +94,8 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 | \<esp-lifetime\> | Esp lifetime from client data center, typically 1800. |
 | \<DC VPN Public IP\>  | Internet facing public IP address of the VPN gateway at the client data centre. | 
 | \<VRA Public IP\> | Public IP address of the VRA created earlier. |
-| \<Remote tunnel IP/24\> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  192.168.1.1/24. |
-| \<Local tunnel IP/24\> | IP address assigned to local end of IPSec tunnel.  192.168.1.2/24. |
+| \<Remote tunnel IP\/24\> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  192.168.1.1/24. |
+| \<Local tunnel IP\/24\> | IP address assigned to local end of IPSec tunnel.  192.168.1.2/24. |
 | \<DC Subnet/CIDR\> | IP address of subnet to be accessed in client data center and CIDR. |
 | \<App Zone subnet/CIDR\> | Network IP address and CIDR of the App Zone subnet created with the VSI. | 
 | \<Shared-Secret\> | Shared encryption key to be used between IBM Cloud and client data center. |
@@ -129,7 +129,7 @@ set security vpn ipsec ike-group <ike group name> lifetime <ike-lifetime>
 
 3. Create Encapsulating Security Payload (ESP) group
 
-```bash 
+```
 set security vpn ipsec esp-group <esp group name> proposal 1 encryption <esp encryption>
 set security vpn ipsec esp-group <esp group name> proposal 1 hash <esp hash>
 set security vpn ipsec esp-group <esp group name> lifetime <esp-lifetime>
@@ -182,7 +182,7 @@ show vpn debug
 
 1. Create the GRE tunnel in VRA edit mode.
 
-```bash
+```
 set interfaces tunnel tun0 address <Local tunnel IP/24>
 set interfaces tunnel tun0 encapsulation gre
 set interfaces tunnel tun0 local-ip <VRA Public IP>
@@ -237,9 +237,6 @@ set security firewall name APP-TO-TUNNEL rule 100 destination port 22
 set security firewall name APP-TO-TUNNEL rule 100 destination port 80
 set security firewall name APP-TO-TUNNEL rule 100 destination port 443
 
-
-
-
 set security firewall name APP-TO-TUNNEL rule 110 action drop 
 set security firewall name APP-TO-TUNNEL rule 110 protocol udp
 
@@ -293,8 +290,7 @@ ssh root@<VSI Private IP>
 ping <Remote Subnet Gateway IP>
 ```
 
-This completes setup of the VPN from the secure private network enclosure. Additional tutorials in this series illustrate how the 
-enclosure can access services on the public internet. 
+This completes setup of the VPN from the secure private network enclosure. Additional tutorials in this series illustrate how the enclosure can access services on the public internet. 
 
 
 ## Remove resources
@@ -314,5 +310,3 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 - [Vyatta documentation](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation)
 - [Brocade Vyatta Network OS IPsec Site-to-Site VPN Configuration Guide, 5.2R1](https://public.dhe.ibm.com/cloud/bluemix/network/vra/vyatta-network-os-5.2r1-ipsec-vpn.pdf)
 - [Brocade Vyatta Network OS Tunnels Configuration Guide, 5.2R1](https://public.dhe.ibm.com/cloud/bluemix/network/vra/vyatta-network-os-5.2r1-tunnels.pdf)
-
-
