@@ -108,7 +108,7 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 3. Click the **Gear icon** on the **DEPLOY** stage and select **Clone Stage**.
    ![HelloWorld](images/solution1/CloneStage.png)
 4. Rename stage to "Deploy to UK" and select **JOBS**.
-5. Change **Target** to **United Kingdom**. Create a **space** if you don't have one.
+5. Change **IBM Cloud region** to **United Kingdom**. Create a **space** if you don't have one.
 6. Change **Deploy script** to `cf push "${CF_APP}" -d eu-gb.mybluemix.net`
 
    ![HelloWorld](images/solution1/DeployToUK.png)
