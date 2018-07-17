@@ -19,8 +19,9 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 **Attention:** This tutorial might incur costs. The VRA is only available on a monthly pricing plan. Use the [Pricing Calculator](https://console.bluemix.net/pricing/)  to generate a cost estimate based on your projected usage.
 
 
-##Architecture
+## Architecture
 {: #architecture}
+
 <p style="text-align: center;">
 
   ![Architecture](images/vra-nat.png)
