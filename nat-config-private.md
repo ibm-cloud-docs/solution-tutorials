@@ -13,7 +13,9 @@ This tutorial presents setup of Network Address Translation (NAT) masquerade on 
 {: #products}
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
+
 •	[Virtual Router Appliance VPN](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
+
 **Attention:** This tutorial might incur costs. The VRA is only available on a monthly pricing plan. Use the [Pricing Calculator](https://console.bluemix.net/pricing/)  to generate a cost estimate based on your projected usage.
 
 
