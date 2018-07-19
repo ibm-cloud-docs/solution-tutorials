@@ -84,7 +84,7 @@ systems in the ‘DC IP Subnet’ in the client data center.
 ![](images/vpn-addresses.png)
 
 
-The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user and the networking 
+The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user configuring the VPN and the networking 
 team for the client data center. In this example the Remote and Local tunnel IP addresses are set to 192.168.10.1 and 
 192.168.10.2. Any arbitrary subnet may be used with agreement of the on-site networking team. (192.168.10.1/24).
 
@@ -93,7 +93,7 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 |:------ |:--- | 
 | \<ike group name\> | Name given to the IKE group for the connection. |
 | \<ike encryption\> | Agreed IKE encryption standard to be used between {{site.data.keyword.Bluemix_notm}} and the client data center, typically ‘aes256’. |
-| \<ike hash\> | Agreed ike hash between {{site.data.keyword.Bluemix_notm}} and client data center, typically ‘sha1’. |
+| \<ike hash\> | Agreed IKE hash between {{site.data.keyword.Bluemix_notm}} and client data center, typically ‘sha1’. |
 | \<ike-lifetime\> | IKE lifetime from client data center, typically 3600. |
 | \<esp group name\> | Name given to ESP group for the connection. |
 | \<esp encryption\> | Agreed ESP encryption standard between {{site.data.keyword.Bluemix_notm}} and client data center, typically ‘aes256’. |
@@ -113,7 +113,7 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 {: #Configure_VRA_VPN}
 
 To create the VPN on the {{site.data.keyword.Bluemix_notm}}, the commands and all the variables that need to changed, are 
-highlighted below. The changes are identified line by line, for each line that needs to be changed. Values come from the 
+highlighted below with \< \>. The changes are identified line by line, for each line that needs to be changed. Values come from the 
 table. 
 
 1. SSH into VRA and enter \[edit\] mode.
@@ -149,7 +149,7 @@ set security vpn ipsec esp-group <esp group name> pfs enable
 4. Define site-to-site connection
 
 ```
-set security vpn ipsec site-to-site peer <DC VPN Public IP>   authentication mode pre- shared-secret
+set security vpn ipsec site-to-site peer <DC VPN Public IP>  authentication mode pre- shared-secret
 set security vpn ipsec site-to-site peer <DC VPN Public IP>  authentication pre-shared-secret <Shared-Secret>
 set security vpn ipsec site-to-site peer <DC VPN Public IP>  connection-type initiate
 set security vpn ipsec site-to-site peer <DC VPN Public IP>  ike-group <ike group name>
@@ -164,8 +164,8 @@ save
 ## Configure data center VPN and tunnel
 {: #Configure_DC_VPN}
 
-1. The network team at the client data centre will configure an identical IPSec VPN connection with the <DC VPN Public IP> 
-and <VRA Public IP> swapped, the local and remote tunnel address and also the <DC Subnet/CIDR> and <App Zone subnet/CIDR> 
+1. The network team at the client data centre will configure an identical IPSec VPN connection with the <\DC VPN Public IP\> 
+and \<VRA Public IP\> swapped, the local and remote tunnel address and also the <\DC Subnet/CIDR\> and <\App Zone subnet/CIDR\> 
 parameters swapped. The specific configuration commands at the client data center will depend on the vendor of the VPN. 
 
 2. When data center configuration is complete, the IPSec link should come up automatically. Verify the status of the 
@@ -177,8 +177,8 @@ show vpn ipsec status
 ```
 {: codeblock}
 
-3. If the link is not been created, validate that the local and remote addresses have been correctly specified and other 
-parameters:
+3. If the link has not been created, validate that the local and remote addresses have been correctly specified and other 
+parameters are as expected:
 
 ``` bash
 show vpn debug 
