@@ -514,7 +514,6 @@ show log firewall name APP-TO-INSIDE
 
 ```bash
 monitor interface bonding dp0bond0 traffic
-
 monitor interface bonding dp0bond0.<VLAN ID> traffic
 ```
 
@@ -522,7 +521,7 @@ monitor interface bonding dp0bond0.<VLAN ID> traffic
 
 {: #securing_the_vra}
 
-1. Apply VRA security policy. By default policy based zoning does not secure access to the VRA itself. This is configured through Control Plane Policing (CPP). VRA provides a basic CPP rule set as a template. Merge it into your configuration: 
+1. Apply VRA security policy. By default policy based firewall zoning does not secure access to the VRA itself. This is configured through Control Plane Policing (CPP). VRA provides a basic CPP rule set as a template. Merge it into your configuration: 
 
 ```bash
 merge /opt/vyatta/etc/cpp.conf 
@@ -531,6 +530,7 @@ merge /opt/vyatta/etc/cpp.conf
 {: codeblock}
 
 This creates a new firewall rule set named `CPP`, view the additional rules and commit in \[edit\] mode. 
+
 ```
 show security firewall name CPP
 commit
@@ -538,7 +538,7 @@ commit
 
 {: codeblock}
 
-2. Securing public SSH access. Due to an outstanding issue with the Vyatta firmware it is not recommended to use `set service SSH listen-address x.x.x.x` to limit SSH administrative access over the public network. Alternatively external access can be blocked via the CPP firewall for the range of public IP addresses used by the VRA public interface. The <VRA Public IP Subnet> used here is the same as the <VRA Public IP Address> with the last octet being zero (x.x.x.0). 
+2. Securing public SSH access. Due to an outstanding issue with the Vyatta firmware it is not recommended to use `set service SSH listen-address x.x.x.x` to limit SSH administrative access over the public network. Alternatively external access can be blocked via the CPP firewall for the range of public IP addresses used by the VRA public interface. The \<VRA Public IP Subnet\> used here is the same as the \<VRA Public IP Address\> with the last octet being zero (x.x.x.0). 
 
 ```
 set security firewall name CPP rule 900 action drop
