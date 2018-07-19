@@ -1,3 +1,5 @@
+# VPN connection to a secure private network on the {{site.data.keyword.Bluemix_notm}} IaaS platform
+
 The need to create a private connection between a remote network environment and servers on {{site.data.keyword.Bluemix_notm}} 
 IaaS platform’s private network is a common requirement. Most typically this connectivity supports hybrid workloads, data 
 transfers, private workloads or administration of systems on the {{site.data.keyword.Bluemix_notm}}. A site-to-site Virtual 
@@ -90,20 +92,20 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 | Item  | Description |
 |:------ |:--- | 
 | \<ike group name\> | Name given to the IKE group for the connection. |
-| \<ike encryption\> | Agreed ike encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
-| \<ike hash\> | Agreed ike hash between IBM Cloud and client data center, typically ‘sha1’. |
-| \<ike-lifetime\> | Ike lifetime from client data center, typically 3600. |
+| \<ike encryption\> | Agreed IKE encryption standard to be used between {{site.data.keyword.Bluemix_notm}} and the client data center, typically ‘aes256’. |
+| \<ike hash\> | Agreed ike hash between {{site.data.keyword.Bluemix_notm}} and client data center, typically ‘sha1’. |
+| \<ike-lifetime\> | IKE lifetime from client data center, typically 3600. |
 | \<esp group name\> | Name given to ESP group for the connection. |
-| \<esp encryption\> | Agreed esp encryption standard between IBM Cloud and client data center, typically ‘aes256’. |
-| \<esp hash\> | Agreed esp hash between IBM Cloud and client data center, typically ‘sha1’. |
-| \<esp-lifetime\> | Esp lifetime from client data center, typically 1800. |
+| \<esp encryption\> | Agreed ESP encryption standard between {{site.data.keyword.Bluemix_notm}} and client data center, typically ‘aes256’. |
+| \<esp hash\> | Agreed ESP hash between {{site.data.keyword.Bluemix_notm}} and client data center, typically ‘sha1’. |
+| \<esp-lifetime\> | ESP lifetime from client data center, typically 1800. |
 | \<DC VPN Public IP\>  | Internet facing public IP address of the VPN gateway at the client data centre. | 
-| \<VRA Public IP\> | Public IP address of the VRA created earlier. |
-| \<Remote tunnel IP\/24\> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  192.168.10.1/24. |
-| \<Local tunnel IP\/24\> | IP address assigned to local end of IPSec tunnel.  192.168.10.2/24. |
+| \<VRA Public IP\> | Public IP address of the VRA. |
+| \<Remote tunnel IP\/24\> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  (192.168.10.1/24) |
+| \<Local tunnel IP\/24\> | IP address assigned to local end of IPSec tunnel.  (192.168.10.2/24) |
 | \<DC Subnet/CIDR\> | IP address of subnet to be accessed in client data center and CIDR. |
-| \<App Zone subnet/CIDR\> | Network IP address and CIDR of the App Zone subnet created with the VSI. | 
-| \<Shared-Secret\> | Shared encryption key to be used between IBM Cloud and client data center. |
+| \<App Zone subnet/CIDR\> | Network IP address and CIDR of the APP Zone subnet from the VRA creation tutorial. | 
+| \<Shared-Secret\> | Shared encryption key to be used between {{site.data.keyword.Bluemix_notm}} and client data center. |
 
 
 
