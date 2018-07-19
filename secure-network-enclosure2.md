@@ -16,7 +16,7 @@ lastupdated: "2018-07-16"
 {:pre: .pre}
 
 # Secure Private Network on the {{site.data.keyword.Bluemix_notm}}
-The need for isolated and secure private network environments is central to the IaaS application deployment model on a public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. Within which virtual machines and bare-metal servers can be securely deployed in multi-tier application topologies while proving protection from risks on the public internet.  
+The need for isolated and secure private network environments is central to the IaaS application deployment model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. This isolation enables virtual machines and bare-metal servers to be securely deployed in complex multi-tier application topologies while proving protection from risks on the public internet.  
 
 This tutorial highlights how a [Virtual Router Appliance](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/faqs.html#what-is-vra-) (VRA) can be configured on the {{site.data.keyword.Bluemix_notm}} to create a secure private network (enclosure). The VRA Gateway Appliance provides in a single self-managed package, a firewall, VPN gateway, Network Address Translation (NAT) and enterprise-grade routing. In this tutorial, a VRA is used to show how an enclosed, isolated network environment can be created on the {{site.data.keyword.Bluemix_notm}}d. Within this enclosure application topologies can be created, using the familiar and well known technologies of IP routing, VLANs, IP subnets, firewall rules, virtual and bare-metal servers.  
 
@@ -52,7 +52,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 <p style="text-align: center;">
 
-  ![Architecture](images/secure_private_network.png)
+  ![Architecture](images/Secure-priv-enc.png)
 </p>
 
 
@@ -77,7 +77,7 @@ In this tutorial the network enclosure created is not visible on the public Inte
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or preferably use your local workstation with a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows). 
 
-Use the FQDN of a single data center VPN access point from the previous of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
+For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page(https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
 
 {tip}
 
@@ -94,9 +94,9 @@ Via the portal [Upload the SSH public key](https://console.bluemix.net/docs/infr
 
 ### Target data center
 
-Choose an {{site.data.keyword.Bluemix_notm}} data center to deploy the secure private network. This tutorial assumes that the users account has no infrastructure, specifically no [VLANs](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans) deployed in the target data center. 
+Choose a {{site.data.keyword.Bluemix_notm}} data center to deploy the secure private network. This tutorial assumes that the users account has no infrastructure, specifically no [VLANs](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans) deployed in the target data center. 
 
-When infrastructure and VLANs are deleted, it can take up for 5 days for the VLANs to be reclaimed.{tip:}
+When infrastructure and VLANs are deleted, it can take up for 5 days for the VLANs to be reclaimed. Any existing user VLANs used for virtual machines may not be accessible to the VRA when it is provisioned. {tip:}
 
 
 ## Provision Virtual Router Appliance
