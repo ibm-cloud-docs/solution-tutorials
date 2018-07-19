@@ -96,7 +96,7 @@ Via the portal [Upload the SSH public key](https://console.bluemix.net/docs/infr
 
 Choose a {{site.data.keyword.Bluemix_notm}} data center to deploy the secure private network. This tutorial assumes that the users account has no infrastructure, specifically no [VLANs](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans) deployed in the target data center. 
 
-When infrastructure and VLANs are deleted, it can take up for 5 days for the VLANs to be reclaimed. Any existing user VLANs used for virtual machines may not be accessible to the VRA when it is provisioned. {tip:}
+When infrastructure and VLANs are deleted, it can take up for 5 days for the VLANs to be reclaimed. Any user VLANs used for virtual machines that exist prior to this step may not be accessible to the VRA when it is provisioned. {tip:}
 
 
 ## Provision Virtual Router Appliance
@@ -224,7 +224,7 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
 {: #order_virtualserver_and_vlan}
 
-To create the private enclosure, one or more user VLANs for the provisioning of virtual and bare-metal servers must be assigned to the VRA. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology can be ordered via a [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans). Note only a limited number of VLANs available for a single client in a data center.  
+To create the private enclosure, one or more user VLANs for the provisioning of virtual and bare-metal servers must be assigned to the VRA. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology can be ordered via a [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans). Note only a limited number of VLANs are available for a single client in a data center.  
 
 When multiple user VLANs are present, prevision new virtual or bare-metal servers via the **Device** menu on the [Softlayer Dashboard](https://control.softlayer.com/). This dialog allows the target VLAN to be specified when a new device is provisioned.   
 
@@ -389,7 +389,7 @@ Two zones are defined:
         ```
       {: codeblock}
 
-3. Create zones and assign previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below as \<VLAN ID\>.
+3. Create the APP zone for the user VLAN and subnet and the INSIDE zone for the {{site.data.keyword.Bluemix_notm}} private network. Assign the previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below as \<VLAN ID\>.
 
     ```
     set security zone-policy zone INSIDE description "IBM Internal network"
