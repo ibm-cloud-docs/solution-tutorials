@@ -329,7 +329,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
     show interfaces
     ```
 
-    This is an example interface configuration.
+    This is an example interface configuration showing vif 1199 and the subnet gateway address.
 
    ![](images/show_interfaces.png)
 
