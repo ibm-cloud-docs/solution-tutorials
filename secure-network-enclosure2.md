@@ -15,7 +15,7 @@ lastupdated: "2018-07-16"
 {:tip: .tip}
 {:pre: .pre}
 
-# Secure Private Network on the {{site.data.keyword.Bluemix_notm}}
+# Secure Private Network on the {{site.data.keyword.Bluemix_notm}} IaaS platform
 The need for isolated and secure private network environments is central to the IaaS application deployment model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. This isolation enables virtual machines and bare-metal servers to be securely deployed in complex multi-tier application topologies while proving protection from risks on the public internet.  
 
 This tutorial highlights how a [Virtual Router Appliance](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/faqs.html#what-is-vra-) (VRA) can be configured on the {{site.data.keyword.Bluemix_notm}} to create a secure private network (enclosure). The VRA Gateway Appliance provides in a single self-managed package, a firewall, VPN gateway, Network Address Translation (NAT) and enterprise-grade routing. In this tutorial, a VRA is used to show how an enclosed, isolated network environment can be created on the {{site.data.keyword.Bluemix_notm}}d. Within this enclosure application topologies can be created, using the familiar and well known technologies of IP routing, VLANs, IP subnets, firewall rules, virtual and bare-metal servers.  
