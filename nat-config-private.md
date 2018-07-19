@@ -1,3 +1,6 @@
+# Internet access from a private network on the {{site.data.keyword.Bluemix_notm}} IaaS platform
+
+
 In today’s world of web based IT applications and services, few applications exist in isolation. Developers have come to expect access to services on the internet, whether it is open-source application code and updates or ‘third party’ services providing application functionality via REST APIs. Network Address Translation (NAT) masquerade, is a commonly used approach to securing the access to internet hosted service from  private networks. In NAT masquerade, private IP addresses are translated to the IP address of the out-bound public interface in a many-to-one relationship, shielding the private IP address from public access.  
 
 This tutorial presents setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the secure private network enclosure documented in tutorial xxxxxxxx adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
