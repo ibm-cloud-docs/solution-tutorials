@@ -69,20 +69,22 @@ must be completed first.
 
 Configuring an IPSec VPN site-to-site link between your data center and {{site.data.keyword.Bluemix_notm}} requires 
 coordination with your onsite networking team to determine many of the configuration parameters, the type of tunnel and 
-routing choice. The parameters have to be in exact accordance for an operational VPN connection. Typically your onsite 
+IP routing information. The parameters have to be in exact accordance for an operational VPN connection. Typically your onsite 
 networking team will specify the configuration to match agreed corporate standards and provide you with the necessary 
-local IP addresses of the VPN, and accessible subnet address ranges. 
+IP address of the VPN gateway, and the subnet address ranges that can be accessed. 
 
 Before commencing setup of the VPN, the IP addresses of the and subnet ranges must be determined and available for the data 
 center VPN configuration and for the secure private network enclosure in the {{site.data.keyword.Bluemix_notm}}. These are 
-illustrated in the following figure, where the App zone in the secure enclosure will be connected via the IPSec tunnel to 
+illustrated in the following figure, where the APP zone in the secure enclosure will be connected via the IPSec tunnel to 
 systems in the ‘DC IP Subnet’ in the client data center.   
 
- 
+
+![](images/vpn-addresses.png)
+
 
 The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user and the networking 
-team for the client data center. In this example the Remote and Local tunnel IP addresses are set to 192.168.1.1 and 
-192.168.1.2. Any arbitrary subnet may be used with agreement of the on-site networking team. (192.168.1.1/24).
+team for the client data center. In this example the Remote and Local tunnel IP addresses are set to 192.168.10.1 and 
+192.168.10.2. Any arbitrary subnet may be used with agreement of the on-site networking team. (192.168.10.1/24).
 
 
 | Item  | Description |
@@ -97,11 +99,12 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 | \<esp-lifetime\> | Esp lifetime from client data center, typically 1800. |
 | \<DC VPN Public IP\>  | Internet facing public IP address of the VPN gateway at the client data centre. | 
 | \<VRA Public IP\> | Public IP address of the VRA created earlier. |
-| \<Remote tunnel IP\/24\> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  192.168.1.1/24. |
-| \<Local tunnel IP\/24\> | IP address assigned to local end of IPSec tunnel.  192.168.1.2/24. |
+| \<Remote tunnel IP\/24\> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  192.168.10.1/24. |
+| \<Local tunnel IP\/24\> | IP address assigned to local end of IPSec tunnel.  192.168.10.2/24. |
 | \<DC Subnet/CIDR\> | IP address of subnet to be accessed in client data center and CIDR. |
 | \<App Zone subnet/CIDR\> | Network IP address and CIDR of the App Zone subnet created with the VSI. | 
 | \<Shared-Secret\> | Shared encryption key to be used between IBM Cloud and client data center. |
+
 
 
 ## Configure IPSec VPN on a VRA
