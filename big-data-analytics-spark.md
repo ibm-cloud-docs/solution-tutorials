@@ -58,15 +58,15 @@ The [Jupyter Notebook](http://jupyter.org/) is an open-source web application th
 2. Use **Blank** notebook. Enter `MyNotebook` as the **Name**.
 3. From the **Select runtime** menu, chose the Spark instance you added to the project's settings. Keep the default **Language** as **Python 3.5**.
 4. Click **Create Notebook** to complete the process.
-If you have never worked with Jupyter Notebooks, click on the **Docs** icon on the upper right menu. Navigate to **Analyze data**, then the [**Notebooks** section](https://dataplatform.ibm.com/docs/content/analyze-data/notebooks-parent.html?context=analytics) to learn more about [notebooks and their parts](https://dataplatform.ibm.com/docs/content/analyze-data/parts-of-a-notebook.html?context=analytics&linkInPage=true). The field where you enter text and commands is called a **Cell**. You can execute the content of a cell by either clicking on the **Run** icon in the toolbar or by pressing **Shift+Enter** on the keyboard.
-{:tip}
-1. Copy the following code into the empty cell to import the [**Pixiedust** package](https://ibm-watson-data-lab.github.io/pixiedust/use.html).
+5. The field where you enter text and commands is called a **Cell**. Copy the following code into the empty cell to import the [**Pixiedust** package](https://ibm-watson-data-lab.github.io/pixiedust/use.html). Execute the cell by either clicking on the **Run** icon in the toolbar or by pressing **Shift+Enter** on the keyboard.
    ```Python
    import pixiedust
    ```
    {:codeblock}
-   Run the cell, i.e., execute the **import pixiedust** command.
    ![](images/solution23/FirstCell_ImportPixiedust.png)
+
+If you've never worked with Jupyter Notebooks, click on the **Docs** icon on the upper right menu. Navigate to **Analyze data**, then the [**Notebooks** section](https://dataplatform.ibm.com/docs/content/analyze-data/notebooks-parent.html?context=analytics) to learn more about [notebooks and their parts](https://dataplatform.ibm.com/docs/content/analyze-data/parts-of-a-notebook.html?context=analytics&linkInPage=true).
+{:tip}
 
 ## Load data
 Next load three open data sets and make them available within the notebook. The **Pixiedust** library allows you to easily [load **CSV** files using an URL](https://ibm-watson-data-lab.github.io/pixiedust/loaddata.html).
