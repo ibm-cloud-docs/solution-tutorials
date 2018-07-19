@@ -77,7 +77,7 @@ In this tutorial the network enclosure created is not visible on the public Inte
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or preferably use your local workstation with a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows). 
 
-For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page(https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
+For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page](https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
 
 {tip}
 
@@ -151,9 +151,9 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
     Setup of the VRA requires the VRA to be placed into \[edit\] mode using the `configure` or `conf` command. 
 
-    When in `edit` mode the prompt changes from `$` to `#`. After successful VRA command execution a change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command. To return to the Vyatta system command prompt `$`, and then type `exit`. 
+    When in `edit` mode the prompt changes from `$` to `#`. After successful VRA command execution a change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command. To return to the Vyatta system command prompt `$`, type `exit`. 
 
-    If at any stage before the `save` command is entered, access is lost due to committing a configuration change, rebooting the VRA will return it back to the last save point, restoring access.
+    If at any stage before the `save` command is entered, access is lost due to committing a bad configuration change, rebooting the VRA will return it back to the last save point, restoring access.
 
     {: tip} 
 
@@ -224,9 +224,9 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
 {: #order_virtualserver_and_vlan}
 
-To create the private enclosure, one or more user VLANs for the provisioning of virtual and bare-metal servers must be assigned to the VRA. There is no charge for the first private and first public VLANs. The [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans) can order additional VLANs, are, and the number available is limited. 
+To create the private enclosure, one or more user VLANs for the provisioning of virtual and bare-metal servers must be assigned to the VRA. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology can be ordered via a [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans). Note only a limited number of VLANs available for a single client in a data center.  
 
-To choose the VLAN a virtual or bare-metal server is provisioned to, use the [Softlayer Dashboard](https://control.softlayer.com/).
+When multiple user VLANs are present, prevision new virtual or bare-metal servers via the **Device** menu on the [Softlayer Dashboard](https://control.softlayer.com/). This dialog allows the target VLAN to be specified when a new device is provisioned.   
 
 {tip:}
 
@@ -268,13 +268,15 @@ A private VLAN and primary IP Subnet will have been automatically provisioned by
 
     {tip}
 
-2. Click **Associate** to tell {{site.data.keyword.Bluemix_notm}} that the IP routing for this VLAN will now be manged by this VRA. Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN will be shown as *Bypassed*.{tip}
+2. Click **Associate** to tell {{site.data.keyword.Bluemix_notm}} that the IP routing for this VLAN will now be manged by this VRA. Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. 
+
+At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN will be shown as *Bypassed*.{tip}
 
 3. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes. A screen refresh will show it is Routed. 
 
 4. Select the [VLAN name](https://control.bluemix.net/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN ID <nnnn> (1199 in this example) as this will be used in a later step. 
 
-5. Select the [subnet}(https://control.bluemix.net/network/subnets) to see the IP subnet details. Make a note of the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. 64 Primary IP addresses are provisioned on the private network and it may require selecting page 2 or 3 to find the required entries.
+5. Select the [subnet](https://control.bluemix.net/network/subnets) to see the IP subnet details. Make a note of the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. 64 Primary IP addresses are provisioned on the private network and it may require selecting page 2 or 3 to find the required entries.
 
 6. Validate the that the subnet/VLAN is routed to the VRA and the VSI is not accessible via the management network from your workstation. The additional work to configure the enclosure and routing is now performed directly on the VRA via SSH. 
 
@@ -288,7 +290,7 @@ A private VLAN and primary IP Subnet will have been automatically provisioned by
 
 {: #vra_setup}
 
-When the VRA configuration is commited, only the running configuration is changed. It does not change the configuration used at boot time. If access is lost to the VRA due to a configuration change, rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} dashboard will return the VRA to the previous save of the boot configuration file. This save could be from some time previously. 
+When the VRA configuration is commited, only the running configuration is changed. It does not change the configuration used at boot time. If access is lost to the VRA due to a configuration change, rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} dashboard will return the VRA to the previous save of the boot configuration file. This saved configuration could be from some time previously. 
 
 Only save the configuration to the default system configuration file when you are satisfied that the changes perform the desired effect and do not affect operation or access to the VRA. 
 
@@ -304,7 +306,7 @@ compare
 
 ### Configure VRA IP routing
 
-Configure the VRA virtual network interface to route to the new subnet from IBM private network.  
+Configure the VRA virtual network interface to route to the new subnet from the {{site.data.keyword.Bluemix_notm}} private network.  
 
 1. Login to the VRA by SSH. 
 
@@ -380,7 +382,7 @@ Two zones are defined:
 2. Create the {{site.data.keyword.Bluemix_notm}} private network resource group. This address group defines the {{site.data.keyword.Bluemix_notm}} private networks that can access the enclosure and the networks that can be reached from the enclosure. Two sets of IP addresses need access to and from the secure enclosure, these are the SSL VPN Data centers and the {{site.data.keyword.Bluemix_notm}} Service Network (backend/private network). [{{site.data.keyword.Bluemix_notm}} IP Ranges](https://console.bluemix.net/docs/infrastructure/hardware-firewall-dedicated/ips.html) provides the full list of IP ranges that need to be allowed. 
 
 
-    - Define the SSL VPN address of the data centers you will VPN via. From the SSL VPN section of {{site.data.keyword.Bluemix_notm}} IP Ranges select the VPN access points for your data center or DC cluster. The example here shows the VPN address ranges for the {{site.data.keyword.Bluemix_notm}} London data centers.
+    - Define the SSL VPN address of the data center(s) you are using for VPN access. From the SSL VPN section of {{site.data.keyword.Bluemix_notm}} IP Ranges select the VPN access points for your data center or DC cluster. The example here shows the VPN address ranges for the {{site.data.keyword.Bluemix_notm}} London data centers.
     
         ```
         set resources group address-group ibmprivate address 10.2.220.0/24
@@ -401,7 +403,7 @@ Two zones are defined:
         ```
       {: codeblock}
 
-3. Create zones and assign previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below. 
+3. Create zones and assign previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below as <VLAN ID>.
 
     ```
     set security zone-policy zone INSIDE description "IBM Internal network"
@@ -417,7 +419,7 @@ Two zones are defined:
     ```
     {: codeblock}
 
-4. Commit the configuration and from your workstation verify that the firewall is now denying traffic via the VRA to the VSI: 
+4. Commit the configuration and from your workstation verify using ping that the firewall is now denying traffic via the VRA to the VSI: 
 
     ```
     commit
@@ -429,7 +431,7 @@ Two zones are defined:
     ```
     {: codeblock}
 
-5. Define firewall access rules.
+5. Define firewall access rules for udp, tcp and icmp.
 
     ```
     set security firewall name INSIDE-TO-APP rule 200 protocol icmp
@@ -472,7 +474,7 @@ Two zones are defined:
     ```
     {: codeblock}
 
-- Confirm the APP-TO-INSIDE firewall is allowing ICMP and udp/tcp traffic. Ping one of the {{site.data.keyword.Bluemix_notm}} name servers at 10.0.80.11 and 10.0.80.12. 
+- Confirm the APP-TO-INSIDE firewall is allowing ICMP and udp/tcp traffic. Login to the VSI using SSH and ping one of the {{site.data.keyword.Bluemix_notm}} name servers at 10.0.80.11 and 10.0.80.12. 
 
     ```bash
     SSH root@<VSI Private IP Address>
@@ -480,7 +482,7 @@ Two zones are defined:
     ```
     {: codeblock}
 
-7. Validate continued access to the VRA management interface via SSH from your workstation. If access is maintained, review and save the configuration.
+7. Validate continued access to the VRA management interface via SSH from your workstation. If access is maintained, review and save the configuration. Otherwise a reboot of the VRA will return back to a working configuration. 
 
 
     ```bash
@@ -508,13 +510,13 @@ show log firewall name APP-TO-INSIDE
 
 {: codeblock}
 
-2. If services or servers are not contactable and nothing is seen in the firewall logs. Verify if the expected IP traffic is present on the VRA network interface.
+2. If services or servers are not contactable and nothing is seen in the firewall logs. Verify if the expected ping/ssh IP traffic is present on the VRA network interface from the {{site.data.keyword.Bluemix_notm}} private network or on the VRA interface to the VLAN using the <VLAN ID> from earlier. 
 
-```
+```bash
 monitor interface bonding dp0bond0 traffic
 
-XxXXXXXXXXXXXXX
-
+monitor interface bonding dp0bond0.<VLAN ID> traffic
+```
 
 ## Securing the VRA
 
