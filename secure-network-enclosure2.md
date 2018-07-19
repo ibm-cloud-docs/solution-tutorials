@@ -274,7 +274,7 @@ At this stage the VLAN and associated subnet are not protected or routed via the
 
 3. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes. A screen refresh will show it is Routed. 
 
-4. Select the [VLAN name](https://control.bluemix.net/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN ID <nnnn> (1199 in this example) as this will be used in a later step. 
+4. Select the [VLAN name](https://control.bluemix.net/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN ID \<nnnn\> (1199 in this example) as this will be used in a later step. 
 
 5. Select the [subnet](https://control.bluemix.net/network/subnets) to see the IP subnet details. Make a note of the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. 64 Primary IP addresses are provisioned on the private network and it may require selecting page 2 or 3 to find the required entries.
 
@@ -331,22 +331,8 @@ Configure the VRA virtual network interface to route to the new subnet from the 
 
     This is an example interface configuration.
 
-    **TODO: replace that with a screenshot so the user won't get confused thinking it's a command to run.**
+   ![](images/show_interfaces.png)
 
-    ```bash
-    interfaces {
-    bonding dp0bond0 {
-    	address 10.72.121.23/26
-    lacp-options {
-    	activity active
-    }
-    mode lacp
-    vif 1199 {
-    	address 10.72.58.65/26
-    }
-    vrrp  ……
-    ```
-    {: codeblock}
 
 4. Validate the VSI is once again accessible via the management network from your workstation. 
 
@@ -403,7 +389,7 @@ Two zones are defined:
         ```
       {: codeblock}
 
-3. Create zones and assign previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below as <VLAN ID>.
+3. Create zones and assign previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below as \<VLAN ID\>.
 
     ```
     set security zone-policy zone INSIDE description "IBM Internal network"
@@ -510,7 +496,7 @@ show log firewall name APP-TO-INSIDE
 
 {: codeblock}
 
-2. If services or servers are not contactable and nothing is seen in the firewall logs. Verify if the expected ping/ssh IP traffic is present on the VRA network interface from the {{site.data.keyword.Bluemix_notm}} private network or on the VRA interface to the VLAN using the <VLAN ID> from earlier. 
+2. If services or servers are not contactable and nothing is seen in the firewall logs. Verify if the expected ping/ssh IP traffic is present on the VRA network interface from the {{site.data.keyword.Bluemix_notm}} private network or on the VRA interface to the VLAN using the \<VLAN ID\> from earlier. 
 
 ```bash
 monitor interface bonding dp0bond0 traffic
@@ -550,15 +536,11 @@ commit
 
 {: codeblock}
 
-3. Validate VRA SSH administrative access over IBM Internal network. If access is lost to the VRA via SSH after performing commits, the previous working configuration can be restored by rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} console. check the parameters entered especially the VRA Public IP Subnet. 
-
-Click **Provision**.
-5. Monitor for completion on the [Devices](https://control.bluemix.net/devices) page or via email. 
-6. Make note of the `Private IP address` of the VSI for a later step. 
+3. Validate VRA SSH administrative access over IBM Internal network. If access is lost to the VRA via SSH after performing commits, the previous working configuration can be restored by rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} console. Check the parameters entered especially the address used for VRA Public IP Subnet. 
 
 4. If OK, save. 
 
-```bash
+```
 save
 ```
 
