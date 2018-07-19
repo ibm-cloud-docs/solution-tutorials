@@ -200,7 +200,7 @@ commit
 {: codeblock}
 
 
-2. Check the operations state of tunnel from VRA ops mode.
+2. Check the operational state of tunnel from the VRA command line. 
 
 ```bash
 show interfaces tunnel
@@ -221,8 +221,8 @@ set protocols static route <DC Subnet/CIDR>  next-hop <Remote tunnel IP>
 ```
 {: codeblock}
 
-2.	Check VRA routing table from ops mode. At this time no traffic will transverse the route as no firewall rules exist 
-to allow traffic via the tunnel. Rules are bi-directional.
+2.	Review the VRA routing table from the VRA command line. At this time no traffic will transverse the route as no firewall rules exist 
+to allow traffic via the tunnel. Firewall rules are required for traffic initiated at either side. 
 
 ```bash
 show ip route
