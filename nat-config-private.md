@@ -45,6 +45,7 @@ In this example only http and https ports are enabled as these cover a majority 
 
 -	Port 80 (http)
 -	Port 443 (https)
+
 Verify if the third party service supports whitelisting of source addresses. If yes, the public IP address of the VRA will be required to configure the third party service to limit access to the service. 
 
 
@@ -61,12 +62,12 @@ configure
 ```
 {: codeblock}
 
-2.	Create SNAT rule on the VRA.
+2.	Create the SNAT rules on the VRA, specifying the same <Subnet Gateway IP\>/\<CIDR\> as determined for the APP zone subnet/VLAN in the prior VRA provisioning tutorial. 
 
 ```
 set service nat source rule 1000 description 'pass traffic to the internet'
 set service nat source rule 1000 outbound-interface 'dp0bond1'
-set service nat source rule 1000 source address <APP Subnet IP/26>
+set service nat source rule 1000 source address <Subnet Gateway IP>/<CIDR>
 set service nat source rule 1000 translation address masquerade
 commit
 save
