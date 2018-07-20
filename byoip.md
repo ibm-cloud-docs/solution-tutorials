@@ -88,7 +88,7 @@ IP aliasing is a commonly used technique, though it is recommended to review ser
 Additional routing configuration on the VRA will be required to create dynamic routes (e.g. BGP) or static routes for the BYOIP subnets. 
 
 
-##Related content
+## Related content
 {:related}
 
 - [{{site.data.keyword.BluDirectLink}}
