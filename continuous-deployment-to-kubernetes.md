@@ -85,7 +85,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications, these starter applications can be created using the `ibmcloud dev` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
-1. From the [{{site.data.keyword.containershort_notm}} console](https://console.bluemix.net), use the left side menu option and select [Web Apps](https://console.bluemix.net/developer/appservice/dashboard).
+1. From the [{{site.data.keyword.cloud_notm}} console](https://console.bluemix.net), use the left side menu option and select [Web Apps](https://console.bluemix.net/developer/appservice/dashboard).
 2. Under **Start from the Web**, section click on the **Get Started** button.
 3. Select the `Express.js Basic` and then `Create Project` to create a Node.js starter application.
 4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
@@ -186,35 +186,51 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 
-2. Click on **Add Stage** and change MyStage to **Validate Stage** and then click on the JOBS  > **ADD JOB**.
+1. Click on **Add Stage** and change MyStage to **Validate Stage** and then click on the JOBS  > **ADD JOB**.
 
-3. Select **Test** as the Job Type and Change **Test** to **Vulnerability advisor** in the box.
-
-4. Under Tester type, select **Vulnerability Advisor**. All the other fields should be populated automatically.
-
-   Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
-   {:tip}
-
-5. Drag and move the **Validate Stage** to the middle then click **Run** ![](images/solution21/run.png) on the **Validate Stage**. You will see that the **Validate stage** fails.
+   1. Select **Test** as the Job Type and Change **Test** to **Vulnerability advisor** in the box.
+   1. Under Tester type, select **Vulnerability Advisor**. All the other fields should be populated automatically.
+      Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
+      {:tip}
+   1. Edit the **Test script** section and replace `SAFE\ to\ deploy` in the last line with `NO\ ISSUES`
+   1. Save the stage
+1. Drag and move the **Validate Stage** to the middle then click **Run** ![](images/solution21/run.png) on the **Validate Stage**. You will see that the **Validate stage** fails.
 
    ![](images/solution21/toolchain.png)
 
-6. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
-    ![](images/solution21/vulnerability_report.png)
+1. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
 
-    You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/security/scans)
-    {:tip}
+   ```
+   The scan results show that 3 ISSUES were found for the image.
 
-7. Let's fix the vulnerabilities by following the corrective action. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `Dockerfile` and add the below command after `EXPOSE 3000`
-  ```
-  RUN apt-get update && apt-get install -y \
-  libc6 \
-  systemd \
-  sensible-utils
-  ```
-  {: codeblock}
+   Configuration Issues Found
+   ==========================
 
-8. Commit and Push the changes. This should trigger the toolchain and fix the **Validate Stage**.
+   Configuration Issue ID                     Policy Status   Security Practice                                    How to Resolve
+   application_configuration:mysql.ssl-ca     Active          A setting in /etc/mysql/my.cnf that specifies the    ssl-ca is not specified in /etc/mysql/my.cnf.
+                                                              Certificate Authority (CA) certificate.
+   application_configuration:mysql.ssl-cert   Active          A setting in /etc/mysql/my.cnf that specifies the    ssl-cert is not specified in /etc/mysql/my.cnf   
+                                                              server public key certificate. This certificate      file.
+                                                              can be sent to the client and authenticated
+                                                              against its CA certificate.
+   application_configuration:mysql.ssl-key    Active          A setting in /etc/mysql/my.cnf that identifies the   ssl-key is not specified in /etc/mysql/my.cnf.   
+                                                              server private key.
+   ```
+
+   You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/registry/private)
+   {:tip}
+
+   The stage may fail saying the image *has not been scanned* if the scan for vulnerabilities takes more than 3 minutes. This timeout can be changed by edit the job script and increasing the number of iterations to wait for the scan results.
+   {:tip}
+
+1. Let's fix the vulnerabilities by following the corrective action. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `Dockerfile` and add the below command after `EXPOSE 3000`
+   ```sh
+   RUN apt-get remove -y mysql-common \
+     && rm -rf /etc/mysql
+   ```
+   {: codeblock}
+
+1. Commit and Push the changes. This should trigger the toolchain and fix the **Validate Stage**.
 
    ```
    git add Dockerfile

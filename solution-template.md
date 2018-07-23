@@ -126,6 +126,15 @@ Introductory statement that overviews the section
 
 Steps to take to remove the resources created in this tutorial
 
+## Expand the tutorial (this section is optional, remove it if you don't have content for it)
+
+Want to add to or change this tutorial? Here are some ideas:
+- idea with [link]() to resources to help implement the idea
+- idea with high level steps the user should follow
+- avoid generic ideas you did not test on your own
+- don't throw up ideas that would take days to implement
+- this section is optional
+
 ## Related content
 {:related}
 
