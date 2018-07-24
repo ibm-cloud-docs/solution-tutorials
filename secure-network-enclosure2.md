@@ -259,10 +259,10 @@ When it is desired to create a new virtual or bare-metal server on a specific VL
     * Set the VSI Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
     * Click **Submit Order**.
 
-4. Click tick box to accept the `Third-Party` service agreements, then **Provision**.
+4. Click tick box to accept the 'Third-Party' service agreements, then **Provision**.
 5. Monitor for completion on the [Devices](https://control.bluemix.net/devices) page or via email. 
-6. Make note of the `Private IP address` of the VSI for a later step. 
-7. Verify access to the VSI via the {{site.data.keyword.Bluemix_notm}} private network using `ping` and `SSH` from your local workstation over the VPN.
+6. Make note of the 'Private IP address' of the VSI for a later step. 
+7. Verify access to the VSI via the {{site.data.keyword.Bluemix_notm}} private network using ping and SSH from your local workstation over the VPN.
 
    ```bash
    ping <VSI Private IP Address>
