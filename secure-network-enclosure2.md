@@ -94,9 +94,21 @@ Via the portal [Upload the SSH public key](https://console.bluemix.net/docs/infr
 
 ### Target data center
 
-Choose a {{site.data.keyword.Bluemix_notm}} data center to deploy the secure private network. This tutorial assumes that the users account has no infrastructure, specifically no [VLANs](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans) deployed in the target data center. 
+Choose a {{site.data.keyword.Bluemix_notm}} data center to deploy the secure private network. 
 
-When infrastructure and VLANs are deleted, it can take up for 5 days for the VLANs to be reclaimed. Any user VLANs used for virtual machines that exist prior to this step may not be accessible to the VRA when it is provisioned. {tip:}
+### Order VLANs
+
+To create the private enclosure in the target data center, public and private VLANs for servers must be assigned, along with transit VLANs for the VRA. There is no charge for the first private and first public VLANs and VRA transit VLANs. Additional VLANs to support a multi-tier application topology are chargable. 
+
+VRA and user VLANs are ordered via a [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans). Note the number of VLANs available to each client in a data center is limited. Ordering VLANs by support ticket ensures that both VRA and server VLANs are associated with the same frontend and backend data center routers on the {{site.data.keyword.Bluemix_notm}} network.  
+
+In the [vlan_request_form_fill_in.pdf](https://public.dhe.ibm.com/cloud/bluemix/network/vlans/vlan_request_form_fill_in.pdf) specify:
+  - target data center
+  - 1 x public VRA transit VLAN
+  - 1 x private VRA transit VLAN
+  - 1 x private server VLAN
+  - additional private VLANs if required
+
 
 
 ## Provision Virtual Router Appliance
@@ -344,7 +356,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
 
 ### Configure secure enclosure
 
-The secure private network enclosure is created though configuration of zones and firewall rules. 
+The secure private network enclosure is created though configuration of zones and firewall rules. Review the VRA documentation on [firewall configuration](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/add-firewall-functions.html#add-firewall-functions-to-virtual-router-appliance-stateless-and-stateful-) before proceeding. 
 
 Two zones are defined:
 
