@@ -275,7 +275,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 To use your custom domain, you need to update your DNS records with either a CNAME record pointing to your IBM-provided domain or an A record pointing to the portable public IP address of the IBM-provided Ingress. Given a paid cluster comes with fixed IP addresses, an A record is a good option.
 
-See [Using the Ingress controller with a custom domain](https://console.bluemix.net/docs/containers/cs_apps.html#custom_domain_cert) for more inforamation.
+See [Using the Ingress controller with a custom domain](https://console.bluemix.net/docs/containers/cs_apps.html#custom_domain_cert) for more information.
 
 ### with HTTP
 
@@ -357,6 +357,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    ```sh
    kubectl exec -it <pod-name> -- bash
    ```
+   {: pre}
 
 ## Scale Kubernetes pods
 {: #scale_cluster}
@@ -366,6 +367,7 @@ As load increases on your application, you can manually increase the number of p
    ```sh
  kubectl scale deployment <nameofproject>-deployment --replicas=2
    ```
+   {: pre}
 
 After a shortwhile, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handles the load balancing between the two replicas. Horizontal scaling can also be made automatic.
 
