@@ -236,12 +236,12 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
 {: #order_virtualserver}
 
-When it is desired to create a new virtual or bare-metal server on a specific VLAN, it is necessary to use the **Device** menu on the **[Softlayer Dashboard](https://control.softlayer.com/)**. This dialog allows the target VLAN to be specified when a new device is provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to order servers from the {{site.data.keyword.Bluemix_notm}} services catalog, or the default infrastructure console and specify the VLAN.
+When it is desired to create a new virtual or bare-metal server on a specific VLAN, it is necessary to use the **Softlayer Device** menu on the **[Softlayer Dashboard](https://control.softlayer.com/)**. This dialog allows the target VLAN to be specified when a new device is provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to order servers from the {{site.data.keyword.Bluemix_notm}} services catalog, or the default infrastructure console and specify the VLAN.
 {note:}
 
 1. Order a [virtual server](https://control.softlayer.com/devices)  
 
-2. Select `Public Virtual Server` and the billing type (hourly). 
+2. Select **Public Virtual Server** and the billing type (hourly). 
 
   On the Virtual Server ordering page specify:
   - Data Center (Data Center same as the VRA)
