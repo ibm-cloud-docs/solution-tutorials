@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-15"
+lastupdated: "2018-07-24"
 
 ---
 
@@ -107,7 +107,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Web App - Java MicroProfile / Java EE Basic` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Basic Web` > `Node`> `Web App - Express.js Basic` )
+1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Web App - Basic Web` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Web App - Basic Web` )
 1. Enter a **name** for your project.
 1. Enter unique **hostname** for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
 1. Do not add a DevOps toolchain, select **manual deployment**.
@@ -242,7 +242,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    Ingress secret:		mycluster
    ```
    {: screen}
-2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.
+2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.**service-name** is the name under `==> v1/Service` in the above step or run `kubectl get svc` to find the service name of type **NodePort**.
    ```
    apiVersion: extensions/v1beta1
    kind: Ingress

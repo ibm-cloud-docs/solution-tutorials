@@ -2,7 +2,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-06-15"
+lastupdated: "2018-07-24"
 
 ---
 
@@ -54,10 +54,10 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 ![](images/solution17/Architecture.png)
 
-1. Use scaffold application, build and run locally inside a Docker container image. 
+1. Use scaffold application, build and run locally inside a Docker container image.
 2. Push the local Docker container image to a private Git repository in the cloud.
 3. Push container image to a Kubernetes cluster.
-4. Create logging and monitoring configuration. 
+4. Create logging and monitoring configuration.
 5. View log analysis and monitoring dashboard in the browser.
 
 ## Prerequisites
@@ -134,7 +134,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
-2. Select `Backend Service / Web App` > `Node `> `Web App - Express.js Basic` to create a Node.js starter application.
+2. Select `Backend Service / Web App` > `Node `> `Web App - Basic Web` to create a Node.js starter application.
 3. Enter a **name** (`mynodestarter`) and a unique **hostname** (`username-mynodestarter`) for your project.
   ![](images/solution17/ibmcloud_dev_create2.png)
 
