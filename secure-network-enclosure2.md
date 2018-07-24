@@ -98,18 +98,17 @@ Choose a {{site.data.keyword.Bluemix_notm}} data center to deploy the secure pri
 
 ### Order VLANs
 
-To create the private enclosure in the target data center, public and private VLANs for servers must be assigned, along with transit VLANs for the VRA. There is no charge for the first private and first public VLANs and VRA transit VLANs. Additional VLANs to support a multi-tier application topology are chargable. 
+To create the private enclosure in the target data center, the required public and private VLANs for servers must first be assigned. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology are chargable. 
 
-VRA and user VLANs are ordered via a [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans). Note the number of VLANs available to each client in a data center is limited. Ordering VLANs by support ticket ensures that both VRA and server VLANs are associated with the same frontend and backend data center routers on the {{site.data.keyword.Bluemix_notm}} network.  
+To ensure that sufficinet VLANs are available on the same data center router and can be associated with the VRA, it is advised that they are ordered via a [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans).   
 
 In the [vlan_request_form_fill_in.pdf](https://public.dhe.ibm.com/cloud/bluemix/network/vlans/vlan_request_form_fill_in.pdf) specify:
   - target data center
-  - 1 x public VRA transit VLAN
-  - 1 x private VRA transit VLAN
-  - 1 x private server VLAN
+  - 1 x private VLAN
+  - Description: 'For use with VRA/Network Gateway' 
   - additional private VLANs if required
 
-
+The support ticket may take several hours to action. You will be notified if additional information is required, or confirmation for authorising additional chargable VLANs and final completion by email to the address associated with your user account. Record the VLANs assigned as these will be needed in a later step. 
 
 ## Provision Virtual Router Appliance
 
@@ -136,12 +135,13 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
 5. On the Checkout screen:
 
-    * Validate or change the choices already made.   
-    * Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. 
+    * Validate or change the choices already made.
+    * VLAN Selection under the **Advanced System Configuration** heading. The 'Backend VLAN' drop down will show **Auto Assigned**, click the dialog box and select the VLAN ID of the private VLAN ordered earlier.  
+    * Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. When selected it will appear under the heading 'Server 1'.  
     * Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
     * Click **Submit Order**.
 
-6. Monitor for creation on the Devices page or via email. VRA creation may take a number of hours to complete. 
+6. Monitor for VRA creation. VRA creation will take several hours to complete. On completion you will receive an email to your account email address on check the Devices list. 
 
 ### Review deployed VRA
 
@@ -232,28 +232,40 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
     {: codeblock}
 
-## Order the first virtual server and VLAN
+## Order the first virtual server
 
 {: #order_virtualserver_and_vlan}
 
-To create the private enclosure, one or more user VLANs for the provisioning of virtual and bare-metal servers must be assigned to the VRA. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology can be ordered via a [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans). Note only a limited number of VLANs are available for a single client in a data center.  
+When it is desired to new virtual or bare-metal server to a specific VLAN, it is necessary to use the **Device** menu on the **[Softlayer Dashboard](https://control.softlayer.com/)**. This dialog allows the target VLAN to be specified when a new device is provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to order servers from the {{site.data.keyword.Bluemix_notm}} services catalog and specify the VLAN.
+{note:}
 
-When multiple user VLANs are present, prevision new virtual or bare-metal servers via the **Device** menu on the [Softlayer Dashboard](https://control.softlayer.com/). This dialog allows the target VLAN to be specified when a new device is provisioned.   
-
-{tip:}
-
-1. Order a [virtual server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) from the Compute category of the IBM cloud services catalog. This will create the first private user VLAN and primary IP subnet.  
+1. Order a [virtual server](https://control.softlayer.com/devices)  
 
 2. Select `Public Virtual Server` and then click **Create**.
 
   On the Virtual Server ordering page specify:
+  - Data Center (Data Center same as the VRA)
+  - Flavor – lowest cost is 'Compute' 
+  - SSH Key - key as uploaded earlier
+  - Operating System – Take CentOS
+  - Uplink Port Speeds. The network interface must be changed from the default of *public and private* to only specify a Private Network Uplink. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA.  
+
+Click **Add To Order**.
+
   - Hostname
   - Domain
-  - Location (Data Center same as the VRA)
-  - Device Flavor – allow to default
-  - SSH Key - key as uploaded earlier
-  - Image – allow to default to CentOS
-  - Network Interface. The network interface must be changed from the default of *public and private* to only specify a Private Network Uplink. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA.  ![](images/vsi-private-network-ordering.png)
+
+
+5. On the Checkout screen:
+
+    * Validate or change the choices already made.
+    * VLAN Selection under the **Advanced System Configuration** heading. The 'Backend VLAN' drop down will show **Auto Assigned**, click the dialog box and select the VLAN ID of the private VLAN ordered earlier.  
+    * Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. When selected it will appear under the heading 'Server 1'.  
+    * Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
+    * Click **Submit Order**.
+
+
+
 
 3. Click tick box to accept the `Third-Party` service agreements. 
 4. Click **Provision**.
