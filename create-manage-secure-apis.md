@@ -157,7 +157,7 @@ You can also start the application manually by issuing the `npm start` command. 
 To prepare for the next steps, you need to create an **{{site.data.keyword.apiconnect_short}}** service on {{site.data.keyword.Bluemix_notm}} which will act as the gateway for your API. This service on {{site.data.keyword.Bluemix_notm}} will be used to manage, secure and rate limit your API.
 
 1. Launch {{site.data.keyword.Bluemix_notm}} [Dashboard](https://console.bluemix.net/dashboard).
-2. Navigate to **Catalog > APIs > {{site.data.keyword.apiconnect_short}}** and click **Create**.
+2. Navigate to **Catalog > Integration > {{site.data.keyword.apiconnect_short}}** and click **Create**.
   ![Catalog page](images/solution13/api_connect.png)
 
 ## Publish API to {{site.data.keyword.Bluemix_notm}}
@@ -165,7 +165,8 @@ To prepare for the next steps, you need to create an **{{site.data.keyword.apico
 {: #publish}
 You will use the API Designer to deploy your application to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application and also publish your API definition to **{{site.data.keyword.apiconnect_short}}**. The API Designer is your local toolkit. If you closed it, relaunch it with `apic edit` from the project directory.
 
-You can also deploy the application manually using the `ibmcloud cf push` command; however, it will not be secured. To [import the API](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_rest_landing.html#tut_rest_landing) into {{site.data.keyword.apiconnect_short}}, use the OpenAPI definition file is available in the `definitions` folder. Deploying using the API Designer secures the application and imports the definition automatically. {:tip}
+You can also deploy the application manually using the `ibmcloud cf push` command; however, it will not be secured. To [import the API](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_rest_landing.html#tut_rest_landing) into {{site.data.keyword.apiconnect_short}}, use the OpenAPI definition file is available in the `definitions` folder. Deploying using the API Designer secures the application and imports the definition automatically.
+{:tip}
 
 1. Back in the API Designer, click **Publish > Add and Manage Targets > Add IBM Bluemix target**.
 2. Select the **Region** and **Organization** that you want to publish to.
