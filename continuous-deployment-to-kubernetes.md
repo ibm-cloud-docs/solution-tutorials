@@ -152,6 +152,7 @@ You can build and run the application as you normally would using `mvn` for java
    This uses your local Docker engine to run the docker image that you built in the previous step.
 2. After your container starts, go to http://localhost:3000/
    ![](images/solution21/node_starter_localhost.png)
+
 ## Push application to your Git repository
 
 In this section, you will commit your change to your Git repository. The pipeline will pick up the commit and push the changes to your cluster automatically.
