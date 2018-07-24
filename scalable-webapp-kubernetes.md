@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-15"
+lastupdated: "2018-07-24"
 
 ---
 
@@ -107,7 +107,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Web App - Java MicroProfile / Java EE Basic` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Basic Web` > `Node`> `Web App - Express.js Basic` )
+1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Web App - Basic Web` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Web App - Basic Web` )
 1. Enter a **name** for your project.
 1. Enter unique **hostname** for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
 1. Do not add a DevOps toolchain, select **manual deployment**.
@@ -242,7 +242,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    Ingress secret:		mycluster
    ```
    {: screen}
-2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.
+2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.**service-name** is the name under `==> v1/Service` in the above step or run `kubectl get svc` to find the service name of type **NodePort**.
    ```
    apiVersion: extensions/v1beta1
    kind: Ingress
@@ -262,8 +262,9 @@ Use Ingress to set up the cluster inbound connection to the service.
              serviceName: <service-name>
              servicePort: 9080
    ```
+   {: pre}
 3. Deploy the Ingress
-   ```
+   ```sh
    kubectl apply -f ingress-ibmdomain.yml
    ```
    {: pre}
@@ -274,7 +275,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 To use your custom domain, you need to update your DNS records with either a CNAME record pointing to your IBM-provided domain or an A record pointing to the portable public IP address of the IBM-provided Ingress. Given a paid cluster comes with fixed IP addresses, an A record is a good option.
 
-See [Using the Ingress controller with a custom domain](https://console.bluemix.net/docs/containers/cs_apps.html#custom_domain_cert) for more inforamation.
+See [Using the Ingress controller with a custom domain](https://console.bluemix.net/docs/containers/cs_apps.html#custom_domain_cert) for more information.
 
 ### with HTTP
 
@@ -294,8 +295,9 @@ See [Using the Ingress controller with a custom domain](https://console.bluemix.
              serviceName: <service-name>
              servicePort: 9080
    ```
+   {: pre}
 2. Deploy the Ingress
-   ```
+   ```sh
    kubectl apply -f ingress-customdomain-http.yml
    ```
    {: pre}
@@ -334,6 +336,7 @@ If you were to try to access your application with HTTPS at this time `https://<
              serviceName: <service-name>
              servicePort: 9080
    ```
+   {: pre}
 5. Deploy the Ingress:
    ```
    kubectl apply -f ingress-customdomain-https.yml
@@ -351,18 +354,20 @@ If you were to try to access your application with HTTPS at this time `https://<
    ![](images/solution2/KubernetesDashboard.png)
 4. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.
 5. To **ssh** into the container, identify your pod name from the previous step and run
-   ```
+   ```sh
    kubectl exec -it <pod-name> -- bash
    ```
+   {: pre}
 
 ## Scale Kubernetes pods
 {: #scale_cluster}
 
 As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
 
-   ```
+   ```sh
  kubectl scale deployment <nameofproject>-deployment --replicas=2
    ```
+   {: pre}
 
 After a shortwhile, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handles the load balancing between the two replicas. Horizontal scaling can also be made automatic.
 

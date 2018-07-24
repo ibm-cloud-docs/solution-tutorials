@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-06-07"
+lastupdated: "2018-07-23"
 ---
 
 
@@ -16,7 +16,7 @@ lastupdated: "2018-06-07"
 
 # Continuous Deployment to Kubernetes
 
-This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like security scanners, Slack notifications, and analytics. 
+This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like security scanners, Slack notifications, and analytics.
 
 {:shortdesc}
 
@@ -24,8 +24,8 @@ This tutorial walks you through the process setting up a continuous integration 
 {: #objectives}
 
 * Create development and production Kubernetes clusters.
-* Create a starter application, run it locally and push it to a Git repository. 
-* Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod clusters. 
+* Create a starter application, run it locally and push it to a Git repository.
+* Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod clusters.
 * Explore and integrate the app to use security scanners, Slack notifications, and analytics.
 
 ## Services used
@@ -64,7 +64,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 {{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
-To complete this tutorial you would need to select the **Paid** cluster of type **Standard**. You would be required to setup two clusters, one for development and one for production.  
+To complete this tutorial you would need to select the **Paid** cluster of type **Standard**. You would be required to setup two clusters, one for development and one for production.
 {: shortdesc}
 
 1. Create the first development Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). Later you will be required to repeat these steps and create a production cluster.
@@ -74,8 +74,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
    ![](images/solution21/KubernetesPaidClusterCreation.png)
 
-2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster. The smallest **Machine type** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial. All other options can be left to their defaults. 
-
+2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster. The smallest **Machine type** with 2 **CPUs**, 4 **GB RAM**, and 1 **Worker Nodes** is sufficient for this tutorial. All other options can be left to their defaults.
 3. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 **Note:** Do not proceed until your workers are ready.
@@ -93,12 +92,12 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 ## Configure DevOps delivery pipeline
 {: #create_application}
 
-1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button. 
+1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button.
 2. Selecting the Kubernetes Cluster deployment method, select the cluster created earlier and then click **Create**. This will create a toolchain and delivery pipeline for you. ![](images/solution21/BindCluster.png)
 3. Once the pipeline created, click on **View Toolchain** and then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
 4. After the deploy stages complete, click on the **View logs and history** to see the logs.
 5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`). ![](images/solution21/Logs.png)
-Done, you've used the App Service UI to create the starter applications, and configured the pipeline to build and deploy the application to your cluster. 
+Done, you've used the App Service UI to create the starter applications, and configured the pipeline to build and deploy the application to your cluster.
 
 ## Clone, build and run the application locally
 {: #cloneandbuildapp}
@@ -110,7 +109,6 @@ In this section, you will use the starter app created in the earlier section, cl
 1. From the Toolchain overview, select the **Git** tile under **Code**. You will be redirected to your git repository page where you can clone the repo.![HelloWorld](images/solution21/DevOps_Toolchain.png)
 
 2. If you haven't set up SSH keys yet, you should see a notification bar at the top with instructions. Follow the steps by opening the **add an SSH key** link in a new tab or if you want to use HTTPS instead of SSH, follow the steps by clicking **create a personal access token**. Remember to save the key or token for future reference.
-
 3. Select SSH or HTTPS and copy the git URL. Clone the source to your local machine. If you're prompted for a username, provide your git username. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 
    ```bash
@@ -159,7 +157,6 @@ You can build and run the application as you normally would using `mvn` for java
 
 In this section, you will commit your change to your Git repository. The pipeline will pick up the commit and push the changes to your cluster automatically.
 1. In your terminal window, make sure you are inside the repo you cloned.
-
 2. Push the change to your repository with three simple steps: Add, commit, and push.
    ```bash
    git add public/index.html
@@ -169,12 +166,9 @@ In this section, you will commit your change to your Git repository. The pipelin
    {: codeblock}
 
 3. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-
 4. Confirm that you see n **BUILD** and **DEPLOY** stage.
    ![](images/solution21/Delivery-pipeline.png)
-
 5. Wait for the **DEPLOY** stage to complete.
-
 6. Click the application **url** under Last Execution result to view your changes live.
 
 If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
@@ -185,7 +179,6 @@ If you don't see your application updating, check the logs of the DEPLOY and BUI
 In this step, you will explore the [Vulnerability Advisor](https://console.bluemix.net/docs/services/va/va_index.html). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-
 1. Click on **Add Stage** and change MyStage to **Validate Stage** and then click on the JOBS  > **ADD JOB**.
 
    1. Select **Test** as the Job Type and Change **Test** to **Vulnerability advisor** in the box.
@@ -209,18 +202,18 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
    Configuration Issue ID                     Policy Status   Security Practice                                    How to Resolve
    application_configuration:mysql.ssl-ca     Active          A setting in /etc/mysql/my.cnf that specifies the    ssl-ca is not specified in /etc/mysql/my.cnf.
                                                               Certificate Authority (CA) certificate.
-   application_configuration:mysql.ssl-cert   Active          A setting in /etc/mysql/my.cnf that specifies the    ssl-cert is not specified in /etc/mysql/my.cnf   
+   application_configuration:mysql.ssl-cert   Active          A setting in /etc/mysql/my.cnf that specifies the    ssl-cert is not specified in /etc/mysql/my.cnf
                                                               server public key certificate. This certificate      file.
                                                               can be sent to the client and authenticated
                                                               against its CA certificate.
-   application_configuration:mysql.ssl-key    Active          A setting in /etc/mysql/my.cnf that identifies the   ssl-key is not specified in /etc/mysql/my.cnf.   
+   application_configuration:mysql.ssl-key    Active          A setting in /etc/mysql/my.cnf that identifies the   ssl-key is not specified in /etc/mysql/my.cnf.
                                                               server private key.
    ```
 
    You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/registry/private)
    {:tip}
 
-   The stage may fail saying the image *has not been scanned* if the scan for vulnerabilities takes more than 3 minutes. This timeout can be changed by edit the job script and increasing the number of iterations to wait for the scan results.
+   The stage may fail saying the image *has not been scanned* if the scan for vulnerabilities takes more than 3 minutes. This timeout can be changed by editing the job script and increasing the number of iterations to wait for the scan results.
    {:tip}
 
 1. Let's fix the vulnerabilities by following the corrective action. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `Dockerfile` and add the below command after `EXPOSE 3000`
@@ -256,7 +249,7 @@ In this section, you will complete the deployment pipeline by deploying the Kube
 6. Under the **Job** tab, change the cluster name to the newly created cluster and then **Save** the stage.
 7. You now should have the full deployment setup, to deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production. ![](images/solution21/full-deploy.png)
 
-Done, you've now created a production cluster and configured the pipeline to push updates to your production cluster manually. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline. 
+Done, you've now created a production cluster and configured the pipeline to push updates to your production cluster manually. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
 
 ## Setup Slack notifications
 {: #setup_slack}
@@ -303,4 +296,4 @@ Do you want to learn more? Here are some ideas of what you can do next:
 
 * Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](kubernetes-log-analysis-kibana.html).
 
-  
+
