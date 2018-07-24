@@ -262,8 +262,9 @@ Use Ingress to set up the cluster inbound connection to the service.
              serviceName: <service-name>
              servicePort: 9080
    ```
+   {: pre}
 3. Deploy the Ingress
-   ```
+   ```sh
    kubectl apply -f ingress-ibmdomain.yml
    ```
    {: pre}
@@ -294,8 +295,9 @@ See [Using the Ingress controller with a custom domain](https://console.bluemix.
              serviceName: <service-name>
              servicePort: 9080
    ```
+   {: pre}
 2. Deploy the Ingress
-   ```
+   ```sh
    kubectl apply -f ingress-customdomain-http.yml
    ```
    {: pre}
@@ -334,6 +336,7 @@ If you were to try to access your application with HTTPS at this time `https://<
              serviceName: <service-name>
              servicePort: 9080
    ```
+   {: pre}
 5. Deploy the Ingress:
    ```
    kubectl apply -f ingress-customdomain-https.yml
@@ -351,7 +354,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    ![](images/solution2/KubernetesDashboard.png)
 4. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.
 5. To **ssh** into the container, identify your pod name from the previous step and run
-   ```
+   ```sh
    kubectl exec -it <pod-name> -- bash
    ```
 
@@ -360,7 +363,7 @@ If you were to try to access your application with HTTPS at this time `https://<
 
 As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
 
-   ```
+   ```sh
  kubectl scale deployment <nameofproject>-deployment --replicas=2
    ```
 
