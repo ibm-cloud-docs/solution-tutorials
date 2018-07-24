@@ -100,7 +100,7 @@ Choose a {{site.data.keyword.Bluemix_notm}} data center to deploy the secure pri
 
 To create the private enclosure in the target data center, the required private VLANs for servers must first be assigned. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology are chargable. 
 
-To ensure that sufficinet VLANs are available on the same data center router and can be associated with the VRA, it is advised that they are ordered via a [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans).   
+To ensure that sufficient VLANs are available on the same data center router and can be associated with the VRA, it is advised that they are ordered via a [support ticket](https://console.bluemix.net/docs/infrastructure/vlans/order-vlan.html#order-vlans).   
 
 In the [vlan_request_form_fill_in.pdf](https://public.dhe.ibm.com/cloud/bluemix/network/vlans/vlan_request_form_fill_in.pdf) specify:
   - target data center
