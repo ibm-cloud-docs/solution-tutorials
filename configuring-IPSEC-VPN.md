@@ -9,7 +9,7 @@ Private Network (VPN) tunnel is the usual approach to securing connectivity betw
 VPN over the public internet or via a private dedicated network connection. 
 
 See [IBM Cloud Direct Link]( https://console.bluemix.net/docs/infrastructure/direct-link/getting-started.html#get-started-with-ibm-cloud-direct-link) 
-for more details on dedicated secure network links to the {{site.data.keyword.Bluemix_notm}} IaaS platform. Alternatively a 
+for more details on dedicated secure network links to the {{site.data.keyword.Bluemix_notm}} IaaS platform. A 
 VPN over the public internet provides a lower cost option, though without bandwidth guarantees. 
 
 There are two suitable VPN options for connectivity over the public internet to servers provisioned on the IaaS platform:
@@ -20,7 +20,7 @@ There are two suitable VPN options for connectivity over the public internet to 
 This tutorial presents setup of a site-to-site IPSec VPN using a Virtual Router Appliance (VRA) to connect a subnet in 
 a client data center to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. 
 
-This example builds on the secure private network enclosure documented in tutorial xxxxxxxx. It uses a site-to-site IPSec 
+This example builds on the [Secure Private Network on the {{site.data.keyword.Bluemix_notm}} IaaS platform](https://github.ibm.com/Bluemix/cloud-portfolio-solutions/issues/secure-enclosure.html) tutorial. It uses a site-to-site IPSec 
 VPN, GRE tunnel and static routing. More complex VPN configurations that use dynamic routing (BGP etc) and VTI tunnels can 
 be found in the [supplemental VRA documentation]( https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
 {:shortdesc}
@@ -62,8 +62,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 ## Before you begin
 {: #prereqs}
 
-This tutorial connects the secure private network enclosure created by tutorial XXXX to your data center. That tutorial 
-must be completed first. 
+This tutorial connects the secure private enclosure in the [Secure Private Network on the {{site.data.keyword.Bluemix_notm}} IaaS platform](https://github.ibm.com/Bluemix/cloud-portfolio-solutions/issues/secure-enclosure.html) tutorial to your data center. That tutorial must be completed first. 
 
 
 ## Document VPN configuration
