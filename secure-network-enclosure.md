@@ -23,14 +23,13 @@ This tutorial highlights how a [Virtual Router Appliance](https://console.bluemi
 {:shortdesc}
 
 This tutorial is a starting point for classic networking on the {{site.data.keyword.Bluemix_notm}} and should not be considered a production capability as is. Additional capabilities that might be considered are:
-* [Direct Link](https://console.bluemix.net/docs/infrastructure/direct-link/getting-started.html#get-started-with-ibm-cloud-direct-link)
+* [{{site.data.keyword.BluDirectLink}}](https://console.bluemix.net/docs/infrastructure/direct-link/getting-started.html#get-started-with-ibm-cloud-direct-link)
 * [Hardware firewall appliances](https://console.bluemix.net/docs/infrastructure/fortigate-10g/explore-firewalls.html)
 * [IPSec VPN](https://console.bluemix.net/catalog/infrastructure/ipsec-vpn) for secure connectivity to your data center.
 * High Availability with clustered VRAs and dual uplinks.
 * Logging and auditing of security events.
 
 ## Objectives 
-
 {: #objectives}
 
 * Create a secure private network within which virtual machines and bare-metal servers can be deployed
@@ -59,8 +58,10 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 1. Configure VPN
 2. Deploy VRA 
 3. Create Virtual Server
-4. Add VLAN to VRA
+4. Route VLAN via VRA
 5. Configure enclosure firewall
+6. Define APP zone
+7. Define INSIDE zone
 
 
 ## Before you begin
@@ -78,8 +79,7 @@ In this tutorial the network enclosure created is not visible on the public Inte
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or preferably use your local workstation with a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows). 
 
 For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page](https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
-
-{tip}
+{:tip}
 
 ### Check account permissions
 
@@ -111,8 +111,8 @@ In the [vlan_request_form_fill_in.pdf](https://public.dhe.ibm.com/cloud/bluemix/
 The support ticket may take several hours to action. You will be notified if additional information is required, to confirm authorisation of the additional chargable VLANs and final of completion, by email to the address associated with your user account. Record the VLANs assigned as these will be needed in a later step. 
 
 ## Provision Virtual Router Appliance
-
 {: #VRA}
+
 The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}} provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
 
 1. From the catalog select a [IBM Virtual Router Appliance](https://console.bluemix.net/catalog/infrastructure/virtual-router-appliance)
@@ -123,14 +123,18 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
 4. On the ordering screen, the target data center and the VRA Server type can be selected. 
 
-    For a production environment it is recommended to use at a minimum - Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM. {tip}
+    For a production environment it is recommended to use at a minimum - Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM. {:tip}
 
     * Select the target data center in the drop down at the top of the page.
     * Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA.
-    * RAM. Select option.
+    * RAM. 64GB.
     * Operating System. Select the only option
         - Virtual Router Appliance 5.x (up to 20Gbps) Subscription Edition (64 Bit) 
+    * Hard Drive. Keep default. 
+    * Public Bandwidth. Keep default of 'Metered'.
     * Uplink Port Speeds. Take the default or if required select 1Gbps, 10Gbps  and redundant links.
+    * Monitoring. Host Ping and TCP Service Monitoring.
+    * Response. Automated Reboot from Monitoring. 
     * Click **Add To Order**.
 
 5. On the Checkout screen:
@@ -166,8 +170,7 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
     When in `edit` mode the prompt changes from `$` to `#`. After successful VRA command execution a change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command. To return to the Vyatta system command prompt `$`, type `exit`. 
 
     If at any stage before the `save` command is entered, access is lost due to committing a bad configuration change, rebooting the VRA will return it back to the last save point, restoring access.
-
-    {: tip} 
+{:tip} 
 
 2. To enhance security, now that SSH login is successful via the private network, userid/password authentication is disabled.
 
@@ -237,7 +240,7 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 {: #order_virtualserver}
 
 When it is desired to create a new virtual or bare-metal server on a specific VLAN, it is necessary to use the **Softlayer Device** menu on the **[Softlayer Dashboard](https://control.softlayer.com/)**. This dialog allows the target VLAN to be specified when a new device is provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to order servers from the {{site.data.keyword.Bluemix_notm}} services catalog, or the default infrastructure console and specify the VLAN.
-{note:}
+{:note}
 
 1. Order a [virtual server](https://control.softlayer.com/devices)  
 
@@ -282,11 +285,11 @@ The private VLAN(s) and primary IP Subnet(s) for the virtual server will have be
 2. If it is desired to add additional VLANs at this time, navigate to the **Associate a VLAN** section. The drop down box, ‘Select VLAN’ should be enabled and other provisioned VLANs can be selected. ![](images/Gateway-Associate-VLAN.png)
 
 If no eligible VLAN is shown, no VLANs are available on the same router as the VRA. This will require a [support ticket](https://control.bluemix.net/support/unifiedConsole/tickets/add) to be raised to request a private VLAN on the same router as the VRA and for this VLAN to be deleted.
-{tip}
+{:tip}
 
 3. Click **Associate** to tell {{site.data.keyword.Bluemix_notm}} that the IP routing for this VLAN will now be manged by this VRA. Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. 
 
-At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN will be shown as *Bypassed*.{tip}
+At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN will be shown as *Bypassed*.{:tip}
 
 4. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes. A screen refresh will show it is Routed. 
 
@@ -303,7 +306,6 @@ At this stage the VLAN and associated subnet are not protected or routed via the
     {: codeblock}
 
 ## VRA setup
-
 {: #vra_setup}
 
 When the VRA configuration is commited, only the running configuration is changed. It does not change the configuration used at boot time. If access is lost to the VRA due to a configuration change, rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} dashboard will return the VRA to the previous save of the boot configuration file. This saved configuration could be from some time previously. 
@@ -574,15 +576,15 @@ This completes setup of the secure private network enclosure. Additional tutoria
 In this step, you will clean up the resources to remove what you created above.
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://control.bluemix.net/network/gateways/) page.
-
-{tip}  
+{:tip}  
 
 - Cancel any virtual servers or bare-metal servers
 - Cancel the VRA
 - Cancel any additional VLANs by support ticket. 
 
 ## Related content
-{:related}
+{: #related}
+
 - [IBM Virtual Router Appliance](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-basics.html#vra-basics)
 - [Static and Portable IP Subnets](https://console.bluemix.net/docs/infrastructure/subnets/about.html)
 - [IBM QRadar Security Intelligence Platform](http://www-01.ibm.com/support/knowledgecenter/SS42VS)
