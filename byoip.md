@@ -3,13 +3,13 @@
 
 Bring Your own IP (BYOIP) is a frequent requirement where its desired to connect existing client networks to infrastructure provisioned on the {{site.data.keyword.Bluemix_notm}} IaaS platform. The intent is typically to minimize change to the clients network routing configuration and operations with the adoption of a single IP address space based on the clients existing IP addressing scheme.
 
-This tutorial presents a brief overview of BYOIP implementation patterns that can be used with {{site.data.keyword.Bluemix_notm}} and a decision tree for identifying the appropriate pattern when realising the secure private network enclosure as described in tutorial XXXXX. Setup may require additional input from your onsite network team, {{site.data.keyword.Bluemix_notm}} technical support or IBM Services. 
+This tutorial presents a brief overview of BYOIP implementation patterns that can be used with {{site.data.keyword.Bluemix_notm}} and a decision tree for identifying the appropriate pattern when realising the secure enclosure as described in the [Secure Private Network on the {{site.data.keyword.Bluemix_notm}} IaaS platform](https://github.ibm.com/Bluemix/cloud-portfolio-solutions/issues/secure-enclosure.html) tutorial. Setup may require additional input from your onsite network team, {{site.data.keyword.Bluemix_notm}} technical support or IBM Services. 
 
 {:shortdesc}
 
 ## {{site.data.keyword.Bluemix_notm}} IP addressing
 
-The {{site.data.keyword.Bluemix_notm}} utilizes a number of private address ranges, most specifically 10.0.0..0/8, and in some cases these ranges may conflict with existing client networks. Where address conflicts exist here are a number of patterns that support BYOIP to allow interoperability with the IBM Cloud network.  
+The {{site.data.keyword.Bluemix_notm}} utilizes a number of private address ranges, most specifically 10.0.0..0/8, and in some cases these ranges may conflict with existing client networks. Where address conflicts exist, there are a number of patterns that support BYOIP to allow interoperability with the IBM Cloud network.  
 
 -	Network Address Translation
 -	GRE tunneling
@@ -21,10 +21,10 @@ The choice of pattern is determined by the applications intended to be hosted on
 
 
 ## Objectives
-{: objectives}
+{: #objectives}
+
 -	Understand BYOIP implementation patterns
 -	Select implementation pattern for {{site.data.keyword.Bluemix_notm}}. 
-
 
 
 ## Implementation patterns overview
@@ -79,7 +79,7 @@ Is 10.0.0.0/8 used in the on-premise network ? When no address overlaps exist be
 If any of the 10.0.0.0/8 range is in use on the on-premise network, are there non-overlapping subnets available on the [{{site.data.keyword.Bluemix_notm}} network? Review existing network address usage with on-site network team and contact [{{site.data.keyword.Bluemix_notm}} technical sales to identify available non-overlapping networks. 
 
 ### Is IP aliasing problematic?
-{:ip_alias}
+{: #ip_alias}
 
 If no overlap-safe addresses exist, IP aliasing can be implemented on virtual and bare-metal servers deployed in the secure private network enclosure. IP aliasing assigns multiple subnet addresses on one or more network interfaces on each server. 
 
@@ -89,7 +89,7 @@ Additional routing configuration on the VRA will be required to create dynamic r
 
 
 ## Related content
-{:related}
+{: #related}
 
 - [{{site.data.keyword.BluDirectLink}}
 ]( https://console.bluemix.net/docs/infrastructure/direct-link/subnet-configuration.html#configure-ibm-cloud-direct-link)
