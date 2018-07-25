@@ -37,7 +37,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 ## Before you begin
 {: #prereqs}
 
-This tutorial enables hosts in the secure private network enclosure created by tutorial XXXX to access public internet services. That tutorial must be completed first. 
+This tutorial enables hosts in the secure private network enclosure created by the [Secure Private Network on the {{site.data.keyword.Bluemix_notm}} IaaS platform](https://github.ibm.com/Bluemix/cloud-portfolio-solutions/issues/secure-enclosure.html) tutorial to access public internet services. That tutorial must be completed first. 
 
 ## Document Internet services
 {: #Document_outbound}
