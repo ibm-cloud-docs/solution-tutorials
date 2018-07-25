@@ -287,7 +287,7 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
 
 {: #routing_vlan_via_vra}
 
-The private VLAN(s) and primary IP Subnet(s) for the virtual server will have been associated by {{site.data.keyword.Bluemix_notm}} to this VRA. At this stage the VSI is still accessible on the {{site.data.keyword.Bluemix_notm}} private network. You will now route these via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible. 
+The private VLAN(s) for the virtual server will have been associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible. 
 
 1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://control.bluemix.net/network/gateways) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. 
 
