@@ -3,7 +3,7 @@
 
 In today’s world of web based IT applications and services, few applications exist in isolation. Developers have come to expect access to services on the internet, whether it is open-source application code and updates or ‘third party’ services providing application functionality via REST APIs. Network Address Translation (NAT) masquerade, is a commonly used approach to securing the access to internet hosted service from  private networks. In NAT masquerade, private IP addresses are translated to the IP address of the out-bound public interface in a many-to-one relationship, shielding the private IP address from public access.  
 
-This tutorial presents setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the secure private network enclosure documented in tutorial xxxxxxxx adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
+This tutorial presents setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the [Secure Private Network on the {{site.data.keyword.Bluemix_notm}} IaaS platform](https://github.ibm.com/Bluemix/cloud-portfolio-solutions/issues/secure-enclosure.html) tutorial, adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
 {:shortdesc}
 
 ## Objectives
@@ -85,12 +85,15 @@ save
 
 ```
 set security firewall name APP-TO-OUTSIDE default-action drop
-set security firewall name APP-TO-OUTSIDE description ‘APP traffic to the Internet’
+set security firewall name APP-TO-OUTSIDE description 'APP traffic to the Internet'
 set security firewall name APP-TO-OUTSIDE default-log
+
+set security firewall name APP-TO-OUTSIDE rule 90 protocol tcp
+set security firewall name APP-TO-OUTSIDE rule 90 action accept 
+set security firewall name APP-TO-OUTSIDE rule 90 destination port 80
 
 set security firewall name APP-TO-OUTSIDE rule 100 protocol tcp
 set security firewall name APP-TO-OUTSIDE rule 100 action accept 
-set security firewall name APP-TO-OUTSIDE rule 100 destination port 80
 set security firewall name APP-TO-OUTSIDE rule 100 destination port 443
 
 set security firewall name APP-TO-OUTSIDE rule 200 protocol icmp
@@ -110,7 +113,7 @@ commit
 ```
 set security zone-policy zone OUTSIDE default-action drop
 set security zone-policy zone OUTSIDE interface dp0bond1
-set security zone-policy zone OUTSIDE description ‘External internet’
+set security zone-policy zone OUTSIDE description 'External internet'
 commit
 ```
 {: codeblock}
@@ -119,7 +122,6 @@ commit
 2.	Assign firewalls to control traffic to and from the internet.
 	
 ```
-set security zone-policy zone OUTSIDE to APP firewall OUTSIDE-TO-APP 
 set security zone-policy zone APP to OUTSIDE firewall APP-TO-OUTSIDE 
 commit
 save
