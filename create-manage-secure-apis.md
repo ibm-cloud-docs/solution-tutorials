@@ -59,16 +59,23 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
   ```bash
   npm install -g apiconnect
   ```
+  Note: If you had issues installing {{site.data.keyword.apiconnect_short}} then use `sudo` or follow the instruction [here](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_prereq_install_toolkit.html#installing-the-api-connect-toolkit).
+
 2. Enter the following command to create the application.
+
   ```bash
   apic loopback
   ```
+
 3. At the prompt, enter `entries-api` as the project name and press `Enter`.
   ```sh
   ? What's the name of your application? entries-api
   ```
+
 4. Press `Enter` to use a directory with the same name as the project.
+
 5. Choose the **current** version of LoopBack.
+
 6. Select **empty-server** for the kind of application.
   ```bash
     ? What kind of application do you have in mind? (Use arrow keys)
