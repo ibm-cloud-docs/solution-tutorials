@@ -593,7 +593,7 @@ save
 
 {: codeblock}
 
-This completes setup of the secure private network enclosure. Additional tutorials in this series illustrate show the enclosure can be securely connected by VPN to a client data center and enabled to access services on the public internet. 
+This completes setup of the secure private network enclosure protecting a single firewall zone containing a VLAN and subnet. Additional firewall zones, rules, virtual and bare-metal servers, VLANs and subnets can be added following the smae instructions. 
 
 
 ## Remove resources
