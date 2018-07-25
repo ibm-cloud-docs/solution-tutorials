@@ -114,7 +114,6 @@ commit
 set security zone-policy zone OUTSIDE default-action drop
 set security zone-policy zone OUTSIDE interface dp0bond1
 set security zone-policy zone OUTSIDE description 'External internet'
-commit
 ```
 {: codeblock}
 
@@ -128,7 +127,7 @@ save
 ```
 {: codeblock}
 
-3.	Validate VSI in the APP zone can access internet services. Login to the local VSI using SSH, use ping and curl to validate icmp and tcp access. 
+3.	Validate the VSI in the APP zone can now access services on the Internet. Login to the local VSI using SSH, use ping and curl to validate icmp and tcp access to sites on the Internet.  
 
 ```bash
 ssh root@<VSI Private IP>
