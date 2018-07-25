@@ -18,7 +18,7 @@ There are two suitable VPN options for connectivity over the public internet to 
 -	[Virtual Router Appliance VPN](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
 
 This tutorial presents setup of a site-to-site IPSec VPN using a Virtual Router Appliance (VRA) to connect a subnet in 
-a client data center to a secured subnet on the {{site.data.keyword.Bluemix_notm}}private network. 
+a client data center to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. 
 
 This example builds on the secure private network enclosure documented in tutorial xxxxxxxx. It uses a site-to-site IPSec 
 VPN, GRE tunnel and static routing. More complex VPN configurations that use dynamic routing (BGP etc) and VTI tunnels can 
@@ -73,9 +73,9 @@ Configuring an IPSec VPN site-to-site link between your data center and {{site.d
 coordination with your onsite networking team to determine many of the configuration parameters, the type of tunnel and 
 IP routing information. The parameters have to be in exact accordance for an operational VPN connection. Typically your onsite 
 networking team will specify the configuration to match agreed corporate standards and provide you with the necessary 
-IP address of the VPN gateway, and the subnet address ranges that can be accessed. 
+IP address of the data center VPN gateway, and the subnet address ranges that can be accessed. 
 
-Before commencing setup of the VPN, the IP addresses of the and subnet ranges must be determined and available for the data 
+Before commencing setup of the VPN, the IP addresses of the VPN gateways and IP network subnet ranges must be determined and available for the data 
 center VPN configuration and for the secure private network enclosure in the {{site.data.keyword.Bluemix_notm}}. These are 
 illustrated in the following figure, where the APP zone in the secure enclosure will be connected via the IPSec tunnel to 
 systems in the ‘DC IP Subnet’ in the client data center.   
@@ -86,7 +86,7 @@ systems in the ‘DC IP Subnet’ in the client data center.
 
 The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user configuring the VPN and the networking 
 team for the client data center. In this example the Remote and Local tunnel IP addresses are set to 192.168.10.1 and 
-192.168.10.2. Any arbitrary subnet may be used with agreement of the on-site networking team. (192.168.10.1/24).
+192.168.10.2. Any arbitrary subnet may be used with agreement of the on-site networking team. 
 
 
 | Item  | Description |
@@ -101,8 +101,8 @@ team for the client data center. In this example the Remote and Local tunnel IP 
 | \<esp-lifetime\> | ESP lifetime from client data center, typically 1800. |
 | \<DC VPN Public IP\>  | Internet facing public IP address of the VPN gateway at the client data centre. | 
 | \<VRA Public IP\> | Public IP address of the VRA. |
-| \<Remote tunnel IP\/24\> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.  (192.168.10.1/24) |
-| \<Local tunnel IP\/24\> | IP address assigned to local end of IPSec tunnel.  (192.168.10.2/24) |
+| \<Remote tunnel IP\/24\> | IP address assigned to remote end of IPSec tunnel. Pair of IP address in range that does not conflict with IP Cloud or client data center.   |
+| \<Local tunnel IP\/24\> | IP address assigned to local end of IPSec tunnel.   |
 | \<DC Subnet/CIDR\> | IP address of subnet to be accessed in client data center and CIDR. |
 | \<App Zone subnet/CIDR\> | Network IP address and CIDR of the APP Zone subnet from the VRA creation tutorial. | 
 | \<Shared-Secret\> | Shared encryption key to be used between {{site.data.keyword.Bluemix_notm}} and client data center. |
