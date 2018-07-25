@@ -127,7 +127,7 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
     * Select the target data center in the drop down at the top of the page.
     * Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA.
-    * RAM. 64GB.
+    * Select RAM. 64GB for production. 8GB minimum for test.
     * Operating System. Select the only option
         - Virtual Router Appliance 5.x (up to 20Gbps) Subscription Edition (64 Bit) 
     * Hard Drive. Keep default. 
@@ -140,12 +140,16 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 5. On the Checkout screen:
 
     * Validate or change the choices already made.
+    * Navigate to the Virtual Router Appliance section at the top of the page. Ignore settings in the `Network Gateway Appliance Cluster`. 
     * VLAN Selection under the **Advanced System Configuration** heading. The 'Backend VLAN' drop down will show **Auto Assigned**, click the dialog box and select the VLAN ID of the private VLAN ordered earlier.  
     * Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. When selected it will appear under the heading 'Server 1'.  
     * Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
     * Click **Submit Order**.
 
-6. Monitor for VRA creation. VRA creation will take several hours to complete. On completion you will receive an email to your account email address or check the [Device list](https://control.bluemix.net/devices). 
+6. Monitor for VRA creation. VRA creation will take several hours to complete, as a bare-metal server is provisioned. On completion you will receive an email to your account email address. 
+
+The [Device list](https://control.bluemix.net/devices) will show the VRA almost immediately with a **Clock** symbol against it, indicating transactions are in progress on this device. Until the VRA creation is complete, the **Clock** symbol remains and beyond viewing details it is not possible to perform any configuration actions against device. 
+{:tip}
 
 ### Review deployed VRA
 
@@ -164,6 +168,9 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
     ```
 
     {: codeblock}
+    
+    If SSH prompts for a password, the SSH key was not included in the build. Access the VRA via the [web browser](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-basics.html#accessing-the-device-using-the-web-gui) using the <VRA Private IP Address>. The password is from the [Software Passwords](https://control.bluemix.net/devices/passwords) page. On the **Configuration** tab, select the System/login/vyatta branch and add the desired SSH key. 
+    {:tip}
 
     Setup of the VRA requires the VRA to be placed into \[edit\] mode using the `configure` or `conf` command. 
 
@@ -172,7 +179,7 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
     If at any stage before the `save` command is entered, access is lost due to committing a bad configuration change, rebooting the VRA will return it back to the last save point, restoring access.
 {:tip} 
 
-2. To enhance security, now that SSH login is successful via the private network, userid/password authentication is disabled.
+2. Enhance security by only allowing SSH login. Now that SSH login is successful via the private network, disable access via userid/password authentication. 
 
     ```
     configure
@@ -239,7 +246,7 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
 {: #order_virtualserver}
 
-When it is desired to create a new virtual or bare-metal server on a specific VLAN, it is necessary to use the **Softlayer Device** menu on the **[Softlayer Dashboard](https://control.softlayer.com/)**. This dialog allows the target VLAN to be specified when a new device is provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to order servers from the {{site.data.keyword.Bluemix_notm}} services catalog, or the default infrastructure console and specify the VLAN.
+When it is desired to create a new virtual or bare-metal server on a specific VLAN, it is necessary to use the **Softlayer Device** menu on the **[Softlayer Dashboard](https://control.softlayer.com/)**. This dialog allows the target VLAN to be specified when a new device is provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to specify VLANs when ordering servers from the {{site.data.keyword.Bluemix_notm}} services catalog, or the default infrastructure console. 
 {:note}
 
 1. Order a [virtual server](https://control.softlayer.com/devices)  
@@ -545,7 +552,7 @@ commit
 
 {: codeblock}
 
-2. Securing public SSH access. Due to an outstanding issue with the Vyatta firmware it is not recommended to use `set service SSH listen-address x.x.x.x` to limit SSH administrative access over the public network. Alternatively external access can be blocked via the CPP firewall for the range of public IP addresses used by the VRA public interface. The \<VRA Public IP Subnet\> used here is the same as the \<VRA Public IP Address\> with the last octet being zero (x.x.x.0). 
+2. Securing public SSH access. Due to an outstanding issue at this time with the Vyatta firmware it is not recommended to use `set service SSH listen-address x.x.x.x` to limit SSH administrative access over the public network. Alternatively external access can be blocked via the CPP firewall for the range of public IP addresses used by the VRA public interface. The \<VRA Public IP Subnet\> used here is the same as the \<VRA Public IP Address\> with the last octet being zero (x.x.x.0). 
 
 ```
 set security firewall name CPP rule 900 action drop
