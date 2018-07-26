@@ -55,8 +55,9 @@ Solution Tutorials
         users-teams-applications.md
 
     {: .topicgroup}
-    Infrastructure
+    Network
         secure-network-enclosure.md
+        nat-config-private.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
@@ -96,5 +97,6 @@ Solution Tutorials
         infrastructure-as-code-terraform.md
         highly-available-and-scalable-web-application.md
         secure-network-enclosure.md
+        nat-config-private.md
 
     {: .navgroup-end}

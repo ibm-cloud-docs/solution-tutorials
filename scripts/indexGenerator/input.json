@@ -416,8 +416,8 @@
         ]
     },
     {
-        "name": "Infrastructure",
-        "anchor": "infrastructure",
+        "name": "Network",
+        "anchor": "Network",
         "solutions": [
             {
                 "name": "Isolate workloads with a secure private network",
@@ -433,12 +433,16 @@
                 ]
             },
             {
-                "hidden": true,
-                "name": "",
-                "url": "",
-                "description": "",
-                "imgSrc": "",
+                "name": "Configure firewall rules for Internet access from a private network",
+                "url": "nat-config-private.html",
+                "description": "Use NAT masquerade to translate private IP addresses to out-bound public interface.",
+                "imgSrc": "images/solution35-nat-config-private/vra-nat.png",
                 "tags": [
+                    "Infrastructure",
+                    "Vyatta",
+                    "Firewall",
+                    "Network",
+                    "Virtual Servers"
                 ]
             },
             {

@@ -702,8 +702,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </a>
 </div>
 
-## Infrastructure
-{: #infrastructure }
+## Network
+{: #Network }
 
 <div class = "solutionBoxContainer">
     <a href = "secure-network-enclosure.html">
@@ -718,6 +718,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution33-secure-network-enclosure/Secure-priv-enc.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "nat-config-private.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Configure firewall rules for Internet access from a private network
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Use NAT masquerade to translate private IP addresses to out-bound public interface.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution35-nat-config-private/vra-nat.png" />
                 </div>
             </div>
         </div>
