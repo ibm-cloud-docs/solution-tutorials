@@ -53,6 +53,10 @@ Solution Tutorials
     {: .topicgroup}
     Identity and Access Management
         users-teams-applications.md
+
+    {: .topicgroup}
+    Infrastructure
+        secure-network-enclosure.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}

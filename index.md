@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-11"
+lastupdated: "2018-07-26"
 
 ---
 
@@ -695,6 +695,29 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution20-users-teams-applications/architecture.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+</div>
+
+## Infrastructure
+{: #infrastructure }
+
+<div class = "solutionBoxContainer">
+    <a href = "secure-network-enclosure.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Isolate workloads with a secure private network
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Configure a Virtual Router Appliance to create a secure enclosure. Associate VLANs, provision servers, setup IP routing and firewalls.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution33-secure-network-enclosure/Secure-priv-enc.png" />
                 </div>
             </div>
         </div>

@@ -414,6 +414,51 @@
                 ]
             }
         ]
+    },
+    {
+        "name": "Infrastructure",
+        "anchor": "infrastructure",
+        "solutions": [
+            {
+                "name": "Isolate workloads with a secure private network",
+                "url": "secure-network-enclosure.html",
+                "description": "Configure a Virtual Router Appliance to create a secure enclosure. Associate VLANs, provision servers, setup IP routing and firewalls.",
+                "imgSrc": "images/solution33-secure-network-enclosure/Secure-priv-enc.png",
+                "tags": [
+                    "Infrastructure",
+                    "Vyatta",
+                    "Firewall",
+                    "Network"
+                ]
+            },
+            {
+                "hidden": true,
+                "name": "",
+                "url": "",
+                "description": "",
+                "imgSrc": "",
+                "tags": [
+                ]
+            },
+            {
+                "hidden": true,
+                "name": "",
+                "url": "",
+                "description": "",
+                "imgSrc": "",
+                "tags": [
+                ]
+            },
+            {
+                "hidden": true,
+                "name": "",
+                "url": "",
+                "description": "",
+                "imgSrc": "",
+                "tags": [
+                ]
+            }
+        ]
     }
-]
+    ]
 }
