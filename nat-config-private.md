@@ -27,7 +27,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 <p style="text-align: center;">
 
-  ![Architecture](images/vra-nat.png)
+  ![Architecture](images/solution35-nat-config-private/vra-nat.png)
 </p>
 
 1.	Document required Internet services.
