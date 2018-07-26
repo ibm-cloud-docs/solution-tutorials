@@ -1,3 +1,20 @@
+---
+copyright:
+  years: 2018
+lastupdated: "2018-07-16"
+---
+
+{:java: #java .ph data-hd-programlang='java'}
+{:swift: #swift .ph data-hd-programlang='swift'}
+{:ios: #ios data-hd-operatingsystem="ios"}
+{:android: #android data-hd-operatingsystem="android"}
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:tip: .tip}
+{:pre: .pre}
+
 # Internet access from a private network on the {{site.data.keyword.Bluemix_notm}} IaaS platform
 
 

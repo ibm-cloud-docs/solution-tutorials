@@ -1,3 +1,20 @@
+---
+copyright:
+  years: 2018
+lastupdated: "2018-07-16"
+---
+
+{:java: #java .ph data-hd-programlang='java'}
+{:swift: #swift .ph data-hd-programlang='swift'}
+{:ios: #ios data-hd-operatingsystem="ios"}
+{:android: #android data-hd-operatingsystem="android"}
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:tip: .tip}
+{:pre: .pre}
+
 # VPN connection to a secure private network on the {{site.data.keyword.Bluemix_notm}} IaaS platform
 
 The need to create a private connection between a remote network environment and servers on {{site.data.keyword.Bluemix_notm}} 
