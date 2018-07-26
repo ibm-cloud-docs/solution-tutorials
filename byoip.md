@@ -54,7 +54,7 @@ Alternatively consider a solution such as VMware NSX that implements a virtual o
 
 The decision tree here can be used to determine the appropriate implement pattern. 
 
-![](images/byoipdecision.png)
+![](images/solution37-byoip/byoipdecision.png)
 
 
 The following notes provide further guidance:
