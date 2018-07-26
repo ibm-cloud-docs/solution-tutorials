@@ -49,7 +49,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 <p style="text-align: center;">
 
-  ![Architecture](images/sec-priv-vpn.png)
+  ![Architecture](images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png)
 </p>
 
 1.	Document VPN Configuration
@@ -80,7 +80,7 @@ illustrated in the following figure, where the APP zone in the secure enclosure 
 systems in the ‘DC IP Subnet’ in the client data center.   
 
 
-![](images/vpn-addresses.png)
+![](images/solution36-configuring-IPSEC-VPN/vpn-addresses.png)
 
 
 The following parameters must be agreed and documented between the {{site.data.keyword.Bluemix_notm}} user configuring the VPN and the networking 
