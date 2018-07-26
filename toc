@@ -95,5 +95,6 @@ Solution Tutorials
         lamp-stack.md
         infrastructure-as-code-terraform.md
         highly-available-and-scalable-web-application.md
+        secure-network-enclosure.md
 
     {: .navgroup-end}

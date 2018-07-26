@@ -428,7 +428,8 @@
                     "Infrastructure",
                     "Vyatta",
                     "Firewall",
-                    "Network"
+                    "Network",
+                    "Virtual Servers"
                 ]
             },
             {
