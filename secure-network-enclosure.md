@@ -51,7 +51,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 <p style="text-align: center;">
 
-  ![Architecture](images/Secure-priv-enc.png)
+  ![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png)
 </p>
 
 
@@ -153,7 +153,7 @@ The [Device list](https://control.bluemix.net/devices) will show the VRA almost 
 
 ### Review deployed VRA
 
-1. Inspect the new VRA. On the [Infrastructure Dashboard](https://control.bluemix.net) Select **Network** in the left-hand pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Select the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page. ![](images/Gateway-detail.png)
+1. Inspect the new VRA. On the [Infrastructure Dashboard](https://control.bluemix.net) Select **Network** in the left-hand pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Select the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page. ![](images/solution33-secure-network-enclosure/Gateway-detail.png)
 
 2. Make a note of the `Private` and `Public IP` addresses of the VRA for future use.
 
@@ -291,7 +291,7 @@ The private VLAN(s) for the virtual server will have been associated by the {{si
 
 1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://control.bluemix.net/network/gateways) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. 
 
-2. If it is desired to add additional VLANs at this time, navigate to the **Associate a VLAN** section. The drop down box, ‘Select VLAN’ should be enabled and other provisioned VLANs can be selected. ![](images/Gateway-Associate-VLAN.png)
+2. If it is desired to add additional VLANs at this time, navigate to the **Associate a VLAN** section. The drop down box, ‘Select VLAN’ should be enabled and other provisioned VLANs can be selected. ![](images/solution33-secure-network-enclosure/Gateway-Associate-VLAN.png)
 
   - If no eligible VLAN is shown, no VLANs are available on the same router as the VRA. This will require a [support ticket](https://control.bluemix.net/support/unifiedConsole/tickets/add) to be raised to request a private VLAN on the same router.
 {:tip}
@@ -366,7 +366,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
 
     This is an example interface configuration showing vif 1199 and the subnet gateway address.
 
-   ![](images/show_interfaces.png)
+   ![](images/solution33-secure-network-enclosure/show_interfaces.png)
 
 
 4. Validate the VSI is once again accessible via the management network from your workstation. 
