@@ -142,6 +142,7 @@ table.
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  ike-group <ike group name>
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  local-address <VRA Public IP>
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  default-esp-group <esp group name>
+   set security vpn ipsec site-to-site peer <DC VPN Public IP> tunnel 1
    commit
    save
    ```
@@ -150,7 +151,7 @@ table.
 ## Configure data center VPN and tunnel
 {: #Configure_DC_VPN}
 
-1. The network team at the client data centre will configure an identical IPSec VPN connection with the <\DC VPN Public IP&gt; and &lt;VRA Public IP&gt; swapped, the local and remote tunnel address and also the <\DC Subnet/CIDR&gt; and <\App Zone subnet/CIDR&gt; parameters swapped. The specific configuration commands at the client data center will depend on the vendor of the VPN. 
+1. The network team at the client data centre will configure an identical IPSec VPN connection with the &lt;DC VPN Public IP&gt; and &lt;VRA Public IP&gt; swapped, the local and remote tunnel address and also the &lt;DC Subnet/CIDR&gt; and &lt;App Zone subnet/CIDR&gt; parameters swapped. The specific configuration commands at the client data center will depend on the vendor of the VPN. 
 
 2. When data center configuration is complete, the IPSec link should come up automatically. Verify the status of the connection from the VRA operational command line:
    ```bash
