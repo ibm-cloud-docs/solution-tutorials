@@ -25,7 +25,7 @@
             {
                 "name": "Scalable web app on Kubernetes",
                 "url": "scalable-webapp-kubernetes.html",
-                "description": "Scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+                "description": "Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
                 "imgSrc": "images/solution2/Architecture.png",
                 "tags": [
                     "Docker",
@@ -77,7 +77,7 @@
             {
                 "name": "Continuous Deployment to Kubernetes",
                 "url": "continuous-deployment-to-kubernetes.html",
-                "description": "Set up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}. Add integrations to other services like security scanners, Slack notifications, and analytics.",
+                "description": "Set up a continuous integration and delivery pipeline for containerized applications running on a Kubernetes cluster. Add integrations to other services like security scanners, Slack notifications, and analytics.",
                 "imgSrc": "images/solution21/Architecture.png",
                 "tags": [
                     "Kubernetes",
@@ -328,10 +328,9 @@
             {
               "name": "Build a data lake with Object Storage",
               "url": "smart-data-lake.html",
-              "description": "Provide tools to data scientists to query data using SQL Query and conduct analysis in Watson Studio. Share data and insights through interactive charts using {{site.data.keyword.dynamdashbemb_short}}.",
+              "description": "Provide tools to data scientists to query data using SQL Query and conduct analysis in Watson Studio. Share data and insights through interactive charts.",
               "imgSrc": "images/solution29/architecture.png",
               "tags": [
-                  "{{site.data.keyword.dynamdashbemb_short}}",
                   "Cloud Object Storage",
                   "SQL Query",
                   "Watson Studio"
@@ -346,7 +345,6 @@
                   "Db2 Warehouse",
                   "App ID",
                   "Cloud Functions",
-                  "{{site.data.keyword.dynamdashbemb_short}}",
                   "GitHub"
               ]
           },
@@ -460,7 +458,7 @@
             {
                 "name": "VPN into a secure private network",
                 "url": "configuring-IPSEC-VPN.html",
-                "description": "Create a private connection between a remote network environment and servers on {{site.data.keyword.Bluemix_notm}}'s private network.",
+                "description": "Create a private connection between a remote network environment and servers on IBM Cloud's private network.",
                 "imgSrc": "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png",
                 "tags": [
                     "Infrastructure",
