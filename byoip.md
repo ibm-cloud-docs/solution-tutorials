@@ -23,6 +23,12 @@ This tutorial presents a brief overview of BYOIP implementation patterns that ca
 
 {:shortdesc}
 
+## Objectives
+{: #objectives}
+
+* Understand BYOIP implementation patterns
+* Select implementation pattern for {{site.data.keyword.Bluemix_notm}}.
+
 ## {{site.data.keyword.Bluemix_notm}} IP addressing
 
 The {{site.data.keyword.Bluemix_notm}} utilizes a number of private address ranges, most specifically 10.0.0.0/8, and in some cases these ranges may conflict with existing client networks. Where address conflicts exist, there are a number of patterns that support BYOIP to allow interoperability with the IBM Cloud network.
@@ -34,12 +40,6 @@ The {{site.data.keyword.Bluemix_notm}} utilizes a number of private address rang
 
 The choice of pattern is determined by the applications intended to be hosted on the {{site.data.keyword.Bluemix_notm}}. There are two key aspects, application sensitivity to the pattern implementation and the extent of overlap of address ranges between the client network and {{site.data.keyword.Bluemix_notm}}. Additional considerations will also apply if there is an intent to use a dedicated private network connection to {{site.data.keyword.Bluemix_notm}}. The documentation for [{{site.data.keyword.BluDirectLink}}
 ](../infrastructure/direct-link/subnet-configuration.html#configure-ibm-cloud-direct-link) is recommended reading for all users considering BYOIP. For {{site.data.keyword.BluDirectLink}} users, the associated guidance should be followed in deference to the information presented here.
-
-## Objectives
-{: #objectives}
-
-* Understand BYOIP implementation patterns
-* Select implementation pattern for {{site.data.keyword.Bluemix_notm}}.
 
 ## Implementation patterns overview
 {: #patterns_overview}
