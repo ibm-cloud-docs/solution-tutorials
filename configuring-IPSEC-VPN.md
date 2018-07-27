@@ -172,7 +172,7 @@ table.
    set interfaces tunnel tun0 address <Local tunnel IP/24>
    set interfaces tunnel tun0 encapsulation gre
    set interfaces tunnel tun0 local-ip <VRA Public IP>
-   set interfaces tunnel tun0 local-ip <DC VPN Public IP>
+   set interfaces tunnel tun0 remote-ip <DC VPN Public IP>
    commit
    ```
    {: codeblock}
