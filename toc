@@ -58,6 +58,7 @@ Solution Tutorials
     Network
         secure-network-enclosure.md
         nat-config-private.md
+        byoip.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}

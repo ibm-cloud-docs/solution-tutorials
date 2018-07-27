@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-26"
+lastupdated: "2018-07-27"
 
 ---
 
@@ -735,6 +735,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution35-nat-config-private/vra-nat.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "byoip.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Bring Your Own IP Address
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>An overview of BYOIP implementation patterns and a guide to identify the appropriate pattern.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution37-byoip/byoipdecision.png" />
                 </div>
             </div>
         </div>

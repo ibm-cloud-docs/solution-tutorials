@@ -446,12 +446,15 @@
                 ]
             },
             {
-                "hidden": true,
-                "name": "",
-                "url": "",
-                "description": "",
-                "imgSrc": "",
+                "name": "Bring Your Own IP Address",
+                "url": "byoip.html",
+                "description": "An overview of BYOIP implementation patterns and a guide to identify the appropriate pattern.",
+                "imgSrc": "images/solution37-byoip/byoipdecision.png",
                 "tags": [
+                    "Infrastructure",
+                    "Vyatta",
+                    "Firewall",
+                    "Network"
                 ]
             },
             {
