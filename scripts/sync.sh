@@ -23,6 +23,10 @@ tar cf - \
   --exclude=configuring-IPSEC-VPN.md \
   --exclude=nat-config-private.md \
   --exclude=secure-network-enclosure.md \
+  --exclude=images/solution33-secure-network-enclosure \
+  --exclude=images/solution35-nat-config-private \
+  --exclude=images/solution36-configuring-IPSEC-VPN \
+  --exclude=images/solution37-byoip \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
