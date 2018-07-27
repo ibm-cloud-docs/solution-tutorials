@@ -416,6 +416,7 @@
     {
         "name": "Network",
         "anchor": "Network",
+        "hidden": true,
         "solutions": [
             {
                 "name": "Isolate workloads with a secure private network",

@@ -19,6 +19,10 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=low-latency-real-time-bidding.md \
   --exclude=autoscale-virtual-server.md \
+  --exclude=byoip.md \
+  --exclude=configuring-IPSEC-VPN.md \
+  --exclude=nat-config-private.md \
+  --exclude=secure-network-enclosure.md \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
