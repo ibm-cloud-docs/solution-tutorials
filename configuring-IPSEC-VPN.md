@@ -205,7 +205,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 
 1. Create firewall rules for traffic to the remote subnet in VRA edit mode.
    ```
-   set security firewall name APP-TO-TUNNEL action drop
+   set security firewall name APP-TO-TUNNEL default-action drop
    set security firewall name APP-TO-TUNNEL default-log
 
    set security firewall name APP-TO-TUNNEL rule 100 action accept
@@ -231,7 +231,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    {: codeblock}
 
    ```
-   set security firewall name TUNNEL-TO-APP action drop
+   set security firewall name TUNNEL-TO-APP default-action drop
    set security firewall name TUNNEL-TO-APP default-log
 
    set security firewall name TUNNEL-TO-APP rule 100 action accept
