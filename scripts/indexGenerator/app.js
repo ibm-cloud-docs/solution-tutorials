@@ -58,4 +58,13 @@ function writeFile(templateFile, dest) {
 writeFile('./index.tmpl.md', '../../index.md');
 writeFile('./toc.tmpl.md', '../../toc');
 
+console.log('Writing ../../tutorials.json');
+let onlyPublicInputs = require('./input.json');
+
+onlyPublicInputs.categories = onlyPublicInputs.categories.filter((category) => !category.hidden);
+onlyPublicInputs.categories.forEach((category) => {
+  category.solutions = category.solutions.filter((solution) => !solution.hidden);
+});
+fs.writeFileSync('../../tutorials.json', JSON.stringify(onlyPublicInputs, null, 2));
+
 console.log('Done!');

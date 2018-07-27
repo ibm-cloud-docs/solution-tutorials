@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-11"
+lastupdated: "2018-07-27"
 
 ---
 
@@ -202,7 +202,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Scaffold a Java web application, run it locally in a container and then deploy it to a IBM Cloud Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.</p>
+                    <p>Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution2/Architecture.png" />
@@ -270,7 +270,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Set up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}. Add integrations to other services like security scanners, Slack notifications, and analytics.</p>
+                    <p>Set up a continuous integration and delivery pipeline for containerized applications running on a Kubernetes cluster. Add integrations to other services like security scanners, Slack notifications, and analytics.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution21/Architecture.png" />
@@ -594,7 +594,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Provide tools to data scientists to query data using SQL Query and conduct analysis in Watson Studio. Share data and insights through interactive charts using {{site.data.keyword.dynamdashbemb_short}}.</p>
+                    <p>Provide tools to data scientists to query data using SQL Query and conduct analysis in Watson Studio. Share data and insights through interactive charts.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution29/architecture.png" />
