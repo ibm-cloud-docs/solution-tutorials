@@ -458,12 +458,16 @@
                 ]
             },
             {
-                "hidden": true,
-                "name": "",
-                "url": "",
-                "description": "",
-                "imgSrc": "",
+                "name": "VPN into a secure private network",
+                "url": "configuring-IPSEC-VPN.html",
+                "description": "Create a private connection between a remote network environment and servers on {{site.data.keyword.Bluemix_notm}}'s private network.",
+                "imgSrc": "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png",
                 "tags": [
+                    "Infrastructure",
+                    "Vyatta",
+                    "Firewall",
+                    "Network",
+                    "Virtual Servers"
                 ]
             }
         ]

@@ -757,5 +757,22 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
+    <a href = "configuring-IPSEC-VPN.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                VPN into a secure private network
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Create a private connection between a remote network environment and servers on {{site.data.keyword.Bluemix_notm}}&#x27;s private network.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
 </div>
 
