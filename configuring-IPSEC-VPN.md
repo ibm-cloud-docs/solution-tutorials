@@ -203,14 +203,15 @@ The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Publ
     ping <Remote tunnel IP>
     ```
     {: codeblock}
-    The TX and RX counts on a `show interfaces tunnel tun0` should be seen to increment.
+    
+    The TX and RX counts on a `show interfaces tunnel tun0` should be seen to increment while there is `ping` traffic. 
     
 4. If traffic is not flowing, `monitor interface` commands can be used to observe what traffic is seen on each interface. Interface `tun0` shows the internal traffic over the tunnel. Interface `dp0bond1` will show the encapsulated traffic flow to and from the remote VPN gateway. 
     ```
     monitor interface tunnel tun0 traffic
     monitor interface bonding dp0bond1 traffic 
     ```
-If no return traffic is seen, the data center networking team will need to observe the traffic flows at the VPN and tunnel interfaces at the remote site to diagnose the issue. 
+If no return traffic is seen, the data center networking team will need to monitor the traffic flows at the VPN and tunnel interfaces at the remote site to localise the issue. 
     
 ## Create static IP route
 {: #Define_Routing}
@@ -224,8 +225,6 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    ```
    {: codeblock}
    
-   As no firewall rules exist for the tunnel, the remote subnet or subnet gateway will not be accessible. 
-   
 2. Review the VRA routing table from the VRA command line. At this time no traffic will transverse the route as no firewall rules exist to allow traffic via the tunnel. Firewall rules are required for traffic initiated at either side.
 
    ```bash
@@ -237,7 +236,8 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 {: #Configure_firewall}
 
 1. Create resource groups for allowed icmp traffic and tcp ports. 
-   ```
+
+  ```
   set res group icmp-group icmpgrp type 8
   set res group icmp-group icmpgrp type 11
   set res group icmp-group icmpgrp type 3
@@ -247,6 +247,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
   set res group port tcpports port 443
   commit
   ```
+  {: codeblock}
 
 2. Create firewall rules for traffic to the remote subnet in VRA edit mode.
    ```
@@ -293,6 +294,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    {: codeblock}
    
 3. To validate the firewalls and routing at both ends are configured correctly and are now allowing ICMP and tcp traffic ping the gateway address of the remote subnet, first from the VRA command line and if successful then by logging into the VSI. 
+
    ```bash
    ping <Remote Subnet Gateway IP>
    ssh root@<VSI Private IP>
@@ -300,20 +302,23 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    ```
    {: codeblock}
 
-4. If the ping from the VRA command line fails, validate that a ping reply is seen on the tunnel interface
+4. If the ping from the VRA command line fails, validate that a ping reply is seen in response to a ping request on the tunnel interface.
+
     ```
     monitor interface tunnel tun0 traffic
     ```
     {: codeblock}
-    No response indicates an issue with the firewall rules or routing at the data center. If a response is seen, but the ping fails, check the configuration of the VRA firewall rules. 
+    
+    No response indicates an issue with the firewall rules or routing at the data center. If a reply is seen in the monitor output, but the ping command times out, check the configuration of the local VRA firewall rules. 
     
 5. If the ping from the VSI fails, this indicates an issue with the VRA firewall rules, routing in the VRA or VSI configuration. Complete the prior step to ensure that a request is sent to and response is seen from the data center. Monitoring the traffic on the local VLAN and inspecting the firewall logs will assist in isolating the issue to routing or the firewall. 
+
     ```
     monitor interfaces bonding dp0bond0.<VLAN ID>
     show log firewall name APP-TO-TUNNEL
     show log firewall name TUNNEL-TO-APP
     ```
-     {: codeblock}
+    {: codeblock}
 
 This completes setup of the VPN from the secure private network enclosure. Additional tutorials in this series illustrate how the enclosure can access services on the public internet. 
 
