@@ -271,10 +271,10 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 
    set security firewall name TUNNEL-TO-APP rule 100 action accept
    set security firewall name TUNNEL-TO-APP rule 100 protocol tcp
-   set security firewall name TUNNEL-TO-APP rule 100 destination port tcpoorts
+   set security firewall name TUNNEL-TO-APP rule 100 destination port tcpports
    
    set security firewall name TUNNEL-TO-APP rule 200 protocol icmp
-   set security firewall name TUNNEL-TO-APP rule 200 icmp icmpgrp
+   set security firewall name TUNNEL-TO-APP rule 200 icmp group icmpgrp
    set security firewall name TUNNEL-TO-APP rule 200 action accept 
    commit
    ```
