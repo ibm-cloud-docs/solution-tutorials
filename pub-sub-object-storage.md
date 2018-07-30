@@ -115,7 +115,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 6. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```sh
  ibmcloud resource service-alias-create myobjectstorage --instance-name myobjectstorage
- ibmcloud cs cluster-service-bind mycluster default myobjectstorage
+ ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service myobjectstorage
  ```
 ![](images/solution25/cos_bucket.png)
 
