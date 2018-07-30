@@ -142,7 +142,8 @@ table.
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  ike-group <ike group name>
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  local-address <VRA Public IP>
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  default-esp-group <esp group name>
-   set security vpn ipsec site-to-site peer <DC VPN Public IP> tunnel 1
+   set security vpn ipsec site-to-site peer <DC VPN Public IP>  tunnel 1
+   set security vpn ipsec site-to-site peer <DC VPN Public IP>  tunnel 1 protocol gre
    commit
    save
    ```
@@ -159,18 +160,21 @@ ping <DC VPN Public IP>
 ```
  {: codeblock}
 
-2. When data center VPN configuration is complete, the IPSec link should come up automatically. Verify that the link has been established and the status of the connection from the VRA operational command line:
+2. When data center VPN configuration is complete, the IPSec link should come up automatically. Verify that the link has been established and the status shows that there is one or more active IPsec tunnels. Verify with the data center that both ends of the VPN show active IPsec tunnels.
+
    ```bash
    show vpn ipsec sa
    show vpn ipsec status
    ```
    {: codeblock}
    
-3. If the link has not been created, validate that the local and remote addresses have been correctly specified and other parameters are as expected using the dedub command:
+3. If the link has not been created, validate that the local and remote addresses have been correctly specified and other parameters are as expected using the debug command:
    ``` bash
    show vpn debug
    ```
    {: codeblock}
+
+The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Public IP>[500].......` should be found in the output. If this does not exist or shows 'CONNECTING' there is an error in the VPN configuration.  
 
 ## Define GRE tunnel 
 {: #Define_Tunnel}
