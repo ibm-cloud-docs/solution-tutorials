@@ -56,7 +56,7 @@ Applications running in the {{site.data.keyword.Bluemix_notm}} generate diagnost
 By default the **Lite** plan is selected which allows for 500 MB of daily logs for the past 3 days. The **Premium** plans feature higher data volumes and longer log retention.
 
 ## Deploy a Cloud Foundry app
-The ready-to-run [code for the logging app is located in this Github repository](https://github.com/IBM-Cloud/application-log-analysis). Clone or download the repository, then push the app to {{site.data.keyword.Bluemix_notm}}.
+The ready-to-run [code for the logging app is located in this Github repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then push the app to {{site.data.keyword.Bluemix_notm}}.
 
 1. Clone the Github repository:
    ```bash
