@@ -152,22 +152,18 @@ table.
 ## Configure data center VPN and tunnel
 {: #Configure_DC_VPN}
 
-1. The network team at the client data centre will configure an identical IPSec VPN connection with the &lt;DC VPN Public IP&gt; and &lt;VRA Public IP&gt; swapped, the local and remote tunnel address and also the &lt;DC Subnet/CIDR&gt; and &lt;App Zone subnet/CIDR&gt; parameters swapped. The specific configuration commands at the client data center will depend on the vendor of the VPN. 
-
-Validate that the public IP address of the DC VPN gateway is accessible over the internet before proceeding:
-```
-ping <DC VPN Public IP>
-```
- {: codeblock}
-
+1. The network team at the client data centre will configure an identical IPSec VPN connection with the &lt;DC VPN Public IP&gt; and &lt;VRA Public IP&gt; swapped, the local and remote tunnel address and also the &lt;DC Subnet/CIDR&gt; and &lt;App Zone subnet/CIDR&gt; parameters swapped. The specific configuration commands at the client data center will depend on the vendor of the VPN.
+1. Validate that the public IP address of the DC VPN gateway is accessible over the internet before proceeding:
+   ```
+   ping <DC VPN Public IP>
+   ```
+   {: codeblock}
 2. When data center VPN configuration is complete, the IPSec link should come up automatically. Verify that the link has been established and the status shows that there is one or more active IPsec tunnels. Verify with the data center that both ends of the VPN show active IPsec tunnels.
-
    ```bash
    show vpn ipsec sa
    show vpn ipsec status
    ```
    {: codeblock}
-   
 3. If the link has not been created, validate that the local and remote addresses have been correctly specified and other parameters are as expected using the debug command:
    ``` bash
    show vpn debug
@@ -219,14 +215,11 @@ If no return traffic is seen, the data center networking team will need to monit
 Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 
 1. Create static route in VRA edit mode.
-
    ```
    set protocols static route <DC Subnet/CIDR>  next-hop <Remote tunnel IP>
    ```
-   {: codeblock}
-   
+   {: codeblock}   
 2. Review the VRA routing table from the VRA command line. At this time no traffic will transverse the route as no firewall rules exist to allow traffic via the tunnel. Firewall rules are required for traffic initiated at either side.
-
    ```bash
    show ip route
    ```
@@ -236,19 +229,17 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
 {: #Configure_firewall}
 
 1. Create resource groups for allowed icmp traffic and tcp ports. 
+   ```
+   set res group icmp-group icmpgrp type 8
+   set res group icmp-group icmpgrp type 11
+   set res group icmp-group icmpgrp type 3
 
-  ```
-  set res group icmp-group icmpgrp type 8
-  set res group icmp-group icmpgrp type 11
-  set res group icmp-group icmpgrp type 3
-
-  set res group port tcpports port 22
-  set res group port tcpports port 80
-  set res group port tcpports port 443
-  commit
-  ```
-  {: codeblock}
-
+   set res group port tcpports port 22
+   set res group port tcpports port 80
+   set res group port tcpports port 443
+   commit
+   ```
+   {: codeblock}
 2. Create firewall rules for traffic to the remote subnet in VRA edit mode.
    ```
    set security firewall name APP-TO-TUNNEL default-action drop
@@ -279,7 +270,6 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    commit
    ```
    {: codeblock}
-   
 2. Create Zone for tunnel and associate firewalls for traffic initiated in either zone.
    ```
    set security zone-policy zone TUNNEL description "GRE Tunnel"
@@ -292,39 +282,33 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    save
    ```
    {: codeblock}
-   
-3. To validate the firewalls and routing at both ends are configured correctly and are now allowing ICMP and tcp traffic ping the gateway address of the remote subnet, first from the VRA command line and if successful then by logging into the VSI. 
-
+3. To validate the firewalls and routing at both ends are configured correctly and are now allowing ICMP and tcp traffic ping the gateway address of the remote subnet, first from the VRA command line and if successful then by logging into the VSI.
    ```bash
    ping <Remote Subnet Gateway IP>
    ssh root@<VSI Private IP>
    ping <Remote Subnet Gateway IP>
    ```
    {: codeblock}
-
 4. If the ping from the VRA command line fails, validate that a ping reply is seen in response to a ping request on the tunnel interface.
+   ```
+   monitor interface tunnel tun0 traffic
+   ```
+   {: codeblock}
+   No response indicates an issue with the firewall rules or routing at the data center. If a reply is seen in the monitor output, but the ping command times out, check the configuration of the local VRA firewall rules.
+5. If the ping from the VSI fails, this indicates an issue with the VRA firewall rules, routing in the VRA or VSI configuration. Complete the prior step to ensure that a request is sent to and response is seen from the data center. Monitoring the traffic on the local VLAN and inspecting the firewall logs will assist in isolating the issue to routing or the firewall.
+   ```
+   monitor interfaces bonding dp0bond0.<VLAN ID>
+   show log firewall name APP-TO-TUNNEL
+   show log firewall name TUNNEL-TO-APP
+   ```
+   {: codeblock}
 
-    ```
-    monitor interface tunnel tun0 traffic
-    ```
-    {: codeblock}
-    
-    No response indicates an issue with the firewall rules or routing at the data center. If a reply is seen in the monitor output, but the ping command times out, check the configuration of the local VRA firewall rules. 
-    
-5. If the ping from the VSI fails, this indicates an issue with the VRA firewall rules, routing in the VRA or VSI configuration. Complete the prior step to ensure that a request is sent to and response is seen from the data center. Monitoring the traffic on the local VLAN and inspecting the firewall logs will assist in isolating the issue to routing or the firewall. 
-
-    ```
-    monitor interfaces bonding dp0bond0.<VLAN ID>
-    show log firewall name APP-TO-TUNNEL
-    show log firewall name TUNNEL-TO-APP
-    ```
-    {: codeblock}
-
-This completes setup of the VPN from the secure private network enclosure. Additional tutorials in this series illustrate how the enclosure can access services on the public internet. 
+This completes setup of the VPN from the secure private network enclosure. Additional tutorials in this series illustrate how the enclosure can access services on the public internet.
 
 ## Remove resources
 {:removeresources}
-Steps to take to remove the resources created in this tutorial. 
+
+Steps to take to remove the resources created in this tutorial.
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://control.bluemix.net/network/gateways/371923) page.
 {:tip}  
@@ -335,8 +319,8 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 ## Related content
 {:related}
-- [IBM Virtual Router Appliance](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-basics.html#vra-basics)
-- [Static and Portable IP Subnets](https://console.bluemix.net/docs/infrastructure/subnets/about.html)
-- [Vyatta documentation](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation)
+- [IBM Virtual Router Appliance](../infrastructure/virtual-router-appliance/vra-basics.html#vra-basics)
+- [Static and Portable IP Subnets](../infrastructure/subnets/about.html)
+- [Vyatta documentation](../infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation)
 - [Brocade Vyatta Network OS IPsec Site-to-Site VPN Configuration Guide, 5.2R1](https://public.dhe.ibm.com/cloud/bluemix/network/vra/vyatta-network-os-5.2r1-ipsec-vpn.pdf)
 - [Brocade Vyatta Network OS Tunnels Configuration Guide, 5.2R1](https://public.dhe.ibm.com/cloud/bluemix/network/vra/vyatta-network-os-5.2r1-tunnels.pdf)
