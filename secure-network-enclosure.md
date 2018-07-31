@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-07-16"
+lastupdated: "2018-07-31"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -33,11 +33,9 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 ## Objectives 
 {: #objectives}
 
-* Create a secure private network within which virtual machines and bare-metal servers can be deployed
 * Deploy a Virtual Router Appliance (VRA)
-* Configure VLANs and IP subnets
-* Secure the VRA and enclosure
-* Configure VRA firewall rules
+* Define VLANs and IP subnets to deploy virtual machines and bare-metal servers
+* Secure the VRA and enclosure with firewall rules
 
 ## Services used
 {: #products}
@@ -121,21 +119,21 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
    For a production environment it is recommended to use at a minimum - Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM. 
    {:tip}
 
-   * Select the target data center in the drop down at the top of the page.
+   * Select the **target data center** in the drop down at the top of the page.
    * Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA.
-   * Select RAM. 64GB for production. 8GB minimum for test.
+   * Select **RAM**. 64GB for production. 8GB minimum for test.
    * Operating System. Select the only option
      - Virtual Router Appliance 5.x (up to 20Gbps) Subscription Edition (64 Bit) 
-   * Hard Drive. Keep default. 
-   * Public Bandwidth. Keep default of 'Metered'.
-   * Uplink Port Speeds. Take the default or if required select 1Gbps, 10Gbps  and redundant links.
-   * Monitoring. Host Ping and TCP Service Monitoring.
-   * Response. Automated Reboot from Monitoring. 
+   * **Hard Drive**. Keep default. 
+   * **Public Bandwidth**. Keep default of 'Metered'.
+   * **Uplink Port Speeds**. Take the default or if required select 1Gbps, 10Gbps  and redundant links.
+   * **Monitoring**. Host Ping and TCP Service Monitoring.
+   * **Response**. Automated Reboot from Monitoring. 
    * Click **Add To Order**.
 5. On the Checkout screen:
    * Validate or change the choices already made.
    * Navigate to the Virtual Router Appliance section at the top of the page. Ignore settings in the `Network Gateway Appliance Cluster`. 
-   * VLAN Selection under the **Advanced System Configuration** heading. The 'Backend VLAN' drop down will show **Auto Assigned**, click the dialog box and select the VLAN ID of the private VLAN ordered earlier.  
+   * VLAN Selection under the **Advanced System Configuration** heading. The *Backend VLAN* drop down will show **Auto Assigned**, click the dialog box and select the VLAN ID of the private VLAN ordered earlier.  
    * Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. When selected it will appear under the heading 'Server 1'.  
    * Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
     * Click **Submit Order**.
@@ -215,7 +213,7 @@ The [Device list](https://control.bluemix.net/devices) will show the VRA almost 
 ## Order the first virtual server
 {: #order_virtualserver}
 
-When it is desired to create a new virtual or bare-metal server on a specific VLAN, it is necessary to use the **Softlayer Device** menu on the **[Softlayer Dashboard](https://control.softlayer.com/)**. This dialog allows the target VLAN to be specified when a new device is provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to specify VLANs when ordering servers from the {{site.data.keyword.Bluemix_notm}} services catalog, or the default infrastructure console. 
+When it is desired to create a new virtual or bare-metal server on a specific VLAN, it is necessary to use the **SoftLayer Device** menu on the **[SoftLayer Dashboard](https://control.softlayer.com/)**. This dialog allows the target VLAN to be specified when a new device is provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to specify VLANs when ordering servers from the {{site.data.keyword.Bluemix_notm}} services catalog, or the default infrastructure console. 
 {:note}
 
 A virtual server is created at this point to aid in diagnosis of VRA configuration errors. Successful access to the VSI is validated over the {{site.data.keyword.Bluemix_notm}} private network before access to it is routed via the VRA in a later step. 
@@ -223,10 +221,10 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
 1. Order a [virtual server](https://control.softlayer.com/devices)  
 2. Select **Public Virtual Server** and the billing type (hourly). 
 3. On the Virtual Server ordering page specify:
-   - Data Center (Data Center same as the VRA)
-   - Flavor – lowest cost is C1.1x1.25 'Compute' 
-   - Operating System – Take CentOS 7.x - Minimal
-   - Uplink Port Speeds. The network interface must be changed from the default of *public and private* to only specify a Private Network Uplink. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA.  
+   - **Data Center** (Data Center same as the VRA)
+   - **Flavor** – lowest cost is C1.1x1.25 'Compute' 
+   - **Operating System** – Take CentOS 7.x - Minimal
+   - **Uplink Port Speeds**. The network interface must be changed from the default of *public and private* to only specify a Private Network Uplink. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA.  
    - Click **Add To Order**.
 3. On the Checkout screen:
    * Validate or change the choices already made.
@@ -236,7 +234,7 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
    * Click **Submit Order**.
 4. Click tick box to accept the 'Third-Party' service agreements, then **Provision**.
 5. Monitor for completion on the [Devices](https://control.bluemix.net/devices) page or via email. 
-6. Make note of the 'Private IP address' of the VSI for a later step and that under the **Network** section on the **Device Details** page that the VSI is assigned to the correct VLAN. If not, delete this VSI and create a new VSI on the correct VLAN. 
+6. Make note of the *Private IP address* of the VSI for a later step and that under the **Network** section on the **Device Details** page that the VSI is assigned to the correct VLAN. If not, delete this VSI and create a new VSI on the correct VLAN. 
 7. Verify successful access to the VSI via the {{site.data.keyword.Bluemix_notm}} private network using ping and SSH from your local workstation over the VPN.
    ```bash
    ping <VSI Private IP Address>
@@ -244,22 +242,21 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
    ```
    {: codeblock}
 
-## Routing VLAN access via the VRA
-
+## Route VLAN access via the VRA
 {: #routing_vlan_via_vra}
 
 The private VLAN(s) for the virtual server will have been associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible. 
 
 1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://control.bluemix.net/network/gateways) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. 
-2. If it is desired to add additional VLANs at this time, navigate to the **Associate a VLAN** section. The drop down box, ‘Select VLAN’ should be enabled and other provisioned VLANs can be selected. ![](images/solution33-secure-network-enclosure/Gateway-Associate-VLAN.png)
+2. If it is desired to add additional VLANs at this time, navigate to the **Associate a VLAN** section. The drop down box, *Select VLAN* should be enabled and other provisioned VLANs can be selected. ![](images/solution33-secure-network-enclosure/Gateway-Associate-VLAN.png)
 
-   If no eligible VLAN is shown, no VLANs are available on the same router as the VRA. This will require a [support ticket](https://control.bluemix.net/support/unifiedConsole/tickets/add) to be raised to request a private VLAN on the same router.
+   If no eligible VLAN is shown, no VLANs are available on the same router as the VRA. This will require a [support ticket](https://control.bluemix.net/support/unifiedConsole/tickets/add) to be raised to request a private VLAN on the same router as the VRA.
    {:tip}
 1. Click **Associate** to tell {{site.data.keyword.Bluemix_notm}} that the IP routing for this VLAN will now be manged by this VRA. Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. 
 
 At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN will be shown as *Bypassed*.
 
-4. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes. A screen refresh will show it is Routed. 
+4. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes. A screen refresh will show it is *Routed*. 
 5. Select the [VLAN name](https://control.bluemix.net/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN ID \<nnnn\> (1199 in this example) as this will be used in a later step. 
 6. Select the [subnet](https://control.bluemix.net/network/subnets) to see the IP subnet details. Make a note of the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. 64 Primary IP addresses are provisioned on the private network and to find the Gateway address it may require selecting page 2 or 3. 
 7. Validate the that the subnet/VLAN is routed to the VRA and the VSI is **NOT** accessible via the management network from your workstation using `ping`. 
@@ -270,7 +267,7 @@ At this stage the VLAN and associated subnet are not protected or routed via the
 
 This completes setup of the VRA via the {{site.data.keyword.Bluemix_notm}} console. The additional work to configure the enclosure and IP routing is now performed directly on the VRA via SSH. 
 
-## VRA setup
+## Configure IP Routing and secure enclosure
 {: #vra_setup}
 
 When the VRA configuration is committed, only the running configuration is changed. It does not change the configuration used at boot time. If access is lost to the VRA due to a configuration change, rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} dashboard will return the VRA to the previous save of the boot configuration file. This saved configuration could be from some time previously. 
@@ -461,7 +458,7 @@ The firewall logs can be viewed from the VRA operational command prompt. In this
    monitor interface bonding dp0bond0.<VLAN ID> traffic
    ```
 
-## Securing the VRA
+## Secure the VRA
 {: #securing_the_vra}
 
 1. Apply VRA security policy. By default policy based firewall zoning does not secure access to the VRA itself. This is configured through Control Plane Policing (CPP). VRA provides a basic CPP rule set as a template. Merge it into your configuration:

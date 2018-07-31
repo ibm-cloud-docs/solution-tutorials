@@ -399,6 +399,63 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Network",
+      "anchor": "Network",
+      "solutions": [
+        {
+          "name": "Isolate workloads with a secure private network",
+          "url": "secure-network-enclosure.html",
+          "description": "Configure a Virtual Router Appliance to create a secure enclosure. Associate VLANs, provision servers, setup IP routing and firewalls.",
+          "imgSrc": "images/solution33-secure-network-enclosure/Secure-priv-enc.png",
+          "tags": [
+            "Infrastructure",
+            "Vyatta",
+            "Firewall",
+            "Network",
+            "Virtual Servers"
+          ]
+        },
+        {
+          "name": "Configure firewall rules for Internet access from a private network",
+          "url": "nat-config-private.html",
+          "description": "Use NAT masquerade to translate private IP addresses to out-bound public interface.",
+          "imgSrc": "images/solution35-nat-config-private/vra-nat.png",
+          "tags": [
+            "Infrastructure",
+            "Vyatta",
+            "Firewall",
+            "Network",
+            "Virtual Servers"
+          ]
+        },
+        {
+          "name": "Bring Your Own IP Address",
+          "url": "byoip.html",
+          "description": "An overview of BYOIP implementation patterns and a guide to identify the appropriate pattern.",
+          "imgSrc": "images/solution37-byoip/byoipdecision.png",
+          "tags": [
+            "Infrastructure",
+            "Vyatta",
+            "Firewall",
+            "Network"
+          ]
+        },
+        {
+          "name": "VPN into a secure private network",
+          "url": "configuring-IPSEC-VPN.html",
+          "description": "Create a private connection between a remote network environment and servers on IBM Cloud's private network.",
+          "imgSrc": "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png",
+          "tags": [
+            "Infrastructure",
+            "Vyatta",
+            "Firewall",
+            "Network",
+            "Virtual Servers"
+          ]
+        }
+      ]
     }
   ]
 }

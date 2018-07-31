@@ -94,7 +94,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
  2. Name the service `mymessagehub` and click **Create**.
  3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```
- ibmcloud cs cluster-service-bind mycluster default mymessagehub
+ ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service mymessagehub
  ```
 
 The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-mymessagehub`. See [Integrating Services](https://console.bluemix.net/docs/containers/cs_integrations.html#integrations) for more info
@@ -115,7 +115,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 6. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```sh
  ibmcloud resource service-alias-create myobjectstorage --instance-name myobjectstorage
- ibmcloud cs cluster-service-bind mycluster default myobjectstorage
+ ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service myobjectstorage
  ```
 ![](images/solution25/cos_bucket.png)
 

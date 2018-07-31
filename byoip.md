@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-07-16"
+lastupdated: "2018-07-31"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -55,7 +55,7 @@ The choice of pattern is determined by the applications intended to be hosted on
 The addressing scheme is unified by routing IP traffic over a GRE tunnel between the on-premise network and alias IP addresses assigned to servers on the {{site.data.keyword.Bluemix_notm}} . This is a special case of the scenario illustrated in [this tutorial](./configuring-IPSEC-VPC.html). An additional interface and IP alias for a compatible IP subnet is created on the virtual and bare-metal servers provisioned on the {{site.data.keyword.Bluemix_notm}}, supported by appropriate routing configuration on the VRA.
 
 4. Virtual Overlay Network
-[{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](../infrastructure/vpc/getting-started.html#getting-started-with-ibm-cloud-virtual-private-cloud-vpc-beta-release), current in beta, supports BYOIP for fully virtual environments on the [{{site.data.keyword.Bluemix_notm}}. When available VPC should be considered as an alternative to the secure private network enclosure described in [this tutorial](./secure-network-enclosure.html).
+[{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](../infrastructure/vpc/) supports BYOIP for fully virtual environments on the {{site.data.keyword.Bluemix_notm}}. It could be considered as an alternative to the secure private network enclosure described in [this tutorial](./secure-network-enclosure.html).
 
 Alternatively consider a solution such as VMware NSX that implements a virtual overlay network in a layer over the [{{site.data.keyword.Bluemix_notm}} network. All BYOIP addresses in the virtual overlay are independent of [{{site.data.keyword.Bluemix_notm}} network address ranges. See [Getting started with VMware and [{{site.data.keyword.Bluemix_notm}}](../infrastructure/vmware/vmware_index.html#getting-started-with-vmware-and-ibm-cloud).
 

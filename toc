@@ -53,6 +53,13 @@ Solution Tutorials
     {: .topicgroup}
     Identity and Access Management
         users-teams-applications.md
+
+    {: .topicgroup}
+    Network
+        secure-network-enclosure.md
+        nat-config-private.md
+        byoip.md
+        configuring-IPSEC-VPN.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
@@ -91,5 +98,8 @@ Solution Tutorials
         lamp-stack.md
         infrastructure-as-code-terraform.md
         highly-available-and-scalable-web-application.md
+        secure-network-enclosure.md
+        nat-config-private.md
+        configuring-IPSEC-VPN.md
 
     {: .navgroup-end}
