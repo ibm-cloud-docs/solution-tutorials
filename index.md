@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-27"
+lastupdated: "2018-07-31"
 
 ---
 
@@ -695,6 +695,80 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution20-users-teams-applications/architecture.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+</div>
+
+## Network
+{: #Network }
+
+<div class = "solutionBoxContainer">
+    <a href = "secure-network-enclosure.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Isolate workloads with a secure private network
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Configure a Virtual Router Appliance to create a secure enclosure. Associate VLANs, provision servers, setup IP routing and firewalls.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution33-secure-network-enclosure/Secure-priv-enc.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "nat-config-private.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Configure firewall rules for Internet access from a private network
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Use NAT masquerade to translate private IP addresses to out-bound public interface.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution35-nat-config-private/vra-nat.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "byoip.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Bring Your Own IP Address
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>An overview of BYOIP implementation patterns and a guide to identify the appropriate pattern.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution37-byoip/byoipdecision.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "configuring-IPSEC-VPN.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                VPN into a secure private network
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Create a private connection between a remote network environment and servers on IBM Cloud&#x27;s private network.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png" />
                 </div>
             </div>
         </div>
