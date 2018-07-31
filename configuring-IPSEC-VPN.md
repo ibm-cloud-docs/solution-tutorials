@@ -39,9 +39,8 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 {: #objectives}
 
 - Document configuration parameters for IPSec VPN
-- Configure IPSec VPN on a VRA
-- Create GRE tunnel
-- Create static IP route
+- Configure IPSec VPN on a Virtual Router Appliance
+- Route traffic through a GRE tunnel
 
 ## Services used
 {: #products}
@@ -191,24 +190,22 @@ The line `peer-<DC VPN Public IP>-tunnel-1: ESTABLISHED 5 seconds ago, <VRA Publ
    show interfaces tun0
    ```
    {: codeblock}
-   
-   The first command should show the tunnel with State and Link as `u/u` (UP/UP). The second command shows more detail about the tunnel and that traffic is transmitted and received.  
-   
+   The first command should show the tunnel with State and Link as `u/u` (UP/UP). The second command shows more detail about the tunnel and that traffic is transmitted and received.
 3. Validate that traffic flows across the tunnel
-    ```bash
-    ping <Remote tunnel IP>
-    ```
-    {: codeblock}
-    
-    The TX and RX counts on a `show interfaces tunnel tun0` should be seen to increment while there is `ping` traffic. 
-    
-4. If traffic is not flowing, `monitor interface` commands can be used to observe what traffic is seen on each interface. Interface `tun0` shows the internal traffic over the tunnel. Interface `dp0bond1` will show the encapsulated traffic flow to and from the remote VPN gateway. 
-    ```
-    monitor interface tunnel tun0 traffic
-    monitor interface bonding dp0bond1 traffic 
-    ```
+   ```bash
+   ping <Remote tunnel IP>
+   ```
+   {: codeblock}
+   The TX and RX counts on a `show interfaces tunnel tun0` should be seen to increment while there is `ping` traffic. 
+4. If traffic is not flowing, `monitor interface` commands can be used to observe what traffic is seen on each interface. Interface `tun0` shows the internal traffic over the tunnel. Interface `dp0bond1` will show the encapsulated traffic flow to and from the remote VPN gateway.
+   ```
+   monitor interface tunnel tun0 traffic
+   monitor interface bonding dp0bond1 traffic 
+   ```
+   {: codeblock}
+
 If no return traffic is seen, the data center networking team will need to monitor the traffic flows at the VPN and tunnel interfaces at the remote site to localise the issue. 
-    
+
 ## Create static IP route
 {: #Define_Routing}
 
@@ -248,7 +245,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    set security firewall name APP-TO-TUNNEL rule 100 action accept
    set security firewall name APP-TO-TUNNEL rule 100 protocol tcp
    set security firewall name APP-TO-TUNNEL rule 100 destination port tcpports
-  
+
    set security firewall name APP-TO-TUNNEL rule 200 protocol icmp
    set security firewall name APP-TO-TUNNEL rule 200 icmp group icmpgrp
    set security firewall name APP-TO-TUNNEL rule 200 action accept
@@ -263,7 +260,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    set security firewall name TUNNEL-TO-APP rule 100 action accept
    set security firewall name TUNNEL-TO-APP rule 100 protocol tcp
    set security firewall name TUNNEL-TO-APP rule 100 destination port tcpports
-   
+
    set security firewall name TUNNEL-TO-APP rule 200 protocol icmp
    set security firewall name TUNNEL-TO-APP rule 200 icmp group icmpgrp
    set security firewall name TUNNEL-TO-APP rule 200 action accept 
@@ -282,7 +279,7 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    save
    ```
    {: codeblock}
-3. To validate the firewalls and routing at both ends are configured correctly and are now allowing ICMP and tcp traffic ping the gateway address of the remote subnet, first from the VRA command line and if successful then by logging into the VSI.
+3. To validate the firewalls and routing at both ends are configured correctly and are now allowing ICMP and TCP traffic ping the gateway address of the remote subnet, first from the VRA command line and if successful then by logging into the VSI.
    ```bash
    ping <Remote Subnet Gateway IP>
    ssh root@<VSI Private IP>
