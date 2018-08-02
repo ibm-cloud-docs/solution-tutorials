@@ -53,15 +53,14 @@ intro sentence
 {: #prereqs}
 
 * [Install Git](https://git-scm.com/)
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-* [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
+* [IBM Cloud Developer Tools](https://console.bluemix.net/docs/cli/index.html#overview) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 
 ## Create services
 {: setup}
 
 In this section, you will create the services required to ...
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#install_use).
     ```sh
     ibmcloud login
     ```

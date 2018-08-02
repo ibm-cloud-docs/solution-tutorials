@@ -7,9 +7,8 @@ Handlebars.registerHelper('replace', function( find, replace, options) {
   return string.replace( find, replace );
 });
 
-Handlebars.registerHelper('html2md', function(options) {
-  let string = options.fn(this);
-  string = string.replace('.html', '.md');
+function htmlTomd(filename) {
+  let string = filename.replace('.html', '.md');
 
   const slash = string.lastIndexOf('/');
   if (slash >= 0) {
@@ -20,6 +19,10 @@ Handlebars.registerHelper('html2md', function(options) {
     string = string.substring(0, query);
   }
   return string;
+}
+
+Handlebars.registerHelper('html2md', function(options) {
+  return htmlTomd(options.fn(this));
 });
 
 Handlebars.registerHelper('hasTag', function( solution, tag, options) {
@@ -35,6 +38,20 @@ const solutions = categories.reduce((previousValue, currentValue) => {
 const featured = solutions
   .filter((solution) => solution.featuredPosition)
   .sort((sol1, sol2) => sol1.featuredPosition - sol2.featuredPosition);
+
+// inject last updated into the JSON by extract "lastupdated" from the .md
+solutions.forEach((solution) => {
+  const solutionContent = fs.readFileSync(`../../${htmlTomd(solution.url)}`).toString();
+  const dateStartPosition = solutionContent.indexOf('lastupdated:');
+  if (dateStartPosition >= 0) {
+    const dateEndPosition = solutionContent.indexOf('\n', dateStartPosition);
+    const lastUpdated = solutionContent
+      .substring(dateStartPosition + 'lastupdated:'.length, dateEndPosition)
+      .trim()
+      .replace(/"/g, '');
+    solution.lastUpdated = lastUpdated;
+  }
+});
 
 const tagsSet = new Set();
 solutions.forEach((solution) => solution.tags.forEach((tag) => tagsSet.add(tag)));
