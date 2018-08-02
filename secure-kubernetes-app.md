@@ -28,6 +28,7 @@ The solution features an app that enables groups of users to upload files to a c
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.registryshort}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
 * [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID)
 * [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
 * [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
@@ -35,7 +36,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.keymanagementserviceshort}}](https://console.bluemix.net/catalog/services/key-protect)
 * [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/certificate-manager)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial requires a [non-Lite account](https://console.bluemix.net/docs/account/index.html#accounts) and may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -53,8 +54,7 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
-* [Install Git](https://git-scm.com/)
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+* [Install all the necessary command line (CLI) tools by following](https://console.bluemix.net/docs/cli/index.html#overview)
 
 ## Create services
 {: setup}
@@ -69,14 +69,14 @@ rough outline
 * deploy Cloudant
 * deploy App ID, config login page
 * git clone the repo
-* configure and push app, how much config can be done automatically?
+* configure and push app: how much config can be done automatically? do this as container, push to registry, use vulnerability advisor as part of CR
 * configure App ID, set redirect page (could be don from within code)
 * optional: custom domain, deploy CM, deploy cert to cluster, config ingress
 
 
 In this section, you will create the services required to ...
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started). It assumes that you already have a Cloud Foundry organization and space created.
     ```sh
     ibmcloud login
     ```
@@ -85,11 +85,26 @@ In this section, you will create the services required to ...
     ibmcloud target --cf
     ```
     {: pre}
-2. Create an instance of [Service A](https://console.bluemix.net/catalog/services/the-service-name).
-  ```sh
-  ibmcloud resource service-instance-create service-instance-name service-name lite global
-  ```
-3. Create an instance of [Service B](https://console.bluemix.net/catalog/services/the-service-name).
+2. Create an instance of [{{site.data.keyword.cloudaccesstrailshort}}](https://console.bluemix.net/catalog/services/activity-tracker) and name it **SKAActivityTracker**.
+    ```sh
+    ibmcloud service create accesstrail free SKAActivityTracker
+    ```
+    {: pre}
+3. Create a new [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster) cluster. First, decide on an available zone within your region:
+    ```sh
+    ibmcloud ks zones
+    ```
+    {: pre}
+    For the zone of your choice (**YOURZONE**) look up the VLAN identifiers for the public and private network:
+    ```sh
+    ibmcloud ks vlans --zone YOURZONE
+    ```
+    {: pre}
+    Finally, create a cluster named **SKACluster** with 2 worker nodes and virtual, shared machines with 2 cores and 4 GB of RAM. Replace the VLAN IDs with the obtained values.
+    ```sh
+    ibmcloud ks cluster-create --name SKACluster --zone YOURZONE --machine-type u2c.2x4 --workers 2 --public-vlan PUBLIC-ID --private-vlan PRIVATE-ID
+    ```
+    {: pre}
 
 ## Solution Specific Section
 {: #section_one}
