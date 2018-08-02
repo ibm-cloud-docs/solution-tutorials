@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-08-01"
+lastupdated: "2018-08-02"
 
 ---
 
@@ -77,58 +77,89 @@ rough outline
 In this section, you will create the services required to ...
 
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started). It assumes that you already have a Cloud Foundry organization and space created.
-    ```sh
+    ```bash
     ibmcloud login
     ```
     {: pre}
-    ```sh
+    ```bash
     ibmcloud target --cf
     ```
     {: pre}
 2. Create an instance of [{{site.data.keyword.cloudaccesstrailshort}}](https://console.bluemix.net/catalog/services/activity-tracker) and name it **SKAActivityTracker**.
-    ```sh
+    ```bash
     ibmcloud service create accesstrail free SKAActivityTracker
     ```
     {: pre}
 3. Create a new [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster) cluster. First, decide on an available zone within your region:
-    ```sh
+    ```bash
     ibmcloud ks zones
     ```
     {: pre}
     For the zone of your choice (**YOURZONE**) look up the VLAN identifiers for the public and private network:
-    ```sh
+    ```bash
     ibmcloud ks vlans --zone YOURZONE
     ```
     {: pre}
     Finally, create a cluster named **SKACluster** with 2 worker nodes and virtual, shared machines with 2 cores and 4 GB of RAM. Replace the VLAN IDs with the obtained values.
-    ```sh
+    ```bash
     ibmcloud ks cluster-create --name SKACluster --zone YOURZONE --machine-type u2c.2x4 --workers 2 --public-vlan PUBLIC-ID --private-vlan PRIVATE-ID
     ```
     {: pre}
+4. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://console.bluemix.net/catalog/services/key-protect) and name it **SKAKeyProtect**. Replace **REGION** according to your {{site.data.keyword.Bluemix_notm}} region.
+    ```bash
+    ibmcloud resource service-instance-create SKAKeyProtect kms tiered-pricing REGION
+    ```
+    {: pre}
+5. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage). 
+    ```bash
+    ibmcloud resource service-instance-create SKAObjectStorage cloud-object-storage lite global
+    ```
+    {: pre}
+6. Next, create an instance of [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB). 
+    ```bash
+    ibmcloud resource service-instance-create SKACloudant cloudantnosqldb lite REGION
+    ```
+    {: pre}
+7. Finally, provision an instance of [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID).
+    ```bash
+    ibmcloud resource service-instance-create SKAAppID appid graduated-tier REGION
+    ```
+    {: pre}
+
+
+## Configure Services
+
+
 
 ## Solution Specific Section
 {: #section_one}
 
 Introductory statement that overviews the section
 
-1. Step 1 Click **This** and enter your name.
+prepare the local cluster environment
+1. Check that the provisioned cluster is ready. The cluster state should indicate **normal**.
+   ```bash
+   ibmcloud ks cluster-get SKACluster
+   ```
+   {: pre}
+2. When the cluster is ready, retrieve the cluster configuration:
+   ```bash
+   ibmcloud ks cluster-config SKACluster
+   ```
+   {: pre}
+3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
+  `echo $KUBECONFIG`
+4. Check that the `kubectl` command is correctly configured
+   ```bash
+   kubectl cluster-info
+   ```
+   {: pre}
+
+
+5. Step 1 Click **This** and enter your name.
 
   This is a tip.
   {:tip}
-
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
-
-### Sub section
-
-   ```bash
-   some shellscript
-   ```
-   {: pre}
 
 
 ## Another Solution Specific Section
