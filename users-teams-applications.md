@@ -77,13 +77,13 @@ When it comes to assigning responsibilities to the project team members, let's d
 A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
 <p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/iam-model.png" style="width: 70%;" />
+  <img src="./images/solution20-users-teams-applications/iam-model.png" style="width: 70%;" alt="Diagram of IAM model" />
 </p>
 
 At this time, not all services in the {{site.data.keyword.cloud_notm}} catalog can be managed by using IAM. For these services, you can continue to use Cloud Foundry by providing users access to the organization and space to which the instance belongs with a Cloud Foundry role assigned to define the level of access that is allowed.
 
 <p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/cloudfoundry-model.png" style="width: 70%;" />
+  <img src="./images/solution20-users-teams-applications/cloudfoundry-model.png" style="width: 70%;" alt="Diagram of Cloud Foundry model" />
 </p>
 
 ## Create the resources for one environment
@@ -91,7 +91,7 @@ At this time, not all services in the {{site.data.keyword.cloud_notm}} catalog c
 Although the three environments needed by this sample project require different access rights and may need to be allocated different capacities, they share a common architecture pattern.
 
 <p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/one-environment.png" style="width: 80%;" />
+  <img src="./images/solution20-users-teams-applications/one-environment.png" style="width: 80%;" alt="Architecture diagram showing one environment" />
 </p>
 
 Let's start by building the Development environment.
@@ -107,7 +107,7 @@ Let's start by building the Development environment.
 The following diagram shows where the project resources are created under the account:
 
 <p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/resources.png" style="height: 400px;" />
+  <img src="./images/solution20-users-teams-applications/resources.png" style="height: 400px;" alt="Diagram showing the project resources" />
 </p>
 
 ## Assign roles within the environment
@@ -134,7 +134,7 @@ For the Development environment, the user responsibilities defined earlier could
 The IAM access policies and Cloud Foundry roles are defined in the [Identify and Access Management user interface](https://console.bluemix.net/iam/#/users):
 
 <p style="text-align: center;">
-  <img title="" src="./images/solution20-users-teams-applications/edit-policy.png" />
+  <img title="" src="./images/solution20-users-teams-applications/edit-policy.png" alt="Configuration of permissions for the developer role" />
 </p>
 
 ## Replicate for multiple environments
@@ -146,7 +146,7 @@ From there, you can replicate similar steps to build the other environments.
 1. Create one cluster per environment
 
 <p style="text-align: center;">
-  <img title="Using separate clusters to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments.png" style="width: 80%;" />
+  <img title="Using separate clusters to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments.png" style="width: 80%;" alt="Diagram showing separate clusters to isolate environments" />
 </p>
 
 Using a combination of tools like the [{{site.data.keyword.cloud_notm}} `ibmcloud` CLI](https://github.com/IBM-Cloud/ibm-cloud-developer-tools), [HashiCorp's `terraform`](https://www.terraform.io/), the [{{site.data.keyword.cloud_notm}} provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm), Kubernetes CLI `kubectl`, you can script and automate the creation of these environments.
@@ -160,7 +160,7 @@ Separate Kubernetes clusters for the environments come with good properties:
 Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption.
 
 <p style="text-align: center;">
-  <img title="Using separate namespaces to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png" style="width: 80%;" />
+  <img title="Using separate namespaces to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png" style="width: 80%;" alt="Diagram showing separate namespaces to isolate environments" />
 </p>
 
 ## Setup delivery pipeline
@@ -171,7 +171,7 @@ When it comes to deploying to the different environments, your continuous integr
 * Repeat a similar process to move to the `Production` environment.
 
 <p style="text-align: center;">
-  <img src="./images/solution20-users-teams-applications/cicd.png" />
+  <img src="./images/solution20-users-teams-applications/cicd.png" alt="A CI/CD pipeline from build to deploy" />
 </p>
 
 When configuring the DevOps pipeline, make sure to use the API key of a functional user. Only the functional user should need to have the required rights to deploy apps to your clusters.

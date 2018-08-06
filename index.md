@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-31"
+lastupdated: "2018-08-06"
 
 ---
 
@@ -148,7 +148,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for the solution Resilient and secure multi-region Kubernetes clusters" />
                 </div>
             </div>
         </div>
@@ -165,7 +165,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" />
+                    <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" alt="Architecture diagram for the solution Build a database-driven Slackbot" />
                 </div>
             </div>
         </div>
@@ -188,7 +188,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution1/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution1/Architecture.png" alt="Architecture diagram for the solution Secure web application across multiple regions"/>
                 </div>
             </div>
         </div>
@@ -205,7 +205,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution2/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution2/Architecture.png" alt="Architecture diagram for the solution Scalable web app on Kubernetes"/>
                 </div>
             </div>
         </div>
@@ -222,7 +222,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for the solution Resilient and secure multi-region Kubernetes clusters"/>
                 </div>
             </div>
         </div>
@@ -239,7 +239,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Create a cluster and configuring the Log Analysis and the Monitoring service. Use Kibana to view and analyze logs and Grafana to view health and metrics.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution17/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution17/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor the health of Kubernetes applications"/>
                 </div>
             </div>
         </div>
@@ -256,7 +256,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Take a VM based application, containerize it, deploy it to a Kubernetes cluster. Use the steps as a general guides for other applications.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution30/modern_architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution30/modern_architecture.png" alt="Architecture diagram for the solution Move a VM based application to Kubernetes"/>
                 </div>
             </div>
         </div>
@@ -273,7 +273,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Set up a continuous integration and delivery pipeline for containerized applications running on a Kubernetes cluster. Add integrations to other services like security scanners, Slack notifications, and analytics.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution21/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution21/Architecture.png" alt="Architecture diagram for the solution Continuous Deployment to Kubernetes"/>
                 </div>
             </div>
         </div>
@@ -290,7 +290,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution3/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution3/Architecture.png" alt="Architecture diagram for the solution Accelerate delivery of static files using Object Storage and CDN"/>
                 </div>
             </div>
         </div>
@@ -307,7 +307,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution25/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution25/Architecture.png" alt="Architecture diagram for the solution Asynchronous data processing using object storage and pub/sub messaging"/>
                 </div>
             </div>
         </div>
@@ -324,7 +324,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution4/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution4/Architecture.png" alt="Architecture diagram for the solution Web application on LAMP stack"/>
                 </div>
             </div>
         </div>
@@ -341,7 +341,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Use Terraform to provision a Linux virtual server, with Apache web server, MySQL, PHP and the IBM Cloud Object Storage service. Update the configuration to scale the resources and tune the environment.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution10/architecture-2.png" />
+                    <img class="architectureDiagram" src = "images/solution10/architecture-2.png" alt="Architecture diagram for the solution Deploy a LAMP stack using Terraform"/>
                 </div>
             </div>
         </div>
@@ -358,7 +358,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Automate the creation and maintenance of multiple deployment environments with IBM Cloud CLI and Terraform.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution26-plan-create-update-deployments/architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution26-plan-create-update-deployments/architecture.png" alt="Architecture diagram for the solution Plan, create and update deployment environments"/>
                 </div>
             </div>
         </div>
@@ -375,7 +375,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Create a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution14/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution14/Architecture.png" alt="Architecture diagram for the solution Use Virtual Servers to build highly available and scalable web app"/>
                 </div>
             </div>
         </div>
@@ -392,7 +392,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Build a web application using the popular MEAN stack - Mongo DB, Express, Angular, Node.js. Run the app locally, create and use a database-as-a-service, deploy the app and monitor the application.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution7/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution7/Architecture.png" alt="Architecture diagram for the solution Modern web application using MEAN stack"/>
                 </div>
             </div>
         </div>
@@ -409,7 +409,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Provision a SQL relational database service, create a table, and load a large data set into the database. Deploy a web app to make use of that data and show how to access the cloud database.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution5/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution5/Architecture.png" alt="Architecture diagram for the solution SQL Database for Cloud Data"/>
                 </div>
             </div>
         </div>
@@ -426,7 +426,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Create a serverless web application by hosting static website content in GitHub Pages and using Cloud Functions to implement the application backend.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution8/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution8/Architecture.png" alt="Architecture diagram for the solution Serverless web application and API"/>
                 </div>
             </div>
         </div>
@@ -443,7 +443,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Use IBM Cloud Log Analysis to understand and diagnose application activities. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution12/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution12/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor health of Cloud Foundry applications"/>
                 </div>
             </div>
         </div>
@@ -460,7 +460,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution13/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution13/Architecture.png" alt="Architecture diagram for the solution Create, secure and manage REST APIs"/>
                 </div>
             </div>
         </div>
@@ -483,7 +483,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" />
+                    <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" alt="Architecture diagram for the solution Build a database-driven Slackbot"/>
                 </div>
             </div>
         </div>
@@ -500,7 +500,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Define intents, entities and build a dialog flow for the chatbot to respond to customer&#x27;s queries. Enable speech to text and text to speech services for easy interaction with the Android app.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" alt="Architecture diagram for the solution Build a voice-enabled Android chatbot"/>
                 </div>
             </div>
         </div>
@@ -523,7 +523,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution6/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution6/Architecture.png" alt="Architecture diagram for the solution iOS mobile app with Push Notifications and Analytics"/>
                 </div>
             </div>
         </div>
@@ -540,7 +540,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Write an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution9/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution9/Architecture.png" alt="Architecture diagram for the solution Android native mobile app with Push Notifications and Analytics"/>
                 </div>
             </div>
         </div>
@@ -557,7 +557,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Develop a hybrid Cordova application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution15/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution15/Architecture.png" alt="Architecture diagram for the solution Hybrid mobile application with Push and Analytics"/>
                 </div>
             </div>
         </div>
@@ -574,7 +574,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Use Cloud Functions with cognitive and data services to build a serverless backend for a mobile application.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution11/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution11/Architecture.png" alt="Architecture diagram for the solution Mobile application with a serverless backend"/>
                 </div>
             </div>
         </div>
@@ -597,7 +597,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Provide tools to data scientists to query data using SQL Query and conduct analysis in Watson Studio. Share data and insights through interactive charts.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution29/architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution29/architecture.png" alt="Architecture diagram for the solution Build a data lake with Object Storage"/>
                 </div>
             </div>
         </div>
@@ -614,7 +614,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Automatically collect GitHub traffic statistics for repositories, store them in a SQL database and get started with traffic analytics.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution24-github-traffic-analytics/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution24-github-traffic-analytics/Architecture.png" alt="Architecture diagram for the solution Combining serverless and Cloud Foundry for data retrieval and analytics"/>
                 </div>
             </div>
         </div>
@@ -631,7 +631,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Build a predictive machine learning model, deploy it as an API, test and retrain the model with feedback data.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution22-build-machine-learning-model/architecture_diagram.png" />
+                    <img class="architectureDiagram" src = "images/solution22-build-machine-learning-model/architecture_diagram.png" alt="Architecture diagram for the solution Build, deploy, test, and retrain a predictive machine learning model"/>
                 </div>
             </div>
         </div>
@@ -648,7 +648,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Analyze and visualize open data sets using a Jupyter Notebook. Uses the Apache Spark service with IBM Watson Studio and Pixiedust to generate graphics.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution23/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution23/Architecture.png" alt="Architecture diagram for the solution Analyze and visualize open data with Apache Spark"/>
                 </div>
             </div>
         </div>
@@ -671,7 +671,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Set up an IoT device, gather large amounts of data in the Watson IoT Platform, analyze data with machine learning and create visualizations.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution16/Architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution16/Architecture.png" alt="Architecture diagram for the solution Gather, visualize and analyze IoT data"/>
                 </div>
             </div>
         </div>
@@ -694,7 +694,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>An overview of the concepts available in IBM Cloud to manage identity and access management and how they can be implemented to support the multiple development stages of an application.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution20-users-teams-applications/architecture.png" />
+                    <img class="architectureDiagram" src = "images/solution20-users-teams-applications/architecture.png" alt="Architecture diagram for the solution Best practices for organizing users, teams, applications"/>
                 </div>
             </div>
         </div>
@@ -717,7 +717,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Configure a Virtual Router Appliance to create a secure enclosure. Associate VLANs, provision servers, setup IP routing and firewalls.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution33-secure-network-enclosure/Secure-priv-enc.png" />
+                    <img class="architectureDiagram" src = "images/solution33-secure-network-enclosure/Secure-priv-enc.png" alt="Architecture diagram for the solution Isolate workloads with a secure private network"/>
                 </div>
             </div>
         </div>
@@ -734,7 +734,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Use NAT masquerade to translate private IP addresses to out-bound public interface.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution35-nat-config-private/vra-nat.png" />
+                    <img class="architectureDiagram" src = "images/solution35-nat-config-private/vra-nat.png" alt="Architecture diagram for the solution Configure firewall rules for Internet access from a private network"/>
                 </div>
             </div>
         </div>
@@ -751,7 +751,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>An overview of BYOIP implementation patterns and a guide to identify the appropriate pattern.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution37-byoip/byoipdecision.png" />
+                    <img class="architectureDiagram" src = "images/solution37-byoip/byoipdecision.png" alt="Architecture diagram for the solution Bring Your Own IP Address"/>
                 </div>
             </div>
         </div>
@@ -768,7 +768,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Create a private connection between a remote network environment and servers on IBM Cloud&#x27;s private network.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png" />
+                    <img class="architectureDiagram" src = "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png" alt="Architecture diagram for the solution VPN into a secure private network"/>
                 </div>
             </div>
         </div>

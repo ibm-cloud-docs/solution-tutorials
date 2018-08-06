@@ -186,6 +186,7 @@ By default MySQL only listens on the local interface. The application servers wi
 There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial uses a crontab entry to dump the database content to disk. The backup files will be stored in a file storage. Obviously, this is a simple backup mechanism. If you plan to manage your own MySQL database server in a production environment, you will want to [implement one of the backup strategies described in MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/backup-and-recovery.html).
 
 ### Create the file storage
+{: create_for_backup}
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
@@ -304,6 +305,8 @@ In this section, you will create two web application servers.
 This file storage is used to share the application files between *app1* and *app2* servers.
 
 ### Create the file storage
+{: create_for_sharing}
+
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
 3. Configure the service with the following:

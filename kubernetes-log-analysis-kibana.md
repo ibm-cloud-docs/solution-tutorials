@@ -266,7 +266,7 @@ To set up Ingress and use your own custom domain see the [Use your own custom do
 
 
 ## View log data in Kibana
-{: #step8}
+{: #view_in_kibana}
 
 The application generates some log data every time you visit its URL. Because of our logging configuration, this data should be forwarded to {{site.data.keyword.loganalysisshort}} service and available via Kibana.
 
@@ -278,7 +278,7 @@ The application generates some log data every time you visit its URL. Because of
 For more information about other search fields that are relevant to Kubernetes clusters, see [Searching logs](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_search).
 
 ### Filter data by Kubernetes cluster name in Kibana
-{: #step8}
+{: #filter_in_kibana}
 
 1. In the filtering menu on the left, you can filter down to only see message from the container you are interested in by expanding `kubernetes.container_name_str` and clicking on the container name.
 
