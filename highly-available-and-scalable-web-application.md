@@ -296,7 +296,7 @@ In this section, you will create two web application servers.
      If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
      {: tip}
    - Review the other configuration options and click **Provision** to provision the server.
-     [Configure virtual server](images/solution14/db-server.png)
+     ![Configure virtual server](images/solution14/db-server.png)
 4. Repeat steps 1-3 to provision another virtual server named **app2**
 
 ## Create a file storage to share files between the application servers
