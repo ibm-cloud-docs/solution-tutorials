@@ -58,7 +58,7 @@ The [Jupyter Notebook](http://jupyter.org/) is an open-source web application th
 2. Use **Blank** notebook. Enter `MyNotebook` as the **Name**.
 3. From the **Select runtime** menu, chose the Spark instance you added to the project's settings. Keep the default **Language** as **Python 3.5**.
 4. Click **Create Notebook** to complete the process.
-5. The field where you enter text and commands is called a **Cell**. Copy the following code into the empty cell to import the [**Pixiedust** package](https://ibm-watson-data-lab.github.io/pixiedust/use.html). Execute the cell by either clicking on the **Run** icon in the toolbar or by pressing **Shift+Enter** on the keyboard.
+5. The field where you enter text and commands is called a **Cell**. Copy the following code into the empty cell to import the [**Pixiedust** package](https://pixiedust.github.io/pixiedust/use.html). Execute the cell by either clicking on the **Run** icon in the toolbar or by pressing **Shift+Enter** on the keyboard.
    ```Python
    import pixiedust
    ```
@@ -69,7 +69,7 @@ If you've never worked with Jupyter Notebooks, click on the **Docs** icon on the
 {:tip}
 
 ## Load data
-Next load three open data sets and make them available within the notebook. The **Pixiedust** library allows you to easily [load **CSV** files using an URL](https://ibm-watson-data-lab.github.io/pixiedust/loaddata.html).
+Next load three open data sets and make them available within the notebook. The **Pixiedust** library allows you to easily [load **CSV** files using an URL](https://pixiedust.github.io/pixiedust/loaddata.html).
 
 1.  Copy the following line into the next empty cell in your notebook, but don't run it yet.
    ```Python
@@ -136,7 +136,7 @@ After the data is made available, transform it slightly and combine the three se
 Your combined data is ready to be analyzed.
 
 ## Analyze data
-In this part, use [Pixiedust to visualize the data in different charts](https://ibm-watson-data-lab.github.io/pixiedust/displayapi.html). Start by comparing life expectancy for some countries.
+In this part, use [Pixiedust to visualize the data in different charts](https://pixiedust.github.io/pixiedust/displayapi.html). Start by comparing life expectancy for some countries.
 
 1. Copy the code into the next empty cell and run it.
    ```Python
