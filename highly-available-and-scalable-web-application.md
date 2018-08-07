@@ -547,7 +547,7 @@ At this point, we have two application servers with separate IP addresses. They 
 4. In **Basic**,
    1. Name the load balancer, e.g. **app-lb-1**
    2. Keep the default protocol configuration - by default the load balancer is configured for HTTP.
-      SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://knowledgelayer.softlayer.com/procedure/access-ssl-certificates-screen)
+      SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://console.bluemix.net/docs/infrastructure/ssl-certificates/access-ssl-certificates-screen.html#accessing-ssl-certificates)
       {: tip}
 5. In **Server Instances**, add *app1* and *app2* servers
 6. Review and Create to complete the wizard.
