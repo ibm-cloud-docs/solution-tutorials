@@ -142,7 +142,7 @@ In this section, you will use the command line tool **curl** to upload files to 
    ![](images/solution3/Buckets.png)
 6. Access the files through your browser by using a link similar to the following example:
 
-   http://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-picture.png
+   `http://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-picture.png`
 
 ## Make the files globally available with a CDN
 
@@ -169,7 +169,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 
 1. Select the CDN instance in the list at [https://control.bluemix.net/network/cdn](https://control.bluemix.net/network/cdn).
 2. The Details panel shows the CNAME for your CDN.
-3. Access your file with https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png. If you omit the file name, you should see the S3 ListBucketResult instead.
+3. Access your file with `https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png`. If you omit the file name, you should see the S3 ListBucketResult instead.
 
 ## Deploy the Cloud Foundry application
 

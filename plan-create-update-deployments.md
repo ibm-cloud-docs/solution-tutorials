@@ -94,7 +94,7 @@ The repository is structured as follow:
 The *Development*, *Testing* and *Production* environments pretty much look the same.
 
 <p style="text-align: center;">
-  <img title="" src="./images/solution26-plan-create-update-deployments/one-environment.png" style="height: 400px;" />
+  <img title="" src="./images/solution26-plan-create-update-deployments/one-environment.png" style="height: 400px;" alt="Diagram showing one deployment environment" />
 </p>
 
 They share a common organization and environment-specific resources. They will differ by the allocated capacity and the access rights. The terraform files reflect this with a ***global*** configuration to provision the Cloud Foundry organization and a ***per-environment*** configuration, using Terraform workspaces, to provision the environment-specific resources:

@@ -186,6 +186,7 @@ By default MySQL only listens on the local interface. The application servers wi
 There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial uses a crontab entry to dump the database content to disk. The backup files will be stored in a file storage. Obviously, this is a simple backup mechanism. If you plan to manage your own MySQL database server in a production environment, you will want to [implement one of the backup strategies described in MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/backup-and-recovery.html).
 
 ### Create the file storage
+{: create_for_backup}
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
@@ -295,7 +296,7 @@ In this section, you will create two web application servers.
      If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
      {: tip}
    - Review the other configuration options and click **Provision** to provision the server.
-     [Configure virtual server](images/solution14/db-server.png)
+     ![Configure virtual server](images/solution14/db-server.png)
 4. Repeat steps 1-3 to provision another virtual server named **app2**
 
 ## Create a file storage to share files between the application servers
@@ -304,6 +305,8 @@ In this section, you will create two web application servers.
 This file storage is used to share the application files between *app1* and *app2* servers.
 
 ### Create the file storage
+{: create_for_sharing}
+
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
 3. Configure the service with the following:
@@ -368,7 +371,7 @@ Repeat the following steps on each application server(app1 and app2):
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
-Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://knowledgelayer.softlayer.com/procedure/add-custom-provisioning-script) or by [capturing an image](https://knowledgelayer.softlayer.com/learning/introduction-image-templates).
+Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://console.bluemix.net/docs/infrastructure/provisioning-scripts/add-provisioning-script.html#managing-a-provisioning-script) or by [capturing an image](https://console.bluemix.net/docs/infrastructure/image-templates/image_index.html#creating-an-image-template).
 {: tip}
 
 ## Install and configure the PHP application on the application servers

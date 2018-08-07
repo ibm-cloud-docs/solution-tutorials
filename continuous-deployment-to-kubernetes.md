@@ -90,7 +90,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
 
 ## Configure DevOps delivery pipeline
-{: #create_application}
+{: #create_devops}
 
 1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button.
 2. Selecting the Kubernetes Cluster deployment method, select the cluster created earlier and then click **Create**. This will create a toolchain and delivery pipeline for you. ![](images/solution21/BindCluster.png)

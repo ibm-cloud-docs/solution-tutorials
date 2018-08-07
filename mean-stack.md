@@ -141,7 +141,7 @@ In this section, you will deploy the node.js app to the {{site.data.keyword.clou
 
    {: codeblock}
 
-2. Once the code been pushed, you should be able to view the app in your browser. A random host name been generated that can look like: **https://mean-random-name.mybluemix.net**. You can get your application URL from the console dashboard or command line.![Live App](images/solution7/live-app.png)
+2. Once the code been pushed, you should be able to view the app in your browser. A random host name been generated that can look like: `https://mean-random-name.mybluemix.net`. You can get your application URL from the console dashboard or command line.![Live App](images/solution7/live-app.png)
 
 
 ## Scaling MongoDB database resources

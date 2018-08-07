@@ -45,14 +45,14 @@ The choice of pattern is determined by the applications intended to be hosted on
 {: #patterns_overview}
 
 1. **NAT**: NAT address translation at the on-premise client router. Perform on premise NAT to translate the client addressing scheme to the IP addresses assigned by {{site.data.keyword.Bluemix_notm}} to provisioned IaaS services.  
-2. **GRE Tunneling**: The addressing scheme is unified by routing IP traffic over a GRE tunnel between {{site.data.keyword.Bluemix_notm}} and the on-premise network, typically via VPN. This is the scenario illustrated in [this tutorial](./configuring-IPSEC-VPC.html). 
+2. **GRE Tunneling**: The addressing scheme is unified by routing IP traffic over a GRE tunnel between {{site.data.keyword.Bluemix_notm}} and the on-premise network, typically via VPN. This is the scenario illustrated in [this tutorial](./configuring-IPSEC-VPN.html). 
 
    There are two sub-patterns depending on the potential for address space overlap.
      * No Address Overlapping: when there’s no address overlap of address ranges and risk of conflict between the networks.
      * Partial Address Overlapping: when the client and {{site.data.keyword.Bluemix_notm}} IP address spaces use the same address range and there is potential for overlap and conflict. In this case client subnet addresses are chosen which don’t overlap in {{site.data.keyword.Bluemix_notm}} private network.
 
 3. GRE Tunneling + IP alias 
-The addressing scheme is unified by routing IP traffic over a GRE tunnel between the on-premise network and alias IP addresses assigned to servers on the {{site.data.keyword.Bluemix_notm}} . This is a special case of the scenario illustrated in [this tutorial](./configuring-IPSEC-VPC.html). An additional interface and IP alias for a compatible IP subnet is created on the virtual and bare-metal servers provisioned on the {{site.data.keyword.Bluemix_notm}}, supported by appropriate routing configuration on the VRA.
+The addressing scheme is unified by routing IP traffic over a GRE tunnel between the on-premise network and alias IP addresses assigned to servers on the {{site.data.keyword.Bluemix_notm}} . This is a special case of the scenario illustrated in [this tutorial](./configuring-IPSEC-VPN.html). An additional interface and IP alias for a compatible IP subnet is created on the virtual and bare-metal servers provisioned on the {{site.data.keyword.Bluemix_notm}}, supported by appropriate routing configuration on the VRA.
 
 4. Virtual Overlay Network
 [{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](../infrastructure/vpc/) supports BYOIP for fully virtual environments on the {{site.data.keyword.Bluemix_notm}}. It could be considered as an alternative to the secure private network enclosure described in [this tutorial](./secure-network-enclosure.html).

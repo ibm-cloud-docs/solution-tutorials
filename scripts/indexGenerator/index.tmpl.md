@@ -150,7 +150,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>{{description}}</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "{{imgSrc}}" />
+                    <img class="architectureDiagram" src = "{{imgSrc}}" alt="Architecture diagram for the solution {{name}}" />
                 </div>
             </div>
         </div>
@@ -179,7 +179,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>{{description}}</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "{{imgSrc}}" />
+                    <img class="architectureDiagram" src = "{{imgSrc}}" alt="Architecture diagram for the solution {{name}}"/>
                 </div>
             </div>
         </div>
