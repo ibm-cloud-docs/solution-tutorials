@@ -62,7 +62,6 @@ In this section, we'll create two Kubernetes clusters, one in `US South` and ano
 You now have two independent clusters across 2 regions.
 
 ## Add application caching
-{: #second_objective}
 
 Next step is to add a caching layer to your stack. Each application instance needs to save and read temporary data to improve performance, reduce trips to a database and ultimately reduce response times. This data needs to be shared across multiple instances of the application across the same data center. Redis is an open-source, blazingly fast, key/value low maintenance store. IBM Compose for Redis makes Redis even better by managing it for you. Features include auto-scaling deployments, high availability, and automated no-stop backups.
 
@@ -76,7 +75,6 @@ We'll create a managed Redis services close to each of the Kubernetes clusters. 
 
 
 ## Add Cloudant NoSQL DB
-{: #second_objective}
 
 When a bidding request comes in, user demographic location, website, history and other such information is provided. It is up to your application to use this information along with your own data such as inventory, pricing, and any saved user profiles to make bidding decisions and calculate your bidding price. Cloudant NoSQL DB can be used to persist this data in a fully-managed database-as-a-service with a wide variety of indexing options and replication capabilities. Create an instance of Cloudant near each of your Kubernetes cluster and then set up replication to keep the data in sync.
 
