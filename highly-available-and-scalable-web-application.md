@@ -371,7 +371,7 @@ Repeat the following steps on each application server(app1 and app2):
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
-Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://knowledgelayer.softlayer.com/procedure/add-custom-provisioning-script) or by [capturing an image](https://knowledgelayer.softlayer.com/learning/introduction-image-templates).
+Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://console.bluemix.net/docs/infrastructure/provisioning-scripts/add-provisioning-script.html#managing-a-provisioning-script) or by [capturing an image](https://console.bluemix.net/docs/infrastructure/image-templates/image_index.html#creating-an-image-template).
 {: tip}
 
 ## Install and configure the PHP application on the application servers
