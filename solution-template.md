@@ -92,7 +92,7 @@ Introductory statement that overviews the section
 6. Another step
 7. Try to limit to 7 steps.
 
-### Sub section
+### A sub section
 
    ```bash
    some shellscript
@@ -118,10 +118,10 @@ And this paragraph only appears for Swift code
 
 Introductory statement that overviews the section
 
-### Sub section
+### Another sub section
 
 ## Remove resources
-{:removeresources}
+{: #removeresources}
 
 Steps to take to remove the resources created in this tutorial
 
@@ -135,6 +135,6 @@ Want to add to or change this tutorial? Here are some ideas:
 - this section is optional
 
 ## Related content
-{:related}
+{: #related}
 
 * [Relevant links](https://blah)

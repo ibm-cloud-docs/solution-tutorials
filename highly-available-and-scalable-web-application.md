@@ -181,12 +181,12 @@ By default MySQL only listens on the local interface. The application servers wi
    ```
 
 ## Create a file storage for database backups
-{: database_backup}
+{: #database_backup}
 
 There are many ways in which backups can be done and stored when it comes to MySQL. This tutorial uses a crontab entry to dump the database content to disk. The backup files will be stored in a file storage. Obviously, this is a simple backup mechanism. If you plan to manage your own MySQL database server in a production environment, you will want to [implement one of the backup strategies described in MySQL documentation](https://dev.mysql.com/doc/refman/5.7/en/backup-and-recovery.html).
 
 ### Create the file storage
-{: create_for_backup}
+{: #create_for_backup}
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
@@ -279,7 +279,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    ```
 
 ## Provision two servers for the PHP application
-{: app_servers}
+{: #app_servers}
 
 In this section, you will create two web application servers.
 
@@ -305,7 +305,7 @@ In this section, you will create two web application servers.
 This file storage is used to share the application files between *app1* and *app2* servers.
 
 ### Create the file storage
-{: create_for_sharing}
+{: #create_for_sharing}
 
 1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
 2. Click **Create**
@@ -375,7 +375,7 @@ Eventually all steps related to the configuration of the servers could be automa
 {: tip}
 
 ## Install and configure the PHP application on the application servers
-{: php_application}
+{: #php_application}
 
 This tutorial sets up a Wordpress blog. All Wordpress files will be installed on the shared file storage so that both application servers can access them. Before installing Wordpress, a web server and a PHP runtime need to be configured.
 
@@ -535,7 +535,7 @@ If you configured the application servers with only a private network link, you 
 {: tip}
 
 ## Provision one load balancer server in front of the application servers
-{: load_balancer}
+{: #load_balancer}
 
 At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a load balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
 
@@ -598,14 +598,14 @@ The Load Balancer is configured to check the health of the servers and to redire
 8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
 ## Remove resources
-{:removeresources}
+{: #removeresources}
 
 1. Delete the Load Balancer
 2. Cancel *db1*, *app1* and *app2*
 3. Delete the two File Storage services
 
 ## Related content
-{:related}
+{: #related}
 
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html) for a tutorial implementing a Content Delivery Network.
 - In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [SoftLayer Auto Scale](https://knowledgelayer.softlayer.com/learning/introduction-softlayer-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
