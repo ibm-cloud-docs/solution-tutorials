@@ -48,7 +48,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 <p style="text-align: center;">
 
-  ![Architecture](images/web-app-private.png)
+  ![Architecture](images/solution42-web-app-private-network/web-app-private.png)
 </p>
 
 1.	Configure Secure Private Network
