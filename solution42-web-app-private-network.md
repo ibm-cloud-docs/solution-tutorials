@@ -19,7 +19,7 @@ lastupdated: "2018-08-08"
 
 Hosting web applications is a common deployment pattern for public cloud, where resources can be scaled on demand to meet short term and long term usage demands. Security for the application workloads is a fundamental prerequisite, to complement the resilience and scalability afforded by public cloud. 
 
-This tutorial takes you through the creation of a scalable and secure Internet facing web application hosted in private network secured using a virtual router appliance, and utilises a load balancer, two web application servers and a MySQL database server. It combines three tutorials to illustrate how web applications can be secured on the {{site.data.keyword.Bluemix_notm}} IaaS platform.
+This tutorial takes you through the creation of a scalable and secure Internet facing web application hosted in private network secured using a virtual router appliance (VRA), VLANs and firewalls. The application comprises a load balancer, two web application servers and a MySQL database server. It combines three tutorials to illustrate how web applications can be secured on the {{site.data.keyword.Bluemix_notm}} IaaS platform using classic networking. 
 {:shortdesc}
 
 ## Objectives
@@ -29,7 +29,7 @@ This tutorial takes you through the creation of a scalable and secure Internet f
 -	Provision a Load Balancer to distribute requests to the application servers
 -	Deploy a Virtual Router Appliance (VRA) to create a secure network
 -	Define VLANs and IP subnets 
--	Secure the VRA with firewall rules
+-	Secure the network with firewall rules
 -	Setup Source Network Address Translation (SNAT) 
 -	
 ## Services used
@@ -91,7 +91,7 @@ This tutorial can be followed without change. In the next step the NAT configura
 
 A Wordpress installation on Nginx and MySQL, with an Load Balancer is used to illustrate how a scalable and resilient web application can be deployed in the secure private network 
 
-This tutorial walks you through this scenario with the creation of a {{site.data.keyword.Bluemix_notm}} load balancer, two web application servers, one MySQL database server. The servers are deployed into the APP zone in the secure private network to provide firewall separation from other workloads and the public network. 
+This tutorial walks you through this scenario with the creation of a {{site.data.keyword.Bluemix_notm}} load balancer, two web application servers and one MySQL database server. The servers are deployed into the APP zone in the secure private network to provide firewall separation from other workloads and the public network. 
 
 -	[Use Virtual Servers to build highly available and scalable web app]( https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#use-virtual-servers-to-build-highly-available-and-scalable-web-app)
 
@@ -99,11 +99,11 @@ There are two changes from this tutorial:
 
 1.	The step in this tutorial to configure file storage for backup is optional and not required to demonstrate this scenario.
 
-2.	The virtual servers used in this tutorial are deployed onto the VLAN and subnet protected by the APP zone behind the VRA. In a change to the original tutorial it is necessary to use the **SoftLayer Device** menu on the **[SoftLayer Dashboard]( https://control.softlayer.com)** to order the virtual servers. This dialog allows the \<Private VLAN ID\> of the APP zone to be specified when the new devices are provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to specify VLANs when ordering servers from the IBM Cloud services catalog, or the default infrastructure console.
+2.	The virtual servers used in this tutorial are deployed onto the VLAN and subnet protected by the APP firewall zone behind the VRA. In a change to the original tutorial it is necessary to use the **SoftLayer Device** menu on the **[SoftLayer Dashboard]( https://control.softlayer.com)** to order the virtual servers. This dialog allows the \<Private VLAN ID\> of the APP zone to be specified when the new servers are provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to specify VLANs when ordering servers from the IBM Cloud services catalog, or the default infrastructure console.
 
-See the [Order the first virtual server](https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#order_virtualserver) instructions in the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial for details of how to specify the \<Private VLAN ID\> when ordering a virtual server. Also remember to select the SSH key to allow access to the virtual servers. 
+See the [Order the first virtual server](https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#order_virtualserver) instructions in the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial for details of how to specify the \<Private VLAN ID\> when ordering a virtual server. Also remember to select your SSH key uploaded earlier in the tutorial to allow access to the virtual servers. 
 
-At the end of this step the load balancer should be in a healthy state and the Wordpress site accessible on the internet. The virtual servers making up the web application are protected from external access via the internet by the VRA firewall. For a production environment DDoS protection and Web Application Firewall (WAF) should also be consider as provided by [{{site.data.keyword.Bluemix_notm}} Internet Services](https://console.bluemix.net/catalog/services/internet-services).
+At the end of this step the load balancer should be in a healthy state and the Wordpress site accessible on the internet. The virtual servers making up the web application are protected from external access via the internet by the VRA firewall and the only access is via the load balancer. For a production environment DDoS protection and Web Application Firewall (WAF) should also be consider as provided by [{{site.data.keyword.Bluemix_notm}} Internet Services](https://console.bluemix.net/catalog/services/internet-services).
 
 
 ## Remove resources
