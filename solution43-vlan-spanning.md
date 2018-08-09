@@ -20,13 +20,13 @@ lastupdated: "2018-08-09"
 
 As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple regions provide resilience in the case of a regional failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. Using the [{{site.data.keyword.Bluemix_notm}}  network]( https://www.ibm.com/cloud-computing/bluemix/our-network) enables users to link workloads hosted in secure private networks across data centers and regions. 
 
-This tutorial presents setup of a privately routed IP connection between two secure private networks {{site.data.keyword.Bluemix_notm}} private network hosted in different data centers. It uses the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html) tutorial to deploy two private networks that are securely linked over the {{site.data.keyword.Bluemix_notm}} private network using the [VLAN Spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning) service. 
+This tutorial presents setup of a privately routed IP connection over the {{site.data.keyword.Bluemix_notm}} private network between two secure private networks hosted in different data centers. All resources are owned by one {{site.data.keyword.Bluemix_notm}} account. It uses the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html) tutorial to deploy two private networks that are securely linked over the {{site.data.keyword.Bluemix_notm}} private network using the [VLAN Spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning) service. 
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
--	Link networks across an {{site.data.keyword.Bluemix_notm}} IaaS account
+-	Link networks within an {{site.data.keyword.Bluemix_notm}} IaaS account
 -	Setup firewall rules for site to site access 
 -	Configure routing between sites
 
@@ -34,20 +34,20 @@ This tutorial presents setup of a privately routed IP connection between two sec
 {: #products}
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
-* [Virtual Router Appliance VPN](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
+* [Virtual Router Appliance](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#about)
 * [Virtual Servers]( https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 * [VLAN Spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning)
 
 **Attention:** This tutorial might incur costs. The VRA is only available on a monthly pricing plan. Use the [Pricing Calculator](https://console.bluemix.net/pricing/)  to generate a cost estimate based on your projected usage.
-Architecture
+
+
+## Architecture
 {: #architecture}
 
 <p style="text-align: center;">
 
   ![Architecture](images/solution43-vlan-spanning/vlan-spanning.png)
 </p>
-
- 
 
 
 1.	Deploy secure private networks
@@ -57,14 +57,15 @@ Architecture
 
 ## Before you begin
 {: #prereqs}
-This tutorial Is based on the existing tutorial, [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network). That tutorial should be reviewed before commencing. 
+
+This tutorial is based on the existing tutorial, [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network). That tutorial should be reviewed before commencing. 
 
 ## Configure secure private network sites
 {: #private_network}
 
-The tutorial [Isolate workloads with a secure private network]( ]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that communicate between the sites. 
+The tutorial [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that will communicate between the sites. 
 
-The [Isolate workloads with a secure private network]( ]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial can be followed without change for each selected data center, recording the following information for later steps. 
+The [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial can be followed without change for each selected data center, recording the following information for later steps. 
 
 
 					Data center 1		Data center 2
