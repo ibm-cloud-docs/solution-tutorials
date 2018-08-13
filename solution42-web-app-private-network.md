@@ -103,10 +103,10 @@ There are three changes from this tutorial:
 
 3. It is strongly recommended **NOT** to use the file storage service for this tutorial due to poor rsync performance copying the Wordpress files to shared storage. This does not affect the overall tutorial. The steps relating to creating the file storage and setting up mounts can be ignored for the app servers and db. Alternatively all the [Install and configure the PHP application on the application servers](https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#php_application) steps need to be performed on both app servers. 
 
-    Prior to step [Install and configure the PHP application on the application servers](https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#php_application), create the directory `/mnt/www/` on both app servers. 
+    Prior to completing the steps in [Install and configure the PHP application on the application servers](https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#php_application), first create the directory `/mnt/www/` on both app servers. This directory was original created in the now removed file storage section. 
 
     ```sh
-    mkdir /mnt/www/html
+    mkdir /mnt/www
     ```
 
 At the end of this step the load balancer should be in a healthy state and the Wordpress site accessible on the internet. The virtual servers making up the web application are protected from external access via the internet by the VRA firewall and the only access is via the load balancer. For a production environment DDoS protection and Web Application Firewall (WAF) should also be consider as provided by [{{site.data.keyword.Bluemix_notm}} Internet Services](https://console.bluemix.net/catalog/services/internet-services).
