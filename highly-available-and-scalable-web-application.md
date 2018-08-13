@@ -442,7 +442,7 @@ Repeat the following steps on each application server:
           }
    }
    ```
-5. Create a `www` folder inside the `/mnt/www` on one of the two app servers using
+5. Create a `html` folder inside the `/mnt/www` directory on one of the two app servers using
    ```sh
    mkdir /mnt/www/html
    ```
