@@ -101,7 +101,7 @@ Enable VLAN Spanning:
 3.	Select the VLAN Spanning ‘On’ radio button. This will take a number of minutes for the network change to complete.
 4.	Confirm that the two VRAs can now communicate:
 
-	-	Login to data center 1 VRA and ping data center 2 VRA
+	Login to data center 1 VRA and ping data center 2 VRA
 
 	```
 	SSH vyatta@<DC1 VRA Private IP Address>
@@ -109,7 +109,7 @@ Enable VLAN Spanning:
 	```
 	{: codeblock}
 
-	-	Login to data center 2 VRA and ping data center 1 VRA
+	Login to data center 2 VRA and ping data center 1 VRA
 	
 	```
 	SSH vyatta@<DC2 VRA Private IP Address>
@@ -124,7 +124,7 @@ Enable VLAN Spanning:
 
 Create the VRA routing in each data center to enable the VSIs in the APP zones in both data centers to communicate. 
 
-1.	 Create static route in data center 1 to the APP zone private subnet in data center 2, in VRA edit mode.
+1.	Create static route in data center 1 to the APP zone private subnet in data center 2, in VRA edit mode.
 
    	```
 	ssh vyatta@<DC1 VRA Private IP Address>
@@ -134,7 +134,7 @@ Create the VRA routing in each data center to enable the VSIs in the APP zones i
    	```
    	{: codeblock}   
 
-2.	 Create static route in data center 2 to the APP zone private subnet in data center 1, in VRA edit mode.
+2.	Create static route in data center 2 to the APP zone private subnet in data center 1, in VRA edit mode.
 
    	```
 	ssh vyatta@<DC2 VRA Private IP Address>
@@ -160,34 +160,39 @@ The new route to allow the APP zone to communicate via the IBM private network w
 The existing APP zone firewall rules are only configured to allow traffic to and from this subnet to {{site.data.keyword.Bluemix_notm}} services on the {{site.data.keyword.Bluemix_notm}} private network and for public Internet access via NAT. Other subnets associated with VSIs on this VRA, or in other data centers are blocked. The next step is to update the `ibmprivate` resource group associated with the APP-TO-INSIDE firewall rule to allow explicit access to the subnet in the other data center. 
 
 
-1.	On the data center 1 VRA edit command mode, add the <DC2 APP zone subnet>/CIDR to the `ibmprivate’ resource group
+1.	On the data center 1 VRA edit command mode, add the <DC2 APP zone subnet>/CIDR to the `ibmprivate` resource group
 
      	```
-	set resources group address-group ibmprivate address <DC2 APP zone subnet>/CIDR     commit
+	set resources group address-group ibmprivate address <DC2 APP zone subnet/CIDR>     
+	commit
+	save
      	```
      	{: codeblock}
      
 
-2.	On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate’ resource group
+2.	On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate` resource group
 
      	```
-	set resources group address-group ibmprivate address <DC1 APP zone subnet>/CIDR     commit
+	set resources group address-group ibmprivate address <DC1 APP zone subnet/CIDR>     
+	commit
+	save
      	```
      	{: codeblock}
 	
-3.	
+3.	Verify that the VSIs in both data centers can now communicate 
 
-```bash
-   ping <Remote Subnet Gateway IP>
-   ssh root@<VSI Private IP>
-   ping <Remote Subnet Gateway IP>
-   ```
-   {: codeblock}
+	```bash
+   	ping <Remote Subnet Gateway IP>
+   	ssh root@<VSI Private IP>
+   	ping <Remote Subnet Gateway IP>
+   	```
+   	{: codeblock}
 
-
+	If the VSIs cannot communicate follow the instructions in the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html) tutorial for monitoring traffic on the interfaces and reviewing the firewall logs. 
 
 ## Remove resources
-{:removeresources}
+{: #removeresources}
+
 Steps to take to remove the resources created in this tutorial. 
 
 The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://control.bluemix.net/network/gateways/371923) page.{tip}  
