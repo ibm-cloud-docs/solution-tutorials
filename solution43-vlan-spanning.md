@@ -18,7 +18,7 @@ lastupdated: "2018-08-09"
 
 # Linking secure private networks over the IBM network
 
-As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple regions provide resilience in the case of a regional failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. Using the [{{site.data.keyword.Bluemix_notm}}  network]( https://www.ibm.com/cloud-computing/bluemix/our-network) enables users to link workloads hosted in secure private networks across data centers and regions. 
+As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple regions provide resilience in the case of a regional failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}}  network]( https://www.ibm.com/cloud-computing/bluemix/our-network) enables users to link workloads hosted in secure private networks across data centers and regions. 
 
 This tutorial presents setup of a privately routed IP connection over the {{site.data.keyword.Bluemix_notm}} private network between two secure private networks hosted in different data centers. All resources are owned by one {{site.data.keyword.Bluemix_notm}} account. It uses the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html) tutorial to deploy two private networks that are securely linked over the {{site.data.keyword.Bluemix_notm}} private network using the [VLAN Spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning) service. 
 {:shortdesc}
@@ -26,7 +26,7 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 ## Objectives
 {: #objectives}
 
--	Link networks within an {{site.data.keyword.Bluemix_notm}} IaaS account
+-	Link secure networks within an {{site.data.keyword.Bluemix_notm}} IaaS account
 -	Setup firewall rules for site to site access 
 -	Configure routing between sites
 
@@ -38,7 +38,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 * [Virtual Servers]( https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 * [VLAN Spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning)
 
-**Attention:** This tutorial might incur costs. The VRA is only available on a monthly pricing plan. Use the [Pricing Calculator](https://console.bluemix.net/pricing/)  to generate a cost estimate based on your projected usage.
+This tutorial might incur costs. The VRA is only available on a monthly pricing plan. Use the [Pricing Calculator](https://console.bluemix.net/pricing/)  to generate a cost estimate based on your projected usage.
 
 
 ## Architecture
@@ -52,13 +52,13 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 1.	Deploy secure private networks
 2.	Configure VLAN Spanning
-3.	Configure firewall rules for remote site access
-4.	Configure IP routing between private networks
+3.	Configure IP routing between private networks
+4.	Configure firewall rules for remote site access
 
 ## Before you begin
 {: #prereqs}
 
-This tutorial is based on the existing tutorial, [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network). That tutorial should be reviewed before commencing. 
+This tutorial is based on the tutorial, [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network). That tutorial and its prerequisites should be reviewed before commencing. 
 
 ## Configure secure private network sites
 {: #private_network}
@@ -68,15 +68,16 @@ The tutorial [Isolate workloads with a secure private network]( https://console.
 The [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial can be followed without change for each selected data center, recording the following information for later steps. 
 
 
-					Data center 1		Data center 2
-Data center
-VRA public IP address
-VRA private IP address
-VRA private subnet & CIDR
+| Item  | Data center 1	| Data center 2 |
+|:------ |:--- | 					
+| Data center | |
+| VRA public IP address | |
+| VRA private IP address | |
+| VRA private subnet & CIDR | |
+| &lt;Private VLAN ID&gt; | |
+| VSI private IP address | |
+| APP zone subnet & CIDR | |
 
-\<Private VLAN ID\>
-VSI private IP address
-APP zone subnet & CIDR
 
 1.	Proceed to the Gateway Details for each VRA via the [Gateway Appliances]( https://control.bluemix.net/network/gateways) page.  
 2.	Locate the Gateway VLANs section and select the Gateway [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network to view the VLAN details. The provisioned VRA can be seen under the **Devices* section as well as the assigned subnets. 
@@ -191,6 +192,11 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 2. Cancel the VRA
 3. Cancel any additional VLANs by support ticket. 
 
+
+## Extend the tutorial
+
+This tutorial can be used in conjunction with the 
+[VPN into a secure private network](https://console.bluemix.net/docs/tutorials/configuring-IPSEC-VPN.html#vpn-into-a-secure-private-network) tutorial to link both secure networks to a users remote network over an IPSec VPN. VPN links can be established to both secure networks for increased resilience of access to the {{site.data.keyword.Bluemix_notm}} IaaS platform. Note IBM does not allow routing of user traffic between client data centers over the IBM private network. The routing configuration to avoid network loops is beyond the scope of this tutorial. 
 
 
 ## Related material
