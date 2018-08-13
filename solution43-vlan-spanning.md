@@ -67,35 +67,32 @@ The tutorial [Isolate workloads with a secure private network]( https://console.
 
 The [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial can be followed without change for each selected data center, recording the following information for later steps. 
 
+| Item  | Datacenter1	| Datacenter2 |
+|:------ |:--- | :--- |					
+| Data center |  |  |
+| VRA public IP address | <DC1 VRA Public IP Address> | <DC2 VRA Public IP Address> |
+| VRA private IP address | <DC1 VRA Private IP Address> | <DC2 VRA Private IP Address> |
+| VRA private subnet & CIDR |  |  |
+| Private VLAN ID | &lt;DC1 Private VLAN ID&gt;  | &lt;DC2 Private VLAN ID&gt; |
+| VSI private IP address | <DC1 VSI Private IP Address> | <DC2 VSI Private IP Address> |
+| APP zone subnet & CIDR | <DC1 APP zone subnet/CIDR> | <DC2 APP zone subnet/CIDR> |
 
-| Item  | Data center 1	| Data center 2 |
-|:------ |:--- | 					
-| Data center | |
-| VRA public IP address | |
-| VRA private IP address | |
-| VRA private subnet & CIDR | |
-| &lt;Private VLAN ID&gt; | |
-| VSI private IP address | |
-| APP zone subnet & CIDR | |
 
-
-1.	Proceed to the Gateway Details for each VRA via the [Gateway Appliances]( https://control.bluemix.net/network/gateways) page.  
-2.	Locate the Gateway VLANs section and select the Gateway [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network to view the VLAN details. The provisioned VRA can be seen under the **Devices* section as well as the assigned subnets. 
-Make a note of the VRA subnet IP address and CIDR (/26) as these are required for routing configuration. 
-3.	Again on the Gateway Details page, locate the **Associated VLANs** section and select the [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network that was associated to create the secure network and APP zone. The provisioned VSI can be seen under the **Devices* section as well as the assigned subnet. 
-Under the **Subnets** section make a note of the VSI subnet IP address and CIDR (/26) as these are required for routing configuration. 
-This VLAN and subnet is identified as the APP zone in both VRA firewall configurations. 
-
+1.	Proceed to the Gateway Details page for each VRA via the [Gateway Appliances]( https://control.bluemix.net/network/gateways) page.  
+2.	Locate the Gateway VLANs section and click on the Gateway [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
+3. The provisioned VRA will be seen under the **Devices* section. From under the **Subnets** section, make a note of the VRA private subnet IP address and CIDR (/26). The subnet will be of type primary with 64 IPs. These details are required later for routing configuration. 
+4.	Again on the Gateway Details page, locate the **Associated VLANs** section and click on the [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network that was associated to create the secure network and APP zone. 
+5.	The provisioned VSI will be seen under the **Devices* section. From under the **Subnets** section, make a note of the  VSI subnet IP address and CIDR (/26) as these are required for routing configuration. This VLAN and subnet is identified as the APP zone in both VRA firewall configurations and is recorded as the \<APP Zone subnet/CIDR\>.
 
 
 ## Configure VLAN Spanning 
 {: #vlan-spanning}
 
-By default servers (and VRAs) on different VLANs and data centers, are unable to communicate with each other over the private network. In these tutorials, within a single data center VRA’s are used to link VLANs and subnets with classic IP routing and firewalls to create a private network for server communication across VLANs. In this configuration servers belonging to the same IBM Cloud account are unable to communicate across data centers. 
+By default servers (and VRAs) on different VLANs and data centers, are unable to communicate with each other over the private network. In these tutorials, within a single data center VRA’s are used to link VLANs and subnets with classic IP routing and firewalls to create a private network for server communication across VLANs. While they can communicate in the same data center, in this configuration servers belonging to the same {{site.data.keyword.Bluemix_notm}}  account are unable to communicate across data centers. 
 
-The [VLAN spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning) service lifts this restriction of communication between the VLANs and subnets that are **NOT** associated with VRAs. It must be noted that even when VLAN spanning is enabled, VLANs associated with VRAs can only communicate via their associated VRA, as determined by the VRA firewall and routing configuration.
+The [VLAN spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning) service lifts this restriction of communication between the VLANs and subnets that are **NOT** associated with VRAs. It must be noted that even when VLAN spanning is enabled, VLANs associated with VRAs can only communicate via their associated VRA, as determined by the VRA firewall and routing configuration. When VLAN spanning is enabled the VRAs owned by an {{site.data.keyword.Bluemix_notm}} account are connected over the private network and can communicate. 
 
-Outside of the secure private networks created by the VRAs, the VLANs and subnets are ‘spanned’ allowing interconnection of the ‘unassociated’ VLANs across data centers. This includes the VRA Gateway (transit) VLANs belonging to the same IBM Cloud account in different data centers. So allowing VRAs to communicate across data centers when VLAN spanning is enabled. With VRA to VRA connectivity, VRA firewall and routing configuration enables servers within the secure networks to connect. 
+VLANs not associated with the secure private networks created by the VRAs, are ‘spanned’ allowing interconnection of these ‘unassociated’ VLANs across data centers. This includes the VRA Gateway (transit) VLANs belonging to the same IBM Cloud account in different data centers. Hence allowing VRAs to communicate across data centers when VLAN spanning is enabled. With VRA to VRA connectivity, the VRA firewall and routing configuration enable servers within the secure networks to connect. 
 
 Enable VLAN Spanning:
 
@@ -103,22 +100,22 @@ Enable VLAN Spanning:
 2.	Select the **Span** tab at the top of the page
 3.	Select the VLAN Spanning ‘On’ radio button. This will take a number of minutes for the network change to complete.
 4.	Confirm that the two VRAs can now communicate:
--	Login to data center 1 VRA and ping data center 2 VRA
-```
-SSH vyatta@<DC1 VRA Private IP Address>
-ping <DC2 VSI Private IP Address>
-```
 
-{: codeblock}
+	-	Login to data center 1 VRA and ping data center 2 VRA
 
--	Login to data center 2 VRA and ping data center 1 VRA
-```
-SSH vyatta@<DC2 VRA Private IP Address>
-ping <DC1 VSI Private IP Address>
-```
-{: codeblock}
+	```
+	SSH vyatta@<DC1 VRA Private IP Address>
+	ping <DC2 VRA Private IP Address>
+	```
+	{: codeblock}
 
-
+	-	Login to data center 2 VRA and ping data center 1 VRA
+	
+	```
+	SSH vyatta@<DC2 VRA Private IP Address>
+	ping <DC1 VRA Private IP Address>
+	```
+	{: codeblock}
 
 
 ## Configure VRA IP Routing 
@@ -129,48 +126,55 @@ Create the VRA routing in each data center to enable the VSIs in the APP zones i
 
 1.	 Create static route in data center 1 to the APP zone private subnet in data center 2, in VRA edit mode.
 
-   ```
+   	```
 	ssh vyatta@<DC1 VRA Private IP Address>
 	conf
-   set protocols static route <DC2 APP zone subnet/CIDR>  next-hop <DC2 VRA Private IP>
-   ```
-   {: codeblock}   
+   	set protocols static route <DC2 APP zone subnet/CIDR>  next-hop <DC2 VRA Private IP>
+	commit
+   	```
+   	{: codeblock}   
 
 2.	 Create static route in data center 2 to the APP zone private subnet in data center 1, in VRA edit mode.
 
-   ```
+   	```
 	ssh vyatta@<DC2 VRA Private IP Address>
 	conf
-   set protocols static route <DC1 APP zone subnet/CIDR>  next-hop <DC1 VRA Private IP>
-   ```
-   {: codeblock}   
+   	set protocols static route <DC1 APP zone subnet/CIDR>  next-hop <DC1 VRA Private IP>
+   	commit
+	```
+   	{: codeblock}   
 
 
-2. Review the VRA routing table from the VRA command line. At this time the VSIs cannot communicate as no firewall rules exist to allow traffic for the APP Zone subnets. Firewall rules are required for traffic initiated at either side.
+2. Review the VRA routing table from the VRA command line. At this time the VSIs cannot communicate as no APP zone firewall rules exist to allow traffic between the two APP Zone subnets. Firewall rules are required for traffic initiated at either side.
 
-   ```bash
-   show ip route
-   ```
-   {: codeblock}
+   	```bash
+   	show ip route
+   	```
+   	{: codeblock}
 
+The new route to allow the APP zone to communicate via the IBM private network will be now seen. 
 
 ## VRA firewall configuration
 {: #vra_firewall}
 
-The existing APP zone firewall rules are only configured to allow traffic to and from IBM Cloud services on the IBM Cloud private network. Subnets associated with VSIs in other data centers are blocked. The next step is to update the `ibmprivate` resource group associated with the APP-TO-INSIDE firewall rule to allow 
+The existing APP zone firewall rules are only configured to allow traffic to and from this subnet to {{site.data.keyword.Bluemix_notm}} services on the {{site.data.keyword.Bluemix_notm}} private network and for public Internet access via NAT. Other subnets associated with VSIs on this VRA, or in other data centers are blocked. The next step is to update the `ibmprivate` resource group associated with the APP-TO-INSIDE firewall rule to allow explicit access to the subnet in the other data center. 
 
 
 1.	On the data center 1 VRA edit command mode, add the <DC2 APP zone subnet>/CIDR to the `ibmprivate’ resource group
 
-     ```
-set resources group address-group ibmprivate address <DC2 APP zone subnet>/CIDR     commit
-     ```
+     	```
+	set resources group address-group ibmprivate address <DC2 APP zone subnet>/CIDR     commit
+     	```
+     	{: codeblock}
+     
 
 2.	On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate’ resource group
 
-     ```
-set resources group address-group ibmprivate address <DC1 APP zone subnet>/CIDR     commit
-     ```
+     	```
+	set resources group address-group ibmprivate address <DC1 APP zone subnet>/CIDR     commit
+     	```
+     	{: codeblock}
+	
 3.	
 
 ```bash
