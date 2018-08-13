@@ -442,7 +442,7 @@ Repeat the following steps on each application server:
           }
    }
    ```
-5. Create a `www` folder inside the `/mnt/www` using
+5. Create a `www` folder inside the `/mnt/www` on one of the two app servers using
    ```sh
    mkdir /mnt/www/html
    ```
@@ -459,7 +459,6 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    apt-get install curl
    cd /tmp
    curl -O https://wordpress.org/latest.tar.gz
-   tar xzvf latest.tar.gz
    ```
 
    If the virtual server has only a private network link, you will need to retrieve the installation files from another machine with Internet access and to copy them to the virtual server. Assuming you have retrieved the Wordpress installation files from https://wordpress.org/latest.tar.gz, you can copy it to the virtual server with `scp`:
