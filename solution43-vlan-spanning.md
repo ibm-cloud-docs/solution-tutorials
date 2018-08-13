@@ -211,7 +211,7 @@ This tutorial can be used in conjunction with the
 ## Related material
 {:related}
 
-1.	Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an IBM Cloud Account. VRF is mandatory for all clients using  [{{site.data.keyword.BluDirectLink}}](https://console.bluemix.net/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview).
+1.	Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an {{site.data.keyword.Bluemix_notm}} Account. VRF is mandatory for all clients using  [{{site.data.keyword.BluDirectLink}}](https://console.bluemix.net/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview).
 
 	[Overview of Virtual Routing and Forwarding (VRF) on IBM Cloud](https://console.bluemix.net/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview)
 
