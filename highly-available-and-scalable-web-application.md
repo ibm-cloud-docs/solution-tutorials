@@ -393,7 +393,7 @@ Repeat the following steps on each application server:
    ```
 3. Stop PHP service and nginx
    ```sh
-   systemctl stop php7.0-fpm
+   systemctl stop php7.2-fpm
    systemctl stop nginx
    ```
 4. Replace the content using `nano /etc/nginx/sites-available/default` with the following:
@@ -427,7 +427,7 @@ Repeat the following steps on each application server:
           # pass the PHP scripts to the local FastCGI server
           location ~ \.php$ {
                   include snippets/fastcgi-php.conf;
-                  fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+                  fastcgi_pass unix:/run/php/php7.2-fpm.sock;
           }
 
           location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
