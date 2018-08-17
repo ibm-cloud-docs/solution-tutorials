@@ -60,6 +60,8 @@ Solution Tutorials
         nat-config-private.md
         byoip.md
         configuring-IPSEC-VPN.md
+        vlan-spanning.md
+        web-app-private-network.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
@@ -101,5 +103,7 @@ Solution Tutorials
         secure-network-enclosure.md
         nat-config-private.md
         configuring-IPSEC-VPN.md
+        vlan-spanning.md
+        web-app-private-network.md
 
     {: .navgroup-end}
