@@ -384,7 +384,8 @@ This tutorial sets up a Wordpress blog. All Wordpress files will be installed on
 Repeat the following steps on each application server:
 
 1. Install nginx
-   ```
+   ```sh
+   apt-get update
    apt-get -y install nginx
    ```
 2. Install PHP and mysql client
@@ -444,7 +445,10 @@ Repeat the following steps on each application server:
    ```
 5. Create a `html` folder inside the `/mnt/www` directory on one of the two app servers using
    ```sh
-   mkdir /mnt/www/html
+   cd  /mnt
+   mkdir /www/html
+   cd www
+   mkdir html
    ```
 
 ### Install and configure WordPress
@@ -523,7 +527,7 @@ On both application servers, start the web server and the PHP runtime:
 7. Start the service by running the following commands
 
    ```sh
-   systemctl start php7.0-fpm
+   systemctl start php7.2-fpm
    systemctl start nginx
    ```
 
