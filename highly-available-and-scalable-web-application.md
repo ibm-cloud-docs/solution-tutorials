@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-25"
+lastupdated: "2018-08-13"
 ---
 
 {:shortdesc: .shortdesc}
@@ -384,7 +384,8 @@ This tutorial sets up a Wordpress blog. All Wordpress files will be installed on
 Repeat the following steps on each application server:
 
 1. Install nginx
-   ```
+   ```sh
+   apt-get update
    apt-get -y install nginx
    ```
 2. Install PHP and mysql client
@@ -393,7 +394,7 @@ Repeat the following steps on each application server:
    ```
 3. Stop PHP service and nginx
    ```sh
-   systemctl stop php7.0-fpm
+   systemctl stop php7.2-fpm
    systemctl stop nginx
    ```
 4. Replace the content using `nano /etc/nginx/sites-available/default` with the following:
@@ -427,7 +428,7 @@ Repeat the following steps on each application server:
           # pass the PHP scripts to the local FastCGI server
           location ~ \.php$ {
                   include snippets/fastcgi-php.conf;
-                  fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+                  fastcgi_pass unix:/run/php/php7.2-fpm.sock;
           }
 
           location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
@@ -442,9 +443,12 @@ Repeat the following steps on each application server:
           }
    }
    ```
-5. Create a `www` folder inside the `/mnt/www` using
+5. Create a `html` folder inside the `/mnt/www` directory on one of the two app servers using
    ```sh
-   mkdir /mnt/www/html
+   cd  /mnt
+   mkdir /www/html
+   cd www
+   mkdir html
    ```
 
 ### Install and configure WordPress
@@ -459,7 +463,6 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    apt-get install curl
    cd /tmp
    curl -O https://wordpress.org/latest.tar.gz
-   tar xzvf latest.tar.gz
    ```
 
    If the virtual server has only a private network link, you will need to retrieve the installation files from another machine with Internet access and to copy them to the virtual server. Assuming you have retrieved the Wordpress installation files from https://wordpress.org/latest.tar.gz, you can copy it to the virtual server with `scp`:
@@ -524,7 +527,7 @@ On both application servers, start the web server and the PHP runtime:
 7. Start the service by running the following commands
 
    ```sh
-   systemctl start php7.0-fpm
+   systemctl start php7.2-fpm
    systemctl start nginx
    ```
 
