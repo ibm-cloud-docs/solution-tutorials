@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-07-31"
+lastupdated: "2018-08-24"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -15,7 +15,7 @@ lastupdated: "2018-07-31"
 {:tip: .tip}
 {:pre: .pre}
 
-# Configure firewall rules for Internet access from a private network
+# Configure NAT for Internet access from a private network
 
 In today’s world of web based IT applications and services, few applications exist in isolation. Developers have come to expect access to services on the internet, whether it is open-source application code and updates or ‘third party’ services providing application functionality via REST APIs. Network Address Translation (NAT) masquerade, is a commonly used approach to securing the access to internet hosted service from  private networks. In NAT masquerade, private IP addresses are translated to the IP address of the out-bound public interface in a many-to-one relationship, shielding the private IP address from public access.  
 

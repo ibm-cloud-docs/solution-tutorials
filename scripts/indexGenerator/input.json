@@ -431,7 +431,7 @@
                 ]
             },
             {
-                "name": "Configure firewall rules for Internet access from a private network",
+                "name": "Configure NAT for Internet access from a private network",
                 "url": "nat-config-private.html",
                 "description": "Use NAT masquerade to translate private IP addresses to out-bound public interface.",
                 "imgSrc": "images/solution35-nat-config-private/vra-nat.png",

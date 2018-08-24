@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-08-17"
+lastupdated: "2018-08-24"
 
 ---
 
@@ -727,14 +727,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Configure firewall rules for Internet access from a private network
+                Configure NAT for Internet access from a private network
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
                     <p>Use NAT masquerade to translate private IP addresses to out-bound public interface.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution35-nat-config-private/vra-nat.png" alt="Architecture diagram for the solution Configure firewall rules for Internet access from a private network"/>
+                    <img class="architectureDiagram" src = "images/solution35-nat-config-private/vra-nat.png" alt="Architecture diagram for the solution Configure NAT for Internet access from a private network"/>
                 </div>
             </div>
         </div>

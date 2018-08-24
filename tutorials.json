@@ -448,7 +448,7 @@
           "lastUpdated": "2018-07-31"
         },
         {
-          "name": "Configure firewall rules for Internet access from a private network",
+          "name": "Configure NAT for Internet access from a private network",
           "url": "nat-config-private.html",
           "description": "Use NAT masquerade to translate private IP addresses to out-bound public interface.",
           "imgSrc": "images/solution35-nat-config-private/vra-nat.png",
@@ -459,7 +459,7 @@
             "Network",
             "Virtual Servers"
           ],
-          "lastUpdated": "2018-07-31"
+          "lastUpdated": "2018-08-24"
         },
         {
           "name": "Bring Your Own IP Address",
@@ -501,7 +501,7 @@
             "Virtual Servers",
             "VLAN Spanning"
           ],
-          "lastUpdated": "2018-08-13"
+          "lastUpdated": "2018-08-24"
         },
         {
           "name": "Web application serving from a secure private network",
@@ -516,7 +516,7 @@
             "Virtual Servers",
             "Virtual Router Appliance VPN"
           ],
-          "lastUpdated": "2018-08-08"
+          "lastUpdated": "2018-08-24"
         }
       ]
     }
