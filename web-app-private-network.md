@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-08-08"
+lastupdated: "2018-08-24"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -25,12 +25,12 @@ This tutorial takes you through the creation of a scalable and secure Internet f
 ## Objectives
 {: #objectives}
 
--	Create Virtual Servers to install PHP and MySQL
--	Provision a Load Balancer to distribute requests to the application servers
--	Deploy a Virtual Router Appliance (VRA) to create a secure network
--	Define VLANs and IP subnets 
--	Secure the network with firewall rules
--	Source Network Address Translation (SNAT) for application deployment
+- Create Virtual Servers to install PHP and MySQL
+- Provision a Load Balancer to distribute requests to the application servers
+- Deploy a Virtual Router Appliance (VRA) to create a secure network
+- Define VLANs and IP subnets 
+- Secure the network with firewall rules
+- Source Network Address Translation (SNAT) for application deployment
 
 ## Services used
 {: #products}
@@ -39,7 +39,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 * [Virtual Router Appliance VPN](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
 * [Load Balancer]( https://console.bluemix.net/catalog/infrastructure/load-balancer-group)
-* [Virtual Servers]( https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.virtualmachinesshort}}]( https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage. The VRA is only available on a monthly pricing plan.
 
@@ -72,7 +72,7 @@ This tutorial utilises three existing tutorials, which are deployed in sequence.
 Isolated and secure private network environments are central to the IaaS application security model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. 
 The first step is to create the secure private network enclosure within which the web app will be deployed.  
 
--	[Isolate workloads with a secure private network](https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-)
+- [Isolate workloads with a secure private network](https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-)
 
 This tutorial can be followed without change. In a later step three virtual machines will be deployed in the APP zone as Nginx web servers and a MySQL database. 
 
@@ -81,7 +81,7 @@ This tutorial can be followed without change. In a later step three virtual mach
 
 Installation of open-source applications requires secure access to the Internet to access the source repositories. To protect the servers in the secure private network from being exposed on the public Internet, Source NAT is used where the source address is obfuscated and firewall rules are used to secure the out-bound application repository requests. All inbound requests are denied. 
 
--	[Configure NAT for Internet access from a secure network]( https://console.bluemix.net/docs/tutorials/nat-config-private.html#configure-firewall-rules-for-internet-access-from-a-private-network)
+- [Configure NAT for Internet access from a secure network]( https://console.bluemix.net/docs/tutorials/nat-config-private.html#configure-firewall-rules-for-internet-access-from-a-private-network)
 
 This tutorial can be followed without change. In the next step the NAT configuration will be used to access the required Nginx and MySQL modules.  
 
@@ -93,21 +93,18 @@ A Wordpress installation on Nginx and MySQL, with an Load Balancer is used to il
 
 This tutorial walks you through this scenario with the creation of a {{site.data.keyword.Bluemix_notm}} load balancer, two web application servers and one MySQL database server. The servers are deployed into the APP zone in the secure private network to provide firewall separation from other workloads and the public network. 
 
--	[Use Virtual Servers to build highly available and scalable web app]( https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#use-virtual-servers-to-build-highly-available-and-scalable-web-app)
+- [Use Virtual Servers to build highly available and scalable web app]( https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#use-virtual-servers-to-build-highly-available-and-scalable-web-app)
 
 There are three changes from this tutorial:
 
-1.	The virtual servers used in this tutorial are deployed onto the VLAN and subnet protected by the APP firewall zone behind the VRA. To ensure that the servers are deployed to the correct VLAN, it is necessary to use the **SoftLayer Device** menu on the **[SoftLayer Dashboard]( https://control.softlayer.com)** to order the virtual servers. This dialog allows the \<Private VLAN ID\> of the APP zone to be specified when the new servers are provisioned. Note you will be prompted to enter your IBM ID again to login. It is not possible to specify VLANs when ordering servers from the IBM Cloud services catalog, or the default infrastructure console. Using the default console, may deploy the servers onto an unexpected and unprotected VLAN. 
+1.	The virtual servers used in this tutorial are deployed onto the VLAN and subnet protected by the APP firewall zone behind the VRA. To ensure that the servers are deployed to the correct VLAN, it is necessary to use the **SoftLayer Device** menu on the **[SoftLayer Dashboard]( https://control.softlayer.com)** to order the virtual servers. This dialog allows the &lt;Private VLAN ID&gt; of the APP zone to be specified when the new servers are provisioned. Note you will be prompted to enter your IBM ID again to login. It is not possible to specify VLANs when ordering servers from the IBM Cloud services catalog, or the default infrastructure console. Using the default console, may deploy the servers onto an unexpected and unprotected VLAN. 
+2. Specify the &lt;Private VLAN ID&gt; when ordering the virtual servers. See the [Order the first virtual server](https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#order_virtualserver) instructions in the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial for details of how to specify the &lt;Private VLAN ID&gt; when ordering a virtual server. Also remember to select your SSH key uploaded earlier in the tutorial to allow access to the virtual servers. 
+3. It is strongly recommended **NOT** to use the file storage service for this tutorial due to poor rsync performance copying the Wordpress files to shared storage. This does not affect the overall tutorial. The steps relating to creating the file storage and setting up mounts can be ignored for the app servers and db. Alternatively all the [Install and configure the PHP application on the application servers](https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#php_application) steps need to be performed on both app servers.
+   Prior to completing the steps in [Install and configure the PHP application on the application servers](https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#php_application), first create the directory `/mnt/www/` on both app servers. This directory was original created in the now removed file storage section. 
 
-2. Specify the \<Private VLAN ID\> when ordering the virtual servers. See the [Order the first virtual server](https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#order_virtualserver) instructions in the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial for details of how to specify the \<Private VLAN ID\> when ordering a virtual server. Also remember to select your SSH key uploaded earlier in the tutorial to allow access to the virtual servers. 
-
-3. It is strongly recommended **NOT** to use the file storage service for this tutorial due to poor rsync performance copying the Wordpress files to shared storage. This does not affect the overall tutorial. The steps relating to creating the file storage and setting up mounts can be ignored for the app servers and db. Alternatively all the [Install and configure the PHP application on the application servers](https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#php_application) steps need to be performed on both app servers. 
-
-    Prior to completing the steps in [Install and configure the PHP application on the application servers](https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html#php_application), first create the directory `/mnt/www/` on both app servers. This directory was original created in the now removed file storage section. 
-
-    ```sh
-    mkdir /mnt/www
-    ```
+   ```sh
+   mkdir /mnt/www
+   ```
 
 At the end of this step the load balancer should be in a healthy state and the Wordpress site accessible on the internet. The virtual servers making up the web application are protected from external access via the internet by the VRA firewall and the only access is via the load balancer. For a production environment DDoS protection and Web Application Firewall (WAF) should also be consider as provided by [{{site.data.keyword.Bluemix_notm}} Internet Services](https://console.bluemix.net/catalog/services/internet-services).
 
