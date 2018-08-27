@@ -25,9 +25,9 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 ## Objectives
 {: #objectives}
 
--	Link secure networks within an {{site.data.keyword.Bluemix_notm}} IaaS account
--	Setup firewall rules for site to site access 
--	Configure routing between sites
+- Link secure networks within an {{site.data.keyword.Bluemix_notm}} IaaS account
+- Setup firewall rules for site to site access 
+- Configure routing between sites
 
 ## Services used
 {: #products}
@@ -49,10 +49,10 @@ This tutorial might incur costs. The VRA is only available on a monthly pricing 
 </p>
 
 
-1.	Deploy secure private networks
-2.	Configure VLAN Spanning
-3.	Configure IP routing between private networks
-4.	Configure firewall rules for remote site access
+1. Deploy secure private networks
+2. Configure VLAN Spanning
+3. Configure IP routing between private networks
+4. Configure firewall rules for remote site access
 
 ## Before you begin
 {: #prereqs}
@@ -66,8 +66,8 @@ The tutorial [Isolate workloads with a secure private network]( https://console.
 
 The [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial can be followed without change for each selected data center, recording the following information for later steps. 
 
-| Item  | Datacenter1	| Datacenter2 |
-|:------ |:--- | :--- |					
+| Item  | Datacenter1 | Datacenter2 |
+|:------ |:--- | :--- |
 | Data center |  |  |
 | VRA public IP address | <DC1 VRA Public IP Address> | <DC2 VRA Public IP Address> |
 | VRA private IP address | <DC1 VRA Private IP Address> | <DC2 VRA Private IP Address> |
@@ -76,12 +76,11 @@ The [Isolate workloads with a secure private network]( https://console.bluemix.n
 | VSI private IP address | <DC1 VSI Private IP Address> | <DC2 VSI Private IP Address> |
 | APP zone subnet & CIDR | <DC1 APP zone subnet/CIDR> | <DC2 APP zone subnet/CIDR> |
 
-
-1.	Proceed to the Gateway Details page for each VRA via the [Gateway Appliances]( https://control.bluemix.net/network/gateways) page.  
-2.	Locate the Gateway VLANs section and click on the Gateway [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
+1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances]( https://control.bluemix.net/network/gateways) page.  
+2. Locate the Gateway VLANs section and click on the Gateway [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
 3. The provisioned VRA will be seen under the **Devices* section. From under the **Subnets** section, make a note of the VRA private subnet IP address and CIDR (/26). The subnet will be of type primary with 64 IPs. These details are required later for routing configuration. 
-4.	Again on the Gateway Details page, locate the **Associated VLANs** section and click on the [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network that was associated to create the secure network and APP zone. 
-5.	The provisioned VSI will be seen under the **Devices* section. From under the **Subnets** section, make a note of the  VSI subnet IP address and CIDR (/26) as these are required for routing configuration. This VLAN and subnet is identified as the APP zone in both VRA firewall configurations and is recorded as the &lt;APP Zone subnet/CIDR&gt;.
+4. Again on the Gateway Details page, locate the **Associated VLANs** section and click on the [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network that was associated to create the secure network and APP zone. 
+5. The provisioned VSI will be seen under the **Devices* section. From under the **Subnets** section, make a note of the  VSI subnet IP address and CIDR (/26) as these are required for routing configuration. This VLAN and subnet is identified as the APP zone in both VRA firewall configurations and is recorded as the &lt;APP Zone subnet/CIDR&gt;.
 
 
 ## Configure VLAN Spanning 
@@ -195,8 +194,5 @@ This tutorial can be used in conjunction with the
 ## Related material
 {:related}
 
-1.	Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an {{site.data.keyword.Bluemix_notm}} Account. VRF is mandatory for all clients using  [{{site.data.keyword.BluDirectLink}}](https://console.bluemix.net/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview).
-
-	[Overview of Virtual Routing and Forwarding (VRF) on IBM Cloud](https://console.bluemix.net/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview)
-
-2.	[The IBM Cloud network]( https://www.ibm.com/cloud-computing/bluemix/our-network)
+1. Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an {{site.data.keyword.Bluemix_notm}} Account. VRF is mandatory for all clients using  [{{site.data.keyword.BluDirectLink}}](https://console.bluemix.net/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview). [Overview of Virtual Routing and Forwarding (VRF) on IBM Cloud](https://console.bluemix.net/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview)
+2. [The IBM Cloud network]( https://www.ibm.com/cloud-computing/bluemix/our-network)
