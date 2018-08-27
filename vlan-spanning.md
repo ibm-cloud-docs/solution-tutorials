@@ -15,7 +15,6 @@ lastupdated: "2018-08-24"
 {:tip: .tip}
 {:pre: .pre}
 
-
 # Linking secure private networks over the IBM network
 
 As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple regions provide resilience in the case of a regional failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}}  network]( https://www.ibm.com/cloud-computing/bluemix/our-network) enables users to link workloads hosted in secure private networks across data centers and regions. 
@@ -35,7 +34,7 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
 * [Virtual Router Appliance](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#about)
-* [Virtual Servers]( https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.virtualmachinesshort}}]( https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 * [VLAN Spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning)
 
 This tutorial might incur costs. The VRA is only available on a monthly pricing plan. Use the [Pricing Calculator](https://console.bluemix.net/pricing/)  to generate a cost estimate based on your projected usage.
@@ -96,61 +95,52 @@ VLANs not associated with the secure private networks created by the VRAs, are �
 
 Enable VLAN Spanning:
 
-1.	Proceed to the [VLANs]( https://control.bluemix.net/network/vlans) page.
-2.	Select the **Span** tab at the top of the page
-3.	Select the VLAN Spanning ‘On’ radio button. This will take a number of minutes for the network change to complete.
-4.	Confirm that the two VRAs can now communicate:
+1. Proceed to the [VLANs]( https://control.bluemix.net/network/vlans) page.
+2. Select the **Span** tab at the top of the page
+3. Select the VLAN Spanning ‘On’ radio button. This will take a number of minutes for the network change to complete.
+4. Confirm that the two VRAs can now communicate:
 
-	Login to data center 1 VRA and ping data center 2 VRA
+   Login to data center 1 VRA and ping data center 2 VRA
 
-	```
-	SSH vyatta@<DC1 VRA Private IP Address>
-	ping <DC2 VRA Private IP Address>
-	```
-	{: codeblock}
+   ```
+   SSH vyatta@<DC1 VRA Private IP Address>
+   ping <DC2 VRA Private IP Address>
+   ```
+   {: codeblock}
 
-	Login to data center 2 VRA and ping data center 1 VRA
-	
-	```
-	SSH vyatta@<DC2 VRA Private IP Address>
-	ping <DC1 VRA Private IP Address>
-	```
-	{: codeblock}
-
+   Login to data center 2 VRA and ping data center 1 VRA
+   ```
+   SSH vyatta@<DC2 VRA Private IP Address>
+   ping <DC1 VRA Private IP Address>
+   ```
+   {: codeblock}
 
 ## Configure VRA IP Routing 
 {: #vra_routing}
 
-
 Create the VRA routing in each data center to enable the VSIs in the APP zones in both data centers to communicate. 
 
-1.	Create static route in data center 1 to the APP zone private subnet in data center 2, in VRA edit mode.
-
-   	```
-	ssh vyatta@<DC1 VRA Private IP Address>
-	conf
-   	set protocols static route <DC2 APP zone subnet/CIDR>  next-hop <DC2 VRA Private IP>
-	commit
-   	```
-   	{: codeblock}   
-
-2.	Create static route in data center 2 to the APP zone private subnet in data center 1, in VRA edit mode.
-
-   	```
-	ssh vyatta@<DC2 VRA Private IP Address>
-	conf
-   	set protocols static route <DC1 APP zone subnet/CIDR>  next-hop <DC1 VRA Private IP>
-   	commit
-	```
-   	{: codeblock}   
-
-
+1. Create static route in data center 1 to the APP zone private subnet in data center 2, in VRA edit mode.
+   ```
+   ssh vyatta@<DC1 VRA Private IP Address>
+   conf
+   set protocols static route <DC2 APP zone subnet/CIDR>  next-hop <DC2 VRA Private IP>
+   commit
+   ```
+   {: codeblock}
+2. Create static route in data center 2 to the APP zone private subnet in data center 1, in VRA edit mode.
+   ```
+   ssh vyatta@<DC2 VRA Private IP Address>
+   conf
+   set protocols static route <DC1 APP zone subnet/CIDR>  next-hop <DC1 VRA Private IP>
+   commit
+   ```
+   {: codeblock}
 2. Review the VRA routing table from the VRA command line. At this time the VSIs cannot communicate as no APP zone firewall rules exist to allow traffic between the two APP Zone subnets. Firewall rules are required for traffic initiated at either side.
-
-   	```bash
-   	show ip route
-   	```
-   	{: codeblock}
+   ```
+   show ip route
+   ```
+   {: codeblock}
 
 The new route to allow the APP zone to communicate via the IBM private network will be now seen. 
 
@@ -159,43 +149,37 @@ The new route to allow the APP zone to communicate via the IBM private network w
 
 The existing APP zone firewall rules are only configured to allow traffic to and from this subnet to {{site.data.keyword.Bluemix_notm}} services on the {{site.data.keyword.Bluemix_notm}} private network and for public Internet access via NAT. Other subnets associated with VSIs on this VRA, or in other data centers are blocked. The next step is to update the `ibmprivate` resource group associated with the APP-TO-INSIDE firewall rule to allow explicit access to the subnet in the other data center. 
 
+1. On the data center 1 VRA edit command mode, add the <DC2 APP zone subnet>/CIDR to the `ibmprivate` resource group
+   ```
+   set resources group address-group ibmprivate address <DC2 APP zone subnet/CIDR>
+   commit
+   save
+   ```
+   {: codeblock}
+2. On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate` resource group
+   ```
+   set resources group address-group ibmprivate address <DC1 APP zone subnet/CIDR>
+   commit
+   save
+   ```
+   {: codeblock}
+3. Verify that the VSIs in both data centers can now communicate
+   ```bash
+   ping <Remote Subnet Gateway IP>
+   ssh root@<VSI Private IP>
+   ping <Remote Subnet Gateway IP>
+   ```
+   {: codeblock}
 
-1.	On the data center 1 VRA edit command mode, add the <DC2 APP zone subnet>/CIDR to the `ibmprivate` resource group
-
-     	```
-	set resources group address-group ibmprivate address <DC2 APP zone subnet/CIDR>     
-	commit
-	save
-     	```
-     	{: codeblock}
-     
-
-2.	On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate` resource group
-
-     	```
-	set resources group address-group ibmprivate address <DC1 APP zone subnet/CIDR>     
-	commit
-	save
-     	```
-     	{: codeblock}
-	
-3.	Verify that the VSIs in both data centers can now communicate 
-
-	```bash
-   	ping <Remote Subnet Gateway IP>
-   	ssh root@<VSI Private IP>
-   	ping <Remote Subnet Gateway IP>
-   	```
-   	{: codeblock}
-
-	If the VSIs cannot communicate follow the instructions in the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html) tutorial for monitoring traffic on the interfaces and reviewing the firewall logs. 
+   If the VSIs cannot communicate follow the instructions in the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html) tutorial for monitoring traffic on the interfaces and reviewing the firewall logs. 
 
 ## Remove resources
 {: #removeresources}
 
 Steps to take to remove the resources created in this tutorial. 
 
-The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://control.bluemix.net/network/gateways/371923) page.{tip}  
+The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://control.bluemix.net/network/gateways/371923) page.
+{:tip}
 
 1. Cancel any virtual servers or bare-metal servers
 2. Cancel the VRA
