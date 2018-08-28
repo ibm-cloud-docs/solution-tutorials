@@ -64,15 +64,15 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data
 
 1. In the Catalog, select **{{site.data.keyword.cloudant_short_notm}}**.
 2. Set the service name to **guestbook-db**, select **Use both legacy credentials and IAM** as authentication methods and click **Create**.
-4. Click on **Manage** on the left and then **Launch** the {{site.data.keyword.cloudant_short_notm}} service dashboard.
+4. Click on **Manage** in the service dashboard then **Launch** the {{site.data.keyword.cloudant_short_notm}} service dashboard.
 5. Create a database named **guestbook**.
    ![](images/solution8/Create_Database.png)
-1. Under **Connections**,
-  1. Click **Create connection**
-  1. Select a Cloud Foundry organization and space where to create the serverless actions
-  1. Hover on the space and click **CONNECT**
+1. Back to the service dashboard, under **Connections**,
+   1. Click **Create connection**
+   1. Select a Cloud Foundry organization and space where to create the serverless actions
+   1. Hover on the space and click **CONNECT**
 1. Go the [console](https://console.bluemix.net/dashboard/apps), select the service alias in the *Cloud Foundry Services* section
-3. Under **Service Credentials**, create **New credential** and click **Add**.
+   1. Under **Service Credentials**, create **New credential** and click **Add**.
 
 ## Create serverless actions
 
@@ -125,6 +125,8 @@ Finally add a second action to the sequence:
 1. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**
 1. Create **New Binding** and set name to `binding-for-guestbook`.
 1. Select the **guestbook-db** {{site.data.keyword.cloudant_short_notm}} instance and the **guestbook** database and **Add** and then **Save**.
+   If the *guestbook-db** instance does not show up, make sure to refresh the page (Shift or Cmd + Refresh) so that existing bindings are reloaded. You can also check on the command line with `ibmcloud cloud-functions package list`.
+   {: tip}
 1. To test it, click on **Change Input** and enter the JSON below
     ```json
     {
