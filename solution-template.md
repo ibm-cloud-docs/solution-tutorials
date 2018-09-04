@@ -56,7 +56,7 @@ intro sentence
 * [IBM Cloud Developer Tools](https://console.bluemix.net/docs/cli/index.html#overview) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 
 ## Create services
-{: setup}
+{: #setup}
 
 In this section, you will create the services required to ...
 
