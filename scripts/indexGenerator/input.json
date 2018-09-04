@@ -217,6 +217,22 @@
                     "Node.js",
                     "API Connect"
                 ]
+            },
+            {
+                "name": "Authenticate users and securely store files",
+                "hidden": true,
+                "url": "data-encryption-security.html",
+                "description": "Design a secure solution with data encrypted in-flight and at rest with your own keys.",
+                "imgSrc": "images/solution34-data-encryption-security/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Encryption",
+                    "Security",
+                    "App ID",
+                    "Cloud Object Storage",
+                    "Key Protect",
+                    "Activity Tracker"
+                ]
             }
         ]
     },

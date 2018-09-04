@@ -14,14 +14,18 @@ lastupdated: "2018-08-02"
 {:pre: .pre}
 
 # Leverage security services for a Kubernetes app
-The solution features an app that enables groups of users to upload files to a common storage pool and provide access to those files via shareable links. The app is written in Node.js and deployed as Docker container to the {{site.data.keyword.containershort_notm}}. It leverages several security-related services and features to improve app security.
+
+* data is the value, needs to be protected, in flight, at rest.
+* bring your own keys, SSL certificates
+
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+* Encrypt bucket files with your own encryption keys
+* Require users to authenticate before accessing an application
+* Manage the lifecycle of SSL certificates centrally
 
 ## Services used
 {: #services}
@@ -41,7 +45,7 @@ This tutorial requires a [non-Lite account](https://console.bluemix.net/docs/acc
 ## Architecture
 {: #architecture}
 
-intro sentence
+The tutorial features an app that enables groups of users to upload files to a common storage pool and provide access to those files via shareable links. The app is written in Node.js and deployed as Docker container to the {{site.data.keyword.containershort_notm}}. It leverages several security-related services and features to improve app security.
 
 <p style="text-align: center;">
 
@@ -49,12 +53,12 @@ intro sentence
 </p>
 
 1. The user connects to the application.
-2. The certificate used for the secure connection is defined in Certificate Manager and used by the Kubernetes Ingress.
-3. App ID secures the application and redirects the user to the authentication page. Users can sign up from there too.
-4. The application is running in a Kubernetes cluster from an image stored in the Container Registry. The image is scanned for vulnerabilities.
-5. Files uploaded by the user are stored in Cloud Object Storage.
+2. The SSL certificate used for the secure connection is defined in {{site.data.keyword.cloudcerts_short}} and used by the Kubernetes Ingress.
+3. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can sign up from there too.
+4. The application is running in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort}}. The image is scanned for vulnerabilities.
+5. Files uploaded by the user are stored in {{site.data.keyword.cos_short}}.
 6. The bucket where the files are stored is using a user-provided key to encrypt the data.
-7. All activities related to managing the solution are logged by Activity Tracker.
+7. All activities related to managing the solution are logged by {{site.data.keyword.cloudaccesstrailshort}}.
 
 ## Before you begin
 {: #prereqs}
