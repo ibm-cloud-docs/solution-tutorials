@@ -69,6 +69,32 @@ The tutorial features an app that enables groups of users to upload files to a c
 ## Create services
 {: #setup}
 
+1. Create Activity Tracker
+1. Create cluster (takes a few minutes, do it early)
+
+1. Create Key Protect
+1. Create root key in Key Protect
+
+1. Create COS
+1. Give COS the right to read Key Protect keys
+1. Create COS bucket right Key Protect root key
+
+1. Create Cloudant
+1. Create database in Cloudant
+
+1. Create App ID
+1. Add cluster ingress in App ID redirect_uris
+
+1. Create credentials for COS
+1. Create credentials for Cloudant
+1. Create .env files with COS/Cloudant credentials
+1. Create kubernetes secret in cluster
+
+1. Build Docker image in registry (bx cr build)
+1. Update yaml with Docker image and cluster ingress
+1. Apply yaml to cluster
+1. App is live! Try it
+
 ### Capture user and application interactions 
 {: #activity-tracker }
 
