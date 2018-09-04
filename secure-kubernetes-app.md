@@ -45,11 +45,16 @@ intro sentence
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution1/Architecture.png)
+  ![Architecture](images/solution34-data-encryption-security/Architecture.png)
 </p>
 
-1. The user does this
-2. Then that
+1. The user connects to the application.
+2. The certificate used for the secure connection is defined in Certificate Manager and used by the Kubernetes Ingress.
+3. App ID secures the application and redirects the user to the authentication page. Users can sign up from there too.
+4. The application is running in a Kubernetes cluster from an image stored in the Container Registry. The image is scanned for vulnerabilities.
+5. Files uploaded by the user are stored in Cloud Object Storage.
+6. The bucket where the files are stored is using a user-provided key to encrypt the data.
+7. All activities related to managing the solution are logged by Activity Tracker.
 
 ## Before you begin
 {: #prereqs}
