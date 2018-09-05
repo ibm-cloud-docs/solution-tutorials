@@ -63,8 +63,9 @@ The tutorial features an app that enables groups of users to upload files to a c
 ## Before you begin
 {: #prereqs}
 
-* [Install all the necessary command line (CLI) tools by following](https://console.bluemix.net/docs/cli/index.html#overview)
-* Identify a region, an organization, a space and a resource group where you will deploy the application and its resources.
+1. [Install all the necessary command line (CLI) tools by following](https://console.bluemix.net/docs/cli/index.html#overview)
+1. Identify **a region**, **a Cloud Foundry organization and a space**, and **a resource group** where you will deploy the application and its resources.
+1. Make sure you have [one private repository](https://console.bluemix.net/containers-kubernetes/registry/private) to push Docker images in the selected region.
   
 ## Create services
 {: #setup}
