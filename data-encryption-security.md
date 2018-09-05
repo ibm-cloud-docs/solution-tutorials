@@ -207,6 +207,8 @@ _&lt;cluster-name&gt;.us-south.containers.appdomain.cloud_, the redirect URL wil
 
 All services have been configured. In this section you will deploy the tutorial application to the cluster.
 
+### Get the code
+
 1. Get the application code:
    ```sh
    git clone https://github.com/IBM-Cloud/secure-file-storage
@@ -217,11 +219,17 @@ All services have been configured. In this section you will deploy the tutorial 
    cd secure-file-storage
    ```
    {: codeblock}
+
+### Build the Docker image
+
 1. Build the Docker image in {{site.data.keyword.registryshort_notm}}:
    ```sh
    ibmcloud cr build -t registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest .
    ```
    {: codeblock}
+
+### Fill in credentials and configuration settings
+
 1. Copy `template.env` to `.env`:
    ```sh
    cp template.env .env
@@ -229,9 +237,23 @@ All services have been configured. In this section you will deploy the tutorial 
    {: codeblock}
 1. Edit `.env` and fill in the blanks with values from the credentials created for **secure-file-storage-cos** and **secure-file-storage-db**.
 1. Edit `secure-file-storage.yaml` and replace the placeholders (REGION, NAMESPACE, INGRESS_SUBDOMAIN) with the correct values.
+
+### Deploy to the cluster
+
 1. export KUBECONFIG=
 1. kubectl secret
 1. kubectl apply
+
+### Test the application
+
+1. connect
+1. sign up
+1. log in
+1. upload files
+1. generate link
+1. access files through link
+
+Learn more in the app README.md
 
 ## Remove resources
 {:removeresources}
