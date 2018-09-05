@@ -72,7 +72,7 @@ The tutorial features an app that enables groups of users to upload files to a c
 _to be removed before release_
 
 1. Create Activity Tracker
-1. Create cluster (takes a few minutes, do it early)
+1. Create cluster, takes a few minutes, do it early (done)
 
 1. Create Key Protect (done)
 1. Create root key in Key Protect (done)
@@ -84,8 +84,8 @@ _to be removed before release_
 1. Create Cloudant (done)
 1. Create database in Cloudant (done)
 
-1. Create App ID
-1. Add cluster ingress in App ID redirect_uris
+1. Create App ID (done)
+1. Add cluster ingress in App ID redirect_uris (done)
 
 1. Create credentials for COS
 1. Create credentials for Cloudant
@@ -105,6 +105,25 @@ what is activity tracker, what does it bring
 <!-- * Deploy Activity Tracker (no config necessary..?) -->
 
 1. Go in the catalog and create an instance of [{{site.data.keyword.cloudaccesstrailshort}}](https://console.bluemix.net/catalog/services/activity-tracker)
+
+### Create a cluster for the application
+
+{{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
+
+Skip this section if you have an existing **Standard** cluster you want to reuse with this tutorial.
+{: tip}
+
+1. Go to the [cluster creation page](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create).
+   1. Set the **Location** to the region you identified in previous steps.
+   1. Set **Cluster type** to **Standard**.
+   1. Set **Availability** to **Single Zone**.
+   1. Select a **Master Zone**.
+1. Keep the default **Kubernetes version**, **Hardware isolation**.
+1. Optionally, if you plan to only deploy this tutorial on this cluster, use the smallest flavor and set **Worker nodes** to **1**.
+1. Set the **Cluster name** to **secure-file-storage-cluster**.
+1. **Create Cluster**
+
+While the cluster is being provisioned, you will create the other services required by the tutorial.
 
 ### Use your own encryption keys
 
@@ -166,10 +185,13 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain a document f
 
 ### Authenticate users
 
-<!-- * deploy App ID, config login page -->
+With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. {{site.data.keyword.appid_short}} provides [an integration](https://console.bluemix.net/docs/containers/cs_annotations.html#appid-auth) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
+
 1. Create an instance of [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID)
    * Set the **name** to **secure-file-storage-appid**
    * Use the same **region** and **resource group** as for the previous services
+1. Under **Identity Providers / Manager**, add a **web redirect URL** pointing to the domain you will use for the application. Assuming your cluster Ingress subdomain is 
+_&lt;cluster-name&gt;.us-south.containers.appdomain.cloud_, the redirect URL will be ___https://secure-file-storage.&lt;cluster-name&gt;.us-south.containers.appdomain.cloud/appid_callback___. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**.
 
 ## Deploy the app
 
