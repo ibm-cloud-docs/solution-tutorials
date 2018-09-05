@@ -69,18 +69,20 @@ The tutorial features an app that enables groups of users to upload files to a c
 ## Create services
 {: #setup}
 
+_to be removed before release_
+
 1. Create Activity Tracker
 1. Create cluster (takes a few minutes, do it early)
 
-1. Create Key Protect
-1. Create root key in Key Protect
+1. Create Key Protect (done)
+1. Create root key in Key Protect (done)
 
-1. Create COS
-1. Give COS the right to read Key Protect keys
-1. Create COS bucket right Key Protect root key
+1. Create COS (done)
+1. Give COS the right to read Key Protect keys (done)
+1. Create COS bucket right Key Protect root key (done)
 
-1. Create Cloudant
-1. Create database in Cloudant
+1. Create Cloudant (done)
+1. Create database in Cloudant (done)
 
 1. Create App ID
 1. Add cluster ingress in App ID redirect_uris
@@ -106,10 +108,7 @@ what is activity tracker, what does it bring
 
 ### Use your own encryption keys
 
-<!--
-* Deploy Key Protect
-* create your own key (how?), import as root key into KP
--->
+{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to help you own the security of your at-rest data](https://console.bluemix.net/docs/services/key-protect/integrations/integrate-cos.html#integrate-cos). In this section, you will create one root key for the storage bucket.
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://console.bluemix.net/catalog/services/kms)
    * Set the name to **secure-file-storage-kp**
@@ -125,31 +124,45 @@ The application stores the user files in a {{site.data.keyword.cos_short}} bucke
 
 #### A bucket for the content
 
-<!-- * deploy COS (no config needed?) -->
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
    * Set the **name** to **secure-file-storage-cos**
    * Use the same **resource group** as for the previous services
 
-Give COS the right to read Key Protect keys:
-1. Open your IBM Cloud dashboard.
-1. From the menu bar, click Manage > Account > Users.
-1. In the side navigation, click Identity & Access > Authorizations.
-1. Click Create authorization.
-1. In the Source service menu, select Cloud Object Storage.
-1. In the Source service instance menu, select the Cloud Object Storage service instance previously created.
-1. In the Target service menu, select IBM Key Protect.
-1. In the Target service instance menu, select the service instance to authorize.
-1. Enable the Reader role.
-1. Click Authorize.
+Before creating the bucket, you need to grant **secure-file-storage-cos** with access to the root key stored in **secure-file-storage-kp**.
+
+1. Go to [Identity & Access > Authorizations](https://console.bluemix.net/iam/#/authorizations) in the {{site.data.keyword.cloud_notm}} console.
+1. Click **Create** authorization.
+1. In the **Source service** menu, select **Cloud Object Storage**.
+1. In the **Source service instance** menu, select the **secure-file-storage-cos** service previously created.
+1. In the **Target service** menu, select **Key Protect**.
+1. In the **Target service instance** menu, select the **secure-file-storage-kp** service to authorize.
+1. Enable the **Reader** role.
+1. Click **Authorize**.
+
+Finally create the bucket.
+
+1. Go to the **secure-file-storage-cos** service dashboard.
+1. Click **Create bucket**
+   1. Set the **name** to a unique value, such as **&lt;your-initials&gt;-secure-file-upload**.
+   1. Set **Resiliency** to **Regional**.
+   1. Set **Location** to the same location where you created the **secure-file-storage-kp** service.
+   1. Set **Storage class** to **Standard**
+1. Check **Add Key Protect Keys**
+   1. Select the **secure-file-storage-kp** service.
+   1. Select the **secure-file-storage-bucket** key.
+1. **Create** the bucket
 
 #### A database to store the mapping between users and their files
 
-<!-- * deploy Cloudant -->
+The {{site.data.keyword.cloudant_short_notm}} database will contain a document for every file uploaded via the application.
+
 1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
    * Set the **name** to **secure-file-storage-db**
    * Set the region
    * Use the same **resource group** as for the previous services
    * Set **Available authentication methods** to **Use only IAM**
+1. Launch the Cloudant dashboard.
+1. Create a database named **secure-file-storage**.
 
 ### Authenticate users
 
