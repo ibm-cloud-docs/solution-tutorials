@@ -88,12 +88,12 @@ _to be removed before release_
 1. Create App ID (done)
 1. Add cluster ingress in App ID redirect_uris (done)
 
-1. Create credentials for COS
-1. Create credentials for Cloudant
+1. Create credentials for COS (done)
+1. Create credentials for Cloudant (done)
 1. Create .env files with COS/Cloudant credentials
 1. Create kubernetes secret in cluster
 
-1. Build Docker image in registry (bx cr build)
+1. Build Docker image in registry (bx cr build) (done)
 1. Update yaml with Docker image and cluster ingress
 1. Apply yaml to cluster
 1. App is live! Try it
@@ -144,9 +144,14 @@ The application stores the user files in a {{site.data.keyword.cos_short}} bucke
 
 #### A bucket for the content
 
-1. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
-   * Set the **name** to **secure-file-storage-cos**
-   * Use the same **resource group** as for the previous services
+1. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage).
+   * Set the **name** to **secure-file-storage-cos**.
+   * Use the same **resource group** as for the previous services.
+1. Under **Service credentials**, create *New credential*.
+   * Set the **name** to **secure-file-storage-cos-key**.
+   * Set **Inline Configuration Parameters** to **{"HMAC":true}**.
+   * **Add**.
+1. Make note of the credentials you will need them in a later step.
 
 Before creating the bucket, you need to grant **secure-file-storage-cos** with access to the root key stored in **secure-file-storage-kp**.
 
@@ -181,7 +186,11 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain a document f
    * Set the region
    * Use the same **resource group** as for the previous services
    * Set **Available authentication methods** to **Use only IAM**
-1. Launch the Cloudant dashboard.
+1. Under **Service credentials**, create *New credential*.
+   * Set the **name** to **secure-file-storage-db-key**.
+   * **Add**.
+1. Make note of the credentials you will need them in a later step.
+1. Under **Manage**, launch the Cloudant dashboard.
 1. Create a database named **secure-file-storage**.
 
 ### Authenticate users
@@ -196,102 +205,40 @@ _&lt;cluster-name&gt;.us-south.containers.appdomain.cloud_, the redirect URL wil
 
 ## Deploy the app
 
-* create K8S cluster, takes a while...
-* git clone the repo
-* configure and push app: how much config can be done automatically? do this as container, push to registry, use vulnerability advisor as part of CR
-* configure App ID, set redirect page (could be don from within code)
-* optional: custom domain, deploy CM, deploy cert to cluster, config ingress -->
+All services have been configured. In this section you will deploy the tutorial application to the cluster.
 
-<!-- ## Misc
-
-In this section, you will create the services required to ...
-
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started). It assumes that you already have a Cloud Foundry organization and space created.
-    ```bash
-    ibmcloud login
-    ```
-    {: pre}
-    ```bash
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [{{site.data.keyword.cloudaccesstrailshort}}](https://console.bluemix.net/catalog/services/activity-tracker) and name it **SKAActivityTracker**.
-    ```bash
-    ibmcloud service create accesstrail free SKAActivityTracker
-    ```
-    {: pre}
-3. Create a new [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster) cluster. First, decide on an available zone within your region:
-    ```bash
-    ibmcloud ks zones
-    ```
-    {: pre}
-    For the zone of your choice (**YOURZONE**) look up the VLAN identifiers for the public and private network:
-    ```bash
-    ibmcloud ks vlans --zone YOURZONE
-    ```
-    {: pre}
-    Finally, create a cluster named **SKACluster** with 2 worker nodes and virtual, shared machines with 2 cores and 4 GB of RAM. Replace the VLAN IDs with the obtained values.
-    ```bash
-    ibmcloud ks cluster-create --name SKACluster --zone YOURZONE --machine-type u2c.2x4 --workers 2 --public-vlan PUBLIC-ID --private-vlan PRIVATE-ID
-    ```
-    {: pre}
-4. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://console.bluemix.net/catalog/services/key-protect) and name it **SKAKeyProtect**. Replace **REGION** according to your {{site.data.keyword.Bluemix_notm}} region.
-    ```bash
-    ibmcloud resource service-instance-create SKAKeyProtect kms tiered-pricing REGION
-    ```
-    {: pre}
-5. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage). 
-    ```bash
-    ibmcloud resource service-instance-create SKAObjectStorage cloud-object-storage lite global
-    ```
-    {: pre}
-6. Next, create an instance of [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB). 
-    ```bash
-    ibmcloud resource service-instance-create SKACloudant cloudantnosqldb lite REGION
-    ```
-    {: pre}
-7. Finally, provision an instance of [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID).
-    ```bash
-    ibmcloud resource service-instance-create SKAAppID appid graduated-tier REGION
-    ```
-    {: pre} -->
-
-<!-- ## Solution Specific Section
-{: #section_one}
-
-Introductory statement that overviews the section
-
-prepare the local cluster environment
-1. Check that the provisioned cluster is ready. The cluster state should indicate **normal**.
-   ```bash
-   ibmcloud ks cluster-get SKACluster
+1. Get the application code:
+   ```sh
+   git clone https://github.com/IBM-Cloud/secure-file-storage
    ```
-   {: pre}
-2. When the cluster is ready, retrieve the cluster configuration:
-   ```bash
-   ibmcloud ks cluster-config SKACluster
+   {: codeblock}
+1. Go to the **secure-file-storage** directory:
+   ```sh
+   cd secure-file-storage
    ```
-   {: pre}
-3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
-  `echo $KUBECONFIG`
-4. Check that the `kubectl` command is correctly configured
-   ```bash
-   kubectl cluster-info
+   {: codeblock}
+1. Build the Docker image in {{site.data.keyword.registryshort_notm}}:
+   ```sh
+   ibmcloud cr build -t registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest .
    ```
-   {: pre}
-
-
-5. Step 1 Click **This** and enter your name.
-
-  This is a tip.
-  {:tip} -->
+   {: codeblock}
+1. Copy `template.env` to `.env`:
+   ```sh
+   cp template.env .env
+   ```
+   {: codeblock}
+1. Edit `.env` and fill in the blanks with values from the credentials created for **secure-file-storage-cos** and **secure-file-storage-db**.
+1. Edit `secure-file-storage.yaml` and replace the placeholders (REGION, NAMESPACE, INGRESS_SUBDOMAIN) with the correct values.
+1. export KUBECONFIG=
+1. kubectl secret
+1. kubectl apply
 
 ## Remove resources
 {:removeresources}
 
 Steps to take to remove the resources created in this tutorial
 
-* Delete Kubernetes service
+* Delete the Kubernetes cluster
 * Delete App ID
 * Delete Cloudant
 * Delete Cloud Object Storage
