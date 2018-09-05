@@ -19,7 +19,7 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=low-latency-real-time-bidding.md \
   --exclude=autoscale-virtual-server.md \
-  --exclude=secure-kubernetes-app.md \
+  --exclude=data-encryption-security.md \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
