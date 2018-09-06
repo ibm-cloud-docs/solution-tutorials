@@ -13,10 +13,13 @@ lastupdated: "2018-08-02"
 {:tip: .tip}
 {:pre: .pre}
 
-# Leverage security services for a Kubernetes app
+# Authenticate users and securely store files
 
-* data is the value, needs to be protected, in flight, at rest.
-* bring your own keys, SSL certificates
+No application architecture is complete without a clear understanding of the security risks it is exposed to and how to protect from these threats.
+
+The data stored by the application is a critical resource, and can't be lost, compromised, or stolen. It needs to be protected whether at rest or in transit. Encrypting data at rest protects information from disclosure even if that information is lost or stolen. For data in transit — for instance when it is transmitted over the Internet — encryption methods like HTTPS, SSL, and TLS are often used.
+
+Authenticating users and only authorizing access to specific resources come as another common requirement for many applications. Different authentication scheme may need to be supported: customers and suppliers log in with social identities, partners log in with cloud-hosted directories, and employees log in with an organization’s identity provider.
 
 {:shortdesc}
 
@@ -26,6 +29,7 @@ lastupdated: "2018-08-02"
 * Encrypt storage bucket content with your own encryption keys.
 * Require users to authenticate before accessing an application.
 * Manage the life cycle of encryption keys and SSL certificates centrally.
+* Monitor and audit API calls and other actions that are made to selected cloud services.
 
 ## Services used
 {: #services}
@@ -245,7 +249,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ## Test the application
 
-The application can be access at `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/`.
+The application can be accessed at `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/`.
 
 1. Go to the application home page. You are redirected to the {{site.data.keyword.appid_short_notm}} default login page.
 1. Sign up for a new account with a valid email address.
@@ -284,5 +288,4 @@ Want to add to or change this tutorial? Here are some ideas:
 {:related}
 
 * [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/)
-* more blogs
-* and some more
+* [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture)
