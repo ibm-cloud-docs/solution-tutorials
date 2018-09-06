@@ -218,8 +218,8 @@ All services have been configured. In this section you will deploy the tutorial 
    cp template.env .env
    ```
    {: codeblock}
-1. Edit `.env` and fill in the blanks with values from:
-   * the service endpoint and credentials created for **secure-file-storage-cos**,
+1. Edit `.env` and fill in the blanks with these values:
+   * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for **secure-file-storage-cos**,
    * and the credentials for **secure-file-storage-db**.
 1. Edit `secure-file-storage.yaml` and replace the placeholders (REGION, NAMESPACE, INGRESS_SUBDOMAIN, CLUSTER_NAME) with the correct values.
 
