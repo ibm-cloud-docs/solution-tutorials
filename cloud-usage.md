@@ -94,9 +94,14 @@ Search is not limited to services and resources. You can also query Cloud artifa
     ```
     {: pre}
 
-4. To notify teams using a particular service type, query using the service name. Replace `<name>` with text, for example `weather` or `cloudant`. ->> TODO How to take the org guid back to the org name??
+4. To notify teams using a particular service type, query using the service name. Replace `<name>` with text, for example `weather` or `cloudant`. Then get the organization's name by replacing `<Organization ID>` the **Organization ID**.
     ```sh
    ibmcloud resource search 'service_name: *<name>*'
+    ```
+    {: pre}
+
+    ```sh
+    ibmcloud cf curl /v2/organizations/<Organization ID> | tail -n +3 | jq .entity.name
     ```
     {: pre}
 
@@ -260,9 +265,13 @@ While `billing` commands are helpful, trying to assemble a "big picture" view us
     ```
     {: pre}
 
-3. Obtain an OAuth token and execute one of the API calls seen in the `billing org-usage` command.
+3. Obtain an OAuth token and execute one of the API calls seen in the `billing org-usage` command. Note that some APIs use the UAA Token while others may use an IAM Token as bearer authorization.
     ```sh
     export IAM_TOKEN=`ibmcloud iam oauth-tokens | head -n 1 | awk ' {print $4} '`
+    ```
+    {: pre}
+
+    ```sh
     export UAA_TOKEN=`ibmcloud iam oauth-tokens | tail -n 1 | awk ' {print $4} '`
     ```
     {: pre}
@@ -307,6 +316,6 @@ While the data-driven approach provides the most flexibility in exploring usage,
 Use the following suggestions to expand your investigation into inventory and usage-related data.
 
 - Explore the `ibmcloud billing` commands with the `--output json` option. This will show additional data properties available and not covered in the tutorial.
-- Execute the `ibmcloud resource search` commands with `IBMCLOUD_TRACING=true" to see the JSON responses. This will help identify which properties can be used in your queries.
+- Read the blog post [Using the IBM Cloud command line to find resources](https://www.ibm.com/blogs/bluemix/2018/06/where-are-my-resources/) for more examples on `ibmcloud resource search` and which properties can be used in your queries.
 - Review the [Infrastructure Account APIs](https://softlayer.github.io/reference/services/SoftLayer_Account/) for addition APIs to investigate infrastructure usage.
 - Review the [jq Manual](https://stedolan.github.io/jq/manual/) for advanced queries to aggregate usage data.
