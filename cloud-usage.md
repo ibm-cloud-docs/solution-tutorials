@@ -235,7 +235,9 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
 
 2. Itemize the instances for each resource type in the resource group.
     ```sh
-    ibmcloud billing resource-instances-usage -g $RESOURCE_GROUP --output json | jq '.[] | {month,resource_name,resource_instance_name,organization_name,space_name}' | json2csv -f month,resource_name,resource_instance_name,organization_name,space_name -p
+    ibmcloud billing resource-instances-usage -g $RESOURCE_GROUP --output json | \
+    jq '.[] | {month,resource_name,resource_instance_name,organization_name,space_name}' | \
+    json2csv -f month,resource_name,resource_instance_name,organization_name,space_name -p
     ```
     {: pre}
 
