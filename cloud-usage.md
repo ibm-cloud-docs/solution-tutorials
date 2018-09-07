@@ -26,11 +26,11 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 ## Before you begin
 {: #prereqs}
 
-* Install [{{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started) <= v0.9.0
-* Install [cURL](https://curl.haxx.se/) <= v7.61.1
-* Install [Node.js](https://nodejs.org/) <= v8.0.0
-* Install [json2csv](https://www.npmjs.com/package/json2csv) <= v4.2.1 using the command `npm install -g json2csv`
-* Install [jq](https://stedolan.github.io/jq/) <= v1.4
+* Install [{{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started) <small>0.9.0+</small>
+* Install [cURL](https://curl.haxx.se/) <small>7.61.1+</small>
+* Install [Node.js](https://nodejs.org/) <small>8.0.0+</small>
+* Install [json2csv](https://www.npmjs.com/package/json2csv) <small>4.2.1+</small> using the command `npm install -g json2csv`
+* Install [jq](https://stedolan.github.io/jq/) <small>1.4+</small>
 
 ## Background
 {: #background}
