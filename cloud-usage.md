@@ -12,15 +12,15 @@ lastupdated: "2018-08-07"
 {:tip: .tip}
 {:pre: .pre}
 
-# Reviewing IBM Cloud services, resources and usage
+# Reviewing {{site.data.keyword.cloud_notm}} services, resources and usage
 As Cloud adoption increases, IT and finance managers will need to understand Cloud usage in the context of innovation and cost control. Questions such as: "Which services are teams using?", "How much does it cost to operate a solution?" and "How can I contain sprawl?" can be answered by investigating available data. This tutorial introduces ways to explore such information and answer common usage-related questions.
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
-* Itemize IBM Cloud artifacts: Cloud Foundry apps and services, IAM resources and IaaS devices
-* Associate IBM Cloud artifacts with usage and billing
-* Define the relationships between IBM Cloud artifacts and development teams
+* Itemize {{site.data.keyword.cloud_notm}} artifacts: Cloud Foundry apps and services, IAM resources and IaaS devices
+* Associate {{site.data.keyword.cloud_notm}} artifacts with usage and billing
+* Define the relationships between {{site.data.keyword.cloud_notm}} artifacts and development teams
 * Leverage usage and billing data to create data sets for accounting purposes
 
 ## Before you begin
@@ -35,13 +35,13 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 ## Background
 {: #background}
 
-Prior to executing commands that inventory and detail IBM Cloud usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded. A helpful visualization of the below artifacts can be found in [documentation](https://console.bluemix.net/docs/account/account_overview.html#overview).
+Prior to executing commands that inventory and detail {{site.data.keyword.cloud_notm}} usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded. A helpful visualization of the below artifacts can be found in [documentation](https://console.bluemix.net/docs/account/account_overview.html#overview).
 
 ### Cloud Foundry
-Cloud Foundry is an open-source, platform-as-a-service (PaaS) on IBM Cloud that enables you to deploy and scale applications and **Services** without managing servers. Cloud Foundry organizes applications and services into orgs or spaces.  An **Org** is a development account that one or many users can own and use. An org can contain multiple spaces. Each **Space** provides users with access to a shared location for application development, deployment, and maintenance.
+Cloud Foundry is an open-source, platform-as-a-service (PaaS) on {{site.data.keyword.cloud_notm}} that enables you to deploy and scale applications and **Services** without managing servers. Cloud Foundry organizes applications and services into orgs or spaces.  An **Org** is a development account that one or many users can own and use. An org can contain multiple spaces. Each **Space** provides users with access to a shared location for application development, deployment, and maintenance.
 
 ### Identity and Access Management
-More recent offerings and migrated Cloud Foundry services exist as **Resources** managed by IBM Cloud Identity and Access Management. Resources are organized into **Resource Groups** and provide access control through Policies and Roles. Additionally, resources can be tagged to conceptually group resources for tracking purposes.
+More recent offerings and migrated Cloud Foundry services exist as **Resources** managed by {{site.data.keyword.cloud_notm}} Identity and Access Management. Resources are organized into **Resource Groups** and provide access control through Policies and Roles. Additionally, resources can be tagged to conceptually group resources for tracking purposes.
 
 ### Infrastructure
 Infrastructure encompasses a variety of compute options: bare metal servers, virtual server instances and Kubernetes nodes. Each are seen as a **Device** in the console. Similar to resources, devices can be tagged.
@@ -52,7 +52,7 @@ The aforementioned artifacts are associated with an **Account** for billing purp
 ## Assign permissions
 To view Cloud inventory and usage, you will need the appropriate roles assigned by the account administrator. If you are the account administrator, proceed to the next section.
 
-1. The account administrator should login to IBM cloud and access the [**Identity & Access Users**](https://console.bluemix.net/iam/#/users) page.
+1. The account administrator should login to {{site.data.keyword.cloud_notm}} and access the [**Identity & Access Users**](https://console.bluemix.net/iam/#/users) page.
 2. Select your name from the list of users.
 3. On the **Access policies** tab, click the **Assign Access** button and perform the following changes.
     1. Select the **Assign access within a resource group** tile. Select the **Resource group(s)** to be granted access to and apply the **Viewer** role. Finish by clicking the **Assign** button. This role is required for the `resource groups` and `billing resource-group-usage` commands.
@@ -126,9 +126,9 @@ By combining advanced Lucene search queries with an enterprise-agreed tagging sc
 
 ## Explore usage using the Usage Dashboard
 
-Once management is aware of the services that teams are using, the next often-asked question is, "What does it cost to operate these services?" The most straightforward means of determining usage and cost is by reviewing the IBM Cloud Usage Dashboard.
+Once management is aware of the services that teams are using, the next often-asked question is, "What does it cost to operate these services?" The most straightforward means of determining usage and cost is by reviewing the {{site.data.keyword.cloud_notm}} Usage Dashboard.
 
-1. Login to IBM Cloud and access the [Account Usage Dashboard](https://console.bluemix.net/account/usage).
+1. Login to {{site.data.keyword.cloud_notm}} and access the [Account Usage Dashboard](https://console.bluemix.net/account/usage).
 2. From the **Groups** drop-down menu, select a Cloud Foundry Org to view service usage.
 3. For a given **Service Offering**, click **View Instances** to view the service instances that have been created.
 4. On the following page, choose an instance and click **View Instance**. The resulting page provides details about the instance such as Org, Space and Region as well as individual line items that build total cost.
@@ -328,6 +328,6 @@ While the data-driven approach provides the most flexibility in exploring usage,
 Use the following suggestions to expand your investigation into inventory and usage-related data.
 
 - Explore the `ibmcloud billing` commands with the `--output json` option. This will show additional data properties available and not covered in the tutorial.
-- Read the blog post [Using the IBM Cloud command line to find resources](https://www.ibm.com/blogs/bluemix/2018/06/where-are-my-resources/) for more examples on `ibmcloud resource search` and which properties can be used in your queries.
+- Read the blog post [Using the {{site.data.keyword.cloud_notm}} command line to find resources](https://www.ibm.com/blogs/bluemix/2018/06/where-are-my-resources/) for more examples on `ibmcloud resource search` and which properties can be used in your queries.
 - Review the [Infrastructure Account APIs](https://softlayer.github.io/reference/services/SoftLayer_Account/) for addition APIs to investigate infrastructure usage.
 - Review the [jq Manual](https://stedolan.github.io/jq/manual/) for advanced queries to aggregate usage data.
