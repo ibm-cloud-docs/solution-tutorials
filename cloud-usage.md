@@ -249,7 +249,7 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
 
 4. Add antipated costs to the data using a more advanced `jq` query. This will create more rows as some resource types have multiple cost metrics.
     ```sh
-    ibmcloud billing resource-instances-usage -g default --output json | \
+    ibmcloud billing resource-instances-usage -g $RESOURCE_GROUP --output json | \
     jq '.[] | {month,resource_name,resource_instance_name,organization_name,space_name,metric: .usage[].metric,cost : .usage[].cost}' | \
     json2csv -f month,resource_name,resource_instance_name,organization_name,space_name,metric,cost -p
     ```
