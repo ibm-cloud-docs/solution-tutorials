@@ -28,7 +28,6 @@ Authenticating users and only authorizing access to specific resources come as a
 
 * Encrypt storage bucket content with your own encryption keys.
 * Require users to authenticate before accessing an application.
-* Manage the life cycle of encryption keys and SSL certificates centrally.
 * Monitor and audit API calls and other actions that are made to selected cloud services.
 
 ## Services used
@@ -42,7 +41,6 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.cloudaccesstrailshort}}](https://console.bluemix.net/catalog/services/activity-tracker)
 * [{{site.data.keyword.keymanagementserviceshort}}](https://console.bluemix.net/catalog/services/key-protect)
-* [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/certificate-manager)
 
 This tutorial requires a [non-Lite account](https://console.bluemix.net/docs/account/index.html#accounts) and may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -57,12 +55,11 @@ The tutorial features a sample application that enables groups of users to uploa
 </p>
 
 1. The user connects to the application.
-2. The SSL certificate used for the secure connection is defined in {{site.data.keyword.cloudcerts_short}} and used by the Kubernetes Ingress.
-3. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can sign up from there too.
-4. The application is running in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}. The image is automatically scanned for vulnerabilities.
-5. Files uploaded by the user are stored in {{site.data.keyword.cos_short}}.
-6. The bucket where the files are stored is using a user-provided key to encrypt the data.
-7. All activities related to managing the solution are logged by {{site.data.keyword.cloudaccesstrailshort}}.
+2. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can sign up from there too.
+3. The application is running in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}. The image is automatically scanned for vulnerabilities.
+4. Files uploaded by the user are stored in {{site.data.keyword.cos_short}}.
+5. The bucket where the files are stored is using a user-provided key to encrypt the data.
+6. All activities related to managing the solution are logged by {{site.data.keyword.cloudaccesstrailshort}}.
 
 ## Before you begin
 {: #prereqs}
@@ -271,7 +268,6 @@ Steps to take to remove the resources created in this tutorial
 * Delete App ID
 * Delete Cloudant
 * Delete Cloud Object Storage
-* Delete Certificate Manager
 * Delete Key Protect
 * Delete Activity Tracker
 
