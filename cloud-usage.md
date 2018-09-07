@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-08-06"
+lastupdated: "2018-08-07"
 
 ---
 
@@ -54,11 +54,10 @@ To view Cloud inventory and usage, you will need the appropriate roles assigned 
 
 1. The account administrator should login to IBM cloud and access the [**Identity & Access Users**](https://console.bluemix.net/iam/#/users) page.
 2. Select your name from the list of users.
-3. On the **Access policies** tab, click the **Assign Access** button.
-4. On the following page, click the **Assign access within a resource group** tile. Select the **Resource group(s)** to be granted access to and apply the **Administrator** role. Finish by clicking the **Assign** button.
-5. Again, click the **Assign Access** button.
-6. On the following page, click the **Assign access by using Cloud Foundry** tile. Select the overflow menu next to each **Organizations(s)** to be granted access.
-7. Select **Edit organization role** from the menu. Select **Billing Manager** from the **Organization roles** list. Finish by clicking the **Save role** button.
+3. On the **Access policies** tab, click the **Assign Access** button and perform the following changes.
+    1. Select the **Assign access within a resource group** tile. Select the **Resource group(s)** to be granted access to and apply the **Viewer** role. Finish by clicking the **Assign** button. This role is required for the `resource groups` and `billing resource-group-usage` commands.
+    2. Select the **Assign access to resources** tile. Select **All Identity and Access enabled services** in the **Services** dropdown menu. Check the **Editor** role under **Assign platform access roles**. This role is required for the `resource create-tag` command.
+    3. Select the **Assign access by using Cloud Foundry** tile. Select the overflow menu next to each **Organization** to be granted access. Select **Edit organization role** from the menu. Select **Billing Manager** from the **Organization roles** list. Finish by clicking the **Save role** button. This role is required for the `billing org-usage` command.
 
 ## Locating resources using search
 
@@ -154,39 +153,44 @@ In this section, you'll explore usage with the command line interface.
 
 2. Itemize billing and usage for a given org with the `billing` command. Specify a particular month using the `-d` flag with a date in the format YYYY-MM.
     ```sh
-    ibmcloud billing org-usage $ORG_NAME -d 2018-07
+    ibmcloud billing org-usage $ORG_NAME
     ```
     {: pre}
 
-3. Conduct the same investigation for resources. Every account has a `default` resource group. Substitute the value `<resource group>` for a resource group listed in the first command.
+3. Conduct the same investigation for resources. Every account has a `default` resource group. Substitute the value `<group>` for a resource group listed in the first command.
     ```sh
     ibmcloud resource groups
     ```
     {: pre}
 
     ```sh
-    ibmcloud billing resource-group-usage <resource group> -d 2018-07
+    export RESOURCE_GROUP=<group>
     ```
     {: pre}
 
-4. If you have administrative access, you can view both Cloud Foundry services and IAM resources using the `resource-instances-usage` command. (This includes only Cloud Foundry services that have been migrated to IAM.)
+    ```sh
+    ibmcloud billing resource-group-usage $RESOURCE_GROUP
+    ```
+    {: pre}
+
+4. If you are the account administrator or have been granted the Administrator role for All Identity and Access enabled services, you can view both Cloud Foundry services and IAM resources using the `resource-instances-usage` command.
     ```sh
     ibmcloud billing resource-instances-usage
     ```
     {: pre}
 
-5. If you are not the account administrator but are the creator of services or resources, the following commands can be used. <-- IS THAT RIGHT?
+5. If you are not the account administrator, the following commands can be used because of the Editor permission set at the beginning of the tutorial.
     ```sh
-    ibmcloud billing resource-instances-usage -o <org name>
+    ibmcloud billing resource-instances-usage -o $ORG_NAME
     ```
     {: pre}
 
     ```sh
-    ibmcloud billing resource-instances-usage -g <resource group>
+    ibmcloud billing resource-instances-usage -g $RESOURCE_GROUP
     ```
     {: pre}
 
-6. To view infrastructure devices, use the `sl` command. You can login to your infrastructure using the **Use Bluemix Single-Sign-On** option and accept the default API endpoint. Then use the `vs` command to review {{site.data.keyword.virtualmachinesshort}} instances.
+6. To view infrastructure devices, use the `sl` command. You can login to your infrastructure using the **Use Bluemix Single-Sign-On** option and accept the default API endpoint. Then use the `vs` command to review {{site.data.keyword.virtualmachinesshort}}.
     ```sh
     ibmcloud sl init
     ```
@@ -211,17 +215,17 @@ This section uses two third-party tools: `jq` and `json2csv`. Each of the below 
 Use the `-p` option to pretty print results. If the data prints poorly, remove the `-p` argument to print the raw CSV data.
 {:tip}
 
-1. Export the `default` resource group's usage with anticipated costs for each resource type.
+1. Export a resource group's usage with anticipated costs for each resource type.
     ```sh
-    ibmcloud billing resource-group-usage default --output json | \
+    ibmcloud billing resource-group-usage $RESOURCE_GROUP --output json | \
     jq '.[0].resources[] | {resource_name,billable_cost}' | \
     json2csv -f resource_name,billable_cost -p
     ```
     {: pre}
 
-2. Itemize the instances for each resource type in the `default` group.
+2. Itemize the instances for each resource type in the resource group.
     ```sh
-    ibmcloud billing resource-instances-usage -g default --output json | jq '.[] | {month,resource_name,resource_instance_name,organization_name,space_name}' | json2csv -f month,resource_name,resource_instance_name,organization_name,space_name -p
+    ibmcloud billing resource-instances-usage -g $RESOURCE_GROUP --output json | jq '.[] | {month,resource_name,resource_instance_name,organization_name,space_name}' | json2csv -f month,resource_name,resource_instance_name,organization_name,space_name -p
     ```
     {: pre}
 
@@ -249,6 +253,14 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
     ```
     {: pre}
 
+6. Export the data to a file by removing the `-p` option and piping output to a file. The resulting CSV file can be opened with a spreadsheet application.
+    ```sh
+    ibmcloud billing resource-instances-usage -o $ORG_NAME --output json | \
+    jq '.[] | {month,resource_name,organization_name,space_name,resource_group_name,metric: .usage[].metric,cost : .usage[].cost}' | \
+    json2csv -f month,resource_name,resource_instance_name,organization_name,space_name,metric,cost > $ORG_NAME.csv
+    ```
+    {: pre}
+
 ## Export usage using APIs
 
 While `billing` commands are helpful, trying to assemble a "big picture" view using the command line interface is tedious. Similarly, the Usage Dashboard presents an overview of Orgs and Resource Groups but not necessarily a team or project's usage. In this section you'll begin to explore a more data-driven approach to obtain usage for custom requirements.
@@ -261,7 +273,7 @@ While `billing` commands are helpful, trying to assemble a "big picture" view us
 
 2. Re-run the `billing org-usage` command to see the API calls. Note that multiple hosts and API routes are used for this single command.
     ```sh
-    ibmcloud billing org-usage $ORG_NAME -d 2018-07
+    ibmcloud billing org-usage $ORG_NAME
     ```
     {: pre}
 
@@ -309,7 +321,7 @@ While `billing` commands are helpful, trying to assemble a "big picture" view us
     ```
     {: pre}
 
-While the data-driven approach provides the most flexibility in exploring usage, it is beyond the scope of this introductory tutorial. A GitHub project has been created to provide a sample application that leverages available APIs.
+While the data-driven approach provides the most flexibility in exploring usage, a more thorough explanation is beyond the scope of this introductory tutorial.
 
 ## Expand the tutorial
 
