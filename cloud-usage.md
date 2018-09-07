@@ -188,7 +188,7 @@ In this section, you'll explore usage with the command line interface.
     ```
     {: pre}
 
-5. If you are not the account administrator, the following commands can be used because of the Editor permission set at the beginning of the tutorial.
+5. If you are not the account administrator, the following commands can be used because of the Viewer permission set at the beginning of the tutorial.
     ```sh
     ibmcloud billing resource-instances-usage -o $ORG_NAME
     ```
