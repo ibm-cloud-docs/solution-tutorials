@@ -23,10 +23,17 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 * Define the relationships between {{site.data.keyword.cloud_notm}} artifacts and development teams
 * Leverage usage and billing data to create data sets for accounting purposes
 
+## Architecture
+{: #architecture}
+
+![Architecture](images/solution38/Architecture.png)
+
+1. Users execute commands using a terminal to obtain inventory and usage-related information
+
 ## Before you begin
 {: #prereqs}
 
-* Install [{{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started) <small>0.9.0+</small>
+* Install [{{site.data.keyword.cloud_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started) <small>0.9.0+</small>
 * Install [cURL](https://curl.haxx.se/) <small>7.61.1+</small>
 * Install [Node.js](https://nodejs.org/) <small>8.0.0+</small>
 * Install [json2csv](https://www.npmjs.com/package/json2csv) <small>4.2.1+</small> using the command `npm install -g json2csv`
@@ -60,6 +67,7 @@ To view Cloud inventory and usage, you will need the appropriate roles assigned 
     3. Select the **Assign access by using Cloud Foundry** tile. Select the overflow menu next to each **Organization** to be granted access. Select **Edit organization role** from the menu. Select **Billing Manager** from the **Organization roles** list. Finish by clicking the **Save role** button. This role is required for the `billing org-usage` command.
 
 ## Locating resources using search
+{: #search}
 
 As development teams begin using Cloud services, managers will benefit from knowing which services have been deployed. Deployment information helps answer questions related to innovation and service management:
 - What service-related skills can be shared across teams to enhance other projects?
@@ -125,6 +133,7 @@ Search is not limited to services and resources. You can also query Cloud artifa
 By combining advanced Lucene search queries with an enterprise-agreed tagging schema, managers and team leads can more easily identify and take action on Cloud apps, resources, and services.
 
 ## Explore usage using the Usage Dashboard
+{: #dashboard}
 
 Once management is aware of the services that teams are using, the next often-asked question is, "What does it cost to operate these services?" The most straightforward means of determining usage and cost is by reviewing the {{site.data.keyword.cloud_notm}} Usage Dashboard.
 
@@ -207,6 +216,7 @@ In this section, you'll explore usage with the command line interface.
     {: pre}
 
 ## Export usage using the command line
+{: #usagecmd}
 
 Some in management often need data exported to another application. A common example is exporting usage data into a spreadsheet. In this section, you will export usage data into the comma separated value (CSV) format, which is compatible with most spreadsheet applications.
 
@@ -262,6 +272,7 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
     {: pre}
 
 ## Export usage using APIs
+{: #usageapi}
 
 While `billing` commands are helpful, trying to assemble a "big picture" view using the command line interface is tedious. Similarly, the Usage Dashboard presents an overview of Orgs and Resource Groups but not necessarily a team or project's usage. In this section you'll begin to explore a more data-driven approach to obtain usage for custom requirements.
 
@@ -324,6 +335,7 @@ While `billing` commands are helpful, trying to assemble a "big picture" view us
 While the data-driven approach provides the most flexibility in exploring usage, a more thorough explanation is beyond the scope of this introductory tutorial.
 
 ## Expand the tutorial
+{: #expand}
 
 Use the following suggestions to expand your investigation into inventory and usage-related data.
 
