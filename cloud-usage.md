@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-08-01"
+lastupdated: "2018-08-06"
 
 ---
 
@@ -26,37 +26,115 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 ## Before you begin
 {: #prereqs}
 
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-* Install cURL
-* Install node.js and json2csv
-* Install jq
+* Install [{{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started) <= v0.9.0
+* Install [cURL](https://curl.haxx.se/) <= v7.61.1
+* Install [Node.js](https://nodejs.org/) <= v8.0.0
+* Install [json2csv](https://www.npmjs.com/package/json2csv) <= v4.2.1 using the command `npm install -g json2csv`
+* Install [jq](https://stedolan.github.io/jq/) <= v1.4
 
 ## Background
 {: #background}
 
-Prior to executing commands that inventory and detail IBM Cloud usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded.
+Prior to executing commands that inventory and detail IBM Cloud usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded. A helpful visualization of the below artifacts can be found in [documentation](https://console.bluemix.net/docs/account/account_overview.html#overview).
 
 ### Cloud Foundry
-Cloud Foundry is an open-source, platform-as-a-service (PaaS) on IBM Cloud that enables you to deploy and scale applications and **Services** without managing servers. Cloud Foundry organizes applications and services into orgs or spaces.  An **Org** is a development account that one or many users can own and use. An org can contain multiple spaces. Each **Space** provides users with access to a shared location for application development, deployment, and maintenance. A helpful visual may be found in [documentation](https://console.bluemix.net/docs/iam/cfaccess.html#cfaccess).
+Cloud Foundry is an open-source, platform-as-a-service (PaaS) on IBM Cloud that enables you to deploy and scale applications and **Services** without managing servers. Cloud Foundry organizes applications and services into orgs or spaces.  An **Org** is a development account that one or many users can own and use. An org can contain multiple spaces. Each **Space** provides users with access to a shared location for application development, deployment, and maintenance.
 
 ### Identity and Access Management
-Newer and migrated services exist as **Resources** managed by IBM Cloud Identity and Access Management. Resources are organized into **Resource Groups** and provide access control through Policies and Roles. Additionally, resources can be tagged to conceptually group resources for tracking purposes. Another helpful visual and overview may be found in [documentation](https://console.bluemix.net/docs/iam/index.html#iamoverview).
+More recent offerings and migrated Cloud Foundry services exist as **Resources** managed by IBM Cloud Identity and Access Management. Resources are organized into **Resource Groups** and provide access control through Policies and Roles. Additionally, resources can be tagged to conceptually group resources for tracking purposes.
 
 ### Infrastructure
-Infrastructure encompasses a variety of compute options: bare metal services, virtual server instances and Kubernetes nodes. Each are seen as a **Device** in the console. Similar to resources, devices can be tagged.
+Infrastructure encompasses a variety of compute options: bare metal servers, virtual server instances and Kubernetes nodes. Each are seen as a **Device** in the console. Similar to resources, devices can be tagged.
 
 ### Account
-The aforementioned artifacts are associcated with an **Account** for billing purposes.
+The aforementioned artifacts are associated with an **Account** for billing purposes.
+
+## Assign permissions
+To view Cloud inventory and usage, you will need the appropriate roles assigned by the account administrator. If you are the account administrator, proceed to the next section.
+
+1. The account administrator should login to IBM cloud and access the [**Identity & Access Users**](https://console.bluemix.net/iam/#/users) page.
+2. Select your name from the list of users.
+3. On the **Access policies** tab, click the **Assign Access** button.
+4. On the following page, click the **Assign access within a resource group** tile. Select the **Resource group(s)** to be granted access to and apply the **Administrator** role. Finish by clicking the **Assign** button.
+5. Again, click the **Assign Access** button.
+6. On the following page, click the **Assign access by using Cloud Foundry** tile. Select the overflow menu next to each **Organizations(s)** to be granted access.
+7. Select **Edit organization role** from the menu. Select **Billing Manager** from the **Organization roles** list. Finish by clicking the **Save role** button.
+
+## Locating resources using search
+
+As development teams begin using Cloud services, managers will benefit from knowing which services have been deployed. Deployment information helps answer questions related to innovation and service management:
+- What service-related skills can be shared across teams to enhance other projects?
+- What are commonalities across teams that might be lacking in some?
+- Which teams are using a service that requires a critical fix or will soon be deprecated?
+- How can teams review their service instances to minimize sprawl?
+
+Search is not limited to services and resources. You can also query Cloud artifacts such as Cloud Foundry orgs and spaces, resource groups, resource bindings, aliases, etc. For more examples, see the [ibmcloud resource search](https://console.bluemix.net/docs/cli/reference/ibmcloud/cli_resource_group.html#ibmcloud_resource_search) documentation.
+{:tip}
+
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+    ```sh
+    ibmcloud login
+    ```
+    {: pre}
+
+    ```sh
+    ibmcloud target --cf
+    ```
+    {: pre}
+
+2. Inventory all Cloud Foundry services used within the account.
+    ```sh
+    ibmcloud resource search 'type:cf-service-instance'
+    ```
+    {: pre}
+
+3. Boolean filters can be applied to broaden or narrow searches. For example, find both Cloud Foundry services and apps as well as IAM resources using the below query.
+    ```sh
+    ibmcloud resource search 'type:cf-service-instance OR type:cf-application OR type:resource-instance'
+    ```
+    {: pre}
+
+4. To notify teams using a particular service type, query using the service name. Replace `<name>` with text, for example `weather` or `cloudant`. ->> TODO How to take the org guid back to the org name??
+    ```sh
+   ibmcloud resource search 'service_name: *<name>*'
+    ```
+    {: pre}
+
+5. Tagging and searching can be used together to provide customized identification of resources. This involves: creating a tag, attaching the tag to resource(s) and searching using tag name(s). Create a tag named `env:tutorial`.
+    ```sh
+   ibmcloud resource tag-create --tag-name env:tutorial
+    ```
+    {: pre}
+
+6. Attach the tag to a resource. A `--resource-crn` value can be obtained from a **CRN** property seen in the previous command's output.
+    ```sh
+    ibmcloud resource tag-attach --tag-name env:tutorial --resource-crn <resource CRN>
+    ```
+    {: pre}
+
+7. Search for the Cloud artifacts that match a given tag using the below query.
+    ```sh
+    ibmcloud resource search 'tags: "env:tutorial"'
+    ```
+    {: pre}
+
+By combining advanced Lucene search queries with an enterprise-agreed tagging schema, managers and team leads can more easily identify and take action on Cloud apps, resources, and services.
 
 ## Explore usage using the Usage Dashboard
 
-The most straightforward means of determining usage is reviewing the IBM Cloud Usage Dashboard.
+Once management is aware of the services that teams are using, the next often-asked question is, "What does it cost to operate these services?" The most straightforward means of determining usage and cost is by reviewing the IBM Cloud Usage Dashboard.
 
-... Add Usage Dashboard Steps ...
+1. Login to IBM Cloud and access the [Account Usage Dashboard](https://console.bluemix.net/account/usage).
+2. From the **Groups** drop-down menu, select a Cloud Foundry Org to view service usage.
+3. For a given **Service Offering**, click **View Instances** to view the service instances that have been created.
+4. On the following page, choose an instance and click **View Instance**. The resulting page provides details about the instance such as Org, Space and Region as well as individual line items that build total cost.
+5. Using the breadcrumb, revisit the [Usage Dashboard](https://console.bluemix.net/account/usage).
+6. From the **Groups** drop-down menu, change the selector to **Resource Groups** and select a group such as **default**.
+7. Conduct a similar review of available instances.
 
 ## Explore usage using the command line
 
-In this section, you'll explore usage using the command line interface. To do so, you must have appropriate access in Cloud Foundry as the Billing Manager organization role and IBM Identity and Asset Management as Administrator <--- TODO fact check or re-word
+In this section, you'll explore usage with the command line interface.
 
 1. List all Cloud Foundry orgs available to you and set an environment variable to store one for testing.
     ```sh
@@ -86,13 +164,13 @@ In this section, you'll explore usage using the command line interface. To do so
     ```
     {: pre}
 
-4. If you have administrative access, you can view both Cloud Foundry services and IAM resources using the `resource-instances-usage` command. (Note this includes only Cloud Foundry services that have been migrated to IAM.)
+4. If you have administrative access, you can view both Cloud Foundry services and IAM resources using the `resource-instances-usage` command. (This includes only Cloud Foundry services that have been migrated to IAM.)
     ```sh
     ibmcloud billing resource-instances-usage
     ```
     {: pre}
 
-5. If you are not the account administrator but are the creator of services or resources, the following commands can be used.
+5. If you are not the account administrator but are the creator of services or resources, the following commands can be used. <-- IS THAT RIGHT?
     ```sh
     ibmcloud billing resource-instances-usage -o <org name>
     ```
@@ -103,7 +181,7 @@ In this section, you'll explore usage using the command line interface. To do so
     ```
     {: pre}
 
-6. To view infrastructure devices, use the `sl` commands. You can login to your infrastructure using the *Use Bluemix Single-Sign-On* option and accept the default API endpoint. Then use the `vs` command to review {{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.containershort_notm}} clusters.
+6. To view infrastructure devices, use the `sl` command. You can login to your infrastructure using the **Use Bluemix Single-Sign-On** option and accept the default API endpoint. Then use the `vs` command to review {{site.data.keyword.virtualmachinesshort}} instances.
     ```sh
     ibmcloud sl init
     ```
@@ -119,13 +197,9 @@ In this section, you'll explore usage using the command line interface. To do so
     ```
     {: pre}
 
-## Resource accounting through tagging
-
-Describe tagging methodologies
-
 ## Export usage using the command line
 
-Reviewers often simply need data exported to another application. A common example is exporting usage data into a spreadsheet. In this section, you will export usage data into the comma separated value (CSV) format, which is compatible with most spreadsheet applications.
+Some in management often need data exported to another application. A common example is exporting usage data into a spreadsheet. In this section, you will export usage data into the comma separated value (CSV) format, which is compatible with most spreadsheet applications.
 
 This section uses two third-party tools: `jq` and `json2csv`. Each of the below commands is composed of three steps: obtaining usage data as JSON, parsing the JSON, and formatting the result as CSV.
 
@@ -134,7 +208,7 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
 
 1. Export the `default` resource group's usage with anticipated costs for each resource type.
     ```sh
-    ibmcloud billing resource-group-usage default --json | \
+    ibmcloud billing resource-group-usage default --output json | \
     jq '.[0].resources[] | {resource_name,billable_cost}' | \
     json2csv -f resource_name,billable_cost -p
     ```
@@ -142,13 +216,13 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
 
 2. Itemize the instances for each resource type in the `default` group.
     ```sh
-    ibmcloud billing resource-instances-usage -g default --json | jq '.[] | {month,resource_name,resource_instance_name,organization_name,space_name}' | json2csv -f month,resource_name,resource_instance_name,organization_name,space_name -p
+    ibmcloud billing resource-instances-usage -g default --output json | jq '.[] | {month,resource_name,resource_instance_name,organization_name,space_name}' | json2csv -f month,resource_name,resource_instance_name,organization_name,space_name -p
     ```
     {: pre}
 
 3. Follow the same approach for a Cloud Foundry Org.
     ```sh
-    ibmcloud billing resource-instances-usage -o $ORG_NAME --json | \
+    ibmcloud billing resource-instances-usage -o $ORG_NAME --output json | \
     jq '.[] | {month,resource_name,resource_instance_name,organization_name,space_name}' | \
     json2csv -f month,resource_name,resource_instance_name,organization_name,space_name -p
     ```
@@ -156,7 +230,7 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
 
 4. Add antipated costs to the data using a more advanced `jq` query. This will create more rows as some resource types have multiple cost metrics.
     ```sh
-    ibmcloud billing resource-instances-usage -g default --json | \
+    ibmcloud billing resource-instances-usage -g default --output json | \
     jq '.[] | {month,resource_name,resource_instance_name,organization_name,space_name,metric: .usage[].metric,cost : .usage[].cost}' | \
     json2csv -f month,resource_name,resource_instance_name,organization_name,space_name,metric,cost -p
     ```
@@ -164,7 +238,7 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
 
 5. Use the same `jq` query to also list Cloud Foundry resources with associated costs.
     ```sh
-    ibmcloud billing resource-instances-usage -o $ORG_NAME --json | \
+    ibmcloud billing resource-instances-usage -o $ORG_NAME --output json | \
     jq '.[] | {month,resource_name,organization_name,space_name,resource_group_name,metric: .usage[].metric,cost : .usage[].cost}' | \
     json2csv -f month,resource_name,resource_instance_name,organization_name,space_name,metric,cost -p
     ```
@@ -172,11 +246,11 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
 
 ## Export usage using APIs
 
-While `billing` commands are helpful, trying to assemble a "big picture" view using the command line interface is tedious. Similarly, the Usage Dashboard presents an overview of Orgs and Resource Groups but not necessarily a team or project's usage. In this section you'll begin to explore a more data-driven approach to obtaining usage to address custom requirements.
+While `billing` commands are helpful, trying to assemble a "big picture" view using the command line interface is tedious. Similarly, the Usage Dashboard presents an overview of Orgs and Resource Groups but not necessarily a team or project's usage. In this section you'll begin to explore a more data-driven approach to obtain usage for custom requirements.
 
-1. In the terminal, set the environment `BLUEMIX_TRACE=true` to print API requests and responses.
+1. In the terminal, set the environment variable `IBMCLOUD_TRACE=true` to print API requests and responses.
     ```sh
-    export BLUEMIX_TRACE=true
+    export IBMCLOUD_TRACE=true
     ```
     {: pre}
 
@@ -220,27 +294,19 @@ While `billing` commands are helpful, trying to assemble a "big picture" view us
     ```
     {: pre}
 
-6. Disable tracing for the remainder of the tutorial.
+6. Disable tracing.
     ```sh
-    export BLUEMIX_TRACE=false
+    export IBMCLOUD_TRACE=false
     ```
     {: pre}
 
-You've now seen how usage data can be obtained via API; however, it should be apparent that a custom program will be necessary to call the various APIs, store data and create a standardized format. The next section will present such a solution.
-
-## Remove resources
-{:removeresources}
-
-Steps to take to remove the resources created in this tutorial
+While the data-driven approach provides the most flexibility in exploring usage, it is beyond the scope of this introductory tutorial. A GitHub project has been created to provide a sample application that leverages available APIs.
 
 ## Expand the tutorial
 
-Use the following suggestions to expand your investigation into usage-related data:
-- Explore the `ibmcloud billing` commands with the `--json` option. This will show the other data properties available and not covered in the tutorial.
+Use the following suggestions to expand your investigation into inventory and usage-related data.
+
+- Explore the `ibmcloud billing` commands with the `--output json` option. This will show additional data properties available and not covered in the tutorial.
+- Execute the `ibmcloud resource search` commands with `IBMCLOUD_TRACING=true" to see the JSON responses. This will help identify which properties can be used in your queries.
 - Review the [Infrastructure Account APIs](https://softlayer.github.io/reference/services/SoftLayer_Account/) for addition APIs to investigate infrastructure usage.
 - Review the [jq Manual](https://stedolan.github.io/jq/manual/) for advanced queries to aggregate usage data.
-
-## Related content
-{:related}
-
-... Blog posts to be added over time ...
