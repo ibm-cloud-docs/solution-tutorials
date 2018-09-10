@@ -21,6 +21,7 @@ The data stored by the application is a critical resource, and can't be lost, co
 
 Authenticating users and only authorizing access to specific resources come as another common requirement for many applications. Different authentication scheme may need to be supported: customers and suppliers log in with social identities, partners log in with cloud-hosted directories, and employees log in with an organization’s identity provider.
 
+This tutorial walks you through key security services available in the {{site.data.keyword.cloud}} catalog and how to use them together.
 {:shortdesc}
 
 ## Objectives
@@ -270,15 +271,6 @@ Steps to take to remove the resources created in this tutorial
 * Delete Cloud Object Storage
 * Delete Key Protect
 * Delete Activity Tracker
-
-## Expand the tutorial
-
-Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
 
 ## Related content
 {:related}
