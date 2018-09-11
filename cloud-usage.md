@@ -18,7 +18,7 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 
 ## Objectives
 {: #objectives}
-* Itemize {{site.data.keyword.cloud_notm}} artifacts: Cloud Foundry apps and services, IAM resources and IaaS devices
+* Itemize {{site.data.keyword.cloud_notm}} artifacts: Cloud Foundry apps and services, Identity and Access Management resources and Infrastructure devices
 * Associate {{site.data.keyword.cloud_notm}} artifacts with usage and billing
 * Define the relationships between {{site.data.keyword.cloud_notm}} artifacts and development teams
 * Leverage usage and billing data to create data sets for accounting purposes
@@ -28,45 +28,43 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 
 ![Architecture](images/solution38/Architecture.png)
 
-1. Users execute commands using a terminal to obtain inventory and usage-related information
-
 ## Before you begin
 {: #prereqs}
 
-* Install [{{site.data.keyword.cloud_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started) <small>0.9.0+</small>
-* Install [cURL](https://curl.haxx.se/) <small>7.61.1+</small>
-* Install [Node.js](https://nodejs.org/) <small>8.0.0+</small>
-* Install [json2csv](https://www.npmjs.com/package/json2csv) <small>4.2.1+</small> using the command `npm install -g json2csv`
-* Install [jq](https://stedolan.github.io/jq/) <small>1.4+</small>
+* Install [{{site.data.keyword.cloud_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+* Install [cURL](https://curl.haxx.se/)
+* Install [Node.js](https://nodejs.org/)
+* Install [json2csv](https://www.npmjs.com/package/json2csv) using the command `npm install -g json2csv`
+* Install [jq](https://stedolan.github.io/jq/)
 
 ## Background
 {: #background}
 
-Prior to executing commands that inventory and detail {{site.data.keyword.cloud_notm}} usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded. A helpful visualization of the below artifacts can be found in [documentation](https://console.bluemix.net/docs/account/account_overview.html#overview).
+Prior to executing commands that inventory and detail {{site.data.keyword.cloud_notm}} usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded. A helpful visualization of the below artifacts can be found in the [Managing your account documentation](https://console.bluemix.net/docs/account/account_overview.html#overview).
 
 ### Cloud Foundry
 Cloud Foundry is an open-source, platform-as-a-service (PaaS) on {{site.data.keyword.cloud_notm}} that enables you to deploy and scale applications and **Services** without managing servers. Cloud Foundry organizes applications and services into orgs or spaces.  An **Org** is a development account that one or many users can own and use. An org can contain multiple spaces. Each **Space** provides users with access to a shared location for application development, deployment, and maintenance.
 
 ### Identity and Access Management
-More recent offerings and migrated Cloud Foundry services exist as **Resources** managed by {{site.data.keyword.cloud_notm}} Identity and Access Management. Resources are organized into **Resource Groups** and provide access control through Policies and Roles. Additionally, resources can be tagged to conceptually group resources for tracking purposes.
+IBM Cloud Identity and Access Management (IAM) enables you to securely authenticate users for both platform services and control access to resources consistently across the {{site.data.keyword.cloud_notm}} platform. More recent offerings and migrated Cloud Foundry services exist as **Resources** managed by {{site.data.keyword.cloud_notm}} Identity and Access Management. Resources are organized into **Resource Groups** and provide access control through Policies and Roles. Additionally, resources can be tagged to conceptually group resources for tracking purposes.
 
 ### Infrastructure
 Infrastructure encompasses a variety of compute options: bare metal servers, virtual server instances and Kubernetes nodes. Each are seen as a **Device** in the console. Similar to resources, devices can be tagged.
 
 ### Account
-The aforementioned artifacts are associated with an **Account** for billing purposes.
+The aforementioned artifacts are associated with an **Account** for billing purposes. **Users** are invited to the account and given access to the different resources within the account.
 
 ## Assign permissions
 To view Cloud inventory and usage, you will need the appropriate roles assigned by the account administrator. If you are the account administrator, proceed to the next section.
 
 1. The account administrator should login to {{site.data.keyword.cloud_notm}} and access the [**Identity & Access Users**](https://console.bluemix.net/iam/#/users) page.
-2. Select your name from the list of users.
+2. The account administrator can select your name from the list of users in the account to assign appropriate permissions.
 3. On the **Access policies** tab, click the **Assign Access** button and perform the following changes.
     1. Select the **Assign access within a resource group** tile. Select the **Resource group(s)** to be granted access to and apply the **Viewer** role. Finish by clicking the **Assign** button. This role is required for the `resource groups` and `billing resource-group-usage` commands.
     2. Select the **Assign access to resources** tile. Select **All Identity and Access enabled services** in the **Services** dropdown menu. Check the **Editor** role under **Assign platform access roles**. This role is required for the `resource create-tag` command.
     3. Select the **Assign access by using Cloud Foundry** tile. Select the overflow menu next to each **Organization** to be granted access. Select **Edit organization role** from the menu. Select **Billing Manager** from the **Organization roles** list. Finish by clicking the **Save role** button. This role is required for the `billing org-usage` command.
 
-## Locating resources using search
+## Locate resources with the search command
 {: #search}
 
 As development teams begin using Cloud services, managers will benefit from knowing which services have been deployed. Deployment information helps answer questions related to innovation and service management:
@@ -101,7 +99,7 @@ Search is not limited to services and resources. You can also query Cloud artifa
     ```
     {: pre}
 
-4. To notify teams using a particular service type, query using the service name. Replace `<name>` with text, for example `weather` or `cloudant`. Then get the organization's name by replacing `<Organization ID>` the **Organization ID**.
+4. To notify teams using a particular service type, query using the service name. Replace `<name>` with text, for example `weather` or `cloudant`. Then get the organization's name by replacing `<Organization ID>` with the **Organization ID**.
     ```sh
    ibmcloud resource search 'service_name: *<name>*'
     ```
@@ -118,7 +116,7 @@ Search is not limited to services and resources. You can also query Cloud artifa
     ```
     {: pre}
 
-6. Attach the tag to a resource. A `--resource-crn` value can be obtained from a **CRN** property seen in the previous command's output.
+6. Attach the tag to a resource. A `--resource-crn` value can be obtained from a **CRN** property seen in the previous command's output. [Cloud Resource Names](https://console.bluemix.net/docs/overview/crn.html#crn_examples) (CRNs) uniquely identify IBM Cloud resources.
     ```sh
     ibmcloud resource tag-attach --tag-name env:tutorial --resource-crn <resource CRN>
     ```
@@ -132,7 +130,7 @@ Search is not limited to services and resources. You can also query Cloud artifa
 
 By combining advanced Lucene search queries with an enterprise-agreed tagging schema, managers and team leads can more easily identify and take action on Cloud apps, resources, and services.
 
-## Explore usage using the Usage Dashboard
+## Explore usage using with the Usage Dashboard
 {: #dashboard}
 
 Once management is aware of the services that teams are using, the next often-asked question is, "What does it cost to operate these services?" The most straightforward means of determining usage and cost is by reviewing the {{site.data.keyword.cloud_notm}} Usage Dashboard.
@@ -145,7 +143,7 @@ Once management is aware of the services that teams are using, the next often-as
 6. From the **Groups** drop-down menu, change the selector to **Resource Groups** and select a group such as **default**.
 7. Conduct a similar review of available instances.
 
-## Explore usage using the command line
+## Explore usage with the command line
 
 In this section, you'll explore usage with the command line interface.
 
@@ -182,22 +180,22 @@ In this section, you'll explore usage with the command line interface.
     ```
     {: pre}
 
-4. If you are the account administrator or have been granted the Administrator role for All Identity and Access enabled services, you can view both Cloud Foundry services and IAM resources using the `resource-instances-usage` command.
-    ```sh
-    ibmcloud billing resource-instances-usage
-    ```
-    {: pre}
+4. You can view both Cloud Foundry services and IAM resources using the `resource-instances-usage` command. Depending on your level of permission, execute the appropriate commands.
+    - If you are the account administrator or have been granted the Administrator role for All Identity and Access enabled services, simply run the `resource-instances-usage`.
+        ```sh
+        ibmcloud billing resource-instances-usage
+        ```
+        {: pre}
+    -  If you are not the account administrator, the following commands can be used because the Viewer role that was set at the beginning of the tutorial.
+        ```sh
+        ibmcloud billing resource-instances-usage -o $ORG_NAME
+        ```
+        {: pre}
 
-5. If you are not the account administrator, the following commands can be used because of the Viewer permission set at the beginning of the tutorial.
-    ```sh
-    ibmcloud billing resource-instances-usage -o $ORG_NAME
-    ```
-    {: pre}
-
-    ```sh
-    ibmcloud billing resource-instances-usage -g $RESOURCE_GROUP
-    ```
-    {: pre}
+        ```sh
+        ibmcloud billing resource-instances-usage -g $RESOURCE_GROUP
+        ```
+        {: pre}
 
 6. To view infrastructure devices, use the `sl` command. You can login to your infrastructure using the **Use Bluemix Single-Sign-On** option and accept the default API endpoint. Then use the `vs` command to review {{site.data.keyword.virtualmachinesshort}}.
     ```sh
@@ -215,12 +213,12 @@ In this section, you'll explore usage with the command line interface.
     ```
     {: pre}
 
-## Export usage using the command line
+## Export usage with the command line
 {: #usagecmd}
 
 Some in management often need data exported to another application. A common example is exporting usage data into a spreadsheet. In this section, you will export usage data into the comma separated value (CSV) format, which is compatible with most spreadsheet applications.
 
-This section uses two third-party tools: `jq` and `json2csv`. Each of the below commands is composed of three steps: obtaining usage data as JSON, parsing the JSON, and formatting the result as CSV.
+This section uses two third-party tools: `jq` and `json2csv`. Each of the below commands is composed of three steps: obtaining usage data as JSON, parsing the JSON, and formatting the result as CSV. The process of obtaining and converting JSON data is not limited to `json2csv` and other tools can be leveraged.
 
 Use the `-p` option to pretty print results. If the data prints poorly, remove the `-p` argument to print the raw CSV data.
 {:tip}
@@ -273,7 +271,7 @@ Use the `-p` option to pretty print results. If the data prints poorly, remove t
     ```
     {: pre}
 
-## Export usage using APIs
+## Export usage with APIs
 {: #usageapi}
 
 While `billing` commands are helpful, trying to assemble a "big picture" view using the command line interface is tedious. Similarly, the Usage Dashboard presents an overview of Orgs and Resource Groups but not necessarily a team or project's usage. In this section you'll begin to explore a more data-driven approach to obtain usage for custom requirements.
