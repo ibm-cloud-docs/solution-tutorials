@@ -224,7 +224,12 @@ All services have been configured. In this section you will deploy the tutorial 
 1. Edit `credentials.env` and fill in the blanks with these values:
    * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for **secure-file-storage-cos**,
    * and the credentials for **secure-file-storage-db**.
-1. Edit `secure-file-storage.yaml` and replace the placeholders (REGION, NAMESPACE, INGRESS_SUBDOMAIN, CLUSTER_NAME) with the correct values.
+1. Copy `secure-file-storage.template.yaml` to `secure-file-storage.yaml`:
+   ```sh
+   cp secure-file-storage.template.yaml secure-file-storage.yaml
+   ```
+   {: codeblock}
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET``) with the correct values. `$IMAGE_PULL_SECRET` can be set the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration.
 
 ### Deploy to the cluster
 
