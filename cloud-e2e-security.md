@@ -236,7 +236,7 @@ All services have been configured. In this section you will deploy the tutorial 
 1. Copy and paste the export command to set the KUBECONFIG environment variable as directed.
 1. Create the secret used by the application to obtain service credentials:
    ```sh
-   kubectl create secret generic secure-file-storage-credentials --from-env-file=.env
+   kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
 1. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster.
