@@ -12,7 +12,7 @@ lastupdated: "2018-09-12"
 {:tip: .tip}
 {:pre: .pre}
 
-# Authenticate users and securely store files
+# Apply end to end security to securely store files
 
 No application architecture is complete without a clear understanding of the security risks it is exposed to and how to protect from these threats.
 
@@ -303,5 +303,6 @@ As an alternative, you can also use the command line. TODO: execute the cleanup 
 * [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture)
 * [{{site.data.keyword.Bluemix_notm}} Platform security](https://console.bluemix.net/docs/overview/security.html#security)
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security)
+* [Tutorial: Best practices for organizing users, teams, applications](https://console.bluemix.net/docs/tutorials/users-teams-applications.html)
 * [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/)
 
