@@ -168,16 +168,16 @@ Finally create the bucket.
 The {{site.data.keyword.cloudant_short_notm}} database will contain a metadata document for every file uploaded via the application.
 
 1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB).
-   * Set the **name** to **secure-file-storage-db**.
+   * Set the **name** to **secure-file-storage-cloudant**.
    * Set the region.
    * Use the same **resource group** as for the previous services.
    * Set **Available authentication methods** to **Use only IAM**.
 1. Under **Service credentials**, create *New credential*.
-   * Set the **name** to **secure-file-storage-db-key**.
+   * Set the **name** to **secure-file-storage-cloudant-key**.
    * **Add**.
 1. Make note of the credentials, you will need them in a later step.
 1. Under **Manage**, launch the Cloudant dashboard.
-1. Create a database named **secure-file-storage**.
+1. Create a database named **secure-file-storage-metadata**.
 
 ### Authenticate users
 
@@ -219,15 +219,20 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Fill in credentials and configuration settings
 
-1. Copy `template.env` to `.env`:
+1. Copy `credentials.template.env` to `credentials.env`:
    ```sh
-   cp template.env .env
+   cp credentials.template.env credentials.env
    ```
    {: codeblock}
-1. Edit `.env` and fill in the blanks with these values:
+1. Edit `credentials.env` and fill in the blanks with these values:
    * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for **secure-file-storage-cos**,
-   * and the credentials for **secure-file-storage-db**.
-1. Edit `secure-file-storage.yaml` and replace the placeholders (REGION, NAMESPACE, INGRESS_SUBDOMAIN, CLUSTER_NAME) with the correct values.
+   * and the credentials for **secure-file-storage-cloudant**.
+1. Copy `secure-file-storage.template.yaml` to `secure-file-storage.yaml`:
+   ```sh
+   cp secure-file-storage.template.yaml secure-file-storage.yaml
+   ```
+   {: codeblock}
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET``) with the correct values. `$IMAGE_PULL_SECRET` can be set the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration.
 
 ### Deploy to the cluster
 
@@ -239,7 +244,7 @@ All services have been configured. In this section you will deploy the tutorial 
 1. Copy and paste the export command to set the KUBECONFIG environment variable as directed.
 1. Create the secret used by the application to obtain service credentials:
    ```sh
-   kubectl create secret generic secure-file-storage-credentials --from-env-file=.env
+   kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
 1. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster.
