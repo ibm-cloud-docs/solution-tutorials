@@ -174,7 +174,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain a metadata d
    * **Add**.
 1. Make note of the credentials, you will need them in a later step.
 1. Under **Manage**, launch the Cloudant dashboard.
-1. Create a database named **secure-file-storage**.
+1. Create a database named **secure-file-storage-metadata**.
 
 ### Authenticate users
 
