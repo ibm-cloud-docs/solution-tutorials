@@ -130,7 +130,7 @@ Search is not limited to services and resources. You can also query Cloud artifa
 
 By combining advanced Lucene search queries with an enterprise-agreed tagging schema, managers and team leads can more easily identify and take action on Cloud apps, resources, and services.
 
-## Explore usage using with the Usage Dashboard
+## Explore usage with the Usage Dashboard
 {: #dashboard}
 
 Once management is aware of the services that teams are using, the next often-asked question is, "What does it cost to operate these services?" The most straightforward means of determining usage and cost is by reviewing the {{site.data.keyword.cloud_notm}} Usage Dashboard.

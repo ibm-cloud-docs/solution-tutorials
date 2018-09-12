@@ -268,17 +268,18 @@ You will find more details about the tutorial application code in the [source co
 ## Remove resources
 {:removeresources}
 
-Steps to take to remove the resources created in this tutorial
+Use the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) to locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Use the context menu next to each of the services to delete them.
 
-* Delete the Kubernetes cluster
-* Delete App ID
-* Delete Cloudant
-* Delete Cloud Object Storage
-* Delete Key Protect
-* Delete Activity Tracker
+As an alternative, you can also use the command line. TODO: execute the cleanup script by following these steps
+1. cd into
+2. export env
+3. execute...
 
 ## Related content
 {:related}
 
-* [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/)
+
+* some more links
 * [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture)
+* [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/)
+
