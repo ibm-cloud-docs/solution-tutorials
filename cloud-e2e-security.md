@@ -113,7 +113,7 @@ While the cluster is being provisioned, you will create the other services requi
    * Set the name to **secure-file-storage-kp**.
    * Select the resource group where to create the service instance.
 1. Under **Manage**, add a new key. This key will be used to encrypt the storage bucket content.
-   * Set the name to **secure-file-storage-bucket-key**.
+   * Set the name to **secure-file-storage-root-enckey**.
    * Set the key type to **Root key**.
    * Then **Generate key**.
 
@@ -130,7 +130,7 @@ The application stores the user files in a {{site.data.keyword.cos_short}} bucke
    * Set the **name** to **secure-file-storage-cos**.
    * Use the same **resource group** as for the previous services.
 1. Under **Service credentials**, create *New credential*.
-   * Set the **name** to **secure-file-storage-cos-key**.
+   * Set the **name** to **secure-file-storage-cos-acckey**.
    * Set **Inline Configuration Parameters** to **{"HMAC":true}**.
    * **Add**.
    * Make note of the credentials you will need them in a later step.
@@ -157,7 +157,7 @@ Finally create the bucket.
    1. Set **Storage class** to **Standard**
 1. Check **Add Key Protect Keys**
    1. Select the **secure-file-storage-kp** service.
-   1. Select **secure-file-storage-bucket-key** as the key.
+   1. Select **secure-file-storage-root-enckey** as the key.
 1. **Create** the bucket.
 
 #### A database to store the mapping between users and their files
@@ -170,7 +170,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain a metadata d
    * Use the same **resource group** as for the previous services.
    * Set **Available authentication methods** to **Use only IAM**.
 1. Under **Service credentials**, create *New credential*.
-   * Set the **name** to **secure-file-storage-cloudant-key**.
+   * Set the **name** to **secure-file-storage-cloudant-acckey**.
    * **Add**.
 1. Make note of the credentials, you will need them in a later step.
 1. Under **Manage**, launch the Cloudant dashboard.
