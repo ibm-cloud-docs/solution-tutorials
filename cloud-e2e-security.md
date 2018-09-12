@@ -294,11 +294,14 @@ As an alternative, you can also use the command line. TODO: execute the cleanup 
 2. export env
 3. execute...
 
+
+
 ## Related content
 {:related}
 
-
-* some more links
+* [{{site.data.keyword.security-advisor_short}} documentation](https://console.bluemix.net/docs/services/security-advisor/about.html#about)
 * [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture)
+* [{{site.data.keyword.Bluemix_notm}} Platform security](https://console.bluemix.net/docs/overview/security.html#security)
+* [Security in the IBM Cloud](https://www.ibm.com/cloud/security)
 * [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/)
 
