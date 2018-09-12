@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-09-05"
+lastupdated: "2018-09-12"
 
 ---
 
@@ -695,6 +695,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution20-users-teams-applications/architecture.png" alt="Architecture diagram for the solution Best practices for organizing users, teams, applications"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "cloud-usage.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Reviewing IBM Cloud services, resources and usage
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>An introduction to various approaches used to answer common usage-related questions.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution38/Architecture.png" alt="Architecture diagram for the solution Reviewing IBM Cloud services, resources and usage"/>
                 </div>
             </div>
         </div>

@@ -53,6 +53,7 @@ Solution Tutorials
     {: .topicgroup}
     Identity and Access Management
         users-teams-applications.md
+        cloud-usage.md
 
     {: .topicgroup}
     Network
@@ -76,6 +77,7 @@ Solution Tutorials
         create-manage-secure-apis.md
         slack-chatbot-database-watson.md
         gather-visualize-analyze-iot-data.md
+        cloud-usage.md
 
     {: .topicgroup}
     Cloud Functions

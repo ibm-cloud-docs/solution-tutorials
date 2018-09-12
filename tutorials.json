@@ -426,6 +426,19 @@
             "DevOps"
           ],
           "lastUpdated": "2018-06-05"
+        },
+        {
+          "name": "Reviewing IBM Cloud services, resources and usage",
+          "url": "cloud-usage.html",
+          "description": "An introduction to various approaches used to answer common usage-related questions.",
+          "imgSrc": "images/solution38/Architecture.png",
+          "tags": [
+            "Identity and Access Management",
+            "Cloud Foundry",
+            "Usage",
+            "Billing"
+          ],
+          "lastUpdated": "2018-08-07"
         }
       ]
     },

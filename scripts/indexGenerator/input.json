@@ -221,9 +221,9 @@
             {
                 "name": "Authenticate users and securely store files",
                 "hidden": true,
-                "url": "data-encryption-security.html",
+                "url": "cloud-e2e-security.html",
                 "description": "Design a secure solution with data encrypted in transit and at rest with your own keys.",
-                "imgSrc": "images/solution34-data-encryption-security/Architecture.png",
+                "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
                 "tags": [
                     "Kubernetes",
                     "Encryption",

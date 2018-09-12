@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-09-11"
+lastupdated: "2018-09-12"
 
 ---
 
@@ -51,7 +51,7 @@ The tutorial features a sample application that enables groups of users to uploa
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution34-data-encryption-security/Architecture.png)
+  ![Architecture](images/solution34-cloud-e2e-security/Architecture.png)
 </p>
 
 1. The user connects to the application.
