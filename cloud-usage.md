@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-08-07"
+lastupdated: "2018-09-13"
 
 ---
 
@@ -109,26 +109,6 @@ Search is not limited to services and resources. You can also query Cloud artifa
     ibmcloud cf curl /v2/organizations/<Organization ID> | tail -n +3 | jq .entity.name
     ```
     {: pre}
-
-5. Tagging and searching can be used together to provide customized identification of resources. This involves: creating a tag, attaching the tag to resource(s) and searching using tag name(s). Create a tag named `env:tutorial`.
-    ```sh
-   ibmcloud resource tag-create --tag-name env:tutorial
-    ```
-    {: pre}
-
-6. Attach the tag to a resource. A `--resource-crn` value can be obtained from a **CRN** property seen in the previous command's output. [Cloud Resource Names](https://console.bluemix.net/docs/overview/crn.html#crn_examples) (CRNs) uniquely identify IBM Cloud resources.
-    ```sh
-    ibmcloud resource tag-attach --tag-name env:tutorial --resource-crn <resource CRN>
-    ```
-    {: pre}
-
-7. Search for the Cloud artifacts that match a given tag using the below query.
-    ```sh
-    ibmcloud resource search 'tags: "env:tutorial"'
-    ```
-    {: pre}
-
-By combining advanced Lucene search queries with an enterprise-agreed tagging schema, managers and team leads can more easily identify and take action on Cloud apps, resources, and services.
 
 ## Explore usage with the Usage Dashboard
 {: #dashboard}
@@ -332,7 +312,7 @@ While `billing` commands are helpful, trying to assemble a "big picture" view us
     ```
     {: pre}
 
-While the data-driven approach provides the most flexibility in exploring usage, a more thorough explanation is beyond the scope of this introductory tutorial.
+While the data-driven approach provides the most flexibility in exploring usage, a more thorough explanation is beyond the scope of this tutorial. The GitHub project [openwhisk-cloud-usage-sample](https://github.com/IBM-Cloud/openwhisk-cloud-usage-sample) has been created and combines {{site.data.keyword.cloud_notm}} services with Cloud Functions to provide a sample implementation.
 
 ## Expand the tutorial
 {: #expand}
