@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-09-12"
+lastupdated: "2018-09-13"
 
 ---
 
@@ -287,14 +287,27 @@ Now that the application and its services have been successfully deployed, you c
 ## Remove resources
 {:removeresources}
 
-Use the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) to locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Use the context menu next to each of the services to delete them.
+To remove the resource, delete the deployed container and then the provisioned services.
 
-As an alternative, you can also use the command line. TODO: execute the cleanup script by following these steps
-1. cd into
-2. export env
-3. execute...
+1. Delete the deployed container:
+   ```sh
+   kubectl delete -f secure-file-storage.yaml
+   ```
+   {: codeblock}
+2. Delete the secrets for the deployment:
+   ```sh
+   kubectl delete secret secure-file-storage-credentials
+   ```
+   {: codeblock}
+3. Remove the Docker image from the container registry:
+   ```sh
+   ibmcloud cr image-rm registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest
+   ```
+   {: codeblock}
+4. In the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
 
-
+I you share an account with other users, always make sure to only your own resources.
+{: tip}
 
 ## Related content
 {:related}
