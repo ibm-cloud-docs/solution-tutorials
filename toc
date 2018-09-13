@@ -26,6 +26,7 @@ Solution Tutorials
         serverless-api-webapp.md
         application-log-analysis.md
         create-manage-secure-apis.md
+        cloud-e2e-security.md
 
     {: .topicgroup}
     Chatbots
@@ -95,6 +96,7 @@ Solution Tutorials
         continuous-deployment-to-kubernetes.md
         pub-sub-object-storage.md
         plan-create-update-deployments.md
+        cloud-e2e-security.md
         users-teams-applications.md
 
     {: .topicgroup}

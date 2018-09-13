@@ -14,13 +14,11 @@ lastupdated: "2018-09-13"
 
 # Apply end to end security to securely store files
 
-No application architecture is complete without a clear understanding of the security risks it is exposed to and how to protect from these threats.
+No application architecture is complete without a clear understanding of the security risks it is exposed to and how to protect it against these threats. The application data is a critical resource and can't be lost, compromised, or stolen. It needs to be protected whether at rest or in transit. Encrypting data at rest protects information from disclosure even if that information is lost or stolen. For data in transit — for instance when it is transmitted over the Internet — encryption methods like HTTPS, SSL, and TLS are often used.
 
-The data stored by the application is a critical resource, and can't be lost, compromised, or stolen. It needs to be protected whether at rest or in transit. Encrypting data at rest protects information from disclosure even if that information is lost or stolen. For data in transit — for instance when it is transmitted over the Internet — encryption methods like HTTPS, SSL, and TLS are often used.
+Authenticating users and only authorizing access to specific resources come as another common requirement for many applications. Different authentication schemes may need to be supported: Customers and suppliers log in with social identities, partners log in with cloud-hosted directories, and employees log in with an organization’s identity provider (SAML).
 
-Authenticating users and only authorizing access to specific resources come as another common requirement for many applications. Different authentication scheme may need to be supported: customers and suppliers log in with social identities, partners log in with cloud-hosted directories, and employees log in with an organization’s identity provider.
-
-This tutorial walks you through key security services available in the {{site.data.keyword.cloud}} catalog and how to use them together.
+This tutorial walks you through key security services available in the {{site.data.keyword.cloud}} catalog and how to use them together. A file sharing application that allows to shared uploaded files via expiring links serves as sample scenario.
 {:shortdesc}
 
 ## Objectives
@@ -28,7 +26,7 @@ This tutorial walks you through key security services available in the {{site.da
 
 * Encrypt storage bucket content with your own encryption keys.
 * Require users to authenticate before accessing an application.
-* Monitor and audit API calls and other actions that are made to selected cloud services.
+* Monitor and audit security-related API calls and other actions that are made to selected cloud services.
 
 ## Services used
 {: #services}

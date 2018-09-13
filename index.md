@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-09-12"
+lastupdated: "2018-09-13"
 
 ---
 
@@ -461,6 +461,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution13/Architecture.png" alt="Architecture diagram for the solution Create, secure and manage REST APIs"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "cloud-e2e-security.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Apply end to end security to securely store files
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to securely store files"/>
                 </div>
             </div>
         </div>

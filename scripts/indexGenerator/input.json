@@ -220,9 +220,8 @@
             },
             {
                 "name": "Apply end to end security to securely store files",
-                "hidden": true,
                 "url": "cloud-e2e-security.html",
-                "description": "Design a secure solution with data encrypted in transit and at rest with your own keys.",
+                "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
                 "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
                 "tags": [
                     "Kubernetes",
