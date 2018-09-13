@@ -141,14 +141,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Apply end to end security to securely store files
+                Apply end to end security to a cloud application
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
                     <p>Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to securely store files" />
+                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to a cloud application" />
                 </div>
             </div>
         </div>
@@ -516,14 +516,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Apply end to end security to securely store files
+                Apply end to end security to a cloud application
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
                     <p>Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to securely store files"/>
+                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to a cloud application"/>
                 </div>
             </div>
         </div>
