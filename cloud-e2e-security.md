@@ -132,7 +132,7 @@ The application stores the user files in a {{site.data.keyword.cos_short}} bucke
    * Use the same **resource group** as for the previous services.
 1. Under **Service credentials**, create *New credential*.
    * Set the **name** to **secure-file-storage-cos-acckey**.
-   * Set **Inline Configuration Parameters** to **{"HMAC":true}**.
+   * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to get the right set of credentials to be able to generate pre-signed URLs.
    * **Add**.
    * Make note of the credentials you will need them in a later step.
 1. Under **Endpoint**, set **Resiliency** to **Regional**, set the **location** to the target location and write down the Public service endpoint. It will be used later in the configuration of the application.
@@ -230,7 +230,7 @@ All services have been configured. In this section you will deploy the tutorial 
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` can be set the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration. As example:
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` can be set to the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration. As example:
 
 | Variable | Value |
 | -------- | ----- |
