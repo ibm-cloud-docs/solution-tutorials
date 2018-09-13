@@ -100,7 +100,7 @@ Skip this section if you have an existing **Standard** cluster you want to reuse
    1. Set **Availability** to **Single Zone**.
    1. Select a **Master Zone**.
 1. Keep the default **Kubernetes version**, **Hardware isolation**.
-1. Optionally, if you plan to only deploy this tutorial on this cluster, use the smallest flavor and set **Worker nodes** to **1**.
+1. If you plan to only deploy this tutorial on this cluster, use the smallest flavor and set **Worker nodes** to **1**.
 1. Set the **Cluster name** to **secure-file-storage-cluster**.
 1. **Create Cluster**
 
@@ -132,7 +132,7 @@ The application stores the user files in a {{site.data.keyword.cos_short}} bucke
    * Use the same **resource group** as for the previous services.
 1. Under **Service credentials**, create *New credential*.
    * Set the **name** to **secure-file-storage-cos-acckey**.
-   * Set **Inline Configuration Parameters** to **{"HMAC":true}**.
+   * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to get the right set of credentials to be able to generate pre-signed URLs.
    * **Add**.
    * Make note of the credentials you will need them in a later step.
 1. Under **Endpoint**, set **Resiliency** to **Regional**, set the **location** to the target location and write down the Public service endpoint. It will be used later in the configuration of the application.
@@ -230,7 +230,17 @@ All services have been configured. In this section you will deploy the tutorial 
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET``) with the correct values. `$IMAGE_PULL_SECRET` can be set the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration.
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` can be set to the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration. As example:
+
+| Variable | Value |
+| -------- | ----- |
+| `$IMAGE_PULL_SECRET` | *secure-file-storage-cluster* |
+| `$REGISTRY_URL` | *registry.ng.bluemix.net* |
+| `$REGISTRY_NAMESPACE` | *a-namespace* |
+| `$IMAGE_NAME` | *secure-file-storage* |
+| `$TARGET_NAMESPACE` | *default* |
+| `$INGRESS_SUBDOMAIN` | *secure-file-storage-cluster-123.us-south.containers.appdomain.cloud* |
+| `$INGRESS_SECRET` | *secure-file-storage-cluster* |
 
 ### Deploy to the cluster
 
@@ -304,7 +314,7 @@ To remove the resource, delete the deployed container and then the provisioned s
    {: codeblock}
 4. In the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
 
-I you share an account with other users, always make sure to only your own resources.
+If you share an account with other users, always make sure to delete only your own resources.
 {: tip}
 
 ## Related content
