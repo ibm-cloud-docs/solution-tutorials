@@ -315,7 +315,7 @@ To remove the resource, delete the deployed container and then the provisioned s
    {: codeblock}
 4. In the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
 
-I you share an account with other users, always make sure to only your own resources.
+If you share an account with other users, always make sure to delete only your own resources.
 {: tip}
 
 ## Related content
