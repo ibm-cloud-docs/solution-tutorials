@@ -137,35 +137,35 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
-    <a href = "multi-region-k8s-cis.html?pos=2">
+    <a href = "cloud-e2e-security.html">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Resilient and secure multi-region Kubernetes clusters
+                Apply end to end security to securely store files
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.</p>
+                    <p>Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for the solution Resilient and secure multi-region Kubernetes clusters" />
+                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to securely store files" />
                 </div>
             </div>
         </div>
     </div>
     </a>
-    <a href = "slack-chatbot-database-watson.html?pos=2">
+    <a href = "cloud-usage.html">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Build a database-driven Slackbot
+                Reviewing IBM Cloud services, resources and usage
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.</p>
+                    <p>An introduction to various approaches used to answer common usage-related questions.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution19/SlackbotArchitecture.png" alt="Architecture diagram for the solution Build a database-driven Slackbot" />
+                    <img class="architectureDiagram" src = "images/solution38/Architecture.png" alt="Architecture diagram for the solution Reviewing IBM Cloud services, resources and usage" />
                 </div>
             </div>
         </div>

@@ -47,7 +47,6 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "featuredPosition": 1,
           "lastUpdated": "2018-06-12"
         },
         {
@@ -240,6 +239,7 @@
           "url": "cloud-e2e-security.html",
           "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
           "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
+          "featuredPosition": 1,
           "tags": [
             "Kubernetes",
             "Encryption",
@@ -262,7 +262,6 @@
           "url": "slack-chatbot-database-watson.html?pos=2",
           "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
           "imgSrc": "images/solution19/SlackbotArchitecture.png",
-          "featuredPosition": 2,
           "tags": [
             "Cloud Foundry",
             "IBM Watson Assistant",
@@ -446,6 +445,7 @@
         {
           "name": "Reviewing IBM Cloud services, resources and usage",
           "url": "cloud-usage.html",
+          "featuredPosition": 2,
           "description": "An introduction to various approaches used to answer common usage-related questions.",
           "imgSrc": "images/solution38/Architecture.png",
           "tags": [
