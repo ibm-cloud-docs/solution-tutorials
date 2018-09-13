@@ -230,7 +230,18 @@ All services have been configured. In this section you will deploy the tutorial 
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET``) with the correct values. `$IMAGE_PULL_SECRET` can be set the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration.
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` can be set the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration.
+
+   As example:
+   | Variable | Value |
+   | -------- | ----- |
+   | `$IMAGE_PULL_SECRET` | *secure-file-storage-cluster* |
+   | `$REGISTRY_URL` | *registry.ng.bluemix.net* |
+   | `$REGISTRY_NAMESPACE` | *a-namespace* |
+   | `$IMAGE_NAME` | *secure-file-storage* |
+   | `$TARGET_NAMESPACE` | *default* |
+   | `$INGRESS_SUBDOMAIN` | *secure-file-storage-cluster-123.us-south.containers.appdomain.cloud* |
+   | `$INGRESS_SECRET` | *secure-file-storage-cluster* |
 
 ### Deploy to the cluster
 
