@@ -100,7 +100,7 @@ Skip this section if you have an existing **Standard** cluster you want to reuse
    1. Set **Availability** to **Single Zone**.
    1. Select a **Master Zone**.
 1. Keep the default **Kubernetes version**, **Hardware isolation**.
-1. Optionally, if you plan to only deploy this tutorial on this cluster, use the smallest flavor and set **Worker nodes** to **1**.
+1. If you plan to only deploy this tutorial on this cluster, use the smallest flavor and set **Worker nodes** to **1**.
 1. Set the **Cluster name** to **secure-file-storage-cluster**.
 1. **Create Cluster**
 
@@ -230,18 +230,17 @@ All services have been configured. In this section you will deploy the tutorial 
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` can be set the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration.
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` can be set the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration. As example:
 
-   As example:
-   | Variable | Value |
-   | -------- | ----- |
-   | `$IMAGE_PULL_SECRET` | *secure-file-storage-cluster* |
-   | `$REGISTRY_URL` | *registry.ng.bluemix.net* |
-   | `$REGISTRY_NAMESPACE` | *a-namespace* |
-   | `$IMAGE_NAME` | *secure-file-storage* |
-   | `$TARGET_NAMESPACE` | *default* |
-   | `$INGRESS_SUBDOMAIN` | *secure-file-storage-cluster-123.us-south.containers.appdomain.cloud* |
-   | `$INGRESS_SECRET` | *secure-file-storage-cluster* |
+| Variable | Value |
+| -------- | ----- |
+| `$IMAGE_PULL_SECRET` | *secure-file-storage-cluster* |
+| `$REGISTRY_URL` | *registry.ng.bluemix.net* |
+| `$REGISTRY_NAMESPACE` | *a-namespace* |
+| `$IMAGE_NAME` | *secure-file-storage* |
+| `$TARGET_NAMESPACE` | *default* |
+| `$INGRESS_SUBDOMAIN` | *secure-file-storage-cluster-123.us-south.containers.appdomain.cloud* |
+| `$INGRESS_SECRET` | *secure-file-storage-cluster* |
 
 ### Deploy to the cluster
 
