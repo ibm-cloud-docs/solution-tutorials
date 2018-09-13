@@ -177,23 +177,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #websites }
 
 <div class = "solutionBoxContainer">
-    <a href = "multi-region-webapp.html?pos=2">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Secure web application across multiple regions
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution1/Architecture.png" alt="Architecture diagram for the solution Secure web application across multiple regions"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
     <a href = "scalable-webapp-kubernetes.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
@@ -206,23 +189,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution2/Architecture.png" alt="Architecture diagram for the solution Scalable web app on Kubernetes"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "multi-region-k8s-cis.html?pos=2">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Resilient and secure multi-region Kubernetes clusters
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for the solution Resilient and secure multi-region Kubernetes clusters"/>
                 </div>
             </div>
         </div>
@@ -449,40 +415,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "create-manage-secure-apis.html">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Create, secure and manage REST APIs
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution13/Architecture.png" alt="Architecture diagram for the solution Create, secure and manage REST APIs"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "cloud-e2e-security.html">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Apply end to end security to securely store files
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to securely store files"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
 </div>
 
 ## Chatbots
@@ -518,6 +450,80 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" alt="Architecture diagram for the solution Build a voice-enabled Android chatbot"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+</div>
+
+## Security
+{: #security }
+
+<div class = "solutionBoxContainer">
+    <a href = "multi-region-webapp.html?pos=2">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Secure web application across multiple regions
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution1/Architecture.png" alt="Architecture diagram for the solution Secure web application across multiple regions"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "multi-region-k8s-cis.html?pos=2">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Resilient and secure multi-region Kubernetes clusters
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for the solution Resilient and secure multi-region Kubernetes clusters"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "create-manage-secure-apis.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Create, secure and manage REST APIs
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution13/Architecture.png" alt="Architecture diagram for the solution Create, secure and manage REST APIs"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "cloud-e2e-security.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Apply end to end security to securely store files
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to securely store files"/>
                 </div>
             </div>
         </div>
