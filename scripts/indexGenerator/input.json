@@ -11,18 +11,6 @@
         "anchor": "websites",
         "solutions": [
             {
-                "name": "Secure web application across multiple regions",
-                "url": "multi-region-webapp.html?pos=2",
-                "description": "Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
-                "imgSrc": "images/solution1/Architecture.png",
-                "tags": [
-                    "Cloud Foundry",
-                    "Node.js",
-                    "Continuous Delivery",
-                    "Cloud Internet Services"
-                ]
-            },
-            {
                 "name": "Scalable web app on Kubernetes",
                 "url": "scalable-webapp-kubernetes.html",
                 "description": "Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
@@ -33,17 +21,6 @@
                     "Container Service",
                     "Container Registry",
                     "Java"
-                ]
-            },
-            {
-                "name": "Resilient and secure multi-region Kubernetes clusters",
-                "url": "multi-region-k8s-cis.html?pos=2",
-                "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
-                "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
-                "tags": [
-                    "Kubernetes",
-                    "Container Registry",
-                    "Cloud Internet Services"
                 ]
             },
             {
@@ -205,33 +182,6 @@
                     "Log Analysis",
                     "Availability Monitoring"
                 ]
-            },
-            {
-                "name": "Create, secure and manage REST APIs",
-                "url": "create-manage-secure-apis.html",
-                "description": "Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.",
-                "imgSrc": "images/solution13/Architecture.png",
-                "tags": [
-                    "Cloud Foundry",
-                    "Node.js",
-                    "API Connect"
-                ]
-            },
-            {
-                "name": "Apply end to end security to securely store files",
-                "url": "cloud-e2e-security.html",
-                "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
-                "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
-                "featuredPosition": 1,
-                "tags": [
-                    "Kubernetes",
-                    "Encryption",
-                    "Security",
-                    "App ID",
-                    "Cloud Object Storage",
-                    "Key Protect",
-                    "Activity Tracker"
-                ]
             }
         ]
     },
@@ -264,6 +214,62 @@
                     "Text to Speech",
                     "Mobile Analytics",
                     "Android"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Security",
+        "anchor": "security",
+        "solutions": [
+            {
+                "name": "Secure web application across multiple regions",
+                "url": "multi-region-webapp.html?pos=2",
+                "description": "Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
+                "imgSrc": "images/solution1/Architecture.png",
+                "tags": [
+                    "Cloud Foundry",
+                    "Node.js",
+                    "Continuous Delivery",
+                    "Cloud Internet Services"
+                ]
+            },
+            {
+                "name": "Resilient and secure multi-region Kubernetes clusters",
+                "url": "multi-region-k8s-cis.html?pos=2",
+                "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
+                "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
+                "tags": [
+                    "Kubernetes",
+                    "Container Registry",
+                    "Cloud Internet Services"
+                ]
+            },
+            {
+                "name": "Create, secure and manage REST APIs",
+                "url": "create-manage-secure-apis.html",
+                "description": "Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.",
+                "imgSrc": "images/solution13/Architecture.png",
+                "tags": [
+                    "Cloud Foundry",
+                    "Node.js",
+                    "API Connect"
+                ]
+            },
+            {
+                "name": "Apply end to end security to securely store files",
+                "url": "cloud-e2e-security.html",
+                "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
+                "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
+                "featuredPosition": 1,
+                "tags": [
+                    "Kubernetes",
+                    "Encryption",
+                    "Security",
+                    "App ID",
+                    "Cloud Object Storage",
+                    "Key Protect",
+                    "Activity Tracker"
                 ]
             }
         ]
