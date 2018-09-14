@@ -80,7 +80,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    git clone https://github.com/IBM-Cloud/iot-device-phone-simulator
    cd iot-device-phone-simulator
    ```
-2. Open the code in an IDE of your choice and change the `name` and `host` values in the **manifest.yml** file to an unique value.
+2. Open the code in an IDE of your choice and change the `name` and `host` values in the **manifest.yml** file to a unique value.
 3. Push the application to the {{site.data.keyword.Bluemix_notm}}.
    ```bash
    ibmcloud login
