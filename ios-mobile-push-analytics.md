@@ -213,7 +213,7 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 
 ## Configure,send, and monitor {{site.data.keyword.mobilepushshort}}
 
-1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide an unique USER_ID(Optional).
+1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide a unique USER_ID(Optional).
 2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.
 3. Open {{site.data.keyword.mobilepushshort}} service under `Mobile Services` > **Existing services**  on {{site.data.keyword.Bluemix_short}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
   * Select `Messages`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, All Devices and other browsers.

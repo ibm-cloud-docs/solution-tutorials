@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-09-13"
+lastupdated: "2018-09-14"
 
 ---
 
@@ -14,11 +14,11 @@ lastupdated: "2018-09-13"
 
 # Apply end to end security to a cloud application
 
-No application architecture is complete without a clear understanding of the security risks it is exposed to and how to protect it against these threats. The application data is a critical resource and can't be lost, compromised, or stolen. It needs to be protected whether at rest or in transit. Encrypting data at rest protects information from disclosure even if that information is lost or stolen. For data in transit — for instance when it is transmitted over the Internet — encryption methods like HTTPS, SSL, and TLS are often used.
+No application architecture is complete without a clear understanding of the security risks it is exposed to and how to protect it against these threats. The application data is a critical resource and can't be lost, compromised, or stolen. It needs to be protected whether at rest or in transit. Encrypting data at rest protects information from disclosure even if that information is lost or stolen. For data in transit — for instance, when it is transmitted over the Internet — encryption methods like HTTPS, SSL, and TLS are often used.
 
 Authenticating users and only authorizing access to specific resources come as another common requirement for many applications. Different authentication schemes may need to be supported: Customers and suppliers log in with social identities, partners log in with cloud-hosted directories, and employees log in with an organization’s identity provider (SAML).
 
-This tutorial walks you through key security services available in the {{site.data.keyword.cloud}} catalog and how to use them together. A file sharing application that allows to shared uploaded files via expiring links serves as sample scenario.
+This tutorial walks you through key security services available in the {{site.data.keyword.cloud}} catalog and how to use them together. A file sharing application that allows to share uploaded files via expiring links serves as sample scenario.
 {:shortdesc}
 
 ## Objectives
@@ -132,6 +132,8 @@ The application stores the user files in a {{site.data.keyword.cos_short}} bucke
    * Use the same **resource group** as for the previous services.
 1. Under **Service credentials**, create *New credential*.
    * Set the **name** to **secure-file-storage-cos-acckey**.
+   * Set **Role** to **Writer**
+   * Do not specify a **Service ID**
    * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to get the right set of credentials to be able to generate pre-signed URLs.
    * **Add**.
    * Make note of the credentials you will need them in a later step.
@@ -172,6 +174,8 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain a metadata d
    * Set **Available authentication methods** to **Use only IAM**.
 1. Under **Service credentials**, create *New credential*.
    * Set the **name** to **secure-file-storage-cloudant-acckey**.
+   * Set **Role** to **Manager**
+   * Keep the default values for the *Optional* fields
    * **Add**.
 1. Make note of the credentials, you will need them in a later step.
 1. Under **Manage**, launch the Cloudant dashboard.
@@ -185,7 +189,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
    * Set the **name** to **secure-file-storage-appid**.
    * Use the same **region** and **resource group** as for the previous services.
 1. Under **Identity Providers / Manage**, add a **web redirect URL** pointing to the domain you will use for the application. Assuming your cluster Ingress subdomain is 
-_&lt;cluster-name&gt;.us-south.containers.appdomain.cloud_, the redirect URL will be ___https://secure-file-storage.&lt;cluster-name&gt;.us-south.containers.appdomain.cloud/appid_callback___. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
+_&lt;cluster-name&gt;.us-south.containers.appdomain.cloud_, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
 
 You should customize the identity providers that are used and the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. In this tutorial we use the defaults for simplicity.
 {: tip}
@@ -230,11 +234,11 @@ All services have been configured. In this section you will deploy the tutorial 
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` can be set to the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration. As example:
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This would requires additional Kubernetes configuration (like creating a Docker registry secret in the new namespace). As example, assuming the _default_ Kubernetes namespace:
 
 | Variable | Value |
 | -------- | ----- |
-| `$IMAGE_PULL_SECRET` | *secure-file-storage-cluster* |
+| `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml |
 | `$REGISTRY_URL` | *registry.ng.bluemix.net* |
 | `$REGISTRY_NAMESPACE` | *a-namespace* |
 | `$IMAGE_NAME` | *secure-file-storage* |
@@ -260,6 +264,8 @@ All services have been configured. In this section you will deploy the tutorial 
    ibmcloud ks cluster-service-bind --cluster <cluster-name> --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
+   If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance secure-file-storage-appid`.
+   {: tip}
 1. Deploy the app
    ```sh
    kubectl apply -f secure-file-storage.yaml
@@ -291,6 +297,8 @@ Now that the application and its services have been successfully deployed, you c
 5. From the **Available Fields** add **action_str** and **initiator.name_str**.
 6. Expand interesting entries by clicking the triangle icon, then choosing a table or JSON format.
 
+You can change the settings for the automatic refresh and the displayed time range and thereby change how and what data is analysed.
+{: tip}
 
 ## Remove resources
 {:removeresources}
