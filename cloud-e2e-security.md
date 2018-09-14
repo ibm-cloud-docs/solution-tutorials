@@ -293,6 +293,8 @@ Now that the application and its services have been successfully deployed, you c
 5. From the **Available Fields** add **action_str** and **initiator.name_str**.
 6. Expand interesting entries by clicking the triangle icon, then choosing a table or JSON format.
 
+You can change the settings for the automatic refresh and the displayed time range and thereby change how and what data is analysed.
+{: tip}
 
 ## Remove resources
 {:removeresources}
