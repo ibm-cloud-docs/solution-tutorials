@@ -189,7 +189,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
    * Set the **name** to **secure-file-storage-appid**.
    * Use the same **region** and **resource group** as for the previous services.
 1. Under **Identity Providers / Manage**, add a **web redirect URL** pointing to the domain you will use for the application. Assuming your cluster Ingress subdomain is 
-_&lt;cluster-name&gt;.us-south.containers.appdomain.cloud_, the redirect URL will be ___https://secure-file-storage.&lt;cluster-name&gt;.us-south.containers.appdomain.cloud/appid_callback___. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
+_&lt;cluster-name&gt;.us-south.containers.appdomain.cloud_, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
 
 You should customize the identity providers that are used and the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. In this tutorial we use the defaults for simplicity.
 {: tip}
