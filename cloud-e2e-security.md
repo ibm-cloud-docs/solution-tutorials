@@ -234,11 +234,11 @@ All services have been configured. In this section you will deploy the tutorial 
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` can be set to the name of your cluster and `$TARGET_NAMESPACE` to **default** to avoid additional Kubernetes configuration. As example:
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This would requires additional Kubernetes configuration (like creating a Docker registry secret in the new namespace). As example, assuming the _default_ Kubernetes namespace:
 
 | Variable | Value |
 | -------- | ----- |
-| `$IMAGE_PULL_SECRET` | *secure-file-storage-cluster* |
+| `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml |
 | `$REGISTRY_URL` | *registry.ng.bluemix.net* |
 | `$REGISTRY_NAMESPACE` | *a-namespace* |
 | `$IMAGE_NAME` | *secure-file-storage* |
