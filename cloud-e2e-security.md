@@ -264,6 +264,8 @@ All services have been configured. In this section you will deploy the tutorial 
    ibmcloud ks cluster-service-bind --cluster <cluster-name> --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
+   If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance secure-file-storage-appid`.
+   {: tip}
 1. Deploy the app
    ```sh
    kubectl apply -f secure-file-storage.yaml
