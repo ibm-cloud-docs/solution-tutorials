@@ -132,6 +132,8 @@ The application stores the user files in a {{site.data.keyword.cos_short}} bucke
    * Use the same **resource group** as for the previous services.
 1. Under **Service credentials**, create *New credential*.
    * Set the **name** to **secure-file-storage-cos-acckey**.
+   * Set **Role** to **Writer**
+   * Do not specify a **Service ID**
    * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to get the right set of credentials to be able to generate pre-signed URLs.
    * **Add**.
    * Make note of the credentials you will need them in a later step.
