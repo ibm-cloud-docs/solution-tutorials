@@ -174,6 +174,8 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain a metadata d
    * Set **Available authentication methods** to **Use only IAM**.
 1. Under **Service credentials**, create *New credential*.
    * Set the **name** to **secure-file-storage-cloudant-acckey**.
+   * Set **Role** to **Manager**
+   * Keep the default values for the *Optional* fields
    * **Add**.
 1. Make note of the credentials, you will need them in a later step.
 1. Under **Manage**, launch the Cloudant dashboard.
