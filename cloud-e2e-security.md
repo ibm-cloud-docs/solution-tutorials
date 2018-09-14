@@ -14,7 +14,7 @@ lastupdated: "2018-09-13"
 
 # Apply end to end security to a cloud application
 
-No application architecture is complete without a clear understanding of the security risks it is exposed to and how to protect it against these threats. The application data is a critical resource and can't be lost, compromised, or stolen. It needs to be protected whether at rest or in transit. Encrypting data at rest protects information from disclosure even if that information is lost or stolen. For data in transit — for instance when it is transmitted over the Internet — encryption methods like HTTPS, SSL, and TLS are often used.
+No application architecture is complete without a clear understanding of the security risks it is exposed to and how to protect it against these threats. The application data is a critical resource and can't be lost, compromised, or stolen. It needs to be protected whether at rest or in transit. Encrypting data at rest protects information from disclosure even if that information is lost or stolen. For data in transit — for instance, when it is transmitted over the Internet — encryption methods like HTTPS, SSL, and TLS are often used.
 
 Authenticating users and only authorizing access to specific resources come as another common requirement for many applications. Different authentication schemes may need to be supported: Customers and suppliers log in with social identities, partners log in with cloud-hosted directories, and employees log in with an organization’s identity provider (SAML).
 
