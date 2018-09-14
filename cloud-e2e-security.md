@@ -18,7 +18,7 @@ No application architecture is complete without a clear understanding of the sec
 
 Authenticating users and only authorizing access to specific resources come as another common requirement for many applications. Different authentication schemes may need to be supported: Customers and suppliers log in with social identities, partners log in with cloud-hosted directories, and employees log in with an organization’s identity provider (SAML).
 
-This tutorial walks you through key security services available in the {{site.data.keyword.cloud}} catalog and how to use them together. A file sharing application that allows to shared uploaded files via expiring links serves as sample scenario.
+This tutorial walks you through key security services available in the {{site.data.keyword.cloud}} catalog and how to use them together. A file sharing application that allows to share uploaded files via expiring links serves as sample scenario.
 {:shortdesc}
 
 ## Objectives
