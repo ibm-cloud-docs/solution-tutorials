@@ -11,19 +11,6 @@
       "anchor": "websites",
       "solutions": [
         {
-          "name": "Secure web application across multiple regions",
-          "url": "multi-region-webapp.html?pos=2",
-          "description": "Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
-          "imgSrc": "images/solution1/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Node.js",
-            "Continuous Delivery",
-            "Cloud Internet Services"
-          ],
-          "lastUpdated": "2018-04-28"
-        },
-        {
           "name": "Scalable web app on Kubernetes",
           "url": "scalable-webapp-kubernetes.html",
           "description": "Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
@@ -36,19 +23,6 @@
             "Java"
           ],
           "lastUpdated": "2018-07-24"
-        },
-        {
-          "name": "Resilient and secure multi-region Kubernetes clusters",
-          "url": "multi-region-k8s-cis.html?pos=2",
-          "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
-          "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
-          "tags": [
-            "Kubernetes",
-            "Container Registry",
-            "Cloud Internet Services"
-          ],
-          "featuredPosition": 1,
-          "lastUpdated": "2018-06-12"
         },
         {
           "name": "Analyze logs and monitor the health of Kubernetes applications",
@@ -222,18 +196,6 @@
             "Availability Monitoring"
           ],
           "lastUpdated": "2018-06-19"
-        },
-        {
-          "name": "Create, secure and manage REST APIs",
-          "url": "create-manage-secure-apis.html",
-          "description": "Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.",
-          "imgSrc": "images/solution13/Architecture.png",
-          "tags": [
-            "Cloud Foundry",
-            "Node.js",
-            "API Connect"
-          ],
-          "lastUpdated": "2018-06-05"
         }
       ]
     },
@@ -246,7 +208,6 @@
           "url": "slack-chatbot-database-watson.html?pos=2",
           "description": "Build a database-driven Slackbot with IBM Watson Assistant, Cloudant and IBM Cloud Functions.",
           "imgSrc": "images/solution19/SlackbotArchitecture.png",
-          "featuredPosition": 2,
           "tags": [
             "Cloud Foundry",
             "IBM Watson Assistant",
@@ -270,6 +231,66 @@
             "Android"
           ],
           "lastUpdated": "2018-04-17"
+        }
+      ]
+    },
+    {
+      "name": "Security",
+      "anchor": "security",
+      "solutions": [
+        {
+          "name": "Secure web application across multiple regions",
+          "url": "multi-region-webapp.html?pos=2",
+          "description": "Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
+          "imgSrc": "images/solution1/Architecture.png",
+          "tags": [
+            "Cloud Foundry",
+            "Node.js",
+            "Continuous Delivery",
+            "Cloud Internet Services"
+          ],
+          "lastUpdated": "2018-04-28"
+        },
+        {
+          "name": "Resilient and secure multi-region Kubernetes clusters",
+          "url": "multi-region-k8s-cis.html?pos=2",
+          "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
+          "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
+          "tags": [
+            "Kubernetes",
+            "Container Registry",
+            "Cloud Internet Services"
+          ],
+          "lastUpdated": "2018-06-12"
+        },
+        {
+          "name": "Create, secure and manage REST APIs",
+          "url": "create-manage-secure-apis.html",
+          "description": "Create a new REST API using the LoopBack Node.js API framework. Add management, visibility, security and rate limiting to the API using the API Connect service on IBM Cloud.",
+          "imgSrc": "images/solution13/Architecture.png",
+          "tags": [
+            "Cloud Foundry",
+            "Node.js",
+            "API Connect"
+          ],
+          "lastUpdated": "2018-06-05"
+        },
+        {
+          "name": "Apply end to end security to a cloud application",
+          "url": "cloud-e2e-security.html",
+          "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
+          "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
+          "featuredPosition": 1,
+          "tags": [
+            "Kubernetes",
+            "Encryption",
+            "Security",
+            "App ID",
+            "Cloud Object Storage",
+            "Key Protect",
+            "Activity Tracker"
+          ],
+          "lastUpdated": "2018-09-13"
         }
       ]
     },
@@ -405,7 +426,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-06-11"
+          "lastUpdated": "2018-09-05"
         }
       ]
     },
@@ -426,6 +447,20 @@
             "DevOps"
           ],
           "lastUpdated": "2018-06-05"
+        },
+        {
+          "name": "Reviewing IBM Cloud services, resources and usage",
+          "url": "cloud-usage.html",
+          "featuredPosition": 2,
+          "description": "An introduction to various approaches used to answer common usage-related questions.",
+          "imgSrc": "images/solution38/Architecture.png",
+          "tags": [
+            "Identity and Access Management",
+            "Cloud Foundry",
+            "Usage",
+            "Billing"
+          ],
+          "lastUpdated": "2018-08-07"
         }
       ]
     },

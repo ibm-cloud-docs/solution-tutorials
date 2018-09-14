@@ -9,9 +9,7 @@ Solution Tutorials
 
     {: .topicgroup}
     Websites and Web Apps
-        multi-region-webapp.md
         scalable-webapp-kubernetes.md
-        multi-region-k8s-cis.md
         kubernetes-log-analysis-kibana.md
         vm-to-containers-and-kubernetes.md
         continuous-deployment-to-kubernetes.md
@@ -25,12 +23,18 @@ Solution Tutorials
         sql-database.md
         serverless-api-webapp.md
         application-log-analysis.md
-        create-manage-secure-apis.md
 
     {: .topicgroup}
     Chatbots
         slack-chatbot-database-watson.md
         android-watson-chatbot.md
+
+    {: .topicgroup}
+    Security
+        multi-region-webapp.md
+        multi-region-k8s-cis.md
+        create-manage-secure-apis.md
+        cloud-e2e-security.md
 
     {: .topicgroup}
     Mobile
@@ -53,6 +57,7 @@ Solution Tutorials
     {: .topicgroup}
     Identity and Access Management
         users-teams-applications.md
+        cloud-usage.md
 
     {: .topicgroup}
     Network
@@ -67,15 +72,16 @@ Solution Tutorials
     {: .navgroup id="howto"}
     {: .topicgroup}
     Cloud Foundry
-        multi-region-webapp.md
         static-files-cdn.md
         plan-create-update-deployments.md
         mean-stack.md
         sql-database.md
         application-log-analysis.md
-        create-manage-secure-apis.md
         slack-chatbot-database-watson.md
+        multi-region-webapp.md
+        create-manage-secure-apis.md
         gather-visualize-analyze-iot-data.md
+        cloud-usage.md
 
     {: .topicgroup}
     Cloud Functions
@@ -87,12 +93,13 @@ Solution Tutorials
     {: .topicgroup}
     Kubernetes
         scalable-webapp-kubernetes.md
-        multi-region-k8s-cis.md
         kubernetes-log-analysis-kibana.md
         vm-to-containers-and-kubernetes.md
         continuous-deployment-to-kubernetes.md
         pub-sub-object-storage.md
         plan-create-update-deployments.md
+        multi-region-k8s-cis.md
+        cloud-e2e-security.md
         users-teams-applications.md
 
     {: .topicgroup}

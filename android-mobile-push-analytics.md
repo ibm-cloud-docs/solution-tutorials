@@ -130,7 +130,7 @@ You would also need to generate the `google-services.json` file. Complete the fo
 1. {{site.data.keyword.mobilepushshort}} SDK is already imported into the app and Push initialization code can be found in `MainActivity.java` file.
 
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
-2. Registration for notifications happens in `MainActivity.java`.  (Optional) Provide an unique USER_ID.
+2. Registration for notifications happens in `MainActivity.java`.  (Optional) Provide a unique USER_ID.
 3. Run the app on a physical device or Emulator to receive notifications.
 4. Open {{site.data.keyword.mobilepushshort}} service under **Mobile Services** > **Existing services** on {{site.data.keyword.Bluemix_notm}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
    - Click **Manage** > **Configure**.

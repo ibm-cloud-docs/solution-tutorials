@@ -15,7 +15,7 @@ rm -rf builddocs/output
 git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.git builddocs/output
 
 # retrieve the conref
-(cd builddocs && curl -sSO "https://oauth2:$GITHUB_ENTERPRISE_TOKEN@raw.github.ibm.com/Bluemix-Docs/docs-build/master/markdown/cloudoeconrefs.yml")
+(cd builddocs && curl -sSO "https://oauth2:$GITHUB_ENTERPRISE_TOKEN@raw.github.ibm.com/cloud-doc-build/markdown/master/cloudoeconrefs.yml")
 
 # remove all files from gh-pages
 (cd builddocs/output && git rm -rf .)

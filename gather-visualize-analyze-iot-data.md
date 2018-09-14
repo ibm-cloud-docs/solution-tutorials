@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-11"
+lastupdated: "2018-09-05"
 
 ---
 
@@ -39,7 +39,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 {: #architecture}
 
 <p style="text-align: center;">
-   
+
    ![](images/solution16/Architecture.png)
 </p>
 
@@ -80,7 +80,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    git clone https://github.com/IBM-Cloud/iot-device-phone-simulator
    cd iot-device-phone-simulator
    ```
-2. Open the code in an IDE of your choice and change the `name` and `host` values in the **manifest.yml** file to an unique value.
+2. Open the code in an IDE of your choice and change the `name` and `host` values in the **manifest.yml** file to a unique value.
 3. Push the application to the {{site.data.keyword.Bluemix_notm}}.
    ```bash
    ibmcloud login
@@ -143,31 +143,32 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 ![](images/solution16/watson_studio.png)
 
 ### Create a new project
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **Watson**, select [**{{site.data.keyword.DSX_short}}**](https://console.bluemix.net/catalog/services/data-science-experience).
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **AI**, select [**{{site.data.keyword.DSX_short}}**](https://console.bluemix.net/catalog/services/data-science-experience).
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
-3. Create a **New Project** > Select **Jupyter Notebooks** and enter `Detect Anomaly` as the **Name**.
+3. Create a **New Project** > Select **Data Science** and enter `Detect Anomaly` as the **Name**.
    ![](images/solution16/new_project.png)
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
-5. Under **Define Storage**, Click on **Add** and choose an existing object storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
+5. Under **Define Storage**, Click on **Add** and choose an existing **Cloud Object Storage** service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Connection to {{site.data.keyword.cloudant_short_notm}} for data
 
 1. Click on **Assets** > **+ Add to Project** > **Connection**  
 2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
-3. Check the **Credentials** then click **Create**
+3. Check the **Credentials** then click **Create**.
 
 ### Create a Jupyter (ipynb) notebook
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **Data & Analytics**, select [**Apache Spark**](https://console.bluemix.net/catalog/services/apache-spark?bss_account=3d40d897302501f3391c73e3029701f3&taxonomyNavigation=data) Lite Plan > Click **Create**.
-2. Navigate to http://dataplatform.ibm.com, Open the project you created above. Under **Assets** in your project, Click **New notebook** > **From URL**.
-3. Enter `Anomaly-detection-sample` for the **Name**.
-4. Enter `https://raw.githubusercontent.com/IBM-Cloud/iot-device-phone-simulator/master/anomaly-detection/Anomaly-detection-DSX.ipynb` in the URL.
-5. Select the Apache Spark you created above as your runtime.
-6. **Create Notebook**.
+1. Click **Services** on the top navigation bar > Compute Services.
+2. Click **Add** under Apache Spark > Select Lite plane and **Create**.
+3. Select a space, change the service name if you want to and **Confirm**.
+4. Navigate to the `Detect Anomaly` project through **Projects** and click **New notebook**.
+5. Enter `Anomaly-detection-sample` for the **Name**.
+6. Enter `https://raw.githubusercontent.com/IBM-Cloud/iot-device-phone-simulator/master/anomaly-detection/Anomaly-detection-DSX.ipynb` in the **Notebook URL**.
+7. Select the Apache Spark you created above as your runtime. 
+8. **Create Notebook**. Set `Python 2 with Spark 2.1` as your Kernel.
    Check that the notebook is created with metadata and code.
    ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_dsx.png)
-
-   Recommended version for this notebook is `Python 2 with Spark 2.1`. To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
+   To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
    {:tip}
 
 ### Run the notebook and detect anomalies   
