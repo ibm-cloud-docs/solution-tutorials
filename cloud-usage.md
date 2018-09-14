@@ -46,10 +46,10 @@ Prior to executing commands that inventory and detail {{site.data.keyword.cloud_
 Cloud Foundry is an open-source, platform-as-a-service (PaaS) on {{site.data.keyword.cloud_notm}} that enables you to deploy and scale applications and **Services** without managing servers. Cloud Foundry organizes applications and services into orgs or spaces.  An **Org** is a development account that one or many users can own and use. An org can contain multiple spaces. Each **Space** provides users with access to a shared location for application development, deployment, and maintenance.
 
 ### Identity and Access Management
-IBM Cloud Identity and Access Management (IAM) enables you to securely authenticate users for both platform services and control access to resources consistently across the {{site.data.keyword.cloud_notm}} platform. More recent offerings and migrated Cloud Foundry services exist as **Resources** managed by {{site.data.keyword.cloud_notm}} Identity and Access Management. Resources are organized into **Resource Groups** and provide access control through Policies and Roles. Additionally, resources can be tagged to conceptually group resources for tracking purposes.
+IBM Cloud Identity and Access Management (IAM) enables you to securely authenticate users for both platform services and control access to resources consistently across the {{site.data.keyword.cloud_notm}} platform. More recent offerings and migrated Cloud Foundry services exist as **Resources** managed by {{site.data.keyword.cloud_notm}} Identity and Access Management. Resources are organized into **Resource Groups** and provide access control through Policies and Roles.
 
 ### Infrastructure
-Infrastructure encompasses a variety of compute options: bare metal servers, virtual server instances and Kubernetes nodes. Each are seen as a **Device** in the console. Similar to resources, devices can be tagged.
+Infrastructure encompasses a variety of compute options: bare metal servers, virtual server instances and Kubernetes nodes. Each are seen as a **Device** in the console.
 
 ### Account
 The aforementioned artifacts are associated with an **Account** for billing purposes. **Users** are invited to the account and given access to the different resources within the account.
@@ -61,8 +61,7 @@ To view Cloud inventory and usage, you will need the appropriate roles assigned 
 2. The account administrator can select your name from the list of users in the account to assign appropriate permissions.
 3. On the **Access policies** tab, click the **Assign Access** button and perform the following changes.
     1. Select the **Assign access within a resource group** tile. Select the **Resource group(s)** to be granted access to and apply the **Viewer** role. Finish by clicking the **Assign** button. This role is required for the `resource groups` and `billing resource-group-usage` commands.
-    2. Select the **Assign access to resources** tile. Select **All Identity and Access enabled services** in the **Services** dropdown menu. Check the **Editor** role under **Assign platform access roles**. This role is required for the `resource create-tag` command.
-    3. Select the **Assign access by using Cloud Foundry** tile. Select the overflow menu next to each **Organization** to be granted access. Select **Edit organization role** from the menu. Select **Billing Manager** from the **Organization roles** list. Finish by clicking the **Save role** button. This role is required for the `billing org-usage` command.
+    2. Select the **Assign access by using Cloud Foundry** tile. Select the overflow menu next to each **Organization** to be granted access. Select **Edit organization role** from the menu. Select **Billing Manager** from the **Organization roles** list. Finish by clicking the **Save role** button. This role is required for the `billing org-usage` command.
 
 ## Locate resources with the search command
 {: #search}
