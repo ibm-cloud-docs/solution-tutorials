@@ -18,7 +18,7 @@ lastupdated: "2018-09-18"
 
 # Resilient and secure multi-region Kubernetes clusters with Cloud Internet Services
 
-Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resilience, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
+Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
 
 This tutorial highlights how Cloud Internet Services (CIS), a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications, can be integrated with Kubernetes clusters to support this scenario and to deliver a secure and resilient solution across multiple regions. 
 
@@ -75,7 +75,7 @@ To create a cluster:
 1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create).
 1. Set **Region** to **US South**.
 1. Select **Standard** cluster.
-1. Select one or more zones as **Location**. Selecting a multi-zone cluster option will increase the cost, but it will add additional resilience by having your cluster nodes running across multiple zones within a region. 
+1. Select one or more zones as **Location**. Selecting a multi-zone add additional resiliency to the application, users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://console.bluemix.net/docs/containers/cs_clusters_planning.html#ha_clusters).
 1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
 1. Use **2** worker nodes. 
 1. Set **Cluster name** to **my-us-cluster**. Use the naming pattern *`my-<region>-cluster`* to be consistent with this tutorial.
