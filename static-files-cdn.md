@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-09-19"
 
 ---
 
@@ -14,7 +14,7 @@ lastupdated: "2018-06-05"
 
 # Accelerate delivery of static files using a CDN
 
-This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [Content Delivery Network (CDN)](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
+This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
 
 Web applications have different types of content: HTML content, images, videos, cascading style sheets, JavaScript files, user-generated content. Some contents change often, others not so much, some are accessed very often by lot of users, others occasionally. As the audience for the application grows, you may want to offload serving these contents to another component, freeing resources for your main application. You may also want to have these contents served from a location close to your application users, wherever they are in the world.
 
@@ -27,7 +27,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 {: #objectives}
 
 * Upload files to a {{site.data.keyword.cos_full_notm}} bucket.
-* Make content globally available with a CDN.
+* Make content globally available with a Content Delivery Network (CDN).
 * Expose files by using a Cloud Foundry web application.
 
 ## Services used
@@ -35,7 +35,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 
 This tutorial uses the following products:
    * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
-   * [Content Delivery Network](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai)
+   * [{{site.data.keyword.cdn_full}}](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -150,26 +150,22 @@ In this section, you will create a CDN service. The CDN service distributes cont
 
 ### Create a CDN instance
 
-1. Go to the catalog in the console, and select **Content Delivery Network** from the Network section. This CDN is powered by Akamai.
-2. Create a Content Delivery Network instance.
-3. Select **Akamai** as the CDN Provider and click **Start Provision**.
-
-### Configure the CDN instance
-
-1. Set the **hostname** for the CDN to your custom domain. Although you set a custom domain, you can still access the CDN contents through the IBM provided CNAME. So if you don't plan to use custom domain, you can set an arbitrary name.
-2. Set the **Custom CNAME** prefix. Do not use dots "." in the name.
-3. Leave the path empty.
-4. Select **Object Storage** as Origin.
-5. Set the endpoint to your bucket API endpoint, such as *s3-api.us-geo.objectstorage.softlayer.net*.
-6. Set the bucket name to *your-bucket-name*.
+1. Go to the catalog in the console, and select **Content Delivery Network** from the Network section. This CDN is powered by Akamai. Click **Create**.
+2. On the next dialog, set the **Hostname** for the CDN to your custom domain. Although you set a custom domain, you can still access the CDN contents through the IBM provided CNAME. So if you don't plan to use custom domain, you can set an arbitrary name.
+3. Set the **Custom CNAME** prefix to a unique value.
+4. Next, under **Configure your origin**, select **Object Storage** to configure the CDN for COS.
+5. Set the **Endpoint** to your bucket API endpoint, such as *s3-api.us-geo.objectstorage.softlayer.net*.
+6. Leave **Host header** and **Path** empty. Set **Bucket name** to *your-bucket-name*.
 7. Enable both HTTP (80) and HTTPS (443) ports.
-8. Click **Create**.
+8. For **SSL certificate** select *DV SAN Certificate* if you want to use a custom domain. Else, for accessing the storage via CNAME, pick the **Wildcard Certificate* option.
+9. Click **Create**.
 
 ### Access your content through the CDN CNAME
 
 1. Select the CDN instance in the list at [https://control.bluemix.net/network/cdn](https://control.bluemix.net/network/cdn).
-2. The Details panel shows the CNAME for your CDN.
-3. Access your file with `https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png`. If you omit the file name, you should see the S3 ListBucketResult instead.
+2. If you earlier picked *DV SAN Certificate*, you will be prompted for domain validation once the inital setup is completed. Follow the steps shown when clicking on **View domain validation**.
+3. The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
+4. Access your file with `https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png` or, if you are using a custom domain, `https://your-cdn-hostname/a-picture.png`. If you omit the file name, you should see the S3 ListBucketResult instead.
 
 ## Deploy the Cloud Foundry application
 
