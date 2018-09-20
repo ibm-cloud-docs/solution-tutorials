@@ -92,6 +92,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 3. Once added, you should see `iris_initial.csv` under the **Data assets** section of the project. Click on the name to see the contents of the data set.
 
 ## Associate services
+{:#associate_services}
 1. Under **Settings**, scroll to **Associated services** > click  **Add service** > choose  **Spark**.
    ![](images/solution22-build-machine-learning-model/associate_services.png)
 2. Select **Lite** plan and click **Create**. Use the default values and click **Confirm**.
