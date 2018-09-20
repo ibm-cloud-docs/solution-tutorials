@@ -75,7 +75,7 @@ To create a cluster:
 1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create).
 1. Set **Region** to **US South**.
 1. Select **Standard** cluster.
-1. Select one or more zones as **Location**. Selecting a multi-zone add additional resiliency to the application, users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://console.bluemix.net/docs/containers/cs_clusters_planning.html#ha_clusters).
+1. Select one or more zones as **Location**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://console.bluemix.net/docs/containers/cs_clusters_planning.html#ha_clusters).
 1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
 1. Use **2** worker nodes. 
 1. Set **Cluster name** to **my-us-cluster**. Use the naming pattern *`my-<region>-cluster`* to be consistent with this tutorial.
