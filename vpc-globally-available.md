@@ -16,7 +16,8 @@ lastupdated: "2018-10-15"
 {:tip: .tip}
 {:pre: .pre}
 
-# TUTORIAL TITLE
+# VPC with globally available deployment
+
 This tutorial...
 {:shortdesc}
 
