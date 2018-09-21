@@ -18,14 +18,17 @@ lastupdated: "2018-10-15"
 
 # VPC with globally available deployment
 
-This tutorial...
+VPC to isolate workloads
+Load balancer to increase resiliency within a region and globally
+
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+* Deploy a 3-tier application to multiple regions and zones
+* Use a load balancer between zones
+* Use a global load balancer between regions
 
 ## Services used
 {: #services}
@@ -56,70 +59,9 @@ intro sentence
 * [Install Git](https://git-scm.com/)
 * [IBM Cloud Developer Tools](https://console.bluemix.net/docs/cli/index.html#overview) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 
-## Create services
-{: #setup}
+## Create VPC
 
-In this section, you will create the services required to ...
-
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#install_use).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [Service A](https://console.bluemix.net/catalog/services/the-service-name).
-  ```sh
-  ibmcloud resource service-instance-create service-instance-name service-name lite global
-  ```
-3. Create an instance of [Service B](https://console.bluemix.net/catalog/services/the-service-name).
-
-## Solution Specific Section
-{: #section_one}
-
-Introductory statement that overviews the section
-
-1. Step 1 Click **This** and enter your name.
-
-  This is a tip.
-  {:tip}
-
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
-
-### A sub section
-
-   ```bash
-   some shellscript
-   ```
-   {: pre}
-
-
-This paragraph only appears in the iOS documentation
-{: ios}
-
-And this paragraph only appears in the Android documentation
-{: android}
-
-This paragraph only appears for Java code
-{: java}
-
-And this paragraph only appears for Swift code
-{: swift}
-
-
-## Another Solution Specific Section
-{: #section_two}
-
-Introductory statement that overviews the section
-
-### Another sub section
+??? If the terraform provider is available, it might be good to use it given the number of elements we need to create. The other option it to use scripting. This tutorial basically deploys the other vpc tutorial in multiple zones/regions.
 
 ## Remove resources
 {: #removeresources}
