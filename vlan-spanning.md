@@ -37,8 +37,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 * [{{site.data.keyword.virtualmachinesshort}}]( https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 * [VLAN Spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning)
 
-This tutorial might incur costs. The VRA is only available on a monthly pricing plan. Use the [Pricing Calculator](https://console.bluemix.net/pricing/)  to generate a cost estimate based on your projected usage.
-
+This tutorial might incur costs. The VRA is only available on a monthly pricing plan.
 
 ## Architecture
 {: #architecture}

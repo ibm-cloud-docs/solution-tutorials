@@ -41,7 +41,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 * [Load Balancer]( https://console.bluemix.net/catalog/infrastructure/load-balancer-group)
 * [{{site.data.keyword.virtualmachinesshort}}]( https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage. The VRA is only available on a monthly pricing plan.
+This tutorial may incur costs. The VRA is only available on a monthly pricing plan.
 
 ## Architecture
 {: #architecture}

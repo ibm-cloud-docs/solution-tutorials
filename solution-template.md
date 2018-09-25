@@ -52,8 +52,7 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
-* [Install Git](https://git-scm.com/)
-* [IBM Cloud Developer Tools](https://console.bluemix.net/docs/cli/index.html#overview) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
+1. Install all the necessary command line (CLI) tools by [following these steps](https://console.bluemix.net/docs/cli/index.html#overview).
 
 ## Create services
 {: #setup}

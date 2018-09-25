@@ -49,7 +49,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 * [Virtual Router Appliance VPN](../infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage. The VRA is only available on a monthly pricing plan.
+This tutorial may incur costs. The VRA is only available on a monthly pricing plan.
 
 ## Architecture
 {: #architecture}
