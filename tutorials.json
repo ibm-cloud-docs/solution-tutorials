@@ -80,7 +80,7 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-06-05"
+          "lastUpdated": "2018-09-19"
         },
         {
           "name": "Asynchronous data processing using object storage and pub/sub messaging",
@@ -261,7 +261,7 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2018-06-12"
+          "lastUpdated": "2018-09-18"
         },
         {
           "name": "Create, secure and manage REST APIs",
@@ -290,7 +290,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2018-09-13"
+          "lastUpdated": "2018-09-14"
         }
       ]
     },
@@ -322,7 +322,7 @@
             "Push Notifications",
             "Mobile Analytics"
           ],
-          "lastUpdated": "2018-06-07"
+          "lastUpdated": "2018-10-01"
         },
         {
           "name": "Hybrid mobile application with Push and Analytics",
@@ -393,7 +393,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2018-06-11"
+          "lastUpdated": "2018-09-18"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -460,7 +460,7 @@
             "Usage",
             "Billing"
           ],
-          "lastUpdated": "2018-08-07"
+          "lastUpdated": "2018-09-13"
         }
       ]
     },
