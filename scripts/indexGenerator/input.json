@@ -212,7 +212,6 @@
                     "IBM Watson Assistant",
                     "Speech to Text",
                     "Text to Speech",
-                    "Mobile Analytics",
                     "Android"
                 ]
             }
@@ -279,38 +278,35 @@
         "anchor": "mobile",
         "solutions": [
             {
-                "name": "iOS mobile app with Push Notifications and Analytics",
+                "name": "iOS mobile app with Push Notifications",
                 "url": "ios-mobile-push-analytics.html",
-                "description": "Create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
+                "description": "Create an iOS Swift application with Push Notifications on IBM Cloud.",
                 "imgSrc": "images/solution6/Architecture.png",
                 "tags": [
                     "iOS",
                     "Swift",
-                    "Push Notifications",
-                    "Mobile Analytics"
+                    "Push Notifications"
                 ]
             },
             {
-                "name": "Android native mobile app with Push Notifications and Analytics",
+                "name": "Android native mobile app with Push Notifications",
                 "url": "android-mobile-push-analytics.html",
-                "description": "Write an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
+                "description": "Write an Android native application with Push Notifications on IBM Cloud.",
                 "imgSrc": "images/solution9/Architecture.png",
                 "tags": [
                     "Android",
                     "Java",
-                    "Push Notifications",
-                    "Mobile Analytics"
+                    "Push Notifications"
                 ]
             },
             {
-                "name": "Hybrid mobile application with Push and Analytics",
+                "name": "Hybrid mobile application with Push Notifications",
                 "url": "hybrid-mobile-push-analytics.html",
-                "description": "Develop a hybrid Cordova application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
+                "description": "Develop a hybrid Cordova application with Push Notifications on IBM Cloud.",
                 "imgSrc": "images/solution15/Architecture.png",
                 "tags": [
                     "Cordova",
-                    "Push Notifications",
-                    "Mobile Analytics"
+                    "Push Notifications"
                 ]
             },
             {
