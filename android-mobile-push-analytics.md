@@ -16,7 +16,7 @@ lastupdated: "2018-10-01"
 
 Learn how easy it is to quickly create a native Android application with high-value mobile service like {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_notm}}.
 
-This tutorial walks you through the creation of a mobile starter application, adding mobile service(s), setting up client SDKs, importing the code to Android Studio and then further enhancing the application.
+This tutorial walks you through the creation of a mobile starter application, adding a mobile service, setting up client SDK, importing the code to Android Studio and then further enhancing the application.
 
 ## Objectives
 {: #objectives}
@@ -52,6 +52,7 @@ The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track
     ![](images/solution9/create_mobile_project.png)
 5. Click on **Add Resource** > Mobile > **Push Notifications** and select the region you want to provision the service, resource group and **Lite** pricing plan.
 6. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** tab.
+
     **Note:** {{site.data.keyword.mobilepushshort}} service should be added with the Empty Starter.
     In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
