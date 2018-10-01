@@ -50,7 +50,7 @@ The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track
 2. Click on **Starter Kits** and click on **Create App**.
     ![](images/solution15/mobile_dashboard.png)
 3. Enter a project name, this can be your app name as well.
-4. Select **Cordova** as your language and click **Create**.
+4. Select **Cordova** as your platform and click **Create**.
 
     ![](images/solution15/create_cordova_project.png)
 5. Click on **Add Resource** > Mobile > **Push Notifications** and select the region you want to provision the service, resource group and **Lite** pricing plan.

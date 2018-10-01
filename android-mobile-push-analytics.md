@@ -47,7 +47,7 @@ The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track
 2. Click on **Starter Kits** and click on **Create App**.
     ![](images/solution9/mobile_dashboard.png)
 3. Enter an app name, this can be your android project name as well.
-4. Select **Android** as your language and click **Create**.
+4. Select **Android** as your platform and click **Create**.
 
     ![](images/solution9/create_mobile_project.png)
 5. Click on **Add Resource** > Mobile > **Push Notifications** and select the region you want to provision the service, resource group and **Lite** pricing plan.

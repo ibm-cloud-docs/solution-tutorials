@@ -52,7 +52,7 @@ This tutorial uses the following products:
 2. Click on **Starter Kits** and scroll down to select **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
 3. Enter an app name which will also be the Xcode project and app name.
-4. Select `iOS Swift` as your language and click **Create**.
+4. Select `iOS Swift` as your platform and click **Create**.
     ![](images/solution6/create_mobile_project.png)
 5. Click on **Add Resource** > Mobile > **Push Notifications** and select the region you want to provision the service, resource group and **Lite** pricing plan.
 6. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** tab.
