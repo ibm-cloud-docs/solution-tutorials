@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-10-01"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -17,18 +17,17 @@ lastupdated: "2018-04-17"
 
 # Build a voice-enabled Android chatbot
 
-Learn how easy it is to quickly create a voice-enabled Android-native chatbot with {{site.data.keyword.conversationshort}}, {{site.data.keyword.texttospeechshort}}, {{site.data.keyword.speechtotextshort}} and mobile analytics services on {{site.data.keyword.Bluemix_short}}.
+Learn how easy it is to quickly create a voice-enabled Android-native chatbot with {{site.data.keyword.conversationshort}}, {{site.data.keyword.texttospeechshort}} and {{site.data.keyword.speechtotextshort}} services on {{site.data.keyword.Bluemix_short}}.
 
-This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer queries. You will learn how to enable {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services for easy interaction with the Android app. Also, track the app's usage metrics through {{site.data.keyword.mobileanalytics_short}} service.
+This tutorial walks you through the process of defining intents and entities and building a dialog flow for your chatbot to respond to customer queries. You will learn how to enable {{site.data.keyword.speechtotextshort}} and {{site.data.keyword.texttospeechshort}} services for easy interaction with the Android app.
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-- Create a chatbot: create a workspace, define an intent and entity, build the dialog flow
-- Allow end users to interact with chatbot using voice and audio
-- Configure and run the Android app
-- Add {{site.data.keyword.mobileanalytics_short}} to track usage
+- Create a chatbot: create a workspace, define an intent and entity, build the dialog flow.
+- Allow end users to interact with chatbot using voice and audio.
+- Configure and run the Android app.
 
 ## Services used
 {: #services}
@@ -38,7 +37,6 @@ This tutorial uses the following products:
 - [{{site.data.keyword.conversationfull}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation)
 - [{{site.data.keyword.speechtotextfull}}](https://console.bluemix.net/catalog/services/speech-to-text)
 - [{{site.data.keyword.texttospeechfull}}](https://console.bluemix.net/catalog/services/text-to-speech)
-- [{{site.data.keyword.mobileanalytics_full}}](https://console.bluemix.net/catalog/services/mobile-analytics)
 
 ## Architecture
 {: #architecture}
@@ -186,22 +184,6 @@ The repository contains Android application code with required gradle dependenci
    ![](images/solution28-watson-chatbot-android/android_studio.png)
 8. Click the **mic** icon in the left bottom corner of the app to input speech that gets converted to text and then can be sent to {{site.data.keyword.conversationshort}} service by clicking the arrow icon.
 
-## Add {{site.data.keyword.mobileanalytics_short}} to track usage
-{:#mobile_analytics}
-
-The {{site.data.keyword.mobileanalytics_short}} service provides key application usage and performance insights for mobile application developers and application owners. By using {{site.data.keyword.mobileanalytics_short}} application owners and developers can understand what is happening on the user side, and they can use this insight to build better applications that are relevant to users and that stand out in the veritable sea of mobile applications.
-
-The service includes the {{site.data.keyword.mobileanalytics_short}} Console where developers and application owners can monitor mobile application performance, see usage statistics, and search device logs.
-
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.mobileanalytics_short}}](https://console.bluemix.net/catalog/services/mobile-analytics) service > **Lite** plan under **Mobile**. Click **Create**.
-2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
-3. Click **View Credentials** to see the credentials and copy the `apiKey` value.
-4. In Android studio, open `app/src/main/res/values/config.xml` and update the `mobileanalytics_apikey` string value.
-5. On line 106 of `app/src/main/java/com/example/vmac/WatBot/MainActivity.java`, change the BMSClient region to the region in which the {{site.data.keyword.mobileanalytics_short}} service is created.
-6. Build and run the Android chatbot app.
-7. Click **Manage** in the {{site.data.keyword.mobileanalytics_short}} service dashboard to see Users, Sessions, Troubleshooting and other App Data.
-   ![](images/solution28-watson-chatbot-android/mobile_analytics.png)
-
 
 ## Remove resources
 {:removeresources}
@@ -214,7 +196,6 @@ The service includes the {{site.data.keyword.mobileanalytics_short}} Console whe
 {:related}
 
 - [Creating entities, Synonyms, System entities](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities)
-- [Monitoring an Android app with Mobile Analytics](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#monitoring-the-app-with-mobile-analytics-)
 - [Planning your Intents and Entities](https://console.bluemix.net/docs/services/conversation/intents-entities.html#planning-your-entities)
 - [Context Variables](https://console.bluemix.net/docs/services/conversation/dialog-runtime.html#context)
 - [Building a complex dialog](https://console.bluemix.net/docs/services/conversation/tutorial.html#tutorial)
