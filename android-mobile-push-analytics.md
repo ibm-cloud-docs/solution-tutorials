@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-07"
+lastupdated: "2018-10-01"
 
 ---
 
@@ -12,27 +12,26 @@ lastupdated: "2018-06-07"
 {:tip: .tip}
 {:pre: .pre}
 
-# Android native mobile application with Push and Analytics
+# Android native mobile application with Push Notifications
 
-Learn how easy it is to quickly create a native Android application with high-value mobile services like {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} on {{site.data.keyword.Bluemix_notm}}.
+Learn how easy it is to quickly create a native Android application with high-value mobile service like {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_notm}}.
 
-This tutorial walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, importing the code to Android Studio and then further enhancing the application.
+This tutorial walks you through the creation of a mobile starter application, adding a mobile service, setting up client SDK, importing the code to Android Studio and then further enhancing the application.
 
 ## Objectives
+{: #objectives}
 
-* Create a mobile app with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services.
+* Create a mobile app with {{site.data.keyword.mobilepushshort}} service.
 * Obtain FCM credentials.
 * Download the code and complete required setup.
-* Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}.
 * Configure, send, and monitor {{site.data.keyword.mobilepushshort}}.
-* Monitoring the app with {{site.data.keyword.mobileanalytics_short}}.
 
- ![](images/solution9/Architecture.png)
+![](images/solution9/Architecture.png)
 
 ## Products
+{: #products}
 
 This tutorial uses the following products:
-   * [{{site.data.keyword.mobileanalytics_full}}](https://console.bluemix.net/catalog/services/mobile-analytics)
    * [{{site.data.keyword.pushfull}}](https://console.bluemix.net/catalog/services/push-notifications)
 
 ## Before you begin
@@ -45,23 +44,25 @@ This tutorial uses the following products:
 {: #get_code}
 The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your app from a Starter Kit.
 1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard)
-2. Click on **Starter Kits** and scroll down to select the **Basic** Starter Kit.
+2. Click on **Starter Kits** and click on **Create App**.
     ![](images/solution9/mobile_dashboard.png)
 3. Enter an app name, this can be your android project name as well.
-4. Select **Android** as your language and check the mobile services on the right pane.
+4. Select **Android** as your platform and click **Create**.
 
     ![](images/solution9/create_mobile_project.png)
-5. Click on **Create** to scaffold an Android (Java) App.
-6. A new App will be created under **Apps** tab on the left pane.
-    **Note:** {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} Services should be added with the Basic Starter.
+5. Click on **Add Resource** > Mobile > **Push Notifications** and select the region you want to provision the service, resource group and **Lite** pricing plan.
+6. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** tab.
+
+    **Note:** {{site.data.keyword.mobilepushshort}} service should be added with the Empty Starter.
     In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
-In the next step, you will download the scaffolded code and setup the Push and Analytics Android SDKs.
+In the next step, you will download the scaffolded code and setup the Push Android SDK.
 
 ## Download the code and complete required setup
+{: #download_code}
 
 If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_notm}} Mobile dashboard to get the code by clicking on the  **Download Code** button under Apps > **Your Mobile App**.
-The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{{site.data.keyword.mobileanalytics_short}}** client SDKs included. The client SDKs is available on Gradle and Maven. For this tutorial, you will use **Gradle**.
+The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client SDK included. The client SDK is available on Gradle and Maven. For this tutorial, you will use **Gradle**.
 
 1. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.
 2. **Gradle** build will automatically be triggered and all the dependencies will be downloaded.
@@ -73,26 +74,8 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
 5. The required permissions are all inside the `AndroidManifest.xml` file and dependencies. Push and Analytics are included in **build.gradle (Module: app)**.
 6. **Firebase Cloud Messaging (FCM)** intent service and intent filters for the `RECEIVE` and `REGISTRATION` event notifications are included in `AndroidManifest.xml`
 
-## Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}
-
-1. In Android Studio, navigate to `MainActivity.java`. You should see the `import` statements already added
-2. The code includes `BMSClient` initialization code with the `Region` parameter. In the initializer, the `Region` value specifies which {{site.data.keyword.Bluemix_notm}} deployment you are using, for example, `BMSClient.REGION_US_SOUTH` and `BMSClient.REGION_UK`.
-    **Note:** Core SDK must be initialized to interact with {{site.data.keyword.Bluemix_notm}} Mobile services.
-3. In this code snippet, Analytics is configured to record lifecycle events. Both `app_name` and `apiKey` are pre-configured as part of the code generation process.
-   ```
-   Analytics.init(getApplication(), "your_app_name_here", apiKey, hasUserContext, Analytics.DeviceEvent.ALL);
-   ```
-    **Note:** The service credentials are part of `/res/values/credentials.xml` file.
-4. The code below enables `Logger` (disabled by default), and sets the logLevel to ERROR (DEBUG by default).
-   ```
-   Logger.storeLogs(true);
-   Logger.setLogLevel(Logger.LEVEL.ERROR);
-   ```
-
-For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger)
-{:tip}
-
 ## Obtain FCM credentials
+{: #obtain_fcm_credentials}
 
 Firebase Cloud Messaging (FCM) is the gateway used to deliver {{site.data.keyword.mobilepushshort}} to Android devices, Google Chrome browser, and Chrome Apps & Extensions. To set up the {{site.data.keyword.mobilepushshort}} service on the console, you need to get your FCM credentials (Sender ID and API key).
 
@@ -127,6 +110,8 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
 ## Configure, send and monitor {{site.data.keyword.mobilepushshort}}
 
+{: #configure_push}
+
 1. {{site.data.keyword.mobilepushshort}} SDK is already imported into the app and Push initialization code can be found in `MainActivity.java` file.
 
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
@@ -151,24 +136,10 @@ You would also need to generate the `google-services.json` file. Complete the fo
      The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent {{site.data.keyword.mobilepushshort}}, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
       ![](images/solution6/monitoring_messages.png)
 
-## Monitoring the app with {{site.data.keyword.mobileanalytics_short}}.
-
-You can record application logs and monitor data with the {{site.data.keyword.mobileanalytics_short}} Client SDK. Developers can control when to send this data to the {{site.data.keyword.mobileanalytics_short}} Service. When data is delivered to {{site.data.keyword.mobileanalytics_short}}, you can use the {{site.data.keyword.mobileanalytics_short}} console to get analytics insights about your mobile applications, devices, and application logs.
-1. Open the **{{site.data.keyword.mobileanalytics_short}}** service from the mobile app you created or click on the three vertical dots next to the service and select **Open Dashboard**.
-2. You should see LIVE Users, Sessions and other App Data by disabling **Demo Mode**. You can filter the analytics information by
-   - Date.
-   - Application.
-   - Operating System.
-   - Version of the app.
-
-     ![](images/solution9/android_mobile_analytics.png)
-3. [Click here](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#monitoringapps) to set alerts, monitor app crashes, and monitor network requests.
-
 ## Related Content
-
+{: #related_content}
 - [Customize the {{site.data.keyword.mobilepushshort}} settings](https://console.bluemix.net/docs/services/mobilepush/push_step_4.html#push_step_4_Android)
 - [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
 - [{{site.data.keyword.mobilepushshort}} REST APIs](https://console.bluemix.net/docs/services/mobilepush/push_restapi.html#push-api-rest)
 - [Security in {{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
-- [Exporting Analytics data to Db2 Warehouse](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#dashdb)
 

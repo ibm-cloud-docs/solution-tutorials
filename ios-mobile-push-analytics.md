@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-08"
+lastupdated: "2018-10-01"
 
 ---
 
@@ -16,11 +16,11 @@ lastupdated: "2018-05-08"
 {:tip: .tip}
 {:pre: .pre}
 
-# iOS mobile application with Push and Analytics
+# iOS mobile application with Push Notifications
 
-Learn how easy it is to quickly create an iOS Swift application with high-value mobile services - {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} on {{site.data.keyword.Bluemix_short}}.
+Learn how easy it is to quickly create an iOS Swift application with high-value mobile service {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_short}}.
 
-This tutorial walks you through the creation of a mobile starter application, adding mobile services, setting up client SDKs, importing the code to Xcode and then further enhance the application.
+This tutorial walks you through the creation of a mobile starter application, adding a mobile service, setting up client SDK, importing the code to Xcode and then further enhance the application.
 {:shortdesc: .shortdesc}
 
 ## Objectives
@@ -28,10 +28,8 @@ This tutorial walks you through the creation of a mobile starter application, ad
 
 - Create a mobile app with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services from Basic Swift starter kit.
 - Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
-- Download the code and setup client SDKs.
-- Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}.
+- Download the code and setup client SDK.
 - Send and monitor {{site.data.keyword.mobilepushshort}}.
-- Monitoring the app with {{site.data.keyword.mobileanalytics_short}}.
 
   ![](images/solution6/Architecture.png)
 
@@ -39,8 +37,7 @@ This tutorial walks you through the creation of a mobile starter application, ad
 {:#products}
 
 This tutorial uses the following products:
-   * [{{site.data.keyword.mobilepushfull}}](https://console.bluemix.net/catalog/services/mobile-analytics)
-   * [{{site.data.keyword.mobileanalytics_full}}](https://console.bluemix.net/catalog/services/push-notifications)
+   * [{{site.data.keyword.pushfull}}](https://console.bluemix.net/catalog/services/push-notifications)
 
 ## Before you begin
 {: #prereqs}
@@ -55,16 +52,18 @@ This tutorial uses the following products:
 2. Click on **Starter Kits** and scroll down to select **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
 3. Enter an app name which will also be the Xcode project and app name.
-4. Select `iOS-Swift` as your language and check the mobile services on the right pane.
-    ![](images/solution6/create_new_project.png)
-5. Click on **Create** to scaffold an iOS Swift App.
-6. A new App will be created under **Apps** tab on the left pane.
+4. Select `iOS Swift` as your platform and click **Create**.
+    ![](images/solution6/create_mobile_project.png)
+5. Click on **Add Resource** > Mobile > **Push Notifications** and select the region you want to provision the service, resource group and **Lite** pricing plan.
+6. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** tab.
 
-​      **Note:** {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} Services should already be added with the Basic Starter.
+​      **Note:** {{site.data.keyword.mobilepushshort}} service should already be added with the Empty Starter.
 
 ## Download the code and setup client SDKs
+{: #download_code}
+
 If you haven't downloaded the code yet, Click on `Download Code` under Apps > `Your Mobile App`
-The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{{site.data.keyword.mobileanalytics_short}}** Client SDKs included. The Client SDKs are available on CocoaPods and Carthage. For this solution, you will use CocoaPods.
+The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client SDK included. The Client SDK is available on CocoaPods and Carthage. For this solution, you will use CocoaPods.
 
 1. To install CocoaPods on your machine, Open the `Terminal` and run the below command.
    ```
@@ -84,41 +83,8 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** and **{
   ```
   {: pre:}
 
-
-## Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}
-
-1. Open `.xcworkspace` in Xcode and navigate to `AppDelegate.swift`.
-  **Note:** Ensure that you always open the new Xcode workspace, instead of the original Xcode project file: `MyApp.xcworkspace`.
-   ![](images/solution6/Xcode.png)
-
-  `BMSCore` is the Core SDK and is base for the Mobile Client SDKs. `BMSClient` is a class of BMSCore and initialized in AppDelegate.swift. Along with BMSCore, {{site.data.keyword.mobileanalytics_short}} SDK is already imported into the project.
-2. Analytics initialization code is already included as shown below
-  ```
-  // Analytics client SDK is configured to record lifecycle events.
-         	Analytics.initialize(appName:dictionary["appName"] as? String,
-        			     apiKey: dictionary["analyticsApiKey"] as? String,
-        	        	     deviceEvents: .lifecycle)
-
-        	// Enable Logger (disabled by default) and set level to ERROR (DEBUG by default).
-        	Logger.isLogStorageEnabled = true
-        	Logger.logLevelFilter = .error
-  ```
-   {: codeblock:}
-
-  **Note:** The service credentials are part of `BMSCredentials.plist` file.
-
-3. Gathering usage analytics and using logger - Navigate to `ViewController.swift` to see the below code.
-   ```
-    func didBecomeActive(_ notification: Notification) {
-        Analytics.send()
-        Logger.send()
-     }
-   ```
-   For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#app-monitoring-gathering-analytics) and [logging](https://console.bluemix.net/docs/services/mobileanalytics/sdk.html#enabling-configuring-and-using-logger)
-   {:tip}
-
-
 ## Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service instance.
+{: #obtain_apns_credentials}
 
    For iOS devices and applications, Apple Push Notification Service (APNs) allows application developers to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications. Messages are sent to a target application on the device.
 
@@ -212,6 +178,7 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 ![](images/solution6/Mobile_push_configure.png)
 
 ## Configure,send, and monitor {{site.data.keyword.mobilepushshort}}
+{: #configure_push}
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide a unique USER_ID(Optional).
 2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.
@@ -232,23 +199,9 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent {{site.data.keyword.mobilepushshort}}, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
 ![](images/solution6/monitoring_messages.png)
 
-## Monitoring the app with {{site.data.keyword.mobileanalytics_short}}.
-The {{site.data.keyword.mobileanalytics_short}} service provides key application usage and performance insights for mobile application developers and application owners. By using {{site.data.keyword.mobileanalytics_short}} application owners and developers can understand what is happening on the user side, and they can use this insight to build better applications that are relevant to users and that stand out in the veritable sea of mobile applications.
-
-The service includes the {{site.data.keyword.mobileanalytics_short}} Console where developers and application owners can monitor mobile application performance, see usage statistics, and search device logs.
-
-1. Open the `{{site.data.keyword.mobileanalytics_short}}` service from the mobile app you created or click on the three vertical dots next to the service and select `Open Dashboard`.
-2. You should see LIVE Users, Sessions and other App Data by disabling `Demo Mode`. You can filter the analytics information by
-    * Date.
-    * Application.
-    * Operating System.
-    * Version of the app.
-         ![{{site.data.keyword.mobileanalytics_short}}](images/solution6/mobile_analytics.png)
-3. [Click here](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#monitoringapps) to set alerts, Monitor App crashes, and Monitor network requests.
-
 ## Related Content
+{: #related_content}
 
 - [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
 - [{{site.data.keyword.mobilepushshort}} REST APIs](https://console.bluemix.net/docs/services/mobilepush/push_restapi.html#push-api-rest)
 - [Security in {{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
-- [Exporting Analytics data to Db2 Warehouse](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#dashdb)

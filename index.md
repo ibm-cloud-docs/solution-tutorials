@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-09-13"
+lastupdated: "2018-10-01"
 
 ---
 
@@ -539,14 +539,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                iOS mobile app with Push Notifications and Analytics
+                iOS mobile app with Push Notifications
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.</p>
+                    <p>Create an iOS Swift application with Push Notifications on IBM Cloud.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution6/Architecture.png" alt="Architecture diagram for the solution iOS mobile app with Push Notifications and Analytics"/>
+                    <img class="architectureDiagram" src = "images/solution6/Architecture.png" alt="Architecture diagram for the solution iOS mobile app with Push Notifications"/>
                 </div>
             </div>
         </div>
@@ -556,14 +556,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Android native mobile app with Push Notifications and Analytics
+                Android native mobile app with Push Notifications
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Write an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.</p>
+                    <p>Write an Android native application with Push Notifications on IBM Cloud.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution9/Architecture.png" alt="Architecture diagram for the solution Android native mobile app with Push Notifications and Analytics"/>
+                    <img class="architectureDiagram" src = "images/solution9/Architecture.png" alt="Architecture diagram for the solution Android native mobile app with Push Notifications"/>
                 </div>
             </div>
         </div>
@@ -573,14 +573,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Hybrid mobile application with Push and Analytics
+                Hybrid mobile application with Push Notifications
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Develop a hybrid Cordova application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.</p>
+                    <p>Develop a hybrid Cordova application with Push Notifications on IBM Cloud.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution15/Architecture.png" alt="Architecture diagram for the solution Hybrid mobile application with Push and Analytics"/>
+                    <img class="architectureDiagram" src = "images/solution15/Architecture.png" alt="Architecture diagram for the solution Hybrid mobile application with Push Notifications"/>
                 </div>
             </div>
         </div>

@@ -80,7 +80,7 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-06-05"
+          "lastUpdated": "2018-09-19"
         },
         {
           "name": "Asynchronous data processing using object storage and pub/sub messaging",
@@ -227,10 +227,9 @@
             "IBM Watson Assistant",
             "Speech to Text",
             "Text to Speech",
-            "Mobile Analytics",
             "Android"
           ],
-          "lastUpdated": "2018-04-17"
+          "lastUpdated": "2018-10-01"
         }
       ]
     },
@@ -261,7 +260,7 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2018-06-12"
+          "lastUpdated": "2018-09-18"
         },
         {
           "name": "Create, secure and manage REST APIs",
@@ -290,7 +289,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2018-09-13"
+          "lastUpdated": "2018-09-14"
         }
       ]
     },
@@ -299,42 +298,39 @@
       "anchor": "mobile",
       "solutions": [
         {
-          "name": "iOS mobile app with Push Notifications and Analytics",
+          "name": "iOS mobile app with Push Notifications",
           "url": "ios-mobile-push-analytics.html",
-          "description": "Create an iOS Swift application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
+          "description": "Create an iOS Swift application with Push Notifications on IBM Cloud.",
           "imgSrc": "images/solution6/Architecture.png",
           "tags": [
             "iOS",
             "Swift",
-            "Push Notifications",
-            "Mobile Analytics"
+            "Push Notifications"
           ],
-          "lastUpdated": "2018-05-08"
+          "lastUpdated": "2018-10-01"
         },
         {
-          "name": "Android native mobile app with Push Notifications and Analytics",
+          "name": "Android native mobile app with Push Notifications",
           "url": "android-mobile-push-analytics.html",
-          "description": "Write an Android native application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
+          "description": "Write an Android native application with Push Notifications on IBM Cloud.",
           "imgSrc": "images/solution9/Architecture.png",
           "tags": [
             "Android",
             "Java",
-            "Push Notifications",
-            "Mobile Analytics"
+            "Push Notifications"
           ],
-          "lastUpdated": "2018-06-07"
+          "lastUpdated": "2018-10-01"
         },
         {
-          "name": "Hybrid mobile application with Push and Analytics",
+          "name": "Hybrid mobile application with Push Notifications",
           "url": "hybrid-mobile-push-analytics.html",
-          "description": "Develop a hybrid Cordova application with high-value mobile services - Push Notifications and Mobile Analytics on IBM Cloud.",
+          "description": "Develop a hybrid Cordova application with Push Notifications on IBM Cloud.",
           "imgSrc": "images/solution15/Architecture.png",
           "tags": [
             "Cordova",
-            "Push Notifications",
-            "Mobile Analytics"
+            "Push Notifications"
           ],
-          "lastUpdated": "2018-06-07"
+          "lastUpdated": "2018-10-01"
         },
         {
           "name": "Mobile application with a serverless backend",
@@ -393,7 +389,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2018-06-11"
+          "lastUpdated": "2018-09-18"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -460,7 +456,7 @@
             "Usage",
             "Billing"
           ],
-          "lastUpdated": "2018-08-07"
+          "lastUpdated": "2018-09-13"
         }
       ]
     },

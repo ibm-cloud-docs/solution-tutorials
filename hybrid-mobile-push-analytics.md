@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-07"
+lastupdated: "2018-10-01"
 
 ---
 
@@ -12,29 +12,26 @@ lastupdated: "2018-06-07"
 {:tip: .tip}
 {:pre: .pre}
 
-# Hybrid mobile application with Push and Analytics
+# Hybrid mobile application with Push Notifications
 
-Learn how easy it is to quickly create a Hybrid Cordova application with high-value mobile services like {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} on {{site.data.keyword.Bluemix_notm}}.
+Learn how easy it is to quickly create a Hybrid Cordova application with high-value mobile service like {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_notm}}.
 
 Apache Cordova is an open-source mobile development framework. It allows you to use standard web technologies - HTML5, CSS3, and JavaScript for cross-platform development. Applications execute within wrappers targeted to each platform, and rely on standards-compliant API bindings to access each device's capabilities such as sensors, data, network status, etc.
 
-This tutorial walks you through the creation of a Cordova mobile starter application, adding mobile services, setting up client SDKs, downloading the scaffolded code and then further enhancing the application.
+This tutorial walks you through the creation of a Cordova mobile starter application, adding a mobile service, setting up client SDK, downloading the scaffolded code and then further enhancing the application.
 
 ## Objectives
 
-* Create a mobile project with {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.mobileanalytics_short}} services.
+* Create a mobile project with {{site.data.keyword.mobilepushshort}} service.
 * Learn how to obtain APNs and FCM credentials.
 * Download the code and complete required setup.
-* Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}.
 * Configure, send, and monitor {{site.data.keyword.mobilepushshort}}.
-* Monitoring the app with {{site.data.keyword.mobileanalytics_short}}.
 
  ![](images/solution15/Architecture.png)
 
 ## Products
 
 This tutorial uses the following products:
-   * [{{site.data.keyword.mobileanalytics_full}}](https://console.bluemix.net/catalog/services/mobile-analytics)
 * [{{site.data.keyword.pushfull}}](https://console.bluemix.net/catalog/services/push-notifications)
 
 ## Before you begin
@@ -50,20 +47,21 @@ This tutorial uses the following products:
 {: #get_code}
 The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your project from a Starter Kit.
 1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard).
-2. Click on **Starter Kits** and scroll down to select the **Basic** Starter Kit.
-    ![](images/solution6/mobile_dashboard.png)
+2. Click on **Starter Kits** and click on **Create App**.
+    ![](images/solution15/mobile_dashboard.png)
 3. Enter a project name, this can be your app name as well.
-4. Select **Cordova** as your language and check the mobile services in the right pane.
+4. Select **Cordova** as your platform and click **Create**.
 
     ![](images/solution15/create_cordova_project.png)
-5. Click on **Create Project** to scaffold a Cordova (Javascript) App.
-6. A new Project will be created under **Projects** tab on the left pane.
+5. Click on **Add Resource** > Mobile > **Push Notifications** and select the region you want to provision the service, resource group and **Lite** pricing plan.
+6. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** tab.
 
-    **Note:** {{site.data.keyword.mobilepushshort}}, and {{site.data.keyword.mobileanalytics_short}} Services should be added to the Basic Starter.
+    **Note:** {{site.data.keyword.mobilepushshort}} service should be added to the Empty Starter.
 
 In the next step, you will download the scaffolded code and complete the required setup.
 
 ## Download the code and complete required setup
+{: #download_code}
 
 If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_notm}} Mobile dashboard to get the code by clicking on the **Download Code** button under Projects > **Your Mobile Project**.
 
@@ -94,29 +92,8 @@ If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_not
     You can find your project name in `config.xml` file by running `cordova info` command.
     {: tip}
 
-## Instrumenting the app to use {{site.data.keyword.mobileanalytics_short}}.
-
-1. Go to your Mobile dashboard > Projects > Cordova Project, Click on **Show** to unveil Push and Analytics service credentials.
-
-   ![mobile dashboard](images/solution15/mobile_dashboard.png)
-
-2. In `index.js`, under `onDeviceReady` function, update the value of `applicationName` with your app name and replace the value of `analyticsApiKey` with Analytics **apiKey**.
-3. Just after **BMSAnalytics.initialize** call, add the below code to send analytics data to server
-
-    ```
-    BMSAnalytics.setUserIdentity("{YOUR_USER_IDENTITY}");
-    BMSAnalytics.send();
-    ```
-4. For logging, add the below code after **BMSLogger.setLogLevel** call
-   ```
-   BMSLogger.send();
-   ```
-   Build and run the app. Navigate to the respective {{site.data.keyword.mobileanalytics_short}} service > Manage > `Sessions` to see your app analytics.
-
- For advanced Analytics and logging capabilities, Refer [Gathering usage Analytics](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmsanalytics) and [logging](https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#using-bmslogger)
- {:tip}
-
 ## Obtain FCM and APNs credentials
+{: #obtain_fcm_apns_credentials}
 
  ### Configure Firebase Cloud Messaging (FCM)
 
@@ -143,6 +120,7 @@ Refer [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort
 {: tip}
 
 ## Configure, send and monitor {{site.data.keyword.mobilepushshort}}
+{: #configure_push}
 
 1. In index.js, under `onDeviceReady` function, replace the values  `{pushAppGuid}` and
 
@@ -185,23 +163,10 @@ You can monitor your sent notifications by navigating to **Monitoring** section.
 The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities to monitor the push performance by generating graphs from your user data. You can use the utility to list all the sent {{site.data.keyword.mobilepushshort}}, or to list all the registered devices and to analyze information on a daily, weekly, or monthly basis.
  ![](images/solution6/monitoring_messages.png)
 
-## Monitoring the app with {{site.data.keyword.mobileanalytics_short}}.
-
-You can record application logs and monitor data with the {{site.data.keyword.mobileanalytics_short}} Client SDK. Developers can control when to send this data to the {{site.data.keyword.mobileanalytics_short}} Service. When data is delivered to {{site.data.keyword.mobileanalytics_short}}, you can use the {{site.data.keyword.mobileanalytics_short}} console to get analytics insights about your mobile applications, devices, and application logs.
-1. Open the **{{site.data.keyword.mobileanalytics_short}}** service from the mobile project you created or click on the three vertical dots next to the service and select **Open Dashboard**.
-2. You should see LIVE Users, Sessions, and other App Data by disabling **Demo Mode**. You can filter the analytics information by
-   - Date.
-   - Application.
-   - Operating System.
-   - The version of the app.
-
-     ![](images/solution15/cordova_mobile_analytics.png)
-3. [Click here](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#monitoringapps) to set alerts, monitor app crashes, and monitor network requests.
-
 ## Related Content
+{: #related_content}
 
 - [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
 - [{{site.data.keyword.mobilepushshort}} REST APIs](https://console.bluemix.net/docs/services/mobilepush/push_restapi.html#push-api-rest)
 - [Security in {{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
-- [Exporting Analytics data to Db2 Warehouse](https://console.bluemix.net/docs/services/mobileanalytics/app-monitoring.html#dashdb)
 
