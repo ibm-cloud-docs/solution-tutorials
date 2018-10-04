@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-10-02"
 
 ---
 
@@ -179,6 +179,13 @@ When configuring the DevOps pipeline, make sure to use the API key of a function
 During the build phase, it is important to properly version the Docker images. You can use the Git commit revision as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
 
 As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package manager for Kubernetes, will become a handy tool to version, assemble and deploy your application. [This sample DevOps toolchain](https://github.com/open-toolchain/simple-helm-toolchain) is a good starting point and is preconfigured for continuous delivery to a Kubernetes cluster. As your project grows into multiple microservices, the [Helm umbrella chart](https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md#complex-charts-with-many-dependencies) will provide a good solution to compose your application.
+
+## Expand the tutorial
+
+Congratulations, your application can now safely be deployed from dev to production. Below are additional suggestions to improve application delivery.
+
+* Add [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights) to your pipeline to perform quality control during deployments
+* Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights)
 
 ## Related information
 
