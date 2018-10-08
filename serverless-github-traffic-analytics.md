@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-05-28"
+lastupdated: "2018-10-04"
 
 ---
 
@@ -199,11 +199,12 @@ To clean up the resources used for this tutorial, you can delete the related ser
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
-1. Expand the app for multi-tenant support
-2. Integrate a charting for the data
-3. Use social identity providers.
-4. Add a date picker to the statistics page to filter displayed data.
-5. Use a custom login page for {{site.data.keyword.appid_short}}.
+* Expand the app for multi-tenant support.
+* Integrate a chart for the data.
+* Use social identity providers.
+* Add a date picker to the statistics page to filter displayed data.
+* Use a custom login page for {{site.data.keyword.appid_short}}.
+* Explore the social coding relationships between developers using [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights).
 
 # Related Content
 Here are links to additional information on the topics covered in this tutorial.

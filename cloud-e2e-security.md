@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-09-14"
+lastupdated: "2018-10-04"
 
 ---
 
@@ -299,6 +299,13 @@ Now that the application and its services have been successfully deployed, you c
 
 You can change the settings for the automatic refresh and the displayed time range and thereby change how and what data is analysed.
 {: tip}
+
+## Expand the tutorial
+
+Security is never done. Try the below suggestions to enhance the security of your application.
+
+* Use [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights) to perform static and dynamic code scans
+* Ensure only quality code is released by using policies and rules with [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights)
 
 ## Remove resources
 {:removeresources}
