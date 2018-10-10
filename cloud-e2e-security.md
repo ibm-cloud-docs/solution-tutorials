@@ -54,11 +54,12 @@ The tutorial features a sample application that enables groups of users to uploa
 </p>
 
 1. The user connects to the application.
-2. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can sign up from there too.
-3. The application is running in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}. The image is automatically scanned for vulnerabilities.
-4. Files uploaded by the user are stored in {{site.data.keyword.cos_short}} with metadata in {{site.data.keyword.cloudant_short_notm}}.
-5. The bucket where the files are stored is using a user-provided key to encrypt the data.
-6. All activities related to managing the solution are logged by {{site.data.keyword.cloudaccesstrailshort}}.
+2. If using a custom domain and a TLS certificate, the certificate is managed by and deployed from the {{site.data.keyword.cloudcerts_short}}.
+3. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can sign up from there too.
+4. The application is running in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}. The image is automatically scanned for vulnerabilities.
+5. Files uploaded by the user are stored in {{site.data.keyword.cos_short}} with metadata in {{site.data.keyword.cloudant_short_notm}}.
+6. The bucket where the files are stored is using a user-provided key to encrypt the data.
+7. All activities related to managing the solution are logged by {{site.data.keyword.cloudaccesstrailshort}}.
 
 ## Before you begin
 {: #prereqs}
