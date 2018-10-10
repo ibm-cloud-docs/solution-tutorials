@@ -188,8 +188,9 @@ As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package man
 
 Congratulations, your application can now safely be deployed from dev to production. Below are additional suggestions to improve application delivery.
 
-* Add [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights) to your pipeline to perform quality control during deployments
-* Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights)
+* Add [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights) to your pipeline to perform quality control during deployments.
+* Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights).
+* Follow the tutorial [Plan, create and update deployment environments](./plan-create-update-deployments.html) to automate the deployment of your environments.
 
 ## Related information
 
