@@ -102,7 +102,7 @@ Let's start by building the Development environment.
    1. [Create a Cloud Foundry space for the environment](https://console.bluemix.net/docs/account/orgs_spaces.html#spaceinfo).
    1. Create the Cloud Foundry services used by the project under this space
 1. [Create a resource group for the environment](https://console.bluemix.net/account/resource-groups).
-1. Create the services compatible with resource group like {site.data.keyword.cos_full_notm}} and {site.data.keyword.cloudant_short_notm}} in this group.
+1. Create the services compatible with resource group like {{site.data.keyword.cos_full_notm}} and {site.data.keyword.cloudant_short_notm}} in this group.
 1. [Create a new Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
 1. Select your cluster [in the console](https://console.bluemix.net/containers-kubernetes/clusters).
 1. Use *Enable Logging* to redirect the cluster logs to the Cloud Foundry space created in the previous steps. If later you want to change the space where the cluster is sending its logging data, you can use the [logging plugin for the ibmcloud command line](https://console.bluemix.net/docs/containers/cs_health.html#log_sources_update).

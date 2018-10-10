@@ -143,6 +143,7 @@ Given the environments are rather simple and similar, you are going to use anoth
 
 Each environment requires:
 * a dedicated Cloud Foundry space
+* a dedicated resource group
 * a Kubernetes cluster
 * a database
 * a file storage
@@ -174,46 +175,39 @@ Once you can reference the organization, it is straightforward to create a space
 
 Notice how the organization name is referenced from the *global* remote state. The other properties are taken from configuration variables.
 
-Next comes the Kubernetes cluster. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
+Next comes the resource group.
+
+   ```sh
+   # a resource group
+   TODO
+   ```
+
+The Kubernetes cluster is created in this resource group. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
 
    ```sh
    # a cluster
-   resource "ibm_container_cluster" "cluster" {
-     name            = "${var.environment_name}-cluster"
-     datacenter      = "${var.cluster_datacenter}"
-     org_guid        = "${data.terraform_remote_state.global.org_guid}"
-     space_guid      = "${ibm_space.space.id}"
-     account_guid    = "${data.terraform_remote_state.global.account_guid}"
-     machine_type    = "${var.cluster_machine_type}"
-     worker_num      = "${var.cluster_worker_num}"
-     public_vlan_id  = "${var.cluster_public_vlan_id}"
-     private_vlan_id = "${var.cluster_private_vlan_id}"
-   }
+   TODO
    ```
 
 Again most of the properties will be initialized from configuration variables. You can adjust the datacenter, the number of workers, the type of workers.
 
-Cloud Foundry services can be provisioned and a Kubernetes binding (secret) can be added to retrieve the service credentials from your applications:
+IAM-enabled services like {{site.data.keyword.cos_full_notm}} and {site.data.keyword.cloudant_short_notm}} are created as resources within the group too:
 
    ```sh
-   # a database
-   resource "ibm_service_instance" "database" {
-     name       = "database"
-     space_guid = "${ibm_space.space.id}"
-     service    = "cloudantNoSQLDB"
-     plan       = "Lite"
-   }
+   # cloudant
+   TODO
 
-   # bind the database service to the cluster
-   resource "ibm_container_bind_service" "bind_database" {
-    cluster_name_id             = "${ibm_container_cluster.cluster.id}"
-    service_instance_space_guid = "${ibm_space.space.id}"
-    service_instance_name_id    = "${ibm_service_instance.database.id}"
-    namespace_id                = "default"
-    account_guid                = "${data.terraform_remote_state.global.account_guid}"
-    org_guid                    = "${data.terraform_remote_state.global.org_guid}"
-    space_guid                  = "${ibm_space.space.id}"
-   }
+   # cloud object storage
+   ```
+
+Kubernetes bindings (secrets) can be added to retrieve the service credentials from your applications:
+
+   ```sh
+   # bind the cloudant service to the cluster
+   TODO
+
+   # bind the cloud object storage service to the cluster
+   TODO
    ```
 
 ## Deploy this environment in your account
