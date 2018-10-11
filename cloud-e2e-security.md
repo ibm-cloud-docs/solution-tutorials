@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-10-04"
+lastupdated: "2018-10-09"
 
 ---
 
@@ -39,6 +39,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.cloudaccesstrailshort}}](https://console.bluemix.net/catalog/services/activity-tracker)
 * [{{site.data.keyword.keymanagementserviceshort}}](https://console.bluemix.net/catalog/services/key-protect)
+* Optional: [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/certificate-manager)
 
 This tutorial requires a [non-Lite account](https://console.bluemix.net/docs/account/index.html#accounts) and may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -53,11 +54,12 @@ The tutorial features a sample application that enables groups of users to uploa
 </p>
 
 1. The user connects to the application.
-2. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can sign up from there too.
-3. The application is running in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}. The image is automatically scanned for vulnerabilities.
-4. Files uploaded by the user are stored in {{site.data.keyword.cos_short}} with metadata in {{site.data.keyword.cloudant_short_notm}}.
-5. The bucket where the files are stored is using a user-provided key to encrypt the data.
-6. All activities related to managing the solution are logged by {{site.data.keyword.cloudaccesstrailshort}}.
+2. If using a custom domain and a TLS certificate, the certificate is managed by and deployed from the {{site.data.keyword.cloudcerts_short}}.
+3. {{site.data.keyword.appid_short}} secures the application and redirects the user to the authentication page. Users can sign up from there too.
+4. The application is running in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}. The image is automatically scanned for vulnerabilities.
+5. Files uploaded by the user are stored in {{site.data.keyword.cos_short}} with metadata in {{site.data.keyword.cloudant_short_notm}}.
+6. The bucket where the files are stored is using a user-provided key to encrypt the data.
+7. All activities related to managing the solution are logged by {{site.data.keyword.cloudaccesstrailshort}}.
 
 ## Before you begin
 {: #prereqs}
@@ -274,7 +276,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ## Test the application
 
-The application can be accessed at `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/`.
+The application can be accessed at `https://secure-file-storage.<cluster-name>.<region>.containers.appdomain.cloud/`.
 
 1. Go to the application home page. You are redirected to the {{site.data.keyword.appid_short_notm}} default login page.
 1. Sign up for a new account with a valid email address.
@@ -299,6 +301,48 @@ Now that the application and its services have been successfully deployed, you c
 
 You can change the settings for the automatic refresh and the displayed time range and thereby change how and what data is analysed.
 {: tip}
+
+## Optional: Use a custom domain and encrypt network traffic
+By default, the application is accessible on a generic hostname at a subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided. In the following, you will upload an existing certificate to the {{site.data.keyword.cloudcerts_short}} and deploy it to the cluster. You will also update the app configuration to use the custom domain.
+
+An example of how to obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) is described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/).
+{: tip}
+
+1. Create an instance of [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/certificate-manager)
+   * Set the name to **secure-file-storage-certmgr**.
+   * Use the same **region** and **resource group** as for the other services.
+1. Click on **Import Certificate** to import your certificate.
+   * Set name to **SecFileStorage** and description to **Certificate for e2e security tutorial**.
+   * Upload the certificate file using the **Browse** button.
+   * Click **Import** to complete the import process.
+1. Locate the entry for the imported certificate and expand it
+   * Verify the certificate entry, e.g., that the domain name matches your custom domain. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
+   * Click the **copy** symbol next to the certificate's **crn**.
+1. Switch to the command line to deploy the certificate information as a secret to the cluster. Execute the following command after copying in the crn from the previous step.
+   ```sh
+   ibmcloud ks alb-cert-deploy --secret-name secure-file-storage-certificate --cluster secure-file-storage-cluster --cert-crn <the copied crn from previous step>
+   ```
+   {: codeblock}
+   Verify that the cluster knows about the certificate by executing the following command.
+   ```sh
+   ibmcloud ks alb-certs --cluster secure-file-storage-cluster
+   ```
+   {: codeblock}
+1. Edit the file `secure-file-storage.yaml`. 
+   * Find the section for **Ingress**.
+   * Uncomment and edit the lines covering custom domains and fill in your domain and host name.   
+   The CNAME entry for your custom domain needs to point to the cluster. Check this [guide on mapping custom domains](https://console.bluemix.net/docs/containers/cs_ingress.html#private_3) in the documentation for details.
+   {: tip}
+1. Apply the configuration changes to the deployed:
+   ```sh
+   kubectl apply -f secure-file-storage.yaml
+   ```
+   {: codeblock}
+1. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard. 
+   * Go to **Manage** under the **Identity Providers**, then to **Settings**.
+   * In the **Add web redirect URLs** form add `https://secure-file-storage.<your custom domain>/appid_callback` as another URL.
+1. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
+
 
 ## Expand the tutorial
 
