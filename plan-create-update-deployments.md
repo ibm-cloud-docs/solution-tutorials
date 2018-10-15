@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-10-15"
 
 ---
 
@@ -179,14 +179,29 @@ Next comes the resource group.
 
    ```sh
    # a resource group
-   TODO
+   resource "ibm_resource_group" "group" {
+    name     = "${var.environment_name}"
+    quota_id = "${data.ibm_resource_quota.quota.id}"
+}
    ```
 
 The Kubernetes cluster is created in this resource group. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
 
    ```sh
    # a cluster
-   TODO
+   resource "ibm_container_cluster" "cluster" {
+      name              = "${var.environment_name}-cluster"
+      datacenter        = "${var.cluster_datacenter}"
+      org_guid          = "${data.terraform_remote_state.global.org_guid}"
+      space_guid        = "${ibm_space.space.id}"
+      account_guid      = "${data.terraform_remote_state.global.account_guid}"
+      machine_type      = "${var.cluster_machine_type}"
+      worker_num        = "${var.cluster_worker_num}"
+      public_vlan_id    = "${var.cluster_public_vlan_id}"
+      private_vlan_id   = "${var.cluster_private_vlan_id}"
+      hardware          = "${var.cluster_hardware}"
+      resource_group_id = "${ibm_resource_group.group.id}"
+}
    ```
 
 Again most of the properties will be initialized from configuration variables. You can adjust the datacenter, the number of workers, the type of workers.
@@ -195,19 +210,49 @@ IAM-enabled services like {{site.data.keyword.cos_full_notm}} and {site.data.key
 
    ```sh
    # cloudant
-   TODO
+   resource "ibm_resource_instance" "database" {
+     name              = "database"
+     service           = "cloudantnosqldb"
+     plan              = "lite"
+     location          = "global"
+     resource_group_id = "${ibm_resource_group.group.id}"
+}
 
    # cloud object storage
+   resource "ibm_resource_instance" "objectstorage" {
+     name              = "objectstorage"
+     service           = "cloud-object-storage"
+     plan              = "standard"
+     location          = "global"
+     resource_group_id = "${ibm_resource_group.group.id}"
+}
    ```
 
 Kubernetes bindings (secrets) can be added to retrieve the service credentials from your applications:
 
    ```sh
    # bind the cloudant service to the cluster
-   TODO
+   resource "ibm_container_bind_service" "bind_database" {
+      cluster_name_id             = "${ibm_container_cluster.cluster.id}"
+  	  service_instance_name       = "${ibm_resource_instance.database.name}"
+      namespace_id                = "default"
+      account_guid                = "${data.terraform_remote_state.global.account_guid}"
+      org_guid                    = "${data.terraform_remote_state.global.org_guid}"
+      space_guid                  = "${ibm_space.space.id}"
+      resource_group_id           = "${ibm_resource_group.group.id}"
+}
 
    # bind the cloud object storage service to the cluster
-   TODO
+   resource "ibm_container_bind_service" "bind_objectstorage" {
+  	cluster_name_id             = "${ibm_container_cluster.cluster.id}"
+  	space_guid                  = "${ibm_space.space.id}"
+  	service_instance_id         = "${ibm_resource_instance.objectstorage.name}"
+  	namespace_id                = "default"
+  	account_guid                = "${data.terraform_remote_state.global.account_guid}"
+  	org_guid                    = "${data.terraform_remote_state.global.org_guid}"
+  	space_guid                  = "${ibm_space.space.id}"
+  	resource_group_id           = "${ibm_resource_group.group.id}"
+}
    ```
 
 ## Deploy this environment in your account
@@ -359,10 +404,15 @@ This section will focus on the `development` environment. The steps will be the 
       ibmcloud cs vlans <location>
       ```
       {: codeblock}
-      If you don't have any VLANs, keep the empty values, new VLANs will be created.
    1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
       ```sh
       ibmcloud cs machine-types <location>
+      ```
+      {: codeblock}
+
+   1. Set the **resource_quota**. Find the available resource quota definitions with:
+      ```sh
+      ibmcloud resource quotas
       ```
       {: codeblock}
 1. Initialize Terraform
