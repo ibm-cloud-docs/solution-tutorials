@@ -45,6 +45,7 @@ Solution Tutorials
 
     {: .topicgroup}
     Machine Learning and Analytics
+        big-data-log-analytics.md
         smart-data-lake.md
         serverless-github-traffic-analytics.md
         create-deploy-retrain-machine-learning-model.md
