@@ -335,11 +335,10 @@
                 "imgSrc": "images/solution31/Architecture.png",
                 "tags": [
                     "Cloud Object Storage",
-                    "Message Hub",
+                    "Event Streams",
                     "SQL Query",
                     "Streaming Analytics"
-                ],
-                "hidden": true
+                ]
             },
             {
               "name": "Build a data lake with Object Storage",
