@@ -42,7 +42,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 ## Architecture
 
 <p style="text-align: center;">
-
 ![Architecture](images/solution3/Architecture.png)
 </p>
 
