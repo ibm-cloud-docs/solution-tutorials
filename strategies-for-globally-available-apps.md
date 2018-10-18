@@ -45,6 +45,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 ## Architecture
 {: #architecture}
 
+This tutorial involves an active/active scenario where two copies of the application are deployed in two different regions and the two copies are serving customer requests in a round-robin way. The DNS configuration automatically points to the healthy region if one copy fails.
+
 <p style="text-align: center;">
 
 ![Architecture](images/solution39/Architecture.png)
@@ -59,8 +61,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 ## Before you begin
 {: #prereqs}
 
+* Deploy applications to a single region on IBM Cloud. 
+* Understanding of database as a service like Cloudant NoSQL DB.
 * Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers.
-* ToDO
 
 ## Multi-zone regions applications
 
