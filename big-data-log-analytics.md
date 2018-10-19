@@ -385,7 +385,7 @@ FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAM
 
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
 
-* Use additional targets in Streams Designer to store data in {{site.data.keyword.cloudant_short_notm}} or execute code in {{site.data.keyword.openwhisk_short}}
+* Use additional targets in Streams Designer to store data in [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant) or execute code in [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk)
 * Follow the [Build a data lake using Object Storage](https://console.bluemix.net/docs/tutorials/smart-data-lake.html#build-a-data-lake-using-object-storage) tutorial to add a dashboard to log data
 * Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](https://console.bluemix.net/catalog/services/app-connect).
 
