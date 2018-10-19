@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-06-28"
+lastupdated: "2018-10-17"
 ---
 
 {:shortdesc: .shortdesc}
@@ -12,9 +12,6 @@ lastupdated: "2018-06-28"
 {:pre: .pre}
 
 # Big data logs with streaming analytics and SQL
-
-Due to a known issue with Streams Designer, this tutorial has been hidden. New users will be unable to access the Streams Designer tool from Watson Data Platform and unable to complete a primary objective. This tutorial will be re-published once Streams Designer is available again.
-{: tip}
 
 In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, SQL Query and {{site.data.keyword.streaminganalyticsshort}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
 
@@ -40,7 +37,7 @@ This tutorial uses the following runtimes and services:
 
 * [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/message-hub)
-* [SQL Query](https://console.bluemix.net/catalog/services/sql-query)
+* [{{site.data.keyword.sqlquery_short}}y](https://console.bluemix.net/catalog/services/sql-query)
 * [{{site.data.keyword.streaminganalyticsshort}}](https://console.bluemix.net/catalog/services/streaming-analytics)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
@@ -67,6 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 * [Install Git](https://git-scm.com/)
 * [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+* [Install Node.js](https://nodejs.org)
 * [Download Kafka 0.10.2.X client](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz)
 
 ## Create services
@@ -93,13 +91,13 @@ This section uses the command line to create service instances. Alternatively, y
     lite global
     ```
     {: pre}
-3. Create a Beta instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
+3. Create a Lite instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
     ```sh
-    ibmcloud resource service-instance-create log-analysis-sql sql-query beta \
+    ibmcloud resource service-instance-create log-analysis-sql sql-query lite \
     us-south
     ```
     {: pre}
-4. Create a Standard instance of [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/message-hub).
+4. Create a Standard instance of [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/event-streams).
     ```sh
     ibmcloud service create messagehub standard log-analysis-hub
     ```
@@ -111,13 +109,18 @@ This section uses the command line to create service instances. Alternatively, y
 
 Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keyword.cos_short}} bucket. Topics define where applications deliver messages in publish-subscribe messaging systems. After messages are received and processed, they will be stored within a file located in an {{site.data.keyword.cos_short}} bucket.
 
-1. In your browser, access the `log-analysis-hub` service instance from the [Dashboard](https://console.bluemix.net/dashboard).
+1. In your browser, access the `log-analysis-hub` service instance from the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis).
 2. Click the **+** button to create a topic.
 3. Enter the **Topic Name** `webserver` and click the **Create topic** button.
-4. Back in the [Dashboard](https://console.bluemix.net/dashboard), select the `log-analysis-cos` service instance.
-5. Click **Create bucket**.
+4. Click **Service Credentials** and the **New Credential** button.
+5. In the resulting dialog, type `webserver-flow` as the **Name** and click the **Add** button.
+6. Click **View Credentials** and copy the information to a safe place. It will be used in the next section.
+7. Back in the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis), select the `log-analysis-cos` service instance.
+8. Click **Create bucket**.
     * Enter a unique **Name** for the bucket.
-    * Click **Create**.
+    * Select **Cross Region** for **Resiliency**.
+    * Select **us-geo** as the **Location**.
+    * Click **Create bucket**.
 
 ## Create a Streams flow source
 
@@ -126,24 +129,24 @@ Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keywo
 In this section, you will begin configuring a Streams flow that receives log messages. The {{site.data.keyword.streaminganalyticsshort}} service is powered by {{site.data.keyword.streamsshort}}, which can analyze millions of events per second, enabling sub-millisecond response times and instant decision-making.
 
 1. In your browser, access [Watson Data Platform](https://dataplatform.ibm.com).
-2. Select the **New project** tile, then the **Basic** tile and click **OK**.
+2. Select the **New project** button or tile, then the **Basic** tile and click **OK**.
     * Enter the **Name** `webserver-logs`.
-    * The **Storage** option should be set to `log-analysis-cos`.
+    * The **Storage** option should be set to `log-analysis-cos`. If not, select the service instance.
     * Click the **Create** button.
-3. On the resulting page, click the **Tools** then **Streams Designer** from the top navigation bar.
-    * Select the **Project Name** you just created from the dropdown list.
-    * Click the **Associate an IBM Streaming Analytics instance**.
-    * Create a new {{site.data.keyword.streaminganalyticsshort}} instance by selecting the **Lite** radio button and clicking **Create**.
-    * Provide the **Service name** as `streaming-analytics-dsx` and click **Confirm**.
-    * Enter the streams flow **Name** as `webserver-flow`.
+3. On the resulting page, select the **Settings** tab and check **Streams Designer** in **Tools**. Finish by clicking the **Save** button.
+4. Click the **Add to project** button then **Streams flow** from the top navigation bar.
+    * Click **Associate an IBM Streaming Analytics instance with a container-based plan**.
+    * Create a new {{site.data.keyword.streaminganalyticsshort}} instance by selecting the **Lite** radio button and clicking **Create**. Do not select Lite VM.
+    * Provide the **Service name** as `log-analysis-sa` and click **Confirm**.
+    * Type the streams flow **Name** as `webserver-flow`.
     * Finish by clicking **Create**.
-4. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
-    * Click **Add Connection** and select your `log-analysis-hub` {{site.data.keyword.messagehub}} instance.
+5. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
+    * Click **Add Connection** and select your `log-analysis-hub` {{site.data.keyword.messagehub}} instance. If you do not see your instance listed, select the **IBM {{site.data.keyword.messagehub}}** option. Manually enter the **Connection details** that you obtained from the **Service credentials** in the previous section. **Name** the connection `webserver-flow`.
     * Click **Create** to create the connection.
     * Select `webserver` from the **Topic** dropdown.
     * Select **Start with the first new message** from the **Initial Offset** dropdown.
     * Click **Continue**.
-5. Leave the **Preview Data** page open; it will be used in the next section.
+6. Leave the **Preview Data** page open; it will be used in the next section.
 
 ## Using Kafka console tools with {{site.data.keyword.messagehub}}
 
@@ -162,10 +165,8 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     ssl.endpoint.identification.algorithm=HTTPS
     ```
     {: pre}
-3. Access the `log-analysis-hub` service instance from the [Dashboard](https://console.bluemix.net/dashboard).
-4. Select **Service Credentials** from the side navigation and then **View Credentials** dropdown for the `apsx-data` key. This key was created automatically when you created your Streams flow.
-5. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the `user` and `password` values seen in **Service Credentials**. Save `message-hub.config`.
-6. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
+3. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the `user` and `password` values seen in **Service Credentials** from the previous section. Save `message-hub.config`.
+4. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
     ```sh
     ./kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL \
     --producer.config message-hub.config --topic webserver
@@ -180,7 +181,7 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     kafka03-prod02.messagehub.services.us-south.bluemix.net:9093 \
     --producer.config message-hub.config --topic webserver
     ```
-7. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}. Notice the sent messages also display on the `webserver-flow` **Preview Data** page.
+5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}. Notice the sent messages also display on the `webserver-flow` **Preview Data** page.
     ```javascript
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
@@ -204,13 +205,13 @@ In this section, you will complete the streams flow configuration by defining a 
     * Set the limit to be 100MB by entering `102400` in the **File Size (KB)** textbox.
     * Click **Continue**.
 3. Click **Save**.
-4. Click the play button to **Start the streams flow**.
+4. Click the **>** play button to **Start the streams flow**.
 5. After the flow is started, again send multiple log messages from the Kafka console tool. You can watch as messages arrive by viewing the `webserver-flow` in Streams Designer.
     ```javascript
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
     {: pre}
-6. Return to your bucket in {{site.data.keyword.cos_short}}. A new `log.csv` file will exist after enough messages have entered the flow.
+6. Return to your bucket in {{site.data.keyword.cos_short}}. A new `log.csv` file will exist after enough messages have entered the flow or the flow is restarted.
 
 ![webserver-flow](images/solution31/flow.png)
 
@@ -223,7 +224,7 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
 1. Use the pencil button to **Edit the streams flow**.
 2. Create a filter node that handles HTTP 200 responses.
     * From the **Nodes** palette, drag the **Filter** node from **PROCESSING AND ANALYTICS** to the canvas.
-    * Type `OK` in the name textbox, which currently contains `Filter`.
+    * Type `OK` in the name textbox, which currently contains the word `Filter`.
     * Enter the following statement in the **Condition Expression** text area.
       ```sh
       responseCode == 200
@@ -248,16 +249,15 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
 
 To view conditional handling in your Streams flow, you will increase the message volume sent to {{site.data.keyword.messagehub}}. The provided Node.js program simulates a realistic flow of messages to {{site.data.keyword.messagehub}} based on traffic to the webserver. To demonstrate the scalability of {{site.data.keyword.messagehub}} and {{site.data.keyword.streaminganalyticsshort}}, you will increase the throughput of log messages.
 
-1. Clone the log simulator from [IBM-Cloud on GitHub](https://github.com/IBM-Cloud/kafka-log-simulator).
+This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). See the npmjs page for troubleshooting instructions if the simulator installation fails. If problems persist, you can skip to the next section and manually upload the data.
+
+1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](http://ita.ee.lbl.gov/traces/NASA_access_log_Aug95.gz) log file from NASA.
+2. Clone and install the log simulator from [IBM-Cloud on GitHub](https://github.com/IBM-Cloud/kafka-log-simulator).
     ```sh
     git clone https://github.com/IBM-Cloud/kafka-log-simulator.git
     ```
     {: pre}
-2. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](http://ita.ee.lbl.gov/html/contrib/NASA-HTTP.html) log file from NASA.
-3. Retrieve your {{site.data.keyword.messagehub}} **Service Credentials**.
-    * Access the `log-analysis-hub` service instance from the [Dashboard](https://console.bluemix.net/dashboard).
-    * Select **Service Credentials** from the side navigation and the **View Credentials** dropdown for the `apsx-data` key.
-4. Change to the simulator's directory and run the following commands to setup the simulator and produce log event messages. Replace `LOGFILE` with the file you downloaded. Replace `BROKERLIST` and `APIKEY` with the corresponding **Service Credentials**. An example is provided.
+3. Change to the simulator's directory and run the following commands to setup the simulator and produce log event messages. Replace `LOGFILE` with the file you downloaded. Replace `BROKERLIST` and `APIKEY` with the corresponding **Service Credentials** used earlier. An example is provided.
     ```sh
     npm install
     ```
@@ -280,9 +280,9 @@ To view conditional handling in your Streams flow, you will increase the message
     --api-key Np15YZKN3SCdABUsOpJYtpue6jgJ7CwYgsoCWaPbuyFbdM4R \
     --topic webserver --rate 100
     ```
-5. In your browser, return to your `webserver-flow` after the simulator begins producing messages.
-6. Stop the simulator after a desired number of messages have gone through the conditional branches using `control+C`.
-7. Experiment with {{site.data.keyword.messagehub}} scaling by increasing or decreasing the `--rate` value.
+4. In your browser, return to your `webserver-flow` after the simulator begins producing messages.
+5. Stop the simulator after a desired number of messages have gone through the conditional branches using `control+C`.
+6. Experiment with {{site.data.keyword.messagehub}} scaling by increasing or decreasing the `--rate` value.
 
 The simulator will delay sending the next message based on the elapsed time in the webserver log. Setting `--rate 1` sends events in realtime. Setting `--rate 100` means that for every 1 second of elapsed time in the webserver log a 10ms delay between messages is used.
 {: tip}
@@ -298,7 +298,7 @@ Depending on the number of messages sent by the simulator, the log file on {{sit
 If you prefer not to wait for the simulator to send all log messages, upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0fptwsp) to {{site.data.keyword.cos_short}} to get started immediately.
 {: tip}
 
-1. Access the `log-analysis-sql` service instance from the [Dashboard](https://console.bluemix.net/dashboard). Select **Open UI** to launch SQL Query.
+1. Access the `log-analysis-sql` service instance from the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis). Select **Open UI** to launch SQL Query.
 2. Enter the following SQL into the **Type SQL here ...** text area.
     ```sql
     -- What are the top 10 web pages on NASA from July 1995?
@@ -312,7 +312,7 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     ```
     {: pre}
 3. Retrieve the Object SQL URL from the logs file.
-    * From the [Dashboard](https://console.bluemix.net/dashboard), select the `log-analysis-cos` service instance.
+    * From the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis), select the `log-analysis-cos` service instance.
     * Select the bucket you created previously.
     * Click the overflow menu on the `http-logs_TIME.csv` file and select **Object SQL URL**.
     * **Copy** the URL to the clipboard.
@@ -385,7 +385,7 @@ FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAM
 
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
 
-* Use [SendGrid](https://console.bluemix.net/catalog/services/sendgrid) with the Streams flow's email node to alert on-call engineers
+* Use additional targets in Streams Designer to store data in [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant) or execute code in [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk)
 * Follow the [Build a data lake using Object Storage](https://console.bluemix.net/docs/tutorials/smart-data-lake.html#build-a-data-lake-using-object-storage) tutorial to add a dashboard to log data
 * Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](https://console.bluemix.net/catalog/services/app-connect).
 
@@ -393,9 +393,9 @@ Congratulations, you have built a log analysis pipeline with {{site.data.keyword
 
 {: #removal}
 
-From the [Dashboard](https://console.bluemix.net/dashboard), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
+From the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
 
-* streaming-analytics-dsx
+* log-analysis-sa
 * log-analysis-hub
 * log-analysis-sql
 * log-analysis-cos

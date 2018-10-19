@@ -67,7 +67,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2018-07-23"
+          "lastUpdated": "2018-10-04"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -272,7 +272,7 @@
             "Node.js",
             "API Connect"
           ],
-          "lastUpdated": "2018-06-05"
+          "lastUpdated": "2018-10-02"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -289,7 +289,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2018-09-14"
+          "lastUpdated": "2018-10-09"
         }
       ]
     },
@@ -353,6 +353,19 @@
       "anchor": "ml",
       "solutions": [
         {
+          "name": "Big data logs with streaming analytics and SQL",
+          "url": "big-data-log-analytics.html",
+          "description": "Collect, store and analyze log records to support regulatory requirements and aid information discovery. Using publish-subscribe messaging, scale the solution to millions of records and then perform analysis on persisted logs with familiar SQL.",
+          "imgSrc": "images/solution31/Architecture.png",
+          "tags": [
+            "Cloud Object Storage",
+            "Event Streams",
+            "SQL Query",
+            "Streaming Analytics"
+          ],
+          "lastUpdated": "2018-10-17"
+        },
+        {
           "name": "Build a data lake with Object Storage",
           "url": "smart-data-lake.html",
           "description": "Provide tools to data scientists to query data using SQL Query and conduct analysis in Watson Studio. Share data and insights through interactive charts.",
@@ -375,7 +388,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2018-05-28"
+          "lastUpdated": "2018-10-04"
         },
         {
           "name": "Build, deploy, test, and retrain a predictive machine learning model",
@@ -442,7 +455,7 @@
             "Container Registry",
             "DevOps"
           ],
-          "lastUpdated": "2018-06-05"
+          "lastUpdated": "2018-10-02"
         },
         {
           "name": "Reviewing IBM Cloud services, resources and usage",

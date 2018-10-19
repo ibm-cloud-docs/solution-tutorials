@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-10-01"
+lastupdated: "2018-10-17"
 
 ---
 
@@ -609,6 +609,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #ml }
 
 <div class = "solutionBoxContainer">
+    <a href = "big-data-log-analytics.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Big data logs with streaming analytics and SQL
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Collect, store and analyze log records to support regulatory requirements and aid information discovery. Using publish-subscribe messaging, scale the solution to millions of records and then perform analysis on persisted logs with familiar SQL.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution31/Architecture.png" alt="Architecture diagram for the solution Big data logs with streaming analytics and SQL"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
     <a href = "smart-data-lake.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
