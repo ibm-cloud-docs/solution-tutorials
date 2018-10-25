@@ -87,7 +87,7 @@ The repository is structured as follow:
 | [terraform](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform) | Home for the Terraform files |
 | [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global) | Terraform files to provision resources common to the three environments |
 | [terraform/per-environment](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/per-environment) | Terraform files specific to a given environment |
-| [iam](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam) | Scripts to configure user permissions |
+| [terraform/roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) | Terraform files to configure user policies |
 
 ### Heavy lifting with Terraform
 
