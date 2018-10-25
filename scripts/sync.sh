@@ -19,6 +19,7 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=low-latency-real-time-bidding.md \
   --exclude=autoscale-virtual-server.md \
+  --exclude=highly-available-and-scalable-web-application-v2.md \
   --exclude="vpc-*.md" \
   --exclude="images/solution40-*" \
   --exclude="images/solution41-*" \
