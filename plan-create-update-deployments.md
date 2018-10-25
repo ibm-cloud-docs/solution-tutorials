@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-10-15"
+lastupdated: "2018-10-25"
 
 ---
 
@@ -183,24 +183,45 @@ Next comes the resource group.
     name     = "${var.environment_name}"
     quota_id = "${data.ibm_resource_quota.quota.id}"
 }
+
+   data "ibm_resource_quota" "quota" {
+	name = "${var.resource_quota}"
+}
    ```
 
 The Kubernetes cluster is created in this resource group. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
 
    ```sh
-   # a cluster
-   resource "ibm_container_cluster" "cluster" {
-      name              = "${var.environment_name}-cluster"
-      datacenter        = "${var.cluster_datacenter}"
-      org_guid          = "${data.terraform_remote_state.global.org_guid}"
-      space_guid        = "${ibm_space.space.id}"
-      account_guid      = "${data.terraform_remote_state.global.account_guid}"
-      machine_type      = "${var.cluster_machine_type}"
-      worker_num        = "${var.cluster_worker_num}"
-      public_vlan_id    = "${var.cluster_public_vlan_id}"
-      private_vlan_id   = "${var.cluster_private_vlan_id}"
-      hardware          = "${var.cluster_hardware}"
-      resource_group_id = "${ibm_resource_group.group.id}"
+  # a cluster
+  resource "ibm_container_cluster" "cluster" {
+  	name              = "${var.environment_name}-cluster"
+  	datacenter        = "${var.cluster_datacenter}"
+  	org_guid          = "${data.terraform_remote_state.global.org_guid}"
+  	space_guid        = "${ibm_space.space.id}"
+  	account_guid      = "${data.terraform_remote_state.global.account_guid}"
+  	hardware         =  "${var.cluster_hardware}"
+  	machine_type     = "${var.cluster_machine_type}"
+  	public_vlan_id    = "${var.cluster_public_vlan_id}"
+  	private_vlan_id   = "${var.cluster_private_vlan_id}"
+  	resource_group_id = "${ibm_resource_group.group.id}"
+}
+
+resource "ibm_container_worker_pool" "cluster_workerpool" {
+  worker_pool_name = "${var.environment_name}-pool"
+  machine_type     = "${var.cluster_machine_type}"
+  cluster          = "${ibm_container_cluster.cluster.id}"
+  size_per_zone    = "${var.worker_num}"
+  hardware         =  "${var.cluster_hardware}"
+  resource_group_id = "${ibm_resource_group.group.id}"
+}
+
+resource "ibm_container_worker_pool_zone_attachment" "cluster_zone" {
+  cluster           = "${ibm_container_cluster.cluster.id}"
+  worker_pool       =  "${element(split("/",ibm_container_worker_pool.cluster_workerpool.id),1)}"
+  zone              = "${var.cluster_datacenter}"
+  public_vlan_id    = "${var.cluster_public_vlan_id}"
+  private_vlan_id   = "${var.cluster_private_vlan_id}"
+  resource_group_id = "${ibm_resource_group.group.id}"
 }
    ```
 
@@ -209,22 +230,21 @@ Again most of the properties will be initialized from configuration variables. Y
 IAM-enabled services like {{site.data.keyword.cos_full_notm}} and {site.data.keyword.cloudant_short_notm}} are created as resources within the group too:
 
    ```sh
-   # cloudant
-   resource "ibm_resource_instance" "database" {
-     name              = "database"
-     service           = "cloudantnosqldb"
-     plan              = "lite"
-     location          = "global"
-     resource_group_id = "${ibm_resource_group.group.id}"
+# a database
+resource "ibm_resource_instance" "database" {
+    name              = "database"
+    service           = "cloudantnosqldb"
+    plan              = "${var.cloudantnosqldb_plan}"
+    location          = "${var.cloudantnosqldb_location}"
+    resource_group_id = "${ibm_resource_group.group.id}"
 }
-
-   # cloud object storage
-   resource "ibm_resource_instance" "objectstorage" {
-     name              = "objectstorage"
-     service           = "cloud-object-storage"
-     plan              = "standard"
-     location          = "global"
-     resource_group_id = "${ibm_resource_group.group.id}"
+# a cloud object storage
+resource "ibm_resource_instance" "objectstorage" {
+    name              = "objectstorage"
+    service           = "cloud-object-storage"
+    plan              = "${var.cloudobjectstorage_plan}"
+    location          = "${var.cloudobjectstorage_location}"
+    resource_group_id = "${ibm_resource_group.group.id}"
 }
    ```
 
