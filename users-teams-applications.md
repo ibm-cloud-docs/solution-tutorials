@@ -96,13 +96,16 @@ Although the three environments needed by this sample project require different 
 
 Let's start by building the Development environment.
 
-1. [Select an {{site.data.keyword.cloud_notm}} region](https://console.bluemix.net/dashboard) where to deploy the environment
-1. [Create an organization for the project](https://console.bluemix.net/docs/account/orgs_spaces.html#createorg)
-1. [Create a Cloud Foundry space for the environment](https://console.bluemix.net/docs/account/orgs_spaces.html#spaceinfo)
-1. [Create a new Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}
-1. Select your cluster [in the console](https://console.bluemix.net/containers-kubernetes/clusters)
+1. [Select an {{site.data.keyword.cloud_notm}} region](https://console.bluemix.net/dashboard) where to deploy the environment.
+1. For Cloud Foundry services and apps:
+   1. [Create an organization for the project](https://console.bluemix.net/docs/account/orgs_spaces.html#createorg).
+   1. [Create a Cloud Foundry space for the environment](https://console.bluemix.net/docs/account/orgs_spaces.html#spaceinfo).
+   1. Create the Cloud Foundry services used by the project under this space
+1. [Create a resource group for the environment](https://console.bluemix.net/account/resource-groups).
+1. Create the services compatible with resource group like {{site.data.keyword.cos_full_notm}} and {site.data.keyword.cloudant_short_notm}} in this group.
+1. [Create a new Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
+1. Select your cluster [in the console](https://console.bluemix.net/containers-kubernetes/clusters).
 1. Use *Enable Logging* to redirect the cluster logs to the Cloud Foundry space created in the previous steps. If later you want to change the space where the cluster is sending its logging data, you can use the [logging plugin for the ibmcloud command line](https://console.bluemix.net/docs/containers/cs_health.html#log_sources_update).
-1. Create the Cloud Foundry services used by the project under the space dedicated to the environment
 
 The following diagram shows where the project resources are created under the account:
 
@@ -113,7 +116,7 @@ The following diagram shows where the project resources are created under the ac
 ## Assign roles within the environment
 
 1. Invite users to the account
-1. Assign Policies to the users to control who can access the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://console.bluemix.net/docs/containers/cs_users.html#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://console.bluemix.net/docs/iam/groups.html#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
+1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://console.bluemix.net/docs/containers/cs_users.html#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://console.bluemix.net/docs/iam/groups.html#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
 1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://console.bluemix.net/docs/iam/cfaccess.html#cfaccess) to assign the right roles based on the environment.
 
 Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the IBM Cloud Monitoring service maps IAM roles to actions](https://console.bluemix.net/docs/services/cloud-monitoring/security_ov.html#iam_roles).
@@ -141,9 +144,10 @@ The IAM access policies and Cloud Foundry roles are defined in the [Identify and
 
 From there, you can replicate similar steps to build the other environments.
 
-1. Create one Cloud Foundry space per environment
-1. Create the required service instances in each space
-1. Create one cluster per environment
+1. Create one resource group per environment.
+1. Create one cluster and required service instances per environment.
+1. Create one Cloud Foundry space per environment.
+1. Create the required service instances in each space.
 
 <p style="text-align: center;">
   <img title="Using separate clusters to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments.png" style="width: 80%;" alt="Diagram showing separate clusters to isolate environments" />
@@ -184,12 +188,15 @@ As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package man
 
 Congratulations, your application can now safely be deployed from dev to production. Below are additional suggestions to improve application delivery.
 
-* Add [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights) to your pipeline to perform quality control during deployments
-* Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights)
+* Add [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights) to your pipeline to perform quality control during deployments.
+* Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights).
+* Follow the tutorial [Plan, create and update deployment environments](./plan-create-update-deployments.html) to automate the deployment of your environments.
 
 ## Related information
 
 * [Getting Started with {{site.data.keyword.iamshort}}](https://console.bluemix.net/docs/iam/quickstart.html#getstarted)
+* [Best practices for organizing resources in a resource group
+](https://console.bluemix.net/docs/resources/bestpractice_rgs.html#bp_resourcegroups)
 * [Analyze logs and monitor the health of Kubernetes applications](./kubernetes-log-analysis-kibana.html)
 * [Continuous Deployment to Kubernetes](./continuous-deployment-to-kubernetes.html)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)

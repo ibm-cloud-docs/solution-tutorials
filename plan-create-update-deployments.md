@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-10-25"
 
 ---
 
@@ -87,7 +87,7 @@ The repository is structured as follow:
 | [terraform](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform) | Home for the Terraform files |
 | [terraform/global](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/global) | Terraform files to provision resources common to the three environments |
 | [terraform/per-environment](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/per-environment) | Terraform files specific to a given environment |
-| [iam](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam) | Scripts to configure user permissions |
+| [terraform/roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) | Terraform files to configure user policies |
 
 ### Heavy lifting with Terraform
 
@@ -143,6 +143,7 @@ Given the environments are rather simple and similar, you are going to use anoth
 
 Each environment requires:
 * a dedicated Cloud Foundry space
+* a dedicated resource group
 * a Kubernetes cluster
 * a database
 * a file storage
@@ -174,46 +175,104 @@ Once you can reference the organization, it is straightforward to create a space
 
 Notice how the organization name is referenced from the *global* remote state. The other properties are taken from configuration variables.
 
-Next comes the Kubernetes cluster. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
+Next comes the resource group.
 
    ```sh
-   # a cluster
-   resource "ibm_container_cluster" "cluster" {
-     name            = "${var.environment_name}-cluster"
-     datacenter      = "${var.cluster_datacenter}"
-     org_guid        = "${data.terraform_remote_state.global.org_guid}"
-     space_guid      = "${ibm_space.space.id}"
-     account_guid    = "${data.terraform_remote_state.global.account_guid}"
-     machine_type    = "${var.cluster_machine_type}"
-     worker_num      = "${var.cluster_worker_num}"
-     public_vlan_id  = "${var.cluster_public_vlan_id}"
-     private_vlan_id = "${var.cluster_private_vlan_id}"
-   }
+   # a resource group
+   resource "ibm_resource_group" "group" {
+    name     = "${var.environment_name}"
+    quota_id = "${data.ibm_resource_quota.quota.id}"
+}
+
+   data "ibm_resource_quota" "quota" {
+	name = "${var.resource_quota}"
+}
+   ```
+
+The Kubernetes cluster is created in this resource group. The {{site.data.keyword.Bluemix_notm}} provider has a Terraform resource to represent a cluster:
+
+   ```sh
+  # a cluster
+  resource "ibm_container_cluster" "cluster" {
+  	name              = "${var.environment_name}-cluster"
+  	datacenter        = "${var.cluster_datacenter}"
+  	org_guid          = "${data.terraform_remote_state.global.org_guid}"
+  	space_guid        = "${ibm_space.space.id}"
+  	account_guid      = "${data.terraform_remote_state.global.account_guid}"
+  	hardware         =  "${var.cluster_hardware}"
+  	machine_type     = "${var.cluster_machine_type}"
+  	public_vlan_id    = "${var.cluster_public_vlan_id}"
+  	private_vlan_id   = "${var.cluster_private_vlan_id}"
+  	resource_group_id = "${ibm_resource_group.group.id}"
+}
+
+resource "ibm_container_worker_pool" "cluster_workerpool" {
+  worker_pool_name = "${var.environment_name}-pool"
+  machine_type     = "${var.cluster_machine_type}"
+  cluster          = "${ibm_container_cluster.cluster.id}"
+  size_per_zone    = "${var.worker_num}"
+  hardware         =  "${var.cluster_hardware}"
+  resource_group_id = "${ibm_resource_group.group.id}"
+}
+
+resource "ibm_container_worker_pool_zone_attachment" "cluster_zone" {
+  cluster           = "${ibm_container_cluster.cluster.id}"
+  worker_pool       =  "${element(split("/",ibm_container_worker_pool.cluster_workerpool.id),1)}"
+  zone              = "${var.cluster_datacenter}"
+  public_vlan_id    = "${var.cluster_public_vlan_id}"
+  private_vlan_id   = "${var.cluster_private_vlan_id}"
+  resource_group_id = "${ibm_resource_group.group.id}"
+}
    ```
 
 Again most of the properties will be initialized from configuration variables. You can adjust the datacenter, the number of workers, the type of workers.
 
-Cloud Foundry services can be provisioned and a Kubernetes binding (secret) can be added to retrieve the service credentials from your applications:
+IAM-enabled services like {{site.data.keyword.cos_full_notm}} and {site.data.keyword.cloudant_short_notm}} are created as resources within the group too:
 
    ```sh
-   # a database
-   resource "ibm_service_instance" "database" {
-     name       = "database"
-     space_guid = "${ibm_space.space.id}"
-     service    = "cloudantNoSQLDB"
-     plan       = "Lite"
-   }
+# a database
+resource "ibm_resource_instance" "database" {
+    name              = "database"
+    service           = "cloudantnosqldb"
+    plan              = "${var.cloudantnosqldb_plan}"
+    location          = "${var.cloudantnosqldb_location}"
+    resource_group_id = "${ibm_resource_group.group.id}"
+}
+# a cloud object storage
+resource "ibm_resource_instance" "objectstorage" {
+    name              = "objectstorage"
+    service           = "cloud-object-storage"
+    plan              = "${var.cloudobjectstorage_plan}"
+    location          = "${var.cloudobjectstorage_location}"
+    resource_group_id = "${ibm_resource_group.group.id}"
+}
+   ```
 
-   # bind the database service to the cluster
+Kubernetes bindings (secrets) can be added to retrieve the service credentials from your applications:
+
+   ```sh
+   # bind the cloudant service to the cluster
    resource "ibm_container_bind_service" "bind_database" {
-    cluster_name_id             = "${ibm_container_cluster.cluster.id}"
-    service_instance_space_guid = "${ibm_space.space.id}"
-    service_instance_name_id    = "${ibm_service_instance.database.id}"
-    namespace_id                = "default"
-    account_guid                = "${data.terraform_remote_state.global.account_guid}"
-    org_guid                    = "${data.terraform_remote_state.global.org_guid}"
-    space_guid                  = "${ibm_space.space.id}"
-   }
+      cluster_name_id             = "${ibm_container_cluster.cluster.id}"
+  	  service_instance_name       = "${ibm_resource_instance.database.name}"
+      namespace_id                = "default"
+      account_guid                = "${data.terraform_remote_state.global.account_guid}"
+      org_guid                    = "${data.terraform_remote_state.global.org_guid}"
+      space_guid                  = "${ibm_space.space.id}"
+      resource_group_id           = "${ibm_resource_group.group.id}"
+}
+
+   # bind the cloud object storage service to the cluster
+   resource "ibm_container_bind_service" "bind_objectstorage" {
+  	cluster_name_id             = "${ibm_container_cluster.cluster.id}"
+  	space_guid                  = "${ibm_space.space.id}"
+  	service_instance_id         = "${ibm_resource_instance.objectstorage.name}"
+  	namespace_id                = "default"
+  	account_guid                = "${data.terraform_remote_state.global.account_guid}"
+  	org_guid                    = "${data.terraform_remote_state.global.org_guid}"
+  	space_guid                  = "${ibm_space.space.id}"
+  	resource_group_id           = "${ibm_resource_group.group.id}"
+}
    ```
 
 ## Deploy this environment in your account
@@ -254,6 +313,7 @@ If you have not done it yet, clone the tutorial repository:
 ### Set Platform API key
 
 1. If you don't already have one, obtain a [Platform API key](https://console.bluemix.net/iam/#/apikeys) and save the API key for future reference.
+
    > If in later steps you plan on creating a new Cloud Foundry organization to host the deployment environments, make sure you are the owner of the account.
 1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command
    ```sh
@@ -365,10 +425,15 @@ This section will focus on the `development` environment. The steps will be the 
       ibmcloud cs vlans <location>
       ```
       {: codeblock}
-      If you don't have any VLANs, keep the empty values, new VLANs will be created.
    1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
       ```sh
       ibmcloud cs machine-types <location>
+      ```
+      {: codeblock}
+
+   1. Set the **resource_quota**. Find the available resource quota definitions with:
+      ```sh
+      ibmcloud resource quotas
       ```
       {: codeblock}
 1. Initialize Terraform
@@ -403,8 +468,9 @@ This section will focus on the `development` environment. The steps will be the 
    {: codeblock}
 
 Once Terraform completes, it will have created:
+* a resource group
 * a Cloud Foundry space
-* a Kubernetes cluster
+* a Kubernetes cluster with a worker pool and a zone attached to it
 * a database
 * a Kubernetes secret with the database credentials
 * a storage
@@ -416,43 +482,7 @@ You can repeat the steps for the `testing` and `production`.
 
 ### Assign user policies
 
-In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `ibmcloud` and the `iam` command.
-
-   ```cmd
-   ~/> ibmcloud iam
-   NAME:
-      ibmcloud iam - Manage identities and access to resources
-   USAGE:
-      ibmcloud iam command [arguments...] [command options]
-
-   COMMANDS:
-      ...
-      access-groups                    List access groups under current account
-      access-group-create              Create an access group
-      access-group                     Show details of an access group
-      access-group-delete              Delete an access group
-      access-group-update              Update an access group
-      access-group-users               List users of an access group
-      access-group-user-add            Add user(s) to an access group
-      access-group-user-remove         Remove a user from an access group
-      access-group-user-purge          Remove user from all access groups
-      access-group-service-ids         List service IDs of an access group
-      access-group-service-id-add      Add service ID(s) to an access group
-      access-group-service-id-remove   Remove a service ID from an access group
-      access-group-service-id-purge    Remove service ID from all access groups
-      access-group-policies            List policies of an access group
-      access-group-policy              Show details of an access group policy
-      access-group-policy-create       Create an access group policy
-      access-group-policy-update       Update an access group policy
-      access-group-policy-delete       Delete an access group policy
-      ...
-      user-policies                    List policies of a user
-      user-policy                      Display details of a user policy
-      user-policy-create               Create a user policy for resources in current account
-      user-policy-update               Update a user policy for resources in current account
-      user-policy-delete               Delete a user policy
-      ...
-   ```
+In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you will be using the [roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) folder in the cloned repo.
 
 For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the policies to define are:
 
@@ -468,49 +498,85 @@ Given a team may be composed of several developers, testers, you can leverage th
 For the *Developer* role in the *Development* environment, this translates to:
 
    ```sh
-   #!/bin/bash
+resource "ibm_iam_access_group" "developer_role" {
+  name        = "${var.access_group_name_developer_role}"
+  description = "${var.access_group_description}"
+}
+resource "ibm_iam_access_group_policy" "resourcepolicy_developer" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles           = ["Viewer"]
 
-   USER=$1
-   GROUP="Example-Developer-Role"
+  resources = [{
+    resource_type = "resource-group"
+    resource      = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
+  }]
+}
 
-   # Check if the group exist
-   if ibmcloud iam access-group $GROUP >/dev/null; then
-     echo "Role already exists"
-   else
-     # Create the access group for the role if the group does not exist
-     ibmcloud iam access-group-create $GROUP --description "used by the multiple-environments-as-code tutorial"
+resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles           = ["Administrator","Editor","Viewer"]
 
-     # Set the permissions for this group
-     # Resource Group: Viewer
-     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-type resource-group --resource "default"
+  resources = [{
+    service           = "monitoring"
+    resource_group_id = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
+  }]
+}
 
-     # Platform Access Roles in the Resource Group: Viewer
-     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-group-name "default"
-
-     # Monitoring: Administrator, Editor, Viewer
-     ibmcloud iam access-group-policy-create $GROUP --roles Administrator,Editor,Viewer --service-name monitoring
-   fi
-
-   # Add the user to the group
-   ibmcloud iam access-group-user-add $GROUP $USER
    ```
 
-The [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles. To set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you can use the script `add-developer.sh`:
+The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/roles/development/main.tf) file of the checkout has examples of these resources for the defined *Developer*, *Operator* , *tester*, and *Functional User* roles. To set the policies as defined in a previous section for the users with the *Developer, Operator, Tester and Function user* roles in the *development* environment, 
+
+1. Change to the `terraform/roles/development` directory
+2. Copy the template `tfvars` file. There is one per environment (you can find the `production` and `testing` templates under their respective folders in `roles` directory)
 
    ```sh
-   cd iam/development
-   ./add-developer.sh user@domain.com
+   cp development.tfvars.tmpl development.tfvars
    ```
+3. Edit `development.tfvars`
+
+   - Set **iam_access_members_developers** to the list of developers to whom you would like to grant the access.
+   - Set **iam_access_members_operators** to the list of operators and so on.
+4. Initialize Terraform
+   ```sh
+   terraform init
+   ```
+   {: codeblock}
+
+5. Look at the Terraform plan
+   ```sh
+   terraform plan -var-file=../../credentials.tfvars -var-file=development.tfvars
+   ```
+   {: codeblock}
+   It should report:
+   ```
+   Plan: 14 to add, 0 to change, 0 to destroy.
+   ```
+   {: codeblock}
+6. Apply the changes
+   ```sh
+   terraform apply -var-file=../../credentials.tfvars -var-file=development.tfvars
+   ```
+You can repeat the steps for the `testing` and `production`.
 
 ## Remove resources
 
+1. Navigate to the `development` folder under `roles`
+   ```sh
+   cd terraform/roles/development
+   ```
+   {: codeblock}
+1. Destroy the access groups and access policies
+   ```sh
+   terraform destroy -var-file=../../credentials.tfvars -var-file=development.tfvars
+   ```
+   {: codeblock}
 1. Activate the `development` workspace
    ```sh
    cd terraform/per-environment
    terraform workspace select development
    ```
    {: codeblock}
-1. Destroy the spaces, services, clusters
+1. Destroy the resource group, spaces, services, clusters
    ```sh
    terraform destroy -var-file=../credentials.tfvars -var-file=development.tfvars
    ```

@@ -1,7 +1,7 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="solution-tutorials" audience="platform" arm="4086992" href="/docs/tutorials/index.html"}
+{: .toc subcollection="solution-tutorials" audience="platform" arm="4086992" href="/docs/tutorials/index.html" path="tutorials"}
 Solution Tutorials
 
     {: .navgroup id="learn"}

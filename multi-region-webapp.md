@@ -29,7 +29,7 @@ Apps or parts of your apps will have outages - it is a fact. It can be a problem
 ## Services used
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.sdk4node}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
+* [{{site.data.keyword.runtime_nodejs_notm}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
 * [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) for DevOps
 * [Internet services](https://console.bluemix.net/catalog/services/internet-services)
 
@@ -50,7 +50,7 @@ This tutorial involves an active/active scenario where two copies of the applica
 Start by creating a Node.js starter application that runs in a Cloud Foundry environment.
 
 1. Click **[Catalog](https://console.bluemix.net/catalog/)** in the {{site.data.keyword.Bluemix_notm}} console.
-2. Click **Cloud Foundry Apps** under the **Platform** category and select **[{{site.data.keyword.sdk4node}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)** .
+2. Click **Cloud Foundry Apps** under the **Platform** category and select **[{{site.data.keyword.runtime_nodejs_notm}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)** .
      ![](images/solution1/SDKforNodejs.png)
 3. Enter a **unique name** for your application, which will also be your host name, for example: myusername-nodeapp. And click **Create**.
 4.  After the application starts, click the **Visit URL** link on the **Overview** page to see your application LIVE on a new tab.
