@@ -313,6 +313,7 @@ If you have not done it yet, clone the tutorial repository:
 ### Set Platform API key
 
 1. If you don't already have one, obtain a [Platform API key](https://console.bluemix.net/iam/#/apikeys) and save the API key for future reference.
+
    > If in later steps you plan on creating a new Cloud Foundry organization to host the deployment environments, make sure you are the owner of the account.
 1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command
    ```sh
@@ -467,8 +468,9 @@ This section will focus on the `development` environment. The steps will be the 
    {: codeblock}
 
 Once Terraform completes, it will have created:
+* a resource group
 * a Cloud Foundry space
-* a Kubernetes cluster
+* a Kubernetes cluster with a worker pool and a zone attached to it
 * a database
 * a Kubernetes secret with the database credentials
 * a storage
@@ -480,43 +482,7 @@ You can repeat the steps for the `testing` and `production`.
 
 ### Assign user policies
 
-In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you are going to rely on the {{site.data.keyword.Bluemix_notm}} CLI `ibmcloud` and the `iam` command.
-
-   ```cmd
-   ~/> ibmcloud iam
-   NAME:
-      ibmcloud iam - Manage identities and access to resources
-   USAGE:
-      ibmcloud iam command [arguments...] [command options]
-
-   COMMANDS:
-      ...
-      access-groups                    List access groups under current account
-      access-group-create              Create an access group
-      access-group                     Show details of an access group
-      access-group-delete              Delete an access group
-      access-group-update              Update an access group
-      access-group-users               List users of an access group
-      access-group-user-add            Add user(s) to an access group
-      access-group-user-remove         Remove a user from an access group
-      access-group-user-purge          Remove user from all access groups
-      access-group-service-ids         List service IDs of an access group
-      access-group-service-id-add      Add service ID(s) to an access group
-      access-group-service-id-remove   Remove a service ID from an access group
-      access-group-service-id-purge    Remove service ID from all access groups
-      access-group-policies            List policies of an access group
-      access-group-policy              Show details of an access group policy
-      access-group-policy-create       Create an access group policy
-      access-group-policy-update       Update an access group policy
-      access-group-policy-delete       Delete an access group policy
-      ...
-      user-policies                    List policies of a user
-      user-policy                      Display details of a user policy
-      user-policy-create               Create a user policy for resources in current account
-      user-policy-update               Update a user policy for resources in current account
-      user-policy-delete               Delete a user policy
-      ...
-   ```
+In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you will be using the [roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) folder in the cloned repo.
 
 For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the policies to define are:
 
@@ -532,49 +498,85 @@ Given a team may be composed of several developers, testers, you can leverage th
 For the *Developer* role in the *Development* environment, this translates to:
 
    ```sh
-   #!/bin/bash
+resource "ibm_iam_access_group" "developer_role" {
+  name        = "${var.access_group_name_developer_role}"
+  description = "${var.access_group_description}"
+}
+resource "ibm_iam_access_group_policy" "resourcepolicy_developer" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles           = ["Viewer"]
 
-   USER=$1
-   GROUP="Example-Developer-Role"
+  resources = [{
+    resource_type = "resource-group"
+    resource      = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
+  }]
+}
 
-   # Check if the group exist
-   if ibmcloud iam access-group $GROUP >/dev/null; then
-     echo "Role already exists"
-   else
-     # Create the access group for the role if the group does not exist
-     ibmcloud iam access-group-create $GROUP --description "used by the multiple-environments-as-code tutorial"
+resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles           = ["Administrator","Editor","Viewer"]
 
-     # Set the permissions for this group
-     # Resource Group: Viewer
-     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-type resource-group --resource "default"
+  resources = [{
+    service           = "monitoring"
+    resource_group_id = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
+  }]
+}
 
-     # Platform Access Roles in the Resource Group: Viewer
-     ibmcloud iam access-group-policy-create $GROUP --roles Viewer --resource-group-name "default"
-
-     # Monitoring: Administrator, Editor, Viewer
-     ibmcloud iam access-group-policy-create $GROUP --roles Administrator,Editor,Viewer --service-name monitoring
-   fi
-
-   # Add the user to the group
-   ibmcloud iam access-group-user-add $GROUP $USER
    ```
 
-The [iam/development](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/iam/development) directory of the checkout has examples of these commands for the defined *Developer*, *Operator* and *Functional User* roles. To set the policies as defined in a previous section for a user with the *Developer* role in the *development* environment, you can use the script `add-developer.sh`:
+The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/roles/development/main.tf) file of the checkout has examples of these resources for the defined *Developer*, *Operator* , *tester*, and *Functional User* roles. To set the policies as defined in a previous section for the users with the *Developer, Operator, Tester and Function user* roles in the *development* environment, 
+
+1. Change to the `terraform/roles/development` directory
+2. Copy the template `tfvars` file. There is one per environment (you can find the `production` and `testing` templates under their respective folders in `roles` directory)
 
    ```sh
-   cd iam/development
-   ./add-developer.sh user@domain.com
+   cp development.tfvars.tmpl development.tfvars
    ```
+3. Edit `development.tfvars`
+
+   - Set **iam_access_members_developers** to the list of developers to whom you would like to grant the access.
+   - Set **iam_access_members_operators** to the list of operators and so on.
+4. Initialize Terraform
+   ```sh
+   terraform init
+   ```
+   {: codeblock}
+
+5. Look at the Terraform plan
+   ```sh
+   terraform plan -var-file=../../credentials.tfvars -var-file=development.tfvars
+   ```
+   {: codeblock}
+   It should report:
+   ```
+   Plan: 14 to add, 0 to change, 0 to destroy.
+   ```
+   {: codeblock}
+6. Apply the changes
+   ```sh
+   terraform apply -var-file=../../credentials.tfvars -var-file=development.tfvars
+   ```
+You can repeat the steps for the `testing` and `production`.
 
 ## Remove resources
 
+1. Navigate to the `development` folder under `roles`
+   ```sh
+   cd terraform/roles/development
+   ```
+   {: codeblock}
+1. Destroy the access groups and access policies
+   ```sh
+   terraform destroy -var-file=../../credentials.tfvars -var-file=development.tfvars
+   ```
+   {: codeblock}
 1. Activate the `development` workspace
    ```sh
    cd terraform/per-environment
    terraform workspace select development
    ```
    {: codeblock}
-1. Destroy the spaces, services, clusters
+1. Destroy the resource group, spaces, services, clusters
    ```sh
    terraform destroy -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
