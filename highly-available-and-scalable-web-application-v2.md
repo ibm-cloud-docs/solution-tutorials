@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-10-23"
+lastupdated: "2018-11-05"
 ---
 
 {:shortdesc: .shortdesc}
@@ -17,10 +17,11 @@ Adding more servers to an application is a common pattern to handle additional l
 
 This tutorial walks you through an active-active scenario with the creation of: 
 
-- Cloud Internet Services to point traffic to the healthy region if one copy fails. 
+- Cloud Internet Services to point traffic to the healthy region if one copy fails. - MUST HAVE
 - Two web application servers for each region. 
 - Cloud Load Balancer, to load balance traffic two servers within a region. 
-- One Cloudant database instance per region with data replication between regions. 
+- One Cloudant database instance per region with data replication between regions. - DATA REPLICATION DEPLY.
+- OTHER DATABASES LIKE DB2 / COMPOSE 
 - App ID for login authentication.
 - One Watson service instance used between the two regions. 
 - A monitoring service for each region. 
