@@ -91,22 +91,50 @@ Once you have obtained the SSL certificate and private key for your domain make 
 
 ## Deploy actions in multiple locations
 
-Repeat the following steps per location.
+In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}.
+
+![alt](images/solution44-multi-region-serverless/api-architecture.png)
+
+The following steps will need to be repeated for every location where you want to host the application back-end. For this tutorial, you can pick *Dallas (us-south)* and *London (eu-gb)* as targets.
 
 ### Store certificate in {{site.data.keyword.cloudcerts_short}}
 
-1. Create a {{site.data.keyword.cloudcerts_short}} instance
-1. Import the SSL cert and private key for the custom domain in {{site.data.keyword.cloudcerts_short}}
+1. Given a location, create a [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts) instance.
+1. In the service dashboard, use **Import Certificate**:
+   * Set **Name** to the custom subdomain and domain, such as *api.mydomain.com*.
+   * Browse for the **Certificate file** in PEM format.
+   * Browse for the **Private key file** in PEM format.
+   * **Import**.
 
-![{{site.data.keyword.cloudcerts_short}}](./certificatemanager.png)
-
-### Define {{site.data.keyword.openwhisk_short}}
+### Define actions
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://console.bluemix.net/openwhisk/actions).
-1. Create action **hello** from [*hello.js*](./hello.js).
-1. Create action **healthz** from [*healthz.js*](./healthz.js).
-
-![{{site.data.keyword.openwhisk_short}}](./actions-are-configured.png)
+1. Switch to the given location and select an organization and space where to deploy the actions.
+1. Create an action
+   1. Set **Name** to **doWork**.
+   1. Set **Enclosing Package** to **default**.
+   1. Set **Runtime** to most recent **Node.js**.
+   1. **Create**.
+1. Change the action code to:
+   ```js
+   function main(args) {
+     msg = "Hello, " + params.name + " from " + params.place;
+     return { greeting:  msg, host: params.__ow_headers.host };
+   }
+   ```
+   {: pre}
+1. Create another action to be used as health check for our API:
+   1. Set **Name** to **healthz**.
+   1. Set **Enclosing Package** to **default**.
+   1. Set **Runtime** to most recent **Node.js**.
+   1. **Create**.
+1. Change the action code to:
+   ```js
+   function main(params) {
+     return { ok: true };
+   }
+   ```
+   {: pre}
 
 ### Expose the {{site.data.keyword.openwhisk_short}} with a managed API
 
