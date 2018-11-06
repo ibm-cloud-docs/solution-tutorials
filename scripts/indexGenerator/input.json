@@ -172,6 +172,18 @@
                 ]
             },
             {
+                "name": "Distribute serverless apps across multiple locations",
+                "hidden": true,
+                "url": "multi-region-serverless.html",
+                "description": "Use Internet Services to build globally available and secure serverless applications.",
+                "imgSrc": "images/solution44-multi-region-serverless/Architecture.png",
+                "tags": [
+                    "Internet Services",
+                    "Cloud Functions",
+                    "Certificate Manager"
+                ]
+            },
+            {
                 "name": "Analyze logs and monitor health of Cloud Foundry applications",
                 "url": "application-log-analysis.html",
                 "description": "Use IBM Cloud Log Analysis to understand and diagnose application activities. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.",

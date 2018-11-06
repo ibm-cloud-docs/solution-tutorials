@@ -20,11 +20,13 @@ tar cf - \
   --exclude=low-latency-real-time-bidding.md \
   --exclude=autoscale-virtual-server.md \
   --exclude=highly-available-and-scalable-web-application-v2.md \
-  --exclude=strategies-for-globally-available-apps.md \ 
+  --exclude=multi-region-serverless.md \
   --exclude="vpc-*.md" \
+  --exclude=strategies-for-globally-available-apps.md \
+  --exclude="images/solution39-*" \
   --exclude="images/solution40-*" \
   --exclude="images/solution41-*" \
-  --exclude="images/solution39-*" \
+  --exclude="images/solution44-*" \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
