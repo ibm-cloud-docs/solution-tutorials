@@ -24,16 +24,16 @@ This tutorial...
 ## Objectives
 {: #objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+* Deploy {{site.data.keyword.openwhisk_short}} actions with a custom domain
+* Distribute load across locations with Cloud Internet Services
 
 ## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
+* [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
+* [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts)
+* [Internet Services](https://console.bluemix.net/catalog/services/internet-svcs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -44,81 +44,116 @@ intro sentence
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution1/Architecture.png)
+  ![Architecture](images/solution44-multi-region-serverless/Architecture.png)
 </p>
 
-1. The user does this
-2. Then that
+1. Users access the application. The request goes through Internet Services.
+2. Internet Services redirect the users to the closest healthy API back-end.
+3. {{site.data.keyword.cloudcerts_short}} provides the API with its SSL certificate. The traffic is encrypted end-to-end.
+4. The API is implemented with {{site.data.keyword.openwhisk_short}}.
 
 ## Before you begin
 {: #prereqs}
 
 1. Install all the necessary command line (CLI) tools by [following these steps](https://console.bluemix.net/docs/cli/index.html#overview).
 
-## Create services
-{: #setup}
+## Configure a custom domain
 
-In this section, you will create the services required to ...
-
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#install_use).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [Service A](https://console.bluemix.net/catalog/services/the-service-name).
-  ```sh
-  ibmcloud resource service-instance-create service-instance-name service-name lite global
-  ```
-3. Create an instance of [Service B](https://console.bluemix.net/catalog/services/the-service-name).
-
-## Solution Specific Section
-{: #section_one}
-
-Introductory statement that overviews the section
-
-1. Step 1 Click **This** and enter your name.
-
-  This is a tip.
-  {:tip}
-
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
-
-### A sub section
-
-   ```bash
-   some shellscript
+1. Get a custom domain such as *mydomain.com*
+1. Create a Cloud Internet Services instance
+1. Register the custom domain with Cloud Internet Services
+1. Obtain a wildcard SSL certificate and private key for **.mydomain.com*. One can use Let's Encrypt via https://zerossl.com/. At some point you'll need to create DNS record of type TXT in CIS DNS to prove you are the owner of the domain.
+1. Convert the Certificate CRT to PEM format:
    ```
-   {: pre}
+   openssl x509 -in domain-crt.txt -out domain-crt.pem -outform PEM
+   ```
+1. Convert the Private Key to PEM format:
+   ```
+   openssl rsa -in domain-key.txt -out domain-key.pem -outform PEM
+   ```
 
+## Deploy actions in multiple locations
 
-This paragraph only appears in the iOS documentation
-{: ios}
+Repeat the following steps per location.
 
-And this paragraph only appears in the Android documentation
-{: android}
+### Store certificate in {{site.data.keyword.cloudcerts_short}}
 
-This paragraph only appears for Java code
-{: java}
+1. Create a {{site.data.keyword.cloudcerts_short}} instance
+1. Import the SSL cert and private key for the custom domain in {{site.data.keyword.cloudcerts_short}}
 
-And this paragraph only appears for Swift code
-{: swift}
+![{{site.data.keyword.cloudcerts_short}}](./certificatemanager.png)
 
+### Define {{site.data.keyword.openwhisk_short}}
 
-## Another Solution Specific Section
-{: #section_two}
+1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://console.bluemix.net/openwhisk/actions).
+1. Create action **hello** from [*hello.js*](./hello.js).
+1. Create action **healthz** from [*healthz.js*](./healthz.js).
 
-Introductory statement that overviews the section
+![{{site.data.keyword.openwhisk_short}}](./actions-are-configured.png)
 
-### Another sub section
+### Expose the {{site.data.keyword.openwhisk_short}} with a managed API
+
+1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://console.bluemix.net/openwhisk/apimanagement).
+1. Create a new API:
+   1. Set **Name** to **hello**.
+   1. Set **Base path** to **/hello**.
+   1. Add operation **/world** pointing to **hello** action.
+   1. Add operation **/healthz** pointing to **healthz** action.
+   1. Save
+
+![Managed API](./api-gateway.png)
+
+### Configure the custom domain for the managed API
+
+1. Go to [APIs / Custom domains](https://console.bluemix.net/apis/domains).
+1. Locate the custom domain linked to the org and space where you created the actions and the managed API.
+1. Click **Change Settings** in the action menu
+1. Check **Apply custom domain**
+1. Set **Domain name** to the domain you will use with the CIS GLB, *hello-functions.mydomain.com*
+1. Select the {{site.data.keyword.cloudcerts_short}} in the location where the actions are deployed
+1. Select the certificate for the domain
+1. In CIS / Reliability / DNS, create a new DNS TXT record mapping your domain to the API default domain / alias
+1. Save the custom domain settings. The dialog will check for the TXT record.
+
+![Custom Domains](./custom-domains.png)
+
+![Custom Domain Cert](./custom-domain-cert.png)
+
+## Create a global load balancer in CIS
+
+1. Create a health check
+   1. Set **Monitor type** to **HTTPS**
+   1. Set **Path** to **/hello/healthz**
+   1. Provision the resource
+1. Create an origin pool per location
+   1. Set **Name** to **hello-\<location>**
+   1. Select the Health check create before
+   1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed
+   1. Set **Origin Name** to **hello-\<location>**
+   1. Set **Origin Address** to the default domain / alias for the managed API (such as _5d3b1eb6.us-south.apiconnect.appdomain.cloud_)
+   1. Provision the resource
+1. Create a global load balancer
+   1. Set **Hostname** to **hello-functions.mydomain.com**
+   1. Add the regional origin pools 
+   1. Provision the resources
+1. After a short while, go to `https://hello-functions.mydomain.com/hello/world`. This should reply with the function running in the first healthy pool.
+
+![Global Load Balancer](./glb.png)
+
+![Pools](./pools.png)
+
+![Health Check](./healthcheck.png)
+
+## Test fail over
+
+1. Edit the `health` function in the first origin pool location, and change its implementation to `throw new Error()`
+1. Save
+1. Wait for the health check to run for this origin pool
+1. Get `https://hello-functions.mydomain.com/hello/world` again, it should now redirect to the other healthy pool
+
+## Test load balancing
+
+1. For load balancing, you would need to create one origin pool with all {{site.data.keyword.openwhisk_short}} APIs. CIS would then load balance queries from different clients between the {{site.data.keyword.openwhisk_short}} APIs.
 
 ## Remove resources
 {: #removeresources}
