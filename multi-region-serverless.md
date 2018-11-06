@@ -73,6 +73,8 @@ The first step is to create an instance of IBM Cloud Internet Services (CIS) and
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {:tip}
 
+### Obtain a certificate for the custom domain
+
 Exposing {{site.data.keyword.openwhisk_short}} actions through a custom domain will require a secure HTTPS connection. You should obtain a SSL certificate for the domain and subdomain you plan to use with the serverless back-end. Assuming a domain like *mydomain.com*, the actions could be hosted at *api.mydomain.com*. The certificate will need to be issued for *api.mydomain.com*.
 
 You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of Cloud Internet Services to prove you are the owner of the domain.
@@ -89,24 +91,24 @@ Once you have obtained the SSL certificate and private key for your domain make 
    openssl rsa -in domain-key.txt -out domain-key.pem -outform PEM
    ```
 
-## Deploy actions in multiple locations
+### Import the certificate to a central repository
 
-In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}}.
-
-![alt](images/solution44-multi-region-serverless/api-architecture.png)
-
-The action **doWork** implements one of your API operations. The action **healthz** is going to be used later on the check if your API is healthy. It could be a no-op simply returning *OK* or it could do a more complex check like pinging the databases or other critical services required by your API.
-
-The following steps will need to be repeated for every location where you want to host the application back-end. For this tutorial, you can pick *Dallas (us-south)* and *London (eu-gb)* as targets.
-
-### Import certificate to a central repository
-
-1. Create a [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts) instance in the target location.
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts) instance in a supported location.
 1. In the service dashboard, use **Import Certificate**:
    * Set **Name** to the custom subdomain and domain, such as *api.mydomain.com*.
    * Browse for the **Certificate file** in PEM format.
    * Browse for the **Private key file** in PEM format.
    * **Import**.
+
+## Deploy actions in multiple locations
+
+In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}}.
+
+![API Architecture](images/solution44-multi-region-serverless/api-architecture.png)
+
+The action **doWork** implements one of your API operations. The action **healthz** is going to be used later on the check if your API is healthy. It could be a no-op simply returning *OK* or it could do a more complex check like pinging the databases or other critical services required by your API.
+
+The following steps will need to be repeated for every location where you want to host the application back-end. For this tutorial, you can pick *Dallas (us-south)* and *London (eu-gb)* as targets.
 
 ### Define actions
 
@@ -155,6 +157,7 @@ The next step involves creating a managed API to expose your actions.
 Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain, the domain which will later be configured in IBM Cloud Internet Services.
 
 1. Go to [APIs / Custom domains](https://console.bluemix.net/apis/domains).
+1. In the Region selector, select the target location.
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API.
 1. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
@@ -167,37 +170,49 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
 
 The DNS TXT record can be removed once the settings have been applied.
 
-## Distribute traffic across locations
+## Distribute traffic between locations
 
-1. Create a health check
+At this stage, you have setup actions in multiple locations but there is no single entry point to reach them. In this section, you will configure a global load balancer (GLB) to distribute traffic between the locations.
+
+![Architecture of the global load balancer](images/solution44-multi-region-serverless/glb-architecture.png)
+
+### Create a health check
+
+1. Go to the dashboard of your IBM Cloud Internet Services instance.
+1. Under **Reliability / Global Load Balancer**, create a health check
    1. Set **Monitor type** to **HTTPS**
-   1. Set **Path** to **/hello/healthz**
-   1. Provision the resource
+   1. Set **Path** to **/api/healthz**
+   1. **Provision the resource**
+
+### Create origin pools
+
 1. Create an origin pool per location
-   1. Set **Name** to **hello-\<location>**
-   1. Select the Health check create before
+   1. Set **Name** to **app-\<location>**
+   1. Select the Health check created before
    1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed
-   1. Set **Origin Name** to **hello-\<location>**
+   1. Set **Origin Name** to **app-\<location>**
    1. Set **Origin Address** to the default domain / alias for the managed API (such as _5d3b1eb6.us-south.apiconnect.appdomain.cloud_)
    1. Provision the resource
+
+### Create a global load balancer
+
 1. Create a global load balancer
-   1. Set **Hostname** to **hello-functions.mydomain.com**
+   1. Set **Hostname** to **api.mydomain.com**
    1. Add the regional origin pools 
    1. Provision the resources
-1. After a short while, go to `https://hello-functions.mydomain.com/hello/world`. This should reply with the function running in the first healthy pool.
 
-![Global Load Balancer](./glb.png)
+After a short while, go to `https://api.mydomain.com/api/do`. This should reply with the function running in the first healthy pool.
 
-![Pools](./pools.png)
+### Test fail over
 
-![Health Check](./healthcheck.png)
+To test the fail over, you can modify the health check function. If it fails, the GLB will redirect traffic to the next healthy origin.
 
-## Test fail over
-
-1. Edit the `health` function in the first origin pool location, and change its implementation to `throw new Error()`
+1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://console.bluemix.net/openwhisk/actions).
+1. Select the first location configured in the GLB.
+1. Edit the `healthz` function and change its implementation to `throw new Error()`.
 1. Save
 1. Wait for the health check to run for this origin pool
-1. Get `https://hello-functions.mydomain.com/hello/world` again, it should now redirect to the other healthy pool
+1. Get `https://api.mydomain.com/api/do` again, it should now redirect to the other healthy origin.
 
 ## Test load balancing
 
