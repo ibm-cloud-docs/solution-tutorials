@@ -101,7 +101,7 @@ The following steps will need to be repeated for every location where you want t
 
 ### Import certificate to a central repository
 
-1. Given a location, create a [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts) instance.
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts) instance in the target location.
 1. In the service dashboard, use **Import Certificate**:
    * Set **Name** to the custom subdomain and domain, such as *api.mydomain.com*.
    * Browse for the **Certificate file** in PEM format.
@@ -111,7 +111,7 @@ The following steps will need to be repeated for every location where you want t
 ### Define actions
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://console.bluemix.net/openwhisk/actions).
-1. Switch to the given location and select an organization and space where to deploy the actions.
+1. Switch to the target location and select an organization and space where to deploy the actions.
 1. Create an action
    1. Set **Name** to **doWork**.
    1. Set **Enclosing Package** to **default**.
@@ -140,34 +140,34 @@ The following steps will need to be repeated for every location where you want t
 
 ### Expose the actions with a managed API
 
+The next step involves creating a managed API to expose your actions.
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://console.bluemix.net/openwhisk/apimanagement).
-1. Create a new API:
-   1. Set **Name** to **hello**.
-   1. Set **Base path** to **/hello**.
-   1. Add operation **/world** pointing to **hello** action.
-   1. Add operation **/healthz** pointing to **healthz** action.
-   1. Save
-
-![Managed API](./api-gateway.png)
+1. Create a new managed API:
+   1. Set **Name** to **App API**.
+   1. Set **Base path** to **/api**.
+   1. Add a **GET** operation **/do** pointing to the **doWork** action.
+   1. Add another **GET** operation **/healthz** pointing to **healthz** action.
+   1. **Save**
 
 ### Configure the custom domain for the managed API
 
+Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain, the domain which will later be configured in IBM Cloud Internet Services.
+
 1. Go to [APIs / Custom domains](https://console.bluemix.net/apis/domains).
-1. Locate the custom domain linked to the org and space where you created the actions and the managed API.
-1. Click **Change Settings** in the action menu
+1. Locate the custom domain linked to the organization and space where you created the actions and the managed API.
+1. Click **Change Settings** in the action menu.
+1. Make note of the **Default domain / alias** value.
 1. Check **Apply custom domain**
-1. Set **Domain name** to the domain you will use with the CIS GLB, *hello-functions.mydomain.com*
-1. Select the {{site.data.keyword.cloudcerts_short}} in the location where the actions are deployed
-1. Select the certificate for the domain
-1. In CIS / Reliability / DNS, create a new DNS TXT record mapping your domain to the API default domain / alias
-1. Save the custom domain settings. The dialog will check for the TXT record.
+   1. Set **Domain name** to the domain you will use with the CIS Global Load Balancer such as *api.mydomain.com*.
+   1. Select the {{site.data.keyword.cloudcerts_short}} in the location where the actions are deployed.
+   1. Select the certificate for the domain.
+1. Go to the dashboard of your instance of **Cloud Internet Services**, under **Reliability / DNS**, create a new **DNS TXT record** mapping your domain to the API default domain / alias
+1. Save the custom domain settings. The dialog will check for the existence of the DNS TXT record.
 
-![Custom Domains](./custom-domains.png)
+The DNS TXT record can be removed once the settings have been applied.
 
-![Custom Domain Cert](./custom-domain-cert.png)
-
-## Create a global load balancer in CIS
+## Distribute traffic across locations
 
 1. Create a health check
    1. Set **Monitor type** to **HTTPS**
