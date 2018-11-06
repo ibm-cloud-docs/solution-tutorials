@@ -618,8 +618,8 @@ With a second region deployment, the architecture would look like this.![Archite
 To extend the scenario to for multi-region, you would need to do the following in region two: 
 
 - Repeat all of the above previous steps in a different region. 
-- Setup database replication between the two MySQL servers between regions. 
-- File storage is used to store data for backups, you have the option to use a single file storage for both regions or one file storage service for each region. 
+- Setup your own database replication between the two MySQL servers between regions. 
+- File storage is used to store data for backups, if using two file storage services, one for each region then you would have a challenge doing replication. You must manage your own replication between file storage services in different regions.
 - In any of the two regions, setup Cloud Internet Services to point traffic to the healthy region if one copy fails. Follow the steps [here](multi-region-k8s-cis.html#create_cis_instance) to setup and configure Cloud Internet Services.
 
 ## Remove resources
