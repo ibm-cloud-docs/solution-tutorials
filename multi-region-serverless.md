@@ -24,8 +24,9 @@ This tutorial...
 ## Objectives
 {: #objectives}
 
-* Deploy {{site.data.keyword.openwhisk_short}} actions with a custom domain
-* Distribute load across locations with Cloud Internet Services
+* Deploy {{site.data.keyword.openwhisk_short}} actions.
+* Expose actions via {{site.data.keyword.APIM}} with a custom domain.
+* Distribute traffic across multiple locations with Cloud Internet Services.
 
 ## Services used
 {: #services}
@@ -33,14 +34,14 @@ This tutorial...
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
 * [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts)
-* [Internet Services](https://console.bluemix.net/catalog/services/internet-svcs)
+* IBM Cloud [Internet Services](https://console.bluemix.net/catalog/services/internet-svcs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
 
-intro sentence
+The tutorial considers a public web application with a back-end implemented with {{site.data.keyword.openwhisk_short}}. To reduce network latency and prevent outage, the application is deployed in multiple locations. Two locations are configured in the tutorial.
 
 <p style="text-align: center;">
 
@@ -55,19 +56,35 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
+1. Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers.
 1. Install all the necessary command line (CLI) tools by [following these steps](https://console.bluemix.net/docs/cli/index.html#overview).
 
 ## Configure a custom domain
 
-1. Get a custom domain such as *mydomain.com*
-1. Create a Cloud Internet Services instance
-1. Register the custom domain with Cloud Internet Services
-1. Obtain a wildcard SSL certificate and private key for **.mydomain.com*. One can use Let's Encrypt via https://zerossl.com/. At some point you'll need to create DNS record of type TXT in CIS DNS to prove you are the owner of the domain.
-1. Convert the Certificate CRT to PEM format:
+The first step is to create an instance of IBM Cloud Internet Services (CIS) and to point your custom domain to CIS name servers.
+
+1. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
+1. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+1. Set the service name, and click **Create** to create an instance of the service.
+1. When the service instance is provisioned, set your domain name and click **Add domain**.
+1. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+1. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+
+   When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
+   {:tip}
+
+Exposing {{site.data.keyword.openwhisk_short}} actions through a custom domain will require a secure HTTPS connection. You should obtain a SSL certificate for the domain and subdomain you plan to use with the serverless back-end. Assuming a domain like *mydomain.com*, the actions could be hosted at *api.mydomain.com*. The certificate will need to be issued for *api.mydomain.com*.
+
+You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of Cloud Internet Services to prove you are the owner of the domain.
+{:tip}
+
+Once you have obtained the SSL certificate and private key for your domain make sure to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
+
+1. To convert a Certificate to PEM format:
    ```
    openssl x509 -in domain-crt.txt -out domain-crt.pem -outform PEM
    ```
-1. Convert the Private Key to PEM format:
+1. To convert a Private Key to PEM format:
    ```
    openssl rsa -in domain-key.txt -out domain-key.pem -outform PEM
    ```
