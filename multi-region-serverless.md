@@ -91,13 +91,15 @@ Once you have obtained the SSL certificate and private key for your domain make 
 
 ## Deploy actions in multiple locations
 
-In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}.
+In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}}.
 
 ![alt](images/solution44-multi-region-serverless/api-architecture.png)
 
+The action **doWork** implements one of your API operations. The action **healthz** is going to be used later on the check if your API is healthy. It could be a no-op simply returning *OK* or it could do a more complex check like pinging the databases or other critical services required by your API.
+
 The following steps will need to be repeated for every location where you want to host the application back-end. For this tutorial, you can pick *Dallas (us-south)* and *London (eu-gb)* as targets.
 
-### Store certificate in {{site.data.keyword.cloudcerts_short}}
+### Import certificate to a central repository
 
 1. Given a location, create a [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts) instance.
 1. In the service dashboard, use **Import Certificate**:
@@ -136,7 +138,8 @@ The following steps will need to be repeated for every location where you want t
    ```
    {: pre}
 
-### Expose the {{site.data.keyword.openwhisk_short}} with a managed API
+### Expose the actions with a managed API
+
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://console.bluemix.net/openwhisk/apimanagement).
 1. Create a new API:
