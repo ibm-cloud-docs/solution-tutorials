@@ -19,7 +19,6 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=low-latency-real-time-bidding.md \
   --exclude=autoscale-virtual-server.md \
-  --exclude=highly-available-and-scalable-web-application-v2.md \
   --exclude=multi-region-serverless.md \
   --exclude="vpc-*.md" \
   --exclude=strategies-for-globally-available-apps.md \
