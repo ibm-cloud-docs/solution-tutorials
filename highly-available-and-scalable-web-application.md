@@ -13,7 +13,7 @@ lastupdated: "2018-08-13"
 
 # Use Virtual Servers to build highly available and scalable web app
 
-Adding more servers to an application is a common pattern to handle additional load, however it does not make the web app a true highly availability. For best resiliency and high availability approach, application needs be deployed across multiple regions with data replication and DNS load balancer. 
+Adding more servers to an application is a common pattern to handle additional load. Another key aspect to increase an application availability and resiliency is to deploy the application to multiple zones or regions with data replication and load balancing.
 
 This tutorial walks you through a scenario with the creation of: 
 
@@ -608,22 +608,30 @@ The Load Balancer is configured to check the health of the servers and to redire
 8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
 ## Extend the solution with a 2nd region (optional)
-
 {: #secondregion}
 
-For better resiliency and higher availability, you can extend the infrastructure setup with a second region and have your application running in two regions. 
+To increase resiliency and availability, you can extend the infrastructure setup with a second region and have your application running in two regions.
 
-With a second region deployment, the architecture would look like this.![Architecture diagram](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution14/Architecture2.png)
+With a second region deployment, the architecture would look like this.
 
-To extend the scenario to for multi-region, you would need to do the following in region two: 
+<p style="text-align: center;">
 
-- Repeat all of the above previous steps in a different region. 
-- Setup your own database replication between the two MySQL servers between regions. 
-- File storage is used to store data for backups, if using two file storage services, one for each region then you would have a challenge doing replication. You must manage your own replication between file storage services in different regions.
-- In any of the two regions, setup Cloud Internet Services to point traffic to the healthy region if one copy fails. Follow the steps [here](multi-region-k8s-cis.html#create_cis_instance) to setup and configure Cloud Internet Services.
+  ![Architecture diagram](images/solution14/Architecture2.png)
+</p>
+
+1. Users access the application through IBM Cloud Internet Services (CIS).
+2. CIS routes traffic to a healthy region.
+3. Within a region a load balancer redirects traffic to a server.
+4. The application accesses the database.
+5. The application stores and retrieves media assets from a file storage.
+
+To implement this architecture, you would need to do the following in region two:
+
+- Repeat all of the above previous steps in the new region.
+- Setup a database replication between the two MySQL servers across regions.
+- Configure IBM Cloud Internet Services to distribute traffic between the regions to healthy servers as described in [this other tutorial](multi-region-k8s-cis.html#create_cis_instance).
 
 ## Remove resources
-
 {: #removeresources}
 
 1. Delete the Load Balancer
