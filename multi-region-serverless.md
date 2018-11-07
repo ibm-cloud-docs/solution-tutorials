@@ -168,7 +168,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
 1. Make note of the **Default domain / alias** value.
 1. Check **Apply custom domain**
    1. Set **Domain name** to the domain you will use with the CIS Global Load Balancer such as *api.mydomain.com*.
-   1. Select the {{site.data.keyword.cloudcerts_short}} in the location where the actions are deployed.
+   1. Select the {{site.data.keyword.cloudcerts_short}} instance holding the certificate.
    1. Select the certificate for the domain.
 1. Go to the dashboard of your instance of **Cloud Internet Services**, under **Reliability / DNS**, create a new **DNS TXT record** mapping your domain to the API default domain / alias
 1. Save the custom domain settings. The dialog will check for the existence of the DNS TXT record.
