@@ -107,7 +107,10 @@ Once you have obtained the SSL certificate and private key for your domain make 
 
 In this section, you will create actions, expose them as an API, and map the custom domain to the API with a SSL certificate stored in {{site.data.keyword.cloudcerts_short}}.
 
-![API Architecture](images/solution44-multi-region-serverless/api-architecture.png)
+<p style="text-align: center;">
+
+  ![API Architecture](images/solution44-multi-region-serverless/api-architecture.png)
+</p>
 
 The action **doWork** implements one of your API operations. The action **healthz** is going to be used later on the check if your API is healthy. It could be a no-op simply returning *OK* or it could do a more complex check like pinging the databases or other critical services required by your API.
 
@@ -177,65 +180,70 @@ The DNS TXT record can be removed once the settings have been applied.
 
 At this stage, you have setup actions in multiple locations but there is no single entry point to reach them. In this section, you will configure a global load balancer (GLB) to distribute traffic between the locations.
 
-![Architecture of the global load balancer](images/solution44-multi-region-serverless/glb-architecture.png)
+<p style="text-align: center;">
+
+  ![Architecture of the global load balancer](images/solution44-multi-region-serverless/glb-architecture.png)
+</p>
 
 ### Create a health check
 
+Internet Services will be regularly calling this endpoint to check the health of the back-end.
+
 1. Go to the dashboard of your IBM Cloud Internet Services instance.
-1. Under **Reliability / Global Load Balancer**, create a health check
-   1. Set **Monitor type** to **HTTPS**
-   1. Set **Path** to **/api/healthz**
-   1. **Provision the resource**
+1. Under **Reliability / Global Load Balancer**, create a health check:
+   1. Set **Monitor type** to **HTTPS**.
+   1. Set **Path** to **/api/healthz**.
+   1. **Provision the resource**.
 
 ### Create origin pools
 
-1. Create an origin pool per location
-   1. Set **Name** to **app-\<location>**
-   1. Select the Health check created before
-   1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed
-   1. Set **Origin Name** to **app-\<location>**
-   1. Set **Origin Address** to the default domain / alias for the managed API (such as _5d3b1eb6.us-south.apiconnect.appdomain.cloud_)
-   1. Provision the resource
+By creating one pool per location, you can later configure geo routes in your global load balancer to redirect users to the closest location. Another option would be to create a single pool with all locations and have the load balancer cycle through the origins in the pool.
+
+1. Create an origin pool per location:
+   1. Set **Name** to **app-\<location>**.
+   1. Select the Health check created before.
+   1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed.
+   1. Set **Origin Name** to **app-\<location>**.
+   1. Set **Origin Address** to the default domain / alias for the managed API (such as _5d3ffd1eb6.us-south.apiconnect.appdomain.cloud_).
+   1. Provision the resource.
 
 ### Create a global load balancer
 
-1. Create a global load balancer
-   1. Set **Hostname** to **api.mydomain.com**
-   1. Add the regional origin pools 
-   1. Provision the resources
+1. Create a global load balancer:
+   1. Set **Hostname** to **api.mydomain.com**.
+   1. Add the regional origin pools.
+   1. Provision the resources.
 
 After a short while, go to `https://api.mydomain.com/api/do`. This should reply with the function running in the first healthy pool.
 
 ### Test fail over
 
-To test the fail over, you can modify the health check function. If it fails, the GLB will redirect traffic to the next healthy origin.
+To test the fail over, a pool health check must fail so that the GLB would redirect to the next healthy pool. To simulate a failure, you can modify the health check function to make it fail.
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://console.bluemix.net/openwhisk/actions).
 1. Select the first location configured in the GLB.
 1. Edit the `healthz` function and change its implementation to `throw new Error()`.
-1. Save
-1. Wait for the health check to run for this origin pool
+1. Save.
+1. Wait for the health check to run for this origin pool.
 1. Get `https://api.mydomain.com/api/do` again, it should now redirect to the other healthy origin.
-
-## Test load balancing
-
-1. For load balancing, you would need to create one origin pool with all {{site.data.keyword.openwhisk_short}} APIs. CIS would then load balance queries from different clients between the {{site.data.keyword.openwhisk_short}} APIs.
+1. Revert the code changes to get back to a healthy origin.
 
 ## Remove resources
 {: #removeresources}
 
-Steps to take to remove the resources created in this tutorial
+### Remove CIS resources
 
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
+1. Remove the GLB.
+1. Remove the origin pools.
+1. Remove the health checks.
 
-Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
+### Remove actions
+
+1. Remove [APIs](https://console.bluemix.net/openwhisk/apimanagement)
+1. Remove [actions](https://console.bluemix.net/openwhisk/actions)
 
 ## Related content
 {: #related}
 
-* [Relevant links](https://blah)
+* IBM Cloud [Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
+* [Resilient and secure multi-region Kubernetes clusters with Cloud Internet Services](https://console.bluemix.net/docs/tutorials/multi-region-k8s-cis.html)
