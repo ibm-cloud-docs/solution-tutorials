@@ -56,35 +56,32 @@ To complete this tutorial, you need the latest version of the [IBM Cloud CLI](ht
 In this section, you are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on Github.
 
 1. Clone the [Github repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) and navigate into the cloned directory:
-
    ```bash
    git clone https://github.com/IBM-Cloud/slack-chatbot-database-watson
    cd slack-chatbot-database-watson
    ```
-
-2. Use `ibmcloud login` to log in interactively. You can reconfirm the details by running `ibmcloud target` command.
-
-3. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
-
+1. If you are not logged in, use `ibmcloud login` to log in interactively.
+1. Target the organization and space where to create the database service with:
+   ```
+   ibmcloud target --cf
+   ```
+1. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
    ```
    ibmcloud service create dashDB Entry eventDB
    ```
    {:codeblock}
    You can also use another than the **Entry** plan.
-
-4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:   
+1. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:   
    ```
    ibmcloud service key-create eventDB slackbotkey
    ```
    {:codeblock}
-
-5. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan.
+1. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan.
    ```
    ibmcloud service create conversation free eventConversation
    ```
    {:codeblock}
-
-6. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
+1. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
 
    One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
 
