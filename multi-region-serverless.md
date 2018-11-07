@@ -213,7 +213,7 @@ By creating one pool per location, you can later configure geo routes in your gl
    1. Add the regional origin pools.
    1. Provision the resources.
 
-After a short while, go to `https://api.mydomain.com/api/do`. This should reply with the function running in the first healthy pool.
+After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Earth`. This should reply with the function running in the first healthy pool.
 
 ### Test fail over
 
@@ -224,7 +224,7 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 1. Edit the `healthz` function and change its implementation to `throw new Error()`.
 1. Save.
 1. Wait for the health check to run for this origin pool.
-1. Get `https://api.mydomain.com/api/do` again, it should now redirect to the other healthy origin.
+1. Get `https://api.mydomain.com/api/do?name=John&place=Earth` again, it should now redirect to the other healthy origin.
 1. Revert the code changes to get back to a healthy origin.
 
 ## Remove resources
