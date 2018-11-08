@@ -67,9 +67,15 @@ The tutorial considers a public web application with a back-end implemented with
 The first step is to create an instance of IBM Cloud Internet Services (CIS) and to point your custom domain to CIS name servers.
 
 1. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+<<<<<<< HEAD
 1. Set the service name, and click **Create** to create an instance of the service.
 1. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
 1. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+=======
+1. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
+1. When the service instance is provisioned, set your domain name and click **Add domain**.
+1. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+>>>>>>> 275820b5464c640dd97e01506129f07b627425ec
 1. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
