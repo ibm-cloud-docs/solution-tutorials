@@ -91,6 +91,9 @@ sudo apt update && sudo apt install lamp-server^
 ```
 {: pre}
 
+An alternative option is to upgrade all packages with `sudo apt-get update && sudo apt-get dist-upgrade`.
+{:tip}
+
 ## Verify the installation and configuration
 
 In this section, you'll verify that Apache, MySQL and PHP are up to date and running on the Ubuntu image. You'll also implement the recommended security settings for MySQL.
