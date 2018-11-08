@@ -18,9 +18,9 @@ lastupdated: "2018-11-11"
 
 # Deploy serverless apps across multiple locations
 
-Serverless computing platforms give developers a rapid way to build APIs without servers. {{site.data.keyword.openwhisk}} supports automatic generation of REST API for actions, turning actions into HTTP endpoints, and the ability to enable secure API authentication. This capability is helpful not only for exposing APIs to external consumers, but also for building microservices applications.
+Serverless computing platforms give developers a rapid way to build APIs without servers. {{site.data.keyword.openwhisk}} supports automatic generation of REST API for actions, turning actions into HTTP endpoints, and the ability to enable secure API authentication. This capability is helpful not only for exposing APIs to external consumers but also for building microservices applications.
 
-{{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with IBM Cloud Internet Services (CIS), developers can expose a single entry point in charge of distributing the traffic to the closest healthy back-end.
+{{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with IBM Cloud Internet Services (CIS), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end.
 
 This tutorial shows how to configure IBM Cloud Internet Services and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple locations.
 
@@ -59,18 +59,23 @@ The tutorial considers a public web application with a back-end implemented with
 ## Before you begin
 {: #prereqs}
 
-1. Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers.
+1. Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
 1. Install all the necessary command line (CLI) tools by [following these steps](https://console.bluemix.net/docs/cli/index.html#overview).
 
 ## Configure a custom domain
 
 The first step is to create an instance of IBM Cloud Internet Services (CIS) and to point your custom domain to CIS name servers.
 
-1. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
 1. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+<<<<<<< HEAD
+1. Set the service name, and click **Create** to create an instance of the service.
+1. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
+1. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+=======
 1. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
 1. When the service instance is provisioned, set your domain name and click **Add domain**.
 1. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+>>>>>>> 275820b5464c640dd97e01506129f07b627425ec
 1. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
