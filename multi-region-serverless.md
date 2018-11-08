@@ -68,7 +68,7 @@ The first step is to create an instance of IBM Cloud Internet Services (CIS) and
 
 1. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
 1. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
-1. Set the service name, and click **Create** to create an instance of the service.
+1. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
 1. When the service instance is provisioned, set your domain name and click **Add domain**.
 1. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 1. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
