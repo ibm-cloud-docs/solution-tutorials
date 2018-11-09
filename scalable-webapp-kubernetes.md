@@ -238,12 +238,12 @@ Use Ingress to set up the cluster inbound connection to the service.
    {: pre}
    to find
    ```
-   Ingress subdomain:	mycluster.us-south.containers.mybluemix.net
+   Ingress subdomain:	mycluster.us-south.containers.appdomain.cloud
    Ingress secret:		mycluster
    ```
    {: screen}
 2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.**service-name** is the name under `==> v1/Service` in the above step or run `kubectl get svc` to find the service name of type **NodePort**.
-   ```
+   ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
    metadata:
@@ -262,7 +262,7 @@ Use Ingress to set up the cluster inbound connection to the service.
              serviceName: <service-name>
              servicePort: 9080
    ```
-   {: pre}
+   {: codeblock}
 3. Deploy the Ingress
    ```sh
    kubectl apply -f ingress-ibmdomain.yml
