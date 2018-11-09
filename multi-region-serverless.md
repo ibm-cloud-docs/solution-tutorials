@@ -218,7 +218,7 @@ By creating one pool per location, you can later configure geo routes in your gl
 
 For every location:
 1. Create an origin pool.
-1. Set **Name** to **app-&lt;location&gt;**.
+1. Set **Name** to **app-&lt;location&gt;** such as _app-Dallas_.
 1. Select the Health check created before.
 1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed.
 1. Set **Origin Name** to **app-&lt;location&gt;**.
