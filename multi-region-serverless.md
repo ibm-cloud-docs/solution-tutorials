@@ -124,7 +124,7 @@ The following steps will need to be repeated for every location where you want t
 1. Create an action
    1. Set **Name** to **doWork**.
    1. Set **Enclosing Package** to **default**.
-   1. Set **Runtime** to most recent **Node.js**.
+   1. Set **Runtime** to the most recent version of **Node.js**.
    1. **Create**.
 1. Change the action code to:
    ```js
@@ -134,6 +134,7 @@ The following steps will need to be repeated for every location where you want t
    }
    ```
    {: pre}
+1. **Save**
 1. Create another action to be used as health check for our API:
    1. Set **Name** to **healthz**.
    1. Set **Enclosing Package** to **default**.
@@ -146,6 +147,7 @@ The following steps will need to be repeated for every location where you want t
    }
    ```
    {: pre}
+1. **Save**
 
 ### Expose the actions with a managed API
 
@@ -153,11 +155,21 @@ The next step involves creating a managed API to expose your actions.
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://console.bluemix.net/openwhisk/apimanagement).
 1. Create a new managed API:
-   1. Set **Name** to **App API**.
+   1. Set **API name** to **App API**.
    1. Set **Base path** to **/api**.
-   1. Add a **GET** operation **/do** pointing to the **doWork** action.
-   1. Add another **GET** operation **/healthz** pointing to **healthz** action.
-   1. **Save**
+1. Create an operation:
+   1. Set **Path** to **/do**.
+   1. Set **Verb** to **GET**.
+   1. Set **Package** to **default**.
+   1. Set **Action** to **doWork**.
+   1. **Create**
+1. Create another operation:
+   1. Set **Path** to **/healthz**.
+   1. Set **Verb** to **GET**.
+   1. Set **Package** to **default**.
+   1. Set **Action** to **healthz**.
+   1. **Create**
+1. **Save** the API
 
 ### Configure the custom domain for the managed API
 
