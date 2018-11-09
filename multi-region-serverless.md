@@ -216,20 +216,21 @@ Internet Services will be regularly calling this endpoint to check the health of
 
 By creating one pool per location, you can later configure geo routes in your global load balancer to redirect users to the closest location. Another option would be to create a single pool with all locations and have the load balancer cycle through the origins in the pool.
 
-1. Create an origin pool per location:
-   1. Set **Name** to **app-&lt;location&gt;**.
-   1. Select the Health check created before.
-   1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed.
-   1. Set **Origin Name** to **app-&lt;location&gt;**.
-   1. Set **Origin Address** to the default domain / alias for the managed API (such as _5d3ffd1eb6.us-south.apiconnect.appdomain.cloud_).
-   1. **Provision the resource**.
+For every location:
+1. Create an origin pool.
+1. Set **Name** to **app-&lt;location&gt;**.
+1. Select the Health check created before.
+1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed.
+1. Set **Origin Name** to **app-&lt;location&gt;**.
+1. Set **Origin Address** to the default domain / alias for the managed API (such as _5d3ffd1eb6.us-south.apiconnect.appdomain.cloud_).
+1. **Provision the resource**.
 
 ### Create a global load balancer
 
-1. Create a load balancer:
-   1. Set **Balancer hostname** to **api.mydomain.com**.
-   1. Add the regional origin pools.
-   1. **Provision the resource**.
+1. Create a load balancer.
+1. Set **Balancer hostname** to **api.mydomain.com**.
+1. Add the regional origin pools.
+1. **Provision the resource**.
 
 After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Earth`. This should reply with the function running in the first healthy pool.
 
