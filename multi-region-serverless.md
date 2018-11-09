@@ -115,7 +115,7 @@ In this section, you will create actions, expose them as an API, and map the cus
 
 The action **doWork** implements one of your API operations. The action **healthz** is going to be used later on the check if your API is healthy. It could be a no-op simply returning *OK* or it could do a more complex check like pinging the databases or other critical services required by your API.
 
-The following steps will need to be repeated for every location where you want to host the application back-end. For this tutorial, you can pick *Dallas (us-south)* and *London (eu-gb)* as targets.
+The three following sections will need to be repeated for every location where you want to host the application back-end. For this tutorial, you can pick *Dallas (us-south)* and *London (eu-gb)* as targets.
 
 ### Define actions
 
@@ -128,12 +128,12 @@ The following steps will need to be repeated for every location where you want t
    1. **Create**.
 1. Change the action code to:
    ```js
-   function main(args) {
+   function main(params) {
      msg = "Hello, " + params.name + " from " + params.place;
      return { greeting:  msg, host: params.__ow_headers.host };
    }
    ```
-   {: pre}
+   {: codeblock}
 1. **Save**
 1. Create another action to be used as health check for our API:
    1. Set **Name** to **healthz**.
@@ -146,7 +146,7 @@ The following steps will need to be repeated for every location where you want t
      return { ok: true };
    }
    ```
-   {: pre}
+   {: codeblock}
 1. **Save**
 
 ### Expose the actions with a managed API
@@ -222,14 +222,14 @@ By creating one pool per location, you can later configure geo routes in your gl
    1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed.
    1. Set **Origin Name** to **app-&lt;location&gt;**.
    1. Set **Origin Address** to the default domain / alias for the managed API (such as _5d3ffd1eb6.us-south.apiconnect.appdomain.cloud_).
-   1. Provision the resource.
+   1. **Provision the resource**.
 
 ### Create a global load balancer
 
-1. Create a global load balancer:
-   1. Set **Hostname** to **api.mydomain.com**.
+1. Create a load balancer:
+   1. Set **Balancer hostname** to **api.mydomain.com**.
    1. Add the regional origin pools.
-   1. Provision the resources.
+   1. **Provision the resource**.
 
 After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Earth`. This should reply with the function running in the first healthy pool.
 
