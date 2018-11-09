@@ -18,11 +18,11 @@ lastupdated: "2018-11-11"
 
 # Deploy serverless apps across multiple locations
 
+This tutorial shows how to configure IBM Cloud Internet Services and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple locations.
+
 Serverless computing platforms give developers a rapid way to build APIs without servers. {{site.data.keyword.openwhisk}} supports automatic generation of REST API for actions, turning actions into HTTP endpoints, and the ability to enable secure API authentication. This capability is helpful not only for exposing APIs to external consumers but also for building microservices applications.
 
 {{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with IBM Cloud Internet Services (CIS), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end.
-
-This tutorial shows how to configure IBM Cloud Internet Services and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple locations.
 
 ## Objectives
 {: #objectives}
@@ -154,7 +154,7 @@ The three following sections will need to be repeated for every location where y
 The next step involves creating a managed API to expose your actions.
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://console.bluemix.net/openwhisk/apimanagement).
-1. Create a new managed API:
+1. Create a new managed {{site.data.keyword.openwhisk_short}} API:
    1. Set **API name** to **App API**.
    1. Set **Base path** to **/api**.
 1. Create an operation:
@@ -188,14 +188,14 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
    1. Set **Content** to the **Default domain / alias**
    1. Save the record
 1. Save the custom domain settings. The dialog will check for the existence of the DNS TXT record.
-   If the TXT record is not found, you may need to wait for it to propagate and retry saving the settings.
+   If the TXT record is not found, you may need to wait for it to propagate and retry saving the settings. The DNS TXT record can be removed once the settings have been applied.
    {: tip}
 
-The DNS TXT record can be removed once the settings have been applied.
+Repeat the previous sections to configure more locations.
 
 ## Distribute traffic between locations
 
-At this stage, you have setup actions in multiple locations but there is no single entry point to reach them. In this section, you will configure a global load balancer (GLB) to distribute traffic between the locations.
+**At this stage, you have setup actions in multiple locations** but there is no single entry point to reach them. In this section, you will configure a global load balancer (GLB) to distribute traffic between the locations.
 
 <p style="text-align: center;">
 
