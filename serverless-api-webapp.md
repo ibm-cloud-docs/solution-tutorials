@@ -226,24 +226,54 @@ Complete the sequence:
 
 ## Optional: Use your own domain for the API
 
-1. Create your domain under your organization https://console.bluemix.net/docs/admin/manageorg.html#managedomains.
-2. Upload a SSL certificate for your domain and the subdomain you will use for the API.
-3. Go to the Cloud Functions dashboard, select **APIs** and the Guestbook API.
-4. Switch to **Definition**.
-5. Set the **Domain for API** to the domain you added to your organization.
-6. Set the **Subdomain for API** to **guestbook-api**
-7. At this stage, you need to configure your DNS to create a CNAME mapping this subdomain to the IBM Cloud servers. Create a CNAME record for the domain targeting one of the following secure endpoints depending on which region hosts the target API:
-   * US South: secure.us-south.bluemix.net.
-   * United Kingdom: secure.eu-gb.bluemix.net.
-   * Frankfurt: secure.eu-de.bluemix.net.
-   * Sydney: secure.au-syd.bluemix.net.
+Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain.
 
-   > Refer to https://console.bluemix.net/docs/apis/management/manage_apis.html#custom_domains for additional information
-8. Save the API.
-9. Wait for DNS to propagate and you will be able to access your guestbook api at https://guestbook-api.mydomain.com/guestbook.
-10. Edit **docs/guestbook.js** and update the value of **apiUrl** with https://guestbook-api.mydomain.com/guestbook
-11. Commit the modified file.
-12. Your application now access the API through your custom domain.
+### Obtain a certificate for the custom domain
+
+Exposing {{site.data.keyword.openwhisk_short}} actions through a custom domain will require a secure HTTPS connection. You should obtain a SSL certificate for the domain and subdomain you plan to use with the serverless back-end. Assuming a domain like *mydomain.com*, the actions could be hosted at *guestbook-api.mydomain.com*. The certificate will need to be issued for *guestbook-api.mydomain.com* (or **.mydomain.com*).
+
+You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in your DNS interface to prove you are the owner of the domain.
+{:tip}
+
+Once you have obtained the SSL certificate and private key for your domain make sure to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
+
+1. To convert a Certificate to PEM format:
+   ```
+   openssl x509 -in domain-crt.txt -out domain-crt.pem -outform PEM
+   ```
+1. To convert a Private Key to PEM format:
+   ```
+   openssl rsa -in domain-key.txt -out domain-key.pem -outform PEM
+   ```
+
+### Import the certificate to a central repository
+
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts) instance in a supported location.
+1. In the service dashboard, use **Import Certificate**:
+   * Set **Name** to the custom subdomain and domain, such as *guestbook-api.mydomain.com*.
+   * Browse for the **Certificate file** in PEM format.
+   * Browse for the **Private key file** in PEM format.
+   * **Import**.
+
+### Configure the custom domain for the managed API
+
+1. Go to [APIs / Custom domains](https://console.bluemix.net/apis/domains).
+1. In the Region selector, select the region where you deployed the actions.
+1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
+1. Make note of the **Default domain / alias** value.
+1. Check **Apply custom domain**
+   1. Set **Domain name** to the domain you will use such as *guestbook-api.mydomain.com*.
+   1. Select the {{site.data.keyword.cloudcerts_short}} instance holding the certificate.
+   1. Select the certificate for the domain.
+1. Go to your DNS provider and create a new **DNS TXT record** mapping your domain to the API default domain / alias. The DNS TXT record can be removed once the settings have been applied.
+1. Save the custom domain settings. The dialog will check for the existence of the DNS TXT record.
+1. Finally, return to your DNS provider's settings and create a CNAME record pointing your custom domain (e.g. guestbook-api.mydomain.com) to the Default domain / Alias. This will cause traffic through your custom domain to be routed to your backend API.
+
+Once the DNS changes have been propagated, you will be able to access your guestbook api at https://guestbook-api.mydomain.com/guestbook.
+
+1. Edit **docs/guestbook.js** and update the value of **apiUrl** with https://guestbook-api.mydomain.com/guestbook
+1. Commit the modified file.
+1. Your application now accesses the API through your custom domain.
 
 ## Remove resources
 

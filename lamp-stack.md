@@ -45,6 +45,18 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 1. Contact your infrastructure administrator to get the following permissions.
   * Network permission required to complete the **Public and Private Network Uplink**
 
+### Configure the SoftLayer VPN
+
+1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn) and configured for SSL. 
+
+   You should be a **Master User** to enable VPN access or contact your master user for access.
+   {:tip}
+2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or preferably use your local workstation with a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows). 
+
+   For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page](https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
+   {:tip}
+
 ## Create services
 
 In this section, you will provision a public virtual server with a fixed configuration. {{site.data.keyword.BluVirtServers_short}} can be deployed in a matter of minutes from virtual server images in specific geographic regions. Virtual servers often address peaks in demand after which they can be suspended or powered down so that the cloud environment perfectly fits your infrastructure needs.
@@ -55,13 +67,17 @@ In this section, you will provision a public virtual server with a fixed configu
 4. Under **Network Interface** select the **Public and Private Network Uplink** option.
 5. Review the other configuration options and click **Provision** to create your virtual server.
   ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
-6. After the server is created, you'll see the server login credentials. Using your username, password and public IP address, connect to the server with SSH.
+
+After the server is created, you'll see the server login credentials. Although you can connect through SSH using the server public IP address, it is recommended to access the server through the Private Network and to disable SSH access on the public network.
+
+1. Follow [these steps](https://console.bluemix.net/docs/infrastructure/ssh-keys/restrict-ssh-access-public-network.html#restricting-ssh-access-on-a-public-network) to secure the virtual machine and to disable SSH access on the public network.
+1. Using your username, password and private IP address, connect to the server with SSH.
    ```sh
-   sudo ssh root@<Public-IP-Address>
+   sudo ssh root@<Private-IP-Address>
    ```
    {: pre}
 
-  You can find the server's public IP address and password in the dashboard.
+  You can find the server's private IP address and password in the dashboard.
   {:tip}
 
   ![Virtual server created](images/solution4/VirtualServerCreated.png)
@@ -74,6 +90,9 @@ It's advised to update the LAMP stack with the latest security patches and bug f
 sudo apt update && sudo apt install lamp-server^
 ```
 {: pre}
+
+An alternative option is to upgrade all packages with `sudo apt-get update && sudo apt-get dist-upgrade`.
+{:tip}
 
 ## Verify the installation and configuration
 

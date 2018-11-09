@@ -56,35 +56,32 @@ To complete this tutorial, you need the latest version of the [IBM Cloud CLI](ht
 In this section, you are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on Github.
 
 1. Clone the [Github repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) and navigate into the cloned directory:
-
    ```bash
    git clone https://github.com/IBM-Cloud/slack-chatbot-database-watson
    cd slack-chatbot-database-watson
    ```
-
-2. Use `ibmcloud login` to log in interactively. You can reconfirm the details by running `ibmcloud target` command.
-
-3. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
-
+1. If you are not logged in, use `ibmcloud login` to log in interactively.
+1. Target the organization and space where to create the database service with:
+   ```
+   ibmcloud target --cf
+   ```
+1. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
    ```
    ibmcloud service create dashDB Entry eventDB
    ```
    {:codeblock}
    You can also use another than the **Entry** plan.
-
-4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:   
+1. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:   
    ```
    ibmcloud service key-create eventDB slackbotkey
    ```
    {:codeblock}
-
-5. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan.
+1. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan.
    ```
    ibmcloud service create conversation free eventConversation
    ```
    {:codeblock}
-
-6. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
+1. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
 
    One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
 
@@ -99,7 +96,7 @@ In this section, you are going to set up the needed services and prepare the env
 In this part of the tutorial you are going to load a pre-defined workspace into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry to open the service details.
 2. Click on **Launch Tool** to get to the {{site.data.keyword.conversationshort}} Tool.
-3. In the tool click on the **Import workspace** icon, right next to the **Create** button.
+3. Switch to **Workspaces** and click on the **Import workspace** icon.
 4. In the popup dialog select the file **conversation-workspace.json** from the local directory. Leave the import option at **Everything (Intents, Entities, and Dialog)**, then click **Import**. This creates a new conversation workspace named **SlackBot**.
 5. Click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
 
@@ -118,8 +115,8 @@ In this part of the tutorial you are going to load a pre-defined workspace into 
 2. Click on the **Deploy** for Slack button.
 3. Click on the **Deploy to Slack app** button, this will bring you to the instructions page to create and configure for Slack.
 4. Follow the instructions on that page which has several steps on its own. In order to create the Slack app, you need access to a Slack workspace. If you don't have that yet, then you can sign up and create such a workspace as part of that process. During the configuration process keep this in mind:
- * Remember how you name the Slack App and the Deployment. Also keep copies of the redirect and request URLs (see instructions on that **Deploy to Slack app** page).
- * In the Slack section **Events Subscription** choose at least **message.im** to be able to send direct messages to the bot.
+   * Remember how you name the Slack App and the Deployment. Also keep copies of the redirect and request URLs (see instructions on that **Deploy to Slack app** page).
+   * In the Slack section **Events Subscription** choose at least **message.im** to be able to send direct messages to the bot.
 5. Once all is done, you should have a fully configured Slack app in a messaging workspace. However, the Slackbot is not yet ready to successfully use the entire {{site.data.keyword.conversationshort}} dialog. Some credentials are missing to invoke the previously defined actions.
 
 Deploying the Conversation to Slack includes authorization of the app. During that process you are asked to sign in to Slack, if not done earlier, and then to approve the app. Make sure to select the correct Slack workspace if you have multiple. The resulting authorization tokens are stored in an **authdb** {{site.data.keyword.cloudant_short_notm}} database. The related service is named **conversation-connector**.

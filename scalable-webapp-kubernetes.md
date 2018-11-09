@@ -107,11 +107,11 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Web App - Basic Web` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Web App - Basic Web` )
-1. Enter a **name** for your project.
-1. Enter unique **hostname** for your project. The host name is used if you deploy your application as a Cloud Foundry app <hostname>.mybluemix.net.
-1. Do not add a DevOps toolchain, select **manual deployment**.
+1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE (Web App)` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Web App - Basic Web` )
+1. Enter a **name** for your application.
+1. Select the resource group where to deploy this application.
 1. Do not add additional services.
+1. Do not add a DevOps toolchain, select **manual deployment**.
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/projects/java_project_contents.html#java-project-files).
 
@@ -207,12 +207,12 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    To upgrade helm, run this command `helm init --upgrade`
    {:tip}
 
-9. To install a Helm chart, run the below command
+9. To install a Helm chart, change to the `chart\YOUR PROJECT NAME` directory and run the below command
   ```sh
   helm install . --name ${MYPROJECT}
   ```
   {: pre}
-10. You should see `==> v1/Service`. Remember the Nodeport which is a 5-digit number(e.g., 31569) under `PORT(S)`. This is your portnumber.
+10. Use `kubectl get service YOUR PROJECT NAME-service` to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 11. For the public IP of worker node, run the below command
    ```sh
    ibmcloud cs workers <CLUSTER NAME>
@@ -238,12 +238,12 @@ Use Ingress to set up the cluster inbound connection to the service.
    {: pre}
    to find
    ```
-   Ingress subdomain:	mycluster.us-south.containers.mybluemix.net
+   Ingress subdomain:	mycluster.us-south.containers.appdomain.cloud
    Ingress secret:		mycluster
    ```
    {: screen}
 2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.**service-name** is the name under `==> v1/Service` in the above step or run `kubectl get svc` to find the service name of type **NodePort**.
-   ```
+   ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
    metadata:
@@ -262,7 +262,7 @@ Use Ingress to set up the cluster inbound connection to the service.
              serviceName: <service-name>
              servicePort: 9080
    ```
-   {: pre}
+   {: codeblock}
 3. Deploy the Ingress
    ```sh
    kubectl apply -f ingress-ibmdomain.yml

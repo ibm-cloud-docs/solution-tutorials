@@ -199,19 +199,19 @@ The Kubernetes cluster is created in this resource group. The {{site.data.keywor
   	org_guid          = "${data.terraform_remote_state.global.org_guid}"
   	space_guid        = "${ibm_space.space.id}"
   	account_guid      = "${data.terraform_remote_state.global.account_guid}"
-  	hardware         =  "${var.cluster_hardware}"
-  	machine_type     = "${var.cluster_machine_type}"
+  	hardware          = "${var.cluster_hardware}"
+  	machine_type      = "${var.cluster_machine_type}"
   	public_vlan_id    = "${var.cluster_public_vlan_id}"
   	private_vlan_id   = "${var.cluster_private_vlan_id}"
   	resource_group_id = "${ibm_resource_group.group.id}"
 }
 
 resource "ibm_container_worker_pool" "cluster_workerpool" {
-  worker_pool_name = "${var.environment_name}-pool"
-  machine_type     = "${var.cluster_machine_type}"
-  cluster          = "${ibm_container_cluster.cluster.id}"
-  size_per_zone    = "${var.worker_num}"
-  hardware         =  "${var.cluster_hardware}"
+  worker_pool_name  = "${var.environment_name}-pool"
+  machine_type      = "${var.cluster_machine_type}"
+  cluster           = "${ibm_container_cluster.cluster.id}"
+  size_per_zone     = "${var.worker_num}"
+  hardware          = "${var.cluster_hardware}"
   resource_group_id = "${ibm_resource_group.group.id}"
 }
 
