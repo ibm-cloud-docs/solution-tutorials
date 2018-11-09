@@ -188,6 +188,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
    1. Set **Content** to the **Default domain / alias**
    1. Save the record
 1. Save the custom domain settings. The dialog will check for the existence of the DNS TXT record.
+
    If the TXT record is not found, you may need to wait for it to propagate and retry saving the settings. The DNS TXT record can be removed once the settings have been applied.
    {: tip}
 
