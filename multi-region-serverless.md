@@ -207,7 +207,7 @@ At this stage, you have setup actions in multiple locations but there is no sing
 Internet Services will be regularly calling this endpoint to check the health of the back-end.
 
 1. Go to the dashboard of your IBM Cloud Internet Services instance.
-1. Under **Reliability / Global Load Balancer**, create a health check:
+1. Under **Reliability / Global Load Balancers**, create a health check:
    1. Set **Monitor type** to **HTTPS**.
    1. Set **Path** to **/api/healthz**.
    1. **Provision the resource**.
