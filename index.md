@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-10-17"
+lastupdated: "2018-11-09"
 
 ---
 
@@ -393,6 +393,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution8/Architecture.png" alt="Architecture diagram for the solution Serverless web application and API"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "multi-region-serverless.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Deploy serverless apps across multiple locations
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Use Cloud Functions and Internet Services to build globally available and secure serverless applications.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution44-multi-region-serverless/Architecture.png" alt="Architecture diagram for the solution Deploy serverless apps across multiple locations"/>
                 </div>
             </div>
         </div>

@@ -22,6 +22,7 @@ Solution Tutorials
         mean-stack.md
         sql-database.md
         serverless-api-webapp.md
+        multi-region-serverless.md
         application-log-analysis.md
 
     {: .topicgroup}
@@ -87,6 +88,7 @@ Solution Tutorials
     {: .topicgroup}
     Cloud Functions
         serverless-api-webapp.md
+        multi-region-serverless.md
         slack-chatbot-database-watson.md
         serverless-mobile-backend.md
         serverless-github-traffic-analytics.md
