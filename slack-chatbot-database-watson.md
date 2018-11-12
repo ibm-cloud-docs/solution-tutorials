@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-06-11"
+lastupdated: "2018-11-12"
 
 ---
 
@@ -14,16 +14,14 @@ lastupdated: "2018-06-11"
 
 # Build a database-driven Slackbot
 
-In this tutorial, you are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using the  [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) using the serverless approach.
+In this tutorial, you are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using a [Botkit plugin for {{site.data.keyword.conversationshort}}](https://github.com/watson-developer-cloud/botkit-middleware). The Botkit app can be run locally or on {{site.data.keyword.Bluemix_notm}} with Cloud Foundry.
 
-The  [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector/) uses {{site.data.keyword.openwhisk_short}} and {{site.data.keyword.cloudantfull}}. The chatbot interacts with the Db2 database through {{site.data.keyword.conversationshort}}. All (not much) function code is using Node.js, but other programming languages can be used to deliver the same.
-
-Note that deploying to Slack is not available in all regions. Please check [this part of the {{site.data.keyword.conversationshort}} documentation](https://console.bluemix.net/docs/services/conversation/conversation-connector.html#deploying-to-a-channel-with-the-conversation-connector) for details on availability before you begin.
+The  Botkit app channels messages between Slack and {{site.data.keyword.conversationshort}}. There, some server-side dialog actions perform SQL queries against a Db2 database. All (but not much) code is written in Node.js.
 
 ## Objectives
 {: #objectives}
 
-* Connect {{site.data.keyword.conversationfull}} to Slack using the Conversation connector
+* Connect {{site.data.keyword.conversationfull}} to Slack using [Botkit](https://github.com/howdyai/botkit/)
 * Create, deploy and bind Node.js actions in {{site.data.keyword.openwhisk_short}}
 * Access a Db2 database from {{site.data.keyword.openwhisk_short}} using Node.js
 
@@ -34,7 +32,7 @@ This tutorial uses the following runtimes and services:
    * [{{site.data.keyword.conversationfull}}](https://console.bluemix.net/catalog/services/conversation)
    * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
    * [{{site.data.keyword.dashdblong}} ](https://console.bluemix.net/catalog/services/db2-warehouse)
-   * [{{site.data.keyword.cloudantfull}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
+   * [Cloud Foundry runtime for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -49,7 +47,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 ## Before you begin
 {: #prereqs}
 
-To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/index.html#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/extend_cli.html#plug-ins).
+To complete this tutorial, you need the latest version of the [{{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/index.html#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](https://console.bluemix.net/docs/cli/reference/bluemix_cli/extend_cli.html#plug-ins).
 
 
 ## Service and Environment Setup
@@ -60,28 +58,28 @@ In this section, you are going to set up the needed services and prepare the env
    git clone https://github.com/IBM-Cloud/slack-chatbot-database-watson
    cd slack-chatbot-database-watson
    ```
-1. If you are not logged in, use `ibmcloud login` to log in interactively.
-1. Target the organization and space where to create the database service with:
+2. If you are not logged in, use `ibmcloud login` to log in interactively.
+3. Target the organization and space where to create the database service with:
    ```
    ibmcloud target --cf
    ```
-1. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
+4. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
    ```
    ibmcloud service create dashDB Entry eventDB
    ```
    {:codeblock}
    You can also use another than the **Entry** plan.
-1. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:   
+5. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:   
    ```
    ibmcloud service key-create eventDB slackbotkey
    ```
    {:codeblock}
-1. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan.
+6. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan.
    ```
    ibmcloud service create conversation free eventConversation
    ```
    {:codeblock}
-1. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
+7. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions.
 
    One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
 
@@ -92,13 +90,14 @@ In this section, you are going to set up the needed services and prepare the env
 
    **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud wsk action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
 
-## Load the conversation workspace
-In this part of the tutorial you are going to load a pre-defined workspace into the {{site.data.keyword.conversationshort}} service.
+## Load the skill / workspace
+In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry to open the service details.
-2. Click on **Launch Tool** to get to the {{site.data.keyword.conversationshort}} Tool.
-3. Switch to **Workspaces** and click on the **Import workspace** icon.
-4. In the popup dialog select the file **conversation-workspace.json** from the local directory. Leave the import option at **Everything (Intents, Entities, and Dialog)**, then click **Import**. This creates a new conversation workspace named **SlackBot**.
-5. Click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
+2. Remember the **API Key** and **Url** for the integration with Slack later on.
+3. Click on **Launch Tool** to get to the {{site.data.keyword.conversationshort}} Tool.
+4. Switch to **Skills**, then click **Create new** and then on **Import skill**.
+5. In the dialog, after clicking **Choose JSON file**, select the file **assistant-skill.json** from the local directory. Leave the import option at **Everything (Intents, Entities, and Dialog)**, then click **Import**. This creates a new skill named **SlackBot**.
+6. Click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
 
    The dialog has nodes to handle questions for help and simple Thank You. The node **newEvent** and it's child gather the necessary input and then call an action to insert a new event record into Db2.
 
@@ -109,36 +108,26 @@ In this part of the tutorial you are going to load a pre-defined workspace into 
 
 
 
-## Deploy the Conversation to Slack
-
-1. Using the conversation left navigation panel, click on the **Deploy** icon.
-2. Click on the **Deploy** for Slack button.
-3. Click on the **Deploy to Slack app** button, this will bring you to the instructions page to create and configure for Slack.
-4. Follow the instructions on that page which has several steps on its own. In order to create the Slack app, you need access to a Slack workspace. If you don't have that yet, then you can sign up and create such a workspace as part of that process. During the configuration process keep this in mind:
-   * Remember how you name the Slack App and the Deployment. Also keep copies of the redirect and request URLs (see instructions on that **Deploy to Slack app** page).
-   * In the Slack section **Events Subscription** choose at least **message.im** to be able to send direct messages to the bot.
-5. Once all is done, you should have a fully configured Slack app in a messaging workspace. However, the Slackbot is not yet ready to successfully use the entire {{site.data.keyword.conversationshort}} dialog. Some credentials are missing to invoke the previously defined actions.
-
-Deploying the Conversation to Slack includes authorization of the app. During that process you are asked to sign in to Slack, if not done earlier, and then to approve the app. Make sure to select the correct Slack workspace if you have multiple. The resulting authorization tokens are stored in an **authdb** {{site.data.keyword.cloudant_short_notm}} database. The related service is named **conversation-connector**.
-{:tip}
-   ​
-
-## Add custom preprocessor to Conversation connector
-In order to integrate Slack and Facebook Messenger with {{site.data.keyword.conversationshort}}, the [Conversation connector](https://github.com/watson-developer-cloud/conversation-connector) uses a pipeline (sequence) of actions (see flow diagram in their documentation). They transform between the native messages and requests of the utilized communication tool (Slack or Facebook Messenger) and the format needed by {{site.data.keyword.conversationshort}}. All the actions in the sequence are customisable. You need to modify one action to retrieve credentials for {{site.data.keyword.openwhisk_short}} and to pass them into the dialog.
-
-1. On the command line, execute the following. Replace **MySlackApp** with the name you used in the previous section. The command updates the existing action **pre-conversation** in the package **MySlackApp_starter-code** with the code from the file **pre-conversation-APIKey.js**. That action usually is empty, but now, with this code, will obtain and add credentials to the information passed from Slack into the dialog.   
+## Integrate with Slack
+Now we are creating a Slack app with a Bot user and obtain the credentials to access it from the Botkit app. Then, we configure the botkit app and push it as Cloud Foundry app.
+1. Visit the [Slack apps](https://api.slack.com/slack-apps) page. If you don’t have an app already click **Create a Slack app** and follow the next steps. If you already have an app, click **Manage your apps** and choose the app you want to use, continue with step 3. 
+2. Enter **Eventbot** as **App Name** and pick the Slack workspace you want to deploy the bot to. In the navigation menu select **Bot Users**, then **Add a Bot User**. Keep the names and enable **Always Show My Bot as Online**. Then finish the dialog.
+3. Click on **OAuth & Permissions** in the navigation menu. Thereafter, if not done alreay, install the app into the workspace. You are presented two OAuth tokens. Copy the **Bot User OAuth Access Token**.
+4. Change into the directory for the botkit app and create an environment configuration file.
    ```
-   ibmcloud wsk action update MySlackApp_starter-code/pre-conversation pre-conversation-APIKey.js
+   cd botkit-app
+   cp .env.template .env
    ```
-   {:codeblock}
+5. Edit the **.env** configuration file. Add the Slack OAuth token from step 4, the API Key and URL for {{site.data.keyword.conversationshort}} from the previous section as well as the API key for {{site.data.keyword.openwhisk_short}}. You can obtain that API key using the following command.
+   ```
+   ibmcloud fn property get --auth
+   ```
+6. Once the configuration is complete and you have saved the file, push the app.
+   ```
+   ibmcloud cf push
+   ```
+   After a moment, it should show success.
 
-2. Verify that the new action is in place by retrieving its details:   
-   ```
-   ibmcloud wsk action get MySlackApp_starter-code/pre-conversation
-   ```
-   {:codeblock}   
-
-   The output mainly shows the action code. That code, in its text, includes keywords like **user**, **password** or **icfcreds**. Now the Slackbot is fully deployed and ready for use.
 
 ## Test the Slackbot and learn
 Open up your Slack workspace for a test drive of the chatbot. Begin a direct chat with the bot.
@@ -163,11 +152,16 @@ After some more searches and new event entries, you can revisit the chat history
 ## Remove resources
 {:removeresources}
 
-Executing the cleanup script deletes the event table from {{site.data.keyword.dashdbshort}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script neither changes the deployed Conversation connector nor the {{site.data.keyword.conversationshort}} workspace.   
+Executing the cleanup script in the main directory deletes the event table from {{site.data.keyword.dashdbshort}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script does not change the {{site.data.keyword.conversationshort}} workspace or skill.   
 ```bash
 sh cleanup.sh
 ```
 {:codeblock}
+
+To delete the botkit app, execute the following command:
+```bash
+ibmcloud cf delete botkit-app
+```
 
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
