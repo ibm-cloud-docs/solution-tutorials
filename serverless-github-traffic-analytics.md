@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-10-04"
+lastupdated: "2018-11-13"
 
 ---
 
@@ -131,7 +131,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    {:codeblock}   
 2. Create a new action **collectStats**. It uses a [Python 3 environment](https://console.bluemix.net/docs/openwhisk/openwhisk_reference.html#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
    ```bash
-   ibmcloud wsk action create collectStats --kind python-jessie:3 ghstats.zip
+   ibmcloud fn action create collectStats --kind python-jessie:3 ghstats.zip
    ```
    {:codeblock}   
 
@@ -139,12 +139,12 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    {:tip}
 3. Bind the action to the database service. Use the instance and the service key that you created during the environment setup.
    ```bash
-   ibmcloud wsk service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
+   ibmcloud fn service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
    ```
    {:codeblock}   
 4. Create a trigger based on the [alarms package](https://console.bluemix.net/docs/openwhisk/openwhisk_alarms.html#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
    ```bash
-   ibmcloud wsk trigger create myDaily --feed /whisk.system/alarms/alarm \
+   ibmcloud fn trigger create myDaily --feed /whisk.system/alarms/alarm \
               --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
               --param stopDate "2018-12-31T00:00:00.000Z"
    ```
@@ -154,12 +154,12 @@ With the management app in place, deploy an action, a trigger and a rule to conn
   {:tip}
 5. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
    ```bash
-   ibmcloud wsk rule create myStatsRule myDaily collectStats
+   ibmcloud fn rule create myStatsRule myDaily collectStats
    ```
    {:codeblock}   
 6. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
    ```bash
-   ibmcloud wsk action invoke collectStats  -r
+   ibmcloud fn action invoke collectStats  -r
    ```
    {:codeblock}   
    The output will look like this:
@@ -182,9 +182,9 @@ To clean up the resources used for this tutorial, you can delete the related ser
 
 1. Delete the {{site.data.keyword.openwhisk_short}} rule, trigger and action.
    ```bash
-   ibmcloud wsk rule delete myStatsRule
-   ibmcloud wsk trigger delete myDaily
-   ibmcloud wsk action delete collectStats
+   ibmcloud fn rule delete myStatsRule
+   ibmcloud fn trigger delete myDaily
+   ibmcloud fn action delete collectStats
    ```
    {:codeblock}   
 2. Delete the Python app and its services.

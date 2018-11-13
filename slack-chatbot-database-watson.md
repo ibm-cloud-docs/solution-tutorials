@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-12"
+lastupdated: "2018-11-13"
 
 ---
 
@@ -88,7 +88,7 @@ In this section, you are going to set up the needed services and prepare the env
    ```
    {:codeblock}   
 
-   **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud wsk action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
+   **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud fn action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
 
 ## Load the skill / workspace
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
