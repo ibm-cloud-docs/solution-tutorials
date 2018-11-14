@@ -181,7 +181,7 @@ A dialog is a branching conversation flow that defines how your application resp
 
 An assistant is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. You customize the assistant by adding to it the skills it needs to satisfy your customers' goals.
 
-1. In the {{site.data.keyword.conversationshort} tool, switch to **Assistants** and use **Create new**.
+1. In the {{site.data.keyword.conversationshort}} tool, switch to **Assistants** and use **Create new**.
    1. Set **Name** to **android-chatbot-assistant**
    1. **Create**
 1. Use **Add Dialog skill** to select the skill created in the previous sections.
