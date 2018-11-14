@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-20"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -59,7 +59,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 ## Create services
 
-In this section, you will provision a public virtual server with a fixed configuration. {{site.data.keyword.BluVirtServers_short}} can be deployed in a matter of minutes from virtual server images in specific geographic regions. Virtual servers often address peaks in demand after which they can be suspended or powered down so that the cloud environment perfectly fits your infrastructure needs.
+In this section, you will provision a public virtual server with a fixed configuration. {{site.data.keyword.BluVirtServers_short}} can be deployed in a matter of minutes from virtual server images in specific geographic locations. Virtual servers often address peaks in demand after which they can be suspended or powered down so that the cloud environment perfectly fits your infrastructure needs.
 
 1. In your browser, access the [{{site.data.keyword.BluVirtServers_short}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) catalog page.
 2. Select **Public Virtual Server** and click **Create**.

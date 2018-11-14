@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-11"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -176,7 +176,7 @@ The next step involves creating a managed API to expose your actions.
 Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain, the domain which will later be configured in IBM Cloud Internet Services.
 
 1. Go to [APIs / Custom domains](https://console.bluemix.net/apis/domains).
-1. In the Region selector, select the target location.
+1. In the **Region** selector, select the target location.
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
 1. Check **Apply custom domain**

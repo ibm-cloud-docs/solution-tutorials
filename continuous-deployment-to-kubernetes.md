@@ -2,7 +2,7 @@
 copyright:
   years: 2018
 
-lastupdated: "2018-10-04"
+lastupdated: "2018-11-14"
 ---
 
 
@@ -283,7 +283,7 @@ Do you want to learn more? Here are some ideas of what you can do next:
 
 - [Analyze logs and monitor the health of Kubernetes applications using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
 - Add a testing environment and deploy it to a 3rd cluster.
-- Deploy the production cluster [across multiple regions](multi-region-webapp.html).
+- Deploy the production cluster [across multiple locations](multi-region-webapp.html).
 - Enhance your pipeline with additional quality controls and analyics using [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights).
 
 ## Related Content

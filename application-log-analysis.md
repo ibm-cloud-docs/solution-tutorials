@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-19"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -51,7 +51,7 @@ In this tutorial, you are going to generate, access and analyze application logs
 ## Provision {{site.data.keyword.loganalysisshort}}
 Applications running in the {{site.data.keyword.Bluemix_notm}} generate diagnostic output, i.e. logs, that can be accessed without any additional service. By using the {{site.data.keyword.loganalysisshort}} service, it is possible to aggregate logs from various sources and retain them as long as needed. This allows to analyze the "big picture" when required and to troubleshoot more complex situations.
 
-{{site.data.keyword.loganalysisshort}} is found in the [{{site.data.keyword.Bluemix_notm}} Catalog in the DevOps category](https://console.bluemix.net/catalog/?category=devops). Click on it and select the region, organization and space to which you want to provision the service. This should be the same as for the app you are going to deploy in the next step. Once the correct values are set, click on **Create**.
+{{site.data.keyword.loganalysisshort}} is found in the [{{site.data.keyword.Bluemix_notm}} Catalog in the DevOps category](https://console.bluemix.net/catalog/?category=devops). Click on it and select the location, organization and space to which you want to provision the service. This should be the same as for the app you are going to deploy in the next step. Once the correct values are set, click on **Create**.
 
 By default the **Lite** plan is selected which allows for 500 MB of daily logs for the past 3 days. The **Premium** plans feature higher data volumes and longer log retention.
 
@@ -64,7 +64,7 @@ The ready-to-run [code for the logging app is located in this Github repository]
    cd application-log-analysis
    ```
    {:codeblock }
-2. Push the application to {{site.data.keyword.Bluemix_notm}}. You need to be logged in to the region, org and space in which the {{site.data.keyword.loganalysisshort}} service was created. Copy and paste these commands one line at a time.
+2. Push the application to {{site.data.keyword.Bluemix_notm}}. You need to be logged in to the location, org and space in which the {{site.data.keyword.loganalysisshort}} service was created. Copy and paste these commands one line at a time.
    ```bash
    ibmcloud login
    ibmcloud target --cf

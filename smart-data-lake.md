@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-06-01"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -125,8 +125,8 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
 2. In your browser, access the **data-lake-cos** service instance from the [Dashboard](https://console.bluemix.net/dashboard).
 3. Create a new bucket to store data.
     - Click the **Create a bucket** button.
-    - Select **Region** from the **Resiliency** drop down.
-    - Select **us-south** from the **Location**. {{site.data.keyword.CHSTSshort}} is only available for buckets created in the `us-south` region at this time. Alternatively, choose another location and use the **Standard** transfer type in the next section.
+    - Select **Regional** from the **Resiliency** drop down.
+    - Select **us-south** from the **Location**. {{site.data.keyword.CHSTSshort}} is only available for buckets created in the `us-south` location at this time. Alternatively, choose another location and use the **Standard** transfer type in the next section.
     - Provide a bucket **Name** and click **Create** If you receive an *AccessDenied* error, try with a more unique bucket name.
 4. Upload the CSV file to {{site.data.keyword.cos_short}}.
     - From your bucket, click the **Add objects** button.

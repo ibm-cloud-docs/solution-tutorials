@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -258,7 +258,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
 ### Configure the custom domain for the managed API
 
 1. Go to [APIs / Custom domains](https://console.bluemix.net/apis/domains).
-1. In the Region selector, select the region where you deployed the actions.
+1. In the Region selector, select the location where you deployed the actions.
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
 1. Check **Apply custom domain**

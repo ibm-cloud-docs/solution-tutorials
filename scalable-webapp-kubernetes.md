@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-24"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -80,7 +80,7 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `ibmcloud login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
+1. Use `ibmcloud login` to log in interactively. Provide the organization (org), location and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
 2. When the cluster is ready, retrieve the cluster configuration:
    ```bash
    ibmcloud cs cluster-config <CLUSTER NAME>

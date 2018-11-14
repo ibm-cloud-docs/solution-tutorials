@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-10-15"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -19,16 +19,16 @@ lastupdated: "2018-10-15"
 # VPC with globally available deployment
 
 VPC to isolate workloads
-Load balancer to increase resiliency within a region and globally
+Load balancer to increase resiliency within a location and globally
 
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* Deploy a 3-tier application to multiple regions and zones
+* Deploy a 3-tier application to multiple locations and zones
 * Use a load balancer between zones
-* Use a global load balancer between regions
+* Use a global load balancer between locations
 
 ## Services used
 {: #services}
@@ -61,7 +61,7 @@ intro sentence
 
 ## Create VPC
 
-??? If the terraform provider is available, it might be good to use it given the number of elements we need to create. The other option it to use scripting. This tutorial basically deploys the other vpc tutorial in multiple zones/regions.
+??? If the terraform provider is available, it might be good to use it given the number of elements we need to create. The other option it to use scripting. This tutorial basically deploys the other vpc tutorial in multiple zones/locations.
 
 ## Remove resources
 {: #removeresources}

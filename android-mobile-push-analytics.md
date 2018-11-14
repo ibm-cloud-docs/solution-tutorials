@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-10-01"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -50,7 +50,7 @@ The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track
 4. Select **Android** as your platform and click **Create**.
 
     ![](images/solution9/create_mobile_project.png)
-5. Click on **Add Resource** > Mobile > **Push Notifications** and select the region you want to provision the service, resource group and **Lite** pricing plan.
+5. Click on **Add Resource** > Mobile > **Push Notifications** and select the location you want to provision the service, resource group and **Lite** pricing plan.
 6. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** tab.
 
     **Note:** {{site.data.keyword.mobilepushshort}} service should be added with the Empty Starter.

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-09-18"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -218,7 +218,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 ## Remove resources
 {:removeresources}
 
-1. Navigate to [{{site.data.keyword.Bluemix_short}} Dashboard](https://console.bluemix.net/dashboard/) > choose the region, Org and space where you have created the services.
+1. Navigate to [{{site.data.keyword.Bluemix_short}} Dashboard](https://console.bluemix.net/dashboard/) > choose the Location, Org and Space where you have created the services.
 2. Delete the respective {{site.data.keyword.DSX_short}}, {{site.data.keyword.sparks}}, {{site.data.keyword.pm_short}}, {{site.data.keyword.dashdbshort}} and {{site.data.keyword.cos_short}} services which you created for this tutorial.
 
 ## Related content

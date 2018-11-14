@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-10-02"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -96,7 +96,7 @@ Although the three environments needed by this sample project require different 
 
 Let's start by building the Development environment.
 
-1. [Select an {{site.data.keyword.cloud_notm}} region](https://console.bluemix.net/dashboard) where to deploy the environment.
+1. [Select an {{site.data.keyword.cloud_notm}} location](https://console.bluemix.net/dashboard) where to deploy the environment.
 1. For Cloud Foundry services and apps:
    1. [Create an organization for the project](https://console.bluemix.net/docs/account/orgs_spaces.html#createorg).
    1. [Create a Cloud Foundry space for the environment](https://console.bluemix.net/docs/account/orgs_spaces.html#spaceinfo).

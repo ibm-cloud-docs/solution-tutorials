@@ -482,14 +482,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Secure web application across multiple regions
+                Secure web application across multiple locations
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.</p>
+                    <p>Create, secure, deploy, and load balance a web application across multiple locations using a continuous delivery pipeline.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution1/Architecture.png" alt="Architecture diagram for the solution Secure web application across multiple regions"/>
+                    <img class="architectureDiagram" src = "images/solution1/Architecture.png" alt="Architecture diagram for the solution Secure web application across multiple locations"/>
                 </div>
             </div>
         </div>
@@ -499,14 +499,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Resilient and secure multi-region Kubernetes clusters
+                Resilient and secure multi-location Kubernetes clusters
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.</p>
+                    <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple locations.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for the solution Resilient and secure multi-region Kubernetes clusters"/>
+                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for the solution Resilient and secure multi-location Kubernetes clusters"/>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-08"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -176,5 +176,5 @@ To check the health of your application, you can use the built-in Availability M
 {: #related}
 
 - Set up source control and [continuous delivery](multi-region-webapp.html#devops).
-- Secure web application across [multiple regions](multi-region-webapp.html).
+- Secure web application across [multiple locations](multi-region-webapp.html).
 - Create, secure and manage [REST APIs](create-manage-secure-apis.html).
