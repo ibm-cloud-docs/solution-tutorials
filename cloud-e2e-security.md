@@ -72,7 +72,7 @@ The tutorial features a sample application that enables groups of users to uploa
 ### Decide where to deploy the application
 
 1. Identify **a region**, **a Cloud Foundry organization and a space**, and **a resource group** where you will deploy the application and its resources.
-1. Make sure you have [one private repository](https://console.bluemix.net/containers-kubernetes/registry/private) to push Docker images in the selected region.
+1. Make sure you have [one private namespace](https://console.bluemix.net/containers-kubernetes/registry/private) to push Docker images in the selected region.
 
 ### Capture user and application activities 
 {: #activity-tracker }
@@ -215,7 +215,11 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Build the Docker image
 
-1. [Build the Docker image](https://console.bluemix.net/docs/services/Registry/registry_images_.html#registry_images_creating) in {{site.data.keyword.registryshort_notm}}. Use **secure-file-storage
+1. [Build the Docker image](https://console.bluemix.net/docs/services/Registry/registry_images_.html#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
+   - Find the registry endpoint with `ibmcloud cr info`, such as registry.**ng**.bluemix.net or registry.**eu-gb**.bluemix.net.
+   - Set _namespace_ to the private namespace you created or selected in the _Before you begin_ section.
+   - Use **secure-file-storage** as the image name.
+
    ```sh
    ibmcloud cr build -t registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest .
    ```
