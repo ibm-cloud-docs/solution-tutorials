@@ -223,10 +223,9 @@ The repository contains Android application code with required gradle dependenci
 ## Related content
 {:related}
 
-- [Creating entities, Synonyms, System entities](https://console.bluemix.net/docs/services/conversation/entities.html#creating-entities)
-- [Planning your Intents and Entities](https://console.bluemix.net/docs/services/conversation/intents-entities.html#planning-your-entities)
-- [Context Variables](https://console.bluemix.net/docs/services/conversation/dialog-runtime.html#context)
-- [Building a complex dialog](https://console.bluemix.net/docs/services/conversation/tutorial.html#tutorial)
-- [Gathering information with slots](https://console.bluemix.net/docs/services/conversation/dialog-slots.html#dialog-slots)
-- [Deployment options](https://console.bluemix.net/docs/services/conversation/deploy.html#deployment-overview)
-- [Conversation Statistics](https://console.bluemix.net/docs/services/conversation/logs.html#about-the-improve-component)
+- [Creating entities, Synonyms, System entities](https://console.bluemix.net/docs/services/assistant/entities.html#creating-entities)
+- [Context Variables](https://console.bluemix.net/docs/services/assistant/dialog-runtime.html#context)
+- [Building a complex dialog](https://console.bluemix.net/docs/services/assistant/tutorial.html#tutorial)
+- [Gathering information with slots](https://console.bluemix.net/docs/services/assistant/dialog-slots.html#dialog-slots)
+- [Deployment options](https://console.bluemix.net/docs/services/assistant/add-integrations.html#add-integrations)
+- [Improve your skill](https://console.bluemix.net/docs/services/assistant/logs_intro.html#logs_intro)
