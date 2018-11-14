@@ -236,17 +236,20 @@ All services have been configured. In this section you will deploy the tutorial 
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This would requires additional Kubernetes configuration (like creating a Docker registry secret in the new namespace). As example, assuming the _default_ Kubernetes namespace:
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. As example, assuming the application is deployed to the _default_ Kubernetes namespace:
 
-| Variable | Value |
-| -------- | ----- |
-| `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml |
-| `$REGISTRY_URL` | *registry.ng.bluemix.net* |
-| `$REGISTRY_NAMESPACE` | *a-namespace* |
-| `$IMAGE_NAME` | *secure-file-storage* |
-| `$TARGET_NAMESPACE` | *default* |
-| `$INGRESS_SUBDOMAIN` | *secure-file-storage-cluster-123.us-south.containers.appdomain.cloud* |
-| `$INGRESS_SECRET` | *secure-file-storage-cluster* |
+| Variable | Value | Description |
+| -------- | ----- | ----------- |
+| `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
+| `$REGISTRY_URL` | *registry.ng.bluemix.net* | The registry where the image was built in the previous section. |
+| `$REGISTRY_NAMESPACE` | *a-namespace* | The registry namespace where the image was built in the previous section. |
+| `$IMAGE_NAME` | *secure-file-storage* | The name of the Docker image. |
+| `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
+| `$INGRESS_SUBDOMAIN` | *secure-file-storage-cluster-123.us-south.containers.appdomain.cloud* | Can be retrieved in the cluster overview page or with `ibmcloud ks cluster-get <cluster-name>`. |
+| `$INGRESS_SECRET` | *secure-file-storage-cluster* | Can be retrieved in the cluster overview page or with `ibmcloud ks cluster-get <cluster-name>`. |
+
+`$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This would requires additional Kubernetes configuration (like [creating a Docker registry secret in the new namespace](https://console.bluemix.net/docs/containers/cs_images.html#other)).
+{: tip}
 
 ### Deploy to the cluster
 
