@@ -216,9 +216,9 @@ The repository contains Android application code with required gradle dependenci
 
 1. Navigate to [Dashboard,](https://console.bluemix.net/dashboard/)
 1. Delete the services you have created:
-   - ({{site.data.keyword.conversationfull}}
+   - {{site.data.keyword.conversationfull}}
    - {{site.data.keyword.speechtotextfull}}
-   - {{site.data.keyword.texttospeechfull}})
+   - {{site.data.keyword.texttospeechfull}}
 
 ## Related content
 {:related}
