@@ -208,17 +208,17 @@ The repository contains Android application code with required gradle dependenci
     </p>
 5. **Enter your query** in the space provided below and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
 6. The response will be passed to {{site.data.keyword.texttospeechshort}} service and you should hear a voice reading out the response.
-7. To change the voice, edit lines 185 and 187 of `app/src/main/java/com/example/vmac/WatBot/MainActivity.java`
-   ![](images/solution28-watson-chatbot-android/android_studio.png)
-8. Click the **mic** icon in the left bottom corner of the app to input speech that gets converted to text and then can be sent to {{site.data.keyword.conversationshort}} service by clicking the arrow icon.
+7. Click the **mic** icon in the left bottom corner of the app to input speech that gets converted to text and then can be sent to {{site.data.keyword.conversationshort}} service by clicking the arrow icon.
 
 
 ## Remove resources
 {:removeresources}
 
-1. Navigate to [Dashboard,](https://console.bluemix.net/dashboard/) choose the region, org and space where you have created the services.
-2. Under **Cloud Foundry Services**, delete the respective Watson and Mobile services which you created for this tutorial.
-3. Remember to clean up the credentials which you saved in the text editor for quick reference.
+1. Navigate to [Dashboard,](https://console.bluemix.net/dashboard/)
+1. Delete the services you have created:
+   - ({{site.data.keyword.conversationfull}}
+   - {{site.data.keyword.speechtotextfull}}
+   - {{site.data.keyword.texttospeechfull}})
 
 ## Related content
 {:related}
