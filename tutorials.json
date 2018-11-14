@@ -228,7 +228,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2018-06-11"
+          "lastUpdated": "2018-11-13"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -241,7 +241,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2018-10-01"
+          "lastUpdated": "2018-11-14"
         }
       ]
     },
@@ -301,7 +301,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2018-10-09"
+          "lastUpdated": "2018-11-13"
         }
       ]
     },
@@ -356,7 +356,7 @@
             "Watson Tone Analyzer",
             "Push Notifications"
           ],
-          "lastUpdated": "2018-07-09"
+          "lastUpdated": "2018-11-13"
         }
       ]
     },
@@ -400,7 +400,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2018-10-04"
+          "lastUpdated": "2018-11-13"
         },
         {
           "name": "Build, deploy, test, and retrain a predictive machine learning model",

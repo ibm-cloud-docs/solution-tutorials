@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-10-09"
+lastupdated: "2018-11-13"
 
 ---
 
@@ -215,7 +215,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Build the Docker image
 
-1. Build the Docker image in {{site.data.keyword.registryshort_notm}}:
+1. [Build the Docker image](https://console.bluemix.net/docs/services/Registry/registry_images_.html#registry_images_creating) in {{site.data.keyword.registryshort_notm}}. Use **secure-file-storage
    ```sh
    ibmcloud cr build -t registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest .
    ```
