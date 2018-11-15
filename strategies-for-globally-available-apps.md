@@ -32,6 +32,15 @@ This tutorial will give you the guidelines needed for when thinking about multi-
 ## Objectives
 {: #objectives}
 
+* Understand the architecture and concepts involved in building resilient applications.
+   * resiliency (multi-zone region)
+   * high-availability
+   * active/passive
+   * active/active
+   * backup/recovery (RPO/RTO)
+* Understand how these concepts map to IBM Cloud compute and service offerings
+
+
 * The guidelines for deploying Kubernetes services, Cloud Foundry, Cloud Functions and Virtual Servers apps across multi-regions, learn the best practices and guidelines. 
 * Databases, the guidelines for handling databases across multiple regions. How database as a service can work in a multi-region deployment. 
 * Database replication between different regions, what IBM Cloud provides and the options available to you.
