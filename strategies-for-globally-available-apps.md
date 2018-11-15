@@ -215,6 +215,24 @@ Multi-region architecture using Cloud Foundry Enterprise Environment looks like 
 
 ToDo: add architecture ![VM-Architecture]()
 
+## Databases
+
+### Cloudant
+
+### DB2
+
+## Storage
+
+### File Storage
+
+### Cloud Object Storage
+
+## Others, more, you find out
+
+### App ID
+
+### Watson Assistant
+
 ##Handing databases and application files in multi-region architecture
 
 {:databaseservices}
