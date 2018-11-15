@@ -82,9 +82,10 @@ The {{site.data.keyword.cloudaccesstrailshort}} service records user-initiated a
 1. Go in the catalog and create an instance of [{{site.data.keyword.cloudaccesstrailshort}}](https://console.bluemix.net/catalog/services/activity-tracker). Note that there can only be one instance of {{site.data.keyword.cloudaccesstrailshort}} per space.
 1. After the instance is created, change its name to **secure-file-storage-activity-tracker**.
 1. To be able to view all activity tracker events, make sure you have the following permissions [assigned to your user](https://console.bluemix.net/iam/#/users):
-   1. **Developer** role in the Cloud Foundry space of the location where {{site.data.keyword.cloudaccesstrailshort}} was provisioned.
-   1. IAM policy for the {{site.data.keyword.loganalysisshort_notm}}.
- service with **viewer** role in the location.
+   1. Go to [Identity & Access > Users](https://console.bluemix.net/iam/#/users).
+   1. Select your user in the list.
+   1. Under **Access Policies**, if it is missing, create a policy for the {{site.data.keyword.loganalysisshort_notm}} service with **Viewer** role in the location where the service was created.
+   1. Under **Cloud Foundry Access**, ensure that you have the **Developer** role in the Cloud Foundry space of the location where {{site.data.keyword.cloudaccesstrailshort}} was provisioned. If not, work with the Cloud Foundry organization manager to add the role.
 
 You can find detailed instructions to set up the proper permissions in the [{{site.data.keyword.cloudaccesstrailshort}} documentation](https://console.bluemix.net/docs/services/cloud-activity-tracker/how-to/grant_permissions.html#grant_iam_policy).
 {: tip}
