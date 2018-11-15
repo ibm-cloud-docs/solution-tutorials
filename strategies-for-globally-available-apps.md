@@ -197,7 +197,15 @@ The above architecture deploys a WordPress application to a single region and th
 
 ## Cloud Foundry Enterprise Environment apps deployed across multiple regions globally
 
-- Missing solution! solution needed for this.
+Earlier you reviewed Cloud Foundry Public and how to deploy a mulit-region app to a public Cloud Foundry org. The next step would be to look at the Enterprise edition of Cloud Foundry. 
+
+**Cloud Foundry Enterprise Environment (CFEE)** where you can instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of the CFEE service run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services. With this in place, learn how to plan for a multi-region architecture when using Cloud Foundry Enterprise Environment. 
+
+CFEE uses all the same like the public Cloud Foundry with number of additional features and ways in which setting up the architecture, which in return can make the mulit-region deployment a little different. 
+
+Multi-region architecture using Cloud Foundry Enterprise Environment looks like this. 
+
+ToDo: add architecture ![VM-Architecture]()
 
 ##Handing databases and application files in multi-region architecture
 
@@ -210,6 +218,16 @@ The above architecture deploys a WordPress application to a single region and th
 {:nondatabaseservices}
 
 - ToDo
+
+## Summary 
+
+{:summary}
+
+- Multi-Region can be achieved for each of the five? 
+- Active/Active or Active/passive, can Active/Active be achieved, for each of the five?  
+- ToDo: Add a table where yes and no for each. 
+
+
 
 ## Related content
 
