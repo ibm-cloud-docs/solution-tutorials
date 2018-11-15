@@ -61,7 +61,7 @@ This tutorial uses the following runtimes and services:
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
-## Architecture
+## Architecture and Concepts
 {: #architecture}
 
 This tutorial involves an active/active and active/passive scenarios where two copies of the application are deployed in two different regions and the two copies are serving customer requests in a round-robin way. `active/active` is the ideal scenario for highly available applications, but this may not always work for all use cases, and depending on the compute option selected where sometimes `active/active` is simply not so easily possible. 
@@ -84,19 +84,21 @@ With IBM Cloud compute options, the following scenario is possible:
 
 Note: the architecture digram above may be different depending on the compute option used and you may require different service like for example File Storage is used for Virtual Servers but Cloud Object Storage may be used if using Cloud Functions. You will see specific architecture digram under each compute option in later stages of this solution tutorials.
 
-## Before you begin
-{: #prereqs}
+### Active/active and active/passive
 
-* You have deployed applications to a single region on IBM Cloud where been using Kubernetes, Cloud Functions, Cloud Foundry or Virtual Servers.
-* Understanding of database as a service like `Cloudant NoSQL DB` or any other database as service in this matter work, you have used a database and want to learn how to handle replication between regions.
-* You have used other IBM Cloud services like Watson.
-* You understand the different between `active/active` &  `active/passive` scenarios.
+- Active/Active having both regions active, with the approach you need to make sure data replication is set to have data synced in real time. This approach is more favourable but not always easily possible depending on the setup and compute option used. With Active/Active you need to make sure you have images and files in sync, database data in sync and that is not easily achieved. 
+- Active/Passive having one region active and the second region passive ready for use as a backup in an event of downtime. With this approach you may not need to have live image files and database files in sync in real time. You would manually sync and replicate the data when one region is down and the passive region become active. 
 
-## Multi-zone regions applications
+### Backup, Recovery, RPO, RTO
+
+- Recovery Time Objective
+- Recovery Point Objective
+
+### Multi-zone regions applications
 
 Building multi-zone regions applications, means having your application deployed across zones within a region and then replicate the same in a different region. This provide many advantages and many reasons to why you may consider such setup, however building successfully running multi-region, active-active architecture is hard, so this solution tutorial you will understand the guiltiness and where to do go to dive deeper to the different part of this art.
 
-### Why bother with multi-region architectures?
+#### Why bother with multi-region architectures?
 
 There are many reasons to why you would want to have a multi-region architecture, here are the top three. 
 
@@ -106,12 +108,9 @@ There are many reasons to why you would want to have a multi-region architecture
 
 There are many blogs and posts articles written on this topic covering the why for Multi-region architecture. Next let's look at the architectures type within a region, `Active/Active` and `Active/Passive`.
 
-### Active/active and active/passive
-
-- Active/Active having both regions active, with the approach you need to make sure data replication is set to have data synced in real time. This approach is more favourable but not always easily possible depending on the setup and compute option used. With Active/Active you need to make sure you have images and files in sync, database data in sync and that is not easily achieved. 
-- Active/Passive having one region active and the second region passive ready for use as a backup in an event of downtime. With this approach you may not need to have live image files and database files in sync in real time. You would manually sync and replicate the data when one region is down and the passive region become active. 
-
 ### Multi-regions apps and Multi-zones within regions apps 
+
+:warning: DO NOT MERGE multi-region and mzr concepts
 
 A region is a specific geographical location where you can deploy apps, services, and other IBM® Cloud resources. [IBM Cloud regions](https://console.bluemix.net/docs/containers/cs_regions.html#bluemix_regions) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
 
@@ -124,7 +123,7 @@ A region is a specific geographical location where you can deploy apps, services
 
 Learn more on regions and zones [here](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-zones).
 
-## Cloud Foundry apps deployed across multiple regions globally
+## Cloud Foundry apps
 
 With Cloud Foundry, you can achieve true Active/Active and active/passive multi-region architecture with data replications set between regions. The architecture for Cloud Foundry multi-region looks like this. 
 
@@ -137,7 +136,7 @@ The above architecture deploys a Cloud Foundry application in two regions. The n
 - Handle non-database services like Watson and other services. See the [Handling non-database services like Watson services in multi-region architecture](#nondatabaseservices) section. 
 - Handle databases-as-service like Cloudant, DB2, Cloud Object Storage and other databases-as-service in the IBM Cloud catalog. See the [Handing databases and application files in multi-region architecture](#databaseservices) section. 
 
-##Kubernetes apps deployed across multiple regions globally
+## Kubernetes apps
 
 With Kubernetes, you can achieve multi-zones within regions architecture having Active/Active regions. When implementing a solution with Kubernetes Service, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
 
@@ -158,7 +157,7 @@ The above architecture deploys a Kubernetes clusters in both regions but without
 - Handle non-database services like Watson and other services. See the [Handling non-database services like Watson services in multi-region architecture](#nondatabaseservices) section. 
 - Handle databases-as-service like Cloudant, DB2, Cloud Object Storage and other databases-as-service in the IBM Cloud catalog. See the [Handing databases and application files in multi-region architecture](#databaseservices) section. 
 
-##Cloud Functions apps deployed across multiple regions globally
+## Cloud Functions apps
 
 With Cloud Functions, you can achieve multi-region architecture with Active/Active regions. The architecture for Cloud Functions multi-region looks like this. ![Functions-Architecture](images/solution39/Functions-Architecture.png)
 
@@ -178,7 +177,7 @@ The above architecture considers a public web application with a back-end implem
 - Handle non-database services like Watson and other services. See the [Handling non-database services like Watson services in multi-region architecture](#nondatabaseservices) section. 
 - Handle databases-as-service like Cloudant, DB2, Cloud Object Storage and other databases-as-service in the IBM Cloud catalog. See the [Handing databases and application files in multi-region architecture](#databaseservices) section. 
 
-## Global Infrastructure availability zones
+## Bare Metal and Virtual Servers
 
 Virtual Servers and IBM Cloud Infrastructure you can have multi-region architecture but only Active/Passive where one region is Active and second is passive used in an event of downtime of the main region. 
 
@@ -204,7 +203,7 @@ The above architecture deploys a WordPress application to a single region and th
 - File Storage: is used store the application images and files, in addition with the application source code to avoid duplicated source code between multiple servers within a single region. Using File Store, you can achieve Active/Passive but not Active/Active. Achieving Active/Active meaning have images and files replication set in real time in between regions and this not yet possible using File Storage. The alternative option would be to use Cloud Object Storage. ToDo: Add more one that later... 
 - Handle non-database services like Watson and other services. See the [Handling non-database services like Watson services in multi-region architecture](#nondatabaseservices) section. 
 
-## Cloud Foundry Enterprise Environment apps deployed across multiple regions globally
+## Cloud Foundry Enterprise Environment
 
 Earlier you reviewed Cloud Foundry Public and how to deploy a mulit-region app to a public Cloud Foundry org. The next step would be to look at the Enterprise edition of Cloud Foundry. 
 
