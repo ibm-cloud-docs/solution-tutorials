@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-14"
+lastupdated: "2018-11-16"
 
 ---
 
@@ -402,14 +402,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Deploy serverless apps across multiple locations
+                Deploy serverless apps across multiple regions
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
                     <p>Use Cloud Functions and Internet Services to build globally available and secure serverless applications.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution44-multi-region-serverless/Architecture.png" alt="Architecture diagram for the solution Deploy serverless apps across multiple locations"/>
+                    <img class="architectureDiagram" src = "images/solution44-multi-region-serverless/Architecture.png" alt="Architecture diagram for the solution Deploy serverless apps across multiple regions"/>
                 </div>
             </div>
         </div>
@@ -482,14 +482,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Secure web application across multiple locations
+                Secure web application across multiple regions
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Create, secure, deploy, and load balance a web application across multiple locations using a continuous delivery pipeline.</p>
+                    <p>Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution1/Architecture.png" alt="Architecture diagram for the solution Secure web application across multiple locations"/>
+                    <img class="architectureDiagram" src = "images/solution1/Architecture.png" alt="Architecture diagram for the solution Secure web application across multiple regions"/>
                 </div>
             </div>
         </div>
@@ -499,14 +499,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Resilient and secure multi-location Kubernetes clusters
+                Resilient and secure multi-region Kubernetes clusters
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple locations.</p>
+                    <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for the solution Resilient and secure multi-location Kubernetes clusters"/>
+                    <img class="architectureDiagram" src = "images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for the solution Resilient and secure multi-region Kubernetes clusters"/>
                 </div>
             </div>
         </div>
