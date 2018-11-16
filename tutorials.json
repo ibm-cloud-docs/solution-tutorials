@@ -22,7 +22,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2018-07-24"
+          "lastUpdated": "2018-11-16"
         },
         {
           "name": "Analyze logs and monitor the health of Kubernetes applications",
@@ -51,7 +51,7 @@
             "MySQL",
             "Java"
           ],
-          "lastUpdated": "2018-06-05"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -67,7 +67,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2018-10-04"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -94,7 +94,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-06-08"
+          "lastUpdated": "2018-11-16"
         },
         {
           "name": "Web application on LAMP stack",
@@ -107,7 +107,7 @@
             "WordPress",
             "Vulnerability Scanner"
           ],
-          "lastUpdated": "2018-04-20"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Deploy a LAMP stack using Terraform",
@@ -158,7 +158,7 @@
             "Node.js",
             "Compose for MongoDB"
           ],
-          "lastUpdated": "2018-06-08"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -170,7 +170,7 @@
             "Python",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2018-05-29"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Serverless web application and API",
@@ -182,10 +182,10 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2018-04-18"
+          "lastUpdated": "2018-11-14"
         },
         {
-          "name": "Deploy serverless apps across multiple locations",
+          "name": "Deploy serverless apps across multiple regions",
           "url": "multi-region-serverless.html",
           "description": "Use Cloud Functions and Internet Services to build globally available and secure serverless applications.",
           "imgSrc": "images/solution44-multi-region-serverless/Architecture.png",
@@ -194,7 +194,7 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2018-11-11"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Analyze logs and monitor health of Cloud Foundry applications",
@@ -207,7 +207,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2018-06-19"
+          "lastUpdated": "2018-11-14"
         }
       ]
     },
@@ -260,7 +260,7 @@
             "Continuous Delivery",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2018-04-28"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Resilient and secure multi-region Kubernetes clusters",
@@ -272,7 +272,7 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2018-09-18"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Create, secure and manage REST APIs",
@@ -301,7 +301,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2018-11-13"
+          "lastUpdated": "2018-11-14"
         }
       ]
     },
@@ -319,7 +319,7 @@
             "Swift",
             "Push Notifications"
           ],
-          "lastUpdated": "2018-10-01"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Android native mobile app with Push Notifications",
@@ -331,7 +331,7 @@
             "Java",
             "Push Notifications"
           ],
-          "lastUpdated": "2018-10-01"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Hybrid mobile application with Push Notifications",
@@ -342,7 +342,7 @@
             "Cordova",
             "Push Notifications"
           ],
-          "lastUpdated": "2018-10-01"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Mobile application with a serverless backend",
@@ -387,7 +387,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2018-06-01"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -414,7 +414,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2018-09-18"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -447,7 +447,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-09-05"
+          "lastUpdated": "2018-11-14"
         }
       ]
     },
@@ -467,7 +467,7 @@
             "Container Registry",
             "DevOps"
           ],
-          "lastUpdated": "2018-10-02"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Reviewing IBM Cloud services, resources and usage",
@@ -481,7 +481,7 @@
             "Usage",
             "Billing"
           ],
-          "lastUpdated": "2018-09-13"
+          "lastUpdated": "2018-11-14"
         }
       ]
     },
@@ -557,7 +557,7 @@
             "Virtual Servers",
             "VLAN Spanning"
           ],
-          "lastUpdated": "2018-08-24"
+          "lastUpdated": "2018-11-14"
         },
         {
           "name": "Web application serving from a secure private network",

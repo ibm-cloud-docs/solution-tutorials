@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-13"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -71,8 +71,8 @@ The tutorial features a sample application that enables groups of users to uploa
 
 ### Decide where to deploy the application
 
-1. Identify **a region**, **a Cloud Foundry organization and a space**, and **a resource group** where you will deploy the application and its resources.
-1. Make sure you have [one private repository](https://console.bluemix.net/containers-kubernetes/registry/private) to push Docker images in the selected region.
+1. Identify **a location**, **a Cloud Foundry organization and a space**, and **a resource group** where you will deploy the application and its resources.
+1. Make sure you have [one private namespace](https://console.bluemix.net/containers-kubernetes/registry/private) to push Docker images in the selected location.
 
 ### Capture user and application activities 
 {: #activity-tracker }
@@ -82,9 +82,10 @@ The {{site.data.keyword.cloudaccesstrailshort}} service records user-initiated a
 1. Go in the catalog and create an instance of [{{site.data.keyword.cloudaccesstrailshort}}](https://console.bluemix.net/catalog/services/activity-tracker). Note that there can only be one instance of {{site.data.keyword.cloudaccesstrailshort}} per space.
 1. After the instance is created, change its name to **secure-file-storage-activity-tracker**.
 1. To be able to view all activity tracker events, make sure you have the following permissions [assigned to your user](https://console.bluemix.net/iam/#/users):
-   1. **Developer** role in the Cloud Foundry space of the region where {{site.data.keyword.cloudaccesstrailshort}} was provisioned.
-   1. IAM policy for the {{site.data.keyword.loganalysisshort_notm}}.
- service with **viewer** role in the region.
+   1. Go to [Identity & Access > Users](https://console.bluemix.net/iam/#/users).
+   1. Select your user in the list.
+   1. Under **Access Policies**, if it is missing, create a policy for the {{site.data.keyword.loganalysisshort_notm}} service with **Viewer** role in the location where the service was created.
+   1. Under **Cloud Foundry Access**, ensure that you have the **Developer** role in the Cloud Foundry space of the location where {{site.data.keyword.cloudaccesstrailshort}} was provisioned. If not, work with the Cloud Foundry organization manager to add the role.
 
 You can find detailed instructions to set up the proper permissions in the [{{site.data.keyword.cloudaccesstrailshort}} documentation](https://console.bluemix.net/docs/services/cloud-activity-tracker/how-to/grant_permissions.html#grant_iam_policy).
 {: tip}
@@ -97,7 +98,7 @@ Skip this section if you have an existing **Standard** cluster you want to reuse
 {: tip}
 
 1. Go to the [cluster creation page](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create).
-   1. Set the **Location** to the region you identified in previous steps.
+   1. Set the **Location** to the one you identified in previous steps.
    1. Set **Cluster type** to **Standard**.
    1. Set **Availability** to **Single Zone**.
    1. Select a **Master Zone**.
@@ -139,7 +140,7 @@ The application stores the user files in a {{site.data.keyword.cos_short}} bucke
    * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to get the right set of credentials to be able to generate pre-signed URLs.
    * **Add**.
    * Make note of the credentials you will need them in a later step.
-1. Under **Endpoint**, set **Resiliency** to **Regional**, set the **location** to the target location and write down the Public service endpoint. It will be used later in the configuration of the application.
+1. Under **Endpoint**, set **Resiliency** to **Regional**, set the **Location** to the target location and write down the Public service endpoint. It will be used later in the configuration of the application.
 
 Before creating the bucket, you need to grant **secure-file-storage-cos** with access to the root key stored in **secure-file-storage-kp**.
 
@@ -171,7 +172,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain a metadata d
 
 1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB).
    * Set the **name** to **secure-file-storage-cloudant**.
-   * Set the region.
+   * Set the location.
    * Use the same **resource group** as for the previous services.
    * Set **Available authentication methods** to **Use only IAM**.
 1. Under **Service credentials**, create *New credential*.
@@ -189,7 +190,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
 
 1. Create an instance of [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID).
    * Set the **name** to **secure-file-storage-appid**.
-   * Use the same **region** and **resource group** as for the previous services.
+   * Use the same **location** and **resource group** as for the previous services.
 1. Under **Identity Providers / Manage**, in the **Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. Assuming your cluster Ingress subdomain is 
 _&lt;cluster-name&gt;.us-south.containers.appdomain.cloud_, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
 
@@ -215,9 +216,13 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Build the Docker image
 
-1. [Build the Docker image](https://console.bluemix.net/docs/services/Registry/registry_images_.html#registry_images_creating) in {{site.data.keyword.registryshort_notm}}. Use **secure-file-storage
+1. [Build the Docker image](https://console.bluemix.net/docs/services/Registry/registry_images_.html#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
+   - Find the registry endpoint with `ibmcloud cr info`, such as registry.**ng**.bluemix.net or registry.**eu-gb**.bluemix.net.
+   - Set _namespace_ to the private namespace you created or selected in the _Before you begin_ section.
+   - Use **secure-file-storage** as the image name.
+
    ```sh
-   ibmcloud cr build -t registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest .
+   ibmcloud cr build -t registry.<location>.bluemix.net/<namespace>/secure-file-storage:latest .
    ```
    {: codeblock}
 
@@ -236,17 +241,20 @@ All services have been configured. In this section you will deploy the tutorial 
    cp secure-file-storage.template.yaml secure-file-storage.yaml
    ```
    {: codeblock}
-1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This would requires additional Kubernetes configuration (like creating a Docker registry secret in the new namespace). As example, assuming the _default_ Kubernetes namespace:
+1. Edit `secure-file-storage.yaml` and replace the placeholders (`$IMAGE_PULL_SECRET`, `$REGISTRY_URL`, `$REGISTRY_NAMESPACE`, `$IMAGE_NAME`, `$TARGET_NAMESPACE`, `$INGRESS_SUBDOMAIN`, `$INGRESS_SECRET`) with the correct values. As example, assuming the application is deployed to the _default_ Kubernetes namespace:
 
-| Variable | Value |
-| -------- | ----- |
-| `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml |
-| `$REGISTRY_URL` | *registry.ng.bluemix.net* |
-| `$REGISTRY_NAMESPACE` | *a-namespace* |
-| `$IMAGE_NAME` | *secure-file-storage* |
-| `$TARGET_NAMESPACE` | *default* |
-| `$INGRESS_SUBDOMAIN` | *secure-file-storage-cluster-123.us-south.containers.appdomain.cloud* |
-| `$INGRESS_SECRET` | *secure-file-storage-cluster* |
+| Variable | Value | Description |
+| -------- | ----- | ----------- |
+| `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
+| `$REGISTRY_URL` | *registry.ng.bluemix.net* | The registry where the image was built in the previous section. |
+| `$REGISTRY_NAMESPACE` | *a-namespace* | The registry namespace where the image was built in the previous section. |
+| `$IMAGE_NAME` | *secure-file-storage* | The name of the Docker image. |
+| `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
+| `$INGRESS_SUBDOMAIN` | *secure-file-storage-cluster-123.us-south.containers.appdomain.cloud* | Can be retrieved in the cluster overview page or with `ibmcloud ks cluster-get <cluster-name>`. |
+| `$INGRESS_SECRET` | *secure-file-storage-cluster* | Can be retrieved in the cluster overview page or with `ibmcloud ks cluster-get <cluster-name>`. |
+
+`$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This would requires additional Kubernetes configuration (like [creating a Docker registry secret in the new namespace](https://console.bluemix.net/docs/containers/cs_images.html#other)).
+{: tip}
 
 ### Deploy to the cluster
 
@@ -276,7 +284,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ## Test the application
 
-The application can be accessed at `https://secure-file-storage.<cluster-name>.<region>.containers.appdomain.cloud/`.
+The application can be accessed at `https://secure-file-storage.<cluster-name>.<location>.containers.appdomain.cloud/`.
 
 1. Go to the application home page. You are redirected to the {{site.data.keyword.appid_short_notm}} default login page.
 1. Sign up for a new account with a valid email address.
@@ -310,7 +318,7 @@ An example of how to obtain a certificate from [Let's Encrypt](https://letsencry
 
 1. Create an instance of [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/certificate-manager)
    * Set the name to **secure-file-storage-certmgr**.
-   * Use the same **region** and **resource group** as for the other services.
+   * Use the same **location** and **resource group** as for the other services.
 1. Click on **Import Certificate** to import your certificate.
    * Set name to **SecFileStorage** and description to **Certificate for e2e security tutorial**.
    * Upload the certificate file using the **Browse** button.
@@ -368,7 +376,7 @@ To remove the resource, delete the deployed container and then the provisioned s
    {: codeblock}
 3. Remove the Docker image from the container registry:
    ```sh
-   ibmcloud cr image-rm registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest
+   ibmcloud cr image-rm registry.<location>.bluemix.net/<namespace>/secure-file-storage:latest
    ```
    {: codeblock}
 4. In the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.

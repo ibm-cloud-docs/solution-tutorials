@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-24"
+lastupdated: "2018-11-16"
 
 ---
 
@@ -80,10 +80,11 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `ibmcloud login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
-2. When the cluster is ready, retrieve the cluster configuration:
+1. Use `ibmcloud login` to log in interactively. Provide the organization (org), location and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
+2. When the cluster is ready, retrieve the cluster configuration by setting MYCLUSTER environment variable to your cluster name:
    ```bash
-   ibmcloud cs cluster-config <CLUSTER NAME>
+   export MYCLUSTER=<CLUSTER_NAME>
+   ibmcloud cs cluster-config ${MYCLUSTER}
    ```
    {: pre}
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
@@ -107,7 +108,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE (Web App)` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Web App - Basic Web` )
+1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE (Web App)` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
 1. Enter a **name** for your application.
 1. Select the resource group where to deploy this application.
 1. Do not add additional services.
@@ -148,7 +149,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
-2. After your container starts, go to `http://localhost:9080/<nameofproject>`. If you created a Node.js application, use port 3000.
+2. After your container starts, go to `http://localhost:9080/<nameofproject>`. If you created a Node.js application, go to `http://localhost:3000/`.
   ![](images/solution2/LibertyLocal.png)
 
 ## Deploy application to cluster using helm chart
@@ -173,7 +174,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
     ```
     {: pre}
     ```sh
-    export MYPROJECT=<PROJECTNAME>
+    export MYPROJECT=<PROJECT_NAME>
     ```
     {: pre}
 3. Identify your **Container Registry** (e.g. registry.ng.bluemix.net) by running `ibmcloud cr info`
@@ -212,13 +213,13 @@ In this section, you first push the Docker image to the IBM Cloud private contai
   helm install . --name ${MYPROJECT}
   ```
   {: pre}
-10. Use `kubectl get service YOUR PROJECT NAME-service` to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
+10. Use `kubectl get service ${MYPROJECT}-service` for your Java application and `kubectl get service ${MYPROJECT}-application-service`  for your Node.js application to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 11. For the public IP of worker node, run the below command
    ```sh
-   ibmcloud cs workers <CLUSTER NAME>
+   ibmcloud cs workers ${MYCLUSTER}
    ```
    {: pre}
-12. Access the application `http://worker-ip-address:portnumber/nameofproject`.
+12. Access the Java application at `http://worker-ip-address:portnumber/nameofproject` and Node.js application at `http://worker-ip-address:portnumber`
 
 ## Use the IBM-provided domain for your cluster
 {: #ibm_domain}
@@ -233,7 +234,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 1. Identify your IBM-provided **Ingress domain**
    ```
-   ibmcloud cs cluster-get <cluster-name>
+   ibmcloud cs cluster-get ${MYCLUSTER}
    ```
    {: pre}
    to find

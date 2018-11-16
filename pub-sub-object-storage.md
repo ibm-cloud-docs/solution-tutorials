@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-06-08"
+lastupdated: "2018-11-16"
 
 ---
 
@@ -70,7 +70,7 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `ibmcloud login` to log in interactively. Provide the organization (org), region and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
+1. Use `ibmcloud login` to log in interactively. Provide the organization (org), location and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
 2. When the cluster is ready, retrieve the cluster configuration:
    ```bash
    ibmcloud cs cluster-config <cluster-name>
@@ -164,7 +164,7 @@ Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and
 1. delete Kubernetes cluster `mycluster`
 2. delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
 3. delete {{site.data.keyword.messagehub}} `mymessagehub`
-4. select **Containers** from the left menu, **Private Repositories** and then delete `pubsub-xxx` repositories.
+4. select **Kubernetes** from the left menu, **Registry** and then delete `pubsub-xxx` repositories.
 
 ## Related content
 {:related}

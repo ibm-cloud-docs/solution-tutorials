@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-05"
+lastupdated: "2018-11-14"
 ---
 
 {:shortdesc: .shortdesc}
@@ -110,11 +110,11 @@ As you design your cluster architecture, you want to balance costs against avail
 
 To run a production app in the cloud by using Kubernetes, consider the following items:
 
-1. Do you expect traffic from a specific geographic region? If yes, select the region that is physically closest to you for best performance.
+1. Do you expect traffic from a specific geographic location? If yes, select the location that is physically closest to you for best performance.
 2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments.
 3. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
 4. How many worker nodes do you need? This depends highly on the apps scale, the more nodes you have the more resilient your app will be.
-5. How many replicas should you have for higher availability? Deploy replica clusters in multiple regions to make your app more available and protect the app from being down due to a region failure.
+5. How many replicas should you have for higher availability? Deploy replica clusters in multiple locations to make your app more available and protect the app from being down due to a location failure.
 6. Which is the minimal set of resources your app needs to startup? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
 7. When to increase the number of worder nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](kubernetes-log-analysis-kibana.html).
 8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind a IBM Cloud database service to your pod.
@@ -341,5 +341,5 @@ To put everything you've learned in practice, follow the [demo](https://github.c
 - [Best practices solution guide](users-teams-applications.html) for organizing users, teams and apps.
 - [Analyze logs and monitor the health of Kubernetes apps by using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
 - Set up [continuous integration and delivery pipeline](continuous-deployment-to-kubernetes.html) for containerized apps that run in Kubernetes.
-- Deploy the production cluster [across multiple regions](multi-region-webapp.html).
-- Use [multiple clusters across multiple regions](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-locations) for high availability.
+- Deploy the production cluster [across multiple locations](multi-region-webapp.html).
+- Use [multiple clusters across multiple locations](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-locations) for high availability.

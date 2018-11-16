@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-09-05"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -102,7 +102,7 @@ Next, you will create a board and cards to display device data in the dashboard.
 
 1. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 2. Select **Boards** from the left menu, and then click **Create New Board**.
-3. Enter a name for the board, `Simulators` as example,  and click **Next** and then **Create**.  
+3. Enter a name for the board, `Simulators` as example,  and click **Next** and then **Submit**.  
 4. Select the board that you just created to open it.
 
 ### Display device data
@@ -124,14 +124,18 @@ Next, you will create a board and cards to display device data in the dashboard.
    ![](images/solution16/board.png)
 
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db) named `iot-db`.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant) named `iot-db`.
+1. Under **Connections**:
+   1. **Create connection**
+   1. Select the Cloud Foundry location, organization and space where the {{site.data.keyword.cloudant_short_notm}} service was provisioned.
+   1. Mouse over the space name in the **Connection Location** table and use the **Connect** button to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space. 
 2. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 3. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
 4. Select the `iot-db` {{site.data.keyword.cloudant_short_notm}} database.
 5. Enter `devicedata` for **Database Name** and click **Done**.
 6. A new window should load prompting for authorization. If you don't see this window, disable your pop-up blocker and refresh the page.
 
-Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. Launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
+Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. After a few minutes, launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
 
 ![](images/solution16/cloudant.png)
 
@@ -157,14 +161,24 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
 3. Check the **Credentials** then click **Create**.
 
-### Create a Jupyter (ipynb) notebook
+### Create an Apache Spark service
+
 1. Click **Services** on the top navigation bar > Compute Services.
-2. Click **Add** under Apache Spark > Select Lite plane and **Create**.
-3. Select a space, change the service name if you want to and **Confirm**.
-4. Navigate to the `Detect Anomaly` project through **Projects** and click **New notebook**.
+2. Click **Add service**.
+   1. Click **Add** on **Apache Spark**.
+   1. Select the **Lite** plan.
+   1. Click **Create**.
+3. Select an organization and a space, change the service name if you want to and **Confirm**.
+1. Navigate to the `Detect Anomaly` project through **Projects**.
+1. In the **Settings**, scroll to **Associated services**.
+1. Click **Add service**, select **Spark**.
+1. Select the **Apache Spark** instance previously created.
+
+### Create a Jupyter (ipynb) notebook
+4. Navigate to the `Detect Anomaly` project through **Projects** and add a new **notebook**.
 5. Enter `Anomaly-detection-sample` for the **Name**.
-6. Enter `https://raw.githubusercontent.com/IBM-Cloud/iot-device-phone-simulator/master/anomaly-detection/Anomaly-detection-DSX.ipynb` in the **Notebook URL**.
-7. Select the Apache Spark you created above as your runtime. 
+6. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio.ipynb` in the **Notebook URL**.
+7. Select the **Apache Spark** service installed previously created as runtime.
 8. **Create Notebook**. Set `Python 2 with Spark 2.1` as your Kernel.
    Check that the notebook is created with metadata and code.
    ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_dsx.png)
@@ -175,20 +189,16 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 1. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Run** or **Ctrl + Enter** to execute the code.
 2. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
 3. In the next code cell, Import your {{site.data.keyword.cloudant_short_notm}} credentials to that cell by completing the following steps:
-  * Click ![](images/solution16/data_icon.png)
-  * Select the **Connections** tab.
-  * Click **Insert to code**. A dictionary called credentials_1" is created with your {{site.data.keyword.cloudant_short_notm}} credentials. If the name is not specified as "credentials_1", rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
-  * name that is required for the notebook code to run.
+   * Click ![](images/solution16/data_icon.png)
+   * Select the **Connections** tab.
+   * Click **Insert to code**. A dictionary called _credentials_1_ is created with your {{site.data.keyword.cloudant_short_notm}} credentials. If the name is not specified as _credentials_1_, rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
 4. In the cell with the database name (`dbName`) enter the name of the {{site.data.keyword.cloudant_short_notm}} database that is the source of data, for example, *iotp_yourWatsonIoTProgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
-
-    You can find the exact database by navigating to your **iot-db** {{site.data.keyword.cloudant_short_notm}} instance you created earlier > Launch Dashboard.
-    {:tip}
+   You can find the exact database by navigating to your **iot-db** {{site.data.keyword.cloudant_short_notm}} instance you created earlier > Launch Dashboard.
+   {:tip}
 5. Save the notebook and execute each code cell one after another or run all (**Cell** > Run All) and by end of the notebook you should see anomalies for device movement data (oa,ob, and og).
-
-    You can change the time interval of interest to desired time of the day. Look for `start` and `end` values.
-    {:tip}
-
-    ![Jupyter Notebook DSX](images/solution16/anomaly_detection_watson_studio.png)
+   You can change the time interval of interest to desired time of the day. Look for `start` and `end` values.
+   {:tip}
+   ![Jupyter Notebook DSX](images/solution16/anomaly_detection_watson_studio.png)
 6. Along with anomaly detection, the key findings or takeaways from this section are
     * Usage of Spark to prepare the data for visualization.
     * Usage of Pandas for data visualization
@@ -201,7 +211,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 ## Remove resources
 {:removeresources}
 
-1. Navigate to [Dashboard](https://console.bluemix.net/dashboard/) > choose the region, Org and space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
+1. Navigate to [Dashboard](https://console.bluemix.net/dashboard/) > choose the Location, Org and Space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
 2. Under **Services**, delete the respective Internet of Things Platform, Apache Spark, {{site.data.keyword.cloudant_short_notm}} and {{site.data.keyword.cos_full_notm}} services which you created for this tutorial.
 
 ## Related content

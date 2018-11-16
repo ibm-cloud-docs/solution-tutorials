@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-11"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -16,9 +16,9 @@ lastupdated: "2018-11-11"
 {:tip: .tip}
 {:pre: .pre}
 
-# Deploy serverless apps across multiple locations
+# Deploy serverless apps across multiple regions
 
-This tutorial shows how to configure IBM Cloud Internet Services and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple locations.
+This tutorial shows how to configure IBM Cloud Internet Services and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple regions.
 
 Serverless computing platforms give developers a rapid way to build APIs without servers. {{site.data.keyword.openwhisk}} supports automatic generation of REST API for actions, turning actions into HTTP endpoints, and the ability to enable secure API authentication. This capability is helpful not only for exposing APIs to external consumers but also for building microservices applications.
 
@@ -176,7 +176,7 @@ The next step involves creating a managed API to expose your actions.
 Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain, the domain which will later be configured in IBM Cloud Internet Services.
 
 1. Go to [APIs / Custom domains](https://console.bluemix.net/apis/domains).
-1. In the Region selector, select the target location.
+1. In the **Region** selector, select the target location.
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
 1. Check **Apply custom domain**

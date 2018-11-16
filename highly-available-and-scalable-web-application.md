@@ -13,15 +13,15 @@ lastupdated: "2018-08-13"
 
 # Use Virtual Servers to build highly available and scalable web app
 
-Adding more servers to an application is a common pattern to handle additional load. Another key aspect to increase an application availability and resiliency is to deploy the application to multiple zones or regions with data replication and load balancing.
+Adding more servers to an application is a common pattern to handle additional load. Another key aspect to increase an application availability and resiliency is to deploy the application to multiple zones or locations with data replication and load balancing.
 
-This tutorial walks you through a scenario with the creation of: 
+This tutorial walks you through a scenario with the creation of:
 
-- Two web application servers for US South region. 
-- Cloud Load Balancer, to load balance traffic two servers within a region. 
-- One MySQL database server. 
+- Two web application servers in Dallas.
+- Cloud Load Balancer, to load balance traffic two servers within a location.
+- One MySQL database server.
 - A durable file storage to store application files and backups.
-- Configure the second region with the first same configurations, then add Cloud Internet Services to point traffic to the healthy region if one copy fails.
+- Configure the second location with the first same configurations, then add Cloud Internet Services to point traffic to the healthy location if one copy fails.
 
 ## Objectives
 {: #objectives}
@@ -29,7 +29,7 @@ This tutorial walks you through a scenario with the creation of:
 * Create {{site.data.keyword.virtualmachinesshort}} to install PHP and MySQL
 * Use {{site.data.keyword.filestorage_short}} to persist application files and database backups
 * Provision a {{site.data.keyword.loadbalancer_short}} to distribute requests to the application servers
-* Extend the solution by adding a second region for better resiliency and higher availability
+* Extend the solution by adding a second location for better resiliency and higher availability
 
 ## Services used
 {: #services}
@@ -607,12 +607,12 @@ The Load Balancer is configured to check the health of the servers and to redire
 
 8. Once the Load Balancer detects *app1* as healthy, it will redirect traffic to this server.
 
-## Extend the solution with a 2nd region (optional)
+## Extend the solution with a 2nd location (optional)
 {: #secondregion}
 
-To increase resiliency and availability, you can extend the infrastructure setup with a second region and have your application running in two regions.
+To increase resiliency and availability, you can extend the infrastructure setup with a second location and have your application running in two locations.
 
-With a second region deployment, the architecture would look like this.
+With a second location deployment, the architecture will look like this.
 
 <p style="text-align: center;">
 
@@ -620,16 +620,16 @@ With a second region deployment, the architecture would look like this.
 </p>
 
 1. Users access the application through IBM Cloud Internet Services (CIS).
-2. CIS routes traffic to a healthy region.
-3. Within a region a load balancer redirects traffic to a server.
+2. CIS routes traffic to a healthy location.
+3. Within a location a load balancer redirects traffic to a server.
 4. The application accesses the database.
 5. The application stores and retrieves media assets from a file storage.
 
-To implement this architecture, you would need to do the following in region two:
+To implement this architecture, you would need to do the following in location two:
 
-- Repeat all of the above previous steps in the new region.
-- Setup a database replication between the two MySQL servers across regions.
-- Configure IBM Cloud Internet Services to distribute traffic between the regions to healthy servers as described in [this other tutorial](multi-region-k8s-cis.html#create_cis_instance).
+- Repeat all of the above previous steps in the new location.
+- Setup a database replication between the two MySQL servers across locations.
+- Configure IBM Cloud Internet Services to distribute traffic between the locations to healthy servers as described in [this other tutorial](multi-region-k8s-cis.html#create_cis_instance).
 
 ## Remove resources
 {: #removeresources}
@@ -637,7 +637,7 @@ To implement this architecture, you would need to do the following in region two
 1. Delete the Load Balancer
 2. Cancel *db1*, *app1* and *app2*
 3. Delete the two File Storage services
-4. If second region configured, then delete all the resources and the Cloud Internet Services.
+4. If a second location is configured, then delete all the resources and the Cloud Internet Services.
 
 ## Related content
 {: #related}

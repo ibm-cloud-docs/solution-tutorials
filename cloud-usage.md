@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-09-13"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -117,7 +117,7 @@ Once management is aware of the services that teams are using, the next often-as
 1. Login to {{site.data.keyword.cloud_notm}} and access the [Account Usage Dashboard](https://console.bluemix.net/account/usage).
 2. From the **Groups** drop-down menu, select a Cloud Foundry Org to view service usage.
 3. For a given **Service Offering**, click **View Instances** to view the service instances that have been created.
-4. On the following page, choose an instance and click **View Instance**. The resulting page provides details about the instance such as Org, Space and Region as well as individual line items that build total cost.
+4. On the following page, choose an instance and click **View Instance**. The resulting page provides details about the instance such as Org, Space and Location as well as individual line items that build total cost.
 5. Using the breadcrumb, revisit the [Usage Dashboard](https://console.bluemix.net/account/usage).
 6. From the **Groups** drop-down menu, change the selector to **Resource Groups** and select a group such as **default**.
 7. Conduct a similar review of available instances.

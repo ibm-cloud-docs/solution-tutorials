@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-28"
+lastupdated: "2018-11-14"
 
 ---
 
@@ -14,15 +14,15 @@ lastupdated: "2018-04-28"
 
 # Secure web application across multiple regions
 
-This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline. 
+This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline.
 
-Apps or parts of your apps will have outages - it is a fact. It can be a problem in your code, a planned maintenance impacting the resources used by your app, a hardware failure bringing down a zone, a region, a data center where your app is hosted. Any of these will happen and you have to be prepared. With {{site.data.keyword.Bluemix_notm}}, you can deploy your application to [multiple regions](https://console.bluemix.net/docs/overview/ibm-cloud.html#ov_intro_reg) to increase your application resilience. And with your application now running in multiple locations, you can also redirect user traffic to the nearest region to reduce latency.
+Apps or parts of your apps will have outages - it is a fact. It can be a problem in your code, a planned maintenance impacting the resources used by your app, a hardware failure bringing down a zone, a location, a data center where your app is hosted. Any of these will happen and you have to be prepared. With {{site.data.keyword.Bluemix_notm}}, you can deploy your application to [multiple locations](https://console.bluemix.net/docs/overview/ibm-cloud.html#ov_intro_reg) to increase your application resilience. And with your application now running in multiple locations, you can also redirect user traffic to the nearest location to reduce latency.
 
 ## Objectives
 
-* Deploy a Cloud Foundry application to multiple regions with {{site.data.keyword.contdelivery_short}}.
+* Deploy a Cloud Foundry application to multiple locations with {{site.data.keyword.contdelivery_short}}.
 * Map a custom domain to the application.
-* Configure global load balancing to your multi-region application.
+* Configure global load balancing to your multi-location application.
 * Bind an SSL certificate to your application.
 * Monitor application performance.
 
@@ -37,7 +37,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 ## Architecture
 
-This tutorial involves an active/active scenario where two copies of the application are deployed in two different regions and the two copies are serving customer requests in a round-robin way. The DNS configuration automatically points to the healthy region if one copy fails.
+This tutorial involves an active/active scenario where two copies of the application are deployed in two different locations and the two copies are serving customer requests in a round-robin way. The DNS configuration automatically points to the healthy location if one copy fails.
 
 <p style="text-align: center;">
 
@@ -98,17 +98,17 @@ In this step, you set up a git source control repository to store your code and 
 
 Continue making further changes to your application and periodically commit your changes to your git repository. If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
 
-## Deploy to another region
+## Deploy to another location
 {: #deploy_another_region}
 
-Next, we will deploy the same application to a different {{site.data.keyword.Bluemix_notm}} region. We can use the same toolchain but will add another DEPLOY stage to handle the deployment of the application to another region.
+Next, we will deploy the same application to a different {{site.data.keyword.Bluemix_notm}} location. We can use the same toolchain but will add another DEPLOY stage to handle the deployment of the application to another location.
 
 1. Navigate to Application **Overview** and scroll to find **View toolchain**.
 2. Select **Delivery Pipeline** from Deliver.
 3. Click the **Gear icon** on the **DEPLOY** stage and select **Clone Stage**.
    ![HelloWorld](images/solution1/CloneStage.png)
 4. Rename stage to "Deploy to UK" and select **JOBS**.
-5. Change **IBM Cloud region** to **United Kingdom**. Create a **space** if you don't have one.
+5. Change **IBM Cloud region** to **London - https://api.eu-gb.bluemix.net**. Create a **space** if you don't have one.
 6. Change **Deploy script** to `cf push "${CF_APP}" -d eu-gb.mybluemix.net`
 
    ![HelloWorld](images/solution1/DeployToUK.png)
@@ -123,7 +123,7 @@ IBM [Cloud Internet Services](https://console.bluemix.net/docs/infrastructure/ci
 When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided mybluemix.net domain. In this step, after you have a custom domain, you can use the DNS servers provided by IBM Cloud Internet Services.
 
 1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
-2. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog. 
+2. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Enter a service name, and click **Create** to create an instance of the service.
 3. When the service instance is provisioned, set your domain name and click **Add domain**.
 4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
@@ -135,7 +135,7 @@ When deploying a real world application, you will likely want to use your own do
 
 {: #add_glb}
 
-In this section, you will use the Global Load Balancer (GLB) in IBM Cloud Internet Services to manage the traffic across multiple regions. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
+In this section, you will use the Global Load Balancer (GLB) in IBM Cloud Internet Services to manage the traffic across multiple locations. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
 
 ### Before creating a GLB, create a health check for the GLB.
 
@@ -146,17 +146,17 @@ In this section, you will use the Global Load Balancer (GLB) in IBM Cloud Intern
 ### After that, create an origin pool with two origins.
 
 1. Click **Create Pool**.
-2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the region of your node.js application.
-3.  Enter a name for the first origin and the host name for the application in the US region `<your_app>.mybluemix.net`. 
-4. Similarly, add another origin with the origin address pointing to the application in the UK region `<your_app>.eu-gb.mybluemix.net`.
+2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the location of your node.js application.
+3. Enter a name for the first origin and the host name for the application in Dallas `<your_app>.mybluemix.net`.
+4. Similarly, add another origin with the origin address pointing to the application in London `<your_app>.eu-gb.mybluemix.net`.
 5. Click **Provision 1 Instance**.
    ![Origin Pool](images/solution1/origin_pool.png)
 
 ### Create a Global Load Balancer (GLB). 
 
-1. Click **Create Load Balancer**. 
-2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the region. 
-3. Click **Add pool** and select the origin pool that you have just created. 
+1. Click **Create Load Balancer**.
+2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the location.
+3. Click **Add pool** and select the origin pool that you have just created.
 4. Click **Provision 1 Instance**.
    ![Global Load Balancer](images/solution1/load_balancer.png)
 
@@ -166,25 +166,25 @@ At this stage, the GLB is configured but the Cloud Foundry applications are not 
 
 {: #add_domain}
 
-In this step, you will map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} region where your application is running.
+In this step, you will map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} location where your application is running.
 
 1. In the {{site.data.keyword.Bluemix_notm}} catalog, switch to your account name from the menu bar in the [console](https://console.bluemix.net/dashboard/apps).
 2. On the account page, navigate to application **Cloud Foundry Orgs**, and select **Domains** from the Actions column.
-3. Click **Add a domain** and enter your custom domain name acquired from the registrar. 
-4. Select the right region and click **Save**.
-5. Similarly, add the custom domain name to the UK region.
-4. Return to the {{site.data.keyword.Bluemix_notm}} [dashboard](https://console.bluemix.net/dashboard/apps) and click on the application in the US region, click **Route** > **Edit Routes**, and click **Add Route**.
-   ![Add a route](images/solution1/ApplicationRoutes.png) 
-5. Enter the GLB hostname you configured earlier in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
-6. Similarly, configure the domain and routes for the application in the UK region.
+3. Click **Add a domain** and enter your custom domain name acquired from the registrar.
+4. Select the right location and click **Save**.
+5. Similarly, add the custom domain name to London.
+6. Return to the {{site.data.keyword.Bluemix_notm}} [dashboard](https://console.bluemix.net/dashboard/apps) and click on the application in Dallas, click **Route** > **Edit Routes**, and click **Add Route**.
+   ![Add a route](images/solution1/ApplicationRoutes.png)
+7. Enter the GLB hostname you configured earlier in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
+8. Similarly, configure the domain and routes for the application in London.
 
-At this point, you can visit your application with the URL `<glb_name>.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-region applications. You can verify this by stopping your application in the US-South region, keeping the UK application on, and accessing the application through the Global Load Balancer. 
+At this point, you can visit your application with the URL `<glb_name>.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-location applications. You can verify this by stopping your application in Dallas, keeping application in London active, and accessing the application through the Global Load Balancer.
 
 Although this works at this moment, as we have configured continuous delivery in the previous steps, the configuration can be overwritten when another build is trigged. To make these changes persistent, go back to the toolchains and modify the *manifest.yml* file:
 
 1. In the {{site.data.keyword.Bluemix_notm}} [console](https://console.bluemix.net/dashboard/apps), navigate to Application **Overview** and scroll to find **View toolchain**.
-2. Select the Git tile under Code. 
-3. Select *manifest.yml*. 
+2. Select the Git tile under Code.
+3. Select *manifest.yml*.
 4. Click **Edit** and add custom routes. Replace the original domain and host configurations with `Routes` only.
 
    ```
@@ -200,18 +200,18 @@ Although this works at this moment, as we have configured continuous delivery in
    ```
    {: pre}
   
-5. Commit the changes and make sure the builds for both regions succeed.  
+5. Commit the changes and make sure the builds for both locations succeed.  
 
 ## Alternative: Map the custom domain to the IBM Cloud system domain
 
-It is possible that you do not want to utilize a Global Load Balancer in front of your multi-region applications, but need to map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} region where your application is running.
+It is possible that you do not want to utilize a Global Load Balancer in front of your multi-location applications, but need to map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} location where your application is running.
 
 With the Cloud Intenet Services application, take the following steps to set up `CNAME` records for your application:
 
-1. In the Cloud Internet Services application, navigate to **Reliability** > **DNS**. 
-2. Select **CNAME** from the **Type** drop-down list, type an alias for your application in the Name field, and the application URL in the domain name field. Th application `<your_app>.mybluemix.net` in the US-South region can be mapped to a CNAME `<your_app>`. 
+1. In the Cloud Internet Services application, navigate to **Reliability** > **DNS**.
+2. Select **CNAME** from the **Type** drop-down list, type an alias for your application in the Name field, and the application URL in the domain name field. Th application `<your_app>.mybluemix.net` in Dallas can be mapped to a CNAME `<your_app>`.
 3. Click **Add Record**. Switch the PROXY toggle to ON to enhance security of your application.
-2. Similarly, set the `CNAME` record for the UK endpoint.
+4. Similarly, set the `CNAME` record for the London endpoint.
    ![CNAME records](images/solution1/cnames.png)
 
 If you are using a different DNS provider, the steps for setting up the CNAME record vary depending on your DNS provider. For example, if you are using GoDaddy, you follow the [Domains Help](https://www.godaddy.com/help/add-a-cname-record-19236) guidance from GoDaddy.
@@ -242,7 +242,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 ## Monitor application performance
 {: #monitor}
 
-Lets check the health of your multi-region application.
+Lets check the health of your multi-location application.
 
 1. In the application dashboard, select **Monitoring**.
 2. Click **View All Tests**
@@ -253,7 +253,7 @@ Availability Monitoring runs synthetic tests from locations around the world, ar
 ## Remove resources
 
 * Delete the toolchain
-* Delete the two Cloud Foundry applications deployed in the two regions
+* Delete the two Cloud Foundry applications deployed in the two locations
 * Delete the GLB, origin pools, and the health check
 * Delete the DNS configuration
 * Delete the Internet Services instance
