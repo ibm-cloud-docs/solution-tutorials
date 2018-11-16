@@ -17,7 +17,6 @@ tar cf - \
   --exclude=.git \
   --exclude=.gitignore \
   --exclude=solution-template.md \
-  --exclude=low-latency-real-time-bidding.md \
   --exclude=autoscale-virtual-server.md \
   --exclude="vpc-*.md" \
   --exclude=strategies-for-globally-available-apps.md \
