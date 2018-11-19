@@ -127,7 +127,7 @@ Next, you will create a board and cards to display device data in the dashboard.
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant) named `iot-db`.
 1. Under **Connections**:
    1. **Create connection**
-   1. Select the Cloud Foundry location, organization and space where the {{site.data.keyword.cloudant_short_notm}} service was provisioned.
+   1. Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
    1. Mouse over the space name in the **Connection Location** table and use the **Connect** button to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space. 
 2. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 3. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
