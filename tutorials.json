@@ -22,7 +22,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-11-16"
         },
         {
           "name": "Analyze logs and monitor the health of Kubernetes applications",
@@ -94,7 +94,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-11-16"
         },
         {
           "name": "Web application on LAMP stack",
@@ -185,7 +185,7 @@
           "lastUpdated": "2018-11-14"
         },
         {
-          "name": "Deploy serverless apps across multiple locations",
+          "name": "Deploy serverless apps across multiple regions",
           "url": "multi-region-serverless.html",
           "description": "Use Cloud Functions and Internet Services to build globally available and secure serverless applications.",
           "imgSrc": "images/solution44-multi-region-serverless/Architecture.png",
@@ -250,9 +250,9 @@
       "anchor": "security",
       "solutions": [
         {
-          "name": "Secure web application across multiple locations",
+          "name": "Secure web application across multiple regions",
           "url": "multi-region-webapp.html?pos=2",
-          "description": "Create, secure, deploy, and load balance a web application across multiple locations using a continuous delivery pipeline.",
+          "description": "Create, secure, deploy, and load balance a web application across multiple regions using a continuous delivery pipeline.",
           "imgSrc": "images/solution1/Architecture.png",
           "tags": [
             "Cloud Foundry",
@@ -263,9 +263,9 @@
           "lastUpdated": "2018-11-14"
         },
         {
-          "name": "Resilient and secure multi-location Kubernetes clusters",
+          "name": "Resilient and secure multi-region Kubernetes clusters",
           "url": "multi-region-k8s-cis.html?pos=2",
-          "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple locations.",
+          "description": "Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple regions.",
           "imgSrc": "images/solution32-multi-region-k8s-cis/Architecture.png",
           "tags": [
             "Kubernetes",

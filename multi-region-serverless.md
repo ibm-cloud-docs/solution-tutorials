@@ -16,9 +16,9 @@ lastupdated: "2018-11-14"
 {:tip: .tip}
 {:pre: .pre}
 
-# Deploy serverless apps across multiple locations
+# Deploy serverless apps across multiple regions
 
-This tutorial shows how to configure IBM Cloud Internet Services and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple locations.
+This tutorial shows how to configure IBM Cloud Internet Services and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple regions.
 
 Serverless computing platforms give developers a rapid way to build APIs without servers. {{site.data.keyword.openwhisk}} supports automatic generation of REST API for actions, turning actions into HTTP endpoints, and the ability to enable secure API authentication. This capability is helpful not only for exposing APIs to external consumers but also for building microservices applications.
 
