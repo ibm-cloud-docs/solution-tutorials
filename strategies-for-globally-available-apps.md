@@ -403,7 +403,7 @@ Before you can replicate, you must create a snapshot schedule. When you fail ove
 
 More on File Storage replication can be found [here](https://console.bluemix.net/docs/infrastructure/FileStorage/replication.html#replicating-data).
 
-##Non-database services 
+##Non-database services
 
 {:nondatabaseservices}
 
@@ -415,13 +415,17 @@ Focusing on the [AI](https://console.bluemix.net/catalog/?category=ai) services.
 
 Watson Assistant a platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants. The Watson Assistant service comes with a powerful visual dialog editor where you can import and export workspaces. A workspace contains intents, entities and dialog, it's the there things that creates the ChatBot conversion. You can read more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/index.html#about). The focus here is on how to configure and use a service like Watson Assistant in a multi-region app. 
 
-#### Watson Assistant setup in multi-region apps 
+#### Watson Assistant setup in multi-region apps
 
-It's important to note that Watson Assistant is stateless, meaning none of the data is stored anywhere. Watson assistant delivers 99.5% up time, but still for highly available applications across multiple regions, you may still want to have multiple instances of this services across regions. 
+It's important to note that Watson Assistant is stateless. Watson assistant delivers 99.5% up time, but still for highly available applications across multiple regions, you may still want to have multiple instances of this services across regions. 
 
 In a multi-region architecture, an active/passive use case for example. You would be required to setup an instance of the Watson Assistant in both regions and manually import and export workspaces between regions in an event of downtime of the active region. 
 
 If you wish you run an active/active use case, you could have both regions using one instances of the Watson Assistant service, and in event where the healthy region is down then manually export the workspace and import into the second region where you have the second Watson Assistant service created. You can learn more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/migrating.html#migrating).
+
+#### Import and export service data between regions
+
+Watson Assistant comes with a tooling allowing you to export an exiting workspace that contains the intents, entities and dialog in which everything you need, the exported workspace can then be reimported into another Watson Assistant  service in a different region. Learn more [here](https://console.bluemix.net/docs/services/assistant/getting-started.html#getting-started).
 
 ## Related content
 
