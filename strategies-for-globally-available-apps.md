@@ -409,9 +409,7 @@ More on File Storage replication can be found [here](https://console.bluemix.net
 
 IBM Cloud offers a selection of non-database services, these are both IBM services and 3rd party service. 
 
-Focusing on the [AI](https://console.bluemix.net/catalog/?category=ai) services. ![Watson AI](images/solution39/ai.png) 
-
-Using the Watson Assistant service, how a service like Watson Assistant can be used and setup in a multi-region architecture? below you will learn just that. 
+Focusing on the [AI](https://console.bluemix.net/catalog/?category=ai) services. Using the Watson Assistant service, how a service like Watson Assistant can be used and setup in a multi-region architecture? below you will learn just that. ![Watson AI](images/solution39/ai.png) 
 
 #### Watson Assistant
 
@@ -430,9 +428,8 @@ If you wish you run an active/active use case, you could have both regions using
 {:related}
 
 - IBM Cloud [Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
-- [Manage your IBM CIS for optimal security](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#best-practice-2-configure-your-security-level-selectively)
-- [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
-- [{{site.data.keyword.registrylong_notm}} Basic](https://console.bluemix.net/docs/services/Registry/registry_overview.html#registry_planning)
-- [Deploying single instance apps to Kubernetes clusters](https://console.bluemix.net/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1)
-- [Best practice to secure traffic and internet application via CIS](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#manage-your-ibm-cis-for-optimal-security)
 - [Improving App Availability with Multizone Clusters](https://www.ibm.com/blogs/bluemix/2018/06/improving-app-availability-multizone-clusters/)
+- [Cloud Foundry, secure web application across multiple regions](https://console.bluemix.net/docs/tutorials/multi-region-webapp.html?pos=2#secure-web-application-across-multiple-regions)
+- [Cloud Functions, deploy serverless apps across multiple regions](https://console.bluemix.net/docs/tutorials/multi-region-serverless.html?pos=2#deploy-serverless-apps-across-multiple-regions)
+- [Kubernetes, resilient and secure multi-region Kubernetes clusters with Cloud Internet Services](https://console.bluemix.net/docs/tutorials/multi-region-k8s-cis.html?pos=3#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services)
+- [Virtual Servers, build highly available and scalable web app](https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html?pos=2#use-virtual-servers-to-build-highly-available-and-scalable-web-app)
