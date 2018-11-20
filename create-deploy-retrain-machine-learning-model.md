@@ -67,9 +67,7 @@ You can create a project to add data and open a data asset in the data refiner f
 **Create a project:**
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) and select [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-
 2. Create a **project** > Click **Create Project** on **Standard** tile. Add a name say `iris_project` and optional description for the project.
-
 3. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 4. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 5. Click **Create**. Your new project opens and you can start adding resources to it.
