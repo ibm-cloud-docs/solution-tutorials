@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-14"
+lastupdated: "2018-11-19"
 
 ---
 
@@ -67,13 +67,7 @@ You can create a project to add data and open a data asset in the data refiner f
 **Create a project:**
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) and select [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-
-   ![](images/solution22-build-machine-learning-model/data_platform_landing.png)
-
-2. Create a **New Project** > Select **Complete**. Click **OK**. Add a name say `iris_project` and optional description for the project.
-
-   ![](images/solution22-build-machine-learning-model/new_project.png)
-
+2. Create a **project** > Click **Create Project** on **Standard** tile. Add a name say `iris_project` and optional description for the project.
 3. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 4. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 5. Click **Create**. Your new project opens and you can start adding resources to it.
@@ -103,7 +97,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#build_model}
 
-1. Back in the **Assets** tab, under **Watson Machine Learning models** click on **New Watson Machine Learning model**. In the dialog, add **iris_model** as name and an optional description.
+1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, add **iris_model** as name and an optional description.
 2. Under **Machine Learning Service** section, you should see the Machine Learning service you associated in the above step.
    ![](images/solution22-build-machine-learning-model/machine_learning_model_creation.png)
 3. Select **Model builder** as your model type and Under **Spark Service or Environment** section, Choose the spark service you created earlier
