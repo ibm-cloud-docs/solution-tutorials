@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-20"
+lastupdated: "2018-11-21"
 
 ---
 
@@ -407,13 +407,11 @@ More on File Storage replication can be found [here](https://console.bluemix.net
 
 {:nondatabaseservices}
 
-IBM Cloud offers a selection of non-database services, these are both IBM services and 3rd party service. 
-
-Focusing on the [AI](https://console.bluemix.net/catalog/?category=ai) services. Using the Watson Assistant service, how a service like Watson Assistant can be used and setup in a multi-region architecture? below you will learn just that. ![Watson AI](images/solution39/ai.png) 
+IBM Cloud offers a selection of non-database [services](https://console.bluemix.net/catalog), these are both IBM services and 3rd party service. When planning for multi-region architecture, you need to understand how services like Watson services and App ID can work in a multi-region setup.  
 
 #### Watson Assistant
 
-Watson Assistant a platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants. The Watson Assistant service comes with a powerful visual dialog editor where you can import and export workspaces. A workspace contains intents, entities and dialog, it's the there things that creates the ChatBot conversion. You can read more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/index.html#about). The focus here is on how to configure and use a service like Watson Assistant in a multi-region app. 
+Watson Assistant a platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants. The Watson Assistant service comes with a powerful visual dialog editor where you can import and export workspaces. A workspace contains intents, entities and dialog, it's the there things that creates the ChatBot conversion. You can read more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/index.html#about). The focus here is on how to configure and use a service like Watson Assistant in a multi-region app.  ![Watson AI](images/solution39/ai.png)
 
 #### Watson Assistant setup in multi-region apps
 
@@ -426,6 +424,10 @@ If you wish you run an active/active use case, you could have both regions using
 #### Import and export service data between regions
 
 Watson Assistant comes with a tooling allowing you to export an exiting workspace that contains the intents, entities and dialog in which everything you need, the exported workspace can then be reimported into another Watson Assistant  service in a different region. Learn more [here](https://console.bluemix.net/docs/services/assistant/getting-started.html#getting-started).
+
+#### App ID
+
+ToDo... adding here. 
 
 ## Related content
 
