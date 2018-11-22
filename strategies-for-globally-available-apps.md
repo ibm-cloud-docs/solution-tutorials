@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-21"
+lastupdated: "2018-11-22"
 
 ---
 
@@ -18,35 +18,23 @@ lastupdated: "2018-11-21"
 
 # Strategies for resilient applications
 
-Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution using Kubernetes services, Cloud Foundry, Cloud Functions or virtual servers, regardless of the compute options, you want to minimize downtimes and have your as resilient as possible for maximum availability. To achieve maximum resiliency, you may consider deploying your solutions across multiple zones and regions with data replications.
+Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution using Kubernetes services, Cloud Foundry, Cloud Functions or virtual servers, regardless of the compute options, you want to minimize downtimes and have your application as resilient as possible for maximum availability. To achieve maximum resiliency, you may consider deploying your solutions across multiple zones and regions with best data replications possible
 
 This tutorial highlights what IBM Cloud provides for resilient solutions, answering questions like: 
 
-- Does IBM Cloud compute options support multiple regions deployment? and how can I import my app into all the regions?
-- What should I consider when preparing my app to be globally available across multiple regions? 
-- How data is handled in a multiple regions deployment, when using a database as service like Cloudant, how data replication can be handled between regions? 
-- How about other services like Watson services, how can they handled in a multi-region setup?
+- Does IBM Cloud compute options to support multiple regions deployment? How to import application source files to all regions?
+- What to consider when preparing an app to be globally available across multiple regions? 
+- How databases are handled in a multiple regions deployment, why database-as-service and how can it work between regions? 
+- Which backing services to use (Block Storage, File Storage, Object Storage, Databases)?
+- What about other services like Watson and App ID, how can they be configured for multi-region?
 
-This tutorial will give you the guidelines needed for when thinking about multi-region deployment on IBM Cloud, it will give your the guidelines for what is possible and what is not possible. You will get answers to questions above and more, you will understand how runtimes, databases, file storage, Watson services work in a multiple regions setup. 
+This tutorial will give you the guidelines needed for when thinking about multi-region deployment on IBM Cloud. It will give you the guidelines for what is possible and what is not possible. You will get answers to questions above and more. You will understand how runtimes, databases, file storage, Watson services work in a multi-regions setup. 
 
 ## Objectives
 {: #objectives}
 
 * Understand the architecture and concepts involved in building resilient applications.
-   * resiliency (multi-zone region)
-   * high-availability
-   * active/passive
-   * active/active
-   * backup/recovery (RPO/RTO)
-* Understand how these concepts map to IBM Cloud compute and service offerings
-
-
-* The guidelines for deploying Kubernetes services, Cloud Foundry, Cloud Functions and Virtual Servers apps across multi-regions, learn the best practices and guidelines. 
-* Databases, the guidelines for handling databases across multiple regions. How database as a service can work in a multi-region deployment. 
-* Database replication between different regions, what IBM Cloud provides and the options available to you.
-* Other services like Watson service and AppID, the guidelines for a multi-region setup.
-
-ToDo: come back to this...
+* Understand how these concepts map to IBM Cloud compute and service offerings.
 
 ## Services used
 {: #services}
@@ -65,33 +53,60 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 ## Architecture and Concepts
 {: #architecture}
 
-This tutorial involves an active/active and active/passive scenarios where two copies of the application are deployed in two different regions and the two copies are serving customer requests in a round-robin way. `active/active` is the ideal scenario for highly available applications, but this may not always work for all use cases.
+To design a resilient architecture, involving scenarios like active/active, active/passive deployment, you need to consider the individual blocks of your solution and their specific capabilities. 
 
-With IBM Cloud compute options, the following scenario is possible:  
-
--  Multi-region architecture with regions been `active/active` or  `active/passive`.
--  Multi-zone within a region architecture with regions been `active/active` or  `active/passive`.
-
-Below is a multi-region architecture.
+Below is a multi-region architecture showcasing the different components that may exist in a multi-region setup. 
 
 <p style="text-align: center;">
-
 ![Architecture](images/solution39/Architecture.png)
 
 </p>
 
-The architecture digram above may be different depending on the compute option used and you may require different service like for example File Storage is used for Virtual Servers but Cloud Object Storage may be used if using Cloud Functions. You will see specific architecture digram under each compute option in later stages of this solution tutorials. 
+The architecture diagram above may be different depending on the compute option. You will see specific architecture diagrams under each compute option in later sections. 
 
-### Active/active and active/passive
+### Disaster recovery with two regions 
 
-- Active/Active having both regions active, with the approach you need to make sure data replication is set to have data synced in real time. This approach is more favourable but not always easily possible depending on the setup and compute option used. With Active/Active you need to make sure you have images and files in sync, database data in sync and that is not easily achieved. 
-- Active/Passive having one region active and the second region passive ready for use as a backup in an event of downtime. With this approach you may not need to have live image files and database files in sync in real time. You would manually sync and replicate the data when one region is down and the passive region become active. When building Active/Passive architecture, backups and data replication something you must think about, if the working region goes down then what actions to take in the passive region, how data is backed and replication been set. More on backups that in the next section.
+When a disaster strikes, the topology and configuration choices you made will determine how your application recovers. You need to understand the costs and benefits associated with each to determine the optimal one for your needs. Active-active or active-passive are two possible configurations for this scenario. In both cases, you must have continuous replication of data between the two data centers.
 
-### Backup, Recovery, RPO, RTO
+#### Active-active configuration
 
-- Recovery Time Objective
-- Recovery Point Objective
-- ToDo: update both of above parts.
+Active/Active having both regions active with a load balancer distributing traffic between the two active regions. With the approach, data replication must be in place to sync data between both regions database in real time. This is a favorable option but not always easily possible depending on the setup. With active/active database and application files like images must have real-time replication. 
+
+![Active/Active](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution39/hadr-active-active-config.png)
+
+
+
+This configuration provides higher availability with minimal human involvement than the active-standby configuration. Requests are served from both data centers. You should configure the edge services (load balancer) with appropriate timeout and retry logic to automatically route the request to the second data center if a failure occurs in the first data center environment.
+
+Benefits of this configuration are reduced recovery time objective (RTO) and recovery point objective (RPO). For the RPO requirement, data synchronization between the two active data centers must be extremely timely to allow seamless request flow.
+
+#### Active-passive configuration
+
+Active/passive having one region active and the second region passive ready for use as a backup. In the event of a downtime of the active region, then you would make the passive region active and make sure database and files are in sync.  
+
+![Active/Active](images/solution39/hadr-active-standby-config.png)
+
+Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the standby data center is a time-consuming operation. Both recovery time objective (RTO) and recovery point objective (RPO) are higher compared to the active-active configuration.
+
+### Disaster recovery with three regions
+
+In this era of *Always On* service with zero tolerance for downtime, customers expect every business service to remain accessible around the clock anywhere in the world. A cost-effective strategy for enterprises involves architecting your infrastructure for continuous availability rather than building disaster recovery infrastructures.
+
+A three data centers topology provides greater resiliency and availability than two data centers. It can offer better performance by spreading the load more evenly across the data centers. A variant of this is to deploy two applications in one data center and deploy the third application in the second data center, if the enterprise has only two data centers. Alternatively, you can deploy business logic and presentation layers in the 3-active topology and deploy the data layer in the 2-active topology.
+
+#### Active-active-active (3-active) configuration
+
+![](images/solution39/hadr-active-active-active-config.png)
+
+Requests are served by the application running in any of the three active data centers. A case study on IBM.com website indicates that 3-active requires only 50% of the compute, memory, and network capacity per cluster, but 2-active requires 100% per cluster. The data layer is where the cost difference stands out. For further details, read [*Always On: Assess, Design, Implement, and Manage Continuous Availability*](http://www.redbooks.ibm.com/redpapers/pdfs/redp5109.pdf).
+
+#### Active-active-standby configuration
+
+![](images/solution39/hadr-active-active-standby-config.png)
+
+In this scenario, when either of the two active applications in the primary and secondary data centers suffers an outage, the standby application in the third data center is activated. The DR procedure described in the two data centers scenario is followed for restoring normalcy to process customer requests. The standby application in the third data center can be set up in either a hot or a cold standby configuration.
+
+For more on disaster recovery click [here](https://www.ibm.com/cloud/garage/content/manage/hadr-on-premises-app/).
 
 ### Multi-regions architectures
 
@@ -192,6 +207,8 @@ CFEE uses all the same like the public Cloud Foundry with number of additional f
 
 A multi-region architecture using Cloud Foundry Enterprise Environment.  ![VM-Architecture](images/solution39/CFEE-Architecture.png)
 
+ToDo: Remove the services here, same like public. Also do same like the Kub digram.
+
 CFEE works in the same manner like the Public Cloud Foundry, with one thing been different and that's to setup the CFEE account and binding service to the CFEE account. After that everything else works in the same matter. 
 
 You would require to do the following: 
@@ -210,8 +227,6 @@ You can learn more on IBM Cloud Foundry Enterprise Environment [here](https://co
 {:databaseservices}
 
 IBM Cloud offers a selection of [databases](https://console.bluemix.net/catalog/?category=databases) to which can be called database-as-a-services. You can find both relation and non-relation databases depending on your business needs. 
-
-![Databases](images/solution39/databases.png)
 
 Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of his multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum up time. 
 
@@ -243,6 +258,8 @@ When prepping for multi-region architecture, there are number of items you need 
 Below you will dive deeper into three of the databases IBM Cloud. 
 
 ### Cloudant
+
+ToDo: Reduce the content, remove duplicated content and just point to Cloudant docs.
 
 IBM Cloudant is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed IBM Cloud service, Cloudant elastically scales throughput and storage independently.
 
@@ -305,7 +322,7 @@ To dive deeper into the three levels of protections, checkout the Cloudant backu
 
 ### Db2, Db2 hosted and Db2 Warehouse
 
-IBM Cloud offers a selection range of Db2 debases, these can be found [here](https://console.bluemix.net/catalog/?search=db2h).
+IBM Cloud offers a selection range of Db2 databases, these can be found [here](https://console.bluemix.net/catalog/?search=db2h).
 
 - **Db2**: A fully-managed cloud SQL database. Powered by a turbo-charged Db2 engine.
 - **Db2 hosted**: IBM Db2 Hosted lets you run Db2 with full administrative access on cloud infrastructure. It eliminates the cost, complexity and risk of managing your own infrastructure.
@@ -328,7 +345,7 @@ How to add a Geo-Replicated Disaster Recovery Node:
 - You can add an on-demand DR node to existing Db2 on Cloud instances. After clicking your instance in the IBM Cloud dashboard, you will see an option called **Manage Disaster Recovery**. You can add a Geo-Replicated Disaster Recovery Node from there.
 - If you purchased Db2 on Cloud on contract through a sales representative and do not have an IBM Cloud subscription, contact your IBM representative to add a DR node.
 
-#### Backup, restore and import data
+#### Backup, restore and import/export data
 
 Backup data:
 
@@ -346,29 +363,29 @@ Import data:
 
 ### Cloud Object Storage
 
+ToDo: the three headings are not clear here, we need to have same clear heading like for DB2. 
+
 A COS service instance is global, buckets within a COS instance are where it starts to talk about regions. Information stored with IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. This service makes use of the distributed storage technologies provided by the IBM Cloud Object Storage System (formerly Cleversafe).
 
 #### Does Cloud Object Storage support multi-region
 
 There are three types of bucket/resiliency that COS offer, Cross Region, Regional, and Single Data Center.
 
-- **Cross Region** resiliency will spread your data across several metropolitan areas.
+- **Cross Region** resiliency will spread your data across several metropolitan areas. This is the multi-region.
 - **Regional** resiliency will spread data across a single metropolitan area - this is the multi-zone within a region.
 - **Single Data Center** resiliency spreads data across multiple appliances within a single data center.
 
 Regional and Cross Region buckets can maintain availability during a site outage. 
-
-Supported regions:
-
-- Cross Region: US, EU, AP
-- Regional: us-south, us-east, eu-gb, eu-de, jp-tok
-- Single site: ams03, che01, mel01, osl01, tor01, sao01, seo01
 
 **Cross Region** has a special "geo" endpoint `s3-api.us-geo.objectstorage.softlayer.net, s3-api.us-geo.objectstorage.service.networklayer.com` to automatically redirect to a healthy region. COS has several access points to enter the cross region, regional.
 
 Additionally, with **Cross Region** and **Regional** buckets, data is automatically replicated across multiple regions within a geo (example for Cross Region US, content goes to Dallas, San Jose, Washington).
 
 For more detailed explanation COS resiliency options, checkout the COS docs [here](https://console.bluemix.net/docs/services/cloud-object-storage/basics/endpoints.html#select-regions-and-endpoints).
+
+### Databases Summary 
+
+- Tablet for the three databases.
 
 ### File Storage
 
@@ -393,15 +410,13 @@ For more detailed dive into File Storage, checkout the file storage docs page [h
 
 Yes it can be configured for active/passive use case. In the active/passive architecture file storage can be used easily, you can attach file storage service to your servers to store data backups, application files like images and videos, these images and files can then be used within different servers in the same region. 
 
-Within adding a second region, you would then use the snapshots feature of File Storage where you would take a snapshot automatically or manually, and then reuse it within the second passive region. More on File Storage snapshots can be found [here](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#snapshots).
+Within adding a second region, you would then use the snapshots feature of File Storage where you would take a snapshot automatically or manually, and then reuse it within the second passive region. 
 
 #### File Storage data replication
 
-Replication uses one of your snapshot schedules to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted.
+Replication uses one of your snapshot schedules to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#snapshots).
 
-Before you can replicate, you must create a snapshot schedule. When you fail over, you’re "flipping the switch" from your storage volume in your primary data center to the destination volume in your remote data center. For example, your primary data center is London and your secondary data center is Amsterdam. If a failure event occurs, you’d fail over to Amsterdam – connecting to the now-primary volume from a compute instance in Amsterdam. After your volume in London is repaired, a snapshot is taken of the Amsterdam volume to fail back to London and the once-again primary volume from a compute instance in London.
-
-More on File Storage replication can be found [here](https://console.bluemix.net/docs/infrastructure/FileStorage/replication.html#replicating-data).
+Before you can replicate, you must create a snapshot schedule. When you fail over, you’re "flipping the switch" from your storage volume in your primary data center to the destination volume in your remote data center. For example, your primary data center is London and your secondary data center is Amsterdam. If a failure event occurs, you’d fail over to Amsterdam – connecting to the now-primary volume from a compute instance in Amsterdam. After your volume in London is repaired, a snapshot is taken of the Amsterdam volume to fail back to London and the once-again primary volume from a compute instance in London. More on File Storage replication can be found [here](https://console.bluemix.net/docs/infrastructure/FileStorage/replication.html#replicating-data).
 
 ##Non-database services
 
@@ -411,7 +426,7 @@ IBM Cloud offers a selection of non-database [services](https://console.bluemix.
 
 #### Watson Assistant
 
-Watson Assistant a platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants. The Watson Assistant service comes with a powerful visual dialog editor where you can import and export workspaces. A workspace contains intents, entities and dialog, it's the there things that creates the ChatBot conversion. You can read more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/index.html#about). The focus here is on how to configure and use a service like Watson Assistant in a multi-region app.  ![Watson AI](images/solution39/ai.png)
+[Watson Assistant ToDo: update URL]() a platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants. The Watson Assistant service comes with a powerful visual dialog editor where you can import and export workspaces. A workspace contains intents, entities and dialog, it's the there things that creates the ChatBot conversion. You can read more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/index.html#about). The focus here is on how to configure and use a service like Watson Assistant in a multi-region app. 
 
 #### Watson Assistant setup in multi-region apps
 
