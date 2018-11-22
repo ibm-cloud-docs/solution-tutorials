@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-07-19"
+lastupdated: "2018-11-23"
 
 ---
 
@@ -44,8 +44,8 @@ Start by provisioning the services used in this tutorial and create a project wi
 You can provision services for {{site.data.keyword.Bluemix_short}} from the [dashboard](https://console.bluemix.net/dashboard) and [catalog](https://console.bluemix.net/catalog/). Alternatively {{site.data.keyword.DSX_short}} allows you to create or add existing Data & Analytics services from its dashboard and project settings.
 {:tip}
 
-1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) navigate to the **Watson** section. Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-2. In the dashboard, click on the **New project** tile. In the **Name** field, enter `1stProject` as the name. You can leave the description empty.
+1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) navigate to the **AI** section. Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
+2. In the dashboard, click on the **Create a project** tile > Select **Standard** > Create project. In the **Name** field, enter `1stProject` as the name. You can leave the description empty.
 3. On the right side of the page, you can **Define storage**. If you have already provisioned storage, select an instance from the list. If not, click on **Add** and follow the instructions in the new browser tab. Once done with service creation, click **Refresh** to see the new service.
 4. Click on the **Create** button to create the project. You will be redirected to the project's overview page.  
    ![](images/solution23/NewProject.png)
