@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-16"
+lastupdated: "2018-11-20"
 
 ---
 
@@ -14,7 +14,7 @@ lastupdated: "2018-11-16"
 
 # Apply end to end security to a cloud application
 
-No application architecture is complete without a clear understanding of potential security risks and how to protect against such threats. Application data is a critical resource which can not be lost, compromised or stolen. Additionally, data should be protected at rest and in transit through encryption techniques. Encrypting data at rest protects information from disclosure even when it is lost or stolen. Encrypting data in transit (e.g. transmitted over the Internet) prevents eavesdropping through methods such as HTTPS, SSL, and TLS.
+No application architecture is complete without a clear understanding of potential security risks and how to protect against such threats. Application data is a critical resource which can not be lost, compromised or stolen. Additionally, data should be protected at rest and in transit through encryption techniques. Encrypting data at rest protects information from disclosure even when it is lost or stolen. Encrypting data in transit (e.g. over the Internet) through methods such as HTTPS, SSL, and TLS prevents eavesdropping and so called man-in-the-middle attacks.
 
 Authenticating and authorizing users' access to specific resources is another common requirement for many applications. Different authentication schemes may need to be supported: customers and suppliers using social identities, partners from cloud-hosted directories, and employees from an organization’s identity provider.
 
@@ -65,6 +65,7 @@ The tutorial features a sample application that enables groups of users to uploa
 {: #prereqs}
 
 1. Install all the necessary command line (CLI) tools by [following these steps](https://console.bluemix.net/docs/cli/index.html#overview).
+2. Ensure you have the latest version of plugins used in this tutorial; use `ibmcloud plugin update --all` to upgrade.
 
 ## Create services
 {: #setup}
@@ -72,7 +73,6 @@ The tutorial features a sample application that enables groups of users to uploa
 ### Decide where to deploy the application
 
 1. Identify the **location**, **Cloud Foundry organization and  space**, and **resource group** where you will deploy the application and its resources.
-2. Ensure you have [one private namespace](https://console.bluemix.net/containers-kubernetes/registry/private) to push Docker images in the selected location.
 
 ### Capture user and application activities 
 {: #activity-tracker }
@@ -180,7 +180,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
    * Set **Role** to **Manager**
    * Keep the default values for the *Optional* fields
    * **Add**.
-3. Make note of the credentials by clicking **View credentials**. Uou will need them in a later step.
+3. Make note of the credentials by clicking **View credentials**. You will need them in a later step.
 4. Under **Manage**, launch the Cloudant dashboard.
 5. Click **Create Database** to create a database named **secure-file-storage-metadata**.
 
@@ -191,7 +191,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
 1. Create an instance of [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID).
    * Set the **Service name** to **secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
-2. Under **Identity Providers / Manage**, in the **Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example if your cluster Ingress subdomain is 
+2. Under **Identity Providers / Manage**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example if your cluster Ingress subdomain is 
 `<cluster-name>.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
 
 You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity.
@@ -218,11 +218,14 @@ All services have been configured. In this section you will deploy the tutorial 
 
 1. [Build the Docker image](https://console.bluemix.net/docs/services/Registry/registry_images_.html#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
    - Find the registry endpoint with `ibmcloud cr info`, such as registry.**ng**.bluemix.net or registry.**eu-gb**.bluemix.net.
-   - Set _namespace_ to the private namespace you created or selected in the _Before you begin_ section.
+   - Create a namespace to store the container image.
+      ```sh
+      ibmcloud cr namespace-add secure-file-storage-namespace
+      ```
    - Use **secure-file-storage** as the image name.
 
    ```sh
-   ibmcloud cr build -t registry.<location>.bluemix.net/<namespace>/secure-file-storage:latest .
+   ibmcloud cr build -t registry.<location>.bluemix.net/secure-file-storage-namespace/secure-file-storage:latest .
    ```
    {: codeblock}
 
@@ -247,36 +250,35 @@ All services have been configured. In this section you will deploy the tutorial 
 | -------- | ----- | ----------- |
 | `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
 | `$REGISTRY_URL` | *registry.ng.bluemix.net* | The registry where the image was built in the previous section. |
-| `$REGISTRY_NAMESPACE` | *a-namespace* | The registry namespace where the image was built in the previous section. |
+| `$REGISTRY_NAMESPACE` | *secure-file-storage-namespace* | The registry namespace where the image was built in the previous section. |
 | `$IMAGE_NAME` | *secure-file-storage* | The name of the Docker image. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
-| `$INGRESS_SUBDOMAIN` | *secure-file-storage-cluster-123.us-south.containers.appdomain.cloud* | Can be retrieved in the cluster overview page or with `ibmcloud ks cluster-get <cluster-name>`. |
-| `$INGRESS_SECRET` | *secure-file-storage-cluster* | Can be retrieved in the cluster overview page or with `ibmcloud ks cluster-get <cluster-name>`. |
+| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster-get secure-file-storage-cluster`. |
+| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster-get secure-file-storage-cluster`. |
 
 `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a Docker registry secret in the new namespace](https://console.bluemix.net/docs/containers/cs_images.html#other)).
 {: tip}
 
 ### Deploy to the cluster
 
-1. Retrieve the cluster configuration:
+1. Retrieve the cluster configuration and set the KUBECONFIG environment variable.
    ```sh
-   ibmcloud ks cluster-config --export <cluster-name>
+   $(ibmcloud ks cluster-config --export secure-file-storage-cluster)
    ```
    {: codeblock}
-2. Copy and paste the export command to set the KUBECONFIG environment variable as directed.
-3. Create the secret used by the application to obtain service credentials:
+2. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
-4. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster.
+3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster.
    ```sh
-   ibmcloud ks cluster-service-bind --cluster <cluster-name> --namespace default --service secure-file-storage-appid
+   ibmcloud ks cluster-service-bind --cluster secure-file-storage-cluster --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
    If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance secure-file-storage-appid`.
    {: tip}
-5. Deploy the app.
+4. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
@@ -375,7 +377,7 @@ To remove the resource, delete the deployed container and then the provisioned s
    {: codeblock}
 3. Remove the Docker image from the container registry:
    ```sh
-   ibmcloud cr image-rm registry.<location>.bluemix.net/<namespace>/secure-file-storage:latest
+   ibmcloud cr image-rm registry.<location>.bluemix.net/secure-file-storage-namespace/secure-file-storage:latest
    ```
    {: codeblock}
 4. In the [{{site.data.keyword.Bluemix_notm}} console](https://console.bluemix.net) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.

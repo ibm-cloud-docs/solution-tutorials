@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-14"
+lastupdated: "2018-11-23"
 
 ---
 
@@ -176,8 +176,8 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
 
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
     - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
-    - Select the **New project** tile followed by **Jupyter Notebooks**.
-    - Select **OK** and then provide a **Project name**.
+    - Click **Create a Project** tile followed by **Data Science**.
+    - Click **Create project** and then provide a **Project name**.
     - Ensure **Storage** is set to **data-lake-cos**.
     - Click **Create**.
     - In the resulting project, click **Add to project** and **Notebook**.

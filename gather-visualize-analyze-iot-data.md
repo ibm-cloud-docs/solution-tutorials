@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-14"
+lastupdated: "2018-11-23"
 
 ---
 
@@ -144,13 +144,10 @@ Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. Afte
 
 In this section, you will use the Jupyter Notebook that is available in the IBM {{site.data.keyword.DSX_short}} service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
 
-![](images/solution16/watson_studio.png)
-
 ### Create a new project
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **AI**, select [**{{site.data.keyword.DSX_short}}**](https://console.bluemix.net/catalog/services/data-science-experience).
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
-3. Create a **New Project** > Select **Data Science** and enter `Detect Anomaly` as the **Name**.
-   ![](images/solution16/new_project.png)
+3. Create a Project > Select **Data Science** > Click **Create project** and enter `Detect Anomaly` as the **Name** of the project.
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 5. Under **Define Storage**, Click on **Add** and choose an existing **Cloud Object Storage** service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
