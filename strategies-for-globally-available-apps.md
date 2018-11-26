@@ -110,57 +110,75 @@ For more on disaster recovery click [here](https://www.ibm.com/cloud/garage/cont
 
 ### Multi-regions architectures
 
-Multi-regions apps means having the app deployed across multiple regions, one copy of the app within each region, with this then you would require to have a Global load balancer something like `Cloud Internet Services` to distribute traffic between regions. 
+Multi-region architecture is to deploy the application across multiple regions where multiple copies of the application deployed on each region.  
 
 A region is a specific geographical location where you can deploy apps, services, and other IBM® Cloud resources. [IBM Cloud regions](https://console.bluemix.net/docs/containers/cs_regions.html#bluemix_regions) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
+
+
+Additionally, in a multi-region architecture, a Global load balancer required in order to distribute traffic between regions. To achieve that, the Cloud Internet Services can be used for the load balancing. 
+
+Multi-regions apps means having the app deployed across multiple regions, one copy of the app within each region, with this then you would require to have a Global load balancer something like `Cloud Internet Services` to distribute traffic between regions. 
 
 ![Regions](images/solution39/regions-mz.png)
 
 ### Multi-zones within regions architectures
 
-Building multi-zone regions applications, means having your application deployed across zones within a region and then replicate the same in a different region. This provide many advantages and many reasons to why you may consider such setup, however building successfully running multi-region, active-active architecture is hard, so following this tutorial will give you an understanding and the guidelines needed with links to other sources to dive deeper. 
+Building multi-zone regions applications mean having your application deployed across zones within a region and then you may also have two or three regions. 
 
-With Multi-zone region architecture with you would require to have a Local load balancer to distribute traffic locally within the region to different zones, and then on a global level to have Global load balancer something like `Cloud Internet Services` to distribute traffic between the regions. 
+With Multi-zone region architecture with you would require to have a local load balancer to distribute traffic locally between zones in a region, and then if a second region is set up then a global load balancer distributes traffic between the regions. 
 
 **Why bother with multi-region architectures?** 
 
-well there are many reasons to why you would want to have a multi-region architecture, here are the top three:
+There are many reasons to why you would want to have a multi-region architecture, here are the top three:
 
 1. Improve latency for end-users
 2. Disaster recovery
 3. Business requirements
 
-You can learn more on regions and zones [here](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-zones).
+You can learn more about regions and zones [here](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-zones).
 
 ## Cloud Foundry apps
 
-Cloud Foundry offers the capability to achieve a deployment of multi-region architecture, in addition using a [Continuous Delivery](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions with pipeline testing and deployment. The architecture for Cloud Foundry multi-region looks like this. 
+Cloud Foundry offers the capability to achieve deployment of multi-region architecture, also using a [continuous delivery](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions with pipeline testing and deployment. The architecture for Cloud Foundry multi-region looks like this. 
 
 ![CF-Architecture](images/solution39/CF2-Architecture.png)
 
-To deploy a Cloud Foundry multi-region app, follow the a step by step [solution tutorial](multi-region-webapp.html) here. The above architecture deploys a Cloud Foundry application in two regions. 
+**Deploy above architecture by following the [solution tutorial here.](multi-region-webapp.html)** 
 
-Note the architecture above does not have databases or other services, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases, and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this tutorial, [databases](databases, and non-database-services), and [non-database-services](#databaseservices) are covered in detail.
+Note: the architecture above does not have databases or other services, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this tutorial, [databases](databases, and non-database-services), and [non-database-services](#databaseservices) are covered in detail.
+
+## Cloud Foundry Enterprise Environment
+
+In the prevues section, you reviewed how to deploy a mulit-region app to public Cloud Foundry. The next step would be to look at the Enterprise edition of Cloud Foundry in which named `Cloud Foundry Enterprise Environment`.
+
+**Cloud Foundry Enterprise Environment (CFEE)** is where you can instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of the CFEE service run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services. With this in place, learn how to plan for a multi-region architecture when using Cloud Foundry Enterprise Environment. 
+
+CFEE short for `Cloud Foundry Enterprise Environment` offers all the same functionalities like public Cloud Foundry but with additional features.
+
+A multi-region architecture using Cloud Foundry Enterprise Environment look like this.![VM-Architecture](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution39/CFEE-Architecture.png)
+
+To deploy an architecture like above, you would require to do the following: 
+
+- Setup a two CFEE orgs, one on each region. 
+- Create and bind the services to the CFEE account. 
+- Push the apps targeting the CFEE API endpoint. 
+- Setup database replication, the same like you would do for public Cloud Foundry. 
+
+Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md) where it will take you deploying a microservice based application to CFEE. Once deployed to one CFEE account, then you would require to redeploy to a second region and attach the internet services in front of the two CFEE account to load balance the traffic. 
+
+You can learn more on IBM Cloud Foundry Enterprise Environment [here](https://console.bluemix.net/docs/cloud-foundry/index.html#about).
 
 ## Kubernetes apps
 
-With Kubernetes, you can achieve multi-zones within regions architecture having Active/Active regions. When implementing a solution with Kubernetes Service, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
+With Kubernetes, you can achieve multi-zones within regions architecture, this can be active/active use case. When implementing a solution with Kubernetes Service, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
 
 The Kubernetes multi-region architecture looks like this.
 
 ![Kubernetes](images/solution39/Kub-Architecture.png)
 
-1. The developer builds Docker images for the application.
-2. The images are pushed to IBM Cloud Container Registry in the US and UK regions.
-3. The application is deployed to Kubernetes clusters in both regions.
-4. End-users access the application.
-5. Cloud Internet Services is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
+**Deploy above architecture by following the [solution tutorial here.](multi-region-k8s-cis.html)** 
 
-To deploy a Kubernetes multi-region app, follow the a step by step [solution tutorial](multi-region-k8s-cis.html) here. 
-
-The above architecture deploys a Kubernetes clusters in both regions but without a database, the next steps may be to add a database and some sort of Watson services. 
-
-Note the architecture above does not have databases or other services, the next logical step would be to add databases and some other Watson services, in later sections of this tutorial, [databases](databases, and non-database-services), and [non-database-services](#databaseservices) are covered in detail.
+The above architecture deploys a Kubernetes cluster in both regions, but without a database. The next steps can be to add a database and some Watson services. More on that later.
 
 ## Cloud Functions apps
 
@@ -168,12 +186,7 @@ With Cloud Functions, you can achieve multi-region architecture. The architectur
 
  ![Functions-Architecture](images/solution39/Functions-Architecture.png)
 
-1. Users access the application. The request goes through Internet Services.
-2. Internet Services redirect the users to the closest healthy API back-end.
-3. Certificate Manager provides the API with its SSL certificate. The traffic is encrypted end-to-end.
-4. The API is implemented with Cloud Functions.
-
-To deploy Cloud Functions multi-region app, follow the a step by step [solution tutorial](multi-region-serverless.html) here. 
+**Deploy above architecture by following the [solution tutorial here.](multi-region-serverless.html)** 
 
 ## Bare Metal and Virtual Servers
 
@@ -181,7 +194,7 @@ IBM Cloud Virtual Servers and Bare Metal offers the capability to achieve a mult
 
 Below architecture demonstrates a deployment of a multi-region architecture using virtual servers with using the active/passive approach where one region is active and the second region is passive. 
 
-The components for such architecture are: 
+The components required for such architecture: 
 
 - Global load balancer directing traffic to the active region always. 
 - Cloud/Local load balancer distributing traffic between virtual servers in different zones within a region. 
@@ -190,37 +203,12 @@ The components for such architecture are:
 
 ![VM-Architecture](images/solution39/vm-Architecture2.png)
 
-To deploy above multi-region app using virtual servers, follow the a step by step [solution tutorial](highly-available-and-scalable-web-application.html) here. 
+**Deploy above architecture by following the [solution tutorial here.](highly-available-and-scalable-web-application.html)** 
 
-When preparing for multi-region architectures using Virtual Servers and Bare Metal, you need to factor in other things like: 
+Other items to factor for: 
 
 - File storage, where do you store files and images, how these files are synced and backed up between servers. To resolve that you can look at the IBM File Storage service to store the application files and images, then this can be used between zones within a region. Using File Storage you can also take snapshot backups to be used by the passive region. You would require to do manually reimport the snapshot backup into the passive region. 
 - Databases, you have the option to install the database directly on the server or use the Database-as-service approach. With using the database-as-a-service approach, you don't need to worry about backups and replications. A database like Cloudant fully supports a multi-region architecture. More on that in the later sections.
-
-## Cloud Foundry Enterprise Environment
-
-Earlier you reviewed Cloud Foundry Public and learned how to deploy a mulit-region app to a public Cloud Foundry org. The next step would be to look at the Enterprise edition of Cloud Foundry. 
-
-**Cloud Foundry Enterprise Environment (CFEE)** is where you can instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of the CFEE service run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services. With this in place, learn how to plan for a multi-region architecture when using Cloud Foundry Enterprise Environment. 
-
-CFEE uses all the same like the public Cloud Foundry with number of additional features and ways in which setting up the architecture.
-
-A multi-region architecture using Cloud Foundry Enterprise Environment.  ![VM-Architecture](images/solution39/CFEE-Architecture.png)
-
-ToDo: Remove the services here, same like public. Also do same like the Kub digram.
-
-CFEE works in the same manner like the Public Cloud Foundry, with one thing been different and that's to setup the CFEE account and binding service to the CFEE account. After that everything else works in the same matter. 
-
-You would require to do the following: 
-
-- Setup a two CFEE accounts, one on each region. 
-- Create and bind the services to the CFEE account. 
-- Push the apps targeting the CFEE api endpoint. 
-- Setup database replication, the same like you would do for public Cloud Foundry. 
-
-For a more real world application deployment, checkout the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md) where it will take you deploying a microservice based application to CFEE. Once deployed to one CFEE account, then you would require to redeploy to a second region and attach the internet services front of the two CFEE account to load balance the traffic. 
-
-You can learn more on IBM Cloud Foundry Enterprise Environment [here](https://console.bluemix.net/docs/cloud-foundry/index.html#about).
 
 ## Databases and application files 
 
@@ -228,9 +216,9 @@ You can learn more on IBM Cloud Foundry Enterprise Environment [here](https://co
 
 IBM Cloud offers a selection of [databases](https://console.bluemix.net/catalog/?category=databases) to which can be called database-as-a-services. You can find both relation and non-relation databases depending on your business needs. 
 
-Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of his multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum up time. 
+Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
 
-Some of the key features: 
+**Key features:** 
 
 - A database service built and accessed through a cloud platform
 - Enables enterprise users to host databases without buying dedicated hardware
@@ -238,47 +226,24 @@ Some of the key features:
 - Can support SQL (including MySQL) or NoSQL databases
 - Accessed through a web interface or vendor-provided API
 
-Why cloud database-as-service:
-
-- Ease of access
-
-- Scalability
-
-- Disaster recovery
-
-- More on databases can be found [here](https://www.ibm.com/cloud/learn/what-is-cloud-database). 
-
-When prepping for multi-region architecture, there are number of items you need to factor for. 
+**Prepping for multi-region architecture**
 
 - Does the database support Multi-Region architecture?
 - How's does replication handle between multiple database services across regions? 
 - How data is backed up
 - What are the disaster recovery approaches for each.
 
-Below you will dive deeper into three of the databases IBM Cloud. 
+More on cloud database-as-service can be found [here](https://www.ibm.com/cloud/learn/what-is-cloud-database). 
 
 ### Cloudant
 
-ToDo: Reduce the content, remove duplicated content and just point to Cloudant docs.
+IBM Cloudant is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed IBM Cloud service, Cloudant elastically scales throughput and storage independently. Cloudant is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
 
-IBM Cloudant is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed IBM Cloud service, Cloudant elastically scales throughput and storage independently.
-
-Cloudant is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB and libraries for the most popular web and mobile development stacks.
-
-Some of Cloudant features: 
-
-- **Fully managed**: IBM Cloud service provides a fully managed, distributed JSON document database. 
-- **Secure**: Cloudant is ISO 27001, SOC 2 Type 2 compliant and HIPAA ready. All data is encrypted over the wire and at rest with optional user-defined key management through IBM Key Protect. 
-- **Global availability**: Cloudant is available in all IBM Cloud regions and 55+ data centers around the world, Cloudant can easily be set up for disaster recovery between continents or scaling an app for a global release through a horizontal scaling architecture that can handle millions of users and terabytes of data to grow seamlessly alongside your business. All Cloudant instances are deployed on clusters that span availability zones in regions that support them, for added durability at no extra cost.
-- **Data flexibility**: leverage a flexible JSON schema and powerful API that is compatible with Apache CouchDB™, enabling you to access an abundance of language libraries and tools to rapidly build new applications and features.
-- **Durable replication:** Move application data closer to all the places it needs to be — for uninterrupted data access, offline or on. Cloudant helps teams build Progressive Web Apps, develop with an offline-first architecture, or manipulate data on edge devices.
-- **Powerful serverless API**: Enhance your applications with built-in key value, MapReduce, full-text search and geospatial querying that goes beyond simple bounding boxes.
-
-More on Cloudant can be found [here](https://www.ibm.com/cloud/cloudant). Now that you understand some features and benefits of using Cloudant, next look at how can it work within a multi-region architecture.
+Cloudant offers many features like, `fully Managed`, `security`, `global availability`, `durable replication` and many more. A full list of Cloudant features can be found [here](https://www.ibm.com/cloud/cloudant).
 
 #### Does Cloudant support multi-region?
 
-Yes, you can configure replication in IBM Cloudant using an 'active-active' or 'active-passive' topology across data center.s The following diagram shows a typical configuration that uses two IBM Cloudant accounts, one in each region: ![active-active](images/solution39/active-active.png)
+Yes, you can configure replication in IBM Cloudant using an 'active-active' or 'active-passive' topology across data centres. The following diagram shows a typical configuration that uses two IBM Cloudant accounts, one in each region: ![active-active](images/solution39/active-active.png)
 
 It is helpful to remember:
 
@@ -287,13 +252,13 @@ It is helpful to remember:
 - IBM Cloudant does not provide any Service Level Agreements (SLAs) or certainties about replication latency.
 - IBM Cloudant does not monitor individual replications. Your own strategy for detecting failed replications and restarting them is advisable.
 
-For step by step instructions on setting up Cloudant for a multi-region arctecture, follow the instructions [here](https://console.bluemix.net/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery).
+For step by step instructions on setting up Cloudant for a multi-region architecture, follow the instructions [here](https://console.bluemix.net/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery).
 
 #### How does replication work?
 
 IBM Cloudant for IBM Cloud replication is the process that synchronizes ('syncs') the state of two databases.
 
-Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one off' task.
+Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task.
 
 Depending on your application requirements, you use replication to share and aggregate state and content.
 
@@ -306,11 +271,11 @@ Replication has two forms: push or pull replication:
 - *Push replication* is where the source is a local database, and the destination is a remote database.
 - *Pull replication* is where the source is a remote database instance, and the destination is the local database.
 
-For more detailed instructions on Cloudant replication, checkout the replication docs [here](https://console.bluemix.net/docs/services/Cloudant/api/replication.html#replication).
+For more detailed instructions on Cloudant replication, check out the replication docs [here](https://console.bluemix.net/docs/services/Cloudant/api/replication.html#replication).
 
-#### Backups and recovery, how do they work?
+#### Backups and recovery
 
-Your data is important and valuable. You want to protect your data, to help ensure it is secure, available, and maintains integrity. IBM® Cloudant for IBM Cloud provides several ways to protect your data and help keep your applications operational. Some of these protection features are automatic. For other forms of protection, IBM Cloudant provides you with supported tools that help you to create your own high availability and disaster recovery capabilities.
+Your data is important and valuable. You want to protect your data, to help ensure it is secure, available, and maintains integrity. IBM® Cloudant for IBM Cloud provides several ways to protect your data and help keep your applications operational. Some of these protection features are automatic. For other forms of protection, IBM Cloudant provides you with supported tools that help you to create your high availability and disaster recovery capabilities.
 
 **Types and levels of protection**
 
@@ -318,14 +283,14 @@ Your data is important and valuable. You want to protect your data, to help ensu
 - Cross-Region Redundancy for Disaster Recovery
 - Database Backup and Recovery
 
-To dive deeper into the three levels of protections, checkout the Cloudant backup and recovery docs [here](https://console.bluemix.net/docs/services/Cloudant/guides/disaster-recovery-and-backup.html#disaster-recovery-and-backup).
+To dive deeper into the three levels of protection, check out the Cloudant backup and recovery docs [here](https://console.bluemix.net/docs/services/Cloudant/guides/disaster-recovery-and-backup.html#disaster-recovery-and-backup).
 
 ### Db2, Db2 hosted and Db2 Warehouse
 
-IBM Cloud offers a selection range of Db2 databases, these can be found [here](https://console.bluemix.net/catalog/?search=db2h).
+IBM Cloud offers a selection range of [Db2 databases](https://console.bluemix.net/catalog/?search=db2h), these are:
 
 - **Db2**: A fully-managed cloud SQL database. Powered by a turbo-charged Db2 engine.
-- **Db2 hosted**: IBM Db2 Hosted lets you run Db2 with full administrative access on cloud infrastructure. It eliminates the cost, complexity and risk of managing your own infrastructure.
+- **Db2 hosted**: IBM Db2 Hosted lets you run Db2 with full administrative access on cloud infrastructure. It eliminates the cost, complexity, and risk of managing your own infrastructure.
 - **Db2 Warehouse**: IBM Db2 Warehouse on Cloud is a fully-managed, enterprise-class, cloud data warehouse service. Powered by IBM BLU Acceleration, Db2 Warehouse on Cloud provides you with unmatched query performance. The service is offered in multiple form factors: SMP for cost-effective cloud data warehousing, and MPP for high-performance parallel query processing and high availability. Db2 Warehouse on Cloud also comes packed with a suite of Netezza-like in-database analytics tools and functions so you can run your analytics jobs wherever your data resides. Get the most out of your cloud data warehouse by combining it with IBM or third-party data visualization and ETL tools.
 
 #### Does Db2 support multi-region?
@@ -334,9 +299,9 @@ Yes, you can plan and prepare for it. Db2 on Cloud uses the Db2 High Availabilit
 
 Db2 on Cloud high availability plans have excellent availability characteristics with a 99.99% SLA. The standard high availability plans without a disaster recovery (DR) node provide seamless failover and rolling updates. They are managed for you by using automatic client reroute (ACR) and portable IPs.
 
-In addition, you can add a Geo-Replicated Disaster Recovery Node. This offsite DR node option gives you the ability to rapidly synchronize your data in real time to a database node in an offsite IBM Cloud data center of your choice.
+Also, you can add a Geo-Replicated Disaster Recovery Node. This offsite DR node option gives you the ability to rapidly synchronize your data in real time to a database node in an offsite IBM Cloud data center of your choice.
 
-For more, checkout the Db2 docs [here](https://console.bluemix.net/docs/services/Db2onCloud/ha.html#ha).
+For more, check out the Db2 docs [here](https://console.bluemix.net/docs/services/Db2onCloud/ha.html#ha).
 
 #### How does replication work?
 
@@ -355,7 +320,7 @@ Restore data, managing high availability and disaster recovery nodes:
 
 - For standard HA nodes, which are not offsite, the failover is managed for you by IBM. IBM monitors the health of your server, failover, and failing back as needed, including rolling updates and scaling to keep uptime as high as possible.
 
-- For Geo-Replicated Disaster Recovery (HADR), you must manually fail over by using **Manage Disaster Recovery** in the console.
+- For Geo-Replicated Disaster Recovery (HADR), you must manually failover by using **Manage Disaster Recovery** in the console.
 
 Import data:
 
@@ -367,9 +332,9 @@ ToDo: the three headings are not clear here, we need to have same clear heading 
 
 A COS service instance is global, buckets within a COS instance are where it starts to talk about regions. Information stored with IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. This service makes use of the distributed storage technologies provided by the IBM Cloud Object Storage System (formerly Cleversafe).
 
-#### Does Cloud Object Storage support multi-region
+#### Does Cloud Object Storage support multi-region?
 
-There are three types of bucket/resiliency that COS offer, Cross Region, Regional, and Single Data Center.
+Yes, there are three types of bucket/resiliency that COS offer, Cross Region, Regional, and Single Data Center.
 
 - **Cross Region** resiliency will spread your data across several metropolitan areas. This is the multi-region.
 - **Regional** resiliency will spread data across a single metropolitan area - this is the multi-zone within a region.
@@ -383,36 +348,29 @@ Additionally, with **Cross Region** and **Regional** buckets, data is automatica
 
 For more detailed explanation COS resiliency options, checkout the COS docs [here](https://console.bluemix.net/docs/services/cloud-object-storage/basics/endpoints.html#select-regions-and-endpoints).
 
-### Databases Summary 
+#### How does replication work?
 
-- Tablet for the three databases.
+With **Cross Region** and **Regional** buckets, data is automatically replicated across multiple regions within a geo (example for Cross Region US, content goes to Dallas, San Jose, Washington).
+
+You have the option to manually synchronized content across buckets in different regions. 
+
+#### Backup and restore
+
+IBM Cloud Object Storage provides durable, secure and cost effective cloud storage for a variety of backup needs. Protect the data in your datacenter by backing it up to IBM Cloud Object Storage to replace tape, streamline backup operations, and simplify archival processes. Most major backup software vendors integrate directly with IBM Cloud Object Storage and offer turnkey data backup solutions. For data in the cloud, leverage the cloud-native capabilities and the low cost of Cloud Object Storage for an automated, application-consistent backup and recovery solution. For more check out the [backup and recovery](https://www.ibm.com/cloud/object-storage/backup-and-recovery) docs.
 
 ### File Storage
 
 IBM File Storage for IBM Cloud is persistent, fast, and flexible network-attached, NFS-based File Storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. File Storage shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
-Some of file storage features: 
+Some of file storage features are things like `Snapshots`, `Replication`, `Concurrent access` and many more. Get the full list of features [here](https://console.bluemix.net/docs/infrastructure/FileStorage/index.html#getting-started-with-file-storage).
 
-- Consistent performance baseline
-- File Storage
-- Highly durable and resilient
-- Data-At-Rest Encryption
-- All Flash Backed Storage
-- Snapshots
-- Replication
-- Highly available connectivity
-- Concurrent access
-- Clustered databases
-
-For more detailed dive into File Storage, checkout the file storage docs page [here](https://console.bluemix.net/docs/infrastructure/FileStorage/index.html#getting-started-with-file-storage).
-
-#### Does File Storage support multi-region
+#### Does File Storage support multi-region?
 
 Yes it can be configured for active/passive use case. In the active/passive architecture file storage can be used easily, you can attach file storage service to your servers to store data backups, application files like images and videos, these images and files can then be used within different servers in the same region. 
 
 Within adding a second region, you would then use the snapshots feature of File Storage where you would take a snapshot automatically or manually, and then reuse it within the second passive region. 
 
-#### File Storage data replication
+#### How does replication work?
 
 Replication uses one of your snapshot schedules to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#snapshots).
 
@@ -426,23 +384,19 @@ IBM Cloud offers a selection of non-database [services](https://console.bluemix.
 
 #### Watson Assistant
 
-[Watson Assistant ToDo: update URL]() a platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants. The Watson Assistant service comes with a powerful visual dialog editor where you can import and export workspaces. A workspace contains intents, entities and dialog, it's the there things that creates the ChatBot conversion. You can read more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/index.html#about). The focus here is on how to configure and use a service like Watson Assistant in a multi-region app. 
+A platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants. The Watson Assistant service comes with a powerful visual dialog editor where you can import and export workspaces. A workspace contains intents, entities and dialog, it's the there things that creates the ChatBot conversion. You can read more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/index.html#about). 
 
-#### Watson Assistant setup in multi-region apps
+Focus point: How to configure and use a service like Watson Assistant in a multi-region app. 
 
-It's important to note that Watson Assistant is stateless. Watson assistant delivers 99.5% up time, but still for highly available applications across multiple regions, you may still want to have multiple instances of this services across regions. 
+#### Watson Assistant in multi-region architecture
 
-In a multi-region architecture, an active/passive use case for example. You would be required to setup an instance of the Watson Assistant in both regions and manually import and export workspaces between regions in an event of downtime of the active region. 
+It's important to note that Watson Assistant is stateless. Watson assistant delivers 99.5% uptime, but still, for highly available applications across multiple regions, you may even want to have multiple instances of this services across regions. In a multi-region architecture, an active/passive use case for example. You would be required to set up an instance of the Watson Assistant in both regions and manually import and export workspaces between regions in an event of downtime of the active region. 
 
-If you wish you run an active/active use case, you could have both regions using one instances of the Watson Assistant service, and in event where the healthy region is down then manually export the workspace and import into the second region where you have the second Watson Assistant service created. You can learn more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/migrating.html#migrating).
+If you wish you run an active/active use case, you could have both regions using one instance of the Watson Assistant service, and an event where the healthy region is down then manually export the workspace and import into the second region where you have the second Watson Assistant service created. You can learn more on Watson Assistant here.
 
-#### Import and export service data between regions
+#### Import and export services data between regions
 
-Watson Assistant comes with a tooling allowing you to export an exiting workspace that contains the intents, entities and dialog in which everything you need, the exported workspace can then be reimported into another Watson Assistant  service in a different region. Learn more [here](https://console.bluemix.net/docs/services/assistant/getting-started.html#getting-started).
-
-#### App ID
-
-ToDo... adding here. 
+Watson Assistant comes with tooling allowing you to export an existing workspace that contains the intents, entities, and dialog in which everything you need, the exported workspace can then be reimported into another Watson Assistant service in a different region. More on Watson Assistant can be found [here](https://console.bluemix.net/docs/services/assistant/getting-started.html#getting-started).
 
 ## Related content
 
