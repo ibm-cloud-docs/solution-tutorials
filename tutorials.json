@@ -54,6 +54,23 @@
           "lastUpdated": "2018-11-14"
         },
         {
+          "name": "Strategies for resilient applications",
+          "url": "strategies-for-resilient-applications.html",
+          "description": "When implementing a solution using Kubernetes services, Cloud Foundry, Cloud Functions or virtual servers, regardless of the compute options, you want to minimize downtimes and have your application as resilient as possible for maximum availability. To achieve maximum resiliency, you may consider deploying your solutions across multiple zones and regions with best data replications possible.",
+          "imgSrc": "images/solution39/Architecture.png",
+          "tags": [
+            "Kubernetes",
+            "Cloud Foundry",
+            "Cloud Functions",
+            "Virtual Servers",
+            "Bare Metal",
+            "Databases",
+            "File Storage",
+            "Watson"
+          ],
+          "lastUpdated": "2018-11-28"
+        },
+        {
           "name": "Continuous Deployment to Kubernetes",
           "url": "continuous-deployment-to-kubernetes.html",
           "description": "Set up a continuous integration and delivery pipeline for containerized applications running on a Kubernetes cluster. Add integrations to other services like security scanners, Slack notifications, and analytics.",
@@ -301,7 +318,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-11-20"
         }
       ]
     },
@@ -387,7 +404,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-11-23"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -414,7 +431,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-11-23"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -426,7 +443,7 @@
             "Watson Studio",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-07-19"
+          "lastUpdated": "2018-11-23"
         }
       ]
     },
@@ -447,7 +464,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-11-23"
         }
       ]
     },

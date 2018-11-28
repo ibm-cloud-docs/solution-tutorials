@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-22"
+lastupdated: "2018-11-28"
 
 ---
 
@@ -18,17 +18,15 @@ lastupdated: "2018-11-22"
 
 # Strategies for resilient applications
 
-Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution using Kubernetes services, Cloud Foundry, Cloud Functions or virtual servers, regardless of the compute options, you want to minimize downtimes and have your application as resilient as possible for maximum availability. To achieve maximum resiliency, you may consider deploying your solutions across multiple zones and regions with best data replications possible
+Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution using Kubernetes services, Cloud Foundry, Cloud Functions or virtual servers, regardless of the compute options, you want to minimize downtimes and have your application as resilient as possible for maximum availability. To achieve maximum resiliency, you may consider deploying your solutions across multiple zones and regions with best data replications possible.
 
 This tutorial highlights what IBM Cloud provides for resilient solutions, answering questions like: 
 
-- Does IBM Cloud compute options to support multiple regions deployment? How to import application source files to all regions?
+- Deploy an app across multiple regions or zones, is to possible? If yes then how to import source files to all regions and zones? 
 - What to consider when preparing an app to be globally available across multiple regions? 
 - How databases are handled in a multiple regions deployment, why database-as-service and how can it work between regions? 
 - Which backing services to use (Block Storage, File Storage, Object Storage, Databases)?
-- What about other services like Watson and App ID, how can they be configured for multi-region?
-
-This tutorial will give you the guidelines needed for when thinking about multi-region deployment on IBM Cloud. It will give you the guidelines for what is possible and what is not possible. You will get answers to questions above and more. You will understand how runtimes, databases, file storage, Watson services work in a multi-regions setup. 
+- What about other services like Watson, how can they be configured for multi-region?
 
 ## Objectives
 {: #objectives}
@@ -326,9 +324,40 @@ Import data:
 
 - You can use [IBM Lift CLI](https://lift.ng.bluemix.net/) to import data into Db2 on Cloud.
 
-### Cloud Object Storage
+### IBM Cloud Databases for PostgreSQL and Redis 
 
-ToDo: the three headings are not clear here, we need to have same clear heading like for DB2. 
+The [IBM Cloud Databases for PostgreSQL](https://console.bluemix.net/catalog/services/databases-for-postgresql) and [IBM Cloud Databases for Redis](https://console.bluemix.net/catalog/services/databases-for-redis) are database-as-a-service products that are fully managed, highly available, and built from the ground up with enterprise security in mind. They are scalable, cost-efficient, and readily usable for enterprise application development.
+
+**IBM Cloud Databases for PostgreSQL**
+
+PostgreSQL is an object-relational SQL database that is complemented by powerful enhancements like indexable JSON, publish/subscribe functions, and drivers. The technology is commonly used for web and mobile transactional applications, business intelligence, and geospatial analysis with PostGIS.
+
+**IBM Cloud Databases for Redis**
+
+Redis is a powerful, open source, in-memory key value store that acts as a cache, queue, or transient store designed for the modern application stack. Applications typically use the Redis for database and web caching or counting and queuing.
+
+#### Does IBM Cloud Databases supports multi-region or multi-zone region?
+
+Yes, multi-zone region supported using IBM Cloud Databases for PostgreSQL and Redis.
+
+#### How does replication work?
+
+IBM Cloud Databases for Redis and IBM Cloud Databases for PostgreSQL offers cross regional replicas. By creating a read replica, you can get: 
+
+- Additional read capacity for applications
+- Relieve pressure on source database
+- Upgrade a read replica to new database version
+- Provides more replicas for disaster recovery
+
+![](images/solution39/replica.png)
+
+Refer to the [PostgreSQL](https://console.bluemix.net/docs/services/databases-for-postgresql/index.html#about-databases-for-postgresql) and [Redis](https://console.bluemix.net/docs/services/databases-for-redis/index.html#about-databases-for-redis) docs for more on replication.
+
+#### Backups 
+
+IBM® Cloud Databases offers automatic back-ups to cross-regional Cloud Object Storage. Daily and on-demand backups are available for 30 days. Each backup is labeled with its type, and when the backup was taken. Click the backup to reveal the full ID of the backup and a command that you can use to restore a backup with the IBM Cloud CLI. More on backups can be found [here](https://console.bluemix.net/docs/services/databases-for-postgresql/dashboard-backups.html#backups) for PostgreSQL and [here](https://console.bluemix.net/docs/services/databases-for-redis/dashboard-backups.html#backups) for Redis.
+
+### Cloud Object Storage
 
 A COS service instance is global, buckets within a COS instance are where it starts to talk about regions. Information stored with IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. This service makes use of the distributed storage technologies provided by the IBM Cloud Object Storage System (formerly Cleversafe).
 
