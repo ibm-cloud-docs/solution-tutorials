@@ -70,7 +70,7 @@ To facilitate disaster recovery, two widely accepted architectures are used: act
 
 In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions' in real time.
 
-![Active/Active](images/solution39/hadr-active-active-config.png)
+![Active/Active](images/solution39/Active-active.png)
 
 
 
@@ -80,11 +80,11 @@ When considering recovery point objectives (RPO) in active/active, data synchron
 
 #### Active-passive configuration
 
-An active-passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application's and users' needs. 
+An active/passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application's and users' needs. 
 
-![Active/Active](images/solution39/hadr-active-standby-config.png)
+![Active/Active](images/solution39/Active-passive.png)
 
-Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data centre is a time-consuming operation. Both recovery time objective (RTO) and recovery point objective (RPO) are higher compared to the active-active configuration.
+Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data centre is a time-consuming operation. Both recovery time objective (RTO) and recovery point objective (RPO) are higher compared to the active/active configuration.
 
 ### Disaster recovery with three regions
 
@@ -94,13 +94,13 @@ Using three data centers provides greater resiliency and availability than two. 
 
 #### Active-active-active (3-active) configuration
 
-![](images/solution39/hadr-active-active-active-config.png)
+![](images/solution39/Active-active-active.png)
 
 Requests are served by the application running in any of the three active data centers. A case study on IBM.com website indicates that 3-active requires only 50% of the compute, memory, and network capacity per cluster, but 2-active requires 100% per cluster. The data layer is where the cost difference stands out. For further details, read [*Always On: Assess, Design, Implement, and Manage Continuous Availability*](http://www.redbooks.ibm.com/redpapers/pdfs/redp5109.pdf).
 
-#### Active-active-standby configuration
+#### Active-active-passive configuration
 
-![](images/solution39/hadr-active-active-standby-config.png)
+![](images/solution39/Active-active-passive.png)
 
 In this scenario, when either of the two active applications in the primary and secondary data centers suffers an outage, the standby application in the third data center is activated. The DR procedure described in the two data centers scenario is followed for restoring normalcy to process customer requests. The standby application in the third data center can be set up in either a hot or a cold standby configuration.
 
@@ -216,21 +216,19 @@ The components required for such architecture:
 
 {:databaseservices}
 
-IBM Cloud offers a selection of [databases](https://console.bluemix.net/catalog/?category=databases) to which can be called database-as-a-services. You can find both relation and non-relation databases depending on your business needs. 
-
-Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
+IBM Cloud offers a selection of [databases as a service](https://console.bluemix.net/catalog/?category=databases) both relation and non-relation databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
 
 **Key features:** 
 
 - A database service built and accessed through a cloud platform
 - Enables enterprise users to host databases without buying dedicated hardware
 - Can be managed by the user or offered as a service and managed by a provider
-- Can support SQL (including MySQL) or NoSQL databases
+- Can support SQL or NoSQL databases
 - Accessed through a web interface or vendor-provided API
 
 **Prepping for multi-region architecture**
 
-- Does the database support Multi-Region architecture?
+- What are the resiliency options of the database service?
 - How is replication handled between multiple database services across regions?
 - How is the data backed up?
 - What are the disaster recovery approaches for each?
@@ -247,26 +245,13 @@ Cloudant offers many features like, `fully Managed`, `security`, `global availab
 
 Yes, you can configure replication in IBM Cloudant using an active/active or active/passive topology across data centres. The following diagram shows a typical configuration that uses two IBM Cloudant accounts, one in each region:![active-active](images/solution39/active-active.png)
 
-It is helpful to remember:
-
-- Within each datacenter, IBM Cloudant already offers high availability by storing data in triplicate across three servers.
-- Replication occurs at the database rather than account level and must be explicitly configured.
-- IBM Cloudant does not provide any Service Level Agreements (SLAs) or certainties about replication latency.
-- IBM Cloudant does not monitor individual replications. Your own strategy for detecting failed replications and restarting them is advisable.
-
 For step by step instructions on setting up Cloudant for a multi-region architecture, follow the instructions [here](https://console.bluemix.net/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery).
 
 #### How does replication work?
 
-IBM Cloudant for IBM Cloud replication is the process that synchronizes ('syncs') the state of two databases.
+IBM Cloudant for IBM Cloud replication is the process that synchronizes ('syncs') the state of two databases. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. Depending on your application requirements, you use replication to share and aggregate state and content.
 
-Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task.
-
-Depending on your application requirements, you use replication to share and aggregate state and content.
-
-Replication takes place in one direction only. To keep two databases synchronized with each other, you must replicate in both directions. Do this by replicating from `database1` to `database2`, and separately from `database2` to `database1`.
-
-The aim of replication is that at the end of the process, all active documents in the source database are also in the destination or 'target' database, *and* that all documents that are deleted from the source databases are also deleted from the destination database (if they existed there).
+Replication takes place in one direction only. To keep two databases synchronized with each other, you must replicate in both directions. Do this by replicating from `database1` to `database2`, and separately from `database2` to `database1`. The aim of replication is that at the end of the process, all active documents in the source database are also in the destination or 'target' database, *and* that all documents that are deleted from the source databases are also deleted from the destination database (if they existed there).
 
 Replication has two forms: push or pull replication:
 
@@ -363,11 +348,11 @@ IBM® Cloud Databases offers automatic back-ups to cross-regional Cloud Object S
 
 ### 4.0 Cloud Object Storage
 
-A COS service instance is global, buckets within a COS instance are where it starts to talk about regions. Information stored with IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. This service makes use of the distributed storage technologies provided by the IBM Cloud Object Storage System (formerly Cleversafe).
+Cloud Object Storage (COS) service instance are global, buckets within a COS instance are where it starts to talk about regions. Information stored with IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. This service makes use of the distributed storage technologies provided by the IBM Cloud Object Storage System (formerly Cleversafe).
 
 #### Does Cloud Object Storage support multi-region?
 
-Yes, there are three types of bucket/resiliency that COS offer, Cross Region, Regional, and Single Data Center.
+Yes, there are three types of bucket resiliency that COS offer, these are:
 
 - **Cross Region** resiliency will spread your data across several metropolitan areas. This is the multi-region.
 - **Regional** resiliency will spread data across a single metropolitan area - this is the multi-zone within a region.
@@ -389,7 +374,11 @@ You have the option to manually synchronize content across buckets in different 
 
 #### Backup and restore
 
-IBM Cloud Object Storage provides durable, secure and cost effective cloud storage for a variety of backup needs. Protect the data in your datacenter by backing it up to IBM Cloud Object Storage to replace tape, streamline backup operations, and simplify archival processes. Most major backup software vendors integrate directly with IBM Cloud Object Storage and offer turnkey data backup solutions. For data in the cloud, leverage the cloud-native capabilities and the low cost of Cloud Object Storage for an automated, application-consistent backup and recovery solution. For more check out the [backup and recovery](https://www.ibm.com/cloud/object-storage/backup-and-recovery) docs.
+IBM Cloud Object Storage provides durable, secure and cost effective cloud storage for a variety of backup needs. Protect the data in your datacenter by backing it up to IBM Cloud Object Storage to replace tape, streamline backup operations, and simplify archival processes. Most major backup software vendors integrate directly with IBM Cloud Object Storage and offer turnkey data backup solutions. For data in the cloud, leverage the cloud-native capabilities and the low cost of Cloud Object Storage for an automated, application-consistent backup and recovery solution. 
+
+You can initiate your backup to the bucket with the policy. and perform backups to IBM Cloud Object Storage. More information on Simpana backups is available [here](https://documentation.commvault.com/commvault/v11/article?p=11677.htm). Backup contents transition to the Archive tier based on the policy configured on the bucket.
+
+Refer to the `performing backups` section [here](https://console.bluemix.net/docs/services/cloud-object-storage/gui/simpana.html#performing-backups).
 
 ### 5.0 File Storage
 
@@ -423,9 +412,9 @@ Focus point: How to configure and use a service like Watson Assistant in a multi
 
 #### Watson Assistant in multi-region architecture
 
-It's important to note that Watson Assistant is stateless. Watson assistant delivers 99.5% uptime, but still, for highly available applications across multiple regions, you may even want to have multiple instances of this services across regions. In a multi-region architecture, an active/passive use case for example. You would be required to set up an instance of the Watson Assistant in both regions and manually import and export workspaces between regions in an event of downtime of the active region. 
+It's important to note that Watson Assistant V1 is stateless. Watson assistant delivers 99.5% uptime, but still, for highly available applications across multiple regions, you may even want to have multiple instances of this services across regions. In the active/passive use case for example, you would be required to set up an instance of the Watson Assistant in both regions and manually import and export workspaces between regions in an event of downtime of the active region. 
 
-If you wish you run an active/active use case, you could have both regions using one instance of the Watson Assistant service, and an event where the healthy region is down then manually export the workspace and import into the second region where you have the second Watson Assistant service created. You can learn more on Watson Assistant here.
+If you wish you run an active/active use case, you could have both regions using one instance of the Watson Assistant service, and an event where the healthy region is down then export the workspace and import it into the second region where you have the second Watson Assistant service created. You can learn more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/getting-started.html).
 
 #### Import and export services data between regions
 
