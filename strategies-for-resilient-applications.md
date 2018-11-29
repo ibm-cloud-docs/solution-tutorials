@@ -18,21 +18,20 @@ lastupdated: "2018-11-28"
 
 # Strategies for resilient applications
 
-Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution using Kubernetes services, Cloud Foundry, Cloud Functions or virtual servers, regardless of the compute options, you want to minimize downtimes and have your application as resilient as possible for maximum availability. To achieve maximum resiliency, you may consider deploying your solutions across multiple zones and regions with best data replications possible.
+Regardless of the compute option: Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud's capabilities to build resilient solutions, and in doing so, answers the following questions.
 
-This tutorial highlights what IBM Cloud provides for resilient solutions, answering questions like: 
-
-- Deploy an app across multiple regions or zones, is to possible? If yes then how to import source files to all regions and zones? 
-- What to consider when preparing an app to be globally available across multiple regions? 
-- How databases are handled in a multiple regions deployment, why database-as-service and how can it work between regions? 
-- Which backing services to use (Block Storage, File Storage, Object Storage, Databases)?
-- What about other services like Watson, how can they be configured for multi-region?
+- Which compute options support multi-region deployment?
+- How do I import application or service artifacts into additional regions?
+- What should I consider when preparing an app to be globally available?
+- How can databases replicate across locations?
+- Which backing services should be used: Block Storage, File Storage, Object Storage, Databases?
+- Are there any service-specific considerations?
 
 ## Objectives
 {: #objectives}
 
-* Understand the architecture and concepts involved in building resilient applications.
-* Understand how these concepts map to IBM Cloud compute and service offerings.
+* Learn architectural concepts involved when building resilient applications.
+* Understand how such concepts map to IBM Cloud compute and service offerings
 
 ## Services used
 {: #services}
@@ -44,11 +43,12 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.BluVirtServers}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 * [{{site.data.keyword.dashdbshort_notm}}](https://console.bluemix.net/catalog/services/db2-warehouse)
-* [Internet Services](https://console.bluemix.net/catalog/services/internet-services)
+* [Cloud Internet Services](https://console.bluemix.net/catalog/services/internet-services)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture and Concepts
+
 {: #architecture}
 
 To design a resilient architecture, involving scenarios like active/active, active/passive deployment, you need to consider the individual blocks of your solution and their specific capabilities. 
@@ -64,33 +64,33 @@ The architecture diagram above may be different depending on the compute option.
 
 ### Disaster recovery with two regions 
 
-When a disaster strikes, the topology and configuration choices you made will determine how your application recovers. You need to understand the costs and benefits associated with each to determine the optimal one for your needs. Active-active or active-passive are two possible configurations for this scenario. In both cases, you must have continuous replication of data between the two data centers.
+To facilitate disaster recovery, two widely accepted architectures are used: active/active and active/passive. Each architecture has its own costs and benefits related to time and effort during recovery.
 
 #### Active-active configuration
 
-Active/Active having both regions active with a load balancer distributing traffic between the two active regions. With the approach, data replication must be in place to sync data between both regions database in real time. This is a favorable option but not always easily possible depending on the setup. With active/active database and application files like images must have real-time replication. 
+In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions' in real time.
 
-![Active/Active](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution39/hadr-active-active-config.png)
+![Active/Active](images/solution39/hadr-active-active-config.png)
 
 
 
-This configuration provides higher availability with minimal human involvement than the active-standby configuration. Requests are served from both data centers. You should configure the edge services (load balancer) with appropriate timeout and retry logic to automatically route the request to the second data center if a failure occurs in the first data center environment.
+This configuration provides higher availability with less manual remediation than an active/passive architecture. Requests are served from both data centers. You should configure the edge services (load balancer) with appropriate timeout and retry logic to automatically route the request to the second data center if a failure occurs in the first data center environment.
 
-Benefits of this configuration are reduced recovery time objective (RTO) and recovery point objective (RPO). For the RPO requirement, data synchronization between the two active data centers must be extremely timely to allow seamless request flow.
+When considering recovery point objectives (RPO) in active/active, data synchronization between the two active data centres must be extremely timely to allow seamless request flow.
 
 #### Active-passive configuration
 
-Active/passive having one region active and the second region passive ready for use as a backup. In the event of a downtime of the active region, then you would make the passive region active and make sure database and files are in sync.  
+An active-passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application's and users' needs. 
 
 ![Active/Active](images/solution39/hadr-active-standby-config.png)
 
-Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the standby data center is a time-consuming operation. Both recovery time objective (RTO) and recovery point objective (RPO) are higher compared to the active-active configuration.
+Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data centre is a time-consuming operation. Both recovery time objective (RTO) and recovery point objective (RPO) are higher compared to the active-active configuration.
 
 ### Disaster recovery with three regions
 
-In this era of *Always On* service with zero tolerance for downtime, customers expect every business service to remain accessible around the clock anywhere in the world. A cost-effective strategy for enterprises involves architecting your infrastructure for continuous availability rather than building disaster recovery infrastructures.
+In today's era of "Always On" services with zero tolerance for downtime, customers expect every business service to remain accessible around the clock anywhere in the world. A cost-effective strategy for enterprises involves architecting your infrastructure for continuous availability rather than building disaster recovery infrastructures.
 
-A three data centers topology provides greater resiliency and availability than two data centers. It can offer better performance by spreading the load more evenly across the data centers. A variant of this is to deploy two applications in one data center and deploy the third application in the second data center, if the enterprise has only two data centers. Alternatively, you can deploy business logic and presentation layers in the 3-active topology and deploy the data layer in the 2-active topology.
+Using three data centers provides greater resiliency and availability than two. It can also offer better performance by spreading the load more evenly across data centers. If the enterprise has only two data centers, a variant of this is to deploy two applications in one data center and deploy the third application in the second data center. Alternatively, you can deploy business logic and presentation layers in the 3-active topology and deploy the data layer in the 2-active topology.
 
 #### Active-active-active (3-active) configuration
 
@@ -108,20 +108,15 @@ For more on disaster recovery click [here](https://www.ibm.com/cloud/garage/cont
 
 ### Multi-regions architectures
 
-Multi-region architecture is to deploy the application across multiple regions where multiple copies of the application deployed on each region.  
+In a multi-region architecture, an application is deployed to different locations where each region runs an identical copy of the application. 
 
 A region is a specific geographical location where you can deploy apps, services, and other IBM® Cloud resources. [IBM Cloud regions](https://console.bluemix.net/docs/containers/cs_regions.html#bluemix_regions) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
 
-
-Additionally, in a multi-region architecture, a Global load balancer required in order to distribute traffic between regions. To achieve that, the Cloud Internet Services can be used for the load balancing. 
-
-Multi-regions apps means having the app deployed across multiple regions, one copy of the app within each region, with this then you would require to have a Global load balancer something like `Cloud Internet Services` to distribute traffic between regions. 
-
-![Regions](images/solution39/regions-mz.png)
+Additionally, in a multi-region architecture, a Global load balancer is required in order to distribute traffic between regions. To achieve that, the [Cloud Internet Services](https://console.bluemix.net/catalog/services/internet-services)s can be used for the load balancing. 
 
 ### Multi-zones within regions architectures
 
-Building multi-zone regions applications mean having your application deployed across zones within a region and then you may also have two or three regions. 
+Building multi-zones regions applications mean having your application deployed across zones within a region and then you may also have two or three regions. 
 
 With Multi-zone region architecture with you would require to have a local load balancer to distribute traffic locally between zones in a region, and then if a second region is set up then a global load balancer distributes traffic between the regions. 
 
@@ -129,44 +124,46 @@ With Multi-zone region architecture with you would require to have a local load 
 
 There are many reasons to why you would want to have a multi-region architecture, here are the top three:
 
-1. Improve latency for end-users
-2. Disaster recovery
-3. Business requirements
+1. Improve latency for end-users - speed is the key, the closer your backend origin is to end-users, the better the experience for users and the faster.
+2. Disaster recovery - when the active region failover, then have a backup region and quickly recover. 
+3. Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometres. Therefore, those in such case you have have to store data in multiple regions. 
 
 You can learn more about regions and zones [here](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-zones).
 
-## Cloud Foundry apps
+## Compute Options available 
 
-Cloud Foundry offers the capability to achieve deployment of multi-region architecture, also using a [continuous delivery](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions with pipeline testing and deployment. The architecture for Cloud Foundry multi-region looks like this. 
+In this section, you will discover the different compute options available in IBM Cloud. For each of the compute options listed, you been given an architecture digram with direct link taken you to the solution tutorial for deploying the architecture. 
+
+Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the compute option selected. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this solution tutorial, [databases](databases, and non-database-services), and [non-database-services](#databaseservices) are covered in detail.
+
+### 1.0 Cloud Foundry apps 
+
+Cloud Foundry offers the capability to achieve deployment of a multi-region architecture, also using a [continuous delivery](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions with pipeline testing and deployment. The architecture for Cloud Foundry multi-region looks like this. 
 
 ![CF-Architecture](images/solution39/CF2-Architecture.png)
 
 **Deploy above architecture by following the [solution tutorial here.](multi-region-webapp.html)** 
 
-Note: the architecture above does not have databases or other services, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this tutorial, [databases](databases, and non-database-services), and [non-database-services](#databaseservices) are covered in detail.
+### 2.0 Cloud Foundry Enterprise Environment
 
-## Cloud Foundry Enterprise Environment
+In the last section, you reviewed how to deploy a multi-region app to the public Cloud Foundry. The next step is to look at Cloud Foundry Enterprise Environment (CFEE). CFEE short for `Cloud Foundry Enterprise Environment` offers all the same functionalities like public Cloud Foundry but with additional features.
 
-In the prevues section, you reviewed how to deploy a mulit-region app to public Cloud Foundry. The next step would be to look at the Enterprise edition of Cloud Foundry in which named `Cloud Foundry Enterprise Environment`.
+**Cloud Foundry Enterprise Environment (CFEE)** allows you to instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of CFEE run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services. With this in place, learn how to plan for a multi-region architecture when using Cloud Foundry Enterprise Environment. 
 
-**Cloud Foundry Enterprise Environment (CFEE)** is where you can instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of the CFEE service run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services. With this in place, learn how to plan for a multi-region architecture when using Cloud Foundry Enterprise Environment. 
+A multi-region architecture using Cloud Foundry Enterprise Environment is below.![VM-Architecture](images/solution39/CFEE-Architecture.png)
 
-CFEE short for `Cloud Foundry Enterprise Environment` offers all the same functionalities like public Cloud Foundry but with additional features.
+Deploying this architecture requires the following: 
 
-A multi-region architecture using Cloud Foundry Enterprise Environment look like this.![VM-Architecture](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution39/CFEE-Architecture.png)
-
-To deploy an architecture like above, you would require to do the following: 
-
-- Setup a two CFEE orgs, one on each region. 
+- Setup two CFEE instances - one in each region.
 - Create and bind the services to the CFEE account. 
 - Push the apps targeting the CFEE API endpoint. 
-- Setup database replication, the same like you would do for public Cloud Foundry. 
+- Setup database replication, just as you would on public Cloud Foundry. 
 
-Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md) where it will take you deploying a microservice based application to CFEE. Once deployed to one CFEE account, then you would require to redeploy to a second region and attach the internet services in front of the two CFEE account to load balance the traffic. 
+Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md) where it will take you deploying a microservice based application to CFEE. Once deployed to one CFEE account, then you would require to redeploy to a second region and attach the [Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) in front of the two CFEE account to load balance the traffic. 
 
 You can learn more on IBM Cloud Foundry Enterprise Environment [here](https://console.bluemix.net/docs/cloud-foundry/index.html#about).
 
-## Kubernetes apps
+### 3.0 Kubernetes apps
 
 With Kubernetes, you can achieve multi-zones within regions architecture, this can be active/active use case. When implementing a solution with Kubernetes Service, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
 
@@ -174,41 +171,48 @@ The Kubernetes multi-region architecture looks like this.
 
 ![Kubernetes](images/solution39/Kub-Architecture.png)
 
+1. The developer builds Docker images for the application.
+2. The images are pushed to IBM Cloud Container Registry in Dallas and London.
+3. The application is deployed to Kubernetes clusters in both locations.
+4. End-users access the application.
+5. Cloud Internet Services is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
+
 **Deploy above architecture by following the [solution tutorial here.](multi-region-k8s-cis.html)** 
 
-The above architecture deploys a Kubernetes cluster in both regions, but without a database. The next steps can be to add a database and some Watson services. More on that later.
+### 4.0 Cloud Functions apps
 
-## Cloud Functions apps
-
-With Cloud Functions, you can achieve multi-region architecture. The architecture for Cloud Functions multi-region looks like this.
+Cloud Functions is available in multiple IBM Cloud locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with IBM Cloud Internet Services (CIS), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end. The architecture for Cloud Functions multi-region looks like this.
 
  ![Functions-Architecture](images/solution39/Functions-Architecture.png)
 
+1. Users access the application. The request goes through Internet Services.
+2. Internet Services redirect the users to the closest healthy API back-end.
+3. Certificate Manager provides the API with its SSL certificate. The traffic is encrypted end-to-end.
+4. The API is implemented with Cloud Functions.
+
 **Deploy above architecture by following the [solution tutorial here.](multi-region-serverless.html)** 
 
-## Bare Metal and Virtual Servers
+### 5.0 Bare Metal and Virtual Servers
 
-IBM Cloud Virtual Servers and Bare Metal offers the capability to achieve a multi-region architecture. When preparing for such architecture using Virtual Servers and Bare Metal you need to think about things like, file storage where to store files, backups, recovery and databases, selecting between a database as service or installing a database on a virtual server. 
+IBM Cloud Virtual Servers and Bare Metal offers the capability to achieve a multi-region architecture. You can provision servers on many available locations on IBM Cloud. ![server locations](images/solution39/ServersLocation.png)
 
-Below architecture demonstrates a deployment of a multi-region architecture using virtual servers with using the active/passive approach where one region is active and the second region is passive. 
+When preparing for such architecture using Virtual Servers and Bare Metal you need to think about the following: file storage, backups, recovery and databases, selecting between a database as service or installing a database on a virtual server. 
 
-The components required for such architecture: 
-
-- Global load balancer directing traffic to the active region always. 
-- Cloud/Local load balancer distributing traffic between virtual servers in different zones within a region. 
-- Databases deployed on a virtual server, meaning you would configure the database and setup replications and backups between regions. The alternative would be use a database-as-service, a topic discussed later in the tutorial.
-- File storage to store the application images and files, File storage offers the capability to take a snapshot at a given time and date, this snapshot then can be reused within another region, something in which you would do manually. 
+The below architecture demonstrates deployment of a multi-region architecture using Virtual Servers in an active/passive architecture where one region is active and the second region is passive. 
 
 ![VM-Architecture](images/solution39/vm-Architecture2.png)
 
+The components required for such architecture: 
+
+1. Users access the application through IBM Cloud Internet Services (CIS).
+2. CIS routes traffic to a healthy location.
+3. Within a location a load balancer redirects traffic to a server.
+4. Databases deployed on a virtual server, meaning you would configure the database and setup replications and backups between regions. The alternative would be use a database-as-service, a topic discussed later in the tutorial.
+5. File storage to store the application images and files, File storage offers the capability to take a snapshot at a given time and date, this snapshot then can be reused within another region, something in which you would do manually. 
+
 **Deploy above architecture by following the [solution tutorial here.](highly-available-and-scalable-web-application.html)** 
 
-Other items to factor for: 
-
-- File storage, where do you store files and images, how these files are synced and backed up between servers. To resolve that you can look at the IBM File Storage service to store the application files and images, then this can be used between zones within a region. Using File Storage you can also take snapshot backups to be used by the passive region. You would require to do manually reimport the snapshot backup into the passive region. 
-- Databases, you have the option to install the database directly on the server or use the Database-as-service approach. With using the database-as-a-service approach, you don't need to worry about backups and replications. A database like Cloudant fully supports a multi-region architecture. More on that in the later sections.
-
-## Databases and application files 
+## Databases and application files
 
 {:databaseservices}
 
@@ -227,13 +231,13 @@ Database-as-service comes with many advantages that are too good to avoid. Using
 **Prepping for multi-region architecture**
 
 - Does the database support Multi-Region architecture?
-- How's does replication handle between multiple database services across regions? 
-- How data is backed up
-- What are the disaster recovery approaches for each.
+- How is replication handled between multiple database services across regions?
+- How is the data backed up?
+- What are the disaster recovery approaches for each?
 
 More on cloud database-as-service can be found [here](https://www.ibm.com/cloud/learn/what-is-cloud-database). 
 
-### Cloudant
+### 1.0 Cloudant
 
 IBM Cloudant is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed IBM Cloud service, Cloudant elastically scales throughput and storage independently. Cloudant is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
 
@@ -241,7 +245,7 @@ Cloudant offers many features like, `fully Managed`, `security`, `global availab
 
 #### Does Cloudant support multi-region?
 
-Yes, you can configure replication in IBM Cloudant using an 'active-active' or 'active-passive' topology across data centres. The following diagram shows a typical configuration that uses two IBM Cloudant accounts, one in each region: ![active-active](images/solution39/active-active.png)
+Yes, you can configure replication in IBM Cloudant using an active/active or active/passive topology across data centres. The following diagram shows a typical configuration that uses two IBM Cloudant accounts, one in each region:![active-active](images/solution39/active-active.png)
 
 It is helpful to remember:
 
@@ -283,7 +287,7 @@ Your data is important and valuable. You want to protect your data, to help ensu
 
 To dive deeper into the three levels of protection, check out the Cloudant backup and recovery docs [here](https://console.bluemix.net/docs/services/Cloudant/guides/disaster-recovery-and-backup.html#disaster-recovery-and-backup).
 
-### Db2, Db2 hosted and Db2 Warehouse
+### 2.0 Db2, Db2 hosted and Db2 Warehouse
 
 IBM Cloud offers a selection range of [Db2 databases](https://console.bluemix.net/catalog/?search=db2h), these are:
 
@@ -324,7 +328,7 @@ Import data:
 
 - You can use [IBM Lift CLI](https://lift.ng.bluemix.net/) to import data into Db2 on Cloud.
 
-### IBM Cloud Databases for PostgreSQL and Redis 
+### 3.0 IBM Cloud Databases for PostgreSQL and Redis 
 
 The [IBM Cloud Databases for PostgreSQL](https://console.bluemix.net/catalog/services/databases-for-postgresql) and [IBM Cloud Databases for Redis](https://console.bluemix.net/catalog/services/databases-for-redis) are database-as-a-service products that are fully managed, highly available, and built from the ground up with enterprise security in mind. They are scalable, cost-efficient, and readily usable for enterprise application development.
 
@@ -357,7 +361,7 @@ Refer to the [PostgreSQL](https://console.bluemix.net/docs/services/databases-fo
 
 IBM® Cloud Databases offers automatic back-ups to cross-regional Cloud Object Storage. Daily and on-demand backups are available for 30 days. Each backup is labeled with its type, and when the backup was taken. Click the backup to reveal the full ID of the backup and a command that you can use to restore a backup with the IBM Cloud CLI. More on backups can be found [here](https://console.bluemix.net/docs/services/databases-for-postgresql/dashboard-backups.html#backups) for PostgreSQL and [here](https://console.bluemix.net/docs/services/databases-for-redis/dashboard-backups.html#backups) for Redis.
 
-### Cloud Object Storage
+### 4.0 Cloud Object Storage
 
 A COS service instance is global, buckets within a COS instance are where it starts to talk about regions. Information stored with IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. This service makes use of the distributed storage technologies provided by the IBM Cloud Object Storage System (formerly Cleversafe).
 
@@ -381,13 +385,13 @@ For more detailed explanation COS resiliency options, checkout the COS docs [her
 
 With **Cross Region** and **Regional** buckets, data is automatically replicated across multiple regions within a geo (example for Cross Region US, content goes to Dallas, San Jose, Washington).
 
-You have the option to manually synchronized content across buckets in different regions. 
+You have the option to manually synchronize content across buckets in different regions. 
 
 #### Backup and restore
 
 IBM Cloud Object Storage provides durable, secure and cost effective cloud storage for a variety of backup needs. Protect the data in your datacenter by backing it up to IBM Cloud Object Storage to replace tape, streamline backup operations, and simplify archival processes. Most major backup software vendors integrate directly with IBM Cloud Object Storage and offer turnkey data backup solutions. For data in the cloud, leverage the cloud-native capabilities and the low cost of Cloud Object Storage for an automated, application-consistent backup and recovery solution. For more check out the [backup and recovery](https://www.ibm.com/cloud/object-storage/backup-and-recovery) docs.
 
-### File Storage
+### 5.0 File Storage
 
 IBM File Storage for IBM Cloud is persistent, fast, and flexible network-attached, NFS-based File Storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. File Storage shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
@@ -397,7 +401,7 @@ Some of file storage features are things like `Snapshots`, `Replication`, `Concu
 
 Yes it can be configured for active/passive use case. In the active/passive architecture file storage can be used easily, you can attach file storage service to your servers to store data backups, application files like images and videos, these images and files can then be used within different servers in the same region. 
 
-Within adding a second region, you would then use the snapshots feature of File Storage where you would take a snapshot automatically or manually, and then reuse it within the second passive region. 
+When adding a second region, use the snapshots feature of File Storage to take a snapshot automatically or manually, and then reuse it within the second passive region. 
 
 #### How does replication work?
 
