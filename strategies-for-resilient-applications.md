@@ -68,9 +68,7 @@ To facilitate disaster recovery, two widely accepted architectures are used: act
 
 #### Active-active configuration
 
-In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions' in real time.
-
-![Active/Active](images/solution39/Active-active.png)
+In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions' in real time.![Active/Active](images/solution39/Active-active-case.png)
 
 
 
