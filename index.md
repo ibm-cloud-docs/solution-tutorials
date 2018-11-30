@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-29"
+lastupdated: "2018-11-30"
 
 ---
 
@@ -236,7 +236,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Regardless of the compute option: Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud&#x27;s capabilities to build resilient solutions.</p>
+                    <p>Regardless of the Compute option: Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution39/Architecture.png" alt="Architecture diagram for the solution Strategies for resilient applications"/>

@@ -53,7 +53,7 @@
             {
                 "name": "Strategies for resilient applications",
                 "url": "strategies-for-resilient-applications.html",
-                "description": "Regardless of the compute option: Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud's capabilities to build resilient solutions.",
+                "description": "Regardless of the Compute option: Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability.",
                 "imgSrc": "images/solution39/Architecture.png",
                 "tags": [
                     "Kubernetes",
