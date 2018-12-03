@@ -31,7 +31,7 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 ## Before you begin
 {: #prereqs}
 
-* Install [{{site.data.keyword.cloud_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+* Install [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
 * Install [cURL](https://curl.haxx.se/)
 * Install [Node.js](https://nodejs.org/)
 * Install [json2csv](https://www.npmjs.com/package/json2csv) using the command `npm install -g json2csv`
@@ -40,7 +40,7 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 ## Background
 {: #background}
 
-Prior to executing commands that inventory and detail {{site.data.keyword.cloud_notm}} usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded. A helpful visualization of the below artifacts can be found in the [Managing your account documentation](https://console.bluemix.net/docs/account/account_overview.html#overview).
+Prior to executing commands that inventory and detail {{site.data.keyword.cloud_notm}} usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded. A helpful visualization of the below artifacts can be found in the [Managing your account documentation](https://{DomainName}/docs/account/account_overview.html#overview).
 
 ### Cloud Foundry
 Cloud Foundry is an open-source, platform-as-a-service (PaaS) on {{site.data.keyword.cloud_notm}} that enables you to deploy and scale applications and **Services** without managing servers. Cloud Foundry organizes applications and services into orgs or spaces.  An **Org** is a development account that one or many users can own and use. An org can contain multiple spaces. Each **Space** provides users with access to a shared location for application development, deployment, and maintenance.
@@ -57,7 +57,7 @@ The aforementioned artifacts are associated with an **Account** for billing purp
 ## Assign permissions
 To view Cloud inventory and usage, you will need the appropriate roles assigned by the account administrator. If you are the account administrator, proceed to the next section.
 
-1. The account administrator should login to {{site.data.keyword.cloud_notm}} and access the [**Identity & Access Users**](https://console.bluemix.net/iam/#/users) page.
+1. The account administrator should login to {{site.data.keyword.cloud_notm}} and access the [**Identity & Access Users**](https://{DomainName}/iam/#/users) page.
 2. The account administrator can select your name from the list of users in the account to assign appropriate permissions.
 3. On the **Access policies** tab, click the **Assign Access** button and perform the following changes.
     1. Select the **Assign access within a resource group** tile. Select the **Resource group(s)** to be granted access to and apply the **Viewer** role. Finish by clicking the **Assign** button. This role is required for the `resource groups` and `billing resource-group-usage` commands.
@@ -72,10 +72,10 @@ As development teams begin using Cloud services, managers will benefit from know
 - Which teams are using a service that requires a critical fix or will soon be deprecated?
 - How can teams review their service instances to minimize sprawl?
 
-Search is not limited to services and resources. You can also query Cloud artifacts such as Cloud Foundry orgs and spaces, resource groups, resource bindings, aliases, etc. For more examples, see the [ibmcloud resource search](https://console.bluemix.net/docs/cli/reference/ibmcloud/cli_resource_group.html#ibmcloud_resource_search) documentation.
+Search is not limited to services and resources. You can also query Cloud artifacts such as Cloud Foundry orgs and spaces, resource groups, resource bindings, aliases, etc. For more examples, see the [ibmcloud resource search](https://{DomainName}/docs/cli/reference/ibmcloud/cli_resource_group.html#ibmcloud_resource_search) documentation.
 {:tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
     ibmcloud login
     ```
@@ -114,11 +114,11 @@ Search is not limited to services and resources. You can also query Cloud artifa
 
 Once management is aware of the services that teams are using, the next often-asked question is, "What does it cost to operate these services?" The most straightforward means of determining usage and cost is by reviewing the {{site.data.keyword.cloud_notm}} Usage Dashboard.
 
-1. Login to {{site.data.keyword.cloud_notm}} and access the [Account Usage Dashboard](https://console.bluemix.net/account/usage).
+1. Login to {{site.data.keyword.cloud_notm}} and access the [Account Usage Dashboard](https://{DomainName}/account/usage).
 2. From the **Groups** drop-down menu, select a Cloud Foundry Org to view service usage.
 3. For a given **Service Offering**, click **View Instances** to view the service instances that have been created.
 4. On the following page, choose an instance and click **View Instance**. The resulting page provides details about the instance such as Org, Space and Location as well as individual line items that build total cost.
-5. Using the breadcrumb, revisit the [Usage Dashboard](https://console.bluemix.net/account/usage).
+5. Using the breadcrumb, revisit the [Usage Dashboard](https://{DomainName}/account/usage).
 6. From the **Groups** drop-down menu, change the selector to **Resource Groups** and select a group such as **default**.
 7. Conduct a similar review of available instances.
 

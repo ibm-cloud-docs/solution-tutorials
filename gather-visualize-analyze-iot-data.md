@@ -28,12 +28,12 @@ This tutorial walks you through setting up an IoT device, gathering data in the 
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.iot_full}}](https://console.bluemix.net/catalog/services/internet-of-things-platform)
-* [Node.js Application](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
-* [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience) with Spark service and {{site.data.keyword.cos_full_notm}}
-* [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
+* [{{site.data.keyword.iot_full}}](https://{DomainName}/catalog/services/internet-of-things-platform)
+* [Node.js Application](https://{DomainName}/catalog/starters/sdk-for-nodejs)
+* [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience) with Spark service and {{site.data.keyword.cos_full_notm}}
+* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -58,7 +58,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 To begin, you will create Internet of Things Platform service - The hub which can manage devices, securely connect and **collect data**, and make historical data available for visualizations and applications.
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [**Internet of Things Platform**](https://console.bluemix.net/catalog/services/internet-of-things-platform) under the **Internet of Things** section.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [**Internet of Things Platform**](https://{DomainName}/catalog/services/internet-of-things-platform) under the **Internet of Things** section.
 2. Enter `IoT demo hub` as the service name, click **Create** and **Launch** the dashboard.
 3. From the side menu, select **Security > Connection Security** and choose **TLS Optional** under **Default Rule** > **Security Level** and click **Save**.
 4. From the side menu, select **Devices** > **Device Types**  and **+ Add Device Type**.
@@ -124,7 +124,7 @@ Next, you will create a board and cards to display device data in the dashboard.
    ![](images/solution16/board.png)
 
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant) named `iot-db`.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) named `iot-db`.
 2. Under **Connections**:
    1. **Create connection**
    1. Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
@@ -146,7 +146,7 @@ Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. Afte
 In this section, you will use the Jupyter Notebook that is available in the IBM {{site.data.keyword.DSX_short}} service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
 
 ### Create a new project
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and under **AI**, select [**{{site.data.keyword.DSX_short}}**](https://console.bluemix.net/catalog/services/data-science-experience).
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and under **AI**, select [**{{site.data.keyword.DSX_short}}**](https://{DomainName}/catalog/services/data-science-experience).
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
 3. Create a Project > Select **Data Science** > Click **Create project** and enter `Detect Anomaly` as the **Name** of the project.
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
@@ -209,13 +209,13 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 ## Remove resources
 {:removeresources}
 
-1. Navigate to [Dashboard](https://console.bluemix.net/dashboard/) > choose the Location, Org and Space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
+1. Navigate to [Dashboard](https://{DomainName}/dashboard/) > choose the Location, Org and Space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
 2. Under **Services**, delete the respective Internet of Things Platform, Apache Spark, {{site.data.keyword.cloudant_short_notm}} and {{site.data.keyword.cos_full_notm}} services which you created for this tutorial.
 
 ## Related content
 {:related}
 
-* [Build, deploy, test, and retrain a predictive machine learning model](https://console.bluemix.net/docs/tutorials/create-deploy-retrain-machine-learning-model.html#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
+* [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/tutorials/create-deploy-retrain-machine-learning-model.html#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
 * Overview of [IBM {{site.data.keyword.DSX_short}}](https://datascience.ibm.com/docs/content/getting-started/overview-ws.html?context=analytics)
 * Anomaly Detection [Jupyter Notebook](https://github.com/IBM-Cloud/iot-device-phone-simulator/blob/master/anomaly-detection/Anomaly-detection-DSX.ipynb)
 * [Understanding z-score](https://en.wikipedia.org/wiki/Standard_score)

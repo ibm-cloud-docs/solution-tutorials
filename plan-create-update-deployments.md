@@ -39,12 +39,12 @@ Multiple environments are pretty common in a project to support the different ph
 
 This tutorial uses the following products:
 * [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
-* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-* [Identity and Access Management](https://console.bluemix.net/iam/#/users)
-* [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://console.bluemix.net/docs/cli/index.html)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+* [Identity and Access Management](https://{DomainName}/iam/#/users)
+* [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://{DomainName}/docs/cli/index.html)
 * [HashiCorp Terraform](https://www.terraform.io/)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -63,7 +63,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 ## Overview of the available tools
 {: #tools}
 
-The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://console.bluemix.net/docs/cli/index.html). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
+The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://{DomainName}/docs/cli/index.html). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
 
 Another tool introduced in [this tutorial](./infrastructure-as-code-terraform.html) is [Terraform](https://www.terraform.io/) by HashiCorp. Quoting HashiCorp, *Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.* It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
@@ -279,7 +279,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
 
-1. Follow [these instructions](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#download_install) to install the CLI
+1. Follow [these instructions](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html#download_install) to install the CLI
 1. Validate the installation by running:
    ```sh
    ibmcloud
@@ -312,7 +312,7 @@ If you have not done it yet, clone the tutorial repository:
 
 ### Set Platform API key
 
-1. If you don't already have one, obtain a [Platform API key](https://console.bluemix.net/iam/#/apikeys) and save the API key for future reference.
+1. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/#/apikeys) and save the API key for future reference.
 
    > If in later steps you plan on creating a new Cloud Foundry organization to host the deployment environments, make sure you are the owner of the account.
 1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command
@@ -493,7 +493,7 @@ For the *Development* environment as defined in [this tutorial](./users-teams-ap
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
 
-Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://console.bluemix.net/docs/iam/groups.html#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
+Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/iam/groups.html#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
 
 For the *Developer* role in the *Development* environment, this translates to:
 

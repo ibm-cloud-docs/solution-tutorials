@@ -28,10 +28,10 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.virtualmachinesshort}}
-](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
-* [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
+](https://{DomainName}/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -169,22 +169,22 @@ In this section, you will learn the how to create a LAMP stack server from the t
 
 {: #modify}
 
-In this section, you are going to look at how to scale the virtual server resource and add an [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage) service to your infrastructure environment.
+In this section, you are going to look at how to scale the virtual server resource and add an [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage) service to your infrastructure environment.
 
 1. Edit the `vm.tf` file to increase the following and the save the file.
  - Increase number of CPU cores to 4 cores
  - Increase RAM(memory) to 4096
  - Increase disk size to 100GB
 
-2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable name for the org name and space name, then these two variable names used to retrieve the space guid in which needed to create the service. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, then you need a space guid, service fully qualified name and plan type. The code below will create a premium plan given it is a pay-as-you-go plan anyway. You can also use the Lite plan, but note that the Lite plan is limited to only one service per account. 
+2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable name for the org name and space name, then these two variable names used to retrieve the space guid in which needed to create the service. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, then you need a space guid, service fully qualified name and plan type. The code below will create a premium plan given it is a pay-as-you-go plan anyway. You can also use the Lite plan, but note that the Lite plan is limited to only one service per account. 
 
    ```
    variable "org_name" {
-     description = "Enter your IBM Cloud org name, you can get your org name under your IBM Cloud dashboard account: https://console.bluemix.net/dashboard"
+     description = "Enter your IBM Cloud org name, you can get your org name under your IBM Cloud dashboard account: https://{DomainName}/dashboard"
    }
 
    variable "space_name" {
-     description = "Enter your IBM Cloud space name, you can get your space name under your IBM Cloud dashboard account: https://console.bluemix.net/dashboard"
+     description = "Enter your IBM Cloud space name, you can get your space name under your IBM Cloud dashboard account: https://{DomainName}/dashboard"
    }
 
    data "ibm_space" "space" {
@@ -236,7 +236,7 @@ In this section, you are going to verify the VM and {{site.data.keyword.cos_shor
 
 1. From the **{{site.data.keyword.Bluemix_notm}} Dashboard**, you should see an instance of the {{site.data.keyword.cos_full_notm}} service been created for you and ready for use. ![object-storage](images/solution10/ibm-cloud-object-storage.png)
 
-   More info on {{site.data.keyword.cos_full_notm}} can be found [here](https://console.bluemix.net/docs/services/ibm-cos/index.html).
+   More info on {{site.data.keyword.cos_full_notm}} can be found [here](https://{DomainName}/docs/services/ibm-cos/index.html).
 
 ## Remove resources
 {: #deleteresources}
@@ -252,7 +252,7 @@ Delete resources using the following command:
 ## Related content
 
 - [Terraform](https://www.terraform.io/)
-- [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/ibm-cos/index.html)
+- [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/ibm-cos/index.html)
 - [{{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/)
 - [Accelerate delivery of static files using a CDN - {{site.data.keyword.cos_full_notm}}](static-files-cdn.html)
 

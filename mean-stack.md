@@ -33,10 +33,10 @@ This tutorial walks you through the creation of a web application using the popu
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
-- [{{site.data.keyword.composeForMongoDB}}](https://console.bluemix.net/catalog/services/compose-for-mongodb)
-- [{{site.data.keyword.runtime_nodejs_notm}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)
+- [{{site.data.keyword.composeForMongoDB}}](https://{DomainName}/catalog/services/compose-for-mongodb)
+- [{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)
 
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -54,7 +54,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 {: #prereqs}
 
 1. [Install Git](https://git-scm.com/)
-2. [Install Bluemix Command Line Tool](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+2. [Install Bluemix Command Line Tool](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
 
 
 And to develop and run the application locally:
@@ -104,7 +104,7 @@ In this section, you will run a local MongoDB database, clone a MEAN sample code
 
 {: #createdatabase}
 
-In this section, you will create a {{site.data.keyword.composeForMongoDB}} database in the cloud. {{site.data.keyword.composeForMongoDB}} is database-as-a-service that usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).  To create {{site.data.keyword.composeForMongoDB}} follow the steps below.
+In this section, you will create a {{site.data.keyword.composeForMongoDB}} database in the cloud. {{site.data.keyword.composeForMongoDB}} is database-as-a-service that usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [IBM cloud catalog](https://{DomainName}/catalog/?category=data).  To create {{site.data.keyword.composeForMongoDB}} follow the steps below.
 
 {: shortdesc}
 
@@ -116,9 +116,9 @@ In this section, you will create a {{site.data.keyword.composeForMongoDB}} datab
   ```
   {: codeblock}
 
-  You can find more CLI commands [here.](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+  You can find more CLI commands [here.](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
 
-2. Create an instance of {{site.data.keyword.composeForMongoDB}}. This can also be done using the [console UI](https://console.bluemix.net/catalog/services/compose-for-mongodb). The service name must be named **mean-starter-mongodb** as the application is configured to look for this service by this name.
+2. Create an instance of {{site.data.keyword.composeForMongoDB}}. This can also be done using the [console UI](https://{DomainName}/catalog/services/compose-for-mongodb). The service name must be named **mean-starter-mongodb** as the application is configured to look for this service by this name.
 
   ```sh
   ibmcloud cf create-service compose-for-mongodb Standard mean-starter-mongodb

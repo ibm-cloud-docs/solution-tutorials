@@ -103,5 +103,5 @@ Additional routing configuration on the VRA will be required to create dynamic r
 {: #related}
 
 - [{{site.data.keyword.BluDirectLink}}
-]( https://console.bluemix.net/docs/infrastructure/direct-link/subnet-configuration.html#configure-ibm-cloud-direct-link)
-- [Virtual Private Cloud (VPC)](https://console.bluemix.net/docs/infrastructure/vpc/about.html#cloud-native-workloads-generally-require-)
+]( https://{DomainName}/docs/infrastructure/direct-link/subnet-configuration.html#configure-ibm-cloud-direct-link)
+- [Virtual Private Cloud (VPC)](https://{DomainName}/docs/infrastructure/vpc/about.html#cloud-native-workloads-generally-require-)

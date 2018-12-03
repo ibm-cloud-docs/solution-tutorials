@@ -37,18 +37,18 @@ This tutorial walks you through the creation of a mobile starter application, ad
 {:#products}
 
 This tutorial uses the following products:
-   * [{{site.data.keyword.pushfull}}](https://console.bluemix.net/catalog/services/push-notifications)
+   * [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
 
 ## Before you begin
 {: #prereqs}
 
-1. [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications.
+1. [Apple Developers![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
 ## Create a mobile app from basic Swift starter kit
 {: #get_code}
 
-1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard) to create your `App` from pre-defined `Starter Kits`.
+1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard) to create your `App` from pre-defined `Starter Kits`.
 2. Click on **Starter Kits** and scroll down to select **Basic** Starter Kit.
     ![](images/solution6/mobile_dashboard.png)
 3. Enter an app name which will also be the Xcode project and app name.
@@ -93,9 +93,9 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
 ### Registering an App ID
 
    The App ID (the bundle identifier) is a unique identifier that identifies a specific application. Each application requires an App ID. Services like the {{site.data.keyword.mobilepushshort}} service are configured to the App ID.
-   Ensure that you have an [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account. This is a mandatory prerequisite.
+   Ensure that you have an [Apple Developers![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account. This is a mandatory prerequisite.
 
-   1. Go to the [Apple Developer![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
+   1. Go to the [Apple Developer![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
    2. Go to `Identifiers` > App IDs section.
    3. In the `Registering App IDs` page, provide the App name in the App ID Description Name field. For example: ACME {{site.data.keyword.mobilepushshort}}. Provide a string for the App ID Prefix.
    4. For the App ID Suffix, choose `Explicit App ID` and provide a Bundle ID value. It is recommended that you provide a reverse domain-name style string. For example: com.ACME.push.
@@ -158,7 +158,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
 
    1. Go to the [Apple Developer](https://developer.apple.com/), click `Member Center`, and select `Certificates, IDs & Profiles`.
    2. Double-click the downloaded provisioning profile to install it into Xcode.
-     After obtaining the credentials, the next step is to [Configure a service instance](https://console.bluemix.net/docs/services/mobilepush/push_step_2.html).
+     After obtaining the credentials, the next step is to [Configure a service instance](https://{DomainName}/docs/services/mobilepush/push_step_2.html).
 
 ### Configure the service instance
 
@@ -202,6 +202,6 @@ The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities t
 ## Related Content
 {: #related_content}
 
-- [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
-- [{{site.data.keyword.mobilepushshort}} REST APIs](https://console.bluemix.net/docs/services/mobilepush/push_restapi.html#push-api-rest)
-- [Security in {{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
+- [Tag-based notifications](https://{DomainName}/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
+- [{{site.data.keyword.mobilepushshort}} REST APIs](https://{DomainName}/docs/services/mobilepush/push_restapi.html#push-api-rest)
+- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/services/mobilepush/push_security.html#overview-push)

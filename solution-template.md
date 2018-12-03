@@ -30,11 +30,11 @@ This tutorial...
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -52,14 +52,14 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://console.bluemix.net/docs/cli/index.html#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview).
 
 ## Create services
 {: #setup}
 
 In this section, you will create the services required to ...
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#install_use).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html#install_use).
     ```sh
     ibmcloud login
     ```
@@ -68,11 +68,11 @@ In this section, you will create the services required to ...
     ibmcloud target --cf
     ```
     {: pre}
-2. Create an instance of [Service A](https://console.bluemix.net/catalog/services/the-service-name).
+2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
   ```sh
   ibmcloud resource service-instance-create service-instance-name service-name lite global
   ```
-3. Create an instance of [Service B](https://console.bluemix.net/catalog/services/the-service-name).
+3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
 
 ## Solution Specific Section
 {: #section_one}

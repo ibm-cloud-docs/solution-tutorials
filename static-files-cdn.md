@@ -14,7 +14,7 @@ lastupdated: "2018-09-19"
 
 # Accelerate delivery of static files using a CDN
 
-This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
+This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
 
 Web applications have different types of content: HTML content, images, videos, cascading style sheets, JavaScript files, user-generated content. Some contents change often, others not so much, some are accessed very often by lot of users, others occasionally. As the audience for the application grows, you may want to offload serving these contents to another component, freeing resources for your main application. You may also want to have these contents served from a location close to your application users, wherever they are in the world.
 
@@ -34,10 +34,10 @@ There are many reasons why you would use a Content Delivery Network in these sit
 {: #services}
 
 This tutorial uses the following products:
-   * [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
-   * [{{site.data.keyword.cdn_full}}](https://console.bluemix.net/catalog/infrastructure/cdn-powered-by-akamai)
+   * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
+   * [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -78,7 +78,7 @@ To start, retrieve the application code:
 
 ![](images/solution3/Storage_Catalog.png)
 
-1. Go to the [catalog](https://console.bluemix.net/catalog/) in the console, and select [**Object Storage**](https://console.bluemix.net/catalog/services/cloud-object-storage) from the Storage section.
+1. Go to the [catalog](https://{DomainName}/catalog/) in the console, and select [**Object Storage**](https://{DomainName}/catalog/services/cloud-object-storage) from the Storage section.
 2. Create a new instance of {{site.data.keyword.cos_full_notm}}
 4. In the service dashboard, click **Create Bucket**.
 5. Set a unique bucket name such as `username-mywebsite` and click **Create**. Avoid dots (.) in the bucket name.
@@ -204,8 +204,8 @@ Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination w
 
 ## Related content
 
-[{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
+[{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
 
-[Manage Access to {{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/iam/overview.html#getting-started-with-iam)
+[Manage Access to {{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/iam/overview.html#getting-started-with-iam)
 
-[Getting Started with CDN](https://console.bluemix.net/docs/infrastructure/CDN/getting-started.html)
+[Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN/getting-started.html)

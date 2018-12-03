@@ -33,12 +33,12 @@ This tutorial walks you through the process setting up a continuous integration 
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
-- [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
-- [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-- [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery)
+- [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
+- [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+- [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)
 - Slack
 
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -55,8 +55,8 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 ## Before you begin
 {: #prereq}
 
-* [Install {{site.data.keyword.dev_cli_notm}}](https://console.bluemix.net/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
+* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry/registry_setup_cli_namespace.html).
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 ## Create development Kubernetes cluster
@@ -67,7 +67,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 To complete this tutorial you would need to select the **Paid** cluster of type **Standard**. You would be required to setup two clusters, one for development and one for production.
 {: shortdesc}
 
-1. Create the first development Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/launch). Later you will be required to repeat these steps and create a production cluster.
+1. Create the first development Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/containers-kubernetes/launch). Later you will be required to repeat these steps and create a production cluster.
 
    For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get.
    {:tip}
@@ -84,7 +84,7 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications, these starter applications can be created using the `ibmcloud dev create` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
-1. From the [{{site.data.keyword.cloud_notm}} console](https://console.bluemix.net), use the left side menu option and select [Web Apps](https://console.bluemix.net/developer/appservice/dashboard).
+1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [Web Apps](https://{DomainName}/developer/appservice/dashboard).
 2. Under **Start from the Web**, section click on the **Get Started** button.
 3. Select the `Express.js Basic` and then `Create Project` to create a Node.js starter application.
 4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
@@ -176,7 +176,7 @@ If you don't see your application updating, check the logs of the DEPLOY and BUI
 ## Security using Vulnerability Advisor
 {: #vulnerability_advisor}
 
-In this step, you will explore the [Vulnerability Advisor](https://console.bluemix.net/docs/services/va/va_index.html). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
+In this step, you will explore the [Vulnerability Advisor](https://{DomainName}/docs/services/va/va_index.html). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 1. Click on **Add Stage** and change MyStage to **Validate Stage** and then click on the JOBS  > **ADD JOB**.
@@ -210,7 +210,7 @@ In this step, you will explore the [Vulnerability Advisor](https://console.bluem
                                                               server private key.
    ```
 
-   You can see the detailed vulnerability assessments of all the scanned repositories [here](https://console.bluemix.net/containers-kubernetes/registry/private)
+   You can see the detailed vulnerability assessments of all the scanned repositories [here](https://{DomainName}/containers-kubernetes/registry/private)
    {:tip}
 
    The stage may fail saying the image *has not been scanned* if the scan for vulnerabilities takes more than 3 minutes. This timeout can be changed by editing the job script and increasing the number of iterations to wait for the scan results.
@@ -254,7 +254,7 @@ Done, you've now created a production cluster and configured the pipeline to pus
 ## Setup Slack notifications
 {: #setup_slack}
 
-1. Go back to view the list of [toolchains](https://console.bluemix.net/devops/toolchains) and select your toolchain, then click on **Add a Tool**.
+1. Go back to view the list of [toolchains](https://{DomainName}/devops/toolchains) and select your toolchain, then click on **Add a Tool**.
 2. Search for slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
     ![](images/solution21/configure_slack.png)
 3. For **Slack webhook**, follow the steps in this [link](https://my.slack.com/services/new/incoming-webhook/). You need to login with your Slack credentials and provide an existing channel name or create a new one.
@@ -284,16 +284,16 @@ Do you want to learn more? Here are some ideas of what you can do next:
 - [Analyze logs and monitor the health of Kubernetes applications using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
 - Add a testing environment and deploy it to a 3rd cluster.
 - Deploy the production cluster [across multiple locations](multi-region-webapp.html).
-- Enhance your pipeline with additional quality controls and analyics using [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights).
+- Enhance your pipeline with additional quality controls and analyics using [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
 
 ## Related Content
 {: #related}
 
 * End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](vm-to-containers-and-kubernetes.html).
 
-* [Security](https://console.bluemix.net/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
+* [Security](https://{DomainName}/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
 
-* Toolchain [integrations](https://console.bluemix.net/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
+* Toolchain [integrations](https://{DomainName}/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
 
 * Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](kubernetes-log-analysis-kibana.html).
 

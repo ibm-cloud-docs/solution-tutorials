@@ -41,12 +41,12 @@ Additionally, setting up logging and monitoring in {{site.data.keyword.container
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
-- [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
-- [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-- [{{site.data.keyword.loganalysislong_notm}}](https://console.bluemix.net/catalog/services/log-analysis)
-- [{{site.data.keyword.monitoringshort_notm}}](https://console.bluemix.net/catalog/services/monitoring)
+- [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
+- [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+- [{{site.data.keyword.loganalysislong_notm}}](https://{DomainName}/catalog/services/log-analysis)
+- [{{site.data.keyword.monitoringshort_notm}}](https://{DomainName}/catalog/services/monitoring)
 
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -64,14 +64,14 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 {: #prereq}
 
-* [Install {{site.data.keyword.dev_cli_notm}}](https://console.bluemix.net/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
+* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry/registry_setup_cli_namespace.html).
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
 {: #create_cluster}
 
-1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
+1. Create **Containers in Kubernetes Clusters** from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/containers-kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
 
    Log forwarding is *not* enabled for the **Free** cluster.
    {:tip}
@@ -110,18 +110,18 @@ When an application is deployed to a container in a **standard** cluster, logs a
   - Where logs are to be forwarded. You can forward logs to the account domain or to a space domain.
   - What logs are forwarded to the {{site.data.keyword.loganalysisshort}} service for analysis.
 
-1. To **enable logging**, navigate to [clusters](https://console.bluemix.net/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
+1. To **enable logging**, navigate to [clusters](https://{DomainName}/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
 2. Under **Summary**, click **Enable logging.**
 3. On **Create Logging Configuration** window, select the appropriate Cloud Foundry **Org** and **Space.**
 
- To enable logging at the account level, you must use CLI. Refer **Enabling log forwarding** section of [logging and monitoring](https://console.bluemix.net/docs/containers/cs_health.html#logging)
+ To enable logging at the account level, you must use CLI. Refer **Enabling log forwarding** section of [logging and monitoring](https://{DomainName}/docs/containers/cs_health.html#logging)
  {:tip}
 
 4. Enable all the **Log sources** and click **Create**.
 
    ![](images/solution17/cluster_logging.png)
 
-If you specified a space when you created the cluster then both the account owner and {{site.data.keyword.containershort}} key owner need `Manager`, `Developer`, or `Auditor` permissions in that space, refer **before you begin** section of [logging and monitoring](https://console.bluemix.net/docs/containers/cs_health.html#logging)
+If you specified a space when you created the cluster then both the account owner and {{site.data.keyword.containershort}} key owner need `Manager`, `Developer`, or `Auditor` permissions in that space, refer **before you begin** section of [logging and monitoring](https://{DomainName}/docs/containers/cs_health.html#logging)
 {:tip}
 
 ## Create a starter application
@@ -140,7 +140,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
 4. Choose **No DevOps** and Select **n** to skip adding services.
 
-  Once complete, this generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://console.bluemix.net/docs/cloudnative/node_project_contents.html).
+  Once complete, this generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://{DomainName}/docs/cloudnative/node_project_contents.html).
 
   ![](images/solution17/node_starter_contents.png)
 
@@ -270,7 +270,7 @@ To set up Ingress and use your own custom domain see the [Use your own custom do
 
 The application generates some log data every time you visit its URL. Because of our logging configuration, this data should be forwarded to {{site.data.keyword.loganalysisshort}} service and available via Kibana.
 
-1. To view **log data**, navigate to [clusters](https://console.bluemix.net/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
+1. To view **log data**, navigate to [clusters](https://{DomainName}/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
 2. Next to **Logs**, click **View**. This should launch Kibana in a new tab.
 3. Click on your username in the upper right corner to select the correct **account**, **org** and **space**.
 
@@ -289,7 +289,7 @@ For more information about other search fields that are relevant to Kubernetes c
 
 4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.
 
-5. Below the configuration is the search field. Here you can [enter and define search queries](https://console.bluemix.net/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:
+5. Below the configuration is the search field. Here you can [enter and define search queries](https://{DomainName}/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:
 
    ```sh
    message:(WARN|INFO|ERROR|FATAL)
@@ -335,7 +335,7 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 ## Monitor cluster health using Grafana
 Metrics for standard clusters are located in the {{site.data.keyword.Bluemix_notm}} account that was logged in to when the Kubernetes cluster was created. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster, then metrics are located in that space. Container metrics are collected automatically for all containers that are deployed in a cluster. These metrics are sent and are made available through Grafana.
 
-1. To view **metrics**, navigate to [clusters](https://console.bluemix.net/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
+1. To view **metrics**, navigate to [clusters](https://{DomainName}/containers-kubernetes/clusters) and select the appropriate **location** to see the cluster you created above - `mycluster`. Select the cluster.
 2. Next to **Metrics**, click **View**. This should launch Grafana in a new tab.
 3. In the top right corner, click on your username and choose **Domain**: **account** and select your **Account**.
 4. Click on **Home** and select the **ClusterMonitoringDashboard_V1** dashboard that has been pre-defined.
@@ -370,9 +370,9 @@ Do you want to learn more? Here are some ideas of what you can do next:
 
 {: #related}
 
-* [Logging and Monitoring](https://console.bluemix.net/docs/containers/cs_health.html#view_metrics).
-* [Documentation for IBM Cloud Log Analysis](https://console.bluemix.net/docs/services/CloudLogAnalysis/index.html).
-* [IBM Cloud Log Collection API](https://console.bluemix.net/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction).
+* [Logging and Monitoring](https://{DomainName}/docs/containers/cs_health.html#view_metrics).
+* [Documentation for IBM Cloud Log Analysis](https://{DomainName}/docs/services/CloudLogAnalysis/index.html).
+* [IBM Cloud Log Collection API](https://{DomainName}/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction).
 * Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html).
 * Kibana User Guide: [Visualizing Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-visualizing.html).
 * Kibana User Guide: [Putting it all Together with Dashboards](https://www.elastic.co/guide/en/kibana/5.1/tutorial-dashboard.html).

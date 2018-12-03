@@ -14,9 +14,9 @@ lastupdated: "2018-11-14"
 
 # Secure web application across multiple regions
 
-This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline.
+This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) pipeline.
 
-Apps or parts of your apps will have outages - it is a fact. It can be a problem in your code, a planned maintenance impacting the resources used by your app, a hardware failure bringing down a zone, a location, a data center where your app is hosted. Any of these will happen and you have to be prepared. With {{site.data.keyword.Bluemix_notm}}, you can deploy your application to [multiple locations](https://console.bluemix.net/docs/overview/ibm-cloud.html#ov_intro_reg) to increase your application resilience. And with your application now running in multiple locations, you can also redirect user traffic to the nearest location to reduce latency.
+Apps or parts of your apps will have outages - it is a fact. It can be a problem in your code, a planned maintenance impacting the resources used by your app, a hardware failure bringing down a zone, a location, a data center where your app is hosted. Any of these will happen and you have to be prepared. With {{site.data.keyword.Bluemix_notm}}, you can deploy your application to [multiple locations](https://{DomainName}/docs/overview/ibm-cloud.html#ov_intro_reg) to increase your application resilience. And with your application now running in multiple locations, you can also redirect user traffic to the nearest location to reduce latency.
 
 ## Objectives
 
@@ -29,11 +29,11 @@ Apps or parts of your apps will have outages - it is a fact. It can be a problem
 ## Services used
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.runtime_nodejs_notm}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
-* [{{site.data.keyword.contdelivery_short}}](https://console.bluemix.net/catalog/services/continuous-delivery) for DevOps
-* [Internet services](https://console.bluemix.net/catalog/services/internet-services)
+* [{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs) Cloud Foundry App
+* [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) for DevOps
+* [Internet services](https://{DomainName}/catalog/services/internet-services)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -49,8 +49,8 @@ This tutorial involves an active/active scenario where two copies of the applica
 
 Start by creating a Node.js starter application that runs in a Cloud Foundry environment.
 
-1. Click **[Catalog](https://console.bluemix.net/catalog/)** in the {{site.data.keyword.Bluemix_notm}} console.
-2. Click **Cloud Foundry Apps** under the **Platform** category and select **[{{site.data.keyword.runtime_nodejs_notm}}](https://console.bluemix.net/catalog/starters/sdk-for-nodejs)** .
+1. Click **[Catalog](https://{DomainName}/catalog/)** in the {{site.data.keyword.Bluemix_notm}} console.
+2. Click **Cloud Foundry Apps** under the **Platform** category and select **[{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)** .
      ![](images/solution1/SDKforNodejs.png)
 3. Enter a **unique name** for your application, which will also be your host name, for example: myusername-nodeapp. And click **Create**.
 4.  After the application starts, click the **Visit URL** link on the **Overview** page to see your application LIVE on a new tab.
@@ -118,12 +118,12 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 
 {: #domain_cis}
 
-IBM [Cloud Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.  
+IBM [Cloud Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.  
 
 When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided mybluemix.net domain. In this step, after you have a custom domain, you can use the DNS servers provided by IBM Cloud Internet Services.
 
 1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
-2. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+2. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Enter a service name, and click **Create** to create an instance of the service.
 3. When the service instance is provisioned, set your domain name and click **Add domain**.
 4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
@@ -168,12 +168,12 @@ At this stage, the GLB is configured but the Cloud Foundry applications are not 
 
 In this step, you will map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} location where your application is running.
 
-1. In the {{site.data.keyword.Bluemix_notm}} catalog, switch to your account name from the menu bar in the [console](https://console.bluemix.net/dashboard/apps).
+1. In the {{site.data.keyword.Bluemix_notm}} catalog, switch to your account name from the menu bar in the [console](https://{DomainName}/dashboard/apps).
 2. On the account page, navigate to application **Cloud Foundry Orgs**, and select **Domains** from the Actions column.
 3. Click **Add a domain** and enter your custom domain name acquired from the registrar.
 4. Select the right location and click **Save**.
 5. Similarly, add the custom domain name to London.
-6. Return to the {{site.data.keyword.Bluemix_notm}} [dashboard](https://console.bluemix.net/dashboard/apps) and click on the application in Dallas, click **Route** > **Edit Routes**, and click **Add Route**.
+6. Return to the {{site.data.keyword.Bluemix_notm}} [dashboard](https://{DomainName}/dashboard/apps) and click on the application in Dallas, click **Route** > **Edit Routes**, and click **Add Route**.
    ![Add a route](images/solution1/ApplicationRoutes.png)
 7. Enter the GLB hostname you configured earlier in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
 8. Similarly, configure the domain and routes for the application in London.
@@ -182,7 +182,7 @@ At this point, you can visit your application with the URL `<glb_name>.<your_dom
 
 Although this works at this moment, as we have configured continuous delivery in the previous steps, the configuration can be overwritten when another build is trigged. To make these changes persistent, go back to the toolchains and modify the *manifest.yml* file:
 
-1. In the {{site.data.keyword.Bluemix_notm}} [console](https://console.bluemix.net/dashboard/apps), navigate to Application **Overview** and scroll to find **View toolchain**.
+1. In the {{site.data.keyword.Bluemix_notm}} [console](https://{DomainName}/dashboard/apps), navigate to Application **Overview** and scroll to find **View toolchain**.
 2. Select the Git tile under Code.
 3. Select *manifest.yml*.
 4. Click **Edit** and add custom routes. Replace the original domain and host configurations with `Routes` only.
@@ -216,7 +216,7 @@ With the Cloud Intenet Services application, take the following steps to set up 
 
 If you are using a different DNS provider, the steps for setting up the CNAME record vary depending on your DNS provider. For example, if you are using GoDaddy, you follow the [Domains Help](https://www.godaddy.com/help/add-a-cname-record-19236) guidance from GoDaddy.
 
-For your Cloud Foundry applications to be reachable through the custom domain, you will need to add the custom domain to the [list of domains in the Cloud Foundry organization where the applications are deployed](https://console.bluemix.net/docs/apps/updapps.html#updatingapps). Once done you can add the routes to the application manifests:
+For your Cloud Foundry applications to be reachable through the custom domain, you will need to add the custom domain to the [list of domains in the Cloud Foundry organization where the applications are deployed](https://{DomainName}/docs/apps/updapps.html#updatingapps). Once done you can add the routes to the application manifests:
 
    ```
    applications:
@@ -260,8 +260,8 @@ Availability Monitoring runs synthetic tests from locations around the world, ar
 
 ## Related content
 
-[Adding a Cloudant Database](https://console.bluemix.net/docs/services/Cloudant/tutorials/create_service.html)
+[Adding a Cloudant Database](https://{DomainName}/docs/services/Cloudant/tutorials/create_service.html)
 
-[Auto-Scaling Cloud Foundry applications](https://console.bluemix.net/docs/services/Auto-Scaling/index.html)
+[Auto-Scaling Cloud Foundry applications](https://{DomainName}/docs/services/Auto-Scaling/index.html)
 
-[Cloud Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
+[Cloud Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)

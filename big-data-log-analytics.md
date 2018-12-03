@@ -35,12 +35,12 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 
 This tutorial uses the following runtimes and services:
 
-* [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
-* [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/message-hub)
-* [{{site.data.keyword.sqlquery_short}}](https://console.bluemix.net/catalog/services/sql-query)
-* [{{site.data.keyword.streaminganalyticsshort}}](https://console.bluemix.net/catalog/services/streaming-analytics)
+* [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
+* [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/message-hub)
+* [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query)
+* [{{site.data.keyword.streaminganalyticsshort}}](https://{DomainName}/catalog/services/streaming-analytics)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -63,7 +63,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 {: #prereqs}
 
 * [Install Git](https://git-scm.com/)
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
 * [Install Node.js](https://nodejs.org)
 * [Download Kafka 0.10.2.X client](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz)
 
@@ -76,7 +76,7 @@ In this section, you will create the services required to perform analysis of lo
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
     ibmcloud login
     ```
@@ -85,19 +85,19 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud target --cf
     ```
     {: pre}
-2. Create a Lite instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage).
+2. Create a Lite instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
     ```sh
     ibmcloud resource service-instance-create log-analysis-cos cloud-object-storage \
     lite global
     ```
     {: pre}
-3. Create a Lite instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
+3. Create a Lite instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
     ```sh
     ibmcloud resource service-instance-create log-analysis-sql sql-query lite \
     us-south
     ```
     {: pre}
-4. Create a Standard instance of [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/event-streams).
+4. Create a Standard instance of [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams).
     ```sh
     ibmcloud service create messagehub standard log-analysis-hub
     ```
@@ -109,13 +109,13 @@ This section uses the command line to create service instances. Alternatively, y
 
 Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keyword.cos_short}} bucket. Topics define where applications deliver messages in publish-subscribe messaging systems. After messages are received and processed, they will be stored within a file located in an {{site.data.keyword.cos_short}} bucket.
 
-1. In your browser, access the `log-analysis-hub` service instance from the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis).
+1. In your browser, access the `log-analysis-hub` service instance from the [Dashboard](https://{DomainName}/dashboard/apps?search=log-analysis).
 2. Click the **+** button to create a topic.
 3. Enter the **Topic Name** `webserver` and click the **Create topic** button.
 4. Click **Service Credentials** and the **New Credential** button.
 5. In the resulting dialog, type `webserver-flow` as the **Name** and click the **Add** button.
 6. Click **View Credentials** and copy the information to a safe place. It will be used in the next section.
-7. Back in the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis), select the `log-analysis-cos` service instance.
+7. Back in the [Dashboard](https://{DomainName}/dashboard/apps?search=log-analysis), select the `log-analysis-cos` service instance.
 8. Click **Create bucket**.
     * Enter a unique **Name** for the bucket.
     * Select **Cross Region** for **Resiliency**.
@@ -298,7 +298,7 @@ Depending on the number of messages sent by the simulator, the log file on {{sit
 If you prefer not to wait for the simulator to send all log messages, upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0fptwsp) to {{site.data.keyword.cos_short}} to get started immediately.
 {: tip}
 
-1. Access the `log-analysis-sql` service instance from the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis). Select **Open UI** to launch SQL Query.
+1. Access the `log-analysis-sql` service instance from the [Dashboard](https://{DomainName}/dashboard/apps?search=log-analysis). Select **Open UI** to launch SQL Query.
 2. Enter the following SQL into the **Type SQL here ...** text area.
     ```sql
     -- What are the top 10 web pages on NASA from July 1995?
@@ -312,7 +312,7 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     ```
     {: pre}
 3. Retrieve the Object SQL URL from the logs file.
-    * From the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis), select the `log-analysis-cos` service instance.
+    * From the [Dashboard](https://{DomainName}/dashboard/apps?search=log-analysis), select the `log-analysis-cos` service instance.
     * Select the bucket you created previously.
     * Click the overflow menu on the `http-logs_TIME.csv` file and select **Object SQL URL**.
     * **Copy** the URL to the clipboard.
@@ -385,15 +385,15 @@ FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAM
 
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
 
-* Use additional targets in Streams Designer to store data in [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant) or execute code in [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk)
-* Follow the [Build a data lake using Object Storage](https://console.bluemix.net/docs/tutorials/smart-data-lake.html#build-a-data-lake-using-object-storage) tutorial to add a dashboard to log data
-* Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](https://console.bluemix.net/catalog/services/app-connect).
+* Use additional targets in Streams Designer to store data in [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) or execute code in [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
+* Follow the [Build a data lake using Object Storage](https://{DomainName}/docs/tutorials/smart-data-lake.html#build-a-data-lake-using-object-storage) tutorial to add a dashboard to log data
+* Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](https://{DomainName}/catalog/services/app-connect).
 
 ## Remove services
 
 {: #removal}
 
-From the [Dashboard](https://console.bluemix.net/dashboard/apps?search=log-analysis), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
+From the [Dashboard](https://{DomainName}/dashboard/apps?search=log-analysis), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
 
 * log-analysis-sa
 * log-analysis-hub

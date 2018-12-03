@@ -28,9 +28,9 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 
 This tutorial uses the following runtimes and services:
 
-* [{{site.data.keyword.BluVirtServers_short}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.BluVirtServers_short}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -61,7 +61,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 In this section, you will provision a public virtual server with a fixed configuration. {{site.data.keyword.BluVirtServers_short}} can be deployed in a matter of minutes from virtual server images in specific geographic locations. Virtual servers often address peaks in demand after which they can be suspended or powered down so that the cloud environment perfectly fits your infrastructure needs.
 
-1. In your browser, access the [{{site.data.keyword.BluVirtServers_short}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) catalog page.
+1. In your browser, access the [{{site.data.keyword.BluVirtServers_short}}](https://{DomainName}/catalog/infrastructure/virtual-server-group) catalog page.
 2. Select **Public Virtual Server** and click **Create**.
 3. Under **Image**, select **LAMP** latest version under **Ubuntu**. Even though this comes pre-installed with Apache, MySQL and PHP, you'll re-install PHP and MySQL with the latest version.
 4. Under **Network Interface** select the **Public and Private Network Uplink** option.
@@ -70,7 +70,7 @@ In this section, you will provision a public virtual server with a fixed configu
 
 After the server is created, you'll see the server login credentials. Although you can connect through SSH using the server public IP address, it is recommended to access the server through the Private Network and to disable SSH access on the public network.
 
-1. Follow [these steps](https://console.bluemix.net/docs/infrastructure/ssh-keys/restrict-ssh-access-public-network.html#restricting-ssh-access-on-a-public-network) to secure the virtual machine and to disable SSH access on the public network.
+1. Follow [these steps](https://{DomainName}/docs/infrastructure/ssh-keys/restrict-ssh-access-public-network.html#restricting-ssh-access-on-a-public-network) to secure the virtual machine and to disable SSH access on the public network.
 1. Using your username, password and private IP address, connect to the server with SSH.
    ```sh
    sudo ssh root@<Private-IP-Address>

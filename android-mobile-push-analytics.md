@@ -32,18 +32,18 @@ This tutorial walks you through the creation of a mobile starter application, ad
 {: #products}
 
 This tutorial uses the following products:
-   * [{{site.data.keyword.pushfull}}](https://console.bluemix.net/catalog/services/push-notifications)
+   * [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
 
 ## Before you begin
 {: #prereqs}
 
-- [Android Studio![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html) for importing and enhancing your code.
+- [Android Studio![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html) for importing and enhancing your code.
 - Google account to log into Firebase console for Sender ID and Server API Key.
 
 ## Create Android mobile app from starter kit
 {: #get_code}
 The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your app from a Starter Kit.
-1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard)
+1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard)
 2. Click on **Starter Kits** and click on **Create App**.
     ![](images/solution9/mobile_dashboard.png)
 3. Enter an app name, this can be your android project name as well.
@@ -81,7 +81,7 @@ Firebase Cloud Messaging (FCM) is the gateway used to deliver {{site.data.keywor
 
 The API key is stored securely and used by the {{site.data.keyword.mobilepushshort}} service to connect to the FCM server and the sender ID (project number) is used by the Android SDK and the JS SDK for Google Chrome and Mozilla Firefox on the client side. To set up FCM and obtain your credentials, complete the steps:
 
-1. Visit the [Firebase Console ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1)  -  A Google user account is required.
+1. Visit the [Firebase Console ![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1)  -  A Google user account is required.
 2. Select **Add project**.
 3. In the **Create a project** window, provide a project name, choose a country/region and click **Create project**.
 4. On the left navigation pane, select **Settings** (Click on Settings Icon next to **Overview**)> **Project settings**.
@@ -138,8 +138,8 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
 ## Related Content
 {: #related_content}
-- [Customize the {{site.data.keyword.mobilepushshort}} settings](https://console.bluemix.net/docs/services/mobilepush/push_step_4.html#push_step_4_Android)
-- [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
-- [{{site.data.keyword.mobilepushshort}} REST APIs](https://console.bluemix.net/docs/services/mobilepush/push_restapi.html#push-api-rest)
-- [Security in {{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
+- [Customize the {{site.data.keyword.mobilepushshort}} settings](https://{DomainName}/docs/services/mobilepush/push_step_4.html#push_step_4_Android)
+- [Tag-based notifications](https://{DomainName}/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
+- [{{site.data.keyword.mobilepushshort}} REST APIs](https://{DomainName}/docs/services/mobilepush/push_restapi.html#push-api-rest)
+- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/services/mobilepush/push_security.html#overview-push)
 

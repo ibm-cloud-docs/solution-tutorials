@@ -34,9 +34,9 @@ This tutorial walks you through the process of defining intents and entities and
 
 This tutorial uses the following products:
 
-- [{{site.data.keyword.conversationfull}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation)
-- [{{site.data.keyword.speechtotextfull}}](https://console.bluemix.net/catalog/services/speech-to-text)
-- [{{site.data.keyword.texttospeechfull}}](https://console.bluemix.net/catalog/services/text-to-speech)
+- [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/watson-assistant-formerly-conversation)
+- [{{site.data.keyword.speechtotextfull}}](https://{DomainName}/catalog/services/speech-to-text)
+- [{{site.data.keyword.texttospeechfull}}](https://{DomainName}/catalog/services/text-to-speech)
 
 ## Architecture
 {: #architecture}
@@ -54,14 +54,14 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-- Download and install [Android Studio![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html).
+- Download and install [Android Studio![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html).
 
 ## Create services
 {: #setup}
 
 In this section, you will create the services required by the tutorial starting with {{site.data.keyword.conversationshort}} to build cognitive virtual assistants that help your customers.
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.conversationshort}}](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation) service > **Lite** plan:
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.conversationshort}}](https://{DomainName}/catalog/services/watson-assistant-formerly-conversation) service > **Lite** plan:
    1. Set **Name** to **android-chatbot-assistant**
    1. **Create**.
 2. Click **Service credentials** on the left pane and click **New credential**.
@@ -71,7 +71,7 @@ In this section, you will create the services required by the tutorial starting 
 
 The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}}.
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://console.bluemix.net/catalog/services/speech-to-text) service > **Lite** plan.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://{DomainName}/catalog/services/speech-to-text) service > **Lite** plan.
    1. Set **Name** to **android-chatbot-stt**.
    1. **Create**.
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
@@ -81,7 +81,7 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 
 The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. The service provides several voices and can be configured in the Android app.
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://console.bluemix.net/catalog/) and select [{{site.data.keyword.texttospeechshort}}](https://console.bluemix.net/catalog/services/text-to-speech) service > **Lite** plan.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.texttospeechshort}}](https://{DomainName}/catalog/services/text-to-speech) service > **Lite** plan.
    1. Set **Name** to **android-chatbot-tts**.
    1. **Create**.
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
@@ -214,7 +214,7 @@ The repository contains Android application code with required gradle dependenci
 ## Remove resources
 {:removeresources}
 
-1. Navigate to [Dashboard,](https://console.bluemix.net/dashboard/)
+1. Navigate to [Dashboard,](https://{DomainName}/dashboard/)
 1. Delete the services you have created:
    - {{site.data.keyword.conversationfull}}
    - {{site.data.keyword.speechtotextfull}}
@@ -223,9 +223,9 @@ The repository contains Android application code with required gradle dependenci
 ## Related content
 {:related}
 
-- [Creating entities, Synonyms, System entities](https://console.bluemix.net/docs/services/assistant/entities.html#creating-entities)
-- [Context Variables](https://console.bluemix.net/docs/services/assistant/dialog-runtime.html#context)
-- [Building a complex dialog](https://console.bluemix.net/docs/services/assistant/tutorial.html#tutorial)
-- [Gathering information with slots](https://console.bluemix.net/docs/services/assistant/dialog-slots.html#dialog-slots)
-- [Deployment options](https://console.bluemix.net/docs/services/assistant/add-integrations.html#add-integrations)
-- [Improve your skill](https://console.bluemix.net/docs/services/assistant/logs_intro.html#logs_intro)
+- [Creating entities, Synonyms, System entities](https://{DomainName}/docs/services/assistant/entities.html#creating-entities)
+- [Context Variables](https://{DomainName}/docs/services/assistant/dialog-runtime.html#context)
+- [Building a complex dialog](https://{DomainName}/docs/services/assistant/tutorial.html#tutorial)
+- [Gathering information with slots](https://{DomainName}/docs/services/assistant/dialog-slots.html#dialog-slots)
+- [Deployment options](https://{DomainName}/docs/services/assistant/add-integrations.html#add-integrations)
+- [Improve your skill](https://{DomainName}/docs/services/assistant/logs_intro.html#logs_intro)

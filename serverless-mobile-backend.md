@@ -43,13 +43,13 @@ This tutorial is configurable based on your target platform. You are currently v
 {: #services}
 
 This tutorial uses the following runtimes and services:
-   * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk)
-   * [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID)
-   * [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
-   * [{{site.data.keyword.toneanalyzershort}}](https://console.bluemix.net/catalog/services/tone_analyzer)
-   * [{{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/catalog/services/imfpush)
+   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
+   * [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID)
+   * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
+   * [{{site.data.keyword.toneanalyzershort}}](https://{DomainName}/catalog/services/tone_analyzer)
+   * [{{site.data.keyword.mobilepushshort}}](https://{DomainName}/catalog/services/imfpush)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -60,12 +60,12 @@ The application shown in this tutorial is a feedback app that smartly analyses t
 ![](images/solution11/Architecture.png)
 </p>
 
-1. The user authenticates against [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID). {{site.data.keyword.appid_short}} provides access and identification tokens.
+1. The user authenticates against [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID). {{site.data.keyword.appid_short}} provides access and identification tokens.
 2. Further calls to the backend API include the access token.
-3. The backend is implemented with [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk). The serverless actions, exposed as Web Actions, expect the token to be sent in the request headers and verify its validity (signature and expiration date) before allowing access to the actual API.
-4. When the user submits a feedback, the feedback is stored in [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
-5. The feedback text is processed with [{{site.data.keyword.toneanalyzershort}}](https://console.bluemix.net/catalog/services/tone_analyzer).
-6. Based on the analysis result, a notification is sent back to the user with [{{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/catalog/services/imfpush).
+3. The backend is implemented with [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk). The serverless actions, exposed as Web Actions, expect the token to be sent in the request headers and verify its validity (signature and expiration date) before allowing access to the actual API.
+4. When the user submits a feedback, the feedback is stored in [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
+5. The feedback text is processed with [{{site.data.keyword.toneanalyzershort}}](https://{DomainName}/catalog/services/tone_analyzer).
+6. Based on the analysis result, a notification is sent back to the user with [{{site.data.keyword.mobilepushshort}}](https://{DomainName}/catalog/services/imfpush).
 7. The user receives the notification on the device.
 
 ## Before you begin
@@ -139,11 +139,11 @@ It is recommended that you create a new space to provision the services and depl
 
 ### Provision services from the {{site.data.keyword.Bluemix_notm}} catalog
 
-1. Go to the [{{site.data.keyword.Bluemix_notm}} catalog](https://console.bluemix.net/catalog/)
-2. Create a [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) service with the **Lite** plan. Set the name to **serverlessfollowup-db**.
-3. Create a [{{site.data.keyword.toneanalyzershort}}](https://console.bluemix.net/catalog/services/tone_analyzer) service with the **Standard** plan. Set the name to **serverlessfollowup-tone**.
-4. Create an [{{site.data.keyword.appid_short}}](https://console.bluemix.net/catalog/services/AppID) service with the **Graduated tier** plan. Set the name to **serverlessfollowup-appid**.
-5. Create a [{{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/catalog/services/imfpush) service with the **Lite** plan. Set the name to **serverlessfollowup-mobilepush**.
+1. Go to the [{{site.data.keyword.Bluemix_notm}} catalog](https://{DomainName}/catalog/)
+2. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB) service with the **Lite** plan. Set the name to **serverlessfollowup-db**.
+3. Create a [{{site.data.keyword.toneanalyzershort}}](https://{DomainName}/catalog/services/tone_analyzer) service with the **Standard** plan. Set the name to **serverlessfollowup-tone**.
+4. Create an [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID) service with the **Graduated tier** plan. Set the name to **serverlessfollowup-appid**.
+5. Create a [{{site.data.keyword.mobilepushshort}}](https://{DomainName}/catalog/services/imfpush) service with the **Lite** plan. Set the name to **serverlessfollowup-mobilepush**.
 
 ### Provision services from the command line
 
@@ -230,10 +230,10 @@ When a user submits a new feedback, the application will analyze this feedback a
 ### Configure Apple Push Notifications Service (APNs)
 {: swift}
 
-1. Go to the [Apple Developer![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en?lang=en)](https://developer.apple.com/) portal and Register an App ID.
+1. Go to the [Apple Developer![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en?lang=en)](https://developer.apple.com/) portal and Register an App ID.
 2. Create a development and distribution APNs SSL certificate.
 3. Create a development provisioning profile.
-4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://console.bluemix.net/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
 {: swift}
 
 ## Deploy a serverless backend
@@ -353,5 +353,5 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 
 
 * When you create an OpenWhisk Swift action with a Swift source file(.swift files under `actions` folder), it has to be compiled into a binary before the action is run. Once done, subsequent calls to the action are much faster until the container that holds your action is purged. This delay is known as the cold-start delay.
-  To avoid the cold-start delay, you can compile your Swift file into a binary and then upload to OpenWhisk in a zip file. As you need the OpenWhisk scaffolding, the easiest way to create the binary is to build it within the same environment it runs in. refer [Package an Action as a Swift executable](https://console.bluemix.net/docs/openwhisk/openwhisk_actions.html#creating-swift-actions) for further steps.
+  To avoid the cold-start delay, you can compile your Swift file into a binary and then upload to OpenWhisk in a zip file. As you need the OpenWhisk scaffolding, the easiest way to create the binary is to build it within the same environment it runs in. refer [Package an Action as a Swift executable](https://{DomainName}/docs/openwhisk/openwhisk_actions.html#creating-swift-actions) for further steps.
 {: swift}

@@ -29,7 +29,7 @@ This tutorial shows how to provision a SQL (relational) database service, create
 ## Products
 
 This tutorial uses the following products:
-   * [{{site.data.keyword.dashdblong_notm}}](https://console.bluemix.net/catalog/services/db2-warehouse-on-cloud)
+   * [{{site.data.keyword.dashdblong_notm}}](https://{DomainName}/catalog/services/db2-warehouse-on-cloud)
 
 ## Before you begin
 {: #prereqs}
@@ -37,11 +37,11 @@ This tutorial uses the following products:
 Go to [GeoNames](http://www.geonames.org/) and download and extract the file [cities1000.zip](http://download.geonames.org/export/dump/cities1000.zip). It holds information about cities with a population of more than 1000. You are going to use it as data set.
 
 ## Provision the SQL Database
-Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](https://console.bluemix.net/catalog/services/db2-warehouse-on-cloud)** service.
+Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](https://{DomainName}/catalog/services/db2-warehouse-on-cloud)** service.
 
 ![](images/solution5/Catalog.png)
 
-1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net). Click on **Catalog** in the top navigation bar.
+1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}). Click on **Catalog** in the top navigation bar.
 2. Click on **Data & Analytics** under Platform on the left pane and select **{{site.data.keyword.dashdbshort_notm}}**.
 3. Pick the **Entry** plan and change the suggested service name to "sqldatabase" (you will use that name later on). Pick a location for the deployment of the database and make sure that the correct organization and space are selected.
 4. Click on **Create**. After a short moment you should get a success notification.
@@ -59,7 +59,7 @@ You need a table to hold the sample data. Create it using the console.
    ![](images/solution5/TableCitiesCreated.png)
 
 ## Load data
-Now that the table "cities" has been created, you are going to load data into it. This can be done in different ways, e.g. from your local machine or from cloud object storage (COS) with Swift or Amazon S3 interface, by utilizing the [{{site.data.keyword.dwl_full}}](https://console.bluemix.net/catalog/services/lift) migration service. For this tutorial, you are going to upload data from your machine. During that process, you adapt the table structure and data format to fully match the file content.
+Now that the table "cities" has been created, you are going to load data into it. This can be done in different ways, e.g. from your local machine or from cloud object storage (COS) with Swift or Amazon S3 interface, by utilizing the [{{site.data.keyword.dwl_full}}](https://{DomainName}/catalog/services/lift) migration service. For this tutorial, you are going to upload data from your machine. During that process, you adapt the table structure and data format to fully match the file content.
 
 1. In the top navigation click on **Load**. Then, under **File selection**, click on **browse files** to locate and pick the file "cities1000.txt" you downloaded in the first section of this guide.
 2. Click **Next** to get to the schema overview. Choose the schema starting with "DASH" again, then the table "CITIES". Click on **Next** again.   
@@ -118,7 +118,7 @@ The app to display city information based on the loaded data set is reduced to a
 
 ## Cleanup
 To clean up resources used by the tutorial, follow these steps:
-1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://console.bluemix.net). Locate your app.
+1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}). Locate your app.
 2. Click on the menu icon for the app and choose **Delete App**. In the dialog window tick the checkmark that you want to delete the related {{site.data.keyword.dashdbshort_notm}} service.
 3. Click the **Delete** button. The app and database service are removed and you are taken back to the dashboard.
 

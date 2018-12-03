@@ -13,7 +13,7 @@ lastupdated: "2018-11-14"
 
 # Moving a VM based app to Kubernetes
 
-This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/container_index.html) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 {: shortdesc}
 
 The lessons in this tutorial include concepts for how to take an existing app, containerize the app, and deploy the app to a Kubernetes cluster. To containerize your VM based app, you can choose between the following options.
@@ -36,11 +36,11 @@ Depending on the type of app that you have, the steps to migrate your app might 
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
-- [{{site.data.keyword.containershort}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-- [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/registry/private)
-- [{{site.data.keyword.composeForMySQL_full}}](https://console.bluemix.net/catalog/services/compose-for-mysql)
+- [{{site.data.keyword.containershort}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+- [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/containers-kubernetes/registry/private)
+- [{{site.data.keyword.composeForMySQL_full}}](https://{DomainName}/catalog/services/compose-for-mysql)
 
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {:#architecture}
@@ -69,7 +69,7 @@ The following diagram shows an example of a modern container architecture that r
 1. The user sends a request to the public endpoint of the Java app. The public endpoint is represented by an Ingress application load balancer (ALB) that load balances incoming network traffic across app pods in the cluster. The ALB is a collection of rules that allow inbound network traffic to a publicly exposed app.
 2. The ALB forwards the request to one of the available app pods in the cluster. App pods run on worker nodes that can be a virtual or physical machine.
 3. App pods store data in persistent volumes. Persistent volumes can be used to share data between app instances or worker nodes.
-4. App pods store data in an {{site.data.keyword.Bluemix_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed database-as-a-service (DBasS) is usually easier to configure and provices built-in backups and scaling. You can find many different types of databases in the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
+4. App pods store data in an {{site.data.keyword.Bluemix_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed database-as-a-service (DBasS) is usually easier to configure and provices built-in backups and scaling. You can find many different types of databases in the [IBM cloud catalog](https://{DomainName}/catalog/?category=data).
 
 ### VMs, containers, and Kubernetes
 
@@ -112,7 +112,7 @@ To run a production app in the cloud by using Kubernetes, consider the following
 
 1. Do you expect traffic from a specific geographic location? If yes, select the location that is physically closest to you for best performance.
 2. How many replicas of your cluster do you want for higher availability? A good starting point might be three clusters, one for development, one for testing and one for production. Check out the [Best practices for organizing users, teams, applications](users-teams-applications.html#replicate-for-multiple-environments) solution guide for creating multiple environments.
-3. What [hardware](https://console.bluemix.net/docs/containers/cs_clusters.html#planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
+3. What [hardware](https://{DomainName}/docs/containers/cs_clusters.html#planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
 4. How many worker nodes do you need? This depends highly on the apps scale, the more nodes you have the more resilient your app will be.
 5. How many replicas should you have for higher availability? Deploy replica clusters in multiple locations to make your app more available and protect the app from being down due to a location failure.
 6. Which is the minimal set of resources your app needs to startup? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
@@ -134,8 +134,8 @@ With Kubernetes, you have two options for handling databases:
    - Create a MySQL Dockerfile, see an example [MySQL Dockerfile](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile) here. 
    - You would need to use secrets to store the database credential. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile.secret).
    - You would need a deployment.yaml file with the configuration of your database to deployed to Kubernetes. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml). 
-2. The second option would be to use the managed database-as-a-service (DBasS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data). To use this option, you would need to do the following:
-   - Create a managed database-as-a-service (DBasS) from the [IBM cloud catalog](https://console.bluemix.net/catalog/?category=data).
+2. The second option would be to use the managed database-as-a-service (DBasS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [IBM cloud catalog](https://{DomainName}/catalog/?category=data). To use this option, you would need to do the following:
+   - Create a managed database-as-a-service (DBasS) from the [IBM cloud catalog](https://{DomainName}/catalog/?category=data).
    - Store database credentials inside a secret. You will learn more on secrets in the "Store credentials in Kubernetes secrets" section.
    - Use the database-as-a-service (DBasS) in your application.
 
@@ -156,7 +156,7 @@ You can persist app data and container data on [NFS file storage](https://www.ib
 
 To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data retention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.Bluemix_notm}}. You can mount the PVC to your pod to read from and write to the PV. Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data.
 
-To learn how to create a PVC, follow the steps covered in the [{{site.data.keyword.containershort_notm}} storage documentation](https://console.bluemix.net/docs/containers/cs_storage.html#create).
+To learn how to create a PVC, follow the steps covered in the [{{site.data.keyword.containershort_notm}} storage documentation](https://{DomainName}/docs/containers/cs_storage.html#create).
 
 ### Learn how to move existing data to persistent storage
 
@@ -204,7 +204,7 @@ To copy data from your local machine to your persistent storage, you must mount 
 
 File shares and block storage are provisioned into the same location as your cluster. The storage itself is hosted on clustered servers by IBM to provide high availability. However, file shares and block storage are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups, which you can use to restore your data when needed.
 
-For more information, see [backup and restore](https://console.bluemix.net/docs/containers/cs_storage.html#backup_restore) options for NFS file storage and block storage.
+For more information, see [backup and restore](https://{DomainName}/docs/containers/cs_storage.html#backup_restore) options for NFS file storage and block storage.
 
 ## Prepare your code
 {: #prepare_code}
@@ -337,9 +337,9 @@ To put everything you've learned in practice, follow the [demo](https://github.c
 - [Get started](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
 - Kubernetes main [docs](http://kubernetes.io/).
-- [Persistent storage](https://console.bluemix.net/docs/containers/cs_storage.html) in {{site.data.keyword.containershort_notm}}.
+- [Persistent storage](https://{DomainName}/docs/containers/cs_storage.html) in {{site.data.keyword.containershort_notm}}.
 - [Best practices solution guide](users-teams-applications.html) for organizing users, teams and apps.
 - [Analyze logs and monitor the health of Kubernetes apps by using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
 - Set up [continuous integration and delivery pipeline](continuous-deployment-to-kubernetes.html) for containerized apps that run in Kubernetes.
 - Deploy the production cluster [across multiple locations](multi-region-webapp.html).
-- Use [multiple clusters across multiple locations](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-locations) for high availability.
+- Use [multiple clusters across multiple locations](https://{DomainName}/docs/containers/cs_regions.html#regions-and-locations) for high availability.

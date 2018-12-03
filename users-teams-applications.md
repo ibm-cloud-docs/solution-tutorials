@@ -36,13 +36,13 @@ Isolating the underlying resources, implementing governance and access policies,
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.iamlong}}](https://console.bluemix.net/docs/iam/index.html)
-* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-* [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
-* [Cloud Foundry](https://console.bluemix.net/catalog/?category=cf-apps&search=foundry)
-* [{{site.data.keyword.cloudantfull}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
+* [{{site.data.keyword.iamlong}}](https://{DomainName}/docs/iam/index.html)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
+* [Cloud Foundry](https://{DomainName}/catalog/?category=cf-apps&search=foundry)
+* [{{site.data.keyword.cloudantfull}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Define a project
 
@@ -58,7 +58,7 @@ In this project, we define three environments:
 
 **A delivery pipeline manages the progression of a build through the environment.** It can be fully automated or include manual validation gates to promote approved builds between environments - this is really open and should be set up to match the company best practices and workflows.
 
-To support the execution of the build pipeline,  we introduce **a functional user** - a regular {{site.data.keyword.cloud_notm}} user but a team member with no real identity in the physical world. This functional user will own the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The functional user will be dedicated to your project and will not change over the lifetime of the project. The next thing you will want to create is [an API key](https://console.bluemix.net/docs/iam/apikeys.html#manapikey) for this functional user. You will select this API key when you setup the DevOps pipelines, or when you want to run automation scripts, to impersonate the functional user.
+To support the execution of the build pipeline,  we introduce **a functional user** - a regular {{site.data.keyword.cloud_notm}} user but a team member with no real identity in the physical world. This functional user will own the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The functional user will be dedicated to your project and will not change over the lifetime of the project. The next thing you will want to create is [an API key](https://{DomainName}/docs/iam/apikeys.html#manapikey) for this functional user. You will select this API key when you setup the DevOps pipelines, or when you want to run automation scripts, to impersonate the functional user.
 
 When it comes to assigning responsibilities to the project team members, let's define the following roles and related permissions:
 
@@ -96,16 +96,16 @@ Although the three environments needed by this sample project require different 
 
 Let's start by building the Development environment.
 
-1. [Select an {{site.data.keyword.cloud_notm}} location](https://console.bluemix.net/dashboard) where to deploy the environment.
+1. [Select an {{site.data.keyword.cloud_notm}} location](https://{DomainName}/dashboard) where to deploy the environment.
 1. For Cloud Foundry services and apps:
-   1. [Create an organization for the project](https://console.bluemix.net/docs/account/orgs_spaces.html#createorg).
-   1. [Create a Cloud Foundry space for the environment](https://console.bluemix.net/docs/account/orgs_spaces.html#spaceinfo).
+   1. [Create an organization for the project](https://{DomainName}/docs/account/orgs_spaces.html#createorg).
+   1. [Create a Cloud Foundry space for the environment](https://{DomainName}/docs/account/orgs_spaces.html#spaceinfo).
    1. Create the Cloud Foundry services used by the project under this space
-1. [Create a resource group for the environment](https://console.bluemix.net/account/resource-groups).
+1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
 1. Create the services compatible with resource group like {{site.data.keyword.cos_full_notm}} and {site.data.keyword.cloudant_short_notm}} in this group.
-1. [Create a new Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
-1. Select your cluster [in the console](https://console.bluemix.net/containers-kubernetes/clusters).
-1. Use *Enable Logging* to redirect the cluster logs to the Cloud Foundry space created in the previous steps. If later you want to change the space where the cluster is sending its logging data, you can use the [logging plugin for the ibmcloud command line](https://console.bluemix.net/docs/containers/cs_health.html#log_sources_update).
+1. [Create a new Kubernetes cluster](https://{DomainName}/containers-kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
+1. Select your cluster [in the console](https://{DomainName}/containers-kubernetes/clusters).
+1. Use *Enable Logging* to redirect the cluster logs to the Cloud Foundry space created in the previous steps. If later you want to change the space where the cluster is sending its logging data, you can use the [logging plugin for the ibmcloud command line](https://{DomainName}/docs/containers/cs_health.html#log_sources_update).
 
 The following diagram shows where the project resources are created under the account:
 
@@ -116,10 +116,10 @@ The following diagram shows where the project resources are created under the ac
 ## Assign roles within the environment
 
 1. Invite users to the account
-1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://console.bluemix.net/docs/containers/cs_users.html#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://console.bluemix.net/docs/iam/groups.html#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
-1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://console.bluemix.net/docs/iam/cfaccess.html#cfaccess) to assign the right roles based on the environment.
+1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers/cs_users.html#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/iam/groups.html#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
+1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://{DomainName}/docs/iam/cfaccess.html#cfaccess) to assign the right roles based on the environment.
 
-Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the IBM Cloud Monitoring service maps IAM roles to actions](https://console.bluemix.net/docs/services/cloud-monitoring/security_ov.html#iam_roles).
+Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the IBM Cloud Monitoring service maps IAM roles to actions](https://{DomainName}/docs/services/cloud-monitoring/security_ov.html#iam_roles).
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
 
@@ -134,7 +134,7 @@ For the Development environment, the user responsibilities defined earlier could
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 
-The IAM access policies and Cloud Foundry roles are defined in the [Identify and Access Management user interface](https://console.bluemix.net/iam/#/users):
+The IAM access policies and Cloud Foundry roles are defined in the [Identify and Access Management user interface](https://{DomainName}/iam/#/users):
 
 <p style="text-align: center;">
   <img title="" src="./images/solution20-users-teams-applications/edit-policy.png" alt="Configuration of permissions for the developer role" />
@@ -188,15 +188,15 @@ As you get acquainted with Kubernetes, [Helm](https://helm.sh/), the package man
 
 Congratulations, your application can now safely be deployed from dev to production. Below are additional suggestions to improve application delivery.
 
-* Add [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights) to your pipeline to perform quality control during deployments.
-* Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://console.bluemix.net/catalog/services/devops-insights).
+* Add [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights) to your pipeline to perform quality control during deployments.
+* Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
 * Follow the tutorial [Plan, create and update deployment environments](./plan-create-update-deployments.html) to automate the deployment of your environments.
 
 ## Related information
 
-* [Getting Started with {{site.data.keyword.iamshort}}](https://console.bluemix.net/docs/iam/quickstart.html#getstarted)
+* [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/iam/quickstart.html#getstarted)
 * [Best practices for organizing resources in a resource group
-](https://console.bluemix.net/docs/resources/bestpractice_rgs.html#bp_resourcegroups)
+](https://{DomainName}/docs/resources/bestpractice_rgs.html#bp_resourcegroups)
 * [Analyze logs and monitor the health of Kubernetes applications](./kubernetes-log-analysis-kibana.html)
 * [Continuous Deployment to Kubernetes](./continuous-deployment-to-kubernetes.html)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)

@@ -19,7 +19,7 @@ lastupdated: "2018-11-14"
 
 As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple locations provide resilience in the case of a geographic failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}}  network]( https://www.ibm.com/cloud-computing/bluemix/our-network) enables users to link workloads hosted in secure private networks across data centers and locations.
 
-This tutorial presents setup of a privately routed IP connection over the {{site.data.keyword.Bluemix_notm}} private network between two secure private networks hosted in different data centers. All resources are owned by one {{site.data.keyword.Bluemix_notm}} account. It uses the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html) tutorial to deploy two private networks that are securely linked over the {{site.data.keyword.Bluemix_notm}} private network using the [VLAN Spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning) service. 
+This tutorial presents setup of a privately routed IP connection over the {{site.data.keyword.Bluemix_notm}} private network between two secure private networks hosted in different data centers. All resources are owned by one {{site.data.keyword.Bluemix_notm}} account. It uses the [Isolate workloads with a secure private network]( https://{DomainName}/docs/tutorials/secure-network-enclosure.html) tutorial to deploy two private networks that are securely linked over the {{site.data.keyword.Bluemix_notm}} private network using the [VLAN Spanning]( https://{DomainName}/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning) service. 
 {:shortdesc}
 
 ## Objectives
@@ -33,9 +33,9 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 {: #products}
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
-* [Virtual Router Appliance](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#about)
-* [{{site.data.keyword.virtualmachinesshort}}]( https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
-* [VLAN Spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning)
+* [Virtual Router Appliance](https://{DomainName}/docs/infrastructure/virtual-router-appliance/about.html#about)
+* [{{site.data.keyword.virtualmachinesshort}}]( https://{DomainName}/catalog/infrastructure/virtual-server-group)
+* [VLAN Spanning]( https://{DomainName}/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning)
 
 This tutorial might incur costs. The VRA is only available on a monthly pricing plan.
 
@@ -56,14 +56,14 @@ This tutorial might incur costs. The VRA is only available on a monthly pricing 
 ## Before you begin
 {: #prereqs}
 
-This tutorial is based on the tutorial, [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network). That tutorial and its prerequisites should be reviewed before commencing. 
+This tutorial is based on the tutorial, [Isolate workloads with a secure private network]( https://{DomainName}/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network). That tutorial and its prerequisites should be reviewed before commencing. 
 
 ## Configure secure private network sites
 {: #private_network}
 
-The tutorial [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that will communicate between the sites. 
+The tutorial [Isolate workloads with a secure private network]( https://{DomainName}/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) is utilised twice to implement private networks in two different data centers. There is no restriction on which two data centers can be utilised, apart from noting the impact of latency on any traffic or workloads that will communicate between the sites. 
 
-The [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial can be followed without change for each selected data center, recording the following information for later steps. 
+The [Isolate workloads with a secure private network]( https://{DomainName}/docs/tutorials/secure-network-enclosure.html#isolate-workloads-with-a-secure-private-network) tutorial can be followed without change for each selected data center, recording the following information for later steps. 
 
 | Item  | Datacenter1 | Datacenter2 |
 |:------ |:--- | :--- |
@@ -87,7 +87,7 @@ The [Isolate workloads with a secure private network]( https://console.bluemix.n
 
 By default servers (and VRAs) on different VLANs and data centers, are unable to communicate with each other over the private network. In these tutorials, within a single data center VRA’s are used to link VLANs and subnets with classic IP routing and firewalls to create a private network for server communication across VLANs. While they can communicate in the same data center, in this configuration servers belonging to the same {{site.data.keyword.Bluemix_notm}}  account are unable to communicate across data centers. 
 
-The [VLAN spanning]( https://console.bluemix.net/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning) service lifts this restriction of communication between the VLANs and subnets that are **NOT** associated with VRAs. It must be noted that even when VLAN spanning is enabled, VLANs associated with VRAs can only communicate via their associated VRA, as determined by the VRA firewall and routing configuration. When VLAN spanning is enabled the VRAs owned by an {{site.data.keyword.Bluemix_notm}} account are connected over the private network and can communicate. 
+The [VLAN spanning]( https://{DomainName}/docs/infrastructure/vlans/vlan-spanning.html#vlan-spanning) service lifts this restriction of communication between the VLANs and subnets that are **NOT** associated with VRAs. It must be noted that even when VLAN spanning is enabled, VLANs associated with VRAs can only communicate via their associated VRA, as determined by the VRA firewall and routing configuration. When VLAN spanning is enabled the VRAs owned by an {{site.data.keyword.Bluemix_notm}} account are connected over the private network and can communicate. 
 
 VLANs not associated with the secure private networks created by the VRAs, are ‘spanned’ allowing interconnection of these ‘unassociated’ VLANs across data centers. This includes the VRA Gateway (transit) VLANs belonging to the same IBM Cloud account in different data centers. Hence allowing VRAs to communicate across data centers when VLAN spanning is enabled. With VRA to VRA connectivity, the VRA firewall and routing configuration enable servers within the secure networks to connect. 
 
@@ -169,7 +169,7 @@ The existing APP zone firewall rules are only configured to allow traffic to and
    ```
    {: codeblock}
 
-   If the VSIs cannot communicate follow the instructions in the [Isolate workloads with a secure private network]( https://console.bluemix.net/docs/tutorials/secure-network-enclosure.html) tutorial for monitoring traffic on the interfaces and reviewing the firewall logs. 
+   If the VSIs cannot communicate follow the instructions in the [Isolate workloads with a secure private network]( https://{DomainName}/docs/tutorials/secure-network-enclosure.html) tutorial for monitoring traffic on the interfaces and reviewing the firewall logs. 
 
 ## Remove resources
 {: #removeresources}
@@ -187,11 +187,11 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 ## Extend the tutorial
 
 This tutorial can be used in conjunction with the 
-[VPN into a secure private network](https://console.bluemix.net/docs/tutorials/configuring-IPSEC-VPN.html#vpn-into-a-secure-private-network) tutorial to link both secure networks to a users remote network over an IPSec VPN. VPN links can be established to both secure networks for increased resilience of access to the {{site.data.keyword.Bluemix_notm}} IaaS platform. Note IBM does not allow routing of user traffic between client data centers over the IBM private network. The routing configuration to avoid network loops is beyond the scope of this tutorial. 
+[VPN into a secure private network](https://{DomainName}/docs/tutorials/configuring-IPSEC-VPN.html#vpn-into-a-secure-private-network) tutorial to link both secure networks to a users remote network over an IPSec VPN. VPN links can be established to both secure networks for increased resilience of access to the {{site.data.keyword.Bluemix_notm}} IaaS platform. Note IBM does not allow routing of user traffic between client data centers over the IBM private network. The routing configuration to avoid network loops is beyond the scope of this tutorial. 
 
 
 ## Related material
 {:related}
 
-1. Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an {{site.data.keyword.Bluemix_notm}} Account. VRF is mandatory for all clients using  [{{site.data.keyword.BluDirectLink}}](https://console.bluemix.net/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview). [Overview of Virtual Routing and Forwarding (VRF) on IBM Cloud](https://console.bluemix.net/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview)
+1. Virtual Routing and Forwarding (VRF) is an alternative to the use of VLAN Spanning to connect networks across an {{site.data.keyword.Bluemix_notm}} Account. VRF is mandatory for all clients using  [{{site.data.keyword.BluDirectLink}}](https://{DomainName}/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview). [Overview of Virtual Routing and Forwarding (VRF) on IBM Cloud](https://{DomainName}/docs/infrastructure/direct-link/vrf-on-ibm-cloud.html#customer-vrf-overview)
 2. [The IBM Cloud network]( https://www.ibm.com/cloud-computing/bluemix/our-network)
