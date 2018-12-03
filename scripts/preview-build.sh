@@ -2,6 +2,13 @@
 set -e
 mkdir -p builddocs/input
 
+# check that there is no "console.bluemix.net" in the source files
+if grep -rI "console.bluemix.net" *.md
+then
+  echo "Found references to console.bluemix.net. Replace them with {DomainName}."
+  exit 1
+fi
+
 # copy all files to doc input folder
 tar cf - \
   --exclude=builddocs \
