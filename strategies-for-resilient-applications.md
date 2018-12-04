@@ -246,6 +246,7 @@ Yes, you can configure replication in IBM Cloudant using an active/active or act
 For step by step instructions on setting up Cloudant for a multi-region architecture, follow the instructions [here](https://{DomainName}/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery).
 
 #### How does replication work?
+{: #replication-cloudant}
 
 IBM Cloudant for IBM Cloud replication is the process that synchronizes ('syncs') the state of two databases. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. Depending on your application requirements, you use replication to share and aggregate state and content.
 
@@ -289,6 +290,7 @@ Also, you can add a Geo-Replicated Disaster Recovery Node. This offsite DR node 
 For more, check out the Db2 docs [here](https://{DomainName}/docs/services/Db2onCloud/ha.html#ha).
 
 #### How does replication work?
+{: #replication-db2}
 
 How to add a Geo-Replicated Disaster Recovery Node:
 
@@ -328,6 +330,7 @@ Redis is a powerful, open source, in-memory key value store that acts as a cache
 Yes, multi-zone region supported using IBM Cloud Databases for PostgreSQL and Redis.
 
 #### How does replication work?
+{: #replication-icd}
 
 IBM Cloud Databases for Redis and IBM Cloud Databases for PostgreSQL offers cross regional replicas. By creating a read replica, you can get: 
 
@@ -365,6 +368,7 @@ Additionally, with **Cross Region** and **Regional** buckets, data is automatica
 For more detailed explanation COS resiliency options, checkout the COS docs [here](https://{DomainName}/docs/services/cloud-object-storage/basics/endpoints.html#select-regions-and-endpoints).
 
 #### How does replication work?
+{: #replication-cos}
 
 With **Cross Region** and **Regional** buckets, data is automatically replicated across multiple regions within a geo (example for Cross Region US, content goes to Dallas, San Jose, Washington).
 
@@ -391,6 +395,7 @@ Yes it can be configured for active/passive use case. In the active/passive arch
 When adding a second region, use the snapshots feature of File Storage to take a snapshot automatically or manually, and then reuse it within the second passive region. 
 
 #### How does replication work?
+{: #replication-filestorage}
 
 Replication uses one of your snapshot schedules to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://{DomainName}/docs/infrastructure/FileStorage/snapshots.html#snapshots).
 
