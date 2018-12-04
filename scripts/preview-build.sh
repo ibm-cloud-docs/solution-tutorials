@@ -2,11 +2,26 @@
 set -e
 mkdir -p builddocs/input
 
-# check that there is no "console.bluemix.net" in the source files
-if grep -rI "console.bluemix.net" *.md
-then
-  echo "Found references to console.bluemix.net. Replace them with {DomainName}."
-  exit 1
+DOMAIN_NAME_RULES=( \
+  "console.bluemix.net" \
+  "/cloud.ibm.com" \
+  "console.cloud.ibm.com" \
+)
+for rule in "${DOMAIN_NAME_RULES[@]}"
+do
+  echo " -----------------------
+Checking for references to ${rule}"
+  if grep -rI "$rule" *.md
+  then
+    echo "  -> [KO] Found references to $rule. Replace them with {DomainName}."
+    DOMAIN_NAME_CHECK="ko"
+  else
+    echo "  -> [OK] No reference found"
+  fi
+done
+if [ $DOMAIN_NAME_CHECK ]; then
+  echo "{DomainName} check failed"
+  exit 1;
 fi
 
 # copy all files to doc input folder
