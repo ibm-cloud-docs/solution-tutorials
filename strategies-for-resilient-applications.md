@@ -68,7 +68,7 @@ To facilitate disaster recovery, two widely accepted architectures are used: act
 
 #### Active-active configuration
 
-In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions' in real time.![Active/Active](images/solution39/Active-active-case.png)
+In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions in real time.![Active/Active](images/solution39/Active-active-case.png)
 
 
 
@@ -102,7 +102,7 @@ Requests are served by the application running in any of the three active data c
 
 In this scenario, when either of the two active applications in the primary and secondary data centers suffers an outage, the standby application in the third data center is activated. The DR procedure described in the two data centers scenario is followed for restoring normalcy to process customer requests. The standby application in the third data center can be set up in either a hot or a cold standby configuration.
 
-For more on disaster recovery click [here](https://www.ibm.com/cloud/garage/content/manage/hadr-on-premises-app/).
+Read this read this [guide](https://www.ibm.com/cloud/garage/content/manage/hadr-on-premises-app/) for more on disaster recovery.
 
 ### Multi-regions architectures
 
@@ -110,13 +110,13 @@ In a multi-region architecture, an application is deployed to different location
 
 A region is a specific geographical location where you can deploy apps, services, and other IBM® Cloud resources. [IBM Cloud regions](https://{DomainName}/docs/containers/cs_regions.html#bluemix_regions) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
 
-Additionally, in a multi-region architecture, a Global load balancer is required in order to distribute traffic between regions. To achieve that, the [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services)s can be used for the load balancing. 
+Additionally, in a multi-region architecture, a Global load balancer is required in order to distribute traffic between regions. To achieve that, the [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services) can be used for the load balancing. 
 
 ### Multi-zones within regions architectures
 
-Building multi-zones regions applications mean having your application deployed across zones within a region and then you may also have two or three regions. 
+Building multi-zones regions applications means having your application deployed across zones within a region and then you may also have two or three regions. 
 
-With Multi-zone region architecture with you would require to have a local load balancer to distribute traffic locally between zones in a region, and then if a second region is set up then a global load balancer distributes traffic between the regions. 
+With multi-zone region architecture you would require to have a local load balancer to distribute traffic locally between zones in a region, and then if a second region is set up then a global load balancer distributes traffic between the regions. 
 
 **Why bother with multi-region architectures?** 
 
@@ -128,13 +128,13 @@ There are many reasons to why you would want to have a multi-region architecture
 
 You can learn more about regions and zones [here](https://{DomainName}/docs/containers/cs_regions.html#regions-and-zones).
 
-## Compute Options available 
+## Compute Options 
 
 In this section, you will discover the different compute options available in IBM Cloud. For each of the compute options listed, you been given an architecture digram with direct link taken you to the solution tutorial for deploying the architecture. 
 
 Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the compute option selected. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this solution tutorial, [databases](databases, and non-database-services), and [non-database-services](#databaseservices) are covered in detail.
 
-### 1.0 Cloud Foundry apps 
+### Cloud Foundry apps 
 
 Cloud Foundry offers the capability to achieve deployment of a multi-region architecture, also using a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions with pipeline testing and deployment. The architecture for Cloud Foundry multi-region looks like this. 
 
@@ -142,9 +142,9 @@ Cloud Foundry offers the capability to achieve deployment of a multi-region arch
 
 **Deploy above architecture by following the [solution tutorial here.](multi-region-webapp.html)** 
 
-### 2.0 Cloud Foundry Enterprise Environment
+### Cloud Foundry Enterprise Environment
 
-In the last section, you reviewed how to deploy a multi-region app to the public Cloud Foundry. The next step is to look at Cloud Foundry Enterprise Environment (CFEE). CFEE short for `Cloud Foundry Enterprise Environment` offers all the same functionalities like public Cloud Foundry but with additional features.
+In the last section, you reviewed how to deploy a multi-region app to the public Cloud Foundry. The next step is to look at Cloud Foundry Enterprise Environment (CFEE). CFEE offers all the same functionalities like public Cloud Foundry but with additional features.
 
 **Cloud Foundry Enterprise Environment (CFEE)** allows you to instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of CFEE run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services. With this in place, learn how to plan for a multi-region architecture when using Cloud Foundry Enterprise Environment. 
 
@@ -161,9 +161,9 @@ Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud
 
 You can learn more on IBM Cloud Foundry Enterprise Environment [here](https://{DomainName}/docs/cloud-foundry/index.html#about).
 
-### 3.0 Kubernetes apps
+### Kubernetes apps
 
-With Kubernetes, you can achieve multi-zones within regions architecture, this can be active/active use case. When implementing a solution with Kubernetes Service, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
+With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with Kubernetes Service, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
 
 The Kubernetes multi-region architecture looks like this.
 
@@ -177,7 +177,7 @@ The Kubernetes multi-region architecture looks like this.
 
 **Deploy above architecture by following the [solution tutorial here.](multi-region-k8s-cis.html)** 
 
-### 4.0 Cloud Functions apps
+### Cloud Functions apps
 
 Cloud Functions is available in multiple IBM Cloud locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with IBM Cloud Internet Services (CIS), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end. The architecture for Cloud Functions multi-region looks like this.
 
@@ -190,7 +190,7 @@ Cloud Functions is available in multiple IBM Cloud locations. To increase resili
 
 **Deploy above architecture by following the [solution tutorial here.](multi-region-serverless.html)** 
 
-### 5.0 Bare Metal and Virtual Servers
+### Bare Metal and Virtual Servers
 
 IBM Cloud Virtual Servers and Bare Metal offers the capability to achieve a multi-region architecture. You can provision servers on many available locations on IBM Cloud. ![server locations](images/solution39/ServersLocation.png)
 
