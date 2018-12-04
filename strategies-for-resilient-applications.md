@@ -37,15 +37,15 @@ Regardless of the compute option: Kubernetes, Cloud Foundry, Cloud Functions or 
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
-* [{{site.data.keyword.cfee_full_notm}}](https://console.bluemix.net/cfadmin/create)
-* [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk)
-* [{{site.data.keyword.BluVirtServers}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
-* [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
-* [{{site.data.keyword.dashdbshort_notm}}](https://console.bluemix.net/catalog/services/db2-warehouse)
-* [Cloud Internet Services](https://console.bluemix.net/catalog/services/internet-services)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
+* [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
+* [{{site.data.keyword.BluVirtServers}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
+* [{{site.data.keyword.dashdbshort_notm}}](https://{DomainName}/catalog/services/db2-warehouse)
+* [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture and Concepts
 
@@ -108,9 +108,9 @@ For more on disaster recovery click [here](https://www.ibm.com/cloud/garage/cont
 
 In a multi-region architecture, an application is deployed to different locations where each region runs an identical copy of the application. 
 
-A region is a specific geographical location where you can deploy apps, services, and other IBM® Cloud resources. [IBM Cloud regions](https://console.bluemix.net/docs/containers/cs_regions.html#bluemix_regions) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
+A region is a specific geographical location where you can deploy apps, services, and other IBM® Cloud resources. [IBM Cloud regions](https://{DomainName}/docs/containers/cs_regions.html#bluemix_regions) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
 
-Additionally, in a multi-region architecture, a Global load balancer is required in order to distribute traffic between regions. To achieve that, the [Cloud Internet Services](https://console.bluemix.net/catalog/services/internet-services)s can be used for the load balancing. 
+Additionally, in a multi-region architecture, a Global load balancer is required in order to distribute traffic between regions. To achieve that, the [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services)s can be used for the load balancing. 
 
 ### Multi-zones within regions architectures
 
@@ -126,7 +126,7 @@ There are many reasons to why you would want to have a multi-region architecture
 2. Disaster recovery - when the active region failover, then have a backup region and quickly recover. 
 3. Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometres. Therefore, those in such case you have have to store data in multiple regions. 
 
-You can learn more about regions and zones [here](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-zones).
+You can learn more about regions and zones [here](https://{DomainName}/docs/containers/cs_regions.html#regions-and-zones).
 
 ## Compute Options available 
 
@@ -136,7 +136,7 @@ Note: all compute options architectures do not have databases or other services 
 
 ### 1.0 Cloud Foundry apps 
 
-Cloud Foundry offers the capability to achieve deployment of a multi-region architecture, also using a [continuous delivery](https://console.bluemix.net/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions with pipeline testing and deployment. The architecture for Cloud Foundry multi-region looks like this. 
+Cloud Foundry offers the capability to achieve deployment of a multi-region architecture, also using a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions with pipeline testing and deployment. The architecture for Cloud Foundry multi-region looks like this. 
 
 ![CF-Architecture](images/solution39/CF2-Architecture.png)
 
@@ -148,7 +148,7 @@ In the last section, you reviewed how to deploy a multi-region app to the public
 
 **Cloud Foundry Enterprise Environment (CFEE)** allows you to instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of CFEE run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services. With this in place, learn how to plan for a multi-region architecture when using Cloud Foundry Enterprise Environment. 
 
-A multi-region architecture using Cloud Foundry Enterprise Environment is below.![VM-Architecture](images/solution39/CFEE-Architecture.png)
+A multi-region architecture using Cloud Foundry Enterprise Environment is below.![Architecture](images/solution39/CFEE-Architecture.png)
 
 Deploying this architecture requires the following: 
 
@@ -157,9 +157,9 @@ Deploying this architecture requires the following:
 - Push the apps targeting the CFEE API endpoint. 
 - Setup database replication, just as you would on public Cloud Foundry. 
 
-Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md) where it will take you deploying a microservice based application to CFEE. Once deployed to one CFEE account, then you would require to redeploy to a second region and attach the [Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) in front of the two CFEE account to load balance the traffic. 
+Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md) where it will take you deploying a microservice based application to CFEE. Once deployed to one CFEE account, then you would require to redeploy to a second region and attach the [Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) in front of the two CFEE account to load balance the traffic. 
 
-You can learn more on IBM Cloud Foundry Enterprise Environment [here](https://console.bluemix.net/docs/cloud-foundry/index.html#about).
+You can learn more on IBM Cloud Foundry Enterprise Environment [here](https://{DomainName}/docs/cloud-foundry/index.html#about).
 
 ### 3.0 Kubernetes apps
 
@@ -214,7 +214,7 @@ The components required for such architecture:
 
 {:databaseservices}
 
-IBM Cloud offers a selection of [databases as a service](https://console.bluemix.net/catalog/?category=databases) both relation and non-relation databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
+IBM Cloud offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) both relation and non-relation databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
 
 **Key features:** 
 
@@ -243,7 +243,7 @@ Cloudant offers many features like, `fully Managed`, `security`, `global availab
 
 Yes, you can configure replication in IBM Cloudant using an active/active or active/passive topology across data centres. The following diagram shows a typical configuration that uses two IBM Cloudant accounts, one in each region:![active-active](images/solution39/active-active.png)
 
-For step by step instructions on setting up Cloudant for a multi-region architecture, follow the instructions [here](https://console.bluemix.net/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery).
+For step by step instructions on setting up Cloudant for a multi-region architecture, follow the instructions [here](https://{DomainName}/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery).
 
 #### How does replication work?
 
@@ -256,7 +256,7 @@ Replication has two forms: push or pull replication:
 - *Push replication* is where the source is a local database, and the destination is a remote database.
 - *Pull replication* is where the source is a remote database instance, and the destination is the local database.
 
-For more detailed instructions on Cloudant replication, check out the replication docs [here](https://console.bluemix.net/docs/services/Cloudant/api/replication.html#replication).
+For more detailed instructions on Cloudant replication, check out the replication docs [here](https://{DomainName}/docs/services/Cloudant/api/replication.html#replication).
 
 #### Backups and recovery
 
@@ -268,11 +268,11 @@ Your data is important and valuable. You want to protect your data, to help ensu
 - Cross-Region Redundancy for Disaster Recovery
 - Database Backup and Recovery
 
-To dive deeper into the three levels of protection, check out the Cloudant backup and recovery docs [here](https://console.bluemix.net/docs/services/Cloudant/guides/disaster-recovery-and-backup.html#disaster-recovery-and-backup).
+To dive deeper into the three levels of protection, check out the Cloudant backup and recovery docs [here](https://{DomainName}/docs/services/Cloudant/guides/disaster-recovery-and-backup.html#disaster-recovery-and-backup).
 
 ### 2.0 Db2, Db2 hosted and Db2 Warehouse
 
-IBM Cloud offers a selection range of [Db2 databases](https://console.bluemix.net/catalog/?search=db2h), these are:
+IBM Cloud offers a selection range of [Db2 databases](https://{DomainName}/catalog/?search=db2h), these are:
 
 - **Db2**: A fully-managed cloud SQL database. Powered by a turbo-charged Db2 engine.
 - **Db2 hosted**: IBM Db2 Hosted lets you run Db2 with full administrative access on cloud infrastructure. It eliminates the cost, complexity, and risk of managing your own infrastructure.
@@ -286,7 +286,7 @@ Db2 on Cloud high availability plans have excellent availability characteristics
 
 Also, you can add a Geo-Replicated Disaster Recovery Node. This offsite DR node option gives you the ability to rapidly synchronize your data in real time to a database node in an offsite IBM Cloud data center of your choice.
 
-For more, check out the Db2 docs [here](https://console.bluemix.net/docs/services/Db2onCloud/ha.html#ha).
+For more, check out the Db2 docs [here](https://{DomainName}/docs/services/Db2onCloud/ha.html#ha).
 
 #### How does replication work?
 
@@ -299,7 +299,7 @@ How to add a Geo-Replicated Disaster Recovery Node:
 
 Backup data:
 
-- For paid plans, encrypted backups of the database are done daily. A daily backup is kept for each of the last 14 days. Retained backups are used by IBM for system recovery purposes in the event of a disaster or system loss. More on that can be found [here](https://console.bluemix.net/docs/services/Db2onCloud/br.html#br).
+- For paid plans, encrypted backups of the database are done daily. A daily backup is kept for each of the last 14 days. Retained backups are used by IBM for system recovery purposes in the event of a disaster or system loss. More on that can be found [here](https://{DomainName}/docs/services/Db2onCloud/br.html#br).
 
 Restore data, managing high availability and disaster recovery nodes: 
 
@@ -313,7 +313,7 @@ Import data:
 
 ### 3.0 IBM Cloud Databases for PostgreSQL and Redis 
 
-The [IBM Cloud Databases for PostgreSQL](https://console.bluemix.net/catalog/services/databases-for-postgresql) and [IBM Cloud Databases for Redis](https://console.bluemix.net/catalog/services/databases-for-redis) are database-as-a-service products that are fully managed, highly available, and built from the ground up with enterprise security in mind. They are scalable, cost-efficient, and readily usable for enterprise application development.
+The [IBM Cloud Databases for PostgreSQL](https://{DomainName}/catalog/services/databases-for-postgresql) and [IBM Cloud Databases for Redis](https://{DomainName}/catalog/services/databases-for-redis) are database-as-a-service products that are fully managed, highly available, and built from the ground up with enterprise security in mind. They are scalable, cost-efficient, and readily usable for enterprise application development.
 
 **IBM Cloud Databases for PostgreSQL**
 
@@ -338,11 +338,11 @@ IBM Cloud Databases for Redis and IBM Cloud Databases for PostgreSQL offers cros
 
 ![](images/solution39/replica.png)
 
-Refer to the [PostgreSQL](https://console.bluemix.net/docs/services/databases-for-postgresql/index.html#about-databases-for-postgresql) and [Redis](https://console.bluemix.net/docs/services/databases-for-redis/index.html#about-databases-for-redis) docs for more on replication.
+Refer to the [PostgreSQL](https://{DomainName}/docs/services/databases-for-postgresql/index.html#about-databases-for-postgresql) and [Redis](https://{DomainName}/docs/services/databases-for-redis/index.html#about-databases-for-redis) docs for more on replication.
 
 #### Backups 
 
-IBM® Cloud Databases offers automatic back-ups to cross-regional Cloud Object Storage. Daily and on-demand backups are available for 30 days. Each backup is labeled with its type, and when the backup was taken. Click the backup to reveal the full ID of the backup and a command that you can use to restore a backup with the IBM Cloud CLI. More on backups can be found [here](https://console.bluemix.net/docs/services/databases-for-postgresql/dashboard-backups.html#backups) for PostgreSQL and [here](https://console.bluemix.net/docs/services/databases-for-redis/dashboard-backups.html#backups) for Redis.
+IBM® Cloud Databases offers automatic back-ups to cross-regional Cloud Object Storage. Daily and on-demand backups are available for 30 days. Each backup is labeled with its type, and when the backup was taken. Click the backup to reveal the full ID of the backup and a command that you can use to restore a backup with the IBM Cloud CLI. More on backups can be found [here](https://{DomainName}/docs/services/databases-for-postgresql/dashboard-backups.html#backups) for PostgreSQL and [here](https://{DomainName}/docs/services/databases-for-redis/dashboard-backups.html#backups) for Redis.
 
 ### 4.0 Cloud Object Storage
 
@@ -362,7 +362,7 @@ Regional and Cross Region buckets can maintain availability during a site outage
 
 Additionally, with **Cross Region** and **Regional** buckets, data is automatically replicated across multiple regions within a geo (example for Cross Region US, content goes to Dallas, San Jose, Washington).
 
-For more detailed explanation COS resiliency options, checkout the COS docs [here](https://console.bluemix.net/docs/services/cloud-object-storage/basics/endpoints.html#select-regions-and-endpoints).
+For more detailed explanation COS resiliency options, checkout the COS docs [here](https://{DomainName}/docs/services/cloud-object-storage/basics/endpoints.html#select-regions-and-endpoints).
 
 #### How does replication work?
 
@@ -376,13 +376,13 @@ IBM Cloud Object Storage provides durable, secure and cost effective cloud stora
 
 You can initiate your backup to the bucket with the policy. and perform backups to IBM Cloud Object Storage. More information on Simpana backups is available [here](https://documentation.commvault.com/commvault/v11/article?p=11677.htm). Backup contents transition to the Archive tier based on the policy configured on the bucket.
 
-Refer to the `performing backups` section [here](https://console.bluemix.net/docs/services/cloud-object-storage/gui/simpana.html#performing-backups).
+Refer to the `performing backups` section [here](https://{DomainName}/docs/services/cloud-object-storage/gui/simpana.html#performing-backups).
 
 ### 5.0 File Storage
 
 IBM File Storage for IBM Cloud is persistent, fast, and flexible network-attached, NFS-based File Storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. File Storage shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
-Some of file storage features are things like `Snapshots`, `Replication`, `Concurrent access` and many more. Get the full list of features [here](https://console.bluemix.net/docs/infrastructure/FileStorage/index.html#getting-started-with-file-storage).
+Some of file storage features are things like `Snapshots`, `Replication`, `Concurrent access` and many more. Get the full list of features [here](https://{DomainName}/docs/infrastructure/FileStorage/index.html#getting-started-with-file-storage).
 
 #### Does File Storage support multi-region?
 
@@ -392,19 +392,19 @@ When adding a second region, use the snapshots feature of File Storage to take a
 
 #### How does replication work?
 
-Replication uses one of your snapshot schedules to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#snapshots).
+Replication uses one of your snapshot schedules to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://{DomainName}/docs/infrastructure/FileStorage/snapshots.html#snapshots).
 
-Before you can replicate, you must create a snapshot schedule. When you fail over, you’re "flipping the switch" from your storage volume in your primary data center to the destination volume in your remote data center. For example, your primary data center is London and your secondary data center is Amsterdam. If a failure event occurs, you’d fail over to Amsterdam – connecting to the now-primary volume from a compute instance in Amsterdam. After your volume in London is repaired, a snapshot is taken of the Amsterdam volume to fail back to London and the once-again primary volume from a compute instance in London. More on File Storage replication can be found [here](https://console.bluemix.net/docs/infrastructure/FileStorage/replication.html#replicating-data).
+Before you can replicate, you must create a snapshot schedule. When you fail over, you’re "flipping the switch" from your storage volume in your primary data center to the destination volume in your remote data center. For example, your primary data center is London and your secondary data center is Amsterdam. If a failure event occurs, you’d fail over to Amsterdam – connecting to the now-primary volume from a compute instance in Amsterdam. After your volume in London is repaired, a snapshot is taken of the Amsterdam volume to fail back to London and the once-again primary volume from a compute instance in London. More on File Storage replication can be found [here](https://{DomainName}/docs/infrastructure/FileStorage/replication.html#replicating-data).
 
 ##Non-database services
 
 {:nondatabaseservices}
 
-IBM Cloud offers a selection of non-database [services](https://console.bluemix.net/catalog), these are both IBM services and 3rd party service. When planning for multi-region architecture, you need to understand how services like Watson services and App ID can work in a multi-region setup.  
+IBM Cloud offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party service. When planning for multi-region architecture, you need to understand how services like Watson services and App ID can work in a multi-region setup.  
 
 #### Watson Assistant
 
-A platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants. The Watson Assistant service comes with a powerful visual dialog editor where you can import and export workspaces. A workspace contains intents, entities and dialog, it's the there things that creates the ChatBot conversion. You can read more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/index.html#about). 
+A platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants. The Watson Assistant service comes with a powerful visual dialog editor where you can import and export workspaces. A workspace contains intents, entities and dialog, it's the there things that creates the ChatBot conversion. You can read more on Watson Assistant [here](https://{DomainName}/docs/services/assistant/index.html#about). 
 
 Focus point: How to configure and use a service like Watson Assistant in a multi-region app. 
 
@@ -412,19 +412,19 @@ Focus point: How to configure and use a service like Watson Assistant in a multi
 
 It's important to note that Watson Assistant V1 is stateless. Watson assistant delivers 99.5% uptime, but still, for highly available applications across multiple regions, you may even want to have multiple instances of this services across regions. In the active/passive use case for example, you would be required to set up an instance of the Watson Assistant in both regions and manually import and export workspaces between regions in an event of downtime of the active region. 
 
-If you wish you run an active/active use case, you could have both regions using one instance of the Watson Assistant service, and an event where the healthy region is down then export the workspace and import it into the second region where you have the second Watson Assistant service created. You can learn more on Watson Assistant [here](https://console.bluemix.net/docs/services/assistant/getting-started.html).
+If you wish you run an active/active use case, you could have both regions using one instance of the Watson Assistant service, and an event where the healthy region is down then export the workspace and import it into the second region where you have the second Watson Assistant service created. You can learn more on Watson Assistant [here](https://{DomainName}/docs/services/assistant/getting-started.html).
 
 #### Import and export services data between regions
 
-Watson Assistant comes with tooling allowing you to export an existing workspace that contains the intents, entities, and dialog in which everything you need, the exported workspace can then be reimported into another Watson Assistant service in a different region. More on Watson Assistant can be found [here](https://console.bluemix.net/docs/services/assistant/getting-started.html#getting-started).
+Watson Assistant comes with tooling allowing you to export an existing workspace that contains the intents, entities, and dialog in which everything you need, the exported workspace can then be reimported into another Watson Assistant service in a different region. More on Watson Assistant can be found [here](https://{DomainName}/docs/services/assistant/getting-started.html#getting-started).
 
 ## Related content
 
 {:related}
 
-- IBM Cloud [Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
+- IBM Cloud [Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
 - [Improving App Availability with Multizone Clusters](https://www.ibm.com/blogs/bluemix/2018/06/improving-app-availability-multizone-clusters/)
-- [Cloud Foundry, secure web application across multiple regions](https://console.bluemix.net/docs/tutorials/multi-region-webapp.html?pos=2#secure-web-application-across-multiple-regions)
-- [Cloud Functions, deploy serverless apps across multiple regions](https://console.bluemix.net/docs/tutorials/multi-region-serverless.html?pos=2#deploy-serverless-apps-across-multiple-regions)
-- [Kubernetes, resilient and secure multi-region Kubernetes clusters with Cloud Internet Services](https://console.bluemix.net/docs/tutorials/multi-region-k8s-cis.html?pos=3#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services)
-- [Virtual Servers, build highly available and scalable web app](https://console.bluemix.net/docs/tutorials/highly-available-and-scalable-web-application.html?pos=2#use-virtual-servers-to-build-highly-available-and-scalable-web-app)
+- [Cloud Foundry, secure web application across multiple regions](https://{DomainName}/docs/tutorials/multi-region-webapp.html?pos=2#secure-web-application-across-multiple-regions)
+- [Cloud Functions, deploy serverless apps across multiple regions](https://{DomainName}/docs/tutorials/multi-region-serverless.html?pos=2#deploy-serverless-apps-across-multiple-regions)
+- [Kubernetes, resilient and secure multi-region Kubernetes clusters with Cloud Internet Services](https://{DomainName}/docs/tutorials/multi-region-k8s-cis.html?pos=3#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services)
+- [Virtual Servers, build highly available and scalable web app](https://{DomainName}/docs/tutorials/highly-available-and-scalable-web-application.html?pos=2#use-virtual-servers-to-build-highly-available-and-scalable-web-app)
