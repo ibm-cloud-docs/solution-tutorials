@@ -29,11 +29,11 @@ ToDo
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.cfee_full_notm}}](https://console.bluemix.net/cfadmin/create)
-* [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
-* [[Cloud Internet Services](https://console.bluemix.net/catalog/services/internet-services)
+* [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
+* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
+* [[Cloud Internet Services](https://{DomainName}/catalog/services/internet-services)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture 
 
@@ -55,7 +55,7 @@ With IBM Cloud Foundry Enterprise Environment (CFEE) you can instantiate multipl
 
 ### CFEE Getting started 
 
-- ToDo: Add getting started with CFEE here.  https://console.bluemix.net/docs/cloud-foundry/getting-started.html#getting-started
+- ToDo: Add getting started with CFEE here.  https://{DomainName}/docs/cloud-foundry/getting-started.html#getting-started
 
 ## Deploy Cloud Foundry Enterprise app across two regions
 
