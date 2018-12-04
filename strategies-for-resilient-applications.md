@@ -68,9 +68,9 @@ To facilitate disaster recovery, two widely accepted architectures are used: act
 
 #### Active-active configuration
 
-In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions' in real time.![Active/Active](images/solution39/Active-active-case.png)
+In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions' in real time.
 
-
+![Active/Active](images/solution39/Active-active-case.png)
 
 This configuration provides higher availability with less manual remediation than an active/passive architecture. Requests are served from both data centers. You should configure the edge services (load balancer) with appropriate timeout and retry logic to automatically route the request to the second data center if a failure occurs in the first data center environment.
 
@@ -132,7 +132,7 @@ You can learn more about regions and zones [here](https://{DomainName}/docs/cont
 
 In this section, you will discover the different compute options available in IBM Cloud. For each of the compute options listed, you been given an architecture digram with direct link taken you to the solution tutorial for deploying the architecture. 
 
-Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the compute option selected. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this solution tutorial, [databases](databases, and non-database-services), and [non-database-services](#databaseservices) are covered in detail.
+Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the compute option selected. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this solution tutorial, [#databaseservices](databases, and non-database-services), and [non-database-services](#nondatabaseservices) are covered in detail.
 
 ### 1.0 Cloud Foundry apps 
 
@@ -211,8 +211,7 @@ The components required for such architecture:
 **Deploy above architecture by following the [solution tutorial here.](highly-available-and-scalable-web-application.html)** 
 
 ## Databases and application files
-
-{:databaseservices}
+{: #databaseservices}
 
 IBM Cloud offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) both relation and non-relation databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
 
@@ -401,9 +400,8 @@ Replication uses one of your snapshot schedules to automatically copy snapshots 
 
 Before you can replicate, you must create a snapshot schedule. When you fail over, you’re "flipping the switch" from your storage volume in your primary data center to the destination volume in your remote data center. For example, your primary data center is London and your secondary data center is Amsterdam. If a failure event occurs, you’d fail over to Amsterdam – connecting to the now-primary volume from a compute instance in Amsterdam. After your volume in London is repaired, a snapshot is taken of the Amsterdam volume to fail back to London and the once-again primary volume from a compute instance in London. More on File Storage replication can be found [here](https://{DomainName}/docs/infrastructure/FileStorage/replication.html#replicating-data).
 
-##Non-database services
-
-{:nondatabaseservices}
+## Non-database services
+{: #nondatabaseservices}
 
 IBM Cloud offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party service. When planning for multi-region architecture, you need to understand how services like Watson services and App ID can work in a multi-region setup.  
 
