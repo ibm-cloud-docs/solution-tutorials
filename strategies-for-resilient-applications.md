@@ -18,11 +18,11 @@ lastupdated: "2018-11-28"
 
 # Strategies for resilient applications
 
-Regardless of the compute option: Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud's capabilities to build resilient solutions, and in doing so, answers the following questions.
+Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud's capabilities to build resilient solutions, and in doing so, answers the following questions.
 
-- Which compute options support multi-region deployment?
+- What should I consider when preparing a solution to be globally available?
+- How available compute options help you deliver multi-region applications?
 - How do I import application or service artifacts into additional regions?
-- What should I consider when preparing an app to be globally available?
 - How can databases replicate across locations?
 - Which backing services should be used: Block Storage, File Storage, Object Storage, Databases?
 - Are there any service-specific considerations?
@@ -51,7 +51,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #architecture}
 
-To design a resilient architecture, involving scenarios like active/active, active/passive deployment, you need to consider the individual blocks of your solution and their specific capabilities. 
+To design a resilient architecture, you need to consider the individual blocks of your solution and their specific capabilities. 
 
 Below is a multi-region architecture showcasing the different components that may exist in a multi-region setup. 
 
@@ -64,25 +64,25 @@ The architecture diagram above may be different depending on the compute option.
 
 ### Disaster recovery with two regions 
 
-To facilitate disaster recovery, two widely accepted architectures are used: active/active and active/passive. Each architecture has its own costs and benefits related to time and effort during recovery.
+To facilitate disaster recovery, two widely accepted architectures are used: **active/active** and **active/passive**. Each architecture has its own costs and benefits related to time and effort during recovery.
 
 #### Active-active configuration
 
-In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions in real time.![Active/Active](images/solution39/Active-active.png)
+In an active/active architecture, both locations have identical active instances with a load balancer distributing traffic between them. Using this approach, data replication must be in place to synchronize data between both regions in real time.
 
-![Active/Active](images/solution39/Active-active-case.png)
+![Active/Active](images/solution39/Active-active.png)
 
 This configuration provides higher availability with less manual remediation than an active/passive architecture. Requests are served from both data centers. You should configure the edge services (load balancer) with appropriate timeout and retry logic to automatically route the request to the second data center if a failure occurs in the first data center environment.
 
-When considering recovery point objectives (RPO) in active/active, data synchronization between the two active data centres must be extremely timely to allow seamless request flow.
+When considering **recovery point objective** (RPO) in the active/active scenario, data synchronization between the two active data centres must be extremely timely to allow seamless request flow.
 
 #### Active-passive configuration
 
-An active/passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application's and users' needs. 
+An active/passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application and user needs. 
 
 ![Active/Active](images/solution39/Active-passive.png)
 
-Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data centre is a time-consuming operation. Both recovery time objective (RTO) and recovery point objective (RPO) are higher compared to the active/active configuration.
+Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data centre is a time-consuming operation. Both **recovery time objective** (RTO) and **recovery point objective** (RPO) are higher compared to the active/active configuration.
 
 ### Disaster recovery with three regions
 
@@ -100,7 +100,7 @@ Requests are served by the application running in any of the three active data c
 
 ![](images/solution39/Active-active-passive.png)
 
-In this scenario, when either of the two active applications in the primary and secondary data centers suffers an outage, the standby application in the third data center is activated. The DR procedure described in the two data centers scenario is followed for restoring normalcy to process customer requests. The standby application in the third data center can be set up in either a hot or a cold standby configuration.
+In this scenario, when either of the two active applications in the primary and secondary data centers suffers an outage, the standby application in the third data center is activated. The disaster recovery procedure described in the two data centers scenario is followed for restoring normalcy to process customer requests. The standby application in the third data center can be set up in either a hot or a cold standby configuration.
 
 Refer to [this guide](https://www.ibm.com/cloud/garage/content/manage/hadr-on-premises-app/) for more on disaster recovery.
 
@@ -110,7 +110,12 @@ In a multi-region architecture, an application is deployed to different location
 
 A region is a specific geographical location where you can deploy apps, services, and other IBM® Cloud resources. [IBM Cloud regions](https://{DomainName}/docs/containers/cs_regions.html#bluemix_regions) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
 
-Additionally, in a multi-region architecture, a Global load balancer is required in order to distribute traffic between regions. To achieve that, the [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services) can be used for the load balancing. 
+Additionally, in a multi-region architecture, a Global load balancer like [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services) is required in order to distribute traffic between regions.
+
+Deploying a solution across multiple regions comes with the following benefits:
+1. Improve latency for end-users - speed is the key, the closer your backend origin is to end-users, the better the experience for users and the faster.
+2. Disaster recovery - when the active region fails, then you have a backup region to recover quickly.
+3. Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometers. Therefore, those in such case you have have to store data in multiple regions. 
 
 ### Multi-zones within regions architectures
 
@@ -118,21 +123,13 @@ Building multi-zones regions applications means having your application deployed
 
 With multi-zone region architecture you would require to have a local load balancer to distribute traffic locally between zones in a region, and then if a second region is set up then a global load balancer distributes traffic between the regions. 
 
-**Why bother with multi-region architectures?** 
-
-There are many reasons to why you would want to have a multi-region architecture, here are the top three:
-
-1. Improve latency for end-users - speed is the key, the closer your backend origin is to end-users, the better the experience for users and the faster.
-2. Disaster recovery - when the active region failover, then have a backup region and quickly recover. 
-3. Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometres. Therefore, those in such case you have have to store data in multiple regions. 
-
 You can learn more about regions and zones [here](https://{DomainName}/docs/containers/cs_regions.html#regions-and-zones).
 
 ## Compute Options 
 
-In this section, you will discover the different compute options available in IBM Cloud. For each of the compute options listed, you been given an architecture digram with direct link taken you to the solution tutorial for deploying the architecture. 
+In this section, you will discover the different compute options available in IBM Cloud. For each of the compute options listed, you been given an architecture diagram with direct link taken you to the solution tutorial for deploying the architecture. 
 
-Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the compute option selected. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this solution tutorial, [#databaseservices](databases, and non-database-services), and [non-database-services](#nondatabaseservices) are covered in detail.
+Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the compute option selected. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this solution tutorial, [databases](#databaseservices), and [non-database-services](#nondatabaseservices) are covered in detail.
 
 ### Cloud Foundry apps 
 
