@@ -202,7 +202,7 @@ The below architecture demonstrates deployment of a multi-region architecture us
 The components required for such architecture: 
 
 1. Users access the application through IBM Cloud Internet Services (CIS).
-2. CIS routes traffic to a healthy location.
+2. CIS routes traffic to the active location.
 3. Within a location a load balancer redirects traffic to a server.
 4. Databases deployed on a virtual server, meaning you would configure the database and setup replications and backups between regions. The alternative would be use a database-as-service, a topic discussed later in the tutorial.
 5. File storage to store the application images and files, File storage offers the capability to take a snapshot at a given time and date, this snapshot then can be reused within another region, something in which you would do manually. 
