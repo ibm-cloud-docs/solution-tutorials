@@ -127,9 +127,9 @@ You can learn more about regions and zones [here](https://{DomainName}/docs/cont
 
 ## Compute Options 
 
-In this section, you will discover the different compute options available in IBM Cloud. For each of the compute options listed, you been given an architecture diagram with direct link taken you to the solution tutorial for deploying the architecture. 
+This section reviews the compute options available in IBM Cloud. For each compute option, an architecture diagram is provided together with a tutorial on how to deploy such architecture.
 
-Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the compute option selected. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and some other Watson services. When deploying a multi-region architecture, you need to think about databases and non-database-services within your multi-region Cloud Foundry architecture. In later sections of this solution tutorial, [databases](#databaseservices), and [non-database-services](#nondatabaseservices) are covered in detail.
+Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the selected compute option. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and other services. Later sections of this solution tutorial will cover [databases](#databaseservices), and [non-database-services](#nondatabaseservices).
 
 ### Cloud Foundry apps 
 
