@@ -113,9 +113,9 @@ A region is a specific geographical location where you can deploy apps, services
 Additionally, in a multi-region architecture, a Global load balancer like [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services) is required in order to distribute traffic between regions.
 
 Deploying a solution across multiple regions comes with the following benefits:
-1. Improve latency for end-users - speed is the key, the closer your backend origin is to end-users, the better the experience for users and the faster.
-2. Disaster recovery - when the active region fails, then you have a backup region to recover quickly.
-3. Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometers. Therefore, those in such case you have have to store data in multiple regions. 
+- Improve latency for end-users - speed is the key, the closer your backend origin is to end-users, the better the experience for users and the faster.
+- Disaster recovery - when the active region fails, then you have a backup region to recover quickly.
+- Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometers. Therefore, those in such case you have have to store data in multiple regions. 
 
 ### Multi-zones within regions architectures
 
