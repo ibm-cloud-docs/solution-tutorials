@@ -133,7 +133,7 @@ Note: all compute options architectures do not have databases or other services 
 
 ### Cloud Foundry apps 
 
-Cloud Foundry offers the capability to achieve deployment of a multi-region architecture, also using a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions with pipeline testing and deployment. The architecture for Cloud Foundry multi-region looks like this. 
+Cloud Foundry offers the capability to achieve deployment of a multi-region architecture, also using a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions. The architecture for Cloud Foundry multi-region looks like this:
 
 ![CF-Architecture](images/solution39/CF2-Architecture.png)
 
@@ -141,11 +141,13 @@ Cloud Foundry offers the capability to achieve deployment of a multi-region arch
 
 ### Cloud Foundry Enterprise Environment
 
-In the last section, you reviewed how to deploy a multi-region app to the public Cloud Foundry. The next step is to look at Cloud Foundry Enterprise Environment (CFEE). CFEE offers all the same functionalities like public Cloud Foundry but with additional features.
+In the last section, you reviewed how to deploy a multi-region app to the public Cloud Foundry. The next step is to look at **Cloud Foundry Enterprise Environment (CFEE)**. CFEE offers all the same functionalities like public Cloud Foundry but with additional features.
 
-**Cloud Foundry Enterprise Environment (CFEE)** allows you to instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of CFEE run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services. With this in place, learn how to plan for a multi-region architecture when using Cloud Foundry Enterprise Environment. 
+**Cloud Foundry Enterprise Environment** allows you to instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of CFEE run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services.
 
-A multi-region architecture using Cloud Foundry Enterprise Environment is below.![Architecture](images/solution39/CFEE-Architecture.png)
+A multi-region architecture using Cloud Foundry Enterprise Environment is below.
+
+![Architecture](images/solution39/CFEE-Architecture.png)
 
 Deploying this architecture requires the following: 
 
@@ -229,7 +231,7 @@ IBM Cloud offers a selection of [databases as a service](https://{DomainName}/ca
 
 More on cloud database-as-service can be found [here](https://www.ibm.com/cloud/learn/what-is-cloud-database). 
 
-### 1.0 Cloudant
+### Cloudant
 
 IBM Cloudant is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed IBM Cloud service, Cloudant elastically scales throughput and storage independently. Cloudant is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
 
@@ -267,7 +269,7 @@ Your data is important and valuable. You want to protect your data, to help ensu
 
 To dive deeper into the three levels of protection, check out the Cloudant backup and recovery docs [here](https://{DomainName}/docs/services/Cloudant/guides/disaster-recovery-and-backup.html#disaster-recovery-and-backup).
 
-### 2.0 Db2, Db2 hosted and Db2 Warehouse
+### Db2, Db2 hosted and Db2 Warehouse
 
 IBM Cloud offers a selection range of [Db2 databases](https://{DomainName}/catalog/?search=db2h), these are:
 
@@ -309,7 +311,7 @@ Import data:
 
 - You can use [IBM Lift CLI](https://lift.ng.bluemix.net/) to import data into Db2 on Cloud.
 
-### 3.0 IBM Cloud Databases for PostgreSQL and Redis 
+### IBM Cloud Databases for PostgreSQL and Redis 
 
 The [IBM Cloud Databases for PostgreSQL](https://{DomainName}/catalog/services/databases-for-postgresql) and [IBM Cloud Databases for Redis](https://{DomainName}/catalog/services/databases-for-redis) are database-as-a-service products that are fully managed, highly available, and built from the ground up with enterprise security in mind. They are scalable, cost-efficient, and readily usable for enterprise application development.
 
@@ -343,7 +345,7 @@ Refer to the [PostgreSQL](https://{DomainName}/docs/services/databases-for-postg
 
 IBM® Cloud Databases offers automatic back-ups to cross-regional Cloud Object Storage. Daily and on-demand backups are available for 30 days. Each backup is labeled with its type, and when the backup was taken. Click the backup to reveal the full ID of the backup and a command that you can use to restore a backup with the IBM Cloud CLI. More on backups can be found [here](https://{DomainName}/docs/services/databases-for-postgresql/dashboard-backups.html#backups) for PostgreSQL and [here](https://{DomainName}/docs/services/databases-for-redis/dashboard-backups.html#backups) for Redis.
 
-### 4.0 Cloud Object Storage
+### Cloud Object Storage
 
 Cloud Object Storage (COS) service instance are global, buckets within a COS instance are where it starts to talk about regions. Information stored with IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. This service makes use of the distributed storage technologies provided by the IBM Cloud Object Storage System (formerly Cleversafe).
 
@@ -378,7 +380,7 @@ You can initiate your backup to the bucket with the policy. and perform backups 
 
 Refer to the `performing backups` section [here](https://{DomainName}/docs/services/cloud-object-storage/gui/simpana.html#performing-backups).
 
-### 5.0 File Storage
+### File Storage
 
 IBM File Storage for IBM Cloud is persistent, fast, and flexible network-attached, NFS-based File Storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. File Storage shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
