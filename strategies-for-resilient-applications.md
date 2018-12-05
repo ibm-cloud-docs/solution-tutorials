@@ -212,7 +212,7 @@ The components required for such architecture:
 ## Databases and application files
 {: #databaseservices}
 
-IBM Cloud offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) both relation and non-relation databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
+IBM Cloud offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) both relational and non-relational databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
 
 **Key features:** 
 
@@ -235,11 +235,11 @@ More on cloud database-as-service can be found [here](https://www.ibm.com/cloud/
 
 IBM Cloudant is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed IBM Cloud service, Cloudant elastically scales throughput and storage independently. Cloudant is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
 
-Cloudant offers many features like, `fully Managed`, `security`, `global availability`, `durable replication` and many more. A full list of Cloudant features can be found [here](https://www.ibm.com/cloud/cloudant).
-
 #### Does Cloudant support multi-region?
 
-Yes, you can configure replication in IBM Cloudant using an active/active or active/passive topology across data centres. The following diagram shows a typical configuration that uses two IBM Cloudant accounts, one in each region:![active-active](images/solution39/active-active.png)
+Yes, you can configure replication in IBM Cloudant using an active/active or active/passive topology across data centres. The following diagram shows a typical configuration that uses two IBM Cloudant accounts, one in each region:
+
+![active-active](images/solution39/Active-active.png)
 
 For step by step instructions on setting up Cloudant for a multi-region architecture, follow the instructions [here](https://{DomainName}/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery).
 
