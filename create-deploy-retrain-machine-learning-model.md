@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-14"
+lastupdated: "2018-11-23"
 
 ---
 
@@ -44,11 +44,11 @@ In the terminology of machine learning, classification is considered an instance
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience)
-* [{{site.data.keyword.sparkl}}](https://console.bluemix.net/catalog/services/apache-spark)
-* [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/catalog/infrastructure/cloud-object-storage)
-* [{{site.data.keyword.pm_full}}](https://console.bluemix.net/catalog/services/machine-learning)
-* [{{site.data.keyword.dashdblong}}](https://console.bluemix.net/catalog/services/db2-warehouse)
+* [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience)
+* [{{site.data.keyword.sparkl}}](https://{DomainName}/catalog/services/apache-spark)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
+* [{{site.data.keyword.pm_full}}](https://{DomainName}/catalog/services/machine-learning)
+* [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
 
 ## Before you begin
 {: #prereqs}
@@ -66,14 +66,8 @@ You can create a project to add data and open a data asset in the data refiner f
 
 **Create a project:**
 
-1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) and select [{{site.data.keyword.DSX_short}}](https://console.bluemix.net/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-
-   ![](images/solution22-build-machine-learning-model/data_platform_landing.png)
-
-2. Create a **New Project** > Select **Complete**. Click **OK**. Add a name say `iris_project` and optional description for the project.
-
-   ![](images/solution22-build-machine-learning-model/new_project.png)
-
+1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
+2. Create a **project** > Click **Create Project** on **Standard** tile. Add a name say `iris_project` and optional description for the project.
 3. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 4. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 5. Click **Create**. Your new project opens and you can start adding resources to it.
@@ -103,7 +97,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#build_model}
 
-1. Back in the **Assets** tab, under **Watson Machine Learning models** click on **New Watson Machine Learning model**. In the dialog, add **iris_model** as name and an optional description.
+1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, add **iris_model** as name and an optional description.
 2. Under **Machine Learning Service** section, you should see the Machine Learning service you associated in the above step.
    ![](images/solution22-build-machine-learning-model/machine_learning_model_creation.png)
 3. Select **Model builder** as your model type and Under **Spark Service or Environment** section, Choose the spark service you created earlier
@@ -142,10 +136,10 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 4. Click on **View API Specification** to see and test {{site.data.keyword.pm_short}} API endpoints.
    ![](images/solution22-build-machine-learning-model/machine_learning_api.png)
 
-   To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Dashboard](https://console.bluemix.net/dashboard/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
+   To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Dashboard](https://{DomainName}/dashboard/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
    {:tip}
 5. To make an online prediction, use the `POST /online` API call.
-   * `instance_id` can be found on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service under [{{site.data.keyword.Bluemix_short}} Dashboard](https://console.bluemix.net/dashboard/).
+   * `instance_id` can be found on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service under [{{site.data.keyword.Bluemix_short}} Dashboard](https://{DomainName}/dashboard/).
    * `deployment_id` and `published_model_id` are under **Overview** of your deployment.
    *  For `online_prediction_input`, use the below JSON
 
@@ -175,7 +169,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#create_feedback_connection}
 
-1. For continuous learning and model evaluation, you need to store new data somewhere. Create a  [{{site.data.keyword.dashdbshort}}](https://console.bluemix.net/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection.
+1. For continuous learning and model evaluation, you need to store new data somewhere. Create a  [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection.
 2. On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open**. On the top navigation, select **Load**.
 3. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
 4. Select **DASHXXXX**, e.g., DASH1234 as your **Schema** and then click on **New Table**. Name it `IRIS_FEEDBACK` and click **Next**.
@@ -189,7 +183,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#retrain_model}
 
-1. Return to your [{{site.data.keyword.Bluemix_short}} Dashboard](https://console.bluemix.net/dashboard/apps) and under the {{site.data.keyword.DSX_short}} service you have been using, click on **Projects** > iris_project >  **iris-model** (under assets) > Evaluation.
+1. Return to your [{{site.data.keyword.Bluemix_short}} Dashboard](https://{DomainName}/dashboard/apps) and under the {{site.data.keyword.DSX_short}} service you have been using, click on **Projects** > iris_project >  **iris-model** (under assets) > Evaluation.
 2. Under **Performance Monitoring**, Click on **Configure Performance Monitoring**.
 3. On the configure Performance Monitoring page,
    * Select the Spark service. Prediction type should be populated automatically.
@@ -218,14 +212,14 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 ## Remove resources
 {:removeresources}
 
-1. Navigate to [{{site.data.keyword.Bluemix_short}} Dashboard](https://console.bluemix.net/dashboard/) > choose the Location, Org and Space where you have created the services.
+1. Navigate to [{{site.data.keyword.Bluemix_short}} Dashboard](https://{DomainName}/dashboard/) > choose the Location, Org and Space where you have created the services.
 2. Delete the respective {{site.data.keyword.DSX_short}}, {{site.data.keyword.sparks}}, {{site.data.keyword.pm_short}}, {{site.data.keyword.dashdbshort}} and {{site.data.keyword.cos_short}} services which you created for this tutorial.
 
 ## Related content
 {:related}
 
 - [Watson Studio Overview](https://dataplatform.ibm.com/docs/content/getting-started/overview-ws.html?audience=wdp&context=wdp)
-- [Detect Anomalies using Machine Learning](https://console.bluemix.net/docs/tutorials/gather-visualize-analyze-iot-data.html#data_experience)
+- [Detect Anomalies using Machine Learning](https://{DomainName}/docs/tutorials/gather-visualize-analyze-iot-data.html#data_experience)
 - [Watson Data Platform Tutorials](https://www.ibm.com/analytics/us/en/watson-data-platform/tutorial/)
 - [Automatic model creation](https://datascience.ibm.com/docs/content/analyze-data/ml-model-builder.html?linkInPage=true)
 - [Machine learning & AI](https://dataplatform.ibm.com/docs/content/analyze-data/wml-ai.html?audience=wdp&context=wdp)

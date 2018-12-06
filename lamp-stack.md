@@ -28,9 +28,9 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 
 This tutorial uses the following runtimes and services:
 
-* [{{site.data.keyword.BluVirtServers_short}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.BluVirtServers_short}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -47,12 +47,12 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 ### Configure the SoftLayer VPN
 
-1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn) and configured for SSL. 
+1. [Ensure your VPN Access is enabled](https://{DomainName}/docs/infrastructure/iaas-vpn/getting-started.html#log-in-to-the-vpn).
 
-   You should be a **Master User** to enable VPN access or contact your master user for access.
-   {:tip}
+     You should be a **Master User** to enable VPN access or contact master user for access.
+     {:tip}
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or preferably use your local workstation with a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows). 
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://{DomainName}/docs/infrastructure/iaas-vpn/set-up-ssl-vpn-connections.html#set-up-ssl-vpn-connections), [macOS](https://{DomainName}/docs/infrastructure/iaas-vpn/connect-mac.html#connect-to-ssl-vpn-mac-osx-10x-and-higher) or [Windows](https://{DomainName}/docs/infrastructure/iaas-vpn/connect-windows.html#connect-to-ssl-vpn-windows-7-and-higher).
 
    For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page](https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
    {:tip}
@@ -61,7 +61,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 In this section, you will provision a public virtual server with a fixed configuration. {{site.data.keyword.BluVirtServers_short}} can be deployed in a matter of minutes from virtual server images in specific geographic locations. Virtual servers often address peaks in demand after which they can be suspended or powered down so that the cloud environment perfectly fits your infrastructure needs.
 
-1. In your browser, access the [{{site.data.keyword.BluVirtServers_short}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) catalog page.
+1. In your browser, access the [{{site.data.keyword.BluVirtServers_short}}](https://{DomainName}/catalog/infrastructure/virtual-server-group) catalog page.
 2. Select **Public Virtual Server** and click **Create**.
 3. Under **Image**, select **LAMP** latest version under **Ubuntu**. Even though this comes pre-installed with Apache, MySQL and PHP, you'll re-install PHP and MySQL with the latest version.
 4. Under **Network Interface** select the **Public and Private Network Uplink** option.
@@ -70,7 +70,7 @@ In this section, you will provision a public virtual server with a fixed configu
 
 After the server is created, you'll see the server login credentials. Although you can connect through SSH using the server public IP address, it is recommended to access the server through the Private Network and to disable SSH access on the public network.
 
-1. Follow [these steps](https://console.bluemix.net/docs/infrastructure/ssh-keys/restrict-ssh-access-public-network.html#restricting-ssh-access-on-a-public-network) to secure the virtual machine and to disable SSH access on the public network.
+1. Follow [these steps](https://{DomainName}/docs/infrastructure/ssh-keys/restrict-ssh-access-public-network.html#restricting-ssh-access-on-a-public-network) to secure the virtual machine and to disable SSH access on the public network.
 1. Using your username, password and private IP address, connect to the server with SSH.
    ```sh
    sudo ssh root@<Private-IP-Address>
@@ -247,7 +247,7 @@ The vulnerability scanner scans the server for any vulnerabilities related to th
 
 Another way to secure the server is by adding a firewall. Firewalls provide an essential security layer: preventing unwanted traffic from hitting your servers, reducing the likelihood of an attack and allowing your server resources to be dedicated for their intended use. Firewall options are provisioned on demand without service interruptions.
 
-Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN. For more information, see [Firewalls](http://knowledgelayer.softlayer.com/topic/firewall).
+Firewalls are available as an add-on feature for all servers on the Infrastructure public network. As part of the ordering process, you can select device-specific hardware or a software firewall to provide protection. Alternatively, you can deploy dedicated firewall appliances to the environment and deploy the virtual server to a protected VLAN. For more information, see [Firewalls](https://{DomainName}/docs/infrastructure/hardware-firewall-dedicated/getting-started.html#getting-started).
 
 ## Remove resources
 

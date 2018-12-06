@@ -17,7 +17,7 @@ lastupdated: "2018-11-14"
 
 In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and implementing the application backend using {{site.data.keyword.openwhisk}}.
 
-As an event-driven platform, {{site.data.keyword.openwhisk_short}} supports a [variety of use cases](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases). Building web applications and APIs is one of them. With web apps, events are the interactions between the web browsers (or REST clients) and your web app, the HTTP requests. Instead of provisioning a virtual machine, a container or a Cloud Foundry runtime to deploy your backend, you can implement your backend API with a serverless platform. This can be a good solution to avoid paying for idle time and to let the platform scale as needed.
+As an event-driven platform, {{site.data.keyword.openwhisk_short}} supports a [variety of use cases](https://{DomainName}/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases). Building web applications and APIs is one of them. With web apps, events are the interactions between the web browsers (or REST clients) and your web app, the HTTP requests. Instead of provisioning a virtual machine, a container or a Cloud Foundry runtime to deploy your backend, you can implement your backend API with a serverless platform. This can be a good solution to avoid paying for idle time and to let the platform scale as needed.
 
 Any action (or function) in {{site.data.keyword.openwhisk_short}} can be turned into a HTTP endpoint ready to be consumed by web clients. When enabled for web, these actions are called *web actions*. Once you have web actions, you can assemble them into a full-featured API with API Gateway. API Gateway is a component of {{site.data.keyword.openwhisk_short}} to expose APIs. It comes with security, OAuth support, rate limiting, custom domain support.
 
@@ -32,10 +32,10 @@ Any action (or function) in {{site.data.keyword.openwhisk_short}} can be turned 
 {: #services}
 
 This tutorial uses the following runtimes and services:
-   * [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB)
-   * [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk)
+   * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
+   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -50,8 +50,8 @@ The application shown in this tutorial is a simple guestbook website where users
 1. The user access the application hosted in GitHub Pages.
 2. The web application calls a backend API.
 3. The backend API is defined in API Gateway.
-4. API Gateway forwards the request to [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk).
-5. The {{site.data.keyword.openwhisk_short}} actions use [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudantNoSQLDB) to store and retrieve guestbook entries.
+4. API Gateway forwards the request to [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk).
+5. The {{site.data.keyword.openwhisk_short}} actions use [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB) to store and retrieve guestbook entries.
 
 ## Before you begin
 {: #prereqs}
@@ -71,7 +71,7 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data
    1. Click **Create connection**
    1. Select a Cloud Foundry organization and space where to create the serverless actions
    1. Hover on the space and click **CONNECT**
-1. Go the [console](https://console.bluemix.net/dashboard/apps), select the service alias in the *Cloud Foundry Services* section
+1. Go the [console](https://{DomainName}/dashboard/apps), select the service alias in the *Cloud Foundry Services* section
    1. Under **Service Credentials**, create **New credential** and click **Add**.
 
 ## Create serverless actions
@@ -88,7 +88,7 @@ You will create a **sequence** which is a chain of actions where output of one a
 
 Start by creating the first action:
 
-1. Switch to **Functions** https://console.bluemix.net/openwhisk.
+1. Switch to **Functions** https://{DomainName}/openwhisk.
 2. On the left pane, click on **Actions** and then **Create**.
 3. **Create Action** with name `prepare-entry-for-save` and select **Node.js 6** as the Runtime.
 4. Replace the existing code with the code snippet below:
@@ -197,10 +197,10 @@ Complete the sequence:
 
 ![](images/solution8/Cloud_Functions_API.png)
 
-1. Go to Actions https://console.bluemix.net/openwhisk/actions.
+1. Go to Actions https://{DomainName}/openwhisk/actions.
 2. Select the **read-guestbook-entries-sequence** sequence. Under **Endpoints**, check **Enable Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
-4. Go to APIs https://console.bluemix.net/openwhisk/apimanagement and **Create a {{site.data.keyword.openwhisk_short}} API**
+4. Go to APIs https://{DomainName}/openwhisk/apimanagement and **Create a {{site.data.keyword.openwhisk_short}} API**
 5. Set name to **guestbook** and base path to **/guestbook**
 6. Create an operation to retrieve guestbook entries:
    1. Set **path** to **/entries**
@@ -248,7 +248,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
 
 ### Import the certificate to a central repository
 
-1. Create a [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts) instance in a supported location.
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
 1. In the service dashboard, use **Import Certificate**:
    * Set **Name** to the custom subdomain and domain, such as *guestbook-api.mydomain.com*.
    * Browse for the **Certificate file** in PEM format.
@@ -257,7 +257,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
 
 ### Configure the custom domain for the managed API
 
-1. Go to [APIs / Custom domains](https://console.bluemix.net/apis/domains).
+1. Go to [APIs / Custom domains](https://{DomainName}/apis/domains).
 1. In the Region selector, select the location where you deployed the actions.
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
@@ -283,6 +283,6 @@ Once the DNS changes have been propagated, you will be able to access your guest
 
 ## Related content
 * [More guides and samples on serverless](https://developer.ibm.com/code/journey/category/serverless/)
-* [Getting started with {{site.data.keyword.openwhisk}}](https://console.bluemix.net/docs/openwhisk/index.html#getting-started-with-openwhisk)
-* [{{site.data.keyword.openwhisk}} common use cases](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases)
-* [Create APIs from actions](https://console.bluemix.net/docs/apis/management/manage_openwhisk_apis.html#manage_openwhisk_apis)
+* [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk/index.html#getting-started-with-openwhisk)
+* [{{site.data.keyword.openwhisk}} common use cases](https://{DomainName}/docs/openwhisk/openwhisk_use_cases.html#openwhisk_common_use_cases)
+* [Create APIs from actions](https://{DomainName}/docs/apis/management/manage_openwhisk_apis.html#manage_openwhisk_apis)

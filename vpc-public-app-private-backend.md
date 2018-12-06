@@ -35,11 +35,11 @@ This tutorial...
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -57,7 +57,7 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://console.bluemix.net/docs/cli/index.html#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview).
 
 ## Create SSH key
 

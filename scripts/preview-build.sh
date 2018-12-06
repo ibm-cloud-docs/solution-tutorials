@@ -2,6 +2,28 @@
 set -e
 mkdir -p builddocs/input
 
+DOMAIN_NAME_RULES=( \
+  "console.bluemix.net" \
+  "/cloud.ibm.com" \
+  "console.cloud.ibm.com" \
+)
+for rule in "${DOMAIN_NAME_RULES[@]}"
+do
+  echo " -----------------------
+Checking for references to ${rule}"
+  if grep -rI "$rule" --exclude=README.md *.md
+  then
+    echo "  -> [KO] Found references to $rule. Replace them with {DomainName}."
+    DOMAIN_NAME_CHECK="ko"
+  else
+    echo "  -> [OK] No reference found"
+  fi
+done
+if [ $DOMAIN_NAME_CHECK ]; then
+  echo "{DomainName} check failed"
+  exit 1;
+fi
+
 # copy all files to doc input folder
 tar cf - \
   --exclude=builddocs \

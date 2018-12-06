@@ -19,7 +19,7 @@ lastupdated: "2018-08-24"
 
 In today’s world of web based IT applications and services, few applications exist in isolation. Developers have come to expect access to services on the internet, whether it is open-source application code and updates or ‘third party’ services providing application functionality via REST APIs. Network Address Translation (NAT) masquerade, is a commonly used approach to securing the access to internet hosted service from  private networks. In NAT masquerade, private IP addresses are translated to the IP address of the out-bound public interface in a many-to-one relationship, shielding the private IP address from public access.  
 
-This tutorial presents setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the [Isolate workloads with a secure private network](secure-network-enclosure.html) tutorial, adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
+This tutorial presents setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the [Isolate workloads with a secure private network](secure-network-enclosure.html) tutorial, adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
 {:shortdesc}
 
 ## Objectives
@@ -33,7 +33,7 @@ This tutorial presents setup of Network Address Translation (NAT) masquerade on 
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
 
-* [Virtual Router Appliance VPN](https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
+* [Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
 
 This tutorial may incur costs. The VRA is only available on a monthly pricing plan.
 
@@ -152,7 +152,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 ## Related material
 {:related}
 
--	[VRA Network Address Translation]( https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/about.html#network-address-translation-nat-) 
--	[NAT Masquerade]( https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/setup-nat.html#one-to-many-nat-rule-masquerade-)
--	[Supplemental VRA documentation]( https://console.bluemix.net/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
+-	[VRA Network Address Translation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance/about.html#network-address-translation-nat-) 
+-	[NAT Masquerade]( https://{DomainName}/docs/infrastructure/virtual-router-appliance/setup-nat.html#one-to-many-nat-rule-masquerade-)
+-	[Supplemental VRA documentation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
 

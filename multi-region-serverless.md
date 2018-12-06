@@ -35,11 +35,11 @@ Serverless computing platforms give developers a rapid way to build APIs without
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/openwhisk/)
-* [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts)
-* IBM Cloud [Internet Services](https://console.bluemix.net/catalog/services/internet-svcs)
+* [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk/)
+* [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts)
+* IBM Cloud [Internet Services](https://{DomainName}/catalog/services/internet-svcs)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -60,13 +60,13 @@ The tutorial considers a public web application with a back-end implemented with
 {: #prereqs}
 
 1. Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
-1. Install all the necessary command line (CLI) tools by [following these steps](https://console.bluemix.net/docs/cli/index.html#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview).
 
 ## Configure a custom domain
 
 The first step is to create an instance of IBM Cloud Internet Services (CIS) and to point your custom domain to CIS name servers.
 
-1. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+1. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 1. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
 1. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
 1. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
@@ -97,7 +97,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
 
 ### Import the certificate to a central repository
 
-1. Create a [{{site.data.keyword.cloudcerts_short}}](https://console.bluemix.net/catalog/services/cloudcerts) instance in a supported location.
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
 1. In the service dashboard, use **Import Certificate**:
    * Set **Name** to the custom subdomain and domain, such as *api.mydomain.com*.
    * Browse for the **Certificate file** in PEM format.
@@ -119,7 +119,7 @@ The three following sections will need to be repeated for every location where y
 
 ### Define actions
 
-1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://console.bluemix.net/openwhisk/actions).
+1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/openwhisk/actions).
 1. Switch to the target location and select an organization and space where to deploy the actions.
 1. Create an action
    1. Set **Name** to **doWork**.
@@ -153,7 +153,7 @@ The three following sections will need to be repeated for every location where y
 
 The next step involves creating a managed API to expose your actions.
 
-1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://console.bluemix.net/openwhisk/apimanagement).
+1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://{DomainName}/openwhisk/apimanagement).
 1. Create a new managed {{site.data.keyword.openwhisk_short}} API:
    1. Set **API name** to **App API**.
    1. Set **Base path** to **/api**.
@@ -175,7 +175,7 @@ The next step involves creating a managed API to expose your actions.
 
 Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain, the domain which will later be configured in IBM Cloud Internet Services.
 
-1. Go to [APIs / Custom domains](https://console.bluemix.net/apis/domains).
+1. Go to [APIs / Custom domains](https://{DomainName}/apis/domains).
 1. In the **Region** selector, select the target location.
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
@@ -239,7 +239,7 @@ After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Eart
 
 To test the fail over, a pool health check must fail so that the GLB would redirect to the next healthy pool. To simulate a failure, you can modify the health check function to make it fail.
 
-1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://console.bluemix.net/openwhisk/actions).
+1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/openwhisk/actions).
 1. Select the first location configured in the GLB.
 1. Edit the `healthz` function and change its implementation to `throw new Error()`.
 1. Save.
@@ -258,11 +258,11 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 
 ### Remove actions
 
-1. Remove [APIs](https://console.bluemix.net/openwhisk/apimanagement)
-1. Remove [actions](https://console.bluemix.net/openwhisk/actions)
+1. Remove [APIs](https://{DomainName}/openwhisk/apimanagement)
+1. Remove [actions](https://{DomainName}/openwhisk/actions)
 
 ## Related content
 {: #related}
 
-* IBM Cloud [Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
-* [Resilient and secure multi-region Kubernetes clusters with Cloud Internet Services](https://console.bluemix.net/docs/tutorials/multi-region-k8s-cis.html)
+* IBM Cloud [Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
+* [Resilient and secure multi-region Kubernetes clusters with Cloud Internet Services](https://{DomainName}/docs/tutorials/multi-region-k8s-cis.html)

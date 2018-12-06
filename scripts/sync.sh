@@ -19,10 +19,12 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=autoscale-virtual-server.md \
   --exclude="vpc-*.md" \
-  --exclude=strategies-for-globally-available-apps.md \
+  --exclude=strategies-for-resilient-applications.md \
   --exclude="images/solution39-*" \
   --exclude="images/solution40-*" \
   --exclude="images/solution41-*" \
+  --exclude="images/solution45-*" \
+  --exclude=isolated-cloud-foundry-enterprise-apps-across-multiple-regions.md \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )

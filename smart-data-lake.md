@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-14"
+lastupdated: "2018-11-23"
 
 ---
 
@@ -25,10 +25,10 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 
 ## Services used
 
-- [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage)
-- [SQL Query](https://console.bluemix.net/catalog/services/sql-query)
-- [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio)
-- [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/ibm-cognos-dashboard-embedded)
+- [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
+- [SQL Query](https://{DomainName}/catalog/services/sql-query)
+- [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio)
+- [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
 
 ## Architecture
 
@@ -44,7 +44,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 ## Before you begin
 
 - [Install Git](https://git-scm.com/)
-- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
 - [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
 - [Install Node.js and NPM](https://nodejs.org)
 
@@ -55,7 +55,7 @@ In this section, you will create the services required to build your data lake.
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
     ```sh
     ibmcloud login
     ```
@@ -64,7 +64,7 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud target --cf
     ```
     {: pre}
-2. Create an instance of [{{site.data.keyword.cos_short}}](https://console.bluemix.net/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a service instance, run the `service-alias-create` command with the existing service name.
+2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) with a Cloud Foundry alias. If you already have a service instance, run the `service-alias-create` command with the existing service name.
     ```sh
     ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
@@ -73,17 +73,17 @@ This section uses the command line to create service instances. Alternatively, y
     ibmcloud resource service-alias-create dashboard-nodejs-cos --instance-name data-lake-cos
     ```
     {: pre}
-3. Create an instance of [SQL Query](https://console.bluemix.net/catalog/services/sql-query).
+3. Create an instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
     ```sh
     ibmcloud resource service-instance-create data-lake-sql sql-query beta us-south
     ```
     {: pre}
-4. Create an instance of [{{site.data.keyword.DSX}}](https://console.bluemix.net/catalog/services/watson-studio).
+4. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
     ```sh
     ibmcloud service create data-science-experience free-v1 data-lake-studio
     ```
     {: pre}
-5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://console.bluemix.net/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
+5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
     ```sh
     ibmcloud resource service-instance-create data-lake-dde dynamic-dashboard-embedded lite us-south
     ```
@@ -110,7 +110,7 @@ This section uses the command line to create service instances. Alternatively, y
     ```
     {: pre}
 
-    After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://console.bluemix.net/dashboard/cf-apps) page to view the URL or run the command `ibmcloud cf app dashboard-nodejs routes` to see routes.
+    After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://{DomainName}/dashboard/cf-apps) page to view the URL or run the command `ibmcloud cf app dashboard-nodejs routes` to see routes.
     {: tip}
 
 7. Confirm the application is active by accessing its public URL in the browser.
@@ -122,7 +122,7 @@ This section uses the command line to create service instances. Alternatively, y
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/).
 
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://catalog.data.gov/dataset/traffic-collision-data-from-2010-to-present/resource/643d0e98-5f40-4db3-8427-02641dd05fd9?inner_span=True) CSV file. The file is 81MB and may take a few minutes to download.
-2. In your browser, access the **data-lake-cos** service instance from the [Dashboard](https://console.bluemix.net/dashboard).
+2. In your browser, access the **data-lake-cos** service instance from the [Dashboard](https://{DomainName}/dashboard).
 3. Create a new bucket to store data.
     - Click the **Create a bucket** button.
     - Select **Regional** from the **Resiliency** drop down.
@@ -142,7 +142,7 @@ In this section, you will convert the original, raw dataset into a targetted coh
 
 You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familar SQL statements. SQL Query has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
-1. Access the **data-lake-sql** SQL Query service instance from your [Dashboard](https://console.bluemix.net/dashboard/apps).
+1. Access the **data-lake-sql** SQL Query service instance from your [Dashboard](https://{DomainName}/dashboard/apps).
 2. Select **Open UI**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Enter the following SQL into the **Type SQL here ...** text area.
@@ -176,8 +176,8 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
 
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
     - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
-    - Select the **New project** tile followed by **Jupyter Notebooks**.
-    - Select **OK** and then provide a **Project name**.
+    - Click **Create a Project** tile followed by **Data Science**.
+    - Click **Create project** and then provide a **Project name**.
     - Ensure **Storage** is set to **data-lake-cos**.
     - Click **Create**.
     - In the resulting project, click **Add to project** and **Notebook**.
@@ -332,7 +332,7 @@ In this section, you'll take a few additional steps to explore the features of t
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
-In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://console.bluemix.net/docs/services/cognos-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
+In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://{DomainName}/docs/services/cognos-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
 {: tip}
 
 ## Expand the tutorial
@@ -340,9 +340,9 @@ In production applications, encrypt information such as URLs, usernames and pass
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
 - Experiment with additional datasets using SQL Query
-- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://console.bluemix.net/docs/tutorials/big-data-log-analytics.html)
-- Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://console.bluemix.net/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
-- Create an [{{site.data.keyword.appid_full_notm}}](https://console.bluemix.net/catalog/services/app-id) service instance to enable security in the dashboard application
+- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://{DomainName}/docs/tutorials/big-data-log-analytics.html)
+- Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
+- Create an [{{site.data.keyword.appid_full_notm}}](https://{DomainName}/catalog/services/app-id) service instance to enable security in the dashboard application
 
 ## Remove resources
 
@@ -393,5 +393,5 @@ ibmcloud app delete dashboard-nodejs
 
 - [ibmcloudsql](https://github.com/IBM-Cloud/sql-query-clients/tree/master/Python)
 - [Jupyter Notebooks](http://jupyter.org/)
-- [Mapbox](https://console.bluemix.net/catalog/services/mapbox-maps)
+- [Mapbox](https://{DomainName}/catalog/services/mapbox-maps)
 - [PixieDust](https://www.ibm.com/cloud/pixiedust)

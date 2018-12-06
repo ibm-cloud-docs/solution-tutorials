@@ -35,12 +35,12 @@ This tutorial walks you through a scenario with the creation of:
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.loadbalancer_short}}](https://console.bluemix.net/catalog/infrastructure/load-balancer-group)
-* [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
-* [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
-* [Internet Services](https://console.bluemix.net/catalog/services/internet-services)
+* [{{site.data.keyword.loadbalancer_short}}](https://{DomainName}/catalog/infrastructure/load-balancer-group)
+* [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
+* [Internet Services](https://{DomainName}/catalog/services/internet-services)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -64,12 +64,12 @@ The application is a simple PHP frontend - a Wordpress blog - with a MySQL datab
 
 In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they can be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
 
-1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
+1. [Ensure your VPN Access is enabled](https://{DomainName}/docs/infrastructure/iaas-vpn/getting-started.html#log-in-to-the-vpn).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://{DomainName}/docs/infrastructure/iaas-vpn/set-up-ssl-vpn-connections.html#set-up-ssl-vpn-connections), [macOS](https://{DomainName}/docs/infrastructure/iaas-vpn/connect-mac.html#connect-to-ssl-vpn-mac-osx-10x-and-higher) or [Windows](https://{DomainName}/docs/infrastructure/iaas-vpn/connect-windows.html#connect-to-ssl-vpn-windows-7-and-higher).
 
 You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning {{site.data.keyword.virtualmachinesshort}}.
 {: tip}
@@ -84,7 +84,7 @@ Contact your Infrastructure master user to get the following permissions:
 
 In this section, you configure one server to act as the master database.
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) from the Infrastructure section.
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group) from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
    - Set **Name** to **db1**
@@ -195,7 +195,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
 ### Create the file storage
 {: #create_for_backup}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
@@ -290,7 +290,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
 
 In this section, you will create two web application servers.
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [{{site.data.keyword.virtualmachinesshort}}](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
    - Set **Name** to **app1**
@@ -314,7 +314,7 @@ This file storage is used to share the application files between *app1* and *app
 ### Create the file storage
 {: #create_for_sharing}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://console.bluemix.net/catalog/infrastructure/file-storage)
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
@@ -327,7 +327,7 @@ This file storage is used to share the application files between *app1* and *app
 
 ### Configure regular snapshots
 
-[Snapshots](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
+[Snapshots](https://{DomainName}/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
 
 1. Select the File Storage from the [list of existing items](https://control.bluemix.net/storage/file)
 2. Under **Snapshot Schedules**, edit the snapshot schedule. The schedule could be defined as follow:
@@ -378,7 +378,7 @@ Repeat the following steps on each application server(app1 and app2):
    The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
-Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://console.bluemix.net/docs/infrastructure/provisioning-scripts/add-provisioning-script.html#managing-a-provisioning-script) or by [capturing an image](https://console.bluemix.net/docs/infrastructure/image-templates/image_index.html#creating-an-image-template).
+Eventually all steps related to the configuration of the servers could be automated using a [provisioning script](https://{DomainName}/docs/infrastructure/provisioning-scripts/add-provisioning-script.html#managing-a-provisioning-script) or by [capturing an image](https://{DomainName}/docs/infrastructure/image-templates/image_index.html#creating-an-image-template).
 {: tip}
 
 ## Install and configure the PHP application on the application servers
@@ -549,7 +549,7 @@ If you configured the application servers with only a private network link, you 
 
 At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a load balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
 
-1. Go to the catalog to create a [{{site.data.keyword.loadbalancer_short}}](https://console.bluemix.net/catalog/infrastructure/ibm-cloud-load-balancer)
+1. Go to the catalog to create a [{{site.data.keyword.loadbalancer_short}}](https://{DomainName}/catalog/infrastructure/ibm-cloud-load-balancer)
 2. In the **Plan** step, select the same data center as *app1* and *app2*
 3. In **Network Settings**,
    1. Select the same subnet as the one where *app1* and *app2* where provisioned
@@ -557,7 +557,7 @@ At this point, we have two application servers with separate IP addresses. They 
 4. In **Basic**,
    1. Name the load balancer, e.g. **app-lb-1**
    2. Keep the default protocol configuration - by default the load balancer is configured for HTTP.
-      SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://console.bluemix.net/docs/infrastructure/ssl-certificates/access-ssl-certificates-screen.html#accessing-ssl-certificates)
+      SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/infrastructure/ssl-certificates/access-ssl-certificates-screen.html#accessing-ssl-certificates)
       {: tip}
 5. In **Server Instances**, add *app1* and *app2* servers
 6. Review and Create to complete the wizard.
@@ -643,5 +643,5 @@ To implement this architecture, you would need to do the following in location t
 {: #related}
 
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html) for a tutorial implementing a Content Delivery Network.
-- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [SoftLayer Auto Scale](https://knowledgelayer.softlayer.com/learning/introduction-softlayer-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
-- To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) of the content and [replication](https://console.bluemix.net/docs/infrastructure/FileStorage/replication.html#working-with-replication) to another data center.
+- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/infrastructure/SLautoscale/as_about.html#about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
+- To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) of the content and [replication](https://{DomainName}/docs/infrastructure/FileStorage/replication.html#working-with-replication) to another data center.

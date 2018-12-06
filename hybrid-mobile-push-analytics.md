@@ -32,21 +32,21 @@ This tutorial walks you through the creation of a Cordova mobile starter applica
 ## Products
 
 This tutorial uses the following products:
-* [{{site.data.keyword.pushfull}}](https://console.bluemix.net/catalog/services/push-notifications)
+* [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
 
 ## Before you begin
 {: #prereqs}
 
-- Cordova [CLI![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/cli/) for executing Cordova commands.
-- Cordova-iOS [Prerequisites![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html) and Cordova-Android [Prerequisites![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html)
+- Cordova [CLI![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/cli/) for executing Cordova commands.
+- Cordova-iOS [Prerequisites![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html) and Cordova-Android [Prerequisites![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html)
 - Google account to log into Firebase console for Sender ID and Server API Key.
-- [Apple Developers![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}} (the provider) to iOS devices and applications.
+- [Apple Developers![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}} (the provider) to iOS devices and applications.
 - Xcode and Android Studio for importing and further enhancing your code.
 
 ## Create Cordova mobile project from starter kit
 {: #get_code}
 The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your project from a Starter Kit.
-1. Navigate to [Mobile Dashboard](https://console.bluemix.net/developer/mobile/dashboard).
+1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard).
 2. Click on **Starter Kits** and click on **Create App**.
     ![](images/solution15/mobile_dashboard.png)
 3. Enter a project name, this can be your app name as well.
@@ -106,17 +106,17 @@ If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_not
   5. In the {{site.data.keyword.mobilepushshort}} service dashboard, set the value of the Sender ID and API Key.
 
 
-Refer [Obtain FCM credentials](https://console.bluemix.net/docs/tutorials/android-mobile-push-analytics.html#obtain-fcm-credentials) for detailed steps.
+Refer [Obtain FCM credentials](https://{DomainName}/docs/tutorials/android-mobile-push-analytics.html#obtain-fcm-credentials) for detailed steps.
 {: tip}
 
 ### Configure Apple {{site.data.keyword.mobilepushshort}} Service (APNs)
 
-  1. Go to the [Apple Developer![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg?lang=en?lang=en)](https://developer.apple.com/) portal and Register an App ID.
+  1. Go to the [Apple Developer![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en?lang=en)](https://developer.apple.com/) portal and Register an App ID.
   2. Create a development and distribution APNs SSL certificate.
   3. Create a development provisioning profile.
   4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}.
 
-Refer [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://console.bluemix.net/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+Refer [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/tutorials/ios-mobile-push-analytics.html#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
 {: tip}
 
 ## Configure, send and monitor {{site.data.keyword.mobilepushshort}}
@@ -166,7 +166,7 @@ The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities t
 ## Related Content
 {: #related_content}
 
-- [Tag-based notifications](https://console.bluemix.net/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
-- [{{site.data.keyword.mobilepushshort}} REST APIs](https://console.bluemix.net/docs/services/mobilepush/push_restapi.html#push-api-rest)
-- [Security in {{site.data.keyword.mobilepushshort}}](https://console.bluemix.net/docs/services/mobilepush/push_security.html#overview-push)
+- [Tag-based notifications](https://{DomainName}/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
+- [{{site.data.keyword.mobilepushshort}} REST APIs](https://{DomainName}/docs/services/mobilepush/push_restapi.html#push-api-rest)
+- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/services/mobilepush/push_security.html#overview-push)
 

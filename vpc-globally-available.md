@@ -34,11 +34,11 @@ Load balancer to increase resiliency within a location and globally
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://console.bluemix.net/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -57,7 +57,7 @@ intro sentence
 {: #prereqs}
 
 * [Install Git](https://git-scm.com/)
-* [IBM Cloud Developer Tools](https://console.bluemix.net/docs/cli/index.html#overview) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
+* [IBM Cloud Developer Tools](https://{DomainName}/docs/cli/index.html#overview) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 
 ## Create VPC
 

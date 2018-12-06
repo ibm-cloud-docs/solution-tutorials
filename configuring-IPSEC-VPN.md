@@ -26,7 +26,7 @@ for more details on dedicated secure network links to the {{site.data.keyword.Bl
 
 There are two suitable VPN options for connectivity over the public internet to servers provisioned on the {{site.data.keyword.Bluemix_notm}}:
 
--	[IPSEC VPN]( https://console.bluemix.net/catalog/infrastructure/ipsec-vpn)
+-	[IPSEC VPN]( https://{DomainName}/catalog/infrastructure/ipsec-vpn)
 -	[Virtual Router Appliance VPN](../infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
 
 This tutorial presents setup of a site-to-site IPSec VPN using a Virtual Router Appliance (VRA) to connect a subnet in a client data center to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. 

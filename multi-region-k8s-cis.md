@@ -35,11 +35,11 @@ This tutorial highlights how Cloud Internet Services (CIS), a uniform platform t
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* IBM Cloud [Internet services](https://console.bluemix.net/catalog/services/internet-services)
-* [{{site.data.keyword.registrylong_notm}}](https://console.bluemix.net/containers-kubernetes/launchRegistryView)
-* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/catalog/cluster)
+* IBM Cloud [Internet services](https://{DomainName}/catalog/services/internet-services)
+* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -59,9 +59,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 * Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers.
 * [Install Git](https://git-scm.com/).
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://console.bluemix.net/docs/services/Registry/registry_setup_cli_namespace.html).
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry/registry_setup_cli_namespace.html).
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 ## Deploy an application to one location
@@ -72,10 +72,10 @@ This tutorial deploys a Kubernetes application to clusters in multiple locations
 {: #create_cluster}
 
 To create a cluster:
-1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://console.bluemix.net/containers-kubernetes/catalog/cluster/create).
+1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/containers-kubernetes/catalog/cluster/create).
 1. Set **Location** to **Dallas**.
 1. Select **Standard** cluster.
-1. Select one or more zones as **Location**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://console.bluemix.net/docs/containers/cs_clusters_planning.html#ha_clusters).
+1. Select one or more zones as **Location**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers/cs_clusters_planning.html#ha_clusters).
 1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
 1. Use **2** worker nodes.
 1. Set **Cluster name** to **my-us-cluster**. Use the naming pattern *`my-<location>-cluster`* to be consistent with this tutorial.
@@ -142,7 +142,7 @@ Tag the image with the target registry:
 
 ### Deploy the application to the Kubernetes cluster
 
-At that stage, the cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/containers-kubernetes/clusters) console.
+At that stage, the cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/clusters) console.
 
 1. Retrieve the configuration of the cluster:
    ```bash
@@ -205,7 +205,7 @@ To configure a global load balancer, you will need:
 The first step is to create an instance of CIS and to point your custom domain to CIS name servers.
 
 1. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
-2. Navigate to the [Internet Services](https://console.bluemix.net/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+2. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 3. Set the service name, and click **Create** to create an instance of the service.
 4. When the service instance is provisioned, set your domain name and click **Add domain**.
 5. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
@@ -365,10 +365,10 @@ In addition, you can now control what content gets cached by CIS and how long it
 ## Related content
 {:related}
 
-* IBM Cloud [Internet Services](https://console.bluemix.net/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
-* [Manage your IBM CIS for optimal security](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#best-practice-2-configure-your-security-level-selectively)
-* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning)
-* [{{site.data.keyword.registrylong_notm}} Basic](https://console.bluemix.net/docs/services/Registry/registry_overview.html#registry_planning)
-* [Deploying single instance apps to Kubernetes clusters](https://console.bluemix.net/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1)
-* [Best practice to secure traffic and internet application via CIS](https://console.bluemix.net/docs/infrastructure/cis/managing-for-security.html#manage-your-ibm-cis-for-optimal-security)
+* IBM Cloud [Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
+* [Manage your IBM CIS for optimal security](https://{DomainName}/docs/infrastructure/cis/managing-for-security.html#best-practice-2-configure-your-security-level-selectively)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/cs_planning.html#cs_planning)
+* [{{site.data.keyword.registrylong_notm}} Basic](https://{DomainName}/docs/services/Registry/registry_overview.html#registry_planning)
+* [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1)
+* [Best practice to secure traffic and internet application via CIS](https://{DomainName}/docs/infrastructure/cis/managing-for-security.html#manage-your-ibm-cis-for-optimal-security)
 * [Improving App Availability with Multizone Clusters](https://www.ibm.com/blogs/bluemix/2018/06/improving-app-availability-multizone-clusters/)

@@ -301,7 +301,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-11-20"
         }
       ]
     },
@@ -387,7 +387,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-11-23"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -414,7 +414,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-11-23"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -426,7 +426,7 @@
             "Watson Studio",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-07-19"
+          "lastUpdated": "2018-11-23"
         }
       ]
     },
@@ -447,7 +447,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2018-11-14"
+          "lastUpdated": "2018-12-03"
         }
       ]
     },

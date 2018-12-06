@@ -29,9 +29,9 @@ In this tutorial, you will learn how to configure the Auto-Scale service to auto
 {: #products}
 
 This tutorial uses the following products:
-* [Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-bluemix-load-balancer)
-* [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group)
-* [File Storage](https://console.bluemix.net/catalog/infrastructure/file-storage)
+* [Load Balancer](https://{DomainName}/catalog/infrastructure/ibm-bluemix-load-balancer)
+* [Virtual Server](https://{DomainName}/catalog/infrastructure/virtual-server-group)
+* [File Storage](https://{DomainName}/catalog/infrastructure/file-storage)
 * Auto-Scale
 
 <p style="text-align: center;">
@@ -55,7 +55,7 @@ This tutorial uses billable components of IBM Cloud Platform, including:
 - Auto Scale
 - BlazeMeter
 
-Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.  
+Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.  
 
 ## Before you begin
 {: #prereqs}
@@ -64,12 +64,12 @@ Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a
 
 In this tutorial, the load balancer is the front door for the application users. The virtual servers do not need to be visible on the public Internet. Thus they will be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
 
-1. [Ensure your VPN Access is enabled](https://knowledgelayer.softlayer.com/procedure/getting-started-softlayer-vpn).
+1. [Ensure your VPN Access is enabled](https://{DomainName}/docs/infrastructure/iaas-vpn/getting-started.html#log-in-to-the-vpn).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-linux), [macOS](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-mac-os-x-1010) or [Windows](https://knowledgelayer.softlayer.com/procedure/ssl-vpn-windows).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://{DomainName}/docs/infrastructure/iaas-vpn/set-up-ssl-vpn-connections.html#set-up-ssl-vpn-connections), [macOS](https://{DomainName}/docs/infrastructure/iaas-vpn/connect-mac.html#connect-to-ssl-vpn-mac-osx-10x-and-higher) or [Windows](https://{DomainName}/docs/infrastructure/iaas-vpn/connect-windows.html#connect-to-ssl-vpn-windows-7-and-higher).
 
 You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning virtual servers.
 {: tip}
@@ -83,7 +83,7 @@ Contact your Infrastructure master user to get the following permissions:
 ## Provision two servers for the PHP application
 {: app_servers}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://console.bluemix.net/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
+1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [Virtual Server](https://{DomainName}/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
 2. Select **Public Virtual Server** and then click **Create**.
 3. Configure the server with the following:
    - Set **Name** to **app1**
@@ -217,7 +217,7 @@ Repeat the following steps on each application server:
 
 At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a Load Balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
 
-1. Go to the catalog to create a [IBM Cloud Load Balancer](https://console.bluemix.net/catalog/infrastructure/ibm-cloud-load-balancer)
+1. Go to the catalog to create a [IBM Cloud Load Balancer](https://{DomainName}/catalog/infrastructure/ibm-cloud-load-balancer)
 2. In the **Plan** step, select the same data center as *app1* and *app2*
 3. In **Network Settings**,
    1. Select the same subnet as the one where *app1* and *app2* where provisioned
@@ -225,7 +225,7 @@ At this point, we have two application servers with separate IP addresses. They 
 4. In **Basic**,
    1. Name the load balancer, e.g. **app-lb-1**
    2. Keep the default protocol configuration - by default the load balancer is configured for HTTP.
-      SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://console.bluemix.net/docs/infrastructure/ssl-certificates/access-ssl-certificates-screen.html#accessing-ssl-certificates)
+      SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/infrastructure/ssl-certificates/access-ssl-certificates-screen.html#accessing-ssl-certificates)
       {: tip}
 5. In **Server Instances**, add *app1* and *app2* servers
 6. Review and Create to complete the wizard.
@@ -249,7 +249,7 @@ The Load Balancer is configured to check the health of the servers and to redire
 ## Related information
 
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](static-files-cdn.html) for a tutorial implementing a Content Delivery Network.
-- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [SoftLayer Auto Scale](https://knowledgelayer.softlayer.com/learning/introduction-softlayer-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
-- To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://console.bluemix.net/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) of the content and [replication](https://console.bluemix.net/docs/infrastructure/FileStorage/replication.html#working-with-replication) to another data center.
+- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/infrastructure/SLautoscale/as_about.html#about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
+- To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) of the content and [replication](https://{DomainName}/docs/infrastructure/FileStorage/replication.html#working-with-replication) to another data center.
 - Add database server and file storage to store application files between different applications. Check the solution [Use Virtual Servers to build highly available and scalable web app](highly-available-and-scalable-web-application.html) for detailed steps for setting up file storage and database server.
 

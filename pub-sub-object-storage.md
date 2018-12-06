@@ -34,10 +34,10 @@ You will simulate this pattern using a file processing example. First create a U
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_full_notm}}](https://console.ng.bluemix.net/catalog/services/cloud-object-storage)
-* [{{site.data.keyword.messagehub}}](https://console.bluemix.net/catalog/services/messagehub)
-* [{{site.data.keyword.containershort_notm}}](https://console.bluemix.net/catalog/infrastructure/containers-kubernetes)
+* [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/messagehub)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/catalog/infrastructure/containers-kubernetes)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -57,12 +57,12 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 ## Before you begin
 {: #prereqs}
 
-* [IBM Cloud Developer Tools](https://console.bluemix.net/docs/cli/idt/setting_up_idt.html#add-cli) - Tool to install {{site.data.keyword.cloud_notm}} CLI, Kubernetes, Helm, and Docker.
+* [IBM Cloud Developer Tools](https://{DomainName}/docs/cli/idt/setting_up_idt.html#add-cli) - Tool to install {{site.data.keyword.cloud_notm}} CLI, Kubernetes, Helm, and Docker.
 
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
 
-1. Create a Kubernetes cluster from the [Catalog](https://console.bluemix.net/containers-kubernetes/launch). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster.
+1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/containers-kubernetes/launch). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster.
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution25/KubernetesClusterCreation.png)
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
@@ -90,14 +90,14 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 
 {{site.data.keyword.messagehub}} is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
 
- 1. From the Dashboard, click on [**Create resource**](https://console.bluemix.net/catalog/) and select [**{{site.data.keyword.messagehub}}**](https://console.bluemix.net/catalog/services/message-hub) from the Application Services section.
+ 1. From the Dashboard, click on [**Create resource**](https://{DomainName}/catalog/) and select [**{{site.data.keyword.messagehub}}**](https://{DomainName}/catalog/services/message-hub) from the Application Services section.
  2. Name the service `mymessagehub` and click **Create**.
  3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```
  ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service mymessagehub
  ```
 
-The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-mymessagehub`. See [Integrating Services](https://console.bluemix.net/docs/containers/cs_integrations.html#integrations) for more info
+The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-mymessagehub`. See [Integrating Services](https://{DomainName}/docs/containers/cs_integrations.html#integrations) for more info
 
 {:tip}
 
@@ -107,7 +107,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 
 {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. You will use this to store the files uploaded by the UI.
 
-1. From the Dashboard, click on [**Create resource**](https://console.bluemix.net/catalog/) and select [**{{site.data.keyword.cos_short}}**](https://console.bluemix.net/catalog/services/cloud-object-storage) from the Storage section.
+1. From the Dashboard, click on [**Create resource**](https://{DomainName}/catalog/) and select [**{{site.data.keyword.cos_short}}**](https://{DomainName}/catalog/services/cloud-object-storage) from the Storage section.
 2. Name the service `myobjectstorage` click **Create**.
 3. Click **Create Bucket**.
 4. Set the bucket name to a unique name such as `username-mybucket`.
@@ -155,12 +155,12 @@ The worker application is a Java application which listens to the {{site.data.ke
 3. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 ![](images/solution25/files_processed.png)
 
-In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://console.bluemix.net/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
+In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
 
 ## Remove resources
 {:removeresources}
 
-Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and
+Navigate to [Dashboard](https://{DomainName}/dashboard/) and
 1. delete Kubernetes cluster `mycluster`
 2. delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
 3. delete {{site.data.keyword.messagehub}} `mymessagehub`
@@ -169,7 +169,7 @@ Navigate to [Dashboard](https://console.bluemix.net/dashboard/) and
 ## Related content
 {:related}
 
-* [{{site.data.keyword.cos_full_notm}}](https://console.bluemix.net/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
-* [{{site.data.keyword.messagehub_full}}](https://console.bluemix.net/docs/services/MessageHub/index.html#messagehub)
-* [Manage Access to Object Storage](https://console.bluemix.net/docs/infrastructure/cloud-object-storage-infrastructure/manage-access.html#managing-access)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
+* [{{site.data.keyword.messagehub_full}}](https://{DomainName}/docs/services/MessageHub/index.html#messagehub)
+* [Manage Access to Object Storage](https://{DomainName}/docs/infrastructure/cloud-object-storage-infrastructure/manage-access.html#managing-access)
 * [{{site.data.keyword.messagehub}} data processing with {{site.data.keyword.openwhisk_short}}](https://github.com/IBM/openwhisk-data-processing-message-hub)

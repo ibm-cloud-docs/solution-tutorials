@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-07-19"
+lastupdated: "2018-11-23"
 
 ---
 
@@ -36,16 +36,16 @@ This tutorial uses the following runtimes and services:
    * {{site.data.keyword.DSX_full}}
    * {{site.data.keyword.cos_full_notm}}
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Service and Environment Setup
 Start by provisioning the services used in this tutorial and create a project within {{site.data.keyword.DSX_short}}.
 
-You can provision services for {{site.data.keyword.Bluemix_short}} from the [dashboard](https://console.bluemix.net/dashboard) and [catalog](https://console.bluemix.net/catalog/). Alternatively {{site.data.keyword.DSX_short}} allows you to create or add existing Data & Analytics services from its dashboard and project settings.
+You can provision services for {{site.data.keyword.Bluemix_short}} from the [dashboard](https://{DomainName}/dashboard) and [catalog](https://{DomainName}/catalog/). Alternatively {{site.data.keyword.DSX_short}} allows you to create or add existing Data & Analytics services from its dashboard and project settings.
 {:tip}
 
-1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://console.bluemix.net/catalog) navigate to the **Watson** section. Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-2. In the dashboard, click on the **New project** tile. In the **Name** field, enter `1stProject` as the name. You can leave the description empty.
+1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) navigate to the **AI** section. Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
+2. In the dashboard, click on the **Create a project** tile > Select **Standard** > Create project. In the **Name** field, enter `1stProject` as the name. You can leave the description empty.
 3. On the right side of the page, you can **Define storage**. If you have already provisioned storage, select an instance from the list. If not, click on **Add** and follow the instructions in the new browser tab. Once done with service creation, click **Refresh** to see the new service.
 4. Click on the **Create** button to create the project. You will be redirected to the project's overview page.  
    ![](images/solution23/NewProject.png)
@@ -172,4 +172,4 @@ Provided below are links related to the topics covered in this tutorial.
 * [PixieDust](https://www.ibm.com/cloud/pixiedust): Open source productivity tool for Jupyter Notebooks
 * [Cognitive Class.ai](https://cognitiveclass.ai/): Data Science and Cognitive Computing Courses
 * [IBM Watson Data Lab](https://ibm-watson-data-lab.github.io/): Things we made with data, so you can too
-* [Analytics Engine service](https://console.bluemix.net/catalog/services/analytics-engine): Develop and deploy analytics applications using open source Apache Spark and Apache Hadoop
+* [Analytics Engine service](https://{DomainName}/catalog/services/analytics-engine): Develop and deploy analytics applications using open source Apache Spark and Apache Hadoop

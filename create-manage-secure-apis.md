@@ -33,8 +33,8 @@ This tutorial demonstrates how to create REST APIs using the LoopBack Node.js AP
 This tutorial uses the following runtimes and services:
 
 * [Loopback](https://loopback.io/)
-* [{{site.data.keyword.apiconnect_short}}](https://console.bluemix.net/docs/services/apiconnect/index.html)
-* [SDK for Node.js](https://console.bluemix.net/catalog/starters/sdk-for-nodejs) Cloud Foundry App
+* [{{site.data.keyword.apiconnect_short}}](https://{DomainName}/docs/services/apiconnect/index.html)
+* [SDK for Node.js](https://{DomainName}/catalog/starters/sdk-for-nodejs) Cloud Foundry App
 
 ## Architecture
 
@@ -55,7 +55,7 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
 
 ### Create application
 
-1. Install the {{site.data.keyword.apiconnect_short}} command line tool. If you have issues installing {{site.data.keyword.apiconnect_short}}, use `sudo` before the command or follow the instructions [here](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_prereq_install_toolkit.html#installing-the-api-connect-toolkit).
+1. Install the {{site.data.keyword.apiconnect_short}} command line tool. If you have issues installing {{site.data.keyword.apiconnect_short}}, use `sudo` before the command or follow the instructions [here](https://{DomainName}/docs/services/apiconnect/tutorials/tut_prereq_install_toolkit.html#installing-the-api-connect-toolkit).
     ```sh
     npm install -g apiconnect
     ```
@@ -152,7 +152,7 @@ You can also manually start the Loopback application by issuing the `npm start` 
 
 To prepare for the next steps, you will create an **{{site.data.keyword.apiconnect_short}}** service on {{site.data.keyword.Bluemix_notm}}. {{site.data.keyword.apiconnect_short}} acts as the gateway to your API and also provides management, security and rate limits.
 
-1. Launch {{site.data.keyword.Bluemix_notm}} [Dashboard](https://console.bluemix.net/dashboard).
+1. Launch {{site.data.keyword.Bluemix_notm}} [Dashboard](https://{DomainName}/dashboard).
 2. Navigate to **Catalog > Integration > {{site.data.keyword.apiconnect_short}}** and click the **Create** button.
 
 ## Publish an API to {{site.data.keyword.Bluemix_notm}}
@@ -160,7 +160,7 @@ To prepare for the next steps, you will create an **{{site.data.keyword.apiconne
 {: #publish}
 You will use the API Designer to deploy your application to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application and also publish your API definition to **{{site.data.keyword.apiconnect_short}}**. The API Designer is your local toolkit. If you closed it, relaunch it with `apic edit` from the project directory.
 
-The application can also be manually deployed using the `ibmcloud cf push` command; however, it will not be secured. To [import the API](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_rest_landing.html#tut_rest_landing) into {{site.data.keyword.apiconnect_short}}, use the OpenAPI definition file is available in the `definitions` folder. Deploying using the API Designer secures the application and imports the definition automatically.
+The application can also be manually deployed using the `ibmcloud cf push` command; however, it will not be secured. To [import the API](https://{DomainName}/docs/services/apiconnect/tutorials/tut_rest_landing.html#tut_rest_landing) into {{site.data.keyword.apiconnect_short}}, use the OpenAPI definition file is available in the `definitions` folder. Deploying using the API Designer secures the application and imports the definition automatically.
 {:tip}
 
 1. Back in the API Designer, click the **Publish** link in the banner. Then click **Add and Manage Targets > Add IBM Bluemix target**.
@@ -179,13 +179,13 @@ The application can also be manually deployed using the `ibmcloud cf push` comma
     An application contains the Loopback models, datasources and code that relate to your API. A product allows you to declare how an API is made available to developers.
     {:tip}
 
-The API application is now published to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under {{site.data.keyword.Bluemix_notm}} [Dashboard](https://console.bluemix.net/dashboard), but direct access using the URL is not possible as the application is protected. The next section will show how managed APIs can be accessed.
+The API application is now published to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under {{site.data.keyword.Bluemix_notm}} [Dashboard](https://{DomainName}/dashboard), but direct access using the URL is not possible as the application is protected. The next section will show how managed APIs can be accessed.
 
 ## API Gateway
 
 Until now, you have been designing and testing your API locally. In this section, you will use {{site.data.keyword.apiconnect_short}} to test your deployed API on {{site.data.keyword.Bluemix_notm}}.
 
-1. Launch the {{site.data.keyword.Bluemix_notm}} [Dashboard](https://console.bluemix.net/dashboard).
+1. Launch the {{site.data.keyword.Bluemix_notm}} [Dashboard](https://{DomainName}/dashboard).
 2. Find and select your **{{site.data.keyword.apiconnect_short}}** service under **Cloud Foundry Services**.
 3. Click on the **Explore** menu and then click the **Sandbox** link.
 4. Click on the **entry.create** operation.
@@ -216,17 +216,17 @@ Setting rate limits enables you to manage the network traffic for your APIs and 
   ![Rate limit page](images/solution13/rate_limit.png)
 6. Follow the steps in [Publish API to {{site.data.keyword.Bluemix_notm}}](#publish) section to re-publish your API.
 
-Your API is now limited to 10 requests per minute. Use the **Try it** feature to hit the limit. See more info about [Setting up rate limits](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_rate_limit.html#setting-up-rate-limits) or explore the API Designer to see all the management features available.
+Your API is now limited to 10 requests per minute. Use the **Try it** feature to hit the limit. See more info about [Setting up rate limits](https://{DomainName}/docs/services/apiconnect/tutorials/tut_rate_limit.html#setting-up-rate-limits) or explore the API Designer to see all the management features available.
 
 ## Expand the tutorial
 
 Congratulations, you have built an API that is both managed and secure. Below are additional suggestions to enhance your API.
 
-* Add data persistence using the [{{site.data.keyword.cloudant}}](https://console.bluemix.net/catalog/services/cloudant) LoopBack connector
+* Add data persistence using the [{{site.data.keyword.cloudant}}](https://{DomainName}/catalog/services/cloudant) LoopBack connector
 * Use the API Designer to [view additional settings](http://127.0.0.1:9000/#/design/apis/editor/entries-api:1.0.0) to manage your API
-* Review API **Analytics** and **Visualizations** [available](https://console.bluemix.net/docs/services/apiconnect/tutorials/tut_insights_analytics.html#gaining-insights-from-basic-analytics) in {{site.data.keyword.apiconnect_short}}
+* Review API **Analytics** and **Visualizations** [available](https://{DomainName}/docs/services/apiconnect/tutorials/tut_insights_analytics.html#gaining-insights-from-basic-analytics) in {{site.data.keyword.apiconnect_short}}
 
 ## Related content
 
 * [Loopback Documentation](https://loopback.io/doc/index.html)
-* [Getting started with {{site.data.keyword.apiconnect_long}}](https://console.bluemix.net/docs/services/apiconnect/index.html#index)
+* [Getting started with {{site.data.keyword.apiconnect_long}}](https://{DomainName}/docs/services/apiconnect/index.html#index)
