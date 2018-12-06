@@ -362,6 +362,22 @@ It's important to note that {{site.data.keyword.conversationshort}} V1 is statel
 
 Once you have created instances in multiple locations, use the tooling {{site.data.keyword.conversationshort}} to export, from one instance, an existing workspace, including intents, entities, and dialog. Then import this workspace in other locations.
 
+## Summary
+
+| Offering | Resiliency Options |
+| -------- | ------------------ |
+| Cloud Foundry | <ul><li>Deploy applications to multiple locations</li><li>Serve requests from multiple locations with Cloud Internet Services</li><li>Use Cloud Foundry APIs to configure orgs, spaces and push apps to multiple locations</li></ul> |
+| {{site.data.keyword.cfee_full_notm}} | <ul><li>Deploy applications to multiple locations</li><li>Serve requests from multiple locations with Cloud Internet Services</li><li>Use Cloud Foundry APIs to configure orgs, spaces and push apps to multiple locations</li><li>Built on Kubernetes service</li></ul> |
+| {{site.data.keyword.containerlong_notm}} | <ul><li>Resiliency by design with support for multi-zone clusters</li><li>Serve requests from clusters spread in multiple locations with Cloud Internet Services</li></ul> |
+| {{site.data.keyword.openwhisk_short}} | <ul><li>Available in multiple locations</li><li>Serve requests from multiple locations with Cloud Internet Services</li><li>Use Cloud Functions API to deploy actions in multiple locations</li></ul> |
+| {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} | <ul><li>Provision servers in multiple locations</li><li>Attach servers in the same location to a local load balancer</li><li>Serve requests from multiple locations with Cloud Internet Services</li></ul> |
+| {{site.data.keyword.cloudant}} | <ul><li>One-shot and Continuous replication between databases</li><li>Automatic data redundancy within a region</li></ul> |
+| {{site.data.keyword.Db2_on_Cloud_short}} | <ul><li>Provision a geo-replicated disaster recovery node for real-time data synchronization</li><li>Daily backup with paid plans</li></ul> |
+| {{site.data.keyword.databases-for-postgresql}}, {{site.data.keyword.databases-for-redis}} | <ul><li>Built on multi-zone Kubernetes clusters</li><li>Cross-region read replicas</li><li>Daily and on-demand backups</li></ul> |
+| {{site.data.keyword.cos_short}} | <ul><li>Single Data Center, Regional and Cross-Regional resiliency</li><li>Use API to synchronize contents across storage buckets</li></ul> |
+| {{site.data.keyword.filestorage_short}} | <ul><li>Use snapshots to automatically capture content to a destination in a remote data center</li></ul> |
+| {{site.data.keyword.conversationshort}} | <ul><li>Use Watson API to export and import workspace specification between multiple instances across locations</li></ul> |
+
 ## Related content
 
 {:related}
