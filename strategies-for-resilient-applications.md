@@ -239,7 +239,7 @@ More on cloud database-as-service can be found [here](https://www.ibm.com/cloud/
 
 ![active-active](images/solution39/Active-active.png)
 
-Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://cloud.ibm.com/docs/services/Cloudant/guides/backup-cookbook.html#ibm-cloudant-backup-and-recovery).
+Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://{DomainName}/docs/services/Cloudant/guides/backup-cookbook.html#ibm-cloudant-backup-and-recovery).
 
 ### Db2, Db2 hosted and Db2 Warehouse
 
