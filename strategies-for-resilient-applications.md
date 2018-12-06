@@ -317,44 +317,20 @@ Refer to the [PostgreSQL](https://{DomainName}/docs/services/databases-for-postg
 
 IBM® Cloud Databases offers automatic back-ups to cross-regional Cloud Object Storage. Daily and on-demand backups are available for 30 days. Each backup is labeled with its type, and when the backup was taken. Click the backup to reveal the full ID of the backup and a command that you can use to restore a backup with the IBM Cloud CLI. More on backups can be found [here](https://{DomainName}/docs/services/databases-for-postgresql/dashboard-backups.html#backups) for PostgreSQL and [here](https://{DomainName}/docs/services/databases-for-redis/dashboard-backups.html#backups) for Redis.
 
-### Cloud Object Storage
+### {{site.data.keyword.cos_full_notm}}
 
-Cloud Object Storage (COS) service instance are global, buckets within a COS instance are where it starts to talk about regions. Information stored with IBM® Cloud Object Storage is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. This service makes use of the distributed storage technologies provided by the IBM Cloud Object Storage System (formerly Cleversafe).
+{{site.data.keyword.cos_full_notm}} (COS) provides durable, secure and cost effective cloud storage. Information stored with {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations. When creating storage buckets within a COS instance, you decide in which location the bucket should be created and which resiliency option to use.
 
-#### Does Cloud Object Storage support multi-region?
+There are three types of bucket resiliency:
+   - **Cross Region** resiliency will spread your data across several metropolitan areas. This can be seen as a multi-region option. When accessing content stored in a Cross Region bucket, COS offers a special endpoint able to retrieve content from a healthy region.
+   - **Regional** resiliency will spread data across a single metropolitan area. This can be seen as a multi-zones within a region configuration.
+   - **Single Data Center** resiliency spreads data across multiple appliances within a single data center.
 
-Yes, there are three types of bucket resiliency that COS offer, these are:
+Refer to [this documentation](https://{DomainName}/docs/services/cloud-object-storage/basics/endpoints.html#select-regions-and-endpoints) for a detailed explanation of {{site.data.keyword.cos_full_notm}} resiliency options.
 
-- **Cross Region** resiliency will spread your data across several metropolitan areas. This is the multi-region.
-- **Regional** resiliency will spread data across a single metropolitan area - this is the multi-zone within a region.
-- **Single Data Center** resiliency spreads data across multiple appliances within a single data center.
+### {{site.data.keyword.filestorage_full_notm}}
 
-Regional and Cross Region buckets can maintain availability during a site outage. 
-
-**Cross Region** has a special "geo" endpoint `s3-api.us-geo.objectstorage.softlayer.net, s3-api.us-geo.objectstorage.service.networklayer.com` to automatically redirect to a healthy region. COS has several access points to enter the cross region, regional.
-
-Additionally, with **Cross Region** and **Regional** buckets, data is automatically replicated across multiple regions within a geo (example for Cross Region US, content goes to Dallas, San Jose, Washington).
-
-For more detailed explanation COS resiliency options, checkout the COS docs [here](https://{DomainName}/docs/services/cloud-object-storage/basics/endpoints.html#select-regions-and-endpoints).
-
-#### How does replication work?
-{: #replication-cos}
-
-With **Cross Region** and **Regional** buckets, data is automatically replicated across multiple regions within a geo (example for Cross Region US, content goes to Dallas, San Jose, Washington).
-
-You have the option to manually synchronize content across buckets in different regions. 
-
-#### Backup and restore
-
-IBM Cloud Object Storage provides durable, secure and cost effective cloud storage for a variety of backup needs. Protect the data in your datacenter by backing it up to IBM Cloud Object Storage to replace tape, streamline backup operations, and simplify archival processes. Most major backup software vendors integrate directly with IBM Cloud Object Storage and offer turnkey data backup solutions. For data in the cloud, leverage the cloud-native capabilities and the low cost of Cloud Object Storage for an automated, application-consistent backup and recovery solution. 
-
-You can initiate your backup to the bucket with the policy. and perform backups to IBM Cloud Object Storage. More information on Simpana backups is available [here](https://documentation.commvault.com/commvault/v11/article?p=11677.htm). Backup contents transition to the Archive tier based on the policy configured on the bucket.
-
-Refer to the `performing backups` section [here](https://{DomainName}/docs/services/cloud-object-storage/gui/simpana.html#performing-backups).
-
-### File Storage
-
-IBM File Storage for IBM Cloud is persistent, fast, and flexible network-attached, NFS-based File Storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. File Storage shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
+{{site.data.keyword.filestorage_full_notm}} is persistent, fast, and flexible network-attached, NFS-based File Storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. File Storage shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
 Some of file storage features are things like `Snapshots`, `Replication`, `Concurrent access` and many more. Get the full list of features [here](https://{DomainName}/docs/infrastructure/FileStorage/index.html#getting-started-with-file-storage).
 
