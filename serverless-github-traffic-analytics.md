@@ -206,7 +206,7 @@ Want to add to or change this tutorial? Here are some ideas:
 * Use a custom login page for {{site.data.keyword.appid_short}}.
 * Explore the social coding relationships between developers using [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
 
-# Related Content
+## Related Content
 Here are links to additional information on the topics covered in this tutorial.
 
 Documentation and SDKs:
