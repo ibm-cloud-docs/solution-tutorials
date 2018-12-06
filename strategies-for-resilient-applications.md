@@ -319,7 +319,7 @@ IBM® Cloud Databases offers automatic back-ups to cross-regional Cloud Object S
 
 ### {{site.data.keyword.cos_full_notm}}
 
-{{site.data.keyword.cos_full_notm}} (COS) provides durable, secure and cost effective cloud storage. Information stored with {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations. When creating storage buckets within a COS instance, you decide in which location the bucket should be created and which resiliency option to use.
+{{site.data.keyword.cos_full_notm}} (COS) provides durable, secure and cost-effective cloud storage. Information stored with {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations. When creating storage buckets within a COS instance, you decide in which location the bucket should be created and which resiliency option to use.
 
 There are three types of bucket resiliency:
    - **Cross Region** resiliency will spread your data across several metropolitan areas. This can be seen as a multi-region option. When accessing content stored in a Cross Region bucket, COS offers a special endpoint able to retrieve content from a healthy region.
