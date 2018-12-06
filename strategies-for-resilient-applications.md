@@ -212,7 +212,7 @@ The components required for such architecture:
 ## Databases and application files
 {: #databaseservices}
 
-IBM Cloud offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) both relational and non-relational databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like Cloudant you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
+IBM Cloud offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) both relational and non-relational databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like {{site.data.keyword.cloudant}} you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
 
 **Key features:** 
 
@@ -231,43 +231,15 @@ IBM Cloud offers a selection of [databases as a service](https://{DomainName}/ca
 
 More on cloud database-as-service can be found [here](https://www.ibm.com/cloud/learn/what-is-cloud-database). 
 
-### Cloudant
+### {{site.data.keyword.cloudant}}
 
-IBM Cloudant is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed IBM Cloud service, Cloudant elastically scales throughput and storage independently. Cloudant is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
+{{site.data.keyword.cloudant}} is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed {{site.data.keyword.Bluemix_notm}} service, {{site.data.keyword.cloudant}} elastically scales throughput and storage independently. {{site.data.keyword.cloudant}} is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
 
-#### Does Cloudant support multi-region?
-
-Yes, you can configure replication in IBM Cloudant using an active/active or active/passive topology across data centres. The following diagram shows a typical configuration that uses two IBM Cloudant accounts, one in each region:
+{{site.data.keyword.cloudant}} supports [replication](https://{DomainName}/docs/services/Cloudant/api/replication.html#replication-operation) between multiple instances across locations. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. The following diagram shows a typical configuration that uses two {{site.data.keyword.cloudant}} accounts, one in each region:
 
 ![active-active](images/solution39/Active-active.png)
 
-For step by step instructions on setting up Cloudant for a multi-region architecture, follow the instructions [here](https://{DomainName}/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery).
-
-#### How does replication work?
-{: #replication-cloudant}
-
-IBM Cloudant for IBM Cloud replication is the process that synchronizes ('syncs') the state of two databases. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. Depending on your application requirements, you use replication to share and aggregate state and content.
-
-Replication takes place in one direction only. To keep two databases synchronized with each other, you must replicate in both directions. Do this by replicating from `database1` to `database2`, and separately from `database2` to `database1`. The aim of replication is that at the end of the process, all active documents in the source database are also in the destination or 'target' database, *and* that all documents that are deleted from the source databases are also deleted from the destination database (if they existed there).
-
-Replication has two forms: push or pull replication:
-
-- *Push replication* is where the source is a local database, and the destination is a remote database.
-- *Pull replication* is where the source is a remote database instance, and the destination is the local database.
-
-For more detailed instructions on Cloudant replication, check out the replication docs [here](https://{DomainName}/docs/services/Cloudant/api/replication.html#replication).
-
-#### Backups and recovery
-
-Your data is important and valuable. You want to protect your data, to help ensure it is secure, available, and maintains integrity. IBM® Cloudant for IBM Cloud provides several ways to protect your data and help keep your applications operational. Some of these protection features are automatic. For other forms of protection, IBM Cloudant provides you with supported tools that help you to create your high availability and disaster recovery capabilities.
-
-**Types and levels of protection**
-
-- In-Region Automatic Data Redundancy
-- Cross-Region Redundancy for Disaster Recovery
-- Database Backup and Recovery
-
-To dive deeper into the three levels of protection, check out the Cloudant backup and recovery docs [here](https://{DomainName}/docs/services/Cloudant/guides/disaster-recovery-and-backup.html#disaster-recovery-and-backup).
+Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides/active-active.html#configuring-ibm-cloudant-for-cross-region-disaster-recovery) to configure replication between {{site.data.keyword.cloudant}} instances. The service also provides instructions and tooling to [backup and restore data](https://cloud.ibm.com/docs/services/Cloudant/guides/backup-cookbook.html#ibm-cloudant-backup-and-recovery).
 
 ### Db2, Db2 hosted and Db2 Warehouse
 
