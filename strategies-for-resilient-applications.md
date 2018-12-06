@@ -108,7 +108,7 @@ Refer to [this guide](https://www.ibm.com/cloud/garage/content/manage/hadr-on-pr
 
 In a multi-region architecture, an application is deployed to different locations where each region runs an identical copy of the application. 
 
-A region is a specific geographical location where you can deploy apps, services, and other IBM® Cloud resources. [IBM Cloud regions](https://{DomainName}/docs/containers/cs_regions.html#bluemix_regions) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
+A region is a specific geographical location where you can deploy apps, services, and other {{site.data.keyword.cloud_notm}} resources. [{{site.data.keyword.cloud_notm}} regions](https://{DomainName}/docs/containers/cs_regions.html#bluemix_regions) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
 
 Additionally, in a multi-region architecture, a Global load balancer like [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services) is required in order to distribute traffic between regions.
 
@@ -127,11 +127,11 @@ You can learn more about regions and zones [here](https://{DomainName}/docs/cont
 
 ## Compute Options 
 
-This section reviews the compute options available in IBM Cloud. For each compute option, an architecture diagram is provided together with a tutorial on how to deploy such architecture.
+This section reviews the compute options available in {{site.data.keyword.cloud_notm}}. For each compute option, an architecture diagram is provided together with a tutorial on how to deploy such architecture.
 
 Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the selected compute option. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and other services. Later sections of this solution tutorial will cover [databases](#databaseservices), and [non-database-services](#nondatabaseservices).
 
-### Cloud Foundry apps 
+### Cloud Foundry 
 
 Cloud Foundry offers the capability to achieve deployment of a multi-region architecture, also using a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions. The architecture for Cloud Foundry multi-region looks like this:
 
@@ -139,13 +139,14 @@ Cloud Foundry offers the capability to achieve deployment of a multi-region arch
 
 **Deploy above architecture by following the [solution tutorial here.](multi-region-webapp.html)** 
 
-### Cloud Foundry Enterprise Environment
+### {{site.data.keyword.cfee_full_notm}}
 
-In the last section, you reviewed how to deploy a multi-region app to the public Cloud Foundry. The next step is to look at **Cloud Foundry Enterprise Environment (CFEE)**. CFEE offers all the same functionalities like public Cloud Foundry but with additional features.
+In the last section, you reviewed how to deploy a multi-region app to the public Cloud Foundry. The next step is to look at **{{site.data.keyword.cfee_full_notm}} (CFEE)**. CFEE offers all the same functionalities like public Cloud Foundry but with additional features.
 
-**Cloud Foundry Enterprise Environment** allows you to instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of CFEE run within your own account in [IBM Cloud](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services.
+**{{site.data.keyword.cfee_full_notm}}** allows you to instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of CFEE run within your own account in [{{site.data.keyword.cloud_notm}}
+](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services.
 
-A multi-region architecture using Cloud Foundry Enterprise Environment is below.
+A multi-region architecture using {{site.data.keyword.cfee_full_notm}} is below.
 
 ![Architecture](images/solution39/CFEE-Architecture.png)
 
@@ -158,27 +159,27 @@ Deploying this architecture requires the following:
 
 Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md) where it will take you deploying a microservice based application to CFEE. Once deployed to one CFEE account, then you would require to redeploy to a second region and attach the [Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) in front of the two CFEE account to load balance the traffic. 
 
-You can learn more on IBM Cloud Foundry Enterprise Environment [here](https://{DomainName}/docs/cloud-foundry/index.html#about).
+Refer to the [{{site.data.keyword.cfee_full_notm}} documentation](https://{DomainName}/docs/cloud-foundry/index.html#about) for additional details.
 
-### Kubernetes apps
+### Kubernetes
 
-With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with Kubernetes Service, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
+With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
 
 The Kubernetes multi-region architecture looks like this.
 
 ![Kubernetes](images/solution39/Kub-Architecture.png)
 
 1. The developer builds Docker images for the application.
-2. The images are pushed to IBM Cloud Container Registry in Dallas and London.
+2. The images are pushed to {{site.data.keyword.registryshort_notm}} in Dallas and London.
 3. The application is deployed to Kubernetes clusters in both locations.
 4. End-users access the application.
 5. Cloud Internet Services is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
 
 **Deploy above architecture by following the [solution tutorial here.](multi-region-k8s-cis.html)** 
 
-### Cloud Functions apps
+### {{site.data.keyword.openwhisk_short}}
 
-Cloud Functions is available in multiple IBM Cloud locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with IBM Cloud Internet Services (CIS), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end. The architecture for Cloud Functions multi-region looks like this.
+{{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with IBM Cloud Internet Services (CIS), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end. The architecture for {{site.data.keyword.openwhisk_short}} multi-region looks like this.
 
  ![Functions-Architecture](images/solution39/Functions-Architecture.png)
 
@@ -189,13 +190,13 @@ Cloud Functions is available in multiple IBM Cloud locations. To increase resili
 
 **Deploy above architecture by following the [solution tutorial here.](multi-region-serverless.html)** 
 
-### Bare Metal and Virtual Servers
+### {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}}
 
-IBM Cloud Virtual Servers and Bare Metal offers the capability to achieve a multi-region architecture. You can provision servers on many available locations on IBM Cloud. ![server locations](images/solution39/ServersLocation.png)
+{{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}} offer the capability to achieve a multi-region architecture. You can provision servers on many available locations on {{site.data.keyword.cloud_notm}}. ![server locations](images/solution39/ServersLocation.png)
 
-When preparing for such architecture using Virtual Servers and Bare Metal you need to think about the following: file storage, backups, recovery and databases, selecting between a database as service or installing a database on a virtual server. 
+When preparing for such architecture using {{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}} you need to think about the following: file storage, backups, recovery and databases, selecting between a database as service or installing a database on a virtual server. 
 
-The below architecture demonstrates deployment of a multi-region architecture using Virtual Servers in an active/passive architecture where one region is active and the second region is passive. 
+The below architecture demonstrates deployment of a multi-region architecture using {{site.data.keyword.virtualmachinesshort}} in an active/passive architecture where one region is active and the second region is passive. 
 
 ![VM-Architecture](images/solution39/vm-Architecture2.png)
 
@@ -212,7 +213,7 @@ The components required for such architecture:
 ## Databases and application files
 {: #databaseservices}
 
-IBM Cloud offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) both relational and non-relational databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like {{site.data.keyword.cloudant}} you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
+{{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) both relational and non-relational databases depending on your business needs. Database-as-service comes with many advantages that are too good to avoid. Using a database-as-service like {{site.data.keyword.cloudant}} you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, backups, scaling and maximum uptime. 
 
 **Key features:** 
 
@@ -243,7 +244,7 @@ Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides
 
 ### Db2, Db2 hosted and Db2 Warehouse
 
-IBM Cloud offers a selection range of [Db2 databases](https://{DomainName}/catalog/?search=db2h), these are:
+{{site.data.keyword.cloud_notm}} offers a selection range of [Db2 databases](https://{DomainName}/catalog/?search=db2h), these are:
 
 - **Db2**: A fully-managed cloud SQL database. Powered by a turbo-charged Db2 engine.
 - **Db2 hosted**: IBM Db2 Hosted lets you run Db2 with full administrative access on cloud infrastructure. It eliminates the cost, complexity, and risk of managing your own infrastructure.
@@ -255,7 +256,7 @@ Yes, you can plan and prepare for it. Db2 on Cloud uses the Db2 High Availabilit
 
 Db2 on Cloud high availability plans have excellent availability characteristics with a 99.99% SLA. The standard high availability plans without a disaster recovery (DR) node provide seamless failover and rolling updates. They are managed for you by using automatic client reroute (ACR) and portable IPs.
 
-Also, you can add a Geo-Replicated Disaster Recovery Node. This offsite DR node option gives you the ability to rapidly synchronize your data in real time to a database node in an offsite IBM Cloud data center of your choice.
+Also, you can add a Geo-Replicated Disaster Recovery Node. This offsite DR node option gives you the ability to rapidly synchronize your data in real time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
 
 For more, check out the Db2 docs [here](https://{DomainName}/docs/services/Db2onCloud/ha.html#ha).
 
@@ -264,8 +265,8 @@ For more, check out the Db2 docs [here](https://{DomainName}/docs/services/Db2on
 
 How to add a Geo-Replicated Disaster Recovery Node:
 
-- You can add an on-demand DR node to existing Db2 on Cloud instances. After clicking your instance in the IBM Cloud dashboard, you will see an option called **Manage Disaster Recovery**. You can add a Geo-Replicated Disaster Recovery Node from there.
-- If you purchased Db2 on Cloud on contract through a sales representative and do not have an IBM Cloud subscription, contact your IBM representative to add a DR node.
+- You can add an on-demand DR node to existing Db2 on Cloud instances. After clicking your instance in the {{site.data.keyword.cloud_notm}} dashboard, you will see an option called **Manage Disaster Recovery**. You can add a Geo-Replicated Disaster Recovery Node from there.
+- If you purchased Db2 on Cloud on contract through a sales representative and do not have an {{site.data.keyword.cloud_notm}} subscription, contact your IBM representative to add a DR node.
 
 #### Backup, restore and import/export data
 
@@ -283,26 +284,26 @@ Import data:
 
 - You can use [IBM Lift CLI](https://lift.ng.bluemix.net/) to import data into Db2 on Cloud.
 
-### IBM Cloud Databases for PostgreSQL and Redis 
+### {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.databases-for-redis}}
 
-The [IBM Cloud Databases for PostgreSQL](https://{DomainName}/catalog/services/databases-for-postgresql) and [IBM Cloud Databases for Redis](https://{DomainName}/catalog/services/databases-for-redis) are database-as-a-service products that are fully managed, highly available, and built from the ground up with enterprise security in mind. They are scalable, cost-efficient, and readily usable for enterprise application development.
+The [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql) and [{{site.data.keyword.databases-for-redis}}](https://{DomainName}/catalog/services/databases-for-redis) are database-as-a-service products that are fully managed, highly available, and built from the ground up with enterprise security in mind. They are scalable, cost-efficient, and readily usable for enterprise application development.
 
-**IBM Cloud Databases for PostgreSQL**
+**{{site.data.keyword.databases-for-postgresql}}**
 
 PostgreSQL is an object-relational SQL database that is complemented by powerful enhancements like indexable JSON, publish/subscribe functions, and drivers. The technology is commonly used for web and mobile transactional applications, business intelligence, and geospatial analysis with PostGIS.
 
-**IBM Cloud Databases for Redis**
+**{{site.data.keyword.databases-for-redis}}**
 
 Redis is a powerful, open source, in-memory key value store that acts as a cache, queue, or transient store designed for the modern application stack. Applications typically use the Redis for database and web caching or counting and queuing.
 
 #### Does IBM Cloud Databases supports multi-region or multi-zone region?
 
-Yes, multi-zone region supported using IBM Cloud Databases for PostgreSQL and Redis.
+Yes, multi-zone region supported using {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.databases-for-redis}}.
 
 #### How does replication work?
 {: #replication-icd}
 
-IBM Cloud Databases for Redis and IBM Cloud Databases for PostgreSQL offers cross regional replicas. By creating a read replica, you can get: 
+{{site.data.keyword.databases-for-redis}} and {{site.data.keyword.databases-for-postgresql}} offers cross regional replicas. By creating a read replica, you can get: 
 
 - Additional read capacity for applications
 - Relieve pressure on source database
@@ -313,9 +314,9 @@ IBM Cloud Databases for Redis and IBM Cloud Databases for PostgreSQL offers cros
 
 Refer to the [PostgreSQL](https://{DomainName}/docs/services/databases-for-postgresql/index.html#about-databases-for-postgresql) and [Redis](https://{DomainName}/docs/services/databases-for-redis/index.html#about-databases-for-redis) docs for more on replication.
 
-#### Backups 
+#### Backups
 
-IBM® Cloud Databases offers automatic back-ups to cross-regional Cloud Object Storage. Daily and on-demand backups are available for 30 days. Each backup is labeled with its type, and when the backup was taken. Click the backup to reveal the full ID of the backup and a command that you can use to restore a backup with the IBM Cloud CLI. More on backups can be found [here](https://{DomainName}/docs/services/databases-for-postgresql/dashboard-backups.html#backups) for PostgreSQL and [here](https://{DomainName}/docs/services/databases-for-redis/dashboard-backups.html#backups) for Redis.
+{{site.data.keyword.databases-for}} offers automatic back-ups to cross-regional {{site.data.keyword.cos_full_notm}}. Daily and on-demand backups are available for 30 days. Each backup is labeled with its type, and when the backup was taken. Click the backup to reveal the full ID of the backup and a command that you can use to restore a backup with the {{site.data.keyword.cloud_notm}} CLI. More on backups can be found [here](https://{DomainName}/docs/services/databases-for-postgresql/dashboard-backups.html#backups) for PostgreSQL and [here](https://{DomainName}/docs/services/databases-for-redis/dashboard-backups.html#backups) for Redis.
 
 ### {{site.data.keyword.cos_full_notm}}
 
@@ -343,7 +344,7 @@ Replication can be scheduled to automatically copy snapshots to a destination vo
 ## Non-database services
 {: #nondatabaseservices}
 
-IBM Cloud offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party service. When planning for multi-region architecture, you need to understand how services like Watson services can work in a multi-region setup.
+{{site.data.keyword.cloud_notm}} offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party service. When planning for multi-region architecture, you need to understand how services like Watson services can work in a multi-region setup.
 
 ### {{site.data.keyword.conversationfull}}
 
