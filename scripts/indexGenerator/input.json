@@ -51,6 +51,7 @@
                 ]
             },
             {
+                "hidden": true,
                 "name": "Strategies for resilient applications",
                 "url": "strategies-for-resilient-applications.html",
                 "description": "Regardless of the Compute option: Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability.",
