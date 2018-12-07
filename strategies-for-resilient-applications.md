@@ -43,6 +43,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.BluVirtServers}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
 * [{{site.data.keyword.Db2_on_Cloud_short}}](https://{DomainName}/catalog/services/db2)
+* [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
@@ -244,7 +245,7 @@ Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides
 
 ### {{site.data.keyword.Db2_on_Cloud_short}}, {{site.data.keyword.dashdbshort_notm}}, and {{site.data.keyword.Db2Hosted_notm}}
 
-{{site.data.keyword.cloud_notm}} offers a selection range of [Db2 database services](https://{DomainName}/catalog/?search=db2h). These are:
+{{site.data.keyword.cloud_notm}} offers several [Db2 database services](https://{DomainName}/catalog/?search=db2h). These are:
 
 - [**{{site.data.keyword.Db2_on_Cloud_short}}**](https://{DomainName}/catalog/services/db2): A fully-managed cloud SQL database for typical operational, OLTP-like workloads.
 - [**{{site.data.keyword.dashdbshort_notm}}**](https://{DomainName}/catalog/services/db2-warehouse): A fully-managed cloud data warehouse service for high performance, petabyte-scale analytic workloads. It offers both SMP and MPP service plans and utilizes an optimized columnar data store and in-memory processing.
@@ -252,35 +253,15 @@ Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides
 
 In the following, we will focus on {{site.data.keyword.Db2_on_Cloud_short}} as DBaaS for operational workloads. These workloads are typical for the applications discussed in this tutorial.
 
-#### Does Db2 support multi-region?
+#### Multi-region support for {{site.data.keyword.Db2_on_Cloud_short}}
 
-{{site.data.keyword.Db2_on_Cloud_short}} offers several [options to achieve High Availability and Disaster Recovery (HADR)](https://{DomainName}/docs/services/Db2onCloud/features_specs.html#overview). High Availability can be chosen as option when creating a new service. Later on, users can [add a Geo-Replicated Disaster Recovery Node through the management console](https://{DomainName}/docs/services/Db2onCloud/ha.html#ha). This offsite DR node option gives you the ability to synchronize your data in real time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
+{{site.data.keyword.Db2_on_Cloud_short}} offers several [options to achieve High Availability and Disaster Recovery (HADR)](https://{DomainName}/docs/services/Db2onCloud/features_specs.html#overview). You can choose the High Availability option when you create a new service. Later on, you can [add a Geo-Replicated Disaster Recovery Node](https://{DomainName}/docs/services/Db2onCloud/ha.html#ha) through the instance dashboard. The offsite DR node option gives you the ability to synchronize your data in real time to a database node in an offsite {{site.data.keyword.cloud_notm}} data center of your choice.
 
 More information is available in the [High Availability documentation](https://{DomainName}/docs/services/Db2onCloud/ha.html#ha).
 
-#### How does replication work?
-{: #replication-db2}
+#### Backup and restore
 
-How to add a Geo-Replicated Disaster Recovery Node:
-
-- You can add an on-demand DR node to existing Db2 on Cloud instances. After clicking your instance in the {{site.data.keyword.cloud_notm}} dashboard, you will see an option called **Manage Disaster Recovery**. You can add a Geo-Replicated Disaster Recovery Node from there.
-- If you purchased Db2 on Cloud on contract through a sales representative and do not have an {{site.data.keyword.cloud_notm}} subscription, contact your IBM representative to add a DR node.
-
-#### Backup, restore and import/export data
-
-Backup data:
-
-- For paid plans, encrypted backups of the database are done daily. A daily backup is kept for each of the last 14 days. Retained backups are used by IBM for system recovery purposes in the event of a disaster or system loss. More on that can be found [here](https://{DomainName}/docs/services/Db2onCloud/br.html#br).
-
-Restore data, managing high availability and disaster recovery nodes: 
-
-- For standard HA nodes, which are not offsite, the failover is managed for you by IBM. IBM monitors the health of your server, failover, and failing back as needed, including rolling updates and scaling to keep uptime as high as possible.
-
-- For Geo-Replicated Disaster Recovery (HADR), you must manually failover by using **Manage Disaster Recovery** in the console.
-
-Import data:
-
-- You can use [IBM Lift CLI](https://lift.ng.bluemix.net/) to import data into Db2 on Cloud.
+{{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation] ](https://{DomainName}/docs/services/Db2onCloud/br.html#br) provides details on how you can restore data to the desired date and time.
 
 ### {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.databases-for-redis}}
 
