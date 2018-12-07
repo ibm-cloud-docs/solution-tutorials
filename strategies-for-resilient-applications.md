@@ -43,6 +43,8 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.BluVirtServers}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
 * [{{site.data.keyword.Db2_on_Cloud_short}}](https://{DomainName}/catalog/services/db2)
+* [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
+* [{{site.data.keyword.databases-for-redis}}](https://{DomainName}/catalog/services/databases-for-redis)
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services)
 
@@ -265,7 +267,7 @@ More information is available in the [High Availability documentation](https://{
 
 ### {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.databases-for-redis}}
 
-The [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql) and [{{site.data.keyword.databases-for-redis}}](https://{DomainName}/catalog/services/databases-for-redis) are database-as-a-service products that are fully managed, highly available, and built from the ground up with enterprise security in mind. They are scalable, cost-efficient, and readily usable for enterprise application development.
+[{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql) and [{{site.data.keyword.databases-for-redis}}](https://{DomainName}/catalog/services/databases-for-redis) are database-as-a-service offerings for both relational data and general data structures. 
 
 **{{site.data.keyword.databases-for-postgresql}}**
 
