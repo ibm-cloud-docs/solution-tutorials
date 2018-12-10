@@ -205,7 +205,6 @@ The repository contains Android application code with required gradle dependenci
    ```xml
    <?xml version="1.0" encoding="utf-8"?>
    <resources>
-   
        <!--Watson Assistant service credentials-->
        <!-- REPLACE `ASSISTANT_ID_HERE` with ID of the Assistant to use -->
        <string name="assistant_id">ASSISTANT_ID_HERE</string>
@@ -215,7 +214,6 @@ The repository contains Android application code with required gradle dependenci
    
        <!-- REPLACE `ASSISTANT_URL_HERE` with Watson Assistant service URL-->
        <string name="assistant_url">ASSISTANT_URL_HERE</string>
-   
        
        <!--Watson Speech To Text(STT) service credentials-->
        <!-- REPLACE `STT_API_KEY_HERE` with Watson Speech to Text service API Key-->
@@ -224,16 +222,13 @@ The repository contains Android application code with required gradle dependenci
        <!-- REPLACE `STT_URL_HERE` with Watson Speech to Text service URL-->
        <string name="STT_url">STT_URL_HERE</string>
    
-   
        <!--Watson Text To Speech(TTS) service credentials-->
        <!-- REPLACE `TTS_API_KEY_HERE` with Watson Text to Speech service API Key-->
        <string name="TTS_apikey">TTS_API_KEY_HERE</string>
    
        <!-- REPLACE `TTS_URL_HERE` with Watson Text to Speech service URL-->
        <string name="TTS_url">TTS_URL_HERE</string>
-   
    </resources>
-   
    ```
 4. Build the project and start the application on a real device or with a simulator.
    <p style="text-align: center; width:200">
