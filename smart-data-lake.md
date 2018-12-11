@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-23"
+lastupdated: "2018-12-11"
 
 ---
 
@@ -75,7 +75,7 @@ This section uses the command line to create service instances. Alternatively, y
     {: pre}
 3. Create an instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
     ```sh
-    ibmcloud resource service-instance-create data-lake-sql sql-query beta us-south
+    ibmcloud resource service-instance-create data-lake-sql sql-query lite us-south
     ```
     {: pre}
 4. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).

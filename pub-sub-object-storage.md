@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-16"
+lastupdated: "2018-12-11"
 
 ---
 
@@ -34,7 +34,7 @@ You will simulate this pattern using a file processing example. First create a U
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_full_notm}}](https://console.ng.bluemix.net/catalog/services/cloud-object-storage)
-* [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/messagehub)
+* [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/catalog/infrastructure/containers-kubernetes)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
@@ -85,12 +85,12 @@ In this step, you'll configure kubectl to point to your newly created cluster go
   {: pre}
    ![](images/solution2/kubectl_cluster-info.png)
 
- ## Create a {{site.data.keyword.messagehub}} instance
+## Create a {{site.data.keyword.messagehub}} instance
  {: #create_messagehub}
 
 {{site.data.keyword.messagehub}} is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
 
- 1. From the Dashboard, click on [**Create resource**](https://{DomainName}/catalog/) and select [**{{site.data.keyword.messagehub}}**](https://{DomainName}/catalog/services/message-hub) from the Application Services section.
+ 1. From the Dashboard, click on [**Create resource**](https://{DomainName}/catalog/) and select [**{{site.data.keyword.messagehub}}**](https://{DomainName}/catalog/services/event-streams) from the Application Services section.
  2. Name the service `mymessagehub` and click **Create**.
  3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
  ```
@@ -129,7 +129,7 @@ The UI application is a simple Node.js Express web application which allows the 
   cd pub-sub-storage-processing/pubsub-ui
 ```
 2. Open `config.js` and update COSBucketName with your bucket name.
-3. Build and deploy the application. The deploy command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment.
+3. Build and deploy the application. The deploy command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment. Follow the interactive instructions while deploying the app.
 ```sh
   ibmcloud dev build
   ibmcloud dev deploy -t container

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-13"
+lastupdated: "2018-12-11"
 
 ---
 
@@ -31,7 +31,7 @@ The  Botkit app channels messages between Slack and {{site.data.keyword.conversa
 This tutorial uses the following runtimes and services:
    * [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/conversation)
    * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk/)
-   * [{{site.data.keyword.dashdblong}} ](https://{DomainName}/catalog/services/db2-warehouse)
+   * [{{site.data.keyword.dashdblong}} ](https://{DomainName}/catalog/services/db2-warehouse) or [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
    * [Cloud Foundry runtime for Node.js](https://{DomainName}/catalog/starters/sdk-for-nodejs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
@@ -51,9 +51,9 @@ To complete this tutorial, you need the latest version of the [{{site.data.keywo
 
 
 ## Service and Environment Setup
-In this section, you are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on Github.
+In this section, you are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on GitHub.
 
-1. Clone the [Github repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) and navigate into the cloned directory:
+1. Clone the [GitHub repository](https://github.com/IBM-Cloud/slack-chatbot-database-watson) and navigate into the cloned directory:
    ```bash
    git clone https://github.com/IBM-Cloud/slack-chatbot-database-watson
    cd slack-chatbot-database-watson
@@ -166,7 +166,7 @@ ibmcloud cf delete botkit-app
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
 1. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
-2. Use the Compose PostgreSQL or MySQL service instead of {{site.data.keyword.dashdbshort}}.
+2. Use {{site.data.keyword.databases-for-postgresql}} instead of {{site.data.keyword.dashdbshort}}. The [GitHub repository for this Slackbot tutorial](https://github.com/IBM-Cloud/slack-chatbot-database-watson) already has code to support {{site.data.keyword.databases-for-postgresql}}.
 3. Add a weather service and retrieve forecast data for the event date and location.
 4. Export event data as iCalendar **.ics** file.
 5. Connect the chatbot to Facebook Messenger.
@@ -184,7 +184,7 @@ Chatbot-related blog posts:
 * [Building chatbots: more tipcs and tricks](https://www.ibm.com/blogs/bluemix/2017/06/building-chatbots-tips-tricks/)
 
 Documentation and SDKs:
-* Github repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
+* GitHub repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
 * [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk/openwhisk_about.html#about-cloud-functions)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
