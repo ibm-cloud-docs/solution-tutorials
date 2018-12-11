@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-14"
+lastupdated: "2018-12-10"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -67,7 +67,7 @@ In this section, you will create the services required by the tutorial starting 
 2. Click **Service credentials** on the left pane and click **New credential**.
    1. Set **Name** to **for-android-app**.
    1. **Add**.
-3. Click **View Credentials** to see the credentials. Make note of the **apikey**, you will need it for the mobile application.
+3. Click **View Credentials** to see the credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}}.
 
@@ -77,7 +77,7 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
    1. Set **Name** to **for-android-app**.
    1. **Add**.
-3. Click **View Credentials** to see the credentials. Make note of the **apikey**, you will need it for the mobile application.
+3. Click **View Credentials** to see the credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. The service provides several voices and can be configured in the Android app.
 
@@ -87,7 +87,7 @@ The {{site.data.keyword.texttospeechshort}} service processes text and natural l
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
    1. Set **Name** to **for-android-app**.
    1. **Add**.
-3. Click **View Credentials** to see the credentials. Make note of the **apikey**, you will need it for the mobile application.
+3. Click **View Credentials** to see the credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 ## Create a skill
 {: #create_workspace}
@@ -100,7 +100,7 @@ For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM
 1. Click on **Skills** tab.
 1. **Create new** then **Import skill** and choose the JSON file downloaded above.
 1. Select **Everything** option and click **Import**. A new skill is created with predefined intents, entities and dialog flow.
-1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**. Copy and save the `Skill ID` for future reference.
+1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**.
 
 ### Define an intent
 {:#define_intent}
@@ -179,7 +179,7 @@ A dialog is a branching conversation flow that defines how your application resp
 
 ## Link the skill to an assistant
 
-An assistant is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. You customize the assistant by adding to it the skills it needs to satisfy your customers' goals.
+An **assistant** is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. You customize the assistant by adding to it the **skills** it needs to satisfy your customers' goals.
 
 1. In the {{site.data.keyword.conversationshort}} tool, switch to **Assistants** and use **Create new**.
    1. Set **Name** to **android-chatbot-assistant**
@@ -187,7 +187,7 @@ An assistant is a cognitive bot that you can customize for your business needs, 
 1. Use **Add Dialog skill** to select the skill created in the previous sections.
    1. **Add existing skill** 
    1. Select **Ana**
-1. Under **View API Details** for the assistant, make note of the **Assistant ID**, you will need to reference it from the mobile application.
+1. Under **View API Details** for the assistant, make note of the **Assistant ID**, you will need to reference it from the mobile application( in the `config.xml` file of the Android app).
 
 ## Configure and run the Android app
 {:#configure_run_android_app}
@@ -199,8 +199,37 @@ The repository contains Android application code with required gradle dependenci
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
    {: codeblock}
+
 2. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
-3. Open `app/src/main/res/values/config.xml` to see the placeholders for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
+3. Open `app/src/main/res/values/config.xml` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
+   ```xml
+   <?xml version="1.0" encoding="utf-8"?>
+   <resources>
+       <!--Watson Assistant service credentials-->
+       <!-- REPLACE `ASSISTANT_ID_HERE` with ID of the Assistant to use -->
+       <string name="assistant_id">ASSISTANT_ID_HERE</string>
+   
+       <!-- REPLACE `ASSISTANT_API_KEY_HERE` with Watson Assistant service API Key-->
+       <string name="assistant_apikey">ASSISTANT_API_KEY_HERE</string>
+   
+       <!-- REPLACE `ASSISTANT_URL_HERE` with Watson Assistant service URL-->
+       <string name="assistant_url">ASSISTANT_URL_HERE</string>
+       
+       <!--Watson Speech To Text(STT) service credentials-->
+       <!-- REPLACE `STT_API_KEY_HERE` with Watson Speech to Text service API Key-->
+       <string name="STT_apikey">STT_API_KEY_HERE</string>
+   
+       <!-- REPLACE `STT_URL_HERE` with Watson Speech to Text service URL-->
+       <string name="STT_url">STT_URL_HERE</string>
+   
+       <!--Watson Text To Speech(TTS) service credentials-->
+       <!-- REPLACE `TTS_API_KEY_HERE` with Watson Text to Speech service API Key-->
+       <string name="TTS_apikey">TTS_API_KEY_HERE</string>
+   
+       <!-- REPLACE `TTS_URL_HERE` with Watson Text to Speech service URL-->
+       <string name="TTS_url">TTS_URL_HERE</string>
+   </resources>
+   ```
 4. Build the project and start the application on a real device or with a simulator.
    <p style="text-align: center; width:200">
    ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)![](images/solution28-watson-chatbot-android/android_chatbot.png)
