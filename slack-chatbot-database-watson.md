@@ -31,7 +31,7 @@ The  Botkit app channels messages between Slack and {{site.data.keyword.conversa
 This tutorial uses the following runtimes and services:
    * [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/conversation)
    * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk/)
-   * [{{site.data.keyword.dashdblong}} ](https://{DomainName}/catalog/services/db2-warehouse)
+   * [{{site.data.keyword.dashdblong}} ](https://{DomainName}/catalog/services/db2-warehouse) or [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
    * [Cloud Foundry runtime for Node.js](https://{DomainName}/catalog/starters/sdk-for-nodejs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
