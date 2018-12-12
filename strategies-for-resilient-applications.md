@@ -43,8 +43,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.BluVirtServers}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
 * [{{site.data.keyword.Db2_on_Cloud_short}}](https://{DomainName}/catalog/services/db2)
-* [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
-* [{{site.data.keyword.databases-for-redis}}](https://{DomainName}/catalog/services/databases-for-redis)
+* {{site.data.keyword.databases-for}}
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services)
 
@@ -265,39 +264,23 @@ More information is available in the [High Availability documentation](https://{
 
 {{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation] ](https://{DomainName}/docs/services/Db2onCloud/br.html#br) provides details on how you can restore data to the desired date and time.
 
-### {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.databases-for-redis}}
+### {{site.data.keyword.databases-for}}
 
-[{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql) and [{{site.data.keyword.databases-for-redis}}](https://{DomainName}/catalog/services/databases-for-redis) are database-as-a-service offerings for both relational data and general data structures. 
+{{site.data.keyword.databases-for}} offers several open source database systems as fully managed services. They are:  
+* [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
+* [{{site.data.keyword.databases-for-redis}}](https://{DomainName}/catalog/services/databases-for-redis)
+* [{{site.data.keyword.databases-for-elasticsearch}}]()
+* [{{site.data.keyword.databases-for-etcd_full_notm}}]()
+  
+All of these services share the same characteristics:   
+* For high availability they are deployed in clusters. Details can be found in the [architecture documentation](https://{DomainName}/docs/services/databases-for-postgresql/reference-architecture.html#architecture) of each service.
+* Each cluster is spread over multiple zones.
+* Data is replicated across the zones.
+* Users can scale up storage and memory resources for an instance. See the [documentation on scaling for, e.g., {{site.data.keyword.databases-for-redis}}](https://{DomainName}/docs/services/databases-for-redis/dashboard-settings.html#settings) for details.
+* Backups are taken daily or on demand. Details are documented for each service. Here is [backup documentation for, e.g., {{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/docs/services/databases-for-postgresql/dashboard-backups.html#backups).
+* Data at rest, backups and network traffic are encrypted.
+* Each [service can be managed using the {{site.data.keyword.databases-for}} CLI plugin](https://{DomainName}/docs/databases-cli-plugin/cloud-databases-cli.html#cloud-databases-cli-plug-in)
 
-**{{site.data.keyword.databases-for-postgresql}}**
-
-PostgreSQL is an object-relational SQL database that is complemented by powerful enhancements like indexable JSON, publish/subscribe functions, and drivers. The technology is commonly used for web and mobile transactional applications, business intelligence, and geospatial analysis with PostGIS.
-
-**{{site.data.keyword.databases-for-redis}}**
-
-Redis is a powerful, open source, in-memory key value store that acts as a cache, queue, or transient store designed for the modern application stack. Applications typically use the Redis for database and web caching or counting and queuing.
-
-#### Does IBM Cloud Databases supports multi-region or multi-zone region?
-
-Yes, multi-zone region supported using {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.databases-for-redis}}.
-
-#### How does replication work?
-{: #replication-icd}
-
-{{site.data.keyword.databases-for-redis}} and {{site.data.keyword.databases-for-postgresql}} offers cross regional replicas. By creating a read replica, you can get: 
-
-- Additional read capacity for applications
-- Relieve pressure on source database
-- Upgrade a read replica to new database version
-- Provides more replicas for disaster recovery
-
-![](images/solution39/replica.png)
-
-Refer to the [PostgreSQL](https://{DomainName}/docs/services/databases-for-postgresql/index.html#about-databases-for-postgresql) and [Redis](https://{DomainName}/docs/services/databases-for-redis/index.html#about-databases-for-redis) docs for more on replication.
-
-#### Backups
-
-{{site.data.keyword.databases-for}} offers automatic back-ups to cross-regional {{site.data.keyword.cos_full_notm}}. Daily and on-demand backups are available for 30 days. Each backup is labeled with its type, and when the backup was taken. Click the backup to reveal the full ID of the backup and a command that you can use to restore a backup with the {{site.data.keyword.cloud_notm}} CLI. More on backups can be found [here](https://{DomainName}/docs/services/databases-for-postgresql/dashboard-backups.html#backups) for PostgreSQL and [here](https://{DomainName}/docs/services/databases-for-redis/dashboard-backups.html#backups) for Redis.
 
 ### {{site.data.keyword.cos_full_notm}}
 
