@@ -177,9 +177,8 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 2. Enter `Anomaly-detection-notebook` for the **Name**.
 3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio-python3.ipynb` in the **Notebook URL**.
 4. Select the **Apache Spark** service associated previously as the runtime.
-5. Create Notebook**. Set `Python 3.5 with Spark 2.1` as your Kernel.
-   Check that the notebook is created with metadata and code.
-   ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_watson_studio.png)
+5. Create **Notebook**. Set `Python 3.5 with Spark 2.1` as your Kernel. Check that the notebook is created with metadata and code.
+   ![Jupyter Notebook Watson Studio](images/solution16/jupyter_notebook_watson_studio.png)
    To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
    {:tip}
 
