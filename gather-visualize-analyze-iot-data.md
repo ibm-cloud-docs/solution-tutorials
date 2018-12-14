@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-12-03"
+lastupdated: "2018-12-14"
 
 ---
 
@@ -174,12 +174,11 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
 ### Create a Jupyter (ipynb) notebook
 1. Click **+ Add to Project** and add a new **notebook**.
-2. Enter `Anomaly-detection-sample` for the **Name**.
-3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio.ipynb` in the **Notebook URL**.
-4. Select the **Apache Spark** service installed previously created as runtime.
-5. Create Notebook**. Set `Python 2 with Spark 2.1` as your Kernel.
-   Check that the notebook is created with metadata and code.
-   ![Jupyter Notebook DSX](images/solution16/jupyter_notebook_dsx.png)
+2. Enter `Anomaly-detection-notebook` for the **Name**.
+3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio-python3.ipynb` in the **Notebook URL**.
+4. Select the **Apache Spark** service associated previously as the runtime.
+5. Create **Notebook**. Set `Python 3.5 with Spark 2.1` as your Kernel. Check that the notebook is created with metadata and code.
+   ![Jupyter Notebook Watson Studio](images/solution16/jupyter_notebook_watson_studio.png)
    To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
    {:tip}
 
