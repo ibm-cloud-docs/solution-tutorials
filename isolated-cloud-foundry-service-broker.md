@@ -90,7 +90,7 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
    kubectl get service tutorial-broker-service
    ibmcloud cf ssh $CF_APP
    export CLUSTER_IP=<ip address>
-   wget --user TestServiceBrokerUser --password TestServiceBrokerPassword -O- http://$CLUSTER_IP/v2/catalog
+   wget --header --user TestServiceBrokerUser --password TestServiceBrokerPassword -O- http://$CLUSTER_IP/v2/catalog
   ```
 
 4. It's likely that you received a `connection refused` error. This is due to CFEE's default [application security groups](https://docs.cloudfoundry.org/concepts/asg.html). An application security group (ASG) defines the allowable IP range for egress traffic from a Cloud Foundry container. Exit the SSH session and download the `public_networks` ASG.
@@ -113,3 +113,24 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
 
 ### Register the service broker with CFEE
 
+To allow developers to provision and bind services from the service broker, you'll register it with CFEE. Previously you've worked with the broker using an IP address. This is problematic though. If the service broker restarts, it receives a new IP address, which requires updating CFEE. To address this problem, you'll use another Kubernetes feature called KubeDNS that provides a Fully Qualified Domain Name (FQDN) route to the service broker.
+
+1. Register the service broker with CFEE using the FQDN of the `tutorial-service-broker` service. This route is internal to your CFEE Kubernetes cluster.
+  
+  ```sh
+  ibmcloud cf create-service-broker my-company-broker TestServiceBrokerUser TestServiceBrokerPassword http://tutorial-broker-service.default.svc.cluster.local
+  ```
+
+2. Then add the services offered by the broker. Since the sample broker only has one mock service, a single command is needed.
+
+   ```sh
+  ibmcloud cf enable-service-access testnoderesourceservicebrokername
+   ```
+
+3. In your browser, access your **CFEE-INSTANCE** from the [**Environments**](https://{Domain}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the space you created previously.
+
+4. Select the **Services** and **Create Service** button.
+
+5. In the search texbox, search for **Test**. The mock service from the broker will display.
+
+6. Click the **Create** button and provide a name to create a service instance. You can also bind the service to the **$APP_NAME** created earlier using the **Bind to appliction** item in the overflow menu.
