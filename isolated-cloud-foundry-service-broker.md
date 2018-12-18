@@ -55,7 +55,7 @@ Now that you've deployed the service broker, confirm it functions properly. You'
 
 This section will confirm that Kubernetes artifacts are configured using IBM Kubernetes Service's dashboard.
 
-1. Access your CFEE cluster by clicking the row item with the name **CLUSTER-NAME** from the [Clusters](https://cloud.ibm.com/containers-kubernetes/clusters) page.
+1. Access your CFEE cluster by clicking the row item with the name **CLUSTER-NAME** from the [Clusters](https://{DomainName}/containers-kubernetes/clusters) page.
 
 2. Open the **Kubernetes Dashboard** by clicking the corresponding button.
 
