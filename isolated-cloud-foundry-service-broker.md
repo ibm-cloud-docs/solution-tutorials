@@ -1,3 +1,10 @@
+---
+copyright:
+  years: 2018
+lastupdated: "2018-12-18"
+
+---
+
 ## The relationship between CFEE and Kubernetes
 
 CFEE - as an application platform - runs on some form of physical or virtual infrastructure. For many years, developers thought little about the underlying Cloud Foundry platform because IBM managed it for them. With CFEE, you are not only a developer writing Cloud Foundry applications but also an operator of the Cloud Foundry platform. This is because CFEE is deployed on an IBM Kubernetes cluster that you control.
