@@ -24,7 +24,7 @@ tar cf - \
   --exclude="images/solution40-*" \
   --exclude="images/solution41-*" \
   --exclude="images/solution45-*" \
-  --exclude=isolated-cloud-foundry-enterprise-apps-across-multiple-regions.md \
+  --exclude=isolated-cloud-foundry-enterprise-apps.md \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
