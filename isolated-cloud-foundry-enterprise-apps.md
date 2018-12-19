@@ -18,15 +18,17 @@ lastupdated: "2018-12-018"
 
 # Isolated Cloud Foundry Enterprise Apps
 
-This tutorial walks you through the process of creating a CFEE instance, setting up orgs and spaces, setting up user access, inviting users and setting up user controls then deploy an app to CFEE, bind a Cloudant database to it. Next then create a service broker, deploy the service broker in the same Kubernetes cluster where CFEE been installed on, learn relationships between CFEE and [Kubernetes Service](https://console.bluemix.net/docs/containers/container_index.html).
+With IBM Cloud Foundry Enterprise Environment (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. This provides your developers with a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage and monitoring. Cloud Foundry Enterprise Environment provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
+
+This tutorial will walk you through the process of creating and configuring a Cloud Foundry Enterpise Environment, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [Kubernetes](https://console.bluemix.net/docs/containers/container_index.html) by deploying a custom service broker that integrates Kubernetes-based services with Cloud Foundry.
 
 ## Objectives
 {: #objectives}
 
-* Introduction to Isolated Cloud Foundry, learn to create a CFEE instance, setup orgs, spaces, and invite users.
-* Deploy a CFEE app and bind a database to your CFEE instance.
-* Understand the relationships between CFEE and [Kubernetes Service](https://console.bluemix.net/docs/containers/container_index.html).
-* Deploy a Kubernetes service broker and use it within CFEE. 
+* Compare and contrast CFEE with public Cloud Foundy
+* Deploy apps and services within CFEE
+* Understand the relationship between Cloud Foundry and [IBM Kubernetes Service](https://console.bluemix.net/docs/containers/container_index.html)
+* Investigate basic Cloud Foundry and Kubernetes networking
 
 ## Services used
 {: #services}
@@ -38,9 +40,9 @@ This tutorial uses the following runtimes and services:
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
-## Architecture 
+## Architecture
 
-{: #architecture} 
+{: #architecture}
 
 <p style="text-align: center;">
 ![Architecture](images/solution45-multi-region-CFEE/Architecture.png)
@@ -61,8 +63,6 @@ ToDo: update this.
 ## Cloud Foundry Enterprise Environment (CFEE)
 
 {:cfee}
-
-With IBM Cloud Foundry Enterprise Environment (CFEE) you can instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on-demand. Instances of the IBM Cloud Foundry Enterprise service run within your own account in the IBM Cloud. The environment is deployed on isolated hardware (Kubernetes clusters). You have full control over the environment, including access control, capacity, version updates, resource usage and monitoring. Furthermore, CFEE integration into the IBM Cloud allows developers to leverage services available in their IBM Cloud account. Users can add those services to a CFEE and bind them to applications deployed into CFEE spaces. CFEE instances are deployed on infrastructure resources (Kubernetes worker nodes from the IBM Container service).
 
 ### Perform initial deploy of CFEE instance
 
