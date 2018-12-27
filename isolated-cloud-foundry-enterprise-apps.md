@@ -20,14 +20,14 @@ lastupdated: "2018-12-20"
 
 With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. This provides your developers with a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage and monitoring. Cloud Foundry Enterprise Environment provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
 
-This tutorial will walk you through the process of creating and configuring a Cloud Foundry Enterpise Environment, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [Kubernetes](https://{Domain}/docs/containers/container_index.html) by deploying a custom service broker that integrates Kubernetes-based services with Cloud Foundry.
+This tutorial will walk you through the process of creating and configuring a Cloud Foundry Enterpise Environment, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [Kubernetes](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates Kubernetes-based services with Cloud Foundry.
 
 ## Objectives
 {: #objectives}
 
 * Compare and contrast CFEE with public Cloud Foundy
 * Deploy apps and services within CFEE
-* Understand the relationship between Cloud Foundry and [IBM Kubernetes Service](https://{Domain}/docs/containers/container_index.html)
+* Understand the relationship between Cloud Foundry and [IBM Kubernetes Service](https://{DomainName}/docs/containers/container_index.html)
 * Investigate basic Cloud Foundry and Kubernetes networking
 
 ## Services used
@@ -55,10 +55,10 @@ ToDo: update this.
 
 {: #prereq}
 
-- [{{site.data.keyword.cloud_notm}} CLI](https://{Domain}/docs/cli/reference/bluemix_cli/download_cli.html)
+- [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html)
 - [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
-- [Git ![External link icon](https://{Domain}/docs/api/content/icons/launch-glyph.svg)](https://git-scm.com/downloads)
-- [Node ![External link icon](https://{Domain}/docs/api/content/icons/launch-glyph.svg)](https://nodejs.org/en/)
+- [Git ![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg)](https://git-scm.com/downloads)
+- [Node ![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg)](https://nodejs.org/en/)
 
 ## Provision Cloud Foundry Enterprise Environment
 
@@ -66,30 +66,30 @@ ToDo: update this.
 
 In this section, you'll create an instance of Cloud Foundry Enterprise Environment deployed to Kubernetes worker nodes from {{site.data.keyword.containershort_notm}}.
 
-1. [Prepare your {{site.data.keyword.cloud_notm}} account](https://{Domain}/docs/cloud-foundry/prepare-account.html) to ensure creation of required infrastructure resources.
-2. From the {{site.data.keyword.cloud_notm}} catalog, create a service instance of [Cloud Foundry Enterprise Environment](https://{Domain}/cfadmin/create).
+1. [Prepare your {{site.data.keyword.cloud_notm}} account](https://{DomainName}/docs/cloud-foundry/prepare-account.html) to ensure creation of required infrastructure resources.
+2. From the {{site.data.keyword.cloud_notm}} catalog, create a service instance of [Cloud Foundry Enterprise Environment](https://{DomainName}/cfadmin/create).
 3. Configure CFEE by providing the following:
    - Select a plan.
    - Enter a **Name** for the service instance.
    - Select a **Resource group** in which the environment is created. You'll need permission to access at least one resource group in the account to be able to create an CFEE.
-   - Select a **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{Domain}/docs/cloud-foundry/index.html#provisioning-targets) ![External link icon](https://{Domain}/docs/api/content/icons/launch-glyph.svg).
+   - Select a **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry/index.html#provisioning-targets) ![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg).
    - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. Select at least **2** cells to ensure highly available applications.
    - Select the **Machine type**, which determines the size of the Cloud Foundry cells (CPU and memory) .
    - In the **{{site.data.keyword.composeForPostgreSQL}}** fields, select one of the public organizations, then select one of the spaces available in that organization. The {{site.data.keyword.composeForPostgreSQL}} instance, a required dependency, will be provisioned in the selected space.
-4. Review the **Infrastructure** section to view the properties of the Kubernetes cluster supporting CFEE. The **Number of worker nodes** equals the number of cells plus 2. Two of the provisioned Kubernetes worker nodes act as the CFEE control plane. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{Domain}/containers-kubernetes/clusters) dashboard.
+4. Review the **Infrastructure** section to view the properties of the Kubernetes cluster supporting CFEE. The **Number of worker nodes** equals the number of cells plus 2. Two of the provisioned Kubernetes worker nodes act as the CFEE control plane. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{DomainName}/containers-kubernetes/clusters) dashboard.
 5. Click the **Create** button to begin automated deployment.
 
 The automated deployment takes aroung 90 to 120 minutes. Once successfully created, you'll receive multiple emails confirming the provisioning of CFEE and supporting services.
 
 ### Create organizations and spaces
 
-After you've created {{site.data.keyword.cfee_full_notm}}, see [creating organizations and spaces](https://{Domain}/docs/cloud-foundry/orgs-spaces.html) for information on how to structure the environment through organizations and spaces. Apps in an {{site.data.keyword.cfee_full_notm}} are scoped within specific spaces. Similarly, a space exists within an organization. Members of an organization share a quota plan, apps, services instances, and custom domains.
+After you've created {{site.data.keyword.cfee_full_notm}}, see [creating organizations and spaces](https://{DomainName}/docs/cloud-foundry/orgs-spaces.html) for information on how to structure the environment through organizations and spaces. Apps in an {{site.data.keyword.cfee_full_notm}} are scoped within specific spaces. Similarly, a space exists within an organization. Members of an organization share a quota plan, apps, services instances, and custom domains.
 
 The **Manage > Account > Cloud Foundry orgs** menu located in the top {{site.data.keyword.cloud_notm}} header is intended exclusively for public {{site.data.keyword.cloud_notm}} organizations. CFEE organizations are managed within the **organizations** page of an CFEE instance.
 
 Follow the steps below to create a CFEE org and space.
 
-1. From the [Cloud Foundry dashboard](https://{Domain}/dashboard/cloudfoundry/overview) select **Environments** under **Enterprise**.
+1. From the [Cloud Foundry dashboard](https://{DomainName}/dashboard/cloudfoundry/overview) select **Environments** under **Enterprise**.
 2. Select your CFEE instance and then select **Organizations**.
 3. Click on the **Create Organizations** button, provide `tutorial` as the **Organization Name**, and select a **Quota Plan**. Finish by clicking **Add**.
 4. Click on the newly created `tutorial` org, select the **Spaces** tab, and click the **Create Space** button.
@@ -105,7 +105,7 @@ Once the user has been invited, follow the steps below to add the user to the `t
 2. Click on the **Members** tab to view and add a new user.
 3. Click on the **Add members** button, search for the username, select the approriate **Organization Roles**, and click **Add**.
 
-More on adding users to CFEE orgs and spaces can be found [here](https://{Domain}/docs/cloud-foundry/add-users.html#adding_users).
+More on adding users to CFEE orgs and spaces can be found [here](https://{DomainName}/docs/cloud-foundry/add-users.html#adding_users).
 
 ## Deploy, configure, and run CFEE apps
 
@@ -148,7 +148,7 @@ In this section, you'll deploy a Node.js application to CFEE. Once deployed, you
 
 To bind {{site.data.keyword.cloud_notm}} services to the *hello world* application, you'll first need to create the service in your {{site.data.keyword.cloud_notm}} account.
 
-1. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{Domain}/catalog/services/cloudant) service, give your service a name and choose the same region to which CFEE been created on. 
+1. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) service, give your service a name and choose the same region to which CFEE been created on. 
 2. Navigate to the CFEE service binding page to bind the Cloudant service created. To get there, navigate to `Organizations -> Select your org -> Applications -> Select your app -> Services tab` and click on the Add service button. 
 3. Find and select your Cloudant service and click Add. Now the service been added to your CFEE instance.
 4. ToDo: continue here once Cloudant is back working.
@@ -165,7 +165,7 @@ Cloud Foundry application logs can be stored by integrating {{site.data.keyword.
 
 To enable logging for a CFEE instance:
 
-1. Make sure that you have an [IAM access policy](https://{Domain}/iam/#/users) that assigns you editor, operator, or administrator role to the Log Analysis service instance into which you intend to persist the logging events.
+1. Make sure that you have an [IAM access policy](https://{DomainName}/iam/#/users) that assigns you editor, operator, or administrator role to the Log Analysis service instance into which you intend to persist the logging events.
 2. Open a CFEE's user interface and to **Operations > Logging** entry in the left navigation pane to open the Logging page.
 3. Click **Enable persistence** and select one of the **Log Analysis instances** available in the {{site.data.keyword.cloud_notm}} account. If no instances are available, the user will see an option to create an instance in the {{site.data.keyword.cloud_notm}} catalog.
 4. Once logging persistence is enabled, configuration details are displayed in the page. Details include the status of the configuration, and a link to the Log Analysis service instance itself, where they user can go to see and manage logging events.
@@ -321,7 +321,7 @@ To allow developers to provision and bind services from the service broker, you'
   ibmcloud cf enable-service-access testnoderesourceservicebrokername
    ```
 
-3. In your browser, access your Environment from the [**Environments**](https://{Domain}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `dev` space you created previously.
+3. In your browser, access your Environment from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `dev` space you created previously.
 
 4. Select the **Services** tab and the **Create Service** button.
 
