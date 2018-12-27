@@ -127,7 +127,7 @@ To allow developers to provision and bind services from the service broker, you'
   ibmcloud cf enable-service-access testnoderesourceservicebrokername
    ```
 
-3. In your browser, access your **CFEE-INSTANCE** from the [**Environments**](https://{Domain}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the space you created previously.
+3. In your browser, access your **CFEE-INSTANCE** from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the space you created previously.
 
 4. Select the **Services** and **Create Service** button.
 
