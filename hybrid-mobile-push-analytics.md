@@ -37,10 +37,10 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-- Cordova [CLI![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/cli/) for executing Cordova commands.
-- Cordova-iOS [Prerequisites![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html) and Cordova-Android [Prerequisites![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html)
+- Cordova [CLI](https://cordova.apache.org/docs/en/latest/guide/cli/) for executing Cordova commands.
+- Cordova-iOS [Prerequisites](https://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html) and Cordova-Android [Prerequisites](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html)
 - Google account to log into Firebase console for Sender ID and Server API Key.
-- [Apple Developers![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}} (the provider) to iOS devices and applications.
+- [Apple Developers](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}} (the provider) to iOS devices and applications.
 - Xcode and Android Studio for importing and further enhancing your code.
 
 ## Create Cordova mobile project from starter kit
@@ -111,7 +111,7 @@ Refer [Obtain FCM credentials](https://{DomainName}/docs/tutorials/android-mobil
 
 ### Configure Apple {{site.data.keyword.mobilepushshort}} Service (APNs)
 
-  1. Go to the [Apple Developer![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en?lang=en)](https://developer.apple.com/) portal and Register an App ID.
+  1. Go to the [Apple Developer](https://developer.apple.com/) portal and Register an App ID.
   2. Create a development and distribution APNs SSL certificate.
   3. Create a development provisioning profile.
   4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}.

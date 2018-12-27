@@ -37,7 +37,7 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-- [Android Studio![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html) for importing and enhancing your code.
+- [Android Studio](https://developer.android.com/studio/index.html) for importing and enhancing your code.
 - Google account to log into Firebase console for Sender ID and Server API Key.
 
 ## Create Android mobile app from starter kit
@@ -81,7 +81,7 @@ Firebase Cloud Messaging (FCM) is the gateway used to deliver {{site.data.keywor
 
 The API key is stored securely and used by the {{site.data.keyword.mobilepushshort}} service to connect to the FCM server and the sender ID (project number) is used by the Android SDK and the JS SDK for Google Chrome and Mozilla Firefox on the client side. To set up FCM and obtain your credentials, complete the steps:
 
-1. Visit the [Firebase Console ![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://console.firebase.google.com/?pli=1)  -  A Google user account is required.
+1. Visit the [Firebase Console](https://console.firebase.google.com/?pli=1)  -  A Google user account is required.
 2. Select **Add project**.
 3. In the **Create a project** window, provide a project name, choose a country/region and click **Create project**.
 4. On the left navigation pane, select **Settings** (Click on Settings Icon next to **Overview**)> **Project settings**.

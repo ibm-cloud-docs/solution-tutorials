@@ -57,8 +57,8 @@ ToDo: update this.
 
 - [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html)
 - [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
-- [Git ![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg)](https://git-scm.com/downloads)
-- [Node ![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg)](https://nodejs.org/en/)
+- [Git](https://git-scm.com/downloads)
+- [Node](https://nodejs.org/en/)
 
 ## Provision Cloud Foundry Enterprise Environment
 
@@ -72,7 +72,7 @@ In this section, you'll create an instance of Cloud Foundry Enterprise Environme
    - Select a plan.
    - Enter a **Name** for the service instance.
    - Select a **Resource group** in which the environment is created. You'll need permission to access at least one resource group in the account to be able to create an CFEE.
-   - Select a **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry/index.html#provisioning-targets) ![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg).
+   - Select a **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry/index.html#provisioning-targets).
    - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. Select at least **2** cells to ensure highly available applications.
    - Select the **Machine type**, which determines the size of the Cloud Foundry cells (CPU and memory) .
    - In the **{{site.data.keyword.composeForPostgreSQL}}** fields, select one of the public organizations, then select one of the spaces available in that organization. The {{site.data.keyword.composeForPostgreSQL}} instance, a required dependency, will be provisioned in the selected space.
