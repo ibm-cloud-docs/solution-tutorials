@@ -264,9 +264,8 @@ More information is available in the [High Availability documentation](https://{
 {{site.data.keyword.databases-for}} offers several open source database systems as fully managed services. They are:  
 * [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
 * [{{site.data.keyword.databases-for-redis}}](https://{DomainName}/catalog/services/databases-for-redis)
-* [{{site.data.keyword.databases-for-elasticsearch}}]()
-* [{{site.data.keyword.databases-for-etcd_full_notm}}]()
-  
+* [{{site.data.keyword.databases-for-elasticsearch}}](https://{DomainName}/catalog/services/databases-for-elasticsearch)
+* [{{site.data.keyword.databases-for-etcd_full_notm}}](https://{DomainName}/catalog/services/databases-for-etcd)
 
 All of these services share the same characteristics:   
 * For high availability they are deployed in clusters. Details can be found in the [architecture documentation](https://{DomainName}/docs/services/databases-for-postgresql/reference-architecture.html#architecture) of each service.
