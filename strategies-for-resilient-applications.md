@@ -55,12 +55,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 To design a resilient architecture, you need to consider the individual blocks of your solution and their specific capabilities. 
 
-Below is a multi-region architecture showcasing the different components that may exist in a multi-region setup. 
-
-<p style="text-align: center;">
-![Architecture](images/solution39/Architecture.png)
-
-</p>
+Below is a multi-region architecture showcasing the different components that may exist in a multi-region setup. ![Architecture](images/solution39/Architecture.png)
 
 The architecture diagram above may be different depending on the compute option. You will see specific architecture diagrams under each compute option in later sections. 
 
@@ -272,6 +267,7 @@ More information is available in the [High Availability documentation](https://{
 * [{{site.data.keyword.databases-for-elasticsearch}}]()
 * [{{site.data.keyword.databases-for-etcd_full_notm}}]()
   
+
 All of these services share the same characteristics:   
 * For high availability they are deployed in clusters. Details can be found in the [architecture documentation](https://{DomainName}/docs/services/databases-for-postgresql/reference-architecture.html#architecture) of each service.
 * Each cluster is spread over multiple zones.
