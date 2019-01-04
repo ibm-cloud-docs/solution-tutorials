@@ -134,14 +134,14 @@ Cloud Foundry offers the capability to achieve deployment of a multi-region arch
 
 ![CF-Architecture](images/solution39/CF2-Architecture.png)
 
-**Deploy above architecture by following the [solution tutorial here.](multi-region-webapp.html)** 
+The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](multi-region-webapp.html) tutorial guides you through the deployment of a similar architecture.
 
 ### {{site.data.keyword.cfee_full_notm}}
 
-In the last section, you reviewed how to deploy a multi-region app to the public Cloud Foundry. The next step is to look at **{{site.data.keyword.cfee_full_notm}} (CFEE)**. CFEE offers all the same functionalities like public Cloud Foundry but with additional features.
+**{{site.data.keyword.cfee_full_notm}} (CFEE)** offers all the same functionalities as the public Cloud Foundry together with additional features.
 
 **{{site.data.keyword.cfee_full_notm}}** allows you to instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of CFEE run within your own account in [{{site.data.keyword.cloud_notm}}
-](http://ibm.com/cloud). The environment is deployed on isolated hardware ([Kubernetes clusters](https://www.ibm.com/cloud/container-service?cm_mmc=OSocial_Blog-_-Cloud_Cloud%20Platform-_-WW_WW-_-CFEE&cm_mmca1=000023UA&cm_mmca2=10007999&)). You have full control over the environment, including access control, capacity management, change management, monitoring, and services.
+](http://ibm.com/cloud). The environment is deployed on isolated hardware on top of [the {{site.data.keyword.containershort_notm}}](https://www.ibm.com/cloud/container-service). You have full control over the environment, including access control, capacity management, change management, monitoring, and services.
 
 A multi-region architecture using {{site.data.keyword.cfee_full_notm}} is below.
 
@@ -154,25 +154,25 @@ Deploying this architecture requires the following:
 - Push the apps targeting the CFEE API endpoint. 
 - Setup database replication, just as you would on public Cloud Foundry. 
 
-Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md) where it will take you deploying a microservice based application to CFEE. Once deployed to one CFEE account, then you would require to redeploy to a second region and attach the [Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) in front of the two CFEE account to load balance the traffic. 
+Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md). It will take you through the deployment of a microservice based application to CFEE. Once deployed to one CFEE instance, you can replicate the procedure to a second region and attach the [Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-) in front of the two CFEE instances to load balance the traffic. 
 
 Refer to the [{{site.data.keyword.cfee_full_notm}} documentation](https://{DomainName}/docs/cloud-foundry/index.html#about) for additional details.
 
 ### Kubernetes
 
-With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
+With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
 
 The Kubernetes multi-region architecture looks like this.
 
 ![Kubernetes](images/solution39/Kub-Architecture.png)
 
 1. The developer builds Docker images for the application.
-2. The images are pushed to {{site.data.keyword.registryshort_notm}} in Dallas and London.
+2. The images are pushed to {{site.data.keyword.registryshort_notm}} in two different locations.
 3. The application is deployed to Kubernetes clusters in both locations.
 4. End-users access the application.
 5. Cloud Internet Services is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
 
-**Deploy above architecture by following the [solution tutorial here.](multi-region-k8s-cis.html)** 
+The tutorial [**Resilient and secure multi-region Kubernetes clusters with Cloud Internet Services**](multi-region-k8s-cis.html) walks you through the steps to deploy such architecture.
 
 ### {{site.data.keyword.openwhisk_short}}
 
@@ -185,13 +185,15 @@ The Kubernetes multi-region architecture looks like this.
 3. Certificate Manager provides the API with its SSL certificate. The traffic is encrypted end-to-end.
 4. The API is implemented with Cloud Functions.
 
-**Deploy above architecture by following the [solution tutorial here.](multi-region-serverless.html)** 
+Find out how to deploy this architecture by following the tutorial [**Deploy serverless apps across multiple regions**](multi-region-serverless.html).
 
 ### {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}}
 
-{{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}} offer the capability to achieve a multi-region architecture. You can provision servers on many available locations on {{site.data.keyword.cloud_notm}}. ![server locations](images/solution39/ServersLocation.png)
+{{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}} offer the capability to achieve a multi-region architecture. You can provision servers on many available locations on {{site.data.keyword.cloud_notm}}.
 
-When preparing for such architecture using {{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}} you need to think about the following: file storage, backups, recovery and databases, selecting between a database as service or installing a database on a virtual server. 
+![server locations](images/solution39/ServersLocation.png)
+
+When preparing for such architecture using {{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}}, consider the following: file storage, backups, recovery and databases, selecting between a database as service or installing a database on a virtual server. 
 
 The below architecture demonstrates deployment of a multi-region architecture using {{site.data.keyword.virtualmachinesshort}} in an active/passive architecture where one region is active and the second region is passive. 
 
@@ -205,12 +207,12 @@ The components required for such architecture:
 4. Databases deployed on a virtual server, meaning you would configure the database and setup replications and backups between regions. The alternative would be use a database-as-service, a topic discussed later in the tutorial.
 5. File storage to store the application images and files, File storage offers the capability to take a snapshot at a given time and date, this snapshot then can be reused within another region, something in which you would do manually. 
 
-**Deploy above architecture by following the [solution tutorial here.](highly-available-and-scalable-web-application.html)** 
+The tutorial [**Use Virtual Servers to build highly available and scalable web app**](highly-available-and-scalable-web-application.html) implements this architecture.
 
 ## Databases and application files
 {: #databaseservices}
 
-{{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) with both relational and non-relational databases depending on your business needs. Database-as-a-service (DBaaS) comes with many advantages. Using a DBaaS like {{site.data.keyword.cloudant}}, you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, perform backups, and have scaling and maximum uptime. 
+{{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) with both relational and non-relational databases depending on your business needs. [Database-as-a-service (DBaaS)](https://www.ibm.com/cloud/learn/what-is-cloud-database) comes with many advantages. Using a DBaaS like {{site.data.keyword.cloudant}}, you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, perform backups, and have scaling and maximum uptime. 
 
 **Key features:** 
 
@@ -220,20 +222,18 @@ The components required for such architecture:
 - Can support SQL or NoSQL databases
 - Accessed through a web interface or vendor-provided API
 
-**Prepping for multi-region architecture**
+**Prepping for multi-region architecture:**
 
 - What are the resiliency options of the database service?
 - How is replication handled between multiple database services across regions?
 - How is the data backed up?
 - What are the disaster recovery approaches for each?
 
-More on cloud database-as-service can be found [here](https://www.ibm.com/cloud/learn/what-is-cloud-database). 
-
 ### {{site.data.keyword.cloudant}}
 
 {{site.data.keyword.cloudant}} is a distributed database that is optimized for handling heavy workloads that are typical of large, fast-growing web and mobile apps. Available as an SLA-backed, fully managed {{site.data.keyword.Bluemix_notm}} service, {{site.data.keyword.cloudant}} elastically scales throughput and storage independently. {{site.data.keyword.cloudant}} is also available as a downloadable on-premises installation, and its API and powerful replication protocol are compatible with an open source ecosystem that includes CouchDB, PouchDB, and libraries for the most popular web and mobile development stacks.
 
-{{site.data.keyword.cloudant}} supports [replication](https://{DomainName}/docs/services/Cloudant/api/replication.html#replication-operation) between multiple instances across locations. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. The following diagram shows a typical configuration that uses two {{site.data.keyword.cloudant}} accounts, one in each region:
+{{site.data.keyword.cloudant}} supports [replication](https://{DomainName}/docs/services/Cloudant/api/replication.html#replication-operation) between multiple instances across locations. Any change that occurred in the source database is reproduced in the target database. You can create replications between any number of databases, either continuously or as a 'one-off' task. The following diagram shows a typical configuration that uses two {{site.data.keyword.cloudant}} instances, one in each region:
 
 ![active-active](images/solution39/Active-active.png)
 
@@ -257,7 +257,7 @@ More information is available in the [High Availability documentation](https://{
 
 #### Backup and restore
 
-{{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation] ](https://{DomainName}/docs/services/Db2onCloud/br.html#br) provides details on how you can restore data to the desired date and time.
+{{site.data.keyword.Db2_on_Cloud_short}} includes daily backups for paid plans. Typically, the backups are stored using {{site.data.keyword.cos_short}} and thereby utilizing three data centers for increased availability of retained data. Backups are kept for 14 days. You can use them to perform a point-in-time recovery. The [backup and restore documentation](https://{DomainName}/docs/services/Db2onCloud/br.html#br) provides details on how you can restore data to the desired date and time.
 
 ### {{site.data.keyword.databases-for}}
 
@@ -292,7 +292,7 @@ Refer to [this documentation](https://{DomainName}/docs/services/cloud-object-st
 
 {{site.data.keyword.filestorage_full_notm}} is persistent, fast, and flexible network-attached, NFS-based file storage. In this network-attached storage (NAS) environment, you have total control over your file shares function and performance. {{site.data.keyword.filestorage_short}} shares can be connected to up to 64 authorized devices over routed TCP/IP connections for resiliency.
 
-Some of file storage features are things like _Snapshots_, _Replication_, _Concurrent access_ and many more. Get the full list of features [here](https://{DomainName}/docs/infrastructure/FileStorage/index.html#getting-started-with-file-storage).
+Some of file storage features are _Snapshots_, _Replication_, _Concurrent access_. Refer to [the  documentation](https://{DomainName}/docs/infrastructure/FileStorage/index.html#getting-started-with-file-storage) for a full list of features.
 
 Once attached to your servers, a {{site.data.keyword.filestorage_short}} service can be used easily to store data backups, application files like images and videos, these images and files can then be used within different servers in the same region.
 
