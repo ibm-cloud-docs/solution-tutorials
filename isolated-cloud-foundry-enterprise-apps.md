@@ -20,7 +20,7 @@ lastupdated: "2018-12-20"
 
 With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. This provides your developers with a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage and monitoring. Cloud Foundry Enterprise Environment provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
 
-This tutorial will walk you through the process of creating and configuring a Cloud Foundry Enterpise Environment, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [Kubernetes](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates Kubernetes-based services with Cloud Foundry.
+This tutorial will walk you through the process of creating and configuring a Cloud Foundry Enterpise Environment, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [Kubernetes](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
 
 ## Objectives
 {: #objectives}
@@ -69,17 +69,17 @@ In this section, you'll create an instance of Cloud Foundry Enterprise Environme
 1. [Prepare your {{site.data.keyword.cloud_notm}} account](https://{DomainName}/docs/cloud-foundry/prepare-account.html) to ensure creation of required infrastructure resources.
 2. From the {{site.data.keyword.cloud_notm}} catalog, create a service instance of [Cloud Foundry Enterprise Environment](https://{DomainName}/cfadmin/create).
 3. Configure CFEE by providing the following:
-   - Select a plan.
+   - Select the **Standard** plan.
    - Enter a **Name** for the service instance.
    - Select a **Resource group** in which the environment is created. You'll need permission to access at least one resource group in the account to be able to create an CFEE.
-   - Select a **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry/index.html#provisioning-targets).
-   - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. Select at least **2** cells to ensure highly available applications.
+   - Select a **Geography** and **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry/index.html#provisioning-targets).
+   - Select a public Cloud Foundry **Organization** and **Space** where **{{site.data.keyword.composeForPostgreSQL}}** will be deployed.
+   - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. At least **2** cells are required for highly available applications.
    - Select the **Machine type**, which determines the size of the Cloud Foundry cells (CPU and memory) .
-   - In the **{{site.data.keyword.composeForPostgreSQL}}** fields, select one of the public organizations, then select one of the spaces available in that organization. The {{site.data.keyword.composeForPostgreSQL}} instance, a required dependency, will be provisioned in the selected space.
 4. Review the **Infrastructure** section to view the properties of the Kubernetes cluster supporting CFEE. The **Number of worker nodes** equals the number of cells plus 2. Two of the provisioned Kubernetes worker nodes act as the CFEE control plane. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{DomainName}/containers-kubernetes/clusters) dashboard.
 5. Click the **Create** button to begin automated deployment.
 
-The automated deployment takes aroung 90 to 120 minutes. Once successfully created, you'll receive multiple emails confirming the provisioning of CFEE and supporting services.
+The automated deployment takes approximately 90 to 120 minutes. Once successfully created, you'll receive an email confirming the provisioning of CFEE and supporting services.
 
 ### Create organizations and spaces
 
@@ -102,8 +102,9 @@ In CFEE, you can assign role assignments controlling user access, but to do so, 
 Once the user has been invited, follow the steps below to add the user to the `tutorial` org and `dev` space.
 
 1. Select your CFEE instance and then select **Organizations** again.
-2. Click on the **Members** tab to view and add a new user.
-3. Click on the **Add members** button, search for the username, select the approriate **Organization Roles**, and click **Add**.
+2. Select the `tutorial` from the list.
+3. Click on the **Members** tab to view and add a new user.
+4. Click on the **Add members** button, search for the username, select the approriate **Organization Roles**, and click **Add**.
 
 More on adding users to CFEE orgs and spaces can be found [here](https://{DomainName}/docs/cloud-foundry/add-users.html#adding_users).
 
@@ -115,13 +116,13 @@ In this section, you'll deploy a Node.js application to CFEE. Once deployed, you
 
 ### Deploy the application to CFEE
 
-1. From your terminal, clone the Node.js *hello world* sample application.
+1. From your terminal, clone the **get-started-node** Node.js sample application.
 
    ```sh
    git clone https://github.com/IBM-Cloud/get-started-node
    ```
 
-2. Run the app locally to ensure it builds and starts correctly.
+2. Run the app locally to ensure it builds and starts correctly. Confirm by accessing `http://localhost:3000/` in your browser.
 
    ```sh
    cd get-started-node
@@ -136,22 +137,28 @@ In this section, you'll deploy a Node.js application to CFEE. Once deployed, you
    ibmcloud target --cf
    ```
 
-4. Push the *hello world* app to CFEE.
+4. Push the **get-started-node** app to CFEE.
 
    ```sh
-   cf push
+   ibmcloud cf push
    ```
 
-5. The endpoint of your app will display in the terminal. Open the URL in your browser to confirm the application is running.
+5. The endpoint of your app will display in the final output next to the `routes` property. Open the URL in your browser to confirm the application is running.
 
 ### Create and bind Cloudant database to the app
 
-To bind {{site.data.keyword.cloud_notm}} services to the *hello world* application, you'll first need to create the service in your {{site.data.keyword.cloud_notm}} account.
+To bind {{site.data.keyword.cloud_notm}} services to the **get-started-node** application, you'll first need to create a service in your {{site.data.keyword.cloud_notm}} account.
 
-1. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) service, give your service a name and choose the same region to which CFEE been created on. 
-2. Navigate to the CFEE service binding page to bind the Cloudant service created. To get there, navigate to `Organizations -> Select your org -> Applications -> Select your app -> Services tab` and click on the Add service button. 
-3. Find and select your Cloudant service and click Add. Now the service been added to your CFEE instance.
-4. ToDo: continue here once Cloudant is back working.
+1. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) service. Provide the **service name** `cfee-cloudant` and choose the same location where the CFEE instance has been created.
+2. Add the newly created {{site.data.keyword.cloudant_short_notm}} service instance to CFEE.
+   1. Navigate back to the `cfee-tutorial` **Organization**. Click the **Spaces** tab and select the `dev` space.
+   2. Select the **Services** tab and click the **Add service** button.
+   3. Type `cfee-cloudant` in the search textbox and select the result. Finish by clicking **Add**. The service is now available to CFEE applications; however, it still resides in public {{site.data.keyword.cloud_notm}}.
+3. On the overflow menu of the service instance shown, select **Bind to application**.
+4. Select the **GetStartedNode** application you pushed earlier and click **Restage application after binding**. Finally, click the **Bind** button. Wait for the application to restage. You can check progress with the command `ibmcloud app show GetStartedNode`.
+5. In your browser, access the application, add your name and hit `enter`. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
+6. Confirm by selecting the `cfee-tutorial` instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
+7. Click **Launch Cloudant Dashboard** and select the `myb` database. A JSON document with your name should exist.
 
 ### Enable auditing and logging persistence
 
