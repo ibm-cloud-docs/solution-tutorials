@@ -58,8 +58,8 @@ ToDo: update this.
 
 - [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html)
 - [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
-- [Git ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg)](https://git-scm.com/downloads)
-- [Node ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg)](https://nodejs.org/en/)
+- [Git](https://git-scm.com/downloads)
+- [Node](https://nodejs.org/en/)
 
 ## Cloud Foundry Enterprise Environment (CFEE)
 
@@ -80,7 +80,7 @@ Before you create your CFEE, make sure that you are in the IBM Cloud IBM Cloud a
    - Select a plan.
    - Enter a **Name** for the service instance.
    - Select a **Resource group** under which the environment is grouped. Only those resource groups to which you have access in the current IBM Cloud account will be listed in the *Resourouce groups* dropdown, which means that you need to have permission to access at least one resource group in the account to be able to create an CFEE.
-   - Select a **Location** where the service instance is to be provisioned. See the list of [available provisioning locations and data centers](https://console.bluemix.net/docs/cloud-foundry/index.html#provisioning-targets) ![External link icon](https://console.bluemix.net/docs/api/content/icons/launch-glyph.svg) by geography for CFEE and supporting services.
+   - Select a **Location** where the service instance is to be provisioned. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry/index.html#provisioning-targets) by geography for CFEE and supporting services.
    - Select the **Number of cells** for the Cloud Foundry environment.
    - Select the **Machine type**, which determines the size of the Cloud Foundry cells (CPU and memory) .
    - In the **Compose for PostgreSQL** fields, select one of the public organizations, then select one of the spaces available in that organization. The instance of the Compose for PostgreSQL instance will be provisioned in the selected space. The Compose for PostgreSQL service is a required dependency of the CFEE service
