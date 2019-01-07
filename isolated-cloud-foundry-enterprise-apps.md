@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-12-20"
+lastupdated: "2018-1-7"
 
 ---
 
@@ -20,14 +20,14 @@ lastupdated: "2018-12-20"
 
 With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. This provides your developers with a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage and monitoring. Cloud Foundry Enterprise Environment provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
 
-This tutorial will walk you through the process of creating and configuring a Cloud Foundry Enterpise Environment, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [Kubernetes](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
+This tutorial will walk you through the process of creating and configuring a Cloud Foundry Enterpise Environment, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
 
 ## Objectives
 {: #objectives}
 
 * Compare and contrast CFEE with public Cloud Foundy
 * Deploy apps and services within CFEE
-* Understand the relationship between Cloud Foundry and [IBM Kubernetes Service](https://{DomainName}/docs/containers/container_index.html)
+* Understand the relationship between Cloud Foundry and {{site.data.keyword.containershort_notm}}
 * Investigate basic Cloud Foundry and Kubernetes networking
 
 ## Services used
@@ -44,12 +44,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #architecture}
 
-<p style="text-align: center;">
 ![Architecture](images/solution45-multi-region-CFEE/Architecture.png)
-
-ToDo: update this.
-
-</p>
 
 ## Prerequisites
 
@@ -58,7 +53,7 @@ ToDo: update this.
 - [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html)
 - [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
 - [Git](https://git-scm.com/downloads)
-- [Node](https://nodejs.org/en/)
+- [Node.js](https://nodejs.org/en/)
 
 ## Provision Cloud Foundry Enterprise Environment
 
@@ -210,44 +205,81 @@ To start the Stratos console:
 
 CFEE - as an application platform - runs on some form of dedicated or shared virtual infrastructure. For many years, developers thought little about the underlying Cloud Foundry platform because IBM managed it for them. With CFEE, you are not only a developer writing Cloud Foundry applications but also an operator of the Cloud Foundry platform. This is because CFEE is deployed on an IBM Kubernetes cluster that you control.
 
-While Cloud Foundry developers may be new to Kubernetes, there are many concepts they both share. Like Cloud Foundry, Kubernetes isolates applications into containers, which run inside a pod. And similar to application instances, pods can have multiple copies (called replica sets) with application load balancing provided by Kubernetes.  The Cloud Foundry *Hello World* application you deployed earlier runs inside the `diego-cell-0` pod. Because Cloud Foundry apps run "inside" Kuberenetes, you can communicate with additional Kubernetes microservices using Kuberenetes-based networking. The following sections will help illustrate the relationships between CFEE and Kubernetes in more detail.
+While Cloud Foundry developers may be new to Kubernetes, there are many concepts they both share. Like Cloud Foundry, Kubernetes isolates applications into containers, which run inside a Kubernetes construct called a pod. Similar to application instances, pods can have multiple copies (called replica sets) with application load balancing provided by Kubernetes.  The Cloud Foundry `GetStartedNode` application you deployed earlier runs inside the `diego-cell-0` pod. To support high availability, another pod `diego-cell-1` would run on a separate Kubernetes worker node. Because these Cloud Foundry apps run "inside" Kuberenetes, you can also communicate with other Kubernetes microservices using Kuberenetes-based networking. The following sections will help illustrate the relationships between CFEE and Kubernetes in more detail.
 
 ## Deploy a Kubernetes service broker
 
-In this section, you'll deploy a microservice to Kubernetes that acts as a service broker for Cloud Foundry. [Service brokers](https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md) provide details on available services as well as binding and provisioning of a service to your Cloud Foundry application. This is no different than how you added the {{site.data.keyword.cloudant_short_notm}} service earlier using the built-in {{site.data.keyword.cloud_notm}} service broker.
+In this section, you'll deploy a microservice to Kubernetes that acts as a service broker for CFEE. [Service brokers](https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md) provide details on available services as well as binding and provisioning support to your Cloud Foundry application. You used a built-in {{site.data.keyword.cloud_notm}} service broker to add the {{site.data.keyword.cloudant_short_notm}} service. Now you'll deploy and use a custom one.
 
 1. Back in your terminal, clone the projects that provide Kubernetes deployment files and the service broker implementation.
 
   ```sh
    git clone https://github.com/IBM-Cloud/cloud-foundry-osb-on-kubernetes.git
+   ```
+   {:pre: .pre}
+
+   ```sh
    cd cloud-foundry-osb-on-kubernetes
+   ```
+   {:pre: .pre}
+
+   ```sh
    git clone https://github.com/IBM/sample-resource-service-brokers.git
   ```
+  {:pre: .pre}
 
-2. Build and store the Docker image that contains the service broker on {{site.data.keyword.registryshort_notm}}. Use the `ibmcloud cr` command to manually retrieve the registry URL or automatically with the `export REGISTRY` command below.
+2. Build and store the Docker image that contains the service broker on {{site.data.keyword.registryshort_notm}}. Use the `ibmcloud cr info` command to manually retrieve the registry URL or automatically with the `export REGISTRY` command below.
 
   ```sh
   export REGISTRY=$(ibmcloud cr info | head -2 | awk '{ print $3 }')
+  ```
+  {:pre: .pre}
+
+  ```sh
   ibmcloud cr namespace-add cfee-tutorial
+  ```
+  {:pre: .pre}
+
+  ```sh
   docker build . -t $REGISTRY/cfee-tutorial/service-broker-impl
+  ```
+  {:pre: .pre}
+
+  ```sh
   docker push $REGISTRY/cfee-tutorial/service-broker-impl
   ```
+  {:pre: .pre}
 
-3. If your container registry is different than `registry.ng.bluemix.net`, edit the `deployment.yaml` file found in `cloud-foundry-osb-on-kubernetes`. Update the `image` attribute to reflect your container registry URL.
+3. If your container registry is different than `registry.ng.bluemix.net`, edit the `./cloud-foundry-osb-on-kubernetes/deployment.yaml` file. Update the `image` attribute to reflect your container registry URL.
 
-4. Deploy the container image to CFEE's Kubernetes cluster. First find your CFEE's cluster name and export the KUBECONFIG variable using the second command. Then create the deployment.
+4. Deploy the container image to CFEE's Kubernetes cluster. Your CFEE's cluster exists in the `default` resource group, which should be targeted if not already. Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
+
+  ```sh
+  ibmcloud target -g default
+  ```
+  {:pre: .pre}
 
   ```sh
   ibmcloud ks clusters
+  ```
+  {:pre: .pre}
+
+  ```sh
   $(ibmcloud ks cluster-config <your-cfee-cluster-name> --export)
+  ```
+  {:pre: .pre}
+
+  ```sh
   kubectl apply -f deployment.yaml
   ```
+  {:pre: .pre}
 
-5. Verify the pods have STATUS as `Running`. It may take a few moments for Kubernetes to pull the image and start the containers.  Notice that you have two pods because the `deployment.yaml` has requested 2 `replicas`.
+5. Verify the pods have STATUS as `Running`. It may take a few moments for Kubernetes to pull the image and start the containers. Notice that you have two pods because the `deployment.yaml` has requested 2 `replicas`.
 
   ```sh
   kubectl get pods
   ```
+  {:pre: .pre}
 
 ## Verify the service broker is deployed
 
@@ -255,7 +287,7 @@ Now that you've deployed the service broker, confirm it functions properly. You'
 
 ### View your pods from Kubernetes dashboard
 
-This section will confirm that Kubernetes artifacts are configured using IBM Kubernetes Service's dashboard.
+This section will confirm that Kubernetes artifacts are configured using {{site.data.keyword.containershort_notm}} dashboard.
 
 1. From the [Kubernetes Clusters](https://{DomainName}/containers-kubernetes/clusters) page, access your CFEE cluster by clicking the row item beginning with your CFEE service's name and ending with **-cluster**.
 
@@ -264,82 +296,127 @@ This section will confirm that Kubernetes artifacts are configured using IBM Kub
 3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply`.
 
 4. In the resulting dashboard, notice the following:
-   - The service has been provided an overlay IP address that is resolvable only within the Kubernetes cluster.
-   - The service has two endpoints, which correspond to the two running pods that have the service broker implementation.
+   - The service has been provided an overlay IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
+   - The service has two endpoints, which correspond to the two pods that have the service broker containers running.
 
 Having confirmed that the service is available and is proxying the service broker pods, you can verify the broker responds with information about available services.
+
+You can view Cloud Foundry related artifacts from the Kubernetes dashboard. Choose the `cf` option from the **Namespace** selector.
+{:tip: .tip}
 
 ### Access the broker from a Cloud Foundry container
 
 To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the service broker directly from a Cloud Foundry application.
 
-1. Back in your terminal, confirm you are still connected to your CFEE organization and space using `ibmcloud target`. If needed, re-target CFEE.
+1. Back in your terminal, confirm you are still connected to your CFEE `tutorial` organization and `dev` space using `ibmcloud target`. If needed, re-target CFEE.
 
   ```sh
   ibmcloud target --cf
   ```
+  {:pre: .pre}
 
-2. By default, SSH is disabled in spaces. This is different than the public cloud, so enable SSH in your space.
-
-  ```sh
-  ibmcloud cf allow-space-ssh $SPACE
-  ```
-
-3. SSH into the `GetStartedNode` application that you deployed earlier and retrieve data from the service broker. This example uses the `kubectl` command to show the same ClusterIP you saw in the Kubenetes dashboard.
+2. By default, SSH is disabled in spaces. This is different than the public cloud, so enable SSH in your `dev` space.
 
   ```sh
-   kubectl get service tutorial-broker-service
-   ibmcloud cf ssh GetStartedNode
-   export CLUSTER_IP=<ip address>
-   wget --header --user TestServiceBrokerUser --password TestServiceBrokerPassword -O- http://$CLUSTER_IP/v2/catalog
+  ibmcloud cf allow-space-ssh dev
   ```
+  {:pre: .pre}
 
-4. It's likely that you received a **connection refused** error. This is due to CFEE's default [application security groups](https://docs.cloudfoundry.org/concepts/asg.html). An application security group (ASG) defines the allowable IP range for egress traffic from a Cloud Foundry container. Exit the SSH session and download the `public_networks` ASG.
+3. Use the `kubectl` command to show the same ClusterIP you saw in the Kubenetes dashboard. Then SSH into the `GetStartedNode` application and retrieve data from the service broker using the IP address.
 
   ```sh
-   exit
-   ibmcloud cf security-group public_networks > public_networks.json
+  kubectl get service tutorial-broker-service
   ```
-
-5. Edit the `public_networks.json` file, and verify that the ClusterIP address being used falls outside of the existing rules. For example, the range `172.32.0.0-192.167.255.255` likely needs to be updated.
-
-6. Adjust the ASG `destination` rule to include the IP address of the Kubernetes service. Trim the file to include only the JSON data beginning and ending with the brackets. Then upload the new ASG.
+  {:pre: .pre}
 
   ```sh
-  ibmcloud cf update-security-group public_networks ./public_network.json
-  ibmcloud cf restart $CF_APP
+  ibmcloud cf ssh GetStartedNode
   ```
+  {:pre: .pre}
 
-7. Repeat step 3, which should now succeed.
+  ```sh
+  export CLUSTER_IP=<ip address>
+  ```
+  {:pre: .pre}
+
+  ```sh
+  wget --user TestServiceBrokerUser --password TestServiceBrokerPassword -O- http://$CLUSTER_IP/v2/catalog
+  ```
+  {:pre: .pre}
+
+4. It's likely that you received a **Connection refused** error. This is due to CFEE's default [application security groups](https://docs.cloudfoundry.org/concepts/asg.html). An application security group (ASG) defines the allowable IP range for egress traffic from a Cloud Foundry container. Since the `GetStartedNode` exists outside the default range, the error occurs. Exit the SSH session and download the `public_networks` ASG.
+
+  ```sh
+  exit
+  ```
+  {:pre: .pre}
+
+  ```sh
+  ibmcloud cf security-group public_networks > public_networks.json
+  ```
+  {:pre: .pre}
+
+5. Edit the `public_networks.json` file, and verify that the ClusterIP address being used falls outside of the existing rules. For example, the range `172.32.0.0-192.167.255.255` likely does not include the ClusterIP and needs to be updated.
+
+6. Adjust the ASG `destination` rule to include the IP address of the Kubernetes service. Trim the file to include only the JSON data, which begins and ends with the brackets. Then upload the new ASG.
+
+  ```sh
+  ibmcloud cf update-security-group public_networks ./public_networks.json
+  ```
+  {:pre: .pre}
+
+  ```sh
+  ibmcloud cf restart GetStartedNode
+  ```
+  {:pre: .pre}
+
+7. Repeat step 3, which should now succeed with mock catalog data. Finsh by exiting the SSH session.
+
+  ```sh
+  exit
+  ```
+  {:pre: .pre}
 
 ### Register the service broker with CFEE
 
 To allow developers to provision and bind services from the service broker, you'll register it with CFEE. Previously you've worked with the broker using an IP address. This is problematic though. If the service broker restarts, it receives a new IP address, which requires updating CFEE. To address this problem, you'll use another Kubernetes feature called KubeDNS that provides a Fully Qualified Domain Name (FQDN) route to the service broker.
 
-1. Register the service broker with CFEE using the FQDN of the `tutorial-service-broker` service. This route is internal to your CFEE Kubernetes cluster.
+1. Register the service broker with CFEE using the FQDN of the `tutorial-service-broker` service. Again, this route is internal to your CFEE Kubernetes cluster.
   
   ```sh
   ibmcloud cf create-service-broker my-company-broker TestServiceBrokerUser TestServiceBrokerPassword http://tutorial-broker-service.default.svc.cluster.local
   ```
+  {:pre: .pre}
 
 2. Then add the services offered by the broker. Since the sample broker only has one mock service, a single command is needed.
 
    ```sh
   ibmcloud cf enable-service-access testnoderesourceservicebrokername
    ```
+  {:pre: .pre}
 
-3. In your browser, access your Environment from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `dev` space you created previously.
+3. In your browser, access your CFEE instance from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `dev` space.
 
 4. Select the **Services** tab and the **Create Service** button.
 
-5. In the search texbox, search for **Test**. The mock service from the broker will display.
+5. In the search texbox, search for **Test**. The **Test Node Resource Service Broker Display Name** mock service from the broker will display.
 
-6. Click the **Create** button and provide a name to create a service instance. You can also bind the service to the **$APP_NAME** created earlier using the **Bind to appliction** item in the overflow menu.
+6. Click the **Create** button and provide a name to create a service instance. Then bind the service to the `GetStartedNode` app using the **Bind to appliction** item in the overflow menu.
 
-TODO I'll look into binding the mock service with GetStartedNode app to see if there's anything the two can do together.
+7. To view the bound service, run the `cf env` command. The `GetStartedNode` application can now leverage the data in the `credentials` object similar to how it uses data from `cloudantNoSQLDB` currently.
+
+  ```sh
+  ibmcloud cf env GetStartedNode
+  ```
+    {:pre: .pre}
+
+## Expand the tutorial
+
+Congratulations, you've deployed {{site.data.keyword.cfee_full_notm}} with a custom service broker and initial application. Below are additional suggestions to enhance CFEE.
 
 ## Related content
 
 {:related}
 
-- ToDo
+* [Deploying apps in Kubernetes clusters](https://{DomainName}/docs/containers/cs_app.html#app)
+* [Cloud Foundry Diego Components and Architecture](https://docs.cloudfoundry.org/concepts/diego/diego-architecture.html)
