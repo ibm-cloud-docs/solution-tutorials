@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-1-7"
+lastupdated: "2018-1-8"
 
 ---
 
@@ -203,7 +203,7 @@ To start the Stratos console:
 
 ## The relationship between CFEE and Kubernetes
 
-CFEE - as an application platform - runs on some form of dedicated or shared virtual infrastructure. For many years, developers thought little about the underlying Cloud Foundry platform because IBM managed it for them. With CFEE, you are not only a developer writing Cloud Foundry applications but also an operator of the Cloud Foundry platform. This is because CFEE is deployed on an IBM Kubernetes cluster that you control.
+As an application platform, CFEE runs on some form of dedicated or shared virtual infrastructure. For many years, developers thought little about the underlying Cloud Foundry platform because IBM managed it for them. With CFEE, you are not only a developer writing Cloud Foundry applications but also an operator of the Cloud Foundry platform. This is because CFEE is deployed on an IBM Kubernetes cluster that you control.
 
 While Cloud Foundry developers may be new to Kubernetes, there are many concepts they both share. Like Cloud Foundry, Kubernetes isolates applications into containers, which run inside a Kubernetes construct called a pod. Similar to application instances, pods can have multiple copies (called replica sets) with application load balancing provided by Kubernetes.  The Cloud Foundry `GetStartedNode` application you deployed earlier runs inside the `diego-cell-0` pod. To support high availability, another pod `diego-cell-1` would run on a separate Kubernetes worker node. Because these Cloud Foundry apps run "inside" Kuberenetes, you can also communicate with other Kubernetes microservices using Kuberenetes-based networking. The following sections will help illustrate the relationships between CFEE and Kubernetes in more detail.
 
@@ -285,7 +285,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
 
 Now that you've deployed the service broker, confirm it functions properly. You'll do this in several ways: first by using the Kubernetes dashboard, then by accessing the broker from a Cloud Foundry app and finally by actually provisioning a service from the broker.
 
-### View your pods from Kubernetes dashboard
+### View your pods from the Kubernetes dashboard
 
 This section will confirm that Kubernetes artifacts are configured using {{site.data.keyword.containershort_notm}} dashboard.
 
@@ -401,18 +401,135 @@ To allow developers to provision and bind services from the service broker, you'
 
 5. In the search texbox, search for **Test**. The **Test Node Resource Service Broker Display Name** mock service from the broker will display.
 
-6. Click the **Create** button and provide a name to create a service instance. Then bind the service to the `GetStartedNode` app using the **Bind to appliction** item in the overflow menu.
+6. Click the **Create** button and provide the name `welcome-service` to create a service instance. It will become clear in the next section why it's named welcome-service. Then bind the service to the `GetStartedNode` app using the **Bind to appliction** item in the overflow menu.
 
 7. To view the bound service, run the `cf env` command. The `GetStartedNode` application can now leverage the data in the `credentials` object similar to how it uses data from `cloudantNoSQLDB` currently.
 
   ```sh
   ibmcloud cf env GetStartedNode
   ```
-    {:pre: .pre}
+  {:pre: .pre}
+
+## Add the service to your application
+
+Up to this point, you've deployed a service broker but not an actual service. While the service broker provides binding data to `GetStartedNode`, no actual functionality from the service itself has been added. To correct this, a mock service has been created that provides a "Welcome" message to `GetStartedNode` in various languages. You'll deploy this service to CFEE and update the broker and application to use it.
+
+1. Push the `welcome-service` implementation to CFEE to allow additional development teams to leverage it as an API.
+
+  ```sh
+  cd sample-resource-service
+  ```
+  {:pre: .pre}
+
+  ```sh
+  ibmcloud cf push
+  ```
+  {:pre: .pre}
+
+2. Access the service using your browser. The `route` to the service will be shown as part of the `push` command's output. The resulting URL will be similar to https://welcome.<your-cfee-cluster-domain>. Refresh the page to see alternating languages.
+
+3. Return to the `sample-resource-service-brokers` folder and update the Node.js sample implementation `testresourceservicebroker.js` with the service's URL. Locate the `// TODO - Do your actual work here` comment and update the code using the example below.
+
+  ```javascript
+  // TODO - Do your actual work here
+
+    var generatedUserid   = uuid();
+    var generatedPassword = uuid();
+
+    result = 
+    {
+        credentials : 
+        {
+            userid   : generatedUserid,
+            password : generatedPassword,
+            url: 'https://welcome.<your-cfee-cluster-domain>'
+        }
+    };
+  ```
+  {:codeblock: .codeblock}
+
+4. Build, push and deploy the updated service broker. This will ensure the URL property will be provided to apps that bind the service.
+
+  ```sh
+  cd ..
+  ```
+
+  ```sh
+  docker build . -t $REGISTRY/cfee-tutorial/service-broker-impl
+  ```
+  {:pre: .pre}
+
+  ```sh
+  docker push $REGISTRY/cfee-tutorial/service-broker-impl
+  ```
+  {:pre: .pre}
+
+  ```sh
+  kubectl patch deployment tutorial-servicebroker-deployment -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"ver\":\"2\"}}}}}"
+  ```
+  {:pre: .pre}
+
+5. Edit the `server.js` file in `get-stared-node` to include the following middleware. Insert it just prior to the `app.listen()` call.
+
+  ```javascript
+  const request = require('request');
+  const testService = appEnv.services['testnoderesourceservicebrokername'];
+
+  if (testService) {
+    const { credentials: { url} } = testService[0];
+    app.get("/api/welcome", (req, res) => request(url, (e, r, b) => res.send(b)));
+  } else {
+    app.get("/api/welcome", (req, res) => res.send('Welcome'));
+  }
+
+  var port = process.env.PORT || 3000
+  app.listen(port, function() {
+      console.log("To view your app, open this link in your browser: http://localhost:" + port);
+  });
+  ```
+  {:codeblock: .codeblock}
+
+6. Refactor the `index.html` page. Change `data-i18n="welcome"` to `id="welcome"` in the `h1` tag. Add a call to the service at the end of the `$(document).ready()` function.
+
+  ```html
+  <h1 id="welcome"></h1> <!-- Welcome -->
+  ```
+  {:codeblock: .codeblock}
+
+  ```javascript
+  $.get("./api/welcome").done(data => document.getElementById('welcome').innerHTML= data);
+  ```
+  {:codeblock: .codeblock}
+
+7. Update the `GetStartedNode` app. Include the `request` package dependency that was added to `server.js`, rebind the `welcome-service` to pick up the new `url` property and finally push the app's new code.
+
+  ```sh
+  npm i request -S
+  ```
+  {:pre: .pre}
+
+  ```sh
+  ibmcloud cf unbind-service GetStartedNode welcome-service
+  ```
+  {:pre: .pre}
+
+  ```sh
+  ibmcloud cf bind-service GetStartedNode welcome-service
+  ```
+  {:pre: .pre}
+
+  ```sh
+  ibmcloud cf push
+  ```
+  {:pre: .pre}
+
+Now visit the application to see the Welcome message in several languages. While this approach used Cloud Foundry as the service implementation, you could just as easily use Kubernetes. The main difference is that the URL to the service would likey be `welcome-service.default.svc.cluster.local`. Using Kubernetes has the added benefit of keeping network traffic to services internal to the Kubernetes cluster.
 
 ## Expand the tutorial
 
 Congratulations, you've deployed {{site.data.keyword.cfee_full_notm}} with a custom service broker and initial application. Below are additional suggestions to enhance CFEE.
+
+* Create a Kubernetes equivalent of the `welcome-service` by using the Dockerfile and deployment.yaml as a template.
 
 ## Related content
 
