@@ -19,8 +19,6 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=autoscale-virtual-server.md \
   --exclude="vpc-*.md" \
-  --exclude=strategies-for-resilient-applications.md \
-  --exclude="images/solution39-*" \
   --exclude="images/solution40-*" \
   --exclude="images/solution41-*" \
   --exclude="images/solution45-*" \
