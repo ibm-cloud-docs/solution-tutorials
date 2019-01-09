@@ -47,9 +47,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #architecture}
 
-![Architecture](/Applications/MAMP/htdocs/_GitHub/tutorials/images/solution45-multi-region-CFEE/Architecture.png)
-
-ToDo: Update digram.
+![Architecture](./images/solution45-CFEE-apps/Architecture.png)
 
 ## Prerequisites
 
