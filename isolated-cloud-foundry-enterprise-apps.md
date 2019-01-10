@@ -225,12 +225,12 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
 1. Back in your terminal, clone the projects that provide Kubernetes deployment files and the service broker implementation.
 
   ```sh
-   git clone https://github.com/IBM-Cloud/cloud-foundry-osb-on-kubernetes.git
+   git clone https://github.com/IBM-Cloud/cfee-service-broker-kubernetes.git
   ```
    {:pre: .pre}
 
    ```sh
-   cd cloud-foundry-osb-on-kubernetes
+   cd cfee-service-broker-kubernetes
    ```
    {:pre: .pre}
 
@@ -281,11 +281,11 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   {:pre: .pre}
 
   ```sh
-  kubectl apply -f deployment.yaml
+  kubectl apply -f deployment.yml
   ```
   {:pre: .pre}
 
-5. Verify the pods have STATUS as `Running`. It may take a few moments for Kubernetes to pull the image and start the containers. Notice that you have two pods because the `deployment.yaml` has requested 2 `replicas`.
+5. Verify the pods have STATUS as `Running`. It may take a few moments for Kubernetes to pull the image and start the containers. Notice that you have two pods because the `deployment.yml` has requested 2 `replicas`.
 
   ```sh
   kubectl get pods
