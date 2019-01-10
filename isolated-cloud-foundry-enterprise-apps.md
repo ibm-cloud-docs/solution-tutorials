@@ -173,15 +173,15 @@ Auditing allows CFEE administrators to track Cloud Foundry activities such as lo
 Cloud Foundry application logs can be stored by integrating {{site.data.keyword.loganalysisshort_notm}}. The {{site.data.keyword.loganalysisshort_notm}} service instance selected by a CFEE administrator is configured automatically to receive and persist Cloud Foundry logging events generated from the CFEE instance.
 
 1. Return to your CFEE dashboard and click the **Auditing** link in the left navigation pane.
-2. Click **Enable auditing** and select one of the **Activity Tracker instances** available in the {{site.data.keyword.cloud_notm}} account. If no instances are available, the user will see an option to create a new Activity Tracker instance in the {{site.data.keyword.cloud_notm}} catalog.
-3. Once auditing is enabled, configuration details are displayed on the page. Details include the status of the configuration, and a link to the Activity Tracker service instance itself, where the user can go to see and manage auditing events.
+2. Click **Enable auditing** and select one of the **Activity Tracker instances** available in the {{site.data.keyword.cloud_notm}} account. If no instances are available, you will see an option to create a new Activity Tracker instance in the {{site.data.keyword.cloud_notm}} catalog.
+3. Once auditing is enabled, configuration details are displayed on the page. Details include the status of the configuration, and a link to the Activity Tracker service instance itself, where you can go to see and manage auditing events.
 
-To enable logging for a CFEE instance:
+**To enable logging for a CFEE instance:**
 
 1. Make sure that you have an [IAM access policy](https://{DomainName}/iam/#/users) that assigns you as an editor, operator, or administrator role to the Log Analysis service instance into which you intend to persist the logging events.
 2. Open a CFEE's user interface and to **Operations > Logging** entry in the left navigation pane to open the Logging page.
-3. Click **Enable persistence** and select one of the **Log Analysis instances** available in the {{site.data.keyword.cloud_notm}} account. If no instances are available, the user will see an option to create an instance in the {{site.data.keyword.cloud_notm}} catalog.
-4. Once logging persistence is enabled, configuration details are displayed in the page. Details include the status of the configuration, and a link to the Log Analysis service instance itself, where the user can go to see and manage logging events.
+3. Click **Enable persistence** and select one of the **Log Analysis instances** available in the {{site.data.keyword.cloud_notm}} account. If no instances are available, you will see an option to create an instance in the {{site.data.keyword.cloud_notm}} catalog.
+4. Once logging persistence is enabled, configuration details are displayed in the page. Details include the status of the configuration, and a link to the Log Analysis service instance itself, where you can go to see and manage logging events.
 
 **Warning:** Enabling Logging Persistence requires a disruptive restart of the CFEE control plane and cells. During the restart, all administrative functionality will be available, but some applications and services running in this CFEE instance may be unavailable. The status of the CFEE components will be reflected in the Health Check page during the restart. The restart takes approximately 20 minutes.
 
