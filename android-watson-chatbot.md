@@ -54,7 +54,7 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-- Download and install [Android Studio![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.android.com/studio/index.html).
+- Download and install [Android Studio](https://developer.android.com/studio/index.html).
 
 ## Create services
 {: #setup}

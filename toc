@@ -12,6 +12,7 @@ Solution Tutorials
         scalable-webapp-kubernetes.md
         kubernetes-log-analysis-kibana.md
         vm-to-containers-and-kubernetes.md
+        strategies-for-resilient-applications.md
         continuous-deployment-to-kubernetes.md
         static-files-cdn.md
         pub-sub-object-storage.md
@@ -74,6 +75,7 @@ Solution Tutorials
     {: .navgroup id="howto"}
     {: .topicgroup}
     Cloud Foundry
+        strategies-for-resilient-applications.md
         static-files-cdn.md
         plan-create-update-deployments.md
         mean-stack.md
@@ -87,6 +89,7 @@ Solution Tutorials
 
     {: .topicgroup}
     Cloud Functions
+        strategies-for-resilient-applications.md
         serverless-api-webapp.md
         multi-region-serverless.md
         slack-chatbot-database-watson.md
@@ -98,6 +101,7 @@ Solution Tutorials
         scalable-webapp-kubernetes.md
         kubernetes-log-analysis-kibana.md
         vm-to-containers-and-kubernetes.md
+        strategies-for-resilient-applications.md
         continuous-deployment-to-kubernetes.md
         pub-sub-object-storage.md
         plan-create-update-deployments.md
@@ -107,6 +111,7 @@ Solution Tutorials
 
     {: .topicgroup}
     Virtual Servers
+        strategies-for-resilient-applications.md
         lamp-stack.md
         infrastructure-as-code-terraform.md
         highly-available-and-scalable-web-application.md

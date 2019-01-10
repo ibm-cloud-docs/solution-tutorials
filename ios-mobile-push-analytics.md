@@ -42,7 +42,7 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-1. [Apple Developers![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications.
+1. [Apple Developers](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
 ## Create a mobile app from basic Swift starter kit
@@ -93,9 +93,9 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
 ### Registering an App ID
 
    The App ID (the bundle identifier) is a unique identifier that identifies a specific application. Each application requires an App ID. Services like the {{site.data.keyword.mobilepushshort}} service are configured to the App ID.
-   Ensure that you have an [Apple Developers![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) account. This is a mandatory prerequisite.
+   Ensure that you have an [Apple Developers](https://developer.apple.com/) account. This is a mandatory prerequisite.
 
-   1. Go to the [Apple Developer![External link icon](https://{DomainName}/docs/api/content/icons/launch-glyph.svg?lang=en)](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
+   1. Go to the [Apple Developer](https://developer.apple.com/) portal, click `Member Center`, and select `Certificates, IDs & Profiles`.
    2. Go to `Identifiers` > App IDs section.
    3. In the `Registering App IDs` page, provide the App name in the App ID Description Name field. For example: ACME {{site.data.keyword.mobilepushshort}}. Provide a string for the App ID Prefix.
    4. For the App ID Suffix, choose `Explicit App ID` and provide a Bundle ID value. It is recommended that you provide a reverse domain-name style string. For example: com.ACME.push.

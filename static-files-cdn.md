@@ -76,8 +76,6 @@ To start, retrieve the application code:
 
 {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data.
 
-![](images/solution3/Storage_Catalog.png)
-
 1. Go to the [catalog](https://{DomainName}/catalog/) in the console, and select [**Object Storage**](https://{DomainName}/catalog/services/cloud-object-storage) from the Storage section.
 2. Create a new instance of {{site.data.keyword.cos_full_notm}}
 4. In the service dashboard, click **Create Bucket**.
