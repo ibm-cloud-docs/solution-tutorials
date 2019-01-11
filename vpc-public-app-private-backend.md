@@ -17,13 +17,13 @@ lastupdated: "2019-01-15"
 {:tip: .tip}
 {:pre: .pre}
 
-# Private and Public Subnets with VPC
+# Private and public subnets in a Virtual Private Cloud
 
-This tutorial walks you through creating your own IBM Cloud Virtual Private Cloud (VPC) with a public subnet for resources that must be exposed to the outside world and a private subnet for resources that should never be directly accessed from the outside world. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly available. You will also define Access Control Lists with Inbound and Outbound rules for subnet Isolation.
+This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance in each subnet. The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will also define Access Control Lists (ACLs) with inbound and outbound rules for subnet isolation.
 
-A VPC is your own cloud on a cloud infrastructure with a logical isolation from other virtual networks.
+A VPC is your own, private cloud on shared cloud infrastructure with a logical isolation from other virtual networks.
 
-A subnetwork([subnet](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary.html#subnet)) is an IP address range, bound to a single zone, which cannot span multiple zones or regions. A subnet can span the entirety of the zone in the IBM Cloud VPC. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual virtual server instances (VSIs).
+A [subnet](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual virtual server instances (VSIs).
 {:shortdesc}
 
 - software defined network
@@ -37,7 +37,7 @@ A subnetwork([subnet](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary
 - Define a 3-tier architecture
 - Create a public subnet for frontend servers
 - Create a private subnet for backend servers
-- Create virtual server instances
+- Create a virtual server instance in each subnet
 - Configure network rules through access control lists (ACL)
 - **TODO:** Define a security group
 - **TODO:** Load Balancers and VPN
@@ -48,8 +48,8 @@ A subnetwork([subnet](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary
 
 This tutorial uses the following runtimes and services:
 
-- [Virtual Private Cloud](https://cloud.ibm.com/vpc/provision/vpc)
-- [Virtual Server for VPC](https://cloud.ibm.com/vpc/provision/vs)
+- [{{site.data.keyword.vpc_full}}](https://cloud.ibm.com/vpc/provision/vpc)
+- [{{site.data.keyword.vsi_is_full}}](https://cloud.ibm.com/vpc/provision/vs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -57,7 +57,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 {: #architecture}
 
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
-</p>
+
 
 1. The user creates a VPC and subnets (Public and Private) to define the network.
 2. Configures individual access control list (ACLs) to limit the subnet's inbound and outbound traffic. By default, all traffic is allowed.
@@ -96,7 +96,7 @@ Check for an existing SSH key if there's none, create a new SSH key.
 ## Create a VPC
 {: #create_vpc}
 
-To create your own VPC,
+To create your own {{site.data.keyword.vpc_short}},
 
 1. Navigate to https://cloud.ibm.com/vpc/overview and click on **Create a VPC**.
 2. Under **New virtual private cloud** section,
@@ -186,11 +186,13 @@ To create a new ACL,
 2. Enter a name as `vpc-pubpriv-backend-acl` and select **Dallas** region.
 3. Define these **Inbound** rules
 
+
    | Allow/Deny | Source                                                       | Protocol | Value |
    | ---------- | ------------------------------------------------------------ | -------- | ----- |
    | Allow      | IP address or CIDR - **IP range of Frontend**  say 10.240.1.0/24 | TCP      | 1433  |
 
 4. Define these **Outbound rules**
+
 
    | Allow/Deny | Destination | Protocol | Value                    |
    | ---------- | ----------- | -------- | ------------------------ |
@@ -210,12 +212,14 @@ To create an ACL for frontend,
 2. Enter a name as `vpc-pubpriv-frontend-acl` and select **Dallas** region.
 3. Define these **Inbound** rules
 
+
    | Allow/Deny | Source | Protocol | Value                    |
    | ---------- | ------ | -------- | ------------------------ |
    | Allow      | Any    | TCP      | From: **443** To **443** |
    | Allow      | Any    | TCP      | From: **80** To **80**   |
 
 4. Define these **Outbound rules**
+
 
    | Allow/Deny | Destination                                                  | Protocol | Value |
    | ---------- | ------------------------------------------------------------ | -------- | ----- |
