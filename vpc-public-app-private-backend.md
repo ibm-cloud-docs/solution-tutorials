@@ -182,19 +182,23 @@ You can configure the ACL to limit inbound and outbound traffic to the subnet. B
 
 To create a new ACL,
 
-1. Click **Access control lists** under Network > New access control list
-2. Enter a name as `vpc-pubpriv-backend-acl` and select **Dallas** region.
-3. Define these **Inbound** rules
-    | Allow/Deny | Source                                                       | Protocol | Value |
-   | ---------- | ------------------------------------------------------------ | -------- | ----- |
-   | Allow      | IP address or CIDR - **IP range of Frontend**  say 10.240.1.0/24 | TCP      | 1433  |
-4. Define these **Outbound rules**
-    | Allow/Deny | Destination | Protocol | Value                    |
-   | ---------- | ----------- | -------- | ------------------------ |
-   | Allow      | Any         | TCP      | From: **443** To **443** |
-   | Allow      | Any         | TCP      | From: **80** To **80**   |
-5. Under Attach subnets, select the backend subnet.
-6. Click **Create access control list**.
+- Click **Access control lists** under Network > New access control list
+- Enter a name as `vpc-pubpriv-backend-acl` and select **Dallas** region.
+- Define these **Inbound** rules
+
+
+| Allow/Deny | Source                                                       | Protocol | Value |
+| ---------- | ------------------------------------------------------------ | -------- | ----- |
+| Allow      | IP address or CIDR <br> **IP range of Frontend** | TCP      | 1433  |
+
+- Define these **Outbound rules**
+
+| Allow/Deny | Destination | Protocol | Value                     |
+| ---------- | ----------- | -------- | ------------------------ |
+| Allow      | Any         | TCP      | From: **443** To **443** |
+| Allow      | Any         | TCP      | From: **80** To **80**   |
+- Under Attach subnets, select the backend subnet.
+- Click **Create access control list**.
 
 This will override the VPC ACL and assigns an ACL with rules specific to the backend subnet.
 
@@ -202,19 +206,23 @@ This will override the VPC ACL and assigns an ACL with rules specific to the bac
 
 To create an ACL for frontend,
 
-1. Click on the [All access control lists for VPC ](https://{DomainName}/vpc/network/acl) > New access control list
-2. Enter a name as `vpc-pubpriv-frontend-acl` and select **Dallas** region.
-3. Define these **Inbound** rules
-    | Allow/Deny | Source | Protocol | Value                    |
-   | ---------- | ------ | -------- | ------------------------ |
-   | Allow      | Any    | TCP      | From: **443** To **443** |
-   | Allow      | Any    | TCP      | From: **80** To **80**   |
-4. Define these **Outbound rules**
-    | Allow/Deny | Destination                                                  | Protocol | Value |
-   | ---------- | ------------------------------------------------------------ | -------- | ----- |
-   | Allow      | IP address or CIDR - **IP range of Backend**  say 10.240.0.0/24 | TCP      | 1433  |
-5. Under Attach subnets, select the frontend subnet.
-6. Click **Create access control list**.
+- Click on the [All access control lists for VPC ](https://{DomainName}/vpc/network/acl) > New access control list
+- Enter a name as `vpc-pubpriv-frontend-acl` and select **Dallas** region.
+- Define these **Inbound** rules
+
+
+| Allow/Deny | Source | Protocol | Value                    |
+| ---------- | ------ | -------- | ------------------------ |
+| Allow      | Any    | TCP      | From: **443** To **443** |
+| Allow      | Any    | TCP      | From: **80** To **80**   |
+- Define these **Outbound rules**
+
+
+| Allow/Deny | Destination                                                  | Protocol | Value |
+| ---------- | ------------------------------------------------------------ | -------- | ----- |
+| Allow      | IP address or CIDR <br> **IP range of Backend**  say 10.240.0.0/24 | TCP      | 1433  |
+- Under Attach subnets, select the frontend subnet.
+- Click **Create access control list**.
 
 This will override the VPC ACL and assigns an ACL with rules specific to the frontend subnet.
 
