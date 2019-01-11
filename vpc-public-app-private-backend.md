@@ -35,9 +35,9 @@ A subnet is an IP address range, bound to a single Zone, which cannot span multi
 {: #objectives}
 
 - Define a 3-tier architecture
-- Create a public subnet for frontend web servers
-- Create a private subnet for backend database servers
-- Create virtual server instances (Web and database)
+- Create a public subnet for frontend servers
+- Create a private subnet for backend servers
+- Create virtual server instances
 - Configure network rules through access control lists (ACL)
 - **TODO:** Define a security group
 - **TODO:** Load Balancers and VPN
@@ -55,13 +55,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 ## Architecture
 
-{: #architecture}
-
-intro sentence
-
-<p style="text-align: center;">
-
-  ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
+{: #architecture}  ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 </p>
 
 1. The user creates a VPC and subnets (Public and Private) to define the network.
@@ -105,12 +99,12 @@ To create your own VPC,
 
 1. Navigate to https://cloud.ibm.com/vpc/overview and click on **Create a VPC**.
 2. Under **New virtual private cloud** section,
-   a. Enter a unique name (say my-vpc) for your VPC
+   a. Enter a unique name (use `vpc-pubpriv`) for your VPC
    b. Select a Resource group
    c. Add Tags(optional).
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the default security group selections as it is.
 4. Under **New subnet for VPC**,
-   a. Enter a unique name (say my-subnet-backend).
+   a. Enter a unique name (use `vpc-pubpriv-backend-subnet`).
    b. Select a Location.
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.0.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
@@ -121,7 +115,8 @@ To confirm creation of subnet, click on **Subnets** and wait until the Status ch
 
 ## Backend
 {: #backend}
-In this section, you will create a backend(database) subnet with virtual server instance and define the rules for network access.
+
+In this section, you will create a backend subnet with virtual server instance and define the rules for network access.
 
 ### Create a subnet for the backend
 
@@ -133,7 +128,7 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under **Subnets**.
 2. Click **Attached instances** > New instance
-3. Enter a unique name (say my-vsi-backend) > Select the VPC your created earlier and select **Dallas** as your Location
+3. Enter a unique name (use `vpc-pubpriv-backend-vsi`) > Select the VPC your created earlier and select **Dallas** as your Location
 4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
 5. To create a new SSH key, Click **New key**
    a. Enter a key name
@@ -148,7 +143,8 @@ Wait for the status to change to **Powered On**.
 
 ## Frontend
 {: #frontend}
-In this section, you will create a frontend(web) subnet with virtual server instance and define the rules for network access.
+
+In this section, you will create a frontend subnet with virtual server instance and define the rules for network access.
 
 ### Create a subnet for the frontend
 
@@ -156,7 +152,7 @@ To create a new subnet for the frontend,
 
 1. Click **VPC and subnets** under Network on the left pane
 2. Click **Subnets **> New subnet
-   a. Enter a unique name (say my-subnet-frontend) and select the VPC you created.
+   a. Enter a unique name (use `vpc-pubpriv-frontend-subnet`) and select the VPC you created.
    b. Select a Location.
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.1.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
@@ -169,7 +165,7 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the frontend subnet under **Subnets**.
 2. Click **Attached instances** > New instance
-3. Enter a unique name (say my-vsi-frontend) > Select the VPC your created earlier and select **Dallas** as your Location
+3. Enter a unique name (use `vpc-pubpriv-frontend-vsi`) > Select the VPC your created earlier and select **Dallas** as your Location
 4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
 5. Select the SSH key you created earlier.
 6. Leave the other options as it is and click **Create virtual server instance**.
@@ -183,10 +179,10 @@ You can configure the ACL to limit inbound and outbound traffic to the subnet. B
 
 ### Configure network rules for the backend subnet
 
-Network rules can be configured under the subnet's ACL. To create a new ACL,
+To create a new ACL,
 
 1. Click **Access control lists** under Network > New access control list
-2. Enter a name say `my-acl-backend` and select **Dallas** region.
+2. Enter a name (use `vpc-pubpriv-backend-acl`) and select **Dallas** region.
 3. Define these **Inbound** rules
 
    | Allow/Deny | Source                                                       | Protocol | Value |
@@ -203,14 +199,14 @@ Network rules can be configured under the subnet's ACL. To create a new ACL,
 5. Under Attach subnets, select the backend subnet.
 6. Click **Create access control list**.
 
-This will override the VPC ACL and creates an ACL specific to the backend subnet.
+This will override the VPC ACL and assigns an ACL with rules specific to the backend subnet.
 
 ### Configure network rules for the frontend subnet
 
 To create an ACL for frontend,
 
 1. Click on the [All access control lists for VPC ](https://cloud.ibm.com/vpc/network/acl) > New access control list
-2. Enter a name say my-acl-frontend and select **Dallas** region.
+2. Enter a name (use `vpc-pubpriv-frontend-acl`) and select **Dallas** region.
 3. Define these **Inbound** rules
 
    | Allow/Deny | Source | Protocol | Value                    |
@@ -226,6 +222,8 @@ To create an ACL for frontend,
 
 5. Under Attach subnets, select the frontend subnet.
 6. Click **Create access control list**.
+
+This will override the VPC ACL and assigns an ACL with rules specific to the frontend subnet.
 
 **TODO:** Define Security groups
 
