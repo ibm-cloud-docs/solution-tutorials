@@ -58,10 +58,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
-
-1. The user creates a VPC and subnets (Public and Private) to define the network.
+**TODO**
+1. The user accesses an app within a VPC.
 2. Configures individual access control list (ACLs) to limit the subnet's inbound and outbound traffic. By default, all traffic is allowed.
-3. Creates respective virtual server instances(VSIs).
+3. Creates respective virtual server instances (VSIs).
 4. Configures a security group to define the inbound and outbound traffic that's allowed for the instance.
 5. Reserves and associates a floating IP address to enable your instance to communicate with the internet.
 6. Creates a virtual private network (VPN) so your VPC can connect securely to another private network, such as your on-premises network or another VPC.
@@ -70,7 +70,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #prereqs}
 
-Check for User Permissions. Be sure that your user has sufficient permissions to create and manage resources in your VPC. For a list of required permissions, see [Granting permissions needed for VPC users](https://console.test.{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
+Check for user permissions. Be sure that your user has sufficient permissions to create and manage resources in your VPC. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
 
 ## Create SSH key
 {: #create_ssh_key}
@@ -93,7 +93,7 @@ Check for an existing SSH key if there's none, create a new SSH key.
      You can find your `user_ID` under your [user preferences](https://{DomainName}/user). This command generates two files. The generated public key is in the `<your key>.pub` file.
 
 
-## Create a VPC
+## Create a Virtual Private Cloud
 {: #create_vpc}
 
 To create your own {{site.data.keyword.vpc_short}},
@@ -101,9 +101,9 @@ To create your own {{site.data.keyword.vpc_short}},
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
 2. Under **New virtual private cloud** section,
    a. Enter a unique name as `vpc-pubpriv` for your VPC
-   b. Select a Resource group
-   c. Add Tags(optional).
-3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the default security group selections as it is.
+   b. Select a **Resource group**.
+   c. Optionally, add **Tags** to organize your resources.
+3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the settings for **Default security group** as is.
 4. Under **New subnet for VPC**,
    a. Enter a unique name as `vpc-pubpriv-backend-subnet`.
    b. Select a Location.
@@ -193,7 +193,7 @@ To create a new ACL,
 
 4. Define these **Outbound rules**
    
-
+   
    | Allow/Deny | Destination | Protocol | Value                    |
    | ---------- | ----------- | -------- | ------------------------ |
    | Allow      | Any         | TCP      | From: **443** To **443** |
@@ -212,7 +212,7 @@ To create an ACL for frontend,
 2. Enter a name as `vpc-pubpriv-frontend-acl` and select **Dallas** region.
 3. Define these **Inbound** rules
    
-
+   
    | Allow/Deny | Source | Protocol | Value                    |
    | ---------- | ------ | -------- | ------------------------ |
    | Allow      | Any    | TCP      | From: **443** To **443** |
@@ -220,7 +220,7 @@ To create an ACL for frontend,
 
 4. Define these **Outbound rules**
    
-
+   
    | Allow/Deny | Destination                                                  | Protocol | Value |
    | ---------- | ------------------------------------------------------------ | -------- | ----- |
    | Allow      | IP address or CIDR - **IP range of Backend**  say 10.240.0.0/24 | TCP      | 1433  |
