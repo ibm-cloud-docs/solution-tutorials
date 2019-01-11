@@ -100,12 +100,12 @@ To create your own {{site.data.keyword.vpc_short}},
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
 2. Under **New virtual private cloud** section,
-   a. Enter a unique name as `vpc-pubpriv` for your VPC
+   a. Enter **vpc-pubpriv** as name for your VPC.
    b. Select a **Resource group**.
    c. Optionally, add **Tags** to organize your resources.
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the settings for **Default security group** as is.
 4. Under **New subnet for VPC**,
-   a. Enter a unique name as `vpc-pubpriv-backend-subnet`.
+   a. Enter **vpc-pubpriv-backend-subnet** as name.
    b. Select a Location.
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.0.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
@@ -129,7 +129,7 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under **Subnets**.
 2. Click **Attached instances** > New instance
-3. Enter a unique name as `vpc-pubpriv-backend-vsi` > Select the VPC your created earlier and select **Dallas** as your Location
+3. Enter **vpc-pubpriv-backend-vsi** as name. Select the VPC your created earlier and select **Dallas** as your **Location**.
 4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
 5. To create a new SSH key, Click **New key**
    a. Enter a key name
@@ -185,7 +185,9 @@ To create a new ACL,
 1. Click **Access control lists** under Network > New access control list
 2. Enter a name as `vpc-pubpriv-backend-acl` and select **Dallas** region.
 3. Define these **Inbound** rules
-    | Allow/Deny | Source                                                       | Protocol | Value |
+   
+   
+   | Allow/Deny | Source                                                       | Protocol | Value |
    | ---------- | ------------------------------------------------------------ | -------- | ----- |
    | Allow      | IP address or CIDR - **IP range of Frontend**  say 10.240.1.0/24 | TCP      | 1433  |
 4. Define these **Outbound rules**
@@ -210,6 +212,8 @@ To create an ACL for frontend,
    | Allow      | Any    | TCP      | From: **443** To **443** |
    | Allow      | Any    | TCP      | From: **80** To **80**   |
 4. Define these **Outbound rules**
+    
+    
     | Allow/Deny | Destination                                                  | Protocol | Value |
    | ---------- | ------------------------------------------------------------ | -------- | ----- |
    | Allow      | IP address or CIDR - **IP range of Backend**  say 10.240.0.0/24 | TCP      | 1433  |
@@ -220,15 +224,19 @@ This will override the VPC ACL and assigns an ACL with rules specific to the fro
 
 **TODO:** Define Security groups
 
-### Give the frontend vm a public IP so that it can be access from the Internet
+### Give the frontend VSI a public IP so that it can be access from the Internet
 
 ### Add a public gateway so that frontend and backend can access the Internet
+
+### Connect using ssh
+connect to each VSI, update packages, install lynx, test 
 
 ## Remove resources
 
 {: #removeresources}
 
-Steps to take to remove the resources created in this tutorial
+Steps to take to remove the resources created in this tutorial.
+Need to recursively delete resources. Make sure that ACLs do not stay around.
 
 ## Expand the tutorial (this section is optional, remove it if you don't have content for it)
 
