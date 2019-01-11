@@ -1,6 +1,6 @@
 ---
 copyright:
-  years: 2018
+  years: 2019
 lastupdated: "2019-01-15"
 
 
@@ -19,11 +19,11 @@ lastupdated: "2019-01-15"
 
 # Private and Public Subnets with VPC
 
-This tutorial walks you through creating your own virtual private cloud (VPC) with a public subnet for resources that must be exposed to the outside world and a private subnet for resources that should never be directly accessed from the outside world. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly available. You will also define Access Control Lists with Inbound and Outbound rules for subnet Isolation.
+This tutorial walks you through creating your own IBM Cloud Virtual Private Cloud (VPC) with a public subnet for resources that must be exposed to the outside world and a private subnet for resources that should never be directly accessed from the outside world. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly available. You will also define Access Control Lists with Inbound and Outbound rules for subnet Isolation.
 
-A Virtual Private Cloud (VPC) is a virtual network that is tied to your customer account. It offers you a cost-effective entry point that provides cloud security and the ability to scale dynamically with growth. It gives you fine-grained control over your virtual infrastructure and your network traffic segmentation.
+A VPC is your own cloud on a cloud infrastructure with a logical isolation from other virtual networks.
 
-A subnet is an IP address range, bound to a single Zone, which cannot span multiple Zones or Regions. A subnet can span the entirety of the Zone in the IBM Cloud VPC. For the purposes of IBM Cloud VPC, the important characteristic for a **subnet** is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network Access Control Lists (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual virtual server instances (VSIs).
+A subnetwork([subnet](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary.html#subnet)) is an IP address range, bound to a single zone, which cannot span multiple zones or regions. A subnet can span the entirety of the zone in the IBM Cloud VPC. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual virtual server instances (VSIs).
 {:shortdesc}
 
 - software defined network
@@ -54,8 +54,9 @@ This tutorial uses the following runtimes and services:
 This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
+{: #architecture}
 
-{: #architecture}  ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
+![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 </p>
 
 1. The user creates a VPC and subnets (Public and Private) to define the network.
@@ -99,12 +100,12 @@ To create your own VPC,
 
 1. Navigate to https://cloud.ibm.com/vpc/overview and click on **Create a VPC**.
 2. Under **New virtual private cloud** section,
-   a. Enter a unique name (use `vpc-pubpriv`) for your VPC
+   a. Enter a unique name as `vpc-pubpriv` for your VPC
    b. Select a Resource group
    c. Add Tags(optional).
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the default security group selections as it is.
 4. Under **New subnet for VPC**,
-   a. Enter a unique name (use `vpc-pubpriv-backend-subnet`).
+   a. Enter a unique name as `vpc-pubpriv-backend-subnet`.
    b. Select a Location.
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.0.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
@@ -128,7 +129,7 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under **Subnets**.
 2. Click **Attached instances** > New instance
-3. Enter a unique name (use `vpc-pubpriv-backend-vsi`) > Select the VPC your created earlier and select **Dallas** as your Location
+3. Enter a unique name as `vpc-pubpriv-backend-vsi` > Select the VPC your created earlier and select **Dallas** as your Location
 4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
 5. To create a new SSH key, Click **New key**
    a. Enter a key name
@@ -152,7 +153,7 @@ To create a new subnet for the frontend,
 
 1. Click **VPC and subnets** under Network on the left pane
 2. Click **Subnets **> New subnet
-   a. Enter a unique name (use `vpc-pubpriv-frontend-subnet`) and select the VPC you created.
+   a. Enter a unique name as `vpc-pubpriv-frontend-subnet` and select the VPC you created.
    b. Select a Location.
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.1.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
@@ -165,7 +166,7 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the frontend subnet under **Subnets**.
 2. Click **Attached instances** > New instance
-3. Enter a unique name (use `vpc-pubpriv-frontend-vsi`) > Select the VPC your created earlier and select **Dallas** as your Location
+3. Enter a unique name as `vpc-pubpriv-frontend-vsi` > Select the VPC your created earlier and select **Dallas** as your Location
 4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
 5. Select the SSH key you created earlier.
 6. Leave the other options as it is and click **Create virtual server instance**.
@@ -182,7 +183,7 @@ You can configure the ACL to limit inbound and outbound traffic to the subnet. B
 To create a new ACL,
 
 1. Click **Access control lists** under Network > New access control list
-2. Enter a name (use `vpc-pubpriv-backend-acl`) and select **Dallas** region.
+2. Enter a name as `vpc-pubpriv-backend-acl` and select **Dallas** region.
 3. Define these **Inbound** rules
 
    | Allow/Deny | Source                                                       | Protocol | Value |
@@ -206,7 +207,7 @@ This will override the VPC ACL and assigns an ACL with rules specific to the bac
 To create an ACL for frontend,
 
 1. Click on the [All access control lists for VPC ](https://cloud.ibm.com/vpc/network/acl) > New access control list
-2. Enter a name (use `vpc-pubpriv-frontend-acl`) and select **Dallas** region.
+2. Enter a name as `vpc-pubpriv-frontend-acl` and select **Dallas** region.
 3. Define these **Inbound** rules
 
    | Allow/Deny | Source | Protocol | Value                    |
