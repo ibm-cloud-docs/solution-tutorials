@@ -61,7 +61,7 @@ intro sentence
 
 <p style="text-align: center;">
 
-  ![Architecture](/Users/VMac/Documents/VMAC/Code/Github-Enterprise/tutorials/builddocs/input/images/solution40-vpc-public-app-private-backend/Architecture.png)
+  ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 </p>
 
 1. The user creates a VPC and subnets (Public and Private) to define the network.
@@ -87,11 +87,11 @@ Check for an existing SSH key if there's none, create a new SSH key.
    ls -al ~/.ssh
    ```
 
-   Look for a file called `id_rsa.pub`. 
+   Look for a file called `id_rsa.pub`.
 
 2. Alternatively, You can check under an `.ssh` directory under your home directory, for example, `/Users/<USERNAME>/.ssh/id_rsa.pub`. The file starts with `ssh-rsa` and ends with your email address
 
-3. If you do not have a public SSH key or if you forgot the password of an existing one, generate a new one by running the `ssh-keygen` command and following the prompts. For example, you can generate an SSH key on your Linux server by running the command 
+3. If you do not have a public SSH key or if you forgot the password of an existing one, generate a new one by running the `ssh-keygen` command and following the prompts. For example, you can generate an SSH key on your Linux server by running the command
 
 4. ```sh
    ssh-keygen -t rsa -C "user_ID"
@@ -105,17 +105,17 @@ To create your own VPC,
 
 1. Navigate to https://cloud.ibm.com/vpc/overview and click on **Create a VPC**.
 
-2. Under **New virtual private cloud** section, 
+2. Under **New virtual private cloud** section,
 
    a. Enter a unique name (say my-vpc) for your VPC
 
-   b. Select a Resource group 
+   b. Select a Resource group
 
    c. Add Tags(optional).
 
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the default security group selections as it is.
 
-4. Under **New subnet for VPC**, 
+4. Under **New subnet for VPC**,
 
    a. Enter a unique name (say my-subnet-backend).
 
@@ -149,11 +149,11 @@ To create a virtual server instance in the newly created subnet:
 
 4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
 
-5. To create a new SSH key, Click **New key** 
+5. To create a new SSH key, Click **New key**
 
-   a. Enter a key name 
+   a. Enter a key name
 
-   b. Select **Dallas** region 
+   b. Select **Dallas** region
 
    c. Copy the contents of  `<your key>.pub` and paste under Public key
 
@@ -171,7 +171,7 @@ Wait for the status to change to **Powered On**.
 
 To create a new subnet for the frontend,
 
-1. Click **VPC and subnets** under Network on the left pane 
+1. Click **VPC and subnets** under Network on the left pane
 
 2. Click **Subnets **> New subnet
 
@@ -200,13 +200,13 @@ To create a new subnet for the frontend,
 
    Wait for the status to change to **Powered On**.Configure network rules for the backend subnet
 
-### Create and configure ACLs 
+### Create and configure ACLs
 
 You can configure the ACL to limit inbound and outbound traffic to the subnet. By default, all traffic is allowed. Each subnet can be attached to only one ACL. However, an ACL can be attached to multiple subnets.
 
 #### Configure network rules for the backend subnet
 
-Network rules can be configured under the subnet's ACL. To create a new ACL, 
+Network rules can be configured under the subnet's ACL. To create a new ACL,
 
 1. Click **Access control lists** under Network > New access control list
 
@@ -233,7 +233,7 @@ This will override the VPC ACL and creates an ACL specific to the backend subnet
 
 #### Configure network rules for the frontend subnet
 
-To create an ACL for frontend, 
+To create an ACL for frontend,
 
 1. Click on the [All access control lists for VPC ](https://cloud.ibm.com/vpc/network/acl) > New access control list
 
