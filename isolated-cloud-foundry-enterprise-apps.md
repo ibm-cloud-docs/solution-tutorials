@@ -246,6 +246,8 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   ```
   {:pre: .pre}
 
+  ToDo: State what is this command doing.
+
   ```sh
   ibmcloud cr namespace-add cfee-tutorial
   ```
@@ -260,6 +262,8 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   docker push $REGISTRY/cfee-tutorial/service-broker-impl
   ```
   {:pre: .pre}
+
+  ToDo: State the expected terminal output after running above command.
 
 3. If your container registry is different than `registry.ng.bluemix.net`, edit the `./cloud-foundry-osb-on-kubernetes/deployment.yaml` file. Update the `image` attribute to reflect your container registry URL.
 
@@ -276,12 +280,12 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   {:pre: .pre}
 
   ```sh
-  $(ibmcloud ks cluster-config <your-cfee-cluster-name> --export)
+  ibmcloud ks cluster-config <your-cfee-cluster-name> --export
   ```
   {:pre: .pre}
 
   ```sh
-  kubectl apply -f deployment.yml
+  kubectl apply -f deployment.yaml
   ```
   {:pre: .pre}
 
@@ -304,7 +308,7 @@ This section will confirm that Kubernetes artifacts are configured using {{site.
 
 2. Open the **Kubernetes Dashboard** by clicking the corresponding button.
 
-3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply`.
+3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply` in earlier steps.
 
 4. In the resulting dashboard, notice the following:
    - The service has been provided an overlay IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
@@ -312,7 +316,8 @@ This section will confirm that Kubernetes artifacts are configured using {{site.
 
 Having confirmed that the service is available and is proxying the service broker pods, you can verify the broker responds with information about available services.
 
-You can view Cloud Foundry related artifacts from the Kubernetes dashboard. Choose the `cf` option from the **Namespace** selector.
+Next, you can view Cloud Foundry related artifacts from the Kubernetes dashboard. To see that, click on  Namespaces and you would see all the namespaces including the CF for Cloud Foundry.
+
 {:tip: .tip}
 
 ### Access the broker from a Cloud Foundry container
@@ -326,7 +331,7 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
   ```
   {:pre: .pre}
 
-2. By default, SSH is disabled in spaces. This is different than the public cloud, so enable SSH in your `dev` space.
+2. By default, SSH is disabled in spaces. This is different than the public cloud, so enable SSH in your CFEE `dev` space.
 
   ```sh
   ibmcloud cf allow-space-ssh dev
@@ -345,6 +350,8 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
   ```
   {:pre: .pre}
 
+  Once you are ssh into the `GetStartedNode` run the commands below:
+
   ```sh
   export CLUSTER_IP=<ip address>
   ```
@@ -354,6 +361,14 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
   wget --user TestServiceBrokerUser --password TestServiceBrokerPassword -O- http://$CLUSTER_IP/v2/catalog
   ```
   {:pre: .pre}
+
+  ToDo: when running the last command, I am getting: 
+
+  ```sh
+  vcap@aa259dc3-4490-4a8c-5872-24f8:~$ wget --user TestServiceBrokerUser --password TestServiceBrokerPassword -O- http://$CLUSTER_IP/v2/catalog
+  --2019-01-11 14:06:23--  http://172.21.107.63/v2/catalog
+  Connecting to 172.21.107.63:80... failed: Connection refused.
+  ```
 
 4. It's likely that you received a **Connection refused** error. This is due to CFEE's default [application security groups](https://docs.cloudfoundry.org/concepts/asg.html). An application security group (ASG) defines the allowable IP range for egress traffic from a Cloud Foundry container. Since the `GetStartedNode` exists outside the default range, the error occurs. Exit the SSH session and download the `public_networks` ASG.
 
