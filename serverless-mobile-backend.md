@@ -25,10 +25,10 @@ Not all mobile developers have experience managing server-side logic, or a serve
 
 {{site.data.keyword.openwhisk_short}} is a serverless event-driven platform. As [highlighted in this example](./serverless-api-webapp.html), the actions you deploy can easily be turned into HTTP endpoints as *web actions* to build a web application backend API. A web application being a client to the REST API, it is easy to take this example a step further and apply the same approach to build a backend for a mobile app. And with {{site.data.keyword.openwhisk_short}}, mobile developers can write the actions in the same language used for their mobile app, Java for Android, and Swift for iOS.
 
-This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **iOS / Swift** version of this tutorial. Use the drop down switcher at the top of this documentation to select the **Android / Java** version of this tutorial.
+This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **iOS / Swift** version of this tutorial. Use the tab at the top of this documentation to select the **Android / Java** version of this tutorial.
 {: swift}
 
-This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **Android / Java** version of this tutorial. Use the drop down switcher at the top of this documentation to select the **iOS / Swift** version of this tutorial.
+This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **Android / Java** version of this tutorial. Use the tab at the top of this documentation to select the **iOS / Swift** version of this tutorial.
 {: java}
 
 ## Objectives
