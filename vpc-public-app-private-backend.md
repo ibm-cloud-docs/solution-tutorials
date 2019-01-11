@@ -181,24 +181,25 @@ You can configure the ACL to limit inbound and outbound traffic to the subnet. B
 ### Configure network rules for the backend subnet
 
 To create a new ACL,
-
-1. Click **Access control lists** under Network > New access control list
-2. Enter a name as `vpc-pubpriv-backend-acl` and select **Dallas** region.
-3. Define these **Inbound** rules
+<ol>
+<li> Click **Access control lists** under Network > New access control list
+<li> Enter a name as `vpc-pubpriv-backend-acl` and select **Dallas** region.
+<li> Define these **Inbound** rules
    
    
    | Allow/Deny | Source                                                       | Protocol | Value |
    | ---------- | ------------------------------------------------------------ | -------- | ----- |
    | Allow      | IP address or CIDR - **IP range of Frontend**  say 10.240.1.0/24 | TCP      | 1433  |
-4. Define these **Outbound rules**
+<li> Define these **Outbound rules**
    
    
     | Allow/Deny | Destination | Protocol | Value                    |
    | ---------- | ----------- | -------- | ------------------------ |
    | Allow      | Any         | TCP      | From: **443** To **443** |
    | Allow      | Any         | TCP      | From: **80** To **80**   |
-5. Under Attach subnets, select the backend subnet.
-6. Click **Create access control list**.
+<li> Under Attach subnets, select the backend subnet.
+<li> Click **Create access control list**.
+</ol>
 
 This will override the VPC ACL and assigns an ACL with rules specific to the backend subnet.
 
