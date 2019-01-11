@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-13"
+lastupdated: "2019-01-11"
 
 ---
 
@@ -279,6 +279,25 @@ With all the services configured, you can now deploy the serverless backend. The
 3. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}}
  and {{site.data.keyword.appid_short}} services from the {{site.data.keyword.Bluemix_notm}} dashboard (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
 4. Deploy the actions to {{site.data.keyword.openwhisk_short}}. `deploy.sh` loads the credentials from `local.env` to create the {{site.data.keyword.cloudant_short_notm}} databases (users, feedback and moods) and deploy the {{site.data.keyword.openwhisk_short}} artifacts for the application.
+   ```sh
+   ./deploy.sh --install
+   ```
+   {: pre}
+
+   You can use `./deploy.sh --uninstall` to remove the {{site.data.keyword.openwhisk_short}} artifacts once you have completed the tutorial.
+   {: tip}
+
+### Configure and deploy the actions
+{: swift}
+
+1. Copy template.local.env to local.env
+   ```sh
+   cp template.local.env local.env
+   ```
+2. Get the credentials for {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.toneanalyzershort}}, {{site.data.keyword.mobilepushshort}}
+   and {{site.data.keyword.appid_short}} services from the {{site.data.keyword.Bluemix_notm}} dashboard (or the output of the ibmcloud commands we ran before) and replace placeholders in `local.env` with corresponding values. These properties will be injected into a package so that all actions can get access to the database.
+3. Deploy the actions to {{site.data.keyword.openwhisk_short}}. `deploy.sh` loads the credentials from `local.env` to create the {{site.data.keyword.cloudant_short_notm}} databases (users, feedback and moods) and deploy the {{site.data.keyword.openwhisk_short}} artifacts for the application.
+
    ```sh
    ./deploy.sh --install
    ```
