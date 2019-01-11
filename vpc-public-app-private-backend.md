@@ -78,6 +78,7 @@ intro sentence
 Check for User Permissions. Be sure that your user has sufficient permissions to create and manage resources in your VPC. For a list of required permissions, see [Granting permissions needed for VPC users](https://console.test.cloud.ibm.com/docs/infrastructure/vpc/vpc-user-permissions.html).
 
 ## Create SSH key
+{: #create_ssh_key}
 
 Check for an existing SSH key if there's none, create a new SSH key.
 
@@ -86,11 +87,8 @@ Check for an existing SSH key if there's none, create a new SSH key.
    ```sh
    ls -al ~/.ssh
    ```
-
    Look for a file called `id_rsa.pub`.
-
 2. Alternatively, You can check under an `.ssh` directory under your home directory, for example, `/Users/<USERNAME>/.ssh/id_rsa.pub`. The file starts with `ssh-rsa` and ends with your email address
-
 3. If you do not have a public SSH key or if you forgot the password of an existing one, generate a new one by running the `ssh-keygen` command and following the prompts. For example, you can generate an SSH key on your Linux server by running the command
 
      ```sh
@@ -101,38 +99,29 @@ Check for an existing SSH key if there's none, create a new SSH key.
 
 
 ## Create a VPC
+{: #create_vpc}
 
 To create your own VPC,
 
 1. Navigate to https://cloud.ibm.com/vpc/overview and click on **Create a VPC**.
-
 2. Under **New virtual private cloud** section,
-
    a. Enter a unique name (say my-vpc) for your VPC
-
    b. Select a Resource group
-
    c. Add Tags(optional).
-
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the default security group selections as it is.
-
 4. Under **New subnet for VPC**,
-
    a. Enter a unique name (say my-subnet-backend).
-
    b. Select a Location.
-
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.0.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-
 5. Select **Use VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
-
 6. Switch the Public gateway to **Attached** as attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
-
 7. Click **Create virtual private cloud** to provision the instance.
 
 To confirm creation of subnet, click on **Subnets** and wait until the Status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
 ## Backend
+{: #backend}
+In this section, you will create a backend(database) subnet with virtual server instance and define the rules for network access.
 
 ### Create a subnet for the backend
 
@@ -143,23 +132,14 @@ You will be using the Subnet created with the VPC as the subnet for the backend.
 To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under **Subnets**.
-
 2. Click **Attached instances** > New instance
-
 3. Enter a unique name (say my-vsi-backend) > Select the VPC your created earlier and select **Dallas** as your Location
-
 4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
-
 5. To create a new SSH key, Click **New key**
-
    a. Enter a key name
-
    b. Select **Dallas** region
-
    c. Copy the contents of  `<your key>.pub` and paste under Public key
-
    d. Click **Add SSH key**
-
 6. Leave the other options as it is and click **Create virtual server instance**.
 
 Wait for the status to change to **Powered On**.
@@ -167,52 +147,46 @@ Wait for the status to change to **Powered On**.
 ??? how to connect to the vm to install software? can I vpn with the softlayer vpn? or do I need to setup a vpn for the VPC? and if so, show the VPN on the architecture diagram
 
 ## Frontend
+{: #frontend}
+In this section, you will create a frontend(web) subnet with virtual server instance and define the rules for network access.
 
 ### Create a subnet for the frontend
 
 To create a new subnet for the frontend,
 
 1. Click **VPC and subnets** under Network on the left pane
-
 2. Click **Subnets **> New subnet
-
    a. Enter a unique name (say my-subnet-frontend) and select the VPC you created.
-
    b. Select a Location.
-
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.1.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-
 3. Select **VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
-
 4. Switch the Public gateway to **Attached** as attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
-
 5. Click **Create subnet** to provision.
 
 ### Create a frontend virtual server instance
 
-1. To create a virtual server instance in the newly created subnet:
+To create a virtual server instance in the newly created subnet:
 
-   1. Click on the frontend subnet under **Subnets**.
-   2. Click **Attached instances** > New instance
-   3. Enter a unique name (say my-vsi-frontend) > Select the VPC your created earlier and select **Dallas** as your Location
-   4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
-   5. Select the SSH key you created earlier.
-   6. Leave the other options as it is and click **Create virtual server instance**.
+1. Click on the frontend subnet under **Subnets**.
+2. Click **Attached instances** > New instance
+3. Enter a unique name (say my-vsi-frontend) > Select the VPC your created earlier and select **Dallas** as your Location
+4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
+5. Select the SSH key you created earlier.
+6. Leave the other options as it is and click **Create virtual server instance**.
 
-   Wait for the status to change to **Powered On**.Configure network rules for the backend subnet
+Wait for the status to change to **Powered On**.Configure network rules for the backend subnet
 
-### Create and configure ACLs
+## Create and configure ACLs
+{: #create_configure_acls}
 
 You can configure the ACL to limit inbound and outbound traffic to the subnet. By default, all traffic is allowed. Each subnet can be attached to only one ACL. However, an ACL can be attached to multiple subnets.
 
-#### Configure network rules for the backend subnet
+### Configure network rules for the backend subnet
 
 Network rules can be configured under the subnet's ACL. To create a new ACL,
 
 1. Click **Access control lists** under Network > New access control list
-
-2. Enter a name say my-acl-backend and select **Dallas** region.
-
+2. Enter a name say `my-acl-backend` and select **Dallas** region.
 3. Define these **Inbound** rules
 
    | Allow/Deny | Source                                                       | Protocol | Value |
@@ -227,19 +201,16 @@ Network rules can be configured under the subnet's ACL. To create a new ACL,
    | Allow      | Any         | TCP      | From: **80** To **80**   |
 
 5. Under Attach subnets, select the backend subnet.
-
 6. Click **Create access control list**.
 
 This will override the VPC ACL and creates an ACL specific to the backend subnet.
 
-#### Configure network rules for the frontend subnet
+### Configure network rules for the frontend subnet
 
 To create an ACL for frontend,
 
 1. Click on the [All access control lists for VPC ](https://cloud.ibm.com/vpc/network/acl) > New access control list
-
 2. Enter a name say my-acl-frontend and select **Dallas** region.
-
 3. Define these **Inbound** rules
 
    | Allow/Deny | Source | Protocol | Value                    |
@@ -254,7 +225,6 @@ To create an ACL for frontend,
    | Allow      | IP address or CIDR - **IP range of Backend**  say 10.240.0.0/24 | TCP      | 1433  |
 
 5. Under Attach subnets, select the frontend subnet.
-
 6. Click **Create access control list**.
 
 **TODO:** Define Security groups
