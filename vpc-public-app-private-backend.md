@@ -23,7 +23,7 @@ This tutorial walks you through creating your own {{site.data.keyword.vpc_full}}
 
 A VPC is your own, private cloud on shared cloud infrastructure with a logical isolation from other virtual networks.
 
-A [subnet](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual virtual server instances (VSIs).
+A [subnet](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual virtual server instances (VSIs).
 {:shortdesc}
 
 - software defined network
@@ -48,10 +48,10 @@ A [subnet](https://cloud.ibm.com/docs/infrastructure/vpc/vpc-glossary.html#subne
 
 This tutorial uses the following runtimes and services:
 
-- [{{site.data.keyword.vpc_full}}](https://cloud.ibm.com/vpc/provision/vpc)
-- [{{site.data.keyword.vsi_is_full}}](https://cloud.ibm.com/vpc/provision/vs)
+- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
+- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://console.bluemix.net/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -70,7 +70,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://console.blue
 
 {: #prereqs}
 
-Check for User Permissions. Be sure that your user has sufficient permissions to create and manage resources in your VPC. For a list of required permissions, see [Granting permissions needed for VPC users](https://console.test.cloud.ibm.com/docs/infrastructure/vpc/vpc-user-permissions.html).
+Check for User Permissions. Be sure that your user has sufficient permissions to create and manage resources in your VPC. For a list of required permissions, see [Granting permissions needed for VPC users](https://console.test.{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
 
 ## Create SSH key
 {: #create_ssh_key}
@@ -90,7 +90,7 @@ Check for an existing SSH key if there's none, create a new SSH key.
        ssh-keygen -t rsa -C "user_ID"
      ```
 
-     You can find your `user_ID` under your [user preferences](https://cloud.ibm.com/user). This command generates two files. The generated public key is in the `<your key>.pub` file.
+     You can find your `user_ID` under your [user preferences](https://{DomainName}/user). This command generates two files. The generated public key is in the `<your key>.pub` file.
 
 
 ## Create a VPC
@@ -98,7 +98,7 @@ Check for an existing SSH key if there's none, create a new SSH key.
 
 To create your own {{site.data.keyword.vpc_short}},
 
-1. Navigate to https://cloud.ibm.com/vpc/overview and click on **Create a VPC**.
+1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
 2. Under **New virtual private cloud** section,
    a. Enter a unique name as `vpc-pubpriv` for your VPC
    b. Select a Resource group
@@ -208,7 +208,7 @@ This will override the VPC ACL and assigns an ACL with rules specific to the bac
 
 To create an ACL for frontend,
 
-1. Click on the [All access control lists for VPC ](https://cloud.ibm.com/vpc/network/acl) > New access control list
+1. Click on the [All access control lists for VPC ](https://{DomainName}/vpc/network/acl) > New access control list
 2. Enter a name as `vpc-pubpriv-frontend-acl` and select **Dallas** region.
 3. Define these **Inbound** rules
 
