@@ -93,11 +93,12 @@ Check for an existing SSH key if there's none, create a new SSH key.
 
 3. If you do not have a public SSH key or if you forgot the password of an existing one, generate a new one by running the `ssh-keygen` command and following the prompts. For example, you can generate an SSH key on your Linux server by running the command
 
-4. ```sh
-   ssh-keygen -t rsa -C "user_ID"
-   ```
+     ```sh
+       ssh-keygen -t rsa -C "user_ID"
+     ```
 
-   You can find your `user_ID` under your [user preferences](https://cloud.ibm.com/user). This command generates two files. The generated public key is in the `<your key>.pub` file.
+     You can find your `user_ID` under your [user preferences](https://cloud.ibm.com/user). This command generates two files. The generated public key is in the `<your key>.pub` file.
+
 
 ## Create a VPC
 
