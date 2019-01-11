@@ -191,6 +191,8 @@ To create a new ACL,
    | ---------- | ------------------------------------------------------------ | -------- | ----- |
    | Allow      | IP address or CIDR - **IP range of Frontend**  say 10.240.1.0/24 | TCP      | 1433  |
 4. Define these **Outbound rules**
+   
+   
     | Allow/Deny | Destination | Protocol | Value                    |
    | ---------- | ----------- | -------- | ------------------------ |
    | Allow      | Any         | TCP      | From: **443** To **443** |
@@ -207,6 +209,8 @@ To create an ACL for frontend,
 1. Click on the [All access control lists for VPC ](https://{DomainName}/vpc/network/acl) > New access control list
 2. Enter a name as `vpc-pubpriv-frontend-acl` and select **Dallas** region.
 3. Define these **Inbound** rules
+    
+       
     | Allow/Deny | Source | Protocol | Value                    |
    | ---------- | ------ | -------- | ------------------------ |
    | Allow      | Any    | TCP      | From: **443** To **443** |
