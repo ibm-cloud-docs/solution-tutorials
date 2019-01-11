@@ -189,7 +189,7 @@ To create a new ACL,
 
 | Allow/Deny | Source                                                       | Protocol | Value |
 | ---------- | ------------------------------------------------------------ | -------- | ----- |
-| Allow      | IP address or CIDR <br> **IP range of Frontend** | TCP      | 1433  |
+| Allow      | IP address or CIDR <br> **IP range of Frontend** say 10.240.1.0/24 | TCP      | 1433  |
 
 - Define these **Outbound rules**
 
