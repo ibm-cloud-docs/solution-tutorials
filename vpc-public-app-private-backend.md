@@ -99,15 +99,15 @@ Check for an existing SSH key if there's none, create a new SSH key.
 To create your own {{site.data.keyword.vpc_short}},
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
-2. Under **New virtual private cloud** section,
-   a. Enter a unique name as `vpc-pubpriv` for your VPC
-   b. Select a **Resource group**.
-   c. Optionally, add **Tags** to organize your resources.
+2. Under **New virtual private cloud** section,  
+   a. Enter a unique name as `vpc-pubpriv` for your VPC.  
+   b. Select a **Resource group**.  
+   c. Optionally, add **Tags** to organize your resources.  
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the settings for **Default security group** as is.
-4. Under **New subnet for VPC**,
-   a. Enter a unique name as `vpc-pubpriv-backend-subnet`.
-   b. Select a Location.
-   c. Enter an IP range for the subnet in CIDR notation, say  `10.240.0.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+4. Under **New subnet for VPC**,  
+   a. Enter a unique name as `vpc-pubpriv-backend-subnet`.  
+   b. Select a Location.  
+   c. Enter an IP range for the subnet in CIDR notation, say  `10.240.0.0/24`.   Leave the **Address prefix** as it is and select the **Number of addresses** as 256
 5. Select **Use VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
 6. Switch the Public gateway to **Attached** as attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
 7. Click **Create virtual private cloud** to provision the instance.
@@ -131,11 +131,11 @@ To create a virtual server instance in the newly created subnet:
 2. Click **Attached instances** > New instance
 3. Enter a unique name as `vpc-pubpriv-backend-vsi` > Select the VPC your created earlier and select **Dallas** as your Location
 4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
-5. To create a new SSH key, Click **New key**
-   a. Enter a key name
-   b. Select **Dallas** region
-   c. Copy the contents of  `<your key>.pub` and paste under Public key
-   d. Click **Add SSH key**
+5. To create a new SSH key, Click **New key**  
+   a. Enter a key name.  
+   b. Select **Dallas** region.  
+   c. Copy the contents of  `<your key>.pub` and paste under Public key.  
+   d. Click **Add SSH key**.
 6. Leave the other options as it is and click **Create virtual server instance**.
 
 Wait for the status to change to **Powered On**.
@@ -152,9 +152,9 @@ In this section, you will create a frontend subnet with virtual server instance 
 To create a new subnet for the frontend,
 
 1. Click **VPC and subnets** under Network on the left pane
-2. Click **Subnets **> New subnet
-   a. Enter a unique name as `vpc-pubpriv-frontend-subnet` and select the VPC you created.
-   b. Select a Location.
+2. Click **Subnets **> New subnet  
+   a. Enter a unique name as `vpc-pubpriv-frontend-subnet` and select the VPC you created.  
+   b. Select a Location.  
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.1.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
 4. Switch the Public gateway to **Attached** as attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
@@ -184,22 +184,25 @@ To create a new ACL,
 1. Click **Access control lists** under Network > New access control list
 2. Enter a name as `vpc-pubpriv-backend-acl` and select **Dallas** region.
 3. Define these **Inbound** rules
-   
+
    <table><thead>
-   <tr><td> Allow/Deny</td><td>Source</td><td>Protocol</td><td>Value</td></tr>
-   </thead>
+   <tr><td><strong>Allow/Deny</strong></td><td><strong>Source</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong></td></tr>
    <tbody><tr>
    <td>Allow</td><td>IP address or CIDR - **IP range of Frontend**  say 10.240.1.0/24</td><td>TCP</td><td>1433</td>
-   </tr></tbody>
+   </tr>
+   <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr></tbody>
    </table>
 4. Define these **Outbound rules**
-   
+
    <table><thead>
-   <tr><td>Allow/Deny</td><td>Destination</td><td>Protocol</td><td>Value </td></tr>
+   <tr><td><strong>Allow/Deny</strong></td><td><strong>Destination</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong> </td></tr>
    </thead>
    <tbody>
+   <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80**</td></tr>
+
    <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **443** To **443**</td></tr>
-   <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80** </td></tr>
+   <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr>
+ 
    </tbody>
    </table>
 5. Under Attach subnets, select the backend subnet.
@@ -217,19 +220,23 @@ To create an ACL for frontend,
 3. Define these **Inbound** rules
 
    <table><thead>
-   <tr><td>Allow/Deny</td><td>Source</td><td>Protocol</td><td>Value</td></tr>
+   <tr><td><strong>Allow/Deny</strong></td><td><strong>Source</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong></td></tr>
    </thead>
    <tbody>
+     <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80**</td></tr>
    <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **443** To **443**</td></tr>
-   <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80**</td></tr>
+   <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr>
    </tbody></table>
 4. Define these **Outbound rules**
 
   <table><thead>
-  <tr><td>Allow/Deny</td><td>Destination</td><td>Protocol</td><td>Value</td></tr>
+ <tr><td><strong>Allow/Deny</strong></td><td><strong>Destination</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong> </td></tr>
+     <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80**</td></tr>
+  <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **443** To **443**</td></tr>
   </thead>
   <tbody>
   <tr><td>Allow</td><td>IP address or CIDR <br> **IP range of Backend**  say 10.240.0.0/24</td><td>TCP</td><td>1433</td></tr>
+  <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr>
   </tbody></table>
 5. Under Attach subnets, select the frontend subnet.
 6. Click **Create access control list**.
