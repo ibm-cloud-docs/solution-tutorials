@@ -186,20 +186,23 @@ To create a new ACL,
 3. Define these **Inbound** rules
 
    <table><thead>
-   <tr><td> Allow/Deny</td><td>Source</td><td>Protocol</td><td>Value</td></tr>
-   </thead>
+   <tr><td><strong>Allow/Deny</strong></td><td><strong>Source</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong></td></tr>
    <tbody><tr>
    <td>Allow</td><td>IP address or CIDR - **IP range of Frontend**  say 10.240.1.0/24</td><td>TCP</td><td>1433</td>
-   </tr></tbody>
+   </tr>
+   <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr></tbody>
    </table>
 4. Define these **Outbound rules**
 
    <table><thead>
-   <tr><td>Allow/Deny</td><td>Destination</td><td>Protocol</td><td>Value </td></tr>
+   <tr><td><strong>Allow/Deny</strong></td><td><strong>Destination</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong> </td></tr>
    </thead>
    <tbody>
+   <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80**</td></tr>
+
    <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **443** To **443**</td></tr>
-   <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80** </td></tr>
+   <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr>
+ 
    </tbody>
    </table>
 5. Under Attach subnets, select the backend subnet.
@@ -217,19 +220,23 @@ To create an ACL for frontend,
 3. Define these **Inbound** rules
 
    <table><thead>
-   <tr><td>Allow/Deny</td><td>Source</td><td>Protocol</td><td>Value</td></tr>
+   <tr><td><strong>Allow/Deny</strong></td><td><strong>Source</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong></td></tr>
    </thead>
    <tbody>
+     <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80**</td></tr>
    <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **443** To **443**</td></tr>
-   <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80**</td></tr>
+   <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr>
    </tbody></table>
 4. Define these **Outbound rules**
 
   <table><thead>
-  <tr><td>Allow/Deny</td><td>Destination</td><td>Protocol</td><td>Value</td></tr>
+ <tr><td><strong>Allow/Deny</strong></td><td><strong>Destination</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong> </td></tr>
+     <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **80** To **80**</td></tr>
+  <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: **443** To **443**</td></tr>
   </thead>
   <tbody>
   <tr><td>Allow</td><td>IP address or CIDR <br> **IP range of Backend**  say 10.240.0.0/24</td><td>TCP</td><td>1433</td></tr>
+  <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr>
   </tbody></table>
 5. Under Attach subnets, select the frontend subnet.
 6. Click **Create access control list**.
