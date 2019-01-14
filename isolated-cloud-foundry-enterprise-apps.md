@@ -227,17 +227,17 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
 1. Back in your terminal, clone the projects that provide Kubernetes deployment files and the service broker implementation.
 
   ```sh
-   git clone https://github.com/IBM-Cloud/cfee-service-broker-kubernetes.git
+  git clone https://github.com/IBM-Cloud/cfee-service-broker-kubernetes.git
   ```
    {:pre: .pre}
 
    ```sh
-   cd cfee-service-broker-kubernetes
+  cd cfee-service-broker-kubernetes
    ```
    {:pre: .pre}
 
    ```sh
-   git clone https://github.com/IBM/sample-resource-service-brokers.git
+  git clone https://github.com/IBM/sample-resource-service-brokers.git
    ```
   {:pre: .pre}
 
@@ -277,7 +277,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   {:pre: .pre}
 
   ```sh
-  $(ibmcloud ks cluster-config <your-cfee-cluster-name> --export)
+  ibmcloud ks cluster-config <your-cfee-cluster-name> --export
   ```
   {:pre: .pre}
 
