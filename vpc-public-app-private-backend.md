@@ -171,12 +171,12 @@ To create a virtual server instance in the newly created subnet:
 5. Select the SSH key you created earlier.
 6. Leave the other options as it is and click **Create virtual server instance**.
 
-Wait for the status to change to **Powered On**.Configure network rules for the backend subnet
+Wait for the status to change to **Powered On**. Configure network rules for the backend subnet.
 
 ## Create and configure ACLs
 {: #create_configure_acls}
 
-You can configure the ACL to limit inbound and outbound traffic to the subnet. By default, all traffic is allowed. Each subnet can be attached to only one ACL. However, an ACL can be attached to multiple subnets.
+You can configure ACLs to limit inbound and outbound traffic to the subnet. By default, all traffic is allowed. Each subnet can be attached to only one ACL. However, an ACL can be attached to multiple subnets.
 
 ### Configure network rules for the backend subnet
 
