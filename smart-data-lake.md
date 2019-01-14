@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-12-11"
+lastupdated: "2018-1-14"
 
 ---
 
@@ -121,7 +121,7 @@ This section uses the command line to create service instances. Alternatively, y
 
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/).
 
-1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://catalog.data.gov/dataset/traffic-collision-data-from-2010-to-present/resource/643d0e98-5f40-4db3-8427-02641dd05fd9?inner_span=True) CSV file. The file is 81MB and may take a few minutes to download.
+1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD) CSV file. The file is 81MB and may take a few minutes to download.
 2. In your browser, access the **data-lake-cos** service instance from the [Dashboard](https://{DomainName}/dashboard).
 3. Create a new bucket to store data.
     - Click the **Create a bucket** button.
@@ -185,10 +185,11 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     - Leave the **Language** and **Runtime** defaults; click **Create notebook**.
 2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the **In [ ]:** input prompt and then **Run**.
     ```python
-    !pip -q install ibmcloudsql
-    !pip install --upgrade pixiedust
+    !conda install pyarrow
+    !conda install sqlparse
+    !pip install --user ibmcloudsql
     import ibmcloudsql
-    import pixiedust
+    from pixiedust.display import *
     ```
     {: codeblock}
 3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
