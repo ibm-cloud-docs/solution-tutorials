@@ -222,7 +222,7 @@ While Cloud Foundry developers may be new to Kubernetes, there are many concepts
 
 ## Deploy a Kubernetes service broker
 
-In this section, you'll deploy a microservice to Kubernetes that acts as a service broker for CFEE. [Service brokers](https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md) provide details on available services as well as binding and provisioning support to your Cloud Foundry application. You used a built-in {{site.data.keyword.cloud_notm}} service broker to add the {{site.data.keyword.cloudant_short_notm}} service. Now you'll deploy and use a custom one.
+In this section, you'll deploy a microservice to Kubernetes that acts as a service broker for CFEE. [Service brokers](https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md) provide details on available services as well as binding and provisioning support to your Cloud Foundry application. You used a built-in {{site.data.keyword.cloud_notm}} service broker to add the {{site.data.keyword.cloudant_short_notm}} service. Now you'll deploy and use a custom one. You will then modify the Node starter app to use the service broker, the service broker will return to the Node starter app a Welcome message in several languages. ![Service broker response](./images/solution45-CFEE-apps/service-broker.png)
 
 1. Back in your terminal, clone the projects that provide Kubernetes deployment files and the service broker implementation.
 
@@ -405,7 +405,7 @@ To allow developers to provision and bind services from the service broker, you'
    ```
     {:pre: .pre}
 
-3. In your browser, access your CFEE instance from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `dev` space.
+3. In your browser, access your CFEE instance from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `organizations -> spaces` and select your `dev` space.
 
 4. Select the **Services** tab and the **Create Service** button.
 
@@ -533,7 +533,7 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
   ```
   {:pre: .pre}
 
-Now visit the application to see the Welcome message in several languages. While this approach used Cloud Foundry as the service implementation, you could just as easily use Kubernetes. The main difference is that the URL to the service would likey be `welcome-service.default.svc.cluster.local`. Using Kubernetes has the added benefit of keeping network traffic to services internal to the Kubernetes cluster.
+Now visit the application to see the Welcome message in several languages. While this approach used Cloud Foundry as the service implementation, you could just as easily use Kubernetes. The main difference is that the URL to the service would likely be `welcome-service.default.svc.cluster.local`. Using Kubernetes has the added benefit of keeping network traffic to services internal to the Kubernetes cluster.
 
 ## Expand the tutorial
 
