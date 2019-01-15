@@ -18,9 +18,11 @@ lastupdated: "2018-1-8"
 
 # Isolated Cloud Foundry Enterprise Apps
 
-{{site.data.keyword.cfee_full_notm}} (CFEE) is an isolated, enterprise-grade Cloud Foundry platform. It provides developers with a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage, and monitoring. {{site.data.keyword.cfee_full_notm}} provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
+With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. This provides your developers with a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage, and monitoring. {{site.data.keyword.cfee_full_notm}} provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
 
-This tutorial will walk you through the process of creating and configuring a {{site.data.keyword.cfee_full_notm}}, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
+A use case for {{site.data.keyword.cfee_full_notm}} is an enterprise-owned innovation platform. Developers within an enterprise can either create new microservices or migrate legacy applications to CFEE. Microservices can then be published to additional developers using the Cloud Foundry marketplace. Once there, developers can consume services within their application just as they do today on public Cloud.
+
+The tutorial will walk you through the process of creating and configuring a {{site.data.keyword.cfee_full_notm}}, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
 
 ## Objectives
 
@@ -220,31 +222,33 @@ While Cloud Foundry developers may be new to Kubernetes, there are many concepts
 
 ## Deploy a Kubernetes service broker
 
-In this section, you'll deploy a microservice to Kubernetes that acts as a service broker for CFEE. [Service brokers](https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md) provide details on available services as well as binding and provisioning support to your Cloud Foundry application. You used a built-in {{site.data.keyword.cloud_notm}} service broker to add the {{site.data.keyword.cloudant_short_notm}} service. Now you'll deploy and use a custom one.
+In this section, you'll deploy a microservice to Kubernetes that acts as a service broker for CFEE. [Service brokers](https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md) provide details on available services as well as binding and provisioning support to your Cloud Foundry application. You used a built-in {{site.data.keyword.cloud_notm}} service broker to add the {{site.data.keyword.cloudant_short_notm}} service. Now you'll deploy and use a custom one. You will then modify the Node starter app to use the service broker, the service broker will return to the Node starter app a Welcome message in several languages.
 
 1. Back in your terminal, clone the projects that provide Kubernetes deployment files and the service broker implementation.
 
   ```sh
-   git clone https://github.com/IBM-Cloud/cfee-service-broker-kubernetes.git
+  git clone https://github.com/IBM-Cloud/cfee-service-broker-kubernetes.git
   ```
    {:pre: .pre}
 
    ```sh
-   cd cfee-service-broker-kubernetes
+  cd cfee-service-broker-kubernetes
    ```
    {:pre: .pre}
 
    ```sh
-   git clone https://github.com/IBM/sample-resource-service-brokers.git
+  git clone https://github.com/IBM/sample-resource-service-brokers.git
    ```
   {:pre: .pre}
 
-2. Build and store the Docker image that contains the service broker on {{site.data.keyword.registryshort_notm}}. Use the `ibmcloud cr info` command to manually retrieve the registry URL or automatically with the `export REGISTRY` command below.
+2. Build and store the Docker image that contains the service broker on {{site.data.keyword.registryshort_notm}}. Use the `ibmcloud cr info` command to manually retrieve the registry URL or automatically with the `export REGISTRY` command below. The `cr namespace-add` command will create a namespace to store the docker image.
 
   ```sh
   export REGISTRY=$(ibmcloud cr info | head -2 | awk '{ print $3 }')
   ```
   {:pre: .pre}
+
+  Create a namespace called `cfee-tutorial`.
 
   ```sh
   ibmcloud cr namespace-add cfee-tutorial
@@ -252,18 +256,13 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   {:pre: .pre}
 
   ```sh
-  docker build . -t $REGISTRY/cfee-tutorial/service-broker-impl
+  ibmcloud cr build . -t $REGISTRY/cfee-tutorial/service-broker-impl
   ```
   {:pre: .pre}
 
-  ```sh
-  docker push $REGISTRY/cfee-tutorial/service-broker-impl
-  ```
-  {:pre: .pre}
+  If your container registry is different than `registry.ng.bluemix.net`, edit the `./cloud-foundry-osb-on-kubernetes/deployment.yml` file. Update the `image` attribute to reflect your container registry URL.
 
-3. If your container registry is different than `registry.ng.bluemix.net`, edit the `./cloud-foundry-osb-on-kubernetes/deployment.yaml` file. Update the `image` attribute to reflect your container registry URL.
-
-4. Deploy the container image to CFEE's Kubernetes cluster. Your CFEE's cluster exists in the `default` resource group, which should be targeted if not already. Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
+3. Deploy the container image to CFEE's Kubernetes cluster. Your CFEE's cluster exists in the `default` resource group, which should be targeted if not already. Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
 
   ```sh
   ibmcloud target -g default
@@ -276,7 +275,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   {:pre: .pre}
 
   ```sh
-  $(ibmcloud ks cluster-config <your-cfee-cluster-name> --export)
+  ibmcloud ks cluster-config <your-cfee-cluster-name> --export
   ```
   {:pre: .pre}
 
@@ -285,7 +284,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   ```
   {:pre: .pre}
 
-5. Verify the pods have STATUS as `Running`. It may take a few moments for Kubernetes to pull the image and start the containers. Notice that you have two pods because the `deployment.yml` has requested 2 `replicas`.
+4. Verify the pods have STATUS as `Running`. It may take a few moments for Kubernetes to pull the image and start the containers. Notice that you have two pods because the `deployment.yml` has requested 2 `replicas`.
 
   ```sh
   kubectl get pods
@@ -304,7 +303,7 @@ This section will confirm that Kubernetes artifacts are configured using {{site.
 
 2. Open the **Kubernetes Dashboard** by clicking the corresponding button.
 
-3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply`.
+3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply` in earlier steps.
 
 4. In the resulting dashboard, notice the following:
    - The service has been provided an overlay IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
@@ -312,7 +311,7 @@ This section will confirm that Kubernetes artifacts are configured using {{site.
 
 Having confirmed that the service is available and is proxying the service broker pods, you can verify the broker responds with information about available services.
 
-You can view Cloud Foundry related artifacts from the Kubernetes dashboard. Choose the `cf` option from the **Namespace** selector.
+You can view Cloud Foundry related artifacts from the Kubernetes dashboard. To see them, click on **Namespaces** to view all namespaces with artifacts including the `cf` Cloud Foundry namespace.
 {:tip: .tip}
 
 ### Access the broker from a Cloud Foundry container
@@ -326,14 +325,14 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
   ```
   {:pre: .pre}
 
-2. By default, SSH is disabled in spaces. This is different than the public cloud, so enable SSH in your `dev` space.
+2. By default, SSH is disabled in spaces. This is different than the public cloud, so enable SSH in your CFEE `dev` space.
 
   ```sh
   ibmcloud cf allow-space-ssh dev
   ```
   {:pre: .pre}
 
-3. Use the `kubectl` command to show the same ClusterIP you saw in the Kubenetes dashboard. Then SSH into the `GetStartedNode` application and retrieve data from the service broker using the IP address.
+3. Use the `kubectl` command to show the same ClusterIP you saw in the Kubenetes dashboard. Then SSH into the `GetStartedNode` application and retrieve data from the service broker using the IP address. Be aware the last command may result in an error, which the next step will resolve.
 
   ```sh
   kubectl get service tutorial-broker-service
@@ -367,12 +366,12 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
   ```
   {:pre: .pre}
 
-5. Edit the `public_networks.json` file, and verify that the ClusterIP address being used falls outside of the existing rules. For example, the range `172.32.0.0-192.167.255.255` likely does not include the ClusterIP and needs to be updated.
+5. Edit the `public_networks.json` file, and verify that the ClusterIP address being used falls outside of the existing rules. For example, the range `172.32.0.0-192.167.255.255` likely does not include the ClusterIP and needs to be updated. If for example, your ClusterIP address is something like this `172.21.107.63` then you would need to edit to the file to have something like this `172.0.0.0-255.255.255.255`.
 
 6. Adjust the ASG `destination` rule to include the IP address of the Kubernetes service. Trim the file to include only the JSON data, which begins and ends with the brackets. Then upload the new ASG.
 
   ```sh
-  ibmcloud cf update-security-group public_networks ./public_networks.json
+  ibmcloud cf update-security-group public_networks public_networks.json
   ```
   {:pre: .pre}
 
@@ -390,7 +389,7 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
 
 ### Register the service broker with CFEE
 
-To allow developers to provision and bind services from the service broker, you'll register it with CFEE. Previously you've worked with the broker using an IP address. This is problematic though. If the service broker restarts, it receives a new IP address, which requires updating CFEE. To address this problem, you'll use another Kubernetes feature called KubeDNS that provides a Fully Qualified Domain Name (FQDN) route to the service broker.
+To allow developers to provision and bind services from the service broker, you'll register it with CFEE. Previously you've worked with the broker using an IP address. This is problematic though. If the service broker restarts, it receives a new IP address, which requires updating CFEE. To address this problem, you'll use another Kubernetes feature called KubeDNS that provides a Fully Qualified Domain Name (FQDN) to the service broker.
 
 1. Register the service broker with CFEE using the FQDN of the `tutorial-service-broker` service. Again, this route is internal to your CFEE Kubernetes cluster.
   
@@ -406,7 +405,7 @@ To allow developers to provision and bind services from the service broker, you'
    ```
     {:pre: .pre}
 
-3. In your browser, access your CFEE instance from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `dev` space.
+3. In your browser, access your CFEE instance from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `organizations -> spaces` and select your `dev` space.
 
 4. Select the **Services** tab and the **Create Service** button.
 
@@ -439,14 +438,14 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
 
 2. Access the service using your browser. The `route` to the service will be shown as part of the `push` command's output. The resulting URL will be similar to https://welcome.<your-cfee-cluster-domain>. Refresh the page to see alternating languages.
 
-3. Return to the `sample-resource-service-brokers` folder and update the Node.js sample implementation `testresourceservicebroker.js` with the service's URL. Locate the `// TODO - Do your actual work here` comment and update the code using the example below.
+3. Return to the `sample-resource-service-brokers` folder and edit the Node.js sample implementation `sample-resource-service-brokers/node-resource-service-broker/testresourceservicebroker.js` with adding url after line 854 with adding the cluster URL. 
 
   ```javascript
   // TODO - Do your actual work here
-
+  
     var generatedUserid   = uuid();
     var generatedPassword = uuid();
-
+  
     result = 
     {
         credentials : 
@@ -459,19 +458,14 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
   ```
   {:codeblock: .codeblock}
 
-4. Build, push and deploy the updated service broker. This will ensure the URL property will be provided to apps that bind the service.
+4. Build and deploy the updated service broker. This will ensure the URL property will be provided to apps that bind the service.
 
   ```sh
   cd ..
   ```
 
   ```sh
-  docker build . -t $REGISTRY/cfee-tutorial/service-broker-impl
-  ```
-  {:pre: .pre}
-
-  ```sh
-  docker push $REGISTRY/cfee-tutorial/service-broker-impl
+  ibmcloud cr build . -t $REGISTRY/cfee-tutorial/service-broker-impl
   ```
   {:pre: .pre}
 
@@ -480,27 +474,32 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
   ```
   {:pre: .pre}
 
-5. Edit the `server.js` file in `get-stared-node` to include the following middleware. Insert it just prior to the `app.listen()` call.
+5. In terminal, navigate back to the `get-started-node` application folder. 
+
+  ```bash
+  cd ../
+  cd get-started-node
+  ```
+
+  {:pre: .pre}
+
+6. Edit the `get-started-node/server.js` file in `get-stared-node` to include the following middleware. Insert it just prior to the `app.listen()` call.
 
   ```javascript
+  // Use the service broker 
   const request = require('request');
   const testService = appEnv.services['testnoderesourceservicebrokername'];
-
+  
   if (testService) {
     const { credentials: { url} } = testService[0];
     app.get("/api/welcome", (req, res) => request(url, (e, r, b) => res.send(b)));
   } else {
     app.get("/api/welcome", (req, res) => res.send('Welcome'));
   }
-
-  var port = process.env.PORT || 3000
-  app.listen(port, function() {
-      console.log("To view your app, open this link in your browser: http://localhost:" + port);
-  });
   ```
   {:codeblock: .codeblock}
 
-6. Refactor the `index.html` page. Change `data-i18n="welcome"` to `id="welcome"` in the `h1` tag. Add a call to the service at the end of the `$(document).ready()` function.
+7. Refactor the `get-started-node/views/index.html` page. Change `data-i18n="welcome"` to `id="welcome"` in the `h1` tag. And then add a call to the service at the end of the `$(document).ready()` function.
 
   ```html
   <h1 id="welcome"></h1> <!-- Welcome -->
@@ -512,7 +511,7 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
   ```
   {:codeblock: .codeblock}
 
-7. Update the `GetStartedNode` app. Include the `request` package dependency that was added to `server.js`, rebind the `welcome-service` to pick up the new `url` property and finally push the app's new code.
+8. Update the `GetStartedNode` app. Include the `request` package dependency that was added to `server.js`, rebind the `welcome-service` to pick up the new `url` property and finally push the app's new code.
 
   ```sh
   npm i request -S
@@ -534,13 +533,13 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
   ```
   {:pre: .pre}
 
-Now visit the application to see the Welcome message in several languages. While this approach used Cloud Foundry as the service implementation, you could just as easily use Kubernetes. The main difference is that the URL to the service would likey be `welcome-service.default.svc.cluster.local`. Using Kubernetes has the added benefit of keeping network traffic to services internal to the Kubernetes cluster.
+Done, now visit the application to see the Welcome message in several languages. While this approach used Cloud Foundry as the service implementation, you could just as easily use Kubernetes. The main difference is that the URL to the service would likely be `welcome-service.default.svc.cluster.local`. Using Kubernetes has the added benefit of keeping network traffic to services internal to the Kubernetes cluster. ![Service broker response](./images/solution45-CFEE-apps/service-broker.png)
 
 ## Expand the tutorial
 
 Congratulations, you've deployed {{site.data.keyword.cfee_full_notm}} with a custom service broker and initial application. Below are additional suggestions to enhance CFEE.
 
-* Create a Kubernetes equivalent of the `welcome-service` by using the Dockerfile and deployment.yaml as a template.
+* Create a Kubernetes equivalent of the `welcome-service` by using the Dockerfile and deployment.yml as a template.
 
 ## Related content
 
