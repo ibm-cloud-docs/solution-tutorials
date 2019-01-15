@@ -97,7 +97,7 @@ Follow the steps below to create a CFEE org and space.
 
 ### Add users to orgs and spaces
 
-In CFEE, you can assign role assignments controlling user access, but to do so, the user must be invited to your {{site.data.keyword.cloud_notm}} org in the **Identity & Access** page under the **Manage > Users** in the {{site.data.keyword.cloud_notm}} header.
+In CFEE, you can assign roles controlling user access, but to do so, the user must be invited to your {{site.data.keyword.cloud_notm}} org in the **Identity & Access** page under the **Manage > Users** in the {{site.data.keyword.cloud_notm}} header.
 
 Once the user has been invited, follow the steps below to add the user to the `tutorial` org and `dev` space.
 
@@ -117,40 +117,28 @@ In this section, you'll deploy a Node.js application to CFEE. Once deployed, you
 ### Deploy the application to CFEE
 
 1. From your terminal, clone the [get-started-node](https://github.com/IBM-Cloud/get-started-node) sample application.
-
    ```sh
    git clone https://github.com/IBM-Cloud/get-started-node
    ```
-
-   {:pre: .pre}
-
+   {: codeblock}
 2. Run the app locally to ensure it builds and starts correctly. Confirm by accessing `http://localhost:3000/` in your browser.
-
    ```sh
    cd get-started-node
    npm install
    npm start
    ```
-
-   {:pre: .pre}
-
+   {: codeblock}
 3. Log in to {{site.data.keyword.cloud_notm}} and target your CFEE instance. An interactive prompt will help you select your new CFEE instance. Since only one CFEE organization and space exist, these will be the defaulted target. You can run `ibmcloud target -o tutorial -s dev` if you've added more than one org or space.
-
    ```sh
    ibmcloud login
    ibmcloud target --cf
    ```
-
-   {:pre: .pre}
-
+   {: codeblock}
 4. Push the **get-started-node** app to CFEE.
-
    ```sh
    ibmcloud cf push
    ```
-
-   {:pre: .pre}
-
+   {: codeblock}
 5. The endpoint of your app will display in the final output next to the `routes` property. Open the URL in your browser to confirm the application is running.
 
 ### Create and bind Cloudant database to the app
@@ -226,70 +214,66 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
 
 1. Back in your terminal, clone the projects that provide Kubernetes deployment files and the service broker implementation.
 
-  ```sh
-  git clone https://github.com/IBM-Cloud/cfee-service-broker-kubernetes.git
-  ```
-   {:pre: .pre}
+   ```sh
+   git clone https://github.com/IBM-Cloud/cfee-service-broker-kubernetes.git
+   ```
+   {: codeblock}
 
    ```sh
-  cd cfee-service-broker-kubernetes
+   cd cfee-service-broker-kubernetes
    ```
-   {:pre: .pre}
+   {: codeblock}
 
    ```sh
-  git clone https://github.com/IBM/sample-resource-service-brokers.git
+   git clone https://github.com/IBM/sample-resource-service-brokers.git
    ```
-  {:pre: .pre}
+   {: codeblock}
 
 2. Build and store the Docker image that contains the service broker on {{site.data.keyword.registryshort_notm}}. Use the `ibmcloud cr info` command to manually retrieve the registry URL or automatically with the `export REGISTRY` command below. The `cr namespace-add` command will create a namespace to store the docker image.
 
-  ```sh
-  export REGISTRY=$(ibmcloud cr info | head -2 | awk '{ print $3 }')
-  ```
-  {:pre: .pre}
+   ```sh
+   export REGISTRY=$(ibmcloud cr info | head -2 | awk '{ print $3 }')
+   ```
+   {: codeblock}
 
-  Create a namespace called `cfee-tutorial`.
+   Create a namespace called `cfee-tutorial`.
 
-  ```sh
-  ibmcloud cr namespace-add cfee-tutorial
-  ```
-  {:pre: .pre}
+   ```sh
+   ibmcloud cr namespace-add cfee-tutorial
+   ```
+   {: codeblock}
 
-  ```sh
-  ibmcloud cr build . -t $REGISTRY/cfee-tutorial/service-broker-impl
-  ```
-  {:pre: .pre}
+   ```sh
+   ibmcloud cr build . -t $REGISTRY/cfee-tutorial/service-broker-impl
+   ```
+   {: codeblock}
 
-  If your container registry is different than `registry.ng.bluemix.net`, edit the `./cloud-foundry-osb-on-kubernetes/deployment.yml` file. Update the `image` attribute to reflect your container registry URL.
-
+   If your container registry is different than `registry.ng.bluemix.net`, edit the `./cloud-foundry-osb-on-kubernetes/deployment.yml` file. Update the `image` attribute to reflect your container registry URL.
 3. Deploy the container image to CFEE's Kubernetes cluster. Your CFEE's cluster exists in the `default` resource group, which should be targeted if not already. Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
+   ```sh
+   ibmcloud target -g default
+   ```
+   {: codeblock}
 
-  ```sh
-  ibmcloud target -g default
-  ```
-  {:pre: .pre}
+   ```sh
+   ibmcloud ks clusters
+   ```
+   {: codeblock}
 
-  ```sh
-  ibmcloud ks clusters
-  ```
-  {:pre: .pre}
+   ```sh
+   ibmcloud ks cluster-config <your-cfee-cluster-name> --export
+   ```
+   {: codeblock}
 
-  ```sh
-  ibmcloud ks cluster-config <your-cfee-cluster-name> --export
-  ```
-  {:pre: .pre}
-
-  ```sh
-  kubectl apply -f deployment.yml
-  ```
-  {:pre: .pre}
-
+   ```sh
+   kubectl apply -f deployment.yml
+   ```
+   {: codeblock}
 4. Verify the pods have STATUS as `Running`. It may take a few moments for Kubernetes to pull the image and start the containers. Notice that you have two pods because the `deployment.yml` has requested 2 `replicas`.
-
-  ```sh
-  kubectl get pods
-  ```
-  {:pre: .pre}
+   ```sh
+   kubectl get pods
+   ```
+   {: codeblock}
 
 ## Verify the service broker is deployed
 
@@ -300,11 +284,8 @@ Now that you've deployed the service broker, confirm it functions properly. You'
 This section will confirm that Kubernetes artifacts are configured using {{site.data.keyword.containershort_notm}} dashboard.
 
 1. From the [Kubernetes Clusters](https://{DomainName}/containers-kubernetes/clusters) page, access your CFEE cluster by clicking the row item beginning with your CFEE service's name and ending with **-cluster**.
-
 2. Open the **Kubernetes Dashboard** by clicking the corresponding button.
-
 3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply` in earlier steps.
-
 4. In the resulting dashboard, notice the following:
    - The service has been provided an overlay IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
    - The service has two endpoints, which correspond to the two pods that have the service broker containers running.
@@ -319,220 +300,183 @@ You can view Cloud Foundry related artifacts from the Kubernetes dashboard. To s
 To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the service broker directly from a Cloud Foundry application.
 
 1. Back in your terminal, confirm you are still connected to your CFEE `tutorial` organization and `dev` space using `ibmcloud target`. If needed, re-target CFEE.
-
-  ```sh
-  ibmcloud target --cf
-  ```
-  {:pre: .pre}
-
+   ```sh
+   ibmcloud target --cf
+   ```
+   {: codeblock}
 2. By default, SSH is disabled in spaces. This is different than the public cloud, so enable SSH in your CFEE `dev` space.
-
-  ```sh
-  ibmcloud cf allow-space-ssh dev
-  ```
-  {:pre: .pre}
-
+   ```sh
+   ibmcloud cf allow-space-ssh dev
+   ```
+   {: codeblock}
 3. Use the `kubectl` command to show the same ClusterIP you saw in the Kubenetes dashboard. Then SSH into the `GetStartedNode` application and retrieve data from the service broker using the IP address. Be aware the last command may result in an error, which the next step will resolve.
+   ```sh
+   kubectl get service tutorial-broker-service
+   ```
+   {: codeblock}
 
-  ```sh
-  kubectl get service tutorial-broker-service
-  ```
-  {:pre: .pre}
+   ```sh
+   ibmcloud cf ssh GetStartedNode
+   ```
+   {: codeblock}
 
-  ```sh
-  ibmcloud cf ssh GetStartedNode
-  ```
-  {:pre: .pre}
+   ```sh
+   export CLUSTER_IP=<ip address>
+   ```
+   {: codeblock}
 
-  ```sh
-  export CLUSTER_IP=<ip address>
-  ```
-  {:pre: .pre}
-
-  ```sh
-  wget --user TestServiceBrokerUser --password TestServiceBrokerPassword -O- http://$CLUSTER_IP/v2/catalog
-  ```
-  {:pre: .pre}
-
+   ```sh
+   wget --user TestServiceBrokerUser --password TestServiceBrokerPassword -O- http://$CLUSTER_IP/v2/catalog
+   ```
+   {: codeblock}
 4. It's likely that you received a **Connection refused** error. This is due to CFEE's default [application security groups](https://docs.cloudfoundry.org/concepts/asg.html). An application security group (ASG) defines the allowable IP range for egress traffic from a Cloud Foundry container. Since the `GetStartedNode` exists outside the default range, the error occurs. Exit the SSH session and download the `public_networks` ASG.
+   ```sh
+   exit
+   ```
+   {: codeblock}
 
-  ```sh
-  exit
-  ```
-  {:pre: .pre}
-
-  ```sh
-  ibmcloud cf security-group public_networks > public_networks.json
-  ```
-  {:pre: .pre}
-
+   ```sh
+   ibmcloud cf security-group public_networks > public_networks.json
+   ```
+   {: codeblock}
 5. Edit the `public_networks.json` file, and verify that the ClusterIP address being used falls outside of the existing rules. For example, the range `172.32.0.0-192.167.255.255` likely does not include the ClusterIP and needs to be updated. If for example, your ClusterIP address is something like this `172.21.107.63` then you would need to edit to the file to have something like this `172.0.0.0-255.255.255.255`.
-
 6. Adjust the ASG `destination` rule to include the IP address of the Kubernetes service. Trim the file to include only the JSON data, which begins and ends with the brackets. Then upload the new ASG.
+   ```sh
+   ibmcloud cf update-security-group public_networks public_networks.json
+   ```
+   {: codeblock}
 
-  ```sh
-  ibmcloud cf update-security-group public_networks public_networks.json
-  ```
-  {:pre: .pre}
-
-  ```sh
-  ibmcloud cf restart GetStartedNode
-  ```
-  {:pre: .pre}
-
+   ```sh
+   ibmcloud cf restart GetStartedNode
+   ```
+   {: codeblock}
 7. Repeat step 3, which should now succeed with mock catalog data. Finsh by exiting the SSH session.
-
-  ```sh
-  exit
-  ```
-  {:pre: .pre}
+   ```sh
+   exit
+   ```
+   {: codeblock}
 
 ### Register the service broker with CFEE
 
 To allow developers to provision and bind services from the service broker, you'll register it with CFEE. Previously you've worked with the broker using an IP address. This is problematic though. If the service broker restarts, it receives a new IP address, which requires updating CFEE. To address this problem, you'll use another Kubernetes feature called KubeDNS that provides a Fully Qualified Domain Name (FQDN) to the service broker.
 
 1. Register the service broker with CFEE using the FQDN of the `tutorial-service-broker` service. Again, this route is internal to your CFEE Kubernetes cluster.
-  
-  ```sh
-  ibmcloud cf create-service-broker my-company-broker TestServiceBrokerUser TestServiceBrokerPassword http://tutorial-broker-service.default.svc.cluster.local
-  ```
-  {:pre: .pre}
-
-2. Then add the services offered by the broker. Since the sample broker only has one mock service, a single command is needed.
-
    ```sh
-    ibmcloud cf enable-service-access testnoderesourceservicebrokername
+   ibmcloud cf create-service-broker my-company-broker TestServiceBrokerUser TestServiceBrokerPassword http://tutorial-broker-service.default.svc.cluster.local
    ```
-    {:pre: .pre}
-
+   {: codeblock}
+2. Then add the services offered by the broker. Since the sample broker only has one mock service, a single command is needed.
+   ```sh
+   ibmcloud cf enable-service-access testnoderesourceservicebrokername
+   ```
+   {: codeblock}
 3. In your browser, access your CFEE instance from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `organizations -> spaces` and select your `dev` space.
-
 4. Select the **Services** tab and the **Create Service** button.
-
 5. In the search texbox, search for **Test**. The **Test Node Resource Service Broker Display Name** mock service from the broker will display.
-
 6. Click the **Create** button and provide the name `welcome-service` to create a service instance. It will become clear in the next section why it's named welcome-service. Then bind the service to the `GetStartedNode` app using the **Bind to appliction** item in the overflow menu.
-
 7. To view the bound service, run the `cf env` command. The `GetStartedNode` application can now leverage the data in the `credentials` object similar to how it uses data from `cloudantNoSQLDB` currently.
-
-  ```sh
-  ibmcloud cf env GetStartedNode
-  ```
-  {:pre: .pre}
+   ```sh
+   ibmcloud cf env GetStartedNode
+   ```
+   {: codeblock}
 
 ## Add the service to your application
 
 Up to this point, you've deployed a service broker but not an actual service. While the service broker provides binding data to `GetStartedNode`, no actual functionality from the service itself has been added. To correct this, a mock service has been created that provides a "Welcome" message to `GetStartedNode` in various languages. You'll deploy this service to CFEE and update the broker and application to use it.
 
 1. Push the `welcome-service` implementation to CFEE to allow additional development teams to leverage it as an API.
+   ```sh
+   cd sample-resource-service
+   ```
+   {: codeblock}
 
-  ```sh
-  cd sample-resource-service
-  ```
-  {:pre: .pre}
-
-  ```sh
-  ibmcloud cf push
-  ```
-  {:pre: .pre}
-
+   ```sh
+   ibmcloud cf push
+   ```
+   {: codeblock}
 2. Access the service using your browser. The `route` to the service will be shown as part of the `push` command's output. The resulting URL will be similar to https://welcome.<your-cfee-cluster-domain>. Refresh the page to see alternating languages.
-
 3. Return to the `sample-resource-service-brokers` folder and edit the Node.js sample implementation `sample-resource-service-brokers/node-resource-service-broker/testresourceservicebroker.js` with adding url after line 854 with adding the cluster URL. 
 
-  ```javascript
-  // TODO - Do your actual work here
+   ```javascript
+   // TODO - Do your actual work here
   
-    var generatedUserid   = uuid();
-    var generatedPassword = uuid();
+   var generatedUserid   = uuid();
+   var generatedPassword = uuid();
   
-    result = 
-    {
-        credentials : 
-        {
-            userid   : generatedUserid,
-            password : generatedPassword,
-            url: 'https://welcome.<your-cfee-cluster-domain>'
-        }
-    };
-  ```
-  {:codeblock: .codeblock}
-
+   result = {
+     credentials: {
+       userid   : generatedUserid,
+       password : generatedPassword,
+       url: 'https://welcome.<your-cfee-cluster-domain>'
+     }
+   };
+   ```
+   {: codeblock}
 4. Build and deploy the updated service broker. This will ensure the URL property will be provided to apps that bind the service.
+   ```sh
+   cd ..
+   ```
+   {: codeblock}
 
-  ```sh
-  cd ..
-  ```
+   ```sh
+   ibmcloud cr build . -t $REGISTRY/cfee-tutorial/service-broker-impl
+   ```
+   {: codeblock}
 
-  ```sh
-  ibmcloud cr build . -t $REGISTRY/cfee-tutorial/service-broker-impl
-  ```
-  {:pre: .pre}
-
-  ```sh
-  kubectl patch deployment tutorial-servicebroker-deployment -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"ver\":\"2\"}}}}}"
-  ```
-  {:pre: .pre}
-
+   ```sh
+   kubectl patch deployment tutorial-servicebroker-deployment -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"ver\":\"2\"}}}}}"
+   ```
+   {: codeblock}
 5. In terminal, navigate back to the `get-started-node` application folder. 
-
-  ```bash
-  cd ../
-  cd get-started-node
-  ```
-
-  {:pre: .pre}
-
+   ```bash
+   cd ../
+   cd get-started-node
+   ```
+   {: codeblock}
 6. Edit the `get-started-node/server.js` file in `get-stared-node` to include the following middleware. Insert it just prior to the `app.listen()` call.
+   ```javascript
+   // Use the service broker 
+   const request = require('request');
+   const testService = appEnv.services['testnoderesourceservicebrokername'];
 
-  ```javascript
-  // Use the service broker 
-  const request = require('request');
-  const testService = appEnv.services['testnoderesourceservicebrokername'];
-  
-  if (testService) {
-    const { credentials: { url} } = testService[0];
-    app.get("/api/welcome", (req, res) => request(url, (e, r, b) => res.send(b)));
-  } else {
-    app.get("/api/welcome", (req, res) => res.send('Welcome'));
-  }
-  ```
-  {:codeblock: .codeblock}
-
+   if (testService) {
+     const { credentials: { url} } = testService[0];
+     app.get("/api/welcome", (req, res) => request(url, (e, r, b) => res.send(b)));
+   } else {
+     app.get("/api/welcome", (req, res) => res.send('Welcome'));
+   }
+   ```
+   {: codeblock}
 7. Refactor the `get-started-node/views/index.html` page. Change `data-i18n="welcome"` to `id="welcome"` in the `h1` tag. And then add a call to the service at the end of the `$(document).ready()` function.
+   ```html
+   <h1 id="welcome"></h1> <!-- Welcome -->
+   ```
+   {: codeblock}
 
-  ```html
-  <h1 id="welcome"></h1> <!-- Welcome -->
-  ```
-  {:codeblock: .codeblock}
-
-  ```javascript
-  $.get("./api/welcome").done(data => document.getElementById('welcome').innerHTML= data);
-  ```
-  {:codeblock: .codeblock}
-
+   ```javascript
+   $.get("./api/welcome").done(data => document.getElementById('welcome').innerHTML= data);
+   ```
+   {: codeblock}
 8. Update the `GetStartedNode` app. Include the `request` package dependency that was added to `server.js`, rebind the `welcome-service` to pick up the new `url` property and finally push the app's new code.
+   ```sh
+   npm i request -S
+   ```
+   {: codeblock}
 
-  ```sh
-  npm i request -S
-  ```
-  {:pre: .pre}
+   ```sh
+   ibmcloud cf unbind-service GetStartedNode welcome-service
+   ```
+   {: codeblock}
 
-  ```sh
-  ibmcloud cf unbind-service GetStartedNode welcome-service
-  ```
-  {:pre: .pre}
+   ```sh
+   ibmcloud cf bind-service GetStartedNode welcome-service
+   ```
+   {: codeblock}
 
-  ```sh
-  ibmcloud cf bind-service GetStartedNode welcome-service
-  ```
-  {:pre: .pre}
-
-  ```sh
-  ibmcloud cf push
-  ```
-  {:pre: .pre}
-
+   ```sh
+   ibmcloud cf push
+   ```
+   {: codeblock}
 Done, now visit the application to see the Welcome message in several languages. While this approach used Cloud Foundry as the service implementation, you could just as easily use Kubernetes. The main difference is that the URL to the service would likely be `welcome-service.default.svc.cluster.local`. Using Kubernetes has the added benefit of keeping network traffic to services internal to the Kubernetes cluster. ![Service broker response](./images/solution45-CFEE-apps/service-broker.png)
 
 ## Expand the tutorial
@@ -542,7 +486,6 @@ Congratulations, you've deployed {{site.data.keyword.cfee_full_notm}} with a cus
 * Create a Kubernetes equivalent of the `welcome-service` by using the Dockerfile and deployment.yml as a template.
 
 ## Related content
-
 {:related}
 
 * [Deploying apps in Kubernetes clusters](https://{DomainName}/docs/containers/cs_app.html#app)
