@@ -18,9 +18,9 @@ lastupdated: "2018-1-8"
 
 # Isolated Cloud Foundry Enterprise Apps
 
-With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. This provides your developers with a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage, and monitoring. Cloud Foundry Enterprise Environment provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
+{{site.data.keyword.cfee_full_notm}} (CFEE) is an isolated, enterprise-grade Cloud Foundry platform. It provides developers with a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage, and monitoring. {{site.data.keyword.cfee_full_notm}} provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
 
-This tutorial will walk you through the process of creating and configuring a Cloud Foundry Enterprise Environment, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
+This tutorial will walk you through the process of creating and configuring a {{site.data.keyword.cfee_full_notm}}, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
 
 ## Objectives
 
@@ -58,14 +58,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 - [Git](https://git-scm.com/downloads)
 - [Node.js](https://nodejs.org/en/)
 
-## Provision Cloud Foundry Enterprise Environment
+## Provision {{site.data.keyword.cfee_full_notm}}
 
 {:provision_cfee}
 
 In this section, you'll create an instance of {{site.data.keyword.cfee_full_notm}} deployed to Kubernetes worker nodes from {{site.data.keyword.containershort_notm}}.
 
 1. [Prepare your {{site.data.keyword.cloud_notm}} account](https://{DomainName}/docs/cloud-foundry/prepare-account.html) to ensure the creation of required infrastructure resources.
-2. From the {{site.data.keyword.cloud_notm}} catalog, create a service instance of [Cloud Foundry Enterprise Environment](https://{DomainName}/cfadmin/create).
+2. From the {{site.data.keyword.cloud_notm}} catalog, create a service instance of [{{site.data.keyword.cfee_full_notm}} ](https://{DomainName}/cfadmin/create).
 3. Configure CFEE by providing the following:
    - Select the **Standard** plan.
    - Enter a **Name** for the service instance.
