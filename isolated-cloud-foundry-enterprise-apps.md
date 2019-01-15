@@ -248,7 +248,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   ```
   {:pre: .pre}
 
-  ToDo: State what is this command doing.
+  Create a namespace called `cfee-tutorial`.
 
   ```sh
   ibmcloud cr namespace-add cfee-tutorial
@@ -260,11 +260,9 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   ```
   {:pre: .pre}
 
-  ToDo: State the expected terminal output after running above command.
+  If your container registry is different than `registry.ng.bluemix.net`, edit the `./cloud-foundry-osb-on-kubernetes/deployment.yml` file. Update the `image` attribute to reflect your container registry URL.
 
-3. If your container registry is different than `registry.ng.bluemix.net`, edit the `./cloud-foundry-osb-on-kubernetes/deployment.yml` file. Update the `image` attribute to reflect your container registry URL.
-
-4. Deploy the container image to CFEE's Kubernetes cluster. Your CFEE's cluster exists in the `default` resource group, which should be targeted if not already. Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
+3. Deploy the container image to CFEE's Kubernetes cluster. Your CFEE's cluster exists in the `default` resource group, which should be targeted if not already. Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
 
   ```sh
   ibmcloud target -g default
@@ -286,7 +284,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
   ```
   {:pre: .pre}
 
-5. Verify the pods have STATUS as `Running`. It may take a few moments for Kubernetes to pull the image and start the containers. Notice that you have two pods because the `deployment.yml` has requested 2 `replicas`.
+4. Verify the pods have STATUS as `Running`. It may take a few moments for Kubernetes to pull the image and start the containers. Notice that you have two pods because the `deployment.yml` has requested 2 `replicas`.
 
   ```sh
   kubectl get pods
@@ -368,12 +366,12 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
   ```
   {:pre: .pre}
 
-5. Edit the `public_networks.json` file, and verify that the ClusterIP address being used falls outside of the existing rules. For example, the range `172.32.0.0-192.167.255.255` likely does not include the ClusterIP and needs to be updated.
+5. Edit the `public_networks.json` file, and verify that the ClusterIP address being used falls outside of the existing rules. For example, the range `172.32.0.0-192.167.255.255` likely does not include the ClusterIP and needs to be updated. If for example, your ClusterIP address is something like this `172.21.107.63` then you would need to edit to the file to have something like this `172.0.0.0-255.255.255.255`.
 
 6. Adjust the ASG `destination` rule to include the IP address of the Kubernetes service. Trim the file to include only the JSON data, which begins and ends with the brackets. Then upload the new ASG.
 
   ```sh
-  ibmcloud cf update-security-group public_networks ./public_networks.json
+  ibmcloud cf update-security-group public_networks public_networks.json
   ```
   {:pre: .pre}
 
