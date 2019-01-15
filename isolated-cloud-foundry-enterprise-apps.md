@@ -438,14 +438,14 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
 
 2. Access the service using your browser. The `route` to the service will be shown as part of the `push` command's output. The resulting URL will be similar to https://welcome.<your-cfee-cluster-domain>. Refresh the page to see alternating languages.
 
-3. Return to the `sample-resource-service-brokers` folder and update the Node.js sample implementation `testresourceservicebroker.js` with the service's URL. Locate the `// TODO - Do your actual work here` comment and update the code using the example below.
+3. Return to the `sample-resource-service-brokers` folder and edit the Node.js sample implementation `sample-resource-service-brokers/node-resource-service-broker/testresourceservicebroker.js` with adding url after line 854 with adding the cluster URL. 
 
   ```javascript
   // TODO - Do your actual work here
-
+  
     var generatedUserid   = uuid();
     var generatedPassword = uuid();
-
+  
     result = 
     {
         credentials : 
@@ -474,27 +474,32 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
   ```
   {:pre: .pre}
 
-5. Edit the `server.js` file in `get-stared-node` to include the following middleware. Insert it just prior to the `app.listen()` call.
+5. In terminal, navigate back to the `get-started-node` application folder. 
+
+  ```bash
+  cd ../
+  cd get-started-node
+  ```
+
+  {:pre: .pre}
+
+6. Edit the `get-started-node/server.js` file in `get-stared-node` to include the following middleware. Insert it just prior to the `app.listen()` call.
 
   ```javascript
+  // Use the service broker 
   const request = require('request');
   const testService = appEnv.services['testnoderesourceservicebrokername'];
-
+  
   if (testService) {
     const { credentials: { url} } = testService[0];
     app.get("/api/welcome", (req, res) => request(url, (e, r, b) => res.send(b)));
   } else {
     app.get("/api/welcome", (req, res) => res.send('Welcome'));
   }
-
-  var port = process.env.PORT || 3000
-  app.listen(port, function() {
-      console.log("To view your app, open this link in your browser: http://localhost:" + port);
-  });
   ```
   {:codeblock: .codeblock}
 
-6. Refactor the `index.html` page. Change `data-i18n="welcome"` to `id="welcome"` in the `h1` tag. Add a call to the service at the end of the `$(document).ready()` function.
+7. Refactor the `get-started-node/views/index.html` page. Change `data-i18n="welcome"` to `id="welcome"` in the `h1` tag. And then add a call to the service at the end of the `$(document).ready()` function.
 
   ```html
   <h1 id="welcome"></h1> <!-- Welcome -->
@@ -506,7 +511,7 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
   ```
   {:codeblock: .codeblock}
 
-7. Update the `GetStartedNode` app. Include the `request` package dependency that was added to `server.js`, rebind the `welcome-service` to pick up the new `url` property and finally push the app's new code.
+8. Update the `GetStartedNode` app. Include the `request` package dependency that was added to `server.js`, rebind the `welcome-service` to pick up the new `url` property and finally push the app's new code.
 
   ```sh
   npm i request -S
