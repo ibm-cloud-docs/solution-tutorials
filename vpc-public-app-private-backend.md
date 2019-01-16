@@ -58,7 +58,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
-**TODO**  
 1. The user accesses the frontend within a VPC.  
 2. Creates a frontend (public) subnet and a backend (private) subnet.  
 3. Creates respective virtual server instances (VSIs).    
@@ -169,42 +168,11 @@ To create a virtual server instance in the newly created subnet:
 5. Select the SSH key you created earlier.
 6. Leave the other options as it is and click **Create virtual server instance**.
 
-Wait for the status to change to **Powered On**. Configure network rules for the backend subnet.
-
-### Configure network rules for the frontend subnet
-{: #create_configure_sgs}
-
-To create an ACL for frontend,
-
-1. Click on the [All access control lists for VPC ](https://{DomainName}/vpc/network/acl) > New access control list
-2. As name enter **vpc-pubpriv-frontend-acl** and select the **Dallas** region.
-3. Define these **Inbound** rules
-
-   <table><thead>
-   <tr><td><strong>Allow/Deny</strong></td><td><strong>Source</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong></td></tr>
-   </thead>
-   <tbody>
-     <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: <strong>80</strong> To <strong>80</strong></td></tr>
-   <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: <strong>443</strong> To <strong>443</strong></td></tr>
-   <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr>
-   </tbody></table>
-4. Define these **Outbound rules**
-
-  <table><thead>
- <tr><td><strong>Allow/Deny</strong></td><td><strong>Destination</strong></td><td><strong>Protocol</strong></td><td><strong>Value</strong> </td></tr>
-     <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: <strong>80</strong> To <strong>443</strong></td></tr>
-  <tr><td>Allow</td><td>Any</td><td>TCP</td><td>From: <strong>443</strong> To <strong>443</strong></td></tr>
-  </thead>
-  <tbody>
-  <tr><td>Allow</td><td>IP address or CIDR <br> **IP range of Backend**  say 10.240.0.0/24</td><td>TCP</td><td>1433</td></tr>
-  <tr><td>Deny</td><td>Any</td><td>ALL</td><td></td></tr>
-  </tbody></table>
-5. Under Attach subnets, select the frontend subnet.  
-6. Click **Create access control list**.
-
-This will override the VPC ACL and assigns an ACL with rules specific to the frontend subnet.
+Wait for the status to change to **Powered On**. Configure network rules for the backend VSI.
 
 ## Create and configure Security Groups
+{: #create_configure_sgs}
+
 ACLs provides security at the subnet level and Security Groups provides security at the instance level. Let's create and configure inbound and outbound traffic to your instances.
 
 By default, a security group is created along with your VPC allowing all SSH (TCP port 22) and Ping (ICMP type 8) traffic to the attached instances. 
