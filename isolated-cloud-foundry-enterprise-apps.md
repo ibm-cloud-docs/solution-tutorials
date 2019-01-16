@@ -51,6 +51,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ![Architecture](./images/solution45-CFEE-apps/Architecture.png)
 
+1. Create a CFEE instance, then add users with developer access to the CFEE instance. 
+2. Push a Node.js starter app to CFEE.
+3. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) and bind it to the CFEE instance. 
+4. Create, bind and deploy a service broker.
+
 ## Prerequisites
 
 {: #prereq}
@@ -399,10 +404,10 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
 
    ```javascript
    // TODO - Do your actual work here
-  
+    
    var generatedUserid   = uuid();
    var generatedPassword = uuid();
-  
+    
    result = {
      credentials: {
        userid   : generatedUserid,
