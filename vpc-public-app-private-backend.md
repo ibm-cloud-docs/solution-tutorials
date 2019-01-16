@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-15"
+lastupdated: "2019-01-16"
 
 
 ---
@@ -60,7 +60,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 **TODO**  
 1. The user accesses the frontend within a VPC.  
-2. Creates a frontend (public) subnet and a backend (private) subnet.  <strong>80</strong>
+2. Creates a frontend (public) subnet and a backend (private) subnet.  
 3. Creates respective virtual server instances (VSIs).    
 4. Creates individual security groups(SGs)to limit the VSIs inbound and outbound traffic.  
 5. Configures a security group to define the inbound and outbound traffic that's allowed for the instance.  
@@ -299,7 +299,9 @@ To configure network rules for the frontend virtual server instance,
       </tr>
    </tbody>
 </table>
-4. Define these **Outbound rules**
+
+3. Define these **Outbound rules**
+   
    <table>
    <thead>
       <tr>
@@ -326,6 +328,7 @@ To configure network rules for the frontend virtual server instance,
       </tr>
    </tbody>
 </table>
+
 This will apply the network rules to the frontend virtual server instance. 
 
 ### Configure the rules for front
