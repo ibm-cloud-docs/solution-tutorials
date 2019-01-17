@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-16"
+lastupdated: "2019-01-17"
 
 
 ---
@@ -70,7 +70,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 Check for user permissions. Be sure that your user has sufficient permissions to create and manage resources in your VPC. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
 
 ## Create SSH key
-{: #create_ssh_key}
+{: #create-ssh-key}
 
 Check for an existing SSH key if there's none, create a new SSH key.
 
@@ -79,6 +79,8 @@ Check for an existing SSH key if there's none, create a new SSH key.
    ```sh
    ls -al ~/.ssh
    ```
+   {:pre: .pre}
+   
    Look for a file called `id_rsa.pub`.
 2. Alternatively, You can check under an `.ssh` directory under your home directory, for example, `/Users/<USERNAME>/.ssh/id_rsa.pub`. The file starts with `ssh-rsa` and ends with your email address
 3. If you do not have a public SSH key or if you forgot the password of an existing one, generate a new one by running the `ssh-keygen` command and following the prompts. For example, you can generate an SSH key on your Linux server by running the command
@@ -86,12 +88,13 @@ Check for an existing SSH key if there's none, create a new SSH key.
      ```sh
        ssh-keygen -t rsa -C "user_ID"
      ```
+     {:pre: .pre}
 
      You can find your `user_ID` under your [user preferences](https://{DomainName}/user). This command generates two files. The generated public key is in the `<your key>.pub` file.
 
 
 ## Create a Virtual Private Cloud
-{: #create_vpc}
+{: #create-vpc}
 
 To create your own {{site.data.keyword.vpc_short}},
 
@@ -111,8 +114,8 @@ To create your own {{site.data.keyword.vpc_short}},
 
 To confirm creation of subnet, click on **Subnets** and wait until the Status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
-## Backend
-{: #backend}
+## Create a backend subnet and VSI
+{: #backend-subnet-vsi}
 
 In this section, you will create a backend subnet with virtual server instance and define the rules for network access.
 
@@ -137,8 +140,8 @@ To create a virtual server instance in the newly created subnet:
 
 Wait for the status to change to **Powered On**.
 
-## Frontend
-{: #frontend}
+## Create a frontend subnet and VSI
+{: #frontend-subnet-vsi}
 
 In this section, you will create a frontend subnet with virtual server instance and define the rules for network access.
 
@@ -169,7 +172,7 @@ To create a virtual server instance in the newly created subnet:
 Wait for the status to change to **Powered On**. Configure network rules for the backend VSI.
 
 ## Create and configure Security Groups
-{: #create_configure_sgs}
+{: #create-configure-sgs}
 
 ACLs provides security at the subnet level and Security Groups provides security at the instance level. Let's create and configure inbound and outbound traffic to your instances.
 
@@ -297,25 +300,64 @@ To configure network rules for the frontend virtual server instance, follow simi
 
 This will apply the network rules to the frontend virtual server instance. 
 
-## Assign a floating IP
-In this section, you will reserve a floating IP address to your frontend (public) VSI and later ping to confirm the assignment. 
+## Assign a floating IP and connect to your instance
+{: #floatingip-connect-to-instance}
+
+In this section, you will reserve a floating IP address to your frontend (public) VSI, ping to confirm the assignment and SSH into the instance. 
 
 Floating IP is a method to provide inbound and outbound access to the internet for VPC resources such as instances, a load balancer, or a VPN tunnel, using assigned Floating IP addresses from a pool.
 
 1. Under **Virtual server instances**, select the frontend VSI (vpc-pubpriv-frontend-vsi).
-2. Scroll to **Network Interfaces** section and click **Reserve** under Floating IP to associate an public IP address to your frontend VSI.
+2. Scroll to **Network Interfaces** section and click **Reserve** under Floating IP to associate an public IP address to your frontend VSI. Save the associated IP Address to clipboard for future reference.
 3. Ping the server by opening the terminal and running the below command
 
- ```
+ ```sh
   ping <PUBLIC_IP_ADDRESS>
  ```
+ {:pre: .pre}
+ 
+ If your ping is successful, you should see a response similar to the following,
+ 
+	```
+	PING 169.61.xxx.xx (169.61.xxx.xxxxx.xx): 56 data bytes
+	64 bytes from 169.61.xxx.xx: icmp_seq=0 ttl=43 time=245.754 ms
+	64 bytes from 169.61.xxx.xx: icmp_seq=1 ttl=43 time=245.567 ms
+	64 bytes from 169.61.xxx.xx: icmp_seq=2 ttl=43 time=245.560 ms
+	64 bytes from 169.61.xxx.xx: icmp_seq=3 ttl=43 time=245.502 ms
+	64 bytes from 169.61.xxx.xx: icmp_seq=4 ttl=43 time=245.436 ms
+	64 bytes from 169.61.xxx.xx: icmp_seq=5 ttl=43 time=245.533 ms
+	64 bytes from 169.61.xxx.xx: icmp_seq=6 ttl=43 time=245.469 ms
+	64 bytes from 169.61.xxx.xx: icmp_seq=7 ttl=43 time=245.460 ms
+	```
+ 
+4. To SSH into your Linux instance, use your private key and run the following command:
 
+	```sh
+	ssh -i <PATH TO PRIVATE KEY> root@<FLOATING_IP_ADDRESS>
+	```
+	{:pre: .pre}
+	
+	You should see a response similar to the following example. When prompted to continue connecting, type `yes`.
+		
+		The authenticity of host 'xxx.xxx.xxx.xxx (xxx.xxx.xxx.xxx)' can't be established.
+		ECDSA key fingerprint is SHA256:abcdef1Gh/aBCd1EFG1H8iJkLMnOP21qr1s/8a3a8aa.
+		Are you sure you want to continue connecting (yes/no)? yes
+		Warning: Permanently added 'xxx.xxx.xxx.xxx' (ECDSA) to the list of known hosts.
+		You are now accessing your server.
 
+5. When you are ready to end your connection, run the following command:
+
+   ```sh
+   # exit
+   ```
+   {:pre: .pre}
+6. To monitor your instance, click **Activity** under an instance for an activity log that shows when the instance was started, stopped, or rebooted.
+   
 ## Remove resources
 
-{: #removeresources}
+{: #remove-resources}
 
-Steps to take to remove the resources created in this tutorial (need to confirm actual flow for final solution)
+Steps to remove the resources created in this tutorial (need to confirm actual flow for final solution)
 
 Note that you may need to refresh your browser to see updated status information after deleting a resource.  
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.  
@@ -323,18 +365,16 @@ Note that you may need to refresh your browser to see updated status information
 3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnets.  
 4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.  
 
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
+## Expand the tutorial 
+{: #expand-tutorial}
 
-Want to add to or change this tutorial? Here are some ideas:
+Want to add to or extend this tutorial? Here are some ideas:
 
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
+- Add a [load balancer] (https://console.test.cloud.ibm.com/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
+- Create a [virtual private network](https://console.test.cloud.ibm.com/docs/infrastructure/vpc/console-tutorial.html#creating-a-vpn) (VPN) so your VPC can connect securely to another private network, such as an on-premises network or another VPC.
+
 
 ## Related content
-
 {: #related}
 
 - [Relevant links](
