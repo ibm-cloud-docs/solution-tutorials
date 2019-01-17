@@ -211,7 +211,7 @@ To configure network rules for the backend virtual server instance,
    </tbody>
 </table>
 
-3. Now define these **Outbound rules** by clicking **Add rule** for each row.
+3. Now, define these **Outbound rules** by clicking **Add rule** for each row.
    <table>
    <thead>
       <tr>
@@ -370,7 +370,7 @@ Note that you may need to refresh your browser to see updated status information
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- Add a [load balancer] (https://{DomainName}/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
+- Add a [load balancer](https://{DomainName}/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
 - Create a [virtual private network](https://{DomainName}/docs/infrastructure/vpc/console-tutorial.html#creating-a-vpn) (VPN) so your VPC can connect securely to another private network, such as an on-premises network or another VPC.
 
 
