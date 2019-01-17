@@ -131,7 +131,7 @@ To create a virtual server instance in the newly created subnet:
 3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC your created earlier and **Dallas** as your location.
 4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Balanced**, choose **b-2x8** with 2vCPUs and 8 GM RAM.
 5. To create a new SSH key, click **New key**  
-   a. Enter a key name.  
+   a. Enter **vpc-ssh-key** as key name.  
    b. Select **Dallas** region.  
    c. Copy the contents of  `<your key>.pub` and paste under Public key.  
    d. Click **Add SSH key**.
@@ -154,7 +154,7 @@ To create a new subnet for the frontend,
    b. Select a location.  
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.1.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
-4. Switch the Public gateway to **Attached** as attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
+4. Switch the Public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
 5. Click **Create subnet** to provision.
 
 ### Create a frontend virtual server instance
