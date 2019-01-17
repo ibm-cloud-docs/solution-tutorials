@@ -193,7 +193,7 @@ To create a new security group,
 To configure network rules for the backend virtual server instance,
   
 1. Select **vpc-pubpriv-backend-sg** from the list of security groups.
-2. Define these **Inbound** rules by clicking **Add rule**.
+2. Define the **Inbound** rule by clicking **Add rule**.
 
    <table>
    <thead>
@@ -204,14 +204,14 @@ To configure network rules for the backend virtual server instance,
       </tr>
    <tbody>
       <tr>
-         <td><strong>Security Group</strong> - Name of the <strong>frontend</strong> security group<br> (vpc-pubpriv-frontend-sg)</td>
+         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-frontend-sg</strong></td>
          <td>TCP</td>
          <td>Port of the backend server<br> e.g., 3306 for MySQL server</td>
       </tr>
    </tbody>
 </table>
 
-3. Now define these **Outbound rules** by clicking **Add rule** in that section.
+3. Now define these **Outbound rules** by clicking **Add rule** for each row.
    <table>
    <thead>
       <tr>
@@ -241,7 +241,7 @@ This will apply the network rules to the backend virtual server instance. Click 
 To configure network rules for the frontend virtual server instance, follow similar steps as for the backend rules:
 
 1. Select **vpc-pubpriv-frontend-sg** from the list of security groups.
-2. Define these **Inbound** rules by clicking **Add rule**.
+2. Define these **Inbound** rules by clicking **Add rule** for each row.
 
    <table>
    <thead>
@@ -269,7 +269,7 @@ To configure network rules for the frontend virtual server instance, follow simi
    </tbody>
 </table>
 
-3. Click **Add rule** in the **Outbound rules** section and define these rules.
+3. In the **Outbound rules** section, define these rules by clicking **Add rule** for each row.
    
    <table>
    <thead>
@@ -281,7 +281,7 @@ To configure network rules for the frontend virtual server instance, follow simi
    </thead>
    <tbody>
      <tr>
-         <td><strong>Security Group</strong> - Name of the <strong>backend</strong> security group<br> (vpc-pubpriv-backend-sg)</td>
+         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
          <td>TCP</td>
          <td>Port of the backend server <br>e.g., 3306 for MySQL server</td>
       </tr>
@@ -312,7 +312,7 @@ Floating IP is a method to provide inbound and outbound access to the internet f
 3. Ping the server by opening the terminal and running the below command
 
  ```sh
-  ping <PUBLIC_IP_ADDRESS>
+  ping <FLOATING_IP_ADDRESS>
  ```
  {:pre: .pre}
  
