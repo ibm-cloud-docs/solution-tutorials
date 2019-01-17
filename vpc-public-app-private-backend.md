@@ -382,5 +382,6 @@ Want to add to or extend this tutorial? Here are some ideas:
 {: #related}
 
 - [VPC Glossary](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#vpc-glossary)
-* [VPC using the IBM Cloud CLI](https://{DomainName}/docs/infrastructure/vpc/hello-world-vpc.html#creating-a-vpc-using-the-ibm-cloud-cli)
-* [VPC using the REST APIs](https://{DomainName}/docs/infrastructure/vpc/example-code.html#creating-a-vpc-using-the-rest-apis)
+- [VPC using the IBM Cloud CLI](https://{DomainName}/docs/infrastructure/vpc/hello-world-vpc.html#creating-a-vpc-using-the-ibm-cloud-cli)
+- [VPC using the REST APIs](https://{DomainName}/docs/infrastructure/vpc/example-code.html#creating-a-vpc-using-the-rest-apis)
+- [VPC: What's New?](https://cloud.ibm.com/docs/infrastructure/vpc/whats-new.html)
