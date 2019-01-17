@@ -308,7 +308,13 @@ This will apply the network rules to the frontend virtual server instance.
 
 {: #removeresources}
 
-Steps to take to remove the resources created in this tutorial
+Steps to take to remove the resources created in this tutorial (need to confirm actual flow for final solution)
+
+Note that you may need to refresh your browser to see updated status information after deleting a resource.
+1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
+2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while.
+3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnets.
+4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
 
 ## Expand the tutorial (this section is optional, remove it if you don't have content for it)
 
