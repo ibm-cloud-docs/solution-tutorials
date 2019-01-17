@@ -18,11 +18,11 @@ lastupdated: "2018-1-8"
 
 # Isolated Cloud Foundry Enterprise Apps
 
-With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. This provides your developers with a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage, and monitoring. {{site.data.keyword.cfee_full_notm}} provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
+With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. With this, you get a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage, and monitoring. {{site.data.keyword.cfee_full_notm}} provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
 
-A use case for {{site.data.keyword.cfee_full_notm}} is an enterprise-owned innovation platform. Developers within an enterprise can either create new microservices or migrate legacy applications to CFEE. Microservices can then be published to additional developers using the Cloud Foundry marketplace. Once there, developers can consume services within their application just as they do today on public Cloud.
+A use case for {{site.data.keyword.cfee_full_notm}} is an enterprise-owned innovation platform. You as a developer user within an enterprise can either create new microservices or migrate legacy applications to CFEE. Microservices can then be published to additional users using the Cloud Foundry marketplace. Once there, other users in your CFEE instance can consume services within the application just as is done today on public Cloud.
 
-The tutorial will walk you through the process of creating and configuring a {{site.data.keyword.cfee_full_notm}}, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
+The tutorial will walk you through the process of creating and configuring an {{site.data.keyword.cfee_full_notm}}, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
 
 ## Objectives
 
@@ -54,7 +54,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. Create a CFEE instance, then add users with developer access to the CFEE instance. 
 2. Push a Node.js starter app to CFEE.
 3. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) and bind it to the CFEE instance. 
-4. Create, bind and deploy a service broker.
+4. Create and deploy a service broker, then bind it and use it within the Node app. 
 
 ## Prerequisites
 
@@ -90,24 +90,24 @@ The automated deployment takes approximately 90 to 120 minutes. Once successfull
 
 After you've created {{site.data.keyword.cfee_full_notm}}, see [creating organizations and spaces](https://{DomainName}/docs/cloud-foundry/orgs-spaces.html) for information on how to structure the environment through organizations and spaces. Apps in an {{site.data.keyword.cfee_full_notm}} are scoped within specific spaces. Similarly, a space exists within an organization. Members of an organization share a quota plan, apps, services instances, and custom domains.
 
-The **Manage > Account > Cloud Foundry orgs** menu located in the top {{site.data.keyword.cloud_notm}} header is intended exclusively for public {{site.data.keyword.cloud_notm}} organizations. CFEE organizations are managed within the **organizations** page of a CFEE instance.
+Note: The **Manage > Account > Cloud Foundry orgs** menu located in the top {{site.data.keyword.cloud_notm}} header is intended exclusively for public {{site.data.keyword.cloud_notm}} organizations. CFEE organizations are managed within the **organizations** page of a CFEE instance.
 
 Follow the steps below to create a CFEE org and space.
 
 1. From the [Cloud Foundry dashboard](https://{DomainName}/dashboard/cloudfoundry/overview) select **Environments** under **Enterprise**.
 2. Select your CFEE instance and then select **Organizations**.
 3. Click on the **Create Organizations** button, provide a `tutorial` as the **Organization Name**, and select a **Quota Plan**. Finish by clicking **Add**.
-4. Click on the newly created `tutorial` org, select the **Spaces** tab, and click the **Create Space** button.
+4. Click on the newly created organization `tutorial`, and then select the **Spaces** tab, and click the **Create Space** button.
 5. Provide `dev` as a **Space Name** and click **Add**.
 
 ### Add users to orgs and spaces
 
-In CFEE, you can assign roles controlling user access, but to do so, the user must be invited to your {{site.data.keyword.cloud_notm}} org in the **Identity & Access** page under the **Manage > Users** in the {{site.data.keyword.cloud_notm}} header.
+In CFEE, you can assign roles controlling user access, but to do so, the user must be invited to your {{site.data.keyword.cloud_notm}} account in the **Identity & Access** page under the **Manage > Users** in the {{site.data.keyword.cloud_notm}} header.
 
-Once the user has been invited, follow the steps below to add the user to the `tutorial` org and `dev` space.
+Once the user has been invited, follow the steps below to add the user to the `tutorial` organization created, 
 
-1. Select your CFEE instance and then select **Organizations** again.
-2. Select the `tutorial` from the list.
+1. Select your [CFEE instance](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) and then select **Organizations** again.
+2. Select the `tutorial` org created from the list.
 3. Click on the **Members** tab to view and add a new user.
 4. Click on the **Add members** button, search for the username, select the appropriate **Organization Roles**, and click **Add**.
 
@@ -152,13 +152,13 @@ To bind {{site.data.keyword.cloud_notm}} services to the **get-started-node** ap
 
 1. Create an [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) service. Provide the **service name** `cfee-cloudant` and choose the same location where the CFEE instance has been created.
 2. Add the newly created {{site.data.keyword.cloudant_short_notm}} service instance to CFEE.
-   1. Navigate back to the `cfee-tutorial` **Organization**. Click the **Spaces** tab and select the `dev` space.
+   1. Navigate back to the `tutorial` **Organization**. Click the **Spaces** tab and select the `dev` space.
    2. Select the **Services** tab and click the **Add Service** button.
    3. Type `cfee-cloudant` in the search textbox and select the result. Finish by clicking **Add**. The service is now available to CFEE applications; however, it still resides in public {{site.data.keyword.cloud_notm}}.
 3. On the overflow menu of the service instance shown, select **Bind to application**.
 4. Select the **GetStartedNode** application you pushed earlier and click **Restage application after binding**. Finally, click the **Bind** button. Wait for the application to restage. You can check progress with the command `ibmcloud app show GetStartedNode`.
 5. In your browser, access the application, add your name and hit `enter`. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
-6. Confirm by selecting the `cfee-tutorial` instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
+6. Confirm by selecting the `tutorial` instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
 7. Click **Launch Cloudant Dashboard** and select the `my` database. A JSON document with your name should exist.
 
 ### Enable auditing and logging persistence
@@ -167,29 +167,11 @@ Auditing allows CFEE administrators to track Cloud Foundry activities such as lo
 
 Cloud Foundry application logs can be stored by integrating {{site.data.keyword.loganalysisshort_notm}}. The {{site.data.keyword.loganalysisshort_notm}} service instance selected by a CFEE administrator is configured automatically to receive and persist Cloud Foundry logging events generated from the CFEE instance.
 
-1. Return to your CFEE dashboard and click the **Auditing** link in the left navigation pane.
-2. Click **Enable auditing** and select one of the **Activity Tracker instances** available in the {{site.data.keyword.cloud_notm}} account. If no instances are available, you will see an option to create a new Activity Tracker instance in the {{site.data.keyword.cloud_notm}} catalog.
-3. Once auditing is enabled, configuration details are displayed on the page. Details include the status of the configuration, and a link to the Activity Tracker service instance itself, where you can go to see and manage auditing events.
-
-**To enable logging for a CFEE instance:**
-
-1. Make sure that you have an [IAM access policy](https://{DomainName}/iam/#/users) that assigns you as an editor, operator, or administrator role to the Log Analysis service instance into which you intend to persist the logging events.
-2. Open a CFEE's user interface and to **Operations > Logging** entry in the left navigation pane to open the Logging page.
-3. Click **Enable persistence** and select one of the **Log Analysis instances** available in the {{site.data.keyword.cloud_notm}} account. If no instances are available, you will see an option to create an instance in the {{site.data.keyword.cloud_notm}} catalog.
-4. Once logging persistence is enabled, configuration details are displayed in the page. Details include the status of the configuration, and a link to the Log Analysis service instance itself, where you can go to see and manage logging events.
-
-**Warning:** Enabling Logging Persistence requires a disruptive restart of the CFEE control plane and cells. During the restart, all administrative functionality will be available, but some applications and services running in this CFEE instance may be unavailable. The status of the CFEE components will be reflected in the Health Check page during the restart. The restart takes approximately 20 minutes.
-
-You can disable auditing or logging persistence by clicking **Disable auditing** or **Disable log persistence** on the respective configuration pages. This removes the service instance from CFEE; however, it will not delete the actual service instance from {{site.data.keyword.cloud_notm}}.
-{:tip}
-
-**Note:** When you disable log persistence, the Cloud Foundry logging events are still being generated, they are just not persisted outside the CFEE instance.
+To enable CFEE auditing and logging persistence follow the [steps here](https://cloud.ibm.com/docs/cloud-foundry/auditing-logging.html#auditing-logging).
 
 ### Install the Stratos console to manage the app
 
-The Stratos Console is an open source web-based tool for working with Cloud Foundry. The Stratos Console application can be optionally installed and used in a specific CFEE environment to manage its organizations, spaces, and applications.
-
-Users with {{site.data.keyword.cloud_notm}} administrator or editor roles in the CFEE instance can install the Stratos Console application in that CFEE instance.
+Stratos Console is an open source web-based tool for working with Cloud Foundry. The Stratos Console application can be optionally installed and used in a specific CFEE environment to manage its organizations, spaces, and applications.
 
 To install the Stratos Console application:
 
@@ -198,20 +180,13 @@ To install the Stratos Console application:
 3. In the Install Stratos Console dialog, select an installation option. You can install the Stratos console application either on the CFEE control plane or in one of the cells. Select a version of the Stratos console and the number of instances of the application to install. If you install the Stratos console app in a cell, you're prompted for the organization and space where to deploy the application.
 4. Click **Install**.
 
-The application takes about 5 minutes to install. Once the installation is complete, a **Stratos Console** button appears in place of the *Install Stratos Console* button on the overview page. The *Stratos Console* button launches the console and is available to all users with access to the CFEE instance. Organization and space membership assignments may limit what a user can see and manage in the Stratos console.
-
-To start the Stratos console:
-
-1. Open the CFEE instance where the Stratos console was installed.
-2. Click **Stratos Console** on the overview page.
-3. The Stratos console is opened in a separate browser tab. When you open the console for the first time, you're prompted to accept two consecutive warnings because of self-signed certificates.
-4. Click **Login** to open the console. No credentials are required since the application uses your {{site.data.keyword.cloud_notm}} credentials.
+The application takes about 5 minutes to install. Once the installation is complete, a **Stratos Console** button appears in place of the *Install Stratos Console* button on the overview page. More on Stratos console can be found [here](https://console.test.cloud.ibm.com/docs/tutorials/isolated-cloud-foundry-enterprise-apps.html#install-the-stratos-console-to-manage-the-app).
 
 ## The relationship between CFEE and Kubernetes
 
 As an application platform, CFEE runs on some form of dedicated or shared virtual infrastructure. For many years, developers thought little about the underlying Cloud Foundry platform because IBM managed it for them. With CFEE, you are not only a developer writing Cloud Foundry applications but also an operator of the Cloud Foundry platform. This is because CFEE is deployed on an IBM Kubernetes cluster that you control.
 
-While Cloud Foundry developers may be new to Kubernetes, there are many concepts they both share. Like Cloud Foundry, Kubernetes isolates applications into containers, which run inside a Kubernetes construct called a pod. Similar to application instances, pods can have multiple copies (called replica sets) with application load balancing provided by Kubernetes.  The Cloud Foundry `GetStartedNode` application you deployed earlier runs inside the `diego-cell-0` pod. To support high availability, another pod `diego-cell-1` would run on a separate Kubernetes worker node. Because these Cloud Foundry apps run "inside" Kuberenetes, you can also communicate with other Kubernetes microservices using Kuberenetes-based networking. The following sections will help illustrate the relationships between CFEE and Kubernetes in more detail.
+While Cloud Foundry developers may be new to Kubernetes, there are many concepts they both share. Like Cloud Foundry, Kubernetes isolates applications into containers, which run inside a Kubernetes construct called a pod. Similar to application instances, pods can have multiple copies (called replica sets) with application load balancing provided by Kubernetes.  The Cloud Foundry `GetStartedNode` application you deployed earlier runs inside the `diego-cell-0` pod. To support high availability, another pod `diego-cell-1` would run on a separate Kubernetes worker node. Because these Cloud Foundry apps run "inside" Kubernetes, you can also communicate with other Kubernetes microservices using Kubernetes-based networking. The following sections will help illustrate the relationships between CFEE and Kubernetes in more detail.
 
 ## Deploy a Kubernetes service broker
 
