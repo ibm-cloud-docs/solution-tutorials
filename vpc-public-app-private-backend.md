@@ -152,7 +152,7 @@ To create a new subnet for the frontend,
    b. Select a location.  
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.1.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
-4. Switch the Public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
+4. Similar as for the backend, switch the Public gateway to **Attached**. 
 5. Click **Create subnet** to provision.
 
 ### Create a frontend virtual server instance
@@ -189,8 +189,8 @@ To create a new security group,
 
 To configure network rules for the backend virtual server instance,
   
-1. Select **vpc-pubpriv-backend-sg** from the list of security groups and click **Add rule**.
-2. Define these **Inbound** rules
+1. Select **vpc-pubpriv-backend-sg** from the list of security groups.
+2. Define these **Inbound** rules by clicking **Add rule**.
 
    <table>
    <thead>
@@ -208,7 +208,7 @@ To configure network rules for the backend virtual server instance,
    </tbody>
 </table>
 
-3. Define these **Outbound rules**
+3. Now define these **Outbound rules** by clicking **Add rule** in that section.
    <table>
    <thead>
       <tr>
@@ -235,10 +235,10 @@ This will apply the network rules to the backend virtual server instance. Click 
 
 ### Configure network rules for the frontend VSI
 
-To configure network rules for the frontend virtual server instance,
+To configure network rules for the frontend virtual server instance, follow similar steps as for the backend rules:
 
-1. Select **vpc-pubpriv-frontend-sg** from the list of security groups and click **Add rule**.
-2. Define these **Inbound** rules
+1. Select **vpc-pubpriv-frontend-sg** from the list of security groups.
+2. Define these **Inbound** rules by clicking **Add rule**.
 
    <table>
    <thead>
@@ -266,7 +266,7 @@ To configure network rules for the frontend virtual server instance,
    </tbody>
 </table>
 
-3. Define these **Outbound rules**
+3. Click **Add rule** in the **Outbound rules** section and define these rules.
    
    <table>
    <thead>
