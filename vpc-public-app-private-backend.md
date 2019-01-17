@@ -34,13 +34,11 @@ A [subnet](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#subnet
 
 {: #objectives}
 
-- Define a 3-tier architecture
 - Create a public subnet for frontend servers
 - Create a private subnet for backend servers
 - Create a virtual server instance in each subnet
-- Configure network rules through access control lists (ACL)
-- **TODO:** Define a security group
-- **TODO:** Load Balancers and VPN
+- Configure network rules through security groups
+- Reserve a floating IP to allow inbound and outbound internet traffic
 
 ## Services used
 
@@ -120,7 +118,7 @@ In this section, you will create a backend subnet with virtual server instance a
 
 ### Create a subnet for the backend
 
-You will be using the Subnet created with the VPC as the subnet for the backend.
+You will use the Subnet created with the VPC as the subnet for the backend.
 
 ### Create a backend virtual server instance
 
@@ -149,7 +147,7 @@ In this section, you will create a frontend subnet with virtual server instance 
 To create a new subnet for the frontend,
 
 1. Click **VPC and subnets** under Network on the left pane
-2. Click **Subnets **> New subnet  
+2. Click **Subnets** > New subnet  
    a. Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.  
    b. Select a location.  
    c. Enter an IP range for the subnet in CIDR notation, say  `10.240.1.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
@@ -299,10 +297,19 @@ To configure network rules for the frontend virtual server instance,
 
 This will apply the network rules to the frontend virtual server instance. 
 
-### Configure the rules for front
-### Give the frontend vm a public IP so that it can be access from the Internet
+## Assign a floating IP
+In this section, you will reserve a floating IP address to your frontend (public) VSI and later ping to confirm the assignment. 
 
-### Add a public gateway so that frontend and backend can access the Internet
+Floating IP is a method to provide inbound and outbound access to the internet for VPC resources such as instances, a load balancer, or a VPN tunnel, using assigned Floating IP addresses from a pool.
+
+1. Under **Virtual server instances**, select the frontend VSI (vpc-pubpriv-frontend-vsi).
+2. Scroll to **Network Interfaces** section and click **Reserve** under Floating IP to associate an public IP address to your frontend VSI.
+3. Ping the server by opening the terminal and running the below command
+
+ ```
+  ping <PUBLIC_IP_ADDRESS>
+ ```
+
 
 ## Remove resources
 
@@ -310,11 +317,11 @@ This will apply the network rules to the frontend virtual server instance.
 
 Steps to take to remove the resources created in this tutorial (need to confirm actual flow for final solution)
 
-Note that you may need to refresh your browser to see updated status information after deleting a resource.
-1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
-2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while.
-3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnets.
-4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
+Note that you may need to refresh your browser to see updated status information after deleting a resource.  
+1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.  
+2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while.  
+3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnets.  
+4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.  
 
 ## Expand the tutorial (this section is optional, remove it if you don't have content for it)
 
