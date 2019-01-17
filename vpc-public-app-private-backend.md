@@ -211,7 +211,7 @@ To configure network rules for the backend virtual server instance,
    </tbody>
 </table>
 
-3. Now define these **Outbound rules** by clicking **Add rule** for each row.
+3. Now, define these **Outbound rules** by clicking **Add rule** for each row.
    <table>
    <thead>
       <tr>
@@ -374,13 +374,13 @@ Note that you may need to refresh your browser to see updated status information
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- Add a [load balancer] (https://console.test.cloud.ibm.com/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
-- Create a [virtual private network](https://console.test.cloud.ibm.com/docs/infrastructure/vpc/console-tutorial.html#creating-a-vpn) (VPN) so your VPC can connect securely to another private network, such as an on-premises network or another VPC.
+- Add a [load balancer](https://{DomainName}/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
+- Create a [virtual private network](https://{DomainName}/docs/infrastructure/vpc/console-tutorial.html#creating-a-vpn) (VPN) so your VPC can connect securely to another private network, such as an on-premises network or another VPC.
 
 
 ## Related content
 {: #related}
 
-- [Relevant links](
-
-* https://blah)
+- [VPC Glossary](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#vpc-glossary)
+* [VPC using the IBM Cloud CLI](https://{DomainName}/docs/infrastructure/vpc/hello-world-vpc.html#creating-a-vpc-using-the-ibm-cloud-cli)
+* [VPC using the REST APIs](https://{DomainName}/docs/infrastructure/vpc/example-code.html#creating-a-vpc-using-the-rest-apis)
