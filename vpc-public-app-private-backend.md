@@ -312,7 +312,7 @@ Floating IP is a method to provide inbound and outbound access to the internet f
 3. Ping the server by opening the terminal and running the below command
 
  ```sh
-  ping <PUBLIC_IP_ADDRESS>
+  ping <FLOATING_IP_ADDRESS>
  ```
  {:pre: .pre}
  
