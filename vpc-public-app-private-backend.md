@@ -352,7 +352,11 @@ Floating IP is a method to provide inbound and outbound access to the internet f
    ```
    {:pre: .pre}
 6. To monitor your instance, click **Activity** under an instance for an activity log that shows when the instance was started, stopped, or rebooted.
-   
+
+## Install software
+
+Need a rough outline how to access both front- and backend and install software. How to ssh into the backend if there is no public IP?
+
 ## Remove resources
 
 {: #remove-resources}
