@@ -225,6 +225,18 @@
             "Availability Monitoring"
           ],
           "lastUpdated": "2018-11-14"
+        },
+        {
+          "name": "Isolated Cloud Foundry Enterprise Apps",
+          "url": "isolated-cloud-foundry-enterprise-apps.html",
+          "description": "Provide an innovation platform to your organization by deploying an isolated, enterprise-grade Cloud Foundry platform using Cloud Foundry Enterprise Environment.",
+          "imgSrc": "images/solution45-CFEE-apps/Architecture.png",
+          "tags": [
+            "Cloud Foundry",
+            "Node.js",
+            "Kubernetes"
+          ],
+          "lastUpdated": "2019-1-18"
         }
       ]
     },

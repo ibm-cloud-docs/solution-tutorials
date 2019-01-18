@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-1-8"
+  years: 2019
+lastupdated: "2018-1-18"
 
 ---
 
@@ -20,7 +20,7 @@ lastupdated: "2018-1-8"
 
 With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. With this, you get a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage, and monitoring. {{site.data.keyword.cfee_full_notm}} provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
 
-A use case for {{site.data.keyword.cfee_full_notm}} is an enterprise-owned innovation platform. You as a developer user within an enterprise can either create new microservices or migrate legacy applications to CFEE. Microservices can then be published to additional users using the Cloud Foundry marketplace. Once there, other users in your CFEE instance can consume services within the application just as is done today on public Cloud.
+A use case for {{site.data.keyword.cfee_full_notm}} is an enterprise-owned innovation platform. You as a developer within an enterprise can either create new microservices or migrate legacy applications to CFEE. Microservices can then be published to additional developers using the Cloud Foundry marketplace. Once there, other developers in your CFEE instance can consume services within the application just as is done today on public Cloud.
 
 The tutorial will walk you through the process of creating and configuring an {{site.data.keyword.cfee_full_notm}}, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
 
@@ -41,7 +41,6 @@ This tutorial uses the following runtimes and services:
 
 - [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
 - [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
-- [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -51,11 +50,12 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ![Architecture](./images/solution45-CFEE-apps/Architecture.png)
 
-1. Create a CFEE instance, then add users with developer access to the CFEE instance. 
-2. Push a Node.js starter app to CFEE.
-3. [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) to store names inputed from the Node.js starter app.
-4. Welcome app returning a `welcome` message in different languages in which been used by the Node.js starter app.
-5. A service broker deployed and used by the Welcome app. 
+1. Admin creates a CFEE instance, and adds users with developer access.
+2. Developer pushes a Node.js starter app to CFEE.
+3. Node.js starter app uses [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) to store data.
+4. Developer adds a new "welcome message" service.
+5. Node.js starter app binds the new service from a custom service broker.
+6. Node.js starter app displays "welcome" in different languages from the service.
 
 ## Prerequisites
 
@@ -160,11 +160,11 @@ To bind {{site.data.keyword.cloud_notm}} services to the **get-started-node** ap
 4. Select the **GetStartedNode** application you pushed earlier and click **Restage application after binding**. Finally, click the **Bind** button. Wait for the application to restage. You can check progress with the command `ibmcloud app show GetStartedNode`.
 5. In your browser, access the application, add your name and hit `enter`. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
 6. Confirm by selecting the `tutorial` instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
-7. Click **Launch Cloudant Dashboard** and select the `my` database. A JSON document with your name should exist.
+7. Click **Launch Cloudant Dashboard** and select the `mydb` database. A JSON document with your name should exist.
 
 ### Enable auditing and logging persistence
 
-Auditing allows CFEE administrators to track Cloud Foundry activities such as login, a creation of organizations and spaces, user membership and role assignments, application deployments, service bindings, and domain configuration. Auditing is supported through integration with the {{site.data.keyword.cloudaccesstrailshort}} service.
+Auditing allows CFEE administrators to track Cloud Foundry activities such as login, creation of organizations and spaces, user membership and role assignments, application deployments, service bindings, and domain configuration. Auditing is supported through integration with the {{site.data.keyword.cloudaccesstrailshort}} service.
 
 Cloud Foundry application logs can be stored by integrating {{site.data.keyword.loganalysisshort_notm}}. The {{site.data.keyword.loganalysisshort_notm}} service instance selected by a CFEE administrator is configured automatically to receive and persist Cloud Foundry logging events generated from the CFEE instance.
 
@@ -172,26 +172,26 @@ To enable CFEE auditing and logging persistence follow the [steps here](https://
 
 ### Install the Stratos console to manage the app
 
-Stratos Console is an open source web-based tool for working with Cloud Foundry. The Stratos Console application can be optionally installed and used in a specific CFEE environment to manage its organizations, spaces, and applications.
+Stratos Console is an open source web-based tool for working with Cloud Foundry. The Stratos Console application can be optionally installed and used in a specific CFEE environment to manage organizations, spaces, and applications.
 
 To install the Stratos Console application:
 
 1. Open the CFEE instance where you want to install the Stratos console.
-2. Click **Install Stratos Console** on the overview page. The button is visible only to users with administrator or editor permissions to that CFEE instance.
+2. On the **Overview** page, click **Install Stratos Console**. The button is visible only to users with administrator or editor permissions.
 3. In the Install Stratos Console dialog, select an installation option. You can install the Stratos console application either on the CFEE control plane or in one of the cells. Select a version of the Stratos console and the number of instances of the application to install. If you install the Stratos console app in a cell, you're prompted for the organization and space where to deploy the application.
 4. Click **Install**.
 
-The application takes about 5 minutes to install. Once the installation is complete, a **Stratos Console** button appears in place of the *Install Stratos Console* button on the overview page. More on Stratos console can be found [here](https://{DomainName}docs/tutorials/isolated-cloud-foundry-enterprise-apps.html#install-the-stratos-console-to-manage-the-app).
+The application takes about 5 minutes to install. Once the installation is complete, a **Stratos Console** button appears in place of the **Install Stratos Console** button on the overview page. More on Stratos console can be found [here](https://{DomainName}docs/tutorials/isolated-cloud-foundry-enterprise-apps.html#install-the-stratos-console-to-manage-the-app).
 
 ## The relationship between CFEE and Kubernetes
 
-As an application platform, CFEE runs on some form of dedicated or shared virtual infrastructure. For many years, developers thought little about the underlying Cloud Foundry platform because IBM managed it for them. With CFEE, you are not only a developer writing Cloud Foundry applications but also an operator of the Cloud Foundry platform. This is because CFEE is deployed on an IBM Kubernetes cluster that you control.
+As an application platform, CFEE runs on some form of dedicated or shared virtual infrastructure. For many years, developers thought little about the underlying Cloud Foundry platform because IBM managed it for them. With CFEE, you are not only a developer writing Cloud Foundry applications but also an operator of the Cloud Foundry platform. This is because CFEE is deployed on a Kubernetes cluster that you control.
 
 While Cloud Foundry developers may be new to Kubernetes, there are many concepts they both share. Like Cloud Foundry, Kubernetes isolates applications into containers, which run inside a Kubernetes construct called a pod. Similar to application instances, pods can have multiple copies (called replica sets) with application load balancing provided by Kubernetes.  The Cloud Foundry `GetStartedNode` application you deployed earlier runs inside the `diego-cell-0` pod. To support high availability, another pod `diego-cell-1` would run on a separate Kubernetes worker node. Because these Cloud Foundry apps run "inside" Kubernetes, you can also communicate with other Kubernetes microservices using Kubernetes-based networking. The following sections will help illustrate the relationships between CFEE and Kubernetes in more detail.
 
 ## Deploy a Kubernetes service broker
 
-In this section, you'll deploy a microservice to Kubernetes that acts as a service broker for CFEE. [Service brokers](https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md) provide details on available services as well as binding and provisioning support to your Cloud Foundry application. You used a built-in {{site.data.keyword.cloud_notm}} service broker to add the {{site.data.keyword.cloudant_short_notm}} service. Now you'll deploy and use a custom one. You will then modify the Node starter app to use the service broker, the service broker will return to the Node starter app a Welcome message in several languages.
+In this section, you'll deploy a microservice to Kubernetes that acts as a service broker for CFEE. [Service brokers](https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md) provide details on available services as well as binding and provisioning support to your Cloud Foundry application. You used a built-in {{site.data.keyword.cloud_notm}} service broker to add the {{site.data.keyword.cloudant_short_notm}} service. Now you'll deploy and use a custom one. You will then modify the `GetStartedNode` app to use the service broker, which will return a "Welcome" message in several languages.
 
 1. Back in your terminal, clone the projects that provide Kubernetes deployment files and the service broker implementation.
 
@@ -242,7 +242,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
    {: codeblock}
 
    ```sh
-   ibmcloud ks cluster-config <your-cfee-cluster-name> --export
+   $(ibmcloud ks cluster-config <your-cfee-cluster-name> --export)
    ```
    {: codeblock}
 
@@ -258,7 +258,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
 
 ## Verify the service broker is deployed
 
-Now that you've deployed the service broker, confirm it functions properly. You'll do this in several ways: first by using the Kubernetes dashboard, then by accessing the broker from a Cloud Foundry app and finally by actually provisioning a service from the broker.
+Now that you've deployed the service broker, confirm it functions properly. You'll do this in several ways: first by using the Kubernetes dashboard, then by accessing the broker from a Cloud Foundry app and finally by actually binding a service from the broker.
 
 ### View your pods from the Kubernetes dashboard
 
@@ -274,7 +274,7 @@ This section will confirm that Kubernetes artifacts are configured using {{site.
 Having confirmed that the service is available and is proxying the service broker pods, you can verify the broker responds with information about available services.
 
 You can view Cloud Foundry related artifacts from the Kubernetes dashboard. To see them, click on **Namespaces** to view all namespaces with artifacts including the `cf` Cloud Foundry namespace.
-{:tip: .tip}
+{: tip}
 
 ### Access the broker from a Cloud Foundry container
 
@@ -302,7 +302,7 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
    {: codeblock}
 
    ```sh
-   export CLUSTER_IP=<ip address>
+   export CLUSTER_IP=<CLUSTER-IP address>
    ```
    {: codeblock}
 
@@ -354,7 +354,7 @@ To allow developers to provision and bind services from the service broker, you'
 3. In your browser, access your CFEE instance from the [**Environments**](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) page and navigate to the `organizations -> spaces` and select your `dev` space.
 4. Select the **Services** tab and the **Create Service** button.
 5. In the search texbox, search for **Test**. The **Test Node Resource Service Broker Display Name** mock service from the broker will display.
-6. Click the **Create** button and provide the name `welcome-service` to create a service instance. It will become clear in the next section why it's named welcome-service. Then bind the service to the `GetStartedNode` app using the **Bind to appliction** item in the overflow menu.
+6. Select the service, click the **Create** button, and provide the name `welcome-service` to create a service instance. It will become clear in the next section why it's named welcome-service. Then bind the service to the `GetStartedNode` app using the **Bind to appliction** item in the overflow menu.
 7. To view the bound service, run the `cf env` command. The `GetStartedNode` application can now leverage the data in the `credentials` object similar to how it uses data from `cloudantNoSQLDB` currently.
    ```sh
    ibmcloud cf env GetStartedNode
@@ -375,7 +375,7 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
    ibmcloud cf push
    ```
    {: codeblock}
-2. Access the service using your browser. The `route` to the service will be shown as part of the `push` command's output. The resulting URL will be similar to https://welcome.<your-cfee-cluster-domain>. Refresh the page to see alternating languages.
+2. Access the service using your browser. The `route` to the service will be shown as part of the `push` command's output. The resulting URL will be similar to `https://welcome.<your-cfee-cluster-domain>`. Refresh the page to see alternating languages.
 3. Return to the `sample-resource-service-brokers` folder and edit the Node.js sample implementation `sample-resource-service-brokers/node-resource-service-broker/testresourceservicebroker.js` with adding url after line 854 with adding the cluster URL. 
 
    ```javascript
@@ -405,18 +405,21 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
    {: codeblock}
 
    ```sh
-   kubectl patch deployment tutorial-servicebroker-deployment -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"ver\":\"2\"}}}}}"
+   kubectl patch deployment tutorial-servicebroker-deployment -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"version\":\"2\"}}}}}"
    ```
    {: codeblock}
 5. In terminal, navigate back to the `get-started-node` application folder. 
-   ```bash
-   cd ../
+   ```sh
+   cd ..
+   ```
+   {: codeblock}
+   ```sh
    cd get-started-node
    ```
    {: codeblock}
 6. Edit the `get-started-node/server.js` file in `get-stared-node` to include the following middleware. Insert it just prior to the `app.listen()` call.
    ```javascript
-   // Use the service broker 
+   // Use the welcome service
    const request = require('request');
    const testService = appEnv.services['testnoderesourceservicebrokername'];
 
@@ -435,7 +438,7 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
    {: codeblock}
 
    ```javascript
-   $.get("./api/welcome").done(data => document.getElementById('welcome').innerHTML= data);
+   $.get('./api/welcome').done(data => document.getElementById('welcome').innerHTML= data);
    ```
    {: codeblock}
 8. Update the `GetStartedNode` app. Include the `request` package dependency that was added to `server.js`, rebind the `welcome-service` to pick up the new `url` property and finally push the app's new code.
@@ -458,7 +461,17 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
    ibmcloud cf push
    ```
    {: codeblock}
-Done, now visit the application to see the Welcome message in several languages. While this approach used Cloud Foundry as the service implementation, you could just as easily use Kubernetes. The main difference is that the URL to the service would likely be `welcome-service.default.svc.cluster.local`. Using Kubernetes has the added benefit of keeping network traffic to services internal to the Kubernetes cluster. ![Service broker response](./images/solution45-CFEE-apps/service-broker.png)
+
+You're done! Now visit the application and refresh the page several times to see the welcome message in different languages.
+
+![Service broker response](./images/solution45-CFEE-apps/service-broker.png)
+
+If you continue to see only **Welcome** and not other languages, run the `ibmcloud cf env GetStartedNode` command, and confirm the `url` to the service is present. If not, retrace your steps, update, and re-deploy the broker. If the `url` value is present, confirm it returns a message in your browser. Then run the `unbind-service` and `bind-service` commands again followed by `ibmcloud cf restart GetStartedNode`.
+{: tip}
+
+While the welcome service uses Cloud Foundry as its implementation, you could just as easily use Kubernetes. The main difference is that the URL to the service would be likely be `welcome-service.default.svc.cluster.local`. Using the KubeDNS URL has the added benefit of keeping network traffic to services internal to the Kubernetes cluster.
+
+With {{site.data.keyword.cfee_full_notm}} these alternate approaches are now possible.
 
 ## Expand the tutorial
 
