@@ -32,6 +32,9 @@ tar cf - \
   --exclude=README.md \
   . | (cd builddocs/input && tar xvf - )
 
+# replace DomainName
+sed -i 's/{DomainName}/cloud.ibm.com/g' builddocs/input/*.md
+
 # get the gh-pages branch
 rm -rf builddocs/output
 git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.git builddocs/output

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-01-09"
+lastupdated: "2019-01-18"
 
 ---
 
@@ -154,18 +154,18 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "cloud-usage.html">
+    <a href = "isolated-cloud-foundry-enterprise-apps.html">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Reviewing IBM Cloud services, resources and usage
+                Isolated Cloud Foundry Enterprise Apps
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>An introduction to various approaches used to answer common usage-related questions.</p>
+                    <p>Provide an innovation platform to your organization by deploying an isolated, enterprise-grade Cloud Foundry platform using Cloud Foundry Enterprise Environment.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution38/Architecture.png" alt="Architecture diagram for the solution Reviewing IBM Cloud services, resources and usage" />
+                    <img class="architectureDiagram" src = "images/solution45-CFEE-apps/Architecture.png" alt="Architecture diagram for the solution Isolated Cloud Foundry Enterprise Apps" />
                 </div>
             </div>
         </div>
@@ -444,6 +444,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution12/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor health of Cloud Foundry applications"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "isolated-cloud-foundry-enterprise-apps.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Isolated Cloud Foundry Enterprise Apps
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Provide an innovation platform to your organization by deploying an isolated, enterprise-grade Cloud Foundry platform using Cloud Foundry Enterprise Environment.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution45-CFEE-apps/Architecture.png" alt="Architecture diagram for the solution Isolated Cloud Foundry Enterprise Apps"/>
                 </div>
             </div>
         </div>

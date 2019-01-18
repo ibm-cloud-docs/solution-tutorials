@@ -225,6 +225,20 @@
             "Availability Monitoring"
           ],
           "lastUpdated": "2018-11-14"
+        },
+        {
+          "name": "Isolated Cloud Foundry Enterprise Apps",
+          "url": "isolated-cloud-foundry-enterprise-apps.html",
+          "description": "Provide an innovation platform to your organization by deploying an isolated, enterprise-grade Cloud Foundry platform using Cloud Foundry Enterprise Environment.",
+          "imgSrc": "images/solution45-CFEE-apps/Architecture.png",
+          "tags": [
+            "Cloud Foundry",
+            "Cloud Foundry Enterprise Environment",
+            "Node.js",
+            "Kubernetes"
+          ],
+          "featuredPosition": 2,
+          "lastUpdated": "2018-1-18"
         }
       ]
     },
@@ -373,7 +387,7 @@
             "Watson Tone Analyzer",
             "Push Notifications"
           ],
-          "lastUpdated": "2018-11-13"
+          "lastUpdated": "2019-01-11"
         }
       ]
     },
@@ -404,7 +418,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2018-12-11"
+          "lastUpdated": "2018-1-14"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -489,7 +503,6 @@
         {
           "name": "Reviewing IBM Cloud services, resources and usage",
           "url": "cloud-usage.html",
-          "featuredPosition": 2,
           "description": "An introduction to various approaches used to answer common usage-related questions.",
           "imgSrc": "images/solution38/Architecture.png",
           "tags": [
