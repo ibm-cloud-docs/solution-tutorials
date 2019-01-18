@@ -21,8 +21,6 @@ tar cf - \
   --exclude="vpc-*.md" \
   --exclude="images/solution40-*" \
   --exclude="images/solution41-*" \
-  --exclude="images/solution45-*" \
-  --exclude="isolated-cloud-foundry-*.md" \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
