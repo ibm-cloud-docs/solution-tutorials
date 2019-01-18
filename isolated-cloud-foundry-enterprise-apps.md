@@ -53,8 +53,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. Create a CFEE instance, then add users with developer access to the CFEE instance. 
 2. Push a Node.js starter app to CFEE.
-3. Create a [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) and bind it to the CFEE instance. 
-4. Create and deploy a service broker, then bind it and use it within the Node app. 
+3. [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) to store names inputed from the Node.js starter app.
+4. Welcome app returning a `welcome` message in different languages in which been used by the Node.js starter app.
+5. A service broker deployed and used by the Welcome app. 
 
 ## Prerequisites
 
