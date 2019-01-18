@@ -167,7 +167,7 @@ Auditing allows CFEE administrators to track Cloud Foundry activities such as lo
 
 Cloud Foundry application logs can be stored by integrating {{site.data.keyword.loganalysisshort_notm}}. The {{site.data.keyword.loganalysisshort_notm}} service instance selected by a CFEE administrator is configured automatically to receive and persist Cloud Foundry logging events generated from the CFEE instance.
 
-To enable CFEE auditing and logging persistence follow the [steps here](https://cloud.ibm.com/docs/cloud-foundry/auditing-logging.html#auditing-logging).
+To enable CFEE auditing and logging persistence follow the [steps here](https://{DomainName}/docs/cloud-foundry/auditing-logging.html#auditing-logging).
 
 ### Install the Stratos console to manage the app
 
@@ -180,7 +180,7 @@ To install the Stratos Console application:
 3. In the Install Stratos Console dialog, select an installation option. You can install the Stratos console application either on the CFEE control plane or in one of the cells. Select a version of the Stratos console and the number of instances of the application to install. If you install the Stratos console app in a cell, you're prompted for the organization and space where to deploy the application.
 4. Click **Install**.
 
-The application takes about 5 minutes to install. Once the installation is complete, a **Stratos Console** button appears in place of the *Install Stratos Console* button on the overview page. More on Stratos console can be found [here](https://console.test.cloud.ibm.com/docs/tutorials/isolated-cloud-foundry-enterprise-apps.html#install-the-stratos-console-to-manage-the-app).
+The application takes about 5 minutes to install. Once the installation is complete, a **Stratos Console** button appears in place of the *Install Stratos Console* button on the overview page. More on Stratos console can be found [here](https://{DomainName}docs/tutorials/isolated-cloud-foundry-enterprise-apps.html#install-the-stratos-console-to-manage-the-app).
 
 ## The relationship between CFEE and Kubernetes
 
