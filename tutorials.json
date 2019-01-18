@@ -233,9 +233,11 @@
           "imgSrc": "images/solution45-CFEE-apps/Architecture.png",
           "tags": [
             "Cloud Foundry",
+            "Cloud Foundry Enterprise Environment",
             "Node.js",
             "Kubernetes"
           ],
+          "featuredPosition": 2,
           "lastUpdated": "2019-1-18"
         }
       ]
@@ -501,7 +503,6 @@
         {
           "name": "Reviewing IBM Cloud services, resources and usage",
           "url": "cloud-usage.html",
-          "featuredPosition": 2,
           "description": "An introduction to various approaches used to answer common usage-related questions.",
           "imgSrc": "images/solution38/Architecture.png",
           "tags": [
