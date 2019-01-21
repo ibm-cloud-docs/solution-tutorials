@@ -266,6 +266,11 @@ To configure network rules for the frontend virtual server instance, follow simi
          <td>TCP</td>
          <td>From: <strong>22</strong> To <strong>22</strong></td>
       </tr>
+      <tr>
+         <td>IP address range of home network</td>
+         <td>TCP</td>
+         <td>Type: <strong>8</strong>,Code <strong>Any</strong></td>
+      </tr>
    </tbody>
 </table>
 
