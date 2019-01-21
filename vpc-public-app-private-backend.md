@@ -27,6 +27,7 @@ A [subnet](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#subnet
 {:shortdesc}
 
 In short, using VPC you can define a
+
 - software defined network
 - isolate workloads
 - fine control of inbound/outbound traffic
@@ -120,9 +121,7 @@ To confirm creation of subnet, click on **Subnets** and wait until the Status ch
 
 In this section, you will create a backend subnet with virtual server instance and define the rules for network access.
 
-### Create a subnet for the backend
-
-You will use the Subnet created with the VPC as the subnet for the backend.
+You will use the subnet created with the VPC as the subnet for the backend.
 
 ### Create a backend virtual server instance
 
@@ -131,15 +130,13 @@ To create a virtual server instance in the newly created subnet:
 1. Click on the backend subnet under **Subnets**.
 2. Click **Attached instances** > New instance
 3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC your created earlier and **Dallas** as your location.
-4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Balanced**, choose **b-2x8** with 2vCPUs and 8 GM RAM.
+4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 5. To create a new SSH key, click **New key**  
    a. Enter **vpc-ssh-key** as key name.  
    b. Select **Dallas** region.  
    c. Copy the contents of  `<your key>.pub` and paste under Public key.  
    d. Click **Add SSH key**.
 6. Leave the other options as it is and click **Create virtual server instance**.
-
-Wait for the status to change to **Powered On**.
 
 ## Create a frontend subnet and VSI
 {: #frontend-subnet-vsi}
@@ -154,7 +151,7 @@ To create a new subnet for the frontend,
 2. Click **Subnets** > New subnet  
    a. Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.  
    b. Select a location.  
-   c. Enter an IP range for the subnet in CIDR notation, say  `10.240.1.0/24`. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   c. Enter an IP range for the subnet in CIDR notation, say **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
 4. Similar as for the backend, switch the Public gateway to **Attached**. 
 5. Click **Create subnet** to provision.
@@ -166,11 +163,11 @@ To create a virtual server instance in the newly created subnet:
 1. Click on the frontend subnet under **Subnets**.
 2. Click **Attached instances** > New instance
 3. Enter a unique name, **vpc-pubpriv-frontend-vsi**, select the VPC your created earlier, pick **Dallas** as your location.
-4. Select **Ubuntu Linux** image > Click **All profiles** and under Balanced, choose b-2x8 with 2vCPUs and 8 GM RAM
+4. Select **Ubuntu Linux** image > Click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
 5. Select the SSH key you created earlier.
 6. Leave the other options as it is and click **Create virtual server instance**.
 
-Wait for the status to change to **Powered On**. Configure network rules for the backend VSI.
+In the next section, you will configure network rules for the backend VSI.
 
 ## Create and configure Security Groups
 {: #create-configure-sgs}
@@ -263,7 +260,7 @@ To configure network rules for the frontend virtual server instance, follow simi
          <td>From: <strong>443</strong> To <strong>443</strong></td>
       </tr>
       <tr>
-         <td>IP address range of home network.<br>Run <strong>curl ipecho.net/plain ; echo</strong></td>
+         <td>Public IP address range of home network.<br>Run <strong>curl ipecho.net/plain ; echo</strong></td>
          <td>TCP</td>
          <td>From: <strong>22</strong> To <strong>22</strong></td>
       </tr>
@@ -315,7 +312,7 @@ Floating IP is a method to provide inbound and outbound access to the internet f
 
 1. Under **Virtual server instances**, select the frontend VSI (vpc-pubpriv-frontend-vsi).
 2. Scroll to **Network Interfaces** section and click **Reserve** under Floating IP to associate an public IP address to your frontend VSI. Save the associated IP Address to clipboard for future reference.
-3. Ping the server by opening the terminal and running the below command by replacing `<FLOATING_IP_ADDRESS>` with your IP address
+3. Ping the server by opening the terminal and running the below command by replacing `<FLOATING_IP_ADDRESS>` with your IP address. Before pinging make sure that the instance is `Powered on`.
 
  ```sh
   ping <FLOATING_IP_ADDRESS>
@@ -382,7 +379,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	      </tr>
 	   <tbody>
 	      <tr>
-	         <td>IP address range of home network.<br>Run <strong>curl ipecho.net/plain ; echo</strong></td>
+	         <td>Public IP address range of home network.<br>Run <strong>curl ipecho.net/plain ; echo</strong></td>
 	         <td>TCP</td>
 	         <td>From: <strong>22</strong> To <strong>22</strong></td>
 	      </tr>
@@ -434,6 +431,26 @@ Let's create a bastion instance and a bastion security group with required inbou
 	      </tr>
 	   </tbody>
 	</table>
+
+6. Edit the `vpc-pubpriv-frontend-sg` inbound rule to allow the SSH only from `vpc-pubpriv-bastion-sg`.
+
+  **Inbound rule:**
+	<table>
+	   <thead>
+	      <tr>
+	         <td><strong>Source</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong></td>
+	      </tr>
+	   <tbody>
+	      <tr>
+	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+
 
 ### Ping and SSH into your backend instance in a private subnet
 
