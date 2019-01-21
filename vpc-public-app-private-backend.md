@@ -314,7 +314,7 @@ Floating IP is a method to provide inbound and outbound access to the internet f
 
 1. Under **Virtual server instances**, select the frontend VSI (vpc-pubpriv-frontend-vsi).
 2. Scroll to **Network Interfaces** section and click **Reserve** under Floating IP to associate an public IP address to your frontend VSI. Save the associated IP Address to clipboard for future reference.
-3. Ping the server by opening the terminal and running the below command
+3. Ping the server by opening the terminal and running the below command by replacing `<FLOATING_IP_ADDRESS>` with your IP address
 
  ```sh
   ping <FLOATING_IP_ADDRESS>
@@ -335,7 +335,7 @@ Floating IP is a method to provide inbound and outbound access to the internet f
 	64 bytes from 169.61.xxx.xx: icmp_seq=7 ttl=43 time=245.460 ms
 	```
  
-4. To SSH into your Linux instance, use your private key and run the following command:
+4. To SSH into your Linux instance, use your private key and IP address and run the following command:
 
 	```sh
 	ssh -i ~/.ssh/<YOUR_PRIVATE_KEY_NAME> root@<FLOATING_IP_ADDRESS>
@@ -359,6 +359,7 @@ Floating IP is a method to provide inbound and outbound access to the internet f
 6. To monitor your instance, click **Activity** under an instance for an activity log that shows when the instance was started, stopped, or rebooted.
 
 ## Connect to your backend instance
+{: #connect-to-backend-instance}
 
 As there's no floating IP assigned to your backend instance, you will need to create and configure a **bastion instance** to ping or SSH into your backend instance. A bastion server's sole purpose is to provide access to a private network from an external network, such as the Internet. It's a gateway between an inside network and an outside network.
 
@@ -388,7 +389,6 @@ Let's create a bastion instance and a bastion security group with required inbou
 	</table>
 	
 	**Outbound rules:**
-	
 	<table>
 	   <thead>
 	      <tr>
@@ -467,7 +467,7 @@ Let's start the ssh-agent on your machine and add your private key. A ssh-agent 
 4. Ping the backend instance using the private IP address of the backend VSI
    
    ```sh
-   # ping <PRIVATE_IP_ADDRESS
+   # ping <PRIVATE_IP_ADDRESS>
    ```
    
 5. After you’re connected to the bastion instance, SSH into the backend instance with this command
