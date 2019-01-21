@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-18"
+lastupdated: "2019-01-21"
 
 
 ---
@@ -90,7 +90,7 @@ Check for an existing SSH key if there's none, create a new SSH key.
      ```
      {:pre: .pre}
 
-     You can find your `user_ID` under your [user preferences](https://{DomainName}/user). This command generates two files. The generated public key is in the `<your key>.pub` file.
+     You can find your `user_ID` under your [user preferences](https://{DomainName}/user). This command generates two files ie., a public key and a private key. The generated public key is in the `<YOUR_KEY>.pub` file.
 
 
 ## Create a Virtual Private Cloud
@@ -300,7 +300,7 @@ To configure network rules for the frontend virtual server instance, follow simi
 
 This will apply the network rules to the frontend virtual server instance. 
 
-## Assign a floating IP and connect to your instance
+## Assign a floating IP and connect to your frontend instance
 {: #floatingip-connect-to-instance}
 
 In this section, you will reserve a floating IP address to your frontend (public) VSI, ping to confirm the assignment and SSH into the instance. 
@@ -333,7 +333,7 @@ Floating IP is a method to provide inbound and outbound access to the internet f
 4. To SSH into your Linux instance, use your private key and run the following command:
 
 	```sh
-	ssh -i <PATH TO PRIVATE KEY> root@<FLOATING_IP_ADDRESS>
+	ssh -i ~/.ssh/<YOUR_PRIVATE_KEY_NAME> root@<FLOATING_IP_ADDRESS>
 	```
 	{:pre: .pre}
 	
@@ -353,9 +353,127 @@ Floating IP is a method to provide inbound and outbound access to the internet f
    {:pre: .pre}
 6. To monitor your instance, click **Activity** under an instance for an activity log that shows when the instance was started, stopped, or rebooted.
 
-## Install software
+## Connect to your backend instance
 
-Need a rough outline how to access both front- and backend and install software. How to ssh into the backend if there is no public IP?
+As there's no floating IP assigned to your backend instance, you will need to create and configure a **bastion instance** to ping or SSH into your backend instance. A bastion server's sole purpose is to provide access to a private network from an external network, such as the Internet. It's a gateway between an inside network and an outside network.
+
+### Create a bastion instance and configure security groups
+Let's create a bastion instance and a bastion security group with required inbound and outbound rules.
+
+1. Under VPC and subnets > select **Subnets** tab > select `vpc-pubpriv-frontend-subnet`.
+2. Click on **Attached instances** and provision a **new instance** called **vpc-pubpriv-bastion-vsi** under your own VPC by selecting Ubuntu Linux as your image, **c-2x4** (2 vCPUs and 4 GB RAM) as your profile, your SSH key.
+3. Once the instance is powered on, click on `vpc-pubpriv-bastion-vsi` and reserve a floating IP.
+4. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-bastion-sg** under your VPC with the below mentioned inbound and outbound rules and by selecting `vpc-pubpriv-bastion-vsi` under Edit interfaces for VPC
+ 
+	**Inbound rule:**
+	<table>
+	   <thead>
+	      <tr>
+	         <td><strong>Source</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong></td>
+	      </tr>
+	   <tbody>
+	      <tr>
+	         <td>IP address range of home network.<br>Run <strong>curl ipecho.net/plain ; echo</strong></td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+	
+	**Outbound rules:**
+	
+	<table>
+	   <thead>
+	      <tr>
+	         <td><strong>Destination</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong> </td>
+	      </tr>
+	   </thead>
+	   <tbody>
+	     <tr>
+	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	       <tr>
+	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
+	         <td>ICMP</td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+5. Edit the `vpc-pubpriv-backend-sg` security group to add the following new rules
+
+  **Inbound rules:**
+	<table>
+	   <thead>
+	      <tr>
+	         <td><strong>Source</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong></td>
+	      </tr>
+	   <tbody>
+	      <tr>
+	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	       <tr>
+	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
+	         <td>ICMP</td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+
+### Ping and SSH into your backend instance in a private subnet
+
+Let's start the ssh-agent on your machine and add your private key. A ssh-agent is a program to hold private keys used for public key authentication (RSA, DSA).
+
+1. On a machine running macOS, run the below to start the ssh-agent
+
+	```sh
+	 eval "$(ssh-agent -s)"
+	```
+	{:pre: .pre}
+	
+	Should return the `Agent pid`.
+	On a linux machine, you can install from [openssh](http://www.openssh.org/)
+	 
+2. Add your SSH private key to the ssh-agent and store your passphrase in the keychain.
+
+   ```sh
+   ssh-add -K ~/.ssh/<YOUR_PRIVATE_KEY_NAME>
+   ```
+   {:pre: .pre}
+   
+   This command adds and stores the passphrase in your keychain for you when you add an ssh key to the ssh-agent.
+
+3. To forward the ssh key, just add `-A` to your ssh command 
+
+   ```sh
+   # ssh –A root@<BASTION_IP_ADDRESS>
+   ```
+   {:pre: .pre}
+   
+4. Ping the backend instance using the private IP address of the backend VSI
+   
+   ```sh
+   # ping <PRIVATE_IP_ADDRESS
+   ```
+   
+5. After you’re connected to the bastion instance, SSH into the backend instance with this command
+
+   ```sh
+   # cd .ssh
+   # ssh root@<PRIVATE_IP_ADDRESS>
+   ```
+   {:pre: .pre}
+
+You can install and update the software as you are connected to the backend instance now.
 
 ## Remove resources
 
