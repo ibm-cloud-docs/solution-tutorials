@@ -72,7 +72,9 @@ Check for user permissions. Be sure that your user account has sufficient permis
 ## Create SSH key
 {: #create-ssh-key}
 
-Check for an existing SSH key if there's none, create a new SSH key.
+SSH, or Secure Shell, is a remote administration protocol that allows you to control and modify the remote servers over the Internet. Any Linux or macOS user can SSH into their remote server directly from the terminal window. Windows users can take advantage of SSH clients like Putty.
+
+Check for an existing SSH key. If there's none, create a new SSH key.
 
 1. Open a terminal and run this command to check if there are any existing SSH keys:
 
@@ -450,7 +452,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	</table>
 
 
-### Ping and SSH into your backend instance in a private subnet
+### SSH and ping into your backend instance in a private subnet
 
 Let's start the ssh-agent on your machine and add your private key. A ssh-agent is a program to hold private keys used for public key authentication (RSA, DSA).
 
