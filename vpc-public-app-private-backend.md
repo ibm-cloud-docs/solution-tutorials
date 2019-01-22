@@ -170,14 +170,14 @@ In the next section, you will configure network rules for the backend VSI.
 ## Create and configure Security Groups
 {: #create-configure-sgs}
 
-ACLs provides security at the subnet level and Security Groups provides security at the instance level. Let's create and configure inbound and outbound traffic to your instances.
+ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create and configure rules for inbound and outbound traffic to your VSIs.
 
 By default, a security group is created along with your VPC allowing all SSH (TCP port 22) and Ping (ICMP type 8) traffic to the attached instances. 
 
 
 ### Create backend and frontend security groups
 
-To create a new security group,  
+To create a new security group for the backend:  
 1. Click **Security groups** under Network, then **New security group**.  
 2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.  
 3. Under Edit interfaces for VPC, expand **vpc-pubpriv-backend-vsi** and check the `eth0` checkbox of backend subnet.  
@@ -230,11 +230,11 @@ To configure network rules for the backend virtual server instance,
    </tbody>
 </table>
 
-This will apply the network rules to the backend virtual server instance. Click **All Security groups for VPC** breadcrumb on the top to navigate to the list of security groups.
+This will apply the network rules to the backend VSI. Click **All Security groups for VPC** breadcrumb on the top to navigate to the list of security groups.
 
 ### Configure network rules for the frontend VSI
 
-To configure network rules for the frontend virtual server instance, follow similar steps as for the backend rules:
+To configure network rules for the frontend VSI, follow similar steps as for the backend rules:
 
 1. Select **vpc-pubpriv-frontend-sg** from the list of security groups.
 2. Define these **Inbound** rules by clicking **Add rule** for each row.
