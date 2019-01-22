@@ -74,15 +74,15 @@ Check for user permissions. Be sure that your user account has sufficient permis
 
 Check for an existing SSH key if there's none, create a new SSH key.
 
-1. Open a Terminal and run this command to check if there are any existing SSH key
+1. Open a terminal and run this command to check if there are any existing SSH keys:
 
    ```sh
-   ls -al ~/.ssh
+   ls -la ~/.ssh
    ```
    {:pre: .pre}
    
    Look for a file called `id_rsa.pub`.
-2. Alternatively, You can check under an `.ssh` directory under your home directory, for example, `/Users/<USERNAME>/.ssh/id_rsa.pub`. The file starts with `ssh-rsa` and ends with your email address
+2. Alternatively, you can check under an `.ssh` directory under your home directory, for example, `/Users/<USERNAME>/.ssh/id_rsa.pub`. The file starts with `ssh-rsa` and ends with your email address
 3. If you do not have a public SSH key or if you forgot the password of an existing one, generate a new one by running the `ssh-keygen` command and following the prompts. For example, you can generate an SSH key on your Linux server by running the command
 
      ```sh
@@ -99,20 +99,20 @@ Check for an existing SSH key if there's none, create a new SSH key.
 To create your own {{site.data.keyword.vpc_short}},
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
-2. Under **New virtual private cloud** section,  
+2. Under **New virtual private cloud** section:  
    a. Enter **vpc-pubpriv** as name for your VPC.  
    b. Select a **Resource group**.  
    c. Optionally, add **Tags** to organize your resources.  
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the settings for **Default security group** as is.
-4. Under **New subnet for VPC**,  
+4. Under **New subnet for VPC**:  
    a. As a unique name enter **vpc-pubpriv-backend-subnet**.  
    b. Select a Location.  
-   c. Enter an IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-5. Select **Use VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
-6. Switch the Public gateway to **Attached** as attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
+   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+5. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+6. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
 7. Click **Create virtual private cloud** to provision the instance.
 
-To confirm creation of subnet, click on **Subnets** and wait until the Status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+To confirm creation of subnet, click on **Subnets** and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
 ## Create a backend subnet and VSI
 {: #backend-subnet-vsi}
@@ -149,10 +149,10 @@ To create a new subnet for the frontend,
 2. Click **Subnets** > New subnet  
    a. Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.  
    b. Select a location.  
-   c. Enter an IP range for the subnet in CIDR notation, say **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-3. Select **VPC default** for your subnet access control list(ACL). You can configure the Inbound and outbound rules later.
-4. Similar as for the backend, switch the Public gateway to **Attached**. 
-5. Click **Create subnet** to provision.
+   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+3. Select **VPC default** for your subnet access control list(ACL). You can configure the inbound and outbound rules later.
+4. Similar as for the backend, switch the **Public gateway** to **Attached**. 
+5. Click **Create subnet** to provision it.
 
 ### Create a frontend virtual server instance
 
