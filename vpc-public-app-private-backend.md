@@ -265,7 +265,7 @@ To configure network rules for the frontend virtual server instance, follow simi
          <td>From: <strong>22</strong> To <strong>22</strong></td>
       </tr>
       <tr>
-         <td>IP address range of home network</td>
+         <td>Public IP address range of home network</td>
          <td>TCP</td>
          <td>Type: <strong>8</strong>,Code <strong>Any</strong></td>
       </tr>
@@ -465,7 +465,6 @@ Let's start the ssh-agent on your machine and add your private key. A ssh-agent 
 	
 	Should return the `Agent pid`.
 	On a linux machine, you can install a ssh-agent from [openssh](http://www.openssh.org/).
-	 
 2. Add your SSH private key to the ssh-agent and store your passphrase in the keychain.
 
    ```sh
@@ -474,20 +473,17 @@ Let's start the ssh-agent on your machine and add your private key. A ssh-agent 
    {:pre: .pre}
    
    This command adds and stores the passphrase in your keychain for you when you add an ssh key to the ssh-agent.
-
 3. To forward the ssh key, just add `-A` to your ssh command 
 
    ```sh
    # ssh –A root@<BASTION_IP_ADDRESS>
    ```
    {:pre: .pre}
-   
 4. Ping the backend instance using the private IP address of the backend VSI
    
    ```sh
    # ping <PRIVATE_IP_ADDRESS>
    ```
-   
 5. After you’re connected to the bastion instance, SSH into the backend instance with this command
 
    ```sh
