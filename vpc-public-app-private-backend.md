@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-21"
+lastupdated: "2019-01-22"
 
 
 ---
@@ -61,9 +61,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. The user accesses the frontend within a VPC.  
 2. Creates a frontend (public) subnet and a backend (private) subnet.  
 3. Creates respective virtual server instances (VSIs).    
-4. Creates individual security groups(SGs)to limit the VSIs inbound and outbound traffic.  
-5. Configures a security group to define the inbound and outbound traffic that's allowed for the instance.  
-6. Reserves and associates a floating IP address to enable your instance to communicate with the internet. 
+4. Creates and configures individual security groups(SGs) to limit the VSIs inbound and outbound traffic.  
+5. Reserves and associates a floating IP address to enable your instance to communicate with the internet. 
+6. Creates a bastion instance and security group to securely access the private instance.
 
 ## Before you begin
 
@@ -464,7 +464,7 @@ Let's start the ssh-agent on your machine and add your private key. A ssh-agent 
 	{:pre: .pre}
 	
 	Should return the `Agent pid`.
-	On a linux machine, you can install from [openssh](http://www.openssh.org/)
+	On a linux machine, you can install a ssh-agent from [openssh](http://www.openssh.org/).
 	 
 2. Add your SSH private key to the ssh-agent and store your passphrase in the keychain.
 
