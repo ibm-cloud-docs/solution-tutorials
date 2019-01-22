@@ -401,6 +401,11 @@ Let's create a bastion instance and a bastion security group with required inbou
 	         <td>From: <strong>22</strong> To <strong>22</strong></td>
 	      </tr>
 	       <tr>
+	         <td>Floating <strong>IP Address</strong> of frontend VSI</td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	       <tr>
 	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
 	         <td>ICMP</td>
 	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
@@ -442,8 +447,8 @@ Let's create a bastion instance and a bastion security group with required inbou
 	         <td><strong>Value</strong></td>
 	      </tr>
 	   <tbody>
-	      <tr>
-	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
+	     <tr>
+	         <td>Floating <strong>IP Address</strong> of bastion VSI</td>
 	         <td>TCP</td>
 	         <td>From: <strong>22</strong> To <strong>22</strong></td>
 	      </tr>
