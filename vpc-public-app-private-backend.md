@@ -2,8 +2,6 @@
 copyright:
   years: 2019
 lastupdated: "2019-01-22"
-
-
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -19,18 +17,18 @@ lastupdated: "2019-01-22"
 
 # Private and public subnets in a Virtual Private Cloud
 
-This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will also define Access Control Lists (ACLs) with inbound and outbound rules for subnet isolation. Moreover, you create Security Groups (SGs) to allow or deny traffic to the VSIs.
+This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by ssh. The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will also define Access Control Lists (ACLs) with inbound and outbound rules for subnet isolation. Moreover, you create Security Groups (SGs) to allow or deny traffic to the VSIs.
 
 A VPC is your own, private cloud on shared cloud infrastructure with a logical isolation from other virtual networks.
 
 A [subnet](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual VSIs.
 {:shortdesc}
 
-In short, using VPC you can define a
+In short, using VPC you can
 
-- software defined network
-- isolate workloads
-- fine control of inbound/outbound traffic
+- create a software defined network (SDN),
+- isolate workloads,
+- have fine control of inbound/outbound traffic.
 
 ## Objectives
 
@@ -38,7 +36,7 @@ In short, using VPC you can define a
 
 - Create a public subnet for frontend servers
 - Create a private subnet for backend servers
-- Create a virtual server instance in each subnet
+- Create virtual server instances in each subnet, including a bastion server
 - Configure network rules through security groups
 - Reserve a floating IP to allow inbound and outbound internet traffic
 
@@ -69,7 +67,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #prereqs}
 
-Check for user permissions. Be sure that your user has sufficient permissions to create and manage resources in your VPC. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
+Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
 
 ## Create SSH key
 {: #create-ssh-key}
