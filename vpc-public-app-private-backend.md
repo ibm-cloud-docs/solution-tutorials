@@ -54,7 +54,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-![Architecture](images/solution40-vpc-public-app-private-backend/Architecture2.png)
+![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
 1. The user accesses the frontend within a VPC.  
 2. Creates a frontend (public) subnet and a backend (private) subnet.  
