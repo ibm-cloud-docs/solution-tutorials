@@ -498,6 +498,23 @@ Let's start the ssh-agent on your machine and add your private key. An ssh-agent
 
 You can install and update the software as you are connected to the backend instance now.
 
+### Install software
+
+To install software, e.g., on the frontend VSI, SSH into the frontend instance similar as shown in the previous section.
+
+1. Then, update the software package information:
+
+   ```sh
+   # apt-get update
+   ```
+   {:pre: .pre}
+2. Install the desired software. To install the command-line web browser **Lynx**, use:
+
+   ```sh
+   # apt-get install lynx
+   ```
+   {:pre: .pre}
+
 ## Remove resources
 
 {: #remove-resources}
