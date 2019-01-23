@@ -19,14 +19,14 @@ lastupdated: "2019-01-22"
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by ssh. The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will also define Access Control Lists (ACLs) with inbound and outbound rules for subnet isolation. Moreover, you create Security Groups (SGs) to allow or deny traffic to the VSIs.
 
-A VPC is your own, private cloud on shared cloud infrastructure with a logical isolation from other virtual networks.
+A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
 A [subnet](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual VSIs.
 {:shortdesc}
 
 In short, using VPC you can
 
-- create a software defined network (SDN),
+- create a software-defined network (SDN),
 - isolate workloads,
 - have fine control of inbound/outbound traffic.
 
@@ -56,7 +56,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
-1. User connects to the cloud and provisions a VPC service with a frontend (public) and a backend (private) subnet under a specific region and a zone. 
+1. The user connects to the cloud and provisions a VPC service with a frontend (public) and a backend (private) subnet under a specific region and a zone. 
 2. Creates virtual server instances (VSIs) and security groups in respective subnets. 
 3. Configures individual security groups(SGs) to limit the attached VSI's inbound and outbound traffic. One such rule is that the backend server receives requests only from the frontend security group.
 4. The user connects(SSH) to the frontend server through the bastion instance to install or update the server. 
@@ -83,7 +83,7 @@ Check for an existing SSH key. If there's none, create a new SSH key.
    {:pre: .pre}
    
    Look for a file called `id_rsa.pub`.
-2. Alternatively, you can check under an `.ssh` directory under your home directory, for example, `/Users/<USERNAME>/.ssh/id_rsa.pub`. The file starts with `ssh-rsa` and ends with your email address
+2. Alternatively, you can check under a `.ssh` directory under your home directory, for example, `/Users/<USERNAME>/.ssh/id_rsa.pub`. The file starts with `ssh-rsa` and ends with your email address
 3. If you do not have a public SSH key or if you forgot the password of an existing one, generate a new one by running the `ssh-keygen` command and following the prompts. For example, you can generate an SSH key on your Linux server by running the command
 
      ```sh
@@ -113,7 +113,7 @@ To create your own {{site.data.keyword.vpc_short}},
 6. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
 7. Click **Create virtual private cloud** to provision the instance.
 
-To confirm creation of subnet, click on **Subnets** and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+To confirm the creation of subnet, click on **Subnets** and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
 ## Create a backend subnet and VSI
 {: #backend-subnet-vsi}
@@ -259,12 +259,12 @@ To configure network rules for the frontend VSI, follow similar steps as for the
          <td>From: <strong>443</strong> To <strong>443</strong></td>
       </tr>
       <tr>
-         <td>Public IP address range of home network.<br>Run <strong>curl ipecho.net/plain ; echo</strong></td>
+         <td>The public IP address range of home network.<br>Run <strong>curl ipecho.net/plain ; echo</strong></td>
          <td>TCP</td>
          <td>From: <strong>22</strong> To <strong>22</strong></td>
       </tr>
       <tr>
-         <td>Public IP address range of home network</td>
+         <td>The public IP address range of home network</td>
          <td>TCP</td>
          <td>Type: <strong>8</strong>,Code <strong>Any</strong></td>
       </tr>
@@ -310,8 +310,8 @@ In this section, you will reserve a floating IP address to your frontend (public
 Floating IP is a method to provide inbound and outbound access to the internet for VPC resources such as instances, a load balancer, or a VPN tunnel, using assigned Floating IP addresses from a pool.
 
 1. Under **Virtual server instances**, select the frontend VSI (vpc-pubpriv-frontend-vsi).
-2. Scroll to **Network Interfaces** section and click **Reserve** under Floating IP to associate an public IP address to your frontend VSI. Save the associated IP Address to clipboard for future reference.
-3. Ping the server by opening the terminal and running the below command by replacing `<FLOATING_IP_ADDRESS>` with your IP address. Before pinging make sure that the instance is `Powered on`.
+2. Scroll to **Network Interfaces** section and click **Reserve** under Floating IP to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
+3. Ping the server by opening the terminal and running the below command by replacing `<FLOATING_IP_ADDRESS>` with your IP address. Before pinging, make sure that the status of the instance is `Powered on`.
 
  ```sh
   ping <FLOATING_IP_ADDRESS>
@@ -458,7 +458,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 
 ### SSH and ping into your backend instance in a private subnet
 
-Let's start the ssh-agent on your machine and add your private key. A ssh-agent is a program to hold private keys used for public key authentication (RSA, DSA).
+Let's start the ssh-agent on your machine and add your private key. An ssh-agent is a program to hold private keys used for public key authentication (RSA, DSA).
 
 1. On a machine running macOS, run the below to start the ssh-agent
 
@@ -468,7 +468,7 @@ Let's start the ssh-agent on your machine and add your private key. A ssh-agent 
 	{:pre: .pre}
 	
 	Should return the `Agent pid`.
-	On a linux machine, you can install a ssh-agent from [openssh](http://www.openssh.org/).
+	On a Linux machine, you can install an ssh-agent from [openSSH](http://www.openssh.org/).
 2. Add your SSH private key to the ssh-agent and store your passphrase in the keychain.
 
    ```sh
