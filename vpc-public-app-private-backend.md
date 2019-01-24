@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-22"
+lastupdated: "2019-01-24"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -115,32 +115,48 @@ To create your own {{site.data.keyword.vpc_short}},
 
 To confirm the creation of subnet, click on **Subnets** and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
-## Create a backend subnet and VSI
+## Create the backend subnet, security group and VSI
 {: #backend-subnet-vsi}
 
-In this section, you will create a backend subnet with virtual server instance and define the rules for network access.
+In this section, you will create a backend subnet with virtual server instance and security group.
 
 You will use the subnet created with the VPC as the subnet for the backend.
+
+### Create a backend security group
+ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create and configure rules for inbound and outbound traffic to your VSIs.
+
+By default, a security group is created along with your VPC allowing all SSH (TCP port 22) and Ping (ICMP type 8) traffic to the attached instances.
+
+To create a new security group for the backend:  
+1. Click **Security groups** under Network, then **New security group**.  
+2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.  
+3. Click **Create security group**.  
+
+You will later edit the security group to add the inbound and outbound rules as and when required.
 
 ### Create a backend virtual server instance
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the backend subnet under **Subnets**.
+1. Click on the backend subnet under **Subnets**
 2. Click **Attached instances** > New instance
 3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC your created earlier and **Dallas** as your location.
 4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 5. To create a new SSH key, click **New key**  
    a. Enter **vpc-ssh-key** as key name.  
    b. Select **Dallas** region.  
-   c. Copy the contents of  `<your key>.pub` and paste under Public key.  
+   c. Copy the contents of  `<YOUR_SSH_KEY>.pub` and paste under Public key.  
    d. Click **Add SSH key**.
-6. Leave the other options as it is and click **Create virtual server instance**.
+6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
+   a. Select **vpc-pubpriv-backend-subnet** as the subnet.
+   b. Uncheck the default SG > check **vpc-pubpriv-backend-sg**.
+   c. Click **Save**.
+7. Click **Create virtual server instance**.
 
-## Create a frontend subnet and VSI
+## Create the frontend subnet, VSI and security group
 {: #frontend-subnet-vsi}
 
-In this section, you will create a frontend subnet with virtual server instance and define the rules for network access.
+In this section, you will create a frontend subnet with virtual server instance and a security group.
 
 ### Create a subnet for the frontend
 
@@ -155,6 +171,13 @@ To create a new subnet for the frontend,
 4. Similar as for the backend, switch the **Public gateway** to **Attached**. 
 5. Click **Create subnet** to provision it.
 
+### Create a frontend security group
+
+To create a new security group for the frontend:  
+1. Click **Security groups** under Network, then **New security group**.  
+2. Enter **vpc-pubpriv-frontend-sg** as name and select the VPC you created earlier.   
+3. Click **Create security group**.  
+
 ### Create a frontend virtual server instance
 
 To create a virtual server instance in the newly created subnet:
@@ -164,206 +187,35 @@ To create a virtual server instance in the newly created subnet:
 3. Enter a unique name, **vpc-pubpriv-frontend-vsi**, select the VPC your created earlier, pick **Dallas** as your location.
 4. Select **Ubuntu Linux** image > Click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
 5. Select the SSH key you created earlier.
-6. Leave the other options as it is and click **Create virtual server instance**.
+6.  Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
+   a. Select **vpc-pubpriv-frontend-subnet** as the subnet.
+   b. Uncheck the default SG > check **vpc-pubpriv-frontend-sg**.
+   c. Click **Save**.
+   d. Click **Create virtual server instance**.
+7. Wait until the status of the VSI changes to **Powered On** > select the frontend VSI (vpc-pubpriv-frontend-vsi) > scroll to Network Interfaces section and click Reserve under Floating IP to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
-In the next section, you will configure network rules for the backend VSI.
-
-## Create and configure Security Groups
-{: #create-configure-sgs}
-
-ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create and configure rules for inbound and outbound traffic to your VSIs.
-
-By default, a security group is created along with your VPC allowing all SSH (TCP port 22) and Ping (ICMP type 8) traffic to the attached instances. 
-
-
-### Create backend and frontend security groups
-
-To create a new security group for the backend:  
-1. Click **Security groups** under Network, then **New security group**.  
-2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.  
-3. Under Edit interfaces for VPC, expand **vpc-pubpriv-backend-vsi** and check the `eth0` checkbox of backend subnet.  
-4. Click **Create security group**.  
-5. Repeat the above steps by clicking **New security group** to create **vpc-pubpriv-frontend-sg**, edit the interface to attach **vpc-pubpriv-frontend-vsi** and check `eth1` checkbox.
-
-### Configure network rules for the backend VSI
-
-To configure network rules for the backend virtual server instance,
-  
-1. Select **vpc-pubpriv-backend-sg** from the list of security groups.
-2. Define the **Inbound** rule by clicking **Add rule**.
-
-   <table>
-   <thead>
-      <tr>
-         <td><strong>Source</strong></td>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Value</strong></td>
-      </tr>
-   <tbody>
-      <tr>
-         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-frontend-sg</strong></td>
-         <td>TCP</td>
-         <td>Port of the backend server<br> e.g., 3306 for MySQL server</td>
-      </tr>
-   </tbody>
-</table>
-
-3. Now, define these **Outbound rules** by clicking **Add rule** for each row.
-   <table>
-   <thead>
-      <tr>
-         <td><strong>Destination</strong></td>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Value</strong> </td>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>Any - 0.0.0.0/0 </td>
-         <td>TCP</td>
-         <td>From: <strong>80</strong> To <strong>80</strong></td>
-      </tr>
-      <tr>
-         <td>Any - 0.0.0.0/0</td>
-         <td>TCP</td>
-         <td>From: <strong>443</strong> To <strong>443</strong></td>
-      </tr>
-   </tbody>
-</table>
-
-This will apply the network rules to the backend VSI. Click **All Security groups for VPC** breadcrumb on the top to navigate to the list of security groups.
-
-### Configure network rules for the frontend VSI
-
-To configure network rules for the frontend VSI, follow similar steps as for the backend rules:
-
-1. Select **vpc-pubpriv-frontend-sg** from the list of security groups.
-2. Define these **Inbound** rules by clicking **Add rule** for each row.
-
-   <table>
-   <thead>
-      <tr>
-         <td><strong>Source</strong></td>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Value</strong></td>
-      </tr>
-   <tbody>
-      <tr>
-         <td>Any - 0.0.0.0/0</td>
-         <td>TCP</td>
-         <td>From: <strong>80</strong> To <strong>80</strong></td>
-      </tr>
-      <tr>
-         <td>Any - 0.0.0.0/0</td>
-         <td>TCP</td>
-         <td>From: <strong>443</strong> To <strong>443</strong></td>
-      </tr>
-      <tr>
-         <td>The public IP address range of home network.<br>Run <strong>curl ipecho.net/plain ; echo</strong></td>
-         <td>TCP</td>
-         <td>From: <strong>22</strong> To <strong>22</strong></td>
-      </tr>
-      <tr>
-         <td>The public IP address range of home network</td>
-         <td>TCP</td>
-         <td>Type: <strong>8</strong>,Code <strong>Any</strong></td>
-      </tr>
-   </tbody>
-</table>
-
-3. In the **Outbound rules** section, define these rules by clicking **Add rule** for each row.
-   
-   <table>
-   <thead>
-      <tr>
-         <td><strong>Destination</strong></td>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Value</strong> </td>
-      </tr>
-   </thead>
-   <tbody>
-     <tr>
-         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
-         <td>TCP</td>
-         <td>Port of the backend server <br>e.g., 3306 for MySQL server</td>
-      </tr>
-      <tr>
-         <td>Any - 0.0.0.0/0 </td>
-         <td>TCP</td>
-         <td>From: <strong>80</strong> To <strong>80</strong></td>
-      </tr>
-      <tr>
-         <td>Any - 0.0.0.0/0</td>
-         <td>TCP</td>
-         <td>From: <strong>443</strong> To <strong>443</strong></td>
-      </tr>
-   </tbody>
-</table>
-
-This will apply the network rules to the frontend virtual server instance. 
-
-## Assign a floating IP and connect to your frontend instance
-{: #floatingip-connect-to-instance}
-
-In this section, you will reserve a floating IP address to your frontend (public) VSI, ping to confirm the assignment and SSH into the instance. 
-
-Floating IP is a method to provide inbound and outbound access to the internet for VPC resources such as instances, a load balancer, or a VPN tunnel, using assigned Floating IP addresses from a pool.
-
-1. Under **Virtual server instances**, select the frontend VSI (vpc-pubpriv-frontend-vsi).
-2. Scroll to **Network Interfaces** section and click **Reserve** under Floating IP to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
-3. Ping the server by opening the terminal and running the below command by replacing `<FLOATING_IP_ADDRESS>` with your IP address. Before pinging, make sure that the status of the instance is `Powered on`.
-
- ```sh
-  ping <FLOATING_IP_ADDRESS>
- ```
- {:pre: .pre}
- 
- If your ping is successful, you should see a response similar to the following,
- 
-	```
-	PING 169.61.xxx.xx (169.61.xxx.xxxxx.xx): 56 data bytes
-	64 bytes from 169.61.xxx.xx: icmp_seq=0 ttl=43 time=245.754 ms
-	64 bytes from 169.61.xxx.xx: icmp_seq=1 ttl=43 time=245.567 ms
-	64 bytes from 169.61.xxx.xx: icmp_seq=2 ttl=43 time=245.560 ms
-	64 bytes from 169.61.xxx.xx: icmp_seq=3 ttl=43 time=245.502 ms
-	64 bytes from 169.61.xxx.xx: icmp_seq=4 ttl=43 time=245.436 ms
-	64 bytes from 169.61.xxx.xx: icmp_seq=5 ttl=43 time=245.533 ms
-	64 bytes from 169.61.xxx.xx: icmp_seq=6 ttl=43 time=245.469 ms
-	64 bytes from 169.61.xxx.xx: icmp_seq=7 ttl=43 time=245.460 ms
-	```
- 
-4. To SSH into your Linux instance, use your private key and IP address and run the following command:
-
-	```sh
-	ssh -i ~/.ssh/<YOUR_PRIVATE_KEY_NAME> root@<FLOATING_IP_ADDRESS>
-	```
-	{:pre: .pre}
-	
-	You should see a response similar to the following example. When prompted to continue connecting, type `yes`.
-		
-		The authenticity of host 'xxx.xxx.xxx.xxx (xxx.xxx.xxx.xxx)' can't be established.
-		ECDSA key fingerprint is SHA256:abcdef1Gh/aBCd1EFG1H8iJkLMnOP21qr1s/8a3a8aa.
-		Are you sure you want to continue connecting (yes/no)? yes
-		Warning: Permanently added 'xxx.xxx.xxx.xxx' (ECDSA) to the list of known hosts.
-		You are now accessing your server.
-
-5. When you are ready to end your connection, run the following command:
-
-   ```sh
-   # exit
-   ```
-   {:pre: .pre}
-6. To monitor your instance, click **Activity** under an instance for an activity log that shows when the instance was started, stopped, or rebooted.
-
-## Connect to your backend instance
+## Create a bastion host
 {: #connect-to-backend-instance}
 
-As there's no floating IP assigned to your backend instance, you will need to create and configure a **bastion instance** to ping or SSH into your backend instance. A bastion server's sole purpose is to provide access to a private network from an external network, such as the Internet. It's a gateway between an inside network and an outside network.
+If you have observed, there's no floating IP assigned to your backend instance, you will need to create and configure a **bastion instance** to ping or SSH into your backend instance. A bastion server's sole purpose is to provide access to a private network from an external network, such as the Internet. It's a gateway between an inside network and an outside network. you will also use bastion instance to connect to frontend as well for secure connection.
+
+### Create a bastion subnet
+
+To create a new subnet for the bastion host,
+
+1. Click **VPC and subnets** under Network on the left pane
+2. Click **Subnets** > New subnet  
+   a. Enter **vpc-pubpriv-bastion-subnet** as name, then select the VPC you created.  
+   b. Select a location.  
+   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+3. Select **VPC default** for your subnet access control list(ACL). You can configure the inbound and outbound rules later.
+4. Similar as for the backend, switch the **Public gateway** to **Attached**. 
+5. Click **Create subnet** to provision it.
 
 ### Create a bastion instance and configure security groups
 Let's create a bastion instance and a bastion security group with required inbound and outbound rules.
 
-1. Under VPC and subnets > select **Subnets** tab > select `vpc-pubpriv-frontend-subnet`.
+1. Under VPC and subnets > select **Subnets** tab > select `vpc-pubpriv-bastion-subnet`.
 2. Click on **Attached instances** and provision a **new instance** called **vpc-pubpriv-bastion-vsi** under your own VPC by selecting Ubuntu Linux as your image, **c-2x4** (2 vCPUs and 4 GB RAM) as your profile, your SSH key.
 3. Once the instance is powered on, click on `vpc-pubpriv-bastion-vsi` and reserve a floating IP.
 4. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-bastion-sg** under your VPC with the below mentioned inbound and outbound rules and by selecting `vpc-pubpriv-bastion-vsi` under Edit interfaces for VPC
@@ -452,11 +304,16 @@ Let's create a bastion instance and a bastion security group with required inbou
 	         <td>TCP</td>
 	         <td>From: <strong>22</strong> To <strong>22</strong></td>
 	      </tr>
+	       <tr>
+	         <td><strong>Any</strong> - 0.0.0.0/0</td>
+	         <td>ICMP</td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
+	      </tr>
 	   </tbody>
 	</table>
 
 
-### SSH and ping into your backend instance in a private subnet
+## SSH into your frontend or backend instance
 
 Let's start the ssh-agent on your machine and add your private key. An ssh-agent is a program to hold private keys used for public key authentication (RSA, DSA).
 
@@ -483,24 +340,64 @@ Let's start the ssh-agent on your machine and add your private key. An ssh-agent
    # ssh –A root@<BASTION_IP_ADDRESS>
    ```
    {:pre: .pre}
-4. Ping the backend instance using the private IP address of the backend VSI
    
-   ```sh
-   # ping <PRIVATE_IP_ADDRESS>
-   ```
-5. After you’re connected to the bastion instance, SSH into the backend instance with this command
+   Now, you are connected to the bastion host.
+4. After you’re connected to the bastion instance, SSH into the frontend or backend instance with this command
 
    ```sh
-   # cd .ssh
-   # ssh root@<PRIVATE_IP_ADDRESS>
+   # ssh root@<PUBLIC_IP_ADDRESS_OR_PRIVATE_IP_ADDRESS>
    ```
    {:pre: .pre}
 
 You can install and update the software as you are connected to the backend instance now.
 
-### Install software
+## Install software and run updates
 
-To install software, e.g., on the frontend VSI, SSH into the frontend instance similar as shown in the previous section.
+Let's setup a new security group that allows you to install or update software when its required.
+
+1. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-allow-install-update-sg** with the below outbound rules
+
+   <table>
+   <thead>
+      <tr>
+         <td><strong>Destination</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong> </td>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>Any - 0.0.0.0/0 </td>
+         <td>TCP</td>
+         <td>From: <strong>80</strong> To <strong>80</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+         <td>TCP</td>
+         <td>From: <strong>443</strong> To <strong>443</strong></td>
+      </tr>
+       <tr>
+         <td>Any - 0.0.0.0/0 </td>
+         <td>TCP</td>
+         <td>From: <strong>53</strong> To <strong>53</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+         <td>UDP</td>
+         <td>From: <strong>53</strong> To <strong>53</strong></td>
+      </tr>
+
+   </tbody>
+</table>
+
+2. Whenever you plan to **install or update** software on your instances  
+   a. Navigate to **Security groups** and select **vpc-pubpriv-allow-install-update-sg** security group.  
+   b. Click **Attached interfaces** > Edit interfaces.  
+   c. Expand and select the instances you want to associate with this security group.  
+   d. Click **Save**.
+
+To install software, e.g., on the frontend VSI, SSH into the frontend or backend instance as shown in the previous section.
+
 
 1. Then, update the software package information:
 
@@ -514,6 +411,45 @@ To install software, e.g., on the frontend VSI, SSH into the frontend instance s
    # apt-get install lynx
    ```
    {:pre: .pre}
+   
+3. Once the required frontend and backend softwares are installed, you can add new inbound and outbound rules to allow traffic on the required ports. For example,define the following **Inbound** rule in your backend security group to allow requests on port 3306 and allow HTTP traffic on port 80 and HTTPS traffic on port 443 to your frontend server
+   <table>
+   <thead>
+      <tr>
+         <td><strong>Source</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong></td>
+      </tr>
+   <tbody>
+      <tr>
+         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-frontend-sg</strong></td>
+         <td>TCP</td>
+         <td>Port of the backend server<br> e.g., 3306 for MySQL server</td>
+      </tr>
+   </tbody>
+</table>
+
+	<table>
+   <thead>
+      <tr>
+         <td><strong>Source</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong></td>
+      </tr>
+   <tbody>
+      <tr>
+         <td>Any - 0.0.0.0/0 </td>
+         <td>TCP</td>
+         <td>From: <strong>80</strong> To <strong>80</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+         <td>TCP</td>
+         <td>From: <strong>443</strong> To <strong>443</strong></td>
+      </tr>
+   </tbody>
+</table>
+
 
 ## Remove resources
 
