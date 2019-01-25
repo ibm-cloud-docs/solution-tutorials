@@ -421,7 +421,7 @@ To install software, e.g., on the frontend VSI, SSH into the frontend instance a
    ```
    {:pre: .pre}
    
-3. Once the required frontend and backend softwares are installed, you can add new inbound and outbound rules to allow traffic on the required ports. For example, you can define the following **Inbound** rule in your backend security group to allow requests on port 3306 for your database and allow HTTP traffic on port 80 and HTTPS traffic on port 443 to your frontend server
+3. Once the required frontend and backend softwares are installed, you can add new inbound and outbound rules to allow traffic on the required ports. For example, you can define the following **inbound** rule in your backend SG to allow requests on port 3306 for your backend database and **inbound** rules in your frontend SG to allow HTTP traffic on port 80 and HTTPS traffic on port 443 to your frontend web server.
    <table>
    <thead>
       <tr>
