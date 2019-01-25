@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-24"
+lastupdated: "2019-01-25"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -54,14 +54,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
+![Architecture](images/solution40-vpc-public-app-private-backend/Architecture2.png)
 
 
-1. The user connects to the cloud and provisions a VPC service with a frontend (public) and a backend (private) subnet under a specific region and a zone. 
+1. The user connects to the cloud and provisions a VPC service with a frontend (public), a backend (private) subnet and a bastion subnet under a specific region and a zone. 
 2. Creates virtual server instances (VSIs) and security groups in respective subnets. 
 3. Configures individual security groups(SGs) to limit the attached VSI's inbound and outbound traffic. One such rule is that the backend server receives requests only from the frontend security group.
 4. The user connects(SSH) to the frontend server through the bastion instance to install or update the server. 
 5. The user securely connects to the backend server in the private subnet through the bastion instance.
+6. The user assigns a new security group to the instances to connect to the internet for installing or updating software.
 
 ## Before you begin
 
