@@ -59,8 +59,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the user assigns a security group with proper outbound rules to the instances to connect to the internet for installing or updating software.
 2. Connects to the bastion server using the private SSH key.
-3. Connects securely to the frontend instance's **public IP address** via bastion server and installs the required frontend software e.g.,a web server.
-4. Connects securely to the backend instance's **private IP address** via bastion server and installs the required backend software e.g.,a database server
+3. Connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
+4. Connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
 5. The internet user connects to web server on frontend. 
 6. Frontend requests private resources from secured backend and serves results to user.
 
