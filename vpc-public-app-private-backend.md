@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-24"
+lastupdated: "2019-01-25"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -56,11 +56,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
-1. The user connects to the cloud and provisions a VPC service with a frontend (public) and a backend (private) subnet under a specific region and a zone. 
-2. Creates virtual server instances (VSIs) and security groups in respective subnets. 
-3. Configures individual security groups(SGs) to limit the attached VSI's inbound and outbound traffic. One such rule is that the backend server receives requests only from the frontend security group.
-4. The user connects(SSH) to the frontend server through the bastion instance to install or update the server. 
-5. The user securely connects to the backend server in the private subnet through the bastion instance.
+
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the user assigns a security group with proper outbound rules to the instances to connect to the internet for installing or updating software.
+2. Connects to the bastion server using the private SSH key.
+3. Connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
+4. Connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
+5. The internet user connects to web server on frontend. 
+6. Frontend requests private resources from secured backend and serves results to user.
 
 ## Before you begin
 
@@ -115,7 +117,7 @@ To create your own {{site.data.keyword.vpc_short}},
 
 To confirm the creation of subnet, click on **Subnets** and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
-## Create the backend subnet, security group and VSI
+## Create a backend subnet, security group and VSI
 {: #backend-subnet-vsi}
 
 In this section, you will create a backend subnet with virtual server instance and security group.
@@ -153,7 +155,7 @@ To create a virtual server instance in the newly created subnet:
    c. Click **Save**.
 7. Click **Create virtual server instance**.
 
-## Create the frontend subnet, VSI and security group
+## Create a frontend subnet, VSI and security group
 {: #frontend-subnet-vsi}
 
 In this section, you will create a frontend subnet with virtual server instance and a security group.
@@ -194,10 +196,14 @@ To create a virtual server instance in the newly created subnet:
    d. Click **Create virtual server instance**.
 7. Wait until the status of the VSI changes to **Powered On** > select the frontend VSI (vpc-pubpriv-frontend-vsi) > scroll to Network Interfaces section and click Reserve under Floating IP to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
-## Create a bastion host
-{: #connect-to-backend-instance}
+## Create a bastion host to securely connect
+{: #bastion-host-to-connect-securely}
 
-If you have observed, there's no floating IP assigned to your backend instance, you will need to create and configure a **bastion instance** to ping or SSH into your backend instance. A bastion server's sole purpose is to provide access to a private network from an external network, such as the Internet. It's a gateway between an inside network and an outside network. you will also use bastion instance to connect to frontend as well for secure connection.
+If you have observed, there's no floating IP assigned to your backend instance. So, you will need to create and configure a **bastion instance** to ping or SSH into your backend instance. 
+
+A bastion server's sole purpose is to provide access to a private network from an external network, such as the Internet. It's a gateway between an inside network and an outside network. 
+
+You will also use bastion instance to securely connect to your frontend instance.
 
 ### Create a bastion subnet
 
@@ -253,7 +259,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	         <td>From: <strong>22</strong> To <strong>22</strong></td>
 	      </tr>
 	       <tr>
-	         <td>Floating <strong>IP Address</strong> of frontend VSI</td>
+	         <td>Floating IP Address of <strong>frontend</strong> VSI</td>
 	         <td>TCP</td>
 	         <td>From: <strong>22</strong> To <strong>22</strong></td>
 	      </tr>
@@ -288,7 +294,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	   </tbody>
 	</table>
 
-6. Edit the `vpc-pubpriv-frontend-sg` inbound rule to allow the SSH only from `vpc-pubpriv-bastion-sg`.
+6. Edit the `vpc-pubpriv-frontend-sg` security group to add an inbound rule to allow the SSH only from `vpc-pubpriv-bastion-sg` and also a rule to ping the server from internet.
 
   **Inbound rule:**
 	<table>
@@ -300,7 +306,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	      </tr>
 	   <tbody>
 	     <tr>
-	         <td>Floating <strong>IP Address</strong> of bastion VSI</td>
+	         <td>Floating IP Address of <strong>bastion</strong> VSI</td>
 	         <td>TCP</td>
 	         <td>From: <strong>22</strong> To <strong>22</strong></td>
 	      </tr>
@@ -312,8 +318,10 @@ Let's create a bastion instance and a bastion security group with required inbou
 	   </tbody>
 	</table>
 
+In the next section, you will see the steps to SSH into your backend or frontend instance via bastion host.
 
-## SSH into your frontend or backend instance
+## SSH into your backend or frontend instance via bastion
+{: #ssh-backend-frontend-via-bastion}
 
 Let's start the ssh-agent on your machine and add your private key. An ssh-agent is a program to hold private keys used for public key authentication (RSA, DSA).
 
@@ -342,16 +350,17 @@ Let's start the ssh-agent on your machine and add your private key. An ssh-agent
    {:pre: .pre}
    
    Now, you are connected to the bastion host.
-4. After you’re connected to the bastion instance, SSH into the frontend or backend instance with this command
+4. After you’re connected to the bastion instance, SSH into the frontend using `floating IP` or backend instance using `private IP` with this command
 
    ```sh
    # ssh root@<PUBLIC_IP_ADDRESS_OR_PRIVATE_IP_ADDRESS>
    ```
    {:pre: .pre}
 
-You can install and update the software as you are connected to the backend instance now.
+You can now install or update the softwares on your backend or frontend instance.
 
 ## Install software and run updates
+{: #install-update-software}
 
 Let's setup a new security group that allows you to install or update software when its required.
 
@@ -396,7 +405,7 @@ Let's setup a new security group that allows you to install or update software w
    c. Expand and select the instances you want to associate with this security group.  
    d. Click **Save**.
 
-To install software, e.g., on the frontend VSI, SSH into the frontend or backend instance as shown in the previous section.
+To install software, e.g., on the frontend VSI, SSH into the frontend instance as shown in the previous section.
 
 
 1. Then, update the software package information:
@@ -412,7 +421,7 @@ To install software, e.g., on the frontend VSI, SSH into the frontend or backend
    ```
    {:pre: .pre}
    
-3. Once the required frontend and backend softwares are installed, you can add new inbound and outbound rules to allow traffic on the required ports. For example,define the following **Inbound** rule in your backend security group to allow requests on port 3306 and allow HTTP traffic on port 80 and HTTPS traffic on port 443 to your frontend server
+3. Once the required frontend and backend softwares are installed, you can add new inbound and outbound rules to allow traffic on the required ports. For example, you can define the following **inbound** rule in your backend SG to allow requests on port 3306 for your backend database and **inbound** rules in your frontend SG to allow HTTP traffic on port 80 and HTTPS traffic on port 443 to your frontend web server.
    <table>
    <thead>
       <tr>
