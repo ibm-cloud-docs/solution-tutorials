@@ -357,7 +357,7 @@ You can now install or update the softwares on your backend or frontend instance
 
 Let's setup a new security group that allows you to install or update software when its required.
 
-1. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-allow-install-update-sg** with the below outbound rules
+1. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-maintenance-sg** with the below outbound rules
 
    <table>
    <thead>
@@ -394,7 +394,7 @@ Let's setup a new security group that allows you to install or update software w
 DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse.
 
 2. Whenever you plan to **install or update** software on your instances  
-   a. Navigate to **Security groups** and select **vpc-pubpriv-allow-install-update-sg** security group.  
+   a. Navigate to **Security groups** and select **vpc-pubpriv-maintenance-sg** security group.  
    b. Click **Attached interfaces** > Edit interfaces.  
    c. Expand and select the instances you want to associate with this security group.  
    d. Click **Save**.
@@ -408,12 +408,7 @@ To install software, e.g., on the frontend VSI, SSH into the frontend instance a
    # apt-get update
    ```
    {:pre: .pre}
-2. Install the desired software. To install the command-line web browser **Lynx**, use:
-
-   ```sh
-   # apt-get install lynx
-   ```
-   {:pre: .pre}
+2. Install the desired software
    
 3. Once the required frontend and backend softwares are installed, you can add new inbound and outbound rules to allow traffic on the required ports. For example, you can define the following **inbound** rule in your backend SG to allow requests on port 3306 for your backend database and **inbound** rules in your frontend SG to allow HTTP traffic on port 80 and HTTPS traffic on port 443 to your frontend web server.
    <table>
@@ -427,7 +422,7 @@ To install software, e.g., on the frontend VSI, SSH into the frontend instance a
       <tr>
          <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-frontend-sg</strong></td>
          <td>TCP</td>
-         <td>Port of the backend server<br> e.g., 3306 for MySQL server</td>
+         <td>Port of the backend server</td>
       </tr>
    </tbody>
 </table>
@@ -464,9 +459,9 @@ To remove the resources associated with this tutorial you have two options. Eith
    ```
    {:pre: .pre}
 
-If your want to use the console, note that you may need to refresh your browser to see updated status information after deleting a resource.  
+If you want to use the console, note that you may need to refresh your browser to see updated status information after deleting a resource.  
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.  
-2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while.  
+2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.  
 3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnets.  
 4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.  
 
