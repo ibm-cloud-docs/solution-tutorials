@@ -120,9 +120,7 @@ To confirm the creation of subnet, click on **Subnets** and wait until the statu
 ## Create a backend subnet, security group and VSI
 {: #backend-subnet-vsi}
 
-In this section, you will create a backend subnet with virtual server instance and security group.
-
-You will use the subnet created with the VPC as the subnet for the backend.
+In this section, you will use the subnet created with the VPC as the subnet for the backend followed by the creation of a virtual server instance and a security group.
 
 ### Create a backend security group
 ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create and configure rules for inbound and outbound traffic to your VSIs.
