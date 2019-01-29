@@ -70,31 +70,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
 
-## Create SSH key
-{: #create-ssh-key}
-
-SSH, or Secure Shell, is a remote administration protocol that allows you to control and modify the remote servers over the Internet. Any Linux or macOS user can SSH into their remote server directly from the terminal window. Windows users can take advantage of SSH clients like Putty.
-
-Check for an existing SSH key. If there's none, create a new SSH key.
-
-1. Open a terminal and run this command to check if there are any existing SSH keys:
-
-   ```sh
-   ls -la ~/.ssh
-   ```
-   {:pre: .pre}
-   
-   Look for a file called `id_rsa.pub`.
-2. Alternatively, you can check under a `.ssh` directory under your home directory, for example, `/Users/<USERNAME>/.ssh/id_rsa.pub`. The file starts with `ssh-rsa` and ends with your email address
-3. If you do not have a public SSH key or if you forgot the password of an existing one, generate a new one by running the `ssh-keygen` command and following the prompts. For example, you can generate an SSH key on your Linux server by running the command
-
-     ```sh
-       ssh-keygen -t rsa -C "user_ID"
-     ```
-     {:pre: .pre}
-
-     You can find your `user_ID` under your [user preferences](https://{DomainName}/user). This command generates two files ie., a public key and a private key. The generated public key is in the `<YOUR_KEY>.pub` file.
-
+Moreover, you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](https://cloud.ibm.com/docs/infrastructure/vpc/example-code.html#create-an-ssh-key).
 
 ## Create a Virtual Private Cloud
 {: #create-vpc}
