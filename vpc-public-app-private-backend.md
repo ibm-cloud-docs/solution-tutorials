@@ -95,7 +95,7 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 
 ## Create a bastion for secure management
 
-To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers is going to be performed using SSH, proxied through the bastion.
+To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers is going to be performed using SSH, proxied through the bastion. Access to the servers and regular Internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 
 ### Create a bastion security group
 Next, we create a security group and inbound rules for the bastion.
@@ -148,6 +148,89 @@ After a short while, the bastion's IP address should be active. Use **ssh** to c
    # ssh root@<BASTION_IP_ADDRESS>
    ```
    {:pre: .pre}
+
+
+### Create a security group for system maintenance
+
+With access to the bastion working, continue and create the security group for maintenance tasks.
+
+1. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-maintenance-sg** with the below outbound rules
+
+   <table>
+   <thead>
+      <tr>
+         <td><strong>Destination</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong> </td>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>Any - 0.0.0.0/0 </td>
+         <td>TCP</td>
+         <td>From: <strong>80</strong> To <strong>80</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+         <td>TCP</td>
+         <td>From: <strong>443</strong> To <strong>443</strong></td>
+      </tr>
+       <tr>
+         <td>Any - 0.0.0.0/0 </td>
+         <td>TCP</td>
+         <td>From: <strong>53</strong> To <strong>53</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+         <td>UDP</td>
+         <td>From: <strong>53</strong> To <strong>53</strong></td>
+      </tr>
+   </tbody>
+   </table>
+
+   DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are n port 80 and 443.
+   {:tip: .tip}
+
+2. Next, add this **inbound** rule which allows SSH access from the bastion server.
+
+   <table>
+	   <thead>
+	      <tr>
+	         <td><strong>Source</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong> </td>
+	      </tr>
+	   </thead>
+	   <tbody>
+	     <tr>
+	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+
+3. Navigate to **All Security Groups for VPC**, then select **vpc-pubpriv-bastion-sg**.
+4. Finally, edit the security group and add the following **outbound** rule.
+
+   <table>
+	   <thead>
+	      <tr>
+	         <td><strong>Destination</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong> </td>
+	      </tr>
+	   </thead>
+	   <tbody>
+	     <tr>
+	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-maintenance-sg</strong></td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+
+
 
 
 ## Create a backend subnet, security group and VSI
