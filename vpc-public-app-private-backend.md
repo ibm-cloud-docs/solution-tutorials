@@ -141,7 +141,13 @@ With the subnet and security group already in place, next, create the bastion vi
 6. Once the instance is powered on, click on `vpc-pubpriv-bastion-vsi` and **reserve** a floating IP.
 
 ### Test your bastion
-Instructions to ssh into the bastion.
+
+After a short while, the bastion's IP address should be active. Use **ssh** to connect into the bastion:
+
+   ```sh
+   # ssh root@<BASTION_IP_ADDRESS>
+   ```
+   {:pre: .pre}
 
 
 ## Create a backend subnet, security group and VSI
