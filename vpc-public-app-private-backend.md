@@ -84,14 +84,65 @@ To create your own {{site.data.keyword.vpc_short}},
    c. Optionally, add **Tags** to organize your resources.  
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the settings for **Default security group** as is.
 4. Under **New subnet for VPC**:  
-   a. As a unique name enter **vpc-pubpriv-backend-subnet**.  
-   b. Select a Location.  
+   a. As a unique name enter **vpc-pubpriv-bastion-subnet**.  
+   b. Select a location.  
    c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
 6. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
 7. Click **Create virtual private cloud** to provision the instance.
 
 To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb > select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+
+## Create a bastion for secure management
+
+To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers is going to be performed using SSH, proxied through the bastion.
+
+### Create a bastion security group
+Next, we create a security group and inbound rules for the bastion.
+
+1. Navigate to **Security groups** and click **New security group**. Enter **vpc-pubpriv-bastion-sg** as name and select your VPC. 
+2. Now, create the following inbound rules by clicking **Add rule** in the inbound section.
+ 
+	**Inbound rule:**
+	<table>
+	   <thead>
+	      <tr>
+	         <td><strong>Source</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong></td>
+	      </tr>
+	   <tbody>
+	      <tr>
+	         <td>Any - 0.0.0.0/0</td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+
+   To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
+   {:tip: .tip}
+
+### Create a bastion instance and configure security groups
+With the subnet and security group already in place, next, create the bastion virtual server instance.
+
+1. Under VPC and subnets > select **Subnets** tab > select `vpc-pubpriv-bastion-subnet`.
+2. Click on **Attached instances** and provision a **New instance** called **vpc-pubpriv-bastion-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
+3. To create a new SSH key, click **New key**  
+   a. Enter **vpc-ssh-key** as key name.  
+   b. Select **Dallas** region.  
+   c. Copy the contents of your existing local SSH key and paste it under **Public key**.  
+   d. Click **Add SSH key**.
+4. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
+   a. Make sure that **vpc-pubpriv-bastion-subnet** is selected as the subnet.
+   b. Uncheck the default security group and mark **vpc-pubpriv-bastion-sg**.
+   c. Click **Save**.
+5. Click **Create virtual server instance**.
+6. Once the instance is powered on, click on `vpc-pubpriv-bastion-vsi` and **reserve** a floating IP.
+
+### Test your bastion
+Instructions to ssh into the bastion.
+
 
 ## Create a backend subnet, security group and VSI
 {: #backend-subnet-vsi}
