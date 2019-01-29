@@ -192,7 +192,7 @@ To create a virtual server instance in the newly created subnet:
    b. Uncheck the default SG > check **vpc-pubpriv-frontend-sg**.
    c. Click **Save**.
    d. Click **Create virtual server instance**.
-7. Wait until the status of the VSI changes to **Powered On** > select the frontend VSI (vpc-pubpriv-frontend-vsi) > scroll to Network Interfaces section and click Reserve under Floating IP to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
+7. Wait until the status of the VSI changes to **Powered On** > select the frontend VSI (vpc-pubpriv-frontend-vsi) > scroll to Network Interfaces section and click **Reserve** under Floating IP to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
 ## Create a bastion host to securely connect
 {: #bastion-host-to-connect-securely}
@@ -221,7 +221,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 
 1. Under VPC and subnets > select **Subnets** tab > select `vpc-pubpriv-bastion-subnet`.
 2. Click on **Attached instances** and provision a **new instance** called **vpc-pubpriv-bastion-vsi** under your own VPC by selecting Ubuntu Linux as your image, **c-2x4** (2 vCPUs and 4 GB RAM) as your profile, your SSH key.
-3. Once the instance is powered on, click on `vpc-pubpriv-bastion-vsi` and reserve a floating IP.
+3. Once the instance is powered on, click on `vpc-pubpriv-bastion-vsi` and **reserve** a floating IP.
 4. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-bastion-sg** under your VPC with the below mentioned inbound and outbound rules and by selecting `vpc-pubpriv-bastion-vsi` under Edit interfaces for VPC
  
 	**Inbound rule:**
@@ -348,7 +348,7 @@ Let's start the ssh-agent on your machine and add your private key. An ssh-agent
    ```
    {:pre: .pre}
    
-   To SSH into the bastion instance, run `ssh root@<BASTION_
+   To SSH into the bastion instance itself, run `ssh root@<BASTION_IP_ADDRESS>`
 
 You can now install or update the softwares on your backend or frontend instance.
 
