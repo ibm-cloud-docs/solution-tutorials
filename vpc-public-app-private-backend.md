@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-25"
+lastupdated: "2019-01-29"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -463,10 +463,14 @@ To install software, e.g., on the frontend VSI, SSH into the frontend instance a
 ## Remove resources
 
 {: #remove-resources}
+To remove the resources associated with this tutorial you have two options. Either use the console and follow the steps below. Or clone the [GitHub repository vpc-tutorials](https://github.com/IBM-Cloud/vpc-tutorials) and execute:
 
-Steps to remove the resources created in this tutorial (need to confirm actual flow for final solution)
+   ```sh
+   # ./vpc-pubpriv-cleanup.sh
+   ```
+   {:pre: .pre}
 
-Note that you may need to refresh your browser to see updated status information after deleting a resource.  
+If your want to use the console, note that you may need to refresh your browser to see updated status information after deleting a resource.  
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.  
 2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while.  
 3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnets.  
