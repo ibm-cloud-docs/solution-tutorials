@@ -115,7 +115,7 @@ To create your own {{site.data.keyword.vpc_short}},
 6. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
 7. Click **Create virtual private cloud** to provision the instance.
 
-To confirm the creation of subnet, click on **Subnets** and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb > select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
 ## Create a backend subnet, security group and VSI
 {: #backend-subnet-vsi}
