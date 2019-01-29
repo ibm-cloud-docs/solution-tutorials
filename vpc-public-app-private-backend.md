@@ -264,7 +264,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	       <tr>
 	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
 	         <td>ICMP</td>
-	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
 	      </tr>
 	   </tbody>
 	</table>
@@ -287,7 +287,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	       <tr>
 	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
 	         <td>ICMP</td>
-	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
 	      </tr>
 	   </tbody>
 	</table>
@@ -311,7 +311,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	       <tr>
 	         <td><strong>Any</strong> - 0.0.0.0/0</td>
 	         <td>ICMP</td>
-	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
 	      </tr>
 	   </tbody>
 	</table>
@@ -340,20 +340,15 @@ Let's start the ssh-agent on your machine and add your private key. An ssh-agent
    {:pre: .pre}
    
    This command adds and stores the passphrase in your keychain for you when you add an ssh key to the ssh-agent.
-3. To forward the ssh key, just add `-A` to your ssh command 
+   
+3. To SSH into the frontend using `floating IP` or backend instance using `private IP`, you will use the bastion instance as your **Jump host**
 
    ```sh
-   # ssh –A root@<BASTION_IP_ADDRESS>
+   # ssh -J root@<BASTION_IP_ADDRESS> root@<PUBLIC_IP_ADDRESS_OR_PRIVATE_IP_ADDRESS>
    ```
    {:pre: .pre}
    
-   Now, you are connected to the bastion host.
-4. After you’re connected to the bastion instance, SSH into the frontend using `floating IP` or backend instance using `private IP` with this command
-
-   ```sh
-   # ssh root@<PUBLIC_IP_ADDRESS_OR_PRIVATE_IP_ADDRESS>
-   ```
-   {:pre: .pre}
+   To SSH into the bastion instance, run `ssh root@<BASTION_
 
 You can now install or update the softwares on your backend or frontend instance.
 
@@ -396,6 +391,7 @@ Let's setup a new security group that allows you to install or update software w
 
    </tbody>
 </table>
+DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse.
 
 2. Whenever you plan to **install or update** software on your instances  
    a. Navigate to **Security groups** and select **vpc-pubpriv-allow-install-update-sg** security group.  
