@@ -100,10 +100,10 @@ To reduce exposure of servers within the VPC you will create and use a bastion i
 
 ### Create a bastion security group
 
-ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create a security group and configure inbound rules to your bastion VSI.
+Let's create a security group and configure inbound rules to your bastion VSI.
 
 1. Navigate to **Security groups** and click **New security group**. Enter **vpc-pubpriv-bastion-sg** as name and select your VPC. 
-2. Now, create the following inbound rules by clicking **Add rule** in the inbound section.
+2. Now, create the following inbound rules by clicking **Add rule** in the inbound section. They allow SSH access and PING (ICMP).
  
 	**Inbound rule:**
 	<table>
@@ -119,6 +119,11 @@ ACLs provide security at the subnet level and Security Groups (SGs) provide secu
 	         <td>TCP</td>
 	         <td>From: <strong>22</strong> To <strong>22</strong></td>
 	      </tr>
+         <tr>
+            <td>Any - 0.0.0.0/0</td>
+	         <td>ICMP</td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
+         </tr>
 	   </tbody>
 	</table>
 
@@ -327,7 +332,7 @@ With all servers in place, in this section you will set up the connectivity to a
 ### Configure the frontend security group
 
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
-2. First, add the following **inbound** rules using **Add rule**.
+2. First, add the following **inbound** rules using **Add rule**. They allow incoming HTTP requests and PING (ICMP).
 
 	<table>
    <thead>
@@ -346,6 +351,11 @@ With all servers in place, in this section you will set up the connectivity to a
          <td>Any - 0.0.0.0/0</td>
          <td>TCP</td>
          <td>From: <strong>443</strong> To <strong>443</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+	      <td>ICMP</td>
+	      <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
       </tr>
    </tbody>
    </table>
@@ -371,9 +381,27 @@ With all servers in place, in this section you will set up the connectivity to a
   Here are ports for typical backend services. MySQL is using port 3306, PostgreSQL port 5432. Db2 is accessed on port 50000 or 50001. Microsoft SQL Server by default uses port 1433. One of many [lists with common port is found on Wikipedia](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
   {:tip: .tip}
 
+### Configure the backend security group
+Similar to the frontend, configure the security group for the backend.
 
+1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-backend-sg**.
+2. Add the following **inbound** rule using **Add rule**. It allows a connection to the backend service.
 
-
+   <table>
+   <thead>
+      <tr>
+         <td><strong>Source</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong></td>
+      </tr>
+   <tbody>
+      <tr>
+         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-frontend-sg</strong></td>
+         <td>TCP</td>
+         <td>Port of the backend server</td>
+      </tr>
+   </tbody>
+   </table>
 
 #
 ##
@@ -381,82 +409,6 @@ With all servers in place, in this section you will set up the connectivity to a
 ##
 #
 
-
-### Create a bastion instance and configure security groups
-Let's create a bastion instance and a bastion security group with required inbound and outbound rules.
-
-1. Under VPC and subnets > select **Subnets** tab > select `vpc-pubpriv-bastion-subnet`.
-2. Click on **Attached instances** and provision a **new instance** called **vpc-pubpriv-bastion-vsi** under your own VPC by selecting Ubuntu Linux as your image, **c-2x4** (2 vCPUs and 4 GB RAM) as your profile, your SSH key.
-3. Once the instance is powered on, click on `vpc-pubpriv-bastion-vsi` and **reserve** a floating IP.
-4. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-bastion-sg** under your VPC with the below mentioned inbound and outbound rules and by selecting `vpc-pubpriv-bastion-vsi` under Edit interfaces for VPC
- 
-	**Inbound rule:**
-	<table>
-	   <thead>
-	      <tr>
-	         <td><strong>Source</strong></td>
-	         <td><strong>Protocol</strong></td>
-	         <td><strong>Value</strong></td>
-	      </tr>
-	   <tbody>
-	      <tr>
-	         <td>Public IP address range of home network.<br>Run <strong>curl ipecho.net/plain ; echo</strong></td>
-	         <td>TCP</td>
-	         <td>From: <strong>22</strong> To <strong>22</strong></td>
-	      </tr>
-	   </tbody>
-	</table>
-	
-	**Outbound rules:**
-	<table>
-	   <thead>
-	      <tr>
-	         <td><strong>Destination</strong></td>
-	         <td><strong>Protocol</strong></td>
-	         <td><strong>Value</strong> </td>
-	      </tr>
-	   </thead>
-	   <tbody>
-	     <tr>
-	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
-	         <td>TCP</td>
-	         <td>From: <strong>22</strong> To <strong>22</strong></td>
-	      </tr>
-	       <tr>
-	         <td>Floating IP Address of <strong>frontend</strong> VSI</td>
-	         <td>TCP</td>
-	         <td>From: <strong>22</strong> To <strong>22</strong></td>
-	      </tr>
-	       <tr>
-	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
-	         <td>ICMP</td>
-	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
-	      </tr>
-	   </tbody>
-	</table>
-5. Edit the `vpc-pubpriv-backend-sg` security group to add the following new rules
-
-  **Inbound rules:**
-	<table>
-	   <thead>
-	      <tr>
-	         <td><strong>Source</strong></td>
-	         <td><strong>Protocol</strong></td>
-	         <td><strong>Value</strong></td>
-	      </tr>
-	   <tbody>
-	      <tr>
-	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
-	         <td>TCP</td>
-	         <td>From: <strong>22</strong> To <strong>22</strong></td>
-	      </tr>
-	       <tr>
-	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
-	         <td>ICMP</td>
-	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
-	      </tr>
-	   </tbody>
-	</table>
 
 6. Edit the `vpc-pubpriv-frontend-sg` security group to add an inbound rule to allow the SSH only from `vpc-pubpriv-bastion-sg` and also a rule to ping the server from internet.
 
