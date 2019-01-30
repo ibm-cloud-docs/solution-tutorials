@@ -94,6 +94,7 @@ To create your own {{site.data.keyword.vpc_short}},
 To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb > select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
 ## Create a bastion for secure management
+{: #bastion-secure-management}
 
 To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers is going to be performed using SSH, proxied through the bastion. Access to the servers and regular Internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 
@@ -142,10 +143,31 @@ With the subnet and security group already in place, next, create the bastion vi
 
 ### Test your bastion
 
-After a short while, the bastion's IP address should be active. Use **ssh** to connect into the bastion:
+Once your bastion's floating IP address is active, 
+
+1. On a machine running macOS, run the below to start the ssh-agent
+
+	 ```sh
+	  eval "$(ssh-agent -s)
+	 ```
+	 {:pre: .pre}
+	
+	Should return the `Agent pid`.
+	On a Linux machine, you can install an ssh-agent from [openSSH](http://www.openssh.org/).
+	
+2. Add your SSH private key to the ssh-agent and store your passphrase in the keychain.
 
    ```sh
-   # ssh root@<BASTION_IP_ADDRESS>
+   ssh-add -K ~/.ssh/<YOUR_PRIVATE_KEY_NAME>
+   ```
+   {:pre: .pre}
+   
+   This command adds and stores the passphrase in your keychain for you when you add an ssh key to the ssh-agent.
+
+3. Use **ssh** to connect into the bastion:
+
+   ```sh
+   ssh root@<BASTION_FLOATING_IP_ADDRESS>
    ```
    {:pre: .pre}
 
@@ -231,12 +253,24 @@ With access to the bastion working, continue and create the security group for m
 	</table>
 
 
-
-
 ## Create a backend subnet, security group and VSI
 {: #backend-subnet-vsi}
 
-In this section, you will use the subnet created with the VPC as the subnet for the backend followed by the creation of a virtual server instance and a security group.
+In this section, you will create a subnet, a security group and a virtual server instance for the backend.
+
+### Create a subnet for the backend
+
+To create a new subnet for the backend,
+
+1. Click **VPC and subnets** under Network on the left pane
+2. Click **Subnets** > New subnet  
+   a. Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.  
+   b. Select a location.  
+   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+3. Select **VPC default** for your subnet access control list(ACL). You can configure the inbound and outbound rules later.
+4. Switch the **Public gateway** to **Attached** to allow virtual server instances in the subnet to have access to the public internet.
+5. Click **Create subnet** to provision it.
+
 
 ### Create a backend security group
 ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create and configure rules for inbound and outbound traffic to your VSIs.
@@ -269,7 +303,7 @@ To create a virtual server instance in the newly created subnet:
    c. Click **Save**.
 7. Click **Create virtual server instance**.
 
-## Create a frontend subnet, VSI and security group
+## Create a frontend subnet, security group and VSI
 {: #frontend-subnet-vsi}
 
 In this section, you will create a frontend subnet with virtual server instance and a security group.
@@ -282,7 +316,7 @@ To create a new subnet for the frontend,
 2. Click **Subnets** > New subnet  
    a. Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.  
    b. Select a location.  
-   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list(ACL). You can configure the inbound and outbound rules later.
 4. Similar as for the backend, switch the **Public gateway** to **Attached**. 
 5. Click **Create subnet** to provision it.
