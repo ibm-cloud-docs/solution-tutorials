@@ -444,7 +444,7 @@ Once connected, you can install software on the backend VSI or perform maintenan
    {:pre: .pre}
 2. Install the desired software, e.g., MySQL or IBM Db2.
 
-When done. To disconnect, follow the instructions in the earlier section to disassociate the maintenance security group from the VSI.
+When done, disconnect from the server. Thereafter, follow the instructions in the earlier section to disassociate the maintenance security group from the VSI.
 
 
 ## Remove resources
@@ -453,6 +453,8 @@ When done. To disconnect, follow the instructions in the earlier section to disa
 To remove the resources associated with this tutorial you have two options. Either use the console and follow the steps below. Or clone the [GitHub repository vpc-tutorials](https://github.com/IBM-Cloud/vpc-tutorials) and execute:
 
    ```sh
+   # git clone https://github.com/IBM-Cloud/vpc-tutorials.git
+   # cd public-app-private-backend
    # ./vpc-pubpriv-cleanup.sh
    ```
    {:pre: .pre}
