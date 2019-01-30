@@ -168,6 +168,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <div class = "solutionBoxContainer">
     {{#each solutions}}
     {{#unless hidden}}
+    {{#if description}}
+    {{#if imgSrc}}
     <a href = "{{{url}}}">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
@@ -185,6 +187,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
+    {{/if}}
+    {{/if}}
     {{/unless}}
     {{/each}}
 </div>

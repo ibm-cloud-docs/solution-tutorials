@@ -211,6 +211,13 @@
                 ]
             },
             {
+                "name": "Analyze metrics for an Ubuntu host",
+                "url": "../services/Monitoring-with-Sysdig/tutorials/ubuntu.html#ubuntu",
+                "tags": [
+                    "Virtual Servers"
+                ]
+            },
+            {
                 "name": "Isolated Cloud Foundry Enterprise Apps",
                 "url": "isolated-cloud-foundry-enterprise-apps.html",
                 "description": "Provide an innovation platform to your organization by deploying an isolated, enterprise-grade Cloud Foundry platform using Cloud Foundry Enterprise Environment.",
