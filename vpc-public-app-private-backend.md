@@ -99,7 +99,8 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers is going to be performed using SSH, proxied through the bastion. Access to the servers and regular Internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 
 ### Create a bastion security group
-Next, we create a security group and inbound rules for the bastion.
+
+ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create a security group and configure inbound rules to your bastion VSI.
 
 1. Navigate to **Security groups** and click **New security group**. Enter **vpc-pubpriv-bastion-sg** as name and select your VPC. 
 2. Now, create the following inbound rules by clicking **Add rule** in the inbound section.
@@ -124,7 +125,7 @@ Next, we create a security group and inbound rules for the bastion.
    To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
    {:tip: .tip}
 
-### Create a bastion instance and configure security groups
+### Create a bastion instance
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
 1. Under VPC and subnets > select **Subnets** tab > select `vpc-pubpriv-bastion-subnet`.
@@ -273,7 +274,6 @@ To create a new subnet for the backend,
 
 
 ### Create a backend security group
-ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create and configure rules for inbound and outbound traffic to your VSIs.
 
 By default, a security group is created along with your VPC allowing all SSH (TCP port 22) and Ping (ICMP type 8) traffic to the attached instances.
 
