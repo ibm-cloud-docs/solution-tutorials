@@ -70,7 +70,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
 
-Moreover, you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](https://cloud.ibm.com/docs/infrastructure/vpc/example-code.html#create-an-ssh-key).
+Moreover, you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](https://{DomainName}/docs/infrastructure/vpc/example-code.html#create-an-ssh-key).
 
 ## Create a Virtual Private Cloud
 {: #create-vpc}
