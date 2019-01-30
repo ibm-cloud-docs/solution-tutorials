@@ -34,11 +34,12 @@ In short, using VPC you can
 
 {: #objectives}
 
-- Create a public subnet for frontend servers
-- Create a private subnet for backend servers
-- Create virtual server instances in each subnet, including a bastion server
+- Create a public subnet with frontend servers
+- Create a private subnet with backend servers
+- Create virtual server instances in each subnet
+- Create and configure a bastion host to connect to frontend and backend for maintenance
 - Configure network rules through security groups
-- Reserve a floating IP to allow inbound and outbound internet traffic
+- Reserve floating IP addresses to allow inbound and outbound internet traffic
 
 ## Services used
 
@@ -57,12 +58,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
 
-1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the user assigns a security group with proper outbound rules to the instances to connect to the internet for installing or updating software.
-2. Connects to the bastion server using the private SSH key.
-3. Connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
-4. Connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
-5. The internet user connects to web server on frontend. 
-6. Frontend requests private resources from secured backend and serves results to user.
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin(DevOps) assigns a maintenance security group with proper outbound rules and connects(SSH) to the bastion server using the private SSH key.
+2. Connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
+3. Connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
+4. The internet user connects to web server on frontend. 
+5. Frontend requests private resources from secured backend and serves results to user.
 
 ## Before you begin
 
