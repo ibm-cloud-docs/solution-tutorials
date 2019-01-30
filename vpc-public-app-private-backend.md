@@ -17,18 +17,18 @@ lastupdated: "2019-01-30"
 
 # Private and public subnets in a Virtual Private Cloud
 
-This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by ssh. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
+This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by SSH. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
-A [subnet](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual VSIs.
+A [subnet](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, Security Groups (SGs) act as virtual firewalls to control the flow of data packets to and from individual VSIs.
 
-The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define Security Groups (SGs) to allow or deny traffic to the VSIs.
+The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define SGs to allow or deny traffic to the VSIs.
 {:shortdesc}
 
 In short, using VPC you can
 
 - create a software-defined network (SDN),
 - isolate workloads,
-- have fine control of inbound/outbound traffic.
+- have fine control of inbound and outbound traffic.
 
 ## Objectives
 
@@ -55,7 +55,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture2.png)
 
 
-1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin(DevOps) connects(SSH) to the bastion server using the private SSH key.
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the bastion server using the private SSH key.
 2. The admin assigns a maintenance security group with proper outbound rules and connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
 3. The admin assigns a maintenance security group with proper outbound rules connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
 4. The internet user makes a HTTP/HTTPS request to the web server on frontend. 
@@ -100,7 +100,7 @@ To reduce exposure of servers within the VPC you will create and use a bastion i
 Let's create a security group and configure inbound rules to your bastion VSI.
 
 1. Navigate to **Security groups** and click **New security group**. Enter **vpc-pubpriv-bastion-sg** as name and select your VPC. 
-2. Now, create the following inbound rules by clicking **Add rule** in the inbound section. They allow SSH access and PING (ICMP).
+2. Now, create the following inbound rules by clicking **Add rule** in the inbound section. They allow SSH access and Ping (ICMP).
  
 	**Inbound rule:**
 	<table>
@@ -133,7 +133,7 @@ With the subnet and security group already in place, next, create the bastion vi
 1. Under **VPC and subnets** select the **Subnets** tab, then select **vpc-pubpriv-bastion-subnet**.
 2. Click on **Attached instances** and provision a **New instance** called **vpc-pubpriv-bastion-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
 3. Select a **Location** and make sure to later use the same location again.
-4. To create a new SSH key, click **New key**  
+4. To create a new **SSH key**, click **New key**  
    a. Enter **vpc-ssh-key** as key name.  
    b. Leave the **Region** as is.
    c. Copy the contents of your existing local SSH key and paste it under **Public key**.  
@@ -274,7 +274,7 @@ To create a virtual server instance in the newly created subnet:
 2. Click **Attached instances**, then **New instance**.
 3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC your created earlier and the **Location** as before.
 4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
-5. For **SSH keys** pick the ssh key you created earlier for the bastion.
+5. For **SSH keys** pick the SSH key you created earlier for the bastion.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
    a. Select **vpc-pubpriv-backend-subnet** as the subnet.  
    b. Uncheck the default security group and check **vpc-pubpriv-backend-sg** as active.  
@@ -314,7 +314,7 @@ To create a virtual server instance in the newly created subnet:
 2. Click **Attached instances**, then **New instance**.
 3. Enter a unique name, **vpc-pubpriv-frontend-vsi**, select the VPC your created earlier, then the same **Location** as before.
 4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
-5. For **SSH keys** pick the ssh key you created earlier for the bastion.
+5. For **SSH keys** pick the SSH key you created earlier for the bastion.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups   
    a. Select **vpc-pubpriv-frontend-subnet** as the subnet.  
    b. Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg**.  
@@ -330,7 +330,7 @@ With all servers in place, in this section you will set up the connectivity to a
 ### Configure the frontend security group
 
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
-2. First, add the following **inbound** rules using **Add rule**. They allow incoming HTTP requests and PING (ICMP).
+2. First, add the following **inbound** rules using **Add rule**. They allow incoming HTTP requests and Ping (ICMP).
 
 	<table>
    <thead>
