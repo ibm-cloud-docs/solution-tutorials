@@ -34,11 +34,12 @@ In short, using VPC you can
 
 {: #objectives}
 
-- Create a public subnet for frontend servers
-- Create a private subnet for backend servers
-- Create virtual server instances in each subnet, including a bastion server
+- Create a public subnet with frontend servers
+- Create a private subnet with backend servers
+- Create virtual server instances in each subnet
+- Create and configure a bastion host to connect to frontend and backend for maintenance
 - Configure network rules through security groups
-- Reserve a floating IP to allow inbound and outbound internet traffic
+- Reserve floating IP addresses to allow inbound and outbound internet traffic
 
 ## Services used
 
@@ -54,15 +55,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
+![Architecture](images/solution40-vpc-public-app-private-backend/Architecture2.png)
 
 
-1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the user assigns a security group with proper outbound rules to the instances to connect to the internet for installing or updating software.
-2. Connects to the bastion server using the private SSH key.
-3. Connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
-4. Connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
-5. The internet user connects to web server on frontend. 
-6. Frontend requests private resources from secured backend and serves results to user.
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin(DevOps) connects(SSH) to the bastion server using the private SSH key.
+2. The admin assigns a maintenance security group with proper outbound rules and connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
+3. The admin assigns a maintenance security group with proper outbound rules connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
+4. The internet user makes a HTTP/HTTPS request to the web server on frontend. 
+5. Frontend requests private resources from secured backend and serves results to user.
 
 ## Before you begin
 
@@ -70,7 +70,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
 
-Moreover, you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](https://cloud.ibm.com/docs/infrastructure/vpc/example-code.html#create-an-ssh-key).
+Moreover, you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](https://{DomainName}/docs/infrastructure/vpc/example-code.html#create-an-ssh-key).
 
 ## Create a Virtual Private Cloud
 {: #create-vpc}
@@ -325,9 +325,10 @@ To create a virtual server instance in the newly created subnet:
    d. Click **Create virtual server instance**.  
 7. Wait until the status of the VSI changes to **Powered On**. Then, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
-## Set up connectivity for front- and backend
+## Set up connectivity between frontend and backend
+{: #setup-connectivity-frontend-backend}
 
-With all servers in place, in this section you will set up the connectivity to allow regular operations of front- and backend services.
+With all servers in place, in this section you will set up the connectivity to allow regular operations between the frontend and backend servers.
 
 ### Configure the frontend security group
 
@@ -403,168 +404,47 @@ Similar to the frontend, configure the security group for the backend.
    </tbody>
    </table>
 
-#
-##
-### DONE UNTIL HERE
-##
-#
+## Maintenance of frontend and backend
+{: #maintenance-frontend-backend}
 
+For administrative work on the frontend and backend servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the backend server, update the software package information, then disassociate the security group again.
 
-6. Edit the `vpc-pubpriv-frontend-sg` security group to add an inbound rule to allow the SSH only from `vpc-pubpriv-bastion-sg` and also a rule to ping the server from internet.
+### Enable the maintenance security group
+Let's enable the maintenance security group for the frontend and backend server.
 
-  **Inbound rule:**
-	<table>
-	   <thead>
-	      <tr>
-	         <td><strong>Source</strong></td>
-	         <td><strong>Protocol</strong></td>
-	         <td><strong>Value</strong></td>
-	      </tr>
-	   <tbody>
-	     <tr>
-	         <td>Floating IP Address of <strong>bastion</strong> VSI</td>
-	         <td>TCP</td>
-	         <td>From: <strong>22</strong> To <strong>22</strong></td>
-	      </tr>
-	       <tr>
-	         <td><strong>Any</strong> - 0.0.0.0/0</td>
-	         <td>ICMP</td>
-	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
-	      </tr>
-	   </tbody>
-	</table>
+1. Navigate to **Security groups** and select **vpc-pubpriv-maintenance-sg** security group.  
+2. Click **Attached interfaces**, then **Edit interfaces**.  
+3. Expand both **vpc-pubpriv-frontend-vsi** and **vpc-pubpriv-backend-vsi**.
+4. For each activate the selection next to **primary** in the **Interfaces** column.
+5. Click **Save** for the changes to be applied.
 
-In the next section, you will see the steps to SSH into your backend or frontend instance via bastion host.
+To disable the maintenance security group follow the steps above, but uncheck **primary**. The maintenance security group should not be active during regular server operations for security purposes.
 
-## SSH into your backend or frontend instance via bastion
-{: #ssh-backend-frontend-via-bastion}
+### Connect to the backend server
 
-Let's start the ssh-agent on your machine and add your private key. An ssh-agent is a program to hold private keys used for public key authentication (RSA, DSA).
+To SSH into the backend instance using its **private IP**, you will use the bastion instance as your **Jump host**.
 
-1. On a machine running macOS, run the below to start the ssh-agent
-
-	```sh
-	 eval "$(ssh-agent -s)"
-	```
-	{:pre: .pre}
-	
-	Should return the `Agent pid`.
-	On a Linux machine, you can install an ssh-agent from [openSSH](http://www.openssh.org/).
-2. Add your SSH private key to the ssh-agent and store your passphrase in the keychain.
+1. For the backend's private IP address, navigate to **Virtual server instances**, then click on **vpc-pubpriv-backend-vsi**.
+2. Use the ssh command with `-J` to log into the backend with the bastion **floating IP** address you used earlier and the backend **Private IP** address shown under **Network interfaces**.
 
    ```sh
-   ssh-add -K ~/.ssh/<YOUR_PRIVATE_KEY_NAME>
+   ssh -J root@<BASTION_FLOATING_IP_ADDRESS> root@<PRIVATE_IP_ADDRESS>
    ```
    {:pre: .pre}
-   
-   This command adds and stores the passphrase in your keychain for you when you add an ssh key to the ssh-agent.
-   
-3. To SSH into the frontend using `floating IP` or backend instance using `private IP`, you will use the bastion instance as your **Jump host**
+
+### Install software and perform maintenance tasks
+
+Once connected, you can install software on the backend VSI or perform maintenance tasks.
+
+1. First, update the software package information:
 
    ```sh
-   # ssh -J root@<BASTION_IP_ADDRESS> root@<PUBLIC_IP_ADDRESS_OR_PRIVATE_IP_ADDRESS>
+   apt-get update
    ```
    {:pre: .pre}
-   
-   To SSH into the bastion instance itself, run `ssh root@<BASTION_IP_ADDRESS>`
+2. Install the desired software, e.g., MySQL or IBM Db2.
 
-You can now install or update the softwares on your backend or frontend instance.
-
-## Install software and run updates
-{: #install-update-software}
-
-Let's setup a new security group that allows you to install or update software when its required.
-
-1. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-maintenance-sg** with the below outbound rules
-
-   <table>
-   <thead>
-      <tr>
-         <td><strong>Destination</strong></td>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Value</strong> </td>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>Any - 0.0.0.0/0 </td>
-         <td>TCP</td>
-         <td>From: <strong>80</strong> To <strong>80</strong></td>
-      </tr>
-      <tr>
-         <td>Any - 0.0.0.0/0</td>
-         <td>TCP</td>
-         <td>From: <strong>443</strong> To <strong>443</strong></td>
-      </tr>
-       <tr>
-         <td>Any - 0.0.0.0/0 </td>
-         <td>TCP</td>
-         <td>From: <strong>53</strong> To <strong>53</strong></td>
-      </tr>
-      <tr>
-         <td>Any - 0.0.0.0/0</td>
-         <td>UDP</td>
-         <td>From: <strong>53</strong> To <strong>53</strong></td>
-      </tr>
-
-   </tbody>
-</table>
-DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse.
-
-2. Whenever you plan to **install or update** software on your instances  
-   a. Navigate to **Security groups** and select **vpc-pubpriv-maintenance-sg** security group.  
-   b. Click **Attached interfaces** > Edit interfaces.  
-   c. Expand and select the instances you want to associate with this security group.  
-   d. Click **Save**.
-
-To install software, e.g., on the frontend VSI, SSH into the frontend instance as shown in the previous section.
-
-
-1. Then, update the software package information:
-
-   ```sh
-   # apt-get update
-   ```
-   {:pre: .pre}
-2. Install the desired software
-   
-3. Once the required frontend and backend softwares are installed, you can add new inbound and outbound rules to allow traffic on the required ports. For example, you can define the following **inbound** rule in your backend SG to allow requests on port 3306 for your backend database and **inbound** rules in your frontend SG to allow HTTP traffic on port 80 and HTTPS traffic on port 443 to your frontend web server.
-   <table>
-   <thead>
-      <tr>
-         <td><strong>Source</strong></td>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Value</strong></td>
-      </tr>
-   <tbody>
-      <tr>
-         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-frontend-sg</strong></td>
-         <td>TCP</td>
-         <td>Port of the backend server</td>
-      </tr>
-   </tbody>
-</table>
-
-	<table>
-   <thead>
-      <tr>
-         <td><strong>Source</strong></td>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Value</strong></td>
-      </tr>
-   <tbody>
-      <tr>
-         <td>Any - 0.0.0.0/0 </td>
-         <td>TCP</td>
-         <td>From: <strong>80</strong> To <strong>80</strong></td>
-      </tr>
-      <tr>
-         <td>Any - 0.0.0.0/0</td>
-         <td>TCP</td>
-         <td>From: <strong>443</strong> To <strong>443</strong></td>
-      </tr>
-   </tbody>
-</table>
+When done, disconnect from the server. Thereafter, follow the instructions in the earlier section to disassociate the maintenance security group from the VSI.
 
 
 ## Remove resources
@@ -573,6 +453,8 @@ To install software, e.g., on the frontend VSI, SSH into the frontend instance a
 To remove the resources associated with this tutorial you have two options. Either use the console and follow the steps below. Or clone the [GitHub repository vpc-tutorials](https://github.com/IBM-Cloud/vpc-tutorials) and execute:
 
    ```sh
+   # git clone https://github.com/IBM-Cloud/vpc-tutorials.git
+   # cd public-app-private-backend
    # ./vpc-pubpriv-cleanup.sh
    ```
    {:pre: .pre}
