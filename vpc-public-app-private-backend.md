@@ -128,7 +128,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 	</table>
 
    To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
-   {:tip: .tip}
+   {:tip}
 
 ### Create a bastion instance
 With the subnet and security group already in place, next, create the bastion virtual server instance.
@@ -155,7 +155,7 @@ Once your bastion's floating IP address is active, try connecting to it using **
    ```sh
    ssh root@<BASTION_FLOATING_IP_ADDRESS>
    ```
-   {:pre: .pre}
+   {:pre}
 
 
 ### Create a security group for system maintenance
@@ -430,7 +430,7 @@ To SSH into the backend instance using its **private IP**, you will use the bast
    ```sh
    ssh -J root@<BASTION_FLOATING_IP_ADDRESS> root@<PRIVATE_IP_ADDRESS>
    ```
-   {:pre: .pre}
+   {:pre}
 
 ### Install software and perform maintenance tasks
 
@@ -441,7 +441,7 @@ Once connected, you can install software on the backend VSI or perform maintenan
    ```sh
    apt-get update
    ```
-   {:pre: .pre}
+   {:pre}
 2. Install the desired software, e.g., MySQL or IBM Db2.
 
 When done, disconnect from the server. Thereafter, follow the instructions in the earlier section to disassociate the maintenance security group from the VSI.
@@ -457,7 +457,7 @@ To remove the resources associated with this tutorial you have two options. Eith
    # cd public-app-private-backend
    # ./vpc-pubpriv-cleanup.sh
    ```
-   {:pre: .pre}
+   {:pre}
 
 If you want to use the console, note that you may need to refresh your browser to see updated status information after deleting a resource.  
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.  
