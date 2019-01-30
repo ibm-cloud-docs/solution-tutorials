@@ -88,15 +88,15 @@ To create your own {{site.data.keyword.vpc_short}},
    b. Select a location.  
    c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-6. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
+6. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public internet. You can also attach the public gateway after you create the subnet.
 7. Click **Create virtual private cloud** to provision the instance.
 
-To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb > select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
 ## Create a bastion for secure management
 {: #bastion-secure-management}
 
-To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers is going to be performed using SSH, proxied through the bastion. Access to the servers and regular Internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
+To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers is going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 
 ### Create a bastion security group
 
