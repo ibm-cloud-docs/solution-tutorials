@@ -326,6 +326,7 @@ To create a virtual server instance in the newly created subnet:
 7. Wait until the status of the VSI changes to **Powered On**. Then, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
 ## Set up connectivity between frontend and backend
+{: #setup-connectivity-frontend-backend}
 
 With all servers in place, in this section you will set up the connectivity to allow regular operations between the frontend and backend servers.
 
@@ -404,6 +405,7 @@ Similar to the frontend, configure the security group for the backend.
    </table>
 
 ## Maintenance of frontend and backend
+{: #maintenance-frontend-backend}
 
 For administrative work on the frontend and backend servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the backend server, update the software package information, then disassociate the security group again.
 
@@ -431,7 +433,6 @@ To SSH into the backend instance using its **private IP**, you will use the bast
    {:pre: .pre}
 
 ### Install software and perform maintenance tasks
-{: #install-update-software}
 
 Once connected, you can install software on the backend VSI or perform maintenance tasks.
 
