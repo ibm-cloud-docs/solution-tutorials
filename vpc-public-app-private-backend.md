@@ -325,9 +325,9 @@ To create a virtual server instance in the newly created subnet:
    d. Click **Create virtual server instance**.  
 7. Wait until the status of the VSI changes to **Powered On**. Then, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
-## Set up connectivity for front- and backend
+## Set up connectivity between frontend and backend
 
-With all servers in place, in this section you will set up the connectivity to allow regular operations of front- and backend services.
+With all servers in place, in this section you will set up the connectivity to allow regular operations between the frontend and backend servers.
 
 ### Configure the frontend security group
 
@@ -418,12 +418,12 @@ Let's enable the maintenance security group for the frontend and backend server.
 
 To disable the maintenance security group follow the steps above, but uncheck **primary**. The maintenance security group should not be active during regular server operations for security purposes.
 
-### Connect into the backend server
+### Connect to the backend server
 
 To SSH into the backend instance using its **private IP**, you will use the bastion instance as your **Jump host**.
 
-1. To look up the backend's private IP address, navigate to **Virtual server instances**, then click on **vpc-pubpriv-backend-vsi**.
-2. Use the ssh command to log into the backend. Use the bastion **floating IP** address you used earlier and the backend **Private IP** address shown under **Network interfaces**.
+1. For the backend's private IP address, navigate to **Virtual server instances**, then click on **vpc-pubpriv-backend-vsi**.
+2. Use the ssh command with `-J` to log into the backend with the bastion **floating IP** address you used earlier and the backend **Private IP** address shown under **Network interfaces**.
 
    ```sh
    ssh -J root@<BASTION_FLOATING_IP_ADDRESS> root@<PRIVATE_IP_ADDRESS>
@@ -443,7 +443,7 @@ Once connected, you can install software on the backend VSI or perform maintenan
    {:pre: .pre}
 2. Install the desired software, e.g., MySQL or IBM Db2.
 
-When done, disconnect, then follow the instructions in the earlier section to disassociate the maintenance security group from the VSI.
+When done. To disconnect, follow the instructions in the earlier section to disassociate the maintenance security group from the VSI.
 
 
 ## Remove resources
