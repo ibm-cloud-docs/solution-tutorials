@@ -55,7 +55,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
+![Architecture](images/solution40-vpc-public-app-private-backend/Architecture2.png)
 
 
 1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin(DevOps) assigns a maintenance security group with proper outbound rules and connects(SSH) to the bastion server using the private SSH key.
