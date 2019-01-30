@@ -213,6 +213,7 @@
             {
                 "name": "Analyze metrics for an Ubuntu host",
                 "url": "/services/Monitoring-with-Sysdig-ubuntu#ubuntu",
+                "hidden": true,
                 "tags": [
                     "Virtual Servers"
                 ]
