@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-25"
+lastupdated: "2019-01-30"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -17,11 +17,11 @@ lastupdated: "2019-01-25"
 
 # Private and public subnets in a Virtual Private Cloud
 
-This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by ssh. The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will also define Access Control Lists (ACLs) with inbound and outbound rules for subnet isolation. Moreover, you create Security Groups (SGs) to allow or deny traffic to the VSIs.
-
-A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
+This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by ssh. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
 A [subnet](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, security groups act as virtual firewalls to control the flow of data packets to and from individual VSIs.
+
+The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define Security Groups (SGs) to allow or deny traffic to the VSIs.
 {:shortdesc}
 
 In short, using VPC you can
@@ -70,31 +70,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
 
-## Create SSH key
-{: #create-ssh-key}
-
-SSH, or Secure Shell, is a remote administration protocol that allows you to control and modify the remote servers over the Internet. Any Linux or macOS user can SSH into their remote server directly from the terminal window. Windows users can take advantage of SSH clients like Putty.
-
-Check for an existing SSH key. If there's none, create a new SSH key.
-
-1. Open a terminal and run this command to check if there are any existing SSH keys:
-
-   ```sh
-   ls -la ~/.ssh
-   ```
-   {:pre: .pre}
-   
-   Look for a file called `id_rsa.pub`.
-2. Alternatively, you can check under a `.ssh` directory under your home directory, for example, `/Users/<USERNAME>/.ssh/id_rsa.pub`. The file starts with `ssh-rsa` and ends with your email address
-3. If you do not have a public SSH key or if you forgot the password of an existing one, generate a new one by running the `ssh-keygen` command and following the prompts. For example, you can generate an SSH key on your Linux server by running the command
-
-     ```sh
-       ssh-keygen -t rsa -C "user_ID"
-     ```
-     {:pre: .pre}
-
-     You can find your `user_ID` under your [user preferences](https://{DomainName}/user). This command generates two files ie., a public key and a private key. The generated public key is in the `<YOUR_KEY>.pub` file.
-
+Moreover, you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](https://cloud.ibm.com/docs/infrastructure/vpc/example-code.html#create-an-ssh-key).
 
 ## Create a Virtual Private Cloud
 {: #create-vpc}
@@ -108,29 +84,181 @@ To create your own {{site.data.keyword.vpc_short}},
    c. Optionally, add **Tags** to organize your resources.  
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the settings for **Default security group** as is.
 4. Under **New subnet for VPC**:  
-   a. As a unique name enter **vpc-pubpriv-backend-subnet**.  
-   b. Select a Location.  
+   a. As a unique name enter **vpc-pubpriv-bastion-subnet**.  
+   b. Select a location.  
    c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
 6. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public Internet. You can also attach the public gateway after you create the subnet.
 7. Click **Create virtual private cloud** to provision the instance.
 
-To confirm the creation of subnet, click on **Subnets** and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb > select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+
+## Create a bastion for secure management
+{: #bastion-secure-management}
+
+To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers is going to be performed using SSH, proxied through the bastion. Access to the servers and regular Internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
+
+### Create a bastion security group
+
+ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create a security group and configure inbound rules to your bastion VSI.
+
+1. Navigate to **Security groups** and click **New security group**. Enter **vpc-pubpriv-bastion-sg** as name and select your VPC. 
+2. Now, create the following inbound rules by clicking **Add rule** in the inbound section.
+ 
+	**Inbound rule:**
+	<table>
+	   <thead>
+	      <tr>
+	         <td><strong>Source</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong></td>
+	      </tr>
+	   <tbody>
+	      <tr>
+	         <td>Any - 0.0.0.0/0</td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+
+   To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
+   {:tip: .tip}
+
+### Create a bastion instance
+With the subnet and security group already in place, next, create the bastion virtual server instance.
+
+1. Under **VPC and subnets** select the **Subnets** tab, then select **vpc-pubpriv-bastion-subnet**.
+2. Click on **Attached instances** and provision a **New instance** called **vpc-pubpriv-bastion-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
+3. Select a **Location** and make sure to later use the same location again.
+4. To create a new SSH key, click **New key**  
+   a. Enter **vpc-ssh-key** as key name.  
+   b. Leave the **Region** as is.
+   c. Copy the contents of your existing local SSH key and paste it under **Public key**.  
+   d. Click **Add SSH key**.
+5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
+   a. Make sure that **vpc-pubpriv-bastion-subnet** is selected as the subnet.
+   b. Uncheck the default security group and mark **vpc-pubpriv-bastion-sg**.
+   c. Click **Save**.
+6. Click **Create virtual server instance**.
+7. Once the instance is powered on, click on **vpc-pubpriv-bastion-vsi** and **reserve** a floating IP.
+
+### Test your bastion
+
+Once your bastion's floating IP address is active, try connecting to it using **ssh**:
+
+   ```sh
+   ssh root@<BASTION_FLOATING_IP_ADDRESS>
+   ```
+   {:pre: .pre}
+
+
+### Create a security group for system maintenance
+
+With access to the bastion working, continue and create the security group for maintenance tasks.
+
+1. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-maintenance-sg** with the below outbound rules
+
+   <table>
+   <thead>
+      <tr>
+         <td><strong>Destination</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong> </td>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>Any - 0.0.0.0/0 </td>
+         <td>TCP</td>
+         <td>From: <strong>80</strong> To <strong>80</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+         <td>TCP</td>
+         <td>From: <strong>443</strong> To <strong>443</strong></td>
+      </tr>
+       <tr>
+         <td>Any - 0.0.0.0/0 </td>
+         <td>TCP</td>
+         <td>From: <strong>53</strong> To <strong>53</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+         <td>UDP</td>
+         <td>From: <strong>53</strong> To <strong>53</strong></td>
+      </tr>
+   </tbody>
+   </table>
+
+   DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are n port 80 and 443.
+   {:tip: .tip}
+
+2. Next, add this **inbound** rule which allows SSH access from the bastion server.
+
+   <table>
+	   <thead>
+	      <tr>
+	         <td><strong>Source</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong> </td>
+	      </tr>
+	   </thead>
+	   <tbody>
+	     <tr>
+	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+
+3. Navigate to **All Security Groups for VPC**, then select **vpc-pubpriv-bastion-sg**.
+4. Finally, edit the security group and add the following **outbound** rule.
+
+   <table>
+	   <thead>
+	      <tr>
+	         <td><strong>Destination</strong></td>
+	         <td><strong>Protocol</strong></td>
+	         <td><strong>Value</strong> </td>
+	      </tr>
+	   </thead>
+	   <tbody>
+	     <tr>
+	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-maintenance-sg</strong></td>
+	         <td>TCP</td>
+	         <td>From: <strong>22</strong> To <strong>22</strong></td>
+	      </tr>
+	   </tbody>
+	</table>
+
 
 ## Create a backend subnet, security group and VSI
 {: #backend-subnet-vsi}
 
-In this section, you will create a backend subnet with virtual server instance and security group.
+In this section, you will create a subnet, a security group and a virtual server instance for the backend.
 
-You will use the subnet created with the VPC as the subnet for the backend.
+### Create a subnet for the backend
+
+To create a new subnet for the backend,
+
+1. Click **VPC and subnets** under **Network** on the left pane
+2. Click **Subnets**, then **New subnet**.  
+   a. Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.  
+   b. Select a location.  
+   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+3. Select **VPC default** for your subnet access control list (ACL).
+4. Switch the **Public gateway** to **Attached** to allow the virtual server instances in the subnet to have access to the public internet.
+5. Click **Create subnet** to provision it.
+
 
 ### Create a backend security group
-ACLs provide security at the subnet level and Security Groups (SGs) provide security at the server instance level. Let's create and configure rules for inbound and outbound traffic to your VSIs.
 
-By default, a security group is created along with your VPC allowing all SSH (TCP port 22) and Ping (ICMP type 8) traffic to the attached instances.
+By default, a security group is created along with your VPC allowing all SSH (TCP port 22) and Ping (ICMP type 8) traffic to the attached instances. 
 
 To create a new security group for the backend:  
-1. Click **Security groups** under Network, then **New security group**.  
+1. Click **Security groups** under **Network**, then **New security group**.  
 2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.  
 3. Click **Create security group**.  
 
@@ -140,35 +268,31 @@ You will later edit the security group to add the inbound and outbound rules as 
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the backend subnet under **Subnets**
-2. Click **Attached instances** > New instance
-3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC your created earlier and **Dallas** as your location.
+1. Click on the backend subnet under **Subnets**.
+2. Click **Attached instances**, then **New instance**.
+3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC your created earlier and the **Location** as before.
 4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
-5. To create a new SSH key, click **New key**  
-   a. Enter **vpc-ssh-key** as key name.  
-   b. Select **Dallas** region.  
-   c. Copy the contents of  `<YOUR_SSH_KEY>.pub` and paste under Public key.  
-   d. Click **Add SSH key**.
-6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
-   a. Select **vpc-pubpriv-backend-subnet** as the subnet.
-   b. Uncheck the default SG > check **vpc-pubpriv-backend-sg**.
-   c. Click **Save**.
+5. For **SSH keys** pick the ssh key you created earlier for the bastion.
+6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
+   a. Select **vpc-pubpriv-backend-subnet** as the subnet.  
+   b. Uncheck the default security group and check **vpc-pubpriv-backend-sg** as active.  
+   c. Click **Save**.  
 7. Click **Create virtual server instance**.
 
-## Create a frontend subnet, VSI and security group
+## Create a frontend subnet, security group and VSI
 {: #frontend-subnet-vsi}
 
-In this section, you will create a frontend subnet with virtual server instance and a security group.
+Similar to the backend, you will create a frontend subnet with virtual server instance and a security group.
 
 ### Create a subnet for the frontend
 
 To create a new subnet for the frontend,
 
-1. Click **VPC and subnets** under Network on the left pane
-2. Click **Subnets** > New subnet  
+1. Click **VPC and subnets** under **Network** on the left pane
+2. Click **Subnets**, then **New subnet**.  
    a. Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.  
    b. Select a location.  
-   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list(ACL). You can configure the inbound and outbound rules later.
 4. Similar as for the backend, switch the **Public gateway** to **Attached**. 
 5. Click **Create subnet** to provision it.
@@ -185,45 +309,85 @@ To create a new security group for the frontend:
 To create a virtual server instance in the newly created subnet:
 
 1. Click on the frontend subnet under **Subnets**.
-2. Click **Attached instances** > New instance
-3. Enter a unique name, **vpc-pubpriv-frontend-vsi**, select the VPC your created earlier, pick **Dallas** as your location.
-4. Select **Ubuntu Linux** image > Click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
-5. Select the SSH key you created earlier.
-6.  Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
-   a. Select **vpc-pubpriv-frontend-subnet** as the subnet.
-   b. Uncheck the default SG > check **vpc-pubpriv-frontend-sg**.
-   c. Click **Save**.
-   d. Click **Create virtual server instance**.
-7. Wait until the status of the VSI changes to **Powered On** > select the frontend VSI (vpc-pubpriv-frontend-vsi) > scroll to Network Interfaces section and click Reserve under Floating IP to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
+2. Click **Attached instances**, then **New instance**.
+3. Enter a unique name, **vpc-pubpriv-frontend-vsi**, select the VPC your created earlier, then the same **Location** as before.
+4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
+5. For **SSH keys** pick the ssh key you created earlier for the bastion.
+6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups   
+   a. Select **vpc-pubpriv-frontend-subnet** as the subnet.  
+   b. Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg**.  
+   c. Click **Save**.  
+   d. Click **Create virtual server instance**.  
+7. Wait until the status of the VSI changes to **Powered On**. Then, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
-## Create a bastion host to securely connect
-{: #bastion-host-to-connect-securely}
+## Set up connectivity for front- and backend
 
-If you have observed, there's no floating IP assigned to your backend instance. So, you will need to create and configure a **bastion instance** to ping or SSH into your backend instance. 
+With all servers in place, in this section you will set up the connectivity to allow regular operations of front- and backend services.
 
-A bastion server's sole purpose is to provide access to a private network from an external network, such as the Internet. It's a gateway between an inside network and an outside network. 
+### Configure the frontend security group
 
-You will also use bastion instance to securely connect to your frontend instance.
+1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
+2. First, add the following **inbound** rules using **Add rule**.
 
-### Create a bastion subnet
+	<table>
+   <thead>
+      <tr>
+         <td><strong>Source</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong></td>
+      </tr>
+   <tbody>
+      <tr>
+         <td>Any - 0.0.0.0/0 </td>
+         <td>TCP</td>
+         <td>From: <strong>80</strong> To <strong>80</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+         <td>TCP</td>
+         <td>From: <strong>443</strong> To <strong>443</strong></td>
+      </tr>
+   </tbody>
+   </table>
 
-To create a new subnet for the bastion host,
+3. Next, add these **outbound** rules.
 
-1. Click **VPC and subnets** under Network on the left pane
-2. Click **Subnets** > New subnet  
-   a. Enter **vpc-pubpriv-bastion-subnet** as name, then select the VPC you created.  
-   b. Select a location.  
-   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-3. Select **VPC default** for your subnet access control list(ACL). You can configure the inbound and outbound rules later.
-4. Similar as for the backend, switch the **Public gateway** to **Attached**. 
-5. Click **Create subnet** to provision it.
+   <table>
+   <thead>
+      <tr>
+         <td><strong>Destination</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong></td>
+      </tr>
+   <tbody>
+      <tr>
+         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
+         <td>TCP</td>
+         <td>Port of the backend server, see tip</td>
+      </tr>
+   </tbody>
+   </table>
+
+  Here are ports for typical backend services. MySQL is using port 3306, PostgreSQL port 5432. Db2 is accessed on port 50000 or 50001. Microsoft SQL Server by default uses port 1433. One of many [lists with common port is found on Wikipedia](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
+  {:tip: .tip}
+
+
+
+
+
+#
+##
+### DONE UNTIL HERE
+##
+#
+
 
 ### Create a bastion instance and configure security groups
 Let's create a bastion instance and a bastion security group with required inbound and outbound rules.
 
 1. Under VPC and subnets > select **Subnets** tab > select `vpc-pubpriv-bastion-subnet`.
 2. Click on **Attached instances** and provision a **new instance** called **vpc-pubpriv-bastion-vsi** under your own VPC by selecting Ubuntu Linux as your image, **c-2x4** (2 vCPUs and 4 GB RAM) as your profile, your SSH key.
-3. Once the instance is powered on, click on `vpc-pubpriv-bastion-vsi` and reserve a floating IP.
+3. Once the instance is powered on, click on `vpc-pubpriv-bastion-vsi` and **reserve** a floating IP.
 4. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-bastion-sg** under your VPC with the below mentioned inbound and outbound rules and by selecting `vpc-pubpriv-bastion-vsi` under Edit interfaces for VPC
  
 	**Inbound rule:**
@@ -266,7 +430,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	       <tr>
 	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
 	         <td>ICMP</td>
-	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
 	      </tr>
 	   </tbody>
 	</table>
@@ -289,7 +453,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	       <tr>
 	         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-bastion-sg</strong></td>
 	         <td>ICMP</td>
-	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
 	      </tr>
 	   </tbody>
 	</table>
@@ -313,7 +477,7 @@ Let's create a bastion instance and a bastion security group with required inbou
 	       <tr>
 	         <td><strong>Any</strong> - 0.0.0.0/0</td>
 	         <td>ICMP</td>
-	         <td>Type: <strong>8</strong>,Code: <strong>Any</strong></td>
+	         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
 	      </tr>
 	   </tbody>
 	</table>
@@ -342,20 +506,15 @@ Let's start the ssh-agent on your machine and add your private key. An ssh-agent
    {:pre: .pre}
    
    This command adds and stores the passphrase in your keychain for you when you add an ssh key to the ssh-agent.
-3. To forward the ssh key, just add `-A` to your ssh command 
+   
+3. To SSH into the frontend using `floating IP` or backend instance using `private IP`, you will use the bastion instance as your **Jump host**
 
    ```sh
-   # ssh –A root@<BASTION_IP_ADDRESS>
+   # ssh -J root@<BASTION_IP_ADDRESS> root@<PUBLIC_IP_ADDRESS_OR_PRIVATE_IP_ADDRESS>
    ```
    {:pre: .pre}
    
-   Now, you are connected to the bastion host.
-4. After you’re connected to the bastion instance, SSH into the frontend using `floating IP` or backend instance using `private IP` with this command
-
-   ```sh
-   # ssh root@<PUBLIC_IP_ADDRESS_OR_PRIVATE_IP_ADDRESS>
-   ```
-   {:pre: .pre}
+   To SSH into the bastion instance itself, run `ssh root@<BASTION_IP_ADDRESS>`
 
 You can now install or update the softwares on your backend or frontend instance.
 
@@ -364,7 +523,7 @@ You can now install or update the softwares on your backend or frontend instance
 
 Let's setup a new security group that allows you to install or update software when its required.
 
-1. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-allow-install-update-sg** with the below outbound rules
+1. Navigate to **Security groups** and provision a new security group called **vpc-pubpriv-maintenance-sg** with the below outbound rules
 
    <table>
    <thead>
@@ -398,9 +557,10 @@ Let's setup a new security group that allows you to install or update software w
 
    </tbody>
 </table>
+DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse.
 
 2. Whenever you plan to **install or update** software on your instances  
-   a. Navigate to **Security groups** and select **vpc-pubpriv-allow-install-update-sg** security group.  
+   a. Navigate to **Security groups** and select **vpc-pubpriv-maintenance-sg** security group.  
    b. Click **Attached interfaces** > Edit interfaces.  
    c. Expand and select the instances you want to associate with this security group.  
    d. Click **Save**.
@@ -414,12 +574,7 @@ To install software, e.g., on the frontend VSI, SSH into the frontend instance a
    # apt-get update
    ```
    {:pre: .pre}
-2. Install the desired software. To install the command-line web browser **Lynx**, use:
-
-   ```sh
-   # apt-get install lynx
-   ```
-   {:pre: .pre}
+2. Install the desired software
    
 3. Once the required frontend and backend softwares are installed, you can add new inbound and outbound rules to allow traffic on the required ports. For example, you can define the following **inbound** rule in your backend SG to allow requests on port 3306 for your backend database and **inbound** rules in your frontend SG to allow HTTP traffic on port 80 and HTTPS traffic on port 443 to your frontend web server.
    <table>
@@ -433,7 +588,7 @@ To install software, e.g., on the frontend VSI, SSH into the frontend instance a
       <tr>
          <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-frontend-sg</strong></td>
          <td>TCP</td>
-         <td>Port of the backend server<br> e.g., 3306 for MySQL server</td>
+         <td>Port of the backend server</td>
       </tr>
    </tbody>
 </table>
@@ -463,13 +618,17 @@ To install software, e.g., on the frontend VSI, SSH into the frontend instance a
 ## Remove resources
 
 {: #remove-resources}
+To remove the resources associated with this tutorial you have two options. Either use the console and follow the steps below. Or clone the [GitHub repository vpc-tutorials](https://github.com/IBM-Cloud/vpc-tutorials) and execute:
 
-Steps to remove the resources created in this tutorial (need to confirm actual flow for final solution)
+   ```sh
+   # ./vpc-pubpriv-cleanup.sh
+   ```
+   {:pre: .pre}
 
-Note that you may need to refresh your browser to see updated status information after deleting a resource.  
+If you want to use the console, note that you may need to refresh your browser to see updated status information after deleting a resource.  
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.  
-2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while.  
-3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnets.  
+2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.  
+3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.  
 4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.  
 
 ## Expand the tutorial 
