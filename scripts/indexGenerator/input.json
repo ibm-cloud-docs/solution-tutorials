@@ -212,7 +212,7 @@
             },
             {
                 "name": "Analyze metrics for an Ubuntu host",
-                "url": "/docs/services/Monitoring-with-Sysdig/tutorials/ubuntu.html#ubuntu",
+                "url": "/services/Monitoring-with-Sysdig/tutorials/ubuntu.html#ubuntu",
                 "tags": [
                     "Virtual Servers"
                 ]
