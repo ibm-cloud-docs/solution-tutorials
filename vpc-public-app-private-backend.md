@@ -58,10 +58,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture2.png)
 
 
-1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin(DevOps) assigns a maintenance security group with proper outbound rules and connects(SSH) to the bastion server using the private SSH key.
-2. Connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
-3. Connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
-4. The internet user connects to web server on frontend. 
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin(DevOps) connects(SSH) to the bastion server using the private SSH key.
+2. The admin assigns a maintenance security group with proper outbound rules and connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
+3. The admin assigns a maintenance security group with proper outbound rules connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
+4. The internet user makes a HTTP/HTTPS request to the web server on frontend. 
 5. Frontend requests private resources from secured backend and serves results to user.
 
 ## Before you begin
