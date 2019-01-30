@@ -318,21 +318,66 @@ To create a virtual server instance in the newly created subnet:
    d. Click **Create virtual server instance**.
 7. Wait until the status of the VSI changes to **Powered On**. Then, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
-## Create a bastion host to securely connect
-{: #bastion-host-to-connect-securely}
+## Set up connectivity for front- and backend
 
-If you have observed, there's no floating IP assigned to your backend instance. So, you will need to create and configure a **bastion instance** to ping or SSH into your backend instance. 
+With all servers in place, in this section you will set up the connectivity to allow regular operations of front- and backend services.
 
-A bastion server's sole purpose is to provide access to a private network from an external network, such as the Internet. It's a gateway between an inside network and an outside network. 
+### Configure the frontend security group
 
-You will also use bastion instance to securely connect to your frontend instance.
+1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
+2. First, add the following **inbound** rules using **Add rule**.
+
+	<table>
+   <thead>
+      <tr>
+         <td><strong>Source</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong></td>
+      </tr>
+   <tbody>
+      <tr>
+         <td>Any - 0.0.0.0/0 </td>
+         <td>TCP</td>
+         <td>From: <strong>80</strong> To <strong>80</strong></td>
+      </tr>
+      <tr>
+         <td>Any - 0.0.0.0/0</td>
+         <td>TCP</td>
+         <td>From: <strong>443</strong> To <strong>443</strong></td>
+      </tr>
+   </tbody>
+   </table>
+
+3. Next, add these **outbound** rules.
+
+   <table>
+   <thead>
+      <tr>
+         <td><strong>Destination</strong></td>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Value</strong></td>
+      </tr>
+   <tbody>
+      <tr>
+         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
+         <td>TCP</td>
+         <td>Port of the backend server, see tip</td>
+      </tr>
+   </tbody>
+   </table>
+
+  Here are ports for typical backend services. MySQL is using port 3306, PostgreSQL port 5432. Db2 is accessed on port 50000 or 50001. Microsoft SQL Server by default uses port 1433. One of many [lists with common port is found on Wikipedia](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
+  {:tip: .tip}
+
+
+
+
 
 #
 ##
 ### DONE UNTIL HERE
 ##
 #
-
 
 
 ### Create a bastion instance and configure security groups
