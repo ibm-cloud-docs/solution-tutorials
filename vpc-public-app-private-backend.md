@@ -453,9 +453,9 @@ When done, disconnect from the server. Thereafter, follow the instructions in th
 To remove the resources associated with this tutorial you have two options. Either use the console and follow the steps below. Or clone the [GitHub repository vpc-tutorials](https://github.com/IBM-Cloud/vpc-tutorials) and execute:
 
    ```sh
-   # git clone https://github.com/IBM-Cloud/vpc-tutorials.git
-   # cd public-app-private-backend
-   # ./vpc-pubpriv-cleanup.sh
+    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
+    cd public-app-private-backend
+    ./vpc-pubpriv-cleanup.sh
    ```
    {:pre}
 
