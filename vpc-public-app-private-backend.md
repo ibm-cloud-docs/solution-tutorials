@@ -34,12 +34,9 @@ In short, using VPC you can
 
 {: #objectives}
 
-- Create a public subnet with frontend servers
-- Create a private subnet with backend servers
-- Create virtual server instances in each subnet
-- Create and configure a bastion host to connect to frontend and backend for maintenance
-- Configure network rules through security groups
-- Reserve floating IP addresses to allow inbound and outbound internet traffic
+- Understand the infrastructure objects available for virtual private clouds
+- Learn how to create a virtual private cloud, subnets and server instances
+- Know how to apply security groups to secure access to the servers
 
 ## Services used
 
