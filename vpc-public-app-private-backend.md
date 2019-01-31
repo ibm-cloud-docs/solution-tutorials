@@ -56,10 +56,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 
 1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the bastion server using the private SSH key.
-2. The admin assigns a maintenance security group with proper outbound rules and connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g.,a web server.
-3. The admin assigns a maintenance security group with proper outbound rules connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g.,a database server
-4. The internet user makes a HTTP/HTTPS request to the web server on frontend. 
-5. Frontend requests private resources from secured backend and serves results to user.
+2. The admin assigns a maintenance security group with proper outbound rules and connects securely to the frontend instance's **public IP address** via bastion server to install or update any required frontend software e.g., a web server.
+3. The admin assigns a maintenance security group with proper outbound rules connects securely to the backend instance's **private IP address** via bastion server to install or update any required backend software e.g., a database server
+4. The internet user makes an HTTP/HTTPS request to the web server on the frontend. 
+5. Frontend requests private resources from secured backend and serves results to the user.
 
 ## Before you begin
 
@@ -93,7 +93,7 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 ## Create a bastion for secure management
 {: #bastion-secure-management}
 
-To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers is going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
+To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 
 ### Create a bastion security group
 
