@@ -84,12 +84,10 @@ writeFile('./index.tmpl.md', '../../index.md');
 writeFile('./toc.tmpl.md', '../../toc');
 
 console.log('Writing ../../tutorials.json');
-let onlyPublicInputs = require('./input.json');
-
-onlyPublicInputs.categories = onlyPublicInputs.categories.filter((category) => !category.hidden);
-onlyPublicInputs.categories.forEach((category) => {
+input.categories = input.categories.filter((category) => !category.hidden);
+input.categories.forEach((category) => {
   category.solutions = category.solutions.filter((solution) => !solution.hidden && !isExternalSolution(solution));
 });
-fs.writeFileSync('../../tutorials.json', JSON.stringify(onlyPublicInputs, null, 2));
+fs.writeFileSync('../../tutorials.json', JSON.stringify(input, null, 2));
 
 console.log('Done!');
