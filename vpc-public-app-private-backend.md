@@ -376,8 +376,8 @@ With all servers in place, in this section you will set up the connectivity to a
    </tbody>
    </table>
 
-  Here are ports for typical backend services. MySQL is using port 3306, PostgreSQL port 5432. Db2 is accessed on port 50000 or 50001. Microsoft SQL Server by default uses port 1433. One of many [lists with common port is found on Wikipedia](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
-  {:tip: .tip}
+Here are ports for typical backend services. MySQL is using port 3306, PostgreSQL port 5432. Db2 is accessed on port 50000 or 50001. Microsoft SQL Server by default uses port 1433. One of many [lists with common port is found on Wikipedia](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
+{:tip: .tip}
 
 ### Configure the backend security group
 Similar to the frontend, configure the security group for the backend.
