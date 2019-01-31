@@ -13,6 +13,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # Android native mobile application with Push Notifications
+{: #android-mobile-push-analytics}
 
 Learn how easy it is to quickly create a native Android application with high-value mobile service like {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_notm}}.
 

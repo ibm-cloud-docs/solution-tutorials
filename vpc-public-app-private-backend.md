@@ -16,6 +16,7 @@ lastupdated: "2019-01-31"
 {:pre: .pre}
 
 # Private and public subnets in a Virtual Private Cloud
+{: #vpc-public-app-private-backend}
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by SSH. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 

@@ -13,6 +13,7 @@ lastupdated: "2018-11-20"
 {:pre: .pre}
 
 # Apply end to end security to a cloud application
+{: #cloud-e2e-security}
 
 No application architecture is complete without a clear understanding of potential security risks and how to protect against such threats. Application data is a critical resource which can not be lost, compromised or stolen. Additionally, data should be protected at rest and in transit through encryption techniques. Encrypting data at rest protects information from disclosure even when it is lost or stolen. Encrypting data in transit (e.g. over the Internet) through methods such as HTTPS, SSL, and TLS prevents eavesdropping and so called man-in-the-middle attacks.
 

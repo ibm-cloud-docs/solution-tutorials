@@ -13,6 +13,7 @@ lastupdated: "2018-12-14"
 {:pre: .pre}
 
 # Gather, visualize, and analyze IoT data
+{: #gather-visualize-analyze-iot-data}
 This tutorial walks you through setting up an IoT device, gathering data in the {{site.data.keyword.iot_short_notm}}, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
 {:shortdesc}
 

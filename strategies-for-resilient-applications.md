@@ -17,6 +17,7 @@ lastupdated: "2018-11-28"
 {:pre: .pre}
 
 # Strategies for resilient applications
+{: #strategies-for-resilient-applications}
 
 Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions or Virtual Servers, enterprises seek to minimize downtime and create resilient architectures that achieve maximum availability. This tutorial highlights IBM Cloud's capabilities to build resilient solutions, and in doing so, answers the following questions.
 

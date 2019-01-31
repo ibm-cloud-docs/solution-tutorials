@@ -17,6 +17,7 @@ lastupdated: "2018-12-11"
 {:pre: .pre}
 
 # Asynchronous data processing using object storage and pub/sub messaging
+{: #pub-sub-object-storage}
 In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. This pattern is used to decouple your application allowing greater control over scaling and performance. {{site.data.keyword.messagehub}} can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks. 
 
 {:shortdesc}

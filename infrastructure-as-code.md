@@ -12,6 +12,7 @@ lastupdated: "2018-03-23"
 {:pre: .pre}
 
 # Automate deployment of environments using Schematics
+{: #infrastructure-as-code}
 
 Attention: The Schematics service is deprecated.</span> For more information, see the [deprecation announcement blog](https://www.ibm.com/blogs/bluemix/2018/03/retirement-ibm-cloud-schematics/).
 

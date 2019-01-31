@@ -17,6 +17,7 @@ lastupdated: "2018-10-25"
 {:pre: .pre}
 
 # Plan, create and update deployment environments
+{: #plan-create-update-deployments}
 
 Multiple deployment environments are common when building a solution. They reflect the lifecycle of a project from development to production. This tutorial introduces tools like the {{site.data.keyword.Bluemix_notm}} CLI and [Terraform](https://www.terraform.io/) to automate the creation and maintenance of these deployment environments.
 {:shortdesc}

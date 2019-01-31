@@ -12,6 +12,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # Moving a VM based app to Kubernetes
+{: #vm-to-containers-and-kubernetes}
 
 This tutorial walks you through the process of moving a VM based app to a Kubernetes cluster by using {{site.data.keyword.containershort_notm}}. [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 {: shortdesc}

@@ -12,6 +12,7 @@ lastupdated: "2018-10-17"
 {:pre: .pre}
 
 # Big data logs with streaming analytics and SQL
+{: #big-data-log-analytics}
 
 In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, SQL Query and {{site.data.keyword.streaminganalyticsshort}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
 

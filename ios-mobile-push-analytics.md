@@ -17,6 +17,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # iOS mobile application with Push Notifications
+{: #ios-mobile-push-analytics}
 
 Learn how easy it is to quickly create an iOS Swift application with high-value mobile service {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_short}}.
 

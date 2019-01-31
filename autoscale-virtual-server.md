@@ -12,6 +12,7 @@ lastupdated: "2018-03-14"
 {:pre: .pre}
 
 # Use Auto-Scale service to automatically scale virtual servers on IBM Cloud
+{: #autoscale-virtual-server}
 
 In this tutorial, you will learn how to configure the Auto-Scale service to automatically scale the infrastructure resources for a highly available web application. You will create a provisioning script to add and remove infrastructure resources set the autoscaling policies.
 

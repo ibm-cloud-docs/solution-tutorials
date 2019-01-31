@@ -17,6 +17,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # Deploy serverless apps across multiple regions
+{: #multi-region-serverless}
 
 This tutorial shows how to configure IBM Cloud Internet Services and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple regions.
 

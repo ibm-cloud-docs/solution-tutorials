@@ -17,6 +17,7 @@ lastupdated: "2018-06-05"
 {:pre: .pre}
 
 # VPC, VPN and service consumption
+{: #vpc-vpn}
 This tutorial...
 {:shortdesc}
 

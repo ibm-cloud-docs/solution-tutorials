@@ -16,6 +16,7 @@ lastupdated: "2019-01-10"
 {:pre: .pre}
 
 # Isolate workloads with a secure private network
+{: #secure-network-enclosure}
 
 The need for isolated and secure private network environments is central to the IaaS application deployment model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. This isolation enables virtual machines and bare-metal servers to be securely deployed in complex multi-tier application topologies while proving protection from risks on the public internet.  
 

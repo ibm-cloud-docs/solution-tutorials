@@ -17,6 +17,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # VPC with globally available deployment
+{: #vpc-globally-available}
 
 VPC to isolate workloads
 Load balancer to increase resiliency within a location and globally
