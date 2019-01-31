@@ -125,7 +125,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 	</table>
 
    To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
-   {:tip}
+   {:tip }
 
 ### Create a bastion instance
 With the subnet and security group already in place, next, create the bastion virtual server instance.
@@ -194,7 +194,7 @@ With access to the bastion working, continue and create the security group for m
    </table>
 
    DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are n port 80 and 443.
-   {:tip: .tip}
+   {:tip }
 
 2. Next, add this **inbound** rule which allows SSH access from the bastion server.
 
@@ -377,7 +377,7 @@ With all servers in place, in this section you will set up the connectivity to a
    </table>
 
 Here are ports for typical backend services. MySQL is using port 3306, PostgreSQL port 5432. Db2 is accessed on port 50000 or 50001. Microsoft SQL Server by default uses port 1433. One of many [lists with common port is found on Wikipedia](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
-{:tip: .tip}
+{:tip }
 
 ### Configure the backend security group
 Similar to the frontend, configure the security group for the backend.
