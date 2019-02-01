@@ -137,9 +137,9 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
-    {{#each featured}}
+    {{#each featured as |solution|}}
     {{#unless hidden}}
-    <a href = "{{{url}}}">
+    <a href = "{{#htmlLink solution}}{{/htmlLink}}">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
