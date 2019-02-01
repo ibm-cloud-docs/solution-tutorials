@@ -18,6 +18,7 @@ lastupdated: "2018-06-05"
 
 # TUTORIAL TITLE
 {: #solution-template}
+
 This tutorial...
 {:shortdesc}
 

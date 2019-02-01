@@ -166,11 +166,11 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #{{anchor}} }
 
 <div class = "solutionBoxContainer">
-    {{#each solutions}}
+    {{#each solutions as |solution|}}
     {{#unless hidden}}
     {{#if description}}
     {{#if imgSrc}}
-    <a href = "{{{url}}}">
+    <a href = "{{#htmlLink solution}}{{/htmlLink}}">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">

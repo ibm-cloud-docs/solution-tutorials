@@ -33,6 +33,14 @@ Handlebars.registerHelper('tocLink', function(solution, options) {
   }
 });
 
+Handlebars.registerHelper('htmlLink', function(solution, options) {
+  if (isExternalSolution(solution)) {
+    return solution.url;
+  } else {
+    return `/docs/tutorials/${solution.url}`;
+  }
+});
+
 Handlebars.registerHelper('hasTag', function( solution, tag, options) {
   const string = options.fn(this);
   return (solution.tags.indexOf(tag) >= 0) ? string : null;
