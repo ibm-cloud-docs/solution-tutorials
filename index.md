@@ -137,7 +137,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
-    <a href = "cloud-e2e-security.html">
+    <a href = "/docs/tutorials/cloud-e2e-security.html">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -154,7 +154,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "isolated-cloud-foundry-enterprise-apps.html">
+    <a href = "/docs/tutorials/isolated-cloud-foundry-enterprise-apps.html">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
