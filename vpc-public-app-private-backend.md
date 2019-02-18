@@ -20,7 +20,7 @@ lastupdated: "2019-02-18"
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by SSH. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
-A [subnet](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic for a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, Security Groups (SGs) act as virtual firewalls to control the flow of data packets to and from individual VSIs.
+A [subnet](/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, Security Groups (SGs) act as virtual firewalls to control the flow of data packets to and from individual VSIs.
 
 The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define SGs to allow or deny traffic to the VSIs.
 {:shortdesc}
@@ -66,9 +66,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc/vpc-user-permissions.html).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc/vpc-user-permissions.html).
 
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](https://{DomainName}/docs/infrastructure/vpc/example-code.html#create-an-ssh-key).
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc/getting-started.html#prerequisites).
 
 ## Create a Virtual Private Cloud
 {: #create-vpc}
@@ -265,7 +265,7 @@ To create a new security group for the backend:
 2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.  
 3. Click **Create security group**.  
 
-You will later edit the security group to add the inbound and outbound rules as and when required.
+You will later edit the security group to add the inbound and outbound rules.
 
 ### Create a backend virtual server instance
 
@@ -296,7 +296,7 @@ To create a new subnet for the frontend,
    a. Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.  
    b. Select a location.  
    c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-3. Select **VPC default** for your subnet access control list(ACL). You can configure the inbound and outbound rules later.
+3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
 4. Similar as for the backend, switch the **Public gateway** to **Attached**. 
 5. Click **Create subnet** to provision it.
 
@@ -472,14 +472,13 @@ If you want to use the console, note that you may need to refresh your browser t
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- Add a [load balancer](https://{DomainName}/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
-- Create a [virtual private network](https://{DomainName}/docs/infrastructure/vpc/console-tutorial.html#creating-a-vpn) (VPN) so your VPC can connect securely to another private network, such as an on-premises network or another VPC.
+- Add a [load balancer](/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
+- Create a [virtual private network](/docs/infrastructure/vpc/console-tutorial.html#creating-a-vpn) (VPN) so your VPC can connect securely to another private network, such as an on-premises network or another VPC.
 
 
 ## Related content
 {: #related}
 
-- [VPC Glossary](https://{DomainName}/docs/infrastructure/vpc/vpc-glossary.html#vpc-glossary)
-- [VPC using the IBM Cloud CLI](https://{DomainName}/docs/infrastructure/vpc/hello-world-vpc.html#creating-a-vpc-using-the-ibm-cloud-cli)
-- [VPC using the REST APIs](https://{DomainName}/docs/infrastructure/vpc/example-code.html#creating-a-vpc-using-the-rest-apis)
-- [VPC: What's New?](https://{DomainName}/docs/infrastructure/vpc/whats-new.html)
+- [VPC Glossary](/docs/infrastructure/vpc/vpc-glossary.html)
+- [VPC using the IBM Cloud CLI](/docs/infrastructure/vpc/hello-world-vpc.html)
+- [VPC using the REST APIs](/docs/infrastructure/vpc/example-code.html)
