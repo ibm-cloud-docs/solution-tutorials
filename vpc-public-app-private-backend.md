@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-01-31"
+lastupdated: "2019-02-18"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -151,7 +151,7 @@ With the subnet and security group already in place, next, create the bastion vi
 Once your bastion's floating IP address is active, try connecting to it using **ssh**:
 
    ```sh
-   ssh root@<BASTION_FLOATING_IP_ADDRESS>
+   ssh -i ~/.ssh/<PRIVATE_KEY> root@<BASTION_FLOATING_IP_ADDRESS>
    ```
    {:pre}
 
@@ -429,6 +429,10 @@ To SSH into the backend instance using its **private IP**, you will use the bast
    ssh -J root@<BASTION_FLOATING_IP_ADDRESS> root@<PRIVATE_IP_ADDRESS>
    ```
    {:pre}
+   
+   `-J` flag is supported in OpenSSH version 7.3+. In older versions `-J` is not available. In this case the safest and most straightforward way is to use ssh's stdio forwarding (`-W`) mode to "bounce" the connection through a bastion host. e.g., `ssh -o ProxyCommand="ssh -W %h:%p root@<BASTION_FLOATING_IP_ADDRESS" root@<PRIVATE_IP_ADDRESS>`
+   {:tip }
+
 
 ### Install software and perform maintenance tasks
 
