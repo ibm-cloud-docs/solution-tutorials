@@ -25,7 +25,7 @@ Solution Tutorials
         serverless-api-webapp.md
         multi-region-serverless.md
         application-log-analysis.md
-        [Analyze metrics for an Ubuntu host](/services/Cloudant/cloudant-security#security)]
+        [Analyze metrics for an Ubuntu host](/services/Monitoring-with-Sysdig/ubuntu#ubuntu)]
         isolated-cloud-foundry-enterprise-apps.md
 
     {: .topicgroup}
@@ -119,7 +119,7 @@ Solution Tutorials
         lamp-stack.md
         infrastructure-as-code-terraform.md
         highly-available-and-scalable-web-application.md
-        [Analyze metrics for an Ubuntu host](/services/Cloudant/cloudant-security#security)]
+        [Analyze metrics for an Ubuntu host](/services/Monitoring-with-Sysdig/ubuntu#ubuntu)]
         secure-network-enclosure.md
         nat-config-private.md
         configuring-IPSEC-VPN.md
