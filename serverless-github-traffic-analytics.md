@@ -13,6 +13,7 @@ lastupdated: "2018-11-13"
 {:pre: .pre}
 
 # Combining serverless and Cloud Foundry for data retrieval and analytics
+{: #serverless-github-traffic-analytics}
 In this tutorial, you create an application to automatically collect GitHub traffic statistics for repositories and provide the foundation for traffic analytics. GitHub only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. In this tutorial, you deploy a serverless action to retrieve the traffic data and store it in a SQL database. Moreover, a Cloud Foundry app is used to manage repositories and provide access to the statistics for data analytics. The app and the serverless action discussed in this tutorial implement a multi-tenant-ready solution with the initial feature set supporting single-tenant mode.
 
 ![](images/solution24-github-traffic-analytics/Architecture.png)

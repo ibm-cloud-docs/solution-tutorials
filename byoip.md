@@ -16,6 +16,7 @@ lastupdated: "2018-07-31"
 {:pre: .pre}
 
 # Bring Your Own IP Address
+{: #byoip}
 
 Bring Your own IP (BYOIP) is a frequent requirement where its desired to connect existing client networks to infrastructure provisioned on the {{site.data.keyword.Bluemix_notm}}. The intent is typically to minimize change to the clients network routing configuration and operations with the adoption of a single IP address space based on the clients existing IP addressing scheme.
 

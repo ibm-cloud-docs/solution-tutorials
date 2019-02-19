@@ -14,6 +14,7 @@ lastupdated: "2018-11-14"
 
 
 # Serverless web application and API
+{: #serverless-api-webapp}
 
 In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and implementing the application backend using {{site.data.keyword.openwhisk}}.
 

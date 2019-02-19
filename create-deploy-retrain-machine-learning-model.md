@@ -17,6 +17,7 @@ lastupdated: "2018-11-23"
 {:pre: .pre}
 
 # Build, deploy, test, and retrain a predictive machine learning model
+{: #create-deploy-retrain-machine-learning-model}
 This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.
 
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.

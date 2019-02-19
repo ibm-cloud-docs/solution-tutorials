@@ -13,6 +13,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # Hybrid mobile application with Push Notifications
+{: #hybrid-mobile-push-analytics}
 
 Learn how easy it is to quickly create a Hybrid Cordova application with high-value mobile service like {{site.data.keyword.mobilepushshort}} on {{site.data.keyword.Bluemix_notm}}.
 

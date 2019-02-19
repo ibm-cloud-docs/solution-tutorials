@@ -17,6 +17,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # Best practices for organizing users, teams, applications
+{: #users-teams-applications}
 
 This tutorial gives an overview of the concepts available in {{site.data.keyword.cloud_notm}} to manage identity and access management and how they can be implemented to support the multiple development stages of an application.
 {:shortdesc}

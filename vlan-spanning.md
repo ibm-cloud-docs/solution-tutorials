@@ -16,6 +16,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # Linking secure private networks over the IBM network
+{: #vlan-spanning}
 
 As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple locations provide resilience in the case of a geographic failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}}  network]( https://www.ibm.com/cloud-computing/bluemix/our-network) enables users to link workloads hosted in secure private networks across data centers and locations.
 

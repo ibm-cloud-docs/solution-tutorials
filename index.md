@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-01-18"
+lastupdated: "2019-02-18"
 
 ---
 
@@ -137,7 +137,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
-    <a href = "cloud-e2e-security.html">
+    <a href = "/docs/tutorials/cloud-e2e-security.html">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -154,7 +154,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "isolated-cloud-foundry-enterprise-apps.html">
+    <a href = "/docs/tutorials/isolated-cloud-foundry-enterprise-apps.html">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -177,7 +177,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #websites }
 
 <div class = "solutionBoxContainer">
-    <a href = "scalable-webapp-kubernetes.html">
+    <a href = "/docs/tutorials/scalable-webapp-kubernetes.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -194,7 +194,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "kubernetes-log-analysis-kibana.html">
+    <a href = "/docs/tutorials/kubernetes-log-analysis-kibana.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -211,7 +211,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "vm-to-containers-and-kubernetes.html">
+    <a href = "/docs/tutorials/vm-to-containers-and-kubernetes.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -228,7 +228,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "strategies-for-resilient-applications.html">
+    <a href = "/docs/tutorials/strategies-for-resilient-applications.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -245,7 +245,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "continuous-deployment-to-kubernetes.html">
+    <a href = "/docs/tutorials/continuous-deployment-to-kubernetes.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -262,7 +262,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "static-files-cdn.html?pos=2">
+    <a href = "/docs/tutorials/static-files-cdn.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -279,7 +279,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "pub-sub-object-storage.html">
+    <a href = "/docs/tutorials/pub-sub-object-storage.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -296,7 +296,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "lamp-stack.html">
+    <a href = "/docs/tutorials/lamp-stack.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -313,7 +313,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "infrastructure-as-code-terraform.html">
+    <a href = "/docs/tutorials/infrastructure-as-code-terraform.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -330,7 +330,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "plan-create-update-deployments.html">
+    <a href = "/docs/tutorials/plan-create-update-deployments.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -347,7 +347,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "highly-available-and-scalable-web-application.html">
+    <a href = "/docs/tutorials/highly-available-and-scalable-web-application.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -364,7 +364,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "mean-stack.html">
+    <a href = "/docs/tutorials/mean-stack.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -381,7 +381,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "sql-database.html">
+    <a href = "/docs/tutorials/sql-database.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -398,7 +398,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "serverless-api-webapp.html">
+    <a href = "/docs/tutorials/serverless-api-webapp.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -415,7 +415,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "multi-region-serverless.html">
+    <a href = "/docs/tutorials/multi-region-serverless.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -432,7 +432,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "application-log-analysis.html">
+    <a href = "/docs/tutorials/application-log-analysis.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -449,7 +449,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "isolated-cloud-foundry-enterprise-apps.html">
+    <a href = "/docs/tutorials/isolated-cloud-foundry-enterprise-apps.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -472,7 +472,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #chatbots }
 
 <div class = "solutionBoxContainer">
-    <a href = "slack-chatbot-database-watson.html?pos=2">
+    <a href = "/docs/tutorials/slack-chatbot-database-watson.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -489,7 +489,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "android-watson-chatbot.html">
+    <a href = "/docs/tutorials/android-watson-chatbot.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -512,7 +512,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #security }
 
 <div class = "solutionBoxContainer">
-    <a href = "multi-region-webapp.html?pos=2">
+    <a href = "/docs/tutorials/multi-region-webapp.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -529,7 +529,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "multi-region-k8s-cis.html?pos=2">
+    <a href = "/docs/tutorials/multi-region-k8s-cis.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -546,7 +546,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "create-manage-secure-apis.html">
+    <a href = "/docs/tutorials/create-manage-secure-apis.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -563,7 +563,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "cloud-e2e-security.html">
+    <a href = "/docs/tutorials/cloud-e2e-security.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -586,7 +586,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #mobile }
 
 <div class = "solutionBoxContainer">
-    <a href = "ios-mobile-push-analytics.html">
+    <a href = "/docs/tutorials/ios-mobile-push-analytics.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -603,7 +603,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "android-mobile-push-analytics.html">
+    <a href = "/docs/tutorials/android-mobile-push-analytics.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -620,7 +620,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "hybrid-mobile-push-analytics.html">
+    <a href = "/docs/tutorials/hybrid-mobile-push-analytics.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -637,7 +637,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "serverless-mobile-backend.html?pos=2">
+    <a href = "/docs/tutorials/serverless-mobile-backend.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -660,7 +660,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #ml }
 
 <div class = "solutionBoxContainer">
-    <a href = "big-data-log-analytics.html">
+    <a href = "/docs/tutorials/big-data-log-analytics.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -677,7 +677,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "smart-data-lake.html">
+    <a href = "/docs/tutorials/smart-data-lake.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -694,7 +694,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "serverless-github-traffic-analytics.html?pos=2">
+    <a href = "/docs/tutorials/serverless-github-traffic-analytics.html?pos=2">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -711,7 +711,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "create-deploy-retrain-machine-learning-model.html">
+    <a href = "/docs/tutorials/create-deploy-retrain-machine-learning-model.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -728,7 +728,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "big-data-analytics-spark.html">
+    <a href = "/docs/tutorials/big-data-analytics-spark.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -751,7 +751,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #iot }
 
 <div class = "solutionBoxContainer">
-    <a href = "gather-visualize-analyze-iot-data.html">
+    <a href = "/docs/tutorials/gather-visualize-analyze-iot-data.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -774,7 +774,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #iam }
 
 <div class = "solutionBoxContainer">
-    <a href = "users-teams-applications.html">
+    <a href = "/docs/tutorials/users-teams-applications.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -791,7 +791,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "cloud-usage.html">
+    <a href = "/docs/tutorials/cloud-usage.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -814,7 +814,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {: #Network }
 
 <div class = "solutionBoxContainer">
-    <a href = "secure-network-enclosure.html">
+    <a href = "/docs/tutorials/secure-network-enclosure.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -831,7 +831,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "nat-config-private.html">
+    <a href = "/docs/tutorials/nat-config-private.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -848,7 +848,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "byoip.html">
+    <a href = "/docs/tutorials/byoip.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -865,7 +865,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "configuring-IPSEC-VPN.html">
+    <a href = "/docs/tutorials/configuring-IPSEC-VPN.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -882,7 +882,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "vlan-spanning.html">
+    <a href = "/docs/tutorials/vlan-spanning.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -899,7 +899,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "web-app-private-network.html">
+    <a href = "/docs/tutorials/web-app-private-network.html">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">

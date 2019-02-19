@@ -17,6 +17,7 @@ lastupdated: "2019-01-11"
 {:pre: .pre}
 
 # Mobile application with a serverless backend
+{: #serverless-mobile-backend}
 
 In this tutorial, you will learn how to use {{site.data.keyword.openwhisk}} along with Cognitive and Data services to build a serverless backend for a mobile application.
 {:shortdesc}

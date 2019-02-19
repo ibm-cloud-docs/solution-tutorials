@@ -13,6 +13,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # Reviewing {{site.data.keyword.cloud_notm}} services, resources and usage
+{: #cloud-usage}
 As Cloud adoption increases, IT and finance managers will need to understand Cloud usage in the context of innovation and cost control. Questions such as: "Which services are teams using?", "How much does it cost to operate a solution?" and "How can I contain sprawl?" can be answered by investigating available data. This tutorial introduces ways to explore such information and answer common usage-related questions.
 {:shortdesc}
 

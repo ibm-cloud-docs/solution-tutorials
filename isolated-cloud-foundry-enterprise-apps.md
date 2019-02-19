@@ -17,6 +17,7 @@ lastupdated: "2018-1-18"
 {:pre: .pre}
 
 # Isolated Cloud Foundry Enterprise Apps
+{: #isolated-cloud-foundry-enterprise-apps}
 
 With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. With this, you get a private Cloud Foundry instance deployed on an isolated Kubernetes cluster. Unlike the public Cloud, you'll have full control over the environment: access control, capacity, version, resource usage, and monitoring. {{site.data.keyword.cfee_full_notm}} provides the speed and innovation of a platform-as-a-service with the infrastructure ownership found in enterprise IT.
 

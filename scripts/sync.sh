@@ -21,6 +21,7 @@ tar cf - \
   --exclude="vpc-*.md" \
   --exclude="images/solution40-*" \
   --exclude="images/solution41-*" \
+  --exclude="images/solution46-*" \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )

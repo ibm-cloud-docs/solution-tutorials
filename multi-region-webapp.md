@@ -13,6 +13,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # Secure web application across multiple regions
+{: #multi-region-webapp}
 
 This tutorial walks you through creating, securing, deploying, and load balancing a Cloud Foundry application across multiple regions by using a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) pipeline.
 
@@ -180,7 +181,7 @@ In this step, you will map the custom domain name to the secure endpoint for the
 
 At this point, you can visit your application with the URL `<glb_name>.<your_domain_name>` and the Global Load Balancer automatically distributes traffic for your multi-location applications. You can verify this by stopping your application in Dallas, keeping application in London active, and accessing the application through the Global Load Balancer.
 
-Although this works at this moment, as we have configured continuous delivery in the previous steps, the configuration can be overwritten when another build is trigged. To make these changes persistent, go back to the toolchains and modify the *manifest.yml* file:
+Although this works at this moment, as we have configured continuous delivery in the previous steps, the configuration can be overwritten when another build is triggered. To make these changes persistent, go back to the toolchains and modify the *manifest.yml* file:
 
 1. In the {{site.data.keyword.Bluemix_notm}} [console](https://{DomainName}/dashboard/apps), navigate to Application **Overview** and scroll to find **View toolchain**.
 2. Select the Git tile under Code.

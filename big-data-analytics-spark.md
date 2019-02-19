@@ -13,6 +13,7 @@ lastupdated: "2018-11-23"
 {:pre: .pre}
 
 # Analyze and visualize open data with Apache Spark
+{: #big-data-analytics-spark}
 
 In this tutorial, you will analyze and visualize open data sets using {{site.data.keyword.DSX_full}}, a Jupyter Notebook and Apache Spark. You'll start by combining data that describes population growth, life expectancy and country ISO codes into a single data frame. To discover insights, you'll then use a Python library called Pixiedust to query and visualize data in a variety of ways.
 

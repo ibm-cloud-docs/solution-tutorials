@@ -13,6 +13,7 @@ lastupdated: "2018-09-19"
 {:pre: .pre}
 
 # Accelerate delivery of static files using a CDN
+{: #static-files-cdn}
 
 This tutorial walks you through how to host and serve website assets (images, videos, documents) and user generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
 

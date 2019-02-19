@@ -13,6 +13,7 @@ lastupdated: "2018-12-11"
 {:pre: .pre}
 
 # Build a database-driven Slackbot
+{: #slack-chatbot-database-watson}
 
 In this tutorial, you are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using a [Botkit plugin for {{site.data.keyword.conversationshort}}](https://github.com/watson-developer-cloud/botkit-middleware). The Botkit app can be run locally or on {{site.data.keyword.Bluemix_notm}} with Cloud Foundry.
 

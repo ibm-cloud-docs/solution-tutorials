@@ -16,6 +16,7 @@ lastupdated: "2018-07-31"
 {:pre: .pre}
 
 # VPN into a secure private network
+{: #configuring-IPSEC-VPN}
 
 The need to create a private connection between a remote network environment and servers on the private network of the {{site.data.keyword.Bluemix_notm}} is a common requirement. Most typically this connectivity supports hybrid workloads, data transfers, private workloads or administration of systems on the {{site.data.keyword.Bluemix_notm}}. A site-to-site Virtual Private Network (VPN) tunnel is the usual approach to securing connectivity between networks. 
 

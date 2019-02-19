@@ -12,6 +12,7 @@ lastupdated: "2018-04-23"
 {:pre: .pre}
 
 # Deploy a LAMP stack using Terraform
+{: #infrastructure-as-code-terraform}
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 

@@ -16,9 +16,8 @@ lastupdated: "2018-06-05"
 {:tip: .tip}
 {:pre: .pre}
 
-# TUTORIAL TITLE
-{: #solution-template}
-
+# VPC, VPN and service consumption
+{: #vpc-vpn}
 This tutorial...
 {:shortdesc}
 

@@ -13,6 +13,7 @@ lastupdated: "2018-11-14"
 {:pre: .pre}
 
 # Analyze logs and monitor health of a Cloud Foundry application
+{: #application-log-analysis}
 This tutorial shows how the [{{site.data.keyword.loganalysislong_notm}}](https://{DomainName}/catalog/services/log-analysis) service can be used to understand and diagnose activities of a Cloud Foundry app that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python Cloud Foundry application, generate different types of logs. Then, you will search, analyze and visualize those logs by using Kibana, an open-source tool that is offered by the {{site.data.keyword.loganalysisshort}} service. Moreover, you will also setup the [{{site.data.keyword.prf_hubshort}}](https://{DomainName}/catalog/services/availability-monitoring) service to track availability of the deployed application, so that you get notified in the case of application health issues.
 
 ## Objectives

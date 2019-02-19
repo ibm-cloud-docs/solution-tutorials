@@ -12,6 +12,7 @@ lastupdated: "2018-08-13"
 {:pre: .pre}
 
 # Use Virtual Servers to build highly available and scalable web app
+{: #highly-available-and-scalable-web-application}
 
 Adding more servers to an application is a common pattern to handle additional load. Another key aspect to increase an application availability and resiliency is to deploy the application to multiple zones or locations with data replication and load balancing.
 
