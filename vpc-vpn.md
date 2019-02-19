@@ -18,8 +18,11 @@ lastupdated: "2018-06-05"
 
 # VPC, VPN and service consumption
 {: #vpc-vpn}
-This tutorial...
-{:shortdesc}
+This tutorial will walk you through creating through the usage of the {{site.data.keyword.vpc_full}} (VPC) Virtual Privat Network, VPN.
+It will demontrate three connectivity options:
+* VPC/VPN connected to VPC/VPN
+* VPC/VPN connected to on premises VPN
+* VPC/VPN connected to classic VPN
 
 ## Objectives
 {: #objectives}
@@ -31,9 +34,8 @@ This tutorial...
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
+- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
