@@ -1,14 +1,10 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-06-05"
+  years: 2019
+lastupdated: "2019-02-28"
 
 ---
 
-{:java: #java .ph data-hd-programlang='java'}
-{:swift: #swift .ph data-hd-programlang='swift'}
-{:ios: #ios data-hd-operatingsystem="ios"}
-{:android: #android data-hd-operatingsystem="android"}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
@@ -18,6 +14,9 @@ lastupdated: "2018-06-05"
 
 # VPC, VPN and service consumption
 {: #vpc-vpn}
+
+This tutorial walks you through connecting an existing Virtual Private Cloud (VPC) to another computing environment by establishing a secure Virtual Private Network (VPN). Moreover, it shows how your app running on a virtual server instance (VSI) in a VPC can securely use an IBM Cloud service by connecting to it through a private endpoint.
+
 This tutorial...
 {:shortdesc}
 
