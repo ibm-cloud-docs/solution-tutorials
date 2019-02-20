@@ -17,8 +17,16 @@ lastupdated: "2019-02-28"
 
 This tutorial walks you through connecting an existing Virtual Private Cloud (VPC) to another computing environment by establishing a secure Virtual Private Network (VPN). Moreover, it shows how your app running on a virtual server instance (VSI) in a VPC can securely use an IBM Cloud service by connecting to it through a private endpoint.
 
-This tutorial...
+It will demontrate three connectivity options:
+* VPC/VPN connected to VPC/VPN
+* VPC/VPN connected to on premises VPN
+* VPC/VPN connected to classic VPN
+
+
+
+
 {:shortdesc}
+
 
 ## Objectives
 {: #objectives}
@@ -30,9 +38,8 @@ This tutorial...
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
+- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
