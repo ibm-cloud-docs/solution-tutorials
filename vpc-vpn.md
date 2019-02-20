@@ -15,13 +15,17 @@ lastupdated: "2019-02-28"
 # VPC, VPN and service consumption
 {: #vpc-vpn}
 
-This tutorial walks you through connecting an existing Virtual Private Cloud (VPC) to another computing environment by establishing a secure Virtual Private Network (VPN). Moreover, it shows how your app running on a virtual server instance (VSI) in a VPC can securely use an IBM Cloud service by connecting to it through a private endpoint.
+Possible titles:
+* Create app with private services on VPC and connect to it through VPN
+* End to end private network for your secure app on VPC
+
+This tutorial walks you through connecting an existing {{site.data.keyword.vpc_full}} (VPC) to another computing environment by establishing a secure Virtual Private Network (VPN). Moreover, it shows how your app running on a virtual server instance (VSI) in a VPC can securely use an IBM Cloud service by connecting to it through a private endpoint.
 
 It will demontrate three connectivity options:
 * VPC/VPN connected to VPC/VPN
 * VPC/VPN connected to on premises VPN
 * VPC/VPN connected to classic VPN
-
+(HL: ^^ Do we need all three, does it add anything to the solution?)
 
 
 
@@ -40,6 +44,7 @@ It will demontrate three connectivity options:
 This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
 - [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
+- [{{site.data.keyword.vpn_full}}](https://{DomainName}/vpc/provision/vpngateway)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -106,17 +111,6 @@ Introductory statement that overviews the section
    {: pre}
 
 
-This paragraph only appears in the iOS documentation
-{: ios}
-
-And this paragraph only appears in the Android documentation
-{: android}
-
-This paragraph only appears for Java code
-{: java}
-
-And this paragraph only appears for Swift code
-{: swift}
 
 
 ## Another Solution Specific Section
@@ -124,7 +118,6 @@ And this paragraph only appears for Swift code
 
 Introductory statement that overviews the section
 
-### Another sub section
 
 ## Remove resources
 {: #removeresources}
