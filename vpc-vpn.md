@@ -55,7 +55,7 @@ intro sentence
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution1/Architecture.png)
+  ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 </p>
 
 1. The user does this
