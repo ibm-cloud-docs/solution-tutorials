@@ -454,22 +454,19 @@ When done, disconnect from the server. Thereafter, follow the instructions in th
 
 
 ## Remove resources
-
 {: #remove-resources}
-To remove the resources associated with this tutorial you have two options. Either use the console and follow the steps below. Or clone the [GitHub repository vpc-tutorials](https://github.com/IBM-Cloud/vpc-tutorials) and execute:
 
-   ```sh
-    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
-    cd public-app-private-backend
-    ./vpc-pubpriv-cleanup.sh
-   ```
-   {:pre}
+1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
+2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
+3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
+4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
 
-If you want to use the console, note that you may need to refresh your browser to see updated status information after deleting a resource.  
-1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.  
-2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.  
-3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.  
-4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.  
+When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
+{:tip}
+
+## Automate with the CLI
+
+The [GitHub repository vpc-tutorials](https://github.com/IBM-Cloud/vpc-tutorials) contains scripts to automate the creation of the VPC environment described in this tutorial. Clone the reposition then follow [the README instructions](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/public-app-private-backend/README.md) to deploy and clean up the resources for this tutorial.
 
 ## Expand the tutorial 
 {: #expand-tutorial}
