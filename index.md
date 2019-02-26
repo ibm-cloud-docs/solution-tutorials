@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-02-18"
+lastupdated: "2019-02-26"
 
 ---
 
@@ -911,6 +911,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution42-web-app-private-network/web-app-private.png" alt="Architecture diagram for the solution Web application serving from a secure private network"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/tutorials/vpc-public-app-private-backend.html">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Private and public subnets in a Virtual Private Cloud
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Create a virtual private cloud with subnets and instances. Secure your resources by attaching security groups and only allow minimal access.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution40-vpc-public-app-private-backend/Architecture.png" alt="Architecture diagram for the solution Private and public subnets in a Virtual Private Cloud"/>
                 </div>
             </div>
         </div>

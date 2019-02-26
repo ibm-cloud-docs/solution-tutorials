@@ -603,6 +603,19 @@
             "Virtual Router Appliance VPN"
           ],
           "lastUpdated": "2018-08-24"
+        },
+        {
+          "name": "Private and public subnets in a Virtual Private Cloud",
+          "url": "vpc-public-app-private-backend.html",
+          "description": "Create a virtual private cloud with subnets and instances. Secure your resources by attaching security groups and only allow minimal access.",
+          "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Network",
+            "Virtual Servers"
+          ],
+          "lastUpdated": "2019-02-26"
         }
       ]
     }
