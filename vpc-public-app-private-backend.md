@@ -14,6 +14,7 @@ lastupdated: "2019-02-26"
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:important: .important}
 
 # Private and public subnets in a Virtual Private Cloud
 {: #vpc-public-app-private-backend}
