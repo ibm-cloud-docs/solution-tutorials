@@ -71,8 +71,8 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data
 
   ![](images/solution8/Create_Database.png)
 
-6. Back to the service details tab, under **Connections**,
-   1. Under **Service Credentials**, create **New credential**, accept the defaults and click **Add**.
+u6. Back to the service details tab, Under **Service Credentials**
+   1. Create **New credential**, accept the defaults and click **Add**.
    2. Click **View credentials** under Actions. We will need these credentials later to allow Cloud Functions actions to read/write to your Cloudant service.
 
 ## Create serverless actions
