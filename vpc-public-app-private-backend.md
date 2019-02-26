@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-02-18"
+lastupdated: "2019-02-26"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -17,6 +17,9 @@ lastupdated: "2019-02-18"
 
 # Private and public subnets in a Virtual Private Cloud
 {: #vpc-public-app-private-backend}
+
+IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://cloud.ibm.com/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
+{: important}
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by SSH. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
