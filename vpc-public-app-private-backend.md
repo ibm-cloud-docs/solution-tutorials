@@ -466,10 +466,6 @@ When done, disconnect from the server. Thereafter, follow the instructions in th
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
 
-## Automate with the CLI
-
-The [GitHub repository vpc-tutorials](https://github.com/IBM-Cloud/vpc-tutorials) contains scripts to automate the creation of the VPC environment described in this tutorial. Clone the reposition then follow [the README instructions](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/public-app-private-backend/README.md) to deploy and clean up the resources for this tutorial.
-
 ## Expand the tutorial 
 {: #expand-tutorial}
 
