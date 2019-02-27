@@ -71,6 +71,7 @@ Solution Tutorials
         configuring-IPSEC-VPN.md
         vlan-spanning.md
         web-app-private-network.md
+        vpc-public-app-private-backend.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
@@ -123,5 +124,6 @@ Solution Tutorials
         configuring-IPSEC-VPN.md
         vlan-spanning.md
         web-app-private-network.md
+        vpc-public-app-private-backend.md
 
     {: .navgroup-end}

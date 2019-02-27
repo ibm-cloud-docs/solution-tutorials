@@ -63,17 +63,17 @@ This guide uses GitHub Pages to host the static website. Make sure you have a pu
 
 Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data.keyword.cloudant_short_notm}} is a fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB and accessible through a secure HTTPS API, which scales as your application grows.
 
-1. In the Catalog, select **{{site.data.keyword.cloudant_short_notm}}**.
+1. In the Catalog, select **Cloudant**.
 2. Set the service name to **guestbook-db**, select **Use both legacy credentials and IAM** as authentication methods and click **Create**.
-4. Click on **Manage** in the service dashboard then **Launch** the {{site.data.keyword.cloudant_short_notm}} service dashboard.
-5. Create a database named **guestbook**.
-   ![](images/solution8/Create_Database.png)
-1. Back to the service dashboard, under **Connections**,
-   1. Click **Create connection**
-   1. Select a Cloud Foundry organization and space where to create the serverless actions
-   1. Hover on the space and click **CONNECT**
-1. Go the [console](https://{DomainName}/dashboard/apps), select the service alias in the *Cloud Foundry Services* section
-   1. Under **Service Credentials**, create **New credential** and click **Add**.
+3. Back in the Resource list, click on the ***guestbook-db** entry under the Name column. Note: You may be required to wait until the service is provisioned. 
+4. In the service details screen, click on  ***Launch Cloudant Dashboard*** which will open in another browser tab. Note: Log in maybe required to your Cloudant instance. 
+5. Click on ***Create Database*** and create a database named ***guestbook***.
+
+  ![](images/solution8/Create_Database.png)
+
+u6. Back to the service details tab, Under **Service Credentials**
+   1. Create **New credential**, accept the defaults and click **Add**.
+   2. Click **View credentials** under Actions. We will need these credentials later to allow Cloud Functions actions to read/write to your Cloudant service.
 
 ## Create serverless actions
 
@@ -91,7 +91,7 @@ Start by creating the first action:
 
 1. Switch to **Functions** https://{DomainName}/openwhisk.
 2. On the left pane, click on **Actions** and then **Create**.
-3. **Create Action** with name `prepare-entry-for-save` and select **Node.js 6** as the Runtime.
+3. **Create Action** with name `prepare-entry-for-save` and select **Node.js** as the Runtime (Note: Pick the lastest version).
 4. Replace the existing code with the code snippet below:
    ```js
    /**
@@ -124,9 +124,9 @@ Finally add a second action to the sequence:
 
 1. Click on **save-guestbook-entry-sequence** and then click **Add**.
 1. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**
-1. Create **New Binding** and set name to `binding-for-guestbook`.
-1. Select the **guestbook-db** {{site.data.keyword.cloudant_short_notm}} instance and the **guestbook** database and **Add** and then **Save**.
-   If the *guestbook-db** instance does not show up, make sure to refresh the page (Shift or Cmd + Refresh) so that existing bindings are reloaded. You can also check on the command line with `ibmcloud cloud-functions package list`.
+1. Create **New Binding** 
+1. For Name, enter `binding-for-guestbook`
+1. For Cloudant Instance, select `Input your own credentials` and fill in the following fields with the credentials information captured for your cloudant service: Username, Password, Host and Database = `guestbook` and click **Add** and then **Save**.
    {: tip}
 1. To test it, click on **Change Input** and enter the JSON below
     ```json
@@ -146,7 +146,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    * List all documents from the database.
    * Format the documents and returning them.
 
-1. Under **Functions**, **Create** a new Node.js action and name it **set-read-input**.
+1. Under **Functions**, click on **Actions** and then **Create** a new Node.js action and name it `set-read-input`.
 2. Replace the existing code with the code snippet below. This action passes the appropriate parameters to the next action.
    ```js
    function main(params) {
@@ -169,7 +169,7 @@ Complete the sequence:
 
 1. Click on **read-guestbook-entries-sequence** sequence and then click **Add** to create and add the second action to get documents from Cloudant.
 1. Under **Use Public**, choose **{{site.data.keyword.cloudant_short_notm}}** and then **list-documents**
-1. Choose **binding-for-guestbook** and **Add** to create and add this public action to your sequence.
+1. Under **My Bindings**, choose **binding-for-guestbook** and **Add** to create and add this public action to your sequence.
 1. Click **Add** again to create and add the third action which will format the documents from {{site.data.keyword.cloudant_short_notm}}.
 1. Under **Create New** enter `format-entries` for name and then click **Create and Add**.
 1. Click on **format-entries** and replace the code with below:
@@ -199,17 +199,17 @@ Complete the sequence:
 ![](images/solution8/Cloud_Functions_API.png)
 
 1. Go to Actions https://{DomainName}/openwhisk/actions.
-2. Select the **read-guestbook-entries-sequence** sequence. Under **Endpoints**, check **Enable Web Action** and **Save**.
+2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
 4. Go to APIs https://{DomainName}/openwhisk/apimanagement and **Create a {{site.data.keyword.openwhisk_short}} API**
-5. Set name to **guestbook** and base path to **/guestbook**
-6. Create an operation to retrieve guestbook entries:
-   1. Set **path** to **/entries**
-   2. Set **verb** to **GET**
+5. Set name to `guestbook` and base path to `/guestbook`
+6. Click on **Create operation** and create an operation to retrieve guestbook entries:
+   1. Set **path** to `/entries`
+   2. Set **verb** to `GET*`
    3. Select the **read-guestbook-entries-sequence** action
-7. Create an operation to persist a guestbook entry:
-   1. Set **path** to **/entries**
-   2. Set **verb** to **PUT**
+7. Click on **Create operation** and create an operation to persist a guestbook entry:
+   1. Set **path** to `/entries`
+   2. Set **verb** to `PUT`
    3. Select the **save-guestbook-entry-sequence** action
 8. Save and expose the API.
 
@@ -251,7 +251,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
 1. In the service dashboard, use **Import Certificate**:
-   * Set **Name** to the custom subdomain and domain, such as *guestbook-api.mydomain.com*.
+   * Set **Name** to the custom subdomain and domain, such as `guestbook-api.mydomain.com`.
    * Browse for the **Certificate file** in PEM format.
    * Browse for the **Private key file** in PEM format.
    * **Import**.
@@ -263,7 +263,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
 1. Check **Apply custom domain**
-   1. Set **Domain name** to the domain you will use such as *guestbook-api.mydomain.com*.
+   1. Set **Domain name** to the domain you will use such as `guestbook-api.mydomain.com`.
    1. Select the {{site.data.keyword.cloudcerts_short}} instance holding the certificate.
    1. Select the certificate for the domain.
 1. Go to your DNS provider and create a new **DNS TXT record** mapping your domain to the API default domain / alias. The DNS TXT record can be removed once the settings have been applied.

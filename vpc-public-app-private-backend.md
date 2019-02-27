@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-02-18"
+lastupdated: "2019-02-26"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -14,13 +14,17 @@ lastupdated: "2019-02-18"
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:important: .important}
 
 # Private and public subnets in a Virtual Private Cloud
 {: #vpc-public-app-private-backend}
 
+IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
+{: important}
+
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. Moreover, a bastion VSI is deployed to securely access the other VSIs by SSH. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
-A [subnet](/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, Security Groups (SGs) act as virtual firewalls to control the flow of data packets to and from individual VSIs.
+A [subnet](/docs/infrastructure/vpc/vpc-glossary.html#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](/docs/infrastructure/vpc/vpc-glossary.html#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, [Security Groups](/docs/infrastructure/vpc/vpc-glossary.html#security-group) (SGs) act as virtual firewalls to control the flow of data packets to and from individual VSIs.
 
 The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define SGs to allow or deny traffic to the VSIs.
 {:shortdesc}
@@ -77,14 +81,15 @@ To create your own {{site.data.keyword.vpc_short}},
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
 2. Under **New virtual private cloud** section:  
-   a. Enter **vpc-pubpriv** as name for your VPC.  
-   b. Select a **Resource group**.  
-   c. Optionally, add **Tags** to organize your resources.  
-3. Select **Create new default (Allow all)** as your VPC default access control list (ACL). Leave the settings for **Default security group** as is.
+   * Enter **vpc-pubpriv** as name for your VPC.  
+   * Select a **Resource group**.  
+   * Optionally, add **Tags** to organize your resources.  
+3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
+1. Uncheck SSH and ping from the **Default security group**.
 4. Under **New subnet for VPC**:  
-   a. As a unique name enter **vpc-pubpriv-bastion-subnet**.  
-   b. Select a location.  
-   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   * As a unique name enter **vpc-pubpriv-bastion-subnet**.  
+   * Select a location.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
 6. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public internet. You can also attach the public gateway after you create the subnet.
 7. Click **Create virtual private cloud** to provision the instance.
@@ -134,15 +139,15 @@ With the subnet and security group already in place, next, create the bastion vi
 1. Under **VPC and subnets** select the **Subnets** tab, then select **vpc-pubpriv-bastion-subnet**.
 2. Click on **Attached instances** and provision a **New instance** called **vpc-pubpriv-bastion-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
 3. Select a **Location** and make sure to later use the same location again.
-4. To create a new **SSH key**, click **New key**  
-   a. Enter **vpc-ssh-key** as key name.  
-   b. Leave the **Region** as is.
-   c. Copy the contents of your existing local SSH key and paste it under **Public key**.  
-   d. Click **Add SSH key**.
+4. To create a new **SSH key**, click **New key**
+   * Enter **vpc-ssh-key** as key name.
+   * Leave the **Region** as is.
+   * Copy the contents of your existing local SSH key and paste it under **Public key**.  
+   * Click **Add SSH key**.
 5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
-   a. Make sure that **vpc-pubpriv-bastion-subnet** is selected as the subnet.
-   b. Uncheck the default security group and mark **vpc-pubpriv-bastion-sg**.
-   c. Click **Save**.
+   * Make sure that **vpc-pubpriv-bastion-subnet** is selected as the subnet.
+   * Uncheck the default security group and mark **vpc-pubpriv-bastion-sg**.
+   * Click **Save**.
 6. Click **Create virtual server instance**.
 7. Once the instance is powered on, click on **vpc-pubpriv-bastion-vsi** and **reserve** a floating IP.
 
@@ -216,6 +221,7 @@ With access to the bastion working, continue and create the security group for m
 	   </tbody>
 	</table>
 
+1. Create the security group.
 3. Navigate to **All Security Groups for VPC**, then select **vpc-pubpriv-bastion-sg**.
 4. Finally, edit the security group and add the following **outbound** rule.
 
@@ -248,9 +254,9 @@ To create a new subnet for the backend,
 
 1. Click **VPC and subnets** under **Network** on the left pane
 2. Click **Subnets**, then **New subnet**.  
-   a. Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.  
-   b. Select a location.  
-   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   * Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.  
+   * Select a location.  
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list (ACL).
 4. Switch the **Public gateway** to **Attached** to allow the virtual server instances in the subnet to have access to the public internet.
 5. Click **Create subnet** to provision it.
@@ -277,9 +283,9 @@ To create a virtual server instance in the newly created subnet:
 4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 5. For **SSH keys** pick the SSH key you created earlier for the bastion.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
-   a. Select **vpc-pubpriv-backend-subnet** as the subnet.  
-   b. Uncheck the default security group and check **vpc-pubpriv-backend-sg** as active.  
-   c. Click **Save**.  
+   * Select **vpc-pubpriv-backend-subnet** as the subnet.  
+   * Uncheck the default security group and check **vpc-pubpriv-backend-sg** as active.  
+   * Click **Save**.  
 7. Click **Create virtual server instance**.
 
 ## Create a frontend subnet, security group and VSI
@@ -293,9 +299,9 @@ To create a new subnet for the frontend,
 
 1. Click **VPC and subnets** under **Network** on the left pane
 2. Click **Subnets**, then **New subnet**.  
-   a. Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.  
-   b. Select a location.  
-   c. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   * Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.  
+   * Select a location.  
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
 4. Similar as for the backend, switch the **Public gateway** to **Attached**. 
 5. Click **Create subnet** to provision it.
@@ -317,10 +323,10 @@ To create a virtual server instance in the newly created subnet:
 4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
 5. For **SSH keys** pick the SSH key you created earlier for the bastion.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups   
-   a. Select **vpc-pubpriv-frontend-subnet** as the subnet.  
-   b. Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg**.  
-   c. Click **Save**.  
-   d. Click **Create virtual server instance**.  
+   * Select **vpc-pubpriv-frontend-subnet** as the subnet.  
+   * Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg**.  
+   * Click **Save**.  
+   * Click **Create virtual server instance**.  
 7. Wait until the status of the VSI changes to **Powered On**. Then, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
 
 ## Set up connectivity between frontend and backend
@@ -450,22 +456,15 @@ When done, disconnect from the server. Thereafter, follow the instructions in th
 
 
 ## Remove resources
-
 {: #remove-resources}
-To remove the resources associated with this tutorial you have two options. Either use the console and follow the steps below. Or clone the [GitHub repository vpc-tutorials](https://github.com/IBM-Cloud/vpc-tutorials) and execute:
 
-   ```sh
-    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
-    cd public-app-private-backend
-    ./vpc-pubpriv-cleanup.sh
-   ```
-   {:pre}
+1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
+2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
+3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
+4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
 
-If you want to use the console, note that you may need to refresh your browser to see updated status information after deleting a resource.  
-1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.  
-2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.  
-3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.  
-4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.  
+When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
+{:tip}
 
 ## Expand the tutorial 
 {: #expand-tutorial}

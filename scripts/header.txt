@@ -36,8 +36,12 @@
     content: "[swift only] ";
   }
   .tip {
-    background-color: #f4dba9;
-    padding: 10px;
+    background-color: #deedf7;
+    padding: 1rem;
+  }
+  .important {
+    background-color: #fbeaae;
+    padding: 1rem;
   }
   img {
     max-width: 100%;

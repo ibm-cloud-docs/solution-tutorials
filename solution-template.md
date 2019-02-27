@@ -15,9 +15,10 @@ lastupdated: "2018-06-05"
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:important: .important}
 
 # TUTORIAL TITLE
-{: #solution-template}
+{: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
 
 This tutorial...
 {:shortdesc}

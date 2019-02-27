@@ -1,8 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2018-11-14"
-
+lastupdated: "2019-02-27"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -19,46 +18,48 @@ lastupdated: "2018-11-14"
 # VPC with globally available deployment
 {: #vpc-globally-available}
 
-VPC to isolate workloads
-Load balancer to increase resiliency within a location and globally
+This tutorial walks you through on how you can isolate workloads by creating VPCs in different IBM Cloud regions with subnets and virtual server instances(VSIs) in multiple zones of a region and how you can increase resiliency within a region and globally by provisioning and configuring load balancers with backend pools, frontend listeners and health checks.
 
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* Deploy a 3-tier application to multiple locations and zones
-* Use a load balancer between zones
-* Use a global load balancer between locations
+* Understand the isolation of workloads through infrastructure objects available for virtual private clouds
+* Use a load balancer between zones in a region
+* Use a global load balancer between regions
 
 ## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+
+- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
+- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
+- [{{site.data.keyword.loadbalancer_full}}](https://{DomainName}/vpc/provision/loadBalancer)
+- IBM Cloud [Internet Services](https://{DomainName}/catalog/services/internet-services)
+- [{{site.data.keyword.cloudcerts_long_notm}}](https://{DomainName}/catalog/services/cloudcerts)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
 
-intro sentence
-
-<p style="text-align: center;">
-
   ![Architecture](images/solution41-vpc-globally-available/Architecture.png)
-</p>
 
-1. The user does this
-2. Then that
+1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
+2. The admin creates a load balancer with a backend pool of servers of subnets in different zones of region 1 and a frontend listener. Repeats the same in region 2.
+3. The admin provisions cloud internet services service with an associated custom domain and creates a global load balancer pointing to the load balancers created in two different VPCs.
+4. The admin enables HTTPS encryption by adding the domain SSL certificate to the Certificate manager service.
+5. The internet user makes an HTTP/HTTPS request and the global load balancer handles the request.
+6. The request is routed to the load balancers and fullfiled by the available server instance through the respective load balancer.
 
 ## Before you begin
 {: #prereqs}
 
-* [Install Git](https://git-scm.com/)
-* [IBM Cloud Developer Tools](https://{DomainName}/docs/cli/index.html#overview) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc/vpc-user-permissions.html).
+
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc/getting-started.html#prerequisites).
 
 ## Create VPC
 
