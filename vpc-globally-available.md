@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2019-02-27"
+lastupdated: "2019-02-28"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -22,7 +22,9 @@ lastupdated: "2019-02-27"
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-This tutorial walks you through on how you can isolate workloads by creating VPCs in different IBM Cloud regions with subnets and virtual server instances(VSIs) in multiple zones of a region and how you can increase resiliency within a region and globally by provisioning and configuring load balancers with backend pools, frontend listeners and health checks.
+This tutorial walks you through on how you can isolate workloads by provisioning VPCs in different IBM Cloud regions with subnets and virtual server instances(VSIs) created in multiple zones of a region and how you can increase resiliency within a region and globally by provisioning and configuring load balancers with back-end pools, front-end listeners and proper health checks. 
+
+For global load balancer, you will provision an IBM Cloud internet services (CIS) from the catalog and for managing the SSL certificate for all HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certification along with the private key will be imported.
 
 {:shortdesc}
 
@@ -56,7 +58,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 3. The admin provisions cloud internet services service with an associated custom domain and creates a global load balancer pointing to the load balancers created in two different VPCs.
 4. The admin enables HTTPS encryption by adding the domain SSL certificate to the Certificate manager service.
 5. The internet user makes an HTTP/HTTPS request and the global load balancer handles the request.
-6. The request is routed to the load balancers and fullfiled by the available server instance through the respective load balancer.
+6. The request is routed to the load balancers both global and local. The request is then fullfiled by the available server instance.
 
 ## Before you begin
 {: #prereqs}
@@ -65,9 +67,59 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc/getting-started.html#prerequisites).
 
-## Create VPC
+## Create VPCs, subnets and VSIs
+{: #create-infrastructure}
 
-??? If the terraform provider is available, it might be good to use it given the number of elements we need to create. The other option it to use scripting. This tutorial basically deploys the other vpc tutorial in multiple zones/locations.
+In this section, you will create your own VPC in Dallas region with subnets created in two different zones (Dallas 1 and 2) followed by provisioning of VSIs.
+
+To create your own {{site.data.keyword.vpc_short}} in region 1,
+
+1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
+2. Under **New virtual private cloud** section:  
+   * Enter **vpc-dallas** as name for your VPC.  
+   * Select a **Resource group**.  
+   * Optionally, add **Tags** to organize your resources.  
+3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
+4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked.
+5. Under **New subnet for VPC**:  
+   * As a unique name enter **vpc-dallas1-subnet**.  
+   * Select **Dallas** as your location and **Dallas 1** as your zone .
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+6. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+7. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public internet. You can also attach the public gateway after you create the subnet.
+8. Click **Create virtual private cloud** to provision the instance.
+
+To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+
+### Create subnet in zone 2
+
+1. Click on **New Subnet**, enter **vpc-dallas2-subnet** as a unique name for your subnet and select **vpc-dallas** as the VPC.
+2. Select **Dallas** as your location and **Dallas 2** as your zone.
+3. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.64.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+4. Select **Use VPC default** for your subnet access control list (ACL). 
+5. Switch the public gateway to **Attached** and click **Create subnet** to provision a new subnet.
+
+### Provision VSIs
+Once the status of the subnets change to **Available**, 
+
+1. Click on the vpc-dallas1-subnet subnet and click **Attached instances**, then **New instance**.
+2. Enter a unique name and pick **vpc-dallas1-vsi**. Then, select the VPC your created earlier and the **Location** as before.
+3. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
+4. For **SSH keys** pick the SSH key you created initially.
+5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
+   * Select **vpc-dallas1-subnet** as the subnet.   
+   * Click **Save**.  
+6. Click **Create virtual server instance**.
+7. REPEAT the steps 1-6 to provision a VSI in dallas 2.
+
+Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **Frankfurt** region by replacing **dallas** in the names.
+
+## Install the web server on the VSI
+
+**TODO**: Point to the bastion server tutorial once drafted.
+
+1. 
+
 
 ## Remove resources
 {: #removeresources}
