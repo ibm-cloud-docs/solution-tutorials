@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-11-14"
+  years: 2017, 2018, 2019
+lastupdated: "2019-02-28"
 
 ---
 
@@ -169,12 +169,12 @@ At this stage, the GLB is configured but the Cloud Foundry applications are not 
 
 In this step, you will map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} location where your application is running.
 
-1. In the {{site.data.keyword.Bluemix_notm}} catalog, switch to your account name from the menu bar in the [console](https://{DomainName}/dashboard/apps).
+1. From the menu bar, click on **Manage** and then **Account**: [Account](https://{DomainName}/account).
 2. On the account page, navigate to application **Cloud Foundry Orgs**, and select **Domains** from the Actions column.
 3. Click **Add a domain** and enter your custom domain name acquired from the registrar.
 4. Select the right location and click **Save**.
 5. Similarly, add the custom domain name to London.
-6. Return to the {{site.data.keyword.Bluemix_notm}} [dashboard](https://{DomainName}/dashboard/apps) and click on the application in Dallas, click **Route** > **Edit Routes**, and click **Add Route**.
+6. Return to the {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), navigate to **Cloud Foundry Apps** and click on the application in Dallas, click **Route** > **Edit Routes**, and click **Add Route**.
    ![Add a route](images/solution1/ApplicationRoutes.png)
 7. Enter the GLB hostname you configured earlier in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
 8. Similarly, configure the domain and routes for the application in London.
@@ -183,7 +183,7 @@ At this point, you can visit your application with the URL `<glb_name>.<your_dom
 
 Although this works at this moment, as we have configured continuous delivery in the previous steps, the configuration can be overwritten when another build is triggered. To make these changes persistent, go back to the toolchains and modify the *manifest.yml* file:
 
-1. In the {{site.data.keyword.Bluemix_notm}} [console](https://{DomainName}/dashboard/apps), navigate to Application **Overview** and scroll to find **View toolchain**.
+1. In the {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), navigate to **Cloud Foundry Apps** and click on the application in Dallas, navigate to Application **Overview** and scroll to find **View toolchain**.
 2. Select the Git tile under Code.
 3. Select *manifest.yml*.
 4. Click **Edit** and add custom routes. Replace the original domain and host configurations with `Routes` only.

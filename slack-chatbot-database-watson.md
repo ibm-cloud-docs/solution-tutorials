@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-12-11"
+  years: 2018, 2019
+lastupdated: "2019-02-28"
 
 ---
 
@@ -93,7 +93,7 @@ In this section, you are going to set up the needed services and prepare the env
 
 ## Load the skill / workspace
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
-1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry to open the service details.
+1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry to open the service details.
 2. Remember the **API Key** and **Url** for the integration with Slack later on.
 3. Click on **Launch Tool** to get to the {{site.data.keyword.conversationshort}} Tool.
 4. Switch to **Skills**, then click **Create new** and then on **Import skill**.

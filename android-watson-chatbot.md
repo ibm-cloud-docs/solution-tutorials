@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-12-10"
+  years: 2018, 2019
+lastupdated: "2019-02-28"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -244,7 +244,7 @@ The repository contains Android application code with required gradle dependenci
 ## Remove resources
 {:removeresources}
 
-1. Navigate to [Dashboard,](https://{DomainName}/dashboard/)
+1. Navigate to [Resource List,](https://{DomainName}/resources/)
 1. Delete the services you have created:
    - {{site.data.keyword.conversationfull}}
    - {{site.data.keyword.speechtotextfull}}

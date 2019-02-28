@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-11-13"
+  years: 2018, 2019
+lastupdated: "2019-02-28"
 
 ---
 
@@ -95,7 +95,7 @@ In this section, you set up the needed services and prepare the environment. All
 ## App ID and GitHub configuration (browser)
 The following steps are all performed using your Internet browser. First, you configure {{site.data.keyword.appid_short}} to use the Cloud Directory and to work with the Python app. Thereafter, you create a GitHub access token. It is needed for the deployed function to retrieve the traffic data.
 
-1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
+1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
 2. In the service dashboard, click on **Manage** under **Identity Providers** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **On**, all other providers to **Off**.
 3. At the bottom of that page is the list of redirect URLs. Enter the **url** of your application + /redirect_uri. For example `https://github-traffic-stats-random-word.mybluemix.net/redirect_uri`.
 

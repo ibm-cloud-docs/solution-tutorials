@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-10-02"
+  years: 2017, 2018, 2019
+lastupdated: "2019-02-28"
 
 ---
 
@@ -153,7 +153,7 @@ You can also manually start the Loopback application by issuing the `npm start` 
 
 To prepare for the next steps, you will create an **{{site.data.keyword.apiconnect_short}}** service on {{site.data.keyword.Bluemix_notm}}. {{site.data.keyword.apiconnect_short}} acts as the gateway to your API and also provides management, security and rate limits.
 
-1. Launch {{site.data.keyword.Bluemix_notm}} [Dashboard](https://{DomainName}/dashboard).
+1. Launch {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources).
 2. Navigate to **Catalog > Integration > {{site.data.keyword.apiconnect_short}}** and click the **Create** button.
 
 ## Publish an API to {{site.data.keyword.Bluemix_notm}}
@@ -180,13 +180,13 @@ The application can also be manually deployed using the `ibmcloud cf push` comma
     An application contains the Loopback models, datasources and code that relate to your API. A product allows you to declare how an API is made available to developers.
     {:tip}
 
-The API application is now published to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under {{site.data.keyword.Bluemix_notm}} [Dashboard](https://{DomainName}/dashboard), but direct access using the URL is not possible as the application is protected. The next section will show how managed APIs can be accessed.
+The API application is now published to {{site.data.keyword.Bluemix_notm}} as a Cloud Foundry application. You can see it by looking at Cloud Foundry applications under {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), but direct access using the URL is not possible as the application is protected. The next section will show how managed APIs can be accessed.
 
 ## API Gateway
 
 Until now, you have been designing and testing your API locally. In this section, you will use {{site.data.keyword.apiconnect_short}} to test your deployed API on {{site.data.keyword.Bluemix_notm}}.
 
-1. Launch the {{site.data.keyword.Bluemix_notm}} [Dashboard](https://{DomainName}/dashboard).
+1. Launch the {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources).
 2. Find and select your **{{site.data.keyword.apiconnect_short}}** service under **Cloud Foundry Services**.
 3. Click on the **Explore** menu and then click the **Sandbox** link.
 4. Click on the **entry.create** operation.

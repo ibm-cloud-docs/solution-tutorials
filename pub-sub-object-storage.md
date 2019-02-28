@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-12-11"
+  years: 2018, 2019
+lastupdated: "2019-02-28"
 
 ---
 
@@ -161,7 +161,7 @@ In this tutorial, you learned how you can use Kafka based {{site.data.keyword.me
 ## Remove resources
 {:removeresources}
 
-Navigate to [Dashboard](https://{DomainName}/dashboard/) and
+Navigate to [Resource List](https://{DomainName}/resources/) and
 1. delete Kubernetes cluster `mycluster`
 2. delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
 3. delete {{site.data.keyword.messagehub}} `mymessagehub`
