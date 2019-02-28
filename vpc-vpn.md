@@ -11,9 +11,13 @@ lastupdated: "2019-02-28"
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:important: .important}
 
 # VPC, VPN and service consumption
 {: #vpc-vpn}
+
+IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
+{: important}
 
 Possible titles:
 * Create app with private services on VPC and connect to it through VPN

@@ -93,7 +93,7 @@ In addition, containers allow you to share the host OS. This reduces duplication
 
 [Kubernetes](http://kubernetes.io/) is a container orchestrator to manage the lifecycle of containerized apps in a cluster of worker nodes. Your apps might need many other resources to run, such as volumes, networks, and secrets which will help you connect to other cloud services, and secure keys. Kubernetes helps you to add these resources to your app. The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes attempts to conform to, and then maintains the described state.
 
-This [2-hour self-paced course](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) can help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
+This [self-paced workshop](https://github.com/IBM/kube101/blob/master/workshop/README.md) can help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/) documentation page to learn more about the concepts of Kubernetes.
 
 ### What IBM's doing for you
 
