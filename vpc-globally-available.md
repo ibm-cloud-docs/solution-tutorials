@@ -14,9 +14,13 @@ lastupdated: "2019-02-27"
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:important: .important}
 
 # VPC with globally available deployment
 {: #vpc-globally-available}
+
+IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
+{: important}
 
 This tutorial walks you through on how you can isolate workloads by creating VPCs in different IBM Cloud regions with subnets and virtual server instances(VSIs) in multiple zones of a region and how you can increase resiliency within a region and globally by provisioning and configuring load balancers with backend pools, frontend listeners and health checks.
 
