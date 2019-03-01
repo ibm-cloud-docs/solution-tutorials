@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-02-28"
+lastupdated: "2019-03-01"
 
 ---
 
@@ -32,6 +32,15 @@ It will demontrate three connectivity options:
 (HL: ^^ Do we need all three, does it add anything to the solution?)
 
 
+Possible flow / toc:
+- Make sure that CLI and IaaS plugin are installed.
+- Clone GH repo.
+- Deploy the basic VPC with bastion and app VSI, related SGs and subnets by script.
+- (Either by CLI or UI): Obtain credentials for COS (and provision COS if not present). Copy into credentials file.
+- Deploy app to VSI.
+- Now, we pick it up in the UI. Walk through steps for setting up VPN.
+- Test app in browser if possible. Verify VPN-based access using curl.
+
 
 {:shortdesc}
 
@@ -39,8 +48,8 @@ It will demontrate three connectivity options:
 ## Objectives
 {: #objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+* Access a virtual private cloud environment from an on-premises data center or (virtual) private cloud
+* Securely reach cloud resources using private service endpoints.
 
 ## Services used
 {: #services}
@@ -49,26 +58,27 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
 - [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
 - [{{site.data.keyword.vpn_full}}](https://{DomainName}/vpc/provision/vpngateway)
+- [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
 
-intro sentence
+The following diagram shows the virtual private cloud consisting of a bastion and an app server. The application utilizes a storage service. SOME MORE DESCRIPTION
 
 <p style="text-align: center;">
-
   ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 </p>
 
 1. The user does this
 2. Then that
 
+
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview). 
 
 ## Create services
 {: #setup}

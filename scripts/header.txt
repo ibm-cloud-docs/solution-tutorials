@@ -56,6 +56,7 @@
 <div data-hd-programlang="java">Text in this color only show for Java</div>
 <div data-hd-programlang="swift">Text in this color only show for Swift</div>
 <a href="index.html">HOME</a> -
-<a href="conref.html">CONREF TABLE</a>
+<a href="conref.html">CONREF TABLE</a> -
+<a href="solution-table.html">SOLUTIONS TABLE</a>
 
 <article aria-labelledby="{{ document.title.id }}" role="article">
