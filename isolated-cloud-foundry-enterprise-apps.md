@@ -230,7 +230,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
    ```
    {: codeblock}
 
-   If your container registry is different than `registry.ng.bluemix.net`, edit the `./cfee-service-broker-kubernetes/deployment.yml` file. Update the `image` attribute to reflect your container registry URL.
+   Edit `./cfee-service-broker-kubernetes/deployment.yml` file. Update the `image` attribute to reflect your container registry URL.
 3. Deploy the container image to CFEE's Kubernetes cluster. Your CFEE's cluster exists in the `default` resource group, which should be targeted if not already. Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
    ```sh
    ibmcloud target -g default
