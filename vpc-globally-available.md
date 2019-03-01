@@ -160,6 +160,24 @@ Once you successfully SSH into the server provisioned in subnet of Dallas 1 zone
 
 **REPEAT** the steps 1-6 to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
+## Using load balancers to distribute traffic
+In this section, you will create two load balancers. One in each region to distribute traffic among multiple server instances under respective subnets within different zones.
+
+1. Navigate to **Load balancers** and click **New load balancer**.
+2. Select **vpc-dallas** and the resource group the VPC was created followed by the selection of **Dallas** region.
+3. Create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the paramaters with the values below and lick **create**.
+	- **Name**:  Dallas-pool
+	- **Protocol**: HTTP
+	- **Method**: Round robin
+	- **Session stickiness**: None
+	- **Health check path**: /
+	- **Health protocol**: HTTP
+	- **Interval(sec)**: 15
+	- **Timeout(sec)**: 2
+	- **Max retries**: 2
+4. Click **Attach** to add server instances to the Dallas-pool
+   - Select **vpc-dallas1-subnet**
+
 ## Remove resources
 {: #removeresources}
 
