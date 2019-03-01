@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-02-28"
+lastupdated: "2019-03-01"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -253,9 +253,9 @@ The repository contains Android application code with required gradle dependenci
 ## Related content
 {:related}
 
-- [Creating entities, Synonyms, System entities](https://{DomainName}/docs/services/assistant/entities.html#creating-entities)
-- [Context Variables](https://{DomainName}/docs/services/assistant/dialog-runtime.html#context)
-- [Building a complex dialog](https://{DomainName}/docs/services/assistant/tutorial.html#tutorial)
-- [Gathering information with slots](https://{DomainName}/docs/services/assistant/dialog-slots.html#dialog-slots)
-- [Deployment options](https://{DomainName}/docs/services/assistant/add-integrations.html#add-integrations)
-- [Improve your skill](https://{DomainName}/docs/services/assistant/logs_intro.html#logs_intro)
+- [Creating entities, Synonyms, System entities](https://{DomainName}/docs/services/assistant?topic=assistant-entities#creating-entities)
+- [Context Variables](https://{DomainName}/docs/services/assistant?topic=assistant-dialog-runtime#dialog-runtime-context-variables)
+- [Building a complex dialog](https://{DomainName}/docs/services/assistant?topic=assistant-tutorial#tutorial)
+- [Gathering information with slots](https://{DomainName}/docs/services/assistant?topic=assistant-dialog-slots#dialog-slots)
+- [Deployment options](https://{DomainName}/docs/services/assistant?topic=assistant-deploy-integration-add#deploy-integration-add)
+- [Improve your skill](https://{DomainName}/docs/services/assistant?topic=assistant-logs-intro#logs-intro)

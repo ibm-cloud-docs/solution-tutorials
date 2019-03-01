@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-28"
+lastupdated: "2019-03-01"
 
 ---
 
@@ -47,7 +47,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
   ![](images/solution12/Architecture.png)
 </p>
 
-In this tutorial, you are going to generate, access and analyze application logs. The [documentation for {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/services/CloudLogAnalysis/index.html) already includes a [tutorial on how to analyze logs for an app deployed in a Kubernetes cluster](https://{DomainName}/docs/services/CloudLogAnalysis/containers/tutorials/kibana_tutorial_1.html). Therefore, in this guide, the focus is on a Cloud Foundry application. Moreover, this tutorial covers how to optionally add [{{site.data.keyword.prf_hubshort}}](https://{DomainName}/docs/services/AvailabilityMonitoring/avmon_about.html#avmon_about) to the application environment.
+In this tutorial, you are going to generate, access and analyze application logs. The [documentation for {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/services/CloudLogAnalysis?topic=cloudloganalysis-getting-started-with-cla#getting-started-with-cla) already includes a [tutorial on how to analyze logs for an app deployed in a Kubernetes cluster](https://{DomainName}/docs/services/CloudLogAnalysis?topic=cloudloganalysis-analyzing_logs_Kibana#analyzing_logs_Kibana). Therefore, in this guide, the focus is on a Cloud Foundry application. Moreover, this tutorial covers how to optionally add [{{site.data.keyword.prf_hubshort}}](https://{DomainName}/docs/services/AvailabilityMonitoring?topic=availability-monitoring-avmon_about#avmon_about) to the application environment.
 
 ## Provision {{site.data.keyword.loganalysisshort}}
 Applications running in the {{site.data.keyword.Bluemix_notm}} generate diagnostic output, i.e. logs, that can be accessed without any additional service. By using the {{site.data.keyword.loganalysisshort}} service, it is possible to aggregate logs from various sources and retain them as long as needed. This allows to analyze the "big picture" when required and to troubleshoot more complex situations.
@@ -90,7 +90,7 @@ ibmcloud cf logs your-app-name --recent
 ```
 2. The second method is to use the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources). Navigate to Cloud Foundry Apps and then your app, click on its entry to open the details and then go to **Logs**. Current logs are shown with the most recent at the bottom. On the upper right you can search for an entry or filter by log type. Selecting **Application (APP)**
 ![](images/solution12/Dashboard_LogsFilter.png)
-3. The {{site.data.keyword.loganalysisshort}} service offers access to the logs. In contrast to the first two, more historial logs from all the apps in a space are available. The logs can be accessed, searched and visualized using a browser-based UI (Kibana dashboard). Using the {{site.data.keyword.Bluemix_notm}} dashboard, navigate to **App Name > Logs > View in Kibana** view. [For details see this section in the {{site.data.keyword.loganalysisshort}} documentation](https://{DomainName}/docs/services/CloudLogAnalysis/kibana/analyzing_logs_Kibana.html#launch_Kibana).   
+3. The {{site.data.keyword.loganalysisshort}} service offers access to the logs. In contrast to the first two, more historial logs from all the apps in a space are available. The logs can be accessed, searched and visualized using a browser-based UI (Kibana dashboard). Using the {{site.data.keyword.Bluemix_notm}} dashboard, navigate to **App Name > Logs > View in Kibana** view. [For details see this section in the {{site.data.keyword.loganalysisshort}} documentation](https://{DomainName}/docs/services/CloudLogAnalysis/kibana?topic=cloudloganalysis-analyzing_logs_Kibana#launch_Kibana).   
 
 ## Search and analyze logs
 The {{site.data.keyword.loganalysisshort}} / Kibana dashboard, by default shows all available log entries from the past 15 minutes. Most recent entries are shown on the top and automatic refresh is turned off by default. The visible bar chart represents the count of messages per 30 seconds over those 15 minutes. In this section, you will modify what and how much is displayed and save this as **search query** for future use.
@@ -101,7 +101,7 @@ The {{site.data.keyword.loganalysisshort}} / Kibana dashboard, by default shows 
 ![](images/solution12/app_name_str.png)
 3. Adjust the displayed interval by navigating to the upper right and clicking on **Last 15 minutes**. Adjust the value to **Last 24 hours**.
 4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.  
-5. Below the configuration is the search field. Here you can [enter and define search queries](https://{DomainName}/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
+5. Below the configuration is the search field. Here you can [enter and define search queries](https://{DomainName}/docs/services/CloudLogAnalysis/kibana?topic=cloudloganalysis-define_search#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:   
 ```
 message:(CRITICAL|INFO|ERROR|WARNING|DEBUG) && message_type_str:ERR
 ```   
@@ -142,7 +142,7 @@ Once you have added visualizations, they can be used to compose a dashboard. A d
 ## Add {{site.data.keyword.prf_hubshort}}
 In the following, you are going to add {{site.data.keyword.prf_hubshort}} to the application. The service regularly checks the availability and response time of the app. It can be configured to raise alerts of different severity when thresholds are passed.
 
-You can also run synthetic tests to measure performance of webpage loads, API calls and simulated user flows through scripted browser interaction using Selenium. See [**Creating a REST API test**](https://{DomainName}/docs/services/AvailabilityMonitoring/avmon_create_api_test.html#avmon_rest_api) and how to **create a test script** from either an [uploaded file](https://{DomainName}/docs/services/AvailabilityMonitoring/avmon_create_script_test.html#avmon_upload_script_test) or from a [GitHub repository](https://{DomainName}/docs/services/AvailabilityMonitoring/avmon_create_script_test_github.html#avmon_git_script_test) in the [{{site.data.keyword.prf_hubshort}} docs](https://{DomainName}/docs/services/AvailabilityMonitoring/index.html#avmon_gettingstarted).
+You can also run synthetic tests to measure performance of webpage loads, API calls and simulated user flows through scripted browser interaction using Selenium. See [**Creating a REST API test**](https://{DomainName}/docs/services/AvailabilityMonitoring?topic=availability-monitoring-avmon_rest_api#avmon_rest_api) and how to **create a test script** from either an [uploaded file](https://{DomainName}/docs/services/AvailabilityMonitoring?topic=availability-monitoring-avmon_upload_script_test#avmon_upload_script_test) or from a [GitHub repository](https://{DomainName}/docs/services/AvailabilityMonitoring?topic=availability-monitoring-avmon_git_script_test#avmon_git_script_test) in the [{{site.data.keyword.prf_hubshort}} docs](https://{DomainName}/docs/services/AvailabilityMonitoring?topic=availability-monitoring-avmon_gettingstarted#avmon_gettingstarted).
 {:tip}   
 
 1. Add the {{site.data.keyword.prf_hubshort}} by accessing the dashboard in the [{{site.data.keyword.Bluemix_notm}} console](https://{DomainName}) and then either provision it as a new service in your organization and space, or by clicking on the application to open the details page and then clicking on **Monitoring**. Use the approach via the application details. The following shows that no tests have been run, but one default test is present.   
@@ -154,21 +154,21 @@ You can also run synthetic tests to measure performance of webpage loads, API ca
 
 ## Expand the tutorial
 Do you want to learn more? Here are some ideas of what you can do next:
-* Push the same app again with a different name or use the [app deployed in a Kubernetes cluster](https://{DomainName}/docs/services/CloudLogAnalysis/containers/tutorials/kibana_tutorial_1.html). Then, the {{site.data.keyword.loganalysisshort}} dashboard (Kibana) will show the combined logs of all apps.
+* Push the same app again with a different name or use the [app deployed in a Kubernetes cluster](https://{DomainName}/docs/services/CloudLogAnalysis?topic=cloudloganalysis-analyzing_logs_Kibana#analyzing_logs_Kibana). Then, the {{site.data.keyword.loganalysisshort}} dashboard (Kibana) will show the combined logs of all apps.
 * Filter by a single app.
 * Add a saved search and metric only for critical and error events.
 * Build a dashboard for all your apps.
 * Add more availability tests.
-* [Configure alert notifications](https://{DomainName}/docs/services/AvailabilityMonitoring/avmon_notifications.html#avmon_notifications).
+* [Configure alert notifications](https://{DomainName}/docs/services/AvailabilityMonitoring?topic=availability-monitoring-avmon_notifications#avmon_notifications).
 
 
 ## Related content
 {:related}
 
-* [Documentation for {{site.data.keyword.loganalysislong_notm}}](https://{DomainName}/docs/services/CloudLogAnalysis/index.html)
-* [Documentation for {{site.data.keyword.prf_hubshort}}](https://{DomainName}/docs/services/AvailabilityMonitoring/index.html#avmon_gettingstarted)
+* [Documentation for {{site.data.keyword.loganalysislong_notm}}](https://{DomainName}/docs/services/CloudLogAnalysis?topic=cloudloganalysis-getting-started-with-cla#getting-started-with-cla)
+* [Documentation for {{site.data.keyword.prf_hubshort}}](https://{DomainName}/docs/services/AvailabilityMonitoring?topic=availability-monitoring-avmon_gettingstarted#avmon_gettingstarted)
 * [Logging facility for Python](https://docs.python.org/3/library/logging.html)
-* [IBM Cloud Log Collection API](https://{DomainName}/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction)
+* [IBM Cloud Log Collection API](https://{DomainName}/apidocs/log-analysis-api)
 * Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html)
 * Kibana User Guide: [Visualizing Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-visualizing.html)
 * Kibana User Guide: [Putting it all Together with Dashboards](https://www.elastic.co/guide/en/kibana/5.1/tutorial-dashboard.html)

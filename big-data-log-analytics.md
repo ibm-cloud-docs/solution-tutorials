@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-02-28"
+lastupdated: "2019-03-01"
 ---
 
 {:shortdesc: .shortdesc}
@@ -64,7 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 * [Install Git](https://git-scm.com/)
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli)
 * [Install Node.js](https://nodejs.org)
 * [Download Kafka 0.10.2.X client](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz)
 
@@ -77,7 +77,7 @@ In this section, you will create the services required to perform analysis of lo
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli).
     ```sh
     ibmcloud login
     ```
@@ -387,7 +387,7 @@ FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAM
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
 
 * Use additional targets in Streams Designer to store data in [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) or execute code in [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
-* Follow the [Build a data lake using Object Storage](https://{DomainName}/docs/tutorials/smart-data-lake.html#build-a-data-lake-using-object-storage) tutorial to add a dashboard to log data
+* Follow the [Build a data lake using Object Storage](https://{DomainName}/docs/tutorials?topic=solution-tutorials-smart-data-lake#build-a-data-lake-using-object-storage) tutorial to add a dashboard to log data
 * Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](https://{DomainName}/catalog/services/app-connect).
 
 ## Remove services
