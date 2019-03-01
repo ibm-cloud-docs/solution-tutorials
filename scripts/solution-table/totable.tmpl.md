@@ -8,7 +8,7 @@ lastupdated: "2019-03-01"
 # All Solutions
 {: solutions}
 
-Use this table in issues when you need to work on a list of files
+Use this table in issues when you need to work on all solutions listed in `input.json`.
 
 ```
 | File | One column | Another column |
