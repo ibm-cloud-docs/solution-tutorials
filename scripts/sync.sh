@@ -18,6 +18,7 @@ tar cf - \
   --exclude=.gitignore \
   --exclude=solution-template.md \
   --exclude=autoscale-virtual-server.md \
+  --exclude=extended-cloud-security.md \
   --exclude="vpc-globally-available.md" \
   --exclude="vpc-vpn.md" \
   --exclude="images/solution41-*" \

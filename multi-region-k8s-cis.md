@@ -124,7 +124,7 @@ This step builds the application into a Docker image. You can skip this step if 
 Tag the image with the target registry:
 
    ```bash
-   docker tag multi-region-hello-world:1 registry.ng.bluemix.net/<your_us-south_namespace>/hello-world:1
+   docker tag multi-region-hello-world:1 us.icr.io/<your_us-south_namespace>/hello-world:1
    ```
    {: pre}
 
@@ -137,7 +137,7 @@ Tag the image with the target registry:
    {: pre}
 2. Push the image.
    ```bash
-   docker push registry.ng.bluemix.net/<your_us-south_namespace>/hello-world:1
+   docker push us.icr.io/<your_us-south_namespace>/hello-world:1
    ```
    {: pre}
 
@@ -153,7 +153,7 @@ At that stage, the cluster should be ready. You can check its status in the [{{s
 1. Copy and paste the output to set the KUBECONFIG environment variable. The variable is used by `kubectl`.
 1. Run the application in the cluster with two replicas:
    ```bash
-   kubectl run hello-world-deployment --image=registry.ng.bluemix.net/<your_US-South_namespace>/hello-world:1 --replicas=2
+   kubectl run hello-world-deployment --image=us.icr.io/<your_US-South_namespace>/hello-world:1 --replicas=2
    ```
    {: pre}
    Example output: `deployment "hello-world-deployment" created`.
@@ -185,7 +185,7 @@ This tutorial uses the Ingress subdomain to configure the Global Load Balancer. 
 Repeat the previous steps in London by replacing:
 * the location name **Dallas** with **London**;
 * the location alias **us-south** with **eu-gb**;
-* the registry *registry.ng.bluemix.net* with **registry.eu-gb.bluemix.net**;
+* the registry *us.icr.io* with **uk.icr.io**;
 * and the cluster name *my-us-cluster* with **my-uk-cluster**.
 
 ## Configure multi-location load-balancing

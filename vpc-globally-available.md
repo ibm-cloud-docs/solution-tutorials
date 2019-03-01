@@ -115,11 +115,11 @@ Once the status of the subnets change to **Available**,
 
 Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **Frankfurt** region by replacing **dallas** with **frankfurt** in the names.
 
-## Setup a web server on the VSI
+## Install and configure a web server on the VSI
 
 **TODO**: Point to the bastion server tutorial once drafted.
 
-Once you successfully SSH into the server, 
+Once you successfully SSH into the server provisioned in subnet of Dallas 1 zone, 
 
 1. At the prompt, run the below commands to install Nginx as your web server
 
@@ -158,6 +158,7 @@ Once you successfully SSH into the server,
    ```
     {:pre}
 
+**REPEAT** the steps 1-6 to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
 ## Remove resources
 {: #removeresources}

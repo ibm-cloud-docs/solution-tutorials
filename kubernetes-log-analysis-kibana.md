@@ -219,7 +219,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
     export MYPROJECT=<PROJECTNAME>
     ```
     {: pre}
-3. Identify your **Container Registry** (e.g. registry.ng.bluemix.net) by running `ibmcloud cr info`
+3. Identify your **Container Registry** (e.g. us.icr.io) by running `ibmcloud cr info`
 4. Set MYREGISTRY env var to your registry.
    ```sh
    export MYREGISTRY=<REGISTRY>
