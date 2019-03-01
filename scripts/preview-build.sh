@@ -48,6 +48,9 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.
 # generate a md helping with the conref
 (cd scripts/conref && npm install && node tomd.js ../../builddocs/input/conref.md)
 
+# generate a list of all solutions, suitable to use in github issues
+(cd scripts/solution-table && npm install && node totable.js ../../builddocs/input/solution-table.md)
+
 # generate the new files
 npm install -g marked-it-cli
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt --conref-file=builddocs/cloudoeconrefs.yml
