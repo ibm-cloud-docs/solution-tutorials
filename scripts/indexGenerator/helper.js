@@ -15,13 +15,3 @@ exports.htmlTomd = function(filename) {
 exports.isExternalSolution = function(solution) {
   return solution.url.indexOf('/') >= 0;
 };
-
-const Handlebars = require('handlebars');
-
-Handlebars.registerHelper('htmlTomd', function(solution, options) {
-  if (isExternalSolution(solution)) {
-    return `[${solution.name}](${solution.url})]`;
-  } else {
-    return helper.htmlTomd(solution.url);
-  }
-});
