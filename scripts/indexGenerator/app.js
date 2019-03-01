@@ -55,16 +55,24 @@ const featured = solutions
   .filter((solution) => solution.featuredPosition)
   .sort((sol1, sol2) => sol1.featuredPosition - sol2.featuredPosition);
 
-// inject last updated into the JSON by extract "lastupdated" from the .md
+
+// update the .md lastupdated dates
+// inject last updated into the JSON
 solutions.filter((solution) => !isExternalSolution(solution)).forEach((solution) => {
-  const solutionContent = fs.readFileSync(`../../${htmlTomd(solution.url)}`).toString();
+  const pathToSolution = `../../${htmlTomd(solution.url)}`;
+
+  // get file last modified
+  const modifiedTime = fs.statSync(pathToSolution).mtime;
+  const lastUpdated = moment(modifiedTime).format('YYYY-MM-DD');
+
+  const solutionContent = fs.readFileSync(pathToSolution).toString();
   const dateStartPosition = solutionContent.indexOf('lastupdated:');
   if (dateStartPosition >= 0) {
     const dateEndPosition = solutionContent.indexOf('\n', dateStartPosition);
-    const lastUpdated = solutionContent
-      .substring(dateStartPosition + 'lastupdated:'.length, dateEndPosition)
-      .trim()
-      .replace(/"/g, '');
+    newSolutionContent = solutionContent.substring(0, dateStartPosition) +
+      `lastupdated: "${lastUpdated}"\n` +
+      solutionContent.substring(dateEndPosition+1);
+    fs.writeFileSync(pathToSolution, newSolutionContent);
     solution.lastUpdated = lastUpdated;
   }
 });
