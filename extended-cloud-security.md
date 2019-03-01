@@ -217,7 +217,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 1. Build the Docker image in {{site.data.keyword.registryshort_notm}}:
    ```sh
-   ibmcloud cr build -t registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest .
+   ibmcloud cr build -t <location>.icr.io/<namespace>/secure-file-storage:latest .
    ```
    {: codeblock}
 
@@ -241,7 +241,7 @@ All services have been configured. In this section you will deploy the tutorial 
 | Variable | Value |
 | -------- | ----- |
 | `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml |
-| `$REGISTRY_URL` | *registry.ng.bluemix.net* |
+| `$REGISTRY_URL` | *us.icr.io* |
 | `$REGISTRY_NAMESPACE` | *a-namespace* |
 | `$IMAGE_NAME` | *secure-file-storage* |
 | `$TARGET_NAMESPACE` | *default* |
@@ -319,7 +319,7 @@ To remove the resource, delete the deployed container and then the provisioned s
    {: codeblock}
 3. Remove the Docker image from the container registry:
    ```sh
-   ibmcloud cr image-rm registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest
+   ibmcloud cr image-rm <location>.icr.io/<namespace>/secure-file-storage:latest
    ```
    {: codeblock}
 4. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
