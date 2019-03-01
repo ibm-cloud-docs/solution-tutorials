@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2019-02-28"
+lastupdated: "2019-03-01"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -108,17 +108,55 @@ Once the status of the subnets change to **Available**,
 4. For **SSH keys** pick the SSH key you created initially.
 5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
    * Select **vpc-dallas1-subnet** as the subnet.   
-   * Click **Save**.  
-6. Click **Create virtual server instance**.
+   * Click **Save**.
+   * Click **Create virtual server instance**.
+6.  Wait until the status of the VSI changes to **Powered On**. Then, select the VSI **vpc-dallas1-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your VSI. Save the associated IP Address to a clipboard for future reference.
 7. REPEAT the steps 1-6 to provision a VSI in dallas 2.
 
-Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **Frankfurt** region by replacing **dallas** in the names.
+Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **Frankfurt** region by replacing **dallas** with **frankfurt** in the names.
 
-## Install the web server on the VSI
+## Setup a web server on the VSI
 
 **TODO**: Point to the bastion server tutorial once drafted.
 
-1. 
+Once you successfully SSH into the server, 
+
+1. At the prompt, run the below commands to install Nginx as your web server
+
+	```
+	sudo apt-get update
+	sudo apt-get install nginx
+	```
+	{:pre}
+2. Check the status of the Nginx service with the following command:
+    
+    ```
+    sudo systemctl status nginx
+    ```
+    {:pre}
+    
+    The output should show you that the Nginx service is **active** and running.
+3. You’ll need to open **HTTP (80)** and **HTTPS (443)** ports to receive traffic(requests). You can do that by adjusting the Firewall via [UFW](https://help.ubuntu.com/community/UFW) - `sudo ufw enable` and by enabling the ‘Nginx Full’ profile which includes rules for both ports:
+
+    ```
+    sudo ufw allow 'Nginx Full'
+    ```
+    {:pre}
+4. To verify that Nginx works as expected open `http://FLOATING_IP` in your browser of choice, and you should see the default Nginx welcome page.
+5. To update the html page with the region and zone details, run the below command
+
+ 	```
+ 	nano /var/www/html/index.nginx-debian.html
+ 	```
+ 	{:pre}
+ 	
+ 	Append the region and zone (server running in **Dallas 1**) to the `h1` tag quoting `Welcome to nginx!` and save the changes.
+6. Restart the nginx server to reflect the changes
+
+   ```
+	sudo systemctl restart nginx
+   ```
+    {:pre}
 
 
 ## Remove resources
