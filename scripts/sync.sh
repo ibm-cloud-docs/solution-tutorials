@@ -20,6 +20,8 @@ tar cf - \
   --exclude=autoscale-virtual-server.md \
   --exclude="vpc-globally-available.md" \
   --exclude="vpc-vpn.md" \
+  --exclude="dprosper-sample.md" \
+  --exclude="images/dprosper-*" \
   --exclude="images/solution41-*" \
   --exclude="images/solution46-*" \
   --exclude=README.md \
