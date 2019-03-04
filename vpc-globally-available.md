@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018
-lastupdated: "2019-03-01"
+lastupdated: "2019-03-04"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -66,6 +66,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc/vpc-user-permissions.html).
 
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc/getting-started.html#prerequisites).
+
+- Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com/).
 
 ## Create VPCs, subnets and VSIs
 {: #create-infrastructure}
@@ -160,12 +162,14 @@ Once you successfully SSH into the server provisioned in subnet of Dallas 1 zone
 
 **REPEAT** the steps 1-6 to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
+
 ## Using load balancers to distribute traffic
 In this section, you will create two load balancers. One in each region to distribute traffic among multiple server instances under respective subnets within different zones.
 
 1. Navigate to **Load balancers** and click **New load balancer**.
-2. Select **vpc-dallas** and the resource group the VPC was created followed by the selection of **Dallas** region.
-3. Create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the paramaters with the values below and lick **create**.
+2. Give **vpc-lb-dallas** as the unique name and Select **vpc-dallas** as your Virtual private cloud followed by the resource group the VPC was created and  **Dallas** as the region.
+3. Select the private IPs of both **Dallas 1** and **Dallas 2**.
+4. Create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the paramaters with the values below and click **create**.
 	- **Name**:  Dallas-pool
 	- **Protocol**: HTTP
 	- **Method**: Round robin
@@ -175,8 +179,86 @@ In this section, you will create two load balancers. One in each region to distr
 	- **Interval(sec)**: 15
 	- **Timeout(sec)**: 2
 	- **Max retries**: 2
-4. Click **Attach** to add server instances to the Dallas-pool
-   - Select **vpc-dallas1-subnet**
+5. Click **Attach** to add server instances to the Dallas-pool
+   - Select the private IP of **vpc-dallas1-subnet**, select the instance your created and set 80 as the port.
+   - Click **Add** and this time select the private IP of **dallas2** subnet, select the instance and set 80 as the port.
+   - Click **Attach** to complete the creation of a back-end pool.
+6. Click **New listener** to create a new front-end listener; A listener is a process that checks for connection requests.
+   - **Protocol**: HTTP
+   - **Port**: 80
+   - **Back-end pool**: Dallas-pool
+   - **Maxconnections**: Leave it empty and click **create**.
+7. Click **Create load balancer** to provision a load balancer. 
+
+Wait until the status changes to **Active**. Open the **Address** in a browser of your choice to see the load balancer hitting different servers everytime you refresh the page. **Save** the address for future reference.
+
+If you observe, the requests are not encrypted and supports only HTTP. You will configure an SSL certificate and enable HTTPS in the coming sections.
+
+**REPEAT** the steps 1-7 above in the **Frankfurt** region.
+
+## Configure a global load balancer with IBM cloud CIS service
+
+In this section, you will create an instance of IBM cloud Internet Services (CIS), point your custom domain to CIS name servers and configure a global load balancer distributing the incoming traffic to the local load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
+
+### Provision a CIS service and configure custom domain.
+
+1. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+2. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
+3. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
+4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+
+   When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <YOUR_DOMAIN_NAME> ns` command to verify that the new name servers have taken effect.
+   {:tip}
+  
+### Distribute traffic across regions with a global load balancer
+
+1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
+2. Enter **lb.<YOUR_DOMAIN_NAME>** as your hostname and TTL be 60 seconds.
+3. Click **Add pool** to define a default origin pool
+   - **Name**: lb-dallas
+   - **Health check**: CREATE A NEW HEALTH CHECK
+     - **Monitor Type**: HTTP
+     - **Path**: /
+     - **Port**: 80
+   - **Health check region**: Eastern North America
+   - **origins** 
+     - **name**: Dallas
+     - **address**: ADDRESS OF DALLAS LOCAL LOAD BALANCER
+     - **weight**: 1
+     - ADD one more **origin pool** pointing to FRANKFURT load balancer in the **Western Europe** region and click **Add** to provision a load balancer.
+
+Wait until the **Health** check status changes to **Healthy**.
+  
+  
+## Secure with HTTPS 
+Before adding a HTTPS listener, you need an SSL certificate, a place to hold the certificate and map it to the infrastructure service. You should obtain a SSL certificate for the domain and subdomain you plan to use with the global load balancer. Assuming a domain like mydomain.com, the global load balancer could be hosted at lb.mydomain.com. The certificate will need to be issued for lb.mydomain.com.
+
+You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of Cloud Internet Services to prove you are the owner of the domain.
+{:tip}
+
+Once you have obtained the SSL certificate and private key for your domain make sure to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
+
+1. To convert a Certificate to PEM format:
+   ```
+   openssl x509 -in domain-crt.txt -out domain-crt.pem -outform PEM
+   ```
+   {: pre}
+1. To convert a Private Key to PEM format:
+   ```
+   openssl rsa -in domain-key.txt -out domain-key.pem -outform PEM
+   ```
+   {: pre}
+
+#### Import the certificate to a central repository
+
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
+1. In the service dashboard, use **Import Certificate**:
+   * Set **Name** to the custom subdomain and domain, such as *lb.mydomain.com*.
+   * Browse for the **Certificate file** in PEM format.
+   * Browse for the **Private key file** in PEM format.
+   * **Import**.
+
 
 ## Remove resources
 {: #removeresources}
