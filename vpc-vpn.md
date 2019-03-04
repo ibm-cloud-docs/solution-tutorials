@@ -78,7 +78,42 @@ The following diagram shows the virtual private cloud consisting of a bastion an
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview). 
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview). You need the optional CLI infrastructure plugin.
+
+## Deploy a virtual app server in a virtual private cloud
+
+In the following, you will download the script to set up your VPC environment and for a simple app to interface with the storage service.
+
+### Get the code
+
+1. Get the application's code:
+   ```sh
+   git clone https://github.com/IBM-Cloud/vpc-tutorial
+   ```
+   {: codeblock}
+2. Go to the script directory in the **vpc-tutorial** directory:
+   ```sh
+   cd secure-file-storage/TODO
+   ```
+   {: codeblock}
+
+### Set up the VPC resources
+
+TODO: We could extend the script to use an existing VPC. It would complicate cleanup and instructions.
+TODO: We need an ssh key.
+
+Execute the setup script. At a minimum, pass in a zone name (e.g., `eu-de-1`or `us-south-2`) and the name of your SSH key for that region.
+
+TODO: Could mention optional naming prefix and resource group.
+
+1. Get the application's code:
+   ```sh
+   ./vpc-vpn-create-with-bastion.sh ZONE SSH-KEY-NAME
+   ```
+   {: codeblock}
+
+
+
 
 ## Create services
 {: #setup}
