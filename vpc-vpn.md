@@ -81,6 +81,19 @@ The following diagram shows the virtual private cloud consisting of a bastion an
 1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview). You need the optional CLI infrastructure plugin.
 
 
+## Get the code
+
+1. Get the application's code:
+   ```sh
+   git clone https://github.com/IBM-Cloud/vpc-tutorial
+   ```
+   {: codeblock}
+2. Go to the script directory in the **vpc-tutorial** directory:
+   ```sh
+   cd vpc-tutorials/TODO
+   ```
+   {: codeblock}
+
 ## Create services
 {: #setup}
 
@@ -110,24 +123,12 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    ibmcloud resource service-key vpc-vpn-cos-key --output json | jq '.[] | .credentials'
    ```
    {: codeblock}
-   Copy the output, a JSON object, into a new file **credentials.json**. It will be used later on.
+   Copy the output, a JSON object, into a new file **credentials.json** in the current directory. It will be used later on by the app.
 
 ## Deploy a virtual app server in a virtual private cloud
 
 In the following, you will download the script to set up your VPC environment and for a simple app to interface with the storage service.
 
-### Get the code
-
-1. Get the application's code:
-   ```sh
-   git clone https://github.com/IBM-Cloud/vpc-tutorial
-   ```
-   {: codeblock}
-2. Go to the script directory in the **vpc-tutorial** directory:
-   ```sh
-   cd secure-file-storage/TODO
-   ```
-   {: codeblock}
 
 ### Set up the VPC resources
 
