@@ -80,6 +80,28 @@ The following diagram shows the virtual private cloud consisting of a bastion an
 
 1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview). You need the optional CLI infrastructure plugin.
 
+
+## Create services
+{: #setup}
+
+In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
+
+1. Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
+    ```sh
+    ibmcloud login
+    ```
+    {: pre}
+    ```sh
+    ibmcloud target --cf
+    ```
+    {: pre}
+2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
+  ```sh
+  ibmcloud resource service-instance-create vpc-vpn-cos cloud-object-storage lite global
+  ```
+
+
+
 ## Deploy a virtual app server in a virtual private cloud
 
 In the following, you will download the script to set up your VPC environment and for a simple app to interface with the storage service.
@@ -112,28 +134,6 @@ TODO: Could mention optional naming prefix and resource group.
    ```
    {: codeblock}
 
-
-
-
-## Create services
-{: #setup}
-
-In this section, you will create the services required to ...
-
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html#install_use).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
-  ```sh
-  ibmcloud resource service-instance-create service-instance-name service-name lite global
-  ```
-3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
 
 ## Solution Specific Section
 {: #section_one}
