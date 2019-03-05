@@ -196,7 +196,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
 2. Under **Identity Providers / Manage**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example if your cluster Ingress subdomain is 
 `<cluster-name>.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
 
-You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity.
+You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
 {: tip}
 
 ## Deploy the app
