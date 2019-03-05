@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2019-03-04"
+  years: 2019
+lastupdated: "2019-03-05"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -192,15 +192,17 @@ In this section, you will create two load balancers. One in each region to distr
 
 Wait until the status changes to **Active**. Open the **Address** in a browser of your choice to see the load balancer hitting different servers everytime you refresh the page. **Save** the address for future reference.
 
-If you observe, the requests are not encrypted and supports only HTTP. You will configure an SSL certificate and enable HTTPS in the coming sections.
+If you observe, the requests are not encrypted and supports only HTTP. You will configure an SSL certificate and enable HTTPS in the next section.
 
 **REPEAT** the steps 1-7 above in the **Frankfurt** region.
 
-## Configure a global load balancer with IBM cloud CIS service
+## Secure with HTTPS 
 
-In this section, you will create an instance of IBM cloud Internet Services (CIS), point your custom domain to CIS name servers and configure a global load balancer distributing the incoming traffic to the local load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
+Before adding a HTTPS listener, you need to generate an SSL certificate, verify the authenticity of your custom domain, a place to hold the certificate and map it to the infrastructure service. 
 
 ### Provision a CIS service and configure custom domain.
+
+In this section, you will create IBM Cloud internet services(CIS) service,  configure a custom domain by pointing it to CIS name servers and later configure a global load balancer.
 
 1. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
@@ -210,29 +212,8 @@ In this section, you will create an instance of IBM cloud Internet Services (CIS
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <YOUR_DOMAIN_NAME> ns` command to verify that the new name servers have taken effect.
    {:tip}
-  
-### Distribute traffic across regions with a global load balancer
-
-1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
-2. Enter **lb.<YOUR_DOMAIN_NAME>** as your hostname and TTL be 60 seconds.
-3. Click **Add pool** to define a default origin pool
-   - **Name**: lb-dallas
-   - **Health check**: CREATE A NEW HEALTH CHECK
-     - **Monitor Type**: HTTP
-     - **Path**: /
-     - **Port**: 80
-   - **Health check region**: Eastern North America
-   - **origins** 
-     - **name**: Dallas
-     - **address**: ADDRESS OF DALLAS LOCAL LOAD BALANCER
-     - **weight**: 1
-     - ADD one more **origin pool** pointing to FRANKFURT load balancer in the **Western Europe** region and click **Add** to provision a load balancer.
-
-Wait until the **Health** check status changes to **Healthy**.
-  
-  
-## Secure with HTTPS 
-Before adding a HTTPS listener, you need an SSL certificate, a place to hold the certificate and map it to the infrastructure service. You should obtain a SSL certificate for the domain and subdomain you plan to use with the global load balancer. Assuming a domain like mydomain.com, the global load balancer could be hosted at lb.mydomain.com. The certificate will need to be issued for lb.mydomain.com.
+   
+You should obtain a SSL certificate for the domain and subdomain you plan to use with the global load balancer. Assuming a domain like mydomain.com, the global load balancer could be hosted at `lb.mydomain.com`. The certificate will need to be issued for lb.mydomain.com.
 
 You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of Cloud Internet Services to prove you are the owner of the domain.
 {:tip}
@@ -244,37 +225,80 @@ Once you have obtained the SSL certificate and private key for your domain make 
    openssl x509 -in domain-crt.txt -out domain-crt.pem -outform PEM
    ```
    {: pre}
-1. To convert a Private Key to PEM format:
+2. To convert a Private Key to PEM format:
    ```
    openssl rsa -in domain-key.txt -out domain-key.pem -outform PEM
    ```
    {: pre}
 
-#### Import the certificate to a central repository
+### Import the certificate and authorize load balancer service
+
+You can manage the SSL certificates through IBM Certificate Manager.
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
-1. In the service dashboard, use **Import Certificate**:
+2. In the service dashboard, use **Import Certificate**:
    * Set **Name** to the custom subdomain and domain, such as *lb.mydomain.com*.
    * Browse for the **Certificate file** in PEM format.
    * Browse for the **Private key file** in PEM format.
    * **Import**.
+3. Create an authorization that gives the load balancer service instance access to the certificate manager instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam#/authorizations).  
+  - Click **Create** and choose **Infrastructure Service** as the source service
+  - **Load Balancer for VPC** as the resource type
+  - **Certificate Manager** as the target service
+  - Assign the **Writer** service access role. 
+  - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be or your specific certificate manager resource instance.
 
+Now, navigate to your [Load balancers](https://{DomainName}/vpc/network/loadBalancers), click to add new **Front-end listeners** and create a **HTTPS** listener with port **443** and your respective backend-pool.
+
+## Configure a global load balancer
+{:#global-load-balancer}
+
+In this section, you will configure a global load balancer distributing the incoming traffic to the local load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
+
+### Distribute traffic across regions with a global load balancer
+Open the CIS service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
+
+1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
+2. Enter **lb.YOUR-DOMAIN-NAME** as your hostname and TTL be 60 seconds.
+3. Click **Add pool** to define a default origin pool
+   - **Name**: lb-dallas
+   - **Health check**: CREATE A NEW HEALTH CHECK
+     - **Monitor Type**: HTTP
+     - **Path**: /
+     - **Port**: 80
+   - **Health check region**: Eastern North America
+   - **origins** 
+     - **name**: Dallas
+     - **address**: ADDRESS OF DALLAS LOCAL LOAD BALANCER
+     - **weight**: 1
+     - Click **Add**
+
+**ADD** one more **origin pool** pointing to FRANKFURT load balancer in the **Western Europe** region and click **Provision 1 Resource** to provision your global load balancer.
+
+Wait until the **Health** check status changes to **Healthy**. Open the link **lb.YOUR-DOMAIN-NAME** in a browser of your choice to see the global load balancer in action.
+
+### Failover test
+By now, you should have seen that most of the time you are hitting the servers in the Dallas region as it's assigned higher weight compared to the servers in Frankfurt region. Let's introduce a health check failure in the **dallas** origin pool,
+
+- Click **three dots(...)** next to the **lb-dallas** pool and click **Edit pool**
+- Select **Health check** and **create new** health check with **HTTP** > **/test** > port - 80
+- Apply changes.
+
+Wait until the health status changes to **Critical**. Now, when you refresh your  domain url, you should always be hitting the servers in the **Frankfurt** region.
+
+Don't forget to delete the **/test** health check and revoke the changes in the **dallas** origin pool.
+{:tip}
 
 ## Remove resources
 {: #removeresources}
 
-Steps to take to remove the resources created in this tutorial
+- Remove the Global load balancer, origin pools and health checks under the CIS service 
+- Remove the certificates in the certificate manager service.
+- Remove the load balancers, VSIs, subnets and VPCs.
+- Under [Resource list](https://{DomainName}/resources), delete the services used in this tutorial.
 
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
-
-Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
 
 ## Related content
 {: #related}
 
-* [Relevant links](https://blah)
+* [Using Load Balancers in IBM Cloud VPC](https://{DomainName}/docs/infrastructure/vpc-network?topic=vpc-network---beta-using-load-balancers-in-ibm-cloud-vpc#--beta-using-load-balancers-in-ibm-cloud-vpc)
