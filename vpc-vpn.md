@@ -90,17 +90,27 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
     ```sh
     ibmcloud login
     ```
-    {: pre}
+    {: codeblock}
     ```sh
     ibmcloud target --cf
     ```
-    {: pre}
+    {: codeblock}
 2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
-  ```sh
-  ibmcloud resource service-instance-create vpc-vpn-cos cloud-object-storage lite global
-  ```
-
-
+   ```sh
+   ibmcloud resource service-instance-create vpc-vpn-cos cloud-object-storage lite global
+   ```
+   {: codeblock}
+3. Create a service key with role **Writer**:
+   ```sh
+   ibmcloud resource service-key-create vpc-vpn-cos-key Writer --instance-name vpc-vpc-cos
+   ```
+   {: codeblock}
+4. Obtain the service key details in JSON format:
+   ```sh
+   ibmcloud resource service-key vpc-vpn-cos-key --output json | jq '.[] | .credentials'
+   ```
+   {: codeblock}
+   Copy the output, a JSON object, into a new file **credentials.json**. It will be used later on.
 
 ## Deploy a virtual app server in a virtual private cloud
 
