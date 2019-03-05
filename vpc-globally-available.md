@@ -241,14 +241,14 @@ You can manage the SSL certificates through IBM Certificate Manager.
    * Browse for the **Certificate file** in PEM format.
    * Browse for the **Private key file** in PEM format.
    * **Import**.
-3. Create an authorization that gives the load balancer service instance access to the certificate manager instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://cloud.ibm.com/iam#/authorizations).  
+3. Create an authorization that gives the load balancer service instance access to the certificate manager instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam#/authorizations).  
   - Click **Create** and choose **Infrastructure Service** as the source service
   - **Load Balancer for VPC** as the resource type
   - **Certificate Manager** as the target service
   - Assign the **Writer** service access role. 
   - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be or your specific certificate manager resource instance.
 
-Now, navigate to your [Load balancers](https://cloud.ibm.com/vpc/network/loadBalancers), click to add new **Front-end listeners** and create a **HTTPS** listener with port **443** and your respective backend-pool.
+Now, navigate to your [Load balancers](https://{DomainName}/vpc/network/loadBalancers), click to add new **Front-end listeners** and create a **HTTPS** listener with port **443** and your respective backend-pool.
 
 ## Configure a global load balancer
 {:#global-load-balancer}
@@ -256,7 +256,7 @@ Now, navigate to your [Load balancers](https://cloud.ibm.com/vpc/network/loadBal
 In this section, you will configure a global load balancer distributing the incoming traffic to the local load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
 
 ### Distribute traffic across regions with a global load balancer
-Open the CIS service you created by navigating to the [Resource list](https://cloud.ibm.com/resources) under services.
+Open the CIS service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
 
 1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
 2. Enter **lb.YOUR-DOMAIN-NAME** as your hostname and TTL be 60 seconds.
@@ -295,10 +295,10 @@ Don't forget to delete the **/test** health check and revoke the changes in the 
 - Remove the Global load balancer, origin pools and health checks under the CIS service 
 - Remove the certificates in the certificate manager service.
 - Remove the load balancers, VSIs, subnets and VPCs.
-- Under [Resource list](https://cloud.ibm.com/resources), delete the services used in this tutorial.
+- Under [Resource list](https://{DomainName}/resources), delete the services used in this tutorial.
 
 
 ## Related content
 {: #related}
 
-* [Using Load Balancers in IBM Cloud VPC](https://cloud.ibm.com/docs/infrastructure/vpc-network?topic=vpc-network---beta-using-load-balancers-in-ibm-cloud-vpc#--beta-using-load-balancers-in-ibm-cloud-vpc)
+* [Using Load Balancers in IBM Cloud VPC](https://{DomainName}/docs/infrastructure/vpc-network?topic=vpc-network---beta-using-load-balancers-in-ibm-cloud-vpc#--beta-using-load-balancers-in-ibm-cloud-vpc)
