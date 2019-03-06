@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-01"
+lastupdated: "2019-03-04"
 ---
 
 {:shortdesc: .shortdesc}
@@ -214,8 +214,8 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 ## Related content
 {:related}
 
-* [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/tutorials/create-deploy-retrain-machine-learning-model.html#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
-* Overview of [IBM {{site.data.keyword.DSX_short}}](https://datascience.ibm.com/docs/content/getting-started/overview-ws.html?context=analytics)
+* [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
+* Overview of [IBM {{site.data.keyword.DSX_short}}](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/overview-ws.html)
 * Anomaly Detection [Jupyter Notebook](https://github.com/IBM-Cloud/iot-device-phone-simulator/blob/master/anomaly-detection/Anomaly-detection-DSX.ipynb)
 * [Understanding z-score](https://en.wikipedia.org/wiki/Standard_score)
-* Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://www.ibm.com/developerworks/analytics/library/iot-deep-learning-anomaly-detection-1/index.html?ca=drs-)
+* Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://developer.ibm.com/series/iot-anomaly-detection-deep-learning/)

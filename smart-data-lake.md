@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-01"
+lastupdated: "2019-03-05"
 ---
 
 {:shortdesc: .shortdesc}
@@ -44,7 +44,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 ## Before you begin
 
 - [Install Git](https://git-scm.com/)
-- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview)
 - [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
 - [Install Node.js and NPM](https://nodejs.org)
 
@@ -55,7 +55,7 @@ In this section, you will create the services required to build your data lake.
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started]https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
     ```sh
     ibmcloud login
     ```
@@ -333,7 +333,7 @@ In this section, you'll take a few additional steps to explore the features of t
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
-In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://{DomainName}/docs/services/cognos-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
+In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://{DomainName}/docs/services/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-encryptingdatasourceinformation#encrypting-data-source-information).
 {: tip}
 
 ## Expand the tutorial
@@ -341,8 +341,8 @@ In production applications, encrypt information such as URLs, usernames and pass
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
 - Experiment with additional datasets using SQL Query
-- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://{DomainName}/docs/tutorials/big-data-log-analytics.html)
-- Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
+- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://{DomainName}/docs/tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics)
+- Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) or {{site.data.keyword.cos_short}}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://{DomainName}/catalog/services/app-id) service instance to enable security in the dashboard application
 
 ## Remove resources
