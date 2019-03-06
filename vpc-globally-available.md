@@ -117,7 +117,7 @@ Once the status of the subnets change to **Available**,
 
 Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **Frankfurt** region by replacing **dallas** with **frankfurt** in the names.
 
-## Install and configure a web server on the VSIs
+## Install and configure web server on the VSIs
 
 **TODO**: Point to the bastion server tutorial once drafted.
 
@@ -195,10 +195,10 @@ In this section, you will create two load balancers. One in each region to distr
 
 ### Test the load balancers
 
-1. Wait until the status changes to **Active**.
-1. Open the **Address** in a web browser
-1. Refresh the page several times and notice the load balancer hitting different servers every time.
-1. **Save** the address for future reference.
+1. Wait until the status of the load balancer changes to **Active**.
+2. Open the **Address** in a web browser
+3. Refresh the page several times and notice the load balancer hitting different servers with each refresh.
+4. **Save** the address for future reference.
 
 If you observe, the requests are not encrypted and supports only HTTP. You will configure an SSL certificate and enable HTTPS in the next section.
 
@@ -257,7 +257,19 @@ You can manage the SSL certificates through IBM Certificate Manager.
   - Assign the **Writer** service access role. 
   - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be or your specific certificate manager resource instance.
 
-Now, navigate to your [Load balancers](https://{DomainName}/vpc/network/loadBalancers), Select **vpc-lb-dallas** > click to add new **Front-end listeners** and create a **HTTPS** listener with port **443**, respective back-end pool and choose the SSL certificate `lb.YOUR-DOMAIN-NAME` > click **Create**. 
+### Create a HTTPS listener
+
+Now, navigate to the [Load balancers](https://{DomainName}/vpc/network/loadBalancers)  
+
+1. Select **vpc-lb-dallas**  
+2. Under **Front-end listeners**, Click **New listener**  
+
+   -  **Protocol**: HTTPS  
+   -  **Port**: 443   
+   -  **Back-end pool**: POOL in the same region   
+   -  Choose the SSL certificate for **lb.YOUR-DOMAIN-NAME**
+
+3. Click **Create** to configure a HTTPS listener
 
 **REPEAT** the same in the load balancer of **Frankfurt** region.
 
