@@ -24,16 +24,16 @@ IBM will be accepting a limited number of customers to participate in an Early A
 
 This tutorial walks you through on how you can isolate workloads by provisioning VPCs in different IBM Cloud regions with subnets and virtual server instances(VSIs) created in multiple zones of a region and how you can increase resiliency within a region and globally by provisioning and configuring load balancers with back-end pools, front-end listeners and proper health checks. 
 
-For global load balancer, you will provision an IBM Cloud internet services (CIS) from the catalog and for managing the SSL certificate for all HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certification along with the private key will be imported.
+For global load balancer, you will provision an IBM Cloud internet services (CIS) from the catalog and for managing the SSL certificate for all HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
 
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* Understand the isolation of workloads through infrastructure objects available for virtual private clouds
-* Use a load balancer between zones in a region
-* Use a global load balancer between regions
+* Understand the isolation of workloads through infrastructure objects available for virtual private clouds.
+* Use a load balancer between zones within a region to distribute traffic among virtual servers.
+* Use a global load balancer between regions to increase resiliency and reduce latency.I'm
 
 ## Services used
 {: #services}
@@ -117,7 +117,7 @@ Once the status of the subnets change to **Available**,
 
 Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **Frankfurt** region by replacing **dallas** with **frankfurt** in the names.
 
-## Install and configure a web server on the VSI
+## Install and configure a web server on the VSIs
 
 **TODO**: Point to the bastion server tutorial once drafted.
 
@@ -163,8 +163,11 @@ Once you successfully SSH into the server provisioned in subnet of Dallas 1 zone
 **REPEAT** the steps 1-6 to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
 
-## Using load balancers to distribute traffic
+## Distribute traffic between zones with load balancers
+
 In this section, you will create two load balancers. One in each region to distribute traffic among multiple server instances under respective subnets within different zones.
+
+### Configure load balancers
 
 1. Navigate to **Load balancers** and click **New load balancer**.
 2. Give **vpc-lb-dallas** as the unique name and Select **vpc-dallas** as your Virtual private cloud followed by the resource group the VPC was created and  **Dallas** as the region.
@@ -190,13 +193,18 @@ In this section, you will create two load balancers. One in each region to distr
    - **Maxconnections**: Leave it empty and click **create**.
 7. Click **Create load balancer** to provision a load balancer. 
 
-Wait until the status changes to **Active**. Open the **Address** in a browser of your choice to see the load balancer hitting different servers everytime you refresh the page. **Save** the address for future reference.
+### Test the load balancers
+
+1. Wait until the status changes to **Active**.
+1. Open the **Address** in a web browser
+1. Refresh the page several times and notice the load balancer hitting different servers every time.
+1. **Save** the address for future reference.
 
 If you observe, the requests are not encrypted and supports only HTTP. You will configure an SSL certificate and enable HTTPS in the next section.
 
 **REPEAT** the steps 1-7 above in the **Frankfurt** region.
 
-## Secure with HTTPS
+## Secure traffic within the VPC with HTTPS
 {:#secure_https}
 
 Before adding a HTTPS listener, you need to generate an SSL certificate, verify the authenticity of your custom domain, a place to hold the certificate and map it to the infrastructure service. 
