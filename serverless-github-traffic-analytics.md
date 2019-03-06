@@ -96,6 +96,10 @@ The following steps are all performed using your Internet browser. First, you co
 
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
 2. In the service dashboard, click on **Manage** under **Identity Providers** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **On**, all other providers to **Off**.
+   
+   You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/services/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
+   {:tip}
+
 3. At the bottom of that page is the list of redirect URLs. Enter the **url** of your application + /redirect_uri. For example `https://github-traffic-stats-random-word.mybluemix.net/redirect_uri`.
 
    For testing the app locally, the redirect URL is `http://0.0.0.0:5000/redirect_uri`. You can configure multiple redirect URLs.
