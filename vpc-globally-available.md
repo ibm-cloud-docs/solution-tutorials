@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-05"
+lastupdated: "2019-03-06"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -196,7 +196,8 @@ If you observe, the requests are not encrypted and supports only HTTP. You will 
 
 **REPEAT** the steps 1-7 above in the **Frankfurt** region.
 
-## Secure with HTTPS 
+## Secure with HTTPS
+{:#secure_https}
 
 Before adding a HTTPS listener, you need to generate an SSL certificate, verify the authenticity of your custom domain, a place to hold the certificate and map it to the infrastructure service. 
 
@@ -248,7 +249,9 @@ You can manage the SSL certificates through IBM Certificate Manager.
   - Assign the **Writer** service access role. 
   - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be or your specific certificate manager resource instance.
 
-Now, navigate to your [Load balancers](https://{DomainName}/vpc/network/loadBalancers), click to add new **Front-end listeners** and create a **HTTPS** listener with port **443** and your respective backend-pool.
+Now, navigate to your [Load balancers](https://{DomainName}/vpc/network/loadBalancers), Select **vpc-lb-dallas** > click to add new **Front-end listeners** and create a **HTTPS** listener with port **443**, respective back-end pool and choose the SSL certificate `lb.YOUR-DOMAIN-NAME` > click **Create**. 
+
+**REPEAT** the same in the load balancer of **Frankfurt** region.
 
 ## Configure a global load balancer
 {:#global-load-balancer}
