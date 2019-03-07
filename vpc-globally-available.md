@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-03-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -72,20 +72,20 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Create VPCs, subnets and VSIs
 {: #create-infrastructure}
 
-In this section, you will create your own VPC in Dallas region with subnets created in two different zones (Dallas 1 and 2) followed by provisioning of VSIs.
+In this section, you will create your own VPC in region 1 with subnets created in two different zones of region 1 followed by provisioning of VSIs.
 
 To create your own {{site.data.keyword.vpc_short}} in region 1,
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
 2. Under **New virtual private cloud** section:  
-   * Enter **vpc-dallas** as name for your VPC.  
+   * Enter **vpc-region1** as name for your VPC.  
    * Select a **Resource group**.  
    * Optionally, add **Tags** to organize your resources.  
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
 4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked.
 5. Under **New subnet for VPC**:  
-   * As a unique name enter **vpc-dallas1-subnet**.  
-   * Select **Dallas** as your location and **Dallas 1** as your zone .
+   * As a unique name enter **vpc-region1-subnet**.  
+   * Select a location (e.g., Dallas), let's call this **region 1** and a zone in region 1 (e.g., Dallas 1), let's call this **zone 1**.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 6. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
 7. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public internet. You can also attach the public gateway after you create the subnet.
@@ -95,8 +95,8 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 
 ### Create subnet in zone 2
 
-1. Click on **New Subnet**, enter **vpc-dallas2-subnet** as a unique name for your subnet and select **vpc-dallas** as the VPC.
-2. Select **Dallas** as your location and **Dallas 2** as your zone.
+1. Click on **New Subnet**, enter **vpc-region1-zone2-subnet** as a unique name for your subnet and select **vpc-region1** as the VPC.
+2. Select a location which we called as region 1 above (e.g., Dallas) and a different zone in region 1 (e.g., Dallas 2), let's call this **zone 2**.
 3. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.64.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 4. Select **Use VPC default** for your subnet access control list (ACL). 
 5. Switch the public gateway to **Attached** and click **Create subnet** to provision a new subnet.
@@ -104,24 +104,25 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 ### Provision VSIs
 Once the status of the subnets change to **Available**, 
 
-1. Click on the vpc-dallas1-subnet subnet and click **Attached instances**, then **New instance**.
-2. Enter a unique name and pick **vpc-dallas1-vsi**. Then, select the VPC your created earlier and the **Location** as before.
+1. Click on **vpc-region1-zone1-subnet** and click **Attached instances**, then **New instance**.
+2. Enter a unique name and pick **vpc-region1-zone1-vsi**. Then, select the VPC your created earlier and the **Location** as before.
 3. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 4. For **SSH keys** pick the SSH key you created initially.
 5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
-   * Select **vpc-dallas1-subnet** as the subnet.   
+   * Select **vpc-region1-zone1-subnet** as the subnet.   
    * Click **Save**.
    * Click **Create virtual server instance**.
-6.  Wait until the status of the VSI changes to **Powered On**. Then, select the VSI **vpc-dallas1-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your VSI. Save the associated IP Address to a clipboard for future reference.
-7. REPEAT the steps 1-6 to provision a VSI in dallas 2.
+6.  Wait until the status of the VSI changes to **Powered On**. Then, select the VSI **vpc-region1-zone1-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your VSI. Save the associated IP Address to a clipboard for future reference.
+7. **REPEAT** the steps 1-6 to provision a VSI in **zone 2** of **region 1**.
 
-Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **Frankfurt** region by replacing **dallas** with **frankfurt** in the names.
+Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **region2** by following the same naming conventions as above.
 
 ## Install and configure web server on the VSIs
+{: #install-configure-web-server-vsis}
 
-**TODO**: Point to the bastion server tutorial once drafted.
+_**TODO**: Point to the bastion server tutorial once drafted._
 
-Once you successfully SSH into the server provisioned in subnet of Dallas 1 zone, 
+Once you successfully SSH into the server provisioned in subnet of zone 1 of region 1, 
 
 1. At the prompt, run the below commands to install Nginx as your web server
 
@@ -152,7 +153,7 @@ Once you successfully SSH into the server provisioned in subnet of Dallas 1 zone
  	```
  	{:pre}
  	
- 	Append the region and zone (server running in **Dallas 1**) to the `h1` tag quoting `Welcome to nginx!` and save the changes.
+ 	Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 6. Restart the nginx server to reflect the changes
 
    ```
@@ -164,16 +165,17 @@ Once you successfully SSH into the server provisioned in subnet of Dallas 1 zone
 
 
 ## Distribute traffic between zones with load balancers
+{: #distribute-traffic-with-load-balancers}
 
 In this section, you will create two load balancers. One in each region to distribute traffic among multiple server instances under respective subnets within different zones.
 
 ### Configure load balancers
 
 1. Navigate to **Load balancers** and click **New load balancer**.
-2. Give **vpc-lb-dallas** as the unique name and Select **vpc-dallas** as your Virtual private cloud followed by the resource group the VPC was created and  **Dallas** as the region.
-3. Select the private IPs of both **Dallas 1** and **Dallas 2**.
+2. Give **vpc-lb-region1** as the unique name and Select **vpc-region1** as your Virtual private cloud followed by the resource group the VPC was created and **region1** as the region.
+3. Select the private IPs of both **zone 1** and **zone 2** of **region 1**.
 4. Create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the paramaters with the values below and click **create**.
-	- **Name**:  Dallas-pool
+	- **Name**:  region1-pool
 	- **Protocol**: HTTP
 	- **Method**: Round robin
 	- **Session stickiness**: None
@@ -182,14 +184,14 @@ In this section, you will create two load balancers. One in each region to distr
 	- **Interval(sec)**: 15
 	- **Timeout(sec)**: 2
 	- **Max retries**: 2
-5. Click **Attach** to add server instances to the Dallas-pool
-   - Select the private IP of **vpc-dallas1-subnet**, select the instance your created and set 80 as the port.
-   - Click **Add** and this time select the private IP of **dallas2** subnet, select the instance and set 80 as the port.
+5. Click **Attach** to add server instances to the region1-pool
+   - Select the private IP of **vpc-region1-zone1-subnet**, select the instance your created and set 80 as the port.
+   - Click **Add** and this time select the private IP of **vpc-region1-zone2-subnet**, select the instance and set 80 as the port.
    - Click **Attach** to complete the creation of a back-end pool.
 6. Click **New listener** to create a new front-end listener; A listener is a process that checks for connection requests.
    - **Protocol**: HTTP
    - **Port**: 80
-   - **Back-end pool**: Dallas-pool
+   - **Back-end pool**: region1-pool
    - **Maxconnections**: Leave it empty and click **create**.
 7. Click **Create load balancer** to provision a load balancer. 
 
@@ -202,10 +204,10 @@ In this section, you will create two load balancers. One in each region to distr
 
 If you observe, the requests are not encrypted and supports only HTTP. You will configure an SSL certificate and enable HTTPS in the next section.
 
-**REPEAT** the steps 1-7 above in the **Frankfurt** region.
+**REPEAT** the steps 1-7 above in **region 2**.
 
 ## Secure traffic within the VPC with HTTPS
-{:#secure_https}
+{: #secure_https}
 
 Before adding a HTTPS listener, you need to generate an SSL certificate, verify the authenticity of your custom domain, a place to hold the certificate and map it to the infrastructure service. 
 
@@ -261,7 +263,7 @@ You can manage the SSL certificates through IBM Certificate Manager.
 
 Now, navigate to the [Load balancers](https://{DomainName}/vpc/network/loadBalancers)  
 
-1. Select **vpc-lb-dallas**  
+1. Select **vpc-lb-region1**  
 2. Under **Front-end listeners**, Click **New listener**  
 
    -  **Protocol**: HTTPS  
@@ -271,12 +273,12 @@ Now, navigate to the [Load balancers](https://{DomainName}/vpc/network/loadBalan
 
 3. Click **Create** to configure a HTTPS listener
 
-**REPEAT** the same in the load balancer of **Frankfurt** region.
+**REPEAT** the same in the load balancer of **region 2**.
 
 ## Configure a global load balancer
-{:#global-load-balancer}
+{: #global-load-balancer}
 
-In this section, you will configure a global load balancer distributing the incoming traffic to the local load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
+In this section, you will configure a global load balancer(GLB) distributing the incoming traffic to the local load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
 
 ### Distribute traffic across regions with a global load balancer
 Open the CIS service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
@@ -284,32 +286,32 @@ Open the CIS service you created by navigating to the [Resource list](https://{D
 1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
 2. Enter **lb.YOUR-DOMAIN-NAME** as your hostname and TTL be 60 seconds.
 3. Click **Add pool** to define a default origin pool
-   - **Name**: lb-dallas
+   - **Name**: lb-region1
    - **Health check**: CREATE A NEW HEALTH CHECK
      - **Monitor Type**: HTTP
      - **Path**: /
      - **Port**: 80
    - **Health check region**: Eastern North America
    - **origins** 
-     - **name**: Dallas
-     - **address**: ADDRESS OF DALLAS LOCAL LOAD BALANCER
+     - **name**: region1
+     - **address**: ADDRESS OF **REGION1** LOCAL LOAD BALANCER
      - **weight**: 1
      - Click **Add**
 
-**ADD** one more **origin pool** pointing to FRANKFURT load balancer in the **Western Europe** region and click **Provision 1 Resource** to provision your global load balancer.
+4. **ADD** one more **origin pool** pointing to **region2** load balancer in the **Western Europe** region and click **Provision 1 Resource** to provision your global load balancer.
 
 Wait until the **Health** check status changes to **Healthy**. Open the link **lb.YOUR-DOMAIN-NAME** in a browser of your choice to see the global load balancer in action.
 
 ### Failover test
-By now, you should have seen that most of the time you are hitting the servers in the Dallas region as it's assigned higher weight compared to the servers in Frankfurt region. Let's introduce a health check failure in the **dallas** origin pool,
+By now, you should have seen that most of the time you are hitting the servers in **region 1** as it's assigned higher weight compared to the servers in **region 2**. Let's introduce a health check failure in the **region 1** origin pool,
 
-- Click **three dots(...)** next to the **lb-dallas** pool and click **Edit pool**
-- Select **Health check** and **create new** health check with **HTTP** > **/test** > port - 80
-- Apply changes.
+1. Navigate to [virtual server instances](https://{DomainName}/vpc/compute/vs)
+2. Click **three dots(...)** next to the server(s) running in **zone 1** of **region 1** and click **Stop**.
+3. **REPEAT** the same for server(s) running in **zone 2** of **region 1**.
+4. Return to GLB under CIS service and wait until the health status changes to **Critical**. 
+5. Now, when you refresh your domain url, you should always be hitting the servers in **region 2**.
 
-Wait until the health status changes to **Critical**. Now, when you refresh your  domain url, you should always be hitting the servers in the **Frankfurt** region.
-
-Don't forget to delete the **/test** health check and revoke the changes in the **dallas** origin pool.
+Don't forget to **start** the servers in zone 1 and zone 2 of region 1
 {:tip}
 
 ## Remove resources
