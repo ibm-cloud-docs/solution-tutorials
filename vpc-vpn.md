@@ -13,34 +13,39 @@ lastupdated: "2019-02-28"
 {:pre: .pre}
 {:important: .important}
 
-# VPC, VPN and service consumption
+# VPC/VPN gateway for secure and private on premises access to cloud resources
 {: #vpc-vpn}
 
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-Possible titles:
-* Create app with private services on VPC and connect to it through VPN
-* End to end private network for your secure app on VPC
+This tutorial walks you through creating a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists ACLs, Security Groups and Virtual Server Instance (VSI). 
+Then a secure Virtual Private Network (VPN) gateway will be created within the VPC (VPC/VPN gateway).
+The VPC/VPN gateway will establish a [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on premises VPN gateway.
+The IBM Cloud Object Storage, COS, service has a Cloud Service Endpoint, CSE, that can be used for private no cost egress within the IBM cloud.
+Egress charges for data to on premises will still be incurred.
+To further demonstrate secure and private access a microservice will be deployed on a VPC/VSI to access COS representing a line of business application.
+An on premises computer that can access COS with all traffic flowing through the VPN and privately through IBMs cloud.
 
-This tutorial walks you through connecting an existing {{site.data.keyword.vpc_full}} (VPC) to another computing environment by establishing a secure Virtual Private Network (VPN). Moreover, it shows how your app running on a virtual server instance (VSI) in a VPC can securely use an IBM Cloud service by connecting to it through a private endpoint.
-
-It will demontrate three connectivity options:
-* VPC/VPN connected to VPC/VPN
-* VPC/VPN connected to on premises VPN
-* VPC/VPN connected to classic VPN
-(HL: ^^ Do we need all three, does it add anything to the solution?)
-
-
+There are many popular on premises VPN site-to-site gateways available.
+This tutorial demonstrates a VPC/VPN gateway connection to the popular [strongSwan](https://www.strongswan.org/) VPN Gateway.
+The strongSwan gateway will be installed on a VSI in the IBM cloud,
+definitely not the most effective way for inter cloud communication,
+but ideal for demonstrating the configuration of a typical on premises VPN Gateway.
 
 {:shortdesc}
+In short, using VPC/VPN Gateway and CSE you can
+
+- connect your on premises computers to workloads running in the cloud
+- insure private and low cost connectivity to cloud services
 
 
 ## Objectives
 {: #objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+- Understand VPN gateway capabilities
+- Learn how to utilize Cloud Service Endpoints for private access to cloud services
+- Apply the best security practices for creating hybrid applications
 
 ## Services used
 {: #services}
@@ -49,6 +54,7 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
 - [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
 - [{{site.data.keyword.vpn_full}}](https://{DomainName}/vpc/provision/vpngateway)
+- cos
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -62,65 +68,43 @@ intro sentence
   ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 </p>
 
-1. The user does this
-2. Then that
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the VSI using the private SSH key and installs the microservice software and verifies it is working
+1. A vsi with associated floating-ip will be provisioned to hold the open source VPN Gateway, note the public ip address
+1. A VPC/VPN Gateway is provisioned, note the public IP address
+1. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses
+1. Verify connectivity through the VPN Gateways by accessin the microservice directly through the vpn site-to-site connection
 
 ## Before you begin
+
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc/vpc-user-permissions.html).
 
-## Create services
-{: #setup}
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc/getting-started.html#prerequisites).
 
-In this section, you will create the services required to ...
+## Create a Virtual Private Cloud
+{: #create-vpc}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html#install_use).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
-  ```sh
-  ibmcloud resource service-instance-create service-instance-name service-name lite global
-  ```
-3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
+To create your own {{site.data.keyword.vpc_short}},
 
-## Solution Specific Section
-{: #section_one}
+1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
+1. Under **New virtual private cloud** section:  
+   * Enter **pfqIA** as name for your VPC.  
+   * Select a **Resource group**.  
+1. Under **New subnet for VPC**:  
+   * As a unique name enter **pfqIAleft**.  
+   * Select a location.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+1. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+1. Click **Create virtual private cloud** to provision the instance.
 
-Introductory statement that overviews the section
+To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
-1. Step 1 Click **This** and enter your name.
-
-  This is a tip.
-  {:tip}
-
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
-
-### A sub section
-
-   ```bash
-   some shellscript
-   ```
-   {: pre}
-
-
-
-
-## Another Solution Specific Section
-{: #section_two}
-
-Introductory statement that overviews the section
+1. Click **New subnet**
+1. In the New Subnet for VPC
+   * As a unique name enter **pfqIAright**.  
+   * Select the VPC created above from the Virual Private Cloud drop down
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the remaining fields unchanged.
 
 
 ## Remove resources
@@ -128,16 +112,19 @@ Introductory statement that overviews the section
 
 Steps to take to remove the resources created in this tutorial
 
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
+* [Relevant links](https://blah)
+## Expand the tutorial 
+{: #expand-tutorial}
 
-Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
+Want to add to or extend this tutorial? Here are some ideas:
+
+- Add a [load balancer](/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound microservice traffic across multiple instances.
+
 
 ## Related content
 {: #related}
 
-* [Relevant links](https://blah)
+- [VPC Glossary](/docs/infrastructure/vpc/vpc-glossary.html)
+- [VPC using the IBM Cloud CLI](/docs/infrastructure/vpc/hello-world-vpc.html)
+- [VPC using the REST APIs](/docs/infrastructure/vpc/example-code.html)
+- bastion tutorial
