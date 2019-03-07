@@ -582,6 +582,32 @@
                     "Network",
                     "Virtual Servers"
                 ]
+            },
+            {
+                "name": "VPC with globally available deployment",
+                "hidden": true,
+                "url": "vpc-globally-available.html",
+                "description": "Deploy a workload in virtual private clouds across multiple zones and regions. Distribute traffic across zones with load balancers.",
+                "imgSrc": "images/solution41-vpc-globally-available/Architecture.png",
+                "tags": [
+                    "Infrastructure",
+                    "Virtual Private Cloud",
+                    "Network",
+                    "Virtual Servers"
+                ]
+            },
+            {
+                "name": "VPC, VPN and service consumption",
+                "hidden": true,
+                "url": "vpc-vpn.html",
+                "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services through private endpoints.",
+                "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
+                "tags": [
+                    "Infrastructure",
+                    "Virtual Private Cloud",
+                    "Network",
+                    "Virtual Servers"
+                ]
             }
         ]
     }
