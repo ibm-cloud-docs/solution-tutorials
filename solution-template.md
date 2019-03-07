@@ -139,4 +139,5 @@ Want to add to or change this tutorial? Here are some ideas:
 ## Related content
 {: #related}
 
-* [Relevant links](https://blah)
+* [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
+* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
