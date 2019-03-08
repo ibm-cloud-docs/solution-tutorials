@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-03-08"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -69,7 +69,7 @@ This tutorial may incur costs. The VRA is only available on a monthly pricing pl
 
 In this tutorial the network enclosure created is not visible on the public Internet. The VRA and any servers will only be accessible via the private network, and you will use your SoftLayer VPN for connectivity. 
 
-1. [Ensure your VPN Access is enabled](https://{DomainName}/docs/infrastructure/iaas-vpn/getting-started.html#log-in-to-the-vpn).
+1. [Ensure your VPN Access is enabled](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-gettingstarted-with-virtual-private-networking#log-in-to-the-vpn).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}

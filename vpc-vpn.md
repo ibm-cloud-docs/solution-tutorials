@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-03-08"
 
 ---
 
@@ -93,6 +93,61 @@ The following diagram shows the virtual private cloud consisting of a bastion an
 
 
 ## Before you begin
+{: #prereqs}
+
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). You need the optional CLI infrastructure plugin.
+
+
+## Get the code
+
+1. Get the application's code:
+   ```sh
+   git clone https://github.com/IBM-Cloud/vpc-tutorial
+   ```
+   {: codeblock}
+2. Go to the script directory in the **vpc-tutorial** directory:
+   ```sh
+   cd vpc-tutorials/TODO
+   ```
+   {: codeblock}
+
+## Create services
+{: #setup}
+
+In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
+
+1. Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
+    ```sh
+    ibmcloud login
+    ```
+    {: codeblock}
+    ```sh
+    ibmcloud target --cf
+    ```
+    {: codeblock}
+2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
+   ```sh
+   ibmcloud resource service-instance-create vpc-vpn-cos cloud-object-storage lite global
+   ```
+   {: codeblock}
+3. Create a service key with role **Writer**:
+   ```sh
+   ibmcloud resource service-key-create vpc-vpn-cos-key Writer --instance-name vpc-vpc-cos
+   ```
+   {: codeblock}
+4. Obtain the service key details in JSON format:
+   ```sh
+   ibmcloud resource service-key vpc-vpn-cos-key --output json | jq '.[] | .credentials'
+   ```
+   {: codeblock}
+   Copy the output, a JSON object, into a new file **credentials.json** in the current directory. It will be used later on by the app.
+
+## Deploy a virtual app server in a virtual private cloud
+
+In the following, you will download the script to set up your VPC environment and for a simple app to interface with the storage service.
+
+
+### Set up the VPC resources
 
 {: #prereqs}
 

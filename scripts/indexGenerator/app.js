@@ -20,7 +20,8 @@ Handlebars.registerHelper('htmlLink', function(solution, options) {
   if (helper.isExternalSolution(solution)) {
     return solution.url;
   } else {
-    return `/docs/tutorials/${solution.url}`;
+    const topic = solution.url.substring(0, solution.url.indexOf('.'));
+    return `/docs/tutorials?topic=solution-tutorials-${topic}#${topic}`;
   }
 });
 
@@ -39,23 +40,18 @@ const featured = solutions
   .sort((sol1, sol2) => sol1.featuredPosition - sol2.featuredPosition);
 
 
-// update the .md lastupdated dates
 // inject last updated into the JSON
 solutions.filter((solution) => !helper.isExternalSolution(solution)).forEach((solution) => {
   const pathToSolution = `../../${helper.htmlTomd(solution.url)}`;
-
-  // get file last modified
-  const modifiedTime = fs.statSync(pathToSolution).mtime;
-  const lastUpdated = moment(modifiedTime).format('YYYY-MM-DD');
 
   const solutionContent = fs.readFileSync(pathToSolution).toString();
   const dateStartPosition = solutionContent.indexOf('lastupdated:');
   if (dateStartPosition >= 0) {
     const dateEndPosition = solutionContent.indexOf('\n', dateStartPosition);
-    newSolutionContent = solutionContent.substring(0, dateStartPosition) +
-      `lastupdated: "${lastUpdated}"\n` +
-      solutionContent.substring(dateEndPosition+1);
-    fs.writeFileSync(pathToSolution, newSolutionContent);
+    const lastUpdated = solutionContent
+      .substring(dateStartPosition + 'lastupdated:'.length, dateEndPosition)
+      .trim()
+      .replace(/"/g, '');
     solution.lastUpdated = lastUpdated;
   }
 });
