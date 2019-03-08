@@ -1,0 +1,15 @@
+{
+  "name": "solution-table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "totable.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "handlebars": "^4.0.11",
+    "js-yaml": "^3.11.0"
+  }
+}

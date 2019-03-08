@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-11-14"
-
+  years: 2017, 2019
+lastupdated: "2019-03-06"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -203,6 +202,6 @@ The IBM {{site.data.keyword.mobilepushshort}} service now extends capabilities t
 ## Related Content
 {: #related_content}
 
-- [Tag-based notifications](https://{DomainName}/docs/services/mobilepush/push_step_4_nf_tag.html#tag_based_notifications)
-- [{{site.data.keyword.mobilepushshort}} REST APIs](https://{DomainName}/docs/services/mobilepush/push_restapi.html#push-api-rest)
-- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/services/mobilepush/push_security.html#overview-push)
+- [Tag-based notifications](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-tag_based_notifications#tag_based_notifications)
+- [{{site.data.keyword.mobilepushshort}} APIs](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-apis-for-push-notification#apis-for-push-notification)
+- [Security in {{site.data.keyword.mobilepushshort}}](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-security-in-push-notifications#overview-push)

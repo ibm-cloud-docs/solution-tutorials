@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-06-05"
+  years: 2018, 2019
+lastupdated: "2019-03-05"
 
 ---
 
@@ -55,14 +55,14 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
 
 ## Create services
 {: #setup}
 
 In this section, you will create the services required to ...
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html#install_use).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
     ```sh
     ibmcloud login
     ```
@@ -139,4 +139,5 @@ Want to add to or change this tutorial? Here are some ideas:
 ## Related content
 {: #related}
 
-* [Relevant links](https://blah)
+* [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
+* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)

@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-02-28"
+lastupdated: "2019-03-06"
 
 ---
 
@@ -39,13 +39,31 @@ In short, using VPC/VPN Gateway and CSE you can
 - connect your on premises computers to workloads running in the cloud
 - insure private and low cost connectivity to cloud services
 
+Possible flow / toc:
+- git clone https://github.com/IBM-Cloud/vpc-tutorials
+- run shell script to create vpc, subnets, sg, network acl, instances, ...
+- explain that there is a second shell script that does the rest of this stuff:
+- gui description of how to create resources for cos and vpn (Either by CLI or UI): Obtain credentials for COS (and provision COS if not present). Copy into credentials file.
+- on cloud vsi:
+  - git clone https://github.com/IBM-Cloud/vpc-tutorials
+  - run script for cos micro service
+- on strongswan vsi:
+  - git clone https://github.com/IBM-Cloud/vpc-tutorials
+  - run script to install and configure strong swan
+  - curl micro service - works
+  - shut down ipsec
+  - curl micro service - fails
+  - start up ipsec
+  - curl micro service - works
+- clean up resources
+
+
 
 ## Objectives
 {: #objectives}
 
-- Understand VPN gateway capabilities
-- Learn how to utilize Cloud Service Endpoints for private access to cloud services
-- Apply the best security practices for creating hybrid applications
+* Access a virtual private cloud environment from an on-premises data center or (virtual) private cloud
+* Securely reach cloud resources using private service endpoints.
 
 ## Services used
 {: #services}
@@ -54,17 +72,16 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
 - [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
 - [{{site.data.keyword.vpn_full}}](https://{DomainName}/vpc/provision/vpngateway)
-- cos
+- [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
 
-intro sentence
+The following diagram shows the virtual private cloud consisting of a bastion and an app server. The application utilizes a storage service. SOME MORE DESCRIPTION
 
 <p style="text-align: center;">
-
   ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 </p>
 
@@ -73,6 +90,7 @@ intro sentence
 1. A VPC/VPN Gateway is provisioned, note the public IP address
 1. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses
 1. Verify connectivity through the VPN Gateways by accessin the microservice directly through the vpn site-to-site connection
+
 
 ## Before you begin
 
