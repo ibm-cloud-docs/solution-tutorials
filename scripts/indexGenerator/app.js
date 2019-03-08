@@ -20,7 +20,8 @@ Handlebars.registerHelper('htmlLink', function(solution, options) {
   if (helper.isExternalSolution(solution)) {
     return solution.url;
   } else {
-    return `/docs/tutorials/${solution.url}`;
+    const topic = solution.url.substring(0, solution.url.indexOf('.'));
+    return `/docs/tutorials?topic=solution-tutorials-${topic}#${topic}`;
   }
 });
 
