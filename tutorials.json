@@ -350,7 +350,7 @@
             "Swift",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-03-06"
+          "lastUpdated": "2019-03-08"
         },
         {
           "name": "Android native mobile app with Push Notifications",
@@ -531,7 +531,7 @@
             "Network",
             "Virtual Servers"
           ],
-          "lastUpdated": "2019-03-06"
+          "lastUpdated": "2019-03-08"
         },
         {
           "name": "Configure NAT for Internet access from a private network",
