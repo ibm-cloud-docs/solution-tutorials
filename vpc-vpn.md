@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-03-08"
 
 ---
 
@@ -78,7 +78,7 @@ The following diagram shows the virtual private cloud consisting of a bastion an
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview). You need the optional CLI infrastructure plugin.
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). You need the optional CLI infrastructure plugin.
 
 
 ## Get the code

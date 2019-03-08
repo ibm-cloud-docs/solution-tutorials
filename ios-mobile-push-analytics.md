@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-03-08"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -158,7 +158,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
 
    1. Go to the [Apple Developer](https://developer.apple.com/), click `Member Center`, and select `Certificates, IDs & Profiles`.
    2. Double-click the downloaded provisioning profile to install it into Xcode.
-     After obtaining the credentials, the next step is to [Configure a service instance](https://{DomainName}/docs/services/mobilepush/push_step_2.html).
+     After obtaining the credentials, the next step is to [Configure a service instance](https://{DomainName}/docs/services/mobilepush?topic=mobile-pushnotification-push_step_2#push_step_2).
 
 ### Configure the service instance
 
