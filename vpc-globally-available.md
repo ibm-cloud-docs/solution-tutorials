@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-03-08"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -22,9 +22,9 @@ lastupdated: "2019-03-07"
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-This tutorial walks you through on how you can isolate workloads by provisioning VPCs in different IBM Cloud regions with subnets and virtual server instances(VSIs) created in multiple zones of a region and how you can increase resiliency within a region and globally by provisioning and configuring load balancers with back-end pools, front-end listeners and proper health checks. 
+This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances(VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks. 
 
-For global load balancer, you will provision an IBM Cloud internet services (CIS) from the catalog and for managing the SSL certificate for all HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
+For global load balancer, you will provision an IBM Cloud internet services (CIS) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
 
 {:shortdesc}
 
@@ -33,7 +33,7 @@ For global load balancer, you will provision an IBM Cloud internet services (CIS
 
 * Understand the isolation of workloads through infrastructure objects available for virtual private clouds.
 * Use a load balancer between zones within a region to distribute traffic among virtual servers.
-* Use a global load balancer between regions to increase resiliency and reduce latency.I'm
+* Use a global load balancer between regions to increase resiliency and reduce latency.
 
 ## Services used
 {: #services}
@@ -46,7 +46,7 @@ This tutorial uses the following runtimes and services:
 - IBM Cloud [Internet Services](https://{DomainName}/catalog/services/internet-services)
 - [{{site.data.keyword.cloudcerts_long_notm}}](https://{DomainName}/catalog/services/cloudcerts)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -96,7 +96,7 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 ### Create subnet in zone 2
 
 1. Click on **New Subnet**, enter **vpc-region1-zone2-subnet** as a unique name for your subnet and select **vpc-region1** as the VPC.
-2. Select a location which we called as region 1 above (e.g., Dallas) and a different zone in region 1 (e.g., Dallas 2), let's call this **zone 2**.
+2. Select a location which we called as region 1 above (e.g., Dallas) and select a different zone in region 1 (e.g., Dallas 2), let's call the selected zone as **zone 2**.
 3. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.64.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 4. Select **Use VPC default** for your subnet access control list (ACL). 
 5. Switch the public gateway to **Attached** and click **Create subnet** to provision a new subnet.
@@ -198,7 +198,7 @@ In this section, you will create two load balancers. One in each region to distr
 ### Test the load balancers
 
 1. Wait until the status of the load balancer changes to **Active**.
-2. Open the **Address** in a web browser
+2. Open the **Address** in a web browser.
 3. Refresh the page several times and notice the load balancer hitting different servers with each refresh.
 4. **Save** the address for future reference.
 
@@ -305,7 +305,7 @@ Wait until the **Health** check status changes to **Healthy**. Open the link **l
 ### Failover test
 By now, you should have seen that most of the time you are hitting the servers in **region 1** as it's assigned higher weight compared to the servers in **region 2**. Let's introduce a health check failure in the **region 1** origin pool,
 
-1. Navigate to [virtual server instances](https://{DomainName}/vpc/compute/vs)
+1. Navigate to [virtual server instances](https://{DomainName}/vpc/compute/vs).
 2. Click **three dots(...)** next to the server(s) running in **zone 1** of **region 1** and click **Stop**.
 3. **REPEAT** the same for server(s) running in **zone 2** of **region 1**.
 4. Return to GLB under CIS service and wait until the health status changes to **Critical**. 
