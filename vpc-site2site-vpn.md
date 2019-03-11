@@ -105,7 +105,7 @@ Possible flow / toc:
    {: codeblock}
 2. Go to the script directory in the **vpc-site2site-vpn** directory:
    ```sh
-   cd vpc-tutorials/vpc-onprem-integration
+   cd vpc-tutorials/vpc-site2site-vpn
    ```
    {: codeblock}
 
@@ -119,17 +119,17 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
     {: codeblock}
 2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
    ```sh
-   ibmcloud resource service-instance-create vpc-vpn-cos cloud-object-storage lite global
+   ibmcloud resource service-instance-create vpc-site2site-vpn-cos cloud-object-storage lite global
    ```
    {: codeblock}
 3. Create a service key with role **Writer**:
    ```sh
-   ibmcloud resource service-key-create vpc-vpn-cos-key Writer --instance-name vpc-vpc-cos
+   ibmcloud resource service-key-create vpc-site2site-vpn-cos-key Writer --instance-name vpc-site2site-vpc-cos
    ```
    {: codeblock}
 4. Obtain the service key details in JSON format:
    ```sh
-   ibmcloud resource service-key vpc-vpn-cos-key --output json | jq '.[] | .credentials'
+   ibmcloud resource service-key vpc-site2site-vpn-cos-key --output json | jq '.[] | .credentials'
    ```
    {: codeblock}
    Copy the output, a JSON object, into a new file **credentials.json** in the current directory. It will be used later on by the app.
@@ -153,7 +153,7 @@ In the following, you will download the script to set up your VPC environment an
 ### Create a Virtual Private Cloud baseline resources
 {: #create-vpc}
 
-To create your own {{site.data.keyword.vpc_short}}, review and run the script **vpc-vpn-baseline-create.sh**.
+To create your own {{site.data.keyword.vpc_short}}, review and run the script **vpc-site2site-vpn-baseline-create.sh**.
 This will result in creating the following resources:
 - 1 VPC named ...
 - 2 subnets within the VPC
@@ -166,7 +166,7 @@ Review the *data.sh* file created.  It has useful information and parameters
 ## Create a VPC/VPN
 
 When the local and remote VPNs connect to each other they will set up a security association using
-[IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre shared key and then securly communicate using
+[IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre-shared key and then securely communicate using the
 [IPsec](https://en.wikipedia.org/wiki/IPsec) protocol.
 
 A VPN gateway working with a local router will forward packets to the remote VPN gateway peer.
@@ -192,10 +192,10 @@ This can be done by simply running the
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
 1. Under **New virtual private cloud** section:  
-   * Enter **pfqIA** as name for your VPC.  
+   * Enter **vpns2s** as name for your VPC.  
    * Select a **Resource group**.  
 1. Under **New subnet for VPC**:  
-   * As a unique name enter **pfqIAleft**.  
+   * As a unique name enter **vpns2sleft**.  
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 1. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
@@ -205,7 +205,7 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 
 1. Click **New subnet**
 1. In the New Subnet for VPC
-   * As a unique name enter **pfqIAright**.  
+   * As a unique name enter **vpns2sright**.  
    * Select the VPC created above from the Virual Private Cloud drop down
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the remaining fields unchanged.
 
