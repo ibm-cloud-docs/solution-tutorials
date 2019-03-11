@@ -13,34 +13,28 @@ lastupdated: "2019-03-11"
 {:pre: .pre}
 {:important: .important}
 
-# VPC/VPN gateway for secure and private on premises access to cloud resources
+# Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
 {: #vpc-vpn}
 
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-IBM offers a number of ways to securely extend an on premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on premises capabilities to the {{site.data.keyword.cloud_notm}} services.
+IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
-This tutorial walks you through connecting an on premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
-The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure comunication.
-To further demonstrate secure and private access, you will deploy a microservice on a VPC/VSI to access {{site.data.keyword.cos_short}}, COS, representing a line of business application.
+This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
+The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure comunication. To further demonstrate secure and private access, you will deploy a microservice on a VPC/VSI to access {{site.data.keyword.cos_short}}, COS, representing a line of business application.
 The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}.
-Egress charges to on premises as well as charges for any services, like COS, used in this tutorial.
-An on premises computer will access COS microservice. All traffic will flow through the VPN and privately through {{site.data.keyword.cloud_notm}}.
+CLARIFY: Egress charges to on-premises as well as charges for any services, like COS, used in this tutorial.
+An on-premises computer will access COS microservice. All traffic will flow through the VPN and privately through {{site.data.keyword.cloud_notm}}.
 
-There are many popular on premises VPN site-to-site gateways available.
-This tutorial demonstrates a VPC/VPN gateway connection to the popular [strongSwan](https://www.strongswan.org/) VPN Gateway.
-The strongSwan gateway will be installed on a VSI in the IBM cloud.
-This is not the most effective way for inter cloud communication.
-It only demonstrates the connection of an example on premises VPN Gateway to the IBM VPC/VPN gateway.
+There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
 
 {:shortdesc}
-In short, using VPC/VPN Gateway and CSE you can
+In short, using a VPC/VPN Gateway and a CSE you can
 
-- connect your on premises computers to workloads running in the cloud
-- insure private and low cost connectivity to cloud services
-- connect your on cloud based systems to on premises computers
-
+- connect your on-premises computers to workloads running in {{site.data.keyword.cloud_notm}},
+- insure private and low cost connectivity to cloud services,
+- connect your cloud-based systems to on-premises computers.
 
 ## Objectives
 {: #objectives}
@@ -162,7 +156,7 @@ The router will be initialized with the CIDR range of the remote network and rou
 The local VPN gateway will receive the packets that match the remote CIDR range and forward them to the remote VPN gateway over the IPsec encrypted connection.
 The local VPN gateway will receive the packets from the remote VPN gateway that match the local CIDR range and forward them to the local network.
 
-The end result will be an integration of your IBM cloud network of devices and services with your on premises network fabric.
+The end result will be an integration of your IBM cloud network of devices and services with your on-premises network fabric.
 
 Each VPN will be configured with the following information:
 - Shared secret key - a string of characters, like a password, that must be the same on both VPNs
@@ -172,7 +166,7 @@ Each VPN will be configured with the following information:
 
 In addition there will be a collection of IKE and IPsec configuration parameters that the VPNs must agree.
 
-In this tutorial there is a left side (on premises) and a right side (in the cloud) of the architecture as shown in the diagram above.
+In this tutorial there is a left side (on-premises) and a right side (in the cloud) of the architecture as shown in the diagram above.
 The left strongswan vsi can not be configured until the IP address of the remote VPN is known.
 So let us create the right side VPC/VPN.
 This can be done by simply running the 
