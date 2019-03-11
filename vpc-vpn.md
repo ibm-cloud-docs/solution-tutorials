@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-08"
+lastupdated: "2019-03-11"
 
 ---
 
@@ -19,19 +19,14 @@ lastupdated: "2019-03-08"
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-IBM has a number of ways to securely extend an on premises computer network with resources in the IBM cloud.
-Enjoy the elasticity of provisioning servers as you need them and removing them when no longer required and only paying for what you use.
-Easily connect your on premise capabilities to the 100s of unique IBM services.
-Allow the cloud based systems that you control to access on premises systems of record.
+IBM offers a number of ways to securely extend an on premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
-This tutorial demonstrates the connection of an on premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (VPC/VPN gateway).
-First a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists ACLs, Security Groups and Virtual Server Instance (VSI) will be created. 
-The VPC/VPN gateway will establish a [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on premises VPN gateway.
-The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure comunication.
-To further demonstrate secure and private access a microservice will be deployed on a VPC/VSI to access IBMs Cloud Object Storage, COS, representing a line of business application.
-The COS service has a Cloud Service Endpoint, CSE, that can be used for private no cost ingress/egress within the IBM cloud.
+This tutorial walks you through connecting an on premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
+The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure comunication.
+To further demonstrate secure and private access, you will deploy a microservice on a VPC/VSI to access {{site.data.keyword.cos_short}}, COS, representing a line of business application.
+The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}.
 Egress charges to on premises as well as charges for any services, like COS, used in this tutorial.
-An on premises computer will access COS microservice.  All traffic will flow through the VPN and privately through IBMs cloud.
+An on premises computer will access COS microservice. All traffic will flow through the VPN and privately through {{site.data.keyword.cloud_notm}}.
 
 There are many popular on premises VPN site-to-site gateways available.
 This tutorial demonstrates a VPC/VPN gateway connection to the popular [strongSwan](https://www.strongswan.org/) VPN Gateway.
@@ -60,7 +55,7 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
 - [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
 - [{{site.data.keyword.vpn_full}}](https://{DomainName}/vpc/provision/vpngateway)
-- [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
+- [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
