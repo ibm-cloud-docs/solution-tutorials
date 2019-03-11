@@ -21,7 +21,7 @@ tar cf - \
   --exclude=extended-cloud-security.md \
   --exclude="vpc-globally-available.md" \
   --exclude="vpc-vpn.md" \
-  --exclude="secure-management-bastion-server.md" \
+  --exclude="vpc-secure-management-bastion-server.md" \
   --exclude="images/solution41-*" \
   --exclude="images/solution46-*" \
   --exclude="images/solution47-*" \
