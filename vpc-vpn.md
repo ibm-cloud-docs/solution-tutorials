@@ -19,44 +19,32 @@ lastupdated: "2019-03-08"
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-This tutorial walks you through creating a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists ACLs, Security Groups and Virtual Server Instance (VSI). 
-Then a secure Virtual Private Network (VPN) gateway will be created within the VPC (VPC/VPN gateway).
+IBM has a number of ways to securely extend an on premises computer network with resources in the IBM cloud.
+Enjoy the elasticity of provisioning servers as you need them and removing them when no longer required and only paying for what you use.
+Easily connect your on premise capabilities to the 100s of unique IBM services.
+Allow the cloud based systems that you control to access on premises systems of record.
+
+This tutorial demonstrates the connection of an on premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (VPC/VPN gateway).
+First a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists ACLs, Security Groups and Virtual Server Instance (VSI) will be created. 
 The VPC/VPN gateway will establish a [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on premises VPN gateway.
-The IBM Cloud Object Storage, COS, service has a Cloud Service Endpoint, CSE, that can be used for private no cost egress within the IBM cloud.
-Egress charges for data to on premises will still be incurred.
-To further demonstrate secure and private access a microservice will be deployed on a VPC/VSI to access COS representing a line of business application.
-An on premises computer that can access COS with all traffic flowing through the VPN and privately through IBMs cloud.
+The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure comunication.
+To further demonstrate secure and private access a microservice will be deployed on a VPC/VSI to access IBMs Cloud Object Storage, COS, representing a line of business application.
+The COS service has a Cloud Service Endpoint, CSE, that can be used for private no cost ingress/egress within the IBM cloud.
+Egress charges to on premises as well as charges for any services, like COS, used in this tutorial.
+An on premises computer will access COS microservice.  All traffic will flow through the VPN and privately through IBMs cloud.
 
 There are many popular on premises VPN site-to-site gateways available.
 This tutorial demonstrates a VPC/VPN gateway connection to the popular [strongSwan](https://www.strongswan.org/) VPN Gateway.
-The strongSwan gateway will be installed on a VSI in the IBM cloud,
-definitely not the most effective way for inter cloud communication,
-but ideal for demonstrating the configuration of a typical on premises VPN Gateway.
+The strongSwan gateway will be installed on a VSI in the IBM cloud.
+This is not the most effective way for inter cloud communication.
+It only demonstrates the connection of an example on premises VPN Gateway to the IBM VPC/VPN gateway.
 
 {:shortdesc}
 In short, using VPC/VPN Gateway and CSE you can
 
 - connect your on premises computers to workloads running in the cloud
 - insure private and low cost connectivity to cloud services
-
-Possible flow / toc:
-- git clone https://github.com/IBM-Cloud/vpc-tutorials
-- run shell script to create vpc, subnets, sg, network acl, instances, ...
-- explain that there is a second shell script that does the rest of this stuff:
-- gui description of how to create resources for cos and vpn (Either by CLI or UI): Obtain credentials for COS (and provision COS if not present). Copy into credentials file.
-- on cloud vsi:
-  - git clone https://github.com/IBM-Cloud/vpc-tutorials
-  - run script for cos micro service
-- on strongswan vsi:
-  - git clone https://github.com/IBM-Cloud/vpc-tutorials
-  - run script to install and configure strong swan
-  - curl micro service - works
-  - shut down ipsec
-  - curl micro service - fails
-  - start up ipsec
-  - curl micro service - works
-- clean up resources
-
+- connect your on cloud based systems to on premises computers
 
 
 ## Objectives
@@ -85,62 +73,55 @@ The following diagram shows the virtual private cloud consisting of a bastion an
   ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 </p>
 
+Notes:
+
 1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the VSI using the private SSH key and installs the microservice software and verifies it is working
 1. A vsi with associated floating-ip will be provisioned to hold the open source VPN Gateway, note the public ip address
 1. A VPC/VPN Gateway is provisioned, note the public IP address
 1. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses
 1. Verify connectivity through the VPN Gateways by accessin the microservice directly through the vpn site-to-site connection
 
+Possible flow / toc:
+- git clone https://github.com/IBM-Cloud/vpc-tutorials
+- run shell script to create vpc, subnets, sg, network acl, instances, ...
+- explain that there is a second shell script that does the rest of this stuff:
+- gui description of how to create resources for cos and vpn (Either by CLI or UI): Obtain credentials for COS (and provision COS if not present). Copy into credentials file.
+- on cloud vsi:
+  - git clone https://github.com/IBM-Cloud/vpc-tutorials
+  - run script for cos micro service
+- on strongswan vsi:
+  - git clone https://github.com/IBM-Cloud/vpc-tutorials
+  - run script to install and configure strong swan
+  - curl micro service - works
+  - shut down ipsec
+  - curl micro service - fails
+  - start up ipsec
+  - curl micro service - works
+- clean up resources
+
 
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). You need the optional CLI infrastructure plugin.
-
+- Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). You need the optional CLI infrastructure plugin.
+- Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc/vpc-user-permissions.html).
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc/getting-started.html#prerequisites).
 
 ## Get the code
+{: #setup}
 
 1. Get the application's code:
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-tutorial
    ```
    {: codeblock}
-2. Go to the script directory in the **vpc-tutorial** directory:
+2. Go to the script directory in the **vpc-onprem-integration** directory:
    ```sh
-   cd vpc-tutorials/TODO
+   cd vpc-tutorials/vpc-onprem-integration
    ```
    {: codeblock}
 
-## Create services
-{: #setup}
-
-In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
-
-1. Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
-    ```sh
-    ibmcloud login
-    ```
-    {: codeblock}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: codeblock}
-2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
-   ```sh
-   ibmcloud resource service-instance-create vpc-vpn-cos cloud-object-storage lite global
-   ```
-   {: codeblock}
-3. Create a service key with role **Writer**:
-   ```sh
-   ibmcloud resource service-key-create vpc-vpn-cos-key Writer --instance-name vpc-vpc-cos
-   ```
-   {: codeblock}
-4. Obtain the service key details in JSON format:
-   ```sh
-   ibmcloud resource service-key vpc-vpn-cos-key --output json | jq '.[] | .credentials'
-   ```
-   {: codeblock}
-   Copy the output, a JSON object, into a new file **credentials.json** in the current directory. It will be used later on by the app.
 
 ## Deploy a virtual app server in a virtual private cloud
 
@@ -151,14 +132,56 @@ In the following, you will download the script to set up your VPC environment an
 
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc/vpc-user-permissions.html).
+1. Verify that you are logged in by displaying some information
+    ```sh
+    ibmcloud target
+    ```
+    {: codeblock}
 
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc/getting-started.html#prerequisites).
-
-## Create a Virtual Private Cloud
+## Create a Virtual Private Cloud Baseline Resources
 {: #create-vpc}
 
 To create your own {{site.data.keyword.vpc_short}},
+review and run the script **vpc-vpn-baseline-create.sh**
+This will result in creating the following resources:
+- vpc
+- 2 subnets
+- security group with ingress and egress rules
+- 2 vsis
+
+    ```sh
+    ibmcloud target
+    ```
+    {: codeblock}
+
+Review the *data.sh* file created.  It has useful information and parameters
+
+## Create a VPC/VPN
+
+When the local and remote VPNs connect to each other they will set up a security association using
+[IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre shared key and then securly communicate using
+[IPsec](https://en.wikipedia.org/wiki/IPsec) protocol.
+
+A VPN gateway working with a local router will forward packets to the remote VPN gateway peer.
+The router will be initialized with the CIDR range of the remote network and route packets that match the CIDR to the local VPN gateway.
+The local VPN gateway will receive the packets that match the remote CIDR range and forward them to the remote VPN gateway over the IPsec encrypted connection.
+The local VPN gateway will receive the packets from the remote VPN gateway that match the local CIDR range and forward them to the local network.
+
+The end result will be an integration of your IBM cloud network of devices and services with your on premises network fabric.
+
+Each VPN will be configured with the following information:
+- Shared secret key - a string of characters, like a password, that must be the same on both VPNs
+- IP address of the remote VPN
+- CIDR block of the local network that is accessible by the remote network
+- CIDR block of the remote network that is accessible by the local network
+
+In addition there will be a collection of IKE and IPsec configuration parameters that the VPNs must agree.
+
+In this tutorial there is a left side (on premises) and a right side (in the cloud) of the architecture as shown in the diagram above.
+The left strongswan vsi can not be configured until the IP address of the remote VPN is known.
+So let us create the right side VPC/VPN.
+This can be done by simply running the 
+
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
 1. Under **New virtual private cloud** section:  
@@ -179,6 +202,31 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
    * Select the VPC created above from the Virual Private Cloud drop down
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the remaining fields unchanged.
 
+
+## Create services
+In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
+
+1. Verify that you have followed the prerequisite steps of logging in
+    ```sh
+    ibmcloud target
+    ```
+    {: codeblock}
+2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
+   ```sh
+   ibmcloud resource service-instance-create vpc-vpn-cos cloud-object-storage lite global
+   ```
+   {: codeblock}
+3. Create a service key with role **Writer**:
+   ```sh
+   ibmcloud resource service-key-create vpc-vpn-cos-key Writer --instance-name vpc-vpc-cos
+   ```
+   {: codeblock}
+4. Obtain the service key details in JSON format:
+   ```sh
+   ibmcloud resource service-key vpc-vpn-cos-key --output json | jq '.[] | .credentials'
+   ```
+   {: codeblock}
+   Copy the output, a JSON object, into a new file **credentials.json** in the current directory. It will be used later on by the app.
 
 ## Remove resources
 {: #removeresources}
