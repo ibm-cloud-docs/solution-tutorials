@@ -88,8 +88,8 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [Web Apps](https://{DomainName}/developer/appservice/dashboard).
 2. Under **Start from the Web**, section click on the **Get Started** button.
-3. Select the `Express.js Basic` and then `Create Project` to create a Node.js starter application.
-4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
+3. Select the `Node.js Web App with Express.js` tile and then `Create app` to create a Node.js starter application.
+4. Enter a **name** `mynodestarter`.
 
 ## Configure DevOps delivery pipeline
 {: #create_devops}
