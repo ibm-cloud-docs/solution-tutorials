@@ -45,10 +45,12 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-  ![Architecture](images/solution47-secure-management-bastion-server/ArchitectureDiagram.png)
+  ![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
 
-1. The user does this
-2. Then that
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the bastion server using the private SSH key.
+2. The admin assigns a maintenance security group with proper outbound rules.
+3. The admin connects(SSH) securely to the instance's private IP address via bastion server to install or update any required software eg., a web server
+4. The internet user makes an HTTP/HTTPS request to the web server.
 
 ## Before you begin
 {: #prereqs}
@@ -70,7 +72,7 @@ To create your own {{site.data.keyword.vpc_short}},
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
 1. Uncheck SSH and ping from the **Default security group**.
 4. Under **New subnet for VPC**:  
-   * As a unique name enter **vpc-bastion-subnet**.  
+   * As a unique name enter **vpc-secure-bastion-subnet**.  
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
@@ -116,7 +118,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
 1. Under **VPC and subnets** select the **Subnets** tab, then select **vpc-secure-bastion-subnet**.
-2. Click on **Attached instances** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
+2. Click on **Attached instances** and provision a **New instance** called **vpc-secure-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
 3. Select a **Location** and make sure to later use the same location again.
 4. To create a new **SSH key**, click **New key**
    * Enter **vpc-ssh-key** as key name.
@@ -124,7 +126,7 @@ With the subnet and security group already in place, next, create the bastion vi
    * Copy the contents of your existing local SSH key and paste it under **Public key**.  
    * Click **Add SSH key**.
 5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
-   * Make sure that **vpc-secure-bastion-subnet** is selected as the subnet.
+   * Make sure that **vpc-secure-subnet** is selected as the subnet.
    * Uncheck the default security group and mark **vpc-secure-bastion-sg**.
    * Click **Save**.
 6. Click **Create virtual server instance**.
@@ -201,7 +203,7 @@ With access to the bastion working, continue and create the security group for m
 	</table>
 
 3. Create the security group.
-4. Navigate to **All Security Groups for VPC**, then select **vpc-secure-bastion-sg**.
+4. Navigate to **All Security Groups for VPC**, then select **vpc-secure-sg**.
 5. Finally, edit the security group and add the following **outbound** rule.
 
    <table>
@@ -232,7 +234,7 @@ To create a new subnet for the frontend,
 
 1. Click **VPC and subnets** under **Network** on the left pane
 2. Click **Subnets**, then **New subnet**.  
-   * Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.  
+   * Enter **vpc-secure-frontend-subnet** as name, then select the VPC you created.  
    * Select a location.  
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
@@ -243,7 +245,7 @@ To create a new subnet for the frontend,
 
 To create a new security group for the frontend:  
 1. Click **Security groups** under Network, then **New security group**.  
-2. Enter **vpc-pubpriv-frontend-sg** as name and select the VPC you created earlier.   
+2. Enter **vpc-secure-frontend-sg** as name and select the VPC you created earlier.   
 3. Click **Create security group**.  
 
 ### Create a frontend virtual server instance
@@ -252,11 +254,11 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the frontend subnet under **Subnets**.
 2. Click **Attached instances**, then **New instance**.
-3. Enter a unique name, **vpc-pubpriv-frontend-vsi**, select the VPC your created earlier, then the same **Location** as before.
+3. Enter a unique name, **vpc-secure-frontend-vsi**, select the VPC your created earlier, then the same **Location** as before.
 4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
 5. For **SSH keys** pick the SSH key you created earlier for the bastion.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups   
-   * Select **vpc-pubpriv-frontend-subnet** as the subnet.  
+   * Select **vpc-secure-frontend-subnet** as the subnet.  
    * Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg**.  
    * Click **Save**.  
    * Click **Create virtual server instance**.  
