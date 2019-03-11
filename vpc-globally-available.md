@@ -84,7 +84,7 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
 4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked.
 5. Under **New subnet for VPC**:  
-   * As a unique name enter **vpc-region1-subnet**.  
+   * As a unique name enter **vpc-region1-zone1-subnet**.  
    * Select a location (e.g., Dallas), let's call this **region 1** and a zone in region 1 (e.g., Dallas 1), let's call this **zone 1**.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 6. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
@@ -106,7 +106,7 @@ Once the status of the subnets change to **Available**,
 
 1. Click on **vpc-region1-zone1-subnet** and click **Attached instances**, then **New instance**.
 2. Enter a unique name and pick **vpc-region1-zone1-vsi**. Then, select the VPC your created earlier and the **Location** as before.
-3. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
+3. Choose any **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 4. For **SSH keys** pick the SSH key you created initially.
 5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
    * Select **vpc-region1-zone1-subnet** as the subnet.   

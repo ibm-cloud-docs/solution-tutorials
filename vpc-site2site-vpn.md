@@ -13,40 +13,32 @@ lastupdated: "2019-03-11"
 {:pre: .pre}
 {:important: .important}
 
-# VPC/VPN gateway for secure and private on premises access to cloud resources
+# Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
 {: #vpc-vpn}
 
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-IBM offers a number of ways to securely extend an on premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on premises capabilities to the {{site.data.keyword.cloud_notm}} services.
+IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
-This tutorial walks you through connecting an on premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
-The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure comunication.
-To further demonstrate secure and private access, you will deploy a microservice on a VPC/VSI to access {{site.data.keyword.cos_short}}, COS, representing a line of business application.
-The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}.
-Egress charges to on premises as well as charges for any services, like COS, used in this tutorial.
-An on premises computer will access COS microservice. All traffic will flow through the VPN and privately through {{site.data.keyword.cloud_notm}}.
+This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
+The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure comunication. To further demonstrate secure and private access, you will deploy a microservice on a VPC/VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
+The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}. An on-premises computer will access the COS microservice. All traffic will flow through the VPN and privately through {{site.data.keyword.cloud_notm}}.
 
-There are many popular on premises VPN site-to-site gateways available.
-This tutorial demonstrates a VPC/VPN gateway connection to the popular [strongSwan](https://www.strongswan.org/) VPN Gateway.
-The strongSwan gateway will be installed on a VSI in the IBM cloud.
-This is not the most effective way for inter cloud communication.
-It only demonstrates the connection of an example on premises VPN Gateway to the IBM VPC/VPN gateway.
+There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
 
 {:shortdesc}
-In short, using VPC/VPN Gateway and CSE you can
+In short, using a VPC with Virtual Private Network gateway and a Cloud Service Endpoint you can
 
-- connect your on premises computers to workloads running in the cloud
-- insure private and low cost connectivity to cloud services
-- connect your on cloud based systems to on premises computers
-
+- connect your on-premises computers to workloads running in {{site.data.keyword.cloud_notm}},
+- insure private and low cost connectivity to cloud services,
+- connect your cloud-based systems to on-premises computers.
 
 ## Objectives
 {: #objectives}
 
-* Access a virtual private cloud environment from an on-premises data center or (virtual) private cloud
-* Securely reach cloud resources using private service endpoints.
+* Access a virtual private cloud environment from an on-premises data center or (virtual) private cloud.
+* Securely reach cloud services using private service endpoints.
 
 ## Services used
 {: #services}
@@ -111,92 +103,11 @@ Possible flow / toc:
    git clone https://github.com/IBM-Cloud/vpc-tutorial
    ```
    {: codeblock}
-2. Go to the script directory in the **vpc-onprem-integration** directory:
+2. Go to the script directory in the **vpc-site2site-vpn** directory:
    ```sh
    cd vpc-tutorials/vpc-onprem-integration
    ```
    {: codeblock}
-
-
-## Deploy a virtual app server in a virtual private cloud
-
-In the following, you will download the script to set up your VPC environment and for a simple app to interface with the storage service.
-
-
-### Set up the VPC resources
-
-{: #prereqs}
-
-1. Verify that you are logged in by displaying some information
-    ```sh
-    ibmcloud target
-    ```
-    {: codeblock}
-
-## Create a Virtual Private Cloud Baseline Resources
-{: #create-vpc}
-
-To create your own {{site.data.keyword.vpc_short}},
-review and run the script **vpc-vpn-baseline-create.sh**
-This will result in creating the following resources:
-- vpc
-- 2 subnets
-- security group with ingress and egress rules
-- 2 vsis
-
-    ```sh
-    ibmcloud target
-    ```
-    {: codeblock}
-
-Review the *data.sh* file created.  It has useful information and parameters
-
-## Create a VPC/VPN
-
-When the local and remote VPNs connect to each other they will set up a security association using
-[IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre shared key and then securly communicate using
-[IPsec](https://en.wikipedia.org/wiki/IPsec) protocol.
-
-A VPN gateway working with a local router will forward packets to the remote VPN gateway peer.
-The router will be initialized with the CIDR range of the remote network and route packets that match the CIDR to the local VPN gateway.
-The local VPN gateway will receive the packets that match the remote CIDR range and forward them to the remote VPN gateway over the IPsec encrypted connection.
-The local VPN gateway will receive the packets from the remote VPN gateway that match the local CIDR range and forward them to the local network.
-
-The end result will be an integration of your IBM cloud network of devices and services with your on premises network fabric.
-
-Each VPN will be configured with the following information:
-- Shared secret key - a string of characters, like a password, that must be the same on both VPNs
-- IP address of the remote VPN
-- CIDR block of the local network that is accessible by the remote network
-- CIDR block of the remote network that is accessible by the local network
-
-In addition there will be a collection of IKE and IPsec configuration parameters that the VPNs must agree.
-
-In this tutorial there is a left side (on premises) and a right side (in the cloud) of the architecture as shown in the diagram above.
-The left strongswan vsi can not be configured until the IP address of the remote VPN is known.
-So let us create the right side VPC/VPN.
-This can be done by simply running the 
-
-
-1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
-1. Under **New virtual private cloud** section:  
-   * Enter **pfqIA** as name for your VPC.  
-   * Select a **Resource group**.  
-1. Under **New subnet for VPC**:  
-   * As a unique name enter **pfqIAleft**.  
-   * Select a location.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-1. Click **Create virtual private cloud** to provision the instance.
-
-To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
-
-1. Click **New subnet**
-1. In the New Subnet for VPC
-   * As a unique name enter **pfqIAright**.  
-   * Select the VPC created above from the Virual Private Cloud drop down
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the remaining fields unchanged.
-
 
 ## Create services
 In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
@@ -222,6 +133,83 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    ```
    {: codeblock}
    Copy the output, a JSON object, into a new file **credentials.json** in the current directory. It will be used later on by the app.
+
+
+## Deploy a virtual app server in a virtual private cloud
+
+In the following, you will download the script to set up your VPC environment and for a simple app to interface with the storage service.
+
+
+### Set up the VPC resources
+
+{: #prereqs}
+
+1. Verify that you are logged in by displaying some information
+    ```sh
+    ibmcloud target
+    ```
+    {: codeblock}
+
+### Create a Virtual Private Cloud baseline resources
+{: #create-vpc}
+
+To create your own {{site.data.keyword.vpc_short}}, review and run the script **vpc-vpn-baseline-create.sh**.
+This will result in creating the following resources:
+- 1 VPC named ...
+- 2 subnets within the VPC
+- X security groups with ingress and egress rules
+- 2 VSIs
+
+
+Review the *data.sh* file created.  It has useful information and parameters
+
+## Create a VPC/VPN
+
+When the local and remote VPNs connect to each other they will set up a security association using
+[IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre shared key and then securly communicate using
+[IPsec](https://en.wikipedia.org/wiki/IPsec) protocol.
+
+A VPN gateway working with a local router will forward packets to the remote VPN gateway peer.
+The router will be initialized with the CIDR range of the remote network and route packets that match the CIDR to the local VPN gateway.
+The local VPN gateway will receive the packets that match the remote CIDR range and forward them to the remote VPN gateway over the IPsec encrypted connection.
+The local VPN gateway will receive the packets from the remote VPN gateway that match the local CIDR range and forward them to the local network.
+
+The end result will be an integration of your IBM cloud network of devices and services with your on-premises network fabric.
+
+Each VPN will be configured with the following information:
+- Shared secret key - a string of characters, like a password, that must be the same on both VPNs
+- IP address of the remote VPN
+- CIDR block of the local network that is accessible by the remote network
+- CIDR block of the remote network that is accessible by the local network
+
+In addition there will be a collection of IKE and IPsec configuration parameters that the VPNs must agree.
+
+In this tutorial there is a left side (on-premises) and a right side (in the cloud) of the architecture as shown in the diagram above.
+The left strongswan vsi can not be configured until the IP address of the remote VPN is known.
+So let us create the right side VPC/VPN.
+This can be done by simply running the 
+
+
+1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
+1. Under **New virtual private cloud** section:  
+   * Enter **pfqIA** as name for your VPC.  
+   * Select a **Resource group**.  
+1. Under **New subnet for VPC**:  
+   * As a unique name enter **pfqIAleft**.  
+   * Select a location.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+1. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+1. Click **Create virtual private cloud** to provision the instance.
+
+To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+
+1. Click **New subnet**
+1. In the New Subnet for VPC
+   * As a unique name enter **pfqIAright**.  
+   * Select the VPC created above from the Virual Private Cloud drop down
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the remaining fields unchanged.
+
+
 
 ## Remove resources
 {: #removeresources}
