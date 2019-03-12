@@ -105,7 +105,7 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 Once the status of the subnets change to **Available**, 
 
 1. Click on **vpc-region1-zone1-subnet** and click **Attached instances**, then **New instance**.
-2. Enter a unique name and pick **vpc-region1-zone1-vsi**. Then, select the VPC your created earlier and the **Location** as before.
+2. Enter a unique name and pick **vpc-region1-zone1-vsi**. Then, select the VPC your created earlier and the **Location** along with the **zone** as before.
 3. Choose any **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 4. For **SSH keys** pick the SSH key you created initially.
 5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
