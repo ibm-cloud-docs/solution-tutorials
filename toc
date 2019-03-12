@@ -71,7 +71,9 @@ Solution Tutorials
         configuring-IPSEC-VPN.md
         vlan-spanning.md
         web-app-private-network.md
+        vpc-secure-management-bastion-server.md
         vpc-public-app-private-backend.md
+        vpc-multi-region.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
@@ -124,6 +126,8 @@ Solution Tutorials
         configuring-IPSEC-VPN.md
         vlan-spanning.md
         web-app-private-network.md
+        vpc-secure-management-bastion-server.md
         vpc-public-app-private-backend.md
+        vpc-multi-region.md
 
     {: .navgroup-end}

@@ -573,7 +573,6 @@
             },
             {
                 "name": "Securely access remote instances with a bastion host",
-                "hidden": true,
                 "url": "vpc-secure-management-bastion-server.html",
                 "description": "Deploy a bastion host to securely access remote instances within a virtual private cloud.",
                 "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
@@ -598,10 +597,9 @@
             },
             {
                 "name": "Deploy isolated workloads across multiple locations and zones",
-                "hidden": true,
-                "url": "vpc-globally-available.html",
+                "url": "vpc-multi-region.html",
                 "description": "Deploy a workload in virtual private clouds across multiple zones and regions. Distribute traffic across zones with local and global load balancers.",
-                "imgSrc": "images/solution41-vpc-globally-available/Architecture.png",
+                "imgSrc": "images/solution41-vpc-multi-region/Architecture.png",
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",

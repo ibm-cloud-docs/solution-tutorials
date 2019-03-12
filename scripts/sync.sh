@@ -19,8 +19,8 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=autoscale-virtual-server.md \
   --exclude=extended-cloud-security.md \
-  --exclude="vpc-globally-available.md" \
-  --exclude="vpc-vpn.md" \
+  --exclude="vpc-multi-region.md" \
+  --exclude="vpc-site2site-vpn.md" \
   --exclude="vpc-secure-management-bastion-server.md" \
   --exclude="images/solution41-*" \
   --exclude="images/solution46-*" \

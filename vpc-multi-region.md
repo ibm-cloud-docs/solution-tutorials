@@ -16,8 +16,8 @@ lastupdated: "2019-03-08"
 {:pre: .pre}
 {:important: .important}
 
-# VPC with globally available deployment
-{: #vpc-globally-available}
+# Deploy isolated workloads across multiple locations and zones
+{: #vpc-multi-region}
 
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
@@ -51,7 +51,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-  ![Architecture](images/solution41-vpc-globally-available/Architecture.png)
+  ![Architecture](images/solution41-vpc-multi-region/Architecture.png)
 
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
 2. The admin creates a load balancer with a backend pool of servers of subnets in different zones of region 1 and a frontend listener. Repeats the same in region 2.
