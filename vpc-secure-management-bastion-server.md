@@ -260,14 +260,11 @@ To create a virtual server instance in the newly created subnet:
    * Click **Save**.  
 7. Click **Create virtual server instance**.  
 
-## Maintenance of private instance
-{: #maintenance-private}
-
-For administrative work on the private servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
-
 
 ### Enable the maintenance security group
-Let's enable the maintenance security group for the frontend and backend server.
+For administrative work on the private servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
+
+Let's enable the maintenance security group for the server.
 
 1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.  
 2. Click **Attached interfaces**, then **Edit interfaces**.  
