@@ -309,8 +309,8 @@ To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to
 {: #removeresources}
 
 1. Switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
-2. Once the VSI is gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnet.
-4. After the subnet has been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
+2. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnets.
+4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
