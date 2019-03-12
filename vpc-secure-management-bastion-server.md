@@ -17,10 +17,10 @@ lastupdated: "2019-03-12"
 {:pre: .pre}
 {:important: .important}
 
-# Secure management of VSIs using Bastion server
+# Securely access remote instances with a bastion host
 {: #secure-management-vsi-bastion-server}
 
-This tutorial walks you through on how a bastion VSI is deployed to securely access the other VSIs by SSH. Bastion servers or hosts are instances that sit within your public subnet and are typically accessed using SSH. Once remote connectivity has been established with the bastion host, it then acts as a **jump** server, allowing you to use SSH to log in to other instances (within private subnets) deeper within your VPC.
+This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is a instance that is provisioned in a public subnet and can be accessed via SSH. Once setup, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
 
 To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 {:shortdesc}
@@ -81,8 +81,12 @@ To create your own {{site.data.keyword.vpc_short}},
 
 To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
-## Create a bastion security group
+## Setup a bastion host
 {: #bastion-security-group}
+
+In this section, you will create and configure a bastion host along with a security group in a seperate subnet.
+
+### Create and configure bastion security group
 
 Let's create a security group and configure inbound rules to your bastion VSI.
 
@@ -141,6 +145,51 @@ Once your bastion's floating IP address is active, try connecting to it using **
    ```
    {:pre}
 
+
+## Create a private subnet, security group and VSI
+{: #frontend-subnet-vsi}
+
+In this section, you will create a private subnet with virtual server instance and a security group. By default, any subnet created in a VPC is private.
+
+### Create a private subnet
+
+To create a new private subnet,
+
+1. Click **VPC and subnets** under **Network** on the left pane
+2. Click **Subnets**, then **New subnet**.  
+   * Enter **vpc-secure-private-subnet** as name, then select the VPC you created.  
+   * Select a location.  
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+4. Switch the **Public gateway** to **Attached**. 
+5. Click **Create subnet** to provision it.
+
+### Create a private security group
+
+To create a new security group:  
+1. Click **Security groups** under Network, then **New security group**.  
+2. Enter **vpc-secure-private-sg** as name and select the VPC you created earlier.   
+3. Click **Create security group**.  
+
+### Create a private virtual server instance
+
+To create a virtual server instance in the newly created subnet:
+
+1. Click on the private subnet under **Subnets**.
+2. Click **Attached instances**, then **New instance**.
+3. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created earlier, then the same **Location** as before.
+4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
+5. For **SSH keys** pick the SSH key you created earlier for the bastion.
+6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups   
+   * Select **vpc-secure-private-subnet** as the subnet.  
+   * Uncheck the default security and group and activate **vpc-secure-private-sg**.  
+   * Click **Save**.  
+7. Click **Create virtual server instance**.  
+
+## Maintenance of private VSI
+{: #maintenance-frontend-backend}
+
+For administrative work on the private servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
 
 ### Create a security group for system maintenance
 
@@ -223,50 +272,6 @@ With access to the bastion working, continue and create the security group for m
 	   </tbody>
 	</table>
 
-## Create a private subnet, security group and VSI
-{: #frontend-subnet-vsi}
-
-In this section, you will create a private subnet with virtual server instance and a security group. By default, any subnet created in a VPC is private.
-
-### Create a private subnet
-
-To create a new private subnet,
-
-1. Click **VPC and subnets** under **Network** on the left pane
-2. Click **Subnets**, then **New subnet**.  
-   * Enter **vpc-secure-private-subnet** as name, then select the VPC you created.  
-   * Select a location.  
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-4. Switch the **Public gateway** to **Attached**. 
-5. Click **Create subnet** to provision it.
-
-### Create a private security group
-
-To create a new security group:  
-1. Click **Security groups** under Network, then **New security group**.  
-2. Enter **vpc-secure-private-sg** as name and select the VPC you created earlier.   
-3. Click **Create security group**.  
-
-### Create a private virtual server instance
-
-To create a virtual server instance in the newly created subnet:
-
-1. Click on the private subnet under **Subnets**.
-2. Click **Attached instances**, then **New instance**.
-3. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created earlier, then the same **Location** as before.
-4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
-5. For **SSH keys** pick the SSH key you created earlier for the bastion.
-6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups   
-   * Select **vpc-secure-private-subnet** as the subnet.  
-   * Uncheck the default security and group and activate **vpc-secure-private-sg**.  
-   * Click **Save**.  
-7. Click **Create virtual server instance**.  
-
-## Maintenance of private VSI
-{: #maintenance-frontend-backend}
-
-For administrative work on the private servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
 
 ### Enable the maintenance security group
 Let's enable the maintenance security group for the frontend and backend server.
@@ -320,14 +325,7 @@ To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
 
-
-## Expand the tutorial 
-
-Want to add to or change this tutorial? Here are some ideas:
-
-- Add a public subnet with frontend server on public subnet and backend on private subnet
-
 ## Related content
 {: #related}
 
-* [Relevant links](https://blah)
+* [Private and public subnets in a Virtual Private Cloud](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)
