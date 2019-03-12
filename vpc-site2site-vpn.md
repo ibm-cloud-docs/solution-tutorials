@@ -95,21 +95,25 @@ Possible flow / toc:
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc/vpc-user-permissions.html).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc/getting-started.html#prerequisites).
 
-## Get the code
+## Deploy a virtual app server in a virtual private cloud
+In the following, you will download the scripts to set up a baseline VPC environment and code for a microservice to interface with the {{site.data.keyword.cos_short}}. Thereafter, you will provision the {{site.data.keyword.cos_short}} service and set up the baseline.
+
+### Get the code
 {: #setup}
+
 
 1. Get the application's code:
    ```sh
-   git clone https://github.com/IBM-Cloud/vpc-tutorial
+   git clone https://github.com/IBM-Cloud/vpc-tutorials
    ```
    {: codeblock}
-2. Go to the script directory in the **vpc-site2site-vpn** directory:
+2. Go to the scripts for this tutorial by changing into **vpc-tutorials**, then **vpc-site2site-vpn**:
    ```sh
    cd vpc-tutorials/vpc-site2site-vpn
    ```
    {: codeblock}
 
-## Create services
+### Create services
 In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
 
 1. Verify that you have followed the prerequisite steps of logging in
@@ -119,36 +123,21 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
     {: codeblock}
 2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
    ```sh
-   ibmcloud resource service-instance-create vpc-site2site-vpn-cos cloud-object-storage lite global
+   ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage lite global
    ```
    {: codeblock}
 3. Create a service key with role **Writer**:
    ```sh
-   ibmcloud resource service-key-create vpc-site2site-vpn-cos-key Writer --instance-name vpc-site2site-vpc-cos
+   ibmcloud resource service-key-create vpns2s-cos-key Writer --instance-name vpns2s-cos
    ```
    {: codeblock}
 4. Obtain the service key details in JSON format:
    ```sh
-   ibmcloud resource service-key vpc-site2site-vpn-cos-key --output json | jq '.[] | .credentials'
+   ibmcloud resource service-key vpns2s-cos-key --output json | jq '.[] | .credentials'
    ```
    {: codeblock}
-   Copy the output, a JSON object, into a new file **credentials.json** in the current directory. It will be used later on by the app.
+   Copy the output, a JSON object, into a new file **credentials.json** in the subdirectory **vpc-app-cos**. It will be used later on by the app.
 
-
-## Deploy a virtual app server in a virtual private cloud
-
-In the following, you will download the script to set up your VPC environment and for a simple app to interface with the storage service.
-
-
-### Set up the VPC resources
-
-{: #prereqs}
-
-1. Verify that you are logged in by displaying some information
-    ```sh
-    ibmcloud target
-    ```
-    {: codeblock}
 
 ### Create a Virtual Private Cloud baseline resources
 {: #create-vpc}
