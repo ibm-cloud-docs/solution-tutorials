@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-11"
+lastupdated: "2019-03-12"
 
 ---
 
@@ -17,7 +17,7 @@ lastupdated: "2019-03-11"
 {:pre: .pre}
 {:important: .important}
 
-# Secure management of VSI using Bastion server
+# Secure management of VSIs using Bastion server
 {: #secure-management-vsi-bastion-server}
 
 This tutorial walks you through on how a bastion VSI is deployed to securely access the other VSIs by SSH. Bastion servers or hosts are instances that sit within your public subnet and are typically accessed using SSH. Once remote connectivity has been established with the bastion host, it then acts as a **jump** server, allowing you to use SSH to log in to other instances (within private subnets) deeper within your VPC.
@@ -144,7 +144,7 @@ Once your bastion's floating IP address is active, try connecting to it using **
 
 ### Create a security group for system maintenance
 
-With access to the bastion working, continue and create the security group for maintenance tasks like installing software, updating it etc.,
+With access to the bastion working, continue and create the security group for maintenance tasks like installing and updating the software.
 
 1. Navigate to **Security groups** and provision a new security group called **vpc-secure-maintenance-sg** with the below outbound rules
 
@@ -223,60 +223,109 @@ With access to the bastion working, continue and create the security group for m
 	   </tbody>
 	</table>
 
-## Create a frontend subnet, security group and VSI
+## Create a private subnet, security group and VSI
 {: #frontend-subnet-vsi}
 
-Similar to the backend, you will create a frontend subnet with virtual server instance and a security group.
+In this section, you will create a private subnet with virtual server instance and a security group. By default, any subnet created in a VPC is private.
 
-### Create a subnet for the frontend
+### Create a private subnet
 
-To create a new subnet for the frontend,
+To create a new private subnet,
 
 1. Click **VPC and subnets** under **Network** on the left pane
 2. Click **Subnets**, then **New subnet**.  
-   * Enter **vpc-secure-frontend-subnet** as name, then select the VPC you created.  
+   * Enter **vpc-secure-private-subnet** as name, then select the VPC you created.  
    * Select a location.  
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-4. Similar as for the backend, switch the **Public gateway** to **Attached**. 
+4. Switch the **Public gateway** to **Attached**. 
 5. Click **Create subnet** to provision it.
 
-### Create a frontend security group
+### Create a private security group
 
-To create a new security group for the frontend:  
+To create a new security group:  
 1. Click **Security groups** under Network, then **New security group**.  
-2. Enter **vpc-secure-frontend-sg** as name and select the VPC you created earlier.   
+2. Enter **vpc-secure-private-sg** as name and select the VPC you created earlier.   
 3. Click **Create security group**.  
 
-### Create a frontend virtual server instance
+### Create a private virtual server instance
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the frontend subnet under **Subnets**.
+1. Click on the private subnet under **Subnets**.
 2. Click **Attached instances**, then **New instance**.
-3. Enter a unique name, **vpc-secure-frontend-vsi**, select the VPC your created earlier, then the same **Location** as before.
+3. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created earlier, then the same **Location** as before.
 4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
 5. For **SSH keys** pick the SSH key you created earlier for the bastion.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups   
-   * Select **vpc-secure-frontend-subnet** as the subnet.  
-   * Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg**.  
+   * Select **vpc-secure-private-subnet** as the subnet.  
+   * Uncheck the default security and group and activate **vpc-secure-private-sg**.  
    * Click **Save**.  
-   * Click **Create virtual server instance**.  
-7. Wait until the status of the VSI changes to **Powered On**. Then, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
+7. Click **Create virtual server instance**.  
+
+## Maintenance of private VSI
+{: #maintenance-frontend-backend}
+
+For administrative work on the private servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
+
+### Enable the maintenance security group
+Let's enable the maintenance security group for the frontend and backend server.
+
+1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.  
+2. Click **Attached interfaces**, then **Edit interfaces**.  
+3. Expand **vpc-secure-private-vsi** and activate the selection next to **primary** in the **Interfaces** column.
+4. Click **Save** for the changes to be applied.
+
+To disable the maintenance security group follow the steps above, but uncheck **primary**. The maintenance security group should not be active during regular server operations for security purposes.
+
+### Connect to the private server
+
+To SSH into the private instance using its **private IP**, you will use the bastion instance as your **Jump host**.
+
+1. For the private IP address, navigate to **Virtual server instances**, then click on **vpc-secure-private-vsi**.
+2. Use the ssh command with `-J` to log into the backend with the bastion **floating IP** address you used earlier and the backend **Private IP** address shown under **Network interfaces**.
+
+   ```sh
+   ssh -J root@<BASTION_FLOATING_IP_ADDRESS> root@<PRIVATE_IP_ADDRESS>
+   ```
+   {:pre}
+   
+   `-J` flag is supported in OpenSSH version 7.3+. In older versions `-J` is not available. In this case the safest and most straightforward way is to use ssh's stdio forwarding (`-W`) mode to "bounce" the connection through a bastion host. e.g., `ssh -o ProxyCommand="ssh -W %h:%p root@<BASTION_FLOATING_IP_ADDRESS" root@<PRIVATE_IP_ADDRESS>`
+   {:tip }
+
+### Install software and perform maintenance tasks
+
+Once connected, you can install software on the backend VSI or perform maintenance tasks.
+
+1. First, update the software package information:
+
+   ```sh
+   apt-get update
+   ```
+   {:pre}
+2. Install the desired software, e.g., Nginx or MySQL or IBM Db2.
+
+When done, disconnect from the server. Thereafter, follow the instructions in the earlier section to disassociate the maintenance security group from the VSI.
+
+To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI in the private subnet and open required ports via the inbound rules in the security group of private VSI.
+{:tip}
 
 ## Remove resources
 {: #removeresources}
 
-Steps to take to remove the resources created in this tutorial
+1. Switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
+2. Once the VSI is gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnet.
+4. After the subnet has been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
 
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
+When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
+{:tip}
+
+
+## Expand the tutorial 
 
 Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
+
+- Add a public subnet with frontend server on public subnet and backend on private subnet
 
 ## Related content
 {: #related}
