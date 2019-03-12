@@ -28,7 +28,6 @@ To reduce exposure of servers within the VPC you will create and use a bastion i
 ## Objectives
 {: #objectives}
 
-* Understand the infrastructure objects available for virtual private clouds
 * Learn how to setup a bastion instance and security groups with rules
 * Securely manage servers via the bastion instance
 
@@ -59,6 +58,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
 
+- A [virtual private cloud](https://{DomainName}/vpc/overview) instance on IBM Cloud.
+
 ## Create a Virtual Private Cloud
 {: #create-vpc}
 
@@ -82,7 +83,7 @@ To create your own {{site.data.keyword.vpc_short}},
 To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
 ## Setup a bastion host
-{: #bastion-security-group}
+{: #bastion-host}
 
 In this section, you will create and configure a bastion host along with a security group in a seperate subnet.
 
@@ -146,8 +147,8 @@ Once your bastion's floating IP address is active, try connecting to it using **
    {:pre}
 
 
-## Create a private subnet, security group and VSI
-{: #frontend-subnet-vsi}
+## Create a private subnet, security group and instance
+{: #private-subnet-vsi}
 
 In this section, you will create a private subnet with virtual server instance and a security group. By default, any subnet created in a VPC is private.
 
@@ -186,8 +187,8 @@ To create a virtual server instance in the newly created subnet:
    * Click **Save**.  
 7. Click **Create virtual server instance**.  
 
-## Maintenance of private VSI
-{: #maintenance-frontend-backend}
+## Maintenance of private instance
+{: #maintenance-private}
 
 For administrative work on the private servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
 
