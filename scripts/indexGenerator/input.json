@@ -572,6 +572,19 @@
                 ]
             },
             {
+                "name": "Securely access remote instances with a bastion host",
+                "hidden": true,
+                "url": "vpc-secure-management-bastion-server.html",
+                "description": "Deploy a bastion host to securely access remote instances within a virtual private cloud.",
+                "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
+                "tags": [
+                    "Infrastructure",
+                    "Virtual Private Cloud",
+                    "Network",
+                    "Virtual Servers"
+                ]
+            },
+            {
                 "name": "Private and public subnets in a Virtual Private Cloud",
                 "url": "vpc-public-app-private-backend.html",
                 "description": "Create a virtual private cloud with subnets and instances. Secure your resources by attaching security groups and only allow minimal access.",
@@ -584,10 +597,10 @@
                 ]
             },
             {
-                "name": "VPC with globally available deployment",
+                "name": "Deploy isolated workloads across multiple locations and zones",
                 "hidden": true,
                 "url": "vpc-globally-available.html",
-                "description": "Deploy a workload in virtual private clouds across multiple zones and regions. Distribute traffic across zones with load balancers.",
+                "description": "Deploy a workload in virtual private clouds across multiple zones and regions. Distribute traffic across zones with local and global load balancers.",
                 "imgSrc": "images/solution41-vpc-globally-available/Architecture.png",
                 "tags": [
                     "Infrastructure",
@@ -597,9 +610,9 @@
                 ]
             },
             {
-                "name": "VPC, VPN and service consumption",
+                "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
                 "hidden": true,
-                "url": "vpc-vpn.html",
+                "url": "vpc-site2site-vpn.html",
                 "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services through private endpoints.",
                 "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
                 "tags": [
