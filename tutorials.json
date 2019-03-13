@@ -520,6 +520,45 @@
       "anchor": "Network",
       "solutions": [
         {
+          "name": "Private and public subnets in a Virtual Private Cloud",
+          "url": "vpc-public-app-private-backend.html",
+          "description": "Create a virtual private cloud with subnets and instances. Secure your resources by attaching security groups and only allow minimal access.",
+          "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Network",
+            "Virtual Servers"
+          ],
+          "lastUpdated": "2019-03-13"
+        },
+        {
+          "name": "Deploy isolated workloads across multiple locations and zones",
+          "url": "vpc-multi-region.html",
+          "description": "Deploy a workload in virtual private clouds across multiple zones and regions. Distribute traffic across zones with local and global load balancers.",
+          "imgSrc": "images/solution41-vpc-multi-region/Architecture.png",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Network",
+            "Virtual Servers"
+          ],
+          "lastUpdated": "2019-03-08"
+        },
+        {
+          "name": "Securely access remote instances with a bastion host",
+          "url": "vpc-secure-management-bastion-server.html",
+          "description": "Deploy a bastion host to securely access remote instances within a virtual private cloud.",
+          "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Network",
+            "Virtual Servers"
+          ],
+          "lastUpdated": "2019-03-13"
+        },
+        {
           "name": "Isolate workloads with a secure private network",
           "url": "secure-network-enclosure.html",
           "description": "Configure a Virtual Router Appliance to create a secure enclosure. Associate VLANs, provision servers, setup IP routing and firewalls.",
@@ -603,45 +642,6 @@
             "Virtual Router Appliance VPN"
           ],
           "lastUpdated": "2019-03-06"
-        },
-        {
-          "name": "Securely access remote instances with a bastion host",
-          "url": "vpc-secure-management-bastion-server.html",
-          "description": "Deploy a bastion host to securely access remote instances within a virtual private cloud.",
-          "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
-          "tags": [
-            "Infrastructure",
-            "Virtual Private Cloud",
-            "Network",
-            "Virtual Servers"
-          ],
-          "lastUpdated": "2019-03-12"
-        },
-        {
-          "name": "Private and public subnets in a Virtual Private Cloud",
-          "url": "vpc-public-app-private-backend.html",
-          "description": "Create a virtual private cloud with subnets and instances. Secure your resources by attaching security groups and only allow minimal access.",
-          "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
-          "tags": [
-            "Infrastructure",
-            "Virtual Private Cloud",
-            "Network",
-            "Virtual Servers"
-          ],
-          "lastUpdated": "2019-03-06"
-        },
-        {
-          "name": "Deploy isolated workloads across multiple locations and zones",
-          "url": "vpc-multi-region.html",
-          "description": "Deploy a workload in virtual private clouds across multiple zones and regions. Distribute traffic across zones with local and global load balancers.",
-          "imgSrc": "images/solution41-vpc-multi-region/Architecture.png",
-          "tags": [
-            "Infrastructure",
-            "Virtual Private Cloud",
-            "Network",
-            "Virtual Servers"
-          ],
-          "lastUpdated": "2019-03-08"
         }
       ]
     }

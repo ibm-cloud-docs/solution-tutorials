@@ -65,15 +65,15 @@ Solution Tutorials
 
     {: .topicgroup}
     Network
+        vpc-public-app-private-backend.md
+        vpc-multi-region.md
+        vpc-secure-management-bastion-server.md
         secure-network-enclosure.md
         nat-config-private.md
         byoip.md
         configuring-IPSEC-VPN.md
         vlan-spanning.md
         web-app-private-network.md
-        vpc-secure-management-bastion-server.md
-        vpc-public-app-private-backend.md
-        vpc-multi-region.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
@@ -121,13 +121,13 @@ Solution Tutorials
         lamp-stack.md
         infrastructure-as-code-terraform.md
         highly-available-and-scalable-web-application.md
+        vpc-public-app-private-backend.md
+        vpc-multi-region.md
+        vpc-secure-management-bastion-server.md
         secure-network-enclosure.md
         nat-config-private.md
         configuring-IPSEC-VPN.md
         vlan-spanning.md
         web-app-private-network.md
-        vpc-secure-management-bastion-server.md
-        vpc-public-app-private-backend.md
-        vpc-multi-region.md
 
     {: .navgroup-end}
