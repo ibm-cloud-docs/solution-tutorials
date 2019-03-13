@@ -2,7 +2,6 @@
 copyright:
   years: 2019
 lastupdated: "2019-03-13"
-
 ---
 
 {:shortdesc: .shortdesc}
