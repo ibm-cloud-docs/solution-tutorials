@@ -173,7 +173,7 @@ In this section, you will create two load balancers. One in each region to distr
 ### Configure load balancers
 
 1. Navigate to **Load balancers** and click **New load balancer**.
-2. Give **vpc-lb-region1** as the unique name and Select **vpc-region1** as your Virtual private cloud followed by the resource group the VPC was created and **region1** as the region.
+2. Give **vpc-lb-region1** as the unique name, select **vpc-region1** as your Virtual private cloud followed by the resource group the VPC was created, Type: **Public** and **region1** as the region.
 3. Select the private IPs of both **zone 1** and **zone 2** of **region 1**.
 4. Create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the paramaters with the values below and click **create**.
 	- **Name**:  region1-pool
