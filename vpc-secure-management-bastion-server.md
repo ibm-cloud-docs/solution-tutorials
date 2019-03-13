@@ -20,6 +20,9 @@ lastupdated: "2019-03-13"
 # Securely access remote instances with a bastion host
 {: #vpc-secure-management-bastion-server}
 
+IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this nomination form{: new_window} and an IBM representative will be in contact with you regarding next steps. 
+{: important}
+
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is a instance that is provisioned in a public subnet and can be accessed via SSH. Once setup, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
 
 To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
@@ -138,7 +141,8 @@ Once your bastion's floating IP address is active, try connecting to it using **
    ```
    {:pre}
 
-## Create a security group for system maintenance
+## Configure a security group with maintenance access rules
+{: #maintenance-security-group}
 
 With access to the bastion working, continue and create the security group for maintenance tasks like installing and updating the software.
 
@@ -221,7 +225,7 @@ With access to the bastion working, continue and create the security group for m
 
 
 ## Use bastion host to access other instances in the VPC
-{: #private-subnet-vsi}
+{: #bastion-host-access-instances}
 
 In this section, you will create a private subnet with virtual server instance and a security group. By default, any subnet created in a VPC is private.
 
@@ -273,8 +277,6 @@ Let's enable the maintenance security group for the server.
 3. Expand **vpc-secure-private-vsi** and activate the selection next to **primary** in the **Interfaces** column.
 4. Click **Save** for the changes to be applied.
 
-To disable the maintenance security group follow the steps above, but uncheck **primary**. The maintenance security group should not be active during regular server operations for security purposes.
-
 ### Connect to the instance
 
 To SSH into the instance using its **private IP**, you will use the bastion instance as your **Jump host**.
@@ -302,7 +304,16 @@ Once connected, you can install software on the VSI in the private subnet or per
    {:pre}
 2. Install the desired software, e.g., Nginx or MySQL or IBM Db2.
 
-When done, disconnect from the server. Thereafter, follow the instructions in the earlier section to disassociate the maintenance security group from the VSI.
+When done, disconnect from the server with `exit` command. 
+
+### Disable the maintenance security group
+
+Let's disable the maintenance security group for the server.
+
+1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.  
+2. Click **Attached interfaces**, then **Edit interfaces**.  
+3. Expand **vpc-secure-private-vsi** and uncheck the selection next to **primary** in the **Interfaces** column.
+4. Click **Save** for the changes to be applied.
 
 To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI in the private subnet and open required ports via the inbound rules in the security group of private VSI.
 {:tip}
