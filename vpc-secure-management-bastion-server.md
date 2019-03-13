@@ -306,6 +306,9 @@ Once connected, you can install software on the VSI in the private subnet or per
 
 When done, disconnect from the server with `exit` command. 
 
+To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI in the private subnet and open required ports(80 - HTTP and 443 - HTTPS) via the inbound rules in the security group of private VSI.
+{:tip}
+
 ### Disable the maintenance security group
 
 Let's disable the maintenance security group for the server.
@@ -314,9 +317,6 @@ Let's disable the maintenance security group for the server.
 2. Click **Attached interfaces**, then **Edit interfaces**.  
 3. Expand **vpc-secure-private-vsi** and uncheck the selection next to **primary** in the **Interfaces** column.
 4. Click **Save** for the changes to be applied.
-
-To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI in the private subnet and open required ports via the inbound rules in the security group of private VSI.
-{:tip}
 
 ## Remove resources
 {: #removeresources}
