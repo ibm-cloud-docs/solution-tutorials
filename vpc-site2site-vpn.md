@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-11"
+lastupdated: "2019-03-13"
 
 ---
 
@@ -54,17 +54,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-The following diagram shows the virtual private cloud consisting of a bastion and an app server. The application utilizes a storage service. SOME MORE DESCRIPTION
+The following diagram shows the virtual private cloud consisting of a bastion and an app server. The app server hosts a microservice interfacing with {{site.data.keyword.cos_short}} service. A (simulated) on-premises network and the virtual cloud environment are connected via VPN gateways.
 
-<p style="text-align: center;">
-  ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
-</p>
+![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 
 Notes:
 
-1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the VSI using the private SSH key and installs the microservice software and verifies it is working
-1. A vsi with associated floating-ip will be provisioned to hold the open source VPN Gateway, note the public ip address
-1. A VPC/VPN Gateway is provisioned, note the public IP address
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the VSI using the private SSH key and installs the microservice software and verifies it is working.
+1. A VSI with associated floating IP address will be provisioned to hold the open source VPN Gateway. Note the public IP address.
+1. A VPC/VPN Gateway is provisioned, note the public IP address.
 1. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses
 1. Verify connectivity through the VPN Gateways by accessin the microservice directly through the vpn site-to-site connection
 
