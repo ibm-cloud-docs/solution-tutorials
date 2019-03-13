@@ -1,8 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-12"
-
+lastupdated: "2019-03-13"
 ---
 
 {:shortdesc: .shortdesc}
@@ -54,17 +53,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-The following diagram shows the virtual private cloud consisting of a bastion and an app server. The application utilizes a storage service. SOME MORE DESCRIPTION
+The following diagram shows the virtual private cloud consisting of a bastion and an app server. The app server hosts a microservice interfacing with {{site.data.keyword.cos_short}} service. A (simulated) on-premises network and the virtual cloud environment are connected via VPN gateways.
 
-<p style="text-align: center;">
-  ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
-</p>
+![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 
 Notes:
 
-1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the VSI using the private SSH key and installs the microservice software and verifies it is working
-1. A vsi with associated floating-ip will be provisioned to hold the open source VPN Gateway, note the public ip address
-1. A VPC/VPN Gateway is provisioned, note the public IP address
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the VSI using the private SSH key and installs the microservice software and verifies it is working.
+1. A VSI with associated floating IP address will be provisioned to hold the open source VPN Gateway. Note the public IP address.
+1. A VPC/VPN Gateway is provisioned, note the public IP address.
 1. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses
 1. Verify connectivity through the VPN Gateways by accessin the microservice directly through the vpn site-to-site connection
 
@@ -142,7 +139,15 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
 ### Create a Virtual Private Cloud baseline resources
 {: #create-vpc}
 
-To create your own {{site.data.keyword.vpc_short}}, review and run the script **vpc-site2site-vpn-baseline-create.sh**.
+The tutorial assumes that you already have a VPC with required subnets, security groups and virtual server instances provisioned. In the following, create these resources by configuring and then running a setup script.
+
+1. Configure TODO
+2. Run the script:
+    ```sh
+   ./vpc-site2site-vpn-baseline-create.sh
+   ```
+   {: codeblock}
+
 This will result in creating the following resources:
 - 1 VPC named ...
 - 2 subnets within the VPC
@@ -152,7 +157,13 @@ This will result in creating the following resources:
 
 Review the *data.sh* file created.  It has useful information and parameters
 
-## Create a VPC/VPN
+### Deploy the microservice
+
+Install and start the small storage app.
+
+## Create the Virtual Private Network gateways
+
+### Create the VPC Virtual Private Network gateway
 
 When the local and remote VPNs connect to each other they will set up a security association using
 [IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre-shared key and then securely communicate using the
@@ -198,6 +209,10 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
    * Select the VPC created above from the Virual Private Cloud drop down
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the remaining fields unchanged.
 
+
+### Create the on-premises Virtual Private Network gateway
+
+### Test the connectivity
 
 
 ## Remove resources
