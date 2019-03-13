@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-11-14"
-
+  years: 2017, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -46,7 +45,7 @@ Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](
 2. Click on **Data & Analytics** under Platform on the left pane and select **{{site.data.keyword.dashdbshort_notm}}**.
 3. Pick the **Entry** plan and change the suggested service name to "sqldatabase" (you will use that name later on). Pick a location for the deployment of the database and make sure that the correct organization and space are selected.
 4. Click on **Create**. After a short moment you should get a success notification.
-5. In the **Dashboard**, click on the entry for your newly created {{site.data.keyword.dashdbshort_notm}} service.
+5. In the **Resource List**, click on the entry for your newly created {{site.data.keyword.dashdbshort_notm}} service.
 6. Click on **Open** to launch the database console. If it is the first time using the console, you are offered to take a tour.
 
 ## Create a table
@@ -119,9 +118,9 @@ The app to display city information based on the loaded data set is reduced to a
 
 ## Cleanup
 To clean up resources used by the tutorial, follow these steps:
-1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}). Locate your app.
+1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources). Locate your app.
 2. Click on the menu icon for the app and choose **Delete App**. In the dialog window tick the checkmark that you want to delete the related {{site.data.keyword.dashdbshort_notm}} service.
-3. Click the **Delete** button. The app and database service are removed and you are taken back to the dashboard.
+3. Click the **Delete** button. The app and database service are removed and you are taken back to the resource list.
 
 ## Expand the tutorial
 Want to extend this app? Here are some ideas:

@@ -4,14 +4,14 @@ mkdir -p builddocs/input
 
 DOMAIN_NAME_RULES=( \
   "console.bluemix.net" \
-  "cloud.ibm.com" \
+  "/cloud.ibm.com" \
   "console.cloud.ibm.com" \
 )
 for rule in "${DOMAIN_NAME_RULES[@]}"
 do
   echo " -----------------------
 Checking for references to ${rule}"
-  if grep -rI "$rule" --exclude=README.md *.md
+  if grep -rI "$rule" --exclude=README.md --exclude solution-template.md *.md
   then
     echo "  -> [KO] Found references to $rule. Replace them with {DomainName}."
     DOMAIN_NAME_CHECK="ko"
@@ -47,6 +47,9 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.
 
 # generate a md helping with the conref
 (cd scripts/conref && npm install && node tomd.js ../../builddocs/input/conref.md)
+
+# generate a list of all solutions, suitable to use in github issues
+(cd scripts/solution-table && npm install && node totable.js ../../builddocs/input/solution-table.md)
 
 # generate the new files
 npm install -g marked-it-cli

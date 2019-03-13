@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-11-14"
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 
 ---
 
@@ -32,7 +32,7 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 ## Before you begin
 {: #prereqs}
 
-* Install [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+* Install [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli)
 * Install [cURL](https://curl.haxx.se/)
 * Install [Node.js](https://nodejs.org/)
 * Install [json2csv](https://www.npmjs.com/package/json2csv) using the command `npm install -g json2csv`
@@ -41,7 +41,7 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 ## Background
 {: #background}
 
-Prior to executing commands that inventory and detail {{site.data.keyword.cloud_notm}} usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded. A helpful visualization of the below artifacts can be found in the [Managing your account documentation](https://{DomainName}/docs/account/account_overview.html#overview).
+Prior to executing commands that inventory and detail {{site.data.keyword.cloud_notm}} usage, it's helpful to have some background on the broad categories of usage and their function. Key terms used later in the tutorial are bolded. A helpful visualization of the below artifacts can be found in the [Managing your account documentation](https://{DomainName}/docs/account?topic=account-overview#overview).
 
 ### Cloud Foundry
 Cloud Foundry is an open-source, platform-as-a-service (PaaS) on {{site.data.keyword.cloud_notm}} that enables you to deploy and scale applications and **Services** without managing servers. Cloud Foundry organizes applications and services into orgs or spaces.  An **Org** is a development account that one or many users can own and use. An org can contain multiple spaces. Each **Space** provides users with access to a shared location for application development, deployment, and maintenance.
@@ -73,10 +73,10 @@ As development teams begin using Cloud services, managers will benefit from know
 - Which teams are using a service that requires a critical fix or will soon be deprecated?
 - How can teams review their service instances to minimize sprawl?
 
-Search is not limited to services and resources. You can also query Cloud artifacts such as Cloud Foundry orgs and spaces, resource groups, resource bindings, aliases, etc. For more examples, see the [ibmcloud resource search](https://{DomainName}/docs/cli/reference/ibmcloud/cli_resource_group.html#ibmcloud_resource_search) documentation.
+Search is not limited to services and resources. You can also query Cloud artifacts such as Cloud Foundry orgs and spaces, resource groups, resource bindings, aliases, etc. For more examples, see the [ibmcloud resource search](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud_commands_resource#ibmcloud_resource_search) documentation.
 {:tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli).
     ```sh
     ibmcloud login
     ```

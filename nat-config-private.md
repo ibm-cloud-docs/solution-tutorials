@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-08-24"
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -20,7 +20,7 @@ lastupdated: "2018-08-24"
 
 In today’s world of web based IT applications and services, few applications exist in isolation. Developers have come to expect access to services on the internet, whether it is open-source application code and updates or ‘third party’ services providing application functionality via REST APIs. Network Address Translation (NAT) masquerade, is a commonly used approach to securing the access to internet hosted service from  private networks. In NAT masquerade, private IP addresses are translated to the IP address of the out-bound public interface in a many-to-one relationship, shielding the private IP address from public access.  
 
-This tutorial presents setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the [Isolate workloads with a secure private network](secure-network-enclosure.html) tutorial, adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
+This tutorial presents setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the [Isolate workloads with a secure private network](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial, adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
 {:shortdesc}
 
 ## Objectives
@@ -34,7 +34,7 @@ This tutorial presents setup of Network Address Translation (NAT) masquerade on 
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
 
-* [Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
+* [Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
 
 This tutorial may incur costs. The VRA is only available on a monthly pricing plan.
 
@@ -53,7 +53,7 @@ This tutorial may incur costs. The VRA is only available on a monthly pricing pl
 ## Before you begin
 {: #prereqs}
 
-This tutorial enables hosts in the secure private network enclosure created by the [Isolate workloads with a secure private network](secure-network-enclosure.html) tutorial to access public internet services. That tutorial must be completed first. 
+This tutorial enables hosts in the secure private network enclosure created by the [Isolate workloads with a secure private network](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to access public internet services. That tutorial must be completed first. 
 
 ## Document Internet services
 {: #Document_outbound}
@@ -153,7 +153,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 ## Related material
 {:related}
 
--	[VRA Network Address Translation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance/about.html#network-address-translation-nat-) 
--	[NAT Masquerade]( https://{DomainName}/docs/infrastructure/virtual-router-appliance/setup-nat.html#one-to-many-nat-rule-masquerade-)
--	[Supplemental VRA documentation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
+-	[VRA Network Address Translation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#network-address-translation-nat-) 
+-	[NAT Masquerade]( https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-setting-up-nat-rules-on-vyatta-5400#one-to-many-nat-rule-masquerade-)
+-	[Supplemental VRA documentation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
 

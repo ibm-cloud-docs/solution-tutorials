@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-12-11"
-
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -48,7 +47,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-To complete this tutorial, you need the latest version of the [{{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/index.html#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](https://{DomainName}/docs/cli/reference/bluemix_cli/extend_cli.html#plug-ins).
+To complete this tutorial, you need the latest version of the [{{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-plug-ins#plug-ins).
 
 
 ## Service and Environment Setup
@@ -93,7 +92,7 @@ In this section, you are going to set up the needed services and prepare the env
 
 ## Load the skill / workspace
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
-1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry to open the service details.
+1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry to open the service details.
 2. Remember the **API Key** and **Url** for the integration with Slack later on.
 3. Click on **Launch Tool** to get to the {{site.data.keyword.conversationshort}} Tool.
 4. Switch to **Skills**, then click **Create new** and then on **Import skill**.
@@ -136,7 +135,7 @@ Open up your Slack workspace for a test drive of the chatbot. Begin a direct cha
 1. Type **help** into the messaging form. The bot should respond with some guidance.
 2. Now enter **new event** to start gathering data for a new event record. You will use {{site.data.keyword.conversationshort}} slots to collect all the necessary input.
 3. First up is the event identifier or name. Quotes are required. They allow entering more complex names. Enter **"Meetup: IBM Cloud"** as the event name. The event name is defined as a pattern-based entity **eventName**. It supports different kinds of double quotes at the beginning and ending.
-4. Next is the event location. Input is based on the [system entity **sys-location**](https://{DomainName}/docs/services/conversation/system-entities.html#system-entity-details). As a limitation, only cities recognized by {{site.data.keyword.conversationshort}} can be used. Try **Friedrichshafen** as a city.
+4. Next is the event location. Input is based on the [system entity **sys-location**](https://{DomainName}/docs/services/assistant?topic=assistant-system-entities#system-entity-details). As a limitation, only cities recognized by {{site.data.keyword.conversationshort}} can be used. Try **Friedrichshafen** as a city.
 5. Contact information such as an email address or URI for a website is asked for in the next step. Start with **https://www.ibm.com/events**. You will use a pattern-based entity for that field.
 6. The next questions are gathering date and time for the begin and end. **sys-date** and **sys-time** are used which allow for different input formats. Use **next Thursday** as start date, **6 pm** for the time, **2018-10-21** and **22:00** for the end date and time.
 7. Last, with all data collected, a summary is printed and a server action, implemented as {{site.data.keyword.openwhisk_short}} action, is invoked to insert a new record into Db2. Thereafter, dialog switches to a child node to clean up the processing environment by removing the context variables. The entire input process can be canceled anytime by entering **cancel**, **exit** or similar. In that case, the user choice is acknowledged and the environment cleaned up.
@@ -147,7 +146,7 @@ With some sample data in it is time to search.
 2. With {{site.data.keyword.conversationshort}} as a backend, it is possible to enter more complex phrases and thereby skipping parts of the dialog. Use **show event by the name "Think 2018"** as input. The chatbot directly returns the event record.
 3. Now you are going to search by date. A search is defined by a pair of dates, the event start date has to be between. With **search conference by date in March** as input, the result should be the **Think 2018** event again. The entity **March** is interpreted as two dates, March 1st, and March 31st, thereby providing input for the start and end of the date range.
 
-After some more searches and new event entries, you can revisit the chat history and improve the future dialog. Follow the instructions in the [{{site.data.keyword.conversationshort}} documentation on **Improving understanding**](https://{DomainName}/docs/services/conversation/logs.html#about-the-improve-component).
+After some more searches and new event entries, you can revisit the chat history and improve the future dialog. Follow the instructions in the [{{site.data.keyword.conversationshort}} documentation on **Improving understanding**](https://{DomainName}/docs/services/assistant?topic=assistant-logs-intro#logs_intro).
 
 
 ## Remove resources
@@ -186,8 +185,8 @@ Chatbot-related blog posts:
 
 Documentation and SDKs:
 * GitHub repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
-* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk/openwhisk_about.html#about-cloud-functions)
+* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_about#about-cloud-functions)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
-* [{{site.data.keyword.cloudantfull}} documentation](https://{DomainName}/docs/services/Cloudant/cloudant.html#overview)
+* [{{site.data.keyword.cloudantfull}} documentation](https://{DomainName}/docs/services/Cloudant?topic=cloudant-overview#overview)

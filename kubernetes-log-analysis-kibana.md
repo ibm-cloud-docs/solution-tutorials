@@ -1,9 +1,7 @@
 ---
 copyright:
-  years: 2017, 2018
-
-lastupdated: "2018-07-24"
-
+  years: 2017, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -65,8 +63,8 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 {: #prereq}
 
-* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry/registry_setup_cli_namespace.html).
+* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
@@ -115,14 +113,14 @@ When an application is deployed to a container in a **standard** cluster, logs a
 2. Under **Summary**, click **Enable logging.**
 3. On **Create Logging Configuration** window, select the appropriate Cloud Foundry **Org** and **Space.**
 
- To enable logging at the account level, you must use CLI. Refer **Enabling log forwarding** section of [logging and monitoring](https://{DomainName}/docs/containers/cs_health.html#logging)
+ To enable logging at the account level, you must use CLI. Refer **Enabling log forwarding** section of [logging and monitoring](https://{DomainName}/docs/containers?topic=containers-health#logging)
  {:tip}
 
 4. Enable all the **Log sources** and click **Create**.
 
    ![](images/solution17/cluster_logging.png)
 
-If you specified a space when you created the cluster then both the account owner and {{site.data.keyword.containershort}} key owner need `Manager`, `Developer`, or `Auditor` permissions in that space, refer **before you begin** section of [logging and monitoring](https://{DomainName}/docs/containers/cs_health.html#logging)
+If you specified a space when you created the cluster then both the account owner and {{site.data.keyword.containershort}} key owner need `Manager`, `Developer`, or `Auditor` permissions in that space, refer **before you begin** section of [logging and monitoring](https://{DomainName}/docs/containers?topic=containers-health#logging)
 {:tip}
 
 ## Create a starter application
@@ -141,7 +139,9 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
 4. Choose **No DevOps** and Select **n** to skip adding services.
 
-  Once complete, this generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://{DomainName}/docs/cloudnative/node_project_contents.html).
+  Once complete, this generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. 
+  
+  <!-- For an overview of the files generated, see [Project Contents Documentation](https://{DomainName}/docs/cloudnative/node_project_contents.html). -->
 
   ![](images/solution17/node_starter_contents.png)
 
@@ -219,7 +219,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
     export MYPROJECT=<PROJECTNAME>
     ```
     {: pre}
-3. Identify your **Container Registry** (e.g. registry.ng.bluemix.net) by running `ibmcloud cr info`
+3. Identify your **Container Registry** (e.g. us.icr.io) by running `ibmcloud cr info`
 4. Set MYREGISTRY env var to your registry.
    ```sh
    export MYREGISTRY=<REGISTRY>
@@ -263,7 +263,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 12. Access the application `http://worker-ip-address:portnumber`
   ![](images/solution17/node_starter_cluster.png)
 
-To set up Ingress and use your own custom domain see the [Use your own custom domain](/docs/tutorials/scalable-webapp-kubernetes.html#custom_domain) section of the [Deploy a scalable web application on Kubernetes](/docs/tutorials/scalable-webapp-kubernetes.html) tutorial.
+To set up Ingress and use your own custom domain see the [Use your own custom domain](#custom_domain) section of the [Deploy a scalable web application on Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-scalable-webapp-kubernetes#scalable-webapp-kubernetes) tutorial.
 
 
 ## View log data in Kibana
@@ -276,7 +276,7 @@ The application generates some log data every time you visit its URL. Because of
 3. Click on your username in the upper right corner to select the correct **account**, **org** and **space**.
 
 ![](images/solution17/kibana_home.png)
-For more information about other search fields that are relevant to Kubernetes clusters, see [Searching logs](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#log_search).
+For more information about other search fields that are relevant to Kubernetes clusters, see [Searching logs](https://{DomainName}/docs/services/CloudLogAnalysis/containers?topic=cloudloganalysis-containers_kubernetes#log_search).
 
 ### Filter data by Kubernetes cluster name in Kibana
 {: #filter_in_kibana}
@@ -290,7 +290,7 @@ For more information about other search fields that are relevant to Kubernetes c
 
 4. Next to the configuration of the interval is the auto-refresh setting. By default it is switched off, but you can change it.
 
-5. Below the configuration is the search field. Here you can [enter and define search queries](https://{DomainName}/docs/services/CloudLogAnalysis/kibana/define_search.html#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:
+5. Below the configuration is the search field. Here you can [enter and define search queries](https://{DomainName}/docs/services/CloudLogAnalysis/kibana?topic=cloudloganalysis-define_search#define_search). To filter for all logs reported as app errors and containing one of the defined log levels, enter the following:
 
    ```sh
    message:(WARN|INFO|ERROR|FATAL)
@@ -298,7 +298,7 @@ For more information about other search fields that are relevant to Kubernetes c
 ![](images/solution17/kibana_filter.png)
 6. Store the search criteria for future use by clicking **Save** in the configuration bar. Use **mylogs** as name.
 
-For more information, see [Filtering logs in Kibana](/docs/services/CloudLogAnalysis/kibana/filter_logs.html#filter_logs).
+For more information, see [Filtering logs in Kibana](https://{DomainName}/docs/services/CloudLogAnalysis/kibana?topic=cloudloganalysis-filter_logs#filter_logs).
 ## Visualize Logs
 
 {: #visualizelogs}
@@ -362,7 +362,7 @@ In this step, you will clean up the resources to remove what you created above.
 {: #expandTutorial}
 
 Do you want to learn more? Here are some ideas of what you can do next:
-* Deploy another application to the cluster or use an [app deployed in a Cloud Foundry environment](application-log-analysis.html). The Log Analysis dashboard (Kibana) will show the combined logs of all apps.
+* Deploy another application to the cluster or use an [app deployed in a Cloud Foundry environment](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#deploy-a-cloud-foundry-app). The Log Analysis dashboard (Kibana) will show the combined logs of all apps.
 * Filter by a single app.
 * Add a saved search and metric only for specific error level.
 * Build a dashboard for all your apps.
@@ -371,8 +371,8 @@ Do you want to learn more? Here are some ideas of what you can do next:
 
 {: #related}
 
-* [Logging and Monitoring](https://{DomainName}/docs/containers/cs_health.html#view_metrics).
-* [Documentation for IBM Cloud Log Analysis](https://{DomainName}/docs/services/CloudLogAnalysis/index.html).
+* [Logging and Monitoring](https://{DomainName}/docs/containers?topic=containers-health#view_metrics).
+* [Documentation for IBM Cloud Log Analysis](https://{DomainName}/docs/services/CloudLogAnalysis?topic=cloudloganalysis-getting-started-with-cla#getting-started-with-cla).
 * [IBM Cloud Log Collection API](https://{DomainName}/apidocs/948-ibm-cloud-log-collection-api?&language=node#introduction).
 * Kibana User Guide: [Discovering Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-discovering.html).
 * Kibana User Guide: [Visualizing Your Data](https://www.elastic.co/guide/en/kibana/5.1/tutorial-visualizing.html).

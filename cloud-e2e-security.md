@@ -1,7 +1,8 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-11-20"
+  years: 2018, 2019
+lastupdated: "2019-03-07"
+
 
 ---
 
@@ -42,7 +43,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/key-protect)
 * Optional: [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/certificate-manager)
 
-This tutorial requires a [non-Lite account](https://{DomainName}/docs/account/index.html#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?topic=account-accounts#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -65,7 +66,7 @@ The tutorial features a sample application that enables groups of users to uploa
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
 2. Ensure you have the latest version of plugins used in this tutorial; use `ibmcloud plugin update --all` to upgrade.
 
 ## Create services
@@ -88,7 +89,7 @@ The {{site.data.keyword.cloudaccesstrailshort}} service records user-initiated a
    3. Under **Access Policies**, if it is missing, create a policy for the {{site.data.keyword.loganalysisshort_notm}} service with **Viewer** role in the location where the service was created.
    4. Under **Cloud Foundry Access**, ensure that you have the **Developer** role in the Cloud Foundry space where {{site.data.keyword.cloudaccesstrailshort}} was provisioned. If not, work with your organization's Cloud Foundry manager to assign the role.
 
-Find detailed instructions on setting up permissions in the [{{site.data.keyword.cloudaccesstrailshort}} documentation](https://{DomainName}/docs/services/cloud-activity-tracker/how-to/grant_permissions.html#grant_iam_policy).
+Find detailed instructions on setting up permissions in the [{{site.data.keyword.cloudaccesstrailshort}} documentation](https://{DomainName}/docs/services/cloud-activity-tracker/how-to?topic=cloud-activity-tracker-grant_permissions#grant_iam_policy).
 {: tip}
 
 ### Create a cluster for the application
@@ -112,7 +113,7 @@ While the cluster is being provisioned, you will create the other services requi
 
 ### Use your own encryption keys
 
-{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](https://{DomainName}/docs/services/key-protect/integrations/integrate-cos.html#integrate-cos). In this section, you will create one root key for the storage bucket.
+{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](https://{DomainName}/docs/services/key-protect/integrations?topic=key-protect-integrate-cos#integrate-cos). In this section, you will create one root key for the storage bucket.
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
    * Set the name to **secure-file-storage-kp**.
@@ -122,7 +123,7 @@ While the cluster is being provisioned, you will create the other services requi
    * Set the key type to **Root key**.
    * Then **Generate key**.
 
-Bring your own key (BYOK) by [importing an existing root key](https://{DomainName}/docs/services/key-protect/import-root-keys.html#import-root-keys).
+Bring your own key (BYOK) by [importing an existing root key](https://{DomainName}/docs/services/key-protect?topic=key-protect-import-root-keys#import-root-keys).
 {: tip}
 
 ### Setup storage for user files
@@ -156,7 +157,7 @@ Before creating the bucket, you will grant **secure-file-storage-cos** access to
 
 Finally create the bucket.
 
-1. Access the **secure-file-storage-cos** service instance from the [Dashboard](https://{DomainName}/dashboard/apps).
+1. Access the **secure-file-storage-cos** service instance from the [Resource List](https://{DomainName}/resources).
 2. Click **Create bucket**.
    1. Set the **name** to a unique value, such as **&lt;your-initials&gt;-secure-file-upload**.
    2. Set **Resiliency** to **Regional**.
@@ -187,7 +188,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 
 ### Authenticate users
 
-With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. {{site.data.keyword.appid_short}} [integrates](https://{DomainName}/docs/containers/cs_annotations.html#appid-auth) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
+With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. {{site.data.keyword.appid_short}} [integrates](https://{DomainName}/docs/containers?topic=containers-ingress_annotation#appid-auth) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
 
 1. Create an instance of [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID).
    * Set the **Service name** to **secure-file-storage-appid**.
@@ -195,7 +196,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
 2. Under **Identity Providers / Manage**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example if your cluster Ingress subdomain is 
 `<cluster-name>.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
 
-You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity.
+You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
 {: tip}
 
 ## Deploy the app
@@ -217,8 +218,8 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Build the Docker image
 
-1. [Build the Docker image](https://{DomainName}/docs/services/Registry/registry_images_.html#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
-   - Find the registry endpoint with `ibmcloud cr info`, such as registry.**ng**.bluemix.net or registry.**eu-gb**.bluemix.net.
+1. [Build the Docker image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
+   - Find the registry endpoint with `ibmcloud cr info`, such as **us**.icr.io or **uk**.icr.io.
    - Create a namespace to store the container image.
       ```sh
       ibmcloud cr namespace-add secure-file-storage-namespace
@@ -226,7 +227,7 @@ All services have been configured. In this section you will deploy the tutorial 
    - Use **secure-file-storage** as the image name.
 
    ```sh
-   ibmcloud cr build -t registry.<location>.bluemix.net/secure-file-storage-namespace/secure-file-storage:latest .
+   ibmcloud cr build -t <location>.icr.io/secure-file-storage-namespace/secure-file-storage:latest .
    ```
    {: codeblock}
 
@@ -250,14 +251,14 @@ All services have been configured. In this section you will deploy the tutorial 
 | Variable | Value | Description |
 | -------- | ----- | ----------- |
 | `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
-| `$REGISTRY_URL` | *registry.ng.bluemix.net* | The registry where the image was built in the previous section. |
+| `$REGISTRY_URL` | *us.icr.io* | The registry where the image was built in the previous section. |
 | `$REGISTRY_NAMESPACE` | *secure-file-storage-namespace* | The registry namespace where the image was built in the previous section. |
 | `$IMAGE_NAME` | *secure-file-storage* | The name of the Docker image. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
 | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster-get secure-file-storage-cluster`. |
 | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster-get secure-file-storage-cluster`. |
 
-`$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a Docker registry secret in the new namespace](https://{DomainName}/docs/containers/cs_images.html#other)).
+`$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a Docker registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-images#other)).
 {: tip}
 
 ### Deploy to the cluster
@@ -301,9 +302,9 @@ Authenticated users have their own spaces to store files. While they can not see
 You can find more details about the application in the [source code repository](https://github.com/IBM-Cloud/secure-file-storage).
 
 ## Review Security Events
-Now that the application and its services have been successfully deployed, you can review the security events generated by that process. All the events are centrally available in {{site.data.keyword.cloudaccesstrailshort}} instance and can be accessed via [graphical UI (Kibana), CLI or API](https://{DomainName}/docs/services/cloud-activity-tracker/how-to/viewing_event_information.html#viewing_event_status).
+Now that the application and its services have been successfully deployed, you can review the security events generated by that process. All the events are centrally available in {{site.data.keyword.cloudaccesstrailshort}} instance and can be accessed via [graphical UI (Kibana), CLI or API](https://{DomainName}/docs/services/cloud-activity-tracker/how-to?topic=cloud-activity-tracker-viewing_event_status#viewing_event_status).
 
-1. From the [{{site.data.keyword.Bluemix_notm}} console](https://{DomainName}) locate the {{site.data.keyword.cloudaccesstrailshort}} instance **secure-file-storage-activity-tracker** and open its dashboard.
+1. From the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the {{site.data.keyword.cloudaccesstrailshort}} instance **secure-file-storage-activity-tracker** and open its dashboard.
 2. By default the **Manage** tab shows **Space logs**. Switch to **Account logs** by clicking on the selector next to **View logs**. It should display several events.
 3. Click on **View in Kibana** to open the full event viewer.
 4. Review event details by clicking on **Discover**.
@@ -342,14 +343,14 @@ An example of how to obtain a certificate from [Let's Encrypt](https://letsencry
 5. Edit the file `secure-file-storage.yaml`.
    * Find the section for **Ingress**.
    * Uncomment and edit the lines covering custom domains and fill in your domain and host name.
-   The CNAME entry for your custom domain needs to point to the cluster. Check this [guide on mapping custom domains](https://{DomainName}/docs/containers/cs_ingress.html#private_3) in the documentation for details.
+   The CNAME entry for your custom domain needs to point to the cluster. Check this [guide on mapping custom domains](https://{DomainName}/docs/containers?topic=containers-ingress#private_3) in the documentation for details.
    {: tip}
 6. Apply the configuration changes to the deployed:
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
    {: codeblock}
-7. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} console](https://{DomainName}) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
+7. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
    * Go to **Manage** under the **Identity Providers**, then to **Settings**.
    * In the **Add web redirect URLs** form add `https://secure-file-storage.<your custom domain>/appid_callback` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
@@ -378,10 +379,10 @@ To remove the resource, delete the deployed container and then the provisioned s
    {: codeblock}
 3. Remove the Docker image from the container registry:
    ```sh
-   ibmcloud cr image-rm registry.<location>.bluemix.net/secure-file-storage-namespace/secure-file-storage:latest
+   ibmcloud cr image-rm <location>.icr.io/secure-file-storage-namespace/secure-file-storage:latest
    ```
    {: codeblock}
-4. In the [{{site.data.keyword.Bluemix_notm}} console](https://{DomainName}) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
+4. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
 
 If you share an account with other users, always make sure to delete only your own resources.
 {: tip}
@@ -389,9 +390,9 @@ If you share an account with other users, always make sure to delete only your o
 ## Related content
 {:related}
 
-* [{{site.data.keyword.security-advisor_short}} documentation](https://{DomainName}/docs/services/security-advisor/about.html#about)
+* [{{site.data.keyword.security-advisor_short}} documentation](https://{DomainName}/docs/services/security-advisor?topic=security-advisor-about#about)
 * [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture)
-* [{{site.data.keyword.Bluemix_notm}} Platform security](https://{DomainName}/docs/overview/security.html#security)
+* [{{site.data.keyword.Bluemix_notm}} Platform security](https://{DomainName}/docs/overview?topic=overview-security#security)
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security)
-* [Tutorial: Best practices for organizing users, teams, applications](https://{DomainName}/docs/tutorials/users-teams-applications.html)
+* [Tutorial: Best practices for organizing users, teams, applications](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/)

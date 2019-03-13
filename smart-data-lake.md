@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-1-14"
-
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -45,7 +44,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 ## Before you begin
 
 - [Install Git](https://git-scm.com/)
-- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview)
 - [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
 - [Install Node.js and NPM](https://nodejs.org)
 
@@ -56,7 +55,7 @@ In this section, you will create the services required to build your data lake.
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started]https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
     ```sh
     ibmcloud login
     ```
@@ -111,7 +110,7 @@ This section uses the command line to create service instances. Alternatively, y
     ```
     {: pre}
 
-    After deployment, the application will be public and listening on a random hostname. You can either login to the [Cloud Foundry Apps](https://{DomainName}/dashboard/cf-apps) page to view the URL or run the command `ibmcloud cf app dashboard-nodejs routes` to see routes.
+    After deployment, the application will be public and listening on a random hostname. You can got to the [Resource List](https://{DomainName}/resources) page, select the app under Cloud Foundry Apps and view the URL or run the command `ibmcloud cf app dashboard-nodejs routes` to see routes.
     {: tip}
 
 7. Confirm the application is active by accessing its public URL in the browser.
@@ -123,7 +122,7 @@ This section uses the command line to create service instances. Alternatively, y
 In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/).
 
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD) CSV file. The file is 81MB and may take a few minutes to download.
-2. In your browser, access the **data-lake-cos** service instance from the [Dashboard](https://{DomainName}/dashboard).
+2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources).
 3. Create a new bucket to store data.
     - Click the **Create a bucket** button.
     - Select **Regional** from the **Resiliency** drop down.
@@ -143,7 +142,7 @@ In this section, you will convert the original, raw dataset into a targetted coh
 
 You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familar SQL statements. SQL Query has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
-1. Access the **data-lake-sql** SQL Query service instance from your [Dashboard](https://{DomainName}/dashboard/apps).
+1. Access the **data-lake-sql** SQL Query service instance from your [Resource List](https://{DomainName}/resources).
 2. Select **Open UI**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
     - Enter the following SQL into the **Type SQL here ...** text area.
@@ -334,7 +333,7 @@ In this section, you'll take a few additional steps to explore the features of t
     - Save your dashboard to the browser's local storage using the dialog's **Save** button.
 4. Click the toolbar's **New** button to create a new dashboard. To open a saved dashboard, click the **Open** button. To delete a dashboard, use the **Delete** icon on the Open Dashboard dialog.
 
-In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://{DomainName}/docs/services/cognos-dashboard-embedded/ddeusecase_encryptdatasourceinformation.html#encrypting-data-source-information).
+In production applications, encrypt information such as URLs, usernames and passwords to prevent them from being seen by end users. See [Encrypting data source information](https://{DomainName}/docs/services/cognos-dashboard-embedded?topic=cognos-dashboard-embedded-encryptingdatasourceinformation#encrypting-data-source-information).
 {: tip}
 
 ## Expand the tutorial
@@ -342,8 +341,8 @@ In production applications, encrypt information such as URLs, usernames and pass
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
 - Experiment with additional datasets using SQL Query
-- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://{DomainName}/docs/tutorials/big-data-log-analytics.html)
-- Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) or {{site.data.keyword.cos_short}}
+- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://{DomainName}/docs/tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics)
+- Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) or {{site.data.keyword.cos_short}}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://{DomainName}/catalog/services/app-id) service instance to enable security in the dashboard application
 
 ## Remove resources

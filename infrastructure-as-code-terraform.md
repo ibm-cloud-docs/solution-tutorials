@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-04-23"
+  years: 2017, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -237,7 +237,7 @@ In this section, you are going to verify the VM and {{site.data.keyword.cos_shor
 
 1. From the **{{site.data.keyword.Bluemix_notm}} Dashboard**, you should see an instance of the {{site.data.keyword.cos_full_notm}} service been created for you and ready for use. ![object-storage](images/solution10/ibm-cloud-object-storage.png)
 
-   More info on {{site.data.keyword.cos_full_notm}} can be found [here](https://{DomainName}/docs/services/ibm-cos/index.html).
+   More info on {{site.data.keyword.cos_full_notm}} can be found [here](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage).
 
 ## Remove resources
 {: #deleteresources}
@@ -253,7 +253,7 @@ Delete resources using the following command:
 ## Related content
 
 - [Terraform](https://www.terraform.io/)
-- [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/ibm-cos/index.html)
+- [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
 - [{{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/)
-- [Accelerate delivery of static files using a CDN - {{site.data.keyword.cos_full_notm}}](static-files-cdn.html)
+- [Accelerate delivery of static files using a CDN - {{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn)
 

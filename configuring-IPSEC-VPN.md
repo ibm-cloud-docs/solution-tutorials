@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-07-31"
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -22,18 +22,19 @@ The need to create a private connection between a remote network environment and
 
 {{site.data.keyword.Bluemix_notm}} provides a number of options for site-to-site data center connectivity, either using a VPN over the public internet or via a private dedicated network connection. 
 
-See [IBM Cloud Direct Link](../infrastructure/direct-link/getting-started.html#get-started-with-ibm-cloud-direct-link) 
+See [{{site.data.keyword.BluDirectLink}}
+]( https://{DomainName}/docs/infrastructure/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link) 
 for more details on dedicated secure network links to the {{site.data.keyword.Bluemix_notm}}. A VPN over the public internet provides a lower cost option, though without bandwidth guarantees. 
 
 There are two suitable VPN options for connectivity over the public internet to servers provisioned on the {{site.data.keyword.Bluemix_notm}}:
 
 -	[IPSEC VPN]( https://{DomainName}/catalog/infrastructure/ipsec-vpn)
--	[Virtual Router Appliance VPN](../infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
+-	[Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
 
 This tutorial presents setup of a site-to-site IPSec VPN using a Virtual Router Appliance (VRA) to connect a subnet in a client data center to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. 
 
-This example builds on the [Isolate workloads with a secure private network](./secure-network-enclosure.html) tutorial. It uses a site-to-site IPSec 
-VPN, GRE tunnel and static routing. More complex VPN configurations that use dynamic routing (BGP etc) and VTI tunnels can be found in the [supplemental VRA documentation]( ../infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation).
+This example builds on the [Isolate workloads with a secure private network](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial. It uses a site-to-site IPSec 
+VPN, GRE tunnel and static routing. More complex VPN configurations that use dynamic routing (BGP etc) and VTI tunnels can be found in the [supplemental VRA documentation](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
 {:shortdesc}
 
 ## Objectives
@@ -48,7 +49,7 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
 
-* [Virtual Router Appliance VPN](../infrastructure/virtual-router-appliance/about.html#virtual-private-network-vpn-gateway)
+* [Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
 
 This tutorial may incur costs. The VRA is only available on a monthly pricing plan.
 
@@ -70,7 +71,7 @@ This tutorial may incur costs. The VRA is only available on a monthly pricing pl
 ## Before you begin
 {: #prereqs}
 
-This tutorial connects the secure private enclosure in the [Isolate workloads with a secure private network](./secure-network-enclosure.html) tutorial to your data center. That tutorial must be completed first.
+This tutorial connects the secure private enclosure in the [Isolate workloads with a secure private network](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to your data center. That tutorial must be completed first.
 
 ## Document VPN configuration
 {: #Document_VPN}
@@ -317,8 +318,8 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 ## Related content
 {:related}
-- [IBM Virtual Router Appliance](../infrastructure/virtual-router-appliance/vra-basics.html#vra-basics)
-- [Static and Portable IP Subnets](../infrastructure/subnets/about.html)
-- [Vyatta documentation](../infrastructure/virtual-router-appliance/vra-docs.html#supplemental-vra-documentation)
+- [IBM Virtual Router Appliance](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance#vra-basics)
+- [Static and Portable IP Subnets](https://{DomainName}/docs/infrastructure/subnets?topic=subnets-about-subnets-ips#about-subnets-ips)
+- [Vyatta documentation](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation)
 - [Brocade Vyatta Network OS IPsec Site-to-Site VPN Configuration Guide, 5.2R1](https://public.dhe.ibm.com/cloud/bluemix/network/vra/vyatta-network-os-5.2r1-ipsec-vpn.pdf)
 - [Brocade Vyatta Network OS Tunnels Configuration Guide, 5.2R1](https://public.dhe.ibm.com/cloud/bluemix/network/vra/vyatta-network-os-5.2r1-tunnels.pdf)

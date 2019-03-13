@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-10-25"
-
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -26,7 +25,7 @@ Developers do not like to write the same thing twice. The [DRY](https://en.wikip
 
 Infrastructure as a Service (IaaS), Platform as a Service (PaaS), Container as a Service (CaaS), Functions as a Service (FaaS) have given developers high level of abstraction and it became easier to acquire resources like bare metal servers, managed databases, virtual machines, Kubernetes clusters, etc. But once you have provisioned these resources, you need to connect them together, to configure user access, to update the configuration over time, etc. Being able to automate all these steps and to repeat the installation, configuration under different environments is a must-have these days.
 
-Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial](./users-teams-applications.html), we've introduced best practices to organize users, teams and applications and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How to automate the creation of these environments? What tools could be used?
+Multiple environments are pretty common in a project to support the different phases of the development cycle with slight differences between the environments like capacity, networking, credentials, log verbosity. In [this other tutorial]((https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications), we've introduced best practices to organize users, teams and applications and a sample scenario. The sample scenario considers three environments, *Development*, *Testing* and *Production*. How to automate the creation of these environments? What tools could be used?
 
 ## Objectives
 {: #objectives}
@@ -42,7 +41,7 @@ This tutorial uses the following products:
 * [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
 * [Identity and Access Management](https://{DomainName}/iam/#/users)
-* [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://{DomainName}/docs/cli/index.html)
+* [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli)
 * [HashiCorp Terraform](https://www.terraform.io/)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
@@ -64,9 +63,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Overview of the available tools
 {: #tools}
 
-The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://{DomainName}/docs/cli/index.html). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
+The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
 
-Another tool introduced in [this tutorial](./infrastructure-as-code-terraform.html) is [Terraform](https://www.terraform.io/) by HashiCorp. Quoting HashiCorp, *Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.* It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
+Another tool introduced in [this tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform) is [Terraform](https://www.terraform.io/) by HashiCorp. Quoting HashiCorp, *Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.* It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
 To support a multi-cloud approach, Terraform works with providers. A provider is responsible for understanding API interactions and exposing resources. {{site.data.keyword.Bluemix_notm}} has [its provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm) enabling users of {{site.data.keyword.Bluemix_notm}} to manage resources with Terraform. Although Terraform is categorized as infrastructure as code, it is not limited to Infrastructure-As-A-Service resources. The {{site.data.keyword.Bluemix_notm}} Provider for Terraform supports IaaS (bare metal, virtual machine, network services, etc.), CaaS ({{site.data.keyword.containershort_notm}} and Kubernetes clusters), PaaS (Cloud Foundry and services) and FaaS ({{site.data.keyword.openwhisk_short}}) resources.
 
@@ -280,7 +279,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
 
-1. Follow [these instructions](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html#download_install) to install the CLI
+1. Follow [these instructions](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli) to install the CLI
 1. Validate the installation by running:
    ```sh
    ibmcloud
@@ -291,7 +290,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 
 1. [Download and install Terraform for your system.](https://www.terraform.io/intro/getting-started/install.html)
 1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
-   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](./infrastructure-as-code-terraform.html#setup)
+   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup)
    {:tip}
 1. Create a `.terraformrc` file in your home directory that points to the Terraform binary. In the following example, `/opt/provider/terraform-provider-ibm` is the route to the directory.
    ```sh
@@ -485,7 +484,7 @@ You can repeat the steps for the `testing` and `production`.
 
 In the previous steps, roles in Cloud Foundry organization and spaces could be configured with the Terraform provider. For user policies on other resources like the Kubernetes clusters, you will be using the [roles](https://github.com/IBM-Cloud/multiple-environments-as-code/tree/master/terraform/roles) folder in the cloned repo.
 
-For the *Development* environment as defined in [this tutorial](./users-teams-applications.html), the policies to define are:
+For the *Development* environment as defined in [this tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications), the policies to define are:
 
 |           | IAM Access policies |
 | --------- | ----------- |
@@ -494,7 +493,7 @@ For the *Development* environment as defined in [this tutorial](./users-teams-ap
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
 
-Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/iam/groups.html#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
+Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/iam?topic=iam-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
 
 For the *Developer* role in the *Development* environment, this translates to:
 
@@ -592,6 +591,6 @@ You can repeat the steps for the `testing` and `production`.
 
 ## Related content
 
-* [Terraform tutorial](./infrastructure-as-code-terraform.html)
+* [Terraform tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)
 * [Terraform provider](https://ibm-cloud.github.io/tf-ibm-docs/)
 * [Examples using {{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)

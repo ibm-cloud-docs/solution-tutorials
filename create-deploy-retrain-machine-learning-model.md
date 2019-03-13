@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-11-23"
-
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -137,10 +136,10 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 4. Click on **View API Specification** to see and test {{site.data.keyword.pm_short}} API endpoints.
    ![](images/solution22-build-machine-learning-model/machine_learning_api.png)
 
-   To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Dashboard](https://{DomainName}/dashboard/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
+   To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
    {:tip}
 5. To make an online prediction, use the `POST /online` API call.
-   * `instance_id` can be found on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service under [{{site.data.keyword.Bluemix_short}} Dashboard](https://{DomainName}/dashboard/).
+   * `instance_id` can be found on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/).
    * `deployment_id` and `published_model_id` are under **Overview** of your deployment.
    *  For `online_prediction_input`, use the below JSON
 
@@ -184,7 +183,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#retrain_model}
 
-1. Return to your [{{site.data.keyword.Bluemix_short}} Dashboard](https://{DomainName}/dashboard/apps) and under the {{site.data.keyword.DSX_short}} service you have been using, click on **Projects** > iris_project >  **iris-model** (under assets) > Evaluation.
+1. Return to your [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) and under the {{site.data.keyword.DSX_short}} service you have been using, click on **Projects** > iris_project >  **iris-model** (under assets) > Evaluation.
 2. Under **Performance Monitoring**, Click on **Configure Performance Monitoring**.
 3. On the configure Performance Monitoring page,
    * Select the Spark service. Prediction type should be populated automatically.
@@ -213,15 +212,15 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 ## Remove resources
 {:removeresources}
 
-1. Navigate to [{{site.data.keyword.Bluemix_short}} Dashboard](https://{DomainName}/dashboard/) > choose the Location, Org and Space where you have created the services.
+1. Navigate to [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/) > choose the Location, Org and Space where you have created the services.
 2. Delete the respective {{site.data.keyword.DSX_short}}, {{site.data.keyword.sparks}}, {{site.data.keyword.pm_short}}, {{site.data.keyword.dashdbshort}} and {{site.data.keyword.cos_short}} services which you created for this tutorial.
 
 ## Related content
 {:related}
 
 - [Watson Studio Overview](https://dataplatform.ibm.com/docs/content/getting-started/overview-ws.html?audience=wdp&context=wdp)
-- [Detect Anomalies using Machine Learning](https://{DomainName}/docs/tutorials/gather-visualize-analyze-iot-data.html#data_experience)
-- [Watson Data Platform Tutorials](https://www.ibm.com/analytics/us/en/watson-data-platform/tutorial/)
+- [Detect Anomalies using Machine Learning](https://{DomainName}/docs/tutorials?topic=solution-tutorials-gather-visualize-analyze-iot-data#data_experiencee)
+<!-- - [Watson Data Platform Tutorials](https://www.ibm.com/analytics/us/en/watson-data-platform/tutorial/) -->
 - [Automatic model creation](https://datascience.ibm.com/docs/content/analyze-data/ml-model-builder.html?linkInPage=true)
 - [Machine learning & AI](https://dataplatform.ibm.com/docs/content/analyze-data/wml-ai.html?audience=wdp&context=wdp)
-- [Watson machine learning client library](https://dataplatform.ibm.com/docs/content/analyze-data/pm_service_client_library.html#client-libraries)
+<!-- - [Watson machine learning client library](https://dataplatform.ibm.com/docs/content/analyze-data/pm_service_client_library.html#client-libraries) -->

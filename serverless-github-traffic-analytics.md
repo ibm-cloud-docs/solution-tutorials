@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-11-13"
-
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -35,7 +34,7 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://{DomainName}/docs/cli/index.html#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](https://{DomainName}/docs/cli/reference/bluemix_cli/extend_cli.html#plug-ins).
+To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-plug-ins#plug-ins).
 
 ## Service and Environment Setup (shell)
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
@@ -95,8 +94,12 @@ In this section, you set up the needed services and prepare the environment. All
 ## App ID and GitHub configuration (browser)
 The following steps are all performed using your Internet browser. First, you configure {{site.data.keyword.appid_short}} to use the Cloud Directory and to work with the Python app. Thereafter, you create a GitHub access token. It is needed for the deployed function to retrieve the traffic data.
 
-1. In the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
+1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
 2. In the service dashboard, click on **Manage** under **Identity Providers** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **On**, all other providers to **Off**.
+   
+   You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/services/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
+   {:tip}
+
 3. At the bottom of that page is the list of redirect URLs. Enter the **url** of your application + /redirect_uri. For example `https://github-traffic-stats-random-word.mybluemix.net/redirect_uri`.
 
    For testing the app locally, the redirect URL is `http://0.0.0.0:5000/redirect_uri`. You can configure multiple redirect URLs.
@@ -130,7 +133,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    cd ../functions
    ```
    {:codeblock}   
-2. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk/openwhisk_reference.html#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
+2. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_reference#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
    ```bash
    ibmcloud fn action create collectStats --kind python-jessie:3 ghstats.zip
    ```
@@ -143,7 +146,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    ibmcloud fn service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
    ```
    {:codeblock}   
-4. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk/openwhisk_alarms.html#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
+4. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_catalog_alarm#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
    ```bash
    ibmcloud fn trigger create myDaily --feed /whisk.system/alarms/alarm \
               --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
@@ -211,7 +214,7 @@ Want to add to or change this tutorial? Here are some ideas:
 Here are links to additional information on the topics covered in this tutorial.
 
 Documentation and SDKs:
-* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk/openwhisk_about.html#about-cloud-functions)
+* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_about#about-cloud-functions)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [{{site.data.keyword.appid_short}} documentation](https://{DomainName}/docs/services/appid/index.html#gettingstarted)
-* [Python runtime on IBM Cloud](https://{DomainName}/docs/runtimes/python/index.html#python_runtime)
+* [{{site.data.keyword.appid_short}} documentation](https://{DomainName}/docs/services/appid?topic=appid-gettingstarted#gettingstarted)
+* [Python runtime on IBM Cloud](https://{DomainName}/docs/runtimes/python?topic=Python-python_runtime#python_runtime)

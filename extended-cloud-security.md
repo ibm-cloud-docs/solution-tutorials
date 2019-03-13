@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-10-04"
+  years: 2018, 2019
+lastupdated: "2019-03-08"
 
 ---
 
@@ -42,7 +42,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cloudaccesstrailshort}}](https://{DomainName}/catalog/services/activity-tracker)
 * [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/key-protect)
 
-This tutorial requires a [non-Lite account](https://{DomainName}/docs/account/index.html#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?topic=account-accounts#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -64,7 +64,7 @@ The tutorial features a sample application that enables groups of users to uploa
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
 
 ## Create services
 {: #setup}
@@ -86,7 +86,7 @@ The {{site.data.keyword.cloudaccesstrailshort}} service records user-initiated a
    1. IAM policy for the {{site.data.keyword.loganalysisshort_notm}}.
  service with **viewer** role in the region.
 
-You can find detailed instructions to set up the proper permissions in the [{{site.data.keyword.cloudaccesstrailshort}} documentation](https://{DomainName}/docs/services/cloud-activity-tracker/how-to/grant_permissions.html#grant_iam_policy).
+You can find detailed instructions to set up the proper permissions in the [{{site.data.keyword.cloudaccesstrailshort}} documentation](https://{DomainName}/docs/services/cloud-activity-tracker/how-to?topic=cloud-activity-tracker-grant_permissions#grant_iam_policy).
 {: tip}
 
 ### Create a cluster for the application
@@ -110,7 +110,7 @@ While the cluster is being provisioned, you will create the other services requi
 
 ### Use your own encryption keys
 
-{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to help you own the security of your at-rest data](https://{DomainName}/docs/services/key-protect/integrations/integrate-cos.html#integrate-cos). In this section, you will create one root key for the storage bucket.
+{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to help you own the security of your at-rest data](https://{DomainName}/docs/services/key-protect/integrations?topic=key-protect-integrate-cos#integrate-cos). In this section, you will create one root key for the storage bucket.
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
    * Set the name to **secure-file-storage-kp**.
@@ -120,7 +120,7 @@ While the cluster is being provisioned, you will create the other services requi
    * Set the key type to **Root key**.
    * Then **Generate key**.
 
-You can bring your own key (BYOK) by [importing an existing root key](https://{DomainName}/docs/services/key-protect/import-root-keys.html#import-root-keys).
+You can bring your own key (BYOK) by [importing an existing root key](https://{DomainName}/docs/services/key-protect?topic=key-protect-import-root-keys#import-root-keys).
 {: tip}
 
 ### Setup storage for user files
@@ -185,7 +185,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain a metadata d
 
 ### Authenticate users
 
-With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. {{site.data.keyword.appid_short}} provides [an integration](https://{DomainName}/docs/containers/cs_annotations.html#appid-auth) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
+With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. {{site.data.keyword.appid_short}} provides [an integration](https://{DomainName}/docs/containers?topic=containers-ingress_annotation#appid-auth) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
 
 1. Create an instance of [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID).
    * Set the **name** to **secure-file-storage-appid**.
@@ -217,7 +217,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 1. Build the Docker image in {{site.data.keyword.registryshort_notm}}:
    ```sh
-   ibmcloud cr build -t registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest .
+   ibmcloud cr build -t <location>.icr.io/<namespace>/secure-file-storage:latest .
    ```
    {: codeblock}
 
@@ -241,7 +241,7 @@ All services have been configured. In this section you will deploy the tutorial 
 | Variable | Value |
 | -------- | ----- |
 | `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml |
-| `$REGISTRY_URL` | *registry.ng.bluemix.net* |
+| `$REGISTRY_URL` | *us.icr.io* |
 | `$REGISTRY_NAMESPACE` | *a-namespace* |
 | `$IMAGE_NAME` | *secure-file-storage* |
 | `$TARGET_NAMESPACE` | *default* |
@@ -290,9 +290,9 @@ Authenticated users get their own space to store files. They don't see each othe
 You will find more details about the tutorial application code in the [source code repository](https://github.com/IBM-Cloud/secure-file-storage).
 
 ## Review Security Events
-Now that the application and its services have been successfully deployed, you can review the security events generated by that process. All the events are centrally available in the instance of {{site.data.keyword.cloudaccesstrailshort}} and can be accessed via [graphical UI (Kibana), CLI or API](https://{DomainName}/docs/services/cloud-activity-tracker/how-to/viewing_event_information.html#viewing_event_status).
+Now that the application and its services have been successfully deployed, you can review the security events generated by that process. All the events are centrally available in the instance of {{site.data.keyword.cloudaccesstrailshort}} and can be accessed via [graphical UI (Kibana), CLI or API](https://{DomainName}/docs/services/cloud-activity-tracker/how-to?topic=cloud-activity-tracker-viewing_event_status#viewing_event_status).
 
-1. In the [{{site.data.keyword.Bluemix_notm}} console](https://{DomainName}) locate the {{site.data.keyword.cloudaccesstrailshort}} instance **secure-file-storage-activity-tracker** and open its dashboard.
+1. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the {{site.data.keyword.cloudaccesstrailshort}} instance **secure-file-storage-activity-tracker** and open its dashboard.
 2. By default it opens the **Manage** tab and shows **Space logs**. Switch to **Account logs** by clicking on the selector next to **View logs**. It should display several events.
 3. Click on **View in Kibana** to open the full event viewer.
 4. See event details the entries by clicking on **Discover**.
@@ -319,10 +319,10 @@ To remove the resource, delete the deployed container and then the provisioned s
    {: codeblock}
 3. Remove the Docker image from the container registry:
    ```sh
-   ibmcloud cr image-rm registry.<region>.bluemix.net/<namespace>/secure-file-storage:latest
+   ibmcloud cr image-rm <location>.icr.io/<namespace>/secure-file-storage:latest
    ```
    {: codeblock}
-4. In the [{{site.data.keyword.Bluemix_notm}} console](https://{DomainName}) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
+4. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
 
 If you share an account with other users, always make sure to delete only your own resources.
 {: tip}
@@ -330,10 +330,10 @@ If you share an account with other users, always make sure to delete only your o
 ## Related content
 {:related}
 
-* [{{site.data.keyword.security-advisor_short}} documentation](https://{DomainName}/docs/services/security-advisor/about.html#about)
+* [{{site.data.keyword.security-advisor_short}} documentation](https://{DomainName}/docs/services/security-advisor?topic=security-advisor-about#about)
 * [Security to safeguard and monitor your cloud apps](https://www.ibm.com/cloud/garage/architectures/securityArchitecture)
-* [{{site.data.keyword.Bluemix_notm}} Platform security](https://{DomainName}/docs/overview/security.html#security)
+* [{{site.data.keyword.Bluemix_notm}} Platform security](https://{DomainName}/docs/overview?topic=overview-security#security)
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security)
-* [Tutorial: Best practices for organizing users, teams, applications](https://{DomainName}/docs/tutorials/users-teams-applications.html)
+* [Tutorial: Best practices for organizing users, teams, applications](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/)
 

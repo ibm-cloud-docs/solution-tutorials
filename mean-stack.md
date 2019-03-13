@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-11-14"
-
+  years: 2017, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -55,7 +54,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 {: #prereqs}
 
 1. [Install Git](https://git-scm.com/)
-2. [Install Bluemix Command Line Tool](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+2. [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli)
 
 
 And to develop and run the application locally:
@@ -117,7 +116,7 @@ In this section, you will create a {{site.data.keyword.composeForMongoDB}} datab
   ```
   {: codeblock}
 
-  You can find more CLI commands [here.](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+  You can find more CLI commands [here.](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-ibmcloud_cli#ibmcloud_cli)
 
 2. Create an instance of {{site.data.keyword.composeForMongoDB}}. This can also be done using the [console UI](https://{DomainName}/catalog/services/compose-for-mongodb). The service name must be named **mean-starter-mongodb** as the application is configured to look for this service by this name.
 
@@ -176,6 +175,6 @@ To check the health of your application, you can use the built-in Availability M
 
 {: #related}
 
-- Set up source control and [continuous delivery](multi-region-webapp.html#devops).
-- Secure web application across [multiple locations](multi-region-webapp.html).
-- Create, secure and manage [REST APIs](create-manage-secure-apis.html).
+- Set up source control and [continuous delivery](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#devops).
+- Secure web application across [multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp).
+- Create, secure and manage [REST APIs](https://{DomainName}/docs/tutorials?topic=solution-tutorials-create-manage-secure-apis#create-manage-secure-apis).

@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-09-19"
-
+  years: 2017, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -35,7 +34,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 {: #services}
 
 This tutorial uses the following products:
-   * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
+   * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
    * [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
@@ -203,8 +202,8 @@ Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination w
 
 ## Related content
 
-[{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
+[{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
 
-[Manage Access to {{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/iam/overview.html#getting-started-with-iam)
+[Manage Access to {{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/iam?topic=cloud-object-storage-getting-started-with-iam#getting-started-with-iam)
 
-[Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN/getting-started.html)
+[Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN?topic=CDN-getting-started#getting-started)

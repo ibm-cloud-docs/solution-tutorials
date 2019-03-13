@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-11-23"
-
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -42,7 +41,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Service and Environment Setup
 Start by provisioning the services used in this tutorial and create a project within {{site.data.keyword.DSX_short}}.
 
-You can provision services for {{site.data.keyword.Bluemix_short}} from the [dashboard](https://{DomainName}/dashboard) and [catalog](https://{DomainName}/catalog/). Alternatively {{site.data.keyword.DSX_short}} allows you to create or add existing Data & Analytics services from its dashboard and project settings.
+You can provision services for {{site.data.keyword.Bluemix_short}} from the [Resource List](https://{DomainName}/resources) and [catalog](https://{DomainName}/catalog/). Alternatively {{site.data.keyword.DSX_short}} allows you to create or add existing Data & Analytics services from its dashboard and project settings.
 {:tip}
 
 1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) navigate to the **AI** section. Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.

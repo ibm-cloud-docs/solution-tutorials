@@ -1,8 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2018-1-18"
-
+lastupdated: "2019-03-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -23,7 +22,7 @@ With {{site.data.keyword.cfee_full_notm}} (CFEE) you can create multiple, isolat
 
 A use case for {{site.data.keyword.cfee_full_notm}} is an enterprise-owned innovation platform. You as a developer within an enterprise can either create new microservices or migrate legacy applications to CFEE. Microservices can then be published to additional developers using the Cloud Foundry marketplace. Once there, other developers in your CFEE instance can consume services within the application just as is done today on public Cloud.
 
-The tutorial will walk you through the process of creating and configuring an {{site.data.keyword.cfee_full_notm}}, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/container_index.html) by deploying a custom service broker that integrates custom services with CFEE.
+The tutorial will walk you through the process of creating and configuring an {{site.data.keyword.cfee_full_notm}}, setting up access control, and deploying apps and services. You'll also review the relationship between CFEE and [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-container_index#container_index) by deploying a custom service broker that integrates custom services with CFEE.
 
 ## Objectives
 
@@ -62,7 +61,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #prereq}
 
-- [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html)
+- [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli)
 - [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
 - [Git](https://git-scm.com/downloads)
 - [Node.js](https://nodejs.org/en/)
@@ -73,13 +72,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 In this section, you'll create an instance of {{site.data.keyword.cfee_full_notm}} deployed to Kubernetes worker nodes from {{site.data.keyword.containershort_notm}}.
 
-1. [Prepare your {{site.data.keyword.cloud_notm}} account](https://{DomainName}/docs/cloud-foundry/prepare-account.html) to ensure the creation of required infrastructure resources.
+1. [Prepare your {{site.data.keyword.cloud_notm}} account](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-prepare#prepare) to ensure the creation of required infrastructure resources.
 2. From the {{site.data.keyword.cloud_notm}} catalog, create a service instance of [{{site.data.keyword.cfee_full_notm}} ](https://{DomainName}/cfadmin/create).
 3. Configure CFEE by providing the following:
    - Select the **Standard** plan.
    - Enter a **Name** for the service instance.
    - Select a **Resource group** in which the environment is created. You'll need permission to access at least one resource group in the account to be able to create a CFEE instance.
-   - Select a **Geography** and **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry/index.html#provisioning-targets).
+   - Select a **Geography** and **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#provisioning-targets).
    - Select a public Cloud Foundry **Organization** and **Space** where **{{site.data.keyword.composeForPostgreSQL}}** will be deployed.
    - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. At least **2** cells are required for highly available applications.
    - Select the **Machine type**, which determines the size of the Cloud Foundry cells (CPU and memory).
@@ -90,7 +89,7 @@ The automated deployment takes approximately 90 to 120 minutes. Once successfull
 
 ### Create organizations and spaces
 
-After you've created {{site.data.keyword.cfee_full_notm}}, see [creating organizations and spaces](https://{DomainName}/docs/cloud-foundry/orgs-spaces.html) for information on how to structure the environment through organizations and spaces. Apps in an {{site.data.keyword.cfee_full_notm}} are scoped within specific spaces. Similarly, a space exists within an organization. Members of an organization share a quota plan, apps, services instances, and custom domains.
+After you've created {{site.data.keyword.cfee_full_notm}}, see [creating organizations and spaces](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-create_orgs#create_orgs) for information on how to structure the environment through organizations and spaces. Apps in an {{site.data.keyword.cfee_full_notm}} are scoped within specific spaces. Similarly, a space exists within an organization. Members of an organization share a quota plan, apps, services instances, and custom domains.
 
 Note: The **Manage > Account > Cloud Foundry orgs** menu located in the top {{site.data.keyword.cloud_notm}} header is intended exclusively for public {{site.data.keyword.cloud_notm}} organizations. CFEE organizations are managed within the **organizations** page of a CFEE instance.
 
@@ -113,7 +112,7 @@ Once the user has been invited, follow the steps below to add the user to the `t
 3. Click on the **Members** tab to view and add a new user.
 4. Click on the **Add members** button, search for the username, select the appropriate **Organization Roles**, and click **Add**.
 
-More on adding users to CFEE orgs and spaces can be found [here](https://{DomainName}/docs/cloud-foundry/add-users.html#adding_users).
+More on adding users to CFEE orgs and spaces can be found [here](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-adding_users#adding_users).
 
 ## Deploy, configure, and run CFEE apps
 
@@ -169,7 +168,7 @@ Auditing allows CFEE administrators to track Cloud Foundry activities such as lo
 
 Cloud Foundry application logs can be stored by integrating {{site.data.keyword.loganalysisshort_notm}}. The {{site.data.keyword.loganalysisshort_notm}} service instance selected by a CFEE administrator is configured automatically to receive and persist Cloud Foundry logging events generated from the CFEE instance.
 
-To enable CFEE auditing and logging persistence follow the [steps here](https://{DomainName}/docs/cloud-foundry/auditing-logging.html#auditing-logging).
+To enable CFEE auditing and logging persistence follow the [steps here](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-auditing-logging#auditing-logging).
 
 ### Install the Stratos console to manage the app
 
@@ -182,7 +181,7 @@ To install the Stratos Console application:
 3. In the Install Stratos Console dialog, select an installation option. You can install the Stratos console application either on the CFEE control plane or in one of the cells. Select a version of the Stratos console and the number of instances of the application to install. If you install the Stratos console app in a cell, you're prompted for the organization and space where to deploy the application.
 4. Click **Install**.
 
-The application takes about 5 minutes to install. Once the installation is complete, a **Stratos Console** button appears in place of the **Install Stratos Console** button on the overview page. More on Stratos console can be found [here](https://{DomainName}docs/tutorials/isolated-cloud-foundry-enterprise-apps.html#install-the-stratos-console-to-manage-the-app).
+The application takes about 5 minutes to install. Once the installation is complete, a **Stratos Console** button appears in place of the **Install Stratos Console** button on the overview page. More on Stratos console can be found [here](https://{DomainName}/docs/tutorials?topic=solution-tutorials-isolated-cloud-foundry-enterprise-apps#install-the-stratos-console-to-manage-the-app).
 
 ## The relationship between CFEE and Kubernetes
 
@@ -230,7 +229,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
    ```
    {: codeblock}
 
-   If your container registry is different than `registry.ng.bluemix.net`, edit the `./cfee-service-broker-kubernetes/deployment.yml` file. Update the `image` attribute to reflect your container registry URL.
+   Edit `./cfee-service-broker-kubernetes/deployment.yml` file. Update the `image` attribute to reflect your container registry URL.
 3. Deploy the container image to CFEE's Kubernetes cluster. Your CFEE's cluster exists in the `default` resource group, which should be targeted if not already. Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
    ```sh
    ibmcloud target -g default
@@ -483,6 +482,6 @@ Congratulations, you've deployed {{site.data.keyword.cfee_full_notm}} with a cus
 ## Related content
 {:related}
 
-* [Deploying apps in Kubernetes clusters](https://{DomainName}/docs/containers/cs_app.html#app)
+* [Deploying apps in Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-app#app)
 * [Cloud Foundry Diego Components and Architecture](https://docs.cloudfoundry.org/concepts/diego/diego-architecture.html)
 

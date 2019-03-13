@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-11-14"
-
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -60,9 +59,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 * Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers.
 * [Install Git](https://git-scm.com/).
-* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli/get_started.html#getting-started).
+* [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli).
 * [IBM Cloud Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry/registry_setup_cli_namespace.html).
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 ## Deploy an application to one location
@@ -76,7 +75,7 @@ To create a cluster:
 1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/containers-kubernetes/catalog/cluster/create).
 1. Set **Location** to **Dallas**.
 1. Select **Standard** cluster.
-1. Select one or more zones as **Location**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers/cs_clusters_planning.html#ha_clusters).
+1. Select one or more zones as **Location**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers?topic=containers-plan_clusters#ha_clusters).
 1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
 1. Use **2** worker nodes.
 1. Set **Cluster name** to **my-us-cluster**. Use the naming pattern *`my-<location>-cluster`* to be consistent with this tutorial.
@@ -124,7 +123,7 @@ This step builds the application into a Docker image. You can skip this step if 
 Tag the image with the target registry:
 
    ```bash
-   docker tag multi-region-hello-world:1 registry.ng.bluemix.net/<your_us-south_namespace>/hello-world:1
+   docker tag multi-region-hello-world:1 us.icr.io/<your_us-south_namespace>/hello-world:1
    ```
    {: pre}
 
@@ -137,7 +136,7 @@ Tag the image with the target registry:
    {: pre}
 2. Push the image.
    ```bash
-   docker push registry.ng.bluemix.net/<your_us-south_namespace>/hello-world:1
+   docker push us.icr.io/<your_us-south_namespace>/hello-world:1
    ```
    {: pre}
 
@@ -153,7 +152,7 @@ At that stage, the cluster should be ready. You can check its status in the [{{s
 1. Copy and paste the output to set the KUBECONFIG environment variable. The variable is used by `kubectl`.
 1. Run the application in the cluster with two replicas:
    ```bash
-   kubectl run hello-world-deployment --image=registry.ng.bluemix.net/<your_US-South_namespace>/hello-world:1 --replicas=2
+   kubectl run hello-world-deployment --image=us.icr.io/<your_US-South_namespace>/hello-world:1 --replicas=2
    ```
    {: pre}
    Example output: `deployment "hello-world-deployment" created`.
@@ -185,7 +184,7 @@ This tutorial uses the Ingress subdomain to configure the Global Load Balancer. 
 Repeat the previous steps in London by replacing:
 * the location name **Dallas** with **London**;
 * the location alias **us-south** with **eu-gb**;
-* the registry *registry.ng.bluemix.net* with **registry.eu-gb.bluemix.net**;
+* the registry *us.icr.io* with **uk.icr.io**;
 * and the cluster name *my-us-cluster* with **my-uk-cluster**.
 
 ## Configure multi-location load-balancing
@@ -366,10 +365,10 @@ In addition, you can now control what content gets cached by CIS and how long it
 ## Related content
 {:related}
 
-* IBM Cloud [Internet Services](https://{DomainName}/docs/infrastructure/cis/getting-started.html#getting-started-with-ibm-cloud-internet-services-cis-)
-* [Manage your IBM CIS for optimal security](https://{DomainName}/docs/infrastructure/cis/managing-for-security.html#best-practice-2-configure-your-security-level-selectively)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers/cs_planning.html#cs_planning)
-* [{{site.data.keyword.registrylong_notm}} Basic](https://{DomainName}/docs/services/Registry/registry_overview.html#registry_planning)
-* [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers/cs_tutorials_apps.html#cs_apps_tutorial_lesson1)
-* [Best practice to secure traffic and internet application via CIS](https://{DomainName}/docs/infrastructure/cis/managing-for-security.html#manage-your-ibm-cis-for-optimal-security)
+* IBM Cloud [Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
+* [Manage your IBM CIS for optimal security](https://{DomainName}/docs/infrastructure/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-2-configure-your-security-level-selectively)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
+* [{{site.data.keyword.registrylong_notm}} Basic](https://{DomainName}/docs/services/Registry?topic=registry-registry_overview#registry_planning)
+* [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-cs_apps_tutorial#cs_apps_tutorial_lesson1)
+* [Best practice to secure traffic and internet application via CIS](https://{DomainName}/docs/infrastructure/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
 * [Improving App Availability with Multizone Clusters](https://www.ibm.com/blogs/bluemix/2018/06/improving-app-availability-multizone-clusters/)

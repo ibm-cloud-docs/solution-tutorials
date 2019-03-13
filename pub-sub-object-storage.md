@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-12-11"
-
+  years: 2018, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -58,7 +57,7 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 ## Before you begin
 {: #prereqs}
 
-* [IBM Cloud Developer Tools](https://{DomainName}/docs/cli/idt/setting_up_idt.html#add-cli) - Tool to install {{site.data.keyword.cloud_notm}} CLI, Kubernetes, Helm, and Docker.
+* [IBM Cloud Developer Tools](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli) - Tool to install {{site.data.keyword.cloud_notm}} CLI, Kubernetes, Helm, and Docker.
 
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
@@ -98,7 +97,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
  ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service mymessagehub
  ```
 
-The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-mymessagehub`. See [Integrating Services](https://{DomainName}/docs/containers/cs_integrations.html#integrations) for more info
+The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-mymessagehub`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-integrations#integrations) for more info
 
 {:tip}
 
@@ -156,12 +155,12 @@ The worker application is a Java application which listens to the {{site.data.ke
 3. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 ![](images/solution25/files_processed.png)
 
-In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/docs/openwhisk/openwhisk_use_cases.html#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
+In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_common_use_cases#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
 
 ## Remove resources
 {:removeresources}
 
-Navigate to [Dashboard](https://{DomainName}/dashboard/) and
+Navigate to [Resource List](https://{DomainName}/resources/) and
 1. delete Kubernetes cluster `mycluster`
 2. delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
 3. delete {{site.data.keyword.messagehub}} `mymessagehub`
@@ -170,7 +169,7 @@ Navigate to [Dashboard](https://{DomainName}/dashboard/) and
 ## Related content
 {:related}
 
-* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage)
-* [{{site.data.keyword.messagehub_full}}](https://{DomainName}/docs/services/MessageHub/index.html#messagehub)
-* [Manage Access to Object Storage](https://{DomainName}/docs/infrastructure/cloud-object-storage-infrastructure/manage-access.html#managing-access)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
+* [{{site.data.keyword.messagehub_full}}](https://{DomainName}/docs/services/EventStreams?topic=eventstreams-getting_started#messagehub)
+* [Manage Access to Object Storage](https://{DomainName}/docs/infrastructure/cloud-object-storage-infrastructure?topic=cloud-object-storage-infrastructure-managing-access#managing-access)
 * [{{site.data.keyword.messagehub}} data processing with {{site.data.keyword.openwhisk_short}}](https://github.com/IBM/openwhisk-data-processing-message-hub)

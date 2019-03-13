@@ -1,8 +1,9 @@
 ---
 copyright:
-  years: 2018
+  years: 2018, 2019
+lastupdated: "2019-03-12"
 
-lastupdated: "2018-11-14"
+
 ---
 
 
@@ -56,8 +57,8 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 ## Before you begin
 {: #prereq}
 
-* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry/registry_setup_cli_namespace.html).
+* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 ## Create development Kubernetes cluster
@@ -87,8 +88,8 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [Web Apps](https://{DomainName}/developer/appservice/dashboard).
 2. Under **Start from the Web**, section click on the **Get Started** button.
-3. Select the `Express.js Basic` and then `Create Project` to create a Node.js starter application.
-4. Enter a **name** `mynodestarter` and a unique **hostname** (`username-mynodestarter`) for your project.
+3. Select the `Node.js Web App with Express.js` tile and then `Create app` to create a Node.js starter application.
+4. Enter the **name** `mynodestarter`. Then, click **Create**.
 
 ## Configure DevOps delivery pipeline
 {: #create_devops}
@@ -177,7 +178,7 @@ If you don't see your application updating, check the logs of the DEPLOY and BUI
 ## Security using Vulnerability Advisor
 {: #vulnerability_advisor}
 
-In this step, you will explore the [Vulnerability Advisor](https://{DomainName}/docs/services/va/va_index.html). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
+In this step, you will explore the [Vulnerability Advisor](https://{DomainName}/docs/services/va?topic=va-va_index#va_index). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
 
 1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 1. Click on **Add Stage** and change MyStage to **Validate Stage** and then click on the JOBS  > **ADD JOB**.
@@ -241,7 +242,7 @@ In this step, you will explore the [Vulnerability Advisor](https://{DomainName}/
 In this section, you will complete the deployment pipeline by deploying the Kubernetes application to development and production environments respectively. Ideally, we want to set up an automatic deployment for the development environment and a manual deployment for the production environment. Before we do that, let's explore the two ways in which you can deliver this. It's possible to use one cluster for both development and production environment. However, it's recommended to have two separate clusters, one for development and one for production. Let's explore setting up a second cluster for production.
 {: shortdesc}
 
-1. Following instructions in [Create development Kubernetes cluster](continuous-deployment-to-kubernetes.html#create_kube_cluster) section, and create a new cluster. Name this cluster `prod-cluster`.
+1. Following instructions in [Create development Kubernetes cluster](#create_kube_cluster) section, and create a new cluster. Name this cluster `prod-cluster`.
 2. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 3. Rename the **Deploy Stage** to `Deploy dev`, you can do that by clicking on settings Icon >  **Configure Stage**.
    ![](images/solution21/deploy_stage.png)
@@ -282,20 +283,20 @@ In this step, you will clean up the resources to remove what you created above.
 
 Do you want to learn more? Here are some ideas of what you can do next:
 
-- [Analyze logs and monitor the health of Kubernetes applications using Kibana and Grafana](kubernetes-log-analysis-kibana.html).
+- [Analyze logs and monitor the health of Kubernetes applications using Kibana and Grafana](https://{DomainName}/docs/tutorials?topic=solution-tutorials-kubernetes-log-analysis-kibana#kubernetes-log-analysis-kibana).
 - Add a testing environment and deploy it to a 3rd cluster.
-- Deploy the production cluster [across multiple locations](multi-region-webapp.html).
+- Deploy the production cluster [across multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 - Enhance your pipeline with additional quality controls and analyics using [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
 
 ## Related Content
 {: #related}
 
-* End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](vm-to-containers-and-kubernetes.html).
+* End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vm-to-containers-and-kubernetes#vm-to-containers-and-kubernetes).
 
-* [Security](https://{DomainName}/docs/containers/cs_secure.html#cluster) for IBM Cloud Container Service.
+* [Security](https://{DomainName}/docs/containers?topic=containers-security#cluster) for IBM Cloud Container Service.
 
-* Toolchain [integrations](https://{DomainName}/docs/services/ContinuousDelivery/toolchains_integrations.html#integrations).
+* Toolchain [integrations](https://{DomainName}/docs/services/ContinuousDelivery?topic=ContinuousDelivery-integrations#integrations).
 
-* Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](kubernetes-log-analysis-kibana.html).
+* Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](https://{DomainName}/docs/tutorials?topic=solution-tutorials-kubernetes-log-analysis-kibana#kubernetes-log-analysis-kibana).
 
 

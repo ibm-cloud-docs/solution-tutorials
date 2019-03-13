@@ -1,8 +1,7 @@
 ---
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-11-16"
-
+  years: 2017, 2019
+lastupdated: "2019-03-07"
 ---
 
 {:shortdesc: .shortdesc}
@@ -57,8 +56,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry/registry_setup_cli_namespace.html)
-* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli/idt/setting_up_idt.html#add-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
+* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
@@ -115,7 +114,9 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 1. Do not add additional services.
 1. Do not add a DevOps toolchain, select **manual deployment**.
 
-This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. For an overview of the files generated, see [Project Contents Documentation](https://{DomainName}/docs/cloudnative/projects/java_project_contents.html#java-project-files).
+This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. 
+
+<!-- For an overview of the files generated, see [Project Contents Documentation](https://{DomainName}/docs/cloudnative/projects/java_project_contents.html#java-project-files). -->
 
 ![](images/solution2/Contents.png)
 
@@ -178,7 +179,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
     export MYPROJECT=<PROJECT_NAME>
     ```
     {: pre}
-3. Identify your **Container Registry** (e.g. registry.ng.bluemix.net) by running `ibmcloud cr info`
+3. Identify your **Container Registry** (e.g. us.icr.io) by running `ibmcloud cr info`
 4. Set MYREGISTRY env var to your registry.
    ```sh
    export MYREGISTRY=<REGISTRY>
@@ -277,7 +278,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 To use your custom domain, you need to update your DNS records with either a CNAME record pointing to your IBM-provided domain or an A record pointing to the portable public IP address of the IBM-provided Ingress. Given a paid cluster comes with fixed IP addresses, an A record is a good option.
 
-See [Using the Ingress controller with a custom domain](https://{DomainName}/docs/containers/cs_apps.html#custom_domain_cert) for more information.
+See [Using the Ingress controller with a custom domain](https://{DomainName}/docs/containers?topic=containers-ingress#ingress) for more information.
 
 ### with HTTP
 
@@ -310,7 +311,7 @@ See [Using the Ingress controller with a custom domain](https://{DomainName}/doc
 If you were to try to access your application with HTTPS at this time `https://<customdomain>/<nameofproject>`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
 1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key:
-  https://{DomainName}/docs/containers/cs_apps.html#custom_domain_cert
+  https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3
    You can use [Let's Encrypt](https://letsencrypt.org/) to generate trusted certificate.
 2. Save the cert and the key in base64 ascii format files.
 3. Create a TLS secret to store the cert and the key:
@@ -384,6 +385,6 @@ Refer to Kubernetes documentation for manual and automatic scaling:
 
 ## Related content
 
-* [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers/cs_planning.html#cs_planning)
-* [IBM Cloud App Service](https://{DomainName}/docs/cloudnative/index.html#web-mobile)
-* [Continuous Deployment to Kubernetes](https://{DomainName}/docs/tutorials/continuous-deployment-to-kubernetes.html#continuous-deployment-to-kubernetes)
+* [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
+<!-- * [IBM Cloud App Service](https://{DomainName}/docs/cloudnative/index.html#web-mobile) -->
+* [Continuous Deployment to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
