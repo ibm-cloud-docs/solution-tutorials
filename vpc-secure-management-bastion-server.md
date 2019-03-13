@@ -58,18 +58,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources#managing-user-permissions-for-vpc-resources).
-
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
-
-- A [virtual private cloud](https://{DomainName}/vpc/overview) service with a subnet on IBM Cloud.
-
+- The tutorial assumes that you are adding the bastion host in an existing [virtual private cloud](https://cloud.ibm.com/vpc/network/vpcs). **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
 
 ## Create a bastion host
 {: #create-bastion-host}
 
-In this section, you will create and configure a bastion host along with a security group in a seperate subnet.
-
-If you already have a subnet created in your VPC, you can skip the below section and skip to security group creation.
+In this section, you will create and configure a bastion host along with a security group in a separate subnet.
 
 ### Create a subnet
 
@@ -229,7 +224,7 @@ With access to the bastion working, continue and create the security group for m
 
 In this section, you will create a private subnet with virtual server instance and a security group. By default, any subnet created in a VPC is private.
 
-If you already have an additional instance in a new subnet, you can skip the section below.
+If you already have virtual server instances in your VPC that you want to connect to, you can skip the next three sections and start [adding your virtual server instances to the maintenance security group](#add-vsi-to-maintenance).
 
 ### Create a subnet
 
@@ -267,21 +262,23 @@ To create a virtual server instance in the newly created subnet:
 7. Click **Create virtual server instance**.  
 
 
-### Enable the maintenance security group
-For administrative work on the servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
+### Add virtual servers to the maintenance security group
+{: #add-vsi-to-maintenance}
+
+For administrative work on the servers, you have to associate the specific virtual servers with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
 
 Let's enable the maintenance security group for the server.
 
 1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.  
 2. Click **Attached interfaces**, then **Edit interfaces**.  
-3. Expand **vpc-secure-private-vsi** and activate the selection next to **primary** in the **Interfaces** column.
+3. Expand the virtual server instances and activate the selection next to **primary** in the **Interfaces** column.
 4. Click **Save** for the changes to be applied.
 
 ### Connect to the instance
 
-To SSH into the instance using its **private IP**, you will use the bastion host as your **jump host**.
+To SSH into an instance using its **private IP**, you will use the bastion host as your **jump host**.
 
-1. For the private IP address, navigate to **Virtual server instances**, then click on **vpc-secure-private-vsi**.
+1. Obtain the private IP address of a virtual server instance under **Virtual server instances**.
 2. Use the ssh command with `-J` to log into the server with the bastion **floating IP** address you used earlier and the server **Private IP** address shown under **Network interfaces**.
 
    ```sh
@@ -294,10 +291,9 @@ To SSH into the instance using its **private IP**, you will use the bastion host
 
 ### Install software and perform maintenance tasks
 
-Once connected, you can install software on the VSI in the private subnet or perform maintenance tasks.
+Once connected, you can install software on the virtual server in the private subnet or perform maintenance tasks.
 
 1. First, update the software package information:
-
    ```sh
    apt-get update
    ```
@@ -311,11 +307,11 @@ To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to
 
 ### Disable the maintenance security group
 
-Let's disable the maintenance security group for the server.
+Once you're done installing software or performing maintenance, you should remove the virtual servers from the maintenance security group to keep them isolated.
 
 1. Navigate to **Security groups** and select **vpc-secure-maintenance-sg** security group.  
 2. Click **Attached interfaces**, then **Edit interfaces**.  
-3. Expand **vpc-secure-private-vsi** and uncheck the selection next to **primary** in the **Interfaces** column.
+3. Expand the virtual server instances and uncheck the selection next to **primary** in the **Interfaces** column.
 4. Click **Save** for the changes to be applied.
 
 ## Remove resources
