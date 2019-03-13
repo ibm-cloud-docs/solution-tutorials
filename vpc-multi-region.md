@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-08"
+lastupdated: "2019-03-13"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -107,7 +107,7 @@ Once the status of the subnets change to **Available**,
 3. Choose any **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 4. For **SSH keys** pick the SSH key you created initially.
 5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
-   * Select **vpc-region1-zone1-subnet** as the subnet.   
+   * Check whether **vpc-region1-zone1-subnet** is selected as the subnet. If not, select.  
    * Click **Save**.
    * Click **Create virtual server instance**.
 6.  Wait until the status of the VSI changes to **Powered On**. Then, select the VSI **vpc-region1-zone1-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your VSI. Save the associated IP Address to a clipboard for future reference.
