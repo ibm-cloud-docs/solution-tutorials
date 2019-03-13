@@ -264,7 +264,7 @@ To create a virtual server instance in the newly created subnet:
 
 
 ### Enable the maintenance security group
-For administrative work on the private servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
+For administrative work on the servers, you have to associate the specific VSI with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
 
 Let's enable the maintenance security group for the server.
 

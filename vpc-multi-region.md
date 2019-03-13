@@ -120,7 +120,8 @@ Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning 
 ## Install and configure web server on the VSIs
 {: #install-configure-web-server-vsis}
 
-_**TODO**: Point to the bastion server tutorial once drafted._
+Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server.html) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
+{:tip}
 
 Once you successfully SSH into the server provisioned in subnet of zone 1 of region 1, 
 
