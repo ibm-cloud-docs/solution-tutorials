@@ -24,7 +24,7 @@ IBM will be accepting a limited number of customers to participate in an Early A
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances(VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks. 
 
-For global load balancer, you will provision an IBM Cloud internet services (CIS) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
+For global load balancer, you will provision an IBM Cloud Internet Services (CIS) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
 
 {:shortdesc}
 
@@ -64,9 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources#managing-user-permissions-for-vpc-resources).
-
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
-
 - Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com/).
 
 ## Create VPCs, subnets and VSIs
@@ -214,7 +212,7 @@ Before adding a HTTPS listener, you need to generate an SSL certificate, verify 
 
 ### Provision a CIS service and configure custom domain.
 
-In this section, you will create IBM Cloud internet services(CIS) service,  configure a custom domain by pointing it to CIS name servers and later configure a global load balancer.
+In this section, you will create IBM Cloud Internet Services(CIS) service,  configure a custom domain by pointing it to CIS name servers and later configure a global load balancer.
 
 1. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.

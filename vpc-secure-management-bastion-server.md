@@ -59,7 +59,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources#managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
-- The tutorial assumes that you are adding the bastion host in an existing [virtual private cloud](https://cloud.ibm.com/vpc/network/vpcs). **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
+- The tutorial assumes that you are adding the bastion host in an existing [virtual private cloud](https://{DomainName}/vpc/network/vpcs). **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
 
 ## Create a bastion host
 {: #create-bastion-host}
