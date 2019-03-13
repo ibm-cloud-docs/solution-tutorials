@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-12"
+lastupdated: "2019-03-13"
 
 ---
 
@@ -225,9 +225,11 @@ With access to the bastion working, continue and create the security group for m
 
 In this section, you will create a private subnet with virtual server instance and a security group. By default, any subnet created in a VPC is private.
 
-### Create a private subnet
+If you already have an additional instance in a new subnet, you can skip the section below.
 
-To create a new private subnet,
+### Create a subnet
+
+To create a new subnet,
 
 1. Click **VPC and subnets** under **Network** on the left pane
 2. Click **Subnets**, then **New subnet**.  
@@ -238,14 +240,14 @@ To create a new private subnet,
 4. Switch the **Public gateway** to **Attached**. 
 5. Click **Create subnet** to provision it.
 
-### Create a private security group
+### Create a security group
 
 To create a new security group:  
 1. Click **Security groups** under Network, then **New security group**.  
 2. Enter **vpc-secure-private-sg** as name and select the VPC you created earlier.   
 3. Click **Create security group**.  
 
-### Create a private virtual server instance
+### Create a virtual server instance
 
 To create a virtual server instance in the newly created subnet:
 
@@ -273,12 +275,12 @@ Let's enable the maintenance security group for the server.
 
 To disable the maintenance security group follow the steps above, but uncheck **primary**. The maintenance security group should not be active during regular server operations for security purposes.
 
-### Connect to the private server
+### Connect to the instance
 
-To SSH into the private instance using its **private IP**, you will use the bastion instance as your **Jump host**.
+To SSH into the instance using its **private IP**, you will use the bastion instance as your **Jump host**.
 
 1. For the private IP address, navigate to **Virtual server instances**, then click on **vpc-secure-private-vsi**.
-2. Use the ssh command with `-J` to log into the backend with the bastion **floating IP** address you used earlier and the backend **Private IP** address shown under **Network interfaces**.
+2. Use the ssh command with `-J` to log into the server with the bastion **floating IP** address you used earlier and the server **Private IP** address shown under **Network interfaces**.
 
    ```sh
    ssh -J root@<BASTION_FLOATING_IP_ADDRESS> root@<PRIVATE_IP_ADDRESS>
@@ -290,7 +292,7 @@ To SSH into the private instance using its **private IP**, you will use the bast
 
 ### Install software and perform maintenance tasks
 
-Once connected, you can install software on the backend VSI or perform maintenance tasks.
+Once connected, you can install software on the VSI in the private subnet or perform maintenance tasks.
 
 1. First, update the software package information:
 
