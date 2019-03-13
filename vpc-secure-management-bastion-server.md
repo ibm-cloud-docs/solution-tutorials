@@ -25,14 +25,14 @@ IBM will be accepting a limited number of customers to participate in an Early A
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is a instance that is provisioned in a public subnet and can be accessed via SSH. Once setup, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
 
-To reduce exposure of servers within the VPC you will create and use a bastion instance. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
+To reduce exposure of servers within the VPC you will create and use a bastion host. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 {:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* Learn how to setup a bastion instance and security groups with rules
-* Securely manage servers via the bastion instance
+* Learn how to setup a bastion host and security groups with rules
+* Securely manage servers via the bastion host
 
 ## Services used
 {: #services}
@@ -49,9 +49,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
   ![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
 
-1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the bastion server using the private SSH key.
+1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the bastion host using the private SSH key.
 2. The admin assigns a maintenance security group with proper outbound rules.
-3. The admin connects(SSH) securely to the instance's private IP address via bastion server to install or update any required software eg., a web server
+3. The admin connects(SSH) securely to the instance's private IP address via the bastion host to install or update any required software eg., a web server
 4. The internet user makes an HTTP/HTTPS request to the web server.
 
 ## Before you begin
@@ -183,7 +183,7 @@ With access to the bastion working, continue and create the security group for m
    DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are n port 80 and 443.
    {:tip }
 
-2. Next, add this **inbound** rule which allows SSH access from the bastion server.
+2. Next, add this **inbound** rule which allows SSH access from the bastion host.
 
    <table>
 	   <thead>
@@ -224,7 +224,7 @@ With access to the bastion working, continue and create the security group for m
 	</table>
 
 
-## Use bastion host to access other instances in the VPC
+## Use the bastion host to access other instances in the VPC
 {: #bastion-host-access-instances}
 
 In this section, you will create a private subnet with virtual server instance and a security group. By default, any subnet created in a VPC is private.
@@ -279,7 +279,7 @@ Let's enable the maintenance security group for the server.
 
 ### Connect to the instance
 
-To SSH into the instance using its **private IP**, you will use the bastion instance as your **Jump host**.
+To SSH into the instance using its **private IP**, you will use the bastion host as your **jump host**.
 
 1. For the private IP address, navigate to **Virtual server instances**, then click on **vpc-secure-private-vsi**.
 2. Use the ssh command with `-J` to log into the server with the bastion **floating IP** address you used earlier and the server **Private IP** address shown under **Network interfaces**.
