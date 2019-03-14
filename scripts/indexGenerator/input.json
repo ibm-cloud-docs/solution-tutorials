@@ -493,6 +493,55 @@
         "anchor": "Network",
         "solutions": [
             {
+                "name": "Private and public subnets in a Virtual Private Cloud",
+                "url": "vpc-public-app-private-backend.html",
+                "description": "Create a virtual private cloud with subnets and instances. Secure your resources by attaching security groups and only allow minimal access.",
+                "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
+                "tags": [
+                    "Infrastructure",
+                    "Virtual Private Cloud",
+                    "Network",
+                    "Virtual Servers"
+                ]
+            },
+            {
+                "name": "Deploy isolated workloads across multiple locations and zones",
+                "url": "vpc-multi-region.html",
+                "description": "Deploy a workload in virtual private clouds across multiple zones and regions. Distribute traffic across zones with local and global load balancers.",
+                "imgSrc": "images/solution41-vpc-multi-region/Architecture.png",
+                "tags": [
+                    "Infrastructure",
+                    "Virtual Private Cloud",
+                    "Network",
+                    "Virtual Servers"
+                ]
+            },
+            {
+                "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
+                "hidden": true,
+                "url": "vpc-site2site-vpn.html",
+                "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services through private endpoints.",
+                "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
+                "tags": [
+                    "Infrastructure",
+                    "Virtual Private Cloud",
+                    "Network",
+                    "Virtual Servers"
+                ]
+            },
+            {
+                "name": "Securely access remote instances with a bastion host",
+                "url": "vpc-secure-management-bastion-server.html",
+                "description": "Deploy a bastion host to securely access remote instances within a virtual private cloud.",
+                "imgSrc": "images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png",
+                "tags": [
+                    "Infrastructure",
+                    "Virtual Private Cloud",
+                    "Network",
+                    "Virtual Servers"
+                ]
+            },
+            {
                 "name": "Isolate workloads with a secure private network",
                 "url": "secure-network-enclosure.html",
                 "description": "Configure a Virtual Router Appliance to create a secure enclosure. Associate VLANs, provision servers, setup IP routing and firewalls.",
@@ -569,18 +618,6 @@
                     "Network",
                     "Virtual Servers",
                     "Virtual Router Appliance VPN"
-                ]
-            },
-            {
-                "name": "Private and public subnets in a Virtual Private Cloud",
-                "url": "vpc-public-app-private-backend.html",
-                "description": "Create a virtual private cloud with subnets and instances. Secure your resources by attaching security groups and only allow minimal access.",
-                "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
-                "tags": [
-                    "Infrastructure",
-                    "Virtual Private Cloud",
-                    "Network",
-                    "Virtual Servers"
                 ]
             }
         ]

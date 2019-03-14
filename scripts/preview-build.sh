@@ -4,14 +4,14 @@ mkdir -p builddocs/input
 
 DOMAIN_NAME_RULES=( \
   "console.bluemix.net" \
-  "cloud.ibm.com" \
+  "/cloud.ibm.com" \
   "console.cloud.ibm.com" \
 )
 for rule in "${DOMAIN_NAME_RULES[@]}"
 do
   echo " -----------------------
 Checking for references to ${rule}"
-  if grep -rI "$rule" --exclude=README.md *.md
+  if grep -rI "$rule" --exclude=README.md --exclude solution-template.md *.md
   then
     echo "  -> [KO] Found references to $rule. Replace them with {DomainName}."
     DOMAIN_NAME_CHECK="ko"

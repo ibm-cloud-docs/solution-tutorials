@@ -1,7 +1,7 @@
 ---
 copyright:
-  years: 2018
-lastupdated: "2018-06-05"
+  years: 2018, 2019
+lastupdated: "2019-03-08"
 
 ---
 
@@ -32,6 +32,23 @@ This tutorial...
 ## Services used
 {: #services}
 
+<!-- Please Note when creating links:  
+
+For anchors within the same document always only use the following format:
+  [link_description](#anchor_name) 
+
+For anchors or any links to external documents, even for those are are within our tutorials use the following format: 
+  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview)
+
+If you have an old format html link that you are trying to translate to the new ?topic= format there are two methods you can use:
+  1. Try entering the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
+
+  2. If the redirect does not work, you may be able to use the old https://console.bluemix.net and enter the uri for the document you are searching for, some times the document uri changed, but you cn recognize it from reading the content and comparing back to the https://test.cloud.ibm.com and obtain the new link
+
+Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/developing/writing?topic=writing-linking#linking
+
+-->
+
 This tutorial uses the following runtimes and services:
 * [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
 * [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
@@ -55,14 +72,14 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli/index.html#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
 
 ## Create services
 {: #setup}
 
 In this section, you will create the services required to ...
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/bluemix_cli/download_cli.html#install_use).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
     ```sh
     ibmcloud login
     ```
@@ -139,4 +156,5 @@ Want to add to or change this tutorial? Here are some ideas:
 ## Related content
 {: #related}
 
-* [Relevant links](https://blah)
+* [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
+* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
