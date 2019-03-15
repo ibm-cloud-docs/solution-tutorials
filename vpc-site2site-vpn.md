@@ -163,6 +163,22 @@ Install and start the small storage app.
 
 ## Create the Virtual Private Network gateways
 
+VPC/VPN
+1. create VPN GW on "right" subnet
+2. create VPN GW connection
+3. note down the VPN_GW_IP address
+
+strongSwan VPN
+1. connect to "left" VSI, login using SSH
+2. apt-get update
+3. apt-get install strongswan
+4. configure /etc/sysctl.conf
+5. edit /etc/ipsec.secrets
+6. configure /etc/ipsec.conf
+7. restart the VPN: ipsec restart
+8. check for VPN connection: ipsec status
+
+
 ### Create the VPC Virtual Private Network gateway
 
 When the local and remote VPNs connect to each other they will set up a security association using
