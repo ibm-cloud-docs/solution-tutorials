@@ -22,7 +22,7 @@ lastupdated: "2019-03-13"
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances(VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks. 
+This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances(VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
 For global load balancer, you will provision an IBM Cloud Internet Services (CIS) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
 
@@ -75,14 +75,14 @@ In this section, you will create your own VPC in region 1 with subnets created i
 To create your own {{site.data.keyword.vpc_short}} in region 1,
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
-2. Under **New virtual private cloud** section:  
-   * Enter **vpc-region1** as name for your VPC.  
-   * Select a **Resource group**.  
-   * Optionally, add **Tags** to organize your resources.  
+2. Under **New virtual private cloud** section:
+   * Enter **vpc-region1** as name for your VPC.
+   * Select a **Resource group**.
+   * Optionally, add **Tags** to organize your resources.
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
 4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked.
-5. Under **New subnet for VPC**:  
-   * As a unique name enter **vpc-region1-zone1-subnet**.  
+5. Under **New subnet for VPC**:
+   * As a unique name enter **vpc-region1-zone1-subnet**.
    * Select a location (e.g., Dallas), let's call this **region 1** and a zone in region 1 (e.g., Dallas 1), let's call this **zone 1**.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 6. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
@@ -96,18 +96,18 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 1. Click on **New Subnet**, enter **vpc-region1-zone2-subnet** as a unique name for your subnet and select **vpc-region1** as the VPC.
 2. Select a location which we called as region 1 above (e.g., Dallas) and select a different zone in region 1 (e.g., Dallas 2), let's call the selected zone as **zone 2**.
 3. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.64.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-4. Select **Use VPC default** for your subnet access control list (ACL). 
+4. Select **Use VPC default** for your subnet access control list (ACL).
 5. Switch the public gateway to **Attached** and click **Create subnet** to provision a new subnet.
 
 ### Provision VSIs
-Once the status of the subnets change to **Available**, 
+Once the status of the subnets change to **Available**,
 
 1. Click on **vpc-region1-zone1-subnet** and click **Attached instances**, then **New instance**.
 2. Enter a unique name and pick **vpc-region1-zone1-vsi**. Then, select the VPC your created earlier and the **Location** along with the **zone** as before.
 3. Choose any **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 4. For **SSH keys** pick the SSH key you created initially.
-5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups  
-   * Check whether **vpc-region1-zone1-subnet** is selected as the subnet. If not, select.  
+5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
+   * Check whether **vpc-region1-zone1-subnet** is selected as the subnet. If not, select.
    * Click **Save**.
    * Click **Create virtual server instance**.
 6.  Wait until the status of the VSI changes to **Powered On**. Then, select the VSI **vpc-region1-zone1-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your VSI. Save the associated IP Address to a clipboard for future reference.
@@ -118,10 +118,10 @@ Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning 
 ## Install and configure web server on the VSIs
 {: #install-configure-web-server-vsis}
 
-Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server.html) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
+Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
 {:tip}
 
-Once you successfully SSH into the server provisioned in subnet of zone 1 of region 1, 
+Once you successfully SSH into the server provisioned in subnet of zone 1 of region 1,
 
 1. At the prompt, run the below commands to install Nginx as your web server
 
@@ -131,12 +131,12 @@ Once you successfully SSH into the server provisioned in subnet of zone 1 of reg
 	```
 	{:pre}
 2. Check the status of the Nginx service with the following command:
-    
+
     ```
     sudo systemctl status nginx
     ```
     {:pre}
-    
+
     The output should show you that the Nginx service is **active** and running.
 3. You’ll need to open **HTTP (80)** and **HTTPS (443)** ports to receive traffic(requests). You can do that by adjusting the Firewall via [UFW](https://help.ubuntu.com/community/UFW) - `sudo ufw enable` and by enabling the ‘Nginx Full’ profile which includes rules for both ports:
 
@@ -151,7 +151,7 @@ Once you successfully SSH into the server provisioned in subnet of zone 1 of reg
  	nano /var/www/html/index.nginx-debian.html
  	```
  	{:pre}
- 	
+
  	Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 6. Restart the nginx server to reflect the changes
 
@@ -192,7 +192,7 @@ In this section, you will create two load balancers. One in each region to distr
    - **Port**: 80
    - **Back-end pool**: region1-pool
    - **Maxconnections**: Leave it empty and click **create**.
-7. Click **Create load balancer** to provision a load balancer. 
+7. Click **Create load balancer** to provision a load balancer.
 
 ### Test the load balancers
 
@@ -208,7 +208,7 @@ If you observe, the requests are not encrypted and supports only HTTP. You will 
 ## Secure traffic within the VPC with HTTPS
 {: #secure_https}
 
-Before adding a HTTPS listener, you need to generate an SSL certificate, verify the authenticity of your custom domain, a place to hold the certificate and map it to the infrastructure service. 
+Before adding a HTTPS listener, you need to generate an SSL certificate, verify the authenticity of your custom domain, a place to hold the certificate and map it to the infrastructure service.
 
 ### Provision a CIS service and configure custom domain.
 
@@ -222,7 +222,7 @@ In this section, you will create IBM Cloud Internet Services(CIS) service,  conf
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <YOUR_DOMAIN_NAME> ns` command to verify that the new name servers have taken effect.
    {:tip}
-   
+
 You should obtain a SSL certificate for the domain and subdomain you plan to use with the global load balancer. Assuming a domain like mydomain.com, the global load balancer could be hosted at `lb.mydomain.com`. The certificate will need to be issued for lb.mydomain.com.
 
 You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of Cloud Internet Services to prove you are the owner of the domain.
@@ -251,23 +251,23 @@ You can manage the SSL certificates through IBM Certificate Manager.
    * Browse for the **Certificate file** in PEM format.
    * Browse for the **Private key file** in PEM format.
    * **Import**.
-3. Create an authorization that gives the load balancer service instance access to the certificate manager instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam#/authorizations).  
+3. Create an authorization that gives the load balancer service instance access to the certificate manager instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam#/authorizations).
   - Click **Create** and choose **Infrastructure Service** as the source service
   - **Load Balancer for VPC** as the resource type
   - **Certificate Manager** as the target service
-  - Assign the **Writer** service access role. 
+  - Assign the **Writer** service access role.
   - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be or your specific certificate manager resource instance.
 
 ### Create a HTTPS listener
 
-Now, navigate to the [Load balancers](https://{DomainName}/vpc/network/loadBalancers)  
+Now, navigate to the [Load balancers](https://{DomainName}/vpc/network/loadBalancers)
 
-1. Select **vpc-lb-region1**  
-2. Under **Front-end listeners**, Click **New listener**  
+1. Select **vpc-lb-region1**
+2. Under **Front-end listeners**, Click **New listener**
 
-   -  **Protocol**: HTTPS  
-   -  **Port**: 443   
-   -  **Back-end pool**: POOL in the same region   
+   -  **Protocol**: HTTPS
+   -  **Port**: 443
+   -  **Back-end pool**: POOL in the same region
    -  Choose the SSL certificate for **lb.YOUR-DOMAIN-NAME**
 
 3. Click **Create** to configure a HTTPS listener
@@ -291,7 +291,7 @@ Open the CIS service you created by navigating to the [Resource list](https://{D
      - **Path**: /
      - **Port**: 80
    - **Health check region**: Eastern North America
-   - **origins** 
+   - **origins**
      - **name**: region1
      - **address**: ADDRESS OF **REGION1** LOCAL LOAD BALANCER
      - **weight**: 1
@@ -307,7 +307,7 @@ By now, you should have seen that most of the time you are hitting the servers i
 1. Navigate to [virtual server instances](https://{DomainName}/vpc/compute/vs).
 2. Click **three dots(...)** next to the server(s) running in **zone 1** of **region 1** and click **Stop**.
 3. **REPEAT** the same for server(s) running in **zone 2** of **region 1**.
-4. Return to GLB under CIS service and wait until the health status changes to **Critical**. 
+4. Return to GLB under CIS service and wait until the health status changes to **Critical**.
 5. Now, when you refresh your domain url, you should always be hitting the servers in **region 2**.
 
 Don't forget to **start** the servers in zone 1 and zone 2 of region 1
@@ -316,7 +316,7 @@ Don't forget to **start** the servers in zone 1 and zone 2 of region 1
 ## Remove resources
 {: #removeresources}
 
-- Remove the Global load balancer, origin pools and health checks under the CIS service 
+- Remove the Global load balancer, origin pools and health checks under the CIS service
 - Remove the certificates in the certificate manager service.
 - Remove the load balancers, VSIs, subnets and VPCs.
 - Under [Resource list](https://{DomainName}/resources), delete the services used in this tutorial.
