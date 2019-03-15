@@ -249,7 +249,7 @@ Similar to the frontend, configure the security group for the backend.
 ## Install software and perform maintenance tasks
 {: #install-software-maintenance-tasks}
 
-Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server.html) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
+Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
 
 ## Remove resources
 {: #remove-resources}
