@@ -13,7 +13,8 @@
     "eslint-config-google": "^0.9.1"
   },
   "dependencies": {
-    "handlebars": "^4.0.11",
-    "moment": "^2.20.1"
+    "handlebars": "4.0.11",
+    "handlebars-helpers": "0.10.0",
+    "moment": "2.20.1"
   }
 }
