@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "{{date}}"
+lastupdated: "{{lastupdated}}"
 ---
 
 {:shortdesc: .shortdesc}

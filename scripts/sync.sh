@@ -24,4 +24,9 @@ tar cf - \
   --exclude=README.md \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
+
+# replace the private toc with the public version
+(cd build && rm -f toc && mv toc-public toc)
+
+# add all files
 (cd build && git add . && git commit -m "$COMMIT_MESSAGE" && git push)
