@@ -22,7 +22,7 @@ lastupdated: "2019-03-13"
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances(VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
+This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
 For global load balancer, you will provision an IBM Cloud Internet Services (CIS) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
 
@@ -58,13 +58,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 3. The admin provisions cloud internet services service with an associated custom domain and creates a global load balancer pointing to the load balancers created in two different VPCs.
 4. The admin enables HTTPS encryption by adding the domain SSL certificate to the Certificate manager service.
 5. The internet user makes an HTTP/HTTPS request and the global load balancer handles the request.
-6. The request is routed to the load balancers both global and local. The request is then fullfiled by the available server instance.
+6. The request is routed to the load balancers both global and local. The request is then fulfilled by the available server instance.
 
 ## Before you begin
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources#managing-user-permissions-for-vpc-resources).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources#managing-user-permissions-for-vpc-resources).
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
 - Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com/).
 
 ## Create VPCs, subnets and VSIs
@@ -118,47 +118,40 @@ Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning 
 ## Install and configure web server on the VSIs
 {: #install-configure-web-server-vsis}
 
-Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
+Follow the steps mentioned in [securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
 {:tip}
 
 Once you successfully SSH into the server provisioned in subnet of zone 1 of region 1,
 
 1. At the prompt, run the below commands to install Nginx as your web server
-
-	```
-	sudo apt-get update
-	sudo apt-get install nginx
-	```
-	{:pre}
+   ```
+   sudo apt-get update
+   sudo apt-get install nginx
+   ```
+   {:codeblock}
 2. Check the status of the Nginx service with the following command:
-
-    ```
-    sudo systemctl status nginx
-    ```
-    {:pre}
-
-    The output should show you that the Nginx service is **active** and running.
-3. You’ll need to open **HTTP (80)** and **HTTPS (443)** ports to receive traffic(requests). You can do that by adjusting the Firewall via [UFW](https://help.ubuntu.com/community/UFW) - `sudo ufw enable` and by enabling the ‘Nginx Full’ profile which includes rules for both ports:
-
-    ```
-    sudo ufw allow 'Nginx Full'
-    ```
-    {:pre}
+   ```
+   sudo systemctl status nginx
+   ```
+   {:pre}
+   The output should show you that the Nginx service is **active** and running.
+3. You’ll need to open **HTTP (80)** and **HTTPS (443)** ports to receive traffic (requests). You can do that by adjusting the Firewall via [UFW](https://help.ubuntu.com/community/UFW) - `sudo ufw enable` and by enabling the ‘Nginx Full’ profile which includes rules for both ports:
+   ```
+   sudo ufw allow 'Nginx Full'
+   ```
+   {:pre}
 4. To verify that Nginx works as expected open `http://FLOATING_IP` in your browser of choice, and you should see the default Nginx welcome page.
 5. To update the html page with the region and zone details, run the below command
-
- 	```
- 	nano /var/www/html/index.nginx-debian.html
- 	```
- 	{:pre}
-
- 	Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
+   ```
+   nano /var/www/html/index.nginx-debian.html
+   ```
+   {:pre}
+   Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 6. Restart the nginx server to reflect the changes
-
    ```
-	sudo systemctl restart nginx
+   sudo systemctl restart nginx
    ```
-    {:pre}
+   {:pre}
 
 **REPEAT** the steps 1-6 to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
@@ -256,7 +249,7 @@ You can manage the SSL certificates through IBM Certificate Manager.
   - **Load Balancer for VPC** as the resource type
   - **Certificate Manager** as the target service
   - Assign the **Writer** service access role.
-  - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be or your specific certificate manager resource instance.
+  - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific certificate manager resource instance.
 
 ### Create a HTTPS listener
 
@@ -270,20 +263,20 @@ Now, navigate to the [Load balancers](https://{DomainName}/vpc/network/loadBalan
    -  **Back-end pool**: POOL in the same region
    -  Choose the SSL certificate for **lb.YOUR-DOMAIN-NAME**
 
-3. Click **Create** to configure a HTTPS listener
+3. Click **Create** to configure an HTTPS listener
 
 **REPEAT** the same in the load balancer of **region 2**.
 
 ## Configure a global load balancer
 {: #global-load-balancer}
 
-In this section, you will configure a global load balancer(GLB) distributing the incoming traffic to the local load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
+In this section, you will configure a global load balancer (GLB) distributing the incoming traffic to the local load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
 
 ### Distribute traffic across regions with a global load balancer
 Open the CIS service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
 
 1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
-2. Enter **lb.YOUR-DOMAIN-NAME** as your hostname and TTL be 60 seconds.
+2. Enter **lb.YOUR-DOMAIN-NAME** as your hostname and TTL as 60 seconds.
 3. Click **Add pool** to define a default origin pool
    - **Name**: lb-region1
    - **Health check**: CREATE A NEW HEALTH CHECK
@@ -325,4 +318,4 @@ Don't forget to **start** the servers in zone 1 and zone 2 of region 1
 ## Related content
 {: #related}
 
-* [Using Load Balancers in IBM Cloud VPC](https://{DomainName}/docs/infrastructure/vpc-network?topic=vpc-network---beta-using-load-balancers-in-ibm-cloud-vpc#--beta-using-load-balancers-in-ibm-cloud-vpc)
+* [Using Load Balancers in IBM Cloud VPC](/docs/infrastructure/vpc-network?topic=vpc-network---beta-using-load-balancers-in-ibm-cloud-vpc#--beta-using-load-balancers-in-ibm-cloud-vpc)

@@ -23,7 +23,7 @@ lastupdated: "2019-03-13"
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once setup, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
+This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
 
 To reduce exposure of servers within the VPC you will create and use a bastion host. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 {:shortdesc}
@@ -31,7 +31,7 @@ To reduce exposure of servers within the VPC you will create and use a bastion h
 ## Objectives
 {: #objectives}
 
-* Learn how to setup a bastion host and security groups with rules
+* Learn how to set up a bastion host and security groups with rules
 * Securely manage servers via the bastion host
 
 ## Services used
@@ -51,7 +51,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the bastion host using the private SSH key.
 2. The admin assigns a maintenance security group with proper outbound rules.
-3. The admin connects(SSH) securely to the instance's private IP address via the bastion host to install or update any required software eg., a web server
+3. The admin connects (SSH) securely to the instance's private IP address via the bastion host to install or update any required software eg., a web server
 4. The internet user makes an HTTP/HTTPS request to the web server.
 
 ## Before you begin
@@ -175,7 +175,7 @@ With access to the bastion working, continue and create the security group for m
    </tbody>
    </table>
 
-   DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are n port 80 and 443.
+   DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are on port 80 and 443.
    {:tip }
 
 2. Next, add this **inbound** rule which allows SSH access from the bastion host.
@@ -302,7 +302,7 @@ Once connected, you can install software on the virtual server in the private su
 
 When done, disconnect from the server with `exit` command. 
 
-To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI in the private subnet and open required ports(80 - HTTP and 443 - HTTPS) via the inbound rules in the security group of private VSI.
+To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI in the private subnet and open required ports (80 - HTTP and 443 - HTTPS) via the inbound rules in the security group of private VSI.
 {:tip}
 
 ### Disable the maintenance security group
@@ -327,4 +327,4 @@ When using the console, you may need to refresh your browser to see updated stat
 ## Related content
 {: #related}
 
-* [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)
+* [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)
