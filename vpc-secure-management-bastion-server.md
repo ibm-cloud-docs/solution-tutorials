@@ -31,7 +31,7 @@ To reduce exposure of servers within the VPC you will create and use a bastion h
 ## Objectives
 {: #objectives}
 
-* Learn how to setup a bastion host and security groups with rules
+* Learn how to set up a bastion host and security groups with rules
 * Securely manage servers via the bastion host
 
 ## Services used
