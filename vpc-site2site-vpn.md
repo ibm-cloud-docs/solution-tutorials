@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-13"
+lastupdated: "2019-03-19"
 ---
 
 {:shortdesc: .shortdesc}
@@ -64,25 +64,6 @@ Notes:
 1. A VPC/VPN Gateway is provisioned, note the public IP address.
 1. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses
 1. Verify connectivity through the VPN Gateways by accessin the microservice directly through the vpn site-to-site connection
-
-Possible flow / toc:
-- git clone https://github.com/IBM-Cloud/vpc-tutorials
-- run shell script to create vpc, subnets, sg, network acl, instances, ...
-- explain that there is a second shell script that does the rest of this stuff:
-- gui description of how to create resources for cos and vpn (Either by CLI or UI): Obtain credentials for COS (and provision COS if not present). Copy into credentials file.
-- on cloud vsi:
-  - git clone https://github.com/IBM-Cloud/vpc-tutorials
-  - run script for cos micro service
-- on strongswan vsi:
-  - git clone https://github.com/IBM-Cloud/vpc-tutorials
-  - run script to install and configure strong swan
-  - curl micro service - works
-  - shut down ipsec
-  - curl micro service - fails
-  - start up ipsec
-  - curl micro service - works
-- clean up resources
-
 
 ## Before you begin
 {: #prereqs}
@@ -157,10 +138,6 @@ The tutorial assumes that you already have a VPC with required subnets, security
 
 
 Review the *data.sh* file created.  It has useful information and parameters
-
-### Deploy the microservice
-
-Install and start the small storage app.
 
 ### Create the Virtual Private Network gateway and connection
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
@@ -254,8 +231,10 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
 
    It should report that a connection has been established. Keep the terminal and ssh connection to this machine open.
 
-### Test the connectivity
+## Test the connectivity
 
+
+### Test using ssh
 To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server. 
 
 1. In a new terminal, execute the following command after replacing the values. It uses the strongSwan host as jump host to connect via VPN to the application server's private IP address.
@@ -280,12 +259,19 @@ To test that the VPN connection has been successfully established, use the simul
   The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
 
 
+### Test using a microservice
+
+TODO: Install and start the small storage app, access COS.
+
+
+
 ## Remove resources
 {: #removeresources}
 
 Steps to take to remove the resources created in this tutorial
 
 * [Relevant links](https://blah)
+
 ## Expand the tutorial 
 {: #expand-tutorial}
 
@@ -304,8 +290,6 @@ Want to add to or extend this tutorial? Here are some ideas:
 
 
 
-# SAVED
-# SAVED
 # SAVED
 
 ### Create the VPC Virtual Private Network gateway
@@ -328,8 +312,3 @@ Each VPN will be configured with the following information:
 - CIDR block of the remote network that is accessible by the local network
 
 In addition there will be a collection of IKE and IPsec configuration parameters that the VPNs must agree.
-
-In this tutorial there is a left side (on-premises) and a right side (in the cloud) of the architecture as shown in the diagram above.
-The left strongswan vsi can not be configured until the IP address of the remote VPN is known.
-So let us create the right side VPC/VPN.
-This can be done by simply running the 
