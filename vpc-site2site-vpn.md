@@ -226,6 +226,16 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the remaining fields unchanged.
 
 
+### Create the Virtual Private Network gateway and connection
+In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
+
+1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog.
+2. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and subnet are selected.
+3. Leave **New VPN connection for VPC** is activated. Enter **vpns2s-gateway-conn** as name.
+4. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi**. Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
+5. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
+6. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
+
 ### Create the on-premises Virtual Private Network gateway
 
 ### Test the connectivity
