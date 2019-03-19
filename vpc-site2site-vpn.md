@@ -147,12 +147,13 @@ The tutorial assumes that you already have a VPC with required subnets, security
    ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
+3. This will result in creating the following resources:
+   - 1 VPC named ...
+   - 2 subnets within the VPC
+   - X security groups with ingress and egress rules
+   - 2 VSIs
 
-This will result in creating the following resources:
-- 1 VPC named ...
-- 2 subnets within the VPC
-- X security groups with ingress and egress rules
-- 2 VSIs
+   Note down for later use the returned values for **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**.
 
 
 Review the *data.sh* file created.  It has useful information and parameters
@@ -160,33 +161,6 @@ Review the *data.sh* file created.  It has useful information and parameters
 ### Deploy the microservice
 
 Install and start the small storage app.
-
-### Create the VPC Virtual Private Network gateway
-
-When the local and remote VPNs connect to each other they will set up a security association using
-[IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre-shared key and then securely communicate using the
-[IPsec](https://en.wikipedia.org/wiki/IPsec) protocol.
-
-A VPN gateway working with a local router will forward packets to the remote VPN gateway peer.
-The router will be initialized with the CIDR range of the remote network and route packets that match the CIDR to the local VPN gateway.
-The local VPN gateway will receive the packets that match the remote CIDR range and forward them to the remote VPN gateway over the IPsec encrypted connection.
-The local VPN gateway will receive the packets from the remote VPN gateway that match the local CIDR range and forward them to the local network.
-
-The end result will be an integration of your IBM cloud network of devices and services with your on-premises network fabric.
-
-Each VPN will be configured with the following information:
-- Shared secret key - a string of characters, like a password, that must be the same on both VPNs
-- IP address of the remote VPN
-- CIDR block of the local network that is accessible by the remote network
-- CIDR block of the remote network that is accessible by the local network
-
-In addition there will be a collection of IKE and IPsec configuration parameters that the VPNs must agree.
-
-In this tutorial there is a left side (on-premises) and a right side (in the cloud) of the architecture as shown in the diagram above.
-The left strongswan vsi can not be configured until the IP address of the remote VPN is known.
-So let us create the right side VPC/VPN.
-This can be done by simply running the 
-
 
 ### Create the Virtual Private Network gateway and connection
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
@@ -278,11 +252,32 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:pre}
 
-   It should report that a connection has been established.
-
-
+   It should report that a connection has been established. Keep the terminal and ssh connection to this machine open.
 
 ### Test the connectivity
+
+To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server. 
+
+1. In a new terminal, execute the following command after replacing the values. It uses the strongSwan host as jump host to connect via VPN to the application server's private IP address.
+
+   ```sh
+   ssh -J root@ONPREM_IP root@VSI_CLOUD_IP
+   ```
+   {:pre}
+  Once successfully connected, close the ssh connection.
+
+2. In the "onprem" VSI terminal, stop the VPN gateway:
+   ```sh
+   ipsec stop
+   ```
+   {:pre}
+3. In the command window from step 1), try to establish the connection again:
+
+   ```sh
+   ssh -J root@ONPREM_IP root@VSI_CLOUD_IP
+   ```
+   {:pre}
+  The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
 
 
 ## Remove resources
@@ -306,3 +301,35 @@ Want to add to or extend this tutorial? Here are some ideas:
 - [VPC using the IBM Cloud CLI](/docs/infrastructure/vpc/hello-world-vpc.html)
 - [VPC using the REST APIs](/docs/infrastructure/vpc/example-code.html)
 - bastion tutorial
+
+
+
+# SAVED
+# SAVED
+# SAVED
+
+### Create the VPC Virtual Private Network gateway
+
+When the local and remote VPNs connect to each other they will set up a security association using
+[IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre-shared key and then securely communicate using the
+[IPsec](https://en.wikipedia.org/wiki/IPsec) protocol.
+
+A VPN gateway working with a local router will forward packets to the remote VPN gateway peer.
+The router will be initialized with the CIDR range of the remote network and route packets that match the CIDR to the local VPN gateway.
+The local VPN gateway will receive the packets that match the remote CIDR range and forward them to the remote VPN gateway over the IPsec encrypted connection.
+The local VPN gateway will receive the packets from the remote VPN gateway that match the local CIDR range and forward them to the local network.
+
+The end result will be an integration of your IBM cloud network of devices and services with your on-premises network fabric.
+
+Each VPN will be configured with the following information:
+- Shared secret key - a string of characters, like a password, that must be the same on both VPNs
+- IP address of the remote VPN
+- CIDR block of the local network that is accessible by the remote network
+- CIDR block of the remote network that is accessible by the local network
+
+In addition there will be a collection of IKE and IPsec configuration parameters that the VPNs must agree.
+
+In this tutorial there is a left side (on-premises) and a right side (in the cloud) of the architecture as shown in the diagram above.
+The left strongswan vsi can not be configured until the IP address of the remote VPN is known.
+So let us create the right side VPC/VPN.
+This can be done by simply running the 
