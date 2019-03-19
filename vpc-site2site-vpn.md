@@ -161,24 +161,6 @@ Review the *data.sh* file created.  It has useful information and parameters
 
 Install and start the small storage app.
 
-## Create the Virtual Private Network gateways
-
-VPC/VPN
-1. create VPN GW on "right" subnet
-2. create VPN GW connection
-3. note down the VPN_GW_IP address
-
-strongSwan VPN
-1. connect to "left" VSI, login using SSH
-2. apt-get update
-3. apt-get install strongswan
-4. configure /etc/sysctl.conf
-5. edit /etc/ipsec.secrets
-6. configure /etc/ipsec.conf
-7. restart the VPN: ipsec restart
-8. check for VPN connection: ipsec status
-
-
 ### Create the VPC Virtual Private Network gateway
 
 When the local and remote VPNs connect to each other they will set up a security association using
@@ -206,26 +188,6 @@ So let us create the right side VPC/VPN.
 This can be done by simply running the 
 
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
-1. Under **New virtual private cloud** section:  
-   * Enter **vpns2s** as name for your VPC.  
-   * Select a **Resource group**.  
-1. Under **New subnet for VPC**:  
-   * As a unique name enter **vpns2sleft**.  
-   * Select a location.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-1. Click **Create virtual private cloud** to provision the instance.
-
-To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
-
-1. Click **New subnet**
-1. In the New Subnet for VPC
-   * As a unique name enter **vpns2sright**.  
-   * Select the VPC created above from the Virual Private Cloud drop down
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the remaining fields unchanged.
-
-
 ### Create the Virtual Private Network gateway and connection
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
 
@@ -235,8 +197,90 @@ In the following, you will add a VPN gateway and an associated connection to the
 4. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi**. Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
 5. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
 6. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
+7. Wait for the VPN gateway to become available (you may need to refresh the screen). Note down the assigned **Gateway IP** address as **CLOUD_IP**. 
 
 ### Create the on-premises Virtual Private Network gateway
+Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
+
+1. Connect to the "on-premises" VSI **vpns2s-onprem-vsi** using ssh. Execute the following and replace **ONPREM_IP** with the IP address returned earlier.
+
+   ```sh
+   ssh root@ONPREM_IP
+   ```
+   {:pre}
+
+
+2. Next, on the machine **vpns2s-onprem-vsi**, execute the following commands to update the package manager and to install the strongSwan software.
+
+   ```sh
+   apt-get update
+   ```
+   {:pre}
+   ```sh
+   apt-get install strongswan
+   ```
+   {:pre}
+
+3. Configure the file **/etc/sysctl.conf** by adding three lines to its end. Copy the following over and run it:
+
+   ```sh
+   cat >> /etc/sysctl.conf << EOF
+   net.ipv4.ip_forward = 1
+   net.ipv4.conf.all.accept_redirects = 0
+   net.ipv4.conf.all.send_redirects = 0
+   EOF
+   ```
+   {:codeblock}
+
+4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key. The key is the same as configured earlier.
+   ```
+   ONPREM_IP CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
+   ```
+   {:pre}
+
+5. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **ONPREM_IP**, **ONPREM_CIDR**, **CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
+   ```sh
+   # basic configuration
+   config setup
+      charondebug="all"
+      uniqueids=yes
+      strictcrlpolicy=no
+
+   # connection to vpc/vpn datacenter 
+   # left=onprem / right=vpc
+   conn tutorial-site2site-onprem-to-cloud
+      authby=secret
+      left=%defaultroute
+      leftid=ONPREM_IP
+      leftsubnet=ONPREM_CIDR
+      right=CLOUD_IP
+      rightsubnet=CLOUD_CIDR
+      ike=aes256-sha2_256-modp1024!
+      esp=aes256-sha2_256!
+      keyingtries=0
+      ikelifetime=1h
+      lifetime=8h
+      dpddelay=30
+      dpdtimeout=120
+      dpdaction=restart
+      auto=start
+    ```
+    {:codeblock}
+
+
+6. Restart the VPN gateway, then check its status by running: ipsec restart
+   ```sh
+   ipsec restart
+   ```
+   {:pre}
+   ```sh
+   ipsec status
+   ```
+   {:pre}
+
+   It should report that a connection has been established.
+
+
 
 ### Test the connectivity
 
