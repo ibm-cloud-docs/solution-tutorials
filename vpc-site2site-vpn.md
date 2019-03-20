@@ -21,7 +21,7 @@ IBM will be accepting a limited number of customers to participate in an Early A
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
 This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
-The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure comunication. To further demonstrate secure and private access, you will deploy a microservice on a VPC/VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
+The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication. To further demonstrate secure and private access, you will deploy a microservice on a VPC/VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
 The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}. An on-premises computer will access the COS microservice. All traffic will flow through the VPN and privately through {{site.data.keyword.cloud_notm}}.
 
 There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
@@ -30,7 +30,7 @@ There are many popular on-premises VPN solutions for site-to-site gateways avail
 In short, using a VPC with Virtual Private Network gateway and a Cloud Service Endpoint you can
 
 - connect your on-premises computers to workloads running in {{site.data.keyword.cloud_notm}},
-- insure private and low cost connectivity to cloud services,
+- ensure private and low cost connectivity to cloud services,
 - connect your cloud-based systems to on-premises computers.
 
 ## Objectives
@@ -109,13 +109,12 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    ibmcloud resource service-key-create vpns2s-cos-key Writer --instance-name vpns2s-cos
    ```
    {: codeblock}
-4. Obtain the service key details in JSON format:
+4. Obtain the service key details in JSON format and store it in a new file **credentials.json** in the subdirectory **vpc-app-cos**. The file will be used later on by the app.
    ```sh
-   ibmcloud resource service-key vpns2s-cos-key --output json | jq '.[] | .credentials'
+   ibmcloud resource service-key vpns2s-cos-key --output json > vpc-app-cos/credentials.json
    ```
    {: codeblock}
-   Copy the output, a JSON object, into a new file **credentials.json** in the subdirectory **vpc-app-cos**. It will be used later on by the app.
-
+   
 
 ### Create a Virtual Private Cloud baseline resources
 {: #create-vpc}
