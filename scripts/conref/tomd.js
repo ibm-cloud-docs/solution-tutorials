@@ -8,7 +8,7 @@ const destination = process.argv[2] || './conref.md'
 const doc = yaml.safeLoad(fs.readFileSync('../../builddocs/cloudoeconrefs.yml', 'utf8'));
 // console.log(doc);
 
-const templateSource = fs.readFileSync('./tomd.tmpl.md');
+const templateSource = fs.readFileSync('./tomd.md.tmpl');
 const template = Handlebars.compile(`${templateSource}`);
 
 Handlebars.registerHelper('value', function( aKey, options) {
