@@ -106,34 +106,25 @@ To ensure that sufficient VLANs are available on the same data center router and
 The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}} provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
 
 1. From the catalog select a [IBM Virtual Router Appliance](https://{DomainName}/catalog/infrastructure/virtual-router-appliance)
-2. Click on **Create** to go to the **Gateway Appliances** page.  
-3. On the top right of the page click **Order Gateway**.
-4. On the ordering screen, the target data center and the VRA Server type can be selected. 
-   For a production environment it is recommended to use at a minimum - Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM. 
-   {:tip}
+2. Click on **Create** to go to the **Gateway Appliances** page.
 
-   * Select the **target data center** in the drop down at the top of the page.
-   * Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA.
-   * Select **RAM**. 64GB for production. 8GB minimum for test.
-   * Operating System. Select the only option
-     - Virtual Router Appliance 5.x (up to 20Gbps) Subscription Edition (64 Bit) 
-   * **Hard Drive**. Keep default. 
-   * **Public Bandwidth**. Keep default of 'Metered'.
-   * **Uplink Port Speeds**. Take the default or if required select 1Gbps, 10Gbps  and redundant links.
-   * **Monitoring**. Host Ping and TCP Service Monitoring.
-   * **Response**. Automated Reboot from Monitoring. 
-   * Click **Add To Order**.
-5. On the Checkout screen:
-   * Validate or change the choices already made.
-   * Navigate to the Virtual Router Appliance section at the top of the page. Ignore settings in the `Network Gateway Appliance Cluster`. 
-   * VLAN Selection under the **Advanced System Configuration** heading. The *Backend VLAN* drop down will show **Auto Assigned**, click the dialog box and select the VLAN ID of the private VLAN ordered earlier.  
-   * Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. When selected it will appear under the heading 'Server 1'.  
-   * Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
-    * Click **Submit Order**.
-6. Monitor for VRA creation. VRA creation will take several hours to complete, as a bare-metal server is provisioned. On completion you will receive an email to your account email address. 
+3. At the **Gateway Vendor** section select AT&T. You can choose between "up to 20 Gbps" or "up to 2 Gbps" Uplink Speed.
+4. At the **Hostname** section enter a Hostname and a Domain for your new VRA.
+5. If you check the **High Availability** check box, you will get two VRA devices working in an active/backup setup using VRRP.
+6. At the **Location** section select the Location and the **Pod** in which you need your VRA.
+7. Select Single Processor or Dual Processor. You will get a list of Servers. Choose a Server by clicking its radio button. 
+8. Select the amount of **RAM**. For a production environment it is recommended to use a minimum of 64GB of RAM. 8GB minimum for test environment.
+9. Select a **SSH Key** (optional). This ssh key will be installed on the VRA, so user vyatta can be used to access the VRA with this key.
+10. Hard Drive. Keep the default.
+11. In the **Uplink Port Speeds** section select the combination of speed, redundancy and private and/or public interfaces that meets your needs.
+12. In the **Add-ons** section, keep the default. I you what to use IPv6 on the public interface select IPv6 address.
 
-The [Device list](https://control.bluemix.net/devices) will show the VRA almost immediately with a **Clock** symbol against it, indicating transactions are in progress on this device. Until the VRA creation is complete, the **Clock** symbol remains and beyond viewing details it is not possible to perform any configuration actions against device. 
-{:tip}
+On the right side you can see your **Order Summary**. Check the _I have read and agree to the Third-Party Service Agreements listed below:_ checkbox and click the **Create** button. Your gateway will be deployed.
+
+12. Monitor for VRA creation. On **IBM Cloud** select **Classic Infrastructure** then **Network** and **Gateway Appliances**.
+Your new VRA will appear at the Gateway Appliances List. It will be in the state **Updating**. VRA creation will take several hours to complete, as a bare-metal server is provisioned. On completion you will receive an email to your account email address.
+
+<!--- TBC -->
 
 ### Review deployed VRA
 
