@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-19"
+lastupdated: "2019-03-20"
 ---
 
 {:shortdesc: .shortdesc}
@@ -21,8 +21,8 @@ IBM will be accepting a limited number of customers to participate in an Early A
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
 This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
-The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication. To further demonstrate secure and private access, you will deploy a microservice on a VPC/VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
-The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}. An on-premises computer will access the COS microservice. All traffic will flow through the VPN and privately through {{site.data.keyword.cloud_notm}}.
+The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication. To further demonstrate secure and private access, you will deploy a microservice on a VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
+The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}. An on-premises computer will access the COS microservice. All traffic will flow through the VPN and hence privately through {{site.data.keyword.cloud_notm}}.
 
 There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
 
@@ -60,10 +60,10 @@ The following diagram shows the virtual private cloud consisting of a bastion an
 Notes:
 
 1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the VSI using the private SSH key and installs the microservice software and verifies it is working.
-1. A VSI with associated floating IP address will be provisioned to hold the open source VPN Gateway. Note the public IP address.
-1. A VPC/VPN Gateway is provisioned, note the public IP address.
-1. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses
-1. Verify connectivity through the VPN Gateways by accessin the microservice directly through the vpn site-to-site connection
+2. A VSI with associated floating IP address will be provisioned to hold the open source VPN Gateway. Note the public IP address.
+3. A VPC/VPN Gateway is provisioned, note the public IP address.
+4. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses.
+5. Verify connectivity through the VPN gateways by accessing the microservice directly through the VPN site-to-site connection.
 
 ## Before you begin
 {: #prereqs}
@@ -78,7 +78,7 @@ In the following, you will download the scripts to set up a baseline VPC environ
 
 ### Get the code
 {: #setup}
-
+The tutorial uses scripts to deploy a baseline of infrastructure resources before you create the VPN gateways. These scripts and the code for the microservice is available in a GitHub repository.
 
 1. Get the application's code:
    ```sh
@@ -119,7 +119,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
 ### Create a Virtual Private Cloud baseline resources
 {: #create-vpc}
 
-The tutorial assumes that you already have a VPC with required subnets, security groups and virtual server instances provisioned. In the following, create these resources by configuring and then running a setup script.
+The tutorial assumes that you already have a VPC with required subnets, security groups and virtual server instances provisioned. In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
 
 1. Configure TODO
 2. Run the script:
@@ -286,28 +286,3 @@ Want to add to or extend this tutorial? Here are some ideas:
 - [VPC using the IBM Cloud CLI](/docs/infrastructure/vpc/hello-world-vpc.html)
 - [VPC using the REST APIs](/docs/infrastructure/vpc/example-code.html)
 - bastion tutorial
-
-
-
-# SAVED
-
-### Create the VPC Virtual Private Network gateway
-
-When the local and remote VPNs connect to each other they will set up a security association using
-[IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre-shared key and then securely communicate using the
-[IPsec](https://en.wikipedia.org/wiki/IPsec) protocol.
-
-A VPN gateway working with a local router will forward packets to the remote VPN gateway peer.
-The router will be initialized with the CIDR range of the remote network and route packets that match the CIDR to the local VPN gateway.
-The local VPN gateway will receive the packets that match the remote CIDR range and forward them to the remote VPN gateway over the IPsec encrypted connection.
-The local VPN gateway will receive the packets from the remote VPN gateway that match the local CIDR range and forward them to the local network.
-
-The end result will be an integration of your IBM cloud network of devices and services with your on-premises network fabric.
-
-Each VPN will be configured with the following information:
-- Shared secret key - a string of characters, like a password, that must be the same on both VPNs
-- IP address of the remote VPN
-- CIDR block of the local network that is accessible by the remote network
-- CIDR block of the remote network that is accessible by the local network
-
-In addition there will be a collection of IKE and IPsec configuration parameters that the VPNs must agree.
