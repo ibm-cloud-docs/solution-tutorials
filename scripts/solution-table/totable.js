@@ -15,7 +15,7 @@ solutions.forEach(solution => {
 });
 solutions.sort((s1, s2) => s1.mdUrl.localeCompare(s2.mdUrl));
 
-const templateSource = fs.readFileSync('./totable.tmpl.md');
+const templateSource = fs.readFileSync('./totable.md.tmpl');
 const template = Handlebars.compile(`${templateSource}`);
 
 console.log('Writing to', destination);
