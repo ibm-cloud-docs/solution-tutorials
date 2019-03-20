@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-13"
+lastupdated: "2019-03-20"
 ---
 
 {:shortdesc: .shortdesc}
@@ -21,8 +21,8 @@ IBM will be accepting a limited number of customers to participate in an Early A
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
 This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
-The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure comunication. To further demonstrate secure and private access, you will deploy a microservice on a VPC/VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
-The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}. An on-premises computer will access the COS microservice. All traffic will flow through the VPN and privately through {{site.data.keyword.cloud_notm}}.
+The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication. To further demonstrate secure and private access, you will deploy a microservice on a VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
+The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}. An on-premises computer will access the COS microservice. All traffic will flow through the VPN and hence privately through {{site.data.keyword.cloud_notm}}.
 
 There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
 
@@ -30,7 +30,7 @@ There are many popular on-premises VPN solutions for site-to-site gateways avail
 In short, using a VPC with Virtual Private Network gateway and a Cloud Service Endpoint you can
 
 - connect your on-premises computers to workloads running in {{site.data.keyword.cloud_notm}},
-- insure private and low cost connectivity to cloud services,
+- ensure private and low cost connectivity to cloud services,
 - connect your cloud-based systems to on-premises computers.
 
 ## Objectives
@@ -60,29 +60,10 @@ The following diagram shows the virtual private cloud consisting of a bastion an
 Notes:
 
 1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the VSI using the private SSH key and installs the microservice software and verifies it is working.
-1. A VSI with associated floating IP address will be provisioned to hold the open source VPN Gateway. Note the public IP address.
-1. A VPC/VPN Gateway is provisioned, note the public IP address.
-1. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses
-1. Verify connectivity through the VPN Gateways by accessin the microservice directly through the vpn site-to-site connection
-
-Possible flow / toc:
-- git clone https://github.com/IBM-Cloud/vpc-tutorials
-- run shell script to create vpc, subnets, sg, network acl, instances, ...
-- explain that there is a second shell script that does the rest of this stuff:
-- gui description of how to create resources for cos and vpn (Either by CLI or UI): Obtain credentials for COS (and provision COS if not present). Copy into credentials file.
-- on cloud vsi:
-  - git clone https://github.com/IBM-Cloud/vpc-tutorials
-  - run script for cos micro service
-- on strongswan vsi:
-  - git clone https://github.com/IBM-Cloud/vpc-tutorials
-  - run script to install and configure strong swan
-  - curl micro service - works
-  - shut down ipsec
-  - curl micro service - fails
-  - start up ipsec
-  - curl micro service - works
-- clean up resources
-
+2. A VSI with associated floating IP address will be provisioned to hold the open source VPN Gateway. Note the public IP address.
+3. A VPC/VPN Gateway is provisioned, note the public IP address.
+4. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses.
+5. Verify connectivity through the VPN gateways by accessing the microservice directly through the VPN site-to-site connection.
 
 ## Before you begin
 {: #prereqs}
@@ -97,7 +78,7 @@ In the following, you will download the scripts to set up a baseline VPC environ
 
 ### Get the code
 {: #setup}
-
+The tutorial uses scripts to deploy a baseline of infrastructure resources before you create the VPN gateways. These scripts and the code for the microservice is available in a GitHub repository.
 
 1. Get the application's code:
    ```sh
@@ -128,18 +109,17 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    ibmcloud resource service-key-create vpns2s-cos-key Writer --instance-name vpns2s-cos
    ```
    {: codeblock}
-4. Obtain the service key details in JSON format:
+4. Obtain the service key details in JSON format and store it in a new file **credentials.json** in the subdirectory **vpc-app-cos**. The file will be used later on by the app.
    ```sh
-   ibmcloud resource service-key vpns2s-cos-key --output json | jq '.[] | .credentials'
+   ibmcloud resource service-key vpns2s-cos-key --output json > vpc-app-cos/credentials.json
    ```
    {: codeblock}
-   Copy the output, a JSON object, into a new file **credentials.json** in the subdirectory **vpc-app-cos**. It will be used later on by the app.
-
+   
 
 ### Create a Virtual Private Cloud baseline resources
 {: #create-vpc}
 
-The tutorial assumes that you already have a VPC with required subnets, security groups and virtual server instances provisioned. In the following, create these resources by configuring and then running a setup script.
+The tutorial assumes that you already have a VPC with required subnets, security groups and virtual server instances provisioned. In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
 
 1. Configure TODO
 2. Run the script:
@@ -147,88 +127,141 @@ The tutorial assumes that you already have a VPC with required subnets, security
    ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
+3. This will result in creating the following resources:
+   - 1 VPC named ...
+   - 2 subnets within the VPC
+   - X security groups with ingress and egress rules
+   - 2 VSIs
 
-This will result in creating the following resources:
-- 1 VPC named ...
-- 2 subnets within the VPC
-- X security groups with ingress and egress rules
-- 2 VSIs
+   Note down for later use the returned values for **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**.
 
 
 Review the *data.sh* file created.  It has useful information and parameters
 
-### Deploy the microservice
+### Create the Virtual Private Network gateway and connection
+In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
 
-Install and start the small storage app.
-
-## Create the Virtual Private Network gateways
-
-VPC/VPN
-1. create VPN GW on "right" subnet
-2. create VPN GW connection
-3. note down the VPN_GW_IP address
-
-strongSwan VPN
-1. connect to "left" VSI, login using SSH
-2. apt-get update
-3. apt-get install strongswan
-4. configure /etc/sysctl.conf
-5. edit /etc/ipsec.secrets
-6. configure /etc/ipsec.conf
-7. restart the VPN: ipsec restart
-8. check for VPN connection: ipsec status
-
-
-### Create the VPC Virtual Private Network gateway
-
-When the local and remote VPNs connect to each other they will set up a security association using
-[IKE](https://en.wikipedia.org/wiki/Internet_Key_Exchange) based on a pre-shared key and then securely communicate using the
-[IPsec](https://en.wikipedia.org/wiki/IPsec) protocol.
-
-A VPN gateway working with a local router will forward packets to the remote VPN gateway peer.
-The router will be initialized with the CIDR range of the remote network and route packets that match the CIDR to the local VPN gateway.
-The local VPN gateway will receive the packets that match the remote CIDR range and forward them to the remote VPN gateway over the IPsec encrypted connection.
-The local VPN gateway will receive the packets from the remote VPN gateway that match the local CIDR range and forward them to the local network.
-
-The end result will be an integration of your IBM cloud network of devices and services with your on-premises network fabric.
-
-Each VPN will be configured with the following information:
-- Shared secret key - a string of characters, like a password, that must be the same on both VPNs
-- IP address of the remote VPN
-- CIDR block of the local network that is accessible by the remote network
-- CIDR block of the remote network that is accessible by the local network
-
-In addition there will be a collection of IKE and IPsec configuration parameters that the VPNs must agree.
-
-In this tutorial there is a left side (on-premises) and a right side (in the cloud) of the architecture as shown in the diagram above.
-The left strongswan vsi can not be configured until the IP address of the remote VPN is known.
-So let us create the right side VPC/VPN.
-This can be done by simply running the 
-
-
-1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
-1. Under **New virtual private cloud** section:  
-   * Enter **vpns2s** as name for your VPC.  
-   * Select a **Resource group**.  
-1. Under **New subnet for VPC**:  
-   * As a unique name enter **vpns2sleft**.  
-   * Select a location.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-1. Click **Create virtual private cloud** to provision the instance.
-
-To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
-
-1. Click **New subnet**
-1. In the New Subnet for VPC
-   * As a unique name enter **vpns2sright**.  
-   * Select the VPC created above from the Virual Private Cloud drop down
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the remaining fields unchanged.
-
+1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog.
+2. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and subnet are selected.
+3. Leave **New VPN connection for VPC** is activated. Enter **vpns2s-gateway-conn** as name.
+4. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi**. Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
+5. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
+6. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
+7. Wait for the VPN gateway to become available (you may need to refresh the screen). Note down the assigned **Gateway IP** address as **CLOUD_IP**. 
 
 ### Create the on-premises Virtual Private Network gateway
+Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
 
-### Test the connectivity
+1. Connect to the "on-premises" VSI **vpns2s-onprem-vsi** using ssh. Execute the following and replace **ONPREM_IP** with the IP address returned earlier.
+
+   ```sh
+   ssh root@ONPREM_IP
+   ```
+   {:pre}
+
+
+2. Next, on the machine **vpns2s-onprem-vsi**, execute the following commands to update the package manager and to install the strongSwan software.
+
+   ```sh
+   apt-get update
+   ```
+   {:pre}
+   ```sh
+   apt-get install strongswan
+   ```
+   {:pre}
+
+3. Configure the file **/etc/sysctl.conf** by adding three lines to its end. Copy the following over and run it:
+
+   ```sh
+   cat >> /etc/sysctl.conf << EOF
+   net.ipv4.ip_forward = 1
+   net.ipv4.conf.all.accept_redirects = 0
+   net.ipv4.conf.all.send_redirects = 0
+   EOF
+   ```
+   {:codeblock}
+
+4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key. The key is the same as configured earlier.
+   ```
+   ONPREM_IP CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
+   ```
+   {:pre}
+
+5. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **ONPREM_IP**, **ONPREM_CIDR**, **CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
+   ```sh
+   # basic configuration
+   config setup
+      charondebug="all"
+      uniqueids=yes
+      strictcrlpolicy=no
+
+   # connection to vpc/vpn datacenter 
+   # left=onprem / right=vpc
+   conn tutorial-site2site-onprem-to-cloud
+      authby=secret
+      left=%defaultroute
+      leftid=ONPREM_IP
+      leftsubnet=ONPREM_CIDR
+      right=CLOUD_IP
+      rightsubnet=CLOUD_CIDR
+      ike=aes256-sha2_256-modp1024!
+      esp=aes256-sha2_256!
+      keyingtries=0
+      ikelifetime=1h
+      lifetime=8h
+      dpddelay=30
+      dpdtimeout=120
+      dpdaction=restart
+      auto=start
+    ```
+    {:codeblock}
+
+
+6. Restart the VPN gateway, then check its status by running: ipsec restart
+   ```sh
+   ipsec restart
+   ```
+   {:pre}
+   ```sh
+   ipsec status
+   ```
+   {:pre}
+
+   It should report that a connection has been established. Keep the terminal and ssh connection to this machine open.
+
+## Test the connectivity
+
+
+### Test using ssh
+To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server. 
+
+1. In a new terminal, execute the following command after replacing the values. It uses the strongSwan host as jump host to connect via VPN to the application server's private IP address.
+
+   ```sh
+   ssh -J root@ONPREM_IP root@VSI_CLOUD_IP
+   ```
+   {:pre}
+  Once successfully connected, close the ssh connection.
+
+2. In the "onprem" VSI terminal, stop the VPN gateway:
+   ```sh
+   ipsec stop
+   ```
+   {:pre}
+3. In the command window from step 1), try to establish the connection again:
+
+   ```sh
+   ssh -J root@ONPREM_IP root@VSI_CLOUD_IP
+   ```
+   {:pre}
+  The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
+
+
+### Test using a microservice
+
+TODO: Install and start the small storage app, access COS.
+
 
 
 ## Remove resources
@@ -237,6 +270,7 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 Steps to take to remove the resources created in this tutorial
 
 * [Relevant links](https://blah)
+
 ## Expand the tutorial 
 {: #expand-tutorial}
 
