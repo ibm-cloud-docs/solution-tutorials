@@ -30,8 +30,7 @@
         "choices": [
           "Helm allows to monitor your cluster health and to automatically apply corrective actions.",
           "Helm helps you manage Kubernetes applications — Helm Charts help you define, install, and upgrade even the most complex Kubernetes application.",
-          "",
-          ""
+          "Helm is to Kubernetes what npm is to Node.js."
         ],
         "answer": 1
       },
