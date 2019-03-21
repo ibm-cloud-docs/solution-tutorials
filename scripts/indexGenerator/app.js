@@ -79,9 +79,9 @@ function writeFile(templateFile, dest, includeHidden = true) {
   }));
 }
 
-writeFile('./index.tmpl.md', '../../index.md');
-writeFile('./toc.tmpl.md', '../../toc');
-writeFile('./toc.tmpl.md', '../../toc-public', false);
+writeFile('./index.md.tmpl', '../../index.md');
+writeFile('./toc.md.tmpl', '../../toc');
+writeFile('./toc.md.tmpl', '../../toc-public', false);
 
 console.log('Writing ../../tutorials.json');
 input.categories = input.categories.filter((category) => !category.hidden);
