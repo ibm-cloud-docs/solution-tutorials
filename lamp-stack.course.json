@@ -1,0 +1,50 @@
+{
+  "quiz": {
+    "qa": [
+      {
+        "question": "What does LAMP stack stands for?",
+        "choices": [
+          "Linux, Apache, MongoDB, PHP",
+          "Linux, Apache, MongoDB, Python",
+          "Linux, Apache, MySQL, PHP",
+          "Linux, Apache, MySQL, Python"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "",
+        "answer": true
+      },
+      {
+        "question": "",
+        "choices": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answer": 0
+      },
+      {
+        "question": "",
+        "choices": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answer": 0
+      },
+      {
+        "question": "",
+        "choices": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answer": 0
+      }
+    ]
+  }
+}
