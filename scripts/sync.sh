@@ -22,6 +22,7 @@ tar cf - \
   --exclude="vpc-site2site-vpn.md" \
   --exclude="images/solution46-*" \
   --exclude=README.md \
+  --exclude="*.course.json" \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
 
