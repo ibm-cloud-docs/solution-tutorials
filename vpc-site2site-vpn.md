@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-20"
+lastupdated: "2019-03-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -121,22 +121,29 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
 
 The tutorial assumes that you already have a VPC with required subnets, security groups and virtual server instances provisioned. In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
 
-1. Configure TODO
-2. Run the script:
+1. Copy over the sample configuration file into a file to use:
     ```sh
-   ./vpc-site2site-vpn-baseline-create.sh
+   cp config.sh.sample config.sh
    ```
    {: codeblock}
-3. This will result in creating the following resources:
-   - 1 VPC named ...
-   - 2 subnets within the VPC
-   - X security groups with ingress and egress rules
-   - 2 VSIs
+2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **KEYNAME** to the name or comma-separated list of names of SSH keys (see above). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
+3. To create the resources in a new VPC, run the script as follows:
+    ```sh
+   ./config.sh; ./vpc-site2site-vpn-baseline-create.sh
+   ```
+   {: codeblock}
+   To reuse an existing VPC, pass its name to the script in this way. Replace **YOUR_EXISTING_VPC** with the actual name.
+   ```sh
+   ./config.sh; REUSE_VPC=YOUR_EXISTING_VPC ./vpc-site2site-vpn-baseline-create.sh
+   ```
+   {: codeblock}
+4. This will result in creating the following resources, including the bastion-related resources:
+   - 1 VPC (optional)
+   - 3 subnets within the VPC
+   - 4 security groups with ingress and egress rules
+   - 3 VSIs
 
-   Note down for later use the returned values for **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**.
-
-
-Review the *data.sh* file created.  It has useful information and parameters
+   Note down for later use the returned values for **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
 
 ### Create the Virtual Private Network gateway and connection
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
