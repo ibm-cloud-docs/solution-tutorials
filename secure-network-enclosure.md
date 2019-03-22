@@ -121,7 +121,7 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
 On the right side you can see your **Order Summary**. Check the _I have read and agree to the Third-Party Service Agreements listed below:_ checkbox and click the **Create** button. Your gateway will be deployed.
 
-12. Monitor for VRA creation. On **IBM Cloud** select **Classic Infrastructure** then **Network** and **Gateway Appliances**.
+13. Monitor for VRA creation. On **IBM Cloud** select **Classic Infrastructure** then **Network** and **Gateway Appliances**.
 Your new VRA will appear at the Gateway Appliances List. It will be in the state **Updating**. VRA creation will take several hours to complete, as a bare-metal server is provisioned. On completion you will receive an email to your account email address.
 
 <!--- TBC -->
@@ -185,7 +185,6 @@ Your new VRA will appear at the Gateway Appliances List. It will be in the state
    set security firewall global-state-policy icmp
    set security firewall global-state-policy udp
    set security firewall global-state-policy tcp
-   commit
    ```
    {: codeblock}
 7. Commit and automatically save your changes to the startup configuration. 
@@ -238,8 +237,7 @@ The private VLAN(s) for the virtual server will have been associated by the {{si
 
    If no eligible VLAN is shown, no VLANs are available on the same router as the VRA. This will require a [support ticket](https://control.bluemix.net/support/unifiedConsole/tickets/add) to be raised to request a private VLAN on the same router as the VRA.
    {:tip}
-5. Select the VLAN that you want to associate with the VRA and click Save
- Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. 
+5. Select the VLAN that you want to associate with the VRA and click Save. Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. 
 
 At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN will be shown as *Bypassed*.
 
@@ -423,7 +421,6 @@ Two zones are defined:
 
    ```
    show security  
-   save
    ```
    {: codeblock}
 
