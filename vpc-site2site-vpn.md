@@ -143,7 +143,7 @@ The tutorial assumes that you already have a VPC with required subnets, security
    - 4 security groups with ingress and egress rules
    - 3 VSIs
 
-   Note down for later use the returned values for **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
+   Note down for later use the returned values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
 
 ### Create the Virtual Private Network gateway and connection
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
@@ -238,7 +238,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    It should report that a connection has been established. Keep the terminal and ssh connection to this machine open.
 
 ## Test the connectivity
-
+You can test the site to site VPN connection by using SSH or by deploying the microservice interfacing {{site.data.keyword.cos_short}}.
 
 ### Test using ssh
 To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server. 
@@ -263,13 +263,52 @@ To test that the VPN connection has been successfully established, use the simul
    ```
    {:pre}
   The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
-
+4. In the "onprem" VSI terminal, start the VPN gateway again:
+   ```sh
+   ipsec start
+   ```
+   {:pre}
+ 
 
 ### Test using a microservice
-
 TODO: Install and start the small storage app, access COS.
 
-
+1. Copy over the code for the microservice app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
+   ```sh
+   scp -r  -o "ProxyJump root@BASTION_IP_ADDRESS"  vpc-app-cos root@VSI_CLOUD_IP:vpc-app-cos
+   ```
+   {:pre}
+2. Connect to the cloud VSI, again using the bastion as jump host.
+   ```sh
+   ssh -J root@BASTION_IP_ADDRESS root@VSI_CLOUD_IP
+   ```
+   {:pre}
+3. On the cloud VSI, change into the code directory:
+   ```sh
+   cd vpc-app-cos
+   ```
+   {:pre}
+4. Install Python and the Python package manager PIP.
+   ```sh
+   apt-get install python python-pip
+   ```
+   {:pre}
+5. Install the necessary Python packages using **pip**.
+   ```sh
+   pip install -r requirements.txt
+   ```
+   {:pre}
+6. Start the app:
+   ```sh
+   python browseCOS.py
+   ```
+   {:pre}
+7. In the "onprem" VSI terminal, access the service. Replace VSI_CLOUD_IP accordingly.
+   ```sh
+   curl VSI_CLOUD_IP:/api/bucketlist
+   ```
+   {:pre}
+   The command should return a JSON object.
 
 ## Remove resources
 {: #removeresources}
