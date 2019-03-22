@@ -257,9 +257,7 @@ This completes setup of the VRA via the {{site.data.keyword.Bluemix_notm}} conso
 ## Configure IP Routing and secure enclosure
 {: #vra_setup}
 
-When the VRA configuration is committed, only the running configuration is changed. It does not change the configuration used at boot time. If access is lost to the VRA due to a configuration change, rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} dashboard will return the VRA to the previous save of the boot configuration file. This saved configuration could be from some time previously. 
-
-Only save the configuration to the default system configuration file when you are satisfied that the changes perform the desired effect and do not affect operation or access to the VRA. 
+When the VRA configuration is committed, the running configuration is changed and the changes are automatically saved to the startup configuration.
 
 If it is desired to return to a previous working configuration, by default the last 20 commit points can be viewed, compared or restored.  See the [Vyatta Network OS Basic System Configuration Guide](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation) for more details of committing and saving the configuration.
    ```bash
@@ -285,7 +283,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
     
-   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one more than the subnet address starting address. Entering an invalid gateway address will result in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command an re-enter.
+   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one more than the subnet address starting address. Entering an invalid gateway address will result in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command an re-enter. You can look it up at Network > IP Management > Subnets. Click on the subnet you need to know the Gateway address. The second entry in the List will with the Description **Gateway** is the IP address to enter as <Subnet Gateway IP>/<CIDR>.
    {: tip}
 
 3. List the new virtual interface (vif): 
@@ -302,9 +300,9 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
    
-   If the VSI is not accessible, check the VRA IP routing table is configured as expected. Delete and recreate the route if required.     
+   If the VSI is not accessible, check the VRA IP routing table is configured as expected. Delete and recreate the route if required. To run a show conmmand in configuation mode, you can use the run command    
    ```bash
-   ip route
+    run show ip route <Subnet Gateway IP>
    ```
    {: codeblock}
 
