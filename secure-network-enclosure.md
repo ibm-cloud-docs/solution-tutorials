@@ -464,12 +464,7 @@ This creates a new firewall rule set named `CPP`, view the additional rules and 
    commit 
    ```
    {: codeblock}
-3. Validate VRA SSH administrative access over IBM Internal network. If access is lost to the VRA via SSH after performing commits, the previous working configuration can be restored by rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} console. Check the parameters entered especially the address used for VRA Public IP Subnet. 
-4. If OK, save. 
-   ```
-   save
-   ```
-   {: codeblock}
+3. Validate VRA SSH administrative access over IBM Internal network. If access is lost to the VRA via SSH after performing commits, you can access the VRA via the KVM Console available at the Device Details page of the VRA via the Action Drop Down Menu.
 
 This completes setup of the secure private network enclosure protecting a single firewall zone containing a VLAN and subnet. Additional firewall zones, rules, virtual and bare-metal servers, VLANs and subnets can be added following the same instructions. 
 
