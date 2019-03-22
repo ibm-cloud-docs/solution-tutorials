@@ -139,6 +139,7 @@ The tutorial assumes that you already have a VPC with required subnets, security
    {: codeblock}
 4. This will result in creating the following resources, including the bastion-related resources:
    - 1 VPC (optional)
+   - 1 public gateway
    - 3 subnets within the VPC
    - 4 security groups with ingress and egress rules
    - 3 VSIs
