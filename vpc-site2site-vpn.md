@@ -272,7 +272,7 @@ To test that the VPN connection has been successfully established, use the simul
  
 
 ### Test using a microservice
-TODO: Install and start the small storage app, access COS.
+You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI.
 
 1. Copy over the code for the microservice app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
    ```sh
@@ -328,13 +328,14 @@ When using the console, you may need to refresh your browser to see updated stat
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- Add a [load balancer](/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound microservice traffic across multiple instances.
+- Add a [load balancer](/docs/infrastructure/vpc-network?topic=vpc-network---beta-using-load-balancers-in-ibm-cloud-vpc) to distribute inbound microservice traffic across multiple instances.
+- Deploy the [application on a public server, your data and services on a private host](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend).
 
 
 ## Related content
 {: #related}
 
-- [VPC Glossary](/docs/infrastructure/vpc/vpc-glossary.html)
-- [VPC using the IBM Cloud CLI](/docs/infrastructure/vpc/hello-world-vpc.html)
+- [VPC Glossary](/docs/vpc?topic=vpc-vpc-glossary)
+- [IBM Cloud CLI plugin for VPC Reference](/docs/infrastructure-service-cli-plugin?topic=infrastructure-service-cli-vpc-reference)
 - [VPC using the REST APIs](/docs/infrastructure/vpc/example-code.html)
-- bastion tutorial
+- Solution tutorial: [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
