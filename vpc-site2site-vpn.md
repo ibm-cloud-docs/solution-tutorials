@@ -140,7 +140,7 @@ In the following, create these resources by configuring and then running a setup
    {: codeblock}
    To reuse an existing VPC, pass its name to the script in this way. Replace **YOUR_EXISTING_VPC** with the actual VPC name.
    ```sh
-   ./config.sh; REUSE_VPC=YOUR_EXISTING_VPC ./vpc-site2site-vpn-baseline-create.sh
+   set -a; source ./config.sh; set +a; REUSE_VPC=YOUR_EXISTING_VPC ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
 4. This will result in creating the following resources, including the bastion-related resources:
