@@ -2,38 +2,32 @@
   "quiz": {
     "qa": [
       {
-        "question": "",
+        "question": "what authorization scheme does App ID support?",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "cloud directory",
+          "social",
+          "MFA",
+          "All of the above"
         ],
-        "answer": 0
+        "answer": 3
       },
       {
         "question": "",
         "answer": true
       },
       {
-        "question": "",
+        "question": "To ensure your encrypted keys are secure, Key Protect relies on a cloud-based hardware HSM. What does HSM stand for?",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "hardware security modules",
+          "high security material",
+          "hyper super memory",
+          "hybrid service maintenance"
         ],
         "answer": 0
       },
       {
-        "question": "",
-        "choices": [
-          "",
-          "",
-          "",
-          ""
-        ],
-        "answer": 0
+        "question": "In the tutorial, you generated a new root key to encrypted the storage bucket content. However you could also have brought your own key (BYOK)",
+        "answer": true
       },
       {
         "question": "",

@@ -2,9 +2,9 @@
   "quiz": {
     "qa": [
       {
-        "question": "",
+        "question": "what are the components of a conversation",
         "choices": [
-          "",
+          "dialog, entities, intents",
           "",
           "",
           ""
@@ -12,7 +12,7 @@
         "answer": 0
       },
       {
-        "question": "",
+        "question": "An intent represents the purpose of a user's input, such as answering a question or processing a bill payment.",
         "answer": true
       },
       {
