@@ -135,12 +135,12 @@ In the following, create these resources by configuring and then running a setup
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
 3. To create the resources in a new VPC, run the script as follows:
     ```sh
-   set -a; source ./config.sh; set +a; ./vpc-site2site-vpn-baseline-create.sh
+   ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
    To reuse an existing VPC, pass its name to the script in this way. Replace **YOUR_EXISTING_VPC** with the actual VPC name.
    ```sh
-   set -a; source ./config.sh; set +a; REUSE_VPC=YOUR_EXISTING_VPC ./vpc-site2site-vpn-baseline-create.sh
+   REUSE_VPC=YOUR_EXISTING_VPC ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
 4. This will result in creating the following resources, including the bastion-related resources:
