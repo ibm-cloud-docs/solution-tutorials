@@ -132,7 +132,7 @@ In the following, create these resources by configuring and then running a setup
    cp config.sh.sample config.sh
    ```
    {: codeblock}
-2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **KEYNAME** to the name or comma-separated list of names of SSH keys (see above). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
+2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
 3. To create the resources in a new VPC, run the script as follows:
     ```sh
    set -a; source ./config.sh; set +a; ./vpc-site2site-vpn-baseline-create.sh
