@@ -108,7 +108,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    
    Note that only one lite instance can be created per account. If you already have an instance of {{site.data.keyword.cos_short}}, you can reuse it.
    {: tip}
-   
+
 3. Create a service key with role **Reader**:
    ```sh
    ibmcloud resource service-key-create vpns2s-cos-key Reader --instance-name vpns2s-cos
@@ -135,7 +135,7 @@ In the following, create these resources by configuring and then running a setup
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **KEYNAME** to the name or comma-separated list of names of SSH keys (see above). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
 3. To create the resources in a new VPC, run the script as follows:
     ```sh
-   ./config.sh; ./vpc-site2site-vpn-baseline-create.sh
+   set -a; source ./config.sh; set +a; ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
    To reuse an existing VPC, pass its name to the script in this way. Replace **YOUR_EXISTING_VPC** with the actual VPC name.
