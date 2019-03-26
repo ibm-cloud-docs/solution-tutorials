@@ -2,18 +2,14 @@
   "quiz": {
     "qa": [
       {
-        "question": "what authorization scheme does App ID support?",
+        "question": "What built-in identity providers are supported by App ID?",
         "choices": [
-          "cloud directory",
-          "social",
-          "MFA",
-          "All of the above"
+          "Cloud Directory - a user registry that is maintained in the cloud.",
+          "Social - such as Facebook, Google.",
+          "SAML - to authenticate with a third-party provider such as Active Directory Federation Services.",
+          "All of the above."
         ],
         "answer": 3
-      },
-      {
-        "question": "",
-        "answer": true
       },
       {
         "question": "To ensure your encrypted keys are secure, Key Protect relies on a cloud-based hardware HSM. What does HSM stand for?",
@@ -28,16 +24,6 @@
       {
         "question": "In the tutorial, you generated a new root key to encrypted the storage bucket content. However you could also have brought your own key (BYOK)",
         "answer": true
-      },
-      {
-        "question": "",
-        "choices": [
-          "",
-          "",
-          "",
-          ""
-        ],
-        "answer": 0
       }
     ]
   }
