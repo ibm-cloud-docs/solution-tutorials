@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-22"
+lastupdated: "2019-03-26"
 ---
 
 {:shortdesc: .shortdesc}
@@ -72,6 +72,7 @@ Notes:
 - Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
+- Install [**jq**](https://stedolan.github.io/jq/download/). It is used by the provided scripts to process JSON output.
 
 ## Deploy a virtual app server in a virtual private cloud
 In the following, you will download the scripts to set up a baseline VPC environment and code for a microservice to interface with the {{site.data.keyword.cos_short}}. Thereafter, you will provision the {{site.data.keyword.cos_short}} service and set up the baseline.
@@ -104,9 +105,13 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage lite global
    ```
    {: codeblock}
-3. Create a service key with role **Writer**:
+   
+   Note that only one lite instance can be created per account. If you already have an instance of {{site.data.keyword.cos_short}}, you can reuse it.
+   {: tip}
+
+3. Create a service key with role **Reader**:
    ```sh
-   ibmcloud resource service-key-create vpns2s-cos-key Writer --instance-name vpns2s-cos
+   ibmcloud resource service-key-create vpns2s-cos-key Reader --instance-name vpns2s-cos
    ```
    {: codeblock}
 4. Obtain the service key details in JSON format and store it in a new file **credentials.json** in the subdirectory **vpc-app-cos**. The file will be used later on by the app.
@@ -130,10 +135,10 @@ In the following, create these resources by configuring and then running a setup
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **KEYNAME** to the name or comma-separated list of names of SSH keys (see above). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
 3. To create the resources in a new VPC, run the script as follows:
     ```sh
-   ./config.sh; ./vpc-site2site-vpn-baseline-create.sh
+   set -a; source ./config.sh; set +a; ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
-   To reuse an existing VPC, pass its name to the script in this way. Replace **YOUR_EXISTING_VPC** with the actual name.
+   To reuse an existing VPC, pass its name to the script in this way. Replace **YOUR_EXISTING_VPC** with the actual VPC name.
    ```sh
    ./config.sh; REUSE_VPC=YOUR_EXISTING_VPC ./vpc-site2site-vpn-baseline-create.sh
    ```
