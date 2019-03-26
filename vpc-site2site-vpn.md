@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-20"
+lastupdated: "2019-03-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -70,8 +70,8 @@ Notes:
 
 - Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). You need the optional CLI infrastructure plugin.
 - Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc/vpc-user-permissions.html).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc/getting-started.html#prerequisites).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
 
 ## Deploy a virtual app server in a virtual private cloud
 In the following, you will download the scripts to set up a baseline VPC environment and code for a microservice to interface with the {{site.data.keyword.cos_short}}. Thereafter, you will provision the {{site.data.keyword.cos_short}} service and set up the baseline.
@@ -118,25 +118,34 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
 
 ### Create a Virtual Private Cloud baseline resources
 {: #create-vpc}
+We provide a script to create the baseline resources required for this tutorial, i.e., the starting environment. The script can either generate that environment in an existing VPC or create a new VPC.
 
-The tutorial assumes that you already have a VPC with required subnets, security groups and virtual server instances provisioned. In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
+In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
 
-1. Configure TODO
-2. Run the script:
+1. Copy over the sample configuration file into a file to use:
     ```sh
-   ./vpc-site2site-vpn-baseline-create.sh
+   cp config.sh.sample config.sh
    ```
    {: codeblock}
-3. This will result in creating the following resources:
-   - 1 VPC named ...
-   - 2 subnets within the VPC
-   - X security groups with ingress and egress rules
-   - 2 VSIs
+2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **KEYNAME** to the name or comma-separated list of names of SSH keys (see above). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
+3. To create the resources in a new VPC, run the script as follows:
+    ```sh
+   ./config.sh; ./vpc-site2site-vpn-baseline-create.sh
+   ```
+   {: codeblock}
+   To reuse an existing VPC, pass its name to the script in this way. Replace **YOUR_EXISTING_VPC** with the actual name.
+   ```sh
+   ./config.sh; REUSE_VPC=YOUR_EXISTING_VPC ./vpc-site2site-vpn-baseline-create.sh
+   ```
+   {: codeblock}
+4. This will result in creating the following resources, including the bastion-related resources:
+   - 1 VPC (optional)
+   - 1 public gateway
+   - 3 subnets within the VPC
+   - 4 security groups with ingress and egress rules
+   - 3 VSIs
 
-   Note down for later use the returned values for **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**.
-
-
-Review the *data.sh* file created.  It has useful information and parameters
+   Note down for later use the returned values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
 
 ### Create the Virtual Private Network gateway and connection
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
@@ -231,7 +240,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    It should report that a connection has been established. Keep the terminal and ssh connection to this machine open.
 
 ## Test the connectivity
-
+You can test the site to site VPN connection by using SSH or by deploying the microservice interfacing {{site.data.keyword.cos_short}}.
 
 ### Test using ssh
 To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server. 
@@ -256,33 +265,78 @@ To test that the VPN connection has been successfully established, use the simul
    ```
    {:pre}
   The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
-
+4. In the "onprem" VSI terminal, start the VPN gateway again:
+   ```sh
+   ipsec start
+   ```
+   {:pre}
+ 
 
 ### Test using a microservice
+You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI.
 
-TODO: Install and start the small storage app, access COS.
-
-
+1. Copy over the code for the microservice app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
+   ```sh
+   scp -r  -o "ProxyJump root@BASTION_IP_ADDRESS"  vpc-app-cos root@VSI_CLOUD_IP:vpc-app-cos
+   ```
+   {:pre}
+2. Connect to the cloud VSI, again using the bastion as jump host.
+   ```sh
+   ssh -J root@BASTION_IP_ADDRESS root@VSI_CLOUD_IP
+   ```
+   {:pre}
+3. On the cloud VSI, change into the code directory:
+   ```sh
+   cd vpc-app-cos
+   ```
+   {:pre}
+4. Install Python and the Python package manager PIP.
+   ```sh
+   apt-get install python python-pip
+   ```
+   {:pre}
+5. Install the necessary Python packages using **pip**.
+   ```sh
+   pip install -r requirements.txt
+   ```
+   {:pre}
+6. Start the app:
+   ```sh
+   python browseCOS.py
+   ```
+   {:pre}
+7. In the "onprem" VSI terminal, access the service. Replace VSI_CLOUD_IP accordingly.
+   ```sh
+   curl VSI_CLOUD_IP:8080/api/bucketlist
+   ```
+   {:pre}
+   The command should return a JSON object.
 
 ## Remove resources
-{: #removeresources}
+{: #remove-resources}
 
-Steps to take to remove the resources created in this tutorial
+1. In the VPC management console, click on **VPNs**. In the action menu on the VPN gateway select **Delete** to remove gateway.
+2. Next, click **Floating IPs** in the navigation, then on the IP address for your VSIs. In the action menu select **Release**. Confirm that you want to release the IP address.
+3. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
+4. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
+5. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
 
-* [Relevant links](https://blah)
+When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
+{:tip}Steps to take to remove the resources created in this tutorial
 
 ## Expand the tutorial 
 {: #expand-tutorial}
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- Add a [load balancer](/docs/infrastructure/vpc/console-tutorial.html#creating-a-load-balancer) to distribute inbound microservice traffic across multiple instances.
+- Add a [load balancer](/docs/infrastructure/vpc-network?topic=vpc-network---beta-using-load-balancers-in-ibm-cloud-vpc) to distribute inbound microservice traffic across multiple instances.
+- Deploy the [application on a public server, your data and services on a private host](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend).
 
 
 ## Related content
 {: #related}
 
-- [VPC Glossary](/docs/infrastructure/vpc/vpc-glossary.html)
-- [VPC using the IBM Cloud CLI](/docs/infrastructure/vpc/hello-world-vpc.html)
+- [VPC Glossary](/docs/vpc?topic=vpc-vpc-glossary)
+- [IBM Cloud CLI plugin for VPC Reference](/docs/infrastructure-service-cli-plugin?topic=infrastructure-service-cli-vpc-reference)
 - [VPC using the REST APIs](/docs/infrastructure/vpc/example-code.html)
-- bastion tutorial
+- Solution tutorial: [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
