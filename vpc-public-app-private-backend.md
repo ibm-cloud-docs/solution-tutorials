@@ -89,8 +89,10 @@ To create your own {{site.data.keyword.vpc_short}},
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-6. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public internet. You can also attach the public gateway after you create the subnet.
-7. Click **Create virtual private cloud** to provision the instance.
+6. Click **Create virtual private cloud** to provision the instance.
+
+If the VSIs attached to the private subnet need access to the Internet to load software, switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public internet. Once the VSIs have all software needed, return the public gateway to **Detached** so that the subnet cannot reach the public internet.
+{: important}
 
 To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
 
