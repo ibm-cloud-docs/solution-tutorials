@@ -160,13 +160,13 @@ In the following, create these resources by configuring and then running a setup
 ### Create the Virtual Private Network gateway and connection
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog.
-2. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and subnet are selected.
-3. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
-4. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi**. Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
-5. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
-6. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
-7. Wait for the VPN gateway to become available (you may need to refresh the screen). Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**. 
+1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and subnet are selected.
+2. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
+3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi**. Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
+4. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
+5. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
+6. Wait for the VPN gateway to become available (you may need to refresh the screen).
+7. Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**. 
 
 ### Create the on-premises Virtual Private Network gateway
 Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
@@ -261,21 +261,23 @@ To test that the VPN connection has been successfully established, use the simul
    ssh -J root@ONPREM_IP root@VSI_CLOUD_IP
    ```
    {:pre}
-  Once successfully connected, close the ssh connection.
+  
+2. Once successfully connected, close the ssh connection.
 
-2. In the "onprem" VSI terminal, stop the VPN gateway:
+3. In the "onprem" VSI terminal, stop the VPN gateway:
    ```sh
    ipsec stop
    ```
    {:pre}
-3. In the command window from step 1), try to establish the connection again:
+4. In the command window from step 1), try to establish the connection again:
 
    ```sh
    ssh -J root@ONPREM_IP root@VSI_CLOUD_IP
    ```
    {:pre}
-  The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
-4. In the "onprem" VSI terminal, start the VPN gateway again:
+   The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
+   
+5. In the "onprem" VSI terminal, start the VPN gateway again:
    ```sh
    ipsec start
    ```
