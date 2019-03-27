@@ -297,7 +297,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    {:pre}
 4. Install Python and the Python package manager PIP.
    ```sh
-   apt-get install python python-pip
+   apt-get update; apt-get install python python-pip
    ```
    {:pre}
 5. Install the necessary Python packages using **pip**.
