@@ -12,23 +12,23 @@
         "answer": 2
       },
       {
-        "question": "Run mysql_secure_installation to set a few initial parameters that are more secure than the default.",
+        "question": "After installing MySQL, you should run mysql_secure_installation to set a few initial parameters that are more secure than the default.",
         "answer": true
       },
       {
-        "question": "What is phpinfo() file?",
+        "question": "What is the role of the instruction phpinfo()?",
         "choices": [
-          "info.php outputs information about PHP's configuration, and it should be added to both development and production stack.",
-          "info.php outputs information about PHP's configuration, but it should not be added to the production stack to avoid attackers getting additional information.",
-          "info.php outputs information about server capacity configuration.",
-          "info.php outputs PHP logs."
+          "It outputs information about PHP's configuration, and it should be added to both development and production stack.",
+          "It outputs information about PHP's configuration, but it should not be added to the production stack to avoid attackers getting additional information.",
+          "It outputs information about server capacity configuration.",
+          "It outputs PHP logs."
         ],
         "answer": 1
       },
       {
         "question": "Which statement is the correct statement for Database security?",
         "choices": [
-          "After Database installation, you need to apply some database security best practices like removing users without a password, removing test databases, obfuscate access to MySQL and so on. ",
+          "After Database installation, you need to apply some database security best practices like removing users without a password, removing test databases, obfuscate access to MySQL and so on.",
           "After Database installation, you do not need to carry any additional database security steps.",
           "MySQL comes with pre-configured best practices steps.",
           "You can't create users without a password. "
