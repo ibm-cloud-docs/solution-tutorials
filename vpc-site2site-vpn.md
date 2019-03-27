@@ -312,7 +312,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    {:pre}
 7. In the "onprem" VSI terminal, access the service. Replace VSI_CLOUD_IP accordingly.
    ```sh
-   curl VSI_CLOUD_IP:8080/api/bucketlist
+   curl VSI_CLOUD_IP/api/bucketlist
    ```
    {:pre}
    The command should return a JSON object.
@@ -327,7 +327,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
 5. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
-{:tip}Steps to take to remove the resources created in this tutorial
+{:tip}
 
 ## Expand the tutorial 
 {: #expand-tutorial}
