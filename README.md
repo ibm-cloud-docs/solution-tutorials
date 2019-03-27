@@ -1,9 +1,11 @@
 # Tutorials
 
-[Quick builds](https://pages.github.ibm.com/Bluemix-Docs/tutorials/) done by [Travis](https://travis.ibm.com/Bluemix-Docs/tutorials) using [this script](./scripts/preview.sh) on the staging branch
+[![Build Status](https://travis.ibm.com/Bluemix-Docs/tutorials.svg?token=pqpHRY2jt29xa8JqgKgx&branch=staging)](https://travis.ibm.com/Bluemix-Docs/tutorials)
 
-[Full builds](https://cloud.test.ibm.com/docs/tutorials/index.html#tutorials) done by the doc team in test environment
+[Quick builds](https://pages.github.ibm.com/Bluemix-Docs/tutorials/) done by [Travis](https://travis.ibm.com/Bluemix-Docs/tutorials) using [this script](./scripts/preview-build.sh) and [this script](./scripts/preview-push.sh) on the staging branch.
 
-[Production builds](https://cloud.ibm.com/docs/tutorials/index.html#tutorials) done by the doc team in public
+[Full builds](https://cloud.test.ibm.com/docs/tutorials/index.html#tutorials) done by the doc team in test environment.
 
-[Process to make the docs public](https://github.ibm.com/Bluemix/cloud-portfolio-solutions/tree/master/solutions#how-do-we-make-the-solutions-public)
+[Production builds](https://cloud.ibm.com/docs/tutorials/index.html#tutorials) done by the doc team in public.
+
+[Process to make the docs public](https://github.ibm.com/Bluemix/cloud-portfolio-solutions/tree/master/solutions#how-do-we-make-the-solutions-public).
