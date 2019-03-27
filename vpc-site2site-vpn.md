@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-26"
+lastupdated: "2019-03-27"
 ---
 
 {:shortdesc: .shortdesc}
@@ -123,7 +123,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
 
 ### Create a Virtual Private Cloud baseline resources
 {: #create-vpc}
-We provide a script to create the baseline resources required for this tutorial, i.e., the starting environment. The script can either generate that environment in an existing VPC or create a new VPC.
+The tutorial provides a script to create the baseline resources required for this tutorial, i.e., the starting environment. The script can either generate that environment in an existing VPC or create a new VPC.
 
 In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
 
@@ -132,17 +132,20 @@ In the following, create these resources by configuring and then running a setup
    cp config.sh.sample config.sh
    ```
    {: codeblock}
+
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
 3. To create the resources in a new VPC, run the script as follows:
     ```sh
    ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
+
    To reuse an existing VPC, pass its name to the script in this way. Replace **YOUR_EXISTING_VPC** with the actual VPC name.
    ```sh
    REUSE_VPC=YOUR_EXISTING_VPC ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
+
 4. This will result in creating the following resources, including the bastion-related resources:
    - 1 VPC (optional)
    - 1 public gateway
@@ -157,7 +160,7 @@ In the following, you will add a VPN gateway and an associated connection to the
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog.
 2. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and subnet are selected.
-3. Leave **New VPN connection for VPC** is activated. Enter **vpns2s-gateway-conn** as name.
+3. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
 4. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi**. Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
 5. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
 6. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
@@ -196,7 +199,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:codeblock}
 
-4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key. The key is the same as configured earlier.
+4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key. The key is the same as configured earlier. Replace **ONPREM_IP** and **CLOUD_IP** with the known values.
    ```
    ONPREM_IP CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
    ```
