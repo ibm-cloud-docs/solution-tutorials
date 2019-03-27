@@ -22,8 +22,18 @@
         "answer": 0
       },
       {
-        "question": "In the tutorial, you generated a new root key to encrypted the storage bucket content. However you could also have brought your own key (BYOK)",
+        "question": "In the tutorial, you generated a new root key to encrypt the storage bucket content. However you could also have brought your own key (BYOK).",
         "answer": true
+      },
+      {
+        "question": "For increase security, data should be protected through encryption techniques.",
+        "choices": [
+          "At rest, when stored on disk.",
+          "In transit, when exchanged across the network.",
+          "At rest and in transit",
+          "Only if it contains credit card numbers."
+        ],
+        "answer": 2
       }
     ]
   }
