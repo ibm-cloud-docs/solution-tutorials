@@ -21,7 +21,9 @@ IBM will be accepting a limited number of customers to participate in an Early A
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
 This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
-The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication. To further demonstrate secure and private access, you will deploy a microservice on a VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
+The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication.
+
+To further demonstrate secure and private access, you will deploy a microservice on a VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
 The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}. An on-premises computer will access the COS microservice. All traffic will flow through the VPN and hence privately through {{site.data.keyword.cloud_notm}}.
 
 There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
@@ -164,7 +166,7 @@ In the following, you will add a VPN gateway and an associated connection to the
 4. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi**. Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
 5. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
 6. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
-7. Wait for the VPN gateway to become available (you may need to refresh the screen). Note down the assigned **Gateway IP** address as **CLOUD_IP**. 
+7. Wait for the VPN gateway to become available (you may need to refresh the screen). Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**. 
 
 ### Create the on-premises Virtual Private Network gateway
 Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
@@ -199,13 +201,13 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:codeblock}
 
-4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key. The key is the same as configured earlier. Replace **ONPREM_IP** and **CLOUD_IP** with the known values.
+4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key. The key is the same as configured earlier. Replace **ONPREM_IP** and **GW_CLOUD_IP** with the known values.
    ```
-   ONPREM_IP CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
+   ONPREM_IP GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
    ```
    {:pre}
 
-5. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **ONPREM_IP**, **ONPREM_CIDR**, **CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
+5. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **ONPREM_IP**, **ONPREM_CIDR**, **GW_CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
    ```sh
    # basic configuration
    config setup
@@ -220,7 +222,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
       left=%defaultroute
       leftid=ONPREM_IP
       leftsubnet=ONPREM_CIDR
-      right=CLOUD_IP
+      right=GW_CLOUD_IP
       rightsubnet=CLOUD_CIDR
       ike=aes256-sha2_256-modp1024!
       esp=aes256-sha2_256!
