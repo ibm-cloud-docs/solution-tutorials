@@ -113,7 +113,7 @@ Search is not limited to services and resources. You can also query Cloud artifa
 
 Tagging and searching can be used together to provide customized identification of resources. This involves: attaching the tag to resource(s) and searching using tag name(s). Create a tag named env:tutorial.
 
-1. Attach the tag to a resource. A --resource-crn value can be obtained from a CRN property seen in the previous command's output. Cloud Resource Names (CRNs) uniquely identify IBM Cloud resources.
+1. Attach the tag to a resource. You can obtain a resource CRN from the user interface or with `ibmcloud resource service-instance <name|id>`. Cloud Resource Names (CRNs) uniquely identify IBM Cloud resources.
    ```sh
    ibmcloud resource tag-attach --tag-names env:tutorial --resource-id <resource CRN>
    ```
