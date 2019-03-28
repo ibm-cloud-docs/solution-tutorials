@@ -86,7 +86,7 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
    * Select a location (e.g., Dallas), let's call this **region 1** and a zone in region 1 (e.g., Dallas 1), let's call this **zone 1**.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 6. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-7. Switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public internet. You can also attach the public gateway after you create the subnet.
+7. Given all virtual server instances in the subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
 8. Click **Create virtual private cloud** to provision the instance.
 
 To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
@@ -97,7 +97,6 @@ To confirm the creation of subnet, click on **All virtual private clouds** bread
 2. Select a location which we called as region 1 above (e.g., Dallas) and select a different zone in region 1 (e.g., Dallas 2), let's call the selected zone as **zone 2**.
 3. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.64.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 4. Select **Use VPC default** for your subnet access control list (ACL).
-5. Switch the public gateway to **Attached** and click **Create subnet** to provision a new subnet.
 
 ### Provision VSIs
 Once the status of the subnets change to **Available**,

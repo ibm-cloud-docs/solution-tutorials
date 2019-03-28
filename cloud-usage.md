@@ -61,8 +61,9 @@ To view Cloud inventory and usage, you will need the appropriate roles assigned 
 1. The account administrator should login to {{site.data.keyword.cloud_notm}} and access the [**Identity & Access Users**](https://{DomainName}/iam/#/users) page.
 2. The account administrator can select your name from the list of users in the account to assign appropriate permissions.
 3. On the **Access policies** tab, click the **Assign Access** button and perform the following changes.
-    1. Select the **Assign access within a resource group** tile. Select the **Resource group(s)** to be granted access to and apply the **Viewer** role. Finish by clicking the **Assign** button. This role is required for the `resource groups` and `billing resource-group-usage` commands.
-    2. Select the **Assign access by using Cloud Foundry** tile. Select the overflow menu next to each **Organization** to be granted access. Select **Edit organization role** from the menu. Select **Billing Manager** from the **Organization roles** list. Finish by clicking the **Save role** button. This role is required for the `billing org-usage` command.
+   1. Select the **Assign access within a resource group** tile. Select the **Resource group(s)** to be granted access to and apply the **Viewer** role. Finish by clicking the **Assign** button. This role is required for the `resource groups` and `billing resource-group-usage` commands.
+   2. Select the **Assign access by using Cloud Foundry** tile. Select the overflow menu next to each **Organization** to be granted access. Select **Edit organization role** from the menu. Select **Billing Manager** from the **Organization roles** list. Finish by clicking the **Save role** button. This role is required for the `billing org-usage` command.
+   3. Select the **Assign access to resources** tile. Select **All Identity and Access enabled services** in the **Services** dropdown menu. Check the **Editor** role under **Assign platform access roles**. This role is required for the `resource tag-attach` command.
 
 ## Locate resources with the search command
 {: #search}
@@ -109,6 +110,21 @@ Search is not limited to services and resources. You can also query Cloud artifa
     ibmcloud cf curl /v2/organizations/<Organization ID> | tail -n +3 | jq .entity.name
     ```
     {: pre}
+
+Tagging and searching can be used together to provide customized identification of resources. This involves: attaching the tag to resource(s) and searching using tag name(s). Create a tag named env:tutorial.
+
+1. Attach the tag to a resource. You can obtain a resource CRN from the user interface or with `ibmcloud resource service-instance <name|id>`. Cloud Resource Names (CRNs) uniquely identify IBM Cloud resources.
+   ```sh
+   ibmcloud resource tag-attach --tag-names env:tutorial --resource-id <resource CRN>
+   ```
+   {: pre}
+1. Search for the Cloud artifacts that match a given tag using the below query.
+   ```
+   ibmcloud resource search 'tags: "env:tutorial"'
+   ```
+   {: pre}
+
+By combining advanced search queries with an enterprise-agreed tagging schema, managers and team leads can more easily identify and take action on Cloud apps, resources, and services.
 
 ## Explore usage with the Usage Dashboard
 {: #dashboard}

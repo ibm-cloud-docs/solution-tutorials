@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-15"
+lastupdated: "2019-03-27"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -140,7 +140,7 @@ To create a new subnet for the frontend,
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-4. Similar as for the backend, switch the **Public gateway** to **Attached**.
+4. Given all virtual server instances in the subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
 5. Click **Create subnet** to provision it.
 
 ### Create a frontend security group
@@ -256,8 +256,8 @@ Follow the steps mentioned in [securely access remote instances with a bastion h
 
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
 2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
-3. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
-4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
+3. Once the VSIs are gone, switch to **Subnets**. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
+4. After the subnets have been deleted, switch to **VPC** tab and delete your VPC.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}

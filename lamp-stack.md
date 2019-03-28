@@ -51,7 +51,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
-2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
+2. Obtain your VPN Access credentials in [your user page under the Users list](https://{DomainName}/iam#/users).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-set-up-ssl-vpn-connections#set-up-ssl-vpn-connections), [macOS](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-connect-to-ssl-vpn-mac-osx-10x-and-higher#connect-to-ssl-vpn-mac-osx-10x-and-higher) or [Windows](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-connect-to-ssl-vpn-windows-7-and-higher#connect-to-ssl-vpn-windows-7-and-higher).
 
    For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page](https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
@@ -253,7 +253,7 @@ Firewalls are available as an add-on feature for all servers on the Infrastructu
 
 To remove your virtual server, complete the following steps.
 
-1. Log in to the [{{site.data.keyword.slportal}}](https://control.softlayer.com/).
+1. Log in to the [{{site.data.keyword.slportal}}](https://{DomainName}/classic/devices).
 2. From the **Devices** menu, select **Device List**.
 3. Click **Actions** for the virtual server you want to remove and select **Cancel**.
 
