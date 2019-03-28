@@ -185,6 +185,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    apt-get update
    ```
    {:pre}
+   
    ```sh
    apt-get install strongswan
    ```
@@ -202,12 +203,14 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    {:codeblock}
 
 4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key. The key is the same as configured earlier. Replace **ONPREM_IP** and **GW_CLOUD_IP** with the known values.
+
    ```
    ONPREM_IP GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
    ```
    {:pre}
 
 5. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **ONPREM_IP**, **ONPREM_CIDR**, **GW_CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
+
    ```sh
    # basic configuration
    config setup
