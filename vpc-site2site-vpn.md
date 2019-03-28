@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-27"
+lastupdated: "2019-03-28"
 ---
 
 {:shortdesc: .shortdesc}
@@ -130,13 +130,15 @@ The tutorial provides a script to create the baseline resources required for thi
 In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
 
 1. Copy over the sample configuration file into a file to use:
-    ```sh
+
+   ```sh
    cp config.sh.sample config.sh
    ```
    {: codeblock}
 
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
 3. To create the resources in a new VPC, run the script as follows:
+
     ```sh
    ./vpc-site2site-vpn-baseline-create.sh
    ```
@@ -160,7 +162,7 @@ In the following, create these resources by configuring and then running a setup
 ### Create the Virtual Private Network gateway and connection
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and subnet are selected.
+1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and **vpns2s-cloud-subnet** as subnet are selected.
 2. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
 3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi**. Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
 4. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
