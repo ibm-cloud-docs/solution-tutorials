@@ -139,7 +139,7 @@ In the following, create these resources by configuring and then running a setup
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
 3. To create the resources in a new VPC, run the script as follows:
 
-    ```sh
+   ```sh
    ./vpc-site2site-vpn-baseline-create.sh
    ```
    {: codeblock}
@@ -180,7 +180,6 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:pre}
 
-
 2. Next, on the machine **vpns2s-onprem-vsi**, execute the following commands to update the package manager and to install the strongSwan software.
 
    ```sh
@@ -219,7 +218,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
       charondebug="all"
       uniqueids=yes
       strictcrlpolicy=no
-
+   
    # connection to vpc/vpn datacenter 
    # left=onprem / right=vpc
    conn tutorial-site2site-onprem-to-cloud
@@ -241,8 +240,8 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
     ```
     {:codeblock}
 
-
 6. Restart the VPN gateway, then check its status by running: ipsec restart
+
    ```sh
    ipsec restart
    ```
