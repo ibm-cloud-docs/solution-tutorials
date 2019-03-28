@@ -140,7 +140,7 @@ To create a new subnet for the frontend,
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-4. Similar as for the backend, switch the **Public gateway** to **Attached**.
+4. Given all virtual server instances in the subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
 5. Click **Create subnet** to provision it.
 
 ### Create a frontend security group
