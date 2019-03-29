@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-28"
+lastupdated: "2019-03-29"
 ---
 
 {:shortdesc: .shortdesc}
@@ -18,13 +18,13 @@ lastupdated: "2019-03-28"
 IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
 {: important}
 
-IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. It allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
+IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. This allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
 This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
 The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication.
 
 To further demonstrate secure and private access, you will deploy a microservice on a VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
-The COS service has a Cloud Service Endpoint (CSE), that can be used for private no cost ingress/egress within {{site.data.keyword.cloud_notm}}. An on-premises computer will access the COS microservice. All traffic will flow through the VPN and hence privately through {{site.data.keyword.cloud_notm}}.
+The COS service has a direct endpoint that can be used for private no cost ingress/egress when all access is within the same region of the {{site.data.keyword.cloud_notm}}. An on-premises computer will access the COS microservice. All traffic will flow through the VPN and hence privately through {{site.data.keyword.cloud_notm}}.
 
 There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
 
@@ -51,11 +51,12 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+Although there are no networking charges for accessing COS from the micro service in this tutorial, standard networking charges for access to the VPC will be incurred.
 
 ## Architecture
 {: #architecture}
 
-The following diagram shows the virtual private cloud consisting of a bastion and an app server. The app server hosts a microservice interfacing with {{site.data.keyword.cos_short}} service. A (simulated) on-premises network and the virtual cloud environment are connected via VPN gateways.
+The following diagram shows the virtual private cloud containing an app server. The app server hosts a microservice interfacing with {{site.data.keyword.cos_short}} service. A (simulated) on-premises network and the virtual cloud environment are connected via VPN gateways.
 
 ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 
