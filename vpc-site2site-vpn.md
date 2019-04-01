@@ -238,8 +238,8 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
       dpdtimeout=120
       dpdaction=restart
       auto=start
-    ```
-    {:codeblock}
+   ```
+   {:pre}
 
 6. Restart the VPN gateway, then check its status by running: ipsec restart
 
