@@ -151,7 +151,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
-2. After your container starts, go to `http://localhost:9080/<nameofproject>`. If you created a Node.js application, go to `http://localhost:3000/`.
+2. After your container starts, go to `http://localhost:9080/`. If you created a Node.js application, go to `http://localhost:3000/`.
   ![](images/solution2/LibertyLocal.png)
 
 ## Deploy application to cluster using helm chart
@@ -221,7 +221,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ibmcloud cs workers ${MYCLUSTER}
    ```
    {: pre}
-12. Access the Java application at `http://worker-ip-address:portnumber/nameofproject` and Node.js application at `http://worker-ip-address:portnumber`
+12. Access the application at `http://worker-ip-address:portnumber/`.
 
 ## Use the IBM-provided domain for your cluster
 {: #ibm_domain}
@@ -254,10 +254,10 @@ Use Ingress to set up the cluster inbound connection to the service.
    spec:
      tls:
      - hosts:
-       -  <ingress-sub-domain>
+       -  <nameofproject>.<ingress-sub-domain>
        secretName: <ingress-secret>
      rules:
-     - host: <ingress-sub-domain>
+     - host: <nameofproject>.<ingress-sub-domain>
        http:
          paths:
          - path: /
@@ -271,7 +271,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    kubectl apply -f ingress-ibmdomain.yml
    ```
    {: pre}
-4. Access your application at `https://<ingress-sub-domain>/<nameofproject>`
+4. Access your application at `https://<nameofproject>.<ingress-sub-domain>/`
 
 ## Use your own custom domain
 {: #custom_domain}
@@ -304,11 +304,11 @@ See [Using the Ingress controller with a custom domain](https://{DomainName}/doc
    kubectl apply -f ingress-customdomain-http.yml
    ```
    {: pre}
-3. Access your application at `http://<customdomain>/<nameofproject>`
+3. Access your application at `http://<customdomain>/`
 
 ### with HTTPS
 
-If you were to try to access your application with HTTPS at this time `https://<customdomain>/<nameofproject>`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
+If you were to try to access your application with HTTPS at this time `https://<customdomain>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
 1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key:
   https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3
@@ -345,7 +345,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    kubectl apply -f ingress-customdomain-https.yml
    ```
    {: pre}
-6. Access your application at `https://<customdomain>/<nameofproject>`.
+6. Access your application at `https://<customdomain>/`.
 
 ## Monitor application health
 {: #monitor_application}
