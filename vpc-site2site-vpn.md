@@ -29,11 +29,11 @@ The COS service has a direct endpoint that can be used for private no cost ingre
 There are many popular on-premises VPN solutions for site-to-site gateways available. This tutorial utilizes the [strongSwan](https://www.strongswan.org/) VPN Gateway to connect with the VPC/VPN gateway. To simulate an on-premises data center, you will install the strongSwan gateway on a VSI in {{site.data.keyword.cloud_notm}}.
 
 {:shortdesc}
-In short, using a VPC with Virtual Private Network gateway and a Cloud Service Endpoint you can
+In short, using a VPC you can
 
-- connect your on-premises computers to workloads running in {{site.data.keyword.cloud_notm}},
-- ensure private and low cost connectivity to cloud services,
-- connect your cloud-based systems to on-premises computers.
+- connect your on-premises systems to services and workloads running in {{site.data.keyword.cloud_notm}},
+- ensure private and low cost connectivity to COS,
+- connect your cloud-based systems to services and worlkloads running on-premises.
 
 ## Objectives
 {: #objectives}
@@ -62,11 +62,11 @@ The following diagram shows the virtual private cloud containing an app server. 
 
 Notes:
 
-1. After setting up the required infrastructure (subnets, security groups with rules, VSIs) on the cloud, the admin (DevOps) connects (SSH) to the VSI using the private SSH key and installs the microservice software and verifies it is working.
-2. A VSI with associated floating IP address will be provisioned to hold the open source VPN Gateway. Note the public IP address.
-3. A VPC/VPN Gateway is provisioned, note the public IP address.
-4. Configure both the VPC/VPN Gateway and open source VPN Gateway connections with each others public ip addresses.
-5. Verify connectivity through the VPN gateways by accessing the microservice directly through the VPN site-to-site connection.
+1. The infrastructure (vpc, subnets, security groups with rules, network ACL and VSIs) are set up using a provided script
+2. The Cloud Object Storage, COS, instance used by the microservice will be provisioned
+3. A VPC/VPN Gateway is provisioned
+4. The VSI, vpns2s-onprem-vsi, will be provisioned with the Strongswan open source ipsec gateway software
+5. The VSI, vpns2s-cloud-vsi, will be provisioned with the microservice software
 
 ## Before you begin
 {: #prereqs}
@@ -103,7 +103,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
     ibmcloud target
     ```
     {: codeblock}
-2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
+2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) using a **standard** or **lite** plan.
    ```sh
    ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage lite global
    ```
@@ -156,7 +156,7 @@ In the following, create these resources by configuring and then running a setup
    - 1 public gateway
    - 3 subnets within the VPC
    - 4 security groups with ingress and egress rules
-   - 3 VSIs
+   - 3 VSIs: vpns2s-onprem-vsi (floating-ip is ONPREM_IP), vpns2s-cloud-vsi (floating-ip is VSI_CLOUD_IP) and vpns2s-bastion (floating-ip is BASTION_IP_ADDRESS)
 
    Note down for later use the returned values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
 
@@ -165,7 +165,7 @@ In the following, you will add a VPN gateway and an associated connection to the
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and **vpns2s-cloud-subnet** as subnet are selected.
 2. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
-3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi**. Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
+3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi** (ONPREM_IP). Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
 4. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
 5. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
 6. Wait for the VPN gateway to become available (you may need to refresh the screen).
@@ -204,7 +204,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:codeblock}
 
-4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key. The key is the same as configured earlier. Replace **ONPREM_IP** and **GW_CLOUD_IP** with the known values.
+4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
 
    ```
    ONPREM_IP GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
