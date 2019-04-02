@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-13"
+lastupdated: "2019-04-02"
 
 ---
 
@@ -68,14 +68,13 @@ In this section, you will create and configure a bastion host along with a secur
 
 ### Create a subnet
 
-1. Click **VPC and subnets** under **Network** on the left pane
-2. Click **Subnets**, then **New subnet**.  
+1. Click **Subnets** under **Network** on the left pane, then **New subnet**.  
    * Enter **vpc-secure-bastion-subnet** as name, then select the VPC you created.  
    * Select a location and zone.  
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-4. Switch the **Public gateway** to **Attached**. 
-5. Click **Create subnet** to provision it.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+1. Switch the **Public gateway** to **Attached**. 
+1. Click **Create subnet** to provision it.
 
 ### Create and configure bastion security group
 
@@ -112,7 +111,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 ### Create a bastion instance
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
-1. Under **VPC and subnets** select the **Subnets** tab, then select **vpc-secure-bastion-subnet**.
+1. Under **Subnets** on the left pane, select **vpc-secure-bastion-subnet**.
 2. Click on **Attached instances** and provision a **New instance** called **vpc-secure-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
 3. Select a **Location** and make sure to later use the same location again.
 4. To create a new **SSH key**, click **New key**
@@ -230,14 +229,13 @@ If you already have virtual server instances in your VPC that you want to connec
 
 To create a new subnet,
 
-1. Click **VPC and subnets** under **Network** on the left pane
-2. Click **Subnets**, then **New subnet**.  
+1. Click **Subnets** under **Network** on the left pane, then **New subnet**.  
    * Enter **vpc-secure-private-subnet** as name, then select the VPC you created.  
    * Select a location.  
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-4. Switch the **Public gateway** to **Attached**. 
-5. Click **Create subnet** to provision it.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+1. Switch the **Public gateway** to **Attached**. 
+1. Click **Create subnet** to provision it.
 
 ### Create a security group
 
@@ -318,7 +316,7 @@ Once you're done installing software or performing maintenance, you should remov
 {: #removeresources}
 
 1. Switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
-2. Once the VSIs are gone, switch to **VPC and subnets** and there to the **Subnets** tab. Delete your subnets.
+2. Once the VSIs are gone, switch to **Subnets** and delete your subnets.
 4. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.

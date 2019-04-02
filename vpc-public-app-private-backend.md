@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-27"
+lastupdated: "2019-04-02"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -87,14 +87,14 @@ To create your own {{site.data.keyword.vpc_short}},
 4. Under **New subnet for VPC**:
    * As a unique name enter **vpc-pubpriv-backend-subnet**.
    * Select a location.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 5. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
 6. Click **Create virtual private cloud** to provision the instance.
 
 If the VSIs attached to the private subnet need access to the Internet to load software, switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public internet. Once the VSIs have all software needed, return the public gateway to **Detached** so that the subnet cannot reach the public internet.
 {: important}
 
-To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+To confirm the creation of subnet, Click **Subnets** on the left pane and wait until the status changes to **Available**. You can create a new subnet under **Subnets**.
 
 ## Create a backend security group and VSI
 {: #backend-subnet-vsi}
@@ -105,9 +105,9 @@ In this section, you will create a security group and a virtual server instance 
 
 By default, a security group is created along with your VPC allowing all SSH (TCP port 22) and Ping (ICMP type 8) traffic to the attached instances.
 
-To create a new security group for the backend:
-1. Click **Security groups** under **Network**, then **New security group**.
-2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.
+To create a new security group for the backend:  
+1. Click **Security groups** under **Network**, then **New security group**.  
+2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.  
 3. Click **Create security group**.
 
 You will later edit the security group to add the inbound and outbound rules.
@@ -136,14 +136,13 @@ Similar to the backend, you will create a frontend subnet with virtual server in
 
 To create a new subnet for the frontend,
 
-1. Click **VPC and subnets** under **Network** on the left pane
-2. Click **Subnets**, then **New subnet**.
+1. Click **Subnets** under **Network** on the left pane > **New subnet**.
    * Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.
    * Select a location.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-3. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-4. Given all virtual server instances in the subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
-5. Click **Create subnet** to provision it.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+1. Given all virtual server instances in the subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
+1. Click **Create subnet** to provision it.
 
 ### Create a frontend security group
 
