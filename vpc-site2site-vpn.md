@@ -60,13 +60,10 @@ The following diagram shows the virtual private cloud containing an app server. 
 
 ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 
-Notes:
-
-1. The infrastructure (vpc, subnets, security groups with rules, network ACL and VSIs) are set up using a provided script
-2. The Cloud Object Storage, COS, instance used by the microservice will be provisioned
-3. A VPC/VPN Gateway is provisioned
-4. The VSI, vpns2s-onprem-vsi, will be provisioned with the Strongswan open source ipsec gateway software
-5. The VSI, vpns2s-cloud-vsi, will be provisioned with the microservice software
+1. The infrastructure (VPC, Subnets, Security Groups with rules, Network ACL and VSIs) are set up using a provided script.
+2. The microservice interfaces with {{site.data.keyword.cos_short}} through a direct endpoint.
+3. A VPC/VPN Gateway is provisioned to expose the virtual private cloud environment to the on-premises network.
+4. The Strongswan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
 
 ## Before you begin
 {: #prereqs}
