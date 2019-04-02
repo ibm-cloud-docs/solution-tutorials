@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-13"
+lastupdated: "2019-04-02"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -84,18 +84,18 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
 5. Under **New subnet for VPC**:
    * As a unique name enter **vpc-region1-zone1-subnet**.
    * Select a location (e.g., Dallas), let's call this **region 1** and a zone in region 1 (e.g., Dallas 1), let's call this **zone 1**.
-   * Enter the IP range for the subnet in CIDR notation, i.e., **10.240.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+   * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 6. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
 7. Given all virtual server instances in the subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
 8. Click **Create virtual private cloud** to provision the instance.
 
-To confirm the creation of subnet, click on **All virtual private clouds** breadcrumb, then select **Subnets** tab and wait until the status changes to **Available**. You can create a new subnet under the **Subnets** tab.
+To confirm the creation of subnet, click **Subnets** on the left pane and wait until the status changes to **Available**. You can create a new subnet under **Subnets**.
 
 ### Create subnet in zone 2
 
 1. Click on **New Subnet**, enter **vpc-region1-zone2-subnet** as a unique name for your subnet and select **vpc-region1** as the VPC.
 2. Select a location which we called as region 1 above (e.g., Dallas) and select a different zone in region 1 (e.g., Dallas 2), let's call the selected zone as **zone 2**.
-3. Enter the IP range for the subnet in CIDR notation, i.e., **10.240.64.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+3. Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.64.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 4. Select **Use VPC default** for your subnet access control list (ACL).
 
 ### Provision VSIs
@@ -112,7 +112,7 @@ Once the status of the subnets change to **Available**,
 6.  Wait until the status of the VSI changes to **Powered On**. Then, select the VSI **vpc-region1-zone1-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your VSI. Save the associated IP Address to a clipboard for future reference.
 7. **REPEAT** the steps 1-6 to provision a VSI in **zone 2** of **region 1**.
 
-Navigate to **VPC and Subnets** and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **region2** by following the same naming conventions as above.
+Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **region2** by following the same naming conventions as above.
 
 ## Install and configure web server on the VSIs
 {: #install-configure-web-server-vsis}
