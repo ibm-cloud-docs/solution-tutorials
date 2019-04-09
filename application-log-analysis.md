@@ -31,8 +31,8 @@ This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{Domain
 ## Services used
 {: #services}
 
-This tutorial uses the following runtimes and services:  
-* [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging)  
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging)
 * [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
@@ -59,23 +59,25 @@ Skip this section if you have an existing **Standard** cluster and want to reuse
 {: tip}
 
 1. Create **a new Cluster** from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
+
 	Log forwarding is *not* enabled for the **Free** cluster.
 	{:tip}
-2. Select a resource group and Geography.
-3. For convenience, use the name `mycluster` to be consistent with this tutorial.
-4. Select a **Worker Zone** and select the smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** as it is sufficient for this tutorial.  
+
+1. Select a resource group and Geography.
+1. For convenience, use the name `mycluster` to be consistent with this tutorial.
+1. Select a **Worker Zone** and select the smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** as it is sufficient for this tutorial.
 1. Select 2 **Worker nodes** and leave all other options set to defaults. Click **Create Cluster**.
 1. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 ## Provision a {{site.data.keyword.la_short}} instance
 From the movement, an application is deployed to a {{site.data.keyword.containerlong_notm}} cluster in {{site.data.keyword.Bluemix_notm}}, the app starts generating diagnostic output, i.e. logs and you want to access logs to troubleshoot problems and pre-empt issues. At any time, you want to have access to different types of logs such as worker logs, pod logs, app logs, or network logs. By using the {{site.data.keyword.la_short}} service, it is possible to aggregate logs from various sources and retain them as long as needed. This allows to analyze the "big picture" when required and to troubleshoot more complex situations.
 
-To provision a {{site.data.keyword.la_short}} service, 
+To provision a {{site.data.keyword.la_short}} service,
 
 1. Navigate to [observability](https://{DomainName}/observe/) page and under **Logging**, click **Create instance**.
 2. Provide a unique **Service name**.
 3. Choose a region/location and Select a resource group.
-4. Select **7 day Log Search** as your plan and Click **Create**. 
+4. Select **7 day Log Search** as your plan and Click **Create**.
 
 With this you configured a centralized log management system where log data is hosted on IBM Cloud.
 
@@ -96,21 +98,21 @@ On a terminal,
 1. [Build the Docker image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
  - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
  - Create a namespace to store the container image.
-   
+
       ```sh
       ibmcloud cr namespace-add app-log-analysis-namespace
       ```
       {: pre}
-      
+
  - Replace `<CONTAINER_REGISTRY>` with your container registry value and use **app-log-analysis** as the image name.
 
 	   ```sh
 	   ibmcloud cr build -t <CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest .
 	   ```
 	   {: pre}
-	   
+
  - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>.icr.io/app-log-analysis-namespace/app-log-analysis:latest`
-   
+
 1. Retrieve the cluster configuration and set the `KUBECONFIG` environment variable.
 
    ```sh
@@ -123,23 +125,23 @@ On a terminal,
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
-   
+
 1. To access the application, you need `public IP` of the worker node and the `NodePort`
 	- For public IP, run the following command
-	
+
 		```sh
 		ibmcloud ks workers mycluster
 		```
 		{: pre}
 	- For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command
-	
+
 		```sh
 		kubectl describe service app-log-analysis-svc
 		```
 		{: pre}
-		
+
 		You can now access the application at `http://worker-ip-address:portnumber`
-		
+
 ### Configure the cluster to send logs to your LogDNA instance
 
 To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la_full_notm}} instance, you must install a logdna-agent pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
@@ -151,9 +153,9 @@ To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la
 5. After you configure a log source, launch the logDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
 
 Let's generate some application logs and view them in logDNA UI.
-   
+
 ## Generate and access application logs
-Next, in order to work with application logs, you first need to generate some. The deploy process above already generated many log entries. 
+Next, in order to work with application logs, you first need to generate some. The deploy process above already generated many log entries.
 
 ### Generate application logs
 1. Visit the web app at `http://worker-ip-address:portnumber`.
@@ -165,7 +167,7 @@ Next, in order to work with application logs, you first need to generate some. T
 You can access the application specific log in the logDNA UI using the filters.
 
 1. On the top bar, click on **All Apps**.
-2. Under containers, check **app-log-analysis**. A new unsaved view is shown with application logs of all levels. 
+2. Under containers, check **app-log-analysis**. A new unsaved view is shown with application logs of all levels.
 3. To see logs of specific log level(s), Click on **All Levels** and select multiple levels like Error,info, warning etc.,
 
 ## Search and filter logs
@@ -173,12 +175,15 @@ The {{site.data.keyword.la_short}} UI, by default shows all available log entrie
 In this section, you will modify what and how much is displayed and save this as a **View** for future use.
 
 ### Search logs
-1. In the **Search** input box located at the bottom of the page in the LogDNA UI, you can search for lines that contain 
-	- string like **"This is my first log entry"** and hit **enter**
-	- errors like **500 internal server error**
-	- specific log levels by entering `level:info` where level is a field that accepts string value.  
-	For more search fields and help, click the syntax help icon next to the search input box.
-	{: tip}
+1. In the **Search** input box located at the bottom of the page in the LogDNA UI, you can search for lines that contain
+
+	- string like **"This is my first log entry"** and hit enter.
+	- errors like **500 internal server error**.
+	- specific log levels by entering `level:info` where level is a field that accepts string value.
+
+      For more search fields and help, click the syntax help icon next to the search input box
+      {:tip}
+
 2. To jump to a specific timeframe, enter **5 mins ago** in the **Jump to timeframe** input box. Click the icon next to the input box to find the other time formats within your retention period.
 3. To highlight the terms, click on **Toggle Viewer Tools** icon.
 4. Enter **error** as your highlight term in the first input box, **container** as your highlight term in the second input box and check the highlighted lines with the terms.
@@ -214,17 +219,17 @@ In this section, you will create and see a graph of the app level data in a boar
 	- Click **Add Breakdown** to see a breakdown with all the levels you logged for the app.
 
 ## Add {{site.data.keyword.mon_short}} and monitor your cluster
-In the following, you are going to add {{site.data.keyword.mon_short}} to the application. The service regularly checks the availability and response time of the app. 
+In the following, you are going to add {{site.data.keyword.mon_short}} to the application. The service regularly checks the availability and response time of the app.
 
 1. Navigate to [observability](https://{DomainName}/observe/) page and under **Monitoring**, click **Create instance**.
 2. Provide a unique **Service name**.
 3. Choose a region/location and Select a resource group.
-4. Select **Graduated Tier** as your plan and Click **Create**. 
+4. Select **Graduated Tier** as your plan and Click **Create**.
 5. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
 6. Copy and run the command under **Install Sysdig Agent to your cluster** on a terminal where you have set the `KUBECONFIG` environment variable to deploy the Sysdig agent in your cluster. Wait for the deployment to complete.
 
 ### Monitor your cluster
-Let’s monitor the Kubernetes cluster running your app.To do this, 
+Let’s monitor the Kubernetes cluster running your app.To do this,
 
 1. Click **View Sysdig** and you should see the sysdig monitor wizard. On the welcome page, click **Next**.
 2. Choose **Kubernetes** as your installation method under set up environment.
