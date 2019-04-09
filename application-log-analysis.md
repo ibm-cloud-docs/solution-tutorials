@@ -69,8 +69,8 @@ Skip this section if you have an existing **Standard** cluster and want to reuse
 
 1. Create **a new Cluster** from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
 
-Log forwarding is *not* enabled for the **Free** cluster.
-{:tip}
+	Log forwarding is *not* enabled for the **Free** cluster.
+	{:tip}
 
 1. Select a resource group and Geography.
 1. For convenience, use the name `mycluster` to be consistent with this tutorial.
@@ -172,7 +172,11 @@ Next, in order to work with application logs, you first need to generate some. T
 4. Back in the application, generate several log entries by submitting messages at different levels. Change the server-side log level in-between to make it more interesting.
 
 ### Access application logs
-You can access the   
+You can access the application specific log in the logDNA UI using the filters.
+
+1. On the top bar, click on **All Apps**.
+2. Under containers, check **app-log-analysis**. A new unsaved view is shown with application logs of all levels. 
+3. To see logs of specific log level, Click on **All Levels** and select multiple levels like Error,info, warning etc.,
 
 ## Search and analyze logs
 The {{site.data.keyword.la_short}} / Kibana dashboard, by default shows all available log entries from the past 15 minutes. Most recent entries are shown on the top and automatic refresh is turned off by default. The visible bar chart represents the count of messages per 30 seconds over those 15 minutes. In this section, you will modify what and how much is displayed and save this as **search query** for future use.
