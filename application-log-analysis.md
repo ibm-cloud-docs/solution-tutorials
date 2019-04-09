@@ -59,13 +59,11 @@ Skip this section if you have an existing **Standard** cluster and want to reuse
 {: tip}
 
 1. Create **a new Cluster** from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
-
 	Log forwarding is *not* enabled for the **Free** cluster.
 	{:tip}
-
-1. Select a resource group and Geography.
-1. For convenience, use the name `mycluster` to be consistent with this tutorial.
-1. Select a **Worker Zone** and select the smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** as it is sufficient for this tutorial.  
+2. Select a resource group and Geography.
+3. For convenience, use the name `mycluster` to be consistent with this tutorial.
+4. Select a **Worker Zone** and select the smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** as it is sufficient for this tutorial.  
 1. Select 2 **Worker nodes** and leave all other options set to defaults. Click **Create Cluster**.
 1. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
@@ -96,22 +94,22 @@ On a terminal,
    ```
    {: pre}
 1. [Build the Docker image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
-   - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
-   - Create a namespace to store the container image.
+ - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
+ - Create a namespace to store the container image.
    
       ```sh
       ibmcloud cr namespace-add app-log-analysis-namespace
       ```
       {: pre}
       
-   - Replace `<CONTAINER_REGISTRY>` with your container registry value and use **app-log-analysis** as the image name.
+ - Replace `<CONTAINER_REGISTRY>` with your container registry value and use **app-log-analysis** as the image name.
 
 	   ```sh
 	   ibmcloud cr build -t <CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest .
 	   ```
 	   {: pre}
 	   
-   - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>.icr.io/app-log-analysis-namespace/app-log-analysis:latest`
+ - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>.icr.io/app-log-analysis-namespace/app-log-analysis:latest`
    
 1. Retrieve the cluster configuration and set the `KUBECONFIG` environment variable.
 
@@ -127,13 +125,13 @@ On a terminal,
    {: pre}
    
 1. To access the application, you need `public IP` of the worker node and the `NodePort`
-	1. For public IP, run the following command
+	- For public IP, run the following command
 	
 		```sh
 		ibmcloud ks workers mycluster
 		```
 		{: pre}
-	1. For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command
+	- For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command
 	
 		```sh
 		kubectl describe service app-log-analysis-svc
@@ -178,7 +176,7 @@ In this section, you will modify what and how much is displayed and save this as
 1. In the **Search** input box located at the bottom of the page in the LogDNA UI, you can search for lines that contain 
 	- string like **"This is my first log entry"** and hit **enter**
 	- errors like **500 internal server error**
-	- specific log levels by entering `level:info` where level is a field that accepts string value.
+	- specific log levels by entering `level:info` where level is a field that accepts string value.  
 	For more search fields and help, click the syntax help icon next to the search input box.
 	{: tip}
 2. To jump to a specific timeframe, enter **5 mins ago** in the **Jump to timeframe** input box. Click the icon next to the input box to find the other time formats within your retention period.
