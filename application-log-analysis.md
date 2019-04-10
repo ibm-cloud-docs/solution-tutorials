@@ -32,6 +32,7 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.containerlong_notm}}](https://{DomainName}/kubernetes/landing)
+* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
 * [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging)
 * [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring)
 
@@ -101,7 +102,7 @@ On a terminal,
    cd application-log-analysis
    ```
    {: pre}
-1. [Build the Docker image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
+1. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
  - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
  - Create a namespace to store the container image.
 
