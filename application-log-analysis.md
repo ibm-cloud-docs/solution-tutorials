@@ -16,7 +16,7 @@ lastupdated: "2019-04-10"
 # Analyze logs and monitor health of a Kubernetes application
 {: #application-log-analysis}
 
-This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to understand and diagnose activities of a Kubernetes app that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to {{site.data.keyword.containerlong_notm}}, configure a LogDNA agent, generate different types of logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
+This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a LogDNA agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
 
 Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring) service and configure Sysdig agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
 {:shortdesc}
@@ -31,6 +31,7 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 {: #services}
 
 This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.containerlong_notm}}](https://{DomainName}/kubernetes/landing)
 * [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging)
 * [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring)
 
@@ -40,6 +41,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #architecture}
 
   ![](images/solution12/Architecture.png)
+
+1. User connects to the application and generates log entries.
+1. The application runs in a Kubernetes cluster from an image stored in the {{site.data.keyword.registryshort_notm}}.
+1. The user will configure {{site.data.keyword.la_full_notm}} service agent to access application and cluster-level logs.
+1. The user will configure {{site.data.keyword.mon_full_notm}} service agent to monitor the health and performance of the {{site.data.keyword.containerlong_notm}} cluster and also the app deployed to the cluster.
 
 ## Prerequisites
 {: #prereq}
@@ -80,7 +86,6 @@ To provision a {{site.data.keyword.la_short}} service,
 1. Select **7 day Log Search** as your plan and Click **Create**.
 
 With this you configured a centralized log management system where log data is hosted on IBM Cloud.
-
 
 ## Deploy and configure a Kubernetes app to forward logs
 {: #deploy_configure_kubernetes_app}
