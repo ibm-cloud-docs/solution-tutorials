@@ -16,12 +16,13 @@ lastupdated: "2019-04-10"
 # Analyze logs and monitor health of a Kubernetes application
 {: #application-log-analysis}
 
-> Work in Progress
+This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to understand and diagnose activities of a Kubernetes app that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to {{site.data.keyword.containerlong_notm}}, configure a LogDNA agent, generate different types of logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
 
-This tutorial shows how the [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging) service can be used to understand and diagnose activities of a Kubernetes app that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python Kubernetes application, configure a LogDNA agent, generate different types of logs. Then, you will search, filter and analyze those logs through {{site.data.keyword.la_short}} Web UI. Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring) service to monitor the performance and health of your application.
+Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring) service and configure Sysdig agent to monitor the performance and health of your application and your {{site.data.keyword.containerlong_notm}} cluster.
 {:shortdesc}
 
 ## Objectives
+{: #objectives}
 * Provision a Kubernetes cluster and deploy an application to generate log entries.
 * Search, filter and visualize logs.
 * Monitor the health and performance of the app and cluster.
@@ -260,12 +261,13 @@ To check the health and performance of your app amd cluster,
 
 ## Remove resources
 {: #remove_resource}
-
 - Remove the LogDNA and Sysdig instances from [observability](https://{DomainName}/observe) page.
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
     ```sh
     ibmcloud ks cluster-rm mycluster -f
     ```
+    {:pre}
+
 ## Expand the tutorial
 {: #expand_tutorial}
 
