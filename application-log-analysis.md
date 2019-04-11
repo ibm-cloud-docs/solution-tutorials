@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-10"
+lastupdated: "2019-04-11"
 
 
 ---
@@ -311,3 +311,4 @@ To create a dashboard,
 - [Resetting the ingestion key used by a Kubernetes cluster](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-kube_reset#kube_reset)
 - [Archiving logs to IBM Cloud Object Storage](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-archiving#archiving)
 - [Configuring alerts in Sysdig](https://sysdigdocs.atlassian.net/wiki/spaces/Monitor/pages/205324292/Alerts)
+- [Working with notification channels in Sysdig UI](https://{DomainName}/docs/services/Monitoring-with-Sysdig?topic=Sysdig-notifications#notifications)
