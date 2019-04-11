@@ -23,9 +23,9 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 
 ## Objectives
 {: #objectives}
-* Provision a Kubernetes cluster and deploy an application to generate log entries.
-* Search, filter and visualize logs.
-* Monitor the health and performance of the app and cluster.
+* Deploy an application to a Kubernetes cluster to generate log entries.
+* Access and analyze different types of logs to troubleshoot problems and pre-empt issues.
+* Gain operational visibility into the performance and health of your app and the cluster running your app.
 
 ## Services used
 {: #services}
@@ -69,7 +69,7 @@ Skip this section if you have an existing **Standard** cluster and want to reuse
 	Log forwarding is *not* enabled for the **Free** cluster.
 	{:tip}
 
-1. Select a resource group and Geography.
+1. Select a resource group and geography.
 1. For convenience, use the name `mycluster` to be consistent with this tutorial.
 1. Select a **Worker Zone** and select the smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** as it is sufficient for this tutorial.
 1. Select 1 **Worker node** and leave all other options set to defaults. Click **Create Cluster**.
@@ -77,25 +77,26 @@ Skip this section if you have an existing **Standard** cluster and want to reuse
 
 ## Provision a {{site.data.keyword.la_short}} instance
 {: #provision_logna_instance}
-From the movement, an application is deployed to a {{site.data.keyword.containerlong_notm}} cluster in {{site.data.keyword.Bluemix_notm}}, the app starts generating diagnostic output, i.e. logs and you want to access logs to troubleshoot problems and pre-empt issues. At any time, you want to have access to different types of logs such as worker logs, pod logs, app logs, or network logs. By using the {{site.data.keyword.la_short}} service, it is possible to aggregate logs from various sources and retain them as long as needed. This allows to analyze the "big picture" when required and to troubleshoot more complex situations.
+
+From the moment, an application is deployed to a {{site.data.keyword.containerlong_notm}} cluster in {{site.data.keyword.Bluemix_notm}}, the app starts generating diagnostic output, i.e. logs and you may want to access and analyze different types of logs such as worker logs, pod logs, app logs, or network logs to troubleshoot problems and pre-empt issues. By using the {{site.data.keyword.la_short}} service, it is possible to aggregate logs from various sources and retain them as long as needed. This allows to analyze the "big picture" when required and to troubleshoot more complex situations.
 
 To provision a {{site.data.keyword.la_short}} service,
 
 1. Navigate to [observability](https://{DomainName}/observe/) page and under **Logging**, click **Create instance**.
 1. Provide a unique **Service name**.
-1. Choose a region/location and Select a resource group.
+1. Choose a region/location and select a resource group.
 1. Select **7 day Log Search** as your plan and Click **Create**.
 
 With this you configured a centralized log management system where log data is hosted on IBM Cloud.
 
 ## Deploy and configure a Kubernetes app to forward logs
 {: #deploy_configure_kubernetes_app}
-The ready-to-run [code for the logging app is located in this Github repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
+The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
-### Deploy the python application
+### Deploy the Python application
 On a terminal,
 
-1. Clone the Github repository:
+1. Clone the GitHub repository:
 
    ```sh
    git clone https://github.com/IBM-Cloud/application-log-analysis
