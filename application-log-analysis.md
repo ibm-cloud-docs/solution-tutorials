@@ -85,7 +85,7 @@ To provision a {{site.data.keyword.la_short}} service,
 1. Navigate to [observability](https://{DomainName}/observe/) page and under **Logging**, click **Create instance**.
 1. Provide a unique **Service name**.
 1. Choose a region/location and select a resource group.
-1. Select **7 day Log Search** as your plan and Click **Create**.
+1. Select **7 day Log Search** as your plan and click **Create**.
 
 With this you configured a centralized log management system where log data is hosted on IBM Cloud.
 
@@ -94,8 +94,8 @@ With this you configured a centralized log management system where log data is h
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
 ### Deploy the Python application
-On a terminal,
 
+On a terminal:
 1. Clone the GitHub repository:
 
    ```sh
@@ -121,13 +121,13 @@ On a terminal,
 
  - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>.icr.io/app-log-analysis-namespace/app-log-analysis:latest`
 
-1. Retrieve the cluster configuration and set the `KUBECONFIG` environment variable.
+1. Run the command below to retrieve cluster configuration and set the `KUBECONFIG` environment variable:
 
    ```sh
    $(ibmcloud ks cluster-config --export mycluster)
    ```
    {: pre}
-1. Deploy the app.
+1. Deploy the app:
 
    ```sh
    kubectl apply -f app-log-analysis.yaml
@@ -135,13 +135,13 @@ On a terminal,
    {: pre}
 
 1. To access the application, you need `public IP` of the worker node and the `NodePort`
-	- For public IP, run the following command
+	- For public IP, run the following command:
 
 		```sh
 		ibmcloud ks workers mycluster
 		```
 		{: pre}
-	- For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command
+	- For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command:
 
 		```sh
 		kubectl describe service app-log-analysis-svc
@@ -157,7 +157,7 @@ To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la
 1. Navigate to [observability](https://{DomainName}/observe/) page and click **Logging**.
 1. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
 1. Copy and run the first command on a terminal where you have set the KUBECONFIG to create a kubernetes secret with the logDNA ingestion key for your service instance.
-1. Copy and run the second command to deploy a logDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension *.log and extensionsless files that are stored in the /var/log directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
+1. Copy and run the second command to deploy a logDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension *.log and extensionless files that are stored in the /var/log directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
 1. After you configure a log source, launch the logDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
 
 Let's generate some application logs and view them in logDNA UI.
@@ -177,17 +177,17 @@ You can access the application specific log in the logDNA UI using the filters.
 
 1. On the top bar, click on **All Apps**.
 1. Under containers, check **app-log-analysis**. A new unsaved view is shown with application logs of all levels.
-1. To see logs of specific log level(s), Click on **All Levels** and select multiple levels like Error,info, warning etc.,
+1. To see logs of specific log level(s), Click on **All Levels** and select multiple levels like Error, info, warning etc.,
 
 ## Search and filter logs
 {: #search_filter_logs}
-The {{site.data.keyword.la_short}} UI, by default shows all available log entries(Everything). Most recent entries are shown on the bottom through automatic refresh.
+The {{site.data.keyword.la_short}} UI, by default, shows all available log entries(Everything). Most recent entries are shown on the bottom through an automatic refresh.
 In this section, you will modify what and how much is displayed and save this as a **View** for future use.
 
 ### Search logs
 1. In the **Search** input box located at the bottom of the page in the LogDNA UI, you can search for lines that contain
 
-	- string like **"This is my first log entry"** and hit enter.
+	- enter **"This is my first log entry"**.
 	- errors like **500 internal server error**.
 	- specific log levels by entering `level:info` where level is a field that accepts string value.
 
@@ -207,6 +207,7 @@ You can filter logs by tags, sources, apps or levels.
 1. To check container or file logs, click **All Apps** and select the checkbox(s) you are interested in seeing the logs.
 
 ### Create a view
+Views are saved shortcuts to a specific set of filters and search queries.
 As soon as you search or filter logs, you should see **Unsaved View** in the top bar. To save this as a view
 
 1. Click **All Apps** and select the checkbox next to **app-log-analysis**
@@ -214,7 +215,7 @@ As soon as you search or filter logs, you should see **Unsaved View** in the top
 1. Click **Save View** and new view should appear on the left pane showing logs for the app.
 
 ### Visualize logs with graphs and breakdowns
-In this section, you will create and see a graph of the app level data in a board. A board is a collection of graphs and breakdowns. You will first create a board and then add a graph with a breakdown.
+In this section, you will create a board and then add a graph with a breakdown to visualize the app level data. A board is a collection of graphs and breakdowns.
 
 1. On the left pane, click on the **board** icon (above the settings icon) > click **NEW BOARD**.
 1. Click **Edit** on the top bar and let's name this **app-log-analysis-board**. Click **Save**.
@@ -225,12 +226,12 @@ In this section, you will create and see a graph of the app level data in a boar
 1. Select **Counts** as your metric to see the number of lines in each interval over last 24 hours.
 1. To add a breakdown, click on the arrow below the graph
 	- Choose **Histogram** as your breakdown type.
-	- **level** as your field type.
+	- Choose **level** as your field type.
 	- Click **Add Breakdown** to see a breakdown with all the levels you logged for the app.
 
-## Add {{site.data.keyword.mon_short}} and monitor your cluster
+## Add {{site.data.keyword.mon_full_notm}} and monitor your cluster
 {: #monitor_cluster_sysdig}
-In the following, you are going to add {{site.data.keyword.mon_short}} to the application. The service regularly checks the availability and response time of the app.
+In the following, you are going to add {{site.data.keyword.mon_full_notm}} to the application. The service regularly checks the availability and response time of the app.
 
 1. Navigate to [observability](https://{DomainName}/observe/) page and under **Monitoring**, click **Create instance**.
 1. Provide a unique **Service name**.
@@ -245,7 +246,7 @@ To Configure Sysdig to monitor health and performance of your cluster,
 1. Click **View Sysdig** and you should see the sysdig monitor UI. On the welcome page, click **Next**.
 1. Choose **Kubernetes** as your installation method under set up environment.
 1. Click **Go to Next step** next to the agent configuration success message and click **Let's Get started** on the next page.
-1. Click **Next** > Complete onboarding to see the Explore tab of Sysdig UI.
+1. Click **Next** and then **Complete onboarding** to see the `Explore` tab of Sysdig UI.
 
 ### Monitor your cluster
 To check the health and performance of your app amd cluster,
@@ -255,14 +256,14 @@ To check the health and performance of your app amd cluster,
 1. To check the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. Change the interval to **10 M** on the bottom bar of the Sysdig UI.
 1. To monitor the latency of the application,
     - From the Explore tab, select **Deployments and Pods**.
-    - Click the arrow next to **HTTP** and then Select Metrics > Network.
+    - Click the arrow next to `HTTP` and then Select Metrics > Network.
     - Select **net.http.request.time**.
     - Select Time: **Sum** and Group: **Average**.
     - Click **More options** and then click **Topology** icon.
     - Click **Done** and Double click the box to expand the view.
 1. To monitor the Kubernetes namespace where the application is running,
     - From the Explore tab, select **Deployments and Pods**.
-    - Click the arrow next to **net.http.request.time**.
+    - Click the arrow next to `net.http.request.time`.
     - Select Default Dashboards > Kubernetes.
     - Select Kubernetes State > Kubernetes State Overview.
 
@@ -273,15 +274,15 @@ Along with the pre-defined dashboards, you can create your own custom dashboard 
 To create a dashboard,
 
 1. Click on **Dashboards** on the left most pane > click **Add Dashboard**.
-1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview** > Click **Create Dashboard**.
+1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview** > click **Create Dashboard**.
 1. Select **Top List** as your new panel and name the panel as **Request time per container**
     - Under **Metrics**, Type **net.http.request.time**.
-    - Scope: Click on **Override Dashboard Scope** > Select **container.image** > select **is** > select _the application image_
+    - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
     - Segment by **container.id** and you should see the net request time of each container.
     - Click **save**.
 1. To add a new panel, Click on the **plus** icon and select **Number(#)** as the panel type
     - Under **Metrics**, Type **net.http.request.count** > Change the time aggregation from **Average(Avg)** to **Sum**.
-    - Scope: Click on **Override Dashboard Scope** > Select **container.image** > select **is** > select _the application image_
+    - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
     - Compare to **1 hour** ago and you should see the net request count of each container.
     - Click **save**.
 1. To edit the scope of this dashboard,
