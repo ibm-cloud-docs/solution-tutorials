@@ -266,6 +266,30 @@ To check the health and performance of your app amd cluster,
     - Select Default Dashboards > Kubernetes.
     - Select Kubernetes State > Kubernetes State Overview.
 
+### Create a custom dashboard
+
+Along with the pre-defined dashboards, you can create your own custom dashboard to display the most useful/relevant views and metrics for the containers running your app in a single location. Each dashboard is comprised of a series of panels configured to display specific data in a number of different formats.
+
+To create a dashboard,
+
+1. Click on **Dashboards** on the left most pane > click **Add Dashboard**.
+1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview** > Click **Create Dashboard**.
+1. Select **Top List** as your new panel and name the panel as **Request time per container**
+    - Under **Metrics**, Type **net.http.request.time**.
+    - Scope: Click on **Override Dashboard Scope** > Select **container.image** > select **is** > select _the application image_
+    - Segment by **container.id** and you should see the net request time of each container.
+    - Click **save**.
+1. To add a new panel, Click on the **plus** icon and select **Number(#)** as the panel type
+    - Under **Metrics**, Type **net.http.request.count** > Change the time aggregation from **Average(Avg)** to **Sum**.
+    - Scope: Click on **Override Dashboard Scope** > Select **container.image** > select **is** > select _the application image_
+    - Compare to **1 hour** ago and you should see the net request count of each container.
+    - Click **save**.
+1. To edit the scope of this dashboard,
+    - Click **Edit Scope** in the title panel.
+    - Select/Type **Kubernetes.cluster.name** in the dropdown
+    - Leave display name empty and select **is**.
+    - Select **mycluster** as the value and click **Save**.
+
 ## Remove resources
 {: #remove_resource}
 - Remove the LogDNA and Sysdig instances from [observability](https://{DomainName}/observe) page.
