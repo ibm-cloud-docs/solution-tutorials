@@ -510,7 +510,6 @@
             },
             {
                 "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
-                "hidden": true,
                 "url": "vpc-site2site-vpn.html",
                 "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.",
                 "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
