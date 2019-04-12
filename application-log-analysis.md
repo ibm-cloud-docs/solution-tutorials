@@ -87,39 +87,39 @@ To provision a {{site.data.keyword.la_short}} service,
 1. Choose a region/location and select a resource group.
 1. Select **7 day Log Search** as your plan and click **Create**.
 
-With this you configured a centralized log management system where log data is hosted on IBM Cloud.
+The service provides a centralized log management system where log data is hosted on IBM Cloud.
 
 ## Deploy and configure a Kubernetes app to forward logs
 {: #deploy_configure_kubernetes_app}
+
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
 ### Deploy the Python application
 
 On a terminal:
 1. Clone the GitHub repository:
-
    ```sh
    git clone https://github.com/IBM-Cloud/application-log-analysis
+   ```
+   {: pre}
+1. Change to the application directory
+   ```sh
    cd application-log-analysis
    ```
    {: pre}
 1. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
- - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
- - Create a namespace to store the container image.
-
+   - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
+   - Create a namespace to store the container image.
       ```sh
       ibmcloud cr namespace-add app-log-analysis-namespace
       ```
       {: pre}
-
- - Replace `<CONTAINER_REGISTRY>` with your container registry value and use **app-log-analysis** as the image name.
-
-	   ```sh
-	   ibmcloud cr build -t <CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest .
-	   ```
-	   {: pre}
-
- - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>.icr.io/app-log-analysis-namespace/app-log-analysis:latest`
+   - Replace `<CONTAINER_REGISTRY>` with your container registry value and use **app-log-analysis** as the image name.
+      ```sh
+      ibmcloud cr build -t <CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest .
+      ```
+      {: pre}
+   - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest`
 
 1. Run the command below to retrieve cluster configuration and set the `KUBECONFIG` environment variable:
 
