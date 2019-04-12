@@ -120,35 +120,28 @@ On a terminal:
       ```
       {: pre}
    - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest`
-
 1. Run the command below to retrieve cluster configuration and set the `KUBECONFIG` environment variable:
-
    ```sh
    $(ibmcloud ks cluster-config --export mycluster)
    ```
    {: pre}
 1. Deploy the app:
-
    ```sh
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
-
-1. To access the application, you need `public IP` of the worker node and the `NodePort`
-	- For public IP, run the following command:
-
-		```sh
-		ibmcloud ks workers mycluster
-		```
-		{: pre}
-	- For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command:
-
-		```sh
-		kubectl describe service app-log-analysis-svc
-		```
-		{: pre}
-
-		You can now access the application at `http://worker-ip-address:portnumber`
+1. To access the application, you need the `public IP` of the worker node and the `NodePort`
+   - For public IP, run the following command:
+      ```sh
+      ibmcloud ks workers mycluster
+      ```
+      {: pre}
+   - For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command:
+      ```sh
+      kubectl describe service app-log-analysis-svc
+      ```
+      {: pre}
+   You can now access the application at `http://worker-ip-address:portnumber`
 
 ### Configure the cluster to send logs to your LogDNA instance
 
