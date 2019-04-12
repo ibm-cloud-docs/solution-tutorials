@@ -169,7 +169,7 @@ Take a look at the code in the file [**views.py**](https://github.com/IBM-Cloud/
 
 ### Access application logs
 
-You can access the application specific log in the logDNA UI using the filters.
+You can access the application specific log in the LogDNA UI using the filters.
 
 1. On the top bar, click on **All Apps**.
 1. Under containers, check **app-log-analysis**. A new unsaved view is shown with application logs of all levels.
@@ -177,40 +177,42 @@ You can access the application specific log in the logDNA UI using the filters.
 
 ## Search and filter logs
 {: #search_filter_logs}
+
 The {{site.data.keyword.la_short}} UI, by default, shows all available log entries(Everything). Most recent entries are shown on the bottom through an automatic refresh.
 In this section, you will modify what and how much is displayed and save this as a **View** for future use.
 
 ### Search logs
-1. In the **Search** input box located at the bottom of the page in the LogDNA UI, you can search for lines that contain
 
-	- enter **"This is my first log entry"**.
-	- errors like **500 internal server error**.
-	- specific log levels by entering `level:info` where level is a field that accepts string value.
+1. In the **Search** input box located at the bottom of the page in the LogDNA UI,
+   - you can search for lines that contain a specific text like **"This is my first log entry"** or **500 internal server error**.
+   - or a specific log level by entering `level:info` where level is a field that accepts string value.
 
-      For more search fields and help, click the syntax help icon next to the search input box
-      {:tip}
-
+   For more search fields and help, click the syntax help icon next to the search input box
+   {:tip}
 1. To jump to a specific timeframe, enter **5 mins ago** in the **Jump to timeframe** input box. Click the icon next to the input box to find the other time formats within your retention period.
 1. To highlight the terms, click on **Toggle Viewer Tools** icon.
 1. Enter **error** as your highlight term in the first input box, **container** as your highlight term in the second input box and check the highlighted lines with the terms.
 1. Click on **Toggle Timeline** icon to see lines with logs at a specific time of a day.
 
 ### Filter logs
+
 You can filter logs by tags, sources, apps or levels.
 
 1. On the top bar, click **All Tags** and select the checkbox **k8s** to see Kubernetes related logs.
-1. Click **All Sources** and select the name of the host(worker node) you are interested in checking the logs. Works well if you have multiple worker nodes in your cluster.
+1. Click **All Sources** and select the name of the host (worker node) you are interested in checking the logs. Works well if you have multiple worker nodes in your cluster.
 1. To check container or file logs, click **All Apps** and select the checkbox(s) you are interested in seeing the logs.
 
 ### Create a view
-Views are saved shortcuts to a specific set of filters and search queries.
-As soon as you search or filter logs, you should see **Unsaved View** in the top bar. To save this as a view
 
+Views are saved shortcuts to a specific set of filters and search queries.
+
+As soon as you search or filter logs, you should see **Unsaved View** in the top bar. To save this as a view:
 1. Click **All Apps** and select the checkbox next to **app-log-analysis**
 1. Click on **Unsaved View** > click **save as new view / alert** and name the view as **app-log-analysis-view**. Leave the **Category** as empty.
 1. Click **Save View** and new view should appear on the left pane showing logs for the app.
 
 ### Visualize logs with graphs and breakdowns
+
 In this section, you will create a board and then add a graph with a breakdown to visualize the app level data. A board is a collection of graphs and breakdowns.
 
 1. On the left pane, click on the **board** icon (above the settings icon) > click **NEW BOARD**.
