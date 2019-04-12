@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-03-13"
+lastupdated: "2019-04-12"
 ---
 
 {:shortdesc: .shortdesc}
@@ -435,14 +435,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Analyze logs and monitor health of Cloud Foundry applications
+                Analyze logs and monitor application health with LogDNA and Sysdig
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Use IBM Cloud Log Analysis to understand and diagnose application activities. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.</p>
+                    <p>Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution12/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor health of Cloud Foundry applications"/>
+                    <img class="architectureDiagram" src = "images/solution12/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor application health with LogDNA and Sysdig"/>
                 </div>
             </div>
         </div>
@@ -842,6 +842,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution41-vpc-multi-region/Architecture.png" alt="Architecture diagram for the solution Deploy isolated workloads across multiple locations and zones"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn#vpc-site2site-vpn">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution46-vpc-vpn/ArchitectureDiagram.png" alt="Architecture diagram for the solution Use a VPC/VPN gateway for secure and private on-premises access to cloud resources"/>
                 </div>
             </div>
         </div>

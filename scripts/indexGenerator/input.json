@@ -199,9 +199,9 @@
                 ]
             },
             {
-                "name": "Analyze logs and monitor health of Cloud Foundry applications",
+                "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
                 "url": "application-log-analysis.html",
-                "description": "Use IBM Cloud Log Analysis to understand and diagnose application activities. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.",
+                "description": "Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.",
                 "imgSrc": "images/solution12/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
@@ -510,7 +510,6 @@
             },
             {
                 "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
-                "hidden": true,
                 "url": "vpc-site2site-vpn.html",
                 "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.",
                 "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",

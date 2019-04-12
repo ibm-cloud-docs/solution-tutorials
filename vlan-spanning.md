@@ -84,7 +84,7 @@ The [Isolate workloads with a secure private network]( https://{DomainName}/docs
 
 
 ## Configure VLAN Spanning 
-{: #vlan-spanning}
+{: #configure-vlan-spanning}
 
 By default servers (and VRAs) on different VLANs and data centers, are unable to communicate with each other over the private network. In these tutorials, within a single data center VRA’s are used to link VLANs and subnets with classic IP routing and firewalls to create a private network for server communication across VLANs. While they can communicate in the same data center, in this configuration servers belonging to the same {{site.data.keyword.Bluemix_notm}}  account are unable to communicate across data centers. 
 
