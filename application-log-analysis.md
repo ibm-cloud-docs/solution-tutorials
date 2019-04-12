@@ -145,27 +145,30 @@ On a terminal:
 
 ### Configure the cluster to send logs to your LogDNA instance
 
-To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la_full_notm}} instance, you must install a logdna-agent pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
+To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la_full_notm}} instance, you must install a *logdna-agent* pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
 
-1. Navigate to [observability](https://{DomainName}/observe/) page and click **Logging**.
+1. Navigate to [Observability](https://{DomainName}/observe/) page and click **Logging**.
 1. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
-1. Copy and run the first command on a terminal where you have set the KUBECONFIG to create a kubernetes secret with the logDNA ingestion key for your service instance.
-1. Copy and run the second command to deploy a logDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension *.log and extensionless files that are stored in the /var/log directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
-1. After you configure a log source, launch the logDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
-
-Let's generate some application logs and view them in logDNA UI.
+1. Copy and run the first command on a terminal where you have set the `KUBECONFIG` environment variable to create a kubernetes secret with the LogDNA ingestion key for your service instance.
+1. Copy and run the second command to deploy a LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension **.log* and extensionless files that are stored in the */var/log* directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
+1. After you configure a log source, launch the LogDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
 
 ## Generate and access application logs
 {: generate_application_logs}
-Next, in order to work with application logs, you first need to generate some. The deploy process above already generated many log entries.
+
+In this section, you will generate application logs and review them in LogDNA.
 
 ### Generate application logs
+
+The application deployed in the previous steps allows you to log a message at a chosen log level. The available log levels are **critical**, **error**, **warn**, **info** and **debug**. The application's logging infrastructure is configured to allow only log entries on or above a set level to pass. Initially, the logger level is set to **warn**. Thus, a message logged at **info** with a server setting of **warn** would not show up in the diagnostic output.
+
+Take a look at the code in the file [**views.py**](https://github.com/IBM-Cloud/application-log-analysis/blob/master/app/views.py). The code contains **print** statements as well as calls to **logger** functions. Printed messages are written to the **stdout** stream (regular output, application console / terminal), logger messages appear in the **stderr** stream (error log).
+
 1. Visit the web app at `http://worker-ip-address:portnumber`.
-1. The application allows you to log a message at a chosen log level. The available log levels are **critical**, **error**, **warn**, **info** and **debug**. The application's logging infrastructure is configured to allow only log entries on or above a set level to pass. Initially, the logger level is set to **warn**. Thus, a message logged at **info** with a server setting of **warn** would not show up in the diagnostic output. The UI allows to change the logger setting for the server log level as well. Try it and generate several log entries.
-1. Take a look at the code in the file [**views.py**](https://github.com/IBM-Cloud/application-log-analysis/blob/master/app/views.py). The code contains **print** statements as well as calls to **logger** functions. Printed messages are written to the **stdout** stream (regular output, application console / terminal), logger messages appear in the **stderr** stream (error log).
-1. Back in the application, generate several log entries by submitting messages at different levels. Change the server-side log level in-between to make it more interesting. For example, you can log a "500 internal server error" as an **error** or "This is my first log entry" as an **info**.
+1. Generate several log entries by submitting messages at different levels. The UI allows to change the logger setting for the server log level as well. Change the server-side log level in-between to make it more interesting. For example, you can log a "500 internal server error" as an **error** or "This is my first log entry" as an **info**.
 
 ### Access application logs
+
 You can access the application specific log in the logDNA UI using the filters.
 
 1. On the top bar, click on **All Apps**.
