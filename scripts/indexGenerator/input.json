@@ -199,9 +199,9 @@
                 ]
             },
             {
-                "name": "Analyze logs and monitor health of Cloud Foundry applications",
+                "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
                 "url": "application-log-analysis.html",
-                "description": "Use IBM Cloud Log Analysis to understand and diagnose application activities. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.",
+                "description": "Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.",
                 "imgSrc": "images/solution12/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
