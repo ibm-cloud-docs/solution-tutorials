@@ -65,10 +65,8 @@ Skip this section if you have an existing **Standard** cluster and want to reuse
 {: tip}
 
 1. Create **a new Cluster** from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
-
-	Log forwarding is *not* enabled for the **Free** cluster.
-	{:tip}
-
+   Log forwarding is *not* enabled for the **Free** cluster.
+   {:tip}
 1. Select a resource group and geography.
 1. For convenience, use the name `mycluster` to be consistent with this tutorial.
 1. Select a **Worker Zone** and select the smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** as it is sufficient for this tutorial.
@@ -78,7 +76,9 @@ Skip this section if you have an existing **Standard** cluster and want to reuse
 ## Provision a {{site.data.keyword.la_short}} instance
 {: #provision_logna_instance}
 
-From the moment, an application is deployed to a {{site.data.keyword.containerlong_notm}} cluster in {{site.data.keyword.Bluemix_notm}}, the app starts generating diagnostic output, i.e. logs and you may want to access and analyze different types of logs such as worker logs, pod logs, app logs, or network logs to troubleshoot problems and pre-empt issues. By using the {{site.data.keyword.la_short}} service, it is possible to aggregate logs from various sources and retain them as long as needed. This allows to analyze the "big picture" when required and to troubleshoot more complex situations.
+Applications deployed to a {{site.data.keyword.containerlong_notm}} cluster in {{site.data.keyword.Bluemix_notm}} will likely generate some level of diagnostic output, i.e. logs. As a developer or an operator, you may want to access and analyze different types of logs such as worker logs, pod logs, app logs, or network logs to troubleshoot problems and pre-empt issues.
+
+By using the {{site.data.keyword.la_short}} service, it is possible to aggregate logs from various sources and retain them as long as needed. This allows to analyze the "big picture" when required and to troubleshoot more complex situations.
 
 To provision a {{site.data.keyword.la_short}} service,
 
