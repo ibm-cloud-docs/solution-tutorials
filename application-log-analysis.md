@@ -51,10 +51,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Prerequisites
 {: #prereq}
 
-* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
-* [Grant permissions to a user to view logs in LogDNA](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam#user_logdna)
-* [Grant permissions to a user to view metrics in Sysdig](https://{DomainName}/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam_work#user_sysdig)
+* [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
+* [Grant permissions to a user to view logs in LogDNA](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam#user_logdna)
+* [Grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam_work#user_sysdig)
 
 ## Create a Kubernetes cluster
 {: #create_cluster}
@@ -217,18 +217,19 @@ In this section, you will create a board and then add a graph with a breakdown t
 
 1. On the left pane, click on the **board** icon (above the settings icon) > click **NEW BOARD**.
 1. Click **Edit** on the top bar and let's name this **app-log-analysis-board**. Click **Save**.
-1. Click **Add Graph**
-	- Enter **app** as your field in the first input box and hit enter.
-	- Choose **app-log-analysis** as your field value.
-	- Click **Add Graph**.
+1. Click **Add Graph**:
+   - Enter **app** as your field in the first input box and hit enter.
+   - Choose **app-log-analysis** as your field value.
+   - Click **Add Graph**.
 1. Select **Counts** as your metric to see the number of lines in each interval over last 24 hours.
-1. To add a breakdown, click on the arrow below the graph
-	- Choose **Histogram** as your breakdown type.
-	- Choose **level** as your field type.
-	- Click **Add Breakdown** to see a breakdown with all the levels you logged for the app.
+1. To add a breakdown, click on the arrow below the graph:
+   - Choose **Histogram** as your breakdown type.
+   - Choose **level** as your field type.
+   - Click **Add Breakdown** to see a breakdown with all the levels you logged for the app.
 
 ## Add {{site.data.keyword.mon_full_notm}} and monitor your cluster
 {: #monitor_cluster_sysdig}
+
 In the following, you are going to add {{site.data.keyword.mon_full_notm}} to the application. The service regularly checks the availability and response time of the app.
 
 1. Navigate to [observability](https://{DomainName}/observe/) page and under **Monitoring**, click **Create instance**.
@@ -239,75 +240,75 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
 1. Copy and run the command under **Install Sysdig Agent to your cluster** on a terminal where you have set the `KUBECONFIG` environment variable to deploy the Sysdig agent in your cluster. Wait for the deployment to complete.
 
 ### Configure {{site.data.keyword.mon_short}}
-To Configure Sysdig to monitor health and performance of your cluster,
 
+To Configure Sysdig to monitor health and performance of your cluster:
 1. Click **View Sysdig** and you should see the sysdig monitor UI. On the welcome page, click **Next**.
 1. Choose **Kubernetes** as your installation method under set up environment.
 1. Click **Go to Next step** next to the agent configuration success message and click **Let's Get started** on the next page.
 1. Click **Next** and then **Complete onboarding** to see the `Explore` tab of Sysdig UI.
 
 ### Monitor your cluster
-To check the health and performance of your app amd cluster,
 
+To check the health and performance of your app amd cluster:
 1. Back in the application running at `http://worker-ip-address:portnumber`, generate several log entries.
 1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment** to see the Request count, Response Time etc., on the Sysdig monitor wizard.
 1. To check the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. Change the interval to **10 M** on the bottom bar of the Sysdig UI.
 1. To monitor the latency of the application,
-    - From the Explore tab, select **Deployments and Pods**.
-    - Click the arrow next to `HTTP` and then Select Metrics > Network.
-    - Select **net.http.request.time**.
-    - Select Time: **Sum** and Group: **Average**.
-    - Click **More options** and then click **Topology** icon.
-    - Click **Done** and Double click the box to expand the view.
+   - From the Explore tab, select **Deployments and Pods**.
+   - Click the arrow next to `HTTP` and then Select Metrics > Network.
+   - Select **net.http.request.time**.
+   - Select Time: **Sum** and Group: **Average**.
+   - Click **More options** and then click **Topology** icon.
+   - Click **Done** and Double click the box to expand the view.
 1. To monitor the Kubernetes namespace where the application is running,
-    - From the Explore tab, select **Deployments and Pods**.
-    - Click the arrow next to `net.http.request.time`.
-    - Select Default Dashboards > Kubernetes.
-    - Select Kubernetes State > Kubernetes State Overview.
+   - From the Explore tab, select **Deployments and Pods**.
+   - Click the arrow next to `net.http.request.time`.
+   - Select Default Dashboards > Kubernetes.
+   - Select Kubernetes State > Kubernetes State Overview.
 
 ### Create a custom dashboard
 
 Along with the pre-defined dashboards, you can create your own custom dashboard to display the most useful/relevant views and metrics for the containers running your app in a single location. Each dashboard is comprised of a series of panels configured to display specific data in a number of different formats.
 
-To create a dashboard,
-
+To create a dashboard:
 1. Click on **Dashboards** on the left most pane > click **Add Dashboard**.
 1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview** > click **Create Dashboard**.
 1. Select **Top List** as your new panel and name the panel as **Request time per container**
-    - Under **Metrics**, Type **net.http.request.time**.
-    - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
-    - Segment by **container.id** and you should see the net request time of each container.
-    - Click **save**.
+   - Under **Metrics**, Type **net.http.request.time**.
+   - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
+   - Segment by **container.id** and you should see the net request time of each container.
+   - Click **save**.
 1. To add a new panel, Click on the **plus** icon and select **Number(#)** as the panel type
-    - Under **Metrics**, Type **net.http.request.count** > Change the time aggregation from **Average(Avg)** to **Sum**.
-    - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
-    - Compare to **1 hour** ago and you should see the net request count of each container.
-    - Click **save**.
+   - Under **Metrics**, Type **net.http.request.count** > Change the time aggregation from **Average(Avg)** to **Sum**.
+   - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
+   - Compare to **1 hour** ago and you should see the net request count of each container.
+   - Click **save**.
 1. To edit the scope of this dashboard,
-    - Click **Edit Scope** in the title panel.
-    - Select/Type **Kubernetes.cluster.name** in the dropdown
-    - Leave display name empty and select **is**.
-    - Select **mycluster** as the value and click **Save**.
+   - Click **Edit Scope** in the title panel.
+   - Select/Type **Kubernetes.cluster.name** in the dropdown
+   - Leave display name empty and select **is**.
+   - Select **mycluster** as the value and click **Save**.
 
 ## Remove resources
 {: #remove_resource}
-- Remove the LogDNA and Sysdig instances from [observability](https://{DomainName}/observe) page.
+
+- Remove the LogDNA and Sysdig instances from [Observability](https://{DomainName}/observe) page.
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
-    ```sh
-    ibmcloud ks cluster-rm mycluster -f
-    ```
-    {:pre}
+   ```sh
+   ibmcloud ks cluster-rm mycluster -f
+   ```
+   {:pre}
 
 ## Expand the tutorial
 {: #expand_tutorial}
 
-- Use the [{{site.data.keyword.at_full}} service](https://{DomainName}/docs/services/Activity-Tracker-with-LogDNA?topic=logdnaat-getting-started#getting-started) to track how applications interact with IBM Cloud services.
-- [Add alerts](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-alerts#alerts) to your view.
-- [Export logs](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-export#export) to a local file.
+- Use the [{{site.data.keyword.at_full}} service](/docs/services/Activity-Tracker-with-LogDNA?topic=logdnaat-getting-started#getting-started) to track how applications interact with IBM Cloud services.
+- [Add alerts](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-alerts#alerts) to your view.
+- [Export logs](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-export#export) to a local file.
 
 ## Related content
 {:related}
-- [Resetting the ingestion key used by a Kubernetes cluster](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-kube_reset#kube_reset)
-- [Archiving logs to IBM Cloud Object Storage](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-archiving#archiving)
+- [Resetting the ingestion key used by a Kubernetes cluster](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-kube_reset#kube_reset)
+- [Archiving logs to IBM Cloud Object Storage](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-archiving#archiving)
 - [Configuring alerts in Sysdig](https://sysdigdocs.atlassian.net/wiki/spaces/Monitor/pages/205324292/Alerts)
-- [Working with notification channels in Sysdig UI](https://{DomainName}/docs/services/Monitoring-with-Sysdig?topic=Sysdig-notifications#notifications)
+- [Working with notification channels in Sysdig UI](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-notifications#notifications)
