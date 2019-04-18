@@ -105,9 +105,7 @@ To ensure that sufficient VLANs are available on the same data center router and
 
 The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}} provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
 
-1. From the catalog select a [IBM Virtual Router Appliance](https://{DomainName}/catalog/infrastructure/virtual-router-appliance)
-2. Click on **Create** to go to the **Gateway Appliances** page.
-
+1. From the catalog select a [Gateway Appliance](https://{DomainName}/gen1/infrastructure/provision/gateway)
 3. At the **Gateway Vendor** section select AT&T. You can choose between "up to 20 Gbps" or "up to 2 Gbps" Uplink Speed.
 4. At the **Hostname** section enter a Hostname and a Domain for your new VRA.
 5. If you check the **High Availability** check box, you will get two VRA devices working in an active/backup setup using VRRP.
