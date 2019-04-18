@@ -47,7 +47,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ### Configure the SoftLayer VPN
 
-1. [Ensure your VPN Access is enabled](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-getting-started-with-virtual-private-networking-vpn-#log-in-to-the-vpn).
+1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-gettingstarted-with-virtual-private-networking#gettingstarted-with-virtual-private-networking).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}

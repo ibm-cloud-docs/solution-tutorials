@@ -76,10 +76,10 @@ The [Isolate workloads with a secure private network]( https://{DomainName}/docs
 | VSI private IP address | <DC1 VSI Private IP Address> | <DC2 VSI Private IP Address> |
 | APP zone subnet & CIDR | <DC1 APP zone subnet/CIDR> | <DC2 APP zone subnet/CIDR> |
 
-1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances]( https://control.bluemix.net/network/gateways) page.  
-2. Locate the Gateway VLANs section and click on the Gateway [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
+1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page.  
+2. Locate the Gateway VLANs section and click on the Gateway [VLAN]( https://{DomainName}/classic/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
 3. The provisioned VRA will be seen under the **Devices* section. From under the **Subnets** section, make a note of the VRA private subnet IP address and CIDR (/26). The subnet will be of type primary with 64 IPs. These details are required later for routing configuration. 
-4. Again on the Gateway Details page, locate the **Associated VLANs** section and click on the [VLAN]( https://control.bluemix.net/network/vlans) on the **Private** network that was associated to create the secure network and APP zone. 
+4. Again on the Gateway Details page, locate the **Associated VLANs** section and click on the [VLAN]( https://{DomainName}/classic/network/vlans) on the **Private** network that was associated to create the secure network and APP zone. 
 5. The provisioned VSI will be seen under the **Devices* section. From under the **Subnets** section, make a note of the  VSI subnet IP address and CIDR (/26) as these are required for routing configuration. This VLAN and subnet is identified as the APP zone in both VRA firewall configurations and is recorded as the &lt;APP Zone subnet/CIDR&gt;.
 
 
@@ -94,7 +94,7 @@ VLANs not associated with the secure private networks created by the VRAs, are �
 
 Enable VLAN Spanning:
 
-1. Proceed to the [VLANs]( https://control.bluemix.net/network/vlans) page.
+1. Proceed to the [VLANs]( https://{DomainName}/classic/network/vlans) page.
 2. Select the **Span** tab at the top of the page
 3. Select the VLAN Spanning ‘On’ radio button. This will take a number of minutes for the network change to complete.
 4. Confirm that the two VRAs can now communicate:
@@ -177,7 +177,7 @@ The existing APP zone firewall rules are only configured to allow traffic to and
 
 Steps to take to remove the resources created in this tutorial. 
 
-The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://control.bluemix.net/network/gateways/371923) page.
+The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances) page.
 {:tip}
 
 1. Cancel any virtual servers or bare-metal servers

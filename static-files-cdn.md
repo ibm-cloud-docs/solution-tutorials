@@ -159,7 +159,7 @@ In this section, you will create a CDN service. The CDN service distributes cont
 
 ### Access your content through the CDN CNAME
 
-1. Select the CDN instance in the list at [https://control.bluemix.net/network/cdn](https://control.bluemix.net/network/cdn).
+1. Select the CDN instance [in the list](https://{DomainName}/classic/network/cdn).
 2. If you earlier picked *DV SAN Certificate*, you will be prompted for domain validation once the inital setup is completed. Follow the steps shown when clicking on **View domain validation**.
 3. The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
 4. Access your file with `https://your-cdn-cname.cdnedge.bluemix.net/a-picture.png` or, if you are using a custom domain, `https://your-cdn-hostname/a-picture.png`. If you omit the file name, you should see the S3 ListBucketResult instead.

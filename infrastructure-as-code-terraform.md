@@ -164,7 +164,7 @@ In this section, you will learn the how to create a LAMP stack server from the t
    ```
    {: pre}
    You should see an output similar to below.![Source Control URL](images/solution10/created.png)
-4. Next, head over to your [infrastructure device list](https://control.bluemix.net/devices) to verify that the server created.![Source Control URL](images/solution10/configuration.png)
+4. Next, head over to your [infrastructure device list](https://{DomainName}/classic/devices) to verify that the server created.![Source Control URL](images/solution10/configuration.png)
 
 ## Add the {{site.data.keyword.cos_full_notm}} service and scale the resources
 
