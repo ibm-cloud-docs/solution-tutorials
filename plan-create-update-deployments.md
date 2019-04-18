@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-04-17"
+lastupdated: "2019-04-18"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -488,9 +488,9 @@ For the *Development* environment as defined in [this tutorial](https://{DomainN
 
 |           | IAM Access policies |
 | --------- | ----------- |
-| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
+| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> |
 | Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> |
-| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
+| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
 
 Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/iam?topic=iam-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.

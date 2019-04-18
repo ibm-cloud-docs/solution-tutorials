@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-04-17"
+lastupdated: "2019-04-18"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -128,9 +128,9 @@ For the Development environment, the user responsibilities defined earlier could
 
 |           | IAM Access policies | Cloud Foundry |
 | --------- | ----------- | ------- |
-| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging/Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Auditor*</li></ul> |
+| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Auditor*</li></ul> |
 | Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> | <ul><li>No configuration needed</li></ul> |
-| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging/Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
+| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 
 The IAM access policies and Cloud Foundry roles are defined in the [Identify and Access Management user interface](https://{DomainName}/iam/#/users):
