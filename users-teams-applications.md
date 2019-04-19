@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-04-18"
+lastupdated: "2019-04-19"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -160,11 +160,14 @@ Separate Kubernetes clusters for the environments come with good properties:
 * it gives flexibility in the update cycles for deployments and underlying resources; when there is a new Kubernetes version, it gives you the option to update the Development cluster first, validate your application then update the other environment;
 * it avoids mixing different workloads that may impact each other such as isolating the production deployment from the others.
 
-<!---Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption.
+Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) in conjunction with [Kubernetes resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to isolate environments and control resource consumption.
 
 <p style="text-align: center;">
   <img title="Using separate namespaces to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png" style="width: 80%;" alt="Diagram showing separate namespaces to isolate environments" />
-</p>--->
+</p>
+
+In the `Search` input box of LogDNA UI, use the field `namespace: ` to filter logs based 0n the namespace.
+{: tip}
 
 ## Setup delivery pipeline
 
