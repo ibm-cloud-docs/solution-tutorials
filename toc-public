@@ -10,7 +10,6 @@ Solution Tutorials
     {: .topicgroup}
     Websites and Web Apps
         scalable-webapp-kubernetes.md
-        kubernetes-log-analysis-kibana.md
         vm-to-containers-and-kubernetes.md
         strategies-for-resilient-applications.md
         continuous-deployment-to-kubernetes.md
@@ -105,7 +104,6 @@ Solution Tutorials
     {: .topicgroup}
     Kubernetes
         scalable-webapp-kubernetes.md
-        kubernetes-log-analysis-kibana.md
         vm-to-containers-and-kubernetes.md
         strategies-for-resilient-applications.md
         continuous-deployment-to-kubernetes.md

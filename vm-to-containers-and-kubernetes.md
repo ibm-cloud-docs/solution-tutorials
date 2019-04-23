@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-04-15"
 ---
 
 {:shortdesc: .shortdesc}
@@ -132,9 +132,9 @@ To make the above more specific, let's assume you want to run a production web a
 With Kubernetes, you have two options for handling databases:
 
 1. You can run your database inside the Kubernetes cluster, to do that you would need to create a microservice to run the database. If using MySQL database example, you need to do the following:
-   - Create a MySQL Dockerfile, see an example [MySQL Dockerfile](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile) here. 
+   - Create a MySQL Dockerfile, see an example [MySQL Dockerfile](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile) here.
    - You would need to use secrets to store the database credential. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile.secret).
-   - You would need a deployment.yaml file with the configuration of your database to deployed to Kubernetes. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml). 
+   - You would need a deployment.yaml file with the configuration of your database to deployed to Kubernetes. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml).
 2. The second option would be to use the managed database-as-a-service (DBasS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [IBM cloud catalog](https://{DomainName}/catalog/?category=data). To use this option, you would need to do the following:
    - Create a managed database-as-a-service (DBasS) from the [IBM cloud catalog](https://{DomainName}/catalog/?category=data).
    - Store database credentials inside a secret. You will learn more on secrets in the "Store credentials in Kubernetes secrets" section.
@@ -164,7 +164,7 @@ To learn how to create a PVC, follow the steps covered in the [{{site.data.keywo
 To copy data from your local machine to your persistent storage, you must mount the PVC to a pod. Then, you can copy data from your local machine to the persistent volume in your pod.
 {: shortdesc}
 
-1. To copy date, first, you would need to create a configuration that looks like something like this: 
+1. To copy date, first, you would need to create a configuration that looks like something like this:
 
    ```bash
    kind: Pod
@@ -228,7 +228,7 @@ It's never good practice to store credentials within the app code. Instead, Kube
 
 One way of using secrets in Kubernetes in by doing something like this:
 
-1. Create a file and store the service credentials inside it. 
+1. Create a file and store the service credentials inside it.
    ```
    {
        "url": "https://gateway-a.watsonplatform.net/visual-recognition/api",
@@ -266,17 +266,17 @@ Images are typically stored in a registry that can either be accessible by the p
 
 To containerize an app and store it in {{site.data.keyword.registrylong_notm}}:
 
-1. You would need to create a Dockerfile, below is an example of a Dockerfile. 
+1. You would need to create a Dockerfile, below is an example of a Dockerfile.
    ```
    # Build JPetStore war
    FROM openjdk:8 as builder
    COPY . /src
    WORKDIR /src
    RUN ./build.sh all
-   
+
    # Use WebSphere Liberty base image from the Docker Store
    FROM websphere-liberty:latest
-   
+
    # Copy war from build stage and server.xml into image
    COPY --from=builder /src/dist/jpetstore.war /opt/ibm/wlp/usr/servers/defaultServer/apps/
    COPY --from=builder /src/server.xml /opt/ibm/wlp/usr/servers/defaultServer/
@@ -285,7 +285,7 @@ To containerize an app and store it in {{site.data.keyword.registrylong_notm}}:
    ```
    {: codeblock}
 
-2. Once a Dockerfile is created, next you would need to build the container image and push it to {{site.data.keyword.registrylong_notm}}. You can build a container using a command like: 
+2. Once a Dockerfile is created, next you would need to build the container image and push it to {{site.data.keyword.registrylong_notm}}. You can build a container using a command like:
    ```
    ibmcloud cr build -t <image_name> <directory_of_Dockerfile>
    ```
@@ -305,7 +305,7 @@ To create Kubernetes deployment.yaml files, you would need to do something like 
 
 2. In your deployment.yaml file, you can define [resource quotas](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) for your containers to specify how much CPU and memory each container needs to properly start. If containers have resource quotas specified, the Kubernetes scheduler can make better decisions about the worker node where to place your pods on.
 
-3. Next, you can use below commands to create and view the deployment and services created: 
+3. Next, you can use below commands to create and view the deployment and services created:
 
    ```
    kubectl create -f <filepath/deployment.yaml>
@@ -330,7 +330,7 @@ In this tutorial, you learned the following:
 ## Put everything learned to practice, run the JPetStore app in your cluster
 {: #runthejpetstore}
 
-To put everything you've learned in practice, follow the [demo](https://github.com/ibm-cloud/ModernizeDemo/) to run the **JPetStore** app on your cluster and apply the concepts learned. The JPetStore app has some extended functionality to allow you to extend an app in Kubernetes by IBM Watson services running as a separate microservice. 
+To put everything you've learned in practice, follow the [demo](https://github.com/ibm-cloud/ModernizeDemo/) to run the **JPetStore** app on your cluster and apply the concepts learned. The JPetStore app has some extended functionality to allow you to extend an app in Kubernetes by IBM Watson services running as a separate microservice.
 
 ## Related Content
 {: #related}
@@ -340,7 +340,7 @@ To put everything you've learned in practice, follow the [demo](https://github.c
 - Kubernetes main [docs](http://kubernetes.io/).
 - [Persistent storage](https://{DomainName}/docs/containers?topic=containers-storage_planning#storage_planning) in {{site.data.keyword.containershort_notm}}.
 - [Best practices solution guide](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications) for organizing users, teams and apps.
-- [Analyze logs and monitor the health of Kubernetes apps by using Kibana and Grafana](https://{DomainName}/docs/tutorials?topic=solution-tutorials-kubernetes-log-analysis-kibana#kubernetes-log-analysis-kibana).
+- [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Set up [continuous integration and delivery pipeline](https://{DomainName}/docs/tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
 - Deploy the production cluster [across multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 - Use [multiple clusters across multiple locations](https://{DomainName}/docs/containers?topic=containers-regions-and-zones#regions-and-locations) for high availability.

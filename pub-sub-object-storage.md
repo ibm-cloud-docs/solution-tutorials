@@ -33,7 +33,7 @@ You will simulate this pattern using a file processing example. First create a U
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.cos_full_notm}}](https://console.ng.bluemix.net/catalog/services/cloud-object-storage)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/catalog/infrastructure/containers-kubernetes)
 
