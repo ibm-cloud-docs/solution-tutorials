@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-04-18"
+lastupdated: "2019-04-23"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -296,7 +296,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
    ```sh
    # ~/.terraformrc
    providers {
-     ibm = "/opt/provider/terraform-provider-ibm"
+     ibm = "/opt/provider/terraform-provider-ibm_VERSION"
    }
    ```
    {: codeblock}
@@ -475,6 +475,8 @@ Once Terraform completes, it will have created:
 * a Kubernetes secret with the database credentials
 * a storage
 * a Kubernetes secret with the storage credentials
+* a logging(LogDNA) instance
+* a monitoring(Sysdig) instance
 * a `development.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
 * the environment specific `terraform.tfstate` under `terraform.tfstate.d/development`.
 
@@ -512,13 +514,31 @@ resource "ibm_iam_access_group_policy" "resourcepolicy_developer" {
   }]
 }
 
-resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
+resource "ibm_iam_access_group_policy" "developer_platform_accesspolicy" {
   access_group_id = "${ibm_iam_access_group.developer_role.id}"
-  roles           = ["Administrator","Editor","Viewer"]
+  roles        = ["Viewer"]
 
   resources = [{
-    service           = "monitoring"
     resource_group_id = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
+  }]
+}
+
+resource "ibm_iam_access_group_policy" "developer_logging_policy" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles           = ["Writer"]
+
+  resources = [{
+    service           = "logdna"
+    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.logdna_instance_id}"
+  }]
+}
+resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles           = ["Writer"]
+
+  resources = [{
+    service           = "sysdig-monitor"
+    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.sysdig_instance_id}"
   }]
 }
 
