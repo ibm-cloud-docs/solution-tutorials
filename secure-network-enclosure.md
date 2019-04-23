@@ -119,8 +119,8 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 
 On the right side you can see your **Order Summary**. Check the _I have read and agree to the Third-Party Service Agreements listed below:_ checkbox and click the **Create** button. Your gateway will be deployed.
 
-13. Monitor for VRA creation. On **IBM Cloud** select **Classic Infrastructure** then **Network** and **Gateway Appliances**.
-Your new VRA will appear at the Gateway Appliances List. It will be in the state **Updating**. VRA creation will take several hours to complete, as a bare-metal server is provisioned. On completion you will receive an email to your account email address.
+The [Device list](https://{DomainName}/classic/devices) will show the VRA almost immediately with a **Clock** symbol against it, indicating transactions are in progress on this device. Until the VRA creation is complete, the **Clock** symbol remains and beyond viewing details it is not possible to perform any configuration actions against device. 
+{:tip}
 
 ### Review deployed VRA
 
@@ -226,10 +226,8 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
 
 The private VLAN(s) for the virtual server will have been associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible. 
 
-1. From the Gateway Appliances Webpage (https://{DomainName}/classic/network/gatewayappliances) proceed to the Gateway Details for the VRA by clicking on its name.
-2. If it is desired to add additional VLANs at this time, click the **Manage VLANs** button.
-3. At the Associated VLANs screen you will see the VLANs that are routed by this VRA. You can add additional VLANs by clicking the **Associate VLAN** button.
-4. In the drop down menu **Select a VLAN** you can select a VLAN that is available in the Location and not associated to any Gateway Appliance until now. ![](images/solution33-secure-network-enclosure/Gateway-Associate-VLAN.png)
+1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. 
+2. If it is desired to add additional VLANs at this time, navigate to the **Associate a VLAN** section. The drop down box, *Select VLAN* should be enabled and other provisioned VLANs can be selected. ![](images/solution33-secure-network-enclosure/Gateway-Associate-VLAN.png)
 
    If no eligible VLAN is shown, no VLANs are available on the same router as the VRA. This will require a [support ticket](https://{DomainName}/unifiedsupport/cases/add) to be raised to request a private VLAN on the same router as the VRA.
    {:tip}
@@ -237,10 +235,10 @@ The private VLAN(s) for the virtual server will have been associated by the {{si
 
 At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN will be shown as *Bypassed*.
 
-6. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes. A screen refresh will show it is *Routed*. 
-7. Select the [VLAN name](https://{DomainName}/classic/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN ID \<nnnn\> (1199 in this example) as this will be used in a later step. 
-8. Select the [subnet](https://{DomainName}/classic/network/subnets) to see the IP subnet details. Make a note of the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. 64 Primary IP addresses are provisioned on the private network and to find the Gateway address it may require selecting page 2 or 3. 
-9. Validate the that the subnet/VLAN is routed to the VRA and the VSI is **NOT** accessible via the management network from your workstation using `ping`. 
+4. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes. A screen refresh will show it is *Routed*. 
+5. Select the [VLAN name](https://{DomainName}/classic/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN ID \<nnnn\> (1199 in this example) as this will be used in a later step. 
+6. Select the [subnet](https://{DomainName}/classic/network/subnets) to see the IP subnet details. Make a note of the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. 64 Primary IP addresses are provisioned on the private network and to find the Gateway address it may require selecting page 2 or 3. 
+7. Validate the that the subnet/VLAN is routed to the VRA and the VSI is **NOT** accessible via the management network from your workstation using `ping`. 
    ```bash
    ping <VSI Private IP Address>
    ```
