@@ -24,20 +24,6 @@
                 ]
             },
             {
-                "name": "Analyze logs and monitor the health of Kubernetes applications",
-                "url": "kubernetes-log-analysis-kibana.html",
-                "description": "Create a cluster and configuring the Log Analysis and the Monitoring service. Use Kibana to view and analyze logs and Grafana to view health and metrics.",
-                "imgSrc": "images/solution17/Architecture.png",
-                "tags": [
-                    "Kubernetes",
-                    "Container Service",
-                    "Docker",
-                    "Node.js",
-                    "Log Analysis",
-                    "Monitoring"
-                ]
-            },
-            {
                 "name": "Move a VM based application to Kubernetes",
                 "url": "vm-to-containers-and-kubernetes.html",
                 "description": "Take a VM based application, containerize it, deploy it to a Kubernetes cluster. Use the steps as a general guides for other applications.",

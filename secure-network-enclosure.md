@@ -69,7 +69,7 @@ This tutorial may incur costs. The VRA is only available on a monthly pricing pl
 
 In this tutorial the network enclosure created is not visible on the public Internet. The VRA and any servers will only be accessible via the private network, and you will use your SoftLayer VPN for connectivity. 
 
-1. [Ensure your VPN Access is enabled](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-gettingstarted-with-virtual-private-networking#log-in-to-the-vpn).
+1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-gettingstarted-with-virtual-private-networking#gettingstarted-with-virtual-private-networking).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
@@ -105,39 +105,26 @@ To ensure that sufficient VLANs are available on the same data center router and
 
 The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}} provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
 
-1. From the catalog select a [IBM Virtual Router Appliance](https://{DomainName}/catalog/infrastructure/virtual-router-appliance)
-2. Click on **Create** to go to the **Gateway Appliances** page.  
-3. On the top right of the page click **Order Gateway**.
-4. On the ordering screen, the target data center and the VRA Server type can be selected. 
-   For a production environment it is recommended to use at a minimum - Dual Intel Xeon E5-2620 v4 (16 Cores, 2.10 GHz) with 64GB of RAM. 
-   {:tip}
+1. From the catalog select a [Gateway Appliance](https://{DomainName}/gen1/infrastructure/provision/gateway)
+3. At the **Gateway Vendor** section select AT&T. You can choose between "up to 20 Gbps" or "up to 2 Gbps" Uplink Speed.
+4. At the **Hostname** section enter a Hostname and a Domain for your new VRA.
+5. If you check the **High Availability** check box, you will get two VRA devices working in an active/backup setup using VRRP.
+6. At the **Location** section select the Location and the **Pod** in which you need your VRA.
+7. Select Single Processor or Dual Processor. You will get a list of Servers. Choose a Server by clicking its radio button. 
+8. Select the amount of **RAM**. For a production environment it is recommended to use a minimum of 64GB of RAM. 8GB minimum for test environment.
+9. Select a **SSH Key** (optional). This ssh key will be installed on the VRA, so user vyatta can be used to access the VRA with this key.
+10. Hard Drive. Keep the default.
+11. In the **Uplink Port Speeds** section select the combination of speed, redundancy and private and/or public interfaces that meets your needs.
+12. In the **Add-ons** section, keep the default. I you what to use IPv6 on the public interface select IPv6 address.
 
-   * Select the **target data center** in the drop down at the top of the page.
-   * Select the link under **STARTING PRICE PER MONTH** for the desired server type to host the VRA.
-   * Select **RAM**. 64GB for production. 8GB minimum for test.
-   * Operating System. Select the only option
-     - Virtual Router Appliance 5.x (up to 20Gbps) Subscription Edition (64 Bit) 
-   * **Hard Drive**. Keep default. 
-   * **Public Bandwidth**. Keep default of 'Metered'.
-   * **Uplink Port Speeds**. Take the default or if required select 1Gbps, 10Gbps  and redundant links.
-   * **Monitoring**. Host Ping and TCP Service Monitoring.
-   * **Response**. Automated Reboot from Monitoring. 
-   * Click **Add To Order**.
-5. On the Checkout screen:
-   * Validate or change the choices already made.
-   * Navigate to the Virtual Router Appliance section at the top of the page. Ignore settings in the `Network Gateway Appliance Cluster`. 
-   * VLAN Selection under the **Advanced System Configuration** heading. The *Backend VLAN* drop down will show **Auto Assigned**, click the dialog box and select the VLAN ID of the private VLAN ordered earlier.  
-   * Add SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. When selected it will appear under the heading 'Server 1'.  
-   * Set the VRA Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
-    * Click **Submit Order**.
-6. Monitor for VRA creation. VRA creation will take several hours to complete, as a bare-metal server is provisioned. On completion you will receive an email to your account email address. 
+On the right side you can see your **Order Summary**. Check the _I have read and agree to the Third-Party Service Agreements listed below:_ checkbox and click the **Create** button. Your gateway will be deployed.
 
-The [Device list](https://control.bluemix.net/devices) will show the VRA almost immediately with a **Clock** symbol against it, indicating transactions are in progress on this device. Until the VRA creation is complete, the **Clock** symbol remains and beyond viewing details it is not possible to perform any configuration actions against device. 
+The [Device list](https://{DomainName}/classic/devices) will show the VRA almost immediately with a **Clock** symbol against it, indicating transactions are in progress on this device. Until the VRA creation is complete, the **Clock** symbol remains and beyond viewing details it is not possible to perform any configuration actions against device. 
 {:tip}
 
 ### Review deployed VRA
 
-1. Inspect the new VRA. On the [Infrastructure Dashboard](https://control.bluemix.net) Select **Network** in the left-hand pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://control.bluemix.net/network/gateways) page. Select the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page. ![](images/solution33-secure-network-enclosure/Gateway-detail.png)
+1. Inspect the new VRA. On the [Infrastructure Dashboard](https://{DomainName}/classic) Select **Network** in the left-hand pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page. Select the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page. ![](images/solution33-secure-network-enclosure/Gateway-detail.png)
 
 2. Make a note of the `Private` and `Public` IP addresses of the VRA for future use.
 
@@ -150,17 +137,18 @@ The [Device list](https://control.bluemix.net/devices) will show the VRA almost 
    ```
    {: codeblock}
 
-   If SSH prompts for a password, the SSH key was not included in the build. Access the VRA via the [web browser](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance#accessing-the-device-using-the-web-gui) using the `VRA Private IP Address`. The password is from the [Software Passwords](https://control.bluemix.net/devices/passwords) page. On the **Configuration** tab, select the System/login/vyatta branch and add the desired SSH key. 
+   If SSH prompts for a password, the SSH key was not included in the build. Access the VRA via the [web browser](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-accessing-and-configuring-the-ibm-virtual-router-appliance#accessing-the-device-using-the-web-gui) using the `VRA Private IP Address`. The password is from the [Software Passwords](https://{DomainName}/classic/devices/passwords) page. On the **Configuration** tab, select the System/login/vyatta branch and add the desired SSH key. 
    {:tip}
 
-   Setup of the VRA requires the VRA to be placed into \[edit\] mode using the `configure` or `conf` command. When in `edit` mode the prompt changes from `$` to `#`. After successful VRA command execution a change can be committed to the running configuration with the `commit` command. Once you have verified that the configuration is working as intended, it can be saved permanently using the `save` command. To return to the Vyatta system command prompt `$`, type `exit`. If at any stage before the `save` command is entered, access is lost due to committing a bad configuration change, rebooting the VRA will return it back to the last save point, restoring access.
+   Setup of the VRA requires the VRA to be placed into \[edit\] mode using the `configure` command. When in `edit` mode the prompt changes from `$` to `#`. After a successful VRA configuration change you can view your changes with the `compare` command and check your changes with the `validate` command. By committing a change with the `commit` command it will be applied to the running configuration, and automatically saved to the startup configuration.
+
+
    {:tip}
 2. Enhance security by only allowing SSH login. Now that SSH login is successful via the private network, disable access via userid/password authentication. 
    ```
    configure
    set service ssh disable-password-authentication
    commit
-   save
    exit
    ```
    {: codeblock}
@@ -180,7 +168,6 @@ The [Device list](https://control.bluemix.net/devices) will show the VRA almost 
 4. Set local time zone as required. Auto-complete with the tab key will list the potential time zone values
    ```
    set system time-zone <timezone>
-   commit 
    ```
    {: codeblock}
 5. Set ping behavior. Ping is not disabled to aid in routing and firewall troubleshooting. 
@@ -194,12 +181,11 @@ The [Device list](https://control.bluemix.net/devices) will show the VRA almost 
    set security firewall global-state-policy icmp
    set security firewall global-state-policy udp
    set security firewall global-state-policy tcp
-   commit
    ```
    {: codeblock}
-7. Save the configuration
+7. Commit and automatically save your changes to the startup configuration. 
    ```
-   save
+   commit
    ```
    {: codeblock}
 
@@ -226,7 +212,7 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
    * Set the VSI Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
    * Click **Submit Order**.
 4. Click tick box to accept the 'Third-Party' service agreements, then **Provision**.
-5. Monitor for completion on the [Devices](https://control.bluemix.net/devices) page or via email. 
+5. Monitor for completion on the [Devices](https://{DomainName}/classic/devices) page or via email. 
 6. Make note of the *Private IP address* of the VSI for a later step and that under the **Network** section on the **Device Details** page that the VSI is assigned to the correct VLAN. If not, delete this VSI and create a new VSI on the correct VLAN. 
 7. Verify successful access to the VSI via the {{site.data.keyword.Bluemix_notm}} private network using ping and SSH from your local workstation over the VPN.
    ```bash
@@ -240,18 +226,18 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
 
 The private VLAN(s) for the virtual server will have been associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible. 
 
-1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://control.bluemix.net/network/gateways) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. 
+1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. 
 2. If it is desired to add additional VLANs at this time, navigate to the **Associate a VLAN** section. The drop down box, *Select VLAN* should be enabled and other provisioned VLANs can be selected. ![](images/solution33-secure-network-enclosure/Gateway-Associate-VLAN.png)
 
-   If no eligible VLAN is shown, no VLANs are available on the same router as the VRA. This will require a [support ticket](https://control.bluemix.net/support/unifiedConsole/tickets/add) to be raised to request a private VLAN on the same router as the VRA.
+   If no eligible VLAN is shown, no VLANs are available on the same router as the VRA. This will require a [support ticket](https://{DomainName}/unifiedsupport/cases/add) to be raised to request a private VLAN on the same router as the VRA.
    {:tip}
-1. Click **Associate** to tell {{site.data.keyword.Bluemix_notm}} that the IP routing for this VLAN will now be manged by this VRA. Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. 
+5. Select the VLAN that you want to associate with the VRA and click Save. Initial VLAN association may take a couple of minutes to complete. Once completed the VLAN should be shown under the **Associated VLANs** heading. 
 
 At this stage the VLAN and associated subnet are not protected or routed via the VRA and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN will be shown as *Bypassed*.
 
 4. Select **Actions** in the right hand column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This will take a few minutes. A screen refresh will show it is *Routed*. 
-5. Select the [VLAN name](https://control.bluemix.net/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN ID \<nnnn\> (1199 in this example) as this will be used in a later step. 
-6. Select the [subnet](https://control.bluemix.net/network/subnets) to see the IP subnet details. Make a note of the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. 64 Primary IP addresses are provisioned on the private network and to find the Gateway address it may require selecting page 2 or 3. 
+5. Select the [VLAN name](https://{DomainName}/classic/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN ID \<nnnn\> (1199 in this example) as this will be used in a later step. 
+6. Select the [subnet](https://{DomainName}/classic/network/subnets) to see the IP subnet details. Make a note of the subnet Network, Gateway addresses and CIDR (/26) as these are required for further VRA configuration. 64 Primary IP addresses are provisioned on the private network and to find the Gateway address it may require selecting page 2 or 3. 
 7. Validate the that the subnet/VLAN is routed to the VRA and the VSI is **NOT** accessible via the management network from your workstation using `ping`. 
    ```bash
    ping <VSI Private IP Address>
@@ -263,9 +249,7 @@ This completes setup of the VRA via the {{site.data.keyword.Bluemix_notm}} conso
 ## Configure IP Routing and secure enclosure
 {: #vra_setup}
 
-When the VRA configuration is committed, only the running configuration is changed. It does not change the configuration used at boot time. If access is lost to the VRA due to a configuration change, rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} dashboard will return the VRA to the previous save of the boot configuration file. This saved configuration could be from some time previously. 
-
-Only save the configuration to the default system configuration file when you are satisfied that the changes perform the desired effect and do not affect operation or access to the VRA. 
+When the VRA configuration is committed, the running configuration is changed and the changes are automatically saved to the startup configuration.
 
 If it is desired to return to a previous working configuration, by default the last 20 commit points can be viewed, compared or restored.  See the [Vyatta Network OS Basic System Configuration Guide](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation) for more details of committing and saving the configuration.
    ```bash
@@ -291,7 +275,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
     
-   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one more than the subnet address starting address. Entering an invalid gateway address will result in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command an re-enter.
+   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one more than the subnet address starting address. Entering an invalid gateway address will result in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command an re-enter. You can look it up at Network > IP Management > Subnets. Click on the subnet you need to know the Gateway address. The second entry in the List will with the Description **Gateway** is the IP address to enter as <Subnet Gateway IP>/<CIDR>.
    {: tip}
 
 3. List the new virtual interface (vif): 
@@ -308,9 +292,9 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
    
-   If the VSI is not accessible, check the VRA IP routing table is configured as expected. Delete and recreate the route if required.     
+   If the VSI is not accessible, check the VRA IP routing table is configured as expected. Delete and recreate the route if required. To run a show conmmand in configuation mode, you can use the run command    
    ```bash
-   ip route
+    run show ip route <Subnet Gateway IP>
    ```
    {: codeblock}
 
@@ -431,7 +415,6 @@ Two zones are defined:
 
    ```
    show security  
-   save
    ```
    {: codeblock}
 
@@ -475,12 +458,7 @@ This creates a new firewall rule set named `CPP`, view the additional rules and 
    commit 
    ```
    {: codeblock}
-3. Validate VRA SSH administrative access over IBM Internal network. If access is lost to the VRA via SSH after performing commits, the previous working configuration can be restored by rebooting the VRA from the {{site.data.keyword.Bluemix_notm}} console. Check the parameters entered especially the address used for VRA Public IP Subnet. 
-4. If OK, save. 
-   ```
-   save
-   ```
-   {: codeblock}
+3. Validate VRA SSH administrative access over IBM Internal network. If access is lost to the VRA via SSH after performing commits, you can access the VRA via the KVM Console available at the Device Details page of the VRA via the Action Drop Down Menu.
 
 This completes setup of the secure private network enclosure protecting a single firewall zone containing a VLAN and subnet. Additional firewall zones, rules, virtual and bare-metal servers, VLANs and subnets can be added following the same instructions. 
 
@@ -489,7 +467,7 @@ This completes setup of the secure private network enclosure protecting a single
 
 In this step, you will clean up the resources to remove what you created above.
 
-The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://control.bluemix.net/network/gateways/) page.
+The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances/) page.
 {:tip}  
 
 - Cancel any virtual servers or bare-metal servers

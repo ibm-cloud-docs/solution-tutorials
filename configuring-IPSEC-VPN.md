@@ -309,7 +309,7 @@ This completes setup of the VPN from the secure private network enclosure. Addit
 
 Steps to take to remove the resources created in this tutorial.
 
-The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://control.bluemix.net/network/gateways/371923) page.
+The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](https://{DomainName}/classic/network/gatewayappliances) page.
 {:tip}  
 
 1. Cancel any virtual servers or bare-metal servers

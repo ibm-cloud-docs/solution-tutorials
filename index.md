@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-04-12"
+lastupdated: "2019-04-19"
 ---
 
 {:shortdesc: .shortdesc}
@@ -188,23 +188,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution2/Architecture.png" alt="Architecture diagram for the solution Scalable web app on Kubernetes"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-kubernetes-log-analysis-kibana#kubernetes-log-analysis-kibana">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Analyze logs and monitor the health of Kubernetes applications
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Create a cluster and configuring the Log Analysis and the Monitoring service. Use Kibana to view and analyze logs and Grafana to view health and metrics.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution17/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor the health of Kubernetes applications"/>
                 </div>
             </div>
         </div>
