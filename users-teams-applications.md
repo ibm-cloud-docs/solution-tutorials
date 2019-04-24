@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-04-19"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -102,10 +102,9 @@ Let's start by building the Development environment.
    1. [Create a Cloud Foundry space for the environment](https://{DomainName}/docs/account?topic=account-orgsspacesusers#spaceinfo).
    1. Create the Cloud Foundry services used by the project under this space
 1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
-1. Create the services compatible with resource group like {{site.data.keyword.cos_full_notm}} and {{site.data.keyword.cloudant_short_notm}} in this group.
+1. Create the services compatible with resource group like {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, and {{site.data.keyword.cloudant_short_notm}} in this group.
 1. [Create a new Kubernetes cluster](https://{DomainName}/containers-kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
-1. Select your cluster [in the console](https://{DomainName}/containers-kubernetes/clusters).
-1. Use *Enable Logging* to redirect the cluster logs to the Cloud Foundry space created in the previous steps. If later you want to change the space where the cluster is sending its logging data, you can use the [logging plugin for the ibmcloud command line](https://{DomainName}/docs/containers?topic=containers-health#log_sources_update).
+1. Configure {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} to send logs and to monitor the cluster.
 
 The following diagram shows where the project resources are created under the account:
 
@@ -119,7 +118,7 @@ The following diagram shows where the project resources are created under the ac
 1. Assign Policies to the users to control who can access the resource group, the services within the group and the {{site.data.keyword.containershort_notm}} instance and their permissions. Refer to the [access policy definition](https://{DomainName}/docs/containers?topic=containers-users#access_policies) to select the right policies for a user in the environment. Users with the same set of policies can be placed into the [same access group](https://{DomainName}/docs/iam?topic=iam-groups#groups). It simplifies the user management as policies will be assigned to the access group and inherited by all users in the group.
 1. Configure their Cloud Foundry organization and space roles based on their needs within the environment. Refer to the [role definition](https://{DomainName}/docs/iam?topic=iam-cfaccess#cfaccess) to assign the right roles based on the environment.
 
-Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the IBM Cloud Monitoring service maps IAM roles to actions](https://{DomainName}/docs/services/cloud-monitoring?topic=cloud-monitoring-security_ov#iam_roles).
+Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam#iam).
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
 
@@ -129,9 +128,9 @@ For the Development environment, the user responsibilities defined earlier could
 
 |           | IAM Access policies | Cloud Foundry |
 | --------- | ----------- | ------- |
-| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Auditor*</li></ul> |
+| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Auditor*</li></ul> |
 | Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> | <ul><li>No configuration needed</li></ul> |
-| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
+| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 
 The IAM access policies and Cloud Foundry roles are defined in the [Identify and Access Management user interface](https://{DomainName}/iam/#/users):
@@ -167,6 +166,9 @@ Another approach is to use [Kubernetes namespaces](https://kubernetes.io/docs/co
   <img title="Using separate namespaces to isolate environments" src="./images/solution20-users-teams-applications/multiple-environments-with-namespaces.png" style="width: 80%;" alt="Diagram showing separate namespaces to isolate environments" />
 </p>
 
+In the `Search` input box of LogDNA UI, use the field `namespace: ` to filter logs based 0n the namespace.
+{: tip}
+
 ## Setup delivery pipeline
 
 When it comes to deploying to the different environments, your continuous integration / continuous delivery pipeline can be setup to drive the full process:
@@ -195,10 +197,10 @@ Congratulations, your application can now safely be deployed from dev to product
 ## Related information
 
 * [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/iam?topic=iam-getstarted#getstarted)
-* [Best practices for organizing resources in a resource group
-](https://{DomainName}/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)
-* [Analyze logs and monitor the health of Kubernetes applications](https://{DomainName}/docs/tutorials?topic=solution-tutorials-kubernetes-log-analysis-kibana#kubernetes-log-analysis-kibana)
+* [Best practices for organizing resources in a resource group](https://{DomainName}/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)
+* [Analyze logs and monitor health with LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
-* [Develop a microservices application with Kubernetes and Helm
-](https://github.com/open-toolchain/microservices-helm-toolchain)
+* [Develop a microservices application with Kubernetes and Helm](https://github.com/open-toolchain/microservices-helm-toolchain)
+* [Grant permissions to a user to view logs in LogDNA](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam)
+* [Grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam_work)
