@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-04-23"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -296,7 +296,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
    ```sh
    # ~/.terraformrc
    providers {
-     ibm = "/opt/provider/terraform-provider-ibm"
+     ibm = "/opt/provider/terraform-provider-ibm_VERSION"
    }
    ```
    {: codeblock}
@@ -475,6 +475,8 @@ Once Terraform completes, it will have created:
 * a Kubernetes secret with the database credentials
 * a storage
 * a Kubernetes secret with the storage credentials
+* a logging(LogDNA) instance
+* a monitoring(Sysdig) instance
 * a `development.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
 * the environment specific `terraform.tfstate` under `terraform.tfstate.d/development`.
 
@@ -488,9 +490,9 @@ For the *Development* environment as defined in [this tutorial](https://{DomainN
 
 |           | IAM Access policies |
 | --------- | ----------- |
-| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
+| Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> |
 | Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> |
-| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Monitoring: *Administrator, Editor, Viewer*</li></ul> |
+| Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> |
 | Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> |
 
 Given a team may be composed of several developers, testers, you can leverage the [access group concept](https://{DomainName}/docs/iam?topic=iam-groups#groups) to simplify the configuration of user policies. Access groups can be created by the account owner so that the same access can be assigned to all entities within the group with a single policy.
@@ -512,19 +514,37 @@ resource "ibm_iam_access_group_policy" "resourcepolicy_developer" {
   }]
 }
 
-resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
+resource "ibm_iam_access_group_policy" "developer_platform_accesspolicy" {
   access_group_id = "${ibm_iam_access_group.developer_role.id}"
-  roles           = ["Administrator","Editor","Viewer"]
+  roles        = ["Viewer"]
 
   resources = [{
-    service           = "monitoring"
     resource_group_id = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
+  }]
+}
+
+resource "ibm_iam_access_group_policy" "developer_logging_policy" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles           = ["Writer"]
+
+  resources = [{
+    service           = "logdna"
+    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.logdna_instance_id}"
+  }]
+}
+resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles           = ["Writer"]
+
+  resources = [{
+    service           = "sysdig-monitor"
+    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.sysdig_instance_id}"
   }]
 }
 
    ```
 
-The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/roles/development/main.tf) file of the checkout has examples of these resources for the defined *Developer*, *Operator* , *tester*, and *Functional User* roles. To set the policies as defined in a previous section for the users with the *Developer, Operator, Tester and Function user* roles in the *development* environment, 
+The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/roles/development/main.tf) file of the checkout has examples of these resources for the defined *Developer*, *Operator* , *tester*, and *Functional User* roles. To set the policies as defined in a previous section for the users with the *Developer, Operator, Tester and Function user* roles in the *development* environment,
 
 1. Change to the `terraform/roles/development` directory
 2. Copy the template `tfvars` file. There is one per environment (you can find the `production` and `testing` templates under their respective folders in `roles` directory)

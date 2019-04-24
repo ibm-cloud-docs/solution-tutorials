@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-04-23"
 ---
 
 {:shortdesc: .shortdesc}
@@ -79,41 +79,41 @@ To support a multi-cloud approach, Terraform works with providers. A provider is
   terraform
   ```
 
-2. Download the appropriate [{{site.data.keyword.Bluemix_notm}} Provider](https://github.com/IBM-Cloud/terraform-provider-ibm/releases) plugin for your system and extract the archive. You should see the  `terraform-provider-ibm` binary plugin file.
+2. Download the appropriate [{{site.data.keyword.Bluemix_notm}} Provider](https://github.com/IBM-Cloud/terraform-provider-ibm/releases) plugin for your system and extract the archive. You should see the  `terraform-provider-ibm_VERSION` binary plugin file.
 
 3. For non-Windows systems, create a `.terraform.d/plugins` directory in your user's home directory and to place the binary file inside of it. Use the following commands for reference.
 
   ```
   mkdir -p $HOME/.terraform.d/plugins
-  mv $HOME/Downloads/terraform-provider-ibm $HOME/.terraform.d/plugins/
+  mv $HOME/Downloads/terraform-provider-ibm_VERSION $HOME/.terraform.d/plugins/
   ```
-  
+
     On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.
-  
+
   - Run the below commands on a command prompt [Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
    ```
   MD %USERPROFILE%\AppData\terraform.d\plugins
    ```
   ```
-   MOVE PATH_TO_UNZIPPED_PROVIDER_FILE\terraform-provider-ibm.exe  %USERPROFILE%\AppData\terraform.d\plugins
+   MOVE PATH_TO_UNZIPPED_PROVIDER_FILE\terraform-provider-ibm_VERSION.exe  %USERPROFILE%\AppData\terraform.d\plugins
   ```
    - Launch **Windows Powershell** (Start + R > Powershell) and run the below command to create `terraform.rc` file
    ```
     echo > $env:APPDATA\terraform.rc
    ```
-   At the first prompt, enter the below content 
+   At the first prompt, enter the below content
    ```
     # ~/.terraformrc
     providers {
-        ibm = "PATH_TO_YOUR_APPDATA_PLUGINS/terraform-provider-ibm.exe"
+        ibm = "PATH_TO_YOUR_APPDATA_PLUGINS/terraform-provider-ibm_VERSION.exe"
     }
    ```
         The PATH_TO_YOUR_APPDATA_PLUGINS should be an absolute path with forward slash(/). For  example , `C:/Users/VMac/AppData/terraform.d/plugins/terraform-provider-ibm.exe`
         {: tip}
-  
+
   - Click enter to exit the prompt.
 
-## Prepare terraform configuration 
+## Prepare terraform configuration
 
 {: #terraformconfig}
 
@@ -135,9 +135,9 @@ In this section, you will learn the basics of a terraform configuration by using
      pbcopy < ~/.ssh/id_rsa.pub
      ```
      This command will copy the SSH to your clipboard, you can then past that into [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) under the `ssh_key` default variable around line 69.
-     
+
     On **Windows**, Download, install, launch [Git Bash](https://git-scm.com/download/win) and run the below command to copy the public SSH key to your clipboard.
-    
+
     ```
      clip < ~/.ssh/id_rsa.pub
     ```
@@ -153,7 +153,7 @@ In this section, you will learn the how to create a LAMP stack server from the t
     cd LAMP-terraform-ibm
    ```
    {: pre}
-2. Initialize the terraform configuration. This will also install `terraform-provider-ibm` plugin.
+2. Initialize the terraform configuration. This will also install `terraform-provider-ibm_VERSION` plugin.
    ````bash
     terraform init
    ````
@@ -177,7 +177,7 @@ In this section, you are going to look at how to scale the virtual server resour
  - Increase RAM(memory) to 4096
  - Increase disk size to 100GB
 
-2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable name for the org name and space name, then these two variable names used to retrieve the space guid in which needed to create the service. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, then you need a space guid, service fully qualified name and plan type. The code below will create a premium plan given it is a pay-as-you-go plan anyway. You can also use the Lite plan, but note that the Lite plan is limited to only one service per account. 
+2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable name for the org name and space name, then these two variable names used to retrieve the space guid in which needed to create the service. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, then you need a space guid, service fully qualified name and plan type. The code below will create a premium plan given it is a pay-as-you-go plan anyway. You can also use the Lite plan, but note that the Lite plan is limited to only one service per account.
 
    ```
    variable "org_name" {
