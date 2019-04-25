@@ -41,7 +41,7 @@ This tutorial uses the following products:
 * [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
 * [Identity and Access Management](https://{DomainName}/iam/#/users)
-* [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli)
+* [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 * [HashiCorp Terraform](https://www.terraform.io/)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
@@ -63,7 +63,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Overview of the available tools
 {: #tools}
 
-The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
+The first tool to interact with {{site.data.keyword.Bluemix_notm}} and to create repeatable deployments is the [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli). With `ibmcloud` and its plugins, you can automate the creation and configuration of your cloud resources. {{site.data.keyword.virtualmachinesshort}}, Kubernetes clusters, {{site.data.keyword.openwhisk_short}}, Cloud Foundry apps and services, you can provision all of them from the command line.
 
 Another tool introduced in [this tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform) is [Terraform](https://www.terraform.io/) by HashiCorp. Quoting HashiCorp, *Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.* It is infrastructure as code. You write down what your infrastructure should look like and Terraform will create, update, remove cloud resources as needed.
 
@@ -279,7 +279,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 
 ### Install {{site.data.keyword.Bluemix_notm}} CLI
 
-1. Follow [these instructions](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli) to install the CLI
+1. Follow [these instructions](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) to install the CLI
 1. Validate the installation by running:
    ```sh
    ibmcloud

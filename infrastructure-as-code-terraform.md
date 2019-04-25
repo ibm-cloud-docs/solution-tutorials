@@ -248,7 +248,7 @@ Delete resources using the following command:
    ```
    {: pre}
 
-**Note:** To delete resources, you would need SoftLayer admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
+**Note:** To delete resources, you would need Infrastructure admin permissions. If you don't have an admin superuser account, then please request to cancel the resources using the infrastructure dashboard. You can request to cancel a device from the infrastructure dashboard under the devices. ![object-storage](images/solution10/rm.png)
 
 ## Related content
 

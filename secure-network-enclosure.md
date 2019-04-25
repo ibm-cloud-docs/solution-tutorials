@@ -65,15 +65,15 @@ This tutorial may incur costs. The VRA is only available on a monthly pricing pl
 ## Before you begin
 {: #prereqs}
 
-### Configure the SoftLayer VPN
+### Configure the VPN access
 
-In this tutorial the network enclosure created is not visible on the public Internet. The VRA and any servers will only be accessible via the private network, and you will use your SoftLayer VPN for connectivity. 
+In this tutorial the network enclosure created is not visible on the public Internet. The VRA and any servers will only be accessible via the private network, and you will use yourll VPN for connectivity. 
 
 1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-gettingstarted-with-virtual-private-networking#gettingstarted-with-virtual-private-networking).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
-2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
+2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-set-up-ssl-vpn-connections#set-up-ssl-vpn-connections), [macOS](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-connect-to-ssl-vpn-mac-osx-10x-and-higher#connect-to-ssl-vpn-mac-osx-10x-and-higher) or [Windows](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-connect-to-ssl-vpn-windows-7-and-higher#connect-to-ssl-vpn-windows-7-and-higher).
 
    For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page](https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
@@ -192,26 +192,20 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 ## Order the first virtual server
 {: #order_virtualserver}
 
-When it is desired to create a new virtual or bare-metal server on a specific VLAN, it is necessary to use the **SoftLayer Device** menu on the **[SoftLayer Dashboard](https://control.softlayer.com/)**. This dialog allows the target VLAN to be specified when a new device is provisioned. Note you will be prompted to enter your IBM ID again. It is not possible to specify VLANs when ordering servers from the {{site.data.keyword.Bluemix_notm}} services catalog, or the default infrastructure console. 
-{:note}
-
 A virtual server is created at this point to aid in diagnosis of VRA configuration errors. Successful access to the VSI is validated over the {{site.data.keyword.Bluemix_notm}} private network before access to it is routed via the VRA in a later step. 
 
-1. Order a [virtual server](https://control.softlayer.com/devices)  
-2. Select **Public Virtual Server** and the billing type (hourly). 
-3. On the Virtual Server ordering page specify:
-   - **Data Center** (Data Center same as the VRA)
-   - **Flavor** – lowest cost is C1.1x1.25 'Compute' 
-   - **Operating System** – Take CentOS 7.x - Minimal
-   - **Uplink Port Speeds**. The network interface must be changed from the default of *public and private* to only specify a Private Network Uplink. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA.  
-   - Click **Add To Order**.
-3. On the Checkout screen:
-   * Validate or change the choices already made.
-   * VLAN Selection under the **Advanced System Configuration** heading. The 'Backend VLAN' drop down will show **Auto Assigned**, click the dialog box and select the VLAN ID of the private VLAN ordered earlier. Leave other fields as Auto Assigned. 
-   * Add the SSH Key under the **Advanced System Configuration** heading. Via the 'Server 1' drop down, select the SSH key you specified earlier. When selected it will appear under the heading 'Server 1'.  
-   * Set the VSI Hostname and Domain name. This domain name is not used for routing and DNS but should align with your network naming standards. 
-   * Click **Submit Order**.
-4. Click tick box to accept the 'Third-Party' service agreements, then **Provision**.
+1. Order a [virtual server](https://{DomainName}/catalog/infrastructure/virtual-server-group)  
+2. Select **Public Virtual Server** and continue.
+3. On the order page:
+   - Set **Billing** to **Hourly**.
+   - Set the *VSI Hostname* and *Domain name*. This domain name is not used for routing and DNS but should align with your network naming standards. 
+   - Set **Location** to the same as the VRA.
+   - Set **Profile** to **C1.1x1**
+   - Add the **SSH Key** you specified earlier.
+   - Set **Operating System** to **CentOS 7.x - Minimal**
+   - In **Uplink Port Speeds**, the network interface must be changed from the default of *public and private* to only specify a **Private Network Uplink**. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA.
+   - Set **Private VLAN** to the VLAN ID of the private VLAN ordered earlier.
+4. Click tick box to accept the 'Third-Party' service agreements, then **Create**.
 5. Monitor for completion on the [Devices](https://{DomainName}/classic/devices) page or via email. 
 6. Make note of the *Private IP address* of the VSI for a later step and that under the **Network** section on the **Device Details** page that the VSI is assigned to the correct VLAN. If not, delete this VSI and create a new VSI on the correct VLAN. 
 7. Verify successful access to the VSI via the {{site.data.keyword.Bluemix_notm}} private network using ping and SSH from your local workstation over the VPN.

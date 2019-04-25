@@ -47,7 +47,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-To complete this tutorial, you need the latest version of the [{{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-plug-ins#plug-ins).
+To complete this tutorial, you need the latest version of the [{{site.data.keyword.Bluemix_notm}} CLI](/docs/cli?topic=cloud-cli-ibmcloud-cli#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](/docs/cli?topic=cloud-cli-plug-ins).
 
 
 ## Service and Environment Setup
