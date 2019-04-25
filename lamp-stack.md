@@ -45,7 +45,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. Contact your infrastructure administrator to get the following permissions.
   * Network permission required to complete the **Public and Private Network Uplink**
 
-### Configure the SoftLayer VPN
+### Configure the VPN access
 
 1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-gettingstarted-with-virtual-private-networking#gettingstarted-with-virtual-private-networking).
 
