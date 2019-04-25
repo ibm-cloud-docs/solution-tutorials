@@ -54,7 +54,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 {: #prereqs}
 
 1. [Install Git](https://git-scm.com/)
-2. [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli)
+2. [Install {{site.data.keyword.Bluemix_notm}} CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 
 
 And to develop and run the application locally:
@@ -116,7 +116,7 @@ In this section, you will create a {{site.data.keyword.composeForMongoDB}} datab
   ```
   {: codeblock}
 
-  You can find more CLI commands [here.](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-ibmcloud_cli#ibmcloud_cli)
+  You can find more CLI commands [here.](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 
 2. Create an instance of {{site.data.keyword.composeForMongoDB}}. This can also be done using the [console UI](https://{DomainName}/catalog/services/compose-for-mongodb). The service name must be named **mean-starter-mongodb** as the application is configured to look for this service by this name.
 

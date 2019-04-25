@@ -57,7 +57,7 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 ## Before you begin
 {: #prereqs}
 
-* [IBM Cloud Developer Tools](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli) - Tool to install {{site.data.keyword.cloud_notm}} CLI, Kubernetes, Helm, and Docker.
+* [IBM Cloud Developer Tools](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Tool to install {{site.data.keyword.cloud_notm}} CLI, Kubernetes, Helm, and Docker.
 
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}

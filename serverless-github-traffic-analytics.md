@@ -34,7 +34,7 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-plug-ins#plug-ins).
+To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](/docs/cli?topic=cloud-cli-install-ibmcloud-cli).
 
 ## Service and Environment Setup (shell)
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
