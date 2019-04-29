@@ -184,6 +184,7 @@ With all servers in place, in this section you will set up the connectivity to a
          <td><strong>Protocol</strong></td>
          <td><strong>Value</strong></td>
       </tr>
+   </thead>
    <tbody>
       <tr>
          <td>Any - 0.0.0.0/0 </td>
@@ -212,6 +213,7 @@ With all servers in place, in this section you will set up the connectivity to a
          <td><strong>Protocol</strong></td>
          <td><strong>Value</strong></td>
       </tr>
+   </thead>
    <tbody>
       <tr>
          <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
@@ -237,6 +239,7 @@ Similar to the frontend, configure the security group for the backend.
          <td><strong>Protocol</strong></td>
          <td><strong>Value</strong></td>
       </tr>
+   </thead>
    <tbody>
       <tr>
          <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-frontend-sg</strong></td>

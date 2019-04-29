@@ -57,7 +57,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
-* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
+* [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster

@@ -193,12 +193,7 @@ In this section, you'll explore usage with the command line interface.
         ```
         {: pre}
 
-6. To view infrastructure devices, use the `sl` command. You can login to your infrastructure using the **Use Bluemix Single-Sign-On** option and accept the default API endpoint. Then use the `vs` command to review {{site.data.keyword.virtualmachinesshort}}.
-    ```sh
-    ibmcloud sl init
-    ```
-    {: pre}
-
+6. To view infrastructure devices, use the `sl` command. Then use the `vs` command to review {{site.data.keyword.virtualmachinesshort}}.
     ```sh
     ibmcloud sl vs list
     ```
@@ -296,7 +291,7 @@ While `billing` commands are helpful, trying to assemble a "big picture" view us
     {: pre}
 
     ```sh
-    curl -H "Authorization: Bearer $UAA_TOKEN" https://mccp.ng.bluemix.net/v2/organizations?q=name:$ORG_NAME
+    curl -H "Authorization: Bearer $UAA_TOKEN" https://mccp.us-south.cf.cloud.ibm.com/v2/organizations?q=name:$ORG_NAME
     ```
     {: pre}
 

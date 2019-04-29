@@ -61,15 +61,15 @@ The application is a simple PHP frontend - a Wordpress blog - with a MySQL datab
 ## Before you begin
 {: #prereqs}
 
-### Configure the SoftLayer VPN
+### Configure the VPN access
 
-In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they can be provisioned with only a private IP address and you will use your SoftLayer VPN connection to work on the servers.
+In this tutorial, the load balancer is the front door for the application users. The {{site.data.keyword.virtualmachinesshort}} do not need to be visible on the public Internet. Thus they can be provisioned with only a private IP address and you will use your VPN connection to work on the servers.
 
 1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-gettingstarted-with-virtual-private-networking#gettingstarted-with-virtual-private-networking).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
-2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
+2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/infrastructure/iaas-vpn?topic=VPN-setup-ssl-vpn-connections#setup-ssl-vpn-connections), [macOS](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx#connect-ssl-vpn-mac-osx) or [Windows](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7#connect-ssl-vpn-windows7).
 
 You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning {{site.data.keyword.virtualmachinesshort}}.
@@ -539,7 +539,7 @@ On both application servers, start the web server and the PHP runtime:
    systemctl start nginx
    ```
 
-Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the SoftLayer VPN connection) or the public IP address of *app1* or *app2*.
+Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the VPN connection) or the public IP address of *app1* or *app2*.
 ![Configure virtual server](images/solution14/wordpress.png)
 
 If you configured the application servers with only a private network link, you will not be able to install Wordpress plugins, themes or upgrades directly from the Wordpress admin console. You will need to upload the files through the Wordpress user interface.

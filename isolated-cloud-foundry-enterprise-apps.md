@@ -61,7 +61,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #prereq}
 
-- [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli)
+- [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 - [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
 - [Git](https://git-scm.com/downloads)
 - [Node.js](https://nodejs.org/en/)
