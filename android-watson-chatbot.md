@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-04-29"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -26,7 +26,7 @@ This tutorial walks you through the process of defining intents and entities and
 ## Objectives
 {: #objectives}
 
-- Use {{site.data.keyword.conversationshort}} to customize and deploy a chatbot. 
+- Use {{site.data.keyword.conversationshort}} to customize and deploy a chatbot.
 - Allow end users to interact with chatbot using voice and audio.
 - Configure and run the Android app.
 
@@ -186,9 +186,9 @@ An **assistant** is a cognitive bot that you can customize for your business nee
    1. Set **Name** to **android-chatbot-assistant**
    1. **Create**
 1. Use **Add Dialog skill** to select the skill created in the previous sections.
-   1. **Add existing skill** 
+   1. **Add existing skill**
    1. Select **Ana**
-1. Under **View API Details** for the assistant, make note of the **Assistant ID**, you will need to reference it from the mobile application( in the `config.xml` file of the Android app).
+1. Select the action menu on the Assistant > **Settings** > **API Details**, make note of the **Assistant ID**, you will need to reference it from the mobile application( in the `config.xml` file of the Android app).
 
 ## Configure and run the Android app
 {:#configure_run_android_app}
@@ -209,24 +209,24 @@ The repository contains Android application code with required gradle dependenci
        <!--Watson Assistant service credentials-->
        <!-- REPLACE `ASSISTANT_ID_HERE` with ID of the Assistant to use -->
        <string name="assistant_id">ASSISTANT_ID_HERE</string>
-   
+
        <!-- REPLACE `ASSISTANT_API_KEY_HERE` with Watson Assistant service API Key-->
        <string name="assistant_apikey">ASSISTANT_API_KEY_HERE</string>
-   
+
        <!-- REPLACE `ASSISTANT_URL_HERE` with Watson Assistant service URL-->
        <string name="assistant_url">ASSISTANT_URL_HERE</string>
-       
+
        <!--Watson Speech To Text(STT) service credentials-->
        <!-- REPLACE `STT_API_KEY_HERE` with Watson Speech to Text service API Key-->
        <string name="STT_apikey">STT_API_KEY_HERE</string>
-   
+
        <!-- REPLACE `STT_URL_HERE` with Watson Speech to Text service URL-->
        <string name="STT_url">STT_URL_HERE</string>
-   
+
        <!--Watson Text To Speech(TTS) service credentials-->
        <!-- REPLACE `TTS_API_KEY_HERE` with Watson Text to Speech service API Key-->
        <string name="TTS_apikey">TTS_API_KEY_HERE</string>
-   
+
        <!-- REPLACE `TTS_URL_HERE` with Watson Text to Speech service URL-->
        <string name="TTS_url">TTS_URL_HERE</string>
    </resources>
