@@ -67,6 +67,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 In this section, you will create and configure a bastion host along with a security group in a separate subnet.
 
 ### Create a subnet
+{: #create-bastion-subnet}
 
 1. Click **Subnets** under **Network** on the left pane, then **New subnet**.  
    * Enter **vpc-secure-bastion-subnet** as name, then select the VPC you created.  
@@ -226,6 +227,7 @@ In this section, you will create a private subnet with virtual server instance a
 If you already have virtual server instances in your VPC that you want to connect to, you can skip the next three sections and start [adding your virtual server instances to the maintenance security group](#add-vsi-to-maintenance).
 
 ### Create a subnet
+{: #create-private-subnet}
 
 To create a new subnet,
 
