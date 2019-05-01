@@ -74,7 +74,7 @@ In this tutorial the network enclosure created is not visible on the public Inte
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-set-up-ssl-vpn-connections#set-up-ssl-vpn-connections), [macOS](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-connect-to-ssl-vpn-mac-osx-10x-and-higher#connect-to-ssl-vpn-mac-osx-10x-and-higher) or [Windows](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-connect-to-ssl-vpn-windows-7-and-higher#connect-to-ssl-vpn-windows-7-and-higher).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/infrastructure/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx) or [Windows](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
 
    For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page](https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
    {:tip}
