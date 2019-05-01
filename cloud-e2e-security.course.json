@@ -26,7 +26,7 @@
         "answer": true
       },
       {
-        "question": "For increase security, data should be protected through encryption techniques.",
+        "question": "For increased security, data should be protected through encryption techniques.",
         "choices": [
           "At rest, when stored on disk.",
           "In transit, when exchanged across the network.",
