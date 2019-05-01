@@ -70,7 +70,7 @@ In this tutorial, the load balancer is the front door for the application users.
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
 2. Obtain your VPN Access credentials in [your profile page](https://control.softlayer.com/account/user/profile).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-setup-ssl-vpn-connections#set-up-ssl-vpn-connections), [macOS](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx#connect-to-ssl-vpn-mac-osx-10x-and-higher) or [Windows](https://{DomainName}/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7#connect-to-ssl-vpn-windows-7-and-higher).
+3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/infrastructure/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx) or [Windows](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
 
 You can choose to skip this step and make all your servers visible on the public Internet (although keeping them private provide an additional level of security). To make them public, select **Public and Private Network Uplink** when provisioning virtual servers.
 {: tip}
