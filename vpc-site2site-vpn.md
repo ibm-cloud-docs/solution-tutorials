@@ -178,6 +178,9 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:pre}
 
+   Depending on your environment, you may need to use `ssh -i <path to your private key file> root@ONPREMP_IP`.
+   {:tip}
+
 2. Next, on the machine **vpns2s-onprem-vsi**, execute the following commands to update the package manager and to install the strongSwan software.
 
    ```sh
