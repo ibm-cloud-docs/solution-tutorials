@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2019
-lastupdated: "2019-03-29"
+lastupdated: "2019-05-02"
 ---
 
 {:shortdesc: .shortdesc}
@@ -70,7 +70,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 
 - Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). You need the optional CLI infrastructure plugin.
 - Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
 - Install [**jq**](https://stedolan.github.io/jq/download/). It is used by the provided scripts to process JSON output.
 
@@ -177,6 +177,9 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ssh root@ONPREM_IP
    ```
    {:pre}
+
+   Depending on your environment, you may need to use `ssh -i <path to your private key file> root@ONPREMP_IP`.
+   {:tip}
 
 2. Next, on the machine **vpns2s-onprem-vsi**, execute the following commands to update the package manager and to install the strongSwan software.
 

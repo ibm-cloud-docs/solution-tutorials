@@ -122,7 +122,7 @@
             "PHP",
             "Object Storage"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-23"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -135,7 +135,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-29"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -209,7 +209,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2019-04-12"
+          "lastUpdated": "2019-04-29"
         },
         {
           "name": "Isolated Cloud Foundry Enterprise Apps",
@@ -244,7 +244,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2019-04-16"
+          "lastUpdated": "2019-04-22"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -257,7 +257,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-29"
         }
       ]
     },
@@ -483,7 +483,7 @@
             "Container Registry",
             "DevOps"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-19"
         },
         {
           "name": "Reviewing IBM Cloud services, resources and usage",
@@ -541,7 +541,7 @@
             "Network",
             "Virtual Servers"
           ],
-          "lastUpdated": "2019-03-29"
+          "lastUpdated": "2019-05-02"
         },
         {
           "name": "Securely access remote instances with a bastion host",
