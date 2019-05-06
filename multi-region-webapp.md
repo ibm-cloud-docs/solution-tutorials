@@ -82,7 +82,7 @@ In this step, you set up a git source control repository to store your code and 
    **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 6. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Hello World" to something else.
 7. Run the application locally by running the commands one after another
-  `npm install`, `npm build`,  `npm start ` and visit ```localhost:<port_number>```in your browser.
+  `npm install`, `npm build`,  `npm start ` and visit `localhost:<port_number>` in your browser.
   **<port_number>** as displayed on the console.
 8. Push the change to your repository with three simple steps: Add, commit, and push.
    ```bash
