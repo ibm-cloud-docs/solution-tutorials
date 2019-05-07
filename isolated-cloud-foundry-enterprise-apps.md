@@ -40,7 +40,7 @@ The tutorial will walk you through the process of creating and configuring an {{
 This tutorial uses the following runtimes and services:
 
 - [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
-- [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
+- [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -52,7 +52,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. Admin creates a CFEE instance, and adds users with developer access.
 2. Developer pushes a Node.js starter app to CFEE.
-3. Node.js starter app uses [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) to store data.
+3. Node.js starter app uses [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) to store data.
 4. Developer adds a new "welcome message" service.
 5. Node.js starter app binds the new service from a custom service broker.
 6. Node.js starter app displays "welcome" in different languages from the service.
