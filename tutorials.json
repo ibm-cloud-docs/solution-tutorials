@@ -25,21 +25,6 @@
           "lastUpdated": "2019-03-07"
         },
         {
-          "name": "Analyze logs and monitor the health of Kubernetes applications",
-          "url": "kubernetes-log-analysis-kibana.html",
-          "description": "Create a cluster and configuring the Log Analysis and the Monitoring service. Use Kibana to view and analyze logs and Grafana to view health and metrics.",
-          "imgSrc": "images/solution17/Architecture.png",
-          "tags": [
-            "Kubernetes",
-            "Container Service",
-            "Docker",
-            "Node.js",
-            "Log Analysis",
-            "Monitoring"
-          ],
-          "lastUpdated": "2019-03-07"
-        },
-        {
           "name": "Move a VM based application to Kubernetes",
           "url": "vm-to-containers-and-kubernetes.html",
           "description": "Take a VM based application, containerize it, deploy it to a Kubernetes cluster. Use the steps as a general guides for other applications.",
@@ -51,7 +36,7 @@
             "MySQL",
             "Java"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-15"
         },
         {
           "name": "Strategies for resilient applications",
@@ -84,7 +69,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2019-03-12"
+          "lastUpdated": "2019-04-15"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -137,7 +122,7 @@
             "PHP",
             "Object Storage"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-23"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -150,7 +135,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-29"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -214,9 +199,9 @@
           "lastUpdated": "2019-03-07"
         },
         {
-          "name": "Analyze logs and monitor health of Cloud Foundry applications",
+          "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
           "url": "application-log-analysis.html",
-          "description": "Use IBM Cloud Log Analysis to understand and diagnose application activities. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.",
+          "description": "Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.",
           "imgSrc": "images/solution12/Architecture.png",
           "tags": [
             "Cloud Foundry",
@@ -224,7 +209,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-29"
         },
         {
           "name": "Isolated Cloud Foundry Enterprise Apps",
@@ -259,7 +244,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-22"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -272,7 +257,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-29"
         }
       ]
     },
@@ -498,7 +483,7 @@
             "Container Registry",
             "DevOps"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-04-19"
         },
         {
           "name": "Reviewing IBM Cloud services, resources and usage",
@@ -530,7 +515,7 @@
             "Network",
             "Virtual Servers"
           ],
-          "lastUpdated": "2019-03-13"
+          "lastUpdated": "2019-04-02"
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -543,7 +528,20 @@
             "Network",
             "Virtual Servers"
           ],
-          "lastUpdated": "2019-03-13"
+          "lastUpdated": "2019-04-02"
+        },
+        {
+          "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
+          "url": "vpc-site2site-vpn.html",
+          "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.",
+          "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Network",
+            "Virtual Servers"
+          ],
+          "lastUpdated": "2019-05-02"
         },
         {
           "name": "Securely access remote instances with a bastion host",
@@ -556,7 +554,7 @@
             "Network",
             "Virtual Servers"
           ],
-          "lastUpdated": "2019-03-13"
+          "lastUpdated": "2019-04-02"
         },
         {
           "name": "Isolate workloads with a secure private network",

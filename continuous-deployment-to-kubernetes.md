@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-12"
+lastupdated: "2019-04-15"
 
 
 ---
@@ -283,7 +283,7 @@ In this step, you will clean up the resources to remove what you created above.
 
 Do you want to learn more? Here are some ideas of what you can do next:
 
-- [Analyze logs and monitor the health of Kubernetes applications using Kibana and Grafana](https://{DomainName}/docs/tutorials?topic=solution-tutorials-kubernetes-log-analysis-kibana#kubernetes-log-analysis-kibana).
+- [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 - Add a testing environment and deploy it to a 3rd cluster.
 - Deploy the production cluster [across multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 - Enhance your pipeline with additional quality controls and analyics using [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
@@ -292,11 +292,8 @@ Do you want to learn more? Here are some ideas of what you can do next:
 {: #related}
 
 * End to end Kubernetes solution guide, [moving VM based apps to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vm-to-containers-and-kubernetes#vm-to-containers-and-kubernetes).
-
 * [Security](https://{DomainName}/docs/containers?topic=containers-security#cluster) for IBM Cloud Container Service.
-
 * Toolchain [integrations](https://{DomainName}/docs/services/ContinuousDelivery?topic=ContinuousDelivery-integrations#integrations).
-
-* Analyze logs and monitor the health of Kubernetes applications using [Kibana and Grafana](https://{DomainName}/docs/tutorials?topic=solution-tutorials-kubernetes-log-analysis-kibana#kubernetes-log-analysis-kibana).
+* Analyze logs and monitor application health with [LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
 
 

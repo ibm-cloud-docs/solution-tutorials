@@ -24,20 +24,6 @@
                 ]
             },
             {
-                "name": "Analyze logs and monitor the health of Kubernetes applications",
-                "url": "kubernetes-log-analysis-kibana.html",
-                "description": "Create a cluster and configuring the Log Analysis and the Monitoring service. Use Kibana to view and analyze logs and Grafana to view health and metrics.",
-                "imgSrc": "images/solution17/Architecture.png",
-                "tags": [
-                    "Kubernetes",
-                    "Container Service",
-                    "Docker",
-                    "Node.js",
-                    "Log Analysis",
-                    "Monitoring"
-                ]
-            },
-            {
                 "name": "Move a VM based application to Kubernetes",
                 "url": "vm-to-containers-and-kubernetes.html",
                 "description": "Take a VM based application, containerize it, deploy it to a Kubernetes cluster. Use the steps as a general guides for other applications.",
@@ -199,23 +185,15 @@
                 ]
             },
             {
-                "name": "Analyze logs and monitor health of Cloud Foundry applications",
+                "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
                 "url": "application-log-analysis.html",
-                "description": "Use IBM Cloud Log Analysis to understand and diagnose application activities. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.",
+                "description": "Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.",
                 "imgSrc": "images/solution12/Architecture.png",
                 "tags": [
                     "Cloud Foundry",
                     "Python",
                     "Log Analysis",
                     "Availability Monitoring"
-                ]
-            },
-            {
-                "name": "Analyze metrics for an Ubuntu host",
-                "url": "/services/Monitoring-with-Sysdig/ubuntu#ubuntu",
-                "hidden": true,
-                "tags": [
-                    "Virtual Servers"
                 ]
             },
             {
@@ -518,9 +496,8 @@
             },
             {
                 "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
-                "hidden": true,
                 "url": "vpc-site2site-vpn.html",
-                "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services through private endpoints.",
+                "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.",
                 "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
                 "tags": [
                     "Infrastructure",

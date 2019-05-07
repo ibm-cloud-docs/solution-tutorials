@@ -1,0 +1,50 @@
+{
+  "quiz": {
+    "qa": [
+      {
+        "question": "",
+        "choices": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answer": 0
+      },
+      {
+        "question": "",
+        "answer": true
+      },
+      {
+        "question": "",
+        "choices": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answer": 0
+      },
+      {
+        "question": "",
+        "choices": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answer": 0
+      },
+      {
+        "question": "",
+        "choices": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answer": 0
+      }
+    ]
+  }
+}

@@ -19,9 +19,13 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=autoscale-virtual-server.md \
   --exclude=extended-cloud-security.md \
-  --exclude="vpc-site2site-vpn.md" \
-  --exclude="images/solution46-*" \
   --exclude=README.md \
+  --exclude="*.course.json" \
   --exclude=scripts \
   --exclude=.travis.yml . | (cd build && tar xvf - )
+
+# replace the private toc with the public version
+(cd build && rm -f toc && mv toc-public toc)
+
+# add all files
 (cd build && git add . && git commit -m "$COMMIT_MESSAGE" && git push)

@@ -33,7 +33,7 @@ You will simulate this pattern using a file processing example. First create a U
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.cos_full_notm}}](https://console.ng.bluemix.net/catalog/services/cloud-object-storage)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/catalog/infrastructure/containers-kubernetes)
 
@@ -57,7 +57,7 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 ## Before you begin
 {: #prereqs}
 
-* [IBM Cloud Developer Tools](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli) - Tool to install {{site.data.keyword.cloud_notm}} CLI, Kubernetes, Helm, and Docker.
+* [IBM Cloud Developer Tools](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Tool to install {{site.data.keyword.cloud_notm}} CLI, Kubernetes, Helm, and Docker.
 
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}

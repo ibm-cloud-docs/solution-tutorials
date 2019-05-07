@@ -40,7 +40,7 @@ The tutorial will walk you through the process of creating and configuring an {{
 This tutorial uses the following runtimes and services:
 
 - [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
-- [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
+- [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -52,7 +52,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. Admin creates a CFEE instance, and adds users with developer access.
 2. Developer pushes a Node.js starter app to CFEE.
-3. Node.js starter app uses [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant-nosql-db) to store data.
+3. Node.js starter app uses [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) to store data.
 4. Developer adds a new "welcome message" service.
 5. Node.js starter app binds the new service from a custom service broker.
 6. Node.js starter app displays "welcome" in different languages from the service.
@@ -61,7 +61,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #prereq}
 
-- [{{site.data.keyword.cloud_notm}} CLI](https://{DomainName}/docs/cli/reference/bluemix_cli?topic=cloud-cli-install-ibmcloud-cli#install-ibmcloud-cli)
+- [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 - [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
 - [Git](https://git-scm.com/downloads)
 - [Node.js](https://nodejs.org/en/)
@@ -473,15 +473,16 @@ While the welcome service uses Cloud Foundry as its implementation, you could ju
 
 With {{site.data.keyword.cfee_full_notm}} these alternate approaches are now possible.
 
-## Expand the tutorial
+## Deploy this solution tutorial using a Toolchain  
 
-Congratulations, you've deployed {{site.data.keyword.cfee_full_notm}} with a custom service broker and initial application. Below are additional suggestions to enhance CFEE.
+Optionally, you can deploy the complete solution tutorial using a toolchain. Follow the [toolchain instruction](https://github.com/IBM-Cloud/cfee-service-broker-kubernetes) to deploy all of above using a toolchain. 
 
-* Create a Kubernetes equivalent of the `welcome-service` by using the Dockerfile and deployment.yml as a template.
+Note: Some prerequisites when using a toolchain, you must have created a CFEE instance and created a CFEE org and CFEE space. Detailed instructions outlined in the [toolchain instruction](https://github.com/IBM-Cloud/cfee-service-broker-kubernetes) readme. 
 
 ## Related content
 {:related}
 
 * [Deploying apps in Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-app#app)
 * [Cloud Foundry Diego Components and Architecture](https://docs.cloudfoundry.org/concepts/diego/diego-architecture.html)
+* [CFEE Service Broker on Kubernetes with a Toolchain](https://github.com/IBM-Cloud/cfee-service-broker-kubernetes)
 

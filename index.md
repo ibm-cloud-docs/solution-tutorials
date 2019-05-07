@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-03-13"
+lastupdated: "2019-05-06"
 ---
 
 {:shortdesc: .shortdesc}
@@ -188,23 +188,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution2/Architecture.png" alt="Architecture diagram for the solution Scalable web app on Kubernetes"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-kubernetes-log-analysis-kibana#kubernetes-log-analysis-kibana">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Analyze logs and monitor the health of Kubernetes applications
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Create a cluster and configuring the Log Analysis and the Monitoring service. Use Kibana to view and analyze logs and Grafana to view health and metrics.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution17/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor the health of Kubernetes applications"/>
                 </div>
             </div>
         </div>
@@ -435,14 +418,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Analyze logs and monitor health of Cloud Foundry applications
+                Analyze logs and monitor application health with LogDNA and Sysdig
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Use IBM Cloud Log Analysis to understand and diagnose application activities. Generate, search, analyze and visualize different log types using Elasticsearch and Kibana.</p>
+                    <p>Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution12/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor health of Cloud Foundry applications"/>
+                    <img class="architectureDiagram" src = "images/solution12/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor application health with LogDNA and Sysdig"/>
                 </div>
             </div>
         </div>
@@ -496,7 +479,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Define intents, entities and build a dialog flow for the chatbot to respond to customer&#x27;s queries. Enable speech to text and text to speech services for easy interaction with the Android app.</p>
+                    <p>Define intents, entities and build a dialog flow for the chatbot to respond to customer's queries. Enable speech to text and text to speech services for easy interaction with the Android app.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution28-watson-chatbot-android/architecture.png" alt="Architecture diagram for the solution Build a voice-enabled Android chatbot"/>
@@ -847,6 +830,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
+    <a href = "/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn#vpc-site2site-vpn">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution46-vpc-vpn/ArchitectureDiagram.png" alt="Architecture diagram for the solution Use a VPC/VPN gateway for secure and private on-premises access to cloud resources"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
     <a href = "/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#vpc-secure-management-bastion-server">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
@@ -923,7 +923,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Create a private connection between a remote network environment and servers on IBM Cloud&#x27;s private network.</p>
+                    <p>Create a private connection between a remote network environment and servers on IBM Cloud's private network.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png" alt="Architecture diagram for the solution VPN into a secure private network"/>

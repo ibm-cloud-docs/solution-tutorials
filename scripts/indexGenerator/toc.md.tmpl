@@ -7,16 +7,16 @@ Solution Tutorials
     {: .navgroup id="learn"}
     index.md
 {{#each categories}}
-{{#unless hidden}}
+{{#if (or (not hidden) @root.includeHidden)}}
 
     {: .topicgroup}
     {{name}}
     {{#each solutions as |solution|}}
-    {{#unless hidden}}
+    {{#if (or (not hidden) @root.includeHidden)}}
         {{#tocLink solution}}{{/tocLink}}
-    {{/unless}}
+    {{/if}}
     {{/each}}
-{{/unless}}
+{{/if}}
 {{/each}}
     {: .navgroup-end}
     
@@ -24,7 +24,7 @@ Solution Tutorials
 {{#each tags as |tag|}}
     {: .topicgroup}
     {{tag}}
-{{#each ../categories}}{{#unless hidden}}{{#each solutions as |solution|}}{{#unless solution.hidden}}{{#hasTag solution tag}}        {{#tocLink solution}}{{/tocLink}}
-{{/hasTag}}{{/unless}}{{/each}}{{/unless}}{{/each}}
+{{#each ../categories}}{{#if (or (not hidden) @root.includeHidden)}}{{#each solutions as |solution|}}{{#if (or (not solution.hidden) @root.includeHidden)}}{{#hasTag solution tag}}        {{#tocLink solution}}{{/tocLink}}
+{{/hasTag}}{{/if}}{{/each}}{{/if}}{{/each}}
 {{/each}}
     {: .navgroup-end}
