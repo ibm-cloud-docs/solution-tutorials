@@ -282,7 +282,7 @@ To test that the VPN connection has been successfully established, use the simul
    {:pre}
    The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
 
-   Note that depending on deployment details this connection actually still succeeds. The reason is that intra-VPC connectivity is supported across zones. If you would deploy the simulated on-prem VSI to another VPC or to a [{{site.data.keyword.virtualmachinesfull}}](/docs/vsi?topic=virtual-servers-about-public-virtual-servers), the VPN would be needed for a successful access.
+   Note that depending on deployment details this connection actually still succeeds. The reason is that intra-VPC connectivity is supported across zones. If you would deploy the simulated on-prem VSI to another VPC or to [{{site.data.keyword.virtualmachinesfull}}](/docs/vsi?topic=virtual-servers-about-public-virtual-servers), the VPN would be needed for successful access.
    {:tip}
    
 5. In the "onprem" VSI terminal, start the VPN gateway again:
