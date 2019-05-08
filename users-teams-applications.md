@@ -40,7 +40,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
 * [Cloud Foundry](https://{DomainName}/catalog/?category=cf-apps&search=foundry)
-* [{{site.data.keyword.cloudantfull}}](https://{DomainName}/catalog/services/cloudant-nosql-db)
+* [{{site.data.keyword.cloudantfull}}](https://{DomainName}/catalog/services/cloudant)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
