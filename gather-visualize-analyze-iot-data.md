@@ -212,7 +212,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 {:removeresources}
 
 1. Navigate to [Resource List](https://{DomainName}/resources/) > choose the Location, Org and Space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
-2. Under **Services**, delete the respective Internet of Things Platform, Apache Spark, {{site.data.keyword.cloudant_short_notm}} and {{site.data.keyword.cos_full_notm}} services which you created for this tutorial.
+2. Under **Services**, delete the respective {{site.data.keyword.iot_full}}, {{site.data.keyword.iae_full_notm}}, {{site.data.keyword.cloudant_short_notm}} and {{site.data.keyword.cos_full_notm}} services which you created for this tutorial.
 
 ## Related content
 {:related}
