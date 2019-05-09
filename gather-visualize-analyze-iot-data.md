@@ -167,6 +167,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 2. Click **Add service**.
    1. Click **Add** on **{{site.data.keyword.iae_full_notm}}**.
    1. Select the **Lite** plan.
+   1. Select **AE 1.1 Spark** as software package
    1. Click **Create**.
 3. Select a resource group, change the service name if you want to and **Confirm**.
 1. Navigate to the `Detect Anomaly` project through **Projects**.
@@ -179,7 +180,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 2. Enter `Anomaly-detection-notebook` for the **Name**.
 3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio-python3.ipynb` in the **Notebook URL**.
 4. Select the **{{site.data.keyword.iae_full_notm}}** service associated previously as the runtime.
-5. Create **Notebook**. Set `Python 3.5 with Spark 2.1` as your Kernel. Check that the notebook is created with metadata and code.
+5. Create **Notebook**. Set `Python 3.5 with Spark 2.3 (YARN Client Mode)` as your Kernel. Check that the notebook is created with metadata and code.
    ![Jupyter Notebook Watson Studio](images/solution16/jupyter_notebook_watson_studio.png)
    To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
    {:tip}
