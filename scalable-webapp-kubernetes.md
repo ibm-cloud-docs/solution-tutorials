@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-09"
 ---
 
 {:shortdesc: .shortdesc}
@@ -201,14 +201,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 
    For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
 
-8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Initialize Helm by navigating to `chart\YOUR PROJECT NAME` and running the below command in your cluster
-
-   ```bash
-   helm init
-   ```
-   {: pre}
-   To upgrade helm, run this command `helm init --upgrade`
-   {:tip}
+8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install). 
 
 9. To install a Helm chart, change to the `chart\YOUR PROJECT NAME` directory and run the below command
   ```sh
