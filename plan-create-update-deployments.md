@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-04-29"
+lastupdated: "2019-05-09"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -480,7 +480,51 @@ Once Terraform completes, it will have created:
 * a `development.env` file under the `outputs` directory in your checkout. This file has environment variables you could reference in other scripts
 * the environment specific `terraform.tfstate` under `terraform.tfstate.d/development`.
 
-You can repeat the steps for the `testing` and `production`.
+You can repeat the steps for `testing` and `production`.
+
+### To reuse an existing resource group
+Instead of creating a new resource group, you can import an existing resource group into Terraform
+
+1. Retrieve the resource group ID
+   ```sh
+   ibmcloud resource group <resource_group_name> --id
+   ```
+   {: codeblock}
+1. Change to the `terraform/per-environment` folder of the checkout
+1. Copy the template `tfvars` file. There is one per environment:
+   ```sh
+   cp development.tfvars.tmpl development.tfvars
+   cp testing.tfvars.tmpl testing.tfvars
+   cp production.tfvars.tmpl production.tfvars
+   ```
+   {: codeblock}
+1. Initialize Terraform
+   ```sh
+   terraform init
+   ```
+   {: codeblock}
+1. Create a new Terraform workspace for the *development* environment
+   ```sh
+   terraform workspace new development
+   ```
+   {: codeblock}
+   Later to switch between environments use
+   ```sh
+   terraform workspace select development
+   ```
+   {: codeblock}
+1. After initializing Terraform, import the resource group into the Terraform state
+    ```sh
+    terraform import -var-file=../credentials.tfvars -var-file=development.tfvars ibm_resource_group.group <id>
+    ```
+    {: codeblock}
+1. Tune `development.tfvars` to match the existing resource group name and structure
+1. Apply the changes
+   ```sh
+   terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
+   ```
+   {: codeblock}
+You can repeat the steps for `testing` and `production`.
 
 ### Assign user policies
 
@@ -576,7 +620,7 @@ The [roles/development/main.tf](https://github.com/IBM-Cloud/multiple-environmen
    ```sh
    terraform apply -var-file=../../credentials.tfvars -var-file=development.tfvars
    ```
-You can repeat the steps for the `testing` and `production`.
+You can repeat the steps for `testing` and `production`.
 
 ## Remove resources
 
@@ -601,6 +645,9 @@ You can repeat the steps for the `testing` and `production`.
    terraform destroy -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
+
+    `terraform destroy` only removes the terraform state information related to a resource group as a resource group cannot be deleted by a user.
+    {:tip}
 1. Repeat the steps for the `testing` and `production` workspaces
 1. If you created it, destroy the organization
    ```sh
