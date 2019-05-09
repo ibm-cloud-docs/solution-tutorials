@@ -32,6 +32,7 @@ This tutorial uses the following runtimes and services:
 * [Node.js Application](https://{DomainName}/catalog/starters/sdk-for-nodejs)
 * [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience) with Spark service and {{site.data.keyword.cos_full_notm}}
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
+* [{{site.data.keyword.iae_full_notm}}](https://{DomainName}/catalog/services/analytics-engine)
 
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
@@ -96,7 +97,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
 {: #createcards}
-Next, you will create a board and cards to display device data in the dashboard. For more information about boards and cards, see [Visualizing real-time data by using boards and cards](https://console.ng.bluemix.net/docs/services/IoT/data_visualization.html).
+Next, you will create a board and cards to display device data in the dashboard.
 
 ### Create a board
 {: #createboard}
@@ -160,24 +161,24 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
 3. Cross-check the **Credentials** and then click **Create**.
 
-### Create an Apache Spark service
+### Create an {{site.data.keyword.iae_full_notm}} service
 
 1. Click **Services** on the top navigation bar > Compute Services.
 2. Click **Add service**.
-   1. Click **Add** on **Apache Spark**.
+   1. Click **Add** on **{{site.data.keyword.iae_full_notm}}**.
    1. Select the **Lite** plan.
    1. Click **Create**.
-3. Select an organization and a space, change the service name if you want to and **Confirm**.
+3. Select a resource group, change the service name if you want to and **Confirm**.
 1. Navigate to the `Detect Anomaly` project through **Projects**.
 1. In the **Settings**, scroll to **Associated services**.
-1. Click **Add service**, select **Spark**.
-1. Select the **Apache Spark** instance previously created.
+1. Click **Add service**, select **{{site.data.keyword.iae_full_notm}}**.
+1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created. If the service is not showing in the list, make sure it is fully provisioned first.
 
 ### Create a Jupyter (ipynb) notebook
 1. Click **+ Add to Project** and add a new **notebook**.
 2. Enter `Anomaly-detection-notebook` for the **Name**.
 3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio-python3.ipynb` in the **Notebook URL**.
-4. Select the **Apache Spark** service associated previously as the runtime.
+4. Select the **{{site.data.keyword.iae_full_notm}}** service associated previously as the runtime.
 5. Create **Notebook**. Set `Python 3.5 with Spark 2.1` as your Kernel. Check that the notebook is created with metadata and code.
    ![Jupyter Notebook Watson Studio](images/solution16/jupyter_notebook_watson_studio.png)
    To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
