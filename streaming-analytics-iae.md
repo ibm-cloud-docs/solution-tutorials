@@ -174,6 +174,10 @@ If the data is to be pasted paste the following after running the kafka-console-
 ## Running Spark Streaming Job on {{site.data.keyword.iae_short}} 
 {: #spark_ae}
 
+In this section you will run a Spark Streaming job on {{site.data.keyword.iae_short}} which will take a stream of data from Kakfa, perform some transformations, clean the data and then push the modified data to a {{site.data.keyword.cos_short}} bucket. 
+
+In the repository, sample data of Online Retail transactions is given. The data is cleaned by the code to remove all fields where `InvoiceNo` or `CustomerId` is null and if the `Quantity` is less than 0. An extra column is also added to the data which is the product of two rows ( `Quantity` and `UnitPrice`). The fields of a particular country (`Lithuania` ) are then filtered out and pushed to a {{site.data.keyword.cos_short}} bucket. 
+
 Clone the repository (Hyperlink to the file in the repository ) containing the sample code for submitting and running Spark Streaming on {{site.data.keyword.iae_short}}. Run the following commands to package the Scala program and copy it to  	{{site.data.keyword.iae_short}}. 
 
 1.	git clone (name of repository) 
