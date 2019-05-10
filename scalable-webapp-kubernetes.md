@@ -373,9 +373,9 @@ To create an autoscaler and to define your policy, run the below command
    ```sh
     kubectl autoscale deployment <nameofproject>-deployment --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
    ```
+   {: pre}
 
 Refer [scaling apps](https://cloud.ibm.com/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
-{:tip}
 
 ## Remove resources
 
