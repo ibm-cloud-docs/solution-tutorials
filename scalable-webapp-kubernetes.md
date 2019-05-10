@@ -378,7 +378,7 @@ kubectl autoscale deployment <nameofproject>-deployment --cpu-percent=<percentag
 Once the autoscaler is successfully created, you should see
 `horizontalpodautoscaler.autoscaling/<nameofproject>-deployment autoscaled`
 
-Refer [scaling apps](https://cloud.ibm.com/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
+Refer [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
 
 ## Remove resources
 
