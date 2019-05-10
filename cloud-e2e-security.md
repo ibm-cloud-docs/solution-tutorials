@@ -83,7 +83,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 
 1. Access the {{site.data.keyword.Bluemix_notm}} catalog and create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create). Note that there can only be one instance of {{site.data.keyword.at_short}} per region.
    * Set the **Service name** to **secure-file-storage-activity-tracker**.
-1. Ensure you have permissions assigned to manage the service instance by following [these instructions](/docs/services/Activity-Tracker-with-LogDNA?topic=logdnaat-iam_manage_events#admin_account_opt1).
+1. Ensure you have the right permissions assigned to manage the service instance by following [these instructions](/docs/services/Activity-Tracker-with-LogDNA?topic=logdnaat-iam_manage_events#admin_account_opt1).
 
 ### Create a cluster for the application
 
