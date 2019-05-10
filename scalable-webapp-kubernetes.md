@@ -371,9 +371,12 @@ With Kubernetes, you can enable [horizontal pod autoscaling](https://kubernetes.
 
 To create an autoscaler and to define your policy, run the below command
    ```sh
-    kubectl autoscale deployment <nameofproject>-deployment --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
+kubectl autoscale deployment <nameofproject>-deployment --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
    ```
    {: pre}
+
+Once the autoscaler is successfully created, you should see
+`horizontalpodautoscaler.autoscaling/<nameofproject>-deployment autoscaled`
 
 Refer [scaling apps](https://cloud.ibm.com/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
 
