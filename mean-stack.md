@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-11"
+lastupdated: "2019-05-13"
 ---
 
 {:shortdesc: .shortdesc}
@@ -24,7 +24,7 @@ This tutorial walks you through the creation of a web application using the popu
 - Create and run a starter Node.js app locally.
 - Create a managed database-as-a-service (DBasS).
 - Deploy the Node.js app to the cloud.
-- Scale MongoDB resources.
+- Scale MongoDB memory and disk resources.
 
 ## Services used
 
