@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-09"
+lastupdated: "2019-05-10"
 ---
 
 {:shortdesc: .shortdesc}
@@ -84,7 +84,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 2. When the cluster is ready, retrieve the cluster configuration by setting MYCLUSTER environment variable to your cluster name:
    ```bash
    export MYCLUSTER=<CLUSTER_NAME>
-   ibmcloud cs cluster-config ${MYCLUSTER}
+   ibmcloud ks cluster-config ${MYCLUSTER}
    ```
    {: pre}
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
@@ -114,7 +114,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 1. Do not add additional services.
 1. Do not add a DevOps toolchain, select **manual deployment**.
 
-This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes. 
+This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes.
 
 <!-- For an overview of the files generated, see [Project Contents Documentation](https://{DomainName}/docs/cloudnative/projects/java_project_contents.html#java-project-files). -->
 
@@ -201,7 +201,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 
    For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
 
-8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install). 
+8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
 
 9. To install a Helm chart, change to the `chart\YOUR PROJECT NAME` directory and run the below command
   ```sh
@@ -211,7 +211,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 10. Use `kubectl get service ${MYPROJECT}-service` for your Java application and `kubectl get service ${MYPROJECT}-application-service`  for your Node.js application to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 11. For the public IP of worker node, run the below command
    ```sh
-   ibmcloud cs workers ${MYCLUSTER}
+   ibmcloud ks workers ${MYCLUSTER}
    ```
    {: pre}
 12. Access the application at `http://worker-ip-address:portnumber/`.
@@ -229,7 +229,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 1. Identify your IBM-provided **Ingress domain**
    ```
-   ibmcloud cs cluster-get ${MYCLUSTER}
+   ibmcloud ks cluster-get ${MYCLUSTER}
    ```
    {: pre}
    to find
@@ -365,12 +365,20 @@ As load increases on your application, you can manually increase the number of p
    ```
    {: pre}
 
-After a shortwhile, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handles the load balancing between the two replicas. Horizontal scaling can also be made automatic.
+After a shortwhile, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handles the load balancing between the two replicas.
 
-Refer to Kubernetes documentation for manual and automatic scaling:
+With Kubernetes, you can enable [horizontal pod autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to automatically increase or decrease the number of instances of your apps based on CPU.
 
-   * [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
-   * [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
+To create an autoscaler and to define your policy, run the below command
+   ```sh
+kubectl autoscale deployment <nameofproject>-deployment --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
+   ```
+   {: pre}
+
+Once the autoscaler is successfully created, you should see
+`horizontalpodautoscaler.autoscaling/<nameofproject>-deployment autoscaled`
+
+Refer [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
 
 ## Remove resources
 
@@ -381,3 +389,5 @@ Refer to Kubernetes documentation for manual and automatic scaling:
 * [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
 <!-- * [IBM Cloud App Service](https://{DomainName}/docs/cloudnative/index.html#web-mobile) -->
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
+* [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
+* [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
