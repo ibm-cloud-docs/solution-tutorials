@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-13"
+lastupdated: "2019-05-15"
 ---
 
 {:shortdesc: .shortdesc}
@@ -15,7 +15,7 @@ lastupdated: "2019-05-13"
 # Modern web application using MEAN stack
 {: #mean-stack}
 
-This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a **N**ode.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and scale the database resources.  
+This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongo DB, **E**xpress web framework, **A**ngular front end framework and a **N**ode.js runtime. You will learn how to run a MEAN starter locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and scale the database resources.
 
 ## Objectives
 
@@ -58,48 +58,9 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 And to develop and run the application locally:
 1. [Install Node.js and NPM](https://nodejs.org/)
-2. [Install and run MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
 
-## Run MEAN app locally
 
-{: #runapplocally}
-
-In this section, you will run a local MongoDB database, clone a MEAN sample code, and run the application locally to use the local MongoDB database.
-
-{: shortdesc}
-
-1. Follow the instructions [here](https://docs.mongodb.com/manual/administration/install-community/) to install and run MongoDB database locally. Once installation completed, use the command below to confirm that **mongod** server is running.  Confirm your database is running with the following command.
-  ```sh
-  mongo
-  ```
-  {: codeblock}
-
-2. Clone the MEAN starter code.
-
-  ```sh
-  git clone https://github.com/IBM-Cloud/nodejs-MEAN-stack
-  cd nodejs-MEAN-stack
-  ```
-  {: codeblock}
-
-3. Install the required packages.
-
-  ```sh
-  npm install
-  ```
-  {: codeblock}
-
-4. Copy .env.example file to .env. Edit the information needed, at a minimum add your own SESSION_SECRET.
-
-5. Run node server.js to start your app
-  ```sh
-  node server.js
-  ```
-  {: codeblock}
-
-6. Access your application, create a new user and log in
-
-## Create instance of MongoDB database in the cloud
+## Create an instance of MongoDB database in the cloud
 
 {: #createdatabase}
 
@@ -107,7 +68,7 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} d
 
 {: shortdesc}
 
-1. Login to your {{site.data.keyword.cloud_notm}} account via the command line and target your {{site.data.keyword.cloud_notm}} account. 
+1. Login to your {{site.data.keyword.cloud_notm}} account via the command line and target your {{site.data.keyword.cloud_notm}} account.
 
   ```sh
   ibmcloud login
@@ -129,32 +90,61 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} d
   ibmcloud cf service mean-starter-mongodb
   ```
   {: codeblock}
- 
+
+
+## Run the MEAN app locally
+{: #runapplocally}
+
+In this section, you will clone a MEAN sample code and run the application locally to test the connection to the MongoDB database running on {{site.data.keyword.cloud_notm}}.
+{: shortdesc}
+
+1. Clone the MEAN starter code.
+  ```sh
+  git clone https://github.com/IBM-Cloud/nodejs-MEAN-stack
+  cd nodejs-MEAN-stack
+  ```
+  {: codeblock}
+1. Install the required packages.
+  ```sh
+  npm install
+  ```
+  {: codeblock}
+1. Copy .env.example file to .env.
+  ```sh
+   cp .env.example .env
+  ```
+  {: codeblock}
+1. In the .env file, add your own SESSION_SECRET. For MONGODB_URL and CERTIFICATE_BASE64, run the below command
+  ```sh
+   ibmcloud cf service-key mean-starter-mongodb "Service credentials-1"
+  ```
+  {: codeblock}
+   You can find the URL under mongodb -> composed and certificate_base64 under mongodb -> certificate in the returned JSON output.
+1. Run node server.js to start your app
+  ```sh
+  node server.js
+  ```
+  {: codeblock}
+1. Access your application, create a new user and log in
 
 ## Deploy app to the cloud
 
 {: #deployapp}
 
-In this section, you will deploy the node.js app to the {{site.data.keyword.cloud_notm}} that used the managed MongoDB database. The source code contains a [**manifest.yml**](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/manifest.yml) file that been configured to use the "mongodb" service created earlier. The application uses VCAP_SERVICES environment variable to access the MongoDB database credentials. This can be viewed in the [server.js file](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/server.js). 
-
+In this section, you will deploy the node.js app to the {{site.data.keyword.cloud_notm}} that used the managed MongoDB database. The source code contains a [**manifest.yml**](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/manifest.yml) file that been configured to use the "mongodb" service created earlier. The application uses VCAP_SERVICES environment variable to access the MongoDB database credentials. This can be viewed in the [server.js file](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/server.js). To check the VCAP_SERVICES, run `ibmcloud cf env mean-stack`.
 {: shortdesc}
 
 1. Push code to the cloud.
-
    ```sh
    ibmcloud cf push
    ```
-
    {: codeblock}
-
 2. Once the code been pushed, you should be able to view the app in your browser. A random host name been generated that can look like: `https://mean-random-name.mybluemix.net`. You can get your application URL from the console dashboard or command line.![Live App](images/solution7/live-app.png)
-
 
 ## Scaling MongoDB database resources
 {: #scaledatabase}
 
 If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
-
 {: shortdesc}
 
 1. Using the console **dashboard**, locate the **MongoDB** service instance and click until you are in the **Service Details**.
