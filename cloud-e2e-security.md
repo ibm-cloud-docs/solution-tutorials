@@ -304,7 +304,7 @@ Now that the application and its services have been successfully deployed, you c
 ## Optional: Use a custom domain and encrypt network traffic
 By default, the application is accessible on a generic hostname at a subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided. In the following section, you will upload an existing certificate to the {{site.data.keyword.cloudcerts_short}} and deploy it to the cluster. You will also update the app configuration to use the custom domain.
 
-An example of how to obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) is described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/).
+An example of how to obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) is described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates).
 {: tip}
 
 1. Create an instance of [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/certificate-manager)
@@ -382,4 +382,4 @@ If you share an account with other users, always make sure to delete only your o
 * [{{site.data.keyword.Bluemix_notm}} Platform security](https://{DomainName}/docs/overview?topic=overview-security#security)
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security)
 * [Tutorial: Best practices for organizing users, teams, applications](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
-* [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/)
+* [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates)
