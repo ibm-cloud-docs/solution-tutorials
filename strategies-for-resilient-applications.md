@@ -37,7 +37,7 @@ Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions or 
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
 * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
 * [{{site.data.keyword.BluVirtServers}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)

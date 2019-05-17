@@ -36,7 +36,7 @@ This tutorial walks you through the process setting up a continuous integration 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 - [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-- [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+- [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 - [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)
 - Slack
 
@@ -69,7 +69,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 To complete this tutorial you would need to select the **Paid** cluster of type **Standard**. You would be required to setup two clusters, one for development and one for production.
 {: shortdesc}
 
-1. Create the first development Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/containers-kubernetes/launch). Later you will be required to repeat these steps and create a production cluster.
+1. Create the first development Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create). Later you will be required to repeat these steps and create a production cluster.
 
    For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get.
    {:tip}

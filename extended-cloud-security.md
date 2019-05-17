@@ -34,7 +34,7 @@ walks you through key security services available in the {{site.data.keyword.clo
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}
-* /containers-kubernetes/catalog/cluster)
+* /kubernetes/catalog/cluster)
 * [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 * [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
@@ -96,7 +96,7 @@ You can find detailed instructions to set up the proper permissions in the [{{si
 Skip this section if you have an existing **Standard** cluster you want to reuse with this tutorial.
 {: tip}
 
-1. Go to the [cluster creation page](https://{DomainName}/containers-kubernetes/catalog/cluster/create).
+1. Go to the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create).
    1. Set the **Location** to the region you identified in previous steps.
    1. Set **Cluster type** to **Standard**.
    1. Set **Availability** to **Single Zone**.

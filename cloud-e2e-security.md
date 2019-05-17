@@ -92,7 +92,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 Skip this section if you have an existing **Standard** cluster you want to reuse with this tutorial.
 {: tip}
 
-1. Access the [cluster creation page](https://{DomainName}/containers-kubernetes/catalog/cluster/create).
+1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create).
    1. Set the **Location** to the one used in previous steps.
    2. Set **Cluster type** to **Standard**.
    3. Set **Availability** to **Single Zone**.
