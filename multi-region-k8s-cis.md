@@ -36,7 +36,7 @@ This tutorial highlights how Cloud Internet Services (CIS), a uniform platform t
 
 This tutorial uses the following runtimes and services:
 * IBM Cloud [Internet services](https://{DomainName}/catalog/services/internet-services)
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
+* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.

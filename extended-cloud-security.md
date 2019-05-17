@@ -35,7 +35,7 @@ walks you through key security services available in the {{site.data.keyword.clo
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}
 * /containers-kubernetes/catalog/cluster)
-* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
+* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 * [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
