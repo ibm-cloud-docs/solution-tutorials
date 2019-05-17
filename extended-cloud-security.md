@@ -72,7 +72,7 @@ The tutorial features a sample application that enables groups of users to uploa
 ### Decide where to deploy the application
 
 1. Identify **a region**, **a Cloud Foundry organization and a space**, and **a resource group** where you will deploy the application and its resources.
-1. Make sure you have [one private repository](https://{DomainName}/containers-kubernetes/registry/private) to push Docker images in the selected region.
+1. Make sure you have [one private repository](https://{DomainName}/kubernetes/registry/main/private) to push Docker images in the selected region.
 
 ### Capture user and application activities 
 {: #activity-tracker }

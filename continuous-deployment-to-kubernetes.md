@@ -212,7 +212,7 @@ In this step, you will explore the [Vulnerability Advisor](https://{DomainName}/
                                                               server private key.
    ```
 
-   You can see the detailed vulnerability assessments of all the scanned repositories [here](https://{DomainName}/containers-kubernetes/registry/private)
+   You can see the detailed vulnerability assessments of all the scanned repositories [here](https://{DomainName}/kubernetes/registry/main/private)
    {:tip}
 
    The stage may fail saying the image *has not been scanned* if the scan for vulnerabilities takes more than 3 minutes. This timeout can be changed by editing the job script and increasing the number of iterations to wait for the scan results.
