@@ -1,7 +1,8 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-17"
+lasttested: "2019-05-17"
 ---
 
 {:shortdesc: .shortdesc}
@@ -34,7 +35,7 @@ There are many reasons why you would use a Content Delivery Network in these sit
 {: #services}
 
 This tutorial uses the following products:
-   * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
+   * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
    * [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
@@ -79,16 +80,22 @@ To start, retrieve the application code:
 1. Go to the [catalog](https://{DomainName}/catalog/) in the console, and select [**Object Storage**](https://{DomainName}/catalog/services/cloud-object-storage) from the Storage section.
 2. Create a new instance of {{site.data.keyword.cos_full_notm}}
 4. In the service dashboard, click **Create Bucket**.
+   * Set the **Resiliency** to **Regional**.
 5. Set a unique bucket name such as `username-mywebsite` and click **Create**. Avoid dots (.) in the bucket name.
+1. Select **Endpoint** in the left menu and identify the service endpoint to use with the bucket you created. As example for a bucket with resiliency set to _Regional_ in the _us-south_ region, the public service endpoint would be _s3.us-south.cloud-object-storage.appdomain.cloud_.
 
 ## Upload files to a bucket
 {: #upload}
 
 In this section, you will use the command line tool **curl** to upload files to the bucket.
 
-1. Log in to {{site.data.keyword.Bluemix_notm}} from the CLI and get a token from IBM Cloud IAM.
+1. Log in to {{site.data.keyword.Bluemix_notm}} from the CLI.
    ```sh
    ibmcloud login
+   ```
+   {: pre}
+1. Get a token from IBM Cloud IAM.
+   ```sh
    ibmcloud iam oauth-tokens
    ```
    {: pre}
@@ -97,10 +104,11 @@ In this section, you will use the command line tool **curl** to upload files to 
    IAM token:  Bearer <token>
    ```
    {: screen}
-3. Set the value of the token and bucket name to an environment variable for easy access.
+3. Set the value of the token, the bucket name and the service endpoint to an environment variable for easy access.
    ```sh
    export IAM_TOKEN=<REPLACE_WITH_TOKEN>
    export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
+   export SERVICE_ENDPOINT=<REPLACE_WITH_SERVICE_ENDPOINT>
    ```
    {: pre}
 4. Upload the files named `a-css-file.css`, `a-picture.png`, and `a-video.mp4` from the content directory of the web application code you downloaded previously. Upload the files to the root of the bucket.
@@ -110,7 +118,7 @@ In this section, you will use the command line tool **curl** to upload files to 
   {: pre}
   ```sh
    curl -X "PUT" \
-         "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-picture.png" \
+         "https://$SERVICE_ENDPOINT/$BUCKET_NAME/a-picture.png" \
         -H "x-amz-acl: public-read" \
         -H "Authorization: Bearer $IAM_TOKEN" \
         -H "Content-Type: image/png" \
@@ -119,7 +127,7 @@ In this section, you will use the command line tool **curl** to upload files to 
   {: pre}
   ```sh
    curl -X "PUT" \
-         "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-css-file.css" \
+         "https://$SERVICE_ENDPOINT/$BUCKET_NAME/a-css-file.css" \
         -H "x-amz-acl: public-read" \
         -H "Authorization: Bearer $IAM_TOKEN" \
         -H "Content-Type: text/css" \
@@ -128,7 +136,7 @@ In this section, you will use the command line tool **curl** to upload files to 
   {: pre}
   ```sh
    curl -X "PUT" \
-         "https://s3-api.us-geo.objectstorage.softlayer.net/$BUCKET_NAME/a-video.mp4" \
+         "https://$SERVICE_ENDPOINT/$BUCKET_NAME/a-video.mp4" \
         -H "x-amz-acl: public-read" \
         -H "Authorization: Bearer $IAM_TOKEN" \
         -H "Content-Type: video/mp4" \
@@ -139,7 +147,7 @@ In this section, you will use the command line tool **curl** to upload files to 
    ![](images/solution3/Buckets.png)
 6. Access the files through your browser by using a link similar to the following example:
 
-   `http://s3-api.us-geo.objectstorage.softlayer.net/YOUR_BUCKET_NAME/a-picture.png`
+   `http://<SERVICE_ENDPOINT>/<YOUR_BUCKET_NAME>/a-picture.png`
 
 ## Make the files globally available with a CDN
 
@@ -147,15 +155,15 @@ In this section, you will create a CDN service. The CDN service distributes cont
 
 ### Create a CDN instance
 
-1. Go to the catalog in the console, and select **Content Delivery Network** from the Network section. This CDN is powered by Akamai. Click **Create**.
+1. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
 2. On the next dialog, set the **Hostname** for the CDN to your custom domain. Although you set a custom domain, you can still access the CDN contents through the IBM provided CNAME. So if you don't plan to use custom domain, you can set an arbitrary name.
 3. Set the **Custom CNAME** prefix to a unique value.
 4. Next, under **Configure your origin**, select **Object Storage** to configure the CDN for COS.
-5. Set the **Endpoint** to your bucket API endpoint, such as *s3-api.us-geo.objectstorage.softlayer.net*.
+5. Set the **Endpoint** to your bucket API endpoint, such as *s3.us-south.cloud-object-storage.appdomain.cloud*.
 6. Leave **Host header** and **Path** empty. Set **Bucket name** to *your-bucket-name*.
 7. Enable both HTTP (80) and HTTPS (443) ports.
 8. For **SSL certificate** select *DV SAN Certificate* if you want to use a custom domain. Else, for accessing the storage via CNAME, pick the **Wildcard Certificate* option.
-9. Click **Create**.
+9. Accept the **Master Service Agreement** and click **Create**.
 
 ### Access your content through the CDN CNAME
 
@@ -197,13 +205,11 @@ Using a CDN with {{site.data.keyword.cos_full_notm}} is a powerful combination w
 ## Remove resources
 
 * Delete the Cloud Foundry application
-* Delete the Content Delivery Network service
+* Delete the {{site.data.keyword.cdn_full}} service
 * Delete the {{site.data.keyword.cos_full_notm}} service or bucket
 
 ## Related content
 
-[{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
-
-[Manage Access to {{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage/iam?topic=cloud-object-storage-getting-started-with-iam#getting-started-with-iam)
-
-[Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN?topic=CDN-getting-started#getting-started)
+* [{{site.data.keyword.cos_full_notm}}](/docs/services/cloud-object-storage)
+* [Manage Access to {{site.data.keyword.cos_full_notm}}](/docs/services/cloud-object-storage?topic=cloud-object-storage-iam)
+* [Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN?topic=CDN-getting-started#getting-started)
