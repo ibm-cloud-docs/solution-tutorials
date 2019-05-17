@@ -50,7 +50,7 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.vpn_full}}](https://{DomainName}/vpc/provision/vpngateway)
 - [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 Although there are no networking charges for accessing COS from the micro service in this tutorial, standard networking charges for access to the VPC will be incurred.
 
 ## Architecture

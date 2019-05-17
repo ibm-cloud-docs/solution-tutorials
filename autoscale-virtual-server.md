@@ -56,7 +56,7 @@ This tutorial uses billable components of IBM Cloud Platform, including:
 - Auto Scale
 - BlazeMeter
 
-Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.  
+Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.  
 
 ## Before you begin
 {: #prereqs}

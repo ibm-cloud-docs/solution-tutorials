@@ -36,7 +36,7 @@ This tutorial uses the following runtimes and services:
    * {{site.data.keyword.DSX_full}}
    * {{site.data.keyword.cos_full_notm}}
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Service and Environment Setup
 Start by provisioning the services used in this tutorial and create a project within {{site.data.keyword.DSX_short}}.

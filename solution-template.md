@@ -54,7 +54,7 @@ This tutorial uses the following runtimes and services:
 * [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
 * [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}

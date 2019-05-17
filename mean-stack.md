@@ -35,7 +35,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 - [{{site.data.keyword.databases-for-mongodb_full_notm}}](https://{DomainName}/catalog/services/databases-for-mongodb)
 - [{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)
 
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 

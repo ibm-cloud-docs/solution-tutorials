@@ -42,7 +42,7 @@ This tutorial uses the following runtimes and services:
 * [Cloud Foundry](https://{DomainName}/catalog/?category=cf-apps&search=foundry)
 * [{{site.data.keyword.cloudantfull}}](https://{DomainName}/catalog/services/cloudant)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Define a project
 

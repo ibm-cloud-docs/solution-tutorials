@@ -41,7 +41,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query)
 * [{{site.data.keyword.streaminganalyticsshort}}](https://{DomainName}/catalog/services/streaming-analytics)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
