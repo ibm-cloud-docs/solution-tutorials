@@ -57,7 +57,7 @@ Contact your Infrastructure master user to get the following permissions:
 
 {: #prereq}
 
-Install **Terraform** via [installer](https://www.terraform.io/intro/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
+Install **Terraform** via [installer](https://learn.hashicorp.com/terraform/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
 
 On **Windows**, follow these steps to complete terraform setup:
    1. Copy files from the downloaded zip to `C:\terraform` (create a folder `terraform`).
