@@ -34,8 +34,8 @@ This tutorial walks you through key security services available in the {{site.da
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
-* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
+* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 * [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
@@ -43,7 +43,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/key-protect)
 * Optional: [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/certificate-manager)
 
-This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?topic=account-accounts#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?topic=account-accounts#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -92,7 +92,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 Skip this section if you have an existing **Standard** cluster you want to reuse with this tutorial.
 {: tip}
 
-1. Access the [cluster creation page](https://{DomainName}/containers-kubernetes/catalog/cluster/create).
+1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create).
    1. Set the **Location** to the one used in previous steps.
    2. Set **Cluster type** to **Standard**.
    3. Set **Availability** to **Single Zone**.

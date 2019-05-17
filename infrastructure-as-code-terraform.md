@@ -32,7 +32,7 @@ This tutorial uses the following runtimes and services:
 ](https://{DomainName}/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -57,7 +57,7 @@ Contact your Infrastructure master user to get the following permissions:
 
 {: #prereq}
 
-Install **Terraform** via [installer](https://www.terraform.io/intro/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
+Install **Terraform** via [installer](https://learn.hashicorp.com/terraform/getting-started/install.html) or use [Homebrew](https://brew.sh/) on macOS by running the command: `brew install terraform`
 
 On **Windows**, follow these steps to complete terraform setup:
    1. Copy files from the downloaded zip to `C:\terraform` (create a folder `terraform`).
@@ -170,14 +170,14 @@ In this section, you will learn the how to create a LAMP stack server from the t
 
 {: #modify}
 
-In this section, you are going to look at how to scale the virtual server resource and add an [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage) service to your infrastructure environment.
+In this section, you are going to look at how to scale the virtual server resource and add an [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage) service to your infrastructure environment.
 
 1. Edit the `vm.tf` file to increase the following and the save the file.
  - Increase number of CPU cores to 4 cores
  - Increase RAM(memory) to 4096
  - Increase disk size to 100GB
 
-2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable name for the org name and space name, then these two variable names used to retrieve the space guid in which needed to create the service. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, then you need a space guid, service fully qualified name and plan type. The code below will create a premium plan given it is a pay-as-you-go plan anyway. You can also use the Lite plan, but note that the Lite plan is limited to only one service per account.
+2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable name for the org name and space name, then these two variable names used to retrieve the space guid in which needed to create the service. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, then you need a space guid, service fully qualified name and plan type. The code below will create a premium plan given it is a pay-as-you-go plan anyway. You can also use the Lite plan, but note that the Lite plan is limited to only one service per account.
 
    ```
    variable "org_name" {

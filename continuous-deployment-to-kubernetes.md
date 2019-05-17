@@ -35,12 +35,12 @@ This tutorial walks you through the process setting up a continuous integration 
 
 This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
-- [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
-- [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+- [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
+- [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 - [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)
 - Slack
 
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -69,7 +69,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 To complete this tutorial you would need to select the **Paid** cluster of type **Standard**. You would be required to setup two clusters, one for development and one for production.
 {: shortdesc}
 
-1. Create the first development Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/containers-kubernetes/launch). Later you will be required to repeat these steps and create a production cluster.
+1. Create the first development Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create). Later you will be required to repeat these steps and create a production cluster.
 
    For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get.
    {:tip}
@@ -212,7 +212,7 @@ In this step, you will explore the [Vulnerability Advisor](https://{DomainName}/
                                                               server private key.
    ```
 
-   You can see the detailed vulnerability assessments of all the scanned repositories [here](https://{DomainName}/containers-kubernetes/registry/private)
+   You can see the detailed vulnerability assessments of all the scanned repositories [here](https://{DomainName}/kubernetes/registry/main/private)
    {:tip}
 
    The stage may fail saying the image *has not been scanned* if the scan for vulnerabilities takes more than 3 minutes. This timeout can be changed by editing the job script and increasing the number of iterations to wait for the scan results.

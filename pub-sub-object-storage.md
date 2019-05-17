@@ -35,9 +35,9 @@ You will simulate this pattern using a file processing example. First create a U
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/catalog/infrastructure/containers-kubernetes)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -62,7 +62,7 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
 
-1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/containers-kubernetes/launch). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster.
+1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/kubernetes/catalog/cluster/create). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster.
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution25/KubernetesClusterCreation.png)
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 

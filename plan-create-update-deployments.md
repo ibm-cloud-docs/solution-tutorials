@@ -39,12 +39,12 @@ Multiple environments are pretty common in a project to support the different ph
 
 This tutorial uses the following products:
 * [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [Identity and Access Management](https://{DomainName}/iam/#/users)
 * [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 * [HashiCorp Terraform](https://www.terraform.io/)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -139,7 +139,7 @@ EOF
 
 There are different approaches to manage multiple environments with Terraform. You could duplicate the Terraform files under separate directories, one directory per environment. With [Terraform modules](https://www.terraform.io/docs/modules/index.html) you could factor common configuration as a group and reuse modules across environments - reducing the code duplication. Separate directories mean you can evolve the *development* environment to test changes and then propagate the changes to other environments. It is common in this case to also have the Terraform *modules* in their own source code repository so that you can reference a specific version of a module in your environment files.
 
-Given the environments are rather simple and similar, you are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#best-practices). Workspaces allow you to use the same terraform files (.tf) with different environments. In the example, *development*, *testing* and *production* are workspaces. They will use the same Terraform definitions but with different configuration variables (different names, different capacities).
+Given the environments are rather simple and similar, you are going to use another Terraform concept called [workspaces](https://www.terraform.io/docs/state/workspaces.html#when-to-use-multiple-workspaces). Workspaces allow you to use the same terraform files (.tf) with different environments. In the example, *development*, *testing* and *production* are workspaces. They will use the same Terraform definitions but with different configuration variables (different names, different capacities).
 
 Each environment requires:
 * a dedicated Cloud Foundry space
@@ -288,7 +288,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 
 ### Install Terraform and the {{site.data.keyword.Bluemix_notm}} provider for Terraform
 
-1. [Download and install Terraform for your system.](https://www.terraform.io/intro/getting-started/install.html)
+1. [Download and install Terraform for your system.](https://learn.hashicorp.com/terraform/getting-started/install.html)
 1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
    To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup)
    {:tip}

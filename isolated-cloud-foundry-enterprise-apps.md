@@ -42,7 +42,7 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
 - [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -82,7 +82,7 @@ In this section, you'll create an instance of {{site.data.keyword.cfee_full_notm
    - Select a public Cloud Foundry **Organization** and **Space** where **{{site.data.keyword.composeForPostgreSQL}}** will be deployed.
    - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. At least **2** cells are required for highly available applications.
    - Select the **Machine type**, which determines the size of the Cloud Foundry cells (CPU and memory).
-4. Review the **Infrastructure** section to view the properties of the Kubernetes cluster supporting CFEE. The **Number of worker nodes** equals the number of cells plus 2. Two of the provisioned Kubernetes worker nodes act as the CFEE control plane. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{DomainName}/containers-kubernetes/clusters) dashboard.
+4. Review the **Infrastructure** section to view the properties of the Kubernetes cluster supporting CFEE. The **Number of worker nodes** equals the number of cells plus 2. Two of the provisioned Kubernetes worker nodes act as the CFEE control plane. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{DomainName}/kubernetes/clusters) dashboard.
 5. Click the **Create** button to begin automated deployment.
 
 The automated deployment takes approximately 90 to 120 minutes. Once successfully created, you'll receive an email confirming the provisioning of CFEE and supporting services.
@@ -264,7 +264,7 @@ Now that you've deployed the service broker, confirm it functions properly. You'
 
 This section will confirm that Kubernetes artifacts are configured using {{site.data.keyword.containershort_notm}} dashboard.
 
-1. From the [Kubernetes Clusters](https://{DomainName}/containers-kubernetes/clusters) page, access your CFEE cluster by clicking the row item beginning with your CFEE service's name and ending with **-cluster**.
+1. From the [Kubernetes Clusters](https://{DomainName}/kubernetes/clusters) page, access your CFEE cluster by clicking the row item beginning with your CFEE service's name and ending with **-cluster**.
 2. Open the **Kubernetes Dashboard** by clicking the corresponding button.
 3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply` in earlier steps.
 4. In the resulting dashboard, notice the following:

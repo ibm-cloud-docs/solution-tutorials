@@ -32,11 +32,11 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](https://
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.containerlong_notm}}](https://{DomainName}/kubernetes/landing)
-* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
+* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 * [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging)
 * [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}

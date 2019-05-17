@@ -36,10 +36,10 @@ This tutorial highlights how Cloud Internet Services (CIS), a uniform platform t
 
 This tutorial uses the following runtimes and services:
 * IBM Cloud [Internet services](https://{DomainName}/catalog/services/internet-services)
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -72,7 +72,7 @@ This tutorial deploys a Kubernetes application to clusters in multiple locations
 {: #create_cluster}
 
 To create a cluster:
-1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/containers-kubernetes/catalog/cluster/create).
+1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
 1. Set **Location** to **Dallas**.
 1. Select **Standard** cluster.
 1. Select one or more zones as **Location**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers?topic=containers-plan_clusters#ha_clusters).
@@ -142,7 +142,7 @@ Tag the image with the target registry:
 
 ### Deploy the application to the Kubernetes cluster
 
-At that stage, the cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/clusters) console.
+At that stage, the cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/clusters) console.
 
 1. Retrieve the configuration of the cluster:
    ```bash

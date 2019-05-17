@@ -37,12 +37,12 @@ Isolating the underlying resources, implementing governance and access policies,
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.iamlong}}](https://{DomainName}/docs/iam?topic=iam-iamoverview#iamoverview)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
 * [Cloud Foundry](https://{DomainName}/catalog/?category=cf-apps&search=foundry)
 * [{{site.data.keyword.cloudantfull}}](https://{DomainName}/catalog/services/cloudant)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Define a project
 
@@ -103,7 +103,7 @@ Let's start by building the Development environment.
    1. Create the Cloud Foundry services used by the project under this space
 1. [Create a resource group for the environment](https://{DomainName}/account/resource-groups).
 1. Create the services compatible with resource group like {{site.data.keyword.cos_full_notm}}, {{site.data.keyword.la_full_notm}}, {{site.data.keyword.mon_full_notm}}, and {{site.data.keyword.cloudant_short_notm}} in this group.
-1. [Create a new Kubernetes cluster](https://{DomainName}/containers-kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
+1. [Create a new Kubernetes cluster](https://{DomainName}/kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, make sure to select the resource group created above.
 1. Configure {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} to send logs and to monitor the cluster.
 
 The following diagram shows where the project resources are created under the account:
