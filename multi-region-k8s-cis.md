@@ -371,4 +371,4 @@ In addition, you can now control what content gets cached by CIS and how long it
 * [{{site.data.keyword.registrylong_notm}} Basic](https://{DomainName}/docs/services/Registry?topic=registry-registry_overview#registry_planning)
 * [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-cs_apps_tutorial#cs_apps_tutorial_lesson1)
 * [Best practice to secure traffic and internet application via CIS](https://{DomainName}/docs/infrastructure/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
-* [Improving App Availability with Multizone Clusters](https://www.ibm.com/blogs/bluemix/2018/06/improving-app-availability-multizone-clusters/)
+* [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)

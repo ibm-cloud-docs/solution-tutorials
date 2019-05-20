@@ -1,8 +1,8 @@
 ---
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-03-08"
-lasttested: "2019-03-08"
+  years: 2019
+lastupdated: "2019-06-15"
+lasttested: "2019-06-15"
 
 ---
 
@@ -18,8 +18,8 @@ lasttested: "2019-03-08"
 {:pre: .pre}
 {:important: .important}
 
-# TUTORIAL TITLE
-{: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
+# Deploy applications on VSI in VPC
+{: #vpc-app-deploy}
 
 This tutorial...
 {:shortdesc}
@@ -61,7 +61,7 @@ intro sentence
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution1/Architecture.png)
+  ![Architecture](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
 </p>
 
 1. The user does this

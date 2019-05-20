@@ -1,7 +1,8 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-20"
+lasttested: "2019-05-20"
 ---
 
 {:shortdesc: .shortdesc}
@@ -66,7 +67,6 @@ In this section, you will provision a public virtual server with a fixed configu
 3. Under **Image**, select **LAMP** latest version under **Ubuntu**. Even though this comes pre-installed with Apache, MySQL and PHP, you'll re-install PHP and MySQL with the latest version.
 4. Under **Network Interface** select the **Public and Private Network Uplink** option.
 5. Review the other configuration options and click **Provision** to create your virtual server.
-  ![Configure virtual server](images/solution4/ConfigureVirtualServer.png)
 
 After the server is created, you'll see the server login credentials. Although you can connect through SSH using the server public IP address, it is recommended to access the server through the Private Network and to disable SSH access on the public network.
 
@@ -79,8 +79,6 @@ After the server is created, you'll see the server login credentials. Although y
 
   You can find the server's private IP address and password in the dashboard.
   {:tip}
-
-  ![Virtual server created](images/solution4/VirtualServerCreated.png)
 
 ## Re-install Apache, MySQL, and PHP
 
@@ -107,17 +105,17 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
    {: pre}
    ![Verify Port](images/solution4/VerifyPort.png)
 3. Review the Apache, MySQL and PHP versions installed by using the following commands.
-  ```sh
-  apache2 -v
-  ```
-  {: pre}
-  ```sh
-  mysql -V
-  ```
-  {: pre}
-  ```sh
+   ```sh
+   apache2 -v
+   ```
+   {: pre}
+   ```sh
+   mysql -V
+   ```
+   {: pre}
+   ```sh
    php -v
-  ```
+   ```
    {: pre}
 4. Run the following script to secure the MySQL database.
   ```sh
@@ -212,16 +210,18 @@ Two basic monitoring types are available: SERVICE PING and SLOW PING.
 
 Since SERVICE PING is added by default, add SLOW PING monitoring with the following steps.
 
-1. From the dashboard, select your server from the list of devices and then click the **Monitoring** tab.
-  ![Slow Ping Monitoring](images/solution4/SlowPing.png)
+1. In the [Resource List](https://{DomainName}/resources), select your server from the list of devices and then click the **Monitoring** tab.
 2. Click **Manage Monitors**.
-3. Add the **SLOW PING** monitoring option and click **Add Monitor**. Select your public IP address for the IP address.
-  ![Add Slow Ping Monitoring](images/solution4/AddSlowPing.png)
+3. Select **Add Monitor**.
+   1. Select the **public IP address** of the server
+   1. Set Monitor Type to **SLOW PING** monitoring option and click **Add Monitor**.
+   1. Set **Notify** to **Notify Users**
+   1. Set **Notify Wait** to **Immediately**
 
-  **Note**: Duplicate monitors with the same configurations are not allowed. Only one monitor per configuration can be created.
+**Note**: Duplicate monitors with the same configurations are not allowed. Only one monitor per configuration can be created.
 
 If a response is not received in the allotted time frame, an alert is sent to the email address on the {{site.data.keyword.Bluemix_notm}} account.
-  ![Two Monitoring](images/solution4/TwoMonitoring.png)
+   ![Two Monitoring](images/solution4/TwoMonitoring.png)
 
 ### Server usage
 
@@ -236,12 +236,11 @@ Select the **Usage** tab to understand the current server's memory and CPU usage
 
 The vulnerability scanner scans the server for any vulnerabilities related to the server. To run a vulnerability scan on the server follow the steps below.
 
-1. From the dashboard, select your server and then click the **Security** tab.
+1. From the resource list, select your server and then click the **Security** tab.
 2. Click **Scan** to start the scan.
 3. After the scan completes, click **Scan Complete** to view the scan report.
-  ![Two Monitoring](images/solution4/Vulnerabilities.png)
 4. Review any reported vulnerabilities.
-  ![Two Monitoring](images/solution4/VulnerabilityResults.png)
+   ![Vulnerability Results](images/solution4/VulnerabilityResults.png)
 
 ### Firewalls
 

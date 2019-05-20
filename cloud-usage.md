@@ -331,6 +331,6 @@ While the data-driven approach provides the most flexibility in exploring usage,
 Use the following suggestions to expand your investigation into inventory and usage-related data.
 
 - Explore the `ibmcloud billing` commands with the `--output json` option. This will show additional data properties available and not covered in the tutorial.
-- Read the blog post [Using the {{site.data.keyword.cloud_notm}} command line to find resources](https://www.ibm.com/blogs/bluemix/2018/06/where-are-my-resources/) for more examples on `ibmcloud resource search` and which properties can be used in your queries.
+- Read the blog post [Using the {{site.data.keyword.cloud_notm}} command line to find resources](https://www.ibm.com/cloud/blog/where-are-my-resources) for more examples on `ibmcloud resource search` and which properties can be used in your queries.
 - Review the [Infrastructure Account APIs](https://softlayer.github.io/reference/services/SoftLayer_Account/) for addition APIs to investigate infrastructure usage.
 - Review the [jq Manual](https://stedolan.github.io/jq/manual/) for advanced queries to aggregate usage data.
