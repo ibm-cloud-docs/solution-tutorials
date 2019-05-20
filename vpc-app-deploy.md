@@ -21,51 +21,47 @@ lasttested: "2019-06-15"
 # Deploy applications on VSI in VPC
 {: #vpc-app-deploy}
 
-This tutorial...
 {:shortdesc}
+This tutorial will walk you through the following mechanisms for installing software onto a Virtual Server Instance, VSI on the Virtual Private Cloud for Classic, VPC.
 
 ## Objectives
 {: #objectives}
 
-* Makes statements on what developers will learn/achieve - not what will they do Solutions and Tasks
-* Short and informational (do not use sentences)
+* Understand the need for updating system software and open source software
+* Utilize manual steps for installing software
+* Identify automated processes that can be used for installing software
 
 ## Services used
 {: #services}
 
-<!-- Please Note when creating links:  
-
-For anchors within the same document always only use the following format:
-  [link_description](#anchor_name) 
-
-For anchors or any links to external documents, even for those are are within our tutorials use the following format: 
-  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview)
-
-If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
-
-Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/developing/writing?topic=writing-linking#linking
-
--->
-
 This tutorial uses the following runtimes and services:
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
-* [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
+- [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
+- [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
 
-intro sentence
+```
+ ---
+|   |
+|vsi| <--ibm cloud----> ibm cloud mirrors
+|   | <--internet-----> open source software packages: npm, pyPI, github, ...
+|   | <--on premises--> my own software package and data
+ ---
+  ^
+  |
+  +-- manual or automation drivers
+```
 
 <p style="text-align: center;">
-
   ![Architecture](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
 </p>
 
-1. The user does this
-2. Then that
+1. The user identifies the software that is required
+1. Manually practices the installation of the software
+1. Optionally automates the procedures using API, CLI, Terraform or Ansible
 
 ## Before you begin
 {: #prereqs}
@@ -75,67 +71,53 @@ intro sentence
 ## Create services
 {: #setup}
 
-In this section, you will create the services required to ...
+- Run the provided script or follow the steps mentioned in [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) only the public subnet and web server is required for this tutorial.
+- Optionally follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
-  ```sh
-  ibmcloud resource service-instance-create service-instance-name service-name lite global
-  ```
-3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
 
-## Solution Specific Section
+## General software installation principles
 {: #section_one}
+Software can generally be though of coming from the following places (align wording here with diagram above):
+- IBM cloud mirrors
+- Internet available respositories
+- On premises repositories
 
-Introductory statement that overviews the section
+IBM instances are initially populated with popular off the shelf operating systems.  Consider if upgrading the installed software is appropriate and do so if necessary.
+(pfq find the answers:)
+- How frequently are these upgraded?
+- What prompts IBM to create a new version?
+- Do we suggest customers upgrade instance OS software as part of their own initialization processes?
 
-1. Step 1 Click **This** and enter your name.
+For illustrative purposes the following software will be installed:
+- NGINX - an example open source software package
+- Static web site from github
+- Data uploaded from on premises
 
-  This is a tip.
-  {:tip}
-
-2. Keep each step as short as possible.
-3. Do not use blank lines between steps except for tips or images.
-4. *Avoid* really long lines like this one explaining a concept inside of a step. Do not offer optional steps or FYI inside steps. *Avoid* using "You can do ...". Be prescriptive and tell them exactly what to do succinctly, like a lab.
-5. Do not use "I", "We will", "Let's", "We'll", etc.
-6. Another step
-7. Try to limit to 7 steps.
-
-### A sub section
-
-   ```bash
-   some shellscript
-   ```
-   {: pre}
-
-
-This paragraph only appears in the iOS documentation
-{: ios}
-
-And this paragraph only appears in the Android documentation
-{: android}
-
-This paragraph only appears for Java code
-{: java}
-
-And this paragraph only appears for Swift code
-{: swift}
-
-
-## Another Solution Specific Section
+## Software installation using ssh
 {: #section_two}
 
-Introductory statement that overviews the section
+Using Centos as an example:
 
-### Another sub section
+Identify the VSI created above.  Modify the steps to use the bastion host as required:
+1. scp data.zip root@ip:<IP>
+1. ssh root@ip
+1. update repositories
+1. upgrade software intalled
+1. install nginx
+1. install git
+1. git clone static website repository
+1. unzip data.zip into the website
+1. systemctl ...nginx
+1. test
+
+## Repeat the same steps with cli
+{: #section_two}
+
+## Repeat the same steps with terraform
+{: #section_two}
+
+## Repeat the same steps with ansible
+{: #section_two}
 
 ## Remove resources
 {: #removeresources}
@@ -145,14 +127,11 @@ Steps to take to remove the resources created in this tutorial
 ## Expand the tutorial (this section is optional, remove it if you don't have content for it)
 
 Want to add to or change this tutorial? Here are some ideas:
-- idea with [link]() to resources to help implement the idea
-- idea with high level steps the user should follow
-- avoid generic ideas you did not test on your own
-- don't throw up ideas that would take days to implement
-- this section is optional
+- add a load balancer for high availability and zero down time software upgrades
+- install operating system patches
+- install new software/data from internet repositories
+- install new software/data from on premises
 
 ## Related content
 {: #related}
 
-* [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
-* [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
