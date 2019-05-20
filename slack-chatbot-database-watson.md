@@ -2,6 +2,7 @@
 copyright:
   years: 2018, 2019
 lastupdated: "2019-04-22"
+lasttested: "2019-04-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -178,6 +179,7 @@ Chatbot-related blog posts:
 * [Chatbots: Some tricks with slots in IBM Watson Conversation](https://www.ibm.com/cloud/blog/chatbots-some-tricks-with-slots-in-ibm-watson-conversation)
 * [Lively chatbots: Best Practices](https://www.ibm.com/blogs/bluemix/2017/07/lively-chatbots-best-practices/)
 * [Building chatbots: more tips and tricks](https://www.ibm.com/blogs/bluemix/2017/06/building-chatbots-tips-tricks/)
+* [Add Watson Discovery News to your Chatbot](https://www.ibm.com/cloud/blog/add-watson-discovery-news-to-your-chatbot)
 
 Documentation and SDKs:
 * GitHub repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
