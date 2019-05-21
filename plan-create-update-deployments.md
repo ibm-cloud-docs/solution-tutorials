@@ -228,7 +228,7 @@ resource "ibm_container_worker_pool_zone_attachment" "cluster_zone" {
 
 Again most of the properties will be initialized from configuration variables. You can adjust the datacenter, the number of workers, the type of workers.
 
-IAM-enabled services like {{site.data.keyword.cos_full_notm}} and {{site.data.keyword.cloudant_short_notm}} are created as resources within the group too:
+IAM-enabled services like {{site.data.keyword.cos_full_notm}} and {{site.data.keyword.cloudant_short_notm}} are also created as resources within the group:
 
    ```sh
 # a database
