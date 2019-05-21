@@ -157,7 +157,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
 1. Click on **Assets** > **+ Add to Project** > **Connection**  
 2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
-3. Cross-check the **Credentials** and then click **Create**.
+3. Verify the **Credentials** and then click **Create**.
 
 ### Create an {{site.data.keyword.iae_full_notm}} service
 

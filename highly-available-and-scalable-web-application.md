@@ -19,10 +19,10 @@ Adding more servers to an application is a common pattern to handle additional l
 This tutorial walks you through a scenario with the creation of:
 
 - Two web application servers in Dallas.
-- Cloud Load Balancer, to load balance traffic two servers within a location.
+- Cloud Load Balancer, to load balance traffic between two servers within a location.
 - One MySQL database server.
 - A durable file storage to store application files and backups.
-- Configure the second location with the first same configurations, then add Cloud Internet Services to point traffic to the healthy location if one copy fails.
+- Configure the second location with the same configurations as the first location, then add Cloud Internet Services to point traffic to the healthy location if one copy fails.
 
 ## Objectives
 {: #objectives}
@@ -246,7 +246,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    [Install]
    WantedBy = multi-user.target
    ```
-   Use Ctrl+X to save and exit the nano window
+   Use Ctrl+X to save and exit the `nano` window
    {: tip}
 
 5. Create the mount point
