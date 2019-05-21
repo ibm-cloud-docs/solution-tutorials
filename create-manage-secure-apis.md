@@ -1,7 +1,8 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-21"
+lasttested: "2019-05-21"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -46,7 +47,7 @@ This tutorial uses the following runtimes and services:
 
 ## Before you begin
 
-* Download and install [Node.js](https://nodejs.org/en/download/) version 6.x (use [nvm](https://github.com/creationix/nvm) or similar if you already have a more recent version of Node.js installed)
+* Download and install [Node.js](https://nodejs.org/en/download/) version 8.15.0, or a higher 8.x.x version. It is recommended to use [nvm](https://github.com/creationix/nvm) to manage your Node.js versions.
 
 ## Create a REST API in Node.js
 
@@ -55,11 +56,7 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
 
 ### Create application
 
-1. Install the {{site.data.keyword.apiconnect_short}} command line tool. If you have issues installing {{site.data.keyword.apiconnect_short}}, use `sudo` before the command or follow the instructions [here](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_prereq_install_toolkit#installing-the-api-connect-toolkit).
-    ```sh
-    npm install -g apiconnect
-    ```
-    {: pre}
+1. Follow the instructions [here](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_prereq_install_toolkit#installing-the-api-connect-toolkit) to install the {{site.data.keyword.apiconnect_short}} command line tool.
 2. Enter the following command to create the application.
     ```sh
     apic loopback --name entries-api
@@ -67,7 +64,6 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
     {: pre}
 3. Press `Enter` to use **entries-api** as the **name of your application**.
 4. Press `Enter` to use **entries-api** as the **directory to contain the project**.
-5. Choose **3.x (current)** as the **version of LoopBack**.
 6. Choose **empty-server** as the **kind of application**.
 
 ![APIC Loopback scaffolding](images/solution13/apic_loopback.png)
@@ -172,7 +168,7 @@ The application can also be manually deployed using the `ibmcloud cf push` comma
 7. In the API Designer UI, click **APIs > entries-api > Assemble** links.
 8. In the Assembly editor, click the **Filter policies** icon.
 9. Select **DataPower Gateway policies** and click **Save**.
-10. Click **Publish** on the top bar and select your target. Select **Publish application** and Stage or Publish Products > Select **Specific products** > **entries-api**.
+10. Click **Publish** on the top bar and select your target. Select **Publish application** and **Stage or Publish Products** > Select **Specific products** > **entries-api**.
 11. Click **Publish** and wait for the application to finish publishing.
     ![Publishing dialog](images/solution13/publish.png)
 
@@ -201,7 +197,7 @@ Until now, you have been designing and testing your API locally. In this section
 
 ![gateway](images/solution13/gateway.png)
 
-Your managed and secure API URL is displayed next to each operation and it should look like `https://us.apiconnect.ibmcloud.com/orgs/ORG-SPACE/catalogs/sb/api/entries`.
+Your managed and secure API URL is displayed next to each operation and it should look like `https://api.us-south.apiconnect.appdomain.cloud/ORG-SPACE/sb/api/entries`.
 {: tip}
 
 ## Rate Limiting
