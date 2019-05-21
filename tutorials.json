@@ -22,7 +22,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-10"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -82,7 +82,7 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-17"
         },
         {
           "name": "Asynchronous data processing using object storage and pub/sub messaging",
@@ -135,7 +135,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2019-04-29"
+          "lastUpdated": "2019-05-09"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -160,7 +160,7 @@
             "Node.js",
             "Compose for MongoDB"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-15"
         },
         {
           "name": "SQL Database for Cloud Data",
@@ -541,7 +541,7 @@
             "Network",
             "Virtual Servers"
           ],
-          "lastUpdated": "2019-05-02"
+          "lastUpdated": "2019-05-07"
         },
         {
           "name": "Securely access remote instances with a bastion host",

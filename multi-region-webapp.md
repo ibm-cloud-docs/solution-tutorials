@@ -2,6 +2,7 @@
 copyright:
   years: 2017, 2019
 lastupdated: "2019-03-07"
+lasttested: "2019-05-20"
 ---
 
 {:shortdesc: .shortdesc}
@@ -49,9 +50,7 @@ This tutorial involves an active/active scenario where two copies of the applica
 
 Start by creating a Node.js starter application that runs in a Cloud Foundry environment.
 
-1. Click **[Catalog](https://{DomainName}/catalog/)** in the {{site.data.keyword.Bluemix_notm}} console.
-2. Click **Cloud Foundry Apps** under the **Platform** category and select **[{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)** .
-     ![](images/solution1/SDKforNodejs.png)
+1. In the [**Catalog**](https://{DomainName}/catalog/), under the [**Compute**](https://{DomainName}/catalog?category=compute) category, select **[{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)**.
 3. Enter a **unique name** for your application, which will also be your host name, for example: myusername-nodeapp. And click **Create**.
 4.  After the application starts, click the **Visit URL** link on the **Overview** page to see your application LIVE on a new tab.
 
@@ -79,6 +78,7 @@ In this step, you set up a git source control repository to store your code and 
    git clone <your_repo_url>
    cd <name_of_your_app>
    ```
+   {: pre}
    **Note:** If you're prompted for a user name, provide your git user name. For the password, use an existing **SSH key** or **personal access token** or the one created you created in the previous step.
 6. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Now, let's update the code. Try changing "Hello World" to something else.
 7. Run the application locally by running the commands one after another
@@ -90,6 +90,7 @@ In this step, you set up a git source control repository to store your code and 
    git commit -m "my first changes"
    git push origin master
    ```
+   {: pre}
 9. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
 10. Confirm that you see n **BUILD** and **DEPLOY** stage.
   ![HelloWorld](images/solution1/DevOps_Pipeline.png)
@@ -109,9 +110,6 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
    ![HelloWorld](images/solution1/CloneStage.png)
 4. Rename stage to "Deploy to UK" and select **JOBS**.
 5. Change **IBM Cloud region** to **London - https://api.eu-gb.bluemix.net**. Create a **space** if you don't have one.
-6. Change **Deploy script** to `cf push "${CF_APP}" -d eu-gb.mybluemix.net`
-
-   ![HelloWorld](images/solution1/DeployToUK.png)
 7. Click **Save** and run the new stage by clicking the **Play button**.
 
 ## Register a custom domain with IBM Cloud Internet Services
@@ -120,7 +118,7 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 
 IBM [Cloud Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.  
 
-When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided mybluemix.net domain. In this step, after you have a custom domain, you can use the DNS servers provided by IBM Cloud Internet Services.
+When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided domain (_mybluemix.net_). In this step, after you have a custom domain, you can use the DNS servers provided by IBM Cloud Internet Services.
 
 1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
 2. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
@@ -140,7 +138,7 @@ In this section, you will use the Global Load Balancer (GLB) in IBM Cloud Intern
 ### Before creating a GLB, create a health check for the GLB.
 
 1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
-2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Instance**.
+2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Resource**.
    ![Health Check](images/solution1/health_check.png)
 
 ### After that, create an origin pool with two origins.
@@ -149,7 +147,7 @@ In this section, you will use the Global Load Balancer (GLB) in IBM Cloud Intern
 2. Enter a name for the pool, select the health check that you've just created, and a region that is close to the location of your node.js application.
 3. Enter a name for the first origin and the host name for the application in Dallas `<your_app>.mybluemix.net`.
 4. Similarly, add another origin with the origin address pointing to the application in London `<your_app>.eu-gb.mybluemix.net`.
-5. Click **Provision 1 Instance**.
+5. Click **Provision 1 Resource**.
    ![Origin Pool](images/solution1/origin_pool.png)
 
 ### Create a Global Load Balancer (GLB). 
@@ -157,7 +155,7 @@ In this section, you will use the Global Load Balancer (GLB) in IBM Cloud Intern
 1. Click **Create Load Balancer**.
 2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the location.
 3. Click **Add pool** and select the origin pool that you have just created.
-4. Click **Provision 1 Instance**.
+4. Click **Provision 1 Resource**.
    ![Global Load Balancer](images/solution1/load_balancer.png)
 
 At this stage, the GLB is configured but the Cloud Foundry applications are not ready yet to reply to requests from the configured GLB domain name. To complete the configuration, you will update the applications with routes using the custom domain.
@@ -169,11 +167,11 @@ At this stage, the GLB is configured but the Cloud Foundry applications are not 
 In this step, you will map the custom domain name to the secure endpoint for the {{site.data.keyword.Bluemix_notm}} location where your application is running.
 
 1. From the menu bar, click on **Manage** and then **Account**: [Account](https://{DomainName}/account).
-2. On the account page, navigate to application **Cloud Foundry Orgs**, and select **Domains** from the Actions column.
+2. On the account page, navigate to application **Cloud Foundry Orgs**, and select **Domains** from the Actions column of the organization where you deployed the application.
 3. Click **Add a domain** and enter your custom domain name acquired from the registrar.
-4. Select the right location and click **Save**.
+4. Select the right location and click **Add**.
 5. Similarly, add the custom domain name to London.
-6. Return to the {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), navigate to **Cloud Foundry Apps** and click on the application in Dallas, click **Route** > **Edit Routes**, and click **Add Route**.
+6. Return to the {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), navigate to **Cloud Foundry Apps** and click on the application in Dallas, click **Routes** > **Edit Routes**, and click **Add Route**.
    ![Add a route](images/solution1/ApplicationRoutes.png)
 7. Enter the GLB hostname you configured earlier in the **Enter host (optional)** field, and select the custom domain that you have just added. Click **Save**.
 8. Similarly, configure the domain and routes for the application in London.
@@ -186,8 +184,7 @@ Although this works at this moment, as we have configured continuous delivery in
 2. Select the Git tile under Code.
 3. Select *manifest.yml*.
 4. Click **Edit** and add custom routes. Replace the original domain and host configurations with `Routes` only.
-
-   ```
+   ```yaml
    applications:
    - path: .
 	  name: <your_app>
@@ -199,8 +196,29 @@ Although this works at this moment, as we have configured continuous delivery in
 	  disk_quota: 1024M
    ```
    {: pre}
-  
-5. Commit the changes and make sure the builds for both locations succeed.  
+
+For the application deployed in London, use a separate manifest to configure the routes:
+
+1. Create a new manifest file named 'eu-gb.manifest.yml`:
+   ```yaml
+   applications:
+   - path: .
+	  name: <your_app>
+	  memory: 256M
+	  instances: 1
+	  routes:
+	  - route: <your_app>.eu-gb.mybluemix.net
+	  - route: <glb_name>.<your_domain_name>
+	  disk_quota: 1024M
+   ```
+   {: pre}
+1. In the toolchain, change the deploy script to:
+   ```sh
+   #!/bin/bash
+   cf push "${CF_APP}" -f eu-gb.manifest.yml
+   ```
+
+Finally commit the changes to the manifest files and make sure the builds for both locations succeed.  
 
 ## Alternative: Map the custom domain to the IBM Cloud system domain
 

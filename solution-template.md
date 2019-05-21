@@ -2,6 +2,7 @@
 copyright:
   years: 2018, 2019
 lastupdated: "2019-03-08"
+lasttested: "2019-03-08"
 
 ---
 
@@ -40,10 +41,7 @@ For anchors within the same document always only use the following format:
 For anchors or any links to external documents, even for those are are within our tutorials use the following format: 
   [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview)
 
-If you have an old format html link that you are trying to translate to the new ?topic= format there are two methods you can use:
-  1. Try entering the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
-
-  2. If the redirect does not work, you may be able to use the old https://console.bluemix.net and enter the uri for the document you are searching for, some times the document uri changed, but you cn recognize it from reading the content and comparing back to the https://test.cloud.ibm.com and obtain the new link
+If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
 
 Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/developing/writing?topic=writing-linking#linking
 

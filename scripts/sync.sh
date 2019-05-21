@@ -19,6 +19,8 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=autoscale-virtual-server.md \
   --exclude=extended-cloud-security.md \
+  --exclude="images/solution49-*" \
+  --exclude=vpc-app-deploy.md \
   --exclude=README.md \
   --exclude="*.course.json" \
   --exclude=scripts \
