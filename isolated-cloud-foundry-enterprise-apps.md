@@ -79,7 +79,7 @@ In this section, you'll create an instance of {{site.data.keyword.cfee_full_notm
    - Enter a **Name** for the service instance.
    - Select a **Resource group** in which the environment is created. You'll need permission to access at least one resource group in the account to be able to create a CFEE instance.
    - Select a **Geography** and **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#provisioning-targets).
-   - Select a public Cloud Foundry **Organization** and **Space** where **{{site.data.keyword.composeForPostgreSQL}}** will be deployed.
+   - In the public Cloud Foundry, select an **Organization** and a **Space** where **{{site.data.keyword.composeForPostgreSQL}}** will be deployed.
    - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. At least **2** cells are required for highly available applications.
    - Select the **Machine type**, which determines the size of the Cloud Foundry cells (CPU and memory).
 4. Review the **Infrastructure** section to view the properties of the Kubernetes cluster supporting CFEE. The **Number of worker nodes** equals the number of cells plus 2. Two of the provisioned Kubernetes worker nodes act as the CFEE control plane. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{DomainName}/kubernetes/clusters) dashboard.
@@ -89,7 +89,7 @@ The automated deployment takes approximately 90 to 120 minutes. Once successfull
 
 ### Create organizations and spaces
 
-After you've created {{site.data.keyword.cfee_full_notm}}, see [creating organizations and spaces](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-create_orgs#create_orgs) for information on how to structure the environment through organizations and spaces. Apps in an {{site.data.keyword.cfee_full_notm}} are scoped within specific spaces. Similarly, a space exists within an organization. Members of an organization share a quota plan, apps, services instances, and custom domains.
+After you've created {{site.data.keyword.cfee_full_notm}}, see [creating organizations and spaces](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-create_orgs#create_orgs) for information on how to structure the environment through organizations and spaces. Apps in an {{site.data.keyword.cfee_full_notm}} are scoped within specific spaces. Similarly, a space exists within the context of an organization. Members of an organization share a quota plan, apps, services instances, and custom domains.
 
 Note: The **Manage > Account > Cloud Foundry orgs** menu located in the top {{site.data.keyword.cloud_notm}} header is intended exclusively for public {{site.data.keyword.cloud_notm}} organizations. CFEE organizations are managed within the **organizations** page of a CFEE instance.
 
