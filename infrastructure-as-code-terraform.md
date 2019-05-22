@@ -81,7 +81,7 @@ To support a multi-cloud approach, Terraform works with providers. A provider is
 
 2. Download the appropriate [{{site.data.keyword.Bluemix_notm}} Provider](https://github.com/IBM-Cloud/terraform-provider-ibm/releases) plugin for your system and extract the archive. You should see the  `terraform-provider-ibm_VERSION` binary plugin file.
 
-3. For non-Windows systems, create a `.terraform.d/plugins` directory in your user's home directory and to place the binary file inside of it. Use the following commands for reference.
+3. For non-Windows systems, create a `.terraform.d/plugins` directory in your home directory and place the binary file inside of it. Use the following commands for reference.
 
   ```
   mkdir -p $HOME/.terraform.d/plugins
@@ -90,7 +90,7 @@ To support a multi-cloud approach, Terraform works with providers. A provider is
 
     On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.
 
-  - Run the below commands on a command prompt [Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
+  - Run the below commands on a command prompt:
    ```
   MD %USERPROFILE%\AppData\terraform.d\plugins
    ```
