@@ -128,21 +128,8 @@ In this section, you will learn the basics of a terraform configuration by using
    - [install.yml](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/install.yml) - contains server installation configurations. Use this file to perform software installation or to create files on the server.
    - [provider.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/provider.tf) - contains the configuration of the provider such as the credentials to access {{site.data.keyword.Bluemix_notm}}.
    - [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) - contains the server configurations to deploy the VM with specified variables.
-   - [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) - contains **SoftLayer** username and api key, {{site.data.keyword.Bluemix_notm}} API Key and your space/org names. These credentials can be added to this file for best practices to avoid re-entering these credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
-4. Open the [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) file in an IDE of your choice and modify the file by adding your **public SSH** key. This will be used to access the VM created by this configuration. For information on Creating SSH keys, follow instructions in [this link](https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html) To copy the public key to your clipboard, you can run the below command in your terminal.
-
-     ```bash
-     pbcopy < ~/.ssh/id_rsa.pub
-     ```
-     This command will copy the SSH to your clipboard, you can then past that into [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) under the `ssh_key` default variable around line 69.
-
-    On **Windows**, Download, install, launch [Git Bash](https://git-scm.com/download/win) and run the below command to copy the public SSH key to your clipboard.
-
-    ```
-     clip < ~/.ssh/id_rsa.pub
-    ```
-
-5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding all the credentials listed, adding these credentials in that files means you don't need to renter these credentials every time running terraform apply. You must add all the five credentials listed in the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file in order to complete the rest of this tutorial.
+   - [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) - contains **SoftLayer** username and api key, {{site.data.keyword.Bluemix_notm}} API Key, SSH key and your space/org names. These credentials can be added to this file for best practices to avoid re-entering these credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
+5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding all the credentials listed, adding these credentials in that files means you don't need to re-enter these credentials every time running `terraform apply`. You must fill all the credentials listed in the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file in order to complete the rest of this tutorial.
 
 ## Create a LAMP stack server from the terraform configuration
 {: #Createserver}
