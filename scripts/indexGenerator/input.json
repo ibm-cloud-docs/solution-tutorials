@@ -3,7 +3,8 @@
         "Cloud Foundry",
         "Cloud Functions",
         "Kubernetes",
-        "Virtual Servers"
+        "Virtual Private Cloud",
+        "Classic Infrastructure"
     ],
     "categories": [
     {
@@ -45,7 +46,7 @@
                     "Kubernetes",
                     "Cloud Foundry",
                     "Cloud Functions",
-                    "Virtual Servers",
+                    "Classic Infrastructure",
                     "Bare Metal", 
                     "Databases",
                     "File Storage", 
@@ -98,7 +99,7 @@
                 "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
                 "imgSrc": "images/solution4/Architecture.png",
                 "tags": [
-                    "Virtual Servers",
+                    "Classic Infrastructure",
                     "PHP",
                     "WordPress",
                     "Vulnerability Scanner"
@@ -111,7 +112,7 @@
                 "imgSrc": "images/solution10/architecture-2.png",
                 "tags": [
                     "Terraform",
-                    "Virtual Servers",
+                    "Classic Infrastructure",
                     "PHP",
                     "Object Storage"
                 ]
@@ -134,7 +135,7 @@
                 "description": "Create a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.",
                 "imgSrc": "images/solution14/Architecture.png",
                 "tags": [
-                    "Virtual Servers",
+                    "Classic Infrastructure",
                     "Load Balancer",
                     "PHP",
                     "File Storage"
@@ -479,7 +480,7 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network",
-                    "Virtual Servers"
+                    "Virtual Private Cloud"
                 ]
             },
             {
@@ -491,7 +492,7 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network",
-                    "Virtual Servers"
+                    "Virtual Private Cloud"
                 ]
             },
             {
@@ -503,7 +504,7 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network",
-                    "Virtual Servers"
+                    "Virtual Private Cloud"
                 ]
             },
             {
@@ -516,7 +517,7 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network",
-                    "Virtual Servers"
+                    "Virtual Private Cloud"
                 ]
             },
             {
@@ -528,7 +529,7 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network",
-                    "Virtual Servers"
+                    "Virtual Private Cloud"
                 ]
             },
             {
@@ -541,7 +542,7 @@
                     "Vyatta",
                     "Firewall",
                     "Network",
-                    "Virtual Servers"
+                    "Classic Infrastructure"
                 ]
             },
             {
@@ -554,7 +555,7 @@
                     "Vyatta",
                     "Firewall",
                     "Network",
-                    "Virtual Servers"
+                    "Classic Infrastructure"
                 ]
             },
             {
@@ -579,7 +580,7 @@
                     "Vyatta",
                     "Firewall",
                     "Network",
-                    "Virtual Servers"
+                    "Classic Infrastructure"
                 ]
             },
             {
@@ -592,7 +593,7 @@
                     "Vyatta",
                     "Firewall",
                     "Network",
-                    "Virtual Servers",
+                    "Classic Infrastructure",
                     "VLAN Spanning"
                 ]
             },
@@ -606,7 +607,7 @@
                     "Firewall",
                     "Load Balancer",
                     "Network",
-                    "Virtual Servers",
+                    "Classic Infrastructure",
                     "Virtual Router Appliance VPN"
                 ]
             }
