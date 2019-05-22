@@ -230,7 +230,7 @@ Select the **Usage** tab to understand the current server's memory and CPU usage
 
 ## Server security
 
-{{site.data.keyword.BluVirtServers}} provide several security options such as vulnerability scanning and add-on firewalls.
+{{site.data.keyword.BluVirtServers}} provide several security options such as vulnerability scanning and firewalls.
 
 ### Vulnerability scanner
 
