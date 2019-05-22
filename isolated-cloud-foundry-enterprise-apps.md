@@ -268,7 +268,7 @@ This section will confirm that Kubernetes artifacts are configured using {{site.
 2. Open the **Kubernetes Dashboard** by clicking the corresponding button.
 3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply` in earlier steps.
 4. In the resulting dashboard, notice the following:
-   - The service has been provided an overlay IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
+   - The service has been provided an private IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
    - The service has two endpoints, which correspond to the two pods that have the service broker containers running.
 
 Having confirmed that the service is available and is proxying the service broker pods, you can verify the broker responds with information about available services.
