@@ -1,7 +1,8 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-10"
+lastupdated: "2019-05-22"
+lasttested: "2019-05-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -80,7 +81,7 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `ibmcloud login` to log in interactively. Provide the organization (org), location and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
+1. Use `ibmcloud login` to log in interactively. Provide the location where the cluster was created. You can reconfirm the details by running `ibmcloud target` command.
 2. When the cluster is ready, retrieve the cluster configuration by setting MYCLUSTER environment variable to your cluster name:
    ```bash
    export MYCLUSTER=<CLUSTER_NAME>
@@ -108,7 +109,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE (Web App)` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
+1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
 1. Enter a **name** for your application.
 1. Select the resource group where to deploy this application.
 1. Do not add additional services.
@@ -179,19 +180,22 @@ In this section, you first push the Docker image to the IBM Cloud private contai
     export MYPROJECT=<PROJECT_NAME>
     ```
     {: pre}
+3. Log in the **Container Registry**:
+   ```sh
+   ibmcloud cr login
+   ```
+   {: pre}
 3. Identify your **Container Registry** (e.g. us.icr.io) by running `ibmcloud cr info`
 4. Set MYREGISTRY env var to your registry.
    ```sh
    export MYREGISTRY=<REGISTRY>
    ```
    {: pre}
-
 5. Build and tag (`-t`)the docker image
    ```sh
    docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
    {: pre}
-
 6. Push the docker image to your container registry on IBM Cloud
    ```sh
    docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
@@ -238,7 +242,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    Ingress secret:		mycluster
    ```
    {: screen}
-2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.**service-name** is the name under `==> v1/Service` in the above step or run `kubectl get svc` to find the service name of type **NodePort**.
+2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output. **service-name** is the name under `==> v1/Service` in the above step or run `kubectl get svc` to find the service name of type **NodePort**.
    ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
