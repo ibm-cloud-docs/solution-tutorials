@@ -134,7 +134,7 @@ In this section, you'll deploy a Node.js application to CFEE. Once deployed, you
    npm start
    ```
    {: codeblock}
-3. Log in to {{site.data.keyword.cloud_notm}} and target your CFEE instance. An interactive prompt will help you select your new CFEE instance. Since only one CFEE organization and space exist, these will be the defaulted target. You can run `ibmcloud target -o tutorial -s dev` if you've added more than one org or space.
+3. Log in to {{site.data.keyword.cloud_notm}} and target your CFEE instance. An interactive prompt will help you select your new CFEE instance. Since only one organization and space exist in the CFEE instance, these will be the defaulted target. You can run `ibmcloud target -o tutorial -s dev` if you've added more than one org or space.
    ```sh
    ibmcloud login
    ibmcloud target --cf
