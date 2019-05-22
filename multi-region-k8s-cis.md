@@ -25,7 +25,7 @@ This tutorial highlights how Cloud Internet Services (CIS), a uniform platform t
 ## Objectives
 {: #objectives}
 
-* Deploy an application on multiple Kubernetes clusters in different location.
+* Deploy an application on multiple Kubernetes clusters in different locations.
 * Distribute traffic across multiple clusters with a Global Load Balancer.
 * Route users to the closest cluster.
 * Protect your application from security threats.
