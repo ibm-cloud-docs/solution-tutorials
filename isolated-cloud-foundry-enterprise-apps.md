@@ -158,7 +158,7 @@ To bind {{site.data.keyword.cloud_notm}} services to the **get-started-node** ap
    3. Type `cfee-cloudant` in the search textbox and select the result. Finish by clicking **Add**. The service is now available to CFEE applications; however, it still resides in public {{site.data.keyword.cloud_notm}}.
 3. On the overflow menu of the service instance shown, select **Bind to application**.
 4. Select the **GetStartedNode** application you pushed earlier and click **Restage application after binding**. Finally, click the **Bind** button. Wait for the application to restage. You can check progress with the command `ibmcloud app show GetStartedNode`.
-5. In your browser, access the application, add your name and hit `enter`. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
+5. In your browser, access the application, add your name and hit the `enter` key. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
 6. Confirm by selecting the `tutorial` instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
 7. Click **Launch Cloudant Dashboard** and select the `mydb` database. A JSON document with your name should exist.
 
