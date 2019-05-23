@@ -333,7 +333,7 @@ Two zones are defined:
      commit
      ```
      {: codeblock}
-3. Create the APP zone for the user VLAN and subnet and the INSIDE zone for the {{site.data.keyword.Bluemix_notm}} private network. Assign the previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below as `<VLAN ID>`.
+3. Create the APP zone for the user VLAN and subnet and the INSIDE zone for the {{site.data.keyword.Bluemix_notm}} private network. Assign the previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires to specify the VLAN ID of the VLAN associated with the VRA created earlier. This is highlighted below as `<VLAN ID>`.
    ```
    set security zone-policy zone INSIDE description "IBM Internal network"
    set security zone-policy zone INSIDE default-action drop
