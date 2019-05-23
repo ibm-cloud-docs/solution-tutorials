@@ -47,12 +47,11 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 ![](images/solution21/Architecture.png)
 
-1. Push code to a private Git repository.
-2. Pipeline picks up changes in Git and builds container image.
-3. Container image uploaded to registry deployed to a development Kubernetes cluster.
-4. Validate changes and deploy to the production cluster.
-5. Slack notifications setup for deployment activities.
-
+1. The code is pushed to a private Git repository.
+2. The pipeline picks up changes in Git and builds container image.
+3. The container image is uploaded to registry and any vulnerabilities are reported. The app is deployed to the Development cluster.
+4. Once changes are validated, the app is deployed to the Production cluster.
+5. Notications are sent to Slack to track the deployment activities.
 
 ## Before you begin
 {: #prereq}
@@ -94,9 +93,12 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 ## Configure DevOps delivery pipeline
 {: #create_devops}
 
-1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button.
-2. Selecting the Kubernetes Cluster deployment method, select the cluster created earlier and then click **Create**. This will create a toolchain and delivery pipeline for you. ![](images/solution21/BindCluster.png)
-3. Once the pipeline created, click on **View Toolchain** and then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
+Now that you successfully created the starter application, you can automate its deployment to the Kubernetes cluster.
+
+1. Under the **Deploy your App** tile, click on the **Configure continuous delivery** button.
+1. Select the Kubernetes deployment target and the cluster created earlier and click **Next**.
+1. Set the **toolchain name** to **mynodestarter-toolchain** and click **Create**
+1. Once the pipeline created, click on **View Toolchain** and then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
 4. After the deploy stages complete, click on the **View logs and history** to see the logs.
 5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`). ![](images/solution21/Logs.png)
 Done, you've used the App Service UI to create the starter applications, and configured the pipeline to build and deploy the application to your cluster.
