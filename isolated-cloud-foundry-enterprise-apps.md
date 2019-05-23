@@ -134,7 +134,7 @@ In this section, you'll deploy a Node.js application to CFEE. Once deployed, you
    npm start
    ```
    {: codeblock}
-3. Log in to {{site.data.keyword.cloud_notm}} and target your CFEE instance. An interactive prompt will help you select your new CFEE instance. Since only one CFEE organization and space exist, these will be the defaulted target. You can run `ibmcloud target -o tutorial -s dev` if you've added more than one org or space.
+3. Log in to {{site.data.keyword.cloud_notm}} and target your CFEE instance. An interactive prompt will help you select your new CFEE instance. Since only one organization and space exist in the CFEE instance, these will be the defaulted target. You can run `ibmcloud target -o tutorial -s dev` if you've added more than one org or space.
    ```sh
    ibmcloud login
    ibmcloud target --cf
@@ -158,7 +158,7 @@ To bind {{site.data.keyword.cloud_notm}} services to the **get-started-node** ap
    3. Type `cfee-cloudant` in the search textbox and select the result. Finish by clicking **Add**. The service is now available to CFEE applications; however, it still resides in public {{site.data.keyword.cloud_notm}}.
 3. On the overflow menu of the service instance shown, select **Bind to application**.
 4. Select the **GetStartedNode** application you pushed earlier and click **Restage application after binding**. Finally, click the **Bind** button. Wait for the application to restage. You can check progress with the command `ibmcloud app show GetStartedNode`.
-5. In your browser, access the application, add your name and hit `enter`. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
+5. In your browser, access the application, add your name and hit the `enter` key. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
 6. Confirm by selecting the `tutorial` instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
 7. Click **Launch Cloudant Dashboard** and select the `mydb` database. A JSON document with your name should exist.
 
@@ -268,7 +268,7 @@ This section will confirm that Kubernetes artifacts are configured using {{site.
 2. Open the **Kubernetes Dashboard** by clicking the corresponding button.
 3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply` in earlier steps.
 4. In the resulting dashboard, notice the following:
-   - The service has been provided an overlay IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
+   - The service has been provided an private IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
    - The service has two endpoints, which correspond to the two pods that have the service broker containers running.
 
 Having confirmed that the service is available and is proxying the service broker pods, you can verify the broker responds with information about available services.

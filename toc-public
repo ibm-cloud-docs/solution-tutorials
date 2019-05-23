@@ -115,15 +115,18 @@ Solution Tutorials
         users-teams-applications.md
 
     {: .topicgroup}
-    Virtual Servers
-        strategies-for-resilient-applications.md
-        lamp-stack.md
-        infrastructure-as-code-terraform.md
-        highly-available-and-scalable-web-application.md
+    Virtual Private Cloud
         vpc-public-app-private-backend.md
         vpc-multi-region.md
         vpc-site2site-vpn.md
         vpc-secure-management-bastion-server.md
+
+    {: .topicgroup}
+    Classic Infrastructure
+        strategies-for-resilient-applications.md
+        lamp-stack.md
+        infrastructure-as-code-terraform.md
+        highly-available-and-scalable-web-application.md
         secure-network-enclosure.md
         nat-config-private.md
         configuring-IPSEC-VPN.md

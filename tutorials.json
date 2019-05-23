@@ -3,7 +3,8 @@
     "Cloud Foundry",
     "Cloud Functions",
     "Kubernetes",
-    "Virtual Servers"
+    "Virtual Private Cloud",
+    "Classic Infrastructure"
   ],
   "categories": [
     {
@@ -22,7 +23,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2019-05-10"
+          "lastUpdated": "2019-05-22"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -36,7 +37,7 @@
             "MySQL",
             "Java"
           ],
-          "lastUpdated": "2019-04-15"
+          "lastUpdated": "2019-05-20"
         },
         {
           "name": "Strategies for resilient applications",
@@ -47,7 +48,7 @@
             "Kubernetes",
             "Cloud Foundry",
             "Cloud Functions",
-            "Virtual Servers",
+            "Classic Infrastructure",
             "Bare Metal",
             "Databases",
             "File Storage",
@@ -104,12 +105,12 @@
           "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
           "imgSrc": "images/solution4/Architecture.png",
           "tags": [
-            "Virtual Servers",
+            "Classic Infrastructure",
             "PHP",
             "WordPress",
             "Vulnerability Scanner"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-20"
         },
         {
           "name": "Deploy a LAMP stack using Terraform",
@@ -118,7 +119,7 @@
           "imgSrc": "images/solution10/architecture-2.png",
           "tags": [
             "Terraform",
-            "Virtual Servers",
+            "Classic Infrastructure",
             "PHP",
             "Object Storage"
           ],
@@ -143,7 +144,7 @@
           "description": "Create a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.",
           "imgSrc": "images/solution14/Architecture.png",
           "tags": [
-            "Virtual Servers",
+            "Classic Infrastructure",
             "Load Balancer",
             "PHP",
             "File Storage"
@@ -300,7 +301,7 @@
             "Node.js",
             "API Connect"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-21"
         },
         {
           "name": "Apply end to end security to a cloud application",
@@ -442,7 +443,7 @@
             "Watson Studio",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-22"
         }
       ]
     },
@@ -513,7 +514,7 @@
             "Infrastructure",
             "Virtual Private Cloud",
             "Network",
-            "Virtual Servers"
+            "Virtual Private Cloud"
           ],
           "lastUpdated": "2019-04-02"
         },
@@ -526,7 +527,7 @@
             "Infrastructure",
             "Virtual Private Cloud",
             "Network",
-            "Virtual Servers"
+            "Virtual Private Cloud"
           ],
           "lastUpdated": "2019-04-02"
         },
@@ -539,7 +540,7 @@
             "Infrastructure",
             "Virtual Private Cloud",
             "Network",
-            "Virtual Servers"
+            "Virtual Private Cloud"
           ],
           "lastUpdated": "2019-05-07"
         },
@@ -552,7 +553,7 @@
             "Infrastructure",
             "Virtual Private Cloud",
             "Network",
-            "Virtual Servers"
+            "Virtual Private Cloud"
           ],
           "lastUpdated": "2019-04-02"
         },
@@ -566,7 +567,7 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "Virtual Servers"
+            "Classic Infrastructure"
           ],
           "lastUpdated": "2019-03-08"
         },
@@ -580,7 +581,7 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "Virtual Servers"
+            "Classic Infrastructure"
           ],
           "lastUpdated": "2019-03-07"
         },
@@ -607,7 +608,7 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "Virtual Servers"
+            "Classic Infrastructure"
           ],
           "lastUpdated": "2019-03-07"
         },
@@ -621,7 +622,7 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "Virtual Servers",
+            "Classic Infrastructure",
             "VLAN Spanning"
           ],
           "lastUpdated": "2019-03-07"
@@ -636,7 +637,7 @@
             "Firewall",
             "Load Balancer",
             "Network",
-            "Virtual Servers",
+            "Classic Infrastructure",
             "Virtual Router Appliance VPN"
           ],
           "lastUpdated": "2019-03-07"
