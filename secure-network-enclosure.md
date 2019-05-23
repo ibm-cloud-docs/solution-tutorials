@@ -299,7 +299,7 @@ This completes the IP routing configuration.
 The secure private network enclosure is created through configuration of zones and firewall rules. Review the VRA documentation on [firewall configuration](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-manage-your-ibm-firewalls#manage-firewalls) before proceeding. 
 
 Two zones are defined:
-   - INSIDE:  The IBM private and management networks
+   - INSIDE:  The IBM private network and the IBM management network
    - APP:  The user VLAN and subnet within the private network enclosure		
 
 1. Define firewalls and defaults.
