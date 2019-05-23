@@ -46,7 +46,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 ![Architecture diagram](images/solution7/Architecture.png)</p>
 
-1. User accesses the application using a web browser.
+1. The user accesses the application using a web browser.
 2. The Node.js app accesses the {{site.data.keyword.databases-for-mongodb}} database to fetch data.
 
 ## Before you begin

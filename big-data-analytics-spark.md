@@ -1,7 +1,8 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-22"
+lasttested: "2019-05-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -24,7 +25,7 @@ In this tutorial, you will analyze and visualize open data sets using {{site.dat
 ## Objectives
 {: #objectives}
 
-* Deploy Apache Spark and {{site.data.keyword.DSX_short}} on IBM Cloud
+* Deploy {{site.data.keyword.iae_short}} and {{site.data.keyword.DSX_short}} on {{site.data.keyword.cloud_notm}}
 * Work with a Jupyter Notebook and a Python kernel
 * Import, transform, analyze and visualize data sets
 
@@ -32,33 +33,32 @@ In this tutorial, you will analyze and visualize open data sets using {{site.dat
 {: #services}
 
 This tutorial uses the following runtimes and services:
-   * {{site.data.keyword.sparkl}}
-   * {{site.data.keyword.DSX_full}}
-   * {{site.data.keyword.cos_full_notm}}
+   * [{{site.data.keyword.iae_full_notm}}](https://{DomainName}/catalog/services/analytics-engine)
+   * [{{site.data.keyword.DSX_full}}](https://{DomainName}/catalog/services/watson-studio)
+   * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Service and Environment Setup
 Start by provisioning the services used in this tutorial and create a project within {{site.data.keyword.DSX_short}}.
 
-You can provision services for {{site.data.keyword.Bluemix_short}} from the [Resource List](https://{DomainName}/resources) and [catalog](https://{DomainName}/catalog/). Alternatively {{site.data.keyword.DSX_short}} allows you to create or add existing Data & Analytics services from its dashboard and project settings.
+You can provision services for {{site.data.keyword.cloud_notm}} from the [Resource List](https://{DomainName}/resources) and [catalog](https://{DomainName}/catalog/). Alternatively {{site.data.keyword.DSX_short}} allows you to create or add existing Data & Analytics services from its dashboard and project settings.
 {:tip}
 
-1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) navigate to the **AI** section. Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-2. In the dashboard, click on the **Create a project** tile > Select **Standard** > Create project. In the **Name** field, enter `1stProject` as the name. You can leave the description empty.
+1. From the [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/catalog) navigate to the **AI** section. Create the **{{site.data.keyword.DSX_short}}** service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
+2. In the dashboard, click on the **Create a project** tile > Select **Data Science** > Create project. In the **Name** field, enter `1stProject` as the name. You can leave the description empty.
 3. On the right side of the page, you can **Define storage**. If you have already provisioned storage, select an instance from the list. If not, click on **Add** and follow the instructions in the new browser tab. Once done with service creation, click **Refresh** to see the new service.
 4. Click on the **Create** button to create the project. You will be redirected to the project's overview page.  
    ![](images/solution23/NewProject.png)
 5. On the overview page, click **Settings**.
-6. From the **Associated services** section, click **Add Service** and select **Spark** from the menu. In the resulting screen, you can choose an existing Spark service instance or create a new one.
+6. From the **Associated services** section, click **Add Service** and select **Analytics Engine** from the menu. In the resulting screen, you can choose an existing service instance or create a new one. Create a new one and make sure that the **Software package** includes **Spark**.
 
 ## Create and prepare a notebook
 The [Jupyter Notebook](http://jupyter.org/) is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Notebooks and other resources are organized in projects.
-1. Click the **Assets** tab, scroll down to the **Notebooks** section, and click **New notebook**.
+1. Click the **Add to project** button and in the **Choose asset type** dialog select **Notebook**.
 2. Use **Blank** notebook. Enter `MyNotebook` as the **Name**.
-3. From the **Select runtime** menu, chose the Spark instance you added to the project's settings. Keep the default **Language** as **Python 3.5**.
-4. Click **Create Notebook** to complete the process.
-5. The field where you enter text and commands is called a **Cell**. Copy the following code into the empty cell to import the [**Pixiedust** package](https://pixiedust.github.io/pixiedust/use.html). Execute the cell by either clicking on the **Run** icon in the toolbar or by pressing **Shift+Enter** on the keyboard.
+3. From the **Select runtime** menu, choose the **Spark Python** instance with the highest version number. Click **Create Notebook** to complete the process.
+4. The field where you enter text and commands is called a **Cell**. Copy the following code into the empty cell to import the [**Pixiedust** package](https://pixiedust.github.io/pixiedust/use.html). Execute the cell by either clicking on the **Run** icon in the toolbar or by pressing **Shift+Enter** on the keyboard.
    ```Python
    import pixiedust
    ```
@@ -145,7 +145,7 @@ In this part, use [Pixiedust to visualize the data in different charts](https://
    display(dfl2)
    ```
    {:codeblock}
-2. A scrollable table is shown. Click on the chart icon directly under the code block and select **Line Chart**. A popup dialog with the **Pixiedust: Line Chart Options** will appear. Enter a **Chart Title** like "Comparison of Life Expectancy". From the offered **Fields**, drag **Year** into the **Keys** box, **Life** into the **Values** area. Enter **1000** for **# of Rows to Display**. Press **OK** to have the line chart plotted. On the right side, make sure that **mapplotlib** is selected as **Renderer**. Click on the **Cluster By** selector and choose **Country**. A chart similar to the following will be shown.
+2. A scrollable table is shown. Click on the chart icon directly under the code block and select **Line Chart**. A popup dialog with the **Pixiedust: Line Chart Options** will appear. Enter a **Chart Title** like "Comparison of Life Expectancy". From the offered **Fields**, drag **Year** into the **Keys** box, **Life** into the **Values** area. Enter **1000** for **# of Rows to Display** and leave **Aggregation** as **SUM**. Press **OK** to have the line chart plotted. On the right side, make sure that **mapplotlib** is selected as **Renderer**. Click on the **Cluster By** selector and choose **Country**. A chart similar to the following will be shown.
    ![](images/solution23/LifeExpectancy.png)
 
 3. Create a chart focusing on the year 2010. Copy the code into the next empty cell and run it.
@@ -157,6 +157,13 @@ In this part, use [Pixiedust to visualize the data in different charts](https://
    {:codeblock}
 4. In the chart selector choose **Map**. In the configuration dialog drag **Country** into the **Keys** area. Move **Life** into the **Values** box. Similar to the first chart, increase the **# of Rows to Display** to **1000**. Press **OK** plot the map. Choose **brunel** as **Renderer**. A world map colored relative to the life expectancy is shown. You can use the mouse to zoom into the map.
    ![](images/solution23/LifeExpectancyMap2010.png)
+
+## Remove resources
+{:removeresources}
+
+To remove resource, follow these steps:
+1. Visit the [{{site.data.keyword.cloud_notm}} Resource List](https://{DomainName}/resources).
+2. Locate the services each by using the **Offering** filter, then choose **Delete** from the context menu.
 
 ## Expand the tutorial
 Below are some ideas and suggestions to enhance this tutorial.

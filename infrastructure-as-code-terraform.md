@@ -81,7 +81,7 @@ To support a multi-cloud approach, Terraform works with providers. A provider is
 
 2. Download the appropriate [{{site.data.keyword.Bluemix_notm}} Provider](https://github.com/IBM-Cloud/terraform-provider-ibm/releases) plugin for your system and extract the archive. You should see the  `terraform-provider-ibm_VERSION` binary plugin file.
 
-3. For non-Windows systems, create a `.terraform.d/plugins` directory in your user's home directory and to place the binary file inside of it. Use the following commands for reference.
+3. For non-Windows systems, create a `.terraform.d/plugins` directory in your home directory and place the binary file inside of it. Use the following commands for reference.
 
   ```
   mkdir -p $HOME/.terraform.d/plugins
@@ -90,7 +90,7 @@ To support a multi-cloud approach, Terraform works with providers. A provider is
 
     On **Windows**, the file needs to be placed in `terraform.d/plugins` beneath your user's "Application Data" directory.
 
-  - Run the below commands on a command prompt [Provider Configuration](https://www.terraform.io/docs/configuration/providers.html)
+  - Run the below commands on a command prompt:
    ```
   MD %USERPROFILE%\AppData\terraform.d\plugins
    ```
@@ -125,24 +125,11 @@ In this section, you will learn the basics of a terraform configuration by using
    git clone https://github.com/YOUR_USER_NAME/LAMP-terraform-ibm
    ```
 3. Inspect the configuration files
-   - [install.yml](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/install.yml) - contains server installation configurations, here is where you can add all scripts related to your server install to what to install on the server. See `phpinfo();` injected into this file.
-   - [provider.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/provider.tf) - contains the variables related to the provider where provider username and api key needed.
+   - [install.yml](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/install.yml) - contains server installation configurations. Use this file to perform software installation or to create files on the server.
+   - [provider.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/provider.tf) - contains the configuration of the provider such as the credentials to access {{site.data.keyword.Bluemix_notm}}.
    - [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) - contains the server configurations to deploy the VM with specified variables.
-   - [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) - contains **SoftLayer** username and api key, {{site.data.keyword.Bluemix_notm}} API Key and your space/org names. These credentials can be added to this file for best practices to avoid re-entering these credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
-4. Open the [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) file in an IDE of your choice and modify the file by adding your **public SSH** key. This will be used to access the VM created by this configuration. For information on Creating SSH keys, follow instructions in [this link](https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html) To copy the public key to your clipboard, you can run the below command in your terminal.
-
-     ```bash
-     pbcopy < ~/.ssh/id_rsa.pub
-     ```
-     This command will copy the SSH to your clipboard, you can then past that into [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) under the `ssh_key` default variable around line 69.
-
-    On **Windows**, Download, install, launch [Git Bash](https://git-scm.com/download/win) and run the below command to copy the public SSH key to your clipboard.
-
-    ```
-     clip < ~/.ssh/id_rsa.pub
-    ```
-
-5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding all the credentials listed, adding these credentials in that files means you don't need to renter these credentials every time running terraform apply. You must add all the five credentials listed in the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file in order to complete the rest of this tutorial.
+   - [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) - contains **SoftLayer** username and api key, {{site.data.keyword.Bluemix_notm}} API Key, SSH key and your space/org names. These credentials can be added to this file for best practices to avoid re-entering these credentials from the command line every time when deploying the server. Note: DO NOT publish this file with your credentials.
+5. Open the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file with your IDE, modify the file by adding all the credentials listed, adding these credentials in that files means you don't need to re-enter these credentials every time running `terraform apply`. You must fill all the credentials listed in the [terraform.tfvars](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars) file in order to complete the rest of this tutorial.
 
 ## Create a LAMP stack server from the terraform configuration
 {: #Createserver}
@@ -164,7 +151,8 @@ In this section, you will learn the how to create a LAMP stack server from the t
    ```
    {: pre}
    You should see an output similar to below.![Source Control URL](images/solution10/created.png)
-4. Next, head over to your [infrastructure device list](https://{DomainName}/classic/devices) to verify that the server created.![Source Control URL](images/solution10/configuration.png)
+4. Next, head over to your [infrastructure device list](https://{DomainName}/classic/devices) to verify that the server was created.
+   ![Source Control URL](images/solution10/configuration.png)
 
 ## Add the {{site.data.keyword.cos_full_notm}} service and scale the resources
 
@@ -177,7 +165,7 @@ In this section, you are going to look at how to scale the virtual server resour
  - Increase RAM(memory) to 4096
  - Increase disk size to 100GB
 
-2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable name for the org name and space name, then these two variable names used to retrieve the space guid in which needed to create the service. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, then you need a space guid, service fully qualified name and plan type. The code below will create a premium plan given it is a pay-as-you-go plan anyway. You can also use the Lite plan, but note that the Lite plan is limited to only one service per account.
+2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable for the org name and space name, then these two variables used to retrieve the space guid in which the service needs to be created. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, then you need a space guid, service fully qualified name and plan type. The code below will create a premium plan. This is a pay-as-you-go plan. You can also use the Lite plan, but note that the Lite plan is limited to only one service per account.
 
    ```
    variable "org_name" {
@@ -204,7 +192,7 @@ In this section, you are going to look at how to scale the virtual server resour
    }
    ```
    {: pre}
-   **Note:** the label "lamp_objectstorage", we will later look for that in the logs to make sure {{site.data.keyword.cos_full_notm}} created successfully.
+   **Note:** we will later look for `lamp_objectstorage` in the logs to make sure {{site.data.keyword.cos_full_notm}} created successfully.
 
 3. Initialize the terraform configuration again by running:
 

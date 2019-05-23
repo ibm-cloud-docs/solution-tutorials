@@ -79,7 +79,7 @@ In this section, you'll create an instance of {{site.data.keyword.cfee_full_notm
    - Enter a **Name** for the service instance.
    - Select a **Resource group** in which the environment is created. You'll need permission to access at least one resource group in the account to be able to create a CFEE instance.
    - Select a **Geography** and **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#provisioning-targets).
-   - Select a public Cloud Foundry **Organization** and **Space** where **{{site.data.keyword.composeForPostgreSQL}}** will be deployed.
+   - In the public Cloud Foundry, select an **Organization** and a **Space** where **{{site.data.keyword.composeForPostgreSQL}}** will be deployed.
    - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. At least **2** cells are required for highly available applications.
    - Select the **Machine type**, which determines the size of the Cloud Foundry cells (CPU and memory).
 4. Review the **Infrastructure** section to view the properties of the Kubernetes cluster supporting CFEE. The **Number of worker nodes** equals the number of cells plus 2. Two of the provisioned Kubernetes worker nodes act as the CFEE control plane. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{DomainName}/kubernetes/clusters) dashboard.
@@ -89,7 +89,7 @@ The automated deployment takes approximately 90 to 120 minutes. Once successfull
 
 ### Create organizations and spaces
 
-After you've created {{site.data.keyword.cfee_full_notm}}, see [creating organizations and spaces](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-create_orgs#create_orgs) for information on how to structure the environment through organizations and spaces. Apps in an {{site.data.keyword.cfee_full_notm}} are scoped within specific spaces. Similarly, a space exists within an organization. Members of an organization share a quota plan, apps, services instances, and custom domains.
+After you've created {{site.data.keyword.cfee_full_notm}}, see [creating organizations and spaces](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-create_orgs#create_orgs) for information on how to structure the environment through organizations and spaces. Apps in an {{site.data.keyword.cfee_full_notm}} are scoped within specific spaces. Similarly, a space exists within the context of an organization. Members of an organization share a quota plan, apps, services instances, and custom domains.
 
 Note: The **Manage > Account > Cloud Foundry orgs** menu located in the top {{site.data.keyword.cloud_notm}} header is intended exclusively for public {{site.data.keyword.cloud_notm}} organizations. CFEE organizations are managed within the **organizations** page of a CFEE instance.
 
@@ -134,7 +134,7 @@ In this section, you'll deploy a Node.js application to CFEE. Once deployed, you
    npm start
    ```
    {: codeblock}
-3. Log in to {{site.data.keyword.cloud_notm}} and target your CFEE instance. An interactive prompt will help you select your new CFEE instance. Since only one CFEE organization and space exist, these will be the defaulted target. You can run `ibmcloud target -o tutorial -s dev` if you've added more than one org or space.
+3. Log in to {{site.data.keyword.cloud_notm}} and target your CFEE instance. An interactive prompt will help you select your new CFEE instance. Since only one organization and space exist in the CFEE instance, these will be the defaulted target. You can run `ibmcloud target -o tutorial -s dev` if you've added more than one org or space.
    ```sh
    ibmcloud login
    ibmcloud target --cf
@@ -158,7 +158,7 @@ To bind {{site.data.keyword.cloud_notm}} services to the **get-started-node** ap
    3. Type `cfee-cloudant` in the search textbox and select the result. Finish by clicking **Add**. The service is now available to CFEE applications; however, it still resides in public {{site.data.keyword.cloud_notm}}.
 3. On the overflow menu of the service instance shown, select **Bind to application**.
 4. Select the **GetStartedNode** application you pushed earlier and click **Restage application after binding**. Finally, click the **Bind** button. Wait for the application to restage. You can check progress with the command `ibmcloud app show GetStartedNode`.
-5. In your browser, access the application, add your name and hit `enter`. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
+5. In your browser, access the application, add your name and hit the `enter` key. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
 6. Confirm by selecting the `tutorial` instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
 7. Click **Launch Cloudant Dashboard** and select the `mydb` database. A JSON document with your name should exist.
 
@@ -268,7 +268,7 @@ This section will confirm that Kubernetes artifacts are configured using {{site.
 2. Open the **Kubernetes Dashboard** by clicking the corresponding button.
 3. Click the **Services** link from the left menu and select **tutorial-broker-service**. This service was deployed when you ran `kubectl apply` in earlier steps.
 4. In the resulting dashboard, notice the following:
-   - The service has been provided an overlay IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
+   - The service has been provided an private IP address (172.x.x.x) that is resolvable only within the Kubernetes cluster.
    - The service has two endpoints, which correspond to the two pods that have the service broker containers running.
 
 Having confirmed that the service is available and is proxying the service broker pods, you can verify the broker responds with information about available services.
@@ -376,7 +376,7 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
    ```
    {: codeblock}
 2. Access the service using your browser. The `route` to the service will be shown as part of the `push` command's output. The resulting URL will be similar to `https://welcome.<your-cfee-cluster-domain>`. Refresh the page to see alternating languages.
-3. Return to the `sample-resource-service-brokers` folder and edit the Node.js sample implementation `sample-resource-service-brokers/node-resource-service-broker/testresourceservicebroker.js` with adding url after line 854 with adding the cluster URL. 
+3. Return to the `sample-resource-service-brokers` folder, edit the Node.js sample implementation `sample-resource-service-brokers/node-resource-service-broker/testresourceservicebroker.js`. Go to line 854 and add the `url` field to the `credentials` object, replacing the placeholder with your cluster domain name:
 
    ```javascript
    // TODO - Do your actual work here

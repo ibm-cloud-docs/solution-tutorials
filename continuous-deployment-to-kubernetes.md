@@ -1,8 +1,8 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-04-15"
-
+lastupdated: "2019-05-23"
+lasttested: "2019-05-23"
 
 ---
 
@@ -18,7 +18,7 @@ lastupdated: "2019-04-15"
 # Continuous Deployment to Kubernetes
 {: #continuous-deployment-to-kubernetes}
 
-This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like security scanners, Slack notifications, and analytics.
+This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like Slack notifications.
 
 {:shortdesc}
 
@@ -28,7 +28,7 @@ This tutorial walks you through the process setting up a continuous integration 
 * Create development and production Kubernetes clusters.
 * Create a starter application, run it locally and push it to a Git repository.
 * Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod clusters.
-* Explore and integrate the app to use security scanners, Slack notifications, and analytics.
+* Explore and integrate the app to use Slack notifications.
 
 ## Services used
 {: #services}
@@ -47,12 +47,11 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 ![](images/solution21/Architecture.png)
 
-1. Push code to a private Git repository.
-2. Pipeline picks up changes in Git and builds container image.
-3. Container image uploaded to registry deployed to a development Kubernetes cluster.
-4. Validate changes and deploy to the production cluster.
-5. Slack notifications setup for deployment activities.
-
+1. The code is pushed to a private Git repository.
+2. The pipeline picks up changes in Git and builds container image.
+3. The container image is uploaded to registry. The app is deployed to the Development cluster.
+4. Once changes are validated, the app is deployed to the Production cluster.
+5. Notications are sent to Slack to track the deployment activities.
 
 ## Before you begin
 {: #prereq}
@@ -94,9 +93,12 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 ## Configure DevOps delivery pipeline
 {: #create_devops}
 
-1. Now that you successfully created the starter application, under the **Deploy your App**, click on the **Deploy to Cloud** button.
-2. Selecting the Kubernetes Cluster deployment method, select the cluster created earlier and then click **Create**. This will create a toolchain and delivery pipeline for you. ![](images/solution21/BindCluster.png)
-3. Once the pipeline created, click on **View Toolchain** and then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
+Now that you successfully created the starter application, you can automate its deployment to the Kubernetes cluster.
+
+1. Under the **Deploy your App** tile, click on the **Configure continuous delivery** button.
+1. Select the Kubernetes deployment target and the cluster created earlier and click **Next**.
+1. Set the **toolchain name** to **mynodestarter-toolchain** and click **Create**
+1. Once the pipeline created, click on **View Toolchain** and then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
 4. After the deploy stages complete, click on the **View logs and history** to see the logs.
 5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`). ![](images/solution21/Logs.png)
 Done, you've used the App Service UI to create the starter applications, and configured the pipeline to build and deploy the application to your cluster.
@@ -168,72 +170,11 @@ In this section, you will commit your change to your Git repository. The pipelin
    {: codeblock}
 
 3. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-4. Confirm that you see n **BUILD** and **DEPLOY** stage.
-   ![](images/solution21/Delivery-pipeline.png)
+4. Notice a new **BUILD** has started.
 5. Wait for the **DEPLOY** stage to complete.
 6. Click the application **url** under Last Execution result to view your changes live.
 
 If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
-
-## Security using Vulnerability Advisor
-{: #vulnerability_advisor}
-
-In this step, you will explore the [Vulnerability Advisor](https://{DomainName}/docs/services/va?topic=va-va_index#va_index). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
-
-1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-1. Click on **Add Stage** and change MyStage to **Validate Stage** and then click on the JOBS  > **ADD JOB**.
-
-   1. Select **Test** as the Job Type and Change **Test** to **Vulnerability advisor** in the box.
-   1. Under Tester type, select **Vulnerability Advisor**. All the other fields should be populated automatically.
-      Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
-      {:tip}
-   1. Edit the **Test script** section and replace `SAFE\ to\ deploy` in the last line with `NO\ ISSUES`
-   1. Save the stage
-1. Drag and move the **Validate Stage** to the middle then click **Run** ![](images/solution21/run.png) on the **Validate Stage**. You will see that the **Validate stage** fails.
-
-   ![](images/solution21/toolchain.png)
-
-1. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
-
-   ```
-   The scan results show that 3 ISSUES were found for the image.
-
-   Configuration Issues Found
-   ==========================
-
-   Configuration Issue ID                     Policy Status   Security Practice                                    How to Resolve
-   application_configuration:mysql.ssl-ca     Active          A setting in /etc/mysql/my.cnf that specifies the    ssl-ca is not specified in /etc/mysql/my.cnf.
-                                                              Certificate Authority (CA) certificate.
-   application_configuration:mysql.ssl-cert   Active          A setting in /etc/mysql/my.cnf that specifies the    ssl-cert is not specified in /etc/mysql/my.cnf
-                                                              server public key certificate. This certificate      file.
-                                                              can be sent to the client and authenticated
-                                                              against its CA certificate.
-   application_configuration:mysql.ssl-key    Active          A setting in /etc/mysql/my.cnf that identifies the   ssl-key is not specified in /etc/mysql/my.cnf.
-                                                              server private key.
-   ```
-
-   You can see the detailed vulnerability assessments of all the scanned repositories [here](https://{DomainName}/kubernetes/registry/main/private)
-   {:tip}
-
-   The stage may fail saying the image *has not been scanned* if the scan for vulnerabilities takes more than 3 minutes. This timeout can be changed by editing the job script and increasing the number of iterations to wait for the scan results.
-   {:tip}
-
-1. Let's fix the vulnerabilities by following the corrective action. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `Dockerfile` and add the below command after `EXPOSE 3000`
-   ```sh
-   RUN apt-get remove -y mysql-common \
-     && rm -rf /etc/mysql
-   ```
-   {: codeblock}
-
-1. Commit and Push the changes. This should trigger the toolchain and fix the **Validate Stage**.
-
-   ```
-   git add Dockerfile
-   git commit -m "Fix Vulnerabilities"
-   git push origin master
-   ```
-
-   {: codeblock}
 
 ## Create production Kubernetes cluster
 
@@ -247,9 +188,11 @@ In this section, you will complete the deployment pipeline by deploying the Kube
 3. Rename the **Deploy Stage** to `Deploy dev`, you can do that by clicking on settings Icon >  **Configure Stage**.
    ![](images/solution21/deploy_stage.png)
 4. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
-5. Change the **stage trigger** to `Run jobs only when this stage is run manually`. ![](images/solution21/prod-stage.png)
+5. Change the **stage trigger** to `Run jobs only when this stage is run manually`.
+   ![](images/solution21/prod-stage.png)
 6. Under the **Job** tab, change the cluster name to the newly created cluster and then **Save** the stage.
-7. You now should have the full deployment setup, to deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production. ![](images/solution21/full-deploy.png)
+7. You now should have the full deployment setup, to deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production.
+   ![](images/solution21/full-deploy.png)
 
 Done, you've now created a production cluster and configured the pipeline to push updates to your production cluster manually. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
 

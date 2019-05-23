@@ -221,7 +221,7 @@ Since SERVICE PING is added by default, add SLOW PING monitoring with the follow
 **Note**: Duplicate monitors with the same configurations are not allowed. Only one monitor per configuration can be created.
 
 If a response is not received in the allotted time frame, an alert is sent to the email address on the {{site.data.keyword.Bluemix_notm}} account.
-   ![Two Monitoring](images/solution4/TwoMonitoring.png)
+   ![Two Monitors](images/solution4/TwoMonitoring.png)
 
 ### Server usage
 
@@ -230,7 +230,7 @@ Select the **Usage** tab to understand the current server's memory and CPU usage
 
 ## Server security
 
-{{site.data.keyword.BluVirtServers}} provide several security options such as vulnerability scanning and add-on firewalls.
+{{site.data.keyword.BluVirtServers}} provide several security options such as vulnerability scanning and firewalls.
 
 ### Vulnerability scanner
 
