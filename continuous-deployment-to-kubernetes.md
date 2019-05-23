@@ -188,9 +188,11 @@ In this section, you will complete the deployment pipeline by deploying the Kube
 3. Rename the **Deploy Stage** to `Deploy dev`, you can do that by clicking on settings Icon >  **Configure Stage**.
    ![](images/solution21/deploy_stage.png)
 4. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
-5. Change the **stage trigger** to `Run jobs only when this stage is run manually`. ![](images/solution21/prod-stage.png)
+5. Change the **stage trigger** to `Run jobs only when this stage is run manually`.
+   ![](images/solution21/prod-stage.png)
 6. Under the **Job** tab, change the cluster name to the newly created cluster and then **Save** the stage.
-7. You now should have the full deployment setup, to deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production. ![](images/solution21/full-deploy.png)
+7. You now should have the full deployment setup, to deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production.
+   ![](images/solution21/full-deploy.png)
 
 Done, you've now created a production cluster and configured the pipeline to push updates to your production cluster manually. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
 
