@@ -49,7 +49,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 1. The code is pushed to a private Git repository.
 2. The pipeline picks up changes in Git and builds container image.
-3. The container image is uploaded to registry and any vulnerabilities are reported. The app is deployed to the Development cluster.
+3. The container image is uploaded to registry. The app is deployed to the Development cluster.
 4. Once changes are validated, the app is deployed to the Production cluster.
 5. Notications are sent to Slack to track the deployment activities.
 
@@ -170,72 +170,11 @@ In this section, you will commit your change to your Git repository. The pipelin
    {: codeblock}
 
 3. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-4. Confirm that you see n **BUILD** and **DEPLOY** stage.
-   ![](images/solution21/Delivery-pipeline.png)
+4. Notice a new **BUILD** has started.
 5. Wait for the **DEPLOY** stage to complete.
 6. Click the application **url** under Last Execution result to view your changes live.
 
 If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
-
-## Security using Vulnerability Advisor
-{: #vulnerability_advisor}
-
-In this step, you will explore the [Vulnerability Advisor](https://{DomainName}/docs/services/va?topic=va-va_index#va_index). The vulnerability advisor is used check the security status of container images before deployment, and also it checks the status of running containers.
-
-1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-1. Click on **Add Stage** and change MyStage to **Validate Stage** and then click on the JOBS  > **ADD JOB**.
-
-   1. Select **Test** as the Job Type and Change **Test** to **Vulnerability advisor** in the box.
-   1. Under Tester type, select **Vulnerability Advisor**. All the other fields should be populated automatically.
-      Container Registry namespace should be same as the one mentioned in **Build Stage** of this toolchain.
-      {:tip}
-   1. Edit the **Test script** section and replace `SAFE\ to\ deploy` in the last line with `NO\ ISSUES`
-   1. Save the stage
-1. Drag and move the **Validate Stage** to the middle then click **Run** ![](images/solution21/run.png) on the **Validate Stage**. You will see that the **Validate stage** fails.
-
-   ![](images/solution21/toolchain.png)
-
-1. Click on **View logs and history** to see the vulnerability assessment.The end of the log says:
-
-   ```
-   The scan results show that 3 ISSUES were found for the image.
-
-   Configuration Issues Found
-   ==========================
-
-   Configuration Issue ID                     Policy Status   Security Practice                                    How to Resolve
-   application_configuration:mysql.ssl-ca     Active          A setting in /etc/mysql/my.cnf that specifies the    ssl-ca is not specified in /etc/mysql/my.cnf.
-                                                              Certificate Authority (CA) certificate.
-   application_configuration:mysql.ssl-cert   Active          A setting in /etc/mysql/my.cnf that specifies the    ssl-cert is not specified in /etc/mysql/my.cnf
-                                                              server public key certificate. This certificate      file.
-                                                              can be sent to the client and authenticated
-                                                              against its CA certificate.
-   application_configuration:mysql.ssl-key    Active          A setting in /etc/mysql/my.cnf that identifies the   ssl-key is not specified in /etc/mysql/my.cnf.
-                                                              server private key.
-   ```
-
-   You can see the detailed vulnerability assessments of all the scanned repositories [here](https://{DomainName}/kubernetes/registry/main/private)
-   {:tip}
-
-   The stage may fail saying the image *has not been scanned* if the scan for vulnerabilities takes more than 3 minutes. This timeout can be changed by editing the job script and increasing the number of iterations to wait for the scan results.
-   {:tip}
-
-1. Let's fix the vulnerabilities by following the corrective action. Open the cloned repository in an IDE or select Eclipse Orion web IDE tile, open `Dockerfile` and add the below command after `EXPOSE 3000`
-   ```sh
-   RUN apt-get remove -y mysql-common \
-     && rm -rf /etc/mysql
-   ```
-   {: codeblock}
-
-1. Commit and Push the changes. This should trigger the toolchain and fix the **Validate Stage**.
-
-   ```
-   git add Dockerfile
-   git commit -m "Fix Vulnerabilities"
-   git push origin master
-   ```
-
-   {: codeblock}
 
 ## Create production Kubernetes cluster
 
