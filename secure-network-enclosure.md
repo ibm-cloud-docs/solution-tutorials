@@ -269,7 +269,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
     
-   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one more than the subnet address starting address. Entering an invalid gateway address will result in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command an re-enter. You can look it up at Network > IP Management > Subnets. Click on the subnet you need to know the Gateway address. The second entry in the List will with the Description **Gateway** is the IP address to enter as <Subnet Gateway IP>/<CIDR>.
+   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one of the first addresses in the subnet range. Entering an invalid gateway address will result in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command an re-enter. You can look it up at Network > IP Management > Subnets. Click on the subnet you need to know the Gateway address. The second entry in the List will with the Description **Gateway** is the IP address to enter as <Subnet Gateway IP>/<CIDR>.
    {: tip}
 
 3. List the new virtual interface (vif): 

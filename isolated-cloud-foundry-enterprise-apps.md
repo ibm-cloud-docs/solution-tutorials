@@ -376,7 +376,7 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
    ```
    {: codeblock}
 2. Access the service using your browser. The `route` to the service will be shown as part of the `push` command's output. The resulting URL will be similar to `https://welcome.<your-cfee-cluster-domain>`. Refresh the page to see alternating languages.
-3. Return to the `sample-resource-service-brokers` folder and edit the Node.js sample implementation `sample-resource-service-brokers/node-resource-service-broker/testresourceservicebroker.js` with adding url after line 854 with adding the cluster URL. 
+3. Return to the `sample-resource-service-brokers` folder, edit the Node.js sample implementation `sample-resource-service-brokers/node-resource-service-broker/testresourceservicebroker.js`. Go to line 854 and add the `url` field to the `credentials` object, replacing the placeholder with your cluster domain name:
 
    ```javascript
    // TODO - Do your actual work here
