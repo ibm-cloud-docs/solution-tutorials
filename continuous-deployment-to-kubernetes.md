@@ -18,7 +18,7 @@ lastupdated: "2019-04-15"
 # Continuous Deployment to Kubernetes
 {: #continuous-deployment-to-kubernetes}
 
-This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like security scanners, Slack notifications, and analytics.
+This tutorial walks you through the process setting up a continuous integration and delivery pipeline for containerized applications running on the {{site.data.keyword.containershort_notm}}.  You will learn how to set up source control, then build, test and deploy the code to different deployment stages. Next, you will add integrations to other services like Slack notifications.
 
 {:shortdesc}
 
@@ -28,7 +28,7 @@ This tutorial walks you through the process setting up a continuous integration 
 * Create development and production Kubernetes clusters.
 * Create a starter application, run it locally and push it to a Git repository.
 * Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod clusters.
-* Explore and integrate the app to use security scanners, Slack notifications, and analytics.
+* Explore and integrate the app to use Slack notifications.
 
 ## Services used
 {: #services}
