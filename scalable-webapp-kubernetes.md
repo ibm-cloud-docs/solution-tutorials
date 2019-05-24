@@ -130,7 +130,7 @@ You can build and run the application as you normally would using `mvn` for java
    docker ps
    ```
    {: pre}
-2. Change to the generated project directory.
+2. Change to the directory of the generated project.
    ```
    cd <project name>
    ```
