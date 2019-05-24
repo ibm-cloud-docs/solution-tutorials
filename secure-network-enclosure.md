@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-08"
+lastupdated: "2019-05-23"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -20,7 +20,7 @@ lastupdated: "2019-03-08"
 
 The need for isolated and secure private network environments is central to the IaaS application deployment model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. This isolation enables virtual machines and bare-metal servers to be securely deployed in complex multi-tier application topologies while proving protection from risks on the public internet.  
 
-This tutorial highlights how a [Virtual Router Appliance](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-faqs-for-ibm-virtual-router-appliance#what-is-vra-) (VRA) can be configured on the {{site.data.keyword.Bluemix_notm}} to create a secure private network (enclosure). The VRA Gateway Appliance provides in a single self-managed package, a firewall, VPN gateway, Network Address Translation (NAT) and enterprise-grade routing. In this tutorial, a VRA is used to show how an enclosed, isolated network environment can be created on the {{site.data.keyword.Bluemix_notm}}. Within this enclosure application topologies can be created, using the familiar and well known technologies of IP routing, VLANs, IP subnets, firewall rules, virtual and bare-metal servers.  
+This tutorial highlights how a [Virtual Router Appliance](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-faqs-for-ibm-virtual-router-appliance#what-is-vra-) (VRA) can be configured on the {{site.data.keyword.Bluemix_notm}} to create a secure private network (enclosure). The VRA provides in a single self-managed package, a firewall, VPN gateway, Network Address Translation (NAT) and enterprise-grade routing. In this tutorial, a VRA is used to show how an enclosed, isolated network environment can be created on the {{site.data.keyword.Bluemix_notm}}. Within this enclosure application topologies can be created, using the familiar and well known technologies of IP routing, VLANs, IP subnets, firewall rules, virtual and bare-metal servers.  
 
 {:shortdesc}
 
@@ -103,7 +103,7 @@ To ensure that sufficient VLANs are available on the same data center router and
 ## Provision Virtual Router Appliance
 {: #VRA}
 
-The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}} provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
+The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}} provided public facing transit VLAN, a gateway and optionally a hardware firewall to create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall for the perimeter. 
 
 1. From the catalog select a [Gateway Appliance](https://{DomainName}/gen1/infrastructure/provision/gateway)
 3. At the **Gateway Vendor** section select AT&T. You can choose between "up to 20 Gbps" or "up to 2 Gbps" Uplink Speed.
@@ -112,10 +112,10 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 6. At the **Location** section select the Location and the **Pod** in which you need your VRA.
 7. Select Single Processor or Dual Processor. You will get a list of Servers. Choose a Server by clicking its radio button. 
 8. Select the amount of **RAM**. For a production environment it is recommended to use a minimum of 64GB of RAM. 8GB minimum for test environment.
-9. Select a **SSH Key** (optional). This ssh key will be installed on the VRA, so user vyatta can be used to access the VRA with this key.
+9. Select a **SSH Key** (optional). This ssh key will be installed on the VRA, so the user `vyatta` can be used to access the VRA with this key.
 10. Hard Drive. Keep the default.
 11. In the **Uplink Port Speeds** section select the combination of speed, redundancy and private and/or public interfaces that meets your needs.
-12. In the **Add-ons** section, keep the default. I you what to use IPv6 on the public interface select IPv6 address.
+12. In the **Add-ons** section, keep the default. If you want to use IPv6 on the public interface, select IPv6 address.
 
 On the right side you can see your **Order Summary**. Check the _I have read and agree to the Third-Party Service Agreements listed below:_ checkbox and click the **Create** button. Your gateway will be deployed.
 
@@ -269,7 +269,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
     
-   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one more than the subnet address starting address. Entering an invalid gateway address will result in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command an re-enter. You can look it up at Network > IP Management > Subnets. Click on the subnet you need to know the Gateway address. The second entry in the List will with the Description **Gateway** is the IP address to enter as <Subnet Gateway IP>/<CIDR>.
+   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one of the first addresses in the subnet range. Entering an invalid gateway address will result in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command an re-enter. You can look it up at Network > IP Management > Subnets. Click on the subnet you need to know the Gateway address. The second entry in the List will with the Description **Gateway** is the IP address to enter as <Subnet Gateway IP>/<CIDR>.
    {: tip}
 
 3. List the new virtual interface (vif): 
@@ -299,7 +299,7 @@ This completes the IP routing configuration.
 The secure private network enclosure is created through configuration of zones and firewall rules. Review the VRA documentation on [firewall configuration](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-manage-your-ibm-firewalls#manage-firewalls) before proceeding. 
 
 Two zones are defined:
-   - INSIDE:  The IBM private and management networks
+   - INSIDE:  The IBM private network and the IBM management network
    - APP:  The user VLAN and subnet within the private network enclosure		
 
 1. Define firewalls and defaults.
@@ -333,7 +333,7 @@ Two zones are defined:
      commit
      ```
      {: codeblock}
-3. Create the APP zone for the user VLAN and subnet and the INSIDE zone for the {{site.data.keyword.Bluemix_notm}} private network. Assign the previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires the VLAN ID of the VLAN associated with the VRA earlier to be specified. This is highlighted below as `<VLAN ID>`.
+3. Create the APP zone for the user VLAN and subnet and the INSIDE zone for the {{site.data.keyword.Bluemix_notm}} private network. Assign the previously created firewalls. Zone definition uses the VRA network interface names to identify the zone associated with each VLAN. The command to create the APP zone, requires to specify the VLAN ID of the VLAN associated with the VRA created earlier. This is highlighted below as `<VLAN ID>`.
    ```
    set security zone-policy zone INSIDE description "IBM Internal network"
    set security zone-policy zone INSIDE default-action drop
@@ -416,13 +416,13 @@ Two zones are defined:
 
 The firewall logs can be viewed from the VRA operational command prompt. In this configuration, only dropped traffic for each Zone is logged to aid in diagnosis of firewall misconfiguration.  
 
-1. Review firewall logs for denied traffic. Periodic review of the logs will identify if servers in the APP zone are attempting to validly or erroneously attempting to contact services on the IBM network. 
+1. Review firewall logs for denied traffic. Periodic review of the logs will identify if servers in the APP zone are attempting to validly or erroneously contact services on the IBM network. 
    ```
    show log firewall name INSIDE-TO-APP
    show log firewall name APP-TO-INSIDE
    ```
    {: codeblock}
-2. If services or servers are not contactable and nothing is seen in the firewall logs. Verify if the expected ping/ssh IP traffic is present on the VRA network interface from the {{site.data.keyword.Bluemix_notm}} private network or on the VRA interface to the VLAN using the `<VLAN ID>` from earlier.
+2. If services or servers are not contactable and nothing is seen in the firewall logs, verify if the expected ping/ssh IP traffic is present on the VRA network interface from the {{site.data.keyword.Bluemix_notm}} private network or on the VRA interface to the VLAN using the `<VLAN ID>` from earlier.
    ```bash
    monitor interface bonding dp0bond0 traffic
    monitor interface bonding dp0bond0.<VLAN ID> traffic
