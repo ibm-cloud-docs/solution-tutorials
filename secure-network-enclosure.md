@@ -152,7 +152,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    exit
    ```
    {: codeblock}
-   From this point in this tutorial it is assumed that all VRA commands are entered at the `edit` prompt, subsequent to entering `configure`.
+   From this point in this tutorial it is assumed that all VRA commands are entered at the `edit` prompt, after using the `configure` command.
 3. Review the initial configuration
    ```
    show
