@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-27"
+lasttested: "2019-05-27"
 ---
 
 {:shortdesc: .shortdesc}
@@ -60,13 +61,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 To begin, you will create Internet of Things Platform service - The hub which can manage devices, securely connect and **collect data**, and make historical data available for visualizations and applications.
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [**Internet of Things Platform**](https://{DomainName}/catalog/services/internet-of-things-platform) under the **Internet of Things** section.
-2. Enter `IoT demo hub` as the service name, click **Create** and **Launch** the dashboard.
-3. From the side menu, select **Security > Connection Security** and choose **TLS Optional** under **Default Rule** > **Security Level** and click **Save**.
+2. Enter `IoT demo hub` as the service name, choose a pricing plan, click **Create** and **Launch**(under Manage) the dashboard.
+3. From the side menu, select **Security** > click Edit icon next to **Connection Security** and choose **TLS Optional** under **Default Rule** > **Security Level** and click **Save**.
 4. From the side menu, select **Devices** > **Device Types**  and **+ Add Device Type**.
 5. Enter `simulator` as the **Name** and click **Next** and **Done**.
-6. Next, click on **Register Devices**
-7. Choose `simulator` for **Select Existing Device Type** and then enter `phone` for **Device ID**.
-8. Click **Next** until the **Device Security** (under Security tab) screen is displayed.
+6. Next, click on **Register Devices**.
+7. Under **Browse** > **Identity** enter `phone` for **Device ID**.
+8. Click **Next** until the **Security** screen is displayed.
 9. Enter a value for the **Authentication Token**, for example: `myauthtoken` and click **Next**.
 10. After clicking **Done**, your connection information is displayed. Keep this tab open.
 
@@ -89,10 +90,13 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    ibmcloud cf push
    ```
 4. In a few minutes, your application will be deployed and you should see a URL similar to `<UNIQUE_NAME>.mybluemix.net`
-5. Visit this URL on your phone using a browser.
+5. Visit the application URL with HTTPS (`https://<UNIQUE_NAME>.mybluemix.net`) on your phone using a browser.
 6. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
-7. Your phone will start transmitting data. Back in the **IBM {{site.data.keyword.iot_short_notm}} tab**, check for new entires in the **Recent Events** section.
+7. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
   ![](images/solution16/recent_events_with_phone.png)
+
+From iOS 12.2+, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
+{: tip}
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
 {: #createcards}
@@ -101,10 +105,9 @@ Next, you will create a board and cards to display device data in the dashboard.
 ### Create a board
 {: #createboard}
 
-1. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
-2. Select **Boards** from the left menu, and then click **Create New Board**.
-3. Enter a name for the board, `Simulators` as example,  and click **Next** and then **Submit**.  
-4. Select the board that you just created to open it.
+1. Select **Boards** from the left menu, and then click **Create New Board**.
+1. Enter a name for the board, `Simulators` as example,  and click **Next** and then **Submit**.
+1. Select the board that you just created to open it.
 
 ### Display device data
 {: #cardtemp}
@@ -119,17 +122,16 @@ Next, you will create a board and cards to display device data in the dashboard.
    - Min: -180
    - Max: 180
 5. In the Card Preview page, select **L** for the line chart size, and click **Next** > **Submit**
-6. The  card appears on the dashboard and includes a line chart of the live temperature data.
+6. The  card appears on the dashboard and includes a line chart of the live OrientationBeta(ob) data.
 7. Use your mobile phone browser to launch the simulator again and slowly tilt the phone forward and backward.
-8. Back in the **IBM {{site.data.keyword.iot_short_notm}} tab**, you should see the chart getting updated.
-   ![](images/solution16/board.png)
+8. Back in the **IBM {{site.data.keyword.iot_short_notm}} Boards tab**, you should see the chart getting updated.
 
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) named `iot-db`.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) named `iot-db` using both legacy credentials and IAM as the authentication method.
 2. Under **Connections**:
    1. **Create connection**
    1. Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
-   1. Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot demo hub** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space. 
+   1. Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot-solution-tutorial** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space.
    1. Connect and restage the app.
 3. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 4. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
@@ -151,31 +153,29 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
 3. Create a Project > Select **Data Science** > Click **Create project** and enter `Detect Anomaly` as the **Name** of the project.
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
-5. Under **Define Storage**, Click on **Add** and choose an existing **Cloud Object Storage** service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
+5. Select an existing **Cloud Object Storage** service under **Define Storage** or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Connection to {{site.data.keyword.cloudant_short_notm}} for data
 
-1. Click on **Assets** > **+ Add to Project** > **Connection**  
+1. Click on **Assets** > **+ Add to Project** > **Connection**
 2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
 3. Verify the **Credentials** and then click **Create**.
 
 ### Create an {{site.data.keyword.iae_full_notm}} service
 
-1. Click **Services** on the top navigation bar > Compute Services.
-2. Click **Add service**.
-   1. Click **Add** on **{{site.data.keyword.iae_full_notm}}**.
-   1. Select the **Lite** plan.
-   1. Select **AE 1.1 Spark** as software package
+1. Click **Settings** on the top navigation bar > Associated Services.
+1. Click **Add service**.
+   1. Select **{{site.data.keyword.iae_full_notm}}**.
+   1. Click **New** > Select the **Lite** plan.
    1. Click **Create**.
-3. Select a resource group, change the service name if you want to and **Confirm**.
-1. Navigate to the `Detect Anomaly` project through **Projects**.
-1. In the **Settings**, scroll to **Associated services**.
-1. Click **Add service**, select **{{site.data.keyword.iae_full_notm}}**.
-1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created. If the service is not showing in the list, make sure it is fully provisioned first.
+   1. Select a resource group, change the service name if you want to .
+   1. Select **AE 1.1 Spark** as software package and **Confirm**.
+1. If you don't see the service in the associated services list, Click **Add service**, select **{{site.data.keyword.iae_full_notm}}**.
+1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created under **Existing**. If the service is not showing in the list, make sure it is fully provisioned first.
 
 ### Create a Jupyter (ipynb) notebook
-1. Click **+ Add to Project** and add a new **notebook**.
+1. Click **+ Add to Project** and add a new **Notebook**.
 2. Enter `Anomaly-detection-notebook` for the **Name**.
 3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio-python3.ipynb` in the **Notebook URL**.
 4. Select the **{{site.data.keyword.iae_full_notm}}** service associated previously as the runtime.
@@ -184,7 +184,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
    To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
    {:tip}
 
-### Run the notebook and detect anomalies   
+### Run the notebook and detect anomalies
 1. Select the cell that starts with `!pip install --upgrade pixiedust,` and then click **Run** or **Ctrl + Enter** to execute the code.
 2. When the installation is complete, restart the Spark kernel by clicking the **Restart Kernel** icon.
 3. In the next code cell, Import your {{site.data.keyword.cloudant_short_notm}} credentials to that cell by completing the following steps:
