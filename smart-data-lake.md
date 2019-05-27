@@ -34,12 +34,12 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 
 ![Architecture](images/solution29/architecture.png)
 
-1. Raw data is stored on {{site.data.keyword.cos_short}}
-2. Data is reduced, enhanced or refined with SQL Query
-3. Data analysis occurs in {{site.data.keyword.DSX}}
-4. Line of business accesses a web application
-5. Refined data is pulled from {{site.data.keyword.cos_short}}
-6. Line of business charts are built using {{site.data.keyword.dynamdashbemb_notm}}
+1. Raw data is stored on {{site.data.keyword.cos_short}}.
+2. Data is reduced, enhanced or refined with SQL Query.
+3. Data analysis occurs in {{site.data.keyword.DSX}}.
+4. The end-user accesses a web application.
+5. Refined data is pulled from {{site.data.keyword.cos_short}}.
+6. Charts are built using {{site.data.keyword.dynamdashbemb_notm}}.
 
 ## Before you begin
 
@@ -309,7 +309,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 
 1. Access the public URL of the dashboard application you pushed to {{site.data.keyword.Bluemix_notm}} previously.
 2. Select a template that matches your intended layout. (The following steps use the second layout in the first row.)
-3. Use the `Add a source` button that appears in the `Selected sources` side shelf, expand the `bucket name` accoridan and click one of the `accidents/jobid=...` table entries. Close the dialog using the X icon in the upper right.
+3. Use the `Add a source` button that appears in the `Selected sources` side shelf, expand the `bucket name` accordion and click one of the `accidents/jobid=...` table entries. Close the dialog using the X icon in the upper right.
 4. On left, click the `Visualizations` icon and then click **Summary**.
 5. Select the `accidents/jobid=...` source, expand `Table` and create a chart.
     - Drag and drop `id` on the **Value** row.

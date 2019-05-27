@@ -183,7 +183,7 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
    Look for the `Ingress Subdomain` value.
 1. Make note of this information for a later step.
 
-This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also swap the subdomain for the public Application Load Balancer IP address (`ibmcloud ks albs -cluster <cluster-name>`). Both options are supported.
+This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also replace the subdomain for the public Application Load Balancer IP address (`ibmcloud ks albs -cluster <cluster-name>`). Both options are supported.
 {: tip}
 
 ## And then to another location
@@ -210,7 +210,7 @@ Repeat the following steps in London:
 
 Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
 
-In this section, you will configure Cloud Internet Services (CIS) to distribute the load between the two clusters. CIS is a one stop-shop service providing Global Load Balancer (GLB), Caching, Web Application Firewall (WAF) and Page rule to secure your applications while ensuring the reliability and performance for your Cloud applications.
+In this section, you will configure Cloud Internet Services (CIS) to distribute the load between the two clusters. CIS is a one stop-shop service providing _Global Load Balancer (GLB)_, _Caching_, _Web Application Firewall (WAF)_ and _Page rule_ to secure your applications while ensuring the reliability and performance for your Cloud applications.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to CIS name servers,
@@ -306,7 +306,7 @@ With this configuration, users in Europe and in Asia will be redirected to the c
 
 ### Create Ingress Resource for Kubernetes clusters per location
 
-The Global Load Balancer is now ready to serve requests. All health checks should be green. But there is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer: you need to define an Ingress resource to handle requests from the GLB domain.
+The Global Load Balancer is now ready to serve requests. All health checks should be passing successfully. But there is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer: you need to define an Ingress resource to handle requests from the GLB domain.
 
 1. Create an Ingress resource file named **glb-ingress.yaml**
    ```yaml
@@ -349,7 +349,7 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
    1. Set **Sensitivity** to `Low`.
    1. Set **Action** to `Simulate` to log all the events.
 1. Click **Back to Security**.
-1. Click **View CIS Rule Set**. This page shows additional rules built around common technology stacks for hosting websites.
+1. Click **View CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
 
 ### Increase performance and protect from Denial of Service attacks 
 {: #proxy_setting}
@@ -362,7 +362,7 @@ A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-
 
    ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis-proxy.png)
 
-**Your GLB is now protected**. An immediate benefit is that the origin IP address of your clusters will be hidden from the clients. If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirect to your application:
+**Your GLB is now protected**. An immediate benefit is that the origin IP addresses of your clusters will be hidden from the clients. If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirected to your application:
 
    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
 
