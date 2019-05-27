@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
 lastupdated: "2019-03-07"
@@ -19,10 +20,10 @@ Adding more servers to an application is a common pattern to handle additional l
 This tutorial walks you through a scenario with the creation of:
 
 - Two web application servers in Dallas.
-- Cloud Load Balancer, to load balance traffic two servers within a location.
+- Cloud Load Balancer, to load balance traffic between two servers within a location.
 - One MySQL database server.
 - A durable file storage to store application files and backups.
-- Configure the second location with the first same configurations, then add Cloud Internet Services to point traffic to the healthy location if one copy fails.
+- Configure the second location with the same configurations as the first location, then add Cloud Internet Services to point traffic to the healthy location if one copy fails.
 
 ## Objectives
 {: #objectives}
@@ -41,7 +42,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
 * [Internet Services](https://{DomainName}/catalog/services/internet-services)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -91,7 +92,7 @@ In this section, you configure one server to act as the master database.
    - Set **Name** to **db1**
    - Select a location where to provision the server. **All other servers and resources created in this tutorial will need to be created in the same location.**
    - Select the **Ubuntu Minimal** image
-   - Keep the default compute flavor. The tutorial has been tested with the smallest flavor but should work with any flavor.
+   - Keep the default compute profile. The tutorial has been tested with the smallest profile but should work with any profile.
    - Under **Attached Storage Disks**, select the 25GB boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
 
@@ -246,7 +247,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    [Install]
    WantedBy = multi-user.target
    ```
-   Use Ctrl+X to save and exit the nano window
+   Use Ctrl+X to save and exit the `nano` window
    {: tip}
 
 5. Create the mount point
@@ -297,7 +298,7 @@ In this section, you will create two web application servers.
    - Set **Name** to **app1**
    - Select the same location where you provisioned the database server
    - Select the **Ubuntu Minimal** image
-   - Keep the default compute flavor.
+   - Keep the default compute profile.
    - Under **Attached Storage Disks**, select 25GB as your boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
 

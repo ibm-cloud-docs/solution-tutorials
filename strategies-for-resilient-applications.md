@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2019-03-11"
@@ -37,7 +38,7 @@ Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions or 
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
 * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
 * [{{site.data.keyword.BluVirtServers}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
@@ -47,7 +48,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [Cloud Internet Services](https://{DomainName}/catalog/services/internet-services)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture and Concepts
 
@@ -342,7 +343,7 @@ Once you have created instances in multiple locations, use the tooling {{site.da
 {:related}
 
 - IBM Cloud [Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
-- [Improving App Availability with Multizone Clusters](https://www.ibm.com/blogs/bluemix/2018/06/improving-app-availability-multizone-clusters/)
+- [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
 - [Cloud Foundry, secure web application across multiple regions](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#secure-web-application-across-multiple-regions)
 - [Cloud Functions, deploy serverless apps across multiple regions](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-serverless#deploy-serverless-apps-across-multiple-regions)
 - [Kubernetes, resilient and secure multi-region Kubernetes clusters with Cloud Internet Services](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-k8s-cis#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services)

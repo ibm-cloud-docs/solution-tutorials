@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
@@ -34,12 +35,12 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 
 ![Architecture](images/solution29/architecture.png)
 
-1. Raw data is stored on {{site.data.keyword.cos_short}}
-2. Data is reduced, enhanced or refined with SQL Query
-3. Data analysis occurs in {{site.data.keyword.DSX}}
-4. Line of business accesses a web application
-5. Refined data is pulled from {{site.data.keyword.cos_short}}
-6. Line of business charts are built using {{site.data.keyword.dynamdashbemb_notm}}
+1. Raw data is stored on {{site.data.keyword.cos_short}}.
+2. Data is reduced, enhanced or refined with SQL Query.
+3. Data analysis occurs in {{site.data.keyword.DSX}}.
+4. The end-user accesses a web application.
+5. Refined data is pulled from {{site.data.keyword.cos_short}}.
+6. Charts are built using {{site.data.keyword.dynamdashbemb_notm}}.
 
 ## Before you begin
 
@@ -119,7 +120,7 @@ This section uses the command line to create service instances. Alternatively, y
 
 ## Uploading data
 
-In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/blogs/bluemix/2018/03/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/).
+In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket using built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/cloud/blog/announcements/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud).
 
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD) CSV file. The file is 81MB and may take a few minutes to download.
 2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources).
@@ -183,7 +184,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     - In the resulting project, click **Add to project** and **Notebook**.
     - From the **Blank** tab, enter a **Notebook name**.
     - Leave the **Language** and **Runtime** defaults; click **Create notebook**.
-2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the **In [ ]:** input prompt and then **Run**.
+2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**.
     ```python
     !conda install pyarrow
     !conda install sqlparse
@@ -309,7 +310,7 @@ Not every user of the data lake is a data scientist. You can allow non-technical
 
 1. Access the public URL of the dashboard application you pushed to {{site.data.keyword.Bluemix_notm}} previously.
 2. Select a template that matches your intended layout. (The following steps use the second layout in the first row.)
-3. Use the `Add a source` button that appears in the `Selected sources` side shelf, expand the `bucket name` accoridan and click one of the `accidents/jobid=...` table entries. Close the dialog using the X icon in the upper right.
+3. Use the `Add a source` button that appears in the `Selected sources` side shelf, expand the `bucket name` accordion and click one of the `accidents/jobid=...` table entries. Close the dialog using the X icon in the upper right.
 4. On left, click the `Visualizations` icon and then click **Summary**.
 5. Select the `accidents/jobid=...` source, expand `Table` and create a chart.
     - Drag and drop `id` on the **Value** row.

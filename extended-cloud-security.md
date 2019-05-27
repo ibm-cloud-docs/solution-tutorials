@@ -34,15 +34,15 @@ walks you through key security services available in the {{site.data.keyword.clo
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}
-* /containers-kubernetes/catalog/cluster)
-* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
+* /kubernetes/catalog/cluster)
+* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 * [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.cloudaccesstrailshort}}](https://{DomainName}/catalog/services/activity-tracker)
 * [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/key-protect)
 
-This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?topic=account-accounts#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?topic=account-accounts#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -72,7 +72,7 @@ The tutorial features a sample application that enables groups of users to uploa
 ### Decide where to deploy the application
 
 1. Identify **a region**, **a Cloud Foundry organization and a space**, and **a resource group** where you will deploy the application and its resources.
-1. Make sure you have [one private repository](https://{DomainName}/containers-kubernetes/registry/private) to push Docker images in the selected region.
+1. Make sure you have [one private repository](https://{DomainName}/kubernetes/registry/main/private) to push Docker images in the selected region.
 
 ### Capture user and application activities 
 {: #activity-tracker }
@@ -96,7 +96,7 @@ You can find detailed instructions to set up the proper permissions in the [{{si
 Skip this section if you have an existing **Standard** cluster you want to reuse with this tutorial.
 {: tip}
 
-1. Go to the [cluster creation page](https://{DomainName}/containers-kubernetes/catalog/cluster/create).
+1. Go to the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create).
    1. Set the **Location** to the region you identified in previous steps.
    1. Set **Cluster type** to **Standard**.
    1. Set **Availability** to **Single Zone**.
@@ -335,5 +335,5 @@ If you share an account with other users, always make sure to delete only your o
 * [{{site.data.keyword.Bluemix_notm}} Platform security](https://{DomainName}/docs/overview?topic=overview-security#security)
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security)
 * [Tutorial: Best practices for organizing users, teams, applications](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
-* [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blogs/bluemix/2018/07/secure-apps-on-ibm-cloud-with-wildcard-certificates/)
+* [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates)
 

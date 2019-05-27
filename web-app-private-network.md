@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
@@ -15,7 +16,7 @@ lastupdated: "2019-03-07"
 {:tip: .tip}
 {:pre: .pre}
 
-# Web application serving from a secure private network
+# Hosting web applications from a secure private network
 {: #web-app-private-network}
 
 Hosting web applications is a common deployment pattern for public cloud, where resources can be scaled on demand to meet short term and long term usage demands. Security for the application workloads is a fundamental prerequisite, to complement the resilience and scalability afforded by public cloud. 

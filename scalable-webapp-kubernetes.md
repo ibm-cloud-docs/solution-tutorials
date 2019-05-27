@@ -1,7 +1,9 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-10"
+lastupdated: "2019-05-22"
+lasttested: "2019-05-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -14,7 +16,7 @@ lastupdated: "2019-05-10"
 # Scalable web application on Kubernetes
 {: #scalable-webapp-kubernetes}
 
-This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster). Additionally, you will learn how to bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how to bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
 Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
@@ -34,10 +36,10 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/containers-kubernetes/launchRegistryView)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/containers-kubernetes/catalog/cluster)
+* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -67,7 +69,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 The major portion of this tutorial can be accomplished with a **Free** cluster. Two optional sections relating to Kubernetes Ingress and custom domain require a **Paid** cluster of type **Standard**.
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/containers-kubernetes/launch).
+1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
 
    For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
    {:tip}
@@ -78,9 +80,9 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 
 ### Configure kubectl
 
-In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
+In this step, you'll configure kubectl to point to your newly created cluster. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `ibmcloud login` to log in interactively. Provide the organization (org), location and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
+1. Use `ibmcloud login` to log in interactively. Provide the location where the cluster was created. You can reconfirm the details by running `ibmcloud target` command.
 2. When the cluster is ready, retrieve the cluster configuration by setting MYCLUSTER environment variable to your cluster name:
    ```bash
    export MYCLUSTER=<CLUSTER_NAME>
@@ -108,7 +110,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE (Web App)` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
+1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
 1. Enter a **name** for your application.
 1. Select the resource group where to deploy this application.
 1. Do not add additional services.
@@ -129,7 +131,7 @@ You can build and run the application as you normally would using `mvn` for java
    docker ps
    ```
    {: pre}
-2. Change to the generated project directory.
+2. Change to the directory of the generated project.
    ```
    cd <project name>
    ```
@@ -179,19 +181,22 @@ In this section, you first push the Docker image to the IBM Cloud private contai
     export MYPROJECT=<PROJECT_NAME>
     ```
     {: pre}
+3. Log in the **Container Registry**:
+   ```sh
+   ibmcloud cr login
+   ```
+   {: pre}
 3. Identify your **Container Registry** (e.g. us.icr.io) by running `ibmcloud cr info`
 4. Set MYREGISTRY env var to your registry.
    ```sh
    export MYREGISTRY=<REGISTRY>
    ```
    {: pre}
-
 5. Build and tag (`-t`)the docker image
    ```sh
    docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
    {: pre}
-
 6. Push the docker image to your container registry on IBM Cloud
    ```sh
    docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
@@ -238,7 +243,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    Ingress secret:		mycluster
    ```
    {: screen}
-2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output.**service-name** is the name under `==> v1/Service` in the above step or run `kubectl get svc` to find the service name of type **NodePort**.
+2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output. **service-name** is the name under `==> v1/Service` in the above step. You can also use `kubectl get svc` to find the service name of type **NodePort**.
    ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
@@ -343,7 +348,7 @@ If you were to try to access your application with HTTPS at this time `https://<
 ## Monitor application health
 {: #monitor_application}
 
-1. To check the health of your application, navigate to [clusters](https://{DomainName}/containers-kubernetes/clusters) to see a list of clusters and click on the cluster you created above.
+1. To check the health of your application, navigate to [clusters](https://{DomainName}/kubernetes/clusters) to see a list of clusters and click on the cluster you created above.
 2. Click **Kubernetes Dashboard** to launch the dashboard in a new tab.
    ![](images/solution2/launch_kubernetes_dashboard.png)
 3. Select **Nodes** on the left pane, click the **Name** of the nodes and see the **Allocation Resources** to see the health of your nodes.

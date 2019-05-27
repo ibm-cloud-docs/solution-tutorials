@@ -1,7 +1,9 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-04-29"
+lastupdated: "2019-05-24"
+lasttested: "2019-05-24"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -35,7 +37,7 @@ This tutorial walks you through the process of defining intents and entities and
 
 This tutorial uses the following products:
 
-- [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/watson-assistant-formerly-conversation)
+- [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/watson-assistant)
 - [{{site.data.keyword.speechtotextfull}}](https://{DomainName}/catalog/services/speech-to-text)
 - [{{site.data.keyword.texttospeechfull}}](https://{DomainName}/catalog/services/text-to-speech)
 
@@ -62,7 +64,7 @@ This tutorial uses the following products:
 
 In this section, you will create the services required by the tutorial starting with {{site.data.keyword.conversationshort}} to build cognitive virtual assistants that help your customers.
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.conversationshort}}](https://{DomainName}/catalog/services/watson-assistant-formerly-conversation) service > **Lite** plan:
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.conversationshort}}](https://{DomainName}/catalog/services/watson-assistant) service > **Lite** plan:
    1. Set **Name** to **android-chatbot-assistant**
    1. **Create**.
 2. Click **Service credentials** on the left pane and click **New credential**.
@@ -99,7 +101,7 @@ For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM
 
 1. In the {{site.data.keyword.conversationshort}} service details page, navigate to **Manage** on the left pane, click on **Launch tool** to see the {{site.data.keyword.conversationshort}} dashboard.
 1. Click on **Skills** tab.
-1. **Create new** then **Import skill** and choose the JSON file downloaded above.
+1. **Create skill** then **Import skill** and choose the JSON file downloaded above.
 1. Select **Everything** option and click **Import**. A new skill is created with predefined intents, entities and dialog flow.
 1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**.
 
@@ -118,14 +120,15 @@ Simply put, intents are the intentions of the end-user. The following are exampl
    Ana is an insurance bot for users to query their health benefits and file claims.
    {:tip}
 2. Click on the first tab to see all the **Intents**.
-3. Click on **Add intent** to create a new intent. Enter `Cancel_Policy` as your intent name after `#`and provide an optional description.
+3. Click on **Create intent**. Enter `Cancel_Policy` as your intent name after `#`and provide an optional description.
+
    ![](images/solution28-watson-chatbot-android/add_intent.png)
 4. Click **Create intent**.
 5. Add user examples when requested to cancel a policy
    - `I want to cancel my policy`
    - `Drop my policy now`
    - `I wish to stop making payments on my policy.`
-6. Add user examples one after another and click **add example**. Repeat this for all the other user examples.
+6. Add user examples one after another and click **Add example**. Repeat this for all the other user examples.
 
    Remember to add at least 5 user examples to train your bot better.
    {:tip}
@@ -147,7 +150,7 @@ The following are examples of entity names
  - `@product`
 
 1. Click **Entities** tab to see the existing entities.
-2. Click **Add entity** and enter the name of the entity as `location` after `@`. Click **Create entity**.
+2. Click **Create entity** and enter the name of the entity as `location` after `@`. Click **Create entity**.
 3. Enter `address` as the value name and select **Synonyms**.
 4. Add `place` as a synonym and click the ![](images/solution28-watson-chatbot-android/plus_icon.png)icon. Repeat with synonyms `office`, `centre`, `branch` etc., and click **Add Value**.
    ![](images/solution28-watson-chatbot-android/add_entity.png)
@@ -182,10 +185,10 @@ A dialog is a branching conversation flow that defines how your application resp
 
 An **assistant** is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. You customize the assistant by adding to it the **skills** it needs to satisfy your customers' goals.
 
-1. In the {{site.data.keyword.conversationshort}} tool, switch to **Assistants** and use **Create new**.
+1. In the {{site.data.keyword.conversationshort}} tool, switch to **Assistants** and use **Create assistant**.
    1. Set **Name** to **android-chatbot-assistant**
-   1. **Create**
-1. Use **Add Dialog skill** to select the skill created in the previous sections.
+   1. **Create assistant**
+1. Use **Add dialog skill** to select the skill created in the previous sections.
    1. **Add existing skill**
    1. Select **Ana**
 1. Select the action menu on the Assistant > **Settings** > **API Details**, make note of the **Assistant ID**, you will need to reference it from the mobile application( in the `config.xml` file of the Android app).

@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
 lastupdated: "2019-03-08"
@@ -106,7 +107,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
      ![](images/solution6/push_ios_register_appid.png)
 
 ### Create a development and distribution APNs SSL certificate
-   Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key that you use to sign for your Apple {{site.data.keyword.mobilepushshort}}. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
+   Before you obtain an APNs certificate, you must first generate a certificate signing request (CSR) and submit it to Apple, the certificate authority (CA). The CSR contains information that identifies your company and your public and private key. Then, generate the SSL certificate on the iOS Developer Portal. The certificate, along with its public and private key, is stored in Keychain Access.
    You can use APNs in two modes:
 
 - Sandbox mode for development and testing.
@@ -128,7 +129,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
 
         ![Generate certificate](images/solution6/generate_certificate.png)
    8. On your mac, open **Keychain Access**, **File**, **Import** and select the downloaded .cer file to install it.
-   9. Right-click on the new certificate and private key, and then select **Export** and change the **File Format** to Personal information exchange format (`.p12` format).
+   9. Right-click on the new certificate, and then select **Export** and change the **File Format** to Personal information exchange format (`.p12` format).
      ![Export certificate and keys](images/solution6/keychain_export_key.png)
    10. In the **Save As** field, provide the certificate a meaningful name. For example, `sandbox_apns.p12` or **production_apns.p12**, then click Save.
      ![Export certificate and keys](images/solution6/certificate_p12v2.png)
@@ -183,11 +184,11 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide a unique USER_ID(Optional).
 2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.
 3. Open {{site.data.keyword.mobilepushshort}} service under `Mobile Services` > **Existing services**  on {{site.data.keyword.Bluemix_short}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
-  * Select `Messages`, and compose a message by choosing a Send to option. The supported options are Device by Tag, Device Id, User Id, Android devices, iOS devices, Web Notifications, All Devices and other browsers.
+  * Select `Messages`, and compose a message by choosing a Send to option. The supported options are _Device by Tag_, _Device Id_, _User Id_, _Android devices_, _iOS devices_, _Web Notifications_, _All Devices_ and _other browsers_.
 
        **Note:** When you select the All Devices option, all devices subscribed to {{site.data.keyword.mobilepushshort}} will receive notifications.
   * In the `Message` field, compose your message. Choose to configure the optional settings as required.
-  * Click `Send` and verify that your physical devices has received the notification.
+  * Click `Send` and verify that your physical device has received the notification.
     ![](images/solution6/send_notifications.png)
 
 4. You should see a notification on your iPhone.

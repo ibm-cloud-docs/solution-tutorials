@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
 lastupdated: "2019-05-27"
@@ -34,7 +35,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience) with [{{site.data.keyword.iae_full_notm}}](https://{DomainName}/catalog/services/analytics-engine) and {{site.data.keyword.cos_full_notm}}
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -160,7 +161,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
 1. Click on **Assets** > **+ Add to Project** > **Connection**
 2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
-3. Cross-check the **Credentials** and then click **Create**.
+3. Verify the **Credentials** and then click **Create**.
 
 ### Create an {{site.data.keyword.iae_full_notm}} service
 
@@ -218,6 +219,5 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
 * [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
 * Overview of [IBM {{site.data.keyword.DSX_short}}](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/overview-ws.html)
-* Anomaly Detection [Jupyter Notebook](https://github.com/IBM-Cloud/iot-device-phone-simulator/blob/master/anomaly-detection/Anomaly-detection-DSX.ipynb)
 * [Understanding z-score](https://en.wikipedia.org/wiki/Standard_score)
 * Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://developer.ibm.com/series/iot-anomaly-detection-deep-learning/)

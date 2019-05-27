@@ -1,7 +1,9 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
 lastupdated: "2019-05-15"
+lasttested: "2019-05-15"
 ---
 
 {:shortdesc: .shortdesc}
@@ -35,7 +37,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 - [{{site.data.keyword.databases-for-mongodb_full_notm}}](https://{DomainName}/catalog/services/databases-for-mongodb)
 - [{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)
 
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 
@@ -45,7 +47,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 ![Architecture diagram](images/solution7/Architecture.png)</p>
 
-1. User accesses the application using a web browser.
+1. The user accesses the application using a web browser.
 2. The Node.js app accesses the {{site.data.keyword.databases-for-mongodb}} database to fetch data.
 
 ## Before you begin

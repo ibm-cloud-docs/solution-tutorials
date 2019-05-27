@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
@@ -35,14 +36,14 @@ You will simulate this pattern using a file processing example. First create a U
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/catalog/infrastructure/containers-kubernetes)
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
 
-In this tutorial, the UI application is written in Node.js and the worker application is written in Java highlighting the flexibility of this pattern. Even though both applications are running in the same Kubernetes cluster in this tutorial, either piece could have also been implemented as a Cloud Foundry application or serverless function.
+In this tutorial, the UI application is written in Node.js and the worker application is written in Java highlighting the flexibility of this pattern. Even though both applications are running in the same Kubernetes cluster in this tutorial, either one could have also been implemented as a Cloud Foundry application or serverless function.
 
 <p style="text-align: center;">
 
@@ -62,7 +63,7 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
 
-1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/containers-kubernetes/launch). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster.
+1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/kubernetes/catalog/cluster/create). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster.
    ![Kubernetes Cluster Creation on IBM Cloud](images/solution25/KubernetesClusterCreation.png)
 2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
@@ -121,7 +122,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 
 ## Deploy the UI application to the cluster
 
-The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to {{site.data.keyword.messagehub}} topic "work-topic" that a new file is ready to be processed.
+The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to {{site.data.keyword.messagehub}} topic `work-topic` that a new file is ready to be processed.
 
 1. Clone the sample application repository locally and change directory to the `pubsub-ui` folder.
 ```sh
@@ -140,7 +141,7 @@ The UI application is a simple Node.js Express web application which allows the 
 
 ## Deploy the worker application to the cluster
 
-The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka "work-topic" topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the "result-work" topic upon completion. The UI application will listen this topic and update the status.
+The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka `work-topic` topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the `result-work` topic upon completion. The UI application will listen this topic and update the status.
 
 1. Change dir to the `pubsub-worker` directory
 ```sh
