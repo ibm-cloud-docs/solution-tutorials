@@ -66,7 +66,7 @@ To begin, you will create Internet of Things Platform service - The hub which ca
 4. From the side menu, select **Devices** > **Device Types**  and **+ Add Device Type**.
 5. Enter `simulator` as the **Name** and click **Next** and **Done**.
 6. Next, click on **Register Devices**.
-7. Under **Browse > **Identity** enter `phone` for **Device ID**.
+7. Under **Browse** > **Identity** enter `phone` for **Device ID**.
 8. Click **Next** until the **Security** screen is displayed.
 9. Enter a value for the **Authentication Token**, for example: `myauthtoken` and click **Next**.
 10. After clicking **Done**, your connection information is displayed. Keep this tab open.
@@ -125,7 +125,6 @@ Next, you will create a board and cards to display device data in the dashboard.
 6. The  card appears on the dashboard and includes a line chart of the live OrientationBeta(ob) data.
 7. Use your mobile phone browser to launch the simulator again and slowly tilt the phone forward and backward.
 8. Back in the **IBM {{site.data.keyword.iot_short_notm}} Boards tab**, you should see the chart getting updated.
-   ![](images/solution16/board.png)
 
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) named `iot-db` using both legacy credentials and IAM as the authentication method.
