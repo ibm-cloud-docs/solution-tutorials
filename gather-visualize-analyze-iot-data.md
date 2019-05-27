@@ -89,7 +89,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    ibmcloud cf push
    ```
 4. In a few minutes, your application will be deployed and you should see a URL similar to `<UNIQUE_NAME>.mybluemix.net`
-5. Visit this URL on your phone using a browser.
+5. Visit this URL (HTTPS recommended) on your phone using a browser.
 6. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
 7. Your phone will start transmitting data. Check for new entires in the **Recent Events** section.
   ![](images/solution16/recent_events_with_phone.png)
@@ -131,7 +131,7 @@ Next, you will create a board and cards to display device data in the dashboard.
 2. Under **Connections**:
    1. **Create connection**
    1. Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
-   1. Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot demo hub** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space.
+   1. Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot-solution-tutorial** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space.
    1. Connect and restage the app.
 3. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 4. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
