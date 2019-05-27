@@ -129,7 +129,7 @@ This step builds the application into a Docker image. You can skip this step if 
 Tag the image with the target registry:
 
    ```bash
-  2docker tag multi-region-hello-world:1 us.icr.io/<your_namespace>/hello-world:1
+  docker tag multi-region-hello-world:1 us.icr.io/<your_namespace>/hello-world:1
    ```
    {: pre}
 
