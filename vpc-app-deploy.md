@@ -146,9 +146,7 @@ runcmd:
 ...
 ```
 
-### ----------------------------------------------------------------------
-
-stuff below not edited yet
+## stuff below not edited yet
 
 ## Prerequisites
 You should have a VPC ssh key in the cloud.  Create or verify one exists. 
