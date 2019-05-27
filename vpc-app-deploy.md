@@ -108,7 +108,7 @@ At a high level:
 ### IBM Mirrors
 IBM has internal mirrors for the images that we provide.
 The mirrors are part of the
-[Service endpoints available for IBM Cloud VPC](https://cloud.ibm.com/docs/infrastructure/vpc?topic=vpc-service-endpoints-available-for-ibm-cloud-vpc)
+[Service endpoints available for IBM Cloud VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-service-endpoints-available-for-ibm-cloud-vpc)
 There are no ingress charges for reading the mirrors.
 The mirrors will contain new versions for the software in the IBM provided images as well as optional software packages.
 
@@ -164,7 +164,7 @@ ibmcloud is key-create pfq @/Users/pquiring/.ssh/id_rsa.pub
 ```
 
 Using the console ui
-- open https://cloud.ibm.com/
+- open https://{DomainName}/
 - upper left hamburger menu choose `VPC Infrastructure
 - on left side choose `SSH Keys` to create a key
 
@@ -210,7 +210,7 @@ Create a VPC VSI with a floating ip
 ## Repeat the same steps with terraform
 {: #section_two}
 Install terraform and the terraform IBM provider on your laptop. 
-See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://cloud.ibm.com/docs/terraform).
+See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://{DomainName}/docs/terraform).
 
 The main.tf file creates the vpc, subnet, security group and instance.
 In the 
