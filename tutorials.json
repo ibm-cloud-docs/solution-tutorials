@@ -205,12 +205,12 @@
           "description": "Use IBM Log Analysis with LogDNA to understand and diagnose application activities. Monitor applications with IBM Cloud Monitoring with Sysdig.",
           "imgSrc": "images/solution12/Architecture.png",
           "tags": [
-            "Cloud Foundry",
+            "Kubernetes",
             "Python",
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2019-04-29"
+          "lastUpdated": "2019-05-27"
         },
         {
           "name": "Isolated Cloud Foundry Enterprise Apps",
@@ -258,7 +258,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2019-04-29"
+          "lastUpdated": "2019-05-24"
         }
       ]
     },
@@ -417,7 +417,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-24"
         },
         {
           "name": "Build, deploy, test, and retrain a predictive machine learning model",
@@ -464,7 +464,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-27"
         }
       ]
     },

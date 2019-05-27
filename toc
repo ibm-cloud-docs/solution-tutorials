@@ -85,7 +85,6 @@ Solution Tutorials
         plan-create-update-deployments.md
         mean-stack.md
         sql-database.md
-        application-log-analysis.md
         isolated-cloud-foundry-enterprise-apps.md
         slack-chatbot-database-watson.md
         multi-region-webapp.md
@@ -110,6 +109,7 @@ Solution Tutorials
         continuous-deployment-to-kubernetes.md
         pub-sub-object-storage.md
         plan-create-update-deployments.md
+        application-log-analysis.md
         isolated-cloud-foundry-enterprise-apps.md
         multi-region-k8s-cis.md
         cloud-e2e-security.md
