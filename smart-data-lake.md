@@ -183,7 +183,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     - In the resulting project, click **Add to project** and **Notebook**.
     - From the **Blank** tab, enter a **Notebook name**.
     - Leave the **Language** and **Runtime** defaults; click **Create notebook**.
-2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the **In [ ]:** input prompt and then **Run**.
+2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**.
     ```python
     !conda install pyarrow
     !conda install sqlparse
