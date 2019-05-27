@@ -153,7 +153,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
 3. Create a Project > Select **Data Science** > Click **Create project** and enter `Detect Anomaly` as the **Name** of the project.
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
-5. Under **Define Storage**, Click on **Add** and choose an existing **Cloud Object Storage** service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
+5. Select an existing **Cloud Object Storage** service under **Define Storage** or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Connection to {{site.data.keyword.cloudant_short_notm}} for data
@@ -164,20 +164,18 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 
 ### Create an {{site.data.keyword.iae_full_notm}} service
 
-1. Click **Services** on the top navigation bar > Compute Services.
-2. Click **Add service**.
-   1. Click **Add** on **{{site.data.keyword.iae_full_notm}}**.
-   1. Select the **Lite** plan.
-   1. Select **AE 1.1 Spark** as software package
+1. Click **Settings** on the top navigation bar > Associated Services.
+1. Click **Add service**.
+   1. Select **{{site.data.keyword.iae_full_notm}}**.
+   1. Click **New** > Select the **Lite** plan.
    1. Click **Create**.
-3. Select a resource group, change the service name if you want to and **Confirm**.
-1. Navigate to the `Detect Anomaly` project through **Projects**.
-1. In the **Settings**, scroll to **Associated services**.
-1. Click **Add service**, select **{{site.data.keyword.iae_full_notm}}**.
-1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created. If the service is not showing in the list, make sure it is fully provisioned first.
+   1. Select a resource group, change the service name if you want to .
+   1. Select **AE 1.1 Spark** as software package and **Confirm**.
+1. If you don't see the service in the associated services list, Click **Add service**, select **{{site.data.keyword.iae_full_notm}}**.
+1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created under **Existing**. If the service is not showing in the list, make sure it is fully provisioned first.
 
 ### Create a Jupyter (ipynb) notebook
-1. Click **+ Add to Project** and add a new **notebook**.
+1. Click **+ Add to Project** and add a new **Notebook**.
 2. Enter `Anomaly-detection-notebook` for the **Name**.
 3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio-python3.ipynb` in the **Notebook URL**.
 4. Select the **{{site.data.keyword.iae_full_notm}}** service associated previously as the runtime.
