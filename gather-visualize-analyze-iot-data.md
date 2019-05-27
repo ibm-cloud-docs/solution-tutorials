@@ -66,7 +66,7 @@ To begin, you will create Internet of Things Platform service - The hub which ca
 4. From the side menu, select **Devices** > **Device Types**  and **+ Add Device Type**.
 5. Enter `simulator` as the **Name** and click **Next** and **Done**.
 6. Next, click on **Register Devices**.
-7. Under **Browse > **Identity** enter `phone` for **Device ID**.
+7. Under **Browse** > **Identity** enter `phone` for **Device ID**.
 8. Click **Next** until the **Security** screen is displayed.
 9. Enter a value for the **Authentication Token**, for example: `myauthtoken` and click **Next**.
 10. After clicking **Done**, your connection information is displayed. Keep this tab open.
