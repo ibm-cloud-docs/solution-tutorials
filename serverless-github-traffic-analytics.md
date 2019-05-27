@@ -1,7 +1,9 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-24"
+lasttested: "2019-05-24"
 ---
 
 {:shortdesc: .shortdesc}
@@ -46,7 +48,7 @@ In this section, you set up the needed services and prepare the environment. All
    ```
    {:codeblock}
 
-2. Use `ibmcloud login` to log in interactively into {{site.data.keyword.Bluemix_short}}. You can reconfirm the details by running `ibmcloud target` command. You need to have an organization and space set.
+2. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command. You need to have an organization and space set.
 
 3. Create a {{site.data.keyword.dashdbshort}} instance with the **Entry** plan and name it **ghstatsDB**:
    ```
@@ -94,18 +96,17 @@ In this section, you set up the needed services and prepare the environment. All
 ## App ID and GitHub configuration (browser)
 The following steps are all performed using your Internet browser. First, you configure {{site.data.keyword.appid_short}} to use the Cloud Directory and to work with the Python app. Thereafter, you create a GitHub access token. It is needed for the deployed function to retrieve the traffic data.
 
-1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
-2. In the service dashboard, click on **Manage** under **Identity Providers** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **On**, all other providers to **Off**.
+1. In the [{{site.data.keyword.cloud}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
+2. In the service dashboard, click on **Manage Authentication** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **On**, all other providers to **Off**.
    
    You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/services/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
    {:tip}
 
-3. At the bottom of that page is the list of redirect URLs. Enter the **url** of your application + /redirect_uri. For example `https://github-traffic-stats-random-word.mybluemix.net/redirect_uri`.
+3. Click on the **Authentication Settings** tab in the same dialog. In **Add web redirect URLs** enter the **url** of your application + `/redirect_uri`, for example `https://github-traffic-stats-random-word.mybluemix.net/redirect_uri`.
 
    For testing the app locally, the redirect URL is `http://0.0.0.0:5000/redirect_uri`. You can configure multiple redirect URLs.
    {:tip}
 
-   ![](images/solution24-github-traffic-analytics/ManageIdentityProviders.png)
 4. In the menu on the left, click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Add User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
 5. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
    ![](images/solution24-github-traffic-analytics/GithubAccessToken.png)
@@ -181,7 +182,9 @@ In this tutorial, you deployed a serverless action and a related trigger and rul
 The Cloud Foundry app manages access through an OpenID Connect client connecting to {{site.data.keyword.appid_short}}.
 ![](images/solution24-github-traffic-analytics/EmbeddedDashboard.png)
 
-## Cleanup
+## Remove resources
+{:removeresources}
+
 To clean up the resources used for this tutorial, you can delete the related services and app as well as the action, trigger and rule in the reverse order as created:
 
 1. Delete the {{site.data.keyword.openwhisk_short}} rule, trigger and action.
@@ -211,6 +214,7 @@ Want to add to or change this tutorial? Here are some ideas:
 * Explore the social coding relationships between developers using [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
 
 ## Related Content
+{:related}
 Here are links to additional information on the topics covered in this tutorial.
 
 Documentation and SDKs:

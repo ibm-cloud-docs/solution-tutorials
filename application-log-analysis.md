@@ -1,8 +1,9 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-29"
-
+lastupdated: "2019-05-27"
+lasttested: "2019-05-27"
 
 ---
 
@@ -97,17 +98,22 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
 ### Deploy the Python application
 
 On a terminal:
-1. Clone the GitHub repository:
+1. Log in to {{site.data.keyword.Bluemix_notm}} and set the target region and resource group to the same that you used to provision the cluster in the UI. 
+   ```sh
+   ibmcloud target -r YOUR_REGION -g YOUR_RESOURCE_GROUP
+    ```
+   {: pre}
+3. Clone the GitHub repository:
    ```sh
    git clone https://github.com/IBM-Cloud/application-log-analysis
    ```
    {: pre}
-1. Change to the application directory
+4. Change to the application directory
    ```sh
    cd application-log-analysis
    ```
    {: pre}
-1. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
+5. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
    - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
    - Create a namespace to store the container image.
       ```sh
@@ -120,17 +126,17 @@ On a terminal:
       ```
       {: pre}
    - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest`
-1. Run the command below to retrieve cluster configuration and set the `KUBECONFIG` environment variable:
+6. Run the command below to retrieve cluster configuration and set the `KUBECONFIG` environment variable:
    ```sh
    $(ibmcloud ks cluster-config --export mycluster)
    ```
    {: pre}
-1. Deploy the app:
+7. Deploy the app:
    ```sh
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
-1. To access the application, you need the `public IP` of the worker node and the `NodePort`
+8. To access the application, you need the `public IP` of the worker node and the `NodePort`
    - For public IP, run the following command:
       ```sh
       ibmcloud ks workers mycluster

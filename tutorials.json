@@ -70,7 +70,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2019-04-15"
+          "lastUpdated": "2019-05-23"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -318,7 +318,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-23"
         }
       ]
     },
@@ -569,7 +569,7 @@
             "Network",
             "Classic Infrastructure"
           ],
-          "lastUpdated": "2019-03-08"
+          "lastUpdated": "2019-05-23"
         },
         {
           "name": "Configure NAT for Internet access from a private network",
@@ -628,7 +628,7 @@
           "lastUpdated": "2019-03-07"
         },
         {
-          "name": "Web application serving from a secure private network",
+          "name": "Hosting web applications from a secure private network",
           "url": "web-app-private-network.html",
           "description": "Create a scalable and secure Internet facing web application hosted in private network secured using a virtual router appliance (VRA), VLANs, NAT and firewalls.",
           "imgSrc": "images/solution42-web-app-private-network/web-app-private.png",

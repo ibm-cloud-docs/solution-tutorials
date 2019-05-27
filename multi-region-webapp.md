@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
 lastupdated: "2019-03-07"
@@ -52,7 +53,7 @@ Start by creating a Node.js starter application that runs in a Cloud Foundry env
 
 1. In the [**Catalog**](https://{DomainName}/catalog/), under the [**Compute**](https://{DomainName}/catalog?category=compute) category, select **[{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)**.
 3. Enter a **unique name** for your application, which will also be your host name, for example: myusername-nodeapp. And click **Create**.
-4.  After the application starts, click the **Visit URL** link on the **Overview** page to see your application LIVE on a new tab.
+4.  After the application starts, click the **Visit URL** link on the **Overview** page to see your application in a new tab.
 
 ![HelloWorld](images/solution1/HelloWorld.png)
 
@@ -92,7 +93,7 @@ In this step, you set up a git source control repository to store your code and 
    ```
    {: pre}
 9. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-10. Confirm that you see n **BUILD** and **DEPLOY** stage.
+10. Confirm that you see the **BUILD** and **DEPLOY** stages.
   ![HelloWorld](images/solution1/DevOps_Pipeline.png)
 11. Wait for the **DEPLOY** stage to complete.
 12. Click the application **url** under Last Execution result to view your changes live.
@@ -183,7 +184,7 @@ Although this works at this moment, as we have configured continuous delivery in
 1. In the {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources), navigate to **Cloud Foundry Apps** and click on the application in Dallas, navigate to Application **Overview** and scroll to find **View toolchain**.
 2. Select the Git tile under Code.
 3. Select *manifest.yml*.
-4. Click **Edit** and add custom routes. Replace the original domain and host configurations with `Routes` only.
+4. Click **Edit** and add custom routes.
    ```yaml
    applications:
    - path: .
@@ -283,6 +284,6 @@ Availability Monitoring runs synthetic tests from locations around the world, ar
 
 [Adding a Cloudant Database](https://{DomainName}/docs/services/Cloudant/tutorials?topic=cloudant-creating-an-ibm-cloudant-instance-on-ibm-cloud#creating-an-ibm-cloudant-instance-on-ibm-cloud)
 
-[Auto-Scaling Cloud Foundry applications](https://{DomainName}/docs/services/Auto-Scaling?topic=services/Auto-Scaling-get-started#get-started)
+[Auto-Scaling for Cloud Foundry applications](https://{DomainName}/docs/services/Auto-Scaling?topic=services/Auto-Scaling-get-started#get-started)
 
 [Cloud Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)

@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
@@ -18,7 +19,7 @@ lastupdated: "2019-03-07"
 # Resilient and secure multi-region Kubernetes clusters with Cloud Internet Services
 {: #multi-region-k8s-cis}
 
-Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different locations, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a location.
+Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different locations, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a location.
 
 This tutorial highlights how Cloud Internet Services (CIS), a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications, can be integrated with Kubernetes clusters to support this scenario and to deliver a secure and resilient solution across multiple locations.
 
@@ -73,16 +74,19 @@ This tutorial deploys a Kubernetes application to clusters in multiple locations
 
 To create a cluster:
 1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
-1. Set **Location** to **Dallas**.
 1. Select **Standard** cluster.
-1. Select one or more zones as **Location**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers?topic=containers-plan_clusters#ha_clusters).
+1. Set **Cluster name** to **my-us-cluster**.
+1. Set the **Geography** to **North America**.
+1. Select single-zone or multi-zone under **Availability**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers?topic=containers-plan_clusters#ha_clusters).
+1. Set **Metro** to **Dallas**.
 1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
 1. Use **2** worker nodes.
-1. Set **Cluster name** to **my-us-cluster**. Use the naming pattern *`my-<location>-cluster`* to be consistent with this tutorial.
+1. Click on **Create cluster**.
 
 While the cluster is getting ready, you are going to prepare the application.
 
 ### Create a namespace in {{site.data.keyword.registryshort_notm}}
+{: #create_namespace}
 
 1. Target the {{site.data.keyword.Bluemix_notm}} CLI to Dallas.
    ```bash
@@ -91,7 +95,7 @@ While the cluster is getting ready, you are going to prepare the application.
    {: pre}
 2. Create a namespace for the application.
    ```bash
-   ibmcloud cr namespace-add <your_namespace>
+   ibmcloud cr namespace-add <your_us-south_namespace>
    ```
    {: pre}
 
@@ -99,6 +103,7 @@ You can also reuse an existing namespace if you have one in the location. You ca
 {: tip}
 
 ### Build the application
+{: #build_application}
 
 This step builds the application into a Docker image. You can skip this step if you are configuring the second cluster. It is a simple HelloWorld app.
 
@@ -119,15 +124,17 @@ This step builds the application into a Docker image. You can skip this step if 
    {: pre}
 
 ### Prepare the image to be pushed to the location-specific registry
+{: #prepare_image}
 
 Tag the image with the target registry:
 
    ```bash
-   docker tag multi-region-hello-world:1 us.icr.io/<your_us-south_namespace>/hello-world:1
+  docker tag multi-region-hello-world:1 us.icr.io/<your_namespace>/hello-world:1
    ```
    {: pre}
 
 ### Push the image to the location-specific registry
+{: #push_image}
 
 1. Ensure your local Docker engine can push to registry in Dallas.
    ```bash
@@ -136,23 +143,24 @@ Tag the image with the target registry:
    {: pre}
 2. Push the image.
    ```bash
-   docker push us.icr.io/<your_us-south_namespace>/hello-world:1
+   docker push us.icr.io/<your_namespace>/hello-world:1
    ```
    {: pre}
 
 ### Deploy the application to the Kubernetes cluster
+{: #deploy_application}
 
 At that stage, the cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/clusters) console.
 
 1. Retrieve the configuration of the cluster:
    ```bash
-   ibmcloud cs cluster-config <us-cluster-name>
+   ibmcloud ks cluster-config <cluster-name>
    ```
    {: pre}
 1. Copy and paste the output to set the KUBECONFIG environment variable. The variable is used by `kubectl`.
 1. Run the application in the cluster with two replicas:
    ```bash
-   kubectl run hello-world-deployment --image=us.icr.io/<your_US-South_namespace>/hello-world:1 --replicas=2
+   kubectl run hello-world-deployment --image=us.icr.io/<your_namespace>/hello-world:1 --replicas=2
    ```
    {: pre}
    Example output: `deployment "hello-world-deployment" created`.
@@ -170,28 +178,40 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
 
 1. Retrieve the Ingress subdomain of the cluster:
    ```bash
-   ibmcloud cs cluster-get <us-cluster-name>
+   ibmcloud ks cluster-get <cluster-name>
    ```
    {: pre}
    Look for the `Ingress Subdomain` value.
 1. Make note of this information for a later step.
 
-This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also swap the subdomain for the public Application Load Balancer IP address (`ibmcloud cs albs -cluster <us-cluster-name>`). Both options are be supported.
+This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also replace the subdomain for the public Application Load Balancer IP address (`ibmcloud ks albs -cluster <cluster-name>`). Both options are supported.
 {: tip}
 
 ## And then to another location
 
-Repeat the previous steps in London by replacing:
-* the location name **Dallas** with **London**;
-* the location alias **us-south** with **eu-gb**;
-* the registry *us.icr.io* with **uk.icr.io**;
-* and the cluster name *my-us-cluster* with **my-uk-cluster**.
+Repeat the following steps in London:
+* In [Create a Kubernetes cluster](#create_cluster) by replacing
+  * the cluster name **my-us-cluster** with **my-uk-cluster**;
+  * the Geography name **North America** with **Europe**;
+  * the Metro name **Dallas** with **London**;
+  * and the cluster name **my-us-cluster** with **my-uk-cluster**.
+* In the [Create a namespace in {{site.data.keyword.registryshort_notm}}](#create_namepsace) by replacing:
+  * the target region **us-south** with **eu-gb**.
+* It is not necessary to repeat the [Build the application](#build_application)
+* In the [Prepare the image to be pushed to the location-specific registry](#prepare_image) by replacing:
+  * the registry **us.icr.io** with **uk.icr.io**.
+* In the [Push the image to the location-specific registry](#push_image) by replacing:
+  * the registry **us.icr.io** with **uk.icr.io**.
+* In the [Deploy the application to the Kubernetes cluster](#deploy_application) by replacing:
+  * the registry **us.icr.io** with **uk.icr.io**.
+* [Get the domain name and IP address assigned to the cluster](#CSALB_IP_subdomain)
+
 
 ## Configure multi-location load-balancing
 
 Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
 
-In this section, you will configure Cloud Internet Services (CIS) to distribute the load between the two clusters. CIS is a one stop-shop service providing Global Load Balancer (GLB), Caching, Web Application Firewall (WAF) and Page rule to secure your applications while ensuring the reliability and performance for your Cloud applications.
+In this section, you will configure Cloud Internet Services (CIS) to distribute the load between the two clusters. CIS is a one stop-shop service providing _Global Load Balancer (GLB)_, _Caching_, _Web Application Firewall (WAF)_ and _Page rule_ to secure your applications while ensuring the reliability and performance for your Cloud applications.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to CIS name servers,
@@ -207,9 +227,10 @@ The first step is to create an instance of CIS and to point your custom domain t
 1. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
 2. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 3. Set the service name, and click **Create** to create an instance of the service.
-4. When the service instance is provisioned, set your domain name and click **Add domain**.
-5. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-6. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+4. When the service instance is provisioned, click on Let's get Started.
+5. Enter your domain name and click **Connect and continue**.
+6. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+7. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {:tip}
@@ -218,10 +239,10 @@ The first step is to create an instance of CIS and to point your custom domain t
 
 A health check helps gain insight into the availability of pools so that traffic can be routed to the healthy ones. These checks periodically send HTTP/HTTPS requests and monitor the responses.
 
-1. In the Cloud Internet Services dashboard, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
+1. In the Cloud Internet Services dashboard, navigate to **Reliability** > **Global Load Balancers**, and at the bottom of the page, click **Create health check**.
 1. Set **Path** to **/**
 1. Set **Monitor Type** to **HTTP**.
-1. Click **Provision 1 Instance**.
+1. Click **Provision 1 Resource**.
 
    When building your own applications, you could define a dedicated health endpoint such as */heathz* where you would report the application state.
    {:tip}
@@ -237,7 +258,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 4. Set **Health Check Region** to **Western Europe**
 5. Set **Origin Name** to **uk-cluster**
 6. Set **Origin Address** to the Ingress subdomain of the cluster in London, e.g. *my_uk_cluster.eu-gb.containers.appdomain.cloud*
-7. Click **Provision 1 Instance**.
+7. Click **Provision 1 Resource**.
 
 #### One pool for the cluster in Dallas
 1. Click **Create Pool**.
@@ -246,7 +267,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 4. Set **Health Check Region** to **Western North America**
 5. Set **Origin Name** to **us-cluster**
 6. Set **Origin Address** to the Ingress subdomain of the cluster in Dallas, e.g. *my_us_cluster.us-south.containers.appdomain.cloud*
-7. Click **Provision 1 Instance**.
+7. Click **Provision 1 Resource**.
 
 #### And one pool with both clusters
 1. Click **Create Pool**.
@@ -256,7 +277,7 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 1. Add two origins:
    1. one with **Origin Name** set to **us-cluster** and the **Origin Address** set to the Ingress subdomain of the cluster in Dallas
    2. one with **Origin Name** set to **uk-cluster** and the **Origin Address** set to the Ingress subdomain of the cluster in London
-2. Click **Provision 1 Instance**.
+2. Click **Provision 1 Resource**.
 
 ### Create the Global Load Balancer
 
@@ -269,7 +290,7 @@ With the origin pools defined, you can complete the configuration of the load ba
    1. Click **Add route**, select **Western Europe** and click **Add**.
    1. Click **Add pool** to select the **UK** pool.
    1. Configure additional routes as shown in the following table.
-   1. Click **Provision 1 Instance**.
+
 
 | Region               | Origin Pool |
 | :---------------:    | :---------: |
@@ -282,9 +303,11 @@ With the origin pools defined, you can complete the configuration of the load ba
 
 With this configuration, users in Europe and in Asia will be redirected to the cluster in London, users in US to the Dallas cluster. When a request does not match any of the defined route, it will be redirected to the **Default origin pools**.
 
+1. Click **Provision 1 Resource**.
+
 ### Create Ingress Resource for Kubernetes clusters per location
 
-The Global Load Balancer is now ready to serve requests. All health checks should be green. But there is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer: you need to define an Ingress resource to handle requests from the GLB domain.
+The Global Load Balancer is now ready to serve requests. All health checks should be passing successfully. But there is one last configuration step required on the Kubernetes clusters to correctly reply to requests coming from the Global Load Balancer: you need to define an Ingress resource to handle requests from the GLB domain.
 
 1. Create an Ingress resource file named **glb-ingress.yaml**
    ```yaml
@@ -327,7 +350,7 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
    1. Set **Sensitivity** to `Low`.
    1. Set **Action** to `Simulate` to log all the events.
 1. Click **Back to Security**.
-1. Click **View CIS Rule Set**. This page shows additional rules built around common technology stacks for hosting websites.
+1. Click **View CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
 
 ### Increase performance and protect from Denial of Service attacks 
 {: #proxy_setting}
@@ -340,7 +363,7 @@ A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-
 
    ![CIS Proxy Toggle ON](images/solution32-multi-region-k8s-cis/cis-proxy.png)
 
-**Your GLB is now protected**. An immediate benefit is that the origin IP address of your clusters will be hidden from the clients. If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirect to your application:
+**Your GLB is now protected**. An immediate benefit is that the origin IP addresses of your clusters will be hidden from the clients. If CIS detects a threat for an upcoming request, the user may see a screen like this one before being redirected to your application:
 
    ![verifying - DDoS protection](images/solution32-multi-region-k8s-cis/cis-DDoS.png)
 

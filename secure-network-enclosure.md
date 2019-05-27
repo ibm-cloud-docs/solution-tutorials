@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2019-05-23"
@@ -103,7 +104,7 @@ To ensure that sufficient VLANs are available on the same data center router and
 ## Provision Virtual Router Appliance
 {: #VRA}
 
-The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}} provided public facing transit VLAN, a gateway and optionally a hardware firewall create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall perimeter. 
+The first step is to deploy a VRA that will provide IP routing and the firewall for the private network enclosure. The internet is accessible from the enclosure by an {{site.data.keyword.Bluemix_notm}} provided public facing transit VLAN, a gateway and optionally a hardware firewall to create the connectivity from the public VLAN to the secure private enclosure VLANs. In this solution tutorial a Virtual Router Appliance (VRA) provides this gateway and firewall for the perimeter. 
 
 1. From the catalog select a [Gateway Appliance](https://{DomainName}/gen1/infrastructure/provision/gateway)
 3. At the **Gateway Vendor** section select AT&T. You can choose between "up to 20 Gbps" or "up to 2 Gbps" Uplink Speed.
@@ -112,10 +113,10 @@ The first step is to deploy a VRA that will provide IP routing and the firewall 
 6. At the **Location** section select the Location and the **Pod** in which you need your VRA.
 7. Select Single Processor or Dual Processor. You will get a list of Servers. Choose a Server by clicking its radio button. 
 8. Select the amount of **RAM**. For a production environment it is recommended to use a minimum of 64GB of RAM. 8GB minimum for test environment.
-9. Select a **SSH Key** (optional). This ssh key will be installed on the VRA, so user vyatta can be used to access the VRA with this key.
+9. Select a **SSH Key** (optional). This ssh key will be installed on the VRA, so the user `vyatta` can be used to access the VRA with this key.
 10. Hard Drive. Keep the default.
 11. In the **Uplink Port Speeds** section select the combination of speed, redundancy and private and/or public interfaces that meets your needs.
-12. In the **Add-ons** section, keep the default. I you what to use IPv6 on the public interface select IPv6 address.
+12. In the **Add-ons** section, keep the default. If you want to use IPv6 on the public interface, select IPv6 address.
 
 On the right side you can see your **Order Summary**. Check the _I have read and agree to the Third-Party Service Agreements listed below:_ checkbox and click the **Create** button. Your gateway will be deployed.
 
@@ -152,7 +153,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
    exit
    ```
    {: codeblock}
-   From this point in this tutorial it is assumed that all VRA commands are entered at the `edit` prompt, subsequent to entering `configure`.
+   From this point in this tutorial it is assumed that all VRA commands are entered at the `edit` prompt, after using the `configure` command.
 3. Review the initial configuration
    ```
    show

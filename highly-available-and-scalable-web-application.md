@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
 lastupdated: "2019-03-07"
@@ -91,7 +92,7 @@ In this section, you configure one server to act as the master database.
    - Set **Name** to **db1**
    - Select a location where to provision the server. **All other servers and resources created in this tutorial will need to be created in the same location.**
    - Select the **Ubuntu Minimal** image
-   - Keep the default compute flavor. The tutorial has been tested with the smallest flavor but should work with any flavor.
+   - Keep the default compute profile. The tutorial has been tested with the smallest profile but should work with any profile.
    - Under **Attached Storage Disks**, select the 25GB boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
 
@@ -297,7 +298,7 @@ In this section, you will create two web application servers.
    - Set **Name** to **app1**
    - Select the same location where you provisioned the database server
    - Select the **Ubuntu Minimal** image
-   - Keep the default compute flavor.
+   - Keep the default compute profile.
    - Under **Attached Storage Disks**, select 25GB as your boot disk.
    - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
 

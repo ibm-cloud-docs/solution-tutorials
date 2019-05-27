@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-05-06"
+lastupdated: "2019-05-24"
 ---
 
 {:shortdesc: .shortdesc}
@@ -953,14 +953,14 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Web application serving from a secure private network
+                Hosting web applications from a secure private network
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
                     <p>Create a scalable and secure Internet facing web application hosted in private network secured using a virtual router appliance (VRA), VLANs, NAT and firewalls.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution42-web-app-private-network/web-app-private.png" alt="Architecture diagram for the solution Web application serving from a secure private network"/>
+                    <img class="architectureDiagram" src = "images/solution42-web-app-private-network/web-app-private.png" alt="Architecture diagram for the solution Hosting web applications from a secure private network"/>
                 </div>
             </div>
         </div>

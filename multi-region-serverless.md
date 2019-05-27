@@ -1,4 +1,5 @@
 ---
+subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
@@ -53,7 +54,7 @@ The tutorial considers a public web application with a back-end implemented with
 
 1. Users access the application. The request goes through Internet Services.
 2. Internet Services redirect the users to the closest healthy API back-end.
-3. {{site.data.keyword.cloudcerts_short}} provides the API with its SSL certificate. The traffic is encrypted end-to-end.
+3. {{site.data.keyword.cloudcerts_short}} provides the SSL certificate to the API. The traffic is encrypted end-to-end.
 4. The API is implemented with {{site.data.keyword.openwhisk_short}}.
 
 ## Before you begin
@@ -113,7 +114,7 @@ In this section, you will create actions, expose them as an API, and map the cus
   ![API Architecture](images/solution44-multi-region-serverless/api-architecture.png)
 </p>
 
-The action **doWork** implements one of your API operations. The action **healthz** is going to be used later on the check if your API is healthy. It could be a no-op simply returning *OK* or it could do a more complex check like pinging the databases or other critical services required by your API.
+The action **doWork** implements one of your API operations. The action **healthz** is going to be used later on the check if your API is healthy. It could as simple as returning *OK* or it could do a more complex check like pinging the databases or other critical services required by your API.
 
 The three following sections will need to be repeated for every location where you want to host the application back-end. For this tutorial, you can pick *Dallas (us-south)* and *London (eu-gb)* as targets.
 
@@ -187,7 +188,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
    1. Set **Name** to your custom subdomain, such as **api**.
    1. Set **Content** to the **Default domain / alias**
    1. Save the record
-1. Save the custom domain settings. The dialog will check for the existence of the DNS TXT record.
+1. Save the custom domain settings. Internet Services will check for the existence of the DNS TXT record.
 
    If the TXT record is not found, you may need to wait for it to propagate and retry saving the settings. The DNS TXT record can be removed once the settings have been applied.
    {: tip}
