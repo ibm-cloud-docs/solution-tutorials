@@ -72,7 +72,7 @@ In an active/active architecture, both locations have identical active instances
 
 This configuration provides higher availability with less manual remediation than an active/passive architecture. Requests are served from both data centers. You should configure the edge services (load balancer) with appropriate timeout and retry logic to automatically route the request to the second data center if a failure occurs in the first data center environment.
 
-When considering **recovery point objective** (RPO) in the active/active scenario, data synchronization between the two active data centres must be extremely timely to allow seamless request flow.
+When considering **recovery point objective** (RPO) in the active/active scenario, data synchronization between the two active data centers must be extremely timely to allow seamless request flow.
 
 #### Active-passive configuration
 
@@ -80,7 +80,7 @@ An active/passive architecture relies on one active region and a second (passive
 
 ![Active/Active](images/solution39/Active-passive.png)
 
-Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data centre is a time-consuming operation. Both **recovery time objective** (RTO) and **recovery point objective** (RPO) are higher compared to the active/active configuration.
+Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data center is a time-consuming operation. Both **recovery time objective** (RTO) and **recovery point objective** (RPO) are higher compared to the active/active configuration.
 
 ### Disaster recovery with three regions
 
