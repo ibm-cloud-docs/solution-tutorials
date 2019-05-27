@@ -90,9 +90,9 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    ibmcloud cf push
    ```
 4. In a few minutes, your application will be deployed and you should see a URL similar to `<UNIQUE_NAME>.mybluemix.net`
-5. Visit this URL (HTTPS recommended) on your phone using a browser.
+5. Visit the application URL with HTTPS (`https://<UNIQUE_NAME>.mybluemix.net`) on your phone using a browser.
 6. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
-7. Your phone will start transmitting data. Check for new entires in the **Recent Events** section.
+7. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
   ![](images/solution16/recent_events_with_phone.png)
 
 From iOS 12.2+, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
