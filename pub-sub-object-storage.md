@@ -121,7 +121,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 
 ## Deploy the UI application to the cluster
 
-The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to {{site.data.keyword.messagehub}} topic "work-topic" that a new file is ready to be processed.
+The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to {{site.data.keyword.messagehub}} topic `work-topic` that a new file is ready to be processed.
 
 1. Clone the sample application repository locally and change directory to the `pubsub-ui` folder.
 ```sh
@@ -140,7 +140,7 @@ The UI application is a simple Node.js Express web application which allows the 
 
 ## Deploy the worker application to the cluster
 
-The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka "work-topic" topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the "result-work" topic upon completion. The UI application will listen this topic and update the status.
+The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka `work-topic` topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the `result-work` topic upon completion. The UI application will listen this topic and update the status.
 
 1. Change dir to the `pubsub-worker` directory
 ```sh
