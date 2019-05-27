@@ -125,7 +125,6 @@ Next, you will create a board and cards to display device data in the dashboard.
 6. The  card appears on the dashboard and includes a line chart of the live OrientationBeta(ob) data.
 7. Use your mobile phone browser to launch the simulator again and slowly tilt the phone forward and backward.
 8. Back in the **IBM {{site.data.keyword.iot_short_notm}} Boards tab**, you should see the chart getting updated.
-   ![](images/solution16/board.png)
 
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) named `iot-db` using both legacy credentials and IAM as the authentication method.
