@@ -100,7 +100,7 @@ To confirm the creation of subnet, click **Subnets** on the left pane and wait u
 4. Select **Use VPC default** for your subnet access control list (ACL).
 
 ### Provision VSIs
-Once the status of the subnets change to **Available**,
+Once the status of the subnets changes to **Available**,
 
 1. Click on **vpc-region1-zone1-subnet** and click **Attached resources**, then **New instance**.
 2. Enter a unique name and pick **vpc-region1-zone1-vsi**. Then, select the VPC your created earlier and the **Location** along with the **zone** as before.
