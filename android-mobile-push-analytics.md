@@ -118,7 +118,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client 
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
 2. Registration for notifications happens in `MainActivity.java`.  (Optional) Provide a unique USER_ID.
 3. Run the app on a physical device or Emulator to receive notifications.
-4. Open {{site.data.keyword.mobilepushshort}} service under **Mobile Services** > **Existing services** on {{site.data.keyword.Bluemix_notm}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
+4. Open {{site.data.keyword.mobilepushshort}} service under **App details** on {{site.data.keyword.Bluemix_notm}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
    - Click **Manage** > **Configure**.
    - Select **Mobile** and then update the GCM/FCM Push Credentials tab with the Sender ID/Project number and API Key(Server Key) which you initially created on Firebase console.
 
