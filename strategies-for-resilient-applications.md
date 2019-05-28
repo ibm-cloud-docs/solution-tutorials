@@ -204,8 +204,8 @@ The components required for such architecture:
 
 1. Users access the application through IBM Cloud Internet Services (CIS).
 2. CIS routes traffic to the active location.
-3. Within a location a load balancer redirects traffic to a server.
-4. Databases deployed on a virtual server, meaning you would configure the database and setup replications and backups between regions. The alternative would be use a database-as-service, a topic discussed later in the tutorial.
+3. Within a location, a load balancer redirects traffic to a server.
+4. Databases are deployed on a virtual server. Backup is enabled and replication is set up between regions. The alternative would be use a database-as-service, a topic discussed later in the tutorial.
 5. File storage to store the application images and files, File storage offers the capability to take a snapshot at a given time and date, this snapshot then can be reused within another region, something in which you would do manually. 
 
 The tutorial [**Use Virtual Servers to build highly available and scalable web app**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#highly-available-and-scalable-web-application) implements this architecture.
@@ -242,7 +242,7 @@ Refer to [these instructions](https://{DomainName}/docs/services/Cloudant/guides
 
 ### {{site.data.keyword.Db2_on_Cloud_short}}, {{site.data.keyword.dashdbshort_notm}}, and {{site.data.keyword.Db2Hosted_notm}}
 
-{{site.data.keyword.cloud_notm}} offers several [Db2 database services](https://{DomainName}/catalog/?search=db2h). These are:
+{{site.data.keyword.cloud_notm}} offers several [Db2 database services](https://{DomainName}/catalog/?search=db2). These are:
 
 - [**{{site.data.keyword.Db2_on_Cloud_short}}**](https://{DomainName}/catalog/services/db2): A fully-managed cloud SQL database for typical operational, OLTP-like workloads.
 - [**{{site.data.keyword.dashdbshort_notm}}**](https://{DomainName}/catalog/services/db2-warehouse): A fully-managed cloud data warehouse service for high performance, petabyte-scale analytic workloads. It offers both SMP and MPP service plans and utilizes an optimized columnar data store and in-memory processing.
@@ -310,7 +310,7 @@ Replication can be scheduled to automatically copy snapshots to a destination vo
 ## Non-database services
 {: #nondatabaseservices}
 
-{{site.data.keyword.cloud_notm}} offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party service. When planning for multi-region architecture, you need to understand how services like Watson services can work in a multi-region setup.
+{{site.data.keyword.cloud_notm}} offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party services. When planning for multi-region architecture, you need to understand how services like Watson services can work in a multi-region setup.
 
 ### {{site.data.keyword.conversationfull}}
 
@@ -318,7 +318,7 @@ Replication can be scheduled to automatically copy snapshots to a destination vo
 
 An assistant is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. The assistant includes one or many skills. A dialog skill contains the training data and logic that enables an assistant to help your customers.
 
-It's important to note that {{site.data.keyword.conversationshort}} V1 is stateless. {{site.data.keyword.conversationshort}} delivers 99.5% uptime, but still, for highly available applications across multiple regions, you may even want to have multiple instances of this services across regions. 
+It's important to note that {{site.data.keyword.conversationshort}} V1 is stateless. {{site.data.keyword.conversationshort}} delivers 99.5% uptime, but still, for highly available applications across multiple regions, you may even want to have multiple instances of this service across regions. 
 
 Once you have created instances in multiple locations, use the tooling {{site.data.keyword.conversationshort}} to export, from one instance, an existing workspace, including intents, entities, and dialog. Then import this workspace in other locations.
 
@@ -342,7 +342,7 @@ Once you have created instances in multiple locations, use the tooling {{site.da
 
 {:related}
 
-- IBM Cloud [Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
+- IBM Cloud [Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started)
 - [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
 - [Cloud Foundry, secure web application across multiple regions](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#secure-web-application-across-multiple-regions)
 - [Cloud Functions, deploy serverless apps across multiple regions](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-serverless#deploy-serverless-apps-across-multiple-regions)
