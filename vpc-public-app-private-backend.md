@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-04-02"
+lastupdated: "2019-05-28"
+lasttested: "2019-05-28"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -61,9 +62,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
 
-1. The admin(DevOps) sets up the required infrastructure (VPC,subnets, security groups with rules, VSIs) on the cloud.
+1. The admin (DevOps) sets up the required infrastructure (VPC,subnets, security groups with rules, VSIs) on the cloud.
 2. The internet user makes an HTTP/HTTPS request to the web server on the frontend.
-3. Frontend requests private resources from secured backend and serves results to the user.
+3. The frontend requests private resources from the secured backend and serves results to the user.
 
 ## Before you begin
 
@@ -118,7 +119,7 @@ You will later edit the security group to add the inbound and outbound rules.
 To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under **Subnets**.
-2. Click **Attached instances**, then **New instance**.
+2. Click **Attached resources**, then **New instance**.
 3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC your created earlier and the **Location** as before.
 4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 5. For **SSH keys** pick the SSH key you created earlier.
@@ -157,7 +158,7 @@ To create a new security group for the frontend:
 To create a virtual server instance in the newly created subnet:
 
 1. Click on the frontend subnet under **Subnets**.
-2. Click **Attached instances**, then **New instance**.
+2. Click **Attached resources**, then **New instance**.
 3. Enter a unique name, **vpc-pubpriv-frontend-vsi**, select the VPC your created earlier, then the same **Location** as before.
 4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
 5. For **SSH keys** pick the SSH key you created earlier.
