@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-11"
+lastupdated: "2019-05-28"
+lasttested: "2019-05-28"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
