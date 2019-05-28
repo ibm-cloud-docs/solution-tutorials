@@ -113,7 +113,7 @@ Additionally, in a multi-region architecture, a Global load balancer like [Cloud
 Deploying a solution across multiple regions comes with the following benefits:
 - Improve latency for end-users - speed is the key, the closer your backend origin is to end-users, the better the experience for users and the faster.
 - Disaster recovery - when the active region fails, then you have a backup region to recover quickly.
-- Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometers. Therefore, those in such case you have have to store data in multiple regions. 
+- Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometers. Therefore, those in such case have to store data in multiple regions. 
 
 ### Multi-zones within regions architectures
 
@@ -155,7 +155,7 @@ Deploying this architecture requires the following:
 - Push the apps targeting the CFEE API endpoint. 
 - Setup database replication, just as you would on public Cloud Foundry. 
 
-Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md). It will take you through the deployment of a microservice based application to CFEE. Once deployed to one CFEE instance, you can replicate the procedure to a second region and attach the [Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-) in front of the two CFEE instances to load balance the traffic. 
+Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md). It will take you through the deployment of a microservice based application to CFEE. Once deployed to one CFEE instance, you can replicate the procedure to a second region and attach the [Internet Services](https://{DomainName}  /docs/infrastructure/cis?topic=cis-getting-started) in front of the two CFEE instances to load balance the traffic. 
 
 Refer to the [{{site.data.keyword.cfee_full_notm}} documentation](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#about) for additional details.
 
