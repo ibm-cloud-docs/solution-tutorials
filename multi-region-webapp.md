@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-29"
 lasttested: "2019-05-20"
 ---
 
@@ -121,7 +121,7 @@ IBM [Cloud Internet Services](https://{DomainName}/docs/infrastructure/cis?topic
 
 When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided domain (_mybluemix.net_). In this step, after you have a custom domain, you can use the DNS servers provided by IBM Cloud Internet Services.
 
-1. Buy a domain from a registrar such as [http://godaddy.com](http://godaddy.com).
+1. Buy a domain from a registrar.
 2. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Enter a service name, and click **Create** to create an instance of the service.
 3. When the service instance is provisioned, set your domain name and click **Add domain**.
@@ -236,7 +236,7 @@ With the Cloud Intenet Services application, take the following steps to set up 
 When using another default domain than `mybluemix.net` such as `cf.appdomain.cloud` or `cf.cloud.ibm.com`, make sure to use the [respective system domain](https://{DomainName}/docs/apps?topic=creating-apps-updatingapps#mapcustomdomain).
 {:tip}
 
-If you are using a different DNS provider, the steps for setting up the CNAME record vary depending on your DNS provider. For example, if you are using GoDaddy, you follow the [Domains Help](https://www.godaddy.com/help/add-a-cname-record-19236) guidance from GoDaddy.
+If you are using a different DNS provider, the steps for setting up the CNAME record vary depending on your DNS provider.
 
 For your Cloud Foundry applications to be reachable through the custom domain, you will need to add the custom domain to the [list of domains in the Cloud Foundry organization where the applications are deployed](https://{DomainName}/docs/apps?topic=creating-apps-updatingapps#updatingapps). Once done you can add the routes to the application manifests:
 
@@ -256,7 +256,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 ## Bind SSL certificate to your application
 {: #ssl}
 
-1. Obtain a SSL certificate. For example, you can purchase from https://www.godaddy.com/web-security/ssl-certificate or generate a free one at https://letsencrypt.org/.
+1. Obtain a SSL certificate. You can generate a free one directly at https://letsencrypt.org/ or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
 2. Navigate to Application **Overview** > **Routes** > **Manage Domains**.
 3. Click the SSL Certificate upload button and upload the certificate.
 5. Access your application with https instead of http.
