@@ -256,7 +256,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 ## Bind SSL certificate to your application
 {: #ssl}
 
-1. Obtain a SSL certificate. You can generate a free one directly at https://letsencrypt.org/ or through [{{site.data.keyword.cloudcerts_long}}](https://cloud.ibm.com/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
+1. Obtain a SSL certificate. You can generate a free one directly at https://letsencrypt.org/ or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
 2. Navigate to Application **Overview** > **Routes** > **Manage Domains**.
 3. Click the SSL Certificate upload button and upload the certificate.
 5. Access your application with https instead of http.
