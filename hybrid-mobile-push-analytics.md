@@ -126,8 +126,8 @@ Refer [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort
 ## Configure, send and monitor {{site.data.keyword.mobilepushshort}}
 {: #configure_push}
 
-1. In index.js, under `onDeviceReady` function, replace the values  `{pushAppGuid}` and `{pushClientSecret} `with push service **credentials** - *appGuid* and *clientSecret*.
-2. Go to your Mobile dashboard > Projects > Cordova Project, Click on the {{site.data.keyword.mobilepushshort}} service and follow the below steps.
+1. In index.js, under `onDeviceReady` function, replace `REPLACEME` with push service *clientSecret*.
+2. Go to your App under [Resource list](https://cloud.ibm.com/resources) > Apps > Cordova Project, Click on the {{site.data.keyword.mobilepushshort}} service and follow the below steps.
 
 ### APNs - Configure the service instance
 
