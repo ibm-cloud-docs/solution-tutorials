@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-29"
+lasttested: "2019-05-29"
 ---
 
 {:shortdesc: .shortdesc}
@@ -47,15 +48,15 @@ This tutorial uses the following products:
 ## Create Cordova mobile project from starter kit
 {: #get_code}
 The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your project from a Starter Kit.
-1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard).
-2. Click on **Starter Kits** and click on **Create App**.
-    ![](images/solution15/mobile_dashboard.png)
-3. Enter a project name, this can be your app name as well.
-4. Select **Cordova** as your platform and click **Create**.
+1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard)
+1. Click on **Starter Kits** and click on **Create App**.
+1. Enter an app name(this will be your android project name as well) > select a resource group.
+1.Choose **Create a new app** under Starting point.
+1. Select **Cordova** as your platform and click **Create**.
+1. Under App details > Click on **Create service** > Web and Mobile > **Push Notifications** and select the location you want to provision the service, resource group and **Lite** pricing plan.
+1. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** of [Resource list](https://{DomainName}/resources).
 
-    ![](images/solution15/create_cordova_project.png)
-5. Click on **Add Resource** > Mobile > **Push Notifications** and select the location you want to provision the service, resource group and **Lite** pricing plan.
-6. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** tab.
+​      **Note:** {{site.data.keyword.mobilepushshort}} service should already be added with the Empty Starter.
 
     **Note:** {{site.data.keyword.mobilepushshort}} service should be added to the project.
 
@@ -135,7 +136,7 @@ To use the {{site.data.keyword.mobilepushshort}} service to send notifications, 
 
 **Note:** After the `.cer` file is in your keychain access, export it to your computer to create a `.p12` certificate.
 
-1. Click on `{{site.data.keyword.mobilepushshort}}` under Services section or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
+1. Click on `{{site.data.keyword.mobilepushshort}}` under **App details** or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
 2. On the {{site.data.keyword.mobilepushshort}} Dashboard, you should see `Configure` option under `Manage > Send Notifications`.
 
 To set up APNs on the `Push Notification services` console, complete the steps:

@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-28"
+lasttested: "2019-05-28"
 
 ---
 
@@ -46,35 +47,16 @@ This tutorial uses the following products:
 {: #get_code}
 The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your app from a Starter Kit.
 1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard)
-2. Click on **Starter Kits** and click on **Create App**.
-    ![](images/solution9/mobile_dashboard.png)
-3. Enter an app name, this can be your android project name as well.
-4. Select **Android** as your platform and click **Create**.
-
-    ![](images/solution9/create_mobile_project.png)
-5. Click on **Add Resource** > Mobile > **Push Notifications** and select the location you want to provision the service, resource group and **Lite** pricing plan.
-6. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** tab.
+1. Click on **Starter Kits** and click on **Create App**.
+1. Enter an app name(this will be your android project name as well) > select a resource group.
+1.Choose **Create a new app** under Starting point.
+1. Select **Android** as your platform and click **Create**.
+1. Under App details > Click on **Create service** > Web and Mobile > **Push Notifications** and select the location you want to provision the service, resource group and **Lite** pricing plan.
+1. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** of [Resource list](https://{DomainName}/resources).
 
     **Note:** {{site.data.keyword.mobilepushshort}} service should be added with the Empty Starter.
-    In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
-In the next step, you will download the scaffolded code and setup the Push Android SDK.
-
-## Download the code and complete required setup
-{: #download_code}
-
-If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_notm}} Mobile dashboard to get the code by clicking on the  **Download Code** button under Apps > **Your Mobile App**.
-The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client SDK included. The client SDK is available on Gradle and Maven. For this tutorial, you will use **Gradle**.
-
-1. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.
-2. **Gradle** build will automatically be triggered and all the dependencies will be downloaded.
-3. Add the **Google Play services** dependency to your Module level `build.gradle (Module: app)` file at the end, after the `dependencies{.....}`
-   ```
-   apply plugin: 'com.google.gms.google-services'
-   ```
-4. Copy the `google-services.json` file that you have created and downloaded to your Android application module root directory. Note that the `google-service.json` file includes the added package names.
-5. The required permissions are all inside the `AndroidManifest.xml` file and dependencies. Push and Analytics are included in **build.gradle (Module: app)**.
-6. **Firebase Cloud Messaging (FCM)** intent service and intent filters for the `RECEIVE` and `REGISTRATION` event notifications are included in `AndroidManifest.xml`
+In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
 ## Obtain FCM credentials
 {: #obtain_fcm_credentials}
@@ -110,8 +92,25 @@ You would also need to generate the `google-services.json` file. Complete the fo
 
 *The steps and Firebase console UI is subject to change, refer to Google documentation for the Firebase part if needed*
 
-## Configure, send and monitor {{site.data.keyword.mobilepushshort}}
+In the next step, you will download the scaffolded code and setup the Push Android SDK.
 
+## Download the code and complete required setup
+{: #download_code}
+
+If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_notm}} Mobile dashboard to get the code by clicking on the  **Download Code** button under Apps > **Your Mobile App**.
+The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client SDK included. The client SDK is available on Gradle and Maven. For this tutorial, you will use **Gradle**.
+
+1. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.
+2. **Gradle** build will automatically be triggered and all the dependencies will be downloaded.
+3. Add the **Google Play services** dependency to your Module level `build.gradle (Module: app)` file at the end, after the `dependencies{.....}`
+   ```
+   apply plugin: 'com.google.gms.google-services'
+   ```
+4. Copy the `google-services.json` file that you have created and downloaded to your Android application module root directory. Note that the `google-service.json` file includes the added package names.
+5. The required permissions are all inside the `AndroidManifest.xml` file and dependencies. Push and Analytics are included in **build.gradle (Module: app)**.
+6. **Firebase Cloud Messaging (FCM)** intent service and intent filters for the `RECEIVE` and `REGISTRATION` event notifications are included in `AndroidManifest.xml`
+
+## Configure, send and monitor {{site.data.keyword.mobilepushshort}}
 {: #configure_push}
 
 1. {{site.data.keyword.mobilepushshort}} SDK is already imported into the app and Push initialization code can be found in `MainActivity.java` file.
@@ -119,7 +118,7 @@ You would also need to generate the `google-services.json` file. Complete the fo
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
 2. Registration for notifications happens in `MainActivity.java`.  (Optional) Provide a unique USER_ID.
 3. Run the app on a physical device or Emulator to receive notifications.
-4. Open {{site.data.keyword.mobilepushshort}} service under **Mobile Services** > **Existing services** on {{site.data.keyword.Bluemix_notm}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
+4. Open {{site.data.keyword.mobilepushshort}} service under **App details** on {{site.data.keyword.Bluemix_notm}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
    - Click **Manage** > **Configure**.
    - Select **Mobile** and then update the GCM/FCM Push Credentials tab with the Sender ID/Project number and API Key(Server Key) which you initially created on Firebase console.
 
