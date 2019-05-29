@@ -72,7 +72,7 @@ If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_not
   cordova.system.library.2=com.google.firebase:firebase-messaging:10.2.6
   cordova.system.library.3=com.google.android.gms:play-services-location:10.2.6
   ```
-  {: pre}
+  {: pre:}
   The above changes are specific to Android
   {: tip}
 2. To launch the app on an Android emulator, run the below command in a terminal or command prompt
@@ -80,19 +80,19 @@ If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_not
  cordova build android
  cordova run android
 ```
-{: pre}
+{: pre:}
  If you see an error, launch an emulator and try running the above command.
  {: tip}
 3. To preview the app in the iOS simulator, run the below commands in a terminal,
     ```sh
     cordova build ios
     ```
-    {: pre}
+   {: pre:}
 
     ```sh
     open platforms/ios/{YOUR_PROJECT_NAME}.xcworkspace/
     ```
-    {: pre}
+    {: pre:}
     You can find your project name in `config.xml` file by running `cordova info` command.
     {: tip}
 
