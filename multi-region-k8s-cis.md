@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-29"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -224,7 +224,7 @@ To configure a global load balancer, you will need:
 
 The first step is to create an instance of CIS and to point your custom domain to CIS name servers.
 
-1. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com).
+1. If you do not own a domain, you can buy one from a registrar.
 2. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 3. Set the service name, and click **Create** to create an instance of the service.
 4. When the service instance is provisioned, click on Let's get Started.
