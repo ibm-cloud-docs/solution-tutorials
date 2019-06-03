@@ -21,9 +21,6 @@ lasttested: "2019-05-28"
 # Private and public subnets in a Virtual Private Cloud
 {: #vpc-public-app-private-backend}
 
-IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
-{: important}
-
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
 A [subnet](/docs/infrastructure/vpc?topic=vpc-vpc-glossary#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](/docs/infrastructure/vpc?topic=vpc-vpc-glossary#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, [Security Groups](/docs/infrastructure/vpc?topic=vpc-vpc-glossary#security-group) (SGs) act as virtual firewalls to control the flow of data packets to and from individual VSIs.
