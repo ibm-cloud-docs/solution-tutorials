@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-05-31"
-lasttested: "2019-05-31"
+lastupdated: "2019-06-03"
+lasttested: "2019-06-03"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -97,9 +97,9 @@ Note: The **Manage > Account > Cloud Foundry orgs** menu located in the top {{si
 
 Follow the steps below to create a CFEE org and space.
 
-1. From the [Cloud Foundry dashboard](https://{DomainName}/dashboard/cloudfoundry/overview) select **Environments** under **Enterprise**.
-2. Select your CFEE instance and then select **Organizations**.
-3. Click on the **Create Organizations** button, provide a `tutorial` as the **Organization Name**, and select a **Quota Plan**. Finish by clicking **Add**.
+1. From the [Cloud Foundry dashboard](https://{DomainName}/dashboard/cloudfoundry/overview) select **Environments** under **Enterprise** on the left pane.
+2. Click on the name of your CFEE instance and then select **Organizations**.
+3. Click on the **Create Organization** button, provide `tutorial` as the **Organization Name**, and select a **Quota Plan**. Finish by clicking **Add**.
 4. Click on the newly created organization `tutorial`, and then select the **Spaces** tab, and click the **Create Space** button.
 5. Provide `dev` as a **Space Name** and click **Add**.
 
@@ -109,7 +109,7 @@ In CFEE, you can assign roles controlling user access, but to do so, the user mu
 
 Once the user has been invited, follow the steps below to add the user to the `tutorial` organization created,
 
-1. Select your [CFEE instance](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) and then select **Organizations** again.
+1. Click on the name of your [CFEE instance](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) and then select **Organizations** again.
 2. Select the `tutorial` org created from the list.
 3. Click on the **Members** tab to view and add a new user.
 4. Click on the **Add members** button, search for the username, select the appropriate **Organization Roles**, and click **Add**.
@@ -153,16 +153,17 @@ In this section, you'll deploy a Node.js application to CFEE. Once deployed, you
 
 To bind {{site.data.keyword.cloud_notm}} services to the **get-started-node** application, you'll first need to create a service in your {{site.data.keyword.cloud_notm}} account.
 
-1. Create an [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) service. Provide the **service name** `cfee-cloudant` and choose the same location where the CFEE instance has been created.
-2. Add the newly created {{site.data.keyword.cloudant_short_notm}} service instance to CFEE.
+1. Create a {{site.data.keyword.cloudant_short_notm}} service and add the newly created {{site.data.keyword.cloudant_short_notm}} service instance to CFEE.
    1. Navigate back to the `tutorial` **Organization**. Click the **Spaces** tab and select the `dev` space.
-   2. Select the **Services** tab and click the **Add Service** button.
-   3. Type `cfee-cloudant` in the search textbox and select the result. Finish by clicking **Add**. The service is now available to CFEE applications; however, it still resides in public {{site.data.keyword.cloud_notm}}.
-3. On the overflow menu of the service instance shown, select **Bind to application**.
-4. Select the **GetStartedNode** application you pushed earlier and click **Restage application after binding**. Finally, click the **Bind** button. Wait for the application to restage. You can check progress with the command `ibmcloud app show GetStartedNode`.
-5. In your browser, access the application, add your name and hit the `enter` key. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
-6. Confirm by selecting the `tutorial` instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
-7. Click **Launch Cloudant Dashboard** and select the `mydb` database. A JSON document with your name should exist.
+   1. Select the **Services** tab and click the **Create Service** button.
+   1. Select {{site.data.keyword.cloudant_short_notm}} from the list > click **Continue**.
+   1. Provide the **service name** `cfee-cloudant`, choose `Use both legacy credentials and IAM` as your authentication method and choose the same location where the CFEE instance has been created. Once the service is created it will appear in the list.
+   1. To find an existing service, Type the name in the search textbox and select the result. Finish by clicking **Add**. The service is now available to CFEE applications; however, it still resides in public {{site.data.keyword.cloud_notm}}.
+1. On the overflow menu of the service instance shown, select **Bind to application**.
+1. Select the **GetStartedNode** application you pushed earlier and click **Restage application after binding**. Finally, click the **Bind** button. Wait for the application to restage. You can check progress with the command `ibmcloud app show GetStartedNode`.
+1. In your browser, access the application, add your name and hit the `enter` key. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
+1. Confirm by selecting the `tutorial` instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
+1. Click **Launch Cloudant Dashboard** and select the `mydb` database. A JSON document with your name should exist.
 
 ### Enable auditing and logging persistence
 
