@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-04-02"
+lastupdated: "2019-05-28"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -19,9 +19,6 @@ lastupdated: "2019-04-02"
 
 # Deploy isolated workloads across multiple locations and zones
 {: #vpc-multi-region}
-
-IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
-{: important}
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
@@ -66,7 +63,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources#managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
-- Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers. If you do not own a domain, you can buy one from a registrar such as [godaddy.com](http://godaddy.com/).
+- Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers. If you do not own a domain, you can buy one from a registrar.
 
 ## Create VPCs, subnets and VSIs
 {: #create-infrastructure}
@@ -100,9 +97,9 @@ To confirm the creation of subnet, click **Subnets** on the left pane and wait u
 4. Select **Use VPC default** for your subnet access control list (ACL).
 
 ### Provision VSIs
-Once the status of the subnets change to **Available**,
+Once the status of the subnets changes to **Available**,
 
-1. Click on **vpc-region1-zone1-subnet** and click **Attached instances**, then **New instance**.
+1. Click on **vpc-region1-zone1-subnet** and click **Attached resources**, then **New instance**.
 2. Enter a unique name and pick **vpc-region1-zone1-vsi**. Then, select the VPC your created earlier and the **Location** along with the **zone** as before.
 3. Choose any **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 4. For **SSH keys** pick the SSH key you created initially.
@@ -164,7 +161,7 @@ In this section, you will create two load balancers. One in each region to distr
 ### Configure load balancers
 
 1. Navigate to **Load balancers** and click **New load balancer**.
-2. Give **vpc-lb-region1** as the unique name, select **vpc-region1** as your Virtual private cloud followed by the resource group the VPC was created, Type: **Public** and **region1** as the region.
+2. Give **vpc-lb-region1** as the unique name, select **vpc-region1** as your Virtual private cloud, select the resource group the VPC was created, Load balancer Type: **Public** and **region1** as the region.
 3. Select the private IPs of both **zone 1** and **zone 2** of **region 1**.
 4. Create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the paramaters with the values below and click **create**.
 	- **Name**:  region1-pool

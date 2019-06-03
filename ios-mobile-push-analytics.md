@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-08"
+lastupdated: "2019-05-28"
+lasttested: "2019-05-28"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -49,14 +50,13 @@ This tutorial uses the following products:
 ## Create a mobile app from basic Swift starter kit
 {: #get_code}
 
-1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard) to create your `App` from pre-defined `Starter Kits`.
-2. Click on **Starter Kits** and scroll down to select **Basic** Starter Kit.
-    ![](images/solution6/mobile_dashboard.png)
-3. Enter an app name which will also be the Xcode project and app name.
-4. Select `iOS Swift` as your platform and click **Create**.
-    ![](images/solution6/create_mobile_project.png)
-5. Click on **Add Resource** > Mobile > **Push Notifications** and select the location you want to provision the service, resource group and **Lite** pricing plan.
-6. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** tab.
+1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard)
+1. Click on **Starter Kits** and click on **Create App**.
+1. Enter an app name(this will be your android project name as well) > select a resource group.
+1.Choose **Create a new app** under Starting point.
+1. Select **iOS Swift** as your platform and click **Create**.
+1. Under App details > Click on **Create service** > Web and Mobile > **Push Notifications** and select the location you want to provision the service, resource group and **Lite** pricing plan.
+1. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** of [Resource list](https://{DomainName}/resources).
 
 ​      **Note:** {{site.data.keyword.mobilepushshort}} service should already be added with the Empty Starter.
 
@@ -68,7 +68,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
 
 1. To install CocoaPods on your machine, Open the `Terminal` and run the below command.
    ```
-   sudo gem install cocoapods
+   sudo gem install cocoapods --pre
    ```
    {: pre:}
 2. Unzip the downloaded code and using the terminal, navigate to the unzipped folder
@@ -167,12 +167,12 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** Client 
 
    **Note:** After the `.cer` file is in your key chain access, export it to your computer to create a `.p12` certificate.
 
-1. Click on {{site.data.keyword.mobilepushshort}} under Services section or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
+1. Click on {{site.data.keyword.mobilepushshort}} under App details section or Click on the three vertical dots next to the {{site.data.keyword.mobilepushshort}} service and select `Open dashboard`.
 2. On the {{site.data.keyword.mobilepushshort}} Dashboard, you should see `Configure` option under `Manage`.
 
 To set up APNs on the `Push Notification services` console, complete the steps:
 
-1. Choose the `Mobile option` to update the information in the APNs Push Credentials form.
+1. Choose the `Mobile` option to update the information in the APNs Push Credentials form.
 2. Select `Sandbox/Development APNs Server` or `Production APNs Server` as appropriate and then upload the `.p12` certificate that you have created.
 3. In the Password field, enter the password that is associated with the .p12 certificate file, then click Save.
 
@@ -183,7 +183,7 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide a unique USER_ID(Optional).
 2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.
-3. Open {{site.data.keyword.mobilepushshort}} service under `Mobile Services` > **Existing services**  on {{site.data.keyword.Bluemix_short}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
+3. Open {{site.data.keyword.mobilepushshort}} service under **App details** on {{site.data.keyword.Bluemix_short}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
   * Select `Messages`, and compose a message by choosing a Send to option. The supported options are _Device by Tag_, _Device Id_, _User Id_, _Android devices_, _iOS devices_, _Web Notifications_, _All Devices_ and _other browsers_.
 
        **Note:** When you select the All Devices option, all devices subscribed to {{site.data.keyword.mobilepushshort}} will receive notifications.

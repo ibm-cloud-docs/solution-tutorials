@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-04-02"
-
+lastupdated: "2019-05-28"
+lasttested: "2019-05-28"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -20,9 +20,6 @@ lastupdated: "2019-04-02"
 
 # Securely access remote instances with a bastion host
 {: #vpc-secure-management-bastion-server}
-
-IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
-{: important}
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
 
@@ -110,11 +107,14 @@ Let's create a security group and configure inbound rules to your bastion VSI.
    To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
    {:tip }
 
+3. Click **Create security group** to create it.
+
+
 ### Create a bastion instance
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
 1. Under **Subnets** on the left pane, select **vpc-secure-bastion-subnet**.
-2. Click on **Attached instances** and provision a **New instance** called **vpc-secure-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
+2. Click on **Attached resources** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
 3. Select a **Location** and make sure to later use the same location again.
 4. To create a new **SSH key**, click **New key**
    * Enter **vpc-ssh-key** as key name.
@@ -122,7 +122,7 @@ With the subnet and security group already in place, next, create the bastion vi
    * Copy the contents of your existing local SSH key and paste it under **Public key**.  
    * Click **Add SSH key**.
 5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
-   * Make sure that **vpc-secure-subnet** is selected as the subnet.
+   * Make sure that **vpc-secure-bastion-subnet** is selected as the subnet.
    * Uncheck the default security group and mark **vpc-secure-bastion-sg**.
    * Click **Save**.
 6. Click **Create virtual server instance**.
@@ -199,7 +199,7 @@ With access to the bastion working, continue and create the security group for m
 	</table>
 
 3. Create the security group.
-4. Navigate to **All Security Groups for VPC**, then select **vpc-secure-sg**.
+4. Navigate to **All Security Groups for VPC**, then select **vpc-secure-bastion-sg**.
 5. Finally, edit the security group and add the following **outbound** rule.
 
    <table>
@@ -252,7 +252,7 @@ To create a new security group:
 To create a virtual server instance in the newly created subnet:
 
 1. Click on the private subnet under **Subnets**.
-2. Click **Attached instances**, then **New instance**.
+2. Click **Attached resources**, then **New instance**.
 3. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created earlier, then the same **Location** as before.
 4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
 5. For **SSH keys** pick the SSH key you created earlier for the bastion.

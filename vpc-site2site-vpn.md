@@ -3,6 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2019
 lastupdated: "2019-05-07"
+lasttested: "2019-05-28"
 ---
 
 {:shortdesc: .shortdesc}
@@ -15,9 +16,6 @@ lastupdated: "2019-05-07"
 
 # Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
 {: #vpc-site2site-vpn}
-
-IBM will be accepting a limited number of customers to participate in an Early Access program to VPC starting in early April, 2019 with expanded usage being opened in the following months. If your organization would like to gain access to IBM Virtual Private Cloud, please complete this [nomination form](https://{DomainName}/vpc){: new_window} and an IBM representative will be in contact with you regarding next steps.
-{: important}
 
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. This allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 

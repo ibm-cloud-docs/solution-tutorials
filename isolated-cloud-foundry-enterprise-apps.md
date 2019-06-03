@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-05-31"
+lasttested: "2019-05-31"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -79,10 +80,10 @@ In this section, you'll create an instance of {{site.data.keyword.cfee_full_notm
    - Select the **Standard** plan.
    - Enter a **Name** for the service instance.
    - Select a **Resource group** in which the environment is created. You'll need permission to access at least one resource group in the account to be able to create a CFEE instance.
-   - Select a **Geography** and **Location** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#provisioning-targets).
-   - In the public Cloud Foundry, select an **Organization** and a **Space** where **{{site.data.keyword.composeForPostgreSQL}}** will be deployed.
+   - Select a **Geography** and **Region** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#provisioning-targets).
+   - Select the **Worker Zones** where the Kubernetes worker nodes will be deployed.
    - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. At least **2** cells are required for highly available applications.
-   - Select the **Machine type**, which determines the size of the Cloud Foundry cells (CPU and memory).
+   - Select the **Node size**, which determines the size of the Cloud Foundry cells (CPU and memory) and the CFEE and Cloud Foundry deployment **Version**.
 4. Review the **Infrastructure** section to view the properties of the Kubernetes cluster supporting CFEE. The **Number of worker nodes** equals the number of cells plus 2. Two of the provisioned Kubernetes worker nodes act as the CFEE control plane. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{DomainName}/kubernetes/clusters) dashboard.
 5. Click the **Create** button to begin automated deployment.
 
@@ -106,7 +107,7 @@ Follow the steps below to create a CFEE org and space.
 
 In CFEE, you can assign roles controlling user access, but to do so, the user must be invited to your {{site.data.keyword.cloud_notm}} account in the **Identity & Access** page under the **Manage > Users** in the {{site.data.keyword.cloud_notm}} header.
 
-Once the user has been invited, follow the steps below to add the user to the `tutorial` organization created, 
+Once the user has been invited, follow the steps below to add the user to the `tutorial` organization created,
 
 1. Select your [CFEE instance](https://{DomainName}/dashboard/cloudfoundry?filter=cf_environments) and then select **Organizations** again.
 2. Select the `tutorial` org created from the list.
@@ -381,10 +382,10 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
 
    ```javascript
    // TODO - Do your actual work here
-    
+
    var generatedUserid   = uuid();
    var generatedPassword = uuid();
-    
+
    result = {
      credentials: {
        userid   : generatedUserid,
@@ -409,7 +410,7 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
    kubectl patch deployment tutorial-servicebroker-deployment -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"version\":\"2\"}}}}}"
    ```
    {: codeblock}
-5. In terminal, navigate back to the `get-started-node` application folder. 
+5. In terminal, navigate back to the `get-started-node` application folder.
    ```sh
    cd ..
    ```
@@ -474,11 +475,11 @@ While the welcome service uses Cloud Foundry as its implementation, you could ju
 
 With {{site.data.keyword.cfee_full_notm}} these alternate approaches are now possible.
 
-## Deploy this solution tutorial using a Toolchain  
+## Deploy this solution tutorial using a Toolchain
 
-Optionally, you can deploy the complete solution tutorial using a toolchain. Follow the [toolchain instruction](https://github.com/IBM-Cloud/cfee-service-broker-kubernetes) to deploy all of above using a toolchain. 
+Optionally, you can deploy the complete solution tutorial using a toolchain. Follow the [toolchain instruction](https://github.com/IBM-Cloud/cfee-service-broker-kubernetes) to deploy all of above using a toolchain.
 
-Note: Some prerequisites when using a toolchain, you must have created a CFEE instance and created a CFEE org and CFEE space. Detailed instructions outlined in the [toolchain instruction](https://github.com/IBM-Cloud/cfee-service-broker-kubernetes) readme. 
+Note: Some prerequisites when using a toolchain, you must have created a CFEE instance and created a CFEE org and CFEE space. Detailed instructions outlined in the [toolchain instruction](https://github.com/IBM-Cloud/cfee-service-broker-kubernetes) readme.
 
 ## Related content
 {:related}

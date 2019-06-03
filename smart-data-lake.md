@@ -194,7 +194,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     ```
     {: codeblock}
 3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
-    - Add the following in the next **In [ ]:** prompt and then **Run**.
+    - Add the following in the next `In [ ]:` prompt and then **Run**.
         ```python
         import getpass
         cloud_api_key = getpass.getpass('Enter your IBM Cloud API Key')
@@ -209,7 +209,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
     - You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
 4. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
-    - In the next **In [ ]:** prompt, assign the CRN to a variable in your Notebook.
+    - In the next `In [ ]:` prompt, assign the CRN to a variable in your Notebook.
         ```python
         sql_crn = '<SQL_QUERY_CRN>'
         ```
@@ -225,7 +225,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
     ```
     {: codeblock}
-6. Execute the following commands in another **In [ ]:** prompt and **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
+6. Enter the following commands in another `In [ ]:` prompt and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
     ```python
     sqlClient = ibmcloudsql.SQLQuery(cloud_api_key, sql_crn, sql_cos_endpoint + '/accidents')
 
@@ -293,7 +293,7 @@ In this section, you will visualize the previous result set using PixieDust and 
     traffic_location.head()
     ```
     {: codeblock}
-2. In the next **In [ ]:** prompt **Run** the `display` command to view the result using PixieDust.
+2. In the next `In [ ]:` prompt **Run** the `display` command to view the result using PixieDust.
     ```python
     display(traffic_location)
     ```
