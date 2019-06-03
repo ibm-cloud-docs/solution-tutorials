@@ -79,7 +79,7 @@ When considering **recovery point objective** (RPO) in the active/active scenari
 
 An active/passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application and user needs. 
 
-![Active/Active](images/solution39/Active-passive.png)
+![Active/Passive](images/solution39/Active-passive.png)
 
 Requests are served from the active site. In the event of an outage or application failure, pre-application work is performed to make the standby data center ready to serve the request. Switching from the active to the passive data center is a time-consuming operation. Both **recovery time objective** (RTO) and **recovery point objective** (RPO) are higher compared to the active/active configuration.
 
