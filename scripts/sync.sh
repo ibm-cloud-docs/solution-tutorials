@@ -29,5 +29,8 @@ tar cf - \
 # replace the private toc with the public version
 (cd build && rm -f toc && mv toc-public toc)
 
+# restore the translation files
+(cd build && git checkout HEAD nl)
+
 # add all files
 (cd build && git add . && git commit -m "$COMMIT_MESSAGE" && git push)
