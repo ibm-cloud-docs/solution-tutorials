@@ -58,8 +58,6 @@ The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track
 
 ​      **Note:** {{site.data.keyword.mobilepushshort}} service should already be added with the Empty Starter.
 
-    **Note:** {{site.data.keyword.mobilepushshort}} service should be added to the project.
-
 In the next step, you will download the scaffolded code and complete the required setup.
 
 ## Download the code and complete required setup
@@ -69,28 +67,32 @@ If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_not
 
 1. In an IDE of your choice, Navigate to `/platforms/android/project.properties` and replace the last two lines (library.1 and library.2) with the lines below
 
-  ```
+  ```sh
   cordova.system.library.1=com.android.support:appcompat-v7:26.1.0
   cordova.system.library.2=com.google.firebase:firebase-messaging:10.2.6
   cordova.system.library.3=com.google.android.gms:play-services-location:10.2.6
   ```
+  {: pre:}
   The above changes are specific to Android
   {: tip}
 2. To launch the app on an Android emulator, run the below command in a terminal or command prompt
+```sh
+ cordova build android
+ cordova run android
 ```
- $ cordova build android
- $ cordova run android
-```
+{: pre:}
  If you see an error, launch an emulator and try running the above command.
  {: tip}
 3. To preview the app in the iOS simulator, run the below commands in a terminal,
+    ```sh
+    cordova build ios
+    ```
+   {: pre:}
 
+    ```sh
+    open platforms/ios/{YOUR_PROJECT_NAME}.xcworkspace/
     ```
-    $ cordova build ios
-    ```
-    ```
-    $ open platforms/ios/{YOUR_PROJECT_NAME}.xcworkspace/
-    ```
+    {: pre:}
     You can find your project name in `config.xml` file by running `cordova info` command.
     {: tip}
 
@@ -124,11 +126,8 @@ Refer [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort
 ## Configure, send and monitor {{site.data.keyword.mobilepushshort}}
 {: #configure_push}
 
-1. In index.js, under `onDeviceReady` function, replace the values  `{pushAppGuid}` and
-
-   `{pushClientSecret} `with push service **credentials** - *appGuid* and *clientSecret*.
-
-2. Go to your Mobile dashboard > Projects > Cordova Project, Click on the {{site.data.keyword.mobilepushshort}} service and follow the below steps.
+1. In index.js, under `onDeviceReady` function, replace `REPLACEME` with push service *clientSecret*.
+2. Go to your App under [Resource list](https://{DomainName}/resources) > Apps > Cordova Project, Click on the {{site.data.keyword.mobilepushshort}} service and follow the below steps.
 
 ### APNs - Configure the service instance
 

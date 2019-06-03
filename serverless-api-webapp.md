@@ -65,8 +65,8 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data
 
 1. In the Catalog, select **Cloudant**.
 2. Set the service name to **guestbook-db**, select **Use both legacy credentials and IAM** as authentication methods and click **Create**.
-3. Back in the Resource list, click on the ***guestbook-db** entry under the Name column. Note: You may be required to wait until the service is provisioned. 
-4. In the service details screen, click on  ***Launch Cloudant Dashboard*** which will open in another browser tab. Note: Log in maybe required to your Cloudant instance. 
+3. Back in the Resource list, click on the ***guestbook-db** entry under the Name column. Note: You may be required to wait until the service is provisioned.
+4. In the service details screen, click on  ***Launch Cloudant Dashboard*** which will open in another browser tab. Note: Log in maybe required to your Cloudant instance.
 5. Click on ***Create Database*** and create a database named ***guestbook***.
 
   ![](images/solution8/Create_Database.png)
@@ -124,7 +124,7 @@ Finally add a second action to the sequence:
 
 1. Click on **save-guestbook-entry-sequence** and then click **Add**.
 1. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**
-1. Create **New Binding** 
+1. Create **New Binding**
 1. For Name, enter `binding-for-guestbook`
 1. For Cloudant Instance, select `Input your own credentials` and fill in the following fields with the credentials information captured for your cloudant service: Username, Password, Host and Database = `guestbook` and click **Add** and then **Save**.
    {: tip}
@@ -137,7 +137,7 @@ Finally add a second action to the sequence:
     }
     ```
     {: codeblock}
-1. **Apply** and then **Invoke**.
+1. Click **Apply** and then click **Invoke**.
     ![](images/solution8/Save_Entry_Invoke.png)
 
 ### Sequence of actions to retrieve entries
