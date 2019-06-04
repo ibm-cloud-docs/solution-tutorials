@@ -234,7 +234,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
 
    Edit `./cfee-service-broker-kubernetes/deployment.yml` file. Check and update the `image` attribute to reflect your container registry URL.
 3. Deploy the container image to CFEE's Kubernetes cluster (<CFEE_INSTANCE_NAME>-cluster). Target the resource group in which the cluster is created.  Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
-    ```sh
+   ```sh
    ibmcloud ks clusters
    ```
    {: pre}
@@ -399,7 +399,7 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
      }
    };
    ```
-   {:codeblock}
+   {: codeblock}
 4. Build and deploy the updated service broker. This will ensure the URL property will be provided to apps that bind the service.
    ```sh
    cd ..
@@ -437,17 +437,17 @@ Up to this point, you've deployed a service broker but not an actual service. Wh
      app.get("/api/welcome", (req, res) => res.send('Welcome'));
    }
    ```
-   {: pre}
-7. Refactor the `get-started-node/views/index.html` page. Change `data-i18n="welcome"` to `id="welcome"` in the `h1` tag. And then add a call to the service at the end of the `$(document).ready()` function.
+   {: codeblock}
+7. Refactor the `get-started-node/views/index.html` page under `views` folder. Change `data-i18n="welcome"` to `id="welcome"` in the `h1` tag. And then add a call to the service at the end of the `$(document).ready()` function.
    ```html
    <h1 id="welcome"></h1> <!-- Welcome -->
    ```
-   {: pre}
+   {: codeblock}
 
    ```javascript
    $.get('./api/welcome').done(data => document.getElementById('welcome').innerHTML= data);
    ```
-   {: pre}
+   {: codeblock}
 8. Update the `GetStartedNode` app. Include the `request` package dependency that was added to `server.js`, rebind the `welcome-service` to pick up the new `url` property and finally push the app's new code.
    ```sh
    npm i request -S
