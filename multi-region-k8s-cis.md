@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-29"
+lastupdated: "2019-06-03"
+lasttested: "2019-06-03"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -77,10 +78,11 @@ To create a cluster:
 1. Select **Standard** cluster.
 1. Set **Cluster name** to **my-us-cluster**.
 1. Set the **Geography** to **North America**.
-1. Select single-zone or multi-zone under **Availability**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers?topic=containers-plan_clusters#ha_clusters).
-1. Set **Metro** to **Dallas**.
+1. Select multi-zone under **Availability**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers?topic=containers-plan_clusters#ha_clusters).
+1. Set **Metro** to **Dallas**.  
+1. You can choose to deploy in 1 or more **Worker zones**, note the number of worker zones entered here will be multiplied to the number of worker nodes entered below.  
 1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
-1. Use **2** worker nodes.
+1. Use **1** worker nodes, note the number of worker nodes entered here will be multiplied to the number of worker zones entered above.
 1. Click on **Create cluster**.
 
 While the cluster is getting ready, you are going to prepare the application.
@@ -95,7 +97,7 @@ While the cluster is getting ready, you are going to prepare the application.
    {: pre}
 2. Create a namespace for the application.
    ```bash
-   ibmcloud cr namespace-add <your_us-south_namespace>
+   ibmcloud cr namespace-add <your_namespace>
    ```
    {: pre}
 
@@ -117,23 +119,8 @@ This step builds the application into a Docker image. You can skip this step if 
    cd 'container-service-getting-started-wt/Lab 1'
    ```
    {: pre}
-1. Build a Docker image that includes the app files of the `Lab 1` directory.
-   ```bash
-   docker build --tag multi-region-hello-world:1 .
-   ```
-   {: pre}
 
-### Prepare the image to be pushed to the location-specific registry
-{: #prepare_image}
-
-Tag the image with the target registry:
-
-   ```bash
-  docker tag multi-region-hello-world:1 us.icr.io/<your_namespace>/hello-world:1
-   ```
-   {: pre}
-
-### Push the image to the location-specific registry
+### Build and push a Docker image to the location-specific registry
 {: #push_image}
 
 1. Ensure your local Docker engine can push to registry in Dallas.
@@ -141,11 +128,15 @@ Tag the image with the target registry:
    ibmcloud cr login
    ```
    {: pre}
-2. Push the image.
+
+2. Build and push the image.
    ```bash
-   docker push us.icr.io/<your_namespace>/hello-world:1
+   ibmcloud cr build -t us.icr.io/<your_namespace>/multi-region-hello-world:1 .
    ```
    {: pre}
+
+  The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag multi-region-hello-world:1 .` (b) `docker tag multi-region-hello-world:1 us.icr.io/<your_namespace>/multi-region-hello-world:1` (c) `docker push us.icr.io/<your_namespace>/multi-region-hello-world:1`.
+  {: tip}
 
 ### Deploy the application to the Kubernetes cluster
 {: #deploy_application}
@@ -158,18 +149,36 @@ At that stage, the cluster should be ready. You can check its status in the [{{s
    ```
    {: pre}
 1. Copy and paste the output to set the KUBECONFIG environment variable. The variable is used by `kubectl`.
-1. Run the application in the cluster with two replicas:
+
    ```bash
-   kubectl run hello-world-deployment --image=us.icr.io/<your_namespace>/hello-world:1 --replicas=2
+   kubectl create deploy hello-world-deployment --image=us.icr.io/<your_namespace>/multi-region-hello-world:1
    ```
    {: pre}
    Example output: `deployment "hello-world-deployment" created`.
 1. Make the application accessible within the cluster
+
    ```bash
    kubectl expose deployment/hello-world-deployment --type=ClusterIP --port=80 --name=hello-world-service --target-port=8080
    ```
    {: pre}
    It returns message like `service "hello-world-service" exposed`.
+
+  ```bash
+  kubectl get services
+  ```
+  {: pre}
+
+1. Run the application in the cluster with two replicas:
+   ```bash
+   kubectl scale deployment hello-world-deployment --replicas=2
+   ```
+   {: pre}
+
+1. You can check the status of the deployment with the following command:
+   ```bash
+   kubectl get pods
+   ```
+   {: pre}
 
 ### Get the domain name and IP address assigned to the cluster
 {: #CSALB_IP_subdomain}
@@ -184,25 +193,20 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
    Look for the `Ingress Subdomain` value.
 1. Make note of this information for a later step.
 
-This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also replace the subdomain for the public Application Load Balancer IP address (`ibmcloud ks albs -cluster <cluster-name>`). Both options are supported.
+This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also replace the subdomain for the public Application Load Balancer IP address (`ibmcloud ks albs --cluster <cluster-name>`). Both options are supported.
 {: tip}
 
 ## And then to another location
 
-Repeat the following steps in London:
-* In [Create a Kubernetes cluster](#create_cluster) by replacing
+Repeat the following steps for the London location:
+* In [Create a Kubernetes cluster](#create_cluster) replace:
   * the cluster name **my-us-cluster** with **my-uk-cluster**;
   * the Geography name **North America** with **Europe**;
   * the Metro name **Dallas** with **London**;
   * and the cluster name **my-us-cluster** with **my-uk-cluster**.
-* In the [Create a namespace in {{site.data.keyword.registryshort_notm}}](#create_namepsace) by replacing:
+* In the [Create a namespace in {{site.data.keyword.registryshort_notm}}](#create_namepsace) replace:
   * the target region **us-south** with **eu-gb**.
-* It is not necessary to repeat the [Build the application](#build_application)
-* In the [Prepare the image to be pushed to the location-specific registry](#prepare_image) by replacing:
-  * the registry **us.icr.io** with **uk.icr.io**.
-* In the [Push the image to the location-specific registry](#push_image) by replacing:
-  * the registry **us.icr.io** with **uk.icr.io**.
-* In the [Deploy the application to the Kubernetes cluster](#deploy_application) by replacing:
+* In the [Build and push a Docker image to the location-specific registry](#push_image) replace:
   * the registry **us.icr.io** with **uk.icr.io**.
 * [Get the domain name and IP address assigned to the cluster](#CSALB_IP_subdomain)
 
@@ -227,8 +231,9 @@ The first step is to create an instance of CIS and to point your custom domain t
 1. If you do not own a domain, you can buy one from a registrar.
 2. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 3. Set the service name, and click **Create** to create an instance of the service.
-4. When the service instance is provisioned, click on Let's get Started.
+4. When the service instance is provisioned, click on **Let's get Started**.
 5. Enter your domain name and click **Connect and continue**.
+6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next Step**
 6. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 7. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
@@ -343,14 +348,13 @@ At this stage, you have successfully configured a Global Load Balancer with Kube
 
 The Web Application Firewall(WAF) protects your web application against ISO Layer 7 attacks. Usually, it is combined with grouped rule-sets, these rule-sets aim to protect against vulnerabilities in the application by filtering out malicious traffic.
 
-1. In the Cloud Internet Services dashboard, navigate to **Security**, then on the **Manage** tab.
-1. In the **Web Application Firewall** section, ensure the WAF is enabled.
-1. Click **View OWASP Rule Set**. From this page, you can review the **OWASP Core Rule Set** and individually enable or disable rules. When a rule is enabled, if an incomimg request triggers the rule, the global threat score will be increased. The **Sensitivity** setting will decide whether an **Action** is triggered for the request.
+1. In the Cloud Internet Services dashboard, navigate to **Security**, then on the **Web Application Firewall**.
+1. Ensure the WAF is **On**.
+1. Click **OWASP Rule Set**. From this page, you can review the **OWASP Core Rule Set** and individually enable or disable rules. When a rule is enabled, if an incomimg request triggers the rule, the global threat score will be increased. The **Sensitivity** setting will decide whether an **Action** is triggered for the request.
    1. Leave default OWASP rule sets as it is.
    1. Set **Sensitivity** to `Low`.
    1. Set **Action** to `Simulate` to log all the events.
-1. Click **Back to Security**.
-1. Click **View CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
+1. Click **CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
 
 ### Increase performance and protect from Denial of Service attacks 
 {: #proxy_setting}

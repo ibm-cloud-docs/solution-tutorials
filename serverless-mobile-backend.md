@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-06-04"
+lasttested: "2019-06-04"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -150,63 +151,51 @@ It is recommended that you create a new space to provision the services and depl
 
 With the command line, run the following commands to provision the services and retrieve their credentials:
 
+Set the location where services should be created:
+
    ```sh
-   ibmcloud cf create-service cloudantNoSQLDB Lite serverlessfollowup-db
+   REGION=us-south
    ```
    {: pre}
 
    ```sh
-   ibmcloud cf create-service-key serverlessfollowup-db for-cli
+   ibmcloud resource service-instance-create serverlessfollowup-db cloudantnosqldb lite $REGION -p '{"legacyCredentials": true}'
    ```
    {: pre}
 
    ```sh
-   ibmcloud cf service-key serverlessfollowup-db for-cli
+   ibmcloud resource service-key-create serverlessfollowup-db-for-cli Manager --instance-name serverlessfollowup-db
    ```
    {: pre}
 
    ```sh
-   ibmcloud cf create-service tone_analyzer standard serverlessfollowup-tone
+   ibmcloud resource service-instance-create serverlessfollowup-tone tone-analyzer lite $REGION 
    ```
    {: pre}
 
    ```sh
-   ibmcloud cf create-service-key serverlessfollowup-tone for-cli
+   ibmcloud resource service-key-create serverlessfollowup-tone-for-cli Writer --instance-name serverlessfollowup-tone
    ```
    {: pre}
 
    ```sh
-   ibmcloud cf service-key serverlessfollowup-tone for-cli
+   ibmcloud resource service-instance-create serverlessfollowup-appid appid lite $REGION
+
    ```
    {: pre}
 
    ```sh
-   ibmcloud cf create-service AppID "Graduated tier" serverlessfollowup-appid
+   ibmcloud resource service-key-create serverlessfollowup-appid-for-cli Writer --instance-name serverlessfollowup-appid
    ```
    {: pre}
 
    ```sh
-   ibmcloud cf create-service-key serverlessfollowup-appid for-cli
+   ibmcloud resource service-instance-create serverlessfollowup-mobilepush imfpush lite $REGION
    ```
    {: pre}
 
    ```sh
-   ibmcloud cf service-key serverlessfollowup-appid for-cli
-   ```
-   {: pre}
-
-   ```sh
-   ibmcloud cf create-service imfpush lite serverlessfollowup-mobilepush
-   ```
-   {: pre}
-
-   ```sh
-   ibmcloud cf create-service-key serverlessfollowup-mobilepush for-cli
-   ```
-   {: pre}
-
-   ```sh
-   ibmcloud cf service-key serverlessfollowup-mobilepush for-cli
+   ibmcloud resource service-key-create serverlessfollowup-mobilepush-for-cli Writer --instance-name serverlessfollowup-mobilepush
    ```
    {: pre}
 
@@ -313,12 +302,12 @@ With all the services configured, you can now deploy the serverless backend. The
 Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. Before running the mobile app, you need to configure its settings to target the services you created.
 
 1. With Android Studio, open the project located in the `android` folder of your checkout directory.
-2. Edit `android/app/src/main/res/values/credentials.xml` and fill in the blanks with values from credentials. You will need the {{site.data.keyword.appid_short}} `tenantId`, the {{site.data.keyword.mobilepushshort}} `appGuid` and `clientSecret` and the organization and space names where the {{site.data.keyword.openwhisk_short}} have been deployed.For API host, launch command prompt or terminal and run the command
+2. Edit `android/app/src/main/res/values/credentials.xml` and fill in the blanks with values from credentials. You will need the {{site.data.keyword.appid_short}} `tenantId`, the {{site.data.keyword.mobilepushshort}} `appGuid` and `clientSecret` and the organization and space names where the {{site.data.keyword.openwhisk_short}} have been deployed. For API host, launch command prompt or terminal and run the command
    ```sh
    ibmcloud fn property get --apihost
    ```
    {: pre}
-3. Open `android/app/src/main/java/serverlessfollowup/app/LoginActivity.java` and `LoginAndRegistrationListener.java` and update the push notifications service(BMSClient)region and AppID region depending on the location in which your service instances are created.
+3. In `android/app/src/main/java/serverlessfollowup/app/LoginActivity.java` and in `android/app/src/main/java/serverlessfollowup/app/LoginAndRegistrationListener.java`, update the value of the constant `region` to the location where the services were created.
 4. Build the project.
 5. Start the application on a real device or with an emulator.
    For the emulator to receive push notifications, make sure to pick an image with the Google APIs and to log in with a Google account within the emulator.
