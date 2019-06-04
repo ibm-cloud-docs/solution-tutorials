@@ -135,7 +135,7 @@ This step builds the application into a Docker image. You can skip this step if 
    ```
    {: pre}
 
-  The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag multi-region-hello-world:1 .` (b) `docker tag multi-region-hello-world:1 us.icr.io/<your_namespace>/hello-world:1` (c) `docker push us.icr.io/<your_namespace>/hello-world:1`.
+  The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag multi-region-hello-world:1 .` (b) `docker tag multi-region-hello-world:1 us.icr.io/<your_namespace>/multi-region-hello-world:1` (c) `docker push us.icr.io/<your_namespace>/multi-region-hello-world:1`.
   {: tip}
 
 ### Deploy the application to the Kubernetes cluster
@@ -155,7 +155,7 @@ At that stage, the cluster should be ready. You can check its status in the [{{s
    ```
    {: pre}
    Example output: `deployment "hello-world-deployment" created`.
-1. Make the application accessible over a NodePort
+1. Make the application accessible within the cluster
 
    ```bash
    kubectl expose deployment/hello-world-deployment --type=ClusterIP --port=80 --name=hello-world-service --target-port=8080
