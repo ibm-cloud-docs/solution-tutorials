@@ -55,8 +55,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources#managing-user-permissions-for-vpc-resources).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites).
 - The tutorial assumes that you are adding the bastion host in an existing [virtual private cloud](https://{DomainName}/vpc/network/vpcs). **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
 
 ## Create a bastion host
@@ -72,16 +72,16 @@ In this section, you will create and configure a bastion host along with a secur
    * Select a location and zone.  
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-1. Switch the **Public gateway** to **Attached**. 
+1. Switch the **Public gateway** to **Attached**.
 1. Click **Create subnet** to provision it.
 
 ### Create and configure bastion security group
 
 Let's create a security group and configure inbound rules to your bastion VSI.
 
-1. Navigate to **Security groups** and click **New security group**. Enter **vpc-secure-bastion-sg** as name and select your VPC. 
+1. Navigate to **Security groups** and click **New security group**. Enter **vpc-secure-bastion-sg** as name and select your VPC.
 2. Now, create the following inbound rules by clicking **Add rule** in the inbound section. They allow SSH access and Ping (ICMP).
- 
+
 	**Inbound rule:**
 	<table>
 	   <thead>
@@ -121,7 +121,7 @@ With the subnet and security group already in place, next, create the bastion vi
    * Leave the **Region** as is.
    * Copy the contents of your existing local SSH key and paste it under **Public key**.  
    * Click **Add SSH key**.
-5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups 
+5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    * Make sure that **vpc-secure-bastion-subnet** is selected as the subnet.
    * Uncheck the default security group and mark **vpc-secure-bastion-sg**.
    * Click **Save**.
@@ -237,7 +237,7 @@ To create a new subnet,
    * Select a location.  
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
-1. Switch the **Public gateway** to **Attached**. 
+1. Switch the **Public gateway** to **Attached**.
 1. Click **Create subnet** to provision it.
 
 ### Create a security group
@@ -286,7 +286,7 @@ To SSH into an instance using its **private IP**, you will use the bastion host 
    ssh -J root@<BASTION_FLOATING_IP_ADDRESS> root@<PRIVATE_IP_ADDRESS>
    ```
    {:pre}
-   
+
    `-J` flag is supported in OpenSSH version 7.3+. In older versions `-J` is not available. In this case the safest and most straightforward way is to use ssh's stdio forwarding (`-W`) mode to "bounce" the connection through a bastion host. e.g., `ssh -o ProxyCommand="ssh -W %h:%p root@<BASTION_FLOATING_IP_ADDRESS" root@<PRIVATE_IP_ADDRESS>`
    {:tip }
 
@@ -301,7 +301,7 @@ Once connected, you can install software on the virtual server in the private su
    {:pre}
 2. Install the desired software, e.g., Nginx or MySQL or IBM Db2.
 
-When done, disconnect from the server with `exit` command. 
+When done, disconnect from the server with `exit` command.
 
 To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI in the private subnet and open required ports (80 - HTTP and 443 - HTTPS) via the inbound rules in the security group of private VSI.
 {:tip}
