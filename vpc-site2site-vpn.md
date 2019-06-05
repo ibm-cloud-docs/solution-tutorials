@@ -19,7 +19,7 @@ lasttested: "2019-05-28"
 
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. This allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
-This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI). 
+This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI).
 The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication.
 
 To further demonstrate secure and private access, you will deploy a microservice on a VSI to access {{site.data.keyword.cos_short}} (COS), representing a line of business application.
@@ -32,7 +32,7 @@ In short, using a VPC you can
 
 - connect your on-premises systems to services and workloads running in {{site.data.keyword.cloud_notm}},
 - ensure private and low cost connectivity to COS,
-- connect your cloud-based systems to services and worlkloads running on-premises.
+- connect your cloud-based systems to services and workloads running on-premises.
 
 ## Objectives
 {: #objectives}
@@ -69,7 +69,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 
 - Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). You need the optional CLI infrastructure plugin.
 - Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
 - Install [**jq**](https://stedolan.github.io/jq/download/). It is used by the provided scripts to process JSON output.
 
@@ -104,7 +104,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage lite global
    ```
    {: codeblock}
-   
+
    Note that only one lite instance can be created per account. If you already have an instance of {{site.data.keyword.cos_short}}, you can reuse it.
    {: tip}
 
@@ -118,7 +118,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    ibmcloud resource service-key vpns2s-cos-key --output json > vpc-app-cos/credentials.json
    ```
    {: codeblock}
-   
+
 
 ### Create a Virtual Private Cloud baseline resources
 {: #create-vpc}
@@ -165,7 +165,7 @@ In the following, you will add a VPN gateway and an associated connection to the
 4. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
 5. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
 6. Wait for the VPN gateway to become available (you may need to refresh the screen).
-7. Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**. 
+7. Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**.
 
 ### Create the on-premises Virtual Private Network gateway
 Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
@@ -186,7 +186,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    apt-get update
    ```
    {:pre}
-   
+
    ```sh
    apt-get install strongswan
    ```
@@ -218,8 +218,8 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
       charondebug="all"
       uniqueids=yes
       strictcrlpolicy=no
-   
-   # connection to vpc/vpn datacenter 
+
+   # connection to vpc/vpn datacenter
    # left=onprem / right=vpc
    conn tutorial-site2site-onprem-to-cloud
       authby=secret
@@ -257,7 +257,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
 You can test the site to site VPN connection by using SSH or by deploying the microservice interfacing {{site.data.keyword.cos_short}}.
 
 ### Test using ssh
-To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server. 
+To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server.
 
 1. In a new terminal, execute the following command after replacing the values. It uses the strongSwan host as jump host to connect via VPN to the application server's private IP address.
 
@@ -265,7 +265,7 @@ To test that the VPN connection has been successfully established, use the simul
    ssh -J root@ONPREM_IP root@VSI_CLOUD_IP
    ```
    {:pre}
-  
+
 2. Once successfully connected, close the ssh connection.
 
 3. In the "onprem" VSI terminal, stop the VPN gateway:
@@ -283,13 +283,13 @@ To test that the VPN connection has been successfully established, use the simul
 
    Note that depending on deployment details this connection actually still succeeds. The reason is that intra-VPC connectivity is supported across zones. If you would deploy the simulated on-prem VSI to another VPC or to [{{site.data.keyword.virtualmachinesfull}}](/docs/vsi?topic=virtual-servers-about-public-virtual-servers), the VPN would be needed for successful access.
    {:tip}
-   
+
 5. In the "onprem" VSI terminal, start the VPN gateway again:
    ```sh
    ipsec start
    ```
    {:pre}
- 
+
 
 ### Test using a microservice
 You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI.
@@ -343,12 +343,12 @@ You can test the working VPN connection by accessing a microservice on the cloud
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
 
-## Expand the tutorial 
+## Expand the tutorial
 {: #expand-tutorial}
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- Add a [load balancer](/docs/infrastructure/vpc-network?topic=vpc-network---beta-using-load-balancers-in-ibm-cloud-vpc) to distribute inbound microservice traffic across multiple instances.
+- Add a [load balancer](/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-load-balancers-in-ibm-cloud-vpc) to distribute inbound microservice traffic across multiple instances.
 - Deploy the [application on a public server, your data and services on a private host](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend).
 
 
@@ -357,5 +357,5 @@ Want to add to or extend this tutorial? Here are some ideas:
 
 - [VPC Glossary](/docs/vpc?topic=vpc-vpc-glossary)
 - [IBM Cloud CLI plugin for VPC Reference](/docs/infrastructure-service-cli-plugin?topic=infrastructure-service-cli-vpc-reference)
-- [VPC using the REST APIs](/docs/infrastructure/vpc/example-code.html)
+- [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
 - Solution tutorial: [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)

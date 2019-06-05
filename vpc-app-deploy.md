@@ -75,7 +75,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 Software is located in the following places (align wording here with diagram above):
 - Initial images
 - IBM cloud mirrors
-- Internet available respositories
+- Internet available repositories
 - On the file system of the provisioning system
 
 Initial IBM images are populated with popular off the shelf operating systems:
@@ -95,21 +95,21 @@ b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2
 5ccbc579-dc22-0def-46a8-9c2e9b502d37   windows-2016-amd64      Windows Server (2016 Standard Edition)                    6 months ago   READY    public   
 ```
 
-For illustrative purposes the software initially described in the following tutorial, 
+For illustrative purposes the software initially described in the following tutorial,
 [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform),
 will be used.
 
 At a high level:
-- A public and private VSI are provsioned with centos-7 as the base image
+- A public and private VSI are provisioned with centos-7 as the base image
 - Httpd and other software is installed - demonstrating the use of IBM mirrors
-- Internet software is accessed - demonstrating the use of internet repositories on the publice VSI and failure on the private VSI
+- Internet software is accessed - demonstrating the use of internet repositories on the public VSI and failure on the private VSI
 - A file is copied from the file system of the provisioning computer to the public VSI and executed
 - Tests are run to verify the above
 
 ### IBM Mirrors
 IBM has internal mirrors for the images that we provide.
 The mirrors are part of the
-[Service endpoints available for IBM Cloud VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-service-endpoints-available-for-ibm-cloud-vpc)
+[Service endpoints available for IBM Cloud VPC](https://{DomainName}/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc)
 There are no ingress charges for reading the mirrors.
 The mirrors will contain new versions for the software in the IBM provided images as well as optional software packages.
 
@@ -150,7 +150,7 @@ runcmd:
 ## stuff below not edited yet
 
 ## Prerequisites
-You should have a VPC ssh key in the cloud.  Create or verify one exists. 
+You should have a VPC ssh key in the cloud.  Create or verify one exists.
 In the example below the ssh key name `pfq` is used.  Substitute your preferred name.
 
 Using the cli, verify it exists:
@@ -174,8 +174,8 @@ After this step is completed a VPC VSI should be provisioned and it should be po
 Before continuing with the ssh and cli examples a VPC VSI will need to be created.
 Each of the mechanisms below are independent.
 Feel free to skip the skip the ssh and cli and the manual steps described here:
-these you can go straight to the terraform and ansible examples wich will create a VPC, subnet, security groups and VSI.
-Creating a VPC VSI can be done 
+these you can go straight to the terraform and ansible examples which will create a VPC, subnet, security groups and VSI.
+Creating a VPC VSI can be done
 
 - Run the provided script or follow the steps mentioned in [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) only the public subnet and web server is required for this tutorial.
 - Optionally follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
@@ -194,7 +194,7 @@ Identify the VSI created above.  Modify the steps to use the bastion host as req
 1. scp data.zip root@ip:<IP>
 1. ssh root@ip
 1. update repositories
-1. upgrade software intalled
+1. upgrade software installed
 1. install nginx
 1. install git
 1. git clone static website repository
@@ -208,11 +208,11 @@ Create a VPC VSI with a floating ip
 
 ## Repeat the same steps with terraform
 {: #section_two}
-Install terraform and the terraform IBM provider on your laptop. 
+Install terraform and the terraform IBM provider on your laptop.
 See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://{DomainName}/docs/terraform).
 
 The main.tf file creates the vpc, subnet, security group and instance.
-In the 
+In the
  install example software.
 N
 
@@ -234,4 +234,3 @@ Want to add to or change this tutorial? Here are some ideas:
 
 ## Related content
 {: #related}
-
