@@ -23,7 +23,7 @@ lasttested: "2019-05-28"
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
-A [subnet](/docs/infrastructure/vpc?topic=vpc-vpc-glossary#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](/docs/infrastructure/vpc?topic=vpc-vpc-glossary#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, [Security Groups](/docs/infrastructure/vpc?topic=vpc-vpc-glossary#security-group) (SGs) act as virtual firewalls to control the flow of data packets to and from individual VSIs.
+A [subnet](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, [Security Groups](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#security-group) (SGs) act as virtual firewalls to control the flow of data packets to and from individual VSIs.
 
 The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define SGs to allow or deny traffic to the VSIs.
 {:shortdesc}
@@ -59,7 +59,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
 
-1. The admin (DevOps) sets up the required infrastructure (VPC,subnets, security groups with rules, VSIs) on the cloud.
+1. The admin (DevOps) sets up the required infrastructure (VPC, subnets, security groups with rules, VSIs) on the cloud.
 2. The internet user makes an HTTP/HTTPS request to the web server on the frontend.
 3. The frontend requests private resources from the secured backend and serves results to the user.
 
@@ -67,9 +67,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources#managing-user-permissions-for-vpc-resources).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
 
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/infrastructure/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites).
 
 ## Create a Virtual Private Cloud
 {: #create-vpc}
@@ -117,7 +117,7 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under **Subnets**.
 2. Click **Attached resources**, then **New instance**.
-3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC your created earlier and the **Location** as before.
+3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC you created earlier and the **Location** as before.
 4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 5. For **SSH keys** pick the SSH key you created earlier.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
@@ -270,13 +270,13 @@ When using the console, you may need to refresh your browser to see updated stat
 
 Want to add to or extend this tutorial? Here are some ideas:
 
-- Add a [load balancer](/docs/infrastructure/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
-- Create a [virtual private network](/docs/infrastructure/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console#creating-a-vpn) (VPN) so your VPC can connect securely to another private network, such as an on-premises network or another VPC.
+- Add a [load balancer](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-console#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
+- Create a [virtual private network](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-console#creating-a-vpn) (VPN) so your VPC can connect securely to another private network, such as an on-premises network or another VPC.
 
 
 ## Related content
 {: #related}
 
-- [VPC Glossary](/docs/infrastructure/vpc?topic=vpc-vpc-glossary#vpc-glossary)
-- [VPC using the IBM Cloud CLI](/docs/infrastructure/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-cli#creating-a-vpc-using-the-ibm-cloud-cli)
-- [VPC using the REST APIs](/docs/infrastructure/vpc?topic=vpc-creating-a-vpc-using-the-rest-apis#creating-a-vpc-using-the-rest-apis)
+- [VPC Glossary](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#vpc-glossary)
+- [VPC using the IBM Cloud CLI](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-cli)
+- [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
