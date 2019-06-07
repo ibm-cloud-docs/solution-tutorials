@@ -101,7 +101,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
    1. Select a resource group.
    1. Select **AE 1.1 Spark** as software package and **Confirm**.
    1. If you don't see the service in the associated services list, click **Add service**, select **{{site.data.keyword.iae_full_notm}}**.
-1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created under **Existing**. If the service is not showing in the list, make sure it is fully provisioned first.
+1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created under **Existing**. If the service is not showing in the list, make sure it is fully provisioned first. In case it asks for a resource key, add a new service credentials named **wdp-writer** and with the role **Writer** on the service instance.
 
 ### Create a {{site.data.keyword.pm_short}} service
 
@@ -115,8 +115,8 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#build_model}
 
-1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, add **iris_model** as name and an optional description.
-2. Under **Machine Learning Service** section, you should see the Machine Learning service you associated in the above step.
+1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, set the name to **iris_model**.
+2. Under **Machine Learning Service** section, select the {{site.data.keyword.pm_short}} service instance you associated in the above step.
    ![](images/solution22-build-machine-learning-model/machine_learning_model_creation.png)
 3. Select **Model builder** as your model type and Under **Spark Service or Environment** section, Choose the spark service you created earlier
 4. Select **Manual** to manually create a model. Click **Create**.
