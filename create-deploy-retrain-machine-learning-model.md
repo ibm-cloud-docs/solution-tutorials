@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-06-07"
+lasttested: "2019-06-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -67,8 +68,9 @@ You can create a project to add data and open a data asset in the data refiner f
 
 **Create a project:**
 
-1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-2. Create a **project** > Click **Create Project** on **Standard** tile. Add a name say `iris_project` and optional description for the project.
+1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service.
+1. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
+2. Create a **project** > Click **Create Project** on **Standard** tile. Set the name to **iris_project**.
 3. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 4. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 5. Click **Create**. Your new project opens and you can start adding resources to it.
@@ -88,11 +90,26 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 ## Associate services
 {:#associate_services}
-1. Under **Settings**, scroll to **Associated services** > click  **Add service** > choose  **Spark**.
-   ![](images/solution22-build-machine-learning-model/associate_services.png)
-2. Select **Lite** plan and click **Create**. Use the default values and click **Confirm**.
-3. Click **Add Service** again and choose **Watson**. Click **Add** on **Machine Learning** tile > choose **Lite** plan > click **Create**.
-4. Leave the default values and click **Confirm** to provision a Machine Learning service.
+
+### Create an {{site.data.keyword.iae_full_notm}} service
+
+1. Click **Settings** on the top navigation bar > Associated Services.
+1. Click **Add service** and choose **{{site.data.keyword.iae_full_notm}}**.
+1. If you have an existing **{{site.data.keyword.iae_full_notm}}** service instance, select it otherwise continue with the next steps to create a new instance.
+   1. Click **New** > Select the **Lite** plan.
+   1. Click **Create**.
+   1. Select a resource group.
+   1. Select **AE 1.1 Spark** as software package and **Confirm**.
+   1. If you don't see the service in the associated services list, click **Add service**, select **{{site.data.keyword.iae_full_notm}}**.
+1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created under **Existing**. If the service is not showing in the list, make sure it is fully provisioned first.
+
+### Create a {{site.data.keyword.pm_short}} service
+
+3. Click **Add Service** again and choose **Watson**.
+1. Click **Add** on **{{site.data.keyword.pm_short}}** tile.
+1. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
+   1. Choose the **Lite** plan and click **Create**.
+   4. Leave the default values and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
 
 ## Build a machine learning model
 
