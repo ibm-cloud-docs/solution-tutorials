@@ -104,7 +104,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
    {:tip}
 
 5. On the next page, select `iris_initial.csv` as your data set and click **Next**.
-6. On the **Select a technique** page, based on the data set added, Label columns and feature columns are pre-populated. Select **Species (String)** as your **Label Col** and **PetalLengthCm (Decimal)** and **PetalWidthCm (Decimal)** as your **Feature columns**.
+6. On the **Select a technique** page, based on the data set added, Label columns and feature columns are pre-populated. Select **species (String)** as your **Label Col** and **petal_length (Decimal)** and **petal_width (Decimal)** as your **Feature columns**.
 7. Choose **Multiclass Classification** as your suggested technique.
    ![](images/solution22-build-machine-learning-model/model_technique.png)
 8. For **Validation Split** configure the following setting:
