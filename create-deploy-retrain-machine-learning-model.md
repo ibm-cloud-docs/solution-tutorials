@@ -141,7 +141,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
      ```json
      {
-     	"fields": ["SepalLengthCm", "SepalWidthCm", "PetalLengthCm", "PetalWidthCm"],
+     	"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"],
      	"values": [
      		[5.1, 3.5, 1.4, 0.2]
      	]
