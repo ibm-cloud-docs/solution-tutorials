@@ -109,7 +109,7 @@ There are three changes from this tutorial:
    mkdir /mnt/www
    ```
 
-At the end of this step the load balancer should be in a healthy state and the Wordpress site accessible on the internet. The virtual servers making up the web application are protected from external access via the internet by the VRA firewall and the only access is via the load balancer. For a production environment DDoS protection and Web Application Firewall (WAF) should also be consider as provided by [{{site.data.keyword.Bluemix_notm}} Internet Services](https://{DomainName}/catalog/services/internet-services).
+At the end of this step the load balancer should be in a healthy state and the Wordpress site accessible on the internet. The virtual servers making up the web application are protected from external access via the internet by the VRA firewall and the only access is via the load balancer. For a production environment DDoS protection and Web Application Firewall (WAF) should also be consider as provided by [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services).
 
 
 ## Remove resources
