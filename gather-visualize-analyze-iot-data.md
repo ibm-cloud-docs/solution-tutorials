@@ -169,7 +169,7 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
    1. Select **{{site.data.keyword.iae_full_notm}}**.
    1. Click **New** > Select the **Lite** plan.
    1. Click **Create**.
-   1. Select a resource group, change the service name if you want to .
+   1. Select a resource group.
    1. Select **AE 1.1 Spark** as software package and **Confirm**.
 1. If you don't see the service in the associated services list, Click **Add service**, select **{{site.data.keyword.iae_full_notm}}**.
 1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created under **Existing**. If the service is not showing in the list, make sure it is fully provisioned first.
