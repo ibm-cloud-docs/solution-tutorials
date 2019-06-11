@@ -3,6 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
+lasttested: "2019-04-23"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -127,7 +128,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 ## Expand the tutorial 
 
-1. In this tutorial only two virtual servers are initially provisioned as the app tier, more servers could be added automatically to handle additional load. [Auto Scale]( https://{DomainName}/docs/infrastructure/SLautoscale?topic=slautoscale-getting-started-with-auto-scaling#create-an-autoscale-group) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
+1. In this tutorial only two virtual servers are initially provisioned as the app tier, more servers could be added automatically to handle additional load. [Auto Scale]( https://{DomainName}/docs/vsi?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
 
 2. Separately protect user data by adding a second private VLAN and IP subnet to the VRA to create a DATA zone for hosting the MySQL database server. Configure firewall rules to only allow only MySQL IP traffic on port 3306 inbound from the APP zone to the DATA zone. 
 
