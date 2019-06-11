@@ -117,7 +117,7 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under **Subnets**.
 2. Click **Attached resources**, then **New instance**.
-3. Enter a unique name and pick **vpc-pubpriv-backend-vsi**. Then, select the VPC you created earlier and the **Location** as before.
+3. Set the **name** to **vpc-pubpriv-backend-vsi**. Then, select the VPC you created earlier and the **Location** as before.
 4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
 5. For **SSH keys** pick the SSH key you created earlier.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
