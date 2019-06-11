@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-06-11"
+lasttested: "2019-06-11"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -101,14 +102,14 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, add **iris_model** as name and an optional description.
 2. Under **Machine Learning Service** section, you should see the Machine Learning service you associated in the above step.
    ![](images/solution22-build-machine-learning-model/machine_learning_model_creation.png)
-3. Select **Model builder** as your model type and Under **Spark Service or Environment** section, Choose the spark service you created earlier
+3. Select **Model builder** as your model type and Under **Select runtime** section, Choose the **Default Spark scala** runtime.
 4. Select **Manual** to manually create a model. Click **Create**.
 
    For the automatic method, you rely on automatic data preparation (ADP) completely. For the manual method, in addition to some functions that are handled by the ADP transformer, you can add and configure your own estimators, which are the algorithms used in the analysis.
    {:tip}
 
 5. On the next page, select `iris_initial.csv` as your data set and click **Next**.
-6. On the **Select a technique** page, based on the data set added, Label columns and feature columns are pre-populated. Select **species (String)** as your **Label Col** and **petal_length (Decimal)** and **petal_width (Decimal)** as your **Feature columns**.
+6. On the **Select a technique** page, based on the data set added, Label columns and feature columns are pre-populated. Select **Species (String)** as your **Label Col** and **PetalLengthCm (Decimal)** and **PetalWidthCm (Decimal)** as your **Feature columns**.
 7. Choose **Multiclass Classification** as your suggested technique.
    ![](images/solution22-build-machine-learning-model/model_technique.png)
 8. For **Validation Split** configure the following setting:
@@ -146,7 +147,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
      ```json
      {
-     	"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"],
+     	"fields": ["SepalLengthCm", "SepalWidthCm", "PetalLengthCm", "PetalWidthCm"],
      	"values": [
      		[5.1, 3.5, 1.4, 0.2]
      	]
