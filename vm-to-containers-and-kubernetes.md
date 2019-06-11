@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-20"
+lastupdated: "2019-06-10"
+lasttested: "2019-06-10"
 ---
 
 {:shortdesc: .shortdesc}
@@ -167,7 +168,7 @@ To copy data from your local machine to your persistent storage, you must mount 
 
 1. To copy date, first, you would need to create a configuration that looks like something like this:
 
-   ```bash
+   ```
    kind: Pod
    apiVersion: v1
    metadata:
@@ -190,13 +191,13 @@ To copy data from your local machine to your persistent storage, you must mount 
    {: codeblock}
 
 2. Then, to copy data from your local machine to the pod you would use a command like this:
-   ```
+   ```sh
     kubectl cp <local_filepath>/<filename> <namespace>/<pod>:<pod_filepath>
    ```
    {: pre}
 
 3. Copy data from a pod in your cluster to your local machine:
-   ```
+   ```sh
    kubectl cp <namespace>/<pod>:<pod_filepath>/<filename> <local_filepath>/<filename>
    ```
    {: pre}
@@ -220,7 +221,7 @@ Here are some of the key principles required:
 
 - **Codebase** - All source code and configuration files are tracked inside a version control system (for example a GIT repository), this is required if using DevOps pipeline for deployment.
 - **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
-- **Config** - All configuration information is stored in environment variables. No service credentials are hardcoded within the app code. To store credentials, you can use Kubernetes secrets. More on credentials covered below.
+- **Config** - All configuration information is stored in environment variables. No service credentials are hard-coded within the app code. To store credentials, you can use Kubernetes secrets. More on credentials covered below.
 
 ### Store credentials in Kubernetes secrets
 {: secrets}
@@ -229,18 +230,18 @@ It's never good practice to store credentials within the app code. Instead, Kube
 
 One way of using secrets in Kubernetes in by doing something like this:
 
-1. Create a file and store the service credentials inside it.
+1. Create a file called `watson-secrets.txt` and store the service credentials inside it.
    ```
    {
-       "url": "https://gateway-a.watsonplatform.net/visual-recognition/api",
-       "api_key": <api_key>
+       "url": "https://gateway.watsonplatform.net/visual-recognition/api",
+       "api_key": <API_Key>
    }
    ```
    {: codeblock}
 
 2. Then, create a Kubernetes secret by running a command below and verify that the secret is created by using `kubectl get secrets` after running the command below:
 
-   ```
+   ```sh
    kubectl create secret generic watson-visual-secret --from-file=watson-secrets.txt=./watson-secrets.txt
    ```
    {: pre}
@@ -287,7 +288,7 @@ To containerize an app and store it in {{site.data.keyword.registrylong_notm}}:
    {: codeblock}
 
 2. Once a Dockerfile is created, next you would need to build the container image and push it to {{site.data.keyword.registrylong_notm}}. You can build a container using a command like:
-   ```
+   ```sh
    ibmcloud cr build -t <image_name> <directory_of_Dockerfile>
    ```
    {: pre}
@@ -308,7 +309,7 @@ To create Kubernetes deployment.yaml files, you would need to do something like 
 
 3. Next, you can use below commands to create and view the deployment and services created:
 
-   ```
+   ```sh
    kubectl create -f <filepath/deployment.yaml>
    kubectl get deployments
    kubectl get services
