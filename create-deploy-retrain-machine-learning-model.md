@@ -67,8 +67,9 @@ You can create a project to add data and open a data asset in the data refiner f
 
 **Create a project:**
 
-1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-2. Create a **project** > Click **Create Project** on **Standard** tile. Add a name say `iris_project` and optional description for the project.
+1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service.
+1. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
+2. Create a **project** > Click **Create Project** on **Standard** tile. Set the name to **iris_project**.
 3. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 4. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 5. Click **Create**. Your new project opens and you can start adding resources to it.
@@ -85,18 +86,23 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
 3. Once added, you should see `iris_initial.csv` under the **Data assets** section of the project. Click on the name to see the contents of the data set.
 
-## Associate services
+## Associate the {{site.data.keyword.pm_short}} service
 {:#associate_services}
-1. Under **Settings**, scroll to **Associated services** > click  **Add service** > choose **Watson**.
-1. Click **Add** on **Machine Learning** tile > choose **Lite** plan > click **Create**.
-1. Leave the default values and click **Confirm** to provision a Machine Learning service.
+
+1. Click **Settings** on the top navigation bar > Associated Services.
+3. Click **Add Service** again and choose **Watson**.
+1. Click **Add** on **{{site.data.keyword.pm_short}}** tile.
+1. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
+   1. Choose the **Lite** plan and click **Create**.
+   4. Leave the default values and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
 
 ## Build a machine learning model
 
 {:#build_model}
 
-1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, add **iris_model** as name and an optional description.
-2. Under **Machine Learning Service** section, you should see the Machine Learning service you associated in the above step.
+1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, set the name to **iris_model**.
+2. Under **Machine Learning Service** section, select the {{site.data.keyword.pm_short}} service instance you associated in the above step.
+   ![](images/solution22-build-machine-learning-model/machine_learning_model_creation.png)
 3. Select **Model builder** as your model type and Under **Select runtime** section, Choose the **Default Spark scala** runtime.
 4. Select **Manual** to manually create a model. Click **Create**.
 
