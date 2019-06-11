@@ -106,21 +106,17 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 5. On the next page, select `iris_initial.csv` as your data set and click **Next**.
 6. On the **Select a technique** page, based on the data set added, Label columns and feature columns are pre-populated. Select **species (String)** as your **Label Col** and **petal_length (Decimal)** and **petal_width (Decimal)** as your **Feature columns**.
 7. Choose **Multiclass Classification** as your suggested technique.
-   ![](images/solution22-build-machine-learning-model/model_technique.png)
 8. For **Validation Split** configure the following setting:
 
    **Train:** 50%,
    **Test** 25%,
    **Holdout:** 25%
-
 9. Click on **Add Estimators** and select **Decision Tree Classifier**, then **Add**.
 
    You can evaluate multiple estimators in one go. For example, you can add **Decision Tree Classifier** and **Random Forest Classifier** as estimators to train your model and choose the best fit based on the evaluation output.
    {:tip}
 
 10. Click **Next** to train the model. Once you see the status as **Trained & Evaluated**, click **Save**.
-   ![](images/solution22-build-machine-learning-model/trained_model.png)
-
 11. Click on **Overview** to check the details of the model.
 
 ## Deploy the model and try out the API
@@ -128,9 +124,9 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {:#deploy_model}
 
 1. Under the created model, click on **Deployments** > **Add Deployment**.
-2. Choose **Web Service**. Add a name say `iris_deployment` and an optional description.
-3. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **DEPLOY_SUCCESS**, you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
-4. Click on **View API Specification** to see and test {{site.data.keyword.pm_short}} API endpoints.
+1. Choose **Web Service**. Add a name say `iris_deployment` and an optional description.
+1. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **DEPLOY_SUCCESS**, you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
+1. Click on **View API Specification** to see and test {{site.data.keyword.pm_short}} API endpoints.
 
    To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
    {:tip}
@@ -149,7 +145,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
      ```
    * Click on **Try it out** to see the JSON output.
 
-6. Using the API endpoints, you can now call this model from any application.
+1. Using the API endpoints, you can now call this model from any application.
 
 ## Test your model
 
@@ -169,7 +165,6 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 3. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
 4. Select **DASHXXXX**, e.g., DASH1234 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
 5. Datatypes are automatically detected. Click **Next** and then **Begin Load**.
-   ![](images/solution22-build-machine-learning-model/define_table.png)
 6. A new target **DASHXXXX.IRIS_FEEDBACK** is created.
 
    You will be using this in the next step where you will be re-training the model for better performance and precision.
@@ -196,10 +191,8 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
      - To prohibit automatic deployment, select **never**.
      - To start automatic deployment regardless of performance, select **always**.
    * Click **Save**.
-     ![](images/solution22-build-machine-learning-model/configure_performance_monitoring.png)
 4. Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, click **Add feedback data**, select the downloaded csv file, and click **Open**.
 5. Click **New evaluation** to begin.
-     ![](images/solution22-build-machine-learning-model/retraining_model.png)
 6. Once the evaluation completes. You can check the **Last Evalution Result** section for the improved **WeightedPrecision** value.
 
 ## Remove resources
