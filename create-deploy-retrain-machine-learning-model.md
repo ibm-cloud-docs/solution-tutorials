@@ -47,7 +47,6 @@ In the terminology of machine learning, classification is considered an instance
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience)
-* [{{site.data.keyword.sparkl}}](https://{DomainName}/catalog/services/apache-spark)
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
 * [{{site.data.keyword.pm_full}}](https://{DomainName}/catalog/services/machine-learning)
 * [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
@@ -84,16 +83,13 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution22-build-machine-learning-model/data_icon.png).
 2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
-      ![](images/solution22-build-machine-learning-model/find_and_add_data.png)
 3. Once added, you should see `iris_initial.csv` under the **Data assets** section of the project. Click on the name to see the contents of the data set.
 
 ## Associate services
 {:#associate_services}
-1. Under **Settings**, scroll to **Associated services** > click  **Add service** > choose  **Spark**.
-   ![](images/solution22-build-machine-learning-model/associate_services.png)
-2. Select **Lite** plan and click **Create**. Use the default values and click **Confirm**.
-3. Click **Add Service** again and choose **Watson**. Click **Add** on **Machine Learning** tile > choose **Lite** plan > click **Create**.
-4. Leave the default values and click **Confirm** to provision a Machine Learning service.
+1. Under **Settings**, scroll to **Associated services** > click  **Add service** > choose **Watson**.
+1. Click **Add** on **Machine Learning** tile > choose **Lite** plan > click **Create**.
+1. Leave the default values and click **Confirm** to provision a Machine Learning service.
 
 ## Build a machine learning model
 
@@ -101,7 +97,6 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, add **iris_model** as name and an optional description.
 2. Under **Machine Learning Service** section, you should see the Machine Learning service you associated in the above step.
-   ![](images/solution22-build-machine-learning-model/machine_learning_model_creation.png)
 3. Select **Model builder** as your model type and Under **Select runtime** section, Choose the **Default Spark scala** runtime.
 4. Select **Manual** to manually create a model. Click **Create**.
 
@@ -136,11 +131,10 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 2. Choose **Web Service**. Add a name say `iris_deployment` and an optional description.
 3. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **DEPLOY_SUCCESS**, you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
 4. Click on **View API Specification** to see and test {{site.data.keyword.pm_short}} API endpoints.
-   ![](images/solution22-build-machine-learning-model/machine_learning_api.png)
 
    To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
    {:tip}
-5. To make an online prediction, use the `POST /online` API call.
+1. To make an online prediction, use the `POST /online` API call.
    * `instance_id` can be found on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/).
    * `deployment_id` and `published_model_id` are under **Overview** of your deployment.
    *  For `online_prediction_input`, use the below JSON
@@ -163,7 +157,6 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Under **Test**, you should see input data (Feature data) being populated automatically.
 2. Click **Predict** and you should see the **Predicted value for species** in a chart.
-   ![](images/solution22-build-machine-learning-model/model_predict_test.png)
 3. For JSON input and output, click on the icons next to the active input and output.
 4. You can change the input data and continue testing your model.
 
@@ -172,9 +165,9 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {:#create_feedback_connection}
 
 1. For continuous learning and model evaluation, you need to store new data somewhere. Create a  [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection.
-2. On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open**. On the top navigation, select **Load**.
+2. On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open Console**. Click **Load** under Load activity section.
 3. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
-4. Select **DASHXXXX**, e.g., DASH1234 as your **Schema** and then click on **New Table**. Name it `IRIS_FEEDBACK` and click **Next**.
+4. Select **DASHXXXX**, e.g., DASH1234 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
 5. Datatypes are automatically detected. Click **Next** and then **Begin Load**.
    ![](images/solution22-build-machine-learning-model/define_table.png)
 6. A new target **DASHXXXX.IRIS_FEEDBACK** is created.
@@ -185,16 +178,14 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#retrain_model}
 
-1. Return to your [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) and under the {{site.data.keyword.DSX_short}} service you have been using, click on **Projects** > iris_project >  **iris-model** (under assets) > Evaluation.
+1. Return to your [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) and under the {{site.data.keyword.DSX_short}} service you have been using, click on [Projects](https://dataplatform.cloud.ibm.com/projects) > iris_project >  **iris-model** (under assets) > Evaluation.
 2. Under **Performance Monitoring**, Click on **Configure Performance Monitoring**.
 3. On the configure Performance Monitoring page,
-   * Select the Spark service. Prediction type should be populated automatically.
+   * Select Default Spark Scala environment. Prediction type should be populated automatically.
    * Choose **weightedPrecision** as your metric and set `0.98` as the optional threshold.
    * Click on **Create new connection** to point to the IBM Db2 Warehouse on cloud which you created in the above section.
    * Select the Db2 warehouse connection and once the connection details are populated, click **Create**.
-     ![](images/solution22-build-machine-learning-model/new_db2_connection.png)
    * Click on **Select feedback data reference** and point to the IRIS_FEEDBACK table and click **Select**.
-     ![](images/solution22-build-machine-learning-model/select_source.png)
    * In the **Record count required for re-evaluation** box, type the minimum number of new records to trigger retraining. Use **10** or leave blank to use the default value of 1000.
    * In the **Auto retrain** box, select one of the following options:
      - To start automatic retraining whenever model performance is below the threshold that you set, select **when model performance is below threshold**. For this tutorial, you will choose this option as our precision is below the threshold (.98).
