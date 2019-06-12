@@ -172,6 +172,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </a>
 </div>
 
+
 ## Websites and Web Apps
 {: #websites }
 <div class = "solutionBoxContainer">
@@ -449,6 +450,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </a>
 </div>
 
+
 ## Chatbots
 {: #chatbots }
 <div class = "solutionBoxContainer">
@@ -487,6 +489,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     </a>
 </div>
+
 
 ## Security
 {: #security }
@@ -561,6 +564,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </a>
 </div>
 
+
 ## Mobile
 {: #mobile }
 <div class = "solutionBoxContainer">
@@ -633,6 +637,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     </a>
 </div>
+
 
 ## Machine Learning and Analytics
 {: #ml }
@@ -724,6 +729,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </a>
 </div>
 
+
 ## Internet of Things
 {: #iot }
 <div class = "solutionBoxContainer">
@@ -745,6 +751,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     </a>
 </div>
+
 
 ## Identity and Access Management
 {: #iam }
@@ -785,10 +792,10 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </a>
 </div>
 
+<div><a name="Network">&nbsp;</a></div>
 ## Virtual Private Cloud
 {: #VPC }
 <div class = "solutionBoxContainer">
-<a name="Network">&nbsp;</a>
     <a href = "/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
@@ -858,6 +865,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </div>
     </a>
 </div>
+
 
 ## Classic Infrastructure
 {: #classic }
