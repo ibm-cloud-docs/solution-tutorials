@@ -102,7 +102,6 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, set the name to **iris_model**.
 2. Under **Machine Learning Service** section, select the {{site.data.keyword.pm_short}} service instance you associated in the above step.
-   ![](images/solution22-build-machine-learning-model/machine_learning_model_creation.png)
 3. Select **Model builder** as your model type and Under **Select runtime** section, Choose the **Default Spark scala** runtime.
 4. Select **Manual** to manually create a model. Click **Create**.
 
