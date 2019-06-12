@@ -794,7 +794,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Virtual Private Cloud
 {: #VPC }
-<a name="Network" />
+
+<a name="Network">&nbsp;</a>
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend">
     <div class = "solutionBox">
