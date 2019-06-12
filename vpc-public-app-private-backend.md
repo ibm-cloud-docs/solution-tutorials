@@ -117,9 +117,13 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the backend subnet under **Subnets**.
 2. Click **Attached resources**, then **New instance**.
-3. Set the **name** to **vpc-pubpriv-backend-vsi**. Then, select the VPC you created earlier and the **Location** as before.
-4. Choose the **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
-5. For **SSH keys** pick the SSH key you created earlier.
+1. To configure the instance:
+   1. Set the **name** to **vpc-pubpriv-backend-vsi**.
+   1. Select the VPC you created earlier
+   1. Select the same **Location** as before.
+   1. Click **All profiles** and under **Compute**, choose **cc1-2x4** with 2vCPUs and 4 GB RAM.
+   1. Set **SSH keys** to the the SSH key you created earlier.
+   1. Set the **image** to **Ubuntu Linux**. You can pick any version.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    * Select **vpc-pubpriv-backend-subnet** as the subnet.
    * Uncheck the default security group and check **vpc-pubpriv-backend-sg** as active.
@@ -156,9 +160,13 @@ To create a virtual server instance in the newly created subnet:
 
 1. Click on the frontend subnet under **Subnets**.
 2. Click **Attached resources**, then **New instance**.
-3. Enter a unique name, **vpc-pubpriv-frontend-vsi**, select the VPC your created earlier, then the same **Location** as before.
-4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
-5. For **SSH keys** pick the SSH key you created earlier.
+1. To configure the instance:
+   1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
+   1. Select the VPC you created earlier
+   1. Select the same **Location** as before.
+   1. Click **All profiles** and under **Compute**, choose **cc1-2x4** with 2vCPUs and 4 GB RAM.
+   1. Set **SSH keys** to the the SSH key you created earlier.
+   1. Set the **image** to **Ubuntu Linux**. You can pick any version.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    * Select **vpc-pubpriv-frontend-subnet** as the subnet.
    * Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg**.
