@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-11"
+lastupdated: "2019-06-12"
 lasttested: "2019-06-11"
 ---
 
