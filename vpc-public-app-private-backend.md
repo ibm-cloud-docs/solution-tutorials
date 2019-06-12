@@ -123,7 +123,7 @@ To create a virtual server instance in the newly created subnet:
    1. Select the same **Location** as before.
    1. Click **All profiles** and under **Compute**, choose **cc1-2x4** with 2vCPUs and 4 GB RAM.
    1. Set **SSH keys** to the the SSH key you created earlier.
-   1. Set the **image** to **Ubuntu Linux**. You can pick any version.
+   1. Set the **image** to **Ubuntu Linux**.  You can pick any version of the image.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    * Select **vpc-pubpriv-backend-subnet** as the subnet.
    * Uncheck the default security group and check **vpc-pubpriv-backend-sg** as active.
@@ -166,7 +166,7 @@ To create a virtual server instance in the newly created subnet:
    1. Select the same **Location** as before.
    1. Click **All profiles** and under **Compute**, choose **cc1-2x4** with 2vCPUs and 4 GB RAM.
    1. Set **SSH keys** to the the SSH key you created earlier.
-   1. Set the **image** to **Ubuntu Linux**. You can pick any version.
+   1. Set the **image** to **Ubuntu Linux**.  You can pick any version of the image.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    * Select **vpc-pubpriv-frontend-subnet** as the subnet.
    * Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg**.
@@ -225,13 +225,12 @@ With all servers in place, in this section you will set up the connectivity to a
       <tr>
          <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
          <td>TCP</td>
-         <td>Port of the backend server, see tip</td>
+         <td>Replace with the port used by your backend</td>
       </tr>
    </tbody>
    </table>
 
-Here are ports for typical backend services. MySQL is using port 3306, PostgreSQL port 5432. Db2 is accessed on port 50000 or 50001. Microsoft SQL Server by default uses port 1433. One of many [lists with common port is found on Wikipedia](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers).
-{:tip }
+The port of the backend depends on the software you are installing on the virtual server. As example, the default port on which a MySQL database server listens is 3306, 5432 for a PostgreSQL database server. Db2 is typically using port 50000 or 50001. Microsoft SQL Server by default uses port 1433.
 
 ### Configure the backend security group
 Similar to the frontend, configure the security group for the backend.
