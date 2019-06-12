@@ -198,7 +198,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
    * Click **Save**.
 4. Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, click **Add feedback data**, select the downloaded csv file, and click **Open**.
 5. Click **New evaluation** to begin.
-6. Once the evaluation completes. You can check the **Last Evalution Result** section for the improved **WeightedPrecision** value.
+6. Once the evaluation completes. You can check the **Last Evaluation Result** section for the improved **WeightedPrecision** value.
 
 ## Remove resources
 {:removeresources}

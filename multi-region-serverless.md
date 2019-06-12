@@ -19,18 +19,18 @@ lastupdated: "2019-05-29"
 # Deploy serverless apps across multiple regions
 {: #multi-region-serverless}
 
-This tutorial shows how to configure IBM Cloud Internet Services and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple regions.
+This tutorial shows how to configure {{site.data.keyword.cis_full_notm}} and {{site.data.keyword.openwhisk_short}} to deploy serverless apps across multiple regions.
 
 Serverless computing platforms give developers a rapid way to build APIs without servers. {{site.data.keyword.openwhisk}} supports automatic generation of REST API for actions, turning actions into HTTP endpoints, and the ability to enable secure API authentication. This capability is helpful not only for exposing APIs to external consumers but also for building microservices applications.
 
-{{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with IBM Cloud Internet Services (CIS), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end.
+{{site.data.keyword.openwhisk_short}} is available in multiple {{site.data.keyword.cloud_notm}} locations. To increase resiliency and reduce network latency, applications can deploy their back-end in multiple locations. Then, with {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}), developers can expose a single entry point in charge of distributing traffic to the closest healthy back-end.
 
 ## Objectives
 {: #objectives}
 
 * Deploy {{site.data.keyword.openwhisk_short}} actions.
 * Expose actions via {{site.data.keyword.APIM}} with a custom domain.
-* Distribute traffic across multiple locations with Cloud Internet Services.
+* Distribute traffic across multiple locations with {{site.data.keyword.cis_full_notm}}.
 
 ## Services used
 {: #services}
@@ -38,7 +38,7 @@ Serverless computing platforms give developers a rapid way to build APIs without
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk/)
 * [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts)
-* IBM Cloud [Internet Services](https://{DomainName}/catalog/services/internet-svcs)
+* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-svcs)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -52,22 +52,22 @@ The tutorial considers a public web application with a back-end implemented with
   ![Architecture](images/solution44-multi-region-serverless/Architecture.png)
 </p>
 
-1. Users access the application. The request goes through Internet Services.
-2. Internet Services redirect the users to the closest healthy API back-end.
+1. Users access the application. The request goes through {{site.data.keyword.cis_full_notm}}.
+2. {{site.data.keyword.cis_full_notm}} redirect the users to the closest healthy API back-end.
 3. {{site.data.keyword.cloudcerts_short}} provides the SSL certificate to the API. The traffic is encrypted end-to-end.
 4. The API is implemented with {{site.data.keyword.openwhisk_short}}.
 
 ## Before you begin
 {: #prereqs}
 
-1. Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers. If you do not own a domain, you can buy one from a registrar.
+1. {{site.data.keyword.cis_full_notm}} requires you to own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers. If you do not own a domain, you can buy one from a registrar.
 1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
 
 ## Configure a custom domain
 
-The first step is to create an instance of IBM Cloud Internet Services (CIS) and to point your custom domain to CIS name servers.
+The first step is to create an instance of {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) and to point your custom domain {{site.data.keyword.cis_short_notm}} name servers.
 
-1. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 1. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
 1. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
 1. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
@@ -80,7 +80,7 @@ The first step is to create an instance of IBM Cloud Internet Services (CIS) and
 
 Exposing {{site.data.keyword.openwhisk_short}} actions through a custom domain will require a secure HTTPS connection. You should obtain a SSL certificate for the domain and subdomain you plan to use with the serverless back-end. Assuming a domain like *mydomain.com*, the actions could be hosted at *api.mydomain.com*. The certificate will need to be issued for *api.mydomain.com*.
 
-You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of Cloud Internet Services to prove you are the owner of the domain.
+You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of {{site.data.keyword.cis_full_notm}} to prove you are the owner of the domain.
 {:tip}
 
 Once you have obtained the SSL certificate and private key for your domain make sure to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
@@ -174,21 +174,21 @@ The next step involves creating a managed API to expose your actions.
 
 ### Configure the custom domain for the managed API
 
-Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain, the domain which will later be configured in IBM Cloud Internet Services.
+Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain, the domain which will later be configured in {{site.data.keyword.cis_full_notm}}.
 
 1. Go to [APIs / Custom domains](https://{DomainName}/apis/domains).
 1. In the **Region** selector, select the target location.
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
 1. Check **Apply custom domain**
-   1. Set **Domain name** to the domain you will use with the CIS Global Load Balancer such as *api.mydomain.com*.
+   1. Set **Domain name** to the domain you will use with the {{site.data.keyword.cis_short_notm}} Global Load Balancer such as *api.mydomain.com*.
    1. Select the {{site.data.keyword.cloudcerts_short}} instance holding the certificate.
    1. Select the certificate for the domain.
-1. Go to the dashboard of your instance of **Cloud Internet Services**, under **Reliability / DNS**, create a new **DNS TXT record**:
+1. Go to the dashboard of your instance of **{{site.data.keyword.cis_full_notm}}**, under **Reliability / DNS**, create a new **DNS TXT record**:
    1. Set **Name** to your custom subdomain, such as **api**.
    1. Set **Content** to the **Default domain / alias**
    1. Save the record
-1. Save the custom domain settings. Internet Services will check for the existence of the DNS TXT record.
+1. Save the custom domain settings. {{site.data.keyword.cis_full_notm}} will check for the existence of the DNS TXT record.
 
    If the TXT record is not found, you may need to wait for it to propagate and retry saving the settings. The DNS TXT record can be removed once the settings have been applied.
    {: tip}
@@ -206,9 +206,9 @@ Repeat the previous sections to configure more locations.
 
 ### Create a health check
 
-Internet Services will be regularly calling this endpoint to check the health of the back-end.
+{{site.data.keyword.cis_full_notm}} will be regularly calling this endpoint to check the health of the back-end.
 
-1. Go to the dashboard of your IBM Cloud Internet Services instance.
+1. Go to the dashboard of your {{site.data.keyword.cis_full_notm}} instance.
 1. Under **Reliability / Global Load Balancers**, create a health check:
    1. Set **Monitor type** to **HTTPS**.
    1. Set **Path** to **/api/healthz**.
@@ -251,7 +251,7 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 ## Remove resources
 {: #removeresources}
 
-### Remove CIS resources
+### Remove {{site.data.keyword.cis_short_notm}} resources
 
 1. Remove the GLB.
 1. Remove the origin pools.
@@ -265,5 +265,5 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 ## Related content
 {: #related}
 
-* IBM Cloud [Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
-* [Resilient and secure multi-region Kubernetes clusters with Cloud Internet Services](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis)
+* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
+* [Resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis)

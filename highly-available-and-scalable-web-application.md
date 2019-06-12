@@ -23,7 +23,7 @@ This tutorial walks you through a scenario with the creation of:
 - Cloud Load Balancer, to load balance traffic between two servers within a location.
 - One MySQL database server.
 - A durable file storage to store application files and backups.
-- Configure the second location with the same configurations as the first location, then add Cloud Internet Services to point traffic to the healthy location if one copy fails.
+- Configure the second location with the same configurations as the first location, then add {{site.data.keyword.cis_full_notm}} to point traffic to the healthy location if one copy fails.
 
 ## Objectives
 {: #objectives}
@@ -40,7 +40,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.loadbalancer_short}}](https://{DomainName}/catalog/infrastructure/load-balancer-group)
 * [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
-* [Internet Services](https://{DomainName}/catalog/services/internet-services)
+* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -621,8 +621,8 @@ With a second location deployment, the architecture will look like this.
   ![Architecture diagram](images/solution14/Architecture2.png)
 </p>
 
-1. Users access the application through IBM Cloud Internet Services (CIS).
-2. CIS routes traffic to a healthy location.
+1. Users access the application through {{site.data.keyword.cis_short}}.
+2. {{site.data.keyword.cis_short_notm}} routes traffic to a healthy location.
 3. Within a location a load balancer redirects traffic to a server.
 4. The application accesses the database.
 5. The application stores and retrieves media assets from a file storage.
@@ -631,7 +631,7 @@ To implement this architecture, you would need to do the following in location t
 
 - Repeat all of the above previous steps in the new location.
 - Setup a database replication between the two MySQL servers across locations.
-- Configure IBM Cloud Internet Services to distribute traffic between the locations to healthy servers as described in [this other tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis).
+- Configure {{site.data.keyword.cis_full_notm}} to distribute traffic between the locations to healthy servers as described in [this other tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis).
 
 ## Remove resources
 {: #removeresources}
@@ -639,7 +639,7 @@ To implement this architecture, you would need to do the following in location t
 1. Delete the Load Balancer
 2. Cancel *db1*, *app1* and *app2*
 3. Delete the two File Storage services
-4. If a second location is configured, then delete all the resources and the Cloud Internet Services.
+4. If a second location is configured, then delete all the resources and the {{site.data.keyword.cis_full_notm}} instance.
 
 ## Related content
 {: #related}
