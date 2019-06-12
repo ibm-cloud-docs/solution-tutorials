@@ -3,6 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2019-03-07"
+lasttested: "2019-04-23"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -108,7 +109,7 @@ There are three changes from this tutorial:
    mkdir /mnt/www
    ```
 
-At the end of this step the load balancer should be in a healthy state and the Wordpress site accessible on the internet. The virtual servers making up the web application are protected from external access via the internet by the VRA firewall and the only access is via the load balancer. For a production environment DDoS protection and Web Application Firewall (WAF) should also be consider as provided by [{{site.data.keyword.Bluemix_notm}} Internet Services](https://{DomainName}/catalog/services/internet-services).
+At the end of this step the load balancer should be in a healthy state and the Wordpress site accessible on the internet. The virtual servers making up the web application are protected from external access via the internet by the VRA firewall and the only access is via the load balancer. For a production environment DDoS protection and Web Application Firewall (WAF) should also be consider as provided by [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services).
 
 
 ## Remove resources
@@ -127,7 +128,7 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 
 ## Expand the tutorial 
 
-1. In this tutorial only two virtual servers are initially provisioned as the app tier, more servers could be added automatically to handle additional load. [Auto Scale]( https://{DomainName}/docs/infrastructure/SLautoscale?topic=slautoscale-getting-started-with-auto-scaling#create-an-autoscale-group) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
+1. In this tutorial only two virtual servers are initially provisioned as the app tier, more servers could be added automatically to handle additional load. [Auto Scale]( https://{DomainName}/docs/vsi?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
 
 2. Separately protect user data by adding a second private VLAN and IP subnet to the VRA to create a DATA zone for hosting the MySQL database server. Configure firewall rules to only allow only MySQL IP traffic on port 3306 inbound from the APP zone to the DATA zone. 
 

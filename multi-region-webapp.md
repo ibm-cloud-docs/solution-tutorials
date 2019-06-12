@@ -33,7 +33,7 @@ Apps or parts of your apps will have outages - it is a fact. It can be a problem
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs) Cloud Foundry App
 * [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) for DevOps
-* [Internet services](https://{DomainName}/catalog/services/internet-services)
+* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -113,16 +113,15 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 5. Change **IBM Cloud region** to **London - https://api.eu-gb.bluemix.net**. Create a **space** if you don't have one.
 7. Click **Save** and run the new stage by clicking the **Play button**.
 
-## Register a custom domain with IBM Cloud Internet Services
-
+## Register a custom domain with {{site.data.keyword.cis_full_notm}}
 {: #domain_cis}
 
-IBM [Cloud Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.  
+[{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.  
 
-When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided domain (_mybluemix.net_). In this step, after you have a custom domain, you can use the DNS servers provided by IBM Cloud Internet Services.
+When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided domain (_mybluemix.net_). In this step, after you have a custom domain, you can use the DNS servers provided by {{site.data.keyword.cis_full_notm}}.
 
 1. Buy a domain from a registrar.
-2. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+2. Navigate to [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Enter a service name, and click **Create** to create an instance of the service.
 3. When the service instance is provisioned, set your domain name and click **Add domain**.
 4. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
@@ -134,11 +133,11 @@ When deploying a real world application, you will likely want to use your own do
 
 {: #add_glb}
 
-In this section, you will use the Global Load Balancer (GLB) in IBM Cloud Internet Services to manage the traffic across multiple locations. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
+In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyword.cis_full_notm}} to manage the traffic across multiple locations. The GLB utilizes a origin pool which allows for the traffic to be distributed to multiple origins.
 
 ### Before creating a GLB, create a health check for the GLB.
 
-1. In the Cloud Internet Services application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
+1. In the {{site.data.keyword.cis_full_notm}} application, navigate to **Reliability** > **Global Load Balancer**, and at the bottom of the page, click **Create health check**.
 2. Enter the path that you want to monitor, for example, `/`, and select a type (HTTP or HTTPS). Typically you can create a dedicated health endpoint. Click **Provision 1 Resource**.
    ![Health Check](images/solution1/health_check.png)
 
@@ -227,7 +226,7 @@ It is possible that you do not want to utilize a Global Load Balancer in front o
 
 With the Cloud Intenet Services application, take the following steps to set up `CNAME` records for your application:
 
-1. In the Cloud Internet Services application, navigate to **Reliability** > **DNS**.
+1. In the {{site.data.keyword.cis_full_notm}} application, navigate to **Reliability** > **DNS**.
 2. Select **CNAME** from the **Type** drop-down list, type an alias for your application in the Name field, and the application URL in the domain name field. Th application `<your_app>.mybluemix.net` in Dallas can be mapped to a CNAME `<your_app>`.
 3. Click **Add Record**. Switch the PROXY toggle to ON to enhance security of your application.
 4. Similarly, set the `CNAME` record for the London endpoint.
@@ -278,12 +277,10 @@ Availability Monitoring runs synthetic tests from locations around the world, ar
 * Delete the two Cloud Foundry applications deployed in the two locations
 * Delete the GLB, origin pools, and the health check
 * Delete the DNS configuration
-* Delete the Internet Services instance
+* Delete the {{site.data.keyword.cis_full_notm}} instance
 
 ## Related content
 
-[Adding a Cloudant Database](https://{DomainName}/docs/services/Cloudant/tutorials?topic=cloudant-creating-an-ibm-cloudant-instance-on-ibm-cloud#creating-an-ibm-cloudant-instance-on-ibm-cloud)
-
-[Auto-Scaling for Cloud Foundry applications](https://{DomainName}/docs/services/Auto-Scaling?topic=services/Auto-Scaling-get-started#get-started)
-
-[Cloud Internet Services](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
+* [Adding a Cloudant Database](https://{DomainName}/docs/services/Cloudant/tutorials?topic=cloudant-creating-an-ibm-cloudant-instance-on-ibm-cloud#creating-an-ibm-cloudant-instance-on-ibm-cloud)
+* [Auto-Scaling for Cloud Foundry applications](https://{DomainName}/docs/services/Auto-Scaling?topic=services/Auto-Scaling-get-started#get-started)
+* [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)

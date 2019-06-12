@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-11"
+lastupdated: "2019-06-12"
 lasttested: "2019-06-11"
 ---
 
@@ -102,7 +102,6 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Click **Add to project** and select **Watson Machine Learning model**. In the dialog, set the name to **iris_model**.
 2. Under **Machine Learning Service** section, select the {{site.data.keyword.pm_short}} service instance you associated in the above step.
-   ![](images/solution22-build-machine-learning-model/machine_learning_model_creation.png)
 3. Select **Model builder** as your model type and Under **Select runtime** section, Choose the **Default Spark scala** runtime.
 4. Select **Manual** to manually create a model. Click **Create**.
 
@@ -199,7 +198,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
    * Click **Save**.
 4. Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, click **Add feedback data**, select the downloaded csv file, and click **Open**.
 5. Click **New evaluation** to begin.
-6. Once the evaluation completes. You can check the **Last Evalution Result** section for the improved **WeightedPrecision** value.
+6. Once the evaluation completes. You can check the **Last Evaluation Result** section for the improved **WeightedPrecision** value.
 
 ## Remove resources
 {:removeresources}

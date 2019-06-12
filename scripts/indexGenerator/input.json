@@ -3,8 +3,7 @@
         "Cloud Foundry",
         "Cloud Functions",
         "Kubernetes",
-        "Virtual Private Cloud",
-        "Classic Infrastructure"
+        "Infrastructure"
     ],
     "categories": [
     {
@@ -46,7 +45,7 @@
                     "Kubernetes",
                     "Cloud Foundry",
                     "Cloud Functions",
-                    "Classic Infrastructure",
+                    "Infrastructure",
                     "Bare Metal", 
                     "Databases",
                     "File Storage", 
@@ -99,7 +98,7 @@
                 "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
                 "imgSrc": "images/solution4/Architecture.png",
                 "tags": [
-                    "Classic Infrastructure",
+                    "Infrastructure",
                     "PHP",
                     "WordPress",
                     "Vulnerability Scanner"
@@ -112,7 +111,7 @@
                 "imgSrc": "images/solution10/architecture-2.png",
                 "tags": [
                     "Terraform",
-                    "Classic Infrastructure",
+                    "Infrastructure",
                     "PHP",
                     "Object Storage"
                 ]
@@ -135,7 +134,7 @@
                 "description": "Create a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.",
                 "imgSrc": "images/solution14/Architecture.png",
                 "tags": [
-                    "Classic Infrastructure",
+                    "Infrastructure",
                     "Load Balancer",
                     "PHP",
                     "File Storage"
@@ -468,8 +467,11 @@
         ]
     },
     {
-        "name": "Network",
-        "anchor": "Network",
+        "name": "Virtual Private Cloud",
+        "anchor": "VPC",
+        "anchors": [
+            "Network"
+        ],
         "solutions": [
             {
                 "name": "Private and public subnets in a Virtual Private Cloud",
@@ -479,8 +481,7 @@
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",
-                    "Network",
-                    "Virtual Private Cloud"
+                    "Network"
                 ]
             },
             {
@@ -491,8 +492,7 @@
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",
-                    "Network",
-                    "Virtual Private Cloud"
+                    "Network"
                 ]
             },
             {
@@ -503,8 +503,7 @@
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",
-                    "Network",
-                    "Virtual Private Cloud"
+                    "Network"
                 ]
             },
             {
@@ -516,8 +515,7 @@
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",
-                    "Network",
-                    "Virtual Private Cloud"
+                    "Network"
                 ]
             },
             {
@@ -528,10 +526,15 @@
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",
-                    "Network",
-                    "Virtual Private Cloud"
+                    "Network"
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "name": "Classic Infrastructure",
+        "anchor": "classic",
+        "solutions": [
             {
                 "name": "Isolate workloads with a secure private network",
                 "url": "secure-network-enclosure.html",
@@ -541,8 +544,7 @@
                     "Infrastructure",
                     "Vyatta",
                     "Firewall",
-                    "Network",
-                    "Classic Infrastructure"
+                    "Network"
                 ]
             },
             {
@@ -554,8 +556,7 @@
                     "Infrastructure",
                     "Vyatta",
                     "Firewall",
-                    "Network",
-                    "Classic Infrastructure"
+                    "Network"
                 ]
             },
             {
@@ -579,8 +580,7 @@
                     "Infrastructure",
                     "Vyatta",
                     "Firewall",
-                    "Network",
-                    "Classic Infrastructure"
+                    "Network"
                 ]
             },
             {
@@ -593,7 +593,6 @@
                     "Vyatta",
                     "Firewall",
                     "Network",
-                    "Classic Infrastructure",
                     "VLAN Spanning"
                 ]
             },
@@ -607,7 +606,6 @@
                     "Firewall",
                     "Load Balancer",
                     "Network",
-                    "Classic Infrastructure",
                     "Virtual Router Appliance VPN"
                 ]
             }
