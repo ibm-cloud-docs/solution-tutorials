@@ -163,9 +163,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 {{#unless hidden}}
 ## {{name}}
 {{#if anchor}}{: #{{anchor}} }{{/if}}
-{{#if anchors}}{{#each anchors as |anchor|}}
+<div class = "solutionBoxContainer">{{#if anchors}}{{#each anchors as |anchor|}}
 <a name="{{anchor}}">&nbsp;</a>{{/each}}{{/if}}
-<div class = "solutionBoxContainer">
     {{#each solutions as |solution|}}
     {{#unless hidden}}
     {{#if description}}

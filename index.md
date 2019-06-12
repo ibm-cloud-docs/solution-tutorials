@@ -174,7 +174,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Websites and Web Apps
 {: #websites }
-
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-scalable-webapp-kubernetes#scalable-webapp-kubernetes">
     <div class = "solutionBox">
@@ -452,7 +451,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Chatbots
 {: #chatbots }
-
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-slack-chatbot-database-watson#slack-chatbot-database-watson">
     <div class = "solutionBox">
@@ -492,7 +490,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Security
 {: #security }
-
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp">
     <div class = "solutionBox">
@@ -566,7 +563,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Mobile
 {: #mobile }
-
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-ios-mobile-push-analytics#ios-mobile-push-analytics">
     <div class = "solutionBox">
@@ -640,7 +636,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Machine Learning and Analytics
 {: #ml }
-
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics">
     <div class = "solutionBox">
@@ -731,7 +726,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Internet of Things
 {: #iot }
-
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-gather-visualize-analyze-iot-data#gather-visualize-analyze-iot-data">
     <div class = "solutionBox">
@@ -754,7 +748,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Identity and Access Management
 {: #iam }
-
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications">
     <div class = "solutionBox">
@@ -794,9 +787,8 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Virtual Private Cloud
 {: #VPC }
-
-<a name="Network">&nbsp;</a>
 <div class = "solutionBoxContainer">
+<a name="Network">&nbsp;</a>
     <a href = "/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
@@ -869,7 +861,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Classic Infrastructure
 {: #classic }
-
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure">
     <div class = "solutionBox">
