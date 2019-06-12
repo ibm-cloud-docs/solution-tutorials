@@ -87,7 +87,7 @@ Start by creating the first action:
 
 1. Switch to [**Functions**](https://{DomainName}/openwhisk).
 2. On the left pane, click on **Actions** and then **Create**.
-3. **Create Action** with name `prepare-entry-for-save` and select **Node.js** as the Runtime (Note: Pick the lastest version).
+3. **Create Action** with name `prepare-entry-for-save` under Default Package and select **Node.js** as the Runtime (Note: Pick the latest version).
 4. Replace the existing code with the code snippet below:
    ```js
    /**
@@ -113,8 +113,8 @@ Start by creating the first action:
 
 Then add the action to a sequence:
 
-1. Click on **Enclosing Sequences** and then **Add To Sequence**.
-1. For the sequence name, enter `save-guestbook-entry-sequence` and then click **Create and Add**.
+1. On the left pane, click on **Enclosing Sequences** and then **Add To Sequence**.
+1. For the sequence name, enter `save-guestbook-entry-sequence` > Leave the Default Package and then click **Create and Add**.
 
 Finally add a second action to the sequence:
 
@@ -142,7 +142,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    * List all documents from the database.
    * Format the documents and returning them.
 
-1. Under **Functions**, click on **Actions** and then **Create** a new Node.js action and name it `set-read-input`.
+1. Under [**Functions**](https://{DomainName}/openwhisk), click on **Actions** and then **Create** a new Node.js action under Default Package and name it `set-read-input`.
 2. Replace the existing code with the code snippet below. This action passes the appropriate parameters to the next action.
    ```js
    function main(params) {
@@ -194,10 +194,10 @@ Complete the sequence:
 
 ![](images/solution8/Cloud_Functions_API.png)
 
-1. Go to Actions https://{DomainName}/openwhisk/actions.
+1. Go to [Actions](https://{DomainName}/openwhisk/actions).
 2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
-4. Go to APIs https://{DomainName}/openwhisk/apimanagement and **Create a {{site.data.keyword.openwhisk_short}} API**
+4. Go to [APIs](https://{DomainName}/openwhisk/apimanagement) and **Create a {{site.data.keyword.openwhisk_short}} API**
 5. Set name to `guestbook` and base path to `/guestbook`
 6. Click on **Create operation** and create an operation to retrieve guestbook entries:
    1. Set **path** to `/entries`
