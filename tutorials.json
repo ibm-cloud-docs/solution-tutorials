@@ -3,8 +3,7 @@
     "Cloud Foundry",
     "Cloud Functions",
     "Kubernetes",
-    "Virtual Private Cloud",
-    "Classic Infrastructure"
+    "Infrastructure"
   ],
   "categories": [
     {
@@ -37,7 +36,7 @@
             "MySQL",
             "Java"
           ],
-          "lastUpdated": "2019-05-20"
+          "lastUpdated": "2019-06-10"
         },
         {
           "name": "Strategies for resilient applications",
@@ -48,13 +47,13 @@
             "Kubernetes",
             "Cloud Foundry",
             "Cloud Functions",
-            "Classic Infrastructure",
+            "Infrastructure",
             "Bare Metal",
             "Databases",
             "File Storage",
             "Watson"
           ],
-          "lastUpdated": "2019-03-11"
+          "lastUpdated": "2019-05-28"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -105,7 +104,7 @@
           "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
           "imgSrc": "images/solution4/Architecture.png",
           "tags": [
-            "Classic Infrastructure",
+            "Infrastructure",
             "PHP",
             "WordPress",
             "Vulnerability Scanner"
@@ -119,7 +118,7 @@
           "imgSrc": "images/solution10/architecture-2.png",
           "tags": [
             "Terraform",
-            "Classic Infrastructure",
+            "Infrastructure",
             "PHP",
             "Object Storage"
           ],
@@ -144,7 +143,7 @@
           "description": "Create a load balancer, two application servers running on Ubuntu with NGINX and PHP installed, one MySQL database server, and durable file storage to store application files and backups.",
           "imgSrc": "images/solution14/Architecture.png",
           "tags": [
-            "Classic Infrastructure",
+            "Infrastructure",
             "Load Balancer",
             "PHP",
             "File Storage"
@@ -185,7 +184,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-12"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -197,7 +196,7 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-29"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -224,7 +223,7 @@
             "Kubernetes"
           ],
           "featuredPosition": 2,
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-04"
         }
       ]
     },
@@ -277,7 +276,7 @@
             "Continuous Delivery",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-29"
         },
         {
           "name": "Resilient and secure multi-region Kubernetes clusters",
@@ -289,7 +288,7 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-03"
         },
         {
           "name": "Create, secure and manage REST APIs",
@@ -336,7 +335,7 @@
             "Swift",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-03-08"
+          "lastUpdated": "2019-05-28"
         },
         {
           "name": "Android native mobile app with Push Notifications",
@@ -348,7 +347,7 @@
             "Java",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-28"
         },
         {
           "name": "Hybrid mobile application with Push Notifications",
@@ -359,7 +358,7 @@
             "Cordova",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-05-29"
         },
         {
           "name": "Mobile application with a serverless backend",
@@ -373,7 +372,7 @@
             "Watson Tone Analyzer",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-04"
         }
       ]
     },
@@ -431,7 +430,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-12"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -502,8 +501,11 @@
       ]
     },
     {
-      "name": "Network",
-      "anchor": "Network",
+      "name": "Virtual Private Cloud",
+      "anchor": "VPC",
+      "anchors": [
+        "Network"
+      ],
       "solutions": [
         {
           "name": "Private and public subnets in a Virtual Private Cloud",
@@ -513,10 +515,9 @@
           "tags": [
             "Infrastructure",
             "Virtual Private Cloud",
-            "Network",
-            "Virtual Private Cloud"
+            "Network"
           ],
-          "lastUpdated": "2019-04-02"
+          "lastUpdated": "2019-05-28"
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -526,10 +527,9 @@
           "tags": [
             "Infrastructure",
             "Virtual Private Cloud",
-            "Network",
-            "Virtual Private Cloud"
+            "Network"
           ],
-          "lastUpdated": "2019-04-02"
+          "lastUpdated": "2019-05-28"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -539,8 +539,7 @@
           "tags": [
             "Infrastructure",
             "Virtual Private Cloud",
-            "Network",
-            "Virtual Private Cloud"
+            "Network"
           ],
           "lastUpdated": "2019-05-07"
         },
@@ -552,11 +551,16 @@
           "tags": [
             "Infrastructure",
             "Virtual Private Cloud",
-            "Network",
-            "Virtual Private Cloud"
+            "Network"
           ],
-          "lastUpdated": "2019-04-02"
-        },
+          "lastUpdated": "2019-05-28"
+        }
+      ]
+    },
+    {
+      "name": "Classic Infrastructure",
+      "anchor": "classic",
+      "solutions": [
         {
           "name": "Isolate workloads with a secure private network",
           "url": "secure-network-enclosure.html",
@@ -566,8 +570,7 @@
             "Infrastructure",
             "Vyatta",
             "Firewall",
-            "Network",
-            "Classic Infrastructure"
+            "Network"
           ],
           "lastUpdated": "2019-05-23"
         },
@@ -580,8 +583,7 @@
             "Infrastructure",
             "Vyatta",
             "Firewall",
-            "Network",
-            "Classic Infrastructure"
+            "Network"
           ],
           "lastUpdated": "2019-03-07"
         },
@@ -607,8 +609,7 @@
             "Infrastructure",
             "Vyatta",
             "Firewall",
-            "Network",
-            "Classic Infrastructure"
+            "Network"
           ],
           "lastUpdated": "2019-03-07"
         },
@@ -622,7 +623,6 @@
             "Vyatta",
             "Firewall",
             "Network",
-            "Classic Infrastructure",
             "VLAN Spanning"
           ],
           "lastUpdated": "2019-03-07"
@@ -637,7 +637,6 @@
             "Firewall",
             "Load Balancer",
             "Network",
-            "Classic Infrastructure",
             "Virtual Router Appliance VPN"
           ],
           "lastUpdated": "2019-03-07"

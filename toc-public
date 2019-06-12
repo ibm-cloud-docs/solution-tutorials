@@ -63,11 +63,14 @@ Solution Tutorials
         cloud-usage.md
 
     {: .topicgroup}
-    Network
+    Virtual Private Cloud
         vpc-public-app-private-backend.md
         vpc-multi-region.md
         vpc-site2site-vpn.md
         vpc-secure-management-bastion-server.md
+
+    {: .topicgroup}
+    Classic Infrastructure
         secure-network-enclosure.md
         nat-config-private.md
         byoip.md
@@ -115,20 +118,18 @@ Solution Tutorials
         users-teams-applications.md
 
     {: .topicgroup}
-    Virtual Private Cloud
-        vpc-public-app-private-backend.md
-        vpc-multi-region.md
-        vpc-site2site-vpn.md
-        vpc-secure-management-bastion-server.md
-
-    {: .topicgroup}
-    Classic Infrastructure
+    Infrastructure
         strategies-for-resilient-applications.md
         lamp-stack.md
         infrastructure-as-code-terraform.md
         highly-available-and-scalable-web-application.md
+        vpc-public-app-private-backend.md
+        vpc-multi-region.md
+        vpc-site2site-vpn.md
+        vpc-secure-management-bastion-server.md
         secure-network-enclosure.md
         nat-config-private.md
+        byoip.md
         configuring-IPSEC-VPN.md
         vlan-spanning.md
         web-app-private-network.md

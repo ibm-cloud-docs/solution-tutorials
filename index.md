@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-05-24"
+lastupdated: "2019-06-12"
 ---
 
 {:shortdesc: .shortdesc}
@@ -792,9 +792,9 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     </a>
 </div>
 
-## Network
-{: #Network }
-
+## Virtual Private Cloud
+{: #VPC }
+<a id="Network" />
 <div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend">
     <div class = "solutionBox">
@@ -864,6 +864,12 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
+</div>
+
+## Classic Infrastructure
+{: #classic }
+
+<div class = "solutionBoxContainer">
     <a href = "/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
