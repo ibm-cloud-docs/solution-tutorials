@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-29"
+lastupdated: "2019-06-11"
+lasttested: "2019-06-11"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -69,8 +70,10 @@ The first step is to create an instance of IBM Cloud Internet Services (CIS) and
 
 1. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 1. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
-1. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
-1. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+1. When the service instance is provisioned, click on **Let's get Started**.
+1. Enter your domain name and click **Connect and continue**.
+1. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next Step**
+1. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 1. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
@@ -180,7 +183,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
 1. In the **Region** selector, select the target location.
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
-1. Check **Apply custom domain**
+1. Check **Assign custom domain**
    1. Set **Domain name** to the domain you will use with the CIS Global Load Balancer such as *api.mydomain.com*.
    1. Select the {{site.data.keyword.cloudcerts_short}} instance holding the certificate.
    1. Select the certificate for the domain.
