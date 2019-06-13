@@ -109,7 +109,7 @@ Start by creating the first action:
    }
    ```
    {: codeblock}
-1. **Save**
+1. Click **Save**.
 
 Then add the action to a sequence:
 
@@ -134,7 +134,6 @@ Finally add a second action to the sequence:
     ```
     {: codeblock}
 1. Click **Apply** and then click **Invoke**.
-    ![](images/solution8/Save_Entry_Invoke.png)
 
 ### Sequence of actions to retrieve entries
 
@@ -154,7 +153,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    }
    ```
    {: codeblock}
-1. **Save**
+1. Click **Save**.
 
 Add the action to a sequence:
 
@@ -185,15 +184,11 @@ Complete the sequence:
    }
    ```
    {: codeblock}
-1. **Save**
+1. Click on **Save**.
 1. Choose the sequence by clicking on **Actions** and then **read-guestbook-entries-sequence**.
 1. Click on **Save** and then **Invoke**. The output should look like the following:
-   ![](images/solution8/Read_Entries_Invoke.png)
 
 ## Create an API
-
-![](images/solution8/Cloud_Functions_API.png)
-
 1. Go to [Actions](https://{DomainName}/openwhisk/actions).
 2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
