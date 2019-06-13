@@ -22,7 +22,7 @@ lastupdated: "2019-05-28"
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
-For global load balancer, you will provision an IBM Cloud Internet Services (CIS) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
+For global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
 
 {:shortdesc}
 
@@ -41,7 +41,7 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
 - [{{site.data.keyword.vsi_is_full}}](https://{DomainName}/vpc/provision/vs)
 - [{{site.data.keyword.loadbalancer_full}}](https://{DomainName}/vpc/provision/loadBalancer)
-- IBM Cloud [Internet Services](https://{DomainName}/catalog/services/internet-services)
+- [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services)
 - [{{site.data.keyword.cloudcerts_long_notm}}](https://{DomainName}/catalog/services/cloudcerts)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -53,7 +53,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
 2. The admin creates a load balancer with a backend pool of servers of subnets in different zones of region 1 and a frontend listener. Repeats the same in region 2.
-3. The admin provisions cloud internet services service with an associated custom domain and creates a global load balancer pointing to the load balancers created in two different VPCs.
+3. The admin provisions a {{site.data.keyword.cis_full_notm}} instance with an associated custom domain and creates a global load balancer pointing to the load balancers created in two different VPCs.
 4. The admin enables HTTPS encryption by adding the domain SSL certificate to the Certificate manager service.
 5. The internet user makes an HTTP/HTTPS request and the global load balancer handles the request.
 6. The request is routed to the load balancers both global and local. The request is then fulfilled by the available server instance.
@@ -63,7 +63,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites).
-- Cloud Internet Services requires you to own a custom domain so you can configure the DNS for this domain to point to Cloud Internet Services name servers. If you do not own a domain, you can buy one from a registrar.
+- {{site.data.keyword.cis_full_notm}} requires you to own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers. If you do not own a domain, you can buy one from a registrar.
 
 ## Create VPCs, subnets and VSIs
 {: #create-infrastructure}
@@ -200,11 +200,11 @@ If you observe, the requests are not encrypted and supports only HTTP. You will 
 
 Before adding a HTTPS listener, you need to generate an SSL certificate, verify the authenticity of your custom domain, a place to hold the certificate and map it to the infrastructure service.
 
-### Provision a CIS service and configure custom domain.
+### Provision a {{site.data.keyword.cis_short_notm}} service and configure custom domain.
 
-In this section, you will create IBM Cloud Internet Services(CIS) service,  configure a custom domain by pointing it to CIS name servers and later configure a global load balancer.
+In this section, you will create {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service,  configure a custom domain by pointing it to {{site.data.keyword.cis_short_notm}} name servers and later configure a global load balancer.
 
-1. Navigate to the [Internet Services](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
+1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
 3. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
 4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
@@ -215,7 +215,7 @@ In this section, you will create IBM Cloud Internet Services(CIS) service,  conf
 
 You should obtain a SSL certificate for the domain and subdomain you plan to use with the global load balancer. Assuming a domain like mydomain.com, the global load balancer could be hosted at `lb.mydomain.com`. The certificate will need to be issued for lb.mydomain.com.
 
-You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of Cloud Internet Services to prove you are the owner of the domain.
+You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of {{site.data.keyword.cis_full_notm}} to prove you are the owner of the domain.
 {:tip}
 
 Once you have obtained the SSL certificate and private key for your domain make sure to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
@@ -270,7 +270,7 @@ Now, navigate to the [Load balancers](https://{DomainName}/vpc/network/loadBalan
 In this section, you will configure a global load balancer (GLB) distributing the incoming traffic to the local load balancers configured in different {{site.data.keyword.Bluemix_notm}} regions.
 
 ### Distribute traffic across regions with a global load balancer
-Open the CIS service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
+Open the {{site.data.keyword.cis_short_notm}} service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
 
 1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
 2. Enter **lb.YOUR-DOMAIN-NAME** as your hostname and TTL as 60 seconds.
@@ -297,7 +297,7 @@ By now, you should have seen that most of the time you are hitting the servers i
 1. Navigate to [virtual server instances](https://{DomainName}/vpc/compute/vs).
 2. Click **three dots(...)** next to the server(s) running in **zone 1** of **region 1** and click **Stop**.
 3. **REPEAT** the same for server(s) running in **zone 2** of **region 1**.
-4. Return to GLB under CIS service and wait until the health status changes to **Critical**.
+4. Return to GLB under {{site.data.keyword.cis_short_notm}} service and wait until the health status changes to **Critical**.
 5. Now, when you refresh your domain url, you should always be hitting the servers in **region 2**.
 
 Don't forget to **start** the servers in zone 1 and zone 2 of region 1
@@ -306,7 +306,7 @@ Don't forget to **start** the servers in zone 1 and zone 2 of region 1
 ## Remove resources
 {: #removeresources}
 
-- Remove the Global load balancer, origin pools and health checks under the CIS service
+- Remove the Global load balancer, origin pools and health checks under the {{site.data.keyword.cis_short_notm}} service
 - Remove the certificates in the certificate manager service.
 - Remove the load balancers, VSIs, subnets and VPCs.
 - Under [Resource list](https://{DomainName}/resources), delete the services used in this tutorial.
