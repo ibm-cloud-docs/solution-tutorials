@@ -76,6 +76,7 @@ In this section, you will create and configure a bastion host along with a secur
 1. Click **Create subnet** to provision it.
 
 ### Create and configure bastion security group
+{: #create-configure-security-group }
 
 Let's create a security group and configure inbound rules to your bastion VSI.
 
@@ -111,10 +112,12 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 
 
 ### Create a bastion instance
+{: #create-bastion-instance}
+
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
 1. Under **Subnets** on the left pane, select **vpc-secure-bastion-subnet**.
-2. Click on **Attached resources** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC. Select Ubuntu Linux as your image and **c-2x4** (2 vCPUs and 4 GB RAM) as your profile.
+2. Click on **Attached resources** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC. Select Ubuntu Linux as your image and **cc1-2x4** (2 vCPUs and 4 GB RAM) as your profile. You can pick any version of the image.
 3. Select a **Location** and make sure to later use the same location again.
 4. To create a new **SSH key**, click **New key**
    * Enter **vpc-ssh-key** as key name.
@@ -126,7 +129,7 @@ With the subnet and security group already in place, next, create the bastion vi
    * Uncheck the default security group and mark **vpc-secure-bastion-sg**.
    * Click **Save**.
 6. Click **Create virtual server instance**.
-7. Once the instance is powered on, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP.
+7. Once the instance is created, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP.
 
 ### Test your bastion
 
@@ -254,7 +257,7 @@ To create a virtual server instance in the newly created subnet:
 1. Click on the private subnet under **Subnets**.
 2. Click **Attached resources**, then **New instance**.
 3. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created earlier, then the same **Location** as before.
-4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM
+4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **cc1-2x4** with 2vCPUs and 4 GB RAM. You can pick any version of the image.
 5. For **SSH keys** pick the SSH key you created earlier for the bastion.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups   
    * Select **vpc-secure-private-subnet** as the subnet.  
