@@ -68,7 +68,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Create a Virtual Private Cloud
 {: #create-vpc}
 
-In order to secure the access to the frontend and backend servers and to not have to open any unwanted ports on these servers, you will deploy a bastion host. Bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a jump server allowing secure connection to instances provisioned in a private subnet.
+To tighten the security of your servers, it is recommended to only allow connections to the ports required by the applications deployed on the servers. In this tutorial, the application will be a web server, thus it will only need to allow inbound connections on port 80.
+
+To perform maintenance tasks on these servers such as installing software, performing operating system upgrades, you will go through a bastion host. A bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a jump server allowing secure connection to instances provisioned in the VPC.
+
+In this section, you will create the VPC and the bastion host.
 
 1. Navigate to the [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
 2. Under **New virtual private cloud** section:
@@ -81,12 +85,8 @@ In order to secure the access to the frontend and backend servers and to not hav
    * As a unique name enter **vpc-secure-bastion-subnet**.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-5. Select **Use VPC default** for your subnet access control list (ACL). You will configure the inbound and outbound rules /later.
-<!-- 1. Switch the **Public gateway** to **Attached**. -->
-6. Click **Create virtual private cloud** to provision the instance.
-
-<!-- If the VSIs attached to the private subnet need access to the Internet to load software, switch the public gateway to **Attached** because attaching a public gateway will allow all attached resources to communicate with the public internet. Once the VSIs have all software needed, return the public gateway to **Detached** so that the subnet cannot reach the public internet.
-{: important} -->
+5. Select **Use VPC default** for your subnet access control list (ACL).
+6. Click **Create virtual private cloud**.
 
 To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainName}/vpc/network/subnets) page and wait until the status changes to **Available**.
 
@@ -111,19 +111,19 @@ In this section, you will create a subnet, a security group and a virtual server
 
 To create a new subnet for the backend,
 
-1. Click **Subnets** under **Network** on the left pane > **New subnet**.
+1. Select [**Subnets**](https://{DomainName}/vpc/network/subnets) under **Network** and click **New subnet**.
    * Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+1. Select **VPC default** for your subnet access control list (ACL).
 1. Click **Create subnet** to provision it.
 
 ### Create a backend security group
 
-By default, a security group is created along with your VPC allowing all SSH (TCP port 22) and Ping (ICMP type 8) traffic to the attached instances.
+The backend security group will allow to control the inbound and outbound connections for the backend servers.
 
 To create a new security group for the backend:  
-1. Click **Security groups** under **Network**, then **New security group**.  
+1. Select [**Security groups**](https://{DomainName}/vpc/network/securityGroups) under **Network**, then click **New security group**.  
 2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.  
 3. Click **Create security group**.
 
@@ -133,7 +133,7 @@ You will later edit the security group to add the inbound and outbound rules.
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the backend subnet under **Subnets**.
+1. Click on the backend subnet under [**Subnets**](https://{DomainName}/vpc/network/subnets).
 2. Click **Attached resources**, then **New instance**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-backend-vsi**.
@@ -146,6 +146,7 @@ To create a virtual server instance in the newly created subnet:
       #!/bin/bash
       apt-get update
       apt-get install -y nginx
+      echo "I'm the backend server" > /var/www/html/index.html
       service nginx start
       ```
       { :pre }
@@ -166,7 +167,7 @@ Similar to the backend, you will create a frontend subnet with virtual server in
 
 To create a new subnet for the frontend,
 
-1. Click **Subnets** under **Network** on the left pane > **New subnet**.
+1. Select [**Subnets**](https://{DomainName}/vpc/network/subnets) under **Network** and click **New subnet**.
    * Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
@@ -185,11 +186,11 @@ To create a new security group for the frontend:
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the frontend subnet under **Subnets**.
+1. Click on the frontend subnet under [**Subnets**](https://{DomainName}/vpc/network/subnets).
 2. Click **Attached resources**, then **New instance**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
-   1. Select the VPC you created earlier
+   1. Select the VPC you created earlier.
    1. Select the same **Location** as before.
    1. Click **All profiles** and under **Compute**, choose **cc1-2x4** with 2vCPUs and 4 GB RAM.
    1. Set **SSH keys** to the the SSH key you created earlier.
@@ -198,6 +199,7 @@ To create a virtual server instance in the newly created subnet:
       #!/bin/bash
       apt-get update
       apt-get install -y nginx
+      echo "I'm the frontend server" > /var/www/html/index.html
       service nginx start
       ```
       { :pre }
@@ -213,14 +215,19 @@ To create a virtual server instance in the newly created subnet:
 ## Set up connectivity between frontend and backend
 {: #setup-connectivity-frontend-backend}
 
-With all servers in place, in this section you will set up the connectivity to allow regular operations between the frontend and backend servers.
+With all servers running, in this section you will set up the connectivity to allow regular operations between the frontend and backend servers.
 
 ### Configure the frontend security group
 
-At that stage, the frontend instance has its software installed but it can not yet be reached.
+The frontend instance has its software installed but it can not yet be reached.
 
-1. To confirm, the web server can not yet be accessed, open a web browser pointing to `http://<floating-ip-address-of-the-frontend-vsi>`. The connection should time out eventually.
-1. To enable inbound connection to the web server installed on the frontend instance, you need to open HTTP port where the web server is listening on.
+1. To confirm the web server can not yet be accessed, open a web browser pointing to `http://<floating-ip-address-of-the-frontend-vsi>` or use:
+   ```sh
+   curl -v -m 30 http://<floating-ip-address-of-the-frontend-vsi>
+   ```
+   {:pre}
+   The connection should time out eventually.
+1. To enable inbound connection to the web server installed on the frontend instance, you need to open the port where the web server is listening on.
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-pubpriv-frontend-sg**.
 2. First, add the following **inbound** rules using **Add rule**. They allow incoming HTTP requests and Ping (ICMP).
 
@@ -249,7 +256,7 @@ At that stage, the frontend instance has its software installed but it can not y
    </tbody>
    </table>
 
-3. Next, add these **outbound** rules.
+3. Next, add this **outbound** rule.
 
    <table>
    <thead>
@@ -280,7 +287,7 @@ The backend server is running the same web server software than the frontend ser
 1. In the [Virtual Server Instances list](https://{DomainName}/vpc/compute/vs), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances. 
 1. Use `ssh` to connect to the frontend virtual server:
    ```sh
-   ssh -J root@<floating-ip-address-of-the-bastion> root@<private-ip-address-of-the-frontend>
+   ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>
    ```
    {:pre}
 1. Call the backend web server:
@@ -317,15 +324,15 @@ To allow inbound connections to the backend server, you need to configure the as
 
 ### Confirm the connectivity
 
-1. Call the backend web server from the frontend server:
+1. Call the backend web server from the frontend server again:
    ```sh
    curl -v -m 30 http://<private-ip-address-of-the-backend-vsi>
    ```
-1. The request returns quickly and outputs the welcome message from the backend web server. This completes the configuration of the connectivity between the servers.
+1. The request returns quickly and outputs the message `I'm the backend server` from the backend web server. This completes the configuration of the connectivity between the servers.
 
 ### Complete the maintenance
 
-With the frontend and backend server software properly installed and working, the frontend server can be removed from the maintenance security group.
+With the frontend and backend server software properly installed and working, the servers can be removed from the maintenance security group.
 
 1. Navigate to **Security groups** in the **Network** section, then click on **vpc-secure-maintenance-sg**.
 1. Select **Attached interfaces**.
@@ -333,7 +340,9 @@ With the frontend and backend server software properly installed and working, th
 1. **Save** the configuration.
 1. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to confirm it is still working as expected.
 
-Once the servers are removed from the maintenance group, they can no longer be accessed with `ssh`. They will only allow application traffic to their web server.
+Once the servers are removed from the maintenance group, they can no longer be accessed with `ssh`. They will only allow  traffic to their web servers.
+
+In this tutorial, you deployed two tiers of an application, one frontend server visible from the public Internet and one backend server only accessible within the VPC by the frontend server. You configured security group rules to ensure traffic would be allowed only the specific ports required by the application.
 
 ## Remove resources
 {: #remove-resources}
