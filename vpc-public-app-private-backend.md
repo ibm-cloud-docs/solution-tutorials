@@ -149,7 +149,7 @@ To create a virtual server instance in the newly created subnet:
       echo "I'm the backend server" > /var/www/html/index.html
       service nginx start
       ```
-      { :pre }
+      {:pre}
       This will install a simple web server into the instance.
    1. Set the **image** to **Ubuntu Linux**.  You can pick any version of the image.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
@@ -202,7 +202,7 @@ To create a virtual server instance in the newly created subnet:
       echo "I'm the frontend server" > /var/www/html/index.html
       service nginx start
       ```
-      { :pre }
+      {:pre}
       This will install a simple web server into the instance.
    1. Set the **image** to **Ubuntu Linux**.  You can pick any version of the image.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
