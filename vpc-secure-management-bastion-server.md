@@ -76,6 +76,7 @@ In this section, you will create and configure a bastion host along with a secur
 1. Click **Create subnet** to provision it.
 
 ### Create and configure bastion security group
+{: #create-configure-security-group }
 
 Let's create a security group and configure inbound rules to your bastion VSI.
 
@@ -111,6 +112,8 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 
 
 ### Create a bastion instance
+{: #create-bastion-instance}
+
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
 1. Under **Subnets** on the left pane, select **vpc-secure-bastion-subnet**.
@@ -126,7 +129,7 @@ With the subnet and security group already in place, next, create the bastion vi
    * Uncheck the default security group and mark **vpc-secure-bastion-sg**.
    * Click **Save**.
 6. Click **Create virtual server instance**.
-7. Once the instance is powered on, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP.
+7. Once the instance is created, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP.
 
 ### Test your bastion
 
