@@ -18,8 +18,7 @@ lasttested: "2019-06-14"
 As Cloud adoption increases, IT and finance managers will need to understand Cloud usage in the context of innovation and cost control. Questions such as: "Which services are teams using?", "How much does it cost to operate a solution?" and "How can I contain sprawl?" can be answered by investigating available data. This tutorial previsouly introduced ways to explore such information and answer common usage-related questions. The content is now part of the regular functionality and documentation. 
 {:shortdesc}
 
-# Related links
-{:related}
+## Related links
 * [Documentation: Manage {{site.data.keyword.cloud_notm}}](https://{DomainName}/docs/home/manage).
 + [{{site.data.keyword.cloud_notm}} Billing and usage](https://cloud.ibm.com/billing/)
 * GitHub project [openwhisk-cloud-usage-sample](https://github.com/IBM-Cloud/openwhisk-cloud-usage-sample) providing sample implementation to extract and visualize usage data by combining {{site.data.keyword.cloud_notm}} services with Cloud Functions.
