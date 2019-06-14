@@ -101,7 +101,7 @@ Once the status of the subnets changes to **Available**,
 
 1. Click on **vpc-region1-zone1-subnet** and click **Attached resources**, then **New instance**.
 2. Enter a unique name and pick **vpc-region1-zone1-vsi**. Then, select the VPC your created earlier and the **Location** along with the **zone** as before.
-3. Choose any **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM.
+3. Choose any **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM. You can pick any version of the image.
 4. For **SSH keys** pick the SSH key you created initially.
 5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    * Check whether **vpc-region1-zone1-subnet** is selected as the subnet. If not, select.
