@@ -20,6 +20,6 @@ As Cloud adoption increases, IT and finance managers will need to understand Clo
 
 ## Related links
 * [Documentation: Manage {{site.data.keyword.cloud_notm}}](https://{DomainName}/docs/home/manage).
-+ [{{site.data.keyword.cloud_notm}} Billing and usage](https://cloud.ibm.com/billing/)
++ [{{site.data.keyword.cloud_notm}} Billing and usage](https://{DomainName}/billing/)
 * GitHub project [openwhisk-cloud-usage-sample](https://github.com/IBM-Cloud/openwhisk-cloud-usage-sample) providing sample implementation to extract and visualize usage data by combining {{site.data.keyword.cloud_notm}} services with Cloud Functions.
 
