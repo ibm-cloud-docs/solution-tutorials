@@ -101,7 +101,7 @@ Follow the steps described in [this section of the bastion tutorial](/docs/tutor
 
 ### Configure a security group with maintenance access rules
 
-Follow the steps described in [this section of the bastion tutorial](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#create-and-configure-bastion-security-group) to create the security group **vpc-secure-maintenance-sg**. This security group will be used when performing maintenance tasks on virtual server instances, such as installing software or updating the operating system.
+Follow the steps described in [this section of the bastion tutorial](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#maintenance-security-group) to create the security group **vpc-secure-maintenance-sg**. This security group will be used when performing maintenance tasks on virtual server instances, such as installing software or updating the operating system.
 
 ## Create a backend subnet, security group and VSI
 {: #backend-subnet-vsi}
