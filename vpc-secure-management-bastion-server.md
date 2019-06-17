@@ -205,7 +205,7 @@ With access to the bastion working, continue and create the security group for m
     <tbody>
       <tr>
          <td>TCP</td>
-         <td>Security Group</td>
+         <td>Security group</td>
          <td>vpc-secure-bastion-sg</td>
          <td>Ports 22-22</td>
       </tr>
@@ -226,7 +226,7 @@ With access to the bastion working, continue and create the security group for m
     <tbody>
       <tr>
          <td>TCP</td>
-         <td>Security Group</td>
+         <td>Security group</td>
          <td>vpc-secure-maintenance-sg</td>
          <td>Ports 22-22</td>
       </tr>
@@ -264,17 +264,20 @@ To create a new security group:
 ### Create a virtual server instance
 
 To create a virtual server instance in the newly created subnet:
+Click on **Attached resources** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC and resource group.
 
 1. Click on the private subnet under **Subnets**.
-2. Click **Attached resources**, then **New instance**.
-3. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created earlier, then the same **Location** as before.
-4. Select **Ubuntu Linux** image, click **All profiles** and, under **Compute**, choose **cc1-2x4** with 2vCPUs and 4 GB RAM. You can pick any version of the image.
-5. For **SSH keys** pick the SSH key you created earlier for the bastion.
-6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
+1. Click **Attached resources**, then **New instance**.
+1. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created and resource group as earlier.
+1. Select a **Location** and make sure to later use the same location again.
+1. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile. To check other available profiles, click **All profiles**
+1. For **SSH keys** pick the SSH key you created earlier for the bastion.
+1. Select **Ubuntu Linux** as your image. You can pick any version of the image.
+1. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    - Select **vpc-secure-private-subnet** as the subnet.
    - Uncheck the default security and group and activate **vpc-secure-private-sg**.
    - Click **Save**.
-7. Click **Create virtual server instance**.
+1. Click **Create virtual server instance**.
 
 ### Add virtual servers to the maintenance security group
 {: #add-vsi-to-maintenance}
