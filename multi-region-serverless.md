@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-29"
+lastupdated: "2019-06-17"
+lasttested: "2019-06-13"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -69,41 +70,19 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
 
 1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 1. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
-1. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
-1. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+1. When the service instance is provisioned, click on **Let's get Started**.
+1. Enter your domain name and click **Connect and continue**.
+1. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next Step**
+1. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 1. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {:tip}
 
-### Obtain a certificate for the custom domain
-
-Exposing {{site.data.keyword.openwhisk_short}} actions through a custom domain will require a secure HTTPS connection. You should obtain a SSL certificate for the domain and subdomain you plan to use with the serverless back-end. Assuming a domain like *mydomain.com*, the actions could be hosted at *api.mydomain.com*. The certificate will need to be issued for *api.mydomain.com*.
-
-You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of {{site.data.keyword.cis_full_notm}} to prove you are the owner of the domain.
-{:tip}
-
-Once you have obtained the SSL certificate and private key for your domain make sure to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
-
-1. To convert a Certificate to PEM format:
-   ```
-   openssl x509 -in domain-crt.txt -out domain-crt.pem -outform PEM
-   ```
-   {: pre}
-1. To convert a Private Key to PEM format:
-   ```
-   openssl rsa -in domain-key.txt -out domain-key.pem -outform PEM
-   ```
-   {: pre}
-
-### Import the certificate to a central repository
+### Request a certificate using {{site.data.keyword.cloudcerts_short}} and a custom sample code
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
-1. In the service dashboard, use **Import Certificate**:
-   * Set **Name** to the custom subdomain and domain, such as *api.mydomain.com*.
-   * Browse for the **Certificate file** in PEM format.
-   * Browse for the **Private key file** in PEM format.
-   * **Import**.
+1. Use the [code sample](https://github.com/ibm-cloud-security/certificate-manager-domain-validation-cloud-function-sample) and included instructions to request and import a certificate using {{site.data.keyword.openwhisk_short}} for a domain maintained by {{site.data.keyword.cis_full_notm}}. The code sample can be deployed using similar steps as provided below. 
 
 ## Deploy actions in multiple locations
 
@@ -180,7 +159,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
 1. In the **Region** selector, select the target location.
 1. Locate the custom domain linked to the organization and space where you created the actions and the managed API. Click **Change Settings** in the action menu.
 1. Make note of the **Default domain / alias** value.
-1. Check **Apply custom domain**
+1. Check **Assign custom domain**
    1. Set **Domain name** to the domain you will use with the {{site.data.keyword.cis_short_notm}} Global Load Balancer such as *api.mydomain.com*.
    1. Select the {{site.data.keyword.cloudcerts_short}} instance holding the certificate.
    1. Select the certificate for the domain.
@@ -212,7 +191,7 @@ Repeat the previous sections to configure more locations.
 1. Under **Reliability / Global Load Balancers**, create a health check:
    1. Set **Monitor type** to **HTTPS**.
    1. Set **Path** to **/api/healthz**.
-   1. **Provision the resource**.
+   1. Click on **Create**.
 
 ### Create origin pools
 
@@ -225,14 +204,14 @@ For every location:
 1. Set **Health Check Region** to a region close to the location where {{site.data.keyword.openwhisk_short}} are deployed.
 1. Set **Origin Name** to **app-&lt;location&gt;**.
 1. Set **Origin Address** to the default domain / alias for the managed API (such as _5d3ffd1eb6.us-south.apiconnect.appdomain.cloud_).
-1. **Provision the resource**.
+1. Click on **Create**.
 
 ### Create a global load balancer
 
 1. Create a load balancer.
 1. Set **Balancer hostname** to **api.mydomain.com**.
 1. Add the regional origin pools.
-1. **Provision the resource**.
+1. Click on **Create**.
 
 After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Earth`. This should reply with the function running in the first healthy pool.
 
@@ -256,6 +235,11 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 1. Remove the GLB.
 1. Remove the origin pools.
 1. Remove the health checks.
+1. Remove the {{site.data.keyword.cis_short_notm}} instance (optional)
+
+### Remove {{site.data.keyword.cloudcerts_short}} resources
+1. Remove the certificate from the {{site.data.keyword.cloudcerts_short}} instance
+1. Remove the {{site.data.keyword.cloudcerts_short}} instance (optional)
 
 ### Remove actions
 

@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-06-17"
+lasttested: "2019-06-17"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -71,19 +72,22 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 
 In this step, you'll configure kubectl to point to your newly created cluster going forward. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
 
-1. Use `ibmcloud login` to log in interactively. Provide the organization (org), location and space under which the cluster is created. You can reconfirm the details by running `ibmcloud target` command.
+1. Use `ibmcloud login` to log in interactively. Select the region where the cluster was created.
 2. When the cluster is ready, retrieve the cluster configuration:
    ```bash
    ibmcloud cs cluster-config <cluster-name>
    ```
    {: pre}
+
+   Make sure you are targeting the resource group where the cluster was created before running this command. You can view and set the current resource group with `ibmcloud target`.
+   {: tip}
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
   `echo $KUBECONFIG`
 4. Check that the `kubectl` command is correctly configured
    ```bash
    kubectl cluster-info
    ```
-  {: pre}
+   {: pre}
    ![](images/solution2/kubectl_cluster-info.png)
 
 ## Create a {{site.data.keyword.messagehub}} instance
@@ -92,13 +96,14 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 {{site.data.keyword.messagehub}} is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
 
  1. From the Dashboard, click on [**Create resource**](https://{DomainName}/catalog/) and select [**{{site.data.keyword.messagehub}}**](https://{DomainName}/catalog/services/event-streams) from the Application Services section.
- 2. Name the service `mymessagehub` and click **Create**.
+ 2. Name the service `myeventstreams` and click **Create**.
  3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
- ```
- ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service mymessagehub
- ```
+   ```sh
+   ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service myeventstreams --role Manager
+   ```
+   {:pre}
 
-The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-mymessagehub`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-integrations#integrations) for more info
+The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-myeventstreams`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-integrations#integrations) for more info
 
 {:tip}
 
@@ -114,11 +119,9 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 4. Set the bucket name to a unique name such as `username-mybucket`.
 5. Select **Cross Region** Resiliency and **us-geo** Location and click **Create**
 6. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
- ```sh
- ibmcloud resource service-alias-create myobjectstorage --instance-name myobjectstorage
- ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service myobjectstorage
- ```
-![](images/solution25/cos_bucket.png)
+   ```sh
+   ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service myobjectstorage
+   ```
 
 ## Deploy the UI application to the cluster
 
@@ -164,7 +167,7 @@ In this tutorial, you learned how you can use Kafka based {{site.data.keyword.me
 Navigate to [Resource List](https://{DomainName}/resources/) and
 1. delete Kubernetes cluster `mycluster`
 2. delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
-3. delete {{site.data.keyword.messagehub}} `mymessagehub`
+3. delete {{site.data.keyword.messagehub}} `myeventstreams`
 4. go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub-xxx` repositories.
 
 ## Related content

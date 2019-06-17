@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-06-14"
+lasttested: "2019-06-14"
 ---
 
 {:shortdesc: .shortdesc}
@@ -15,7 +16,7 @@ lastupdated: "2019-03-07"
 # Build a data lake using object storage
 {: #smart-data-lake}
 
-Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights using {{site.data.keyword.dynamdashbemb_notm}}.
+Definitions of the term data lake vary, but in the context of this tutorial, a data lake is an approach to storing data in its native format for organizational use. To that end, you will create a data lake for your organization using {{site.data.keyword.cos_short}}. By combining {{site.data.keyword.cos_short}} and SQL Query, data analysts can query data where it lies using SQL. You'll also leverage the SQL Query service in a Jupyter Notebook to conduct a simple analysis. When you're done, allow non-technical users to discover their own insights using {{site.data.keyword.dynamdashbemb_notm}}.
 
 ## Objectives
 
@@ -53,10 +54,10 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 
 In this section, you will create the services required to build your data lake.
 
-This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
+This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the [catalog](https://{DomainName}/catalog) using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started]https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
     ```sh
     ibmcloud login
     ```
@@ -125,27 +126,27 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD) CSV file. The file is 81MB and may take a few minutes to download.
 2. In your browser, access the **data-lake-cos** service instance from the [Resource List](https://{DomainName}/resources).
 3. Create a new bucket to store data.
-    - Click the **Create a bucket** button.
+    - Click **Create a bucket**.
     - Select **Regional** from the **Resiliency** drop down.
     - Select **us-south** from the **Location**. {{site.data.keyword.CHSTSshort}} is only available for buckets created in the `us-south` location at this time. Alternatively, choose another location and use the **Standard** transfer type in the next section.
-    - Provide a bucket **Name** and click **Create** If you receive an *AccessDenied* error, try with a more unique bucket name.
+    - Provide a bucket **Name** and click **Create**. If you receive an *AccessDenied* error, try with an unique bucket name.
 4. Upload the CSV file to {{site.data.keyword.cos_short}}.
-    - From your bucket, click the **Add objects** button.
-    - Select the **Aspera high-speed transfer** radio button.
-    - Click the **Add files** button. This will open the Aspera plugin, which will be in a separate window - possibly behind your browser window.
-    - Browse to and select the previously downloaded CSV file.
-
-![Bucket with CSV file](images/solution29/cos-bucket.png)
+    - From your bucket, click **Upload** > **Files**.
+    - Select the **Aspera high-speed transfer.Requires installation.** radio button.
+    - Click **Install Aspera connect** > Download Connect. This will download the Aspera plugin to your machine.
+    - Once the plugin is successfully installed. You may have to refresh the browser.
+    - Click **Select files** > Browse to and select the previously downloaded CSV file.
 
 ## Working with data
 
-In this section, you will convert the original, raw dataset into a targetted cohort based on time and age attributes. This is helpful to consumers of the data lake who have specific interests or would struggle with very large datasets.
+In this section, you will convert the original, raw dataset into a targeted cohort based on time and age attributes. This is helpful to consumers of the data lake who have specific interests or would struggle with very large datasets.
 
-You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familar SQL statements. SQL Query has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
+You will use SQL Query to manipulate the data where it resides in {{site.data.keyword.cos_short}} using familiar SQL statements. SQL Query has built-in support for CSV, JSON and Parquet - no additional computation services or extract-transform-load is necessary.
 
 1. Access the **data-lake-sql** SQL Query service instance from your [Resource List](https://{DomainName}/resources).
-2. Select **Open UI**.
+2. Click **Launch SQL Query UI** under **Manage**.
 3. Create a new dataset by executing SQL directly on the previously uploaded CSV file.
+    - Replace `<your-bucket-name` in the URL of the`FROM` clause with your bucket's name.
     - Enter the following SQL into the **Type SQL here ...** text area.
         ```
         SELECT
@@ -164,27 +165,24 @@ You will use SQL Query to manipulate the data where it resides in {{site.data.ke
         `Victim Age` <= 35
         ```
         {: codeblock}
-    - Replace the URL in the `FROM` clause with your bucket's name.
-4. The **Target** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result. Change the **Target** to `cos://us-south/<your-bucket-name>/results`.
-5. Click the **Run** button. The results will appear below.
-6. On the **Query Details** tab, click the **Launch** icon next after the **Result Location** URL to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
-
-![Notebook](images/solution29/sql-query.png)
+     - Click **Run**.
+1. The **Target location** will auto-create a {{site.data.keyword.cos_short}} bucket to hold the result.
+1. On the **Query details** tab, click on the URL under **Result Location** to view the intermediate dataset, which is now also stored on {{site.data.keyword.cos_short}}.
 
 ## Combine Jupyter Notebooks with SQL Query
 
-In this section, you will use the SQL Query client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} within a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be used with {{site.data.keyword.dynamdashbemb_notm}}.
+In this section, you will use the SQL Query client within a Jupyter Notebook. This re-uses the data stored on {{site.data.keyword.cos_short}} in a data analysis tool. The combination also creates datasets that are automatically stored in {{site.data.keyword.cos_short}} that can then be used with {{site.data.keyword.dynamdashbemb_notm}}.
 
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
     - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
-    - Click **Create a Project** tile followed by **Data Science**.
-    - Click **Create project** and then provide a **Project name**.
+    - Click **Create a Project** tile followed by **Data Science and AutoAI**.
+    - Click **Create project** > Select a region and then provide a **Project name**. Uncheck the checkboxes as there's no need to restrict and also data analysis.
     - Ensure **Storage** is set to **data-lake-cos**.
     - Click **Create**.
     - In the resulting project, click **Add to project** and **Notebook**.
     - From the **Blank** tab, enter a **Notebook name**.
-    - Leave the **Language** and **Runtime** defaults; click **Create notebook**.
-2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**.
+    - Leave the **Language** and **Runtime** to defaults > click **Create notebook**.
+2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
     !conda install pyarrow
     !conda install sqlparse
@@ -193,7 +191,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     from pixiedust.display import *
     ```
     {: codeblock}
-3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
+1. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
     - Add the following in the next `In [ ]:` prompt and then **Run**.
         ```python
         import getpass
@@ -208,7 +206,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     - Copy the **API Key** to the clipboard.
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
     - You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
-4. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
+1. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
     - In the next `In [ ]:` prompt, assign the CRN to a variable in your Notebook.
         ```python
         sql_crn = '<SQL_QUERY_CRN>'
@@ -220,12 +218,12 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
         ```
         {: pre}
     - Paste the CRN between the single quotes and then **Run**.
-5. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
+1. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
     ```python
     sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
     ```
     {: codeblock}
-6. Enter the following commands in another `In [ ]:` prompt and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
+1. Enter the following commands in another `In [ ]:` prompt and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
     ```python
     sqlClient = ibmcloudsql.SQLQuery(cloud_api_key, sql_crn, sql_cos_endpoint + '/accidents')
 
@@ -300,7 +298,7 @@ In this section, you will visualize the previous result set using PixieDust and 
     {: codeblock}
 3. Select the chart dropdown button; then select **Map**.
 4. Add `latitude` and `longitude` to **Keys**. Add `id` and `age` to **Values**. Click **OK** to view the map.
-5. Click the **Save** icon to save your Notebook to {{site.data.keyword.cos_short}}.
+5. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
 ![Notebook](images/solution29/notebook-mapbox.png)
 
@@ -348,7 +346,7 @@ Congratulations, you have built a data lake using {{site.data.keyword.cos_short}
 
 ## Remove resources
 
-Run the following commands to remove services, applications and keys used.
+Run the following commands to remove services, applications and keys you created and used.
 
 ```sh
 ibmcloud resource service-binding-delete dashboard-nodejs-dde dashboard-nodejs

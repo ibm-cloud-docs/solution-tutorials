@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-06-17"
+lasttested: "2019-06-17"
 ---
 
 {:shortdesc: .shortdesc}
@@ -131,12 +132,11 @@ Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keywo
 In this section, you will begin configuring a Streams flow that receives log messages. The {{site.data.keyword.streaminganalyticsshort}} service is powered by {{site.data.keyword.streamsshort}}, which can analyze millions of events per second, enabling sub-millisecond response times and instant decision-making.
 
 1. In your browser, access [Watson Data Platform](https://dataplatform.ibm.com).
-2. Select the **New project** button or tile, then the **Basic** tile and click **OK**.
+2. Select the **New project** button or tile, then the **Standard** tile.
     * Enter the **Name** `webserver-logs`.
     * The **Storage** option should be set to `log-analysis-cos`. If not, select the service instance.
     * Click the **Create** button.
-3. On the resulting page, select the **Settings** tab and check **Streams Designer** in **Tools**. Finish by clicking the **Save** button.
-4. Click the **Add to project** button then **Streams flow** from the top navigation bar.
+3. On the resulting page, click the **Add to project** button, then the **Streams flow** tile.
     * Click **Associate an IBM Streaming Analytics instance with a container-based plan**.
     * Create a new {{site.data.keyword.streaminganalyticsshort}} instance by selecting the **Lite** radio button and clicking **Create**. Do not select Lite VM.
     * Provide the **Service name** as `log-analysis-sa` and click **Confirm**.
@@ -156,7 +156,7 @@ In this section, you will begin configuring a Streams flow that receives log mes
 
 The `webserver-flow` is currently idle and awaiting messages. In this section, you will configure Kafka console tools to work with {{site.data.keyword.messagehub}}. Kafka console tools allow you to produce arbitrary messages from the terminal and send them to {{site.data.keyword.messagehub}}, which will trigger the `webserver-flow`.
 
-1. Download and unzip the [Kafka 0.10.2.X client](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz).
+1. Download and unzip the [Kafka 2.2.1 client or newer](https://www.apache.org/dyn/closer.cgi?path=/kafka/2.2.1/kafka_2.11-2.2.1.tgz) from the [Apache Kafka download page](http://kafka.apache.org/downloads).
 2. Change directory to `bin` and create a text file named `message-hub.config` with the following contents.
     ```sh
     sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="USER" password="PASSWORD";
@@ -253,7 +253,7 @@ To view conditional handling in your Streams flow, you will increase the message
 
 This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). See the npmjs page for troubleshooting instructions if the simulator installation fails. If problems persist, you can skip to the next section and manually upload the data.
 
-1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](http://ita.ee.lbl.gov/traces/NASA_access_log_Aug95.gz) log file from NASA.
+1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 19.7 MB gzip compressed](ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz) log file from NASA.
 2. Clone and install the log simulator from [IBM-Cloud on GitHub](https://github.com/IBM-Cloud/kafka-log-simulator).
     ```sh
     git clone https://github.com/IBM-Cloud/kafka-log-simulator.git
@@ -338,7 +338,7 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE `responseCode` == 500
     GROUP BY HOST
-    ORDER BY 2 DESC;
+    ORDER BY 2 DESC
     ```
     {: pre}
 
