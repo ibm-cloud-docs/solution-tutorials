@@ -176,13 +176,13 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
     - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
     - Click **Create a Project** tile followed by **Data Science and AutoAI**.
-    - Click **Create project** > Select a region and then provide a **Project name**.
+    - Click **Create project** > Select a region and then provide a **Project name**. Uncheck the checkboxes as there's no need to restrict and also data analysis.
     - Ensure **Storage** is set to **data-lake-cos**.
     - Click **Create**.
     - In the resulting project, click **Add to project** and **Notebook**.
     - From the **Blank** tab, enter a **Notebook name**.
-    - Leave the **Language** and **Runtime** defaults; click **Create notebook**.
-2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**.
+    - Leave the **Language** and **Runtime** to defaults > click **Create notebook**.
+2. From the Notebook, install and import PixieDust and ibmcloudsql by adding the following commands to the `In [ ]:` input prompt and then **Run**
     ```python
     !conda install pyarrow
     !conda install sqlparse
@@ -191,7 +191,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     from pixiedust.display import *
     ```
     {: codeblock}
-3. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
+1. Add a {{site.data.keyword.cos_short}} API key to the Notebook. This will allow SQL Query results to be stored in {{site.data.keyword.cos_short}}.
     - Add the following in the next `In [ ]:` prompt and then **Run**.
         ```python
         import getpass
@@ -206,7 +206,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
     - Copy the **API Key** to the clipboard.
     - Paste the API Key into the textbox in the Notebook and hit the `enter` key.
     - You should also store the API Key to a secure, permanent location; the Notebook does not store the API key.
-4. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
+1. Add the SQL Query instance's CRN (Cloud Resource Name) to the Notebook.
     - In the next `In [ ]:` prompt, assign the CRN to a variable in your Notebook.
         ```python
         sql_crn = '<SQL_QUERY_CRN>'
@@ -218,12 +218,12 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
         ```
         {: pre}
     - Paste the CRN between the single quotes and then **Run**.
-5. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
+1. Add another variable to the Notebook to specify the {{site.data.keyword.cos_short}} bucket and **Run**.
     ```python
     sql_cos_endpoint = 'cos://us-south/<your-bucket-name>'
     ```
     {: codeblock}
-6. Enter the following commands in another `In [ ]:` prompt and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
+1. Enter the following commands in another `In [ ]:` prompt and click **Run** to view the result set. You will also have new `accidents/jobid=<id>/<part>.csv*` file added to your bucket that includes the result of the `SELECT`.
     ```python
     sqlClient = ibmcloudsql.SQLQuery(cloud_api_key, sql_crn, sql_cos_endpoint + '/accidents')
 
@@ -298,7 +298,7 @@ In this section, you will visualize the previous result set using PixieDust and 
     {: codeblock}
 3. Select the chart dropdown button; then select **Map**.
 4. Add `latitude` and `longitude` to **Keys**. Add `id` and `age` to **Values**. Click **OK** to view the map.
-5. Click the **Save** icon to save your Notebook to {{site.data.keyword.cos_short}}.
+5. Click **File** > **Save** to save your Notebook to {{site.data.keyword.cos_short}}.
 
 ![Notebook](images/solution29/notebook-mapbox.png)
 
@@ -346,7 +346,7 @@ Congratulations, you have built a data lake using {{site.data.keyword.cos_short}
 
 ## Remove resources
 
-Run the following commands to remove services, applications and keys used.
+Run the following commands to remove services, applications and keys you created and used.
 
 ```sh
 ibmcloud resource service-binding-delete dashboard-nodejs-dde dashboard-nodejs
