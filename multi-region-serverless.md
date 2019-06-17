@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-13"
+lastupdated: "2019-06-17"
 lasttested: "2019-06-13"
 ---
 
@@ -79,36 +79,10 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {:tip}
 
-<!-- ### Obtain a certificate for the custom domain
-
-Exposing {{site.data.keyword.openwhisk_short}} actions through a custom domain will require a secure HTTPS connection. You should obtain a SSL certificate for the domain and subdomain you plan to use with the serverless back-end. Assuming a domain like *mydomain.com*, the actions could be hosted at *api.mydomain.com*. The certificate will need to be issued for *api.mydomain.com*.
-
-You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of {{site.data.keyword.cis_full_notm}} to prove you are the owner of the domain.
-{:tip}
-
-Once you have obtained the SSL certificate and private key for your domain make sure to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
-
-1. To convert a Certificate to PEM format:
-   ```
-   openssl x509 -in domain-crt.txt -out domain-crt.pem -outform PEM
-   ```
-   {: pre}
-1. To convert a Private Key to PEM format:
-   ```
-   openssl rsa -in domain-key.txt -out domain-key.pem -outform PEM
-   ```
-   {: pre} -->
-
 ### Request a certificate using {{site.data.keyword.cloudcerts_short}} and a custom sample code
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
-1. Leverage the [code sample](https://github.com/ibm-cloud-security/certificate-manager-domain-validation-cloud-function-sample) and instructions provided to request and import a certificate using {{site.data.keyword.openwhisk_short}} for a domain maintained by {{site.data.keyword.cis_full_notm}}. 
-
-<!-- 1. In the service dashboard, use **Import Certificate**:
-   * Set **Name** to the custom subdomain and domain, such as *api.mydomain.com*.
-   * Browse for the **Certificate file** in PEM format.
-   * Browse for the **Private key file** in PEM format.
-   * **Import**. -->
+1. Use the [code sample](https://github.com/ibm-cloud-security/certificate-manager-domain-validation-cloud-function-sample) and included instructions to request and import a certificate using {{site.data.keyword.openwhisk_short}} for a domain maintained by {{site.data.keyword.cis_full_notm}}. The code sample can be deployed using similar steps as provided below. 
 
 ## Deploy actions in multiple locations
 
