@@ -86,6 +86,7 @@ In this section, you will create the VPC and the bastion host.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 1. Select **Use VPC default** for your subnet access control list (ACL).
+1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access to all virtual server instances in the VPC. In this tutorial, the servers do not require such connectivity.
 1. Click **Create virtual private cloud**.
 
 To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainName}/vpc/network/subnets) page and wait until the status changes to **Available**.
