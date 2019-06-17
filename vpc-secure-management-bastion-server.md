@@ -120,19 +120,21 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 With the subnet and security group already in place, next, create the bastion virtual server instance.
 
 1. Under **Subnets** on the left pane, select **vpc-secure-bastion-subnet**.
-2. Click on **Attached resources** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC. Select Ubuntu Linux as your image and **cc1-2x4** (2 vCPUs and 4 GB RAM) as your profile. You can pick any version of the image.
-3. Select a **Location** and make sure to later use the same location again.
-4. To create a new **SSH key**, click **New key**
+1. Click on **Attached resources** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC and resource group.
+1. Select a **Location** and make sure to later use the same location again.
+1. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile.
+1. To create a new **SSH key**, click **New key**
    - Enter **vpc-ssh-key** as key name.
    - Leave the **Region** as is.
    - Copy the contents of your existing local SSH key and paste it under **Public key**.
    - Click **Add SSH key**.
-5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
+1. Select **Ubuntu Linux** as your image. You can pick any version of the image.
+1. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    - Make sure that **vpc-secure-bastion-subnet** is selected as the subnet.
    - Uncheck the default security group and mark **vpc-secure-bastion-sg**.
    - Click **Save**.
-6. Click **Create virtual server instance**.
-7. Once the instance is created, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP.
+1. Click **Create virtual server instance**.
+1. Once the instance is created, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP.
 
 ### Test your bastion
 
@@ -186,9 +188,8 @@ With access to the bastion working, continue and create the security group for m
      </tbody>
    </table>
 
-
-DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are on port 80 and 443.
-{:tip }
+ DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and UDP for name queries either regular (primary) or reverse. HTTP requests are on port 80 and 443.
+ {:tip }
 
 2. Next, add this **inbound** rule which allows SSH access from the bastion host.
 
@@ -232,7 +233,6 @@ DNS server requests are addressed on port 53. DNS uses TCP for Zone transfer and
     </tbody>
    </table>
 
-
 ## Use the bastion host to access other instances in the VPC
 {: #bastion-host-access-instances}
 
@@ -241,7 +241,6 @@ In this section, you will create a private subnet with virtual server instance a
 If you already have virtual server instances in your VPC that you want to connect to, you can skip the next three sections and start [adding your virtual server instances to the maintenance security group](#add-vsi-to-maintenance).
 
 ### Create a subnet
-
 {: #create-private-subnet}
 
 To create a new subnet,
@@ -278,7 +277,6 @@ To create a virtual server instance in the newly created subnet:
 7. Click **Create virtual server instance**.
 
 ### Add virtual servers to the maintenance security group
-
 {: #add-vsi-to-maintenance}
 
 For administrative work on the servers, you have to associate the specific virtual servers with the maintenance security group. In the following, you will enable maintenance, log into the private server, update the software package information, then disassociate the security group again.
