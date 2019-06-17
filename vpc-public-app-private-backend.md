@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-06-13"
-lasttested: "2019-05-28"
+lastupdated: "2019-06-17"
+lasttested: "2019-06-17"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -138,9 +138,9 @@ To create a virtual server instance in the newly created subnet:
 2. Click **Attached resources**, then **New instance**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-backend-vsi**.
-   1. Select the VPC you created earlier
+   1. Select the VPC you created and resource group as earlier.
    1. Select the same **Location** as before.
-   1. Click **All profiles** and under **Compute**, choose **cc1-2x4** with 2vCPUs and 4 GB RAM.
+   1. Select **Compute** with 2vCPUs and 4 GB RAM as your profile.To check other available profiles, click **All profiles**
    1. Set **SSH keys** to the the SSH key you created earlier.
    1. Set **User data** to
       ```sh
@@ -191,9 +191,9 @@ To create a virtual server instance in the newly created subnet:
 2. Click **Attached resources**, then **New instance**.
 1. To configure the instance:
    1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
-   1. Select the VPC you created earlier.
+   1. Select the VPC you created and resource group as earlier.
    1. Select the same **Location** as before.
-   1. Click **All profiles** and under **Compute**, choose **cc1-2x4** with 2vCPUs and 4 GB RAM.
+   1. Select **Compute** with 2vCPUs and 4 GB RAM as your profile. To check other available profiles, click **All profiles**
    1. Set **SSH keys** to the the SSH key you created earlier.
    1. Set **User data** to
       ```sh
@@ -235,23 +235,26 @@ The frontend instance has its software installed but it can not yet be reached.
 	<table>
    <thead>
       <tr>
-         <td><strong>Source</strong></td>
          <td><strong>Protocol</strong></td>
+         <td><strong>Source type</strong></td>
+         <td><strong>Source</strong></td>
          <td><strong>Value</strong></td>
          <td><strong>Description</strong></td>
       </tr>
    </thead>
    <tbody>
       <tr>
-         <td>Any - 0.0.0.0/0 </td>
          <td>TCP</td>
-         <td>From: <strong>80</strong> To <strong>80</strong></td>
+         <td>Any</td>
+         <td>0.0.0.0/0</td>
+         <td>Ports 22-22</td>
          <td>This rule allows connections from any IP address to the frontend web server.</td>
       </tr>
       <tr>
-         <td>Any - 0.0.0.0/0</td>
-	      <td>ICMP</td>
-	      <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
+         <td>ICMP</td>
+         <td>Any</td>
+         <td>0.0.0.0/0</td>
+         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
          <td>This rule allows the frontend server to be pinged by any host.</td>
       </tr>
    </tbody>
@@ -262,17 +265,19 @@ The frontend instance has its software installed but it can not yet be reached.
    <table>
    <thead>
       <tr>
-         <td><strong>Destination</strong></td>
          <td><strong>Protocol</strong></td>
+         <td><strong>Destination type</strong></td>
+         <td><strong>Destination</strong></td>
          <td><strong>Value</strong></td>
          <td><strong>Description</strong></td>
       </tr>
    </thead>
    <tbody>
       <tr>
-         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-backend-sg</strong></td>
          <td>TCP</td>
-         <td>From: <strong>80</strong> To <strong>80</strong></td>
+         <td>Any</td>
+         <td>0.0.0.0/0</td>
+         <td>Ports 80-80</td>
          <td>This rule allows the frontend server to communicate with the backend server.</td>
       </tr>
    </tbody>
@@ -307,17 +312,19 @@ To allow inbound connections to the backend server, you need to configure the as
    <table>
    <thead>
       <tr>
-         <td><strong>Source</strong></td>
          <td><strong>Protocol</strong></td>
+         <td><strong>Source type</strong></td>
+         <td><strong>Source</strong></td>
          <td><strong>Value</strong></td>
          <td><strong>Description</strong></td>
       </tr>
    </thead>
    <tbody>
       <tr>
-         <td>Type: <strong>Security Group</strong> - Name: <strong>vpc-pubpriv-frontend-sg</strong></td>
          <td>TCP</td>
-         <td>From: <strong>80</strong> To <strong>80</strong></td>
+         <td>Security group</td>
+         <td>vpc-pubpriv-frontend-sg</td>
+         <td>Ports 80-80</td>
          <td>This rule allows incoming connections on port 80 from the frontend server to the backend server.</td>
       </tr>
    </tbody>
