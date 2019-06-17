@@ -19,7 +19,6 @@ lasttested: "2019-06-17"
 {:important: .important}
 
 # Securely access remote instances with a bastion host
-
 {: #vpc-secure-management-bastion-server}
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
@@ -28,7 +27,6 @@ To reduce exposure of servers within the VPC you will create and use a bastion h
 {:shortdesc}
 
 ## Objectives
-
 {: #objectives}
 
 - Learn how to set up a bastion host and security groups with rules
