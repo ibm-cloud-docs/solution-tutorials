@@ -70,23 +70,23 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 To tighten the security of your servers, it is recommended to only allow connections to the ports required by the applications deployed on the servers. In this tutorial, the application will be a web server, thus it will only need to allow inbound connections on port 80.
 
-To perform maintenance tasks on these servers such as installing software, performing operating system upgrades, you will go through a bastion host. A bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a jump server allowing secure connection to instances provisioned in the VPC.
+To perform maintenance tasks on these servers such as installing software, performing operating system upgrades, you will go through a bastion host. A bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a jump server allowing a secure connection to instances provisioned in the VPC.
 
 In this section, you will create the VPC and the bastion host.
 
 1. Navigate to the [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
-2. Under **New virtual private cloud** section:
+1. Under **New virtual private cloud** section:
    * Enter **vpc-pubpriv** as name for your VPC.
    * Select a **Resource group**.
    * Optionally, add **Tags** to organize your resources.
-3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
+1. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
 1. Uncheck SSH and ping from the **Default security group**.
-4. Under **New subnet for VPC**:
+1. Under **New subnet for VPC**:
    * As a unique name enter **vpc-secure-bastion-subnet**.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-5. Select **Use VPC default** for your subnet access control list (ACL).
-6. Click **Create virtual private cloud**.
+1. Select **Use VPC default** for your subnet access control list (ACL).
+1. Click **Create virtual private cloud**.
 
 To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainName}/vpc/network/subnets) page and wait until the status changes to **Available**.
 
@@ -122,9 +122,9 @@ To create a new subnet for the backend,
 
 The backend security group will allow to control the inbound and outbound connections for the backend servers.
 
-To create a new security group for the backend:  
-1. Select [**Security groups**](https://{DomainName}/vpc/network/securityGroups) under **Network**, then click **New security group**.  
-2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.  
+To create a new security group for the backend:
+1. Select [**Security groups**](https://{DomainName}/vpc/network/securityGroups) under **Network**, then click **New security group**.
+2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.
 3. Click **Create security group**.
 
 You will later edit the security group to add the inbound and outbound rules.
@@ -284,7 +284,7 @@ The frontend instance has its software installed but it can not yet be reached.
 
 The backend server is running the same web server software than the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
 
-1. In the [Virtual Server Instances list](https://{DomainName}/vpc/compute/vs), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances. 
+1. In the [Virtual Server Instances list](https://{DomainName}/vpc/compute/vs), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
 1. Use `ssh` to connect to the frontend virtual server:
    ```sh
    ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>
