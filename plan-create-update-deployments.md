@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-09"
-lasttested: "2019-05-09"
+lastupdated: "2019-06-18"
+lasttested: "2019-06-18"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -81,6 +81,7 @@ As you start describing your infrastructure-as-code, it is critical to treat fil
    ```sh
    git clone https://github.com/IBM-Cloud/multiple-environments-as-code
    ```
+   {: codeblock}
 
 The repository is structured as follow:
 
@@ -119,6 +120,7 @@ Under the [terraform/global](https://github.com/IBM-Cloud/multiple-environments-
      billing_managers = "${var.org_billing_managers}"
    }
    ```
+   {: codeblock}
 
 In this resource, all properties are configured through variables. In the next sections, you will learn how to set these variables.
 
@@ -136,6 +138,7 @@ EOF
      filename = "../outputs/global.env"
    }
    ```
+   {: codeblock}
 
 ### Individual Environments
 
