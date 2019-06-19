@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-23"
-lasttested: "2019-05-23"
+lastupdated: "2019-06-19"
+lasttested: "2019-06-18"
 
 ---
 
@@ -178,6 +178,9 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 3. Make note of the credentials by clicking **View credentials**. You will need them in a later step.
 4. Under **Manage**, launch the Cloudant dashboard.
 5. Click **Create Database** to create a database named **secure-file-storage-metadata**.
+
+{{site.data.keyword.cloudant_short_notm}} instances on dedicated hardware allow private endpoints. Instances with dedicated service plans allow IP whitelisting. See [{{site.data.keyword.cloudant_short_notm}} Secure access control](https://{DomainName}/docs/services/Cloudant?topic=cloudant-security#secure-access-control) for details.
+{: tip}
 
 ### Authenticate users
 
