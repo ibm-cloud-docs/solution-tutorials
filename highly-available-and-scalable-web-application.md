@@ -215,7 +215,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
    - Set **Storage Type** to **Endurance**
    - Select the same **Location** as the one where you created the database server
    - Select a billing method
-   - Under **Storage Packages**, select **0.25 IOPS/GB**
+   - Under **Storage Packages**, select **2 IOPS/GB**
    - Under **Storage Size**, select **20GB**
    - Keep the **Snapshot Space Size** to **0GB**
    - Click continue to create the service.
@@ -582,7 +582,8 @@ On both application servers, start the web server and the PHP runtime:
    ```
    {:pre}
 
-Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the VPN connection) or the public IP address of *app1* or *app2*.
+Access the Wordpress installation at `http://YourAppServerIPAddress/` using either the private IP address (if you are going through the VPN connection) or the public IP address of *app1* or *app2*. Complete the Wordpress installation wizard.
+
 ![Configure virtual server](images/solution14/wordpress.png)
 
 If you configured the application servers with only a private network link, you will not be able to install Wordpress plugins, themes or upgrades directly from the Wordpress admin console. You will need to upload the files through the Wordpress user interface.
@@ -594,14 +595,12 @@ If you configured the application servers with only a private network link, you 
 At this point, we have two application servers with separate IP addresses. They might even not be visible on the public Internet if you choose to only provision Private Network Uplink. Adding a load balancer in front of these servers will make the application public. The load balancer will also hide the underlying infrastructure to the users. The Load Balancer will monitor the health of the application servers and dispatch incoming requests to healthly servers.
 
 1. Go to the catalog to create a [{{site.data.keyword.loadbalancer_short}}](https://{DomainName}/catalog/infrastructure/ibm-cloud-load-balancer)
-2. In the **Plan** step, select the same data center as *app1* and *app2*
-3. In **Network Settings**,
-   1. Select the same subnet as the one where *app1* and *app2* where provisioned
-   2. Use the default IBM system pool for the load balancer public IP.
-4. In **Basic**,
-   1. Name the load balancer, e.g. **app-lb-1**
-   2. Keep the default protocol configuration - by default the load balancer is configured for HTTP.
-      SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/infrastructure/ssl-certificates?topic=ssl-certificates-accessing-ssl-certificates#accessing-ssl-certificates)
+1. Set **Name** to **app-lb-1**.
+1. Select the same datacenter as *app1* and *app2* servers.
+1. Set **Type** to **Public**.
+1. Select the same subnet as the one where *app1* and *app2* where provisioned.
+1. Select the **IBM system pool** for **Public IPs**.
+1. Keep the default protocol configuration - by default the load balancer is configured for HTTP. SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/infrastructure/ssl-certificates?topic=ssl-certificates-accessing-ssl-certificates#accessing-ssl-certificates)
       {: tip}
 5. In **Server Instances**, add *app1* and *app2* servers
 6. Review and Create to complete the wizard.
@@ -636,7 +635,7 @@ The Load Balancer is configured to check the health of the servers and to redire
 
 3. Stop nginx on *app1*
    ```sh
-   systemctl nginx stop
+   systemctl stop nginx
    ```
    {:pre}
 
@@ -648,7 +647,7 @@ The Load Balancer is configured to check the health of the servers and to redire
 
 7. Restart nginx on *app1*
    ```sh
-   systemctl nginx start
+   systemctl start nginx
    ```
    {:pre}
 
@@ -690,5 +689,5 @@ To implement this architecture, you would need to do the following in location t
 {: #related}
 
 - Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](https://{DomainName}/docs/tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn) for a tutorial implementing a Content Delivery Network.
-- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/infrastructure/SLautoscale?topic=slautoscale-about-auto-scale#about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
+- In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/vsi?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
 - To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) of the content and [replication](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-replication#working-with-replication) to another data center.
