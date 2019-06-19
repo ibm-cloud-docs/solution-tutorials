@@ -153,26 +153,26 @@ The server does not come with a database. In this section, you install MySQL on 
    ```sql
    GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO database-username@'%' IDENTIFIED BY 'database-password';
    ```
-   {:pre}
+   {:codeblock}
 
    ```sql
    FLUSH PRIVILEGES;
    ```
-   {:pre}
+   {:codeblock}
 
 3. Check if database created by using:
 
    ```sql
    show databases;
    ```
-   {:pre}
+   {:codeblock}
 
 4. Exit from the database using:
 
    ```sql
    exit
    ```
-   {:pre}
+   {:codeblock}
 
 5. Make note of the database name, user and password. You will need them when configuring the application servers.
 
@@ -185,7 +185,7 @@ By default MySQL only listens on the local interface. The application servers wi
    [mysqld]
    bind-address    = 0.0.0.0
    ```
-   {:pre}
+   {:codeblock}
 
 2. Exit and save the file using Ctrl+X.
 
@@ -264,7 +264,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    [Install]
    WantedBy = multi-user.target
    ```
-   {:pre}
+   {:codeblock}
 
    Use Ctrl+X to save and exit the `nano` window
    {: tip}
@@ -393,7 +393,7 @@ Repeat the following steps on each application server(app1 and app2):
    [Install]
    WantedBy = multi-user.target
    ```
-   {:pre}
+   {:codeblock}
 3. Create the mount point
    ```sh
    mkdir /mnt/www
@@ -487,7 +487,7 @@ Repeat the following steps on each application server:
           }
    }
    ```
-   {:pre}
+   {:codeblock}
 5. Create a `html` folder inside the `/mnt/www` directory on one of the two app servers using
    ```sh
    mkdir -p /mnt/www/html
@@ -571,7 +571,7 @@ As Wordpress will be installed on the File Storage mount, you only need to do th
    define('DB_PASSWORD', 'database-password');
    define('DB_HOST', 'database-server-ip-address');
    ```
-   {:pre}
+   {:codeblock}
    Wordpress is configured. To complete the installation, you need to access the Wordpress user interface.
 
 On both application servers, start the web server and the PHP runtime:
