@@ -135,7 +135,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
    * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to generate pre-signed URLs.
    * Click **Add**.
    * Make note of the credentials by clicking **View credentials**. You will need them in a later step.
-3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location. Copy the **Public** service endpoint. It will be used later in the configuration of the application.
+3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location. Copy the **Private** service endpoint. It will be used later in the configuration of the application.
 
 Before creating the bucket, you will grant **secure-file-storage-cos** access to the root key stored in **secure-file-storage-kp**.
 
