@@ -202,13 +202,13 @@ If you observe, the requests are not encrypted and supports only HTTP. You will 
 
 Before adding a HTTPS listener, you need to generate an SSL certificate, verify the authenticity of your custom domain, a place to hold the certificate and map it to the infrastructure service.
 
-### Provision a {{site.data.keyword.cis_short_notm}} service and configure custom domain.
+### Provision a {{site.data.keyword.cis_short_notm}} service and configure custom domain
 
 In this section, you will create {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service,  configure a custom domain by pointing it to {{site.data.keyword.cis_short_notm}} name servers and later configure a global load balancer.
 
 1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
-2. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
-3. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
+2. Enter a service name, select a resource group and click **Create** to provision an instance of the service. You can use any pricing plans for this tutorial.
+3. When the service instance is provisioned, set your domain name by clicking **Let's get started** > enter your domain name and click **Connect and continue**.
 4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
@@ -237,7 +237,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
 
 You can manage the SSL certificates through IBM Certificate Manager.
 
-1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location and under a resource group.
 2. In the service dashboard, use **Import Certificate**:
    * Set **Name** to the custom subdomain and domain, such as *lb.mydomain.com*.
    * Browse for the **Certificate file** in PEM format.
@@ -279,7 +279,7 @@ Open the {{site.data.keyword.cis_short_notm}} service you created by navigating 
 2. Enter **lb.YOUR-DOMAIN-NAME** as your hostname and TTL as 60 seconds.
 3. Click **Add pool** to define a default origin pool
    - **Name**: lb-region1
-   - **Health check**: CREATE A NEW HEALTH CHECK
+   - **Health check**: Create new
      - **Monitor Type**: HTTP
      - **Path**: /
      - **Port**: 80
