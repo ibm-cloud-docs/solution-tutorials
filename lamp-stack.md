@@ -49,7 +49,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ### Configure the VPN access
 
-1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-gettingstarted-with-virtual-private-networking#gettingstarted-with-virtual-private-networking).
+1. [Ensure your VPN Access is enabled](/docs/infrastructure/iaas-vpn?topic=VPN-getting-started#enable-user-vpn-access).
 
      You should be a **Master User** to enable VPN access or contact master user for access.
      {:tip}
