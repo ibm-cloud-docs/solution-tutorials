@@ -55,7 +55,7 @@ The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track
 1. Under **Service details** section,
     - Select {{site.data.keyword.pushfull}} region
     - Select a resource group
-    - Select a **Lite** plan.
+    - Select a **Lite** plan
 1. Click **Create**. A new App will be created under **Apps** of [Resource list](https://{DomainName}/resources).
 
 
