@@ -295,7 +295,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 
 1. [Download and install Terraform for your system.](https://learn.hashicorp.com/terraform/getting-started/install.html)
 1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
-   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](https://https://{DomainName}/docs/terraform?topic=terraform-getting-started#install)
+   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](https://{DomainName}/docs/terraform?topic=terraform-getting-started#install)
    {:tip}
 1. Create a `.terraformrc` file in your home directory that points to the Terraform binary. In the following example, `/opt/provider/terraform-provider-ibm` is the route to the directory.
    ```sh
