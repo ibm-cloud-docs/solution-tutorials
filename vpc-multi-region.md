@@ -2,7 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-05-28"
+lastupdated: "2019-06-18"
+lasttested: "2019-06-18"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -80,7 +81,7 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
 4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked.
 5. Under **New subnet for VPC**:
-   * As a unique name enter **vpc-region1-zone1-subnet**.
+   * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
    * Select a location (e.g., Dallas), let's call this **region 1** and a zone in region 1 (e.g., Dallas 1), let's call this **zone 1**.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 6. Select **Use VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
@@ -89,26 +90,27 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
 
 To confirm the creation of subnet, click **Subnets** on the left pane and wait until the status changes to **Available**. You can create a new subnet under **Subnets**.
 
-### Create subnet in zone 2
+### Create subnet in a different zone
 
 1. Click on **New Subnet**, enter **vpc-region1-zone2-subnet** as a unique name for your subnet and select **vpc-region1** as the VPC.
-2. Select a location which we called as region 1 above (e.g., Dallas) and select a different zone in region 1 (e.g., Dallas 2), let's call the selected zone as **zone 2**.
-3. Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.64.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-4. Select **Use VPC default** for your subnet access control list (ACL).
+1. Select a location which we called as region 1 above (e.g., Dallas) and select a different zone in region 1 (e.g., Dallas 2), let's call the selected zone as **zone 2**.
+1. Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.64.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
+1. Select **VPC default** for your subnet access control list (ACL).
+1. Leave the public gateway to **Detached** and click **Create subnet**.
 
 ### Provision VSIs
 Once the status of the subnets changes to **Available**,
 
 1. Click on **vpc-region1-zone1-subnet** and click **Attached resources**, then **New instance**.
-2. Enter a unique name and pick **vpc-region1-zone1-vsi**. Then, select the VPC your created earlier and the **Location** along with the **zone** as before.
-3. Choose any **Ubuntu Linux** image, click **All profiles** and under **Compute**, choose **c-2x4** with 2vCPUs and 4 GB RAM. You can pick any version of the image.
-4. For **SSH keys** pick the SSH key you created initially.
-5. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
-   * Check whether **vpc-region1-zone1-subnet** is selected as the subnet. If not, select.
-   * Click **Save**.
+1. Enter **vpc-region1-zone1-vsi** as your virtual server's unique name. Then, select the VPC your created earlier, resource group and the **Location** along with the **zone** as before.
+1. Select **Compute** with 2vCPUs and 4 GB RAM as your profile.To check other available profiles, click **All profiles**
+1. Set **SSH keys** to the the SSH key you created earlier.
+1. Set the **image** to **Ubuntu Linux** and pick any version of the image.
+1. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
+   * Check whether **vpc-region1-zone1-subnet** is selected as the subnet. If not, select and click **Save**.
    * Click **Create virtual server instance**.
-6.  Wait until the status of the VSI changes to **Powered On**. Then, select the VSI **vpc-region1-zone1-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your VSI. Save the associated IP Address to a clipboard for future reference.
-7. **REPEAT** the steps 1-6 to provision a VSI in **zone 2** of **region 1**.
+1.  Wait until the status of the VSI changes to **Powered On**. Then, select the VSI **vpc-region1-zone1-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your VSI. Save the associated IP Address to a clipboard for future reference.
+1. **REPEAT** the above steps to provision a VSI in **zone 2** of **region 1**.
 
 Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REPEAT** the above steps for provisioning a new VPC with subnets and VSIs in **region2** by following the same naming conventions as above.
 
@@ -130,27 +132,27 @@ Once you successfully SSH into the server provisioned in subnet of zone 1 of reg
    ```
    sudo systemctl status nginx
    ```
-   {:pre}
+   {:codeblock}
    The output should show you that the Nginx service is **active** and running.
 3. You’ll need to open **HTTP (80)** and **HTTPS (443)** ports to receive traffic (requests). You can do that by adjusting the Firewall via [UFW](https://help.ubuntu.com/community/UFW) - `sudo ufw enable` and by enabling the ‘Nginx Full’ profile which includes rules for both ports:
    ```
    sudo ufw allow 'Nginx Full'
    ```
-   {:pre}
+   {:codeblock}
 4. To verify that Nginx works as expected open `http://FLOATING_IP` in your browser of choice, and you should see the default Nginx welcome page.
 5. To update the html page with the region and zone details, run the below command
    ```
    nano /var/www/html/index.nginx-debian.html
    ```
-   {:pre}
+   {:codeblock}
    Append the region and zone say _server running in **zone 1 of region 1**_ to the `h1` tag quoting `Welcome to nginx!` and save the changes.
 6. Restart the nginx server to reflect the changes
    ```
    sudo systemctl restart nginx
    ```
-   {:pre}
+   {:codeblock}
 
-**REPEAT** the steps 1-6 to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
+**REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
 
 
 ## Distribute traffic between zones with load balancers
@@ -161,9 +163,9 @@ In this section, you will create two load balancers. One in each region to distr
 ### Configure load balancers
 
 1. Navigate to **Load balancers** and click **New load balancer**.
-2. Give **vpc-lb-region1** as the unique name, select **vpc-region1** as your Virtual private cloud, select the resource group the VPC was created, Load balancer Type: **Public** and **region1** as the region.
-3. Select the private IPs of both **zone 1** and **zone 2** of **region 1**.
-4. Create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the paramaters with the values below and click **create**.
+2. Enter **vpc-lb-region1** as the unique name, select **vpc-region1** as your Virtual private cloud, select the resource group the VPC was created, Load balancer Type: **Public** and **region1** as the region.
+3. Select the **Subnets** of both **zone 1** and **zone 2** of **region 1**.
+4. Click **New pool** to create a new back-end pool of VSIs that acts as equal peers to share the traffic routed to the pool. Set the paramaters with the values below and click **create**.
 	- **Name**:  region1-pool
 	- **Protocol**: HTTP
 	- **Method**: Round robin
@@ -171,7 +173,7 @@ In this section, you will create two load balancers. One in each region to distr
 	- **Health check path**: /
 	- **Health protocol**: HTTP
 	- **Interval(sec)**: 15
-	- **Timeout(sec)**: 2
+	- **Timeout(sec)**: 5
 	- **Max retries**: 2
 5. Click **Attach** to add server instances to the region1-pool
    - Select the private IP of **vpc-region1-zone1-subnet**, select the instance your created and set 80 as the port.
@@ -181,7 +183,7 @@ In this section, you will create two load balancers. One in each region to distr
    - **Protocol**: HTTP
    - **Port**: 80
    - **Back-end pool**: region1-pool
-   - **Maxconnections**: Leave it empty and click **create**.
+   - **Maxconnections**: Leave it empty and click **Create**.
 7. Click **Create load balancer** to provision a load balancer.
 
 ### Test the load balancers
@@ -200,13 +202,13 @@ If you observe, the requests are not encrypted and supports only HTTP. You will 
 
 Before adding a HTTPS listener, you need to generate an SSL certificate, verify the authenticity of your custom domain, a place to hold the certificate and map it to the infrastructure service.
 
-### Provision a {{site.data.keyword.cis_short_notm}} service and configure custom domain.
+### Provision a {{site.data.keyword.cis_short_notm}} service and configure custom domain
 
 In this section, you will create {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service,  configure a custom domain by pointing it to {{site.data.keyword.cis_short_notm}} name servers and later configure a global load balancer.
 
 1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
-2. Set the service name, and click **Create** to create an instance of the service. You can use any pricing plans for this tutorial.
-3. When the service instance is provisioned, set your domain name by clicking **Let's get started** and click **Add domain**.
+2. Enter a service name, select a resource group and click **Create** to provision an instance of the service. You can use any pricing plans for this tutorial.
+3. When the service instance is provisioned, set your domain name by clicking **Let's get started** > enter your domain name and click **Connect and continue**.
 4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
@@ -235,7 +237,7 @@ Once you have obtained the SSL certificate and private key for your domain make 
 
 You can manage the SSL certificates through IBM Certificate Manager.
 
-1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location and under a resource group.
 2. In the service dashboard, use **Import Certificate**:
    * Set **Name** to the custom subdomain and domain, such as *lb.mydomain.com*.
    * Browse for the **Certificate file** in PEM format.
@@ -258,11 +260,12 @@ Now, navigate to the [Load balancers](https://{DomainName}/vpc/network/loadBalan
    -  **Protocol**: HTTPS
    -  **Port**: 443
    -  **Back-end pool**: POOL in the same region
-   -  Choose the SSL certificate for **lb.YOUR-DOMAIN-NAME**
+   - Choose the current region as your SSL region
+   - Choose the SSL certificate for **lb.YOUR-DOMAIN-NAME**
 
 3. Click **Create** to configure an HTTPS listener
 
-**REPEAT** the same in the load balancer of **region 2**.
+**REPEAT** the above steps in the load balancer of **region 2**.
 
 ## Configure a global load balancer
 {: #global-load-balancer}
@@ -276,7 +279,7 @@ Open the {{site.data.keyword.cis_short_notm}} service you created by navigating 
 2. Enter **lb.YOUR-DOMAIN-NAME** as your hostname and TTL as 60 seconds.
 3. Click **Add pool** to define a default origin pool
    - **Name**: lb-region1
-   - **Health check**: CREATE A NEW HEALTH CHECK
+   - **Health check**: Create new
      - **Monitor Type**: HTTP
      - **Path**: /
      - **Port**: 80

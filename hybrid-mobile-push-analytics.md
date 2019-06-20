@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-29"
-lasttested: "2019-05-29"
+lastupdated: "2019-06-20"
+lasttested: "2019-06-20"
 ---
 
 {:shortdesc: .shortdesc}
@@ -47,14 +47,17 @@ This tutorial uses the following products:
 
 ## Create Cordova mobile project from starter kit
 {: #get_code}
-The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your project from a Starter Kit.
-1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard)
-1. Click on **Starter Kits** and click on **Create App**.
-1. Enter an app name(this will be your android project name as well) > select a resource group.
-1.Choose **Create a new app** under Starting point.
-1. Select **Cordova** as your platform and click **Create**.
-1. Under App details > Click on **Create service** > Web and Mobile > **Push Notifications** and select the location you want to provision the service, resource group and **Lite** pricing plan.
-1. Click **Create** to provision {{site.data.keyword.mobilepushshort}} service. A new App will be created under **Apps** of [Resource list](https://{DomainName}/resources).
+The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your App from a Starter Kit.
+1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard) and click on **Get a Starter Kit**.
+1. Scroll and click on **Basic** starter kit.
+1. Click **Create app** and enter an app name > select a resource group.
+1. Select **Cordova** as your platform.
+1. Under **Service details** section,
+    - Select {{site.data.keyword.pushfull}} region
+    - Select a resource group
+    - Select a **Lite** plan
+1. Click **Create**. A new App will be created under **Apps** of [Resource list](https://{DomainName}/resources).
+
 
 ​      **Note:** {{site.data.keyword.mobilepushshort}} service should already be added with the Empty Starter.
 

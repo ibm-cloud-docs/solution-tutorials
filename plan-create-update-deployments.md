@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-09"
-lasttested: "2019-05-09"
+lastupdated: "2019-06-18"
+lasttested: "2019-06-18"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -42,8 +42,10 @@ Multiple environments are pretty common in a project to support the different ph
 This tutorial uses the following products:
 * [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-* [Identity and Access Management](https://{DomainName}/iam/#/users)
-* [{{site.data.keyword.Bluemix_notm}} command line interface - the `ibmcloud` CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
+* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
+* [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
+* [{{site.data.keyword.at_short}}](https://{DomainName}/observe/activitytracker/create)
+* [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring/create)
 * [HashiCorp Terraform](https://www.terraform.io/)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -57,10 +59,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 </p>
 
 1. A set of Terraform files are created to describe the target infrastructure as code.
-1. An operator uses `terraform apply` to provision the environments.
-1. Shell scripts are written to complete the configuration of the environments.
-1. The operator runs the scripts against the environments
-1. The environments are fully configured, ready to be used.
+2. An operator uses `terraform apply` to provision the environments.
+3. Shell scripts are written to complete the configuration of the environments.
+4. The operator runs the scripts against the environments
+5. The environments are fully configured, ready to be used.
 
 ## Overview of the available tools
 {: #tools}
@@ -81,6 +83,7 @@ As you start describing your infrastructure-as-code, it is critical to treat fil
    ```sh
    git clone https://github.com/IBM-Cloud/multiple-environments-as-code
    ```
+   {: codeblock}
 
 The repository is structured as follow:
 
@@ -292,7 +295,7 @@ Kubernetes bindings (secrets) can be added to retrieve the service credentials f
 
 1. [Download and install Terraform for your system.](https://learn.hashicorp.com/terraform/getting-started/install.html)
 1. [Download the Terraform binary for the {{site.data.keyword.Bluemix_notm}} provider.](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
-   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup)
+   To setup Terraform with {{site.data.keyword.Bluemix_notm}} provider, refer to this [link](https://{DomainName}/docs/terraform?topic=terraform-getting-started#install)
    {:tip}
 1. Create a `.terraformrc` file in your home directory that points to the Terraform binary. In the following example, `/opt/provider/terraform-provider-ibm` is the route to the directory.
    ```sh
@@ -314,7 +317,7 @@ If you have not done it yet, clone the tutorial repository:
 
 ### Set Platform API key
 
-1. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/#/apikeys) and save the API key for future reference.
+1. If you don't already have one, obtain a [Platform API key](https://{DomainName}/iam/apikeys) and save the API key for future reference.
 
    > If in later steps you plan on creating a new Cloud Foundry organization to host the deployment environments, make sure you are the owner of the account.
 1. Copy [terraform/credentials.tfvars.tmpl](https://github.com/IBM-Cloud/multiple-environments-as-code/blob/master/terraform/credentials.tfvars.tmpl) to *terraform/credentials.tfvars* by running the below command
@@ -372,7 +375,7 @@ Once Terraform completes, it will have created:
 
 #### To reuse an organization you are managing
 
-If you are not the account owner but you manage an organization in the account, you can also import an existing organization into Terraform
+If you are not the account owner but you manage an organization in the account, you can also import an existing organization into Terraform. Make sure to be in the region where the Cloud Foundry org exists.
 
 1. Retrieve the organization GUID
    ```sh
@@ -395,7 +398,7 @@ If you are not the account owner but you manage an organization in the account, 
    terraform import -var-file=../credentials.tfvars -var-file=global.tfvars ibm_org.organization <guid>
    ```
    {: codeblock}
-1. Tune `global.tfvars` to match the existing organization name and structure
+1. Tune `global.tfvars` to match the existing organization name and structure. To keep the existing org managers and users, make sure to list them. Verify possible changes before applying them in the next step.
 1. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=global.tfvars
@@ -419,17 +422,17 @@ This section will focus on the `development` environment. The steps will be the 
    1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
    1. Set **cluster_datacenter** to the location where you want to create the cluster. Find the available locations with:
       ```sh
-      ibmcloud cs locations
+      ibmcloud ks locations
       ```
       {: codeblock}
    1. Set the private (**cluster_private_vlan_id**) and public (**cluster_public_vlan_id**) VLANs for the cluster. Find the available VLANs for the location with:
       ```sh
-      ibmcloud cs vlans <location>
+      ibmcloud ks vlans <location>
       ```
       {: codeblock}
    1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
       ```sh
-      ibmcloud cs machine-types <location>
+      ibmcloud ks machine-types <location>
       ```
       {: codeblock}
 
@@ -458,9 +461,9 @@ This section will focus on the `development` environment. The steps will be the 
    terraform plan -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
    {: codeblock}
-   It should report:
+   It should report (with **NN** being the number of resources to be added):
    ```
-   Plan: 7 to add, 0 to change, 0 to destroy.
+   Plan: NN to add, 0 to change, 0 to destroy.
    ```
    {: codeblock}
 1. Apply the changes
