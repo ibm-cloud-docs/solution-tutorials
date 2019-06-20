@@ -297,7 +297,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    #!/bin/bash
    mysqldump -u root -p CHANGE_ME --all-databases --routines | gzip > /mnt/datamysql/backup-`date '+%m-%d-%Y-%H-%M-%S'`.sql.gz
    ```
-   {:pre}
+   {:codeblock}
 2. Make sure the file is executable
    ```sh
    chmod 700 /root/dbbackup.sh
@@ -312,7 +312,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    ```
    0 23 * * * /root/dbbackup.sh
    ```
-   {:pre}
+   {:codeblock}
 
 ## Provision two servers for the PHP application
 {: #app_servers}
