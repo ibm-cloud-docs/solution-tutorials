@@ -75,11 +75,11 @@ Note the values for the **SoftLayer** username and api key, and the {{site.data.
 
 In this section, you will learn the basics of a terraform configuration by using a sample Terraform configuration provided by {{site.data.keyword.Bluemix_notm}}.
 
-1. Visit https://github.com/IBM-Cloud/LAMP-terraform-ibm and **Fork** your own copy to your account.
-2. Clone your fork locally:
+1. Clone the sample configuration:
    ```bash
-   git clone https://github.com/YOUR_USER_NAME/LAMP-terraform-ibm
+   git clone https://github.com/IBM-Cloud/LAMP-terraform-ibm
    ```
+   {:pre}
 3. Inspect the configuration files
    - [install.yml](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/install.yml) - contains server installation configurations. Use this file to perform software installation or to create files on the server.
    - [provider.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/provider.tf) - contains the configuration of the provider such as the credentials to access {{site.data.keyword.Bluemix_notm}}.
@@ -112,17 +112,21 @@ In this section, you will learn how to create a LAMP stack server from the terra
 4. Next, head over to your [infrastructure device list](https://{DomainName}/classic/devices) to verify that the server was created.
    ![Source Control URL](images/solution10/configuration.png)
 
+**Note:** after running the terraform apply command successfully, you should see a new `terraform.tfstate` file added to your directory. This file contains the full deployment configuration and is used by terraform as a baseline to compare against future modifications to your configuration. If this file is removed or lost then you will lose your terraform deployment configurations.
+{ :tip}
+
 ## Add the {{site.data.keyword.cos_full_notm}} service and scale the resources
 
 {: #modify}
 
 In this section, you are going to look at how to scale the virtual server resource and add an [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage) service to your infrastructure environment.
 
-1. Edit the `vm.tf` file to increase the following and the save the file.
- - Increase number of CPU cores to 4 cores
- - Increase RAM(memory) to 4096
-
-2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage) service, to do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable for the Identity and Access Management, IAM, resource group. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, service to the fully qualified name and plan type. The code below will create a standard plan. This is a pay-as-you-go plan. You can also use the lite plan, but note that the lite plan is limited to only one service per account.
+1. Add the following lines to the `terraform.tfvars` file to increase the number of cores and memory and save the file:
+   ```
+   cores = 2
+   memory = 2048
+   ```
+2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage) service. To do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable for the Identity and Access Management, IAM, resource group. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, service to the fully qualified name and plan type. The code below will create a standard plan. This is a pay-as-you-go plan. You can also use the lite plan, but note that the lite plan is limited to only one service per account.
 
    ```
    # a cloud object storage
@@ -154,7 +158,6 @@ In this section, you are going to look at how to scale the virtual server resour
     terraform apply
    ```
    {: pre}
-   **Note:** after running the terraform apply command successfully, you should see a new a `terraform.tfstate`. file added to your directory. This file contains the full deployment configuration and is used by terraform as a baseline to compare against future modifications to your configuration. If this file is removed or lost then you will lose your terraform deployment configurations.
 
 ## Verify VM and {{site.data.keyword.cos_short}}
 {: #verifyvm}
