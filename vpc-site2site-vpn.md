@@ -134,7 +134,13 @@ In the following, create these resources by configuring and then running a setup
    {: codeblock}
 
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
-3. To create the resources in a new VPC, run the script as follows:
+3. Make sure that your CLI environment is set up to target generation 1 VPC resources. Run:
+   ```sh
+   ibmcloud is target --gen 1
+   ```
+   {: codeblock}
+
+4. To create the resources in a new VPC, run the script as follows:
 
    ```sh
    ./vpc-site2site-vpn-baseline-create.sh
@@ -147,7 +153,7 @@ In the following, create these resources by configuring and then running a setup
    ```
    {: codeblock}
 
-4. This will result in creating the following resources, including the bastion-related resources:
+5. This will result in creating the following resources, including the bastion-related resources:
    - 1 VPC (optional)
    - 1 public gateway
    - 3 subnets within the VPC
