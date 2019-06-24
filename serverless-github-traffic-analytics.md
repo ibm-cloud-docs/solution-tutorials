@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-24"
+lastupdated: "2019-06-24"
 lasttested: "2019-05-24"
 ---
 
@@ -42,52 +42,52 @@ To complete this tutorial, you need the latest version of the [IBM Cloud CLI](ht
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
 
 1. Clone the [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) and navigate into the cloned directory and its **backend** subdirectory:
-   ```bash
+   ```sh
    git clone https://github.com/IBM-Cloud/github-traffic-stats
    cd github-traffic-stats/backend
    ```
-   {:codeblock}
+   {: pre}
 
 2. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command. You need to have an organization and space set.
 
 3. Create a {{site.data.keyword.dashdbshort}} instance with the **Entry** plan and name it **ghstatsDB**:
+   ```sh
+   ibmcloud cf create-service dashDB Entry ghstatsDB
    ```
-   ibmcloud service create dashDB Entry ghstatsDB
-   ```
-   {:codeblock}
+   {: pre}
 
-4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **ghstatskey**:   
+4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **ghstatskey**:
+   ```sh
+   ibmcloud cf create-service-key ghstatsDB ghstatskey
    ```
-   ibmcloud service key-create ghstatsDB ghstatskey
-   ```
-   {:codeblock}
+   {: pre}
 
 5. Create an instance of the {{site.data.keyword.appid_short}} service. Use **ghstatsAppID** as name and the **Graduated tier** plan.
-   ```
+   ```sh
    ibmcloud resource service-instance-create ghstatsAppID appid graduated-tier us-south
    ```
-   {:codeblock}
+   {: pre}
    Thereafter, create an alias of that new service instance in the Cloud Foundry space. Replace **YOURSPACE** with the space you are deploying to.
-   ```
+   ```sh
    ibmcloud resource service-alias-create ghstatsAppID --instance-name ghstatsAppID -s YOURSPACE
    ```
-  {:codeblock}
+  {: pre}
 
 6. Create an instance of the {{site.data.keyword.dynamdashbemb_short}} service using the **lite** plan.
-   ```
+   ```sh
    ibmcloud resource service-instance-create ghstatsDDE dynamic-dashboard-embedded lite us-south
    ```
-   {:codeblock}
+   {: pre}
    Again, create an alias of that new service instance and replace **YOURSPACE**.
-   ```
+   ```sh
    ibmcloud resource service-alias-create ghstatsDDE --instance-name ghstatsDDE -s YOURSPACE
    ```
-  {:codeblock}
+  {: pre}
 7. In the **backend** directory, push the application to the IBM Cloud. The command uses a random route for your application.
-   ```bash
+   ```sh
    ibmcloud cf push
    ```
-   {:codeblock}
+   {: pre}
    Wait for the deployment to finish. The application files are uploaded, the runtime environment created, and the services bound to the application. The service information is taken from the file `manifest.yml`. You need to update that file, if you used other service names. Once the process finishes successfully, the application URI is displayed.
 
    The above command uses a random, but unique route for the application. If you want to pick one yourself, add it as additional parameter to the command, e.g., `ibmcloud cf push your-app-name`. You could also edit the file `manifest.yml`, change the **name** and change **random-route** from **true** to **false**.
@@ -98,7 +98,7 @@ The following steps are all performed using your Internet browser. First, you co
 
 1. In the [{{site.data.keyword.cloud}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
 2. In the service dashboard, click on **Manage Authentication** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **On**, all other providers to **Off**.
-   
+
    You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/services/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
    {:tip}
 
@@ -130,49 +130,50 @@ After the preparation, you configure and test the app. The app is written in Pyt
 With the management app in place, deploy an action, a trigger and a rule to connect the two in for {{site.data.keyword.openwhisk_short}}. These objects are used to automatically collect the GitHub traffic data on the specified schedule. The action connects to the database, iterates over all tenants and their repositories and obtains the view and cloning data for each repository. Those statistics are merged into the database.
 
 1. Change into the **functions** directory.
-   ```bash
+   ```sh
    cd ../functions
    ```
-   {:codeblock}   
+   {: pre}
 2. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_reference#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
-   ```bash
+   ```sh
    ibmcloud fn action create collectStats --kind python-jessie:3 ghstats.zip
    ```
-   {:codeblock}   
+   {: pre}
 
    If you modify the source code for the action (`__main__.py`), then you can repackage the zip archive with `zip -r ghstats.zip  __main__.py github.py` again. See the file `setup.sh` for details.
    {:tip}
 3. Bind the action to the database service. Use the instance and the service key that you created during the environment setup.
-   ```bash
+   ```sh
    ibmcloud fn service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
    ```
-   {:codeblock}   
+   {: pre}
 4. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_catalog_alarm#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
-   ```bash
+   ```sh
    ibmcloud fn trigger create myDaily --feed /whisk.system/alarms/alarm \
               --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
               --param stopDate "2018-12-31T00:00:00.000Z"
    ```
-  {:codeblock}   
+  {: pre}
 
   You can change the trigger from a daily to a weekly schedule by applying `"0 6 * * 0"`. This would fire every Sunday at 6am.
   {:tip}
 5. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
-   ```bash
+   ```sh
    ibmcloud fn rule create myStatsRule myDaily collectStats
    ```
-   {:codeblock}   
+   {: pre}
 6. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
-   ```bash
+   ```sh
    ibmcloud fn action invoke collectStats  -r
    ```
-   {:codeblock}   
+   {: pre}
    The output will look like this:
    ```
    {
        "repoCount": 18
    }
    ```
+   {:codeblock}
 7. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories. You could enter a date and an organization name and then sort by viewcount to list the top scorers for a particular day.
    ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
@@ -193,15 +194,15 @@ To clean up the resources used for this tutorial, you can delete the related ser
    ibmcloud fn trigger delete myDaily
    ibmcloud fn action delete collectStats
    ```
-   {:codeblock}   
+   {:codeblock}
 2. Delete the Python app and its services.
    ```bash
    ibmcloud resource service-instance-delete ghstatsAppID
    ibmcloud resource service-instance-delete ghstatsDDE
-   ibmcloud service delete ghstatsDB
+   ibmcloud cf delete-service ghstatsDB
    ibmcloud cf delete github-traffic-stats
    ```
-   {:codeblock}   
+   {:codeblock}
 
 
 ## Expand the tutorial
