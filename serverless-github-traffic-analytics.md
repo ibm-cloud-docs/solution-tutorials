@@ -189,20 +189,20 @@ The Cloud Foundry app manages access through an OpenID Connect client connecting
 To clean up the resources used for this tutorial, you can delete the related services and app as well as the action, trigger and rule in the reverse order as created:
 
 1. Delete the {{site.data.keyword.openwhisk_short}} rule, trigger and action.
-   ```bash
+   ```sh
    ibmcloud fn rule delete myStatsRule
    ibmcloud fn trigger delete myDaily
    ibmcloud fn action delete collectStats
    ```
-   {:codeblock}
+   {: pre}
 2. Delete the Python app and its services.
-   ```bash
+   ```sh
    ibmcloud resource service-instance-delete ghstatsAppID
    ibmcloud resource service-instance-delete ghstatsDDE
    ibmcloud cf delete-service ghstatsDB
    ibmcloud cf delete github-traffic-stats
    ```
-   {:codeblock}
+   {: pre}
 
 
 ## Expand the tutorial
