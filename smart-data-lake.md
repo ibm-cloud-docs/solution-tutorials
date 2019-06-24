@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-14"
+lastupdated: "2019-06-24"
 lasttested: "2019-06-14"
 ---
 
@@ -82,7 +82,7 @@ This section uses the command line to create service instances. Alternatively, y
     {: pre}
 4. Create an instance of [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio).
     ```sh
-    ibmcloud service create data-science-experience free-v1 data-lake-studio
+    ibmcloud cf create-service data-science-experience free-v1 data-lake-studio
     ```
     {: pre}
 5. Create an instance of [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded) with a Cloud Foundry alias.
@@ -381,11 +381,11 @@ ibmcloud resource service-instance-delete data-lake-sql
 ```
 {: pre}
 ```sh
-ibmcloud service delete data-lake-studio
+ibmcloud cf delete-service data-lake-studio
 ```
 {: pre}
 ```sh
-ibmcloud app delete dashboard-nodejs
+ibmcloud cf delete dashboard-nodejs
 ```
 {: pre}
 
