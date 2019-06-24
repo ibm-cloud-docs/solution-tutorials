@@ -55,13 +55,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {: #architecture}
 
-To design a resilient architecture, you need to consider the individual blocks of your solution and their specific capabilities. 
+To design a resilient architecture, you need to consider the individual blocks of your solution and their specific capabilities.
 
 Below is a multi-region architecture showcasing the different components that may exist in a multi-region setup. ![Architecture](images/solution39/Architecture.png)
 
-The architecture diagram above may be different depending on the compute option. You will see specific architecture diagrams under each compute option in later sections. 
+The architecture diagram above may be different depending on the compute option. You will see specific architecture diagrams under each compute option in later sections.
 
-### Disaster recovery with two regions 
+### Disaster recovery with two regions
 
 To facilitate disaster recovery, two widely accepted architectures are used: **active/active** and **active/passive**. Each architecture has its own costs and benefits related to time and effort during recovery.
 
@@ -77,7 +77,7 @@ When considering **recovery point objective** (RPO) in the active/active scenari
 
 #### Active-passive configuration
 
-An active/passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application and user needs. 
+An active/passive architecture relies on one active region and a second (passive) region used as a backup. In the event of an outage in the active region, the passive region becomes active. Manual intervention may be required to ensure databases or file storage is current with the application and user needs.
 
 ![Active/Passive](images/solution39/Active-passive.png)
 
@@ -105,7 +105,7 @@ Refer to [this guide](https://www.ibm.com/cloud/garage/content/manage/hadr-on-pr
 
 ### Multi-regions architectures
 
-In a multi-region architecture, an application is deployed to different locations where each region runs an identical copy of the application. 
+In a multi-region architecture, an application is deployed to different locations where each region runs an identical copy of the application.
 
 A region is a specific geographical location where you can deploy apps, services, and other {{site.data.keyword.cloud_notm}} resources. [{{site.data.keyword.cloud_notm}} regions](https://{DomainName}/docs/containers?topic=containers-regions-and-zones) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
 
@@ -114,23 +114,23 @@ Additionally, in a multi-region architecture, a Global load balancer like [{{sit
 Deploying a solution across multiple regions comes with the following benefits:
 - Improve latency for end-users - speed is the key, the closer your backend origin is to end-users, the better the experience for users and the faster.
 - Disaster recovery - when the active region fails, then you have a backup region to recover quickly.
-- Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometers. Therefore, those in such case have to store data in multiple regions. 
+- Business requirements - in some cases you need to store data in distinct regions, separated by several hundreds of kilometers. Therefore, those in such case have to store data in multiple regions.
 
 ### Multi-zones within regions architectures
 
-Building multi-zones regions applications means having your application deployed across zones within a region and then you may also have two or three regions. 
+Building multi-zones regions applications means having your application deployed across zones within a region and then you may also have two or three regions.
 
-With multi-zone region architecture you would require to have a local load balancer to distribute traffic locally between zones in a region, and then if a second region is set up then a global load balancer distributes traffic between the regions. 
+With multi-zone region architecture you would require to have a local load balancer to distribute traffic locally between zones in a region, and then if a second region is set up then a global load balancer distributes traffic between the regions.
 
 You can learn more about regions and zones [here](https://{DomainName}/docs/containers?topic=containers-regions-and-zones#regions-and-zones).
 
-## Compute Options 
+## Compute Options
 
 This section reviews the compute options available in {{site.data.keyword.cloud_notm}}. For each compute option, an architecture diagram is provided together with a tutorial on how to deploy such architecture.
 
 Note: all compute options architectures do not have databases or other services included, they only focus on deploying an app to two regions for the selected compute option. Once you deployed any of the multi-region compute options examples, the next logical step would be to add databases and other services. Later sections of this solution tutorial will cover [databases](#databaseservices), and [non-database-services](#nondatabaseservices).
 
-### Cloud Foundry 
+### Cloud Foundry
 
 Cloud Foundry offers the capability to achieve deployment of a multi-region architecture, also using a [continuous delivery](https://{DomainName}/catalog/services/continuous-delivery) pipeline services allows you to deploy your application across multiple regions. The architecture for Cloud Foundry multi-region looks like this:
 
@@ -149,20 +149,20 @@ A multi-region architecture using {{site.data.keyword.cfee_full_notm}} is below.
 
 ![Architecture](images/solution39/CFEE-Architecture.png)
 
-Deploying this architecture requires the following: 
+Deploying this architecture requires the following:
 
 - Setup two CFEE instances - one in each region.
-- Create and bind the services to the CFEE account. 
-- Push the apps targeting the CFEE API endpoint. 
-- Setup database replication, just as you would on public Cloud Foundry. 
+- Create and bind the services to the CFEE account.
+- Push the apps targeting the CFEE API endpoint.
+- Setup database replication, just as you would on public Cloud Foundry.
 
-Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md). It will take you through the deployment of a microservice based application to CFEE. Once deployed to one CFEE instance, you can replicate the procedure to a second region and attach the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started) in front of the two CFEE instances to load balance the traffic. 
+Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md). It will take you through the deployment of a microservice based application to CFEE. Once deployed to one CFEE instance, you can replicate the procedure to a second region and attach the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started) in front of the two CFEE instances to load balance the traffic.
 
 Refer to the [{{site.data.keyword.cfee_full_notm}} documentation](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#about) for additional details.
 
 ### Kubernetes
 
-With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region. 
+With Kubernetes, you can achieve a multi-zones within regions architecture, this can be an active/active use case. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different regions, users can also access the closest cluster with reduced network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a region.
 
 The Kubernetes multi-region architecture looks like this.
 
@@ -189,34 +189,45 @@ The tutorial [**Resilient and secure multi-region Kubernetes clusters with {{sit
 
 Find out how to deploy this architecture by following the tutorial [**Deploy serverless apps across multiple regions**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-serverless#multi-region-serverless).
 
-### {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}}
+### Virtual server instances on VPC Infrastructure
+{{site.data.keyword.vsi_is_full}} offer the capability to achieve a multi-region architecture. You can provision instances in many available zones on {{site.data.keyword.cloud_notm}}.
 
-{{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}} offer the capability to achieve a multi-region architecture. You can provision servers on many available locations on {{site.data.keyword.cloud_notm}}.
+IBM Cloud VPC adds a network orchestration layer that eliminates the pod boundary, creating infinite capacity for scaling instances. The network orchestration layer handles all of the networking for all virtual server instances that are within an IBM Cloud VPC across regions and zones.
+
+The below architecture demonstrates deploying isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
+
+![VPC-Architecture](images/solution41-vpc-multi-region/Architecture.png)
+
+The tutorial [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-multi-region) implements this architecture.
+
+### {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} on Classic Infrastructure
+
+{{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}} offer the capability to achieve a multi-region architecture. You can provision servers in many available locations on {{site.data.keyword.cloud_notm}}.
 
 ![server locations](images/solution39/ServersLocation.png)
 
-When preparing for such architecture using {{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}}, consider the following: file storage, backups, recovery and databases, selecting between a database as service or installing a database on a virtual server. 
+When preparing for such architecture using {{site.data.keyword.virtualmachinesshort}} and {{site.data.keyword.baremetal_short}}, consider the following: file storage, backups, recovery and databases, selecting between a database as service or installing a database on a virtual server.
 
-The below architecture demonstrates deployment of a multi-region architecture using {{site.data.keyword.virtualmachinesshort}} in an active/passive architecture where one region is active and the second region is passive. 
+The below architecture demonstrates deployment of a multi-region architecture using {{site.data.keyword.virtualmachinesshort}} in an active/passive architecture where one region is active and the second region is passive.
 
 ![VM-Architecture](images/solution39/vm-Architecture2.png)
 
-The components required for such architecture: 
+The components required for such architecture:
 
 1. Users access the application through {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}).
 2. {{site.data.keyword.cis_short_notm}} routes traffic to the active location.
 3. Within a location, a load balancer redirects traffic to a server.
 4. Databases are deployed on a virtual server. Backup is enabled and replication is set up between regions. The alternative would be use a database-as-service, a topic discussed later in the tutorial.
-5. File storage to store the application images and files, File storage offers the capability to take a snapshot at a given time and date, this snapshot then can be reused within another region, something in which you would do manually. 
+5. File storage to store the application images and files, File storage offers the capability to take a snapshot at a given time and date, this snapshot then can be reused within another region, something in which you would do manually.
 
 The tutorial [**Use Virtual Servers to build highly available and scalable web app**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#highly-available-and-scalable-web-application) implements this architecture.
 
 ## Databases and application files
 {: #databaseservices}
 
-{{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) with both relational and non-relational databases depending on your business needs. [Database-as-a-service (DBaaS)](https://www.ibm.com/cloud/learn/what-is-cloud-database) comes with many advantages. Using a DBaaS like {{site.data.keyword.cloudant}}, you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, perform backups, and have scaling and maximum uptime. 
+{{site.data.keyword.cloud_notm}} offers a selection of [databases as a service](https://{DomainName}/catalog/?category=databases) with both relational and non-relational databases depending on your business needs. [Database-as-a-service (DBaaS)](https://www.ibm.com/cloud/learn/what-is-cloud-database) comes with many advantages. Using a DBaaS like {{site.data.keyword.cloudant}}, you can take advantages of the multi-region support allowing you to do live replication between two database services in different regions, perform backups, and have scaling and maximum uptime.
 
-**Key features:** 
+**Key features:**
 
 - A database service built and accessed through a cloud platform
 - Enables enterprise users to host databases without buying dedicated hardware
@@ -263,14 +274,14 @@ More information is available in the [High Availability documentation](https://{
 
 ### {{site.data.keyword.databases-for}}
 
-{{site.data.keyword.databases-for}} offers several open source database systems as fully managed services. They are:  
+{{site.data.keyword.databases-for}} offers several open source database systems as fully managed services. They are:
 * [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
 * [{{site.data.keyword.databases-for-redis}}](https://{DomainName}/catalog/services/databases-for-redis)
 * [{{site.data.keyword.databases-for-elasticsearch}}](https://{DomainName}/catalog/services/databases-for-elasticsearch)
 * [{{site.data.keyword.databases-for-etcd}}](https://{DomainName}/catalog/services/databases-for-etcd)
 * [{{site.data.keyword.databases-for-mongodb}}](https://{DomainName}/catalog/services/databases-for-mongodb)
 
-All of these services share the same characteristics:   
+All of these services share the same characteristics:
 * For high availability they are deployed in clusters. Details can be found in the documentation of each service:
   - [PostgreSQL](https://{DomainName}/docs/services/databases-for-postgresql?topic=databases-for-postgresql-high-availability#high-availability)
   - [Redis](https://{DomainName}/docs/services/databases-for-redis?topic=databases-for-redis-high-availability#high-availability)
@@ -304,7 +315,7 @@ Some of file storage features are _Snapshots_, _Replication_, _Concurrent access
 
 Once attached to your servers, a {{site.data.keyword.filestorage_short}} service can be used easily to store data backups, application files like images and videos, these images and files can then be used within different servers in the same region.
 
-When adding a second region, you can use the snapshots feature of {{site.data.keyword.filestorage_short}} to take a snapshot automatically or manually, and then reuse it within the second passive region. 
+When adding a second region, you can use the snapshots feature of {{site.data.keyword.filestorage_short}} to take a snapshot automatically or manually, and then reuse it within the second passive region.
 
 Replication can be scheduled to automatically copy snapshots to a destination volume in a remote data center. The copies can be recovered in the remote site if a catastrophic event occurs or your data becomes corrupted. More on File Storage snapshots can be found [here](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#snapshots).
 
@@ -319,7 +330,7 @@ Replication can be scheduled to automatically copy snapshots to a destination vo
 
 An assistant is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. The assistant includes one or many skills. A dialog skill contains the training data and logic that enables an assistant to help your customers.
 
-It's important to note that {{site.data.keyword.conversationshort}} V1 is stateless. {{site.data.keyword.conversationshort}} delivers 99.5% uptime, but still, for highly available applications across multiple regions, you may even want to have multiple instances of this service across regions. 
+It's important to note that {{site.data.keyword.conversationshort}} V1 is stateless. {{site.data.keyword.conversationshort}} delivers 99.5% uptime, but still, for highly available applications across multiple regions, you may even want to have multiple instances of this service across regions.
 
 Once you have created instances in multiple locations, use the tooling {{site.data.keyword.conversationshort}} to export, from one instance, an existing workspace, including intents, entities, and dialog. Then import this workspace in other locations.
 
