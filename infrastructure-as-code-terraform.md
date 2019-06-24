@@ -63,7 +63,7 @@ Install **Terraform** and the {{site.data.keyword.Bluemix_notm}} provider.  See,
 Take special notice of the [Configuring the IBM Cloud Provider plug-in](https://{DomainName}/docs/terraform?topic=terraform-configure_provider#retrieve_credentials).  The values for the following are required for this tutorial.
 ```
 softlayer_username = "<infrastructure_username>"
-softlayer_api_key = "<infrasturcture_apikey>"
+softlayer_api_key = "<infrastructure_apikey>"
 ibmcloud_api_key = "<platform_api_key>"
 ```
 
@@ -85,9 +85,9 @@ In this section, you will learn the basics of a terraform configuration by using
    - [provider.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/provider.tf) - contains the configuration of the provider such as the credentials to access {{site.data.keyword.Bluemix_notm}}.
    - [vm.tf](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/vm.tf) - contains the server configurations to deploy the VM with specified variables.
    - [terraform.tfvars.template](https://github.com/IBM-Cloud/LAMP-terraform-ibm/blob/master/terraform.tfvars.template) - variables that terraform will prompt you to enter.
-4. Copy the terraform.tfvars.template file to terraform.tfvars.  Open the terraform.tfvars with your IDE, modify the file by adding the values mentioned in the previous section.  Any variable defaults in the .tf files can be specified in this file.
+4. Copy the `terraform.tfvars.template` file to `terraform.tfvars`.  Open the `terraform.tfvars` with your IDE, modify the file by adding the values mentioned in the previous section.  Any variable defaults in the `.tf` files can be specified in this file.
 
-Note on SSH key - The public key from a private/public key pair is required to create a virtual machine instance.  If you already have a key pair it is likely in this file: ~/.ssh/id_rsa.pub (the private key does not have the .pub file extension and should not be used). [SSH Keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-ssh-keys) will help you create the pair if needed.
+Note on SSH key - The public key from a private/public key pair is required to create a virtual machine instance.  If you already have a key pair it is likely in this file: `~/.ssh/id_rsa.pub` (the private key does not have the .pub file extension and should not be used). [SSH Keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-ssh-keys) will help you create the pair if needed.
 
 ## Create a LAMP stack server from the terraform configuration
 {: #Createserver}
