@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-17"
+lastupdated: "2019-06-24"
 lasttested: "2019-06-17"
 ---
 
@@ -102,7 +102,7 @@ This section uses the command line to create service instances. Alternatively, y
     {: pre}
 4. Create a Standard instance of [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams).
     ```sh
-    ibmcloud service create messagehub standard log-analysis-hub
+    ibmcloud cf create-service messagehub standard log-analysis-hub
     ```
     {: pre}
 
