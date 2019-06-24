@@ -71,7 +71,7 @@ In this section, you set up the needed services and prepare the environment. All
    ```sh
    ibmcloud resource service-alias-create ghstatsAppID --instance-name ghstatsAppID -s YOURSPACE
    ```
-  {: pre}
+   {: pre}
 
 6. Create an instance of the {{site.data.keyword.dynamdashbemb_short}} service using the **lite** plan.
    ```sh
@@ -82,7 +82,7 @@ In this section, you set up the needed services and prepare the environment. All
    ```sh
    ibmcloud resource service-alias-create ghstatsDDE --instance-name ghstatsDDE -s YOURSPACE
    ```
-  {: pre}
+   {: pre}
 7. In the **backend** directory, push the application to the IBM Cloud. The command uses a random route for your application.
    ```sh
    ibmcloud cf push
@@ -153,7 +153,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
               --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
               --param stopDate "2018-12-31T00:00:00.000Z"
    ```
-  {: pre}
+   {: pre}
 
   You can change the trigger from a daily to a weekly schedule by applying `"0 6 * * 0"`. This would fire every Sunday at 6am.
   {:tip}
