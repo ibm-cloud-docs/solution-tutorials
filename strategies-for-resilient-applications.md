@@ -198,7 +198,7 @@ The below architecture demonstrates deploying isolated workloads by provisioning
 
 ![VPC-Architecture](images/solution41-vpc-multi-region/Architecture.png)
 
-The tutorial [Deploy isolated workloads across multiple locations and zones](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-multi-region) implements this architecture.
+The tutorial [**Deploy isolated workloads across multiple locations and zones**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-multi-region) implements this architecture.
 
 ### {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} on Classic Infrastructure
 
