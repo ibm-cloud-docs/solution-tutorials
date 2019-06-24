@@ -113,7 +113,7 @@ In this section, you will learn how to create a LAMP stack server from the terra
    ![Source Control URL](images/solution10/configuration.png)
 
 **Note:** after running the terraform apply command successfully, you should see a new `terraform.tfstate` file added to your directory. This file contains the full deployment configuration and is used by terraform as a baseline to compare against future modifications to your configuration. If this file is removed or lost then you will lose your terraform deployment configurations.
-{ :tip}
+{: tip}
 
 ## Add the {{site.data.keyword.cos_full_notm}} service and scale the resources
 
