@@ -282,5 +282,5 @@ Availability Monitoring runs synthetic tests from locations around the world, ar
 ## Related content
 
 * [Adding a Cloudant Database](https://{DomainName}/docs/services/Cloudant/tutorials?topic=cloudant-creating-an-ibm-cloudant-instance-on-ibm-cloud#creating-an-ibm-cloudant-instance-on-ibm-cloud)
-* [Auto-Scaling for Cloud Foundry applications](https://{DomainName}/docs/services/Auto-Scaling?topic=services/Auto-Scaling-get-started#get-started)
+* [Autoscaling for Cloud Foundry applications](https://{DomainName}/docs/cloud-foundry-public?topic=cloud-foundry-public-autoscale_cloud_foundry_apps)
 * [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-)
