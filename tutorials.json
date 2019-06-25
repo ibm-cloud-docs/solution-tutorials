@@ -53,7 +53,7 @@
             "File Storage",
             "Watson"
           ],
-          "lastUpdated": "2019-05-28"
+          "lastUpdated": "2019-06-24"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -96,7 +96,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-17"
         },
         {
           "name": "Web application on LAMP stack",
@@ -122,7 +122,7 @@
             "PHP",
             "Object Storage"
           ],
-          "lastUpdated": "2019-04-23"
+          "lastUpdated": "2019-06-25"
         },
         {
           "name": "Plan, create and update deployment environments",
@@ -135,7 +135,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2019-05-09"
+          "lastUpdated": "2019-06-18"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -148,7 +148,7 @@
             "PHP",
             "File Storage"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-19"
         },
         {
           "name": "Modern web application using MEAN stack",
@@ -196,7 +196,7 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2019-05-29"
+          "lastUpdated": "2019-06-17"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -244,7 +244,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2019-04-22"
+          "lastUpdated": "2019-06-24"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -317,7 +317,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-05-23"
+          "lastUpdated": "2019-06-19"
         }
       ]
     },
@@ -335,7 +335,7 @@
             "Swift",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-05-28"
+          "lastUpdated": "2019-06-20"
         },
         {
           "name": "Android native mobile app with Push Notifications",
@@ -347,7 +347,7 @@
             "Java",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-05-28"
+          "lastUpdated": "2019-06-20"
         },
         {
           "name": "Hybrid mobile application with Push Notifications",
@@ -358,7 +358,7 @@
             "Cordova",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-05-29"
+          "lastUpdated": "2019-06-20"
         },
         {
           "name": "Mobile application with a serverless backend",
@@ -391,7 +391,7 @@
             "SQL Query",
             "Streaming Analytics"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-24"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -403,7 +403,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-24"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -416,7 +416,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2019-05-24"
+          "lastUpdated": "2019-06-24"
         },
         {
           "name": "Build, deploy, test, and retrain a predictive machine learning model",
@@ -496,7 +496,7 @@
             "Usage",
             "Billing"
           ],
-          "lastUpdated": "2019-03-07"
+          "lastUpdated": "2019-06-14"
         }
       ]
     },
@@ -517,7 +517,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-05-28"
+          "lastUpdated": "2019-06-17"
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -529,7 +529,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-05-28"
+          "lastUpdated": "2019-06-18"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -553,7 +553,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-05-28"
+          "lastUpdated": "2019-06-17"
         }
       ]
     },
