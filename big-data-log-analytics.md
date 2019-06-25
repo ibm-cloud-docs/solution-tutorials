@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-24"
+lastupdated: "2019-06-25"
 lasttested: "2019-06-17"
 ---
 
@@ -112,7 +112,7 @@ This section uses the command line to create service instances. Alternatively, y
 
 Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keyword.cos_short}} bucket. Topics define where applications deliver messages in publish-subscribe messaging systems. After messages are received and processed, they will be stored within a file located in an {{site.data.keyword.cos_short}} bucket.
 
-1. In your browser, access the `log-analysis-hub` service instance from the [Resources](https://{DomainName}/resources?search=log-analysis).
+1. In your browser, access the `log-analysis-hub` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis).
 2. Click the **+** button to create a topic.
 3. Enter the **Topic Name** `webserver` and click the **Create topic** button.
 4. Click **Service Credentials** and the **New Credential** button.
@@ -126,22 +126,21 @@ Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keywo
     * Click **Create bucket**.
 
 ## Create a Streams flow source
-
 {: #streamsflow}
 
 In this section, you will begin configuring a Streams flow that receives log messages. The {{site.data.keyword.streaminganalyticsshort}} service is powered by {{site.data.keyword.streamsshort}}, which can analyze millions of events per second, enabling sub-millisecond response times and instant decision-making.
 
 1. In your browser, access [Watson Data Platform](https://dataplatform.ibm.com).
-2. Select the **New project** button or tile, then the **Standard** tile.
+2. Click **Create a project** tile, then **create project** on **Standard** tile.
     * Enter the **Name** `webserver-logs`.
-    * The **Storage** option should be set to `log-analysis-cos`. If not, select the service instance.
+    * The **Define storage** option should be set to `log-analysis-cos`. If not, select the Cloud object storage instance from the list.
     * Click the **Create** button.
-3. On the resulting page, click the **Add to project** button, then the **Streams flow** tile.
+3. On the resulting page, click the **Add to project** button, then choose **Streams flow** as your asset type.
     * Click **Associate an IBM Streaming Analytics instance with a container-based plan**.
-    * Create a new {{site.data.keyword.streaminganalyticsshort}} instance by selecting the **Lite** radio button and clicking **Create**. Do not select Lite VM.
+    * Create a new {{site.data.keyword.streaminganalyticsshort}} instance by selecting the **Lite** radio button and clicking **Create**.
     * Provide the **Service name** as `log-analysis-sa` and click **Confirm**.
     * Type the streams flow **Name** as `webserver-flow`.
-    * Finish by clicking **Create**.
+    * Select **Wizard** and Finish by clicking **Create**.
 5. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
     * Click **Add Connection** and select your `log-analysis-hub` {{site.data.keyword.messagehub}} instance. If you do not see your instance listed, select the **IBM {{site.data.keyword.messagehub}}** option. Manually enter the **Connection details** that you obtained from the **Service credentials** in the previous section. **Name** the connection `webserver-flow`.
     * Click **Create** to create the connection.
