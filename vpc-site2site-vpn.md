@@ -17,7 +17,7 @@ lasttested: "2019-06-27"
 # Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
 {: #vpc-site2site-vpn}
 
-IBM offers a number of ways to securely extend an on-premises computer network with resources in the IBM cloud. This allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
+IBM offers a number of ways to securely extend an on-premises computer network with resources in the {{site.data.keyword.cloud_notm}}. This allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
 This tutorial walks you through connecting an on-premises Virtual Private Network (VPN) gateway to a cloud VPN created within a VPC (a VPC/VPN gateway). First, you will create a new {{site.data.keyword.vpc_full}} (VPC) and the associated resources like subnets, network Access Control Lists (ACLs), Security Groups and Virtual Server Instance (VSI).
 The VPC/VPN gateway will establish an [IPsec](https://en.wikipedia.org/wiki/IPsec) site-to-site link to an on-premises VPN gateway. The IPsec and the [Internet Key Exchange](https://en.wikipedia.org/wiki/Internet_Key_Exchange), IKE, protocols are proven open standards for secure communication.
@@ -56,7 +56,7 @@ Although there are no networking charges for accessing COS from the micro servic
 ## Architecture
 {: #architecture}
 
-The following diagram shows the virtual private cloud containing an app server. The app server hosts a microservice interfacing with {{site.data.keyword.cos_short}} service. A (simulated) on-premises network and the virtual cloud environment are connected via VPN gateways.
+The following diagram shows the virtual private cloud containing an app server. The app server hosts a microservice interfacing with {{site.data.keyword.cloud_notm}} services. A (simulated) on-premises network and the virtual cloud environment are connected via VPN gateways.
 
 ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 
