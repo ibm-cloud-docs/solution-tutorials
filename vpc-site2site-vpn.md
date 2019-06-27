@@ -51,7 +51,7 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-Although there are no networking charges for accessing COS from the micro service in this tutorial, standard networking charges for access to the VPC will be incurred.
+Although there are no networking charges for accessing {{site.data.keyword.cos_full}} and {{site.data.keyword.databases-for-postgresql}} in this tutorial, standard networking charges for access to the VPC will be incurred.
 
 ## Architecture
 {: #architecture}
@@ -105,21 +105,22 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
     {: codeblock}
 2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) using a **standard** or **lite** plan.
    ```sh
-   ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage lite global
+   ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage standard global
    ```
    {: codeblock}
 
    Note that only one lite instance can be created per account. If you already have an instance of {{site.data.keyword.cos_short}}, you can reuse it.
    {: tip}
 
-3. Create a service key with role **Reader**:
+3. Create a service key with role **Writer**:
    ```sh
-   ibmcloud resource service-key-create vpns2s-cos-key Reader --instance-name vpns2s-cos
+   ibmcloud resource service-key-create vpns2s-cos-key Writer --instance-name vpns2s-cos
    ```
    {: codeblock}
+
 4. Obtain the service key details in JSON format and store it in a new file **credentials.json** in the subdirectory **vpc-app-cos**. The file will be used later on by the app.
    ```sh
-   ibmcloud resource service-key vpns2s-cos-key --output json > vpc-app-cos/credentials.json
+   ibmcloud resource service-key vpns2s-cos-key --output json > nodejs-graphql/config/cos_credentials.json
    ```
    {: codeblock}
 
@@ -132,6 +133,30 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    ```
    {: codeblock}
 
+   The service will take a few minutes to provision, you will receive an output similar to the following
+   ```sh
+   Name:                vpns2s-pg
+   ID:                  crn:v1:bluemix:public:databases-for-postgresql:eu-gb:a/12412::
+   GUID:                12312
+   Location:            eu-gb
+   State:               inactive
+   Type:                service_instance
+   Sub Type:            Public
+   Service Endpoints:   private
+   Created at:          2019-06-27T19:26:57Z
+   Updated at:          2019-06-27T19:26:57Z
+   Last Operation:
+                        Status       create in progress
+                        Updated At   2019-06-27 19:26:57.183633222 +0000 UTC
+   ```
+
+   You can get updates on the status by issuing the following command periodically
+   ```sh
+   ibmcloud resource service-instance vpns2s-pg
+   ```
+
+   Once the Status changes to "create succeeded", you may proceed to the next step.
+
 2. Create a service key with role **Administrator**:
    ```sh
    ibmcloud resource service-key-create vpns2s-pg-key Administrator --instance-name vpns2s-pg
@@ -140,7 +165,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
 
 3. Obtain the service key details in JSON format and store it in a new file **pg_credentials.json** in the subdirectory **nodejs-graphql/config**. The file will be used later on by the app.
    ```sh
-   ibmcloud resource service-key vpns2s-cos-key --output json > nodejs-graphql/config/pg_credentials.json
+   ibmcloud resource service-key vpns2s-pg-key --output json > nodejs-graphql/config/pg_credentials.json
    ```
    {: codeblock}
 
