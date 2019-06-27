@@ -60,7 +60,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 ![Architecture](images/solution46-vpc-vpn/ArchitectureDiagram.png)
 
 1. The infrastructure (VPC, Subnets, Security Groups with rules, Network ACL and VSIs) are set up using a provided script.
-2. The microservice interfaces with {{site.data.keyword.cos_short}} through a direct endpoint.
+2. The microservice interfaces with {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} through private endpoints.
 3. A VPC/VPN Gateway is provisioned to expose the virtual private cloud environment to the on-premises network.
 4. The Strongswan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
 
@@ -92,6 +92,8 @@ The tutorial uses scripts to deploy a baseline of infrastructure resources befor
    {: codeblock}
 
 ### Create services
+
+#### {{site.data.keyword.cos_short}}
 In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
 
 1. Verify that you have followed the prerequisite steps of logging in
@@ -116,6 +118,32 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
 4. Obtain the service key details in JSON format and store it in a new file **credentials.json** in the subdirectory **vpc-app-cos**. The file will be used later on by the app.
    ```sh
    ibmcloud resource service-key vpns2s-cos-key --output json > vpc-app-cos/credentials.json
+   ```
+   {: codeblock}
+
+#### {{site.data.keyword.databases-for-postgresql}}
+In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.databases-for-postgresql}}.
+
+1. Verify that you have followed the prerequisite steps of logging in
+    ```sh
+    ibmcloud target
+    ```
+    {: codeblock}
+2. Create an instance of [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql) using a **standard** plan.
+   ```sh
+   ibmcloud resource service-instance-create vpns2s-pg databases-for-postgresql databases-for-postgresql-standard <region_name> --service-endpoints private
+   ```
+   {: codeblock}
+
+
+3. Create a service key with role **Administrator**:
+   ```sh
+   ibmcloud resource service-key-create vpns2s-pg-key Administrator --instance-name vpns2s-pg
+   ```
+   {: codeblock}
+4. Obtain the service key details in JSON format and store it in a new file **pg_credentials.json** in the subdirectory **nodejs-graphql/config**. The file will be used later on by the app.
+   ```sh
+   ibmcloud resource service-key vpns2s-cos-key --output json > nodejs-graphql/config/pg_credentials.json
    ```
    {: codeblock}
 
