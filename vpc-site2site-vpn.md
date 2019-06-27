@@ -71,6 +71,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 - Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
+- You need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/infrastructure/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
 - Install [**jq**](https://stedolan.github.io/jq/download/). It is used by the provided scripts to process JSON output.
 
 ## Deploy a virtual app server in a virtual private cloud
@@ -120,7 +121,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    {: codeblock}
 
 
-### Create a Virtual Private Cloud baseline resources
+### Create Virtual Private Cloud baseline resources
 {: #create-vpc}
 The tutorial provides a script to create the baseline resources required for this tutorial, i.e., the starting environment. The script can either generate that environment in an existing VPC or create a new VPC.
 
@@ -133,7 +134,7 @@ In the following, create these resources by configuring and then running a setup
    ```
    {: codeblock}
 
-2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is.
+2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is or are explained in the next section.
 3. Make sure that your CLI environment is set up to target generation 1 VPC resources. Run:
    ```sh
    ibmcloud is target --gen 1
@@ -156,18 +157,33 @@ In the following, create these resources by configuring and then running a setup
 5. This will result in creating the following resources, including the bastion-related resources:
    - 1 VPC (optional)
    - 1 public gateway
-   - 3 subnets within the VPC
-   - 4 security groups with ingress and egress rules
-   - 3 VSIs: vpns2s-onprem-vsi (floating-ip is ONPREM_IP), vpns2s-cloud-vsi (floating-ip is VSI_CLOUD_IP) and vpns2s-bastion (floating-ip is BASTION_IP_ADDRESS)
+   - 2 subnets within the VPC
+   - 3 security groups with ingress and egress rules
+   - 2 VSIs: vpns2s-cloud-vsi (floating-ip is VSI_CLOUD_IP) and vpns2s-bastion (floating-ip is BASTION_IP_ADDRESS)
 
-   Note down for later use the returned values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, **ONPREM_IP**, **CLOUD_CIDR**, and **ONPREM_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
+   Note down for later use the returned values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, and **CLOUD_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
+
+### Create an on-premises virtual server 
+{: #create-onprem}
+
+To simulate the on-premises environment, you create a virtual server (VSI) with classic infrastructure. In the same directory as for the previous section, follow these steps:
+1. Edit the file **config.sh** and adapt the settings to your environment. Change the value of **SSHKEYNAME_CLASSIC** to the name or comma-separated list of names of SSH keys for classic infrastructure (see "Before you begin"). Modify **DATACENTER_ONPREM** to a different value if needed. You can obtain the list of supported data centers using `ibmcloud sl vs options`.
+2. Create the VSI to simalte the on-prem environment by executing:
+
+   ```sh
+   ./onprem-vsi-create.sh
+   ```
+   {: codeblock}
+
+3. Note down the returned values for **VSI_ONPREM_IP** and **ONPREM_CIDR**.
+
 
 ### Create the Virtual Private Network gateway and connection
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and **vpns2s-cloud-subnet** as subnet are selected.
 2. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
-3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi** (ONPREM_IP). Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
+3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi** (**VSI_ONPREM_IP**). Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
 4. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
 5. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
 6. Wait for the VPN gateway to become available (you may need to refresh the screen).
@@ -176,14 +192,14 @@ In the following, you will add a VPN gateway and an associated connection to the
 ### Create the on-premises Virtual Private Network gateway
 Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
 
-1. Connect to the "on-premises" VSI **vpns2s-onprem-vsi** using ssh. Execute the following and replace **ONPREM_IP** with the IP address returned earlier.
+1. Connect to the "on-premises" VSI **vpns2s-onprem-vsi** using ssh. Execute the following and replace **VSI_ONPREM_IP** with the IP address returned earlier.
 
    ```sh
-   ssh root@ONPREM_IP
+   ssh root@VSI_ONPREM_IP
    ```
    {:pre}
 
-   Depending on your environment, you may need to use `ssh -i <path to your private key file> root@ONPREMP_IP`.
+   Depending on your environment, you may need to use `ssh -i <path to your private key file> root@VSI_ONPREM_IP`.
    {:tip}
 
 2. Next, on the machine **vpns2s-onprem-vsi**, execute the following commands to update the package manager and to install the strongSwan software.
@@ -209,14 +225,14 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:codeblock}
 
-4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
+4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
 
    ```
-   ONPREM_IP GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
+   VSI_ONPREM_IP GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
    ```
    {:pre}
 
-5. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **ONPREM_IP**, **ONPREM_CIDR**, **GW_CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
+5. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **VSI_ONPREM_IP**, **ONPREM_CIDR**, **GW_CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
 
    ```sh
    # basic configuration
@@ -230,7 +246,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    conn tutorial-site2site-onprem-to-cloud
       authby=secret
       left=%defaultroute
-      leftid=ONPREM_IP
+      leftid=VSI_ONPREM_IP
       leftsubnet=ONPREM_CIDR
       right=GW_CLOUD_IP
       rightsubnet=CLOUD_CIDR
@@ -268,7 +284,7 @@ To test that the VPN connection has been successfully established, use the simul
 1. In a new terminal, execute the following command after replacing the values. It uses the strongSwan host as jump host to connect via VPN to the application server's private IP address.
 
    ```sh
-   ssh -J root@ONPREM_IP root@VSI_CLOUD_IP
+   ssh -J root@VSI_ONPREM_IP root@VSI_CLOUD_IP
    ```
    {:pre}
 
@@ -282,13 +298,10 @@ To test that the VPN connection has been successfully established, use the simul
 4. In the command window from step 1), try to establish the connection again:
 
    ```sh
-   ssh -J root@ONPREM_IP root@VSI_CLOUD_IP
+   ssh -J root@VSI_ONPREM_IP root@VSI_CLOUD_IP
    ```
    {:pre}
    The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
-
-   Note that depending on deployment details this connection actually still succeeds. The reason is that intra-VPC connectivity is supported across zones. If you would deploy the simulated on-prem VSI to another VPC or to [{{site.data.keyword.virtualmachinesfull}}](/docs/vsi?topic=virtual-servers-about-public-virtual-servers), the VPN would be needed for successful access.
-   {:tip}
 
 5. In the "onprem" VSI terminal, start the VPN gateway again:
    ```sh
@@ -345,6 +358,11 @@ You can test the working VPN connection by accessing a microservice on the cloud
 3. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
 4. Once the VSIs are gone, switch to **Subnets**. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
 5. After the subnets have been deleted, switch to **VPC** and delete your VPC.
+6. In the terminal, remove the classic VSI by executing the script:
+   ```sh
+   BASENAME=vpns2s ./onprem-vsi-remove.sh
+   ```
+   {:codeblock}
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
