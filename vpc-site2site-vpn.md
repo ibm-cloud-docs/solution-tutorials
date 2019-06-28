@@ -364,7 +364,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
 
 1. Copy over the code for the microservice app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
    ```sh
-   scp -r  -o "ProxyJump root@BASTION_IP_ADDRESS"  vpc-app-cos root@VSI_CLOUD_IP:vpc-app-cos
+   scp -r  -o "ProxyJump root@BASTION_IP_ADDRESS" nodejs-graphql root@VSI_CLOUD_IP:nodejs-graphql
    ```
    {:pre}
 2. Connect to the cloud VSI, again using the bastion as jump host.
@@ -374,30 +374,87 @@ You can test the working VPN connection by accessing a microservice on the cloud
    {:pre}
 3. On the cloud VSI, change into the code directory:
    ```sh
-   cd vpc-app-cos
+   cd nodejs-graphql
    ```
    {:pre}
-4. Install Python and the Python package manager PIP.
+4. Install Node.js and the Node package manager(NPM).
    ```sh
-   apt-get update; apt-get install python python-pip
+   apt-get update; apt-get install nodejs npm
    ```
    {:pre}
-5. Install the necessary Python packages using **pip**.
+5. Install the necessary modules using **npm**.
    ```sh
-   pip install -r requirements.txt
+   npm install
    ```
    {:pre}
-6. Start the app:
+6. Build the app:
    ```sh
-   python browseCOS.py
+   npm run build
    ```
    {:pre}
-7. In the "onprem" VSI terminal, access the service. Replace VSI_CLOUD_IP accordingly.
+7. Create the tables in the PostgreSQL database.
    ```sh
-   curl VSI_CLOUD_IP/api/bucketlist
+   node ./build/createTables.js
    ```
    {:pre}
-   The command should return a JSON object.
+8. Create the cloud object storage bucket in the database.
+   ```sh
+   node ./build/createBucket.js
+   ```
+   {:pre}
+   The command should return something similar to this:
+   ```
+   Creating new bucket: transactions
+
+   Bucket: transactions created!
+
+   Retrieving list of buckets:
+   Bucket Name: transactions
+   ```
+8. Run the app.
+   ```sh
+   npm run start
+   ```
+   {:pre}
+9. Access the server using the URI provided in the output screen. Copy and paste the following queries and run them each at a time, modify the balance and item_content and repeat:
+   ```
+   query read_database {
+      read_database {
+         id
+         balance
+         transactiontime
+      }
+   }
+
+   query read_items {
+      read_items {
+         key
+         size
+         modified
+      }
+   }
+
+   query read_database_and_items {
+      read_database {
+         id
+         balance
+         transactiontime
+      }
+      read_items {
+         key
+         size
+         modified
+      }
+   }
+
+   mutation add_to_database_and_storage_bucket {
+      add(balance: 20.50, item_content: "Payment for movie, popcorn and drink...") {
+         id
+         status
+      }
+   }
+   ```
+   {:pre}
 
 ## Remove resources
 {: #remove-resources}
