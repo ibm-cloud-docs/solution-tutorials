@@ -416,43 +416,42 @@ You can test the working VPN connection by accessing a microservice on the cloud
    npm run start
    ```
    {:pre}
-9. Access the server using the URI provided in the output screen. Copy and paste the following queries and run them each at a time, modify the balance and item_content and repeat:
+9. Access the "onprem" VSI terminal via SSH. Issue the following curl commands to query the API server running on the Cloud VSI.
+
+   - The API server will read content from the {{site.data.keyword.databases-for-postgresql}}.
+   ```sh
+   curl \
+   -X POST \
+   -H "Content-Type: application/json" \
+   --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
+   http://10.242.64.11:5000/api/bank
    ```
-   query read_database {
-      read_database {
-         id
-         balance
-         transactiontime
-      }
-   }
 
-   query read_items {
-      read_items {
-         key
-         size
-         modified
-      }
-   }
+   - The API server will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format.
+   ```sh
+   curl \
+   -X POST \
+   -H "Content-Type: application/json" \
+   --data '{ "query": "query read_items { read_items { key size modified } }" }' \
+   http://10.242.64.11:5000/api/bank
+   ```
 
-   query read_database_and_items {
-      read_database {
-         id
-         balance
-         transactiontime
-      }
-      read_items {
-         key
-         size
-         modified
-      }
-   }
+   - The API server will create a record in the {{site.data.keyword.databases-for-postgresql}} and add an item to the {{site.data.keyword.cos_short}} bucket and return the results in JSON format.
+   ```sh
+   curl \
+   -X POST \
+   -H "Content-Type: application/json" \
+   --data '{ "query": "mutation add_to_database_and_storage_bucket { add(balance: 10, item_content: \"Payment for movie, popcorn and drink...\") { id status } }" }' \
+   http://10.242.64.11:5000/api/bank
+   ```
 
-   mutation add_to_database_and_storage_bucket {
-      add(balance: 20.50, item_content: "Payment for movie, popcorn and drink...") {
-         id
-         status
-      }
-   }
+   - The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
+   ```sh
+   curl \
+   -X POST \
+   -H "Content-Type: application/json" \
+   --data '{ "query": "query read_database_and_items { read_database { id balance transactiontime } read_items { key size modified } }" }' \
+   http://10.242.64.11:5000/api/bank
    ```
    {:pre}
 
