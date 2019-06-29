@@ -424,7 +424,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
-   http://10.242.64.11/api/bank
+   http://VSI_CLOUD_IP/api/bank
    ```
 
    - The API server will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format.
@@ -433,7 +433,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_items { read_items { key size modified } }" }' \
-   http://10.242.64.11/api/bank
+   http://VSI_CLOUD_IP/api/bank
    ```
 
    - The API server will create a record in the {{site.data.keyword.databases-for-postgresql}} and add an item to the {{site.data.keyword.cos_short}} bucket and return the results in JSON format.
@@ -442,7 +442,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "mutation add_to_database_and_storage_bucket { add(balance: 10, item_content: \"Payment for movie, popcorn and drink...\") { id status } }" }' \
-   http://10.242.64.11/api/bank
+   http://VSI_CLOUD_IP/api/bank
    ```
 
    - The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
@@ -451,7 +451,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_database_and_items { read_database { id balance transactiontime } read_items { key size modified } }" }' \
-   http://10.242.64.11/api/bank
+   http://VSI_CLOUD_IP/api/bank
    ```
    {:pre}
 
