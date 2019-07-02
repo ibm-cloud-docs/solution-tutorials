@@ -120,7 +120,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
 
 4. Obtain the service key details in JSON format and store it in a new file **credentials.json** in the subdirectory **vpc-app-cos**. The file will be used later on by the app.
    ```sh
-   ibmcloud resource service-key vpns2s-cos-key --output json > nodejs-graphql/config/cos_credentials.json
+   ibmcloud resource service-key vpns2s-cos-key --output json > config/cos_credentials.json
    ```
    {: codeblock}
 
@@ -165,7 +165,7 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
 
 3. Obtain the service key details in JSON format and store it in a new file **pg_credentials.json** in the subdirectory **nodejs-graphql/config**. The file will be used later on by the app.
    ```sh
-   ibmcloud resource service-key vpns2s-pg-key --output json > nodejs-graphql/config/pg_credentials.json
+   ibmcloud resource service-key vpns2s-pg-key --output json > config/pg_credentials.json
    ```
    {: codeblock}
 
