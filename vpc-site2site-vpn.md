@@ -87,9 +87,9 @@ The tutorial uses scripts to deploy a baseline of infrastructure resources befor
    git clone https://github.com/IBM-Cloud/vpc-tutorials
    ```
    {: codeblock}
-2. Go to the scripts for this tutorial by changing into **vpc-tutorials**, then **vpc-site2site-vpn**:
+2. Go to the directory for the sample app we will use for this tutorial by changing into **sampleapps**, then **nodejs-graphql**:
    ```sh
-   cd vpc-tutorials/vpc-site2site-vpn
+   cd sampleapps/nodejs-graphql
    ```
    {: codeblock}
 
@@ -176,7 +176,13 @@ The tutorial provides a script to create the baseline resources required for thi
 
 In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
 
-1. Copy over the sample configuration file into a file to use:
+1. Go to the directory for the scripts used for this tutorial by changing into **vpc-tutorials**, then **vpc-site2site-vpn**:
+   ```sh
+   cd vpc-tutorials/vpc-site2site-vpn
+   ```
+   {: codeblock}
+
+   Copy over the sample configuration file into a file to use:
 
    ```sh
    cp config.sh.sample config.sh
@@ -362,7 +368,13 @@ To test that the VPN connection has been successfully established, use the simul
 ### Test using a microservice
 You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI.
 
-1. Copy over the code for the microservice app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
+1. Go to the directory for the sample app we will use for this tutorial by changing into **sampleapps**, then **nodejs-graphql**:
+   ```sh
+   cd sampleapps/nodejs-graphql
+   ```
+   {: codeblock}
+
+   Copy over the code for the microservice app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
    ```sh
    scp -r  -o "ProxyJump root@BASTION_IP_ADDRESS" nodejs-graphql root@VSI_CLOUD_IP:nodejs-graphql
    ```
