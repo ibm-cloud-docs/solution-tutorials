@@ -368,13 +368,13 @@ To test that the VPN connection has been successfully established, use the simul
 ### Test using a microservice
 You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI.
 
-1. Go to the directory for the sample app we will use for this tutorial by changing into **sampleapps**, then **nodejs-graphql**:
+1. Back on your local machine, where you had cloned the vpc-tutorials repository.  Go to the directory for the sample apps **sampleapps**:
    ```sh
-   cd sampleapps/nodejs-graphql
+   cd sampleapps
    ```
    {: codeblock}
 
-   Copy over the code for the microservice app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
+   Copy over the code for the app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
    ```sh
    scp -r  -o "ProxyJump root@BASTION_IP_ADDRESS" nodejs-graphql root@VSI_CLOUD_IP:nodejs-graphql
    ```
@@ -404,6 +404,31 @@ You can test the working VPN connection by accessing a microservice on the cloud
    npm run build
    ```
    {:pre}
+6. Copy the config/config.template.json to config/config.json
+   ```sh
+   cp config/config.template.json config/config.json
+   ```
+6. Edit the config/config.json file and add the `bucketName`, `region` and `location` for your deployment, all other settings can remain as is.
+   ```json
+   {
+   "cookie": "some_ridiculously_long_string_of_your_choice_or_keep_this_one",
+   "cloud_object_storage": {
+      "bucketName": "<desired name for bucket>",
+      "endpoint_type": "regional",
+      "region": "<see related help below>",
+      "type": "direct",
+      "location": "<see related help below>",
+      "location_constraint": "standard",
+      "help": {
+         "endpoint_type_help": "As defined by the endpoints url provided in the credentials, can be either: cross-region, regional or single-site",
+         "region_help": "As defined by the endpoints url provided in the credentials, i.e. for regional enpoint_type can be: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd. For cross-region endpoint_type can be: us, eu, ap. ",
+         "type_help": "Can be public or private or direct (note the direct endpoints are used for VPC only)",
+         "location_help": "As defined by the endpoints url provided in the credentials, i.e. ",
+         "location_constraint_help": "As found here https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-classes#classes, standard, vault, cold or flex with prefix of the region."
+      }
+   }
+   ```
+
 7. Create the tables in the PostgreSQL database.
    ```sh
    node ./build/createTables.js
@@ -428,7 +453,14 @@ You can test the working VPN connection by accessing a microservice on the cloud
    npm run start
    ```
    {:pre}
-9. Access the "onprem" VSI terminal via SSH. Issue the following curl commands to query the API server running on the Cloud VSI.
+9. Access the "onprem" VSI terminal via SSH. 
+
+   ```sh
+   ssh root@VSI_ONPREM_IP
+   ```
+   {:pre}
+
+   Issue the following curl commands to query the API server running on the Cloud VSI:
 
    - The API server will read content from the {{site.data.keyword.databases-for-postgresql}}.
    ```sh
