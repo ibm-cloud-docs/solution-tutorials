@@ -60,7 +60,7 @@ The addressing scheme is unified by routing IP traffic over a GRE tunnel between
 4. Virtual Overlay Network
 [{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc-on-classic?topic=vpc-on-classic-getting-started) supports BYOIP for fully virtual environments on the {{site.data.keyword.Bluemix_notm}}. It could be considered as an alternative to the secure private network enclosure described in [this tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure).
 
-Alternatively consider a solution such as VMware NSX that implements a virtual overlay network in a layer over the [{{site.data.keyword.Bluemix_notm}} network. All BYOIP addresses in the virtual overlay are independent of [{{site.data.keyword.Bluemix_notm}} network address ranges. See [Getting started with VMware and [{{site.data.keyword.Bluemix_notm}}](https://{DomainName}/docs/infrastructure/vmware?topic=VMware-getting-started-tutorial#getting-started-with-vmware-and-ibm-cloud).
+Alternatively consider a solution such as VMware NSX that implements a virtual overlay network in a layer over the {{site.data.keyword.Bluemix_notm}} network. All BYOIP addresses in the virtual overlay are independent of {{site.data.keyword.Bluemix_notm}} network address ranges. See [Getting started with VMware and {{site.data.keyword.Bluemix_notm}}](https://{DomainName}/docs/infrastructure/vmware?topic=VMware-getting-started-tutorial#getting-started-with-vmware-and-ibm-cloud).
 
 ## Pattern decision tree
 {: #decision_tree}
@@ -80,18 +80,18 @@ The following notes provide further guidance:
 There are following two distinctive cases where NAT could be problematic. In these cases, NAT should not be used.
 
 - Some applications such as Microsoft AD domain communication, and P2P applications could have technical problems with NAT.
-- Where unknown servers need to communicate with the [{{site.data.keyword.Bluemix_notm}} or hundreds of bidirectional connections between [{{site.data.keyword.Bluemix_notm}} and on-premise servers are required. In this case all the mapping cannot be configured on the client router/NAT table because of an inability to identify the mapping beforehand.
+- Where unknown servers need to communicate with the {{site.data.keyword.Bluemix_notm}} or hundreds of bidirectional connections between {{site.data.keyword.Bluemix_notm}} and on-premise servers are required. In this case all the mapping cannot be configured on the client router/NAT table because of an inability to identify the mapping beforehand.
 
 
 ### No address overlapping
 {: #no-overlap}
 
-Is 10.0.0.0/8 used in the on-premise network? When no address overlaps exist between the on-premise and the [{{site.data.keyword.Bluemix_notm}} private network, GRE tunneling as described in [this tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN) can be used between on-premise and IBM Cloud to avoid the need for NAT translation. This requires a review of network address usage with on-site network team.
+Is 10.0.0.0/8 used in the on-premise network? When no address overlaps exist between the on-premise and the {{site.data.keyword.Bluemix_notm}} private network, GRE tunneling as described in [this tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-configuring-IPSEC-VPN#configuring-IPSEC-VPN) can be used between on-premise and IBM Cloud to avoid the need for NAT translation. This requires a review of network address usage with on-site network team.
 
 ### Partial address overlapping
 {: #partial_overlap}
 
-If any of the 10.0.0.0/8 range is in use on the on-premise network, are there non-overlapping subnets available on the [{{site.data.keyword.Bluemix_notm}} network? Review existing network address usage with on-site network team and contact [{{site.data.keyword.Bluemix_notm}} technical sales to identify available non-overlapping networks.
+If any of the 10.0.0.0/8 range is in use on the on-premise network, are there non-overlapping subnets available on the {{site.data.keyword.Bluemix_notm}} network? Review existing network address usage with on-site network team and contact {{site.data.keyword.Bluemix_notm}} technical sales to identify available non-overlapping networks.
 
 ### Is IP aliasing problematic?
 {: #ip_alias}
