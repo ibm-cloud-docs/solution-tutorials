@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-06-28"
-lasttested: "2019-06-28"
+lastupdated: "2019-07-02"
+lasttested: "2019-07-02"
 ---
 
 {:shortdesc: .shortdesc}
@@ -98,11 +98,12 @@ The tutorial uses scripts to deploy a baseline of infrastructure resources befor
 #### {{site.data.keyword.cos_short}}
 In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
 
-1. Verify that you have followed the prerequisite steps of logging in
+1. Verify that you have followed the prerequisite steps of logging in:
     ```sh
     ibmcloud target
     ```
     {: codeblock}
+
 2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) using a **standard** or **lite** plan.
    ```sh
    ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage standard global
@@ -197,7 +198,6 @@ In the following, create these resources by configuring and then running a setup
    {: codeblock}
 
 4. To create the resources in a new VPC, run the script as follows:
-
    ```sh
    ./vpc-site2site-vpn-baseline-create.sh
    ```
@@ -211,7 +211,7 @@ In the following, create these resources by configuring and then running a setup
 
 5. This will result in creating the following resources, including the bastion-related resources:
    - 1 VPC (optional)
-   - 1 public gateway
+   - up to 3 public gateways, 1 per zone if not already present
    - 2 subnets within the VPC
    - 3 security groups with ingress and egress rules
    - 2 VSIs: vpns2s-cloud-vsi (floating-ip is VSI_CLOUD_IP) and vpns2s-bastion (floating-ip is BASTION_IP_ADDRESS)
