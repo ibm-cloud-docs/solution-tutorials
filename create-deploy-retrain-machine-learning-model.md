@@ -174,6 +174,29 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
    You will be using this in the next step where you will be re-training the model for better performance and precision.
 
+## Monitor your model with Watson OpenScale
+In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
+1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale?bss_account=e97a8c01ac694e308ef3ad77958e7d50&ims_account=1608115) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog and click **Launch Application**.
+1. Click on **No thanks** to manually setup the monitors.
+1. Click **Use the free lite plan database** to store model deployment output and retraining data > click **Save**.
+1. Click **Select Provider** > Click **Add machine learning provider** > Select **Watson Machine Learning** as your service provider
+      - In the dropdown, select the {{site.data.keyword.pm_full}} service you created above.
+      - Provide a service provider instance name (say `iris-wml-provider`)
+      - Click **Save**
+1. Click **Go to Dashboard** to add a deployment > Click **Add deployments** and select `iris_deployment`> Click **Configure**.
+1. Click **Configure monitors** to setup your monitors.
+1. Under **Payload logging**,
+      - Select **Numerical/categorical** as Data type
+      - Select **Multi-class classification** as the Algorithm type > Click **Save** and then **OK**
+      - Send a payload scoring request using the `POST /online` API call or using the TEST section. Once done, click **I'm finished**
+1. Under **Model details**,
+      - Click **Begin** and select **Manually configure monitors** > Click **Next**.
+      - Select **Db2** as the location for your training data > Provide the credentials of your Db2 service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) > Click **Test**. Once the connection is successful, Click **Next**
+      - Select the schema - DASHXXXX and the Table - IRIS_FEEDBACK > Click **Next**
+      - Click on **Species** tile as your column that contains the answers to be predicted by the model > Click **Next**
+      - Select petal_length, petal_width as your features used to train the model.> Click **Next**
+      - Select petal_length, petal_width as the text and categorical features.> Click **Next**
+
 ## Re-train your model
 
 {:#retrain_model}
