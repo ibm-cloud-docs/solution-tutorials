@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-12"
+lastupdated: "2019-07-04"
 lasttested: "2019-06-11"
 ---
 
@@ -17,7 +17,7 @@ lasttested: "2019-06-11"
 {:tip: .tip}
 {:pre: .pre}
 
-# Build, deploy, test, and retrain a predictive machine learning model
+# Build, deploy, test, retrain and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
 This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.
 
@@ -50,6 +50,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
 * [{{site.data.keyword.pm_full}}](https://{DomainName}/catalog/services/machine-learning)
 * [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
+* [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale)
 
 ## Before you begin
 {: #prereqs}
@@ -178,7 +179,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {:#monitor_openscale}
 
 In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
-1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale?bss_account=e97a8c01ac694e308ef3ad77958e7d50&ims_account=1608115) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog and click **Launch Application**.
+1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog and click **Launch Application**.
 1. Click on **No thanks** to manually setup the monitors.
 1. Click **Use the free lite plan database** to store model deployment output and retraining data > click **Save**.
 1. Click **Select Provider** > Click **Add machine learning provider** > Select **Watson Machine Learning** as your service provider
