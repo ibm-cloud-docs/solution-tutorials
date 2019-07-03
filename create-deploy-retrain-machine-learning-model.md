@@ -205,8 +205,8 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
       - Set the minimum threshold to 1o and maximum threshold to 40 > Click **Next** and then **Save**.
       - Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.
 
-## Generate load and
-{:#generate_load}
+## Generate load and check metrics
+{:#generate_load_metrics}
 
 You can either generate load by sending multiple requests with random petal_width, petal_length, sepal_width and sepal_length values in the JSON to the scoring API endpoint or by executing the Python script below
 
@@ -244,7 +244,10 @@ You can either generate load by sending multiple requests with random petal_widt
    ```
    {:pre}
 1. Once the command exits, Navigate to the {{site.data.keyword.aios_full_notm}} dashboard and click on the **Insights** on the left pane.
-1. Once on the insights page, click on the WML deployment to see the Quality, Performance and Analytics monitors and metrics.
+1. Once on the insights page, click on the WML deployment tile to see the Quality, Performance and Analytics monitors and metrics.
+1. Click on **Throughput** under performance to see the average number of requests per minute.
+1. Click on **Accuracy** to check the quality of your model. Accuracy is proportion of correct predictions.
+1. Explore the chart builder to visualize various metrics.
 
 ## Re-train your model
 
