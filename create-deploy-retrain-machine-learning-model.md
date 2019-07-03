@@ -174,8 +174,9 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
    You will be using this in the next step where you will be re-training the model for better performance and precision.
 
-## Monitor your model with Watson OpenScale
+## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
 {:#monitor_openscale}
+
 In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
 1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale?bss_account=e97a8c01ac694e308ef3ad77958e7d50&ims_account=1608115) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog and click **Launch Application**.
 1. Click on **No thanks** to manually setup the monitors.
@@ -202,7 +203,48 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
 1. Under **Accuracy**,
       - Click **Begin** and let the accuracy alert threshold be **80%**.
       - Set the minimum threshold to 1o and maximum threshold to 40 > Click **Next** and then **Save**.
-      - Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**
+      - Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.
+
+## Generate load and
+{:#generate_load}
+
+You can either generate load by sending multiple requests with random petal_width, petal_length, sepal_width and sepal_length values in the JSON to the scoring API endpoint or by executing the Python script below
+
+1. Open the terminal and export the required values for the Python script by replacing the placeholders below
+   ```sh
+   export IAM_TOKEN='<IAM_TOKEN>'
+   export ML_INSTANCE_ID='<ML_SERVICE_INSTANCE_ID>'
+   export SCORING_ENDPOINT='<ML_SCORING_ENDPOINT>'
+   ```
+   {:pre}
+
+   For getting an IAM token using a Watson service API key, refer this [link](https://{DomainName}/docs/services/watson?topic=watson-iam)
+   {:tip}
+
+1. Create a file with the name `scoring.py`, paste the code below and save the file.
+   ```
+    import os, urllib3, requests, json, random
+
+    iam_token=os.environ.get('IAM_TOKEN')
+    ml_instance_id=os.environ.get('ML_INSTANCE_ID')
+    scoring_endpoint=os.environ.get('SCORING_ENDPOINT')
+    array_of_values_to_be_scored=[round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1)]
+    # NOTE: generate iam_token and retrieve ml_instance_id from the ML service credentials
+    header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + iam_token, 'ML-Instance-ID': ml_instance_id}
+    payload_scoring = {"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"], "values": [array_of_values_to_be_scored]}
+    response_scoring = requests.post(scoring_endpoint, json=payload_scoring, headers=header)
+    print("Scoring response")
+    print(json.loads(response_scoring.text))
+   ```
+   {:pre}
+
+1. Point to the directory where the Python script is saved and run the below bash command
+   ```sh
+   for i in {1..100}; do python3 scoring.py; done
+   ```
+   {:pre}
+1. Once the command exits, Navigate to the {{site.data.keyword.aios_full_notm}} dashboard and click on the **Insights** on the left pane.
+1. Once on the insights page, click on the WML deployment to see the Quality, Performance and Analytics monitors and metrics.
 
 ## Re-train your model
 
