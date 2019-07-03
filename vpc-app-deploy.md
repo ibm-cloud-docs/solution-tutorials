@@ -54,9 +54,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
   ![Architecture](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
 </p>
 
-1. The user identifies the software that is required
-1. Manually practices the installation of the software
-1. Optionally automates the procedures using API, CLI, Terraform or Ansible
+1. Install and configure the automation software required to access cloud and VSIs
+1. Identify the software accessed from the {{site.data.keyword.IBM}} provided mirrors and configure installation and update
+1. Identify the internet software required and configure installation and update
 
 ## General software installation principles
 {: #section_one}
@@ -64,7 +64,7 @@ Software can originate from the following locations:
 - Initial VSI image
 - {{site.data.keyword.Bluemix_notm}} mirrors
 - Internet or intranet available repositories
-- On the file system of the provisioning system, the users system in the architecture diagram above
+- File system of the workstation in the architecture diagram above (provisioning system)
 
 Initial {{site.data.keyword.Bluemix_notm}} VSI images are populated with popular off the shelf operating systems:
 
@@ -82,7 +82,7 @@ cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.
 
 At a high level:
 - A public, private and bastion VSI are provisioned with the ubuntu-18.04 base image
-- nginx is installed on the public and private VSI - demonstrating the use of IBM mirrors
+- nginx is installed on the public and private VSI - demonstrating the use of {{site.data.keyword.IBM}} mirrors
 - Internet software is accessed - demonstrating the use of internet repositories on the public VSI and failure on the private VSI
 - A file is copied from the file system of the provisioning computer to the public VSI and executed
 - Tests are run to verify the above
@@ -145,7 +145,7 @@ runcmd:
 {:pre}
 
 ### Demonstrate the mirrors
-Upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the private instances have access to the IBM provided mirrors.  The cloud-init program uses the OS native install software, ubuntu apt for example, to install software from the mirrors.  The mirrors contain the full linux distrubtions of updates and optionally installed software, like nginx, for the IBM images.
+Upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the private instances have access to the {{site.data.keyword.IBM}} provided mirrors.  The cloud-init program uses the OS native install software, ubuntu apt for example, to install software from the mirrors.  The mirrors contain the full linux distrubtions of updates and optionally installed software, like nginx, for the provided images.
 
 ### Demonstrating internet access
 When nginx is initialized it will surface the following file: /var/www/html/index.nginx-debian.html
