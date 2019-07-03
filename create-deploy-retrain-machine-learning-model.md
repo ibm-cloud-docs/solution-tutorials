@@ -175,6 +175,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
    You will be using this in the next step where you will be re-training the model for better performance and precision.
 
 ## Monitor your model with Watson OpenScale
+{:#monitor_openscale}
 In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
 1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale?bss_account=e97a8c01ac694e308ef3ad77958e7d50&ims_account=1608115) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog and click **Launch Application**.
 1. Click on **No thanks** to manually setup the monitors.
@@ -196,6 +197,12 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
       - Click on **Species** tile as your column that contains the answers to be predicted by the model > Click **Next**
       - Select petal_length, petal_width as your features used to train the model.> Click **Next**
       - Select petal_length, petal_width as the text and categorical features.> Click **Next**
+      - Select nodeADP_class as the deployment prediction column.
+      - Click **Save**.
+1. Under **Accuracy**,
+      - Click **Begin** and let the accuracy alert threshold be **80%**.
+      - Set the minimum threshold to 1o and maximum threshold to 40 > Click **Next** and then **Save**.
+      - Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**
 
 ## Re-train your model
 
