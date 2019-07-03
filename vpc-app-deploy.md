@@ -22,14 +22,16 @@ lasttested: "2019-06-15"
 # Deploy applications on VSI in VPC
 {: #vpc-app-deploy}
 
-This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure on {{site.data.keyword.Bluemix_notm}} and installing software on a virtual server instance (VSI) using Infrastructure as code(IaC) tools like Terraform and Ansible. The infrastructure can be built as described in the following two tutorials:
-- [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) only the public subnet and web server is required for this tutorial.
-- [Securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
+This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on a virtual server instance (VSI) using Infrastructure as code(IaC) tools like Terraform and Ansible. The infrastructure can be built as described in the following two tutorials:
+- Provision your own VPC with a public and a private subnet and a virtual server instance (VSI) in each subnet - [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). Only the public subnet and web server is required for this tutorial.
+- For secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group - [Securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
+
+{:shortdesc}
 
 ## Objectives
 {: #objectives}
 
-* Understand operating system software provided by IBM
+* Understand operating system software provided by {{site.data.keyword.IBM_notm}}
 * Utilize manual steps for updating the operating system software and installing new software
 * Become familiar with the Terraform object model for VPC
 * Understand how to use Terraform for installing software
@@ -60,11 +62,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #section_one}
 Software can originate from the following locations:
 - Initial VSI image
-- IBM cloud mirrors
+- {{site.data.keyword.Bluemix_notm}} mirrors
 - Internet or intranet available repositories
 - On the file system of the provisioning system, the users system in the architecture diagram above
 
-Initial IBM VSI images are populated with popular off the shelf operating systems:
+Initial {{site.data.keyword.Bluemix_notm}} VSI images are populated with popular off the shelf operating systems:
 
 ```
 $ ibmcloud is images
@@ -85,7 +87,7 @@ At a high level:
 - A file is copied from the file system of the provisioning computer to the public VSI and executed
 - Tests are run to verify the above
 
-## IBM Mirrors
+## {{site.data.keyword.Bluemix_notm}} Mirrors
 IBM has internal mirrors to support the IBM images.  The mirrors are part of the [service endpoints available for IBM Cloud VPC](https://{DomainName}/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc).  There are no ingress charges for reading the mirrors.  The mirrors will contain new versions for the software in the IBM provided images as well as optional packages.
 
 Consider both `updating` the version lists available to the provisioned instances and `upgrading` the installed software from these mirrors.
