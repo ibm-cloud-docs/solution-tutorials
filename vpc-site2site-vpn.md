@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-02"
+lastupdated: "2019-07-04"
 lasttested: "2019-07-02"
 ---
 
@@ -126,9 +126,9 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    {: codeblock}
 
 #### {{site.data.keyword.databases-for-postgresql}}
-In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.databases-for-postgresql}}.
+In this section, you will create the database service.
 
-1. Create an instance of [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql) using a **standard** plan.
+1. Create an instance of [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql) using a **standard** plan. Replace **<region_name>** accordingly.
    ```sh
    ibmcloud resource service-instance-create vpns2s-pg databases-for-postgresql databases-for-postgresql-standard <region_name> --service-endpoints private
    ```
@@ -223,7 +223,7 @@ In the following, create these resources by configuring and then running a setup
 
 To simulate the on-premises environment, you create a virtual server (VSI) with classic infrastructure. In the same directory as for the previous section, follow these steps:
 1. Edit the file **config.sh** and adapt the settings to your environment. Change the value of **SSHKEYNAME_CLASSIC** to the name or comma-separated list of names of SSH keys for classic infrastructure (see "Before you begin"). Modify **DATACENTER_ONPREM** to a different value if needed. You can obtain the list of supported data centers using `ibmcloud sl vs options`.
-2. Create the VSI to simalte the on-prem environment by executing:
+2. Create the VSI to simulate the on-prem environment by executing:
 
    ```sh
    ./onprem-vsi-create.sh
@@ -247,17 +247,22 @@ In the following, you will add a VPN gateway and an associated connection to the
 ### Create the on-premises Virtual Private Network gateway
 Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
 
-1. Connect to the "on-premises" VSI **vpns2s-onprem-vsi** using ssh. Execute the following and replace **VSI_ONPREM_IP** with the IP address returned earlier.
+1. Source the file **network_config.sh** to make the configuration available for further shell commands.
+   ```sh
+   source network_config.sh
+   ```
+   {:pre}
+2. Connect to the "on-premises" VSI **vpns2s-onprem-vsi** using ssh. 
 
    ```sh
-   ssh root@VSI_ONPREM_IP
+   ssh root@$VSI_ONPREM_IP
    ```
    {:pre}
 
-   Depending on your environment, you may need to use `ssh -i <path to your private key file> root@VSI_ONPREM_IP`.
+   Depending on your environment, you may need to use `ssh -i <path to your private key file> root@$VSI_ONPREM_IP`.
    {:tip}
 
-2. Next, on the machine **vpns2s-onprem-vsi**, execute the following commands to update the package manager and to install the strongSwan software.
+3. Next, on the machine **vpns2s-onprem-vsi**, execute the following commands to update the package manager and to install the strongSwan software.
 
    ```sh
    apt-get update
@@ -269,7 +274,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:pre}
 
-3. Configure the file **/etc/sysctl.conf** by adding three lines to its end. Copy the following over and run it:
+4. Configure the file **/etc/sysctl.conf** by adding three lines to its end. Copy the following over and run it:
 
    ```sh
    cat >> /etc/sysctl.conf << EOF
@@ -280,14 +285,14 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:codeblock}
 
-4. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
+5. Next, edit the file **/etc/ipsec.secrets**. Add the following line to configure source and destination IP addresses and the pre-shared key configured earlier. Replace **VSI_ONPREM_IP** with the known value of the floating ip of the vpns2s-onprem-vsi.  Replace the **GW_CLOUD_IP** with the known ip address of the VPC VPN gateway.
 
    ```
    VSI_ONPREM_IP GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
    ```
    {:pre}
 
-5. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **VSI_ONPREM_IP**, **ONPREM_CIDR**, **GW_CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
+6. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **VSI_ONPREM_IP**, **ONPREM_CIDR**, **GW_CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
 
    ```sh
    # basic configuration
@@ -317,7 +322,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:pre}
 
-6. Restart the VPN gateway, then check its status by running: ipsec restart
+7. Restart the VPN gateway, then check its status by running: ipsec restart
 
    ```sh
    ipsec restart
@@ -336,10 +341,14 @@ You can test the site to site VPN connection by using SSH or by deploying the mi
 ### Test using ssh
 To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server.
 
-1. In a new terminal, execute the following command after replacing the values. It uses the strongSwan host as jump host to connect via VPN to the application server's private IP address.
-
+1. In a new terminal, execute the following command after sourcing **network_config.sh** again. It uses the strongSwan host as jump host to connect via VPN to the application server's private IP address.
    ```sh
-   ssh -J root@VSI_ONPREM_IP root@VSI_CLOUD_IP
+   source network_config.sh
+   ```
+   {:pre}
+   
+   ```sh
+   ssh -J root@$VSI_ONPREM_IP root@$VSI_CLOUD_IP
    ```
    {:pre}
 
@@ -353,7 +362,7 @@ To test that the VPN connection has been successfully established, use the simul
 4. In the command window from step 1), try to establish the connection again:
 
    ```sh
-   ssh -J root@VSI_ONPREM_IP root@VSI_CLOUD_IP
+   ssh -J root@$VSI_ONPREM_IP root@$VSI_CLOUD_IP
    ```
    {:pre}
    The command should not succeed because the VPN connection is not active and hence there is no direct link between the simulated on-prem and cloud environments.
@@ -376,12 +385,12 @@ You can test the working VPN connection by accessing a microservice on the cloud
 
    Copy over the code for the app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
    ```sh
-   scp -r  -o "ProxyJump root@BASTION_IP_ADDRESS" nodejs-graphql root@VSI_CLOUD_IP:nodejs-graphql
+   scp -r  -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@VSI_CLOUD_IP:nodejs-graphql
    ```
    {:pre}
 2. Connect to the cloud VSI, again using the bastion as jump host.
    ```sh
-   ssh -J root@BASTION_IP_ADDRESS root@VSI_CLOUD_IP
+   ssh -J root@$BASTION_IP_ADDRESS root@$VSI_CLOUD_IP
    ```
    {:pre}
 3. On the cloud VSI, change into the code directory:
@@ -456,7 +465,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
 9. Access the "onprem" VSI terminal via SSH. 
 
    ```sh
-   ssh root@VSI_ONPREM_IP
+   ssh root@$VSI_ONPREM_IP
    ```
    {:pre}
 
@@ -468,7 +477,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
-   http://VSI_CLOUD_IP/api/bank
+   http://$VSI_CLOUD_IP/api/bank
    ```
 
    - The API server will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format.
@@ -477,7 +486,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_items { read_items { key size modified } }" }' \
-   http://VSI_CLOUD_IP/api/bank
+   http://$VSI_CLOUD_IP/api/bank
    ```
 
    - The API server will create a record in the {{site.data.keyword.databases-for-postgresql}} and add an item to the {{site.data.keyword.cos_short}} bucket and return the results in JSON format.
@@ -486,7 +495,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "mutation add_to_database_and_storage_bucket { add(balance: 10, item_content: \"Payment for movie, popcorn and drink...\") { id status } }" }' \
-   http://VSI_CLOUD_IP/api/bank
+   http://$VSI_CLOUD_IP/api/bank
    ```
 
    - The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
@@ -495,7 +504,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    -X POST \
    -H "Content-Type: application/json" \
    --data '{ "query": "query read_database_and_items { read_database { id balance transactiontime } read_items { key size modified } }" }' \
-   http://VSI_CLOUD_IP/api/bank
+   http://$VSI_CLOUD_IP/api/bank
    ```
    {:pre}
 
