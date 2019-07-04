@@ -66,9 +66,9 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data
 
 1. In the Catalog, select **Cloudant** under Databases.
 2. Set the service name to ***guestbook-db*** > choose a region/location > select a resource group > select **Use both legacy credentials and IAM** as authentication method and click **Create**.
-3. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), click on the **guestbook-db** entry under the Name column. Note: You may be required to wait until the status of the service changes to `Provisioned`.
+3. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), click on the **guestbook-db** instance name to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Provisioned`.
 4. Under **Manage**, click on  **Launch Cloudant Dashboard** which will open in a new browser tab. Note: You may be asked to log into your Cloudant instance.
-5. Click on **Create Database** and create a database named ***guestbook***.
+5. Click on **Create Database** and create a database named ***guestbook***, leave **Partitioned** unchecked.
 6. Back in the service, Under **Service credentials**
    1. Create **New credential**, accept the defaults and click **Add**.
    2. Click **View credentials** under Actions. We will need these credentials later to allow Cloud Functions actions to read/write to your Cloudant service.
@@ -186,14 +186,14 @@ Complete the sequence:
    {: codeblock}
 1. Click on **Save**.
 1. Choose the sequence by clicking on **Actions** and then **read-guestbook-entries-sequence**.
-1. Click on **Save** and then **Invoke**. The output should look like the following:
+1. Click on **Save** and then **Invoke**.
 
 ## Create an API
 1. Go to [Actions](https://{DomainName}/openwhisk/actions).
-2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable Web Action** and **Save**.
+2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable as Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
-4. Go to [APIs](https://{DomainName}/openwhisk/apimanagement) and **Create a {{site.data.keyword.openwhisk_short}} API**
-5. Set name to `guestbook` and base path to `/guestbook`
+4. Go to [APIs](https://{DomainName}/openwhisk/apimanagement) and **Create a {{site.data.keyword.openwhisk_short}} API** (or **Create Managed API** if you have existing APIs).
+5. Set API name to `guestbook` and base path to `/guestbook`
 6. Click on **Create operation** and create an operation to retrieve guestbook entries:
    1. Set **path** to `/entries`
    2. Set **verb** to `GET*`
