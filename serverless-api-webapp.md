@@ -66,7 +66,7 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data
 
 1. In the Catalog, select **Cloudant** under Databases.
 2. Set the service name to ***guestbook-db*** > choose a region/location > select a resource group > select **Use both legacy credentials and IAM** as authentication method and click **Create**.
-3. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), click on the **guestbook-db** entry under the Name column. Note: You may be required to wait until the status of the service changes to `Provisioned`.
+3. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), click on the **guestbook-db** instance name to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Provisioned`.
 4. Under **Manage**, click on  **Launch Cloudant Dashboard** which will open in a new browser tab. Note: You may be asked to log into your Cloudant instance.
 5. Click on **Create Database** and create a database named ***guestbook***.
 6. Back in the service, Under **Service credentials**
