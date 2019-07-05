@@ -126,6 +126,8 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    {: codeblock}
 
 #### {{site.data.keyword.databases-for-postgresql}}
+{: #create-postgresql}
+
 In this section, you will create the database service.
 
 1. Create an instance of [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql) using a **standard** plan. Replace **<region_name>** accordingly.
@@ -156,9 +158,9 @@ In this section, you will create the database service.
    ibmcloud resource service-instance vpns2s-pg
    ```
 
-   Once the Status changes to "create succeeded", you may proceed to the next step.
+   While waiting for the service to create, you can proceed with the steps in the other sections of this tutorial and come back to perform steps 2 and 3 below.  
 
-2. Create a service key with role **Administrator**:
+2. Once you have verified the service status changed to "create succeeded", you may proceed to create a service key with role **Administrator**:
    ```sh
    ibmcloud resource service-key-create vpns2s-pg-key Administrator --instance-name vpns2s-pg
    ```
@@ -375,7 +377,7 @@ To test that the VPN connection has been successfully established, use the simul
 
 
 ### Test using a microservice
-You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI.
+You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section.
 
 1. Back on your local machine, where you had cloned the vpc-tutorials repository.  Go to the directory for the sample apps **sampleapps**:
    ```sh
