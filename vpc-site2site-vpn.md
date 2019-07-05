@@ -419,26 +419,26 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```sh
    cp config/config.template.json config/config.json
    ```
-6. Edit the config/config.json file and add the `bucketName`, `region` and `location` for your deployment, all other settings can remain as is.
+6. You can keep the defaults found in the `config/config.json` file or modify for your desired storage location/settings.
    ```json
    {
    "cookie": "some_ridiculously_long_string_of_your_choice_or_keep_this_one",
    "cloud_object_storage": {
-      "bucketName": "<desired name for bucket>",
+      "bucketName": "vpns2s-bucket",
       "endpoint_type": "regional",
-      "region": "<see related help below>",
+      "region": "us-south",
       "type": "direct",
-      "location": "<see related help below>",
-      "location_constraint": "standard",
-      "help": {
-         "endpoint_type_help": "As defined by the endpoints url provided in the credentials, can be either: cross-region, regional or single-site",
-         "region_help": "As defined by the endpoints url provided in the credentials, i.e. for regional enpoint_type can be: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd. For cross-region endpoint_type can be: us, eu, ap. ",
-         "type_help": "Can be public or private or direct (note the direct endpoints are used for VPC only)",
-         "location_help": "As defined by the endpoints url provided in the credentials, i.e. ",
-         "location_constraint_help": "As found here https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-classes#classes, standard, vault, cold or flex with prefix of the region."
-      }
+      "location": "us-south",
+      "location_constraint": "standard"
    }
    ```
+
+   - endpoint_type: "Can be either: `cross-region`, `regional` or `single-site`",
+   - region: "For regional endpoint_type can be: `us-south`, `us-east`, `eu-gb`, `eu-de`, `jp-tok`, `au-syd`. For cross-region endpoint_type can be: `us`, `eu`, `ap`. For ",
+   - type: "Can be `public` or `private` or `direct` (note the direct endpoints are used for VPC only)",
+   - location: "For regional, the location possible values are the same as listed for region, For cross-region they vary based the value selected for cross-region, a full list is available here: https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints."
+   - location_constraint: "As found here https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-classes#classes, `standard`, `vault`, `cold` or `flex` with prefix of the region."
+   {:tip}
 
 7. Create the tables in the PostgreSQL database.
    ```sh
