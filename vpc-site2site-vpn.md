@@ -440,12 +440,12 @@ You can test the working VPN connection by accessing a microservice on the cloud
    - location_constraint: "As found here https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-classes#classes, `standard`, `vault`, `cold` or `flex` with prefix of the region."
    {:tip}
 
-7. Create the tables in the PostgreSQL database.
+7. Create the tables in the PostgreSQL database. The script leverages the `config/pg_credentials.json`, retrieves and uses the private endpoint to the PostgreSQL database, the private endpoint is reachable only from the VPC.
    ```sh
    node ./build/createTables.js
    ```
    {:pre}
-8. Create the cloud object storage bucket in the database.
+8. Create the cloud object storage bucket in the database. The script leverages the `config/config.json`, retrieves and uses the direct endpoint to Cloud Object Storage, the direct endpoint is reachable only from the VPC.
    ```sh
    node ./build/createBucket.js
    ```
@@ -473,7 +473,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
 
    Issue the following curl commands to query the API server running on the Cloud VSI:
 
-   - The API server will read content from the {{site.data.keyword.databases-for-postgresql}}.
+   - The API server will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint, there is no content in the database by default, it should return an empty array.
    ```sh
    curl \
    -X POST \
@@ -481,8 +481,9 @@ You can test the working VPN connection by accessing a microservice on the cloud
    --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
    http://$VSI_CLOUD_IP/api/bank
    ```
+   {:pre}
 
-   - The API server will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format.
+   - The API server will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format over the direct endpoint, there is no content in the bucket by default, it should return an empty array.
    ```sh
    curl \
    -X POST \
@@ -490,8 +491,9 @@ You can test the working VPN connection by accessing a microservice on the cloud
    --data '{ "query": "query read_items { read_items { key size modified } }" }' \
    http://$VSI_CLOUD_IP/api/bank
    ```
+   {:pre}
 
-   - The API server will create a record in the {{site.data.keyword.databases-for-postgresql}} and add an item to the {{site.data.keyword.cos_short}} bucket and return the results in JSON format.
+   - The API server will in a single operation create a record in the {{site.data.keyword.databases-for-postgresql}} using the private endpoint and add an item to the {{site.data.keyword.cos_short}} bucket using the direct endpoint and return the results in JSON format. 
    ```sh
    curl \
    -X POST \
@@ -499,6 +501,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    --data '{ "query": "mutation add_to_database_and_storage_bucket { add(balance: 10, item_content: \"Payment for movie, popcorn and drink...\") { id status } }" }' \
    http://$VSI_CLOUD_IP/api/bank
    ```
+   {:pre}
 
    - The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
    ```sh
@@ -509,6 +512,8 @@ You can test the working VPN connection by accessing a microservice on the cloud
    http://$VSI_CLOUD_IP/api/bank
    ```
    {:pre}
+
+   - Using your browser, access the [Resource List][https://cloud.ibm.com/resources], navigate to the Storage category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
 
 ## Remove resources
 {: #remove-resources}
