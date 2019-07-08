@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-04"
+lastupdated: "2019-07-08"
 lasttested: "2019-06-15"
 
 ---
@@ -19,12 +19,10 @@ lasttested: "2019-06-15"
 {:pre: .pre}
 {:important: .important}
 
-# Deploy applications on a VSI in VPC
+# Deploy application on a VSI in VPC
 {: #vpc-app-deploy}
 
-This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on a virtual server instance (VSI) using Infrastructure as code(IaC) tools like Terraform and Ansible. The infrastructure can be built as described in the following two tutorials:
-- Provision your own VPC with a public and a private subnet and a virtual server instance (VSI) in each subnet - [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). Only the public subnet and web server is required for this tutorial.
-- For secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group - [Securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
+This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on a virtual server instance (VSI) using Infrastructure as code(IaC) tools like Terraform and Ansible.
 
 {:shortdesc}
 
@@ -57,6 +55,12 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. Install and configure the automation software required to access cloud and VSIs
 1. Identify the software accessed from the {{site.data.keyword.IBM}} provided mirrors and configure installation and update
 1. Identify the internet software required and configure installation and update
+
+## Before you begin
+{: #prereqs}
+
+- Provision your own VPC with a public and a private subnet and a virtual server instance (VSI) in each subnet - [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). Only the public subnet and web server is required for this tutorial.
+- For secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group - [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
 
 ## General software installation principles
 {: #general_software_installation}
