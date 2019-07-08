@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-04"
+lastupdated: "2019-07-08"
 lasttested: "2019-07-02"
 ---
 
@@ -68,8 +68,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 ## Before you begin
 {: #prereqs}
 
-- Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). You need the optional CLI infrastructure plugin.
-- Login to {{site.data.keyword.cloud_notm}} via the command line. See [CLI Getting Started](https://{DomainName}/docs/cli/reference/ibmcloud?topic=cloud-cli-ibmcloud-cli) for details.
+- Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started). You need the optional CLI infrastructure plugin.
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
 - You need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/infrastructure/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
@@ -87,23 +86,20 @@ The tutorial uses scripts to deploy a baseline of infrastructure resources befor
    git clone https://github.com/IBM-Cloud/vpc-tutorials
    ```
    {: codeblock}
-2. Go to the directory for the sample app we will use for this tutorial by changing into **sampleapps**, then **nodejs-graphql**:
+
+2. Go to the directory for the scripts used for this tutorial by changing into **vpc-tutorials**, then **vpc-site2site-vpn**:
    ```sh
-   cd sampleapps/nodejs-graphql
+   cd vpc-tutorials/vpc-site2site-vpn
    ```
    {: codeblock}
+
 
 ### Create services
 
 #### {{site.data.keyword.cos_short}}
 In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
 
-1. Verify that you have followed the prerequisite steps of logging in:
-    ```sh
-    ibmcloud target
-    ```
-    {: codeblock}
-
+1. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target`.
 2. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage) using a **standard** or **lite** plan.
    ```sh
    ibmcloud resource service-instance-create vpns2s-cos cloud-object-storage standard global
@@ -119,9 +115,9 @@ In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI a
    ```
    {: codeblock}
 
-4. Obtain the service key details in JSON format and store it in a new file **credentials.json** in the subdirectory **vpc-app-cos**. The file will be used later on by the app.
+4. Obtain the service key details in JSON format and store it in a new file **credentials.json**. The file will be used later on by the app.
    ```sh
-   ibmcloud resource service-key vpns2s-cos-key --output json > config/cos_credentials.json
+   ibmcloud resource service-key vpns2s-cos-key --output json > cos_credentials.json
    ```
    {: codeblock}
 
@@ -166,9 +162,9 @@ In this section, you will create the database service.
    ```
    {: codeblock}
 
-3. Obtain the service key details in JSON format and store it in a new file **pg_credentials.json** in the subdirectory **nodejs-graphql/config**. The file will be used later on by the app.
+3. Obtain the service key details in JSON format and store it in a new file **pg_credentials.json**. The file will be used later on by the app.
    ```sh
-   ibmcloud resource service-key vpns2s-pg-key --output json > config/pg_credentials.json
+   ibmcloud resource service-key vpns2s-pg-key --output json > pg_credentials.json
    ```
    {: codeblock}
 
@@ -179,13 +175,7 @@ The tutorial provides a script to create the baseline resources required for thi
 
 In the following, create these resources by configuring and then running a setup script. The script incorporates the setup of a bastion host as discussed in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server).
 
-1. Go to the directory for the scripts used for this tutorial by changing into **vpc-tutorials**, then **vpc-site2site-vpn**:
-   ```sh
-   cd vpc-tutorials/vpc-site2site-vpn
-   ```
-   {: codeblock}
-
-   Copy over the sample configuration file into a file to use:
+1. In the directory **vpc-site2site-vpn**, copy over the sample configuration file into a file to use:
 
    ```sh
    cp config.sh.sample config.sh
@@ -376,18 +366,24 @@ To test that the VPN connection has been successfully established, use the simul
    {:pre}
 
 
-### Test using a microservice
-You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section.
+### Set up a microservice for testing
+You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
 
-1. Back on your local machine, where you had cloned the vpc-tutorials repository.  Go to the directory for the sample apps **sampleapps**:
+1. Back on your local machine, change the working directory and switch to **sampleapps**:
    ```sh
-   cd sampleapps
+   cd ../sampleapps
    ```
    {: codeblock}
 
-   Copy over the code for the app from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI. Replace **BASTION_IP_ADDRESS** and **VSI_CLOUD_IP** accordingly.
+   Move over the previously generated configuration files into the **nodejs-graphql/config** subdirectory:
    ```sh
-   scp -r  -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@VSI_CLOUD_IP:nodejs-graphql
+   mv ../vpc-site2site-vpn/*_credentials.json nodejs-graphql/config/
+   ```
+   {: codeblock}
+
+2. Now copy over the code for the app and the credentials from your local machine to the cloud VSI. The command uses the bastion as jump host to the cloud VSI.
+   ```sh
+   scp -r  -o "ProxyJump root@$BASTION_IP_ADDRESS" nodejs-graphql root@$VSI_CLOUD_IP:nodejs-graphql
    ```
    {:pre}
 2. Connect to the cloud VSI, again using the bastion as jump host.
@@ -395,22 +391,25 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ssh -J root@$BASTION_IP_ADDRESS root@$VSI_CLOUD_IP
    ```
    {:pre}
+
 3. On the cloud VSI, change into the code directory:
    ```sh
    cd nodejs-graphql
    ```
    {:pre}
+
 4. Install Node.js and the Node package manager(NPM).
    ```sh
    apt-get update; apt-get install nodejs npm
    ```
    {:pre}
-5. Install the necessary modules using **npm**.
+
+5. Install the necessary modules using **npm**, then build the app:
    ```sh
    npm install
    ```
    {:pre}
-6. Build the app:
+
    ```sh
    npm run build
    ```
@@ -419,7 +418,9 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```sh
    cp config/config.template.json config/config.json
    ```
-6. You can keep the defaults found in the `config/config.json` file or modify for your desired storage location/settings.
+   {:pre}
+
+7. You can keep the defaults found in the `config/config.json` file or modify for your desired storage location/settings.
    ```json
    {
    "cookie": "some_ridiculously_long_string_of_your_choice_or_keep_this_one",
@@ -432,20 +433,14 @@ You can test the working VPN connection by accessing a microservice on the cloud
       "location_constraint": "standard"
    }
    ```
+   {:pre}
 
-   - endpoint_type: "Can be either: `cross-region`, `regional` or `single-site`",
-   - region: "For regional endpoint_type can be: `us-south`, `us-east`, `eu-gb`, `eu-de`, `jp-tok`, `au-syd`. For cross-region endpoint_type can be: `us`, `eu`, `ap`. For ",
-   - type: "Can be `public` or `private` or `direct` (note the direct endpoints are used for VPC only)",
-   - location: "For regional, the location possible values are the same as listed for region, For cross-region they vary based the value selected for cross-region, a full list is available here: https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints."
-   - location_constraint: "As found here https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-classes#classes, `standard`, `vault`, `cold` or `flex` with prefix of the region."
-   {:tip}
-
-7. Create the tables in the PostgreSQL database. The script leverages the `config/pg_credentials.json`, retrieves and uses the private endpoint to the PostgreSQL database, the private endpoint is reachable only from the VPC.
+8. Create the tables in the PostgreSQL database. The script leverages the `config/pg_credentials.json`, retrieves and uses the private endpoint to the PostgreSQL database, the private endpoint is reachable only from the VPC.
    ```sh
    node ./build/createTables.js
    ```
    {:pre}
-8. Create the cloud object storage bucket in the database. The script leverages the `config/config.json`, retrieves and uses the direct endpoint to Cloud Object Storage, the direct endpoint is reachable only from the VPC.
+9. Create the cloud object storage bucket in the database. The script leverages the `config/config.json`, retrieves and uses the direct endpoint to Cloud Object Storage, the direct endpoint is reachable only from the VPC.
    ```sh
    node ./build/createBucket.js
    ```
@@ -459,21 +454,28 @@ You can test the working VPN connection by accessing a microservice on the cloud
    Retrieving list of buckets:
    Bucket Name: transactions
    ```
-8. Run the app.
+10. Run the app.
    ```sh
    npm run start
    ```
    {:pre}
-9. Access the "onprem" VSI terminal via SSH. 
+
+### Test using a microservice
+With the microservice app set up and running, test the scenario by accessing the cloud resources from the on-prem machine.
+
+1. In a new terminal, retrieve the network configuration and then access the "onprem" VSI terminal via SSH.
+   ```sh
+   source ../vpc-site2site-vpn/network_config.sh
+   ```
+   {:pre}
 
    ```sh
    ssh root@$VSI_ONPREM_IP
    ```
    {:pre}
 
-   Issue the following curl commands to query the API server running on the Cloud VSI:
+2. Issue the following curl commands to query the API server running on the Cloud VSI.The API server will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. There is no content in the database by default, it should return an empty array.
 
-   - The API server will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint, there is no content in the database by default, it should return an empty array.
    ```sh
    curl \
    -X POST \
@@ -483,7 +485,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {:pre}
 
-   - The API server will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format over the direct endpoint, there is no content in the bucket by default, it should return an empty array.
+3. The API server will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format over the direct endpoint, there is no content in the bucket by default, it should return an empty array.
    ```sh
    curl \
    -X POST \
@@ -493,7 +495,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {:pre}
 
-   - The API server will in a single operation create a record in the {{site.data.keyword.databases-for-postgresql}} using the private endpoint and add an item to the {{site.data.keyword.cos_short}} bucket using the direct endpoint and return the results in JSON format. 
+4. The API server will in a single operation create a record in the {{site.data.keyword.databases-for-postgresql}} using the private endpoint and add an item to the {{site.data.keyword.cos_short}} bucket using the direct endpoint and return the results in JSON format. 
    ```sh
    curl \
    -X POST \
@@ -503,7 +505,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {:pre}
 
-   - The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
+5. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} and {{site.data.keyword.cos_short}} and return the results in JSON format.
    ```sh
    curl \
    -X POST \
@@ -513,7 +515,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {:pre}
 
-   - Using your browser, access the [Resource List][https://cloud.ibm.com/resources], navigate to the Storage category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
+6. Using your browser, access the [Resource List][https://cloud.ibm.com/resources], navigate to the Storage category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
 
 ## Remove resources
 {: #remove-resources}
@@ -523,7 +525,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
 3. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
 4. Once the VSIs are gone, switch to **Subnets**. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
 5. After the subnets have been deleted, switch to **VPC** and delete your VPC.
-6. In the terminal, remove the classic VSI by executing the script:
+6. In the terminal and while in the directory **vpc-site2site-vpn**, remove the classic VSI by executing the script:
    ```sh
    BASENAME=vpns2s ./onprem-vsi-remove.sh
    ```
