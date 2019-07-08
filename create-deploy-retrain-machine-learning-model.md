@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-04"
+lastupdated: "2019-07-08"
 lasttested: "2019-06-11"
 ---
 
@@ -246,9 +246,10 @@ You can either generate load by sending multiple requests with random petal_widt
    {:pre}
 1. Once the command exits, Navigate to the {{site.data.keyword.aios_full_notm}} dashboard and click on the **Insights** on the left pane.
 1. Once on the insights page, click on the WML deployment tile to see the Quality, Performance and Analytics monitors and metrics.
-1. Click on **Throughput** under performance to see the average number of requests per minute.
-1. Click on **Accuracy** to check the quality of your model. Accuracy is proportion of correct predictions.
-1. Explore the chart builder to visualize various metrics.
+1. Click on **Throughput** under Performance to see the average number of requests per minute.
+1. Click on **Accuracy** under Quality to check the quality of your model. Accuracy is proportion of correct predictions.On the generated chart, click on any point to see the confusion matrix.
+1. Click on **Predictions by Confidence** under Analytics to check the Prediction Confidence of your model.
+1. Explore the chart builder under to visualize various metrics plotted on X-axis and Y-axis of the generated chart.
 
 ## Re-train your model
 
