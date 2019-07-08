@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-19"
+lastupdated: "2019-07-08"
 lasttested: "2019-06-18"
 
 ---
@@ -67,7 +67,7 @@ The tutorial features a sample application that enables groups of users to uploa
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
 2. Ensure you have the latest version of plugins used in this tutorial; use `ibmcloud plugin update --all` to upgrade.
 
 ## Create services

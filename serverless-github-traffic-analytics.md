@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-24"
+lastupdated: "2019-07-08"
 lasttested: "2019-05-24"
 ---
 
@@ -36,7 +36,7 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](/docs/cli?topic=cloud-cli-install-ibmcloud-cli).
+To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started) and the {{site.data.keyword.openwhisk_short}} [plugin installed](/docs/cli?topic=cloud-cli-install-ibmcloud-cli).
 
 ## Service and Environment Setup (shell)
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.

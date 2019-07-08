@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-24"
+lastupdated: "2019-07-08"
 lasttested: "2019-06-14"
 ---
 
@@ -46,7 +46,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 ## Before you begin
 
 - [Install Git](https://git-scm.com/)
-- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview)
+- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started)
 - [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
 - [Install Node.js and NPM](https://nodejs.org)
 
@@ -57,7 +57,7 @@ In this section, you will create the services required to build your data lake.
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the [catalog](https://{DomainName}/catalog) using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
     ```sh
     ibmcloud login
     ```
