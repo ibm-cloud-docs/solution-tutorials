@@ -19,7 +19,7 @@ lasttested: "2019-06-15"
 {:pre: .pre}
 {:important: .important}
 
-# Deploy application on a VSI in VPC
+# Deploy applications on a VSI in VPC
 {: #vpc-app-deploy}
 
 This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on a virtual server instance (VSI) using Infrastructure as code(IaC) tools like Terraform and Ansible.
@@ -64,9 +64,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## General software installation principles
 {: #general_software_installation}
+
 Software can originate from the following locations:
 - Initial VSI image
-- {{site.data.keyword.Bluemix_notm}} mirrors
+- {{site.data.keyword.IBM_notm}} mirrors
 - Internet or intranet available repositories
 - File system of the workstation in the architecture diagram above (provisioning system)
 
@@ -83,24 +84,26 @@ cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.
 ```
 {:pre}
 
-By end of this tutorial,
+In this tutorial,
 - A public, private and bastion VSI are provisioned with the ubuntu-18.04 base image
 - nginx is installed on the public and private VSI - demonstrating the use of {{site.data.keyword.IBM}} mirrors
 - Internet software is accessed - demonstrating the use of internet repositories on the public VSI and failure on the private VSI
 - A file is copied from the file system of the provisioning computer to the public VSI and executed
 - Tests are run to verify the above
 
-## {{site.data.keyword.IBM_notm}} Mirrors
+### {{site.data.keyword.IBM_notm}} Mirrors
 {{site.data.keyword.IBM_notm}} has internal mirrors to support the {{site.data.keyword.IBM_notm}} images. The mirrors are part of the [service endpoints available for IBM Cloud VPC](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as optional packages.
 
 Consider both `updating` the version lists available to the provisioned instances and `upgrading` the installed software from these mirrors.
 
-## Cloud-init
+## Initialize and Customize cloud instances with Cloud-init
 {: #cloud_init}
+
+Cloud-init is a package that contains utilities for early initialization of cloud instances.
 The [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) syntax is readable, even by a novice linux administrator. An example cloud-config.yaml file is shown below and does what you would expect:
-- bootcmd works around an initial problem with the ubuntu image that will soon be resolved
+
 - package\_update - update the list of software packages available for either upgrade or installation
-- package\_upgrade - upgrade the currently installed software provied in the base with the latest versions
+- package\_upgrade - upgrade the currently installed software provided in the base with the latest versions
 - packages - software packages to install - nginx
 - write\_files - paths to text files with contents
 - runcmd - commands to be executed
@@ -149,7 +152,7 @@ runcmd:
 {:codeblock}
 
 ### Demonstrate the mirrors
-Upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the private instances have access to the {{site.data.keyword.IBM}} provided mirrors.  The cloud-init program uses the OS native install software, ubuntu apt for example, to install software from the mirrors.  The mirrors contain the full linux distrubtions of updates and optionally installed software, like nginx, for the provided images.
+Upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the private instances have access to the {{site.data.keyword.IBM}} provided mirrors.  The cloud-init program uses the OS native install software, ubuntu apt for example, to install software from the mirrors.  The mirrors contain the full linux distributions of updates and optionally installed software, like nginx, for the provided images.
 
 ### Demonstrating internet access
 When nginx is initialized it will surface the following file: /var/www/html/index.nginx-debian.html
