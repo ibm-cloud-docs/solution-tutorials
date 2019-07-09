@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-08"
+lastupdated: "2019-07-09"
 lasttested: "2019-06-15"
 
 ---
@@ -65,13 +65,22 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## General software installation principles
 {: #general_software_installation}
 
-Software can originate from the following locations:
-- Initial VSI image
+A software can originate from the following locations:
+- Base VSI images
 - {{site.data.keyword.IBM_notm}} mirrors
 - Internet or intranet available repositories
 - File system of the workstation in the architecture diagram above (provisioning system)
 
-Initial {{site.data.keyword.Bluemix_notm}} VSI images are populated with popular off the shelf operating systems:
+Following the steps in this tutorial, you will be able to
+- provision a public, private and bastion VSI with the ubuntu-18.04 base image
+- install nginx on the public and private VSI - demonstrating the use of {{site.data.keyword.IBM}} mirrors
+- access Internet software - demonstrating the use of internet repositories on the public VSI and failure on the private VSI
+- copy a file from the file system of the provisioning computer to the public VSI and execute
+- run tests to verify the above
+
+## Base VSI images
+
+Base {{site.data.keyword.Bluemix}} VSI images are populated with popular off the shelf operating systems:
 
 ```
 ibmcloud is images
@@ -84,15 +93,10 @@ cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.
 ```
 {:pre}
 
-Following the steps in this tutorial, you will be able to
-- Provision a public, private and bastion VSI with the ubuntu-18.04 base image
-- Install nginx on the public and private VSI - demonstrating the use of {{site.data.keyword.IBM}} mirrors
-- Access Internet software - demonstrating the use of internet repositories on the public VSI and failure on the private VSI
-- Copy a file from the file system of the provisioning computer to the public VSI and execute
-- Run tests to verify the above
 
-### {{site.data.keyword.IBM_notm}} Mirrors
-{{site.data.keyword.IBM_notm}} has internal mirrors to support the {{site.data.keyword.IBM_notm}} images. The mirrors are part of the [service endpoints available for IBM Cloud VPC](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as optional packages.
+### Maintain software on images with {{site.data.keyword.IBM_notm}} Mirrors
+
+{{site.data.keyword.IBM_notm}} has internal mirrors to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as optional packages. The mirrors are part of the [service endpoints available for IBM Cloud VPC](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors.
 
 Consider both `updating` the version lists available to the provisioned instances and `upgrading` the installed software from these mirrors.
 
@@ -100,11 +104,11 @@ Consider both `updating` the version lists available to the provisioned instance
 {: #cloud_init}
 
 Cloud-init is a package that contains utilities for early initialization of cloud instances.
-The [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) syntax is readable, even by a novice linux administrator. An example cloud-config.yaml file is shown below and does what you would expect:
+The [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) syntax is readable, even by a novice linux administrator. An example cloud-config.yaml file with different [directives](https://cloudinit.readthedocs.io/en/latest/topics/modules.html#) is shown below and each directive does what you would expect:
 
 - package\_update - update the list of software packages available for either upgrade or installation
 - package\_upgrade - upgrade the currently installed software provided in the base with the latest versions
-- packages - software packages to install - nginx
+- packages - software packages to install during boot - nginx
 - write\_files - paths to text files with contents
 - runcmd - commands to be executed
 
@@ -152,17 +156,22 @@ runcmd:
 {:codeblock}
 
 ### Install and upgrade software from the mirrors
-Upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the private instances have access to the {{site.data.keyword.IBM}} provided mirrors.  The cloud-init program uses the OS native install software, ubuntu apt for example, to install software from the mirrors.  The mirrors contain the full linux distributions of updates and optionally installed software, like nginx, for the provided images.
+Upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the private instances have access to the {{site.data.keyword.IBM}} provided mirrors.  The cloud-init program uses the OS native install software. For example, `apt` in Ubuntu to install software from the mirrors.  The mirrors contain the full linux distributions of updates and optionally installed software like nginx for the provided images.
 
 ### Test the internet access
 When nginx is initialized it will surface the following file: `/var/www/html/index.nginx-debian.html`
 
-The `/init.bash` script executed by cloud-init will test if www.python.org can be accessed and put one of these strings in index html file:
+In the example above, the `/init.bash` script executed by cloud-init will test if www.python.org can be accessed and put one of these strings in index html file:
 - INTERNET - if it is possible to install software from the internet
 - ISOLATED - if the internet is not available
 
-## Upload and execute
-There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the VSI and then executed.  To demonstrate a script will be uploaded from the filesystem of your computer being used for this tutorial. The execution of the script will wait for the index html file to exist indicating that nginx has been installed.  It will then create a file, testupload.html, containing the string `hi`.
+### Upload from the filesystem and execute on the instance
+
+There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the VSI and then executed.
+
+User data is the mechanism by which a user can pass information contained in a local file to an instance at launch time. The typical use case is to pass something like a shell script or a configuration file as user data.In this tutorial, you will use shell scripts to pass the data.
+
+To demonstrate, a script will be uploaded from the filesystem of your current computer. The execution of the script will wait for the index html file to exist indicating that nginx has been installed.  It will then create a file, `testupload.html`, containing the string `hi`. Before executing, replace the `content`(User data) part of `write_files` directive in the above example with the shell script below
 
 ```
 #!/bin/bash
@@ -183,21 +192,11 @@ EOF
 ```
 {:codeblock}
 
-The various mechanisms for upload and execution will be discussed below.
 
-Once these steps are complete testing will verify the initialization.
+### Configure instances after booting
+Users often want to do some configuration to their instances after booting. For example, you may want to install some packages, start services, or manage the instance using a Puppet or Chef server.
 
-## Using the GUI Console
-{: #gui_console}
-### Provisiong resources
-If you do not want to use the GUI console [VPC overview](https://{DomainName}/vpc/overview) you may still wish to browse the text in the tutorial to familiarize yourself with the set up that will be used through out this tutorial:
-
-[Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) contains step by step instructions for creating the cloud resources including a public facing front end VSI and a private back end VSI both optionally accessible through a bastion VSI.
-
-### Cloud-init
-See the general `Cloud-init` section above.
-
-At the point the instance is created change the cloud-init User data as shown below:
+At the point, the instance is created. Change the cloud-init User data as shown below:
 
 1. To configure the instance:
    1. Set **User data** to
@@ -378,7 +377,7 @@ The monotony and chances for error when managing resources in the console UI has
 Two of them: terraform and ansible, are discussed below.
 
 ## Terraform
-### Inroduction
+### Introduction
 {: #section_two}
 Install terraform and the terraform IBM provider on your laptop.
 See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://{DomainName}/docs/terraform).
