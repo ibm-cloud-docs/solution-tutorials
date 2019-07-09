@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-03-08"
+lastupdated: "2019-07-08"
 lasttested: "2019-03-08"
 
 ---
@@ -40,7 +40,7 @@ For anchors within the same document always only use the following format:
   [link_description](#anchor_name) 
 
 For anchors or any links to external documents, even for those are are within our tutorials use the following format: 
-  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview)
+  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
 
 If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
 
@@ -71,14 +71,14 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
 
 ## Create services
 {: #setup}
 
 In this section, you will create the services required to ...
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
     ```sh
     ibmcloud login
     ```

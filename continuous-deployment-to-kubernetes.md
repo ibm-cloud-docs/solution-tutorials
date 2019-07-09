@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-23"
+lastupdated: "2019-07-08"
 lasttested: "2019-05-23"
 
 ---
@@ -57,7 +57,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 ## Before you begin
 {: #prereq}
 
-* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
+* [Install {{site.data.keyword.dev_cli_notm}}](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
