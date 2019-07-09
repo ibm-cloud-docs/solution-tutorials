@@ -367,7 +367,7 @@ To test that the VPN connection has been successfully established, use the simul
 
 
 ### Set up a microservice for testing
-You can test the working VPN connection by accessing a microservice on the cloud VSI from the onprem VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
+You can test the working VPN connection by accessing a microservice on the cloud VSI from the "onprem" VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
 
 1. Back on your local machine, change the working directory and switch to **sampleapps**:
    ```sh
@@ -398,7 +398,7 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {:pre}
 
-4. Install Node.js and the Node package manager(NPM).
+4. Install Node.js and the Node package manager (NPM).
    ```sh
    apt-get update; apt-get install nodejs npm
    ```
@@ -435,12 +435,12 @@ You can test the working VPN connection by accessing a microservice on the cloud
    ```
    {:pre}
 
-8. Create the tables in the PostgreSQL database. The script leverages the `config/pg_credentials.json`, retrieves and uses the private endpoint to the PostgreSQL database, the private endpoint is reachable only from the VPC.
+8. Create the tables in the PostgreSQL database. The script leverages the file `config/pg_credentials.json`, retrieves and uses the private endpoint to the PostgreSQL database, the private endpoint is reachable only from the VPC.
    ```sh
    node ./build/createTables.js
    ```
    {:pre}
-9. Create the cloud object storage bucket in the database. The script leverages the `config/config.json`, retrieves and uses the direct endpoint to Cloud Object Storage, the direct endpoint is reachable only from the VPC.
+9. Create the cloud object storage bucket in the database. The script leverages `config/config.json`, retrieves and uses the direct endpoint to Cloud Object Storage, the direct endpoint is reachable only from the VPC.
    ```sh
    node ./build/createBucket.js
    ```
@@ -474,7 +474,7 @@ With the microservice app set up and running, test the scenario by accessing the
    ```
    {:pre}
 
-2. Issue the following curl commands to query the API server running on the Cloud VSI.The API server will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. There is no content in the database by default, it should return an empty array.
+2. Issue the following curl commands to query the API server running on the cloud VSI. The API server will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. There is no content in the database by default, it should return an empty array.
 
    ```sh
    curl \
@@ -515,7 +515,7 @@ With the microservice app set up and running, test the scenario by accessing the
    ```
    {:pre}
 
-6. Using your browser, access the [Resource List][https://cloud.ibm.com/resources], navigate to the Storage category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
+6. Using your browser, access the [Resource List][https://{DomainName}/resources], navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
 
 ## Remove resources
 {: #remove-resources}
