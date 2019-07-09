@@ -84,12 +84,12 @@ cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.
 ```
 {:pre}
 
-In this tutorial,
-- A public, private and bastion VSI are provisioned with the ubuntu-18.04 base image
-- nginx is installed on the public and private VSI - demonstrating the use of {{site.data.keyword.IBM}} mirrors
-- Internet software is accessed - demonstrating the use of internet repositories on the public VSI and failure on the private VSI
-- A file is copied from the file system of the provisioning computer to the public VSI and executed
-- Tests are run to verify the above
+Following the steps in this tutorial, you will be able to
+- Provision a public, private and bastion VSI with the ubuntu-18.04 base image
+- Install nginx on the public and private VSI - demonstrating the use of {{site.data.keyword.IBM}} mirrors
+- Access Internet software - demonstrating the use of internet repositories on the public VSI and failure on the private VSI
+- Copy a file from the file system of the provisioning computer to the public VSI and execute
+- Run tests to verify the above
 
 ### {{site.data.keyword.IBM_notm}} Mirrors
 {{site.data.keyword.IBM_notm}} has internal mirrors to support the {{site.data.keyword.IBM_notm}} images. The mirrors are part of the [service endpoints available for IBM Cloud VPC](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as optional packages.
@@ -151,18 +151,18 @@ runcmd:
 ```
 {:codeblock}
 
-### Demonstrate the mirrors
+### Install and upgrade software from the mirrors
 Upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the private instances have access to the {{site.data.keyword.IBM}} provided mirrors.  The cloud-init program uses the OS native install software, ubuntu apt for example, to install software from the mirrors.  The mirrors contain the full linux distributions of updates and optionally installed software, like nginx, for the provided images.
 
-### Demonstrating internet access
-When nginx is initialized it will surface the following file: /var/www/html/index.nginx-debian.html
+### Test the internet access
+When nginx is initialized it will surface the following file: `/var/www/html/index.nginx-debian.html`
 
-The /init.bash script executed by cloud-init will test if www.python.org can be accessed and put one of these strings in index html file:
+The `/init.bash` script executed by cloud-init will test if www.python.org can be accessed and put one of these strings in index html file:
 - INTERNET - if it is possible to install software from the internet
 - ISOLATED - if the internet is not available
 
 ## Upload and execute
-There may be data and software that is available on the filesystem of your on premise system or CI/CD pipeline that needs to be uploaded to the VSI and then executed.  To demonstrate a script will be uploaded from the filesystem of your computer being used for this tutorial. The execution of the script will wait for the index html file to exist indicating that nginx has been installed.  It will then create a file, testupload.html, containing the string `hi`.
+There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the VSI and then executed.  To demonstrate a script will be uploaded from the filesystem of your computer being used for this tutorial. The execution of the script will wait for the index html file to exist indicating that nginx has been installed.  It will then create a file, testupload.html, containing the string `hi`.
 
 ```
 #!/bin/bash
@@ -192,7 +192,7 @@ Once these steps are complete testing will verify the initialization.
 ### Provisiong resources
 If you do not want to use the GUI console [VPC overview](https://{DomainName}/vpc/overview) you may still wish to browse the text in the tutorial to familiarize yourself with the set up that will be used through out this tutorial:
 
-[Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) contains step by step instructions for creating the cloud resources including a public facing front end VSI and a private back end VSI both optionally acessible through a bastion VSI.
+[Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) contains step by step instructions for creating the cloud resources including a public facing front end VSI and a private back end VSI both optionally accessible through a bastion VSI.
 
 ### Cloud-init
 See the general `Cloud-init` section above.
@@ -273,7 +273,7 @@ Network ACLs could restrict access as well.
 {: #before_you_continue}
 
 This tutorial will walk through example steps on a terminal using a shell.  Shell scripts, terraform, ansible, etc will be demonstrated. Initialize your environment now:
-1. Install the command line (CLI) tools [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). Not required for terraform.
+1. Install the command line (CLI) tools [following these steps](/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). Not required for terraform.
 1. Clone the git repository and point to the folder
    ```sh
     git clone https://github.com/IBM-Cloud/vpc-tutorials.git
