@@ -56,6 +56,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. Install software from {{site.data.keyword.IBM_notm}} mirrors
 1. Install software from external repositories
 
+## Before you begin
+{: #prereqs}
+
+- Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+
 ## General software installation principles
 {: #general_software_installation}
 
@@ -191,31 +196,61 @@ EOF
 ```
 {:codeblock}
 
-
-## Provision resources and configure instances
+## Provision infrastructure resources and configure the instance with Cloud init
 In this section, you will provision a new VPC with subnets and VSIs (if you don't have one) and configure instances to use cloud-init user data.
 
-Follow the instructions in the tutorials below to
+### Provision resources via the VPC console
+If you don't have the infrastructure setup yet, Follow the instructions in the tutorials below:
 
 - Provision your own VPC with a public and a private subnet and a virtual server instance (VSI) in each subnet - [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). Only the public subnet and web server is required for this tutorial.
 - For secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group - [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
 
 While provisioning a VSI, You can either use the **cloud-config.yaml** script or the shell script provided below as your cloud-init user data. Set **User Data** field to
 
-      ```
-      #!/bin/bash
-      apt-get update
-      apt-get install -y nginx
-      echo "I'm the backend server" > /var/www/html/index.html
-      service nginx start
-      ```
-      {:codeblock}
+   ```
+    #!/bin/bash
+    apt-get update
+    apt-get install -y nginx
+    echo "I'm the backend server" > /var/www/html/index.html
+    service nginx start
+   ```
+   {:codeblock}
 
 This will install a simple web server into the instance.
 
-### Upload software and execute on the VSI
+### Provision resources via CLI and scripting
+If you are into CLI and scripting, clone this GitHub repository with shell, Terraform and Ansible scripts to provision the VPC resources
 
-To upload software, you can `scp`software to the frontend and backend VSIs and then ssh to the VSIs to install the software.  Assuming that the PWD is .../vpc-app-deploy use the following steps to copy and then execute through the bastion:
+   ```sh
+    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
+    cd .../vpc-app-deploy
+   ```
+   {:pre}
+
+Use the template file provided in the `vpc-app-deploy` folder to create an `export` file. Follow the comments in the `export` file and use `edit` command on Linux or `nano` command on macOS to update the `export` file with the required environment variables.
+   ```sh
+   cp export.template export; # create your copy
+   edit export; # edit your copy by substituting in your values
+   source export; # source the values into each shell environment that you create
+  ```
+  {:pre}
+
+Once the environment variables are set and the file is sourced, run `make all_cli` command to generate `resource.sh`as an outcome of successful build and the below command to provision the required VPC resources for this tutorial,
+
+   ```sh
+    ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 ssh_key tst default resources.sh @shared/cloud-config.yaml @shared/cloud-config.yaml ubuntu-18.04-amd64
+   ```
+   {:pre}
+
+You can pass the `@shared/cloud-config.yaml` file that contains the cloud-init user-data as a parameter to the `instance-create` command as shown below
+
+  ```sh
+    ibmcloud is instance-create ... --user-data @shared/cloud-config.yaml
+  ```
+  {:pre}
+
+### Upload software and execute on the VSI
+To upload software to the frontend and backend VSIs, you can use the `scp` command and then SSH into the VSIs to install the software. On a terminal, point to the run the following commands to copy and then execute through the bastion:
 ```
 scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> shared/uploaded.sh root@<FRONT_NIC_IP>:/uploaded.sh
 ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP> sh /uploaded.sh
@@ -224,24 +259,18 @@ ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> ro
 ```
 {:codeblock}
 
-The floating ips come from a common pool and are reused.  To avoid complaints from ssh the -F specifies a configuration file:
-```
-Host *
-  StrictHostKeyChecking no
-  UserKnownHostsFile=/dev/null
-  LogLevel=quiet
-```
-{:codeblock}
+If you observe, the `scp` command above uses `-F` flag with a configuration file - `ssh.notstrict.config`. This is to avoid complaints from SSH as the floating ips come from a common pool and are reused.
 
-### Testing
-The frontend is easy to test using curl since a floating ip, FRONT_IP_ADDRESS, is attached:
+### Test the connection to the frontend
+
+You can test the connection to the frontend using curl with the attached floating ip (FRONT_IP_ADDRESS)
 ```sh
 curl <FRONT_IP_ADDRESS>
 curl <FRONT_IP_ADDRESS>/testupload.html
 ```
 {:pre}
 
-The backend is only accessible from the frontend (see Diagram).  The frontend can be accessed through the bastion.
+The backend is only accessible from the frontend.  The frontend can be accessed through the bastion.
 ```sh
 ssh -F shared/ssh.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP>
 curl <BACK_IP_ADDRESS>
@@ -250,9 +279,9 @@ curl <BACK_IP_ADDRESS>/testupload.html
 {:pre}
 
 ### Troubleshooting
-It can be helpful to use the GUI console [VPC overview](https://{DomainName}/vpc/overview) to browse through the resources created.  The `ibmcloud is` command line can be used as well.
+You can check the provisioned resources on the [VPC overview](https://{DomainName}/vpc/overview) page.Alternatively, The `ibmcloud is` command line can also be used.
 
-Here is how to ssh to the bastion, frontend and backend.  The frontend and backend jump through the bastion.
+Here is how to ssh into the bastion, frontend and backend instances.  The frontend and backend jump through the bastion.
 ```sh
 ssh -F shared/ssh.config root@<BASTION_IP_ADDRESS>
 ssh -F shared/ssh.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP>
@@ -260,7 +289,7 @@ ssh -F shared/ssh.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<BACK_NIC_I
 ```
 {:pre}
 
-The cloud-init log files on the frontend and backend can be found in the /var/log/cloud-init-output.log and will contain the standard output from the commands in the cloud-init.yaml file.
+The cloud-init log files on the frontend and backend instances can be found in the `/var/log/cloud-init-output.log` and will contain the standard output from the commands in the cloud-init.yaml file.
 
 Network connectivity to any of the VSIs needs to be enabled through the VPC Security Groups on the network interface:
 - to ssh to a VSI ingress over tcp port
@@ -272,13 +301,6 @@ Network ACLs could restrict access as well.
 {: #before_you_continue}
 
 This tutorial will walk through example steps on a terminal using a shell.  Shell scripts, terraform, ansible, etc will be demonstrated. Initialize your environment now:
-1. Install the command line (CLI) tools [following these steps](/docs/cli?topic=cloud-cli-ibmcloud-cli#overview). Not required for terraform.
-1. Clone the git repository and point to the folder
-   ```sh
-    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
-    cd .../vpc-app-deploy
-   ```
-   {:pre}
 
 The scripts in this directory assume you have exported some environment variables.  Start with the provided template:
 ```
@@ -340,11 +362,7 @@ After the command is complete examine the contents of resources.sh
 
 ### Cloud init
 {:#cloud_init}
-The parameter, @shared/cloud-config.yaml, contained the user-data in the instance create command.  In the cli:
-```sh
-ibmcloud is instance-create ... --user-data @shared/cloud-config.yaml
-```
-{:pre}
+
 
 ## Upload and execute
 {:#upload_execute}
