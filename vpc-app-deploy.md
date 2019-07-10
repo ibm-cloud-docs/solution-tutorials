@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-09"
+lastupdated: "2019-07-10"
 lasttested: "2019-06-15"
 
 ---
@@ -56,12 +56,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. Install software from {{site.data.keyword.IBM_notm}} mirrors
 1. Install software from external repositories
 
-## Before you begin
-{: #prereqs}
-
-- Provision your own VPC with a public and a private subnet and a virtual server instance (VSI) in each subnet - [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). Only the public subnet and web server is required for this tutorial.
-- For secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group - [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
-
 ## General software installation principles
 {: #general_software_installation}
 
@@ -103,8 +97,14 @@ Consider both `updating` the version lists available to the provisioned instance
 ## Initialize and Customize cloud instances with Cloud-init
 {: #cloud_init}
 
-Cloud-init is a package that contains utilities for early initialization of cloud instances.
-The [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) syntax is readable, even by a novice linux administrator. An example cloud-config.yaml file with different [directives](https://cloudinit.readthedocs.io/en/latest/topics/modules.html#) is shown below and each directive does what you would expect:
+[Cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) is a package that contains utilities for early initialization of cloud instances.  Cloud-init‘s behavior can be configured via user-data. User-data can be given by the user at instance launch time. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content.The VSIs provisioned with Ubuntu-18.04 base image in this tutorial comes with cloud-init pre-installed.
+
+In this tutorial, you will use the following user-data formats
+
+- Cloud config files (starts with `#cloud-config`). The cloud-config file must be valid `yaml` syntax.
+- Shell scripts (starts with `#!`)
+
+ An example [cloud-config.yaml](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/cloud-config.yaml) file with different directives is shown below and each directive does what you would expect:
 
 - package\_update - update the list of software packages available for either upgrade or installation
 - package\_upgrade - upgrade the currently installed software provided in the base with the latest versions
@@ -155,6 +155,8 @@ runcmd:
 ```
 {:codeblock}
 
+You can paste this cloud-init script in the **User Data** field while provisioning a VSI. The **User Data** field can be used to perform common configuration tasks or runs scripts.
+
 ### Install and upgrade software from the mirrors
 Upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the private instances have access to the {{site.data.keyword.IBM}} provided mirrors.  The cloud-init program uses the OS native install software. For example, `apt` in Ubuntu to install software from the mirrors.  The mirrors contain the full linux distributions of updates and optionally installed software like nginx for the provided images.
 
@@ -166,10 +168,7 @@ In the example above, the `/init.bash` script executed by cloud-init will test i
 - ISOLATED - if the internet is not available
 
 ### Upload from the filesystem and execute on the instance
-
 There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the VSI and then executed.
-
-User data is the mechanism by which a user can pass information contained in a local file to an instance at launch time. The typical use case is to pass something like a shell script or a configuration file as user data.In this tutorial, you will use shell scripts to pass the data.
 
 To demonstrate, a script will be uploaded from the filesystem of your current computer. The execution of the script will wait for the index html file to exist indicating that nginx has been installed.  It will then create a file, `testupload.html`, containing the string `hi`. Before executing, replace the `content`(User data) part of `write_files` directive in the above example with the shell script below
 
@@ -193,13 +192,16 @@ EOF
 {:codeblock}
 
 
-### Configure instances after booting
-Users often want to do some configuration to their instances after booting. For example, you may want to install some packages, start services, or manage the instance using a Puppet or Chef server.
+## Provision resources and configure instances
+In this section, you will provision a new VPC with subnets and VSIs (if you don't have one) and configure instances to use cloud-init user data.
 
-At the point, the instance is created. Change the cloud-init User data as shown below:
+Follow the instructions in the tutorials below to
 
-1. To configure the instance:
-   1. Set **User data** to
+- Provision your own VPC with a public and a private subnet and a virtual server instance (VSI) in each subnet - [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). Only the public subnet and web server is required for this tutorial.
+- For secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group - [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
+
+While provisioning a VSI, You can either use the **cloud-config.yaml** script or the shell script provided below as your cloud-init user data. Set **User Data** field to
+
       ```
       #!/bin/bash
       apt-get update
@@ -208,14 +210,12 @@ At the point, the instance is created. Change the cloud-init User data as shown 
       service nginx start
       ```
       {:codeblock}
-      This will install a simple web server into the instance.
 
-Instead fill the **User data** text box with the contents found here: [cloud-config.yaml](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/cloud-config.yaml) or in the terminal .../vpc-app-deploy/shared/cloud-config.yaml
+This will install a simple web server into the instance.
 
-### Upload and execute
-See the general `Upload and execute` section above.
+### Upload software and execute on the VSI
 
-To upload software you can scp the software to the frontend and backend VSIs and then ssh to the VSIs to install the software.  Assuming that the PWD is .../vpc-app-deploy use the following steps to copy and then execute through the bastion:
+To upload software, you can `scp`software to the frontend and backend VSIs and then ssh to the VSIs to install the software.  Assuming that the PWD is .../vpc-app-deploy use the following steps to copy and then execute through the bastion:
 ```
 scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> shared/uploaded.sh root@<FRONT_NIC_IP>:/uploaded.sh
 ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP> sh /uploaded.sh
