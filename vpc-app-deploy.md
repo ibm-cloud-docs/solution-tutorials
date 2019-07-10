@@ -219,7 +219,7 @@ While provisioning a VSI, You can either use the **cloud-config.yaml** script or
 This will install a simple web server into the instance.
 
 ### Provision resources via CLI and scripting
-If you are into CLI and scripting, clone this GitHub repository with shell, Terraform and Ansible scripts to provision the VPC resources
+If you are into CLI and scripting, clone this [GitHub repository](https://github.com/IBM-Cloud/vpc-tutorials) with shell, Terraform and Ansible scripts to provision the VPC resources
 
 ```sh
  git clone https://github.com/IBM-Cloud/vpc-tutorials.git
