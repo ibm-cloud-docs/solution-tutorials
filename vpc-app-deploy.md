@@ -109,7 +109,7 @@ In this tutorial, you will use the following user-data formats
 - Cloud config files (starts with `#cloud-config`). The cloud-config file must be valid `yaml` syntax.
 - Shell scripts (starts with `#!`)
 
- An example [cloud-config.yaml](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/cloud-config.yaml) file with different directives is shown below and each directive does what you would expect:
+An example [cloud-config.yaml](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/cloud-config.yaml) file with different directives is shown below and each directive does what you would expect:
 
 - package\_update - update the list of software packages available for either upgrade or installation
 - package\_upgrade - upgrade the currently installed software provided in the base with the latest versions
