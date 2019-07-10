@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-08"
+lastupdated: "2019-07-10"
 lasttested: "2019-06-11"
 ---
 
@@ -54,13 +54,11 @@ This tutorial uses the following runtimes and services:
 
 ## Before you begin
 {: #prereqs}
-* IBM Watson Studio and Watson Knowledge Catalog are applications that are part of IBM Watson. To create an IBM Watson account, begin by signing up for one or both of these applications.
 
-   Go to [Try IBM Watson](https://dataplatform.ibm.com/registration/stepone) and sign up for IBM Watson apps.
+* {{site.data.keyword.DSX_full}}, {{site.data.keyword.pm_full}} and {{site.data.keyword.knowledgestudiofull}} are applications that are part of IBM Watson. Go to [Try IBM Watson](https://dataplatform.ibm.com/registration/stepone) to activate and try the Watson applications for free with your IBM Cloud account
 
 ## Import data to a project
-
-{:#import_data_project}
+{: #import_data_project}
 
 A project is how you organize your resources to achieve a particular goal. Your project resources can include data, collaborators, and analytic tools like Jupyter notebooks and machine learning models.
 
@@ -70,7 +68,7 @@ You can create a project to add data and open a data asset in the data refiner f
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service.
 1. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-2. Create a **project** > Click **Create Project** on **Standard** tile. Set the name to **iris_project**.
+2. Create a **project** and then on **Standard** tile, Click **Create Project**. Set the name to **iris_project**.
 3. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 4. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 5. Click **Create**. Your new project opens and you can start adding resources to it.
@@ -84,18 +82,18 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 **Download** [iris_initial.csv](https://ibm.box.com/shared/static/nnxx7ozfvpdkjv17x4katwu385cm6k5d.csv) which consists of 40 instances of each class. You will use the rest 10 instances of each class to re-train your model.
 
 1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution22-build-machine-learning-model/data_icon.png).
-2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
-3. Once added, you should see `iris_initial.csv` under the **Data assets** section of the project. Click on the name to see the contents of the data set.
+1. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
+1. Once added, you should see `iris_initial.csv` under the **Data assets** section of the project. Click on the name to see the contents of the data set.
 
 ## Associate the {{site.data.keyword.pm_short}} service
 {:#associate_services}
 
 1. Click **Settings** on the top navigation bar > Associated Services.
-3. Click **Add Service** again and choose **Watson**.
+1. Click **Add Service** and choose **Watson**.
 1. Click **Add** on **{{site.data.keyword.pm_short}}** tile.
 1. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
    1. Choose the **Lite** plan and click **Create**.
-   4. Leave the default values and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
+   1. Leave the default values and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
 
 ## Build a machine learning model
 
@@ -131,7 +129,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Under the created model, click on **Deployments** > **Add Deployment**.
 1. Choose **Web Service**. Add a name say `iris_deployment` and an optional description.
-1. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **DEPLOY_SUCCESS**, you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
+1. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **DEPLOY_SUCCESS** (You may have to refresh the page), you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
 1. Click on **View API Specification** to see and test {{site.data.keyword.pm_short}} API endpoints.
 
    To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
