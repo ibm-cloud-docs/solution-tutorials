@@ -239,7 +239,7 @@ Use the template file provided in the `vpc-app-deploy` folder to create an `expo
 
 ### Configure the instance with cloud-init
 
-Once the environment variables are set and the file is sourced, run `make all_cli` command to generate `resource.sh` as an outcome of successful build and the below command to provision the required VPC resources for this tutorial,
+Once the environment variables are set and the file is sourced, run `make all_cli` command to generate `resource.sh` as an outcome of successful build and then the below command to provision the required VPC resources for this tutorial,
 
 ```sh
  ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 ssh_key tst default resources.sh @shared/cloud-config.yaml @shared/cloud-config.yaml ubuntu-18.04-amd64
@@ -262,16 +262,11 @@ If you wish to create an new instance, you can separately run the `instance-crea
 ```
 {:pre}
 
-
 ### Provision resources with Terraform scripts
-
-To update the system software from the mirrors, you will create a shell script and scp it to the instances and execute it.  Similarly, new versions of on-premise files can be deployed.  Extend the tests to verify correct results.
-
-The monotony and chances for error when managing resources in the console UI has lead to scripting.  Integrating scripting into your CI/CD pipeline can also be hard since the scripts either do not consider the current state of the resources or do so in an ad hoc way.  This has led to other kinds of orchestration systems like Terraform and Ansible.
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
-You can create the required resources with a self contained example including the creation of a VSI that you can SSH into. Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tfinstance/main.tf) file for the terraform script. It utilizes the `TF_VAR_bluemix_api_key` and `TF_VAR_ssh_key_name` initialized as environment variables earlier.
+You can create the required resources including the provisioning of a VSI that you can SSH into with a self contained example. Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tfinstance/main.tf) file for a terraform script. It utilizes the `TF_VAR_bluemix_api_key` and `TF_VAR_ssh_key_name` initialized as environment variables earlier.
 
 1. Run the below command to point to the directory
 
@@ -289,7 +284,25 @@ You can create the required resources with a self contained example including th
     ```
     {:pre}
 
-Let's dig deep into the `main.tf`script to understand better
+## Upload software and execute on the VSI
+
+You can use the CLI commands or scripts to Upload the software to the instance and then execute it in the instance manually or automatically
+
+### Through CLI
+To upload software to the frontend and backend VSIs, you can use the `scp` command and then SSH into the VSIs to install the software. On a terminal, point to the run the following commands to copy and then execute through the bastion:
+```sh
+scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> shared/uploaded.sh root@<FRONT_NIC_IP>:/uploaded.sh
+ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP> sh /uploaded.sh
+scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> shared/uploaded.sh root@<BACK_NIC_IP>:/uploaded.sh
+ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<BACK_NIC_IP> sh /uploaded.sh
+```
+{:pre}
+
+If you observe, the `scp` command above uses `-F` flag with a configuration file - `ssh.notstrict.config`. This is to avoid complaints from SSH as the floating ips come from a common pool and are reused.
+
+### Using Terraform
+
+Let's dig deep into the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) script under `tf` folder of the repo to understand the individual parts of the terraform script
 
 ```json
 module vpc_pub_priv {
@@ -307,23 +320,36 @@ module vpc_pub_priv {
 }
 ```
 {:codeblock}
-The parameters help us understand the concepts presented thus far.  Most will be familiar but few may be new:
-- backend_pgw - a public gateway can be connected to the backend subnet.  The frontend has a floating ip connected which provides both a public IP and gateway to the internet.  This is going to allow open internet access for software installation.  The backend does not have have access to the internet unless backend_pgw is true.  A test will verify by checking the value of http://HOST:/index.html which will be either ISOLATED or INTERNET.
+
+The parameters help us understand the concepts presented thus far,
+
+- backend_pgw - a public gateway can be connected to the backend subnet.  The frontend has a floating ip connected which provides both a public IP and gateway to the internet.  This is going to allow open internet access for software installation.  The backend does not have access to the internet unless backend_pgw is true.  A test will verify by checking the value of http://HOST:/index.html which will be either ISOLATED or INTERNET.
 - frontend_user_data, backend_user_data - cloud-init contents that is executed at provision time
 
-
-### Upload software and execute on the VSI
-To upload software to the frontend and backend VSIs, you can use the `scp` command and then SSH into the VSIs to install the software. On a terminal, point to the run the following commands to copy and then execute through the bastion:
-```sh
-scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> shared/uploaded.sh root@<FRONT_NIC_IP>:/uploaded.sh
-ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP> sh /uploaded.sh
-scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> shared/uploaded.sh root@<BACK_NIC_IP>:/uploaded.sh
-ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<BACK_NIC_IP> sh /uploaded.sh
+All terraform resources can have associated provisioners.  The null resource does not provision a cloud resource but can be used to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) file and then execute it.  Terraform has some special connection variables to use the bastion.
 ```
-{:pre}
-
-If you observe, the `scp` command above uses `-F` flag with a configuration file - `ssh.notstrict.config`. This is to avoid complaints from SSH as the floating ips come from a common pool and are reused.
-
+resource "null_resource" "copy_from_on_prem" {
+  connection {
+    type        = "ssh"
+    user        = "root"
+    host        = "${module.vpc_pub_priv.frontend_network_interface_address}"
+    private_key = "${file("~/.ssh/id_rsa")}"
+    bastion_user        = "root"
+    bastion_host        = "${local.bastion_ip}"
+    bastion_private_key = "${file("~/.ssh/id_rsa")}"
+  }
+  provisioner "file" {
+    source      = "../shared/${local.uploaded}"
+    destination = "/${local.uploaded}"
+  }
+  provisioner "remote-exec" {
+    inline      = [
+      "bash -x /${local.uploaded}",
+    ]
+  }
+}
+```
+{:codeblock}
 ### Test the connection to the frontend
 
 You can test the connection to the frontend using curl with the attached floating ip (FRONT_IP_ADDRESS)
@@ -447,7 +473,10 @@ The test_provision.bash script automates the testing discussed above.
 See troubleshoot above if there are problems.
 
 ### Update and analysis
+To update the system software from the mirrors create a shell script and scp it to the computers and execute it.  Similarly new versions of on premises files can be deployed.  Extend the tests to verify correct results.
 
+The monotony and chances for error when managing resources in the console UI has lead to scripting.  Integrating scripting into your CI/CD pipeline can also be hard since the scripts either do not consider the current state of the resources or do so in an ad hoc way.  This has led to other kinds of orchestration systems.
+Two of them: terraform and ansible, are discussed below.
 
 ## Terraform
 ### Introduction
@@ -459,30 +488,6 @@ Back to the example this tutorial has been demonstrating.  The terraform configu
 
 
 ## Upload and execute
-All terraform resources can have associated provisioners.  The null resource does not provision a cloud resource but can be used to copy the uploaded.sh file and then execute it.  Terraform has some special connection variables to use the bastion.
-```
-resource "null_resource" "copy_from_on_prem" {
-  connection {
-    type        = "ssh"
-    user        = "root"
-    host        = "${module.vpc_pub_priv.frontend_network_interface_address}"
-    private_key = "${file("~/.ssh/id_rsa")}"
-    bastion_user        = "root"
-    bastion_host        = "${local.bastion_ip}"
-    bastion_private_key = "${file("~/.ssh/id_rsa")}"
-  }
-  provisioner "file" {
-    source      = "../shared/${local.uploaded}"
-    destination = "/${local.uploaded}"
-  }
-  provisioner "remote-exec" {
-    inline      = [
-      "bash -x /${local.uploaded}",
-    ]
-  }
-}
-```
-{:codeblock}
 
 From the .../vpc-app-deploy directory the Makefile has targets that you can use to see it in action.  Or cd .../vpc-app-deploy/tf to use the terraform commands.  Makefile:
 
