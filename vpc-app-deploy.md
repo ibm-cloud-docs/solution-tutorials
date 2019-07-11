@@ -59,7 +59,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-- Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+- Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
+- Install terraform and the terraform IBM provider on your laptop.
+See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://{DomainName}/docs/terraform).
 
 ## General software installation principles
 {: #general_software_installation}
@@ -78,7 +80,7 @@ Following the steps in this tutorial, you will be able to
 - run tests to verify the above
 
 ## Base VSI images
-
+{: #base-vsi-images}
 Base {{site.data.keyword.Bluemix}} VSI images are populated with popular off the shelf operating systems:
 
 ```
@@ -196,10 +198,10 @@ EOF
 ```
 {:codeblock}
 
-## Provision infrastructure resources and configure the instance with Cloud init
+## Provision infrastructure resources via the VPC console
+{: #provision-vpc-cloud-init}
 In this section, you will provision a new VPC with subnets and VSIs (if you don't have one) and configure instances to use cloud-init user data.
 
-### Provision resources via the VPC console
 If you don't have the infrastructure setup yet, Follow the instructions in the tutorials below:
 
 - Provision your own VPC with a public and a private subnet and a virtual server instance (VSI) in each subnet - [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). Only the public subnet and web server is required for this tutorial.
@@ -218,7 +220,7 @@ While provisioning a VSI, You can either use the **cloud-config.yaml** script or
 
 This will install a simple web server into the instance.
 
-### Provision resources via CLI and scripting
+## Provision infrastructure resources via CLI and scripting
 If you are into CLI and scripting, clone this [GitHub repository](https://github.com/IBM-Cloud/vpc-tutorials) with shell, Terraform and Ansible scripts to provision the VPC resources
 
 ```sh
@@ -235,19 +237,80 @@ Use the template file provided in the `vpc-app-deploy` folder to create an `expo
 ```
 {:pre}
 
-Once the environment variables are set and the file is sourced, run `make all_cli` command to generate `resource.sh`as an outcome of successful build and the below command to provision the required VPC resources for this tutorial,
+### Configure the instance with cloud-init
+
+Once the environment variables are set and the file is sourced, run `make all_cli` command to generate `resource.sh` as an outcome of successful build and the below command to provision the required VPC resources for this tutorial,
 
 ```sh
  ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 ssh_key tst default resources.sh @shared/cloud-config.yaml @shared/cloud-config.yaml ubuntu-18.04-amd64
 ```
 {:pre}
+In the script above,
 
-You can pass the `@shared/cloud-config.yaml` file that contains the cloud-init user-data as a parameter to the `instance-create` command as shown below
+- ssh_key is one of the keys output from the `ibmcloud is keys` command
+- tst is the common prefix to all resources and the name of the vpc, keep this lower case and a valid dns name
+- ubuntu-18.04-amd64 one of the VSI images from the `ibmcloud is images` command, the scripts are expecting ubuntu
+- shared/cloud-config.yaml is the cloud-init file
+- resources.sh is the output of a successful build
+
+The `vpc-pubpriv-create-with-bastion.sh` shell script once executed successfully will create three hosts: frontend, backend and bastion respectively.  If you observe, the `cloud-config.yaml` file is passed as a parameter, it's contents will be passed to the `ibmcloud is create-instance` cli command.  When this step is complete the Front VSI is a publicly accessible host with an attached floating ip.  The Back VSI is isolated from the internet.
+
+If you wish to create an new instance, you can separately run the `instance-create` command by passing `@shared/cloud-config.yaml` file that contains the cloud-init user-data as a parameter as shown below
 
 ```sh
  ibmcloud is instance-create ... --user-data @shared/cloud-config.yaml
 ```
 {:pre}
+
+
+### Provision resources with Terraform scripts
+
+To update the system software from the mirrors, you will create a shell script and scp it to the instances and execute it.  Similarly, new versions of on-premise files can be deployed.  Extend the tests to verify correct results.
+
+The monotony and chances for error when managing resources in the console UI has lead to scripting.  Integrating scripting into your CI/CD pipeline can also be hard since the scripts either do not consider the current state of the resources or do so in an ad hoc way.  This has led to other kinds of orchestration systems like Terraform and Ansible.
+
+[Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
+
+You can create the required resources with a self contained example including the creation of a VSI that you can SSH into. Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tfinstance/main.tf) file for the terraform script. It utilizes the `TF_VAR_bluemix_api_key` and `TF_VAR_ssh_key_name` initialized as environment variables earlier.
+
+1. Run the below command to point to the directory
+
+    ```sh
+    cd .../vpc-app-deploy/tfinstance
+    ```
+    {:pre}
+
+1. To initialize and to apply the terraform script, run the below commands one after another
+
+    ```sh
+    terraform init
+    terraform apply
+    terraform output
+    ```
+    {:pre}
+
+Let's dig deep into the `main.tf`script to understand better
+
+```json
+module vpc_pub_priv {
+  source = "../../vpc-public-app-private-backend/tfmodule"
+  basename = "${local.BASENAME}"
+  ssh_key_name = "${var.ssh_key_name}"
+  zone = "${var.zone}"
+  backend_pgw = false
+  profile = "${var.profile}"
+  image_name = "${var.image_name}"
+  resource_group_name = "${var.resource_group_name}"
+  maintenance = "${var.maintenance}"
+  frontend_user_data = "${file("../shared/cloud-config.yaml")}"
+  backend_user_data = "${file("../shared/cloud-config.yaml")}"
+}
+```
+{:codeblock}
+The parameters help us understand the concepts presented thus far.  Most will be familiar but few may be new:
+- backend_pgw - a public gateway can be connected to the backend subnet.  The frontend has a floating ip connected which provides both a public IP and gateway to the internet.  This is going to allow open internet access for software installation.  The backend does not have have access to the internet unless backend_pgw is true.  A test will verify by checking the value of http://HOST:/index.html which will be either ISOLATED or INTERNET.
+- frontend_user_data, backend_user_data - cloud-init contents that is executed at provision time
+
 
 ### Upload software and execute on the VSI
 To upload software to the frontend and backend VSIs, you can use the `scp` command and then SSH into the VSIs to install the software. On a terminal, point to the run the following commands to copy and then execute through the bastion:
@@ -335,7 +398,6 @@ For more info or instructions on how to manage and/or create an SSH key read [SS
 
 The steps are captured in the .../vpc-app-deploy/Makefile. You can use the make targets or use the Makefile as a reference.
 
-The vpc-pubpriv-create-with-bastion.sh shell script will create three hosts: front, back, and bastion.  The cloud-config.yaml file is passed as a paramter, it's contents will be passed to the `ibmcloud is create-instance` cli command.  When this step is complete the Front VSI is a publicly accessible host with an attached floating ip.  The Back VSI is isolated from the internet.  A great explination of this environment is found in these two tutorials.
 
 - [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) only the public subnet and web server is required for this tutorial.
 - [Securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
@@ -352,11 +414,7 @@ Example command:
 ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 ssh_key tst default resources.sh @shared/cloud-config.yaml @shared/cloud-config.yaml ubuntu-18.04-amd64
 ```
 {:pre}
-- ssh_key is one of the keys output from the `ibmcloud is keys` command
-- tst is the common prefix to all resources and the name of the vpc, keep this lower case and a valid dns name
-- ubuntu-18.04-amd64 one of the VSI images from the `ibmcloud is images` command, the scripts are expecting ubuntu
-- shared/cloud-config.yaml is the cloud-init file
-- resources.sh is the output of a successful build
+
 
 After the command is complete examine the contents of resources.sh
 
@@ -389,51 +447,16 @@ The test_provision.bash script automates the testing discussed above.
 See troubleshoot above if there are problems.
 
 ### Update and analysis
-To update the system software from the mirrors create a shell script and scp it to the computers and execute it.  Similarly new versions of on premises files can be deployed.  Extend the tests to verify correct results.
 
-The monotony and chances for error when managing resources in the console UI has lead to scripting.  Integrating scripting into your CI/CD pipeline can also be hard since the scripts either do not consider the current state of the resources or do so in an ad hoc way.  This has led to other kinds of orchestration systems.
-Two of them: terraform and ansible, are discussed below.
 
 ## Terraform
 ### Introduction
 {: #section_two}
-Install terraform and the terraform IBM provider on your laptop.
-See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://{DomainName}/docs/terraform).
 
-If you are new to terraform or the IBM VPC resource model it will be helpful to start with a self contained example that creates the recources required to create a VSI that you can get to via ssh. [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tfinstance/main.tf) or .../vpc-app-deploy/tfinstance/main.tf in the terninal.  It utilizes the `TF_VAR_bluemix_api_key` and `TF_VAR_ssh_key_name` initialized earlier:
-
-```sh
-cd .../vpc-app-deploy/tfinstance
-terraform init
-terraform apply
-terraform output
-# notice the ssh command.  try it out
-terraform destroy
-```
-{:pre}
 
 ### Provisiong resources
 Back to the example this tutorial has been demonstrating.  The terraform configuration creates all the resources in the [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial.  Notice that the the previous two tutorials contribute terraform modules that are referenced by [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) or .../vpc-app-deploy/tf/main.tf.
 
-```json
-module vpc_pub_priv {
-  source = "../../vpc-public-app-private-backend/tfmodule"
-  basename = "${local.BASENAME}"
-  ssh_key_name = "${var.ssh_key_name}"
-  zone = "${var.zone}"
-  backend_pgw = false
-  profile = "${var.profile}"
-  image_name = "${var.image_name}"
-  resource_group_name = "${var.resource_group_name}"
-  maintenance = "${var.maintenance}"
-  frontend_user_data = "${file("../shared/cloud-config.yaml")}"
-  backend_user_data = "${file("../shared/cloud-config.yaml")}"
-}
-```
-{:codeblock}
-The parameters help us understand the concepts presented thus far.  Most will be familiar but these may be new:
-- backend_pgw - a public gateway can be connected to the backend subnet.  The frontend has a floating ip connected which provides both a public IP and gateway to the internet.  This is going to allow open internet access for software installation.  The backend does not have have access to the internet unless backend_pgw is true.  A test will verify by checking the value of htp://HOST:/index.html which will be either ISOLATED or INTERNET.
-- frontend_user_data, backend_user_data - cloud-init contents that is executed at provision time
 
 ## Upload and execute
 All terraform resources can have associated provisioners.  The null resource does not provision a cloud resource but can be used to copy the uploaded.sh file and then execute it.  Terraform has some special connection variables to use the bastion.
