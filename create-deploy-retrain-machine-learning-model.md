@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-10"
+lastupdated: "2019-07-11"
 lasttested: "2019-06-11"
 ---
 
@@ -132,9 +132,9 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 1. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **DEPLOY_SUCCESS** (You may have to refresh the page), you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
 1. Click on **View API Specification** to see and test {{site.data.keyword.pm_short}} API endpoints.
 
-   To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
+   To start working with the API, you need to generate an **access token**. Follow the instructions mentioned on the API specification page to generate an **access token**.
    {:tip}
-1. To make an online prediction, use the `POST /online` API call.
+1. To make an online prediction, use the `POST /online` API call under Deployments.
    * `instance_id` can be found on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/).
    * `deployment_id` and `published_model_id` are under **Overview** of your deployment.
    *  For `online_prediction_input`, use the below JSON
