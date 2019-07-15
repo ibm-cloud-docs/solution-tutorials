@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-08"
+lastupdated: "2019-07-15"
 lasttested: "2019-07-02"
 ---
 
@@ -153,6 +153,7 @@ In this section, you will create the database service.
    ```sh
    ibmcloud resource service-instance vpns2s-pg
    ```
+   {: codeblock}
 
    While waiting for the service to create, you can proceed with the steps in the other sections of this tutorial and come back to perform steps 2 and 3 below.  
 
