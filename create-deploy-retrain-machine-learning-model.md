@@ -164,7 +164,11 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#create_feedback_connection}
 
-1. For continuous learning and model evaluation, you need to store new data somewhere. Create a  [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection.
+1. For continuous learning and model evaluation, you need to store new data somewhere. Create a [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection. 
+
+  Make sure to select the **Entry** plan when creating the above instance.
+  {:tip}
+
 2. On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open Console**. Click **Load** under Load activity section.
 3. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
 4. Select **DASHXXXX**, e.g., DASH1234 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
@@ -201,7 +205,7 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
       - Click **Save**.
 1. Under **Accuracy**,
       - Click **Begin** and let the accuracy alert threshold be **80%**.
-      - Set the minimum threshold to 1o and maximum threshold to 40 > Click **Next** and then **Save**.
+      - Set the minimum threshold to 10 and maximum threshold to 40 > Click **Next** and then **Save**.
       - Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.
 
 ## Generate load and check metrics
