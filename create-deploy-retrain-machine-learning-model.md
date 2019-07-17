@@ -185,6 +185,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
 1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog and click **Launch Application**.
 1. Click on **No thanks** to manually setup the monitors.
+1. If prompted, click on `Show beta features` to enable the latest capabilities.
 1. Click **Use the free lite plan database** to store model deployment output and retraining data > click **Save**.
 1. Click **Select Provider** > Click **Add machine learning provider** > Select **Watson Machine Learning** as your service provider
       - In the dropdown, select the {{site.data.keyword.pm_full}} service you created above.
