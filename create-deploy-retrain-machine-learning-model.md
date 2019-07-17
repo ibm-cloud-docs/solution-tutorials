@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-12"
-lasttested: "2019-06-11"
+lastupdated: "2019-07-17"
+lasttested: "2019-07-17"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -17,7 +17,7 @@ lasttested: "2019-06-11"
 {:tip: .tip}
 {:pre: .pre}
 
-# Build, deploy, test, and retrain a predictive machine learning model
+# Build, deploy, test, retrain and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
 This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.
 
@@ -50,16 +50,16 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
 * [{{site.data.keyword.pm_full}}](https://{DomainName}/catalog/services/machine-learning)
 * [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
+* [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale)
 
 ## Before you begin
 {: #prereqs}
-* IBM Watson Studio and Watson Knowledge Catalog are applications that are part of IBM Watson. To create an IBM Watson account, begin by signing up for one or both of these applications.
 
-   Go to [Try IBM Watson](https://dataplatform.ibm.com/registration/stepone) and sign up for IBM Watson apps.
+* {{site.data.keyword.DSX_full}}, {{site.data.keyword.pm_full}} and {{site.data.keyword.knowledgestudiofull}} are applications that are part of IBM Watson. Go to [Try IBM Watson](https://dataplatform.ibm.com/registration/stepone) to activate and try the Watson applications for free with your IBM Cloud account
+* Install [Python 3.x](https://www.python.org/downloads/)
 
 ## Import data to a project
-
-{:#import_data_project}
+{: #import_data_project}
 
 A project is how you organize your resources to achieve a particular goal. Your project resources can include data, collaborators, and analytic tools like Jupyter notebooks and machine learning models.
 
@@ -69,7 +69,7 @@ You can create a project to add data and open a data asset in the data refiner f
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service.
 1. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-2. Create a **project** > Click **Create Project** on **Standard** tile. Set the name to **iris_project**.
+2. Create a **project** and then on **Standard** tile, Click **Create Project**. Set the name to **iris_project**.
 3. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 4. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 5. Click **Create**. Your new project opens and you can start adding resources to it.
@@ -83,18 +83,18 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 **Download** [iris_initial.csv](https://ibm.box.com/shared/static/nnxx7ozfvpdkjv17x4katwu385cm6k5d.csv) which consists of 40 instances of each class. You will use the rest 10 instances of each class to re-train your model.
 
 1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution22-build-machine-learning-model/data_icon.png).
-2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
-3. Once added, you should see `iris_initial.csv` under the **Data assets** section of the project. Click on the name to see the contents of the data set.
+1. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
+1. Once added, you should see `iris_initial.csv` under the **Data assets** section of the project. Click on the name to see the contents of the data set.
 
 ## Associate the {{site.data.keyword.pm_short}} service
 {:#associate_services}
 
 1. Click **Settings** on the top navigation bar > Associated Services.
-3. Click **Add Service** again and choose **Watson**.
+1. Click **Add Service** and choose **Watson**.
 1. Click **Add** on **{{site.data.keyword.pm_short}}** tile.
 1. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
    1. Choose the **Lite** plan and click **Create**.
-   4. Leave the default values and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
+   1. Leave the default values and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
 
 ## Build a machine learning model
 
@@ -130,17 +130,27 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Under the created model, click on **Deployments** > **Add Deployment**.
 1. Choose **Web Service**. Add a name say `iris_deployment` and an optional description.
-1. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **DEPLOY_SUCCESS**, you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
-1. Click on **View API Specification** to see and test {{site.data.keyword.pm_short}} API endpoints.
+1. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **DEPLOY_SUCCESS** (You may have to refresh the page), you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
+1. Open a terminal and export the required values for the **cURL** code snippet by replacing the placeholders below
+   ```sh
+   export IAM_TOKEN='<IAM_TOKEN>'
+   export ML_INSTANCE_ID='<ML_SERVICE_INSTANCE_ID>'
+   export SCORING_ENDPOINT='<ML_SCORING_ENDPOINT>'
+   ```
+   {:pre}
 
-   To start working with the API, you need to generate an **access token** using the **username** and **password** available on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service instance under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/) . Follow the instructions mentioned on the API specification page to generate an **access token**.
+   For getting an IAM token using a Watson service API key, refer this [link](https://{DomainName}/docs/services/watson?topic=watson-iam). You can find the ML_INSTANCE_ID under Service credentials of Machine Learning service you created earlier.
    {:tip}
-1. To make an online prediction, use the `POST /online` API call.
-   * `instance_id` can be found on the **Service Credentials** tab of the {{site.data.keyword.pm_short}} service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/).
-   * `deployment_id` and `published_model_id` are under **Overview** of your deployment.
-   *  For `online_prediction_input`, use the below JSON
 
-     ```json
+1. Copy and paste the **cURL** code snippet in the terminal window where you have exported the variables. Thereafter, replace `$ARRAY_OF_VALUES_TO_BE_SCORED` with **[5.1,3.5,1.4,0.2]** and `$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED` with **[3.2,1.2,5.2,1.7]**.
+1. Run the **cURL** to see the prediction results.
+
+## Test your model
+
+{:#test_model}
+
+1. Under **Test**, click on **Provide input data as JSON** icon next to **Enter input data** and provide the JSON below as input.
+   ```json
      {
      	"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"],
      	"values": [
@@ -148,24 +158,19 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
      	]
      }
      ```
-   * Click on **Try it out** to see the JSON output.
-
-1. Using the API endpoints, you can now call this model from any application.
-
-## Test your model
-
-{:#test_model}
-
-1. Under **Test**, you should see input data (Feature data) being populated automatically.
-2. Click **Predict** and you should see the **Predicted value for species** in a chart.
-3. For JSON input and output, click on the icons next to the active input and output.
-4. You can change the input data and continue testing your model.
+1. Click **Predict** and you should see the **Predicted value for species** in a chart.
+1. For JSON input and output, click on the icons next to the active input and output.
+1. You can change the input data and continue testing your model.
 
 ## Create a feedback data connection
 
 {:#create_feedback_connection}
 
-1. For continuous learning and model evaluation, you need to store new data somewhere. Create a  [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection.
+1. For continuous learning and model evaluation, you need to store new data somewhere. Create a [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection.
+
+  Make sure to select the **Entry** plan when creating the above instance.
+  {:tip}
+
 2. On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open Console**. Click **Load** under Load activity section.
 3. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
 4. Select **DASHXXXX**, e.g., DASH1234 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
@@ -173,6 +178,72 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 6. A new target **DASHXXXX.IRIS_FEEDBACK** is created.
 
    You will be using this in the next step where you will be re-training the model for better performance and precision.
+
+## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
+{:#monitor_openscale}
+
+In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
+1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog and click **Launch Application**.
+1. Click on **No thanks** to manually setup the monitors.
+1. If prompted, click on `Show beta features` to enable the latest capabilities.
+1. Click **Use the free lite plan database** to store model deployment output and retraining data > click **Save**.
+1. Click **Select Provider** > Click **Add machine learning provider** > Select **Watson Machine Learning** as your service provider
+      - In the dropdown, select the {{site.data.keyword.pm_full}} service you created above.
+      - Provide a service provider instance name (say `iris-wml-provider`)
+      - Click **Save**
+1. Click **Go to Dashboard** to add a deployment > Click **Add deployments** and select `iris_deployment`> Click **Configure**.
+1. Click **Configure monitors** to setup your monitors.
+1. Under **Payload logging**,
+      - Select **Numerical/categorical** as Data type
+      - Select **Multi-class classification** as the Algorithm type > Click **Save** and then **OK**
+      - Send a payload scoring request using the `POST /online` API call or using the TEST section. Once done, click **I'm finished**
+1. Under **Model details**,
+      - Click **Begin** and select **Manually configure monitors** > Click **Next**.
+      - Select **Db2** as the location for your training data > Provide the credentials of your Db2 service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) > Click **Test**. Once the connection is successful, Click **Next**
+      - Select the schema - DASHXXXX and the Table - IRIS_FEEDBACK > Click **Next**
+      - Click on **Species** tile as your column that contains the answers to be predicted by the model > Click **Next**
+      - Select petal_length, petal_width as your features used to train the model.> Click **Next**
+      - Select petal_length, petal_width as the text and categorical features.> Click **Next**
+      - Select nodeADP_class as the deployment prediction column.
+      - Click **Save**.
+1. Under **Accuracy**,
+      - Click **Begin** and let the accuracy alert threshold be **80%**.
+      - Set the minimum threshold to 10 and maximum threshold to 40 > Click **Next** and then **Save**.
+      - Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.
+
+## Generate load and check metrics
+{:#generate_load_metrics}
+
+You can either generate load by sending multiple requests with random petal_width, petal_length, sepal_width and sepal_length values in the JSON to the scoring API endpoint or by executing the Python script below
+
+1. Create a file with the name `scoring.py`, paste the code below and save the file.
+   ```
+    import os, urllib3, requests, json, random
+
+    iam_token=os.environ.get('IAM_TOKEN')
+    ml_instance_id=os.environ.get('ML_INSTANCE_ID')
+    scoring_endpoint=os.environ.get('SCORING_ENDPOINT')
+    array_of_values_to_be_scored=[round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1)]
+    # NOTE: generate iam_token and retrieve ml_instance_id from the ML service credentials
+    header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + iam_token, 'ML-Instance-ID': ml_instance_id}
+    payload_scoring = {"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"], "values": [array_of_values_to_be_scored]}
+    response_scoring = requests.post(scoring_endpoint, json=payload_scoring, headers=header)
+    print("Scoring response")
+    print(json.loads(response_scoring.text))
+   ```
+   {:pre}
+
+1. On a terminal, point to the directory where the Python script is saved and run the below bash command
+   ```sh
+   for i in {1..100}; do python3 scoring.py; done
+   ```
+   {:pre}
+1. Once the command exits, Navigate to the {{site.data.keyword.aios_full_notm}} dashboard and click on the **Insights** on the left pane.
+1. Once on the insights page, click on the WML deployment tile to see the Quality, Performance and Analytics monitors and metrics.
+1. Click on **Throughput** under Performance to see the average number of requests per minute.
+1. Click on **Accuracy** under Quality to check the quality of your model. Accuracy is proportion of correct predictions.On the generated chart, click on any point to see the confusion matrix.
+1. Click on **Predictions by Confidence** under Analytics to check the Prediction Confidence of your model.
+1. Explore the chart builder under to visualize various metrics plotted on X-axis and Y-axis of the generated chart.
 
 ## Re-train your model
 
@@ -183,9 +254,9 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 3. On the configure Performance Monitoring page,
    * Select Default Spark Scala environment. Prediction type should be populated automatically.
    * Choose **weightedPrecision** as your metric and set `0.98` as the optional threshold.
-   * Click on **Create new connection** to point to the IBM Db2 Warehouse on cloud which you created in the above section.
+   * Click on **Create new connection** to point to the IBM Db2 Warehouse on cloud which you created in the above section.This will open on a new tab. Once done, return to the main tab.
    * Select the Db2 warehouse connection and once the connection details are populated, click **Create**.
-   * Click on **Select feedback data reference** and point to the IRIS_FEEDBACK table and click **Select**.
+   * Click on **Select feedback data reference**, Select the schema - DASHXXXX and point to the IRIS_FEEDBACK table and click **Select**.
    * In the **Record count required for re-evaluation** box, type the minimum number of new records to trigger retraining. Use **10** or leave blank to use the default value of 1000.
    * In the **Auto retrain** box, select one of the following options:
      - To start automatic retraining whenever model performance is below the threshold that you set, select **when model performance is below threshold**. For this tutorial, you will choose this option as our precision is below the threshold (.98).
@@ -196,7 +267,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
      - To prohibit automatic deployment, select **never**.
      - To start automatic deployment regardless of performance, select **always**.
    * Click **Save**.
-4. Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, click **Add feedback data**, select the downloaded csv file, and click **Open**.
+4. Click **Add feedback data**, select the downloaded `iris_retrain.csv` file, and click **Open**.
 5. Click **New evaluation** to begin.
 6. Once the evaluation completes. You can check the **Last Evaluation Result** section for the improved **WeightedPrecision** value.
 
