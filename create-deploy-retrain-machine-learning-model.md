@@ -253,9 +253,9 @@ You can either generate load by sending multiple requests with random petal_widt
 3. On the configure Performance Monitoring page,
    * Select Default Spark Scala environment. Prediction type should be populated automatically.
    * Choose **weightedPrecision** as your metric and set `0.98` as the optional threshold.
-   * Click on **Create new connection** to point to the IBM Db2 Warehouse on cloud which you created in the above section.
+   * Click on **Create new connection** to point to the IBM Db2 Warehouse on cloud which you created in the above section.This will open on a new tab. Once done, return to the main tab.
    * Select the Db2 warehouse connection and once the connection details are populated, click **Create**.
-   * Click on **Select feedback data reference** and point to the IRIS_FEEDBACK table and click **Select**.
+   * Click on **Select feedback data reference**, Select the schema - DASHXXXX and point to the IRIS_FEEDBACK table and click **Select**.
    * In the **Record count required for re-evaluation** box, type the minimum number of new records to trigger retraining. Use **10** or leave blank to use the default value of 1000.
    * In the **Auto retrain** box, select one of the following options:
      - To start automatic retraining whenever model performance is below the threshold that you set, select **when model performance is below threshold**. For this tutorial, you will choose this option as our precision is below the threshold (.98).
