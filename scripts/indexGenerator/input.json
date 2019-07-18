@@ -326,16 +326,6 @@
                 ]
             },
             {
-                "name": "Hybrid mobile application with Push Notifications",
-                "url": "hybrid-mobile-push-analytics.html",
-                "description": "Develop a hybrid Cordova application with Push Notifications on IBM Cloud.",
-                "imgSrc": "images/solution15/Architecture.png",
-                "tags": [
-                    "Cordova",
-                    "Push Notifications"
-                ]
-            },
-            {
                 "name": "Mobile application with a serverless backend",
                 "url": "serverless-mobile-backend.html?pos=2",
                 "description": "Use Cloud Functions with cognitive and data services to build a serverless backend for a mobile application.",

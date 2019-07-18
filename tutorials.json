@@ -69,7 +69,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2019-05-23"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -196,7 +196,7 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2019-06-17"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -209,7 +209,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2019-05-27"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Isolated Cloud Foundry Enterprise Apps",
@@ -244,7 +244,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2019-06-24"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -317,7 +317,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-06-19"
+          "lastUpdated": "2019-07-08"
         }
       ]
     },
@@ -345,17 +345,6 @@
           "tags": [
             "Android",
             "Java",
-            "Push Notifications"
-          ],
-          "lastUpdated": "2019-06-20"
-        },
-        {
-          "name": "Hybrid mobile application with Push Notifications",
-          "url": "hybrid-mobile-push-analytics.html",
-          "description": "Develop a hybrid Cordova application with Push Notifications on IBM Cloud.",
-          "imgSrc": "images/solution15/Architecture.png",
-          "tags": [
-            "Cordova",
             "Push Notifications"
           ],
           "lastUpdated": "2019-06-20"
@@ -391,7 +380,7 @@
             "SQL Query",
             "Streaming Analytics"
           ],
-          "lastUpdated": "2019-06-24"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -403,7 +392,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2019-06-24"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -416,7 +405,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2019-06-24"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Build, deploy, test, and retrain a predictive machine learning model",
@@ -463,7 +452,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-05-27"
+          "lastUpdated": "2019-06-27"
         }
       ]
     },
@@ -541,7 +530,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-05-07"
+          "lastUpdated": "2019-07-15"
         },
         {
           "name": "Securely access remote instances with a bastion host",
