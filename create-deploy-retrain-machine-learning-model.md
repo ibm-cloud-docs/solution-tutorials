@@ -231,7 +231,7 @@ You can either generate load by sending multiple requests with random petal_widt
     print("Scoring response")
     print(json.loads(response_scoring.text))
    ```
-   {:pre}
+   {:codeblock}
 
 1. On a terminal, point to the directory where the Python script is saved and run the below bash command
    ```sh
