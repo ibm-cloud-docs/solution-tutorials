@@ -11,6 +11,19 @@
         "anchor": "websites",
         "solutions": [
             {
+                "name": "Scalable web app on OpenShift",
+                "url": "scalable-webapp-openshift.html",
+                "description": "Scaffold a nodejs web application, run it locally in a container and then deploy it to an openshift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+                "imgSrc": "images/solution2/Architecture.png",
+                "hidden": true,
+                "tags": [
+                    "OpenShift",
+                    "Container Service",
+                    "Container Registry",
+                    "Node.js"
+                ]
+            },
+            {
                 "name": "Scalable web app on Kubernetes",
                 "url": "scalable-webapp-kubernetes.html",
                 "description": "Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
