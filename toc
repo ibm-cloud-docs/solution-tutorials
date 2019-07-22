@@ -9,6 +9,7 @@ Solution Tutorials
 
     {: .topicgroup}
     Websites and Web Apps
+        scalable-webapp-openshift.md
         scalable-webapp-kubernetes.md
         vm-to-containers-and-kubernetes.md
         strategies-for-resilient-applications.md

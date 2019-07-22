@@ -13,8 +13,8 @@
             {
                 "name": "Scalable web app on OpenShift",
                 "url": "scalable-webapp-openshift.html",
-                "description": "Scaffold a nodejs web application, run it locally in a container and then deploy it to an openshift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
-                "imgSrc": "images/solution2/Architecture.png",
+                "description": "Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+                "imgSrc": "images/solution50-scalable-webapp-openshift/Architecture.png",
                 "hidden": true,
                 "tags": [
                     "OpenShift",
