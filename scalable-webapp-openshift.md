@@ -82,7 +82,7 @@ You will provision a **Standard** Red Hat OpenShift on IBM Cloud cluster as Open
     - Select **2** Worker nodes for this tutorial.
 1. Check **Infrastructure permissions checker** to verify the required permissions and Click **Create** to provision an openshift cluster.
 
-### Configure oc
+### Configure CLI
 
 In this step, you'll configure `oc` to point to your newly created cluster. The [OpenShift Container Platform CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
@@ -94,12 +94,13 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
     ```
     {:pre}
 
-## Create a starter kit
-{: #create_application}
-
+## Generate a starter kit
+{: #generate_starter_kit}
 The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
-1. Start the `ibmcloud dev` wizard.
+### Using ibmcloud dev plugin
+
+1. On a terminal, Start the `ibmcloud dev` wizard by running the below command
    ```
    ibmcloud dev create
    ```
@@ -146,16 +147,26 @@ You can build and run the application as you normally would using `mvn` for java
   ![](images/solution2/LibertyLocal.png)
 
 ### Push the code to a Private IBM Cloud GitHub repo
-In this step, you will create a private IBM Cloud GitHub repo and push the generated code
+In this step, you will create a private IBM Cloud GitHub repository and push the generated code
 
-## Deploy the application from the Private GitHub repo
+1. Create an empty Git repository on
 
+## Create a new OpenShift application
+### Generate a build configuration yaml file
+### Update the BuildConfig and Push the builder image to ICR
 
-### Update the BuildConfig and Push the builder image to IBM Cloud Container Registry
+## Deploy the application to cluster
+
+### Create the app using the buildconfig yaml
+### Access the app through IBM provided domain
+
+### Update the app and redeploy
+
+## Monitor the app
+
+## Scale the app
 
 ![](images/solution2/Contents.png)
-
-
 
 
 {: #deploy}
@@ -222,7 +233,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {: pre}
 12. Access the application at `http://worker-ip-address:portnumber/`.
 
-### Use the IBM-provided domain for your cluster
+
 {: #ibm_domain}
 
 In the previous step, the application was accessed with a not standard port. The service was exposed by way of Kubernetes NodePort feature.
@@ -245,6 +256,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    ```
    {: screen}
 2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output. **service-name** is the name under `==> v1/Service` in the above step. You can also use `kubectl get svc` to find the service name of type **NodePort**.
+
    ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
@@ -265,12 +277,12 @@ Use Ingress to set up the cluster inbound connection to the service.
              servicePort: 9080
    ```
    {: codeblock}
-3. Deploy the Ingress
+1. Deploy the Ingress
    ```sh
    kubectl apply -f ingress-ibmdomain.yml
    ```
    {: pre}
-4. Access your application at `https://<nameofproject>.<ingress-sub-domain>/`
+1. Access your application at `https://<nameofproject>.<ingress-sub-domain>/`
 
 ## Use your own custom domain
 {: #custom_domain}
@@ -346,7 +358,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    {: pre}
 6. Access your application at `https://<customdomain>/`.
 
-## Monitor application health
+
 {: #monitor_application}
 
 1. To check the health of your application, navigate to [clusters](https://{DomainName}/kubernetes/clusters) to see a list of clusters and click on the cluster you created above.
@@ -361,7 +373,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    ```
    {: pre}
 
-## Scale Openshift pods
+
 {: #scale_cluster}
 
 As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
