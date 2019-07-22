@@ -21,6 +21,8 @@ tar cf - \
   --exclude=extended-cloud-security.md \
   --exclude="images/solution49-*" \
   --exclude=vpc-app-deploy.md \
+  --exclude="images/solution50-*" \
+  --exclude=scalable-webapp-openshift.md \
   --exclude=README.md \
   --exclude="*.course.json" \
   --exclude=scripts \
