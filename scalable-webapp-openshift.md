@@ -146,10 +146,22 @@ You can build and run the application as you normally would using `mvn` for java
 1. After your container starts, go to `http://localhost:9080/`. If you created a Node.js application, go to `http://localhost:3000/`.
   ![](images/solution2/LibertyLocal.png)
 
-### Push the code to a Private IBM Cloud GitHub repo
-In this step, you will create a private IBM Cloud GitHub repository and push the generated code
+### Push the code to a Private IBM Cloud Git repo
+In this step, you will create a private IBM Cloud Git repository and push the generated code.
 
-1. Create an empty Git repository on
+1. Create a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) service > provide a **Service name** > choose a **region/location** > select a **resource group** > select a **Lite** plan and click **Create**.
+1. Once provisioned, click on **Manage** tab to authorize users and manage access to the toolchains.
+1. Create an [empty toolchain](https://{DomainName}/devops/setup/deploy?repository=https%3A%2F%2Fgithub.com%2Fopen-toolchain%2Fempty-toolchain) with **openshift-toolchain** as the **Toolchain Name**.
+1. Select a **region** preferably where you have created the cluster > select a **resource group**
+1. Select **GitLab** as the source provider and click **Create**.
+1. Once your toolchain is ready, click on **Add Tool**.
+1. Select **Git Repos and Issue Tracking**
+   - Select a **Server** and choose **New** as the repository type
+   - Select a **Owner** and provide **openshiftapp** as the repository name
+   - Leave the checkboxes checked and Click **Create Integration**
+1. Click on **Git** tile under CODE to open your Git repository.
+1. Follow the instructions under **Existing folder** section of project **Details** by pointing it to the local folder where you have created the starter kit using `ibmcloud dev`.
+1. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
 ## Create a new OpenShift application
 ### Generate a build configuration yaml file
