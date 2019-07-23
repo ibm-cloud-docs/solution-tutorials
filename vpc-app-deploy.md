@@ -239,32 +239,6 @@ Network connectivity to any of the VSIs needs to be enabled through the VPC Secu
 
 The default Network ACLs allow all traffic.  If this is changed keep in mind that both ingress and egress need to be allowed and the specification is not statefull (unlike security groups)
 
-### Before you continue
-{: #before_you_continue}
-
-This tutorial will walk through example steps on a terminal using the shell, terraform and ansible.  Initialize your environment now:
-```
-cp export.template export; # create your copy
-edit export; # edit your copy by substituting in your values
-source export; # source the values into each shell environment that you create
-```
-{:codeblock}
-
-Check out the comments in the export.template.  The environment variables are in terraform format but are used in all environments.
-
-`TF_VAR_ibmcloud_api_key` is an ibm cloud api key. Follow the [Configuring the IBM Cloud Provider plug-in](https://{DomainName}/docs/terraform?topic=terraform-configure_provider) instructions for finding the value of ibmcloud_api_key
-
-`TF_VAR_ssh_key_name` is the name of the VPC SSH public key in the cloud.  This is the public key that will be loaded into the instance to provide secure ssh access via the private key on my workstation.  Use the cli to verify it exists:
-```sh
-ibmcloud is keys
-```
-{:pre}
-By default the private key is found here: $HOME/.ssh/id_rsa
-For more info or instructions on how to manage and/or create an SSH key read [SSH keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
-
-
-`TF_VAR_resource_group_name` is the resource group.  See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
-
 ### Choose your technology
 The next sections will use the concepts described above and apply them to the following major technology mechanisms for provisioning and installing software:
 
@@ -272,6 +246,51 @@ The next sections will use the concepts described above and apply them to the fo
 - CLI and shell scripts
 - terraform
 - ansible
+
+## Common steps (work in progress)
+
+### Get the source code
+
+1. Check out the tutorial source code
+   ```sh
+   git clone https://github.com/IBM-Cloud/vpc-tutorials.git
+   ```
+   {: codeblock}
+
+### Create a VPC ssh key
+
+xxx
+
+### Set environment variables
+
+This tutorial will walk through example steps on a terminal using the shell, `terraform` and `ansible`.
+
+1. Change to the tutorial directory:
+   ```sh
+   cd vpc-app-deploy
+   ```
+   {:codeblock}
+1. Copy the configuration file:
+   ```sh
+   cp export.template export
+   ```
+   {:codeblock}
+1. Edit the `export` file and set the environment variable values:
+   * `TF_VAR_ibmcloud_api_key` is an IBM Cloud API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
+   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key in the cloud. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
+      ```sh
+      ibmcloud is keys
+      ```
+      {:codeblock}
+   By default the private key is found here: $HOME/.ssh/id_rsa. For more info or instructions on how to manage and/or create an SSH key read [SSH keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
+   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
+1. Load the variables into the environments:
+   ```sh
+   source export
+   ```
+   {:codeblock}
+
+The environment variables in `export` are in terraform format (notice the `TF_` prefix) for convenience but are used in all environments.
 
 ## VPC GUI console and typing
 {: #provision-vpc-cloud-init}
@@ -418,41 +437,55 @@ The following script will delete the vpc and `all` of the conents in the vpc, be
 {:pre}
 
 
-## Terraform
+## Provisioning infrastructure with Terraform
 
-### Before you begin
-- Install terraform and the terraform IBM provider on your workstation.  See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://{DomainName}/docs/terraform).
-
-### Introduction
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
-If you are starting with terraform for the first time, or if you are unfamiliar with the IBM VPC object model expressed in terraform you can optionally spend a few minutes with a smaller example before moving ahead with this tutorial.  The terraform configuration for a VSI and floating ip allowing SSH access is provided. Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tfinstance/main.tf) file for a terraform script. It utilizes the `TF_VAR_bluemix_api_key` and `TF_VAR_ssh_key_name` initialized as environment variables earlier.
+If you are starting with terraform for the first time, or if you are unfamiliar with the IBM VPC object model expressed in terraform you can optionally spend a few minutes [with a smaller example](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples/ibm-is-vpc) before moving ahead with this tutorial.
 
-1. Enter the directory
+### Before you begin
 
-    ```sh
-    cd .../vpc-app-deploy/tfinstance
-    ```
-    {:pre}
-1. Initialize and apply the terraform script.  Notice the output generated.
+1. Follow the instructions found in [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the IBM Cloud Provider plug-in for Terraform on your workstation.
 
-    ```sh
-    terraform init
-    terraform apply
-    terraform output
-    ```
-    {:pre}
-1. SSH to the created VSI
-    ```
-    echo $(terraform output sshcommand)
-    $(terraform output sshcommand)
-    ```
-    {:pre}
-1.
-    ```sh
-    terraform destroy
-    ```
-    {:pre}
+### Provision a single virtual server instance
+
+Before deploying a more complex architecture, let's deploy a single VSI with a floating IP and access this VSI with `ssh`.
+
+Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tfinstance/main.tf) file for a terraform script. It utilizes the environment variables defined earlier.
+
+1. Change to the terraform script folder for this example:
+   ```sh
+   cd <checkout_dir>/vpc-app-deploy/tfinstance
+   ```
+   {:codeblock}
+1. Initialize Terraform:
+   ```sh
+   terraform init
+   ```
+   {:codeblock}
+1. Apply the Terraform plan:
+   ```sh
+   terraform apply
+   ```
+   {:codeblock}
+   The script creates a VPC, a VSI and enable SSH access.
+1. View the output generated by the plan:
+   ```sh
+   terraform output
+   ```
+   {:codeblock}
+1. You could copy paste the output of the previous command or you can use `terraform output` as follow to SSH into the VSI
+   ```sh
+   $(terraform output sshcommand)
+   ```
+   {:codeblock}
+   Using outputs in Terraform can become quite handy when you want to reuse resource properties in other scripts after you have applied a Terraform plan.
+   {:tip}
+1. Remove the resources created by Terraform:
+   ```sh
+   terraform destroy
+   ```
+   {:codeblock}
 
 ### Provision
 
