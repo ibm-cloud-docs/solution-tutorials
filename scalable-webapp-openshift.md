@@ -61,6 +61,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
 * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
 * [Install the OpenShift Origin (oc) CLI](/docs/containers?topic=containers-cs_cli_install&locale=en\043science#cli_oc)
+* [Generate a new SSH key](https://help.github.com/en/enterprise/2.16/user/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create an OpenShift cluster
@@ -160,12 +161,82 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
    - Select a **Owner** and provide **openshiftapp** as the repository name
    - Leave the checkboxes checked and Click **Create Integration**
 1. Click on **Git** tile under CODE to open your Git repository.
-1. Follow the instructions under **Existing folder** section of project **Details** by pointing it to the local folder where you have created the starter kit using `ibmcloud dev`.
+1. Copy the SSH key(e.g., id_rsa.pub) by running the below command on a terminal
+    ```sh
+     pbcopy < ~/.ssh/id_rsa.pub
+    ```
+    {:pre}
+1. Under Git profile settings, click on **SSH Keys** and paste the SSH key > click **Add key**.
+1. Click **Projects** on the top ribbon > Your projects > Openshiftapp and Follow the instructions under **Existing folder** section by pointing it to the local folder where you have created the starter kit using `ibmcloud dev`.
 1. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
 ## Create a new OpenShift application
+In this section, you will generate a BuildConfig YAML file and update the file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}(ICR).
 ### Generate a build configuration yaml file
+
+A Kubernetes namespace provides a mechanism to scope resources in a cluster. In OpenShift, a project is a Kubernetes namespace with additional annotations.
+
+1. Create a new project
+    ```sh
+     oc new-project openshiftproject
+    ```
+1. Create a secret with the SSH key (sshsecret) to pass while creating a new OpenShift app
+  ```sh
+   oc create secret generic sshsecret \
+    --from-file=ssh-privatekey=$HOME/.ssh/id_rsa \
+    --type=kubernetes.io/ssh-auth
+  ```
+  {: pre}
+1. On your Git repo page, click on **Clone** and copy **Clone with SSH** URL.
+1. Generate a yaml file in the same folder as your starter kit code by replacing the placeholder and running the below command
+   ```sh
+    oc new-app <CLONE_WITH_SSH_URL> --name=openshiftapp --source-secret=sshsecret --strategy=docker -o yaml > myapp.yaml
+   ```
+   {:pre}
+
 ### Update the BuildConfig and Push the builder image to ICR
+In this step, you will update the generated BuildConfig section of the generated yaml to point to ICR namespace and push the generated builder image to ICR
+
+1. To automate access to your registry namespaces and to push generated builder Docker image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key
+   ```sh
+    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=<API_KEY> --docker-server=<REGISTRY_URL>
+   ```
+   {:pre}
+
+   For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create). For registry URL, run `ibmcloud cr region`.
+   {:tip}
+1. Open the generated `myapp.yaml`in an IDE and
+   - Update the placeholders with the values. Thereafter, replace the `spec` under BuildConfig with
+
+   ```yaml
+   spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: DockerImage
+        name: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
+      pushSecret:
+        name: push-secret
+   ```
+   {:codeblock}
+   - Search for `containers` and replace the image and name with
+   ```yaml
+    containers:
+        - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
+          name: openshiftapp
+   ```
+   {:codeblock}
+1. Once updated and saved, create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the modified yaml
+   ```sh
+   oc create -f myapp.yaml
+   ```
+   {:pre}
+
+1. To check the builder Docker image creation and pushing to the ICR, run the below command
+  ```sh
+   oc logs -f bc/openshiftapp
+  ```
+  {:pre}
 
 ## Deploy the application to cluster
 
