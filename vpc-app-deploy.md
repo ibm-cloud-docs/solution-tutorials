@@ -97,12 +97,12 @@ cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.
 
 {{site.data.keyword.IBM_notm}} has internal mirrors to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors.
 
-Consider both `updating` the version lists available to the provisioned instances and `upgrading` the installed software from these mirrors.
+Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
 
 ### Initialize and Customize cloud instances with Cloud-init
 {: #cloud_init}
 
-[Cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) defines a collection of file formats to encode the initialization of cloud instances. In {{site.data.keyword.cloud_notm}}, the Cloud-init file contents are provided in the user-data parameter at the time the VSI is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content.
+[Cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances. In {{site.data.keyword.cloud_notm}}, the Cloud-init file contents are provided in the user-data parameter at the time the VSI is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content.
 
 This tutorial will use a shell script (starts with `#!`). You can also find the source in [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh):
 
@@ -119,17 +119,9 @@ fi
 ```
 {:codeblock}
 
-#### Install and upgrade software from the mirrors
+In this script, upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM}} provided mirrors. For ubuntu that `apt-get` commands will access mirrors. This is step 2 on the architecture diagram.
 
-In this script, upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the isolated instances have access to the {{site.data.keyword.IBM}} provided mirrors.  For ubuntu that `apt-get` commands will access mirrors.
-
-See 2 on the architecture diagram.
-
-#### Install and upgrade software from the intranet
-
-The curl command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet.
-
-See 3 on the architecture diagram
+The curl command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet. This is step 3 on the architecture diagram.
 
 ### Upload from the filesystem and execute on the instance
 
