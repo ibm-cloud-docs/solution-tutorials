@@ -419,8 +419,10 @@ The following script will delete the vpc and `all` of the conents in the vpc, be
 
 
 ## Terraform
+
 ### Before you begin
 - Install terraform and the terraform IBM provider on your workstation.  See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://{DomainName}/docs/terraform).
+
 ### Introduction
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
@@ -654,6 +656,7 @@ cd .../vpc-app-deploy/ansible/tf
 Test the backend:
 ```
 ../../test_provision.bash $(terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../../scripts/ssh.notstrict.config root@$(terraform output FRONT_NIC_IP) -o ProxyJump=root@$(terraform output BASTION_IP_ADDRESS)"
+```
 
 ### Clean up
 ```
