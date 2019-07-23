@@ -205,28 +205,34 @@ In this step, you will update the generated BuildConfig section of the generated
 
    For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create). For registry URL, run `ibmcloud cr region`.
    {:tip}
-1. Open the generated `myapp.yaml`in an IDE and
-   - Update the placeholders with the values. Thereafter, replace the `spec` under BuildConfig with
+1. Open the generated **myapp.yaml** in an IDE and
+   - Update the placeholders with the values. Thereafter, update the `spec` under `BuildConfig` section with
+    ```yaml
+       spec:
+        nodeSelector: null
+        output:
+          to:
+            kind: DockerImage
+            name: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
+          pushSecret:
+            name: push-secret
+   ```
+   {:codeblock}
+   - Search for `containers` and update the image with
+    ```yaml
+        containers:
+            - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
+              name: openshiftapp
+    ```
+   {:codeblock}
+1. Save the YAML file.
 
-   ```yaml
-   spec:
-    nodeSelector: null
-    output:
-      to:
-        kind: DockerImage
-        name: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
-      pushSecret:
-        name: push-secret
-   ```
-   {:codeblock}
-   - Search for `containers` and replace the image and name with
-   ```yaml
-    containers:
-        - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
-          name: openshiftapp
-   ```
-   {:codeblock}
-1. Once updated and saved, create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the modified yaml
+## Deploy the application to cluster
+In this section, you will deploy the application to the cluster using the generated **myapp.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
+
+### Create the app using the buildconfig yaml
+
+1. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
    oc create -f myapp.yaml
    ```
@@ -237,10 +243,11 @@ In this step, you will update the generated BuildConfig section of the generated
    oc logs -f bc/openshiftapp
   ```
   {:pre}
-
-## Deploy the application to cluster
-
-### Create the app using the buildconfig yaml
+1. You can check the status using
+  ```sh
+   oc status
+  ```
+  {:pre}
 ### Access the app through IBM provided domain
 
 ### Update the app and redeploy
@@ -249,237 +256,6 @@ In this step, you will update the generated BuildConfig section of the generated
 
 ## Scale the app
 
-![](images/solution2/Contents.png)
-
-
-{: #deploy}
-
-In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
-
-1. Find your **namespace** by listing all the namespace in the registry.
-   ```sh
-   ibmcloud cr namespaces
-   ```
-   {: pre}
-   If you have a namespace, make note of the name for use later. If you don't have one, create it.
-   ```sh
-   ibmcloud cr namespace-add <Name>
-   ```
-   {: pre}
-2. Set MYNAMESPACE and MYPROJECT environment variables to your namespace and project name respectively
-
-    ```sh
-    export MYNAMESPACE=<NAMESPACE>
-    ```
-    {: pre}
-    ```sh
-    export MYPROJECT=<PROJECT_NAME>
-    ```
-    {: pre}
-3. Log in the **Container Registry**:
-   ```sh
-   ibmcloud cr login
-   ```
-   {: pre}
-3. Identify your **Container Registry** (e.g. us.icr.io) by running `ibmcloud cr info`
-4. Set MYREGISTRY env var to your registry.
-   ```sh
-   export MYREGISTRY=<REGISTRY>
-   ```
-   {: pre}
-5. Build and tag (`-t`)the docker image
-   ```sh
-   docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
-   ```
-   {: pre}
-6. Push the docker image to your container registry on IBM Cloud
-   ```sh
-   docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
-   ```
-   {: pre}
-7. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
-
-   For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
-
-8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
-
-9. To install a Helm chart, change to the `chart\YOUR PROJECT NAME` directory and run the below command
-  ```sh
-  helm install . --name ${MYPROJECT}
-  ```
-  {: pre}
-10. Use `kubectl get service ${MYPROJECT}-service` for your Java application and `kubectl get service ${MYPROJECT}-application-service`  for your Node.js application to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
-11. For the public IP of worker node, run the below command
-   ```sh
-   ibmcloud ks workers ${MYCLUSTER}
-   ```
-   {: pre}
-12. Access the application at `http://worker-ip-address:portnumber/`.
-
-
-{: #ibm_domain}
-
-In the previous step, the application was accessed with a not standard port. The service was exposed by way of Kubernetes NodePort feature.
-
-Paid clusters come with an IBM-provided domain. This gives you a better option to expose applications with a proper URL and on standard HTTP/S ports.
-
-Use Ingress to set up the cluster inbound connection to the service.
-
-![Ingress](images/solution2/Ingress.png)
-
-1. Identify your IBM-provided **Ingress domain**
-   ```
-   ibmcloud ks cluster-get ${MYCLUSTER}
-   ```
-   {: pre}
-   to find
-   ```
-   Ingress subdomain:	mycluster.us-south.containers.appdomain.cloud
-   Ingress secret:		mycluster
-   ```
-   {: screen}
-2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output. **service-name** is the name under `==> v1/Service` in the above step. You can also use `kubectl get svc` to find the service name of type **NodePort**.
-
-   ```yaml
-   apiVersion: extensions/v1beta1
-   kind: Ingress
-   metadata:
-     name: ingress-for-ibmdomain-http-and-https
-   spec:
-     tls:
-     - hosts:
-       -  <nameofproject>.<ingress-sub-domain>
-       secretName: <ingress-secret>
-     rules:
-     - host: <nameofproject>.<ingress-sub-domain>
-       http:
-         paths:
-         - path: /
-           backend:
-             serviceName: <service-name>
-             servicePort: 9080
-   ```
-   {: codeblock}
-1. Deploy the Ingress
-   ```sh
-   kubectl apply -f ingress-ibmdomain.yml
-   ```
-   {: pre}
-1. Access your application at `https://<nameofproject>.<ingress-sub-domain>/`
-
-## Use your own custom domain
-{: #custom_domain}
-
-To use your custom domain, you need to update your DNS records with either a CNAME record pointing to your IBM-provided domain or an A record pointing to the portable public IP address of the IBM-provided Ingress. Given a paid cluster comes with fixed IP addresses, an A record is a good option.
-
-See [Using the Ingress controller with a custom domain](https://{DomainName}/docs/containers?topic=containers-ingress#ingress) for more information.
-
-### with HTTP
-
-1. Create an Ingress file `ingress-customdomain-http.yml` pointing to your domain:
-   ```
-   apiVersion: extensions/v1beta1
-   kind: Ingress
-   metadata:
-     name: ingress-for-customdomain-http
-   spec:
-     rules:
-     - host: <my-custom-domain.com>
-       http:
-         paths:
-         - path: /
-           backend:
-             serviceName: <service-name>
-             servicePort: 9080
-   ```
-   {: pre}
-2. Deploy the Ingress
-   ```sh
-   kubectl apply -f ingress-customdomain-http.yml
-   ```
-   {: pre}
-3. Access your application at `http://<customdomain>/`
-
-### with HTTPS
-
-If you were to try to access your application with HTTPS at this time `https://<customdomain>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
-
-1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key:
-  https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3
-   You can use [Let's Encrypt](https://letsencrypt.org/) to generate trusted certificate.
-2. Save the cert and the key in base64 ascii format files.
-3. Create a TLS secret to store the cert and the key:
-   ```
-   kubectl create secret tls my-custom-domain-secret-name --cert=<custom-domain.cert> --key=<custom-domain.key>
-   ```
-   {: pre}
-4. Create an Ingress file `ingress-customdomain-https.yml` pointing to your domain:
-   ```
-   apiVersion: extensions/v1beta1
-   kind: Ingress
-   metadata:
-     name: ingress-customdomain-https
-   spec:
-     tls:
-     - hosts:
-       - <my-custom-domain.com>
-       secretName: <my-custom-domain-secret-name>
-     rules:
-     - host: <my-custom-domain.com>
-       http:
-         paths:
-         - path: /
-           backend:
-             serviceName: <service-name>
-             servicePort: 9080
-   ```
-   {: pre}
-5. Deploy the Ingress:
-   ```
-   kubectl apply -f ingress-customdomain-https.yml
-   ```
-   {: pre}
-6. Access your application at `https://<customdomain>/`.
-
-
-{: #monitor_application}
-
-1. To check the health of your application, navigate to [clusters](https://{DomainName}/kubernetes/clusters) to see a list of clusters and click on the cluster you created above.
-2. Click **Kubernetes Dashboard** to launch the dashboard in a new tab.
-   ![](images/solution2/launch_kubernetes_dashboard.png)
-3. Select **Nodes** on the left pane, click the **Name** of the nodes and see the **Allocation Resources** to see the health of your nodes.
-   ![](images/solution2/KubernetesDashboard.png)
-4. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.
-5. To **ssh** into the container, identify your pod name from the previous step and run
-   ```sh
-   kubectl exec -it <pod-name> -- bash
-   ```
-   {: pre}
-
-
-{: #scale_cluster}
-
-As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
-
-   ```sh
- kubectl scale deployment <nameofproject>-deployment --replicas=2
-   ```
-   {: pre}
-
-After a shortwhile, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handles the load balancing between the two replicas.
-
-With Kubernetes, you can enable [horizontal pod autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to automatically increase or decrease the number of instances of your apps based on CPU.
-
-To create an autoscaler and to define your policy, run the below command
-   ```sh
-kubectl autoscale deployment <nameofproject>-deployment --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
-   ```
-   {: pre}
-
-Once the autoscaler is successfully created, you should see
-`horizontalpodautoscaler.autoscaling/<nameofproject>-deployment autoscaled`
-
-Refer [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
 
 ## Remove resources
 
