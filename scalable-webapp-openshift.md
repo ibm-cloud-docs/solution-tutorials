@@ -160,7 +160,7 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
    - Select a **Server** and choose **New** as the repository type
    - Select a **Owner** and provide **openshiftapp** as the repository name
    - Leave the checkboxes checked and Click **Create Integration**
-1. Click on **Git** tile under CODE to open your Git repository.
+1. Click on **Git** tile under CODE to open your Git repository in a browser.
 1. Copy the SSH key(e.g., id_rsa.pub) by running the below command on a terminal
     ```sh
      pbcopy < ~/.ssh/id_rsa.pub
@@ -232,25 +232,97 @@ In this section, you will deploy the application to the cluster using the genera
 
 ### Create the app using the buildconfig yaml
 
-1. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
+1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project(openshiftproject)
+   ```sh
+    oc get secret default-us-icr-io -n default -o yaml | sed 's/default/openshiftproject/g' | oc -n openshiftproject create -f -
+   ```
+   {:pre}
+   If you are using ICR from a region other than US, follow the instructions in this [link](https://{DomainName}/docs/containers?topic=containers-images#copy_imagePullSecret) to copy pull secrets.
+
+1. For the image pull secret to take effect, you need to store it in the `default` service account
+   ```sh
+    oc patch -n openshiftproject serviceaccount/default -p '{"imagePullSecrets":[{"name": "openshiftproject-us-icr-io"}]}'
+   ```
+   {:pre}
+1.  Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
    oc create -f myapp.yaml
    ```
    {:pre}
+    To learn about the core concepts of OpenShift, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
 
 1. To check the builder Docker image creation and pushing to the ICR, run the below command
   ```sh
    oc logs -f bc/openshiftapp
   ```
   {:pre}
-1. You can check the status using
+1. Configure an image stream to import tag and image metadata from an image repository in an external container image registry
+   ```sh
+    oc import-image openshiftapp --from=<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest --confirm
+   ```
+   {:pre}
+1. You can check the status of deployment and service using
   ```sh
    oc status
   ```
   {:pre}
+
 ### Access the app through IBM provided domain
+To access the app, you need to create a route. A route announces your service to the world.
+
+1. Create a route by running the below command in a terminal
+  ```sh
+   oc expose service openshiftapp --port=3000
+  ```
+  {:pre}
+1. You can access the app through IBM provided domain. Run the below command for the URL
+   ```sh
+    oc get routes
+   ```
+   {:pre}
+1. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action.
 
 ### Update the app and redeploy
+In this step, you will automate the build and deploy process. So that whenever you update the application and push the changes to the Private repo, a new build config is generated creating a build in turn generating a new version of the builder Docker image. This image will be deployed automatically.
+
+1. You will create a new **GitLab** Webhook trigger. Webhook triggers allow you to trigger a new build by sending a request to the OpenShift Container Platform API endpoint.You can define these triggers using GitHub, GitLab, Bitbucket, or Generic webhooks.
+  ```sh
+   oc set triggers bc openshiftapp --from-gitlab
+  ```
+  {:pre}
+1. To add a webhook on the GitLab repository, you need a URL and a secret
+   - For webhook GitLab URL,
+     ```sh
+      oc describe bc openshiftapp
+     ```
+     {:pre}
+   - For secret that needs to be passed in the webhook URL,
+     ```sh
+      oc get bc openshiftapp -o yaml
+     ```
+     {:pre}
+   - Replace `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
+1. Using the provided link(e.g., https://us-south.git.cloud.ibm.com/vidyasagar.msc/nodeshiftapp.git), open your private git repo on a browser > Click on **Settings** > Integrations.
+1. Paste the **URL** > click **Add webhook**. Test the URL by clicking **Test** > Push events.
+1. Update the image stream to point to ICR(e.g., us-icr-io/vmac)
+   ```sh
+    oc patch imagestream openshiftapp --patch '{"spec":{"dockerImageRepository":"<REGISTRY_URL_SEPARATED_BY_HYPHENS/<REGISTRY_NAMESPACE>"}}'
+   ```
+   {:pre}
+1. Update the ImagePolicy of the image stream to query ICR at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
+ ```sh
+  oc patch imagestream openshiftapp --patch '{"spec":{"tags":[{"from":{"kind":"DockerImage","name":"<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest"},"name":"latest","importPolicy":{"scheduled":true}}]}}'
+ ```
+ {:pre}
+1. Update the `h1` tag of local *public/index.html* file in an IDE and change to **Congratulations! <YOUR_NAME>**.
+1. Save and push the code to the repo
+   ```sh
+    git add public/index.html
+    git commit -m "Updated with my name"
+    git push -u origin master
+   ```
+   {:pre}
+1. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
 ## Monitor the app
 
