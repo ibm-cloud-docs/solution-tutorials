@@ -26,6 +26,8 @@ This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC
 
 {:shortdesc}
 
+This tutorial starts with a general background and then has technology specific sections.  Each technology section is stand alone so feel free to jump to a specific section, like Terraform, after reviewing the overall architecture and the background section.
+
 ## Objectives
 {: #objectives}
 
@@ -57,27 +59,27 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. Install software from {{site.data.keyword.IBM_notm}} mirrors
 1. Install software from external repositories
 
-## Tutorial Organization
-This tutorial starts with a general background and then has technology specific sections.  Each technlogy section is stand alone so feel free to jump to a specific section, like Terraform, after understanding the background section.
 ## Background
+{: #background}
+
 ### General software installation principles
 {: #general_software_installation}
 
-The base VSI image software supplied by {{site.data.keyword.IBM_notm}} ca be augmented with software originating from places corresponding to the numbers in the architecture diagram above:
-Software can originate from the following locations:
+The base VSI image software supplied by {{site.data.keyword.IBM_notm}} can be augmented with software originating from places corresponding to the numbers in the architecture diagram above:
 1. File system of the workstation (provisioning system)
 2. {{site.data.keyword.IBM_notm}} mirrors
 3. Internet or intranet repositories
 
-Following the steps in this tutorial, you will be able to
-- provision a fronend, backend and bastion VSI with the ubuntu-18.04 base image
-- install nginx on the frontend and backend VSI - demonstrating the use of {{site.data.keyword.IBM}} mirrors
-- access Internet software - demonstrating the use of internet repositories on the public VSI and failure on the private VSI
-- copy a file from the file system of the provisioning computer to the public VSI and then execute the file
-- run tests and verify 
+Following the steps in this tutorial, you will be able to:
+- provision a frontend, a backend and a bastion VSI with the ubuntu-18.04 base image.
+- install nginx on the frontend and on the backend VSIs - demonstrating the use of {{site.data.keyword.IBM}} mirrors.
+- access Internet software - demonstrating the use of internet repositories on the public VSI and the lack of internet connection on the private VSI.
+- copy a file from the file system of the provisioning computer to the public VSI and then execute the file.
+- run tests and verify the configuration. 
 
-### Base VSI images
+### Base virtual server images
 {: #base-vsi-images}
+
 Base {{site.data.keyword.Bluemix}} VSI images are populated with popular off the shelf operating systems:
 
 ```
@@ -91,20 +93,20 @@ cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.
 ```
 {:pre}
 
-
 #### Maintain software on images with {{site.data.keyword.IBM_notm}} Mirrors
 
-{{site.data.keyword.IBM_notm}} has internal mirrors to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distro. The mirrors are part of the [service endpoints available for IBM Cloud VPC](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors.
+{{site.data.keyword.IBM_notm}} has internal mirrors to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors.
 
-Consider both `updating` the version lists available to the provisioned instances and `upgrading` the installed software from these mirrors.
+Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
 
 ### Initialize and Customize cloud instances with Cloud-init
 {: #cloud_init}
-[Cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) defines a collection of file formats to encode the initialization of cloud instances.  In the IBM cloud the Cloud-init file contents are provided in the user-data parameter at the time the VSI is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content.
 
-This tutorial will use a shell scripts (starts with `#!`).  You can also find the source in [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh):
+[Cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances. In {{site.data.keyword.cloud_notm}}, the Cloud-init file contents are provided in the user-data parameter at the time the VSI is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content.
 
-```
+This tutorial will use a shell script (starts with `#!`). You can also find the source in [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh):
+
+```sh
 #!/bin/bash
 apt-get update
 apt-get install -y nginx
@@ -117,18 +119,12 @@ fi
 ```
 {:codeblock}
 
-#### Install and upgrade software from the mirrors
-Upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools will demonstrate that even the isolated instances have access to the {{site.data.keyword.IBM}} provided mirrors.  For ubuntu that `apt-get` commands will access mirrors.
+In this script, upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM}} provided mirrors. For ubuntu that `apt-get` commands will access mirrors. This is step 2 on the architecture diagram.
 
-See 2 on the architecture diagram
-
-#### Install and upgrade software from the intranet`
-The curl command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet.
-
-See 3 on the architecture diagram
-
+The curl command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet. This is step 3 on the architecture diagram.
 
 ### Upload from the filesystem and execute on the instance
+
 There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the VSI and then executed.
 
 To demonstrate, a script will be uploaded from the filesystem of the workstation (see architecture diagram). The execution of the script will wait for the index html file to exist indicating that nginx has been installed.  It will then create a file, `testupload.html`, containing the string `hi`. Before executing, replace the `content`(User data) part of `write_files` directive in the above example with the shell script below
