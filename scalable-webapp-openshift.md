@@ -145,7 +145,6 @@ You can build and run the application as you normally would using `mvn` for java
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
 1. After your container starts, go to `http://localhost:9080/`. If you created a Node.js application, go to `http://localhost:3000/`.
-  ![](images/solution2/LibertyLocal.png)
 
 ### Push the code to a Private IBM Cloud Git repo
 In this step, you will create a private IBM Cloud Git repository and push the generated code.
