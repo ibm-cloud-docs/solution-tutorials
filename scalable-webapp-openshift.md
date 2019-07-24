@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-22"
-lasttested: "2019-07-22"
+lastupdated: "2019-07-24"
+lasttested: "2019-07-24"
 ---
 
 {:shortdesc: .shortdesc}
@@ -274,8 +274,9 @@ In this section, you will deploy the application to the cluster using the genera
     oc create -f myapp.yaml
    ```
    {:pre}
+
     To learn about the core concepts of OpenShift, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
-   {:tip}
+    {:tip}
 
 1. To check the builder Docker image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
    ```sh
