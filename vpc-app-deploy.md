@@ -50,37 +50,81 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
+Software can originate from different sources:
+1. The file system of a local workstation using a provisioning system to create the required infrastructure and to copy files and scripts to the virtual server instances,
+2. {{site.data.keyword.IBM_notm}} mirrors,
+3. Internet or intranet software repositories.
+
 <p style="text-align: center;">
 
   ![Architecture](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
 </p>
 
-1. The admin (DevOps) sets up the required infrastructure (VPC, subnets, security groups with rules, VSIs) on the cloud.  Copy files and scripts to the VSIs.
-1. Install software from {{site.data.keyword.IBM_notm}} mirrors
-1. Install software from external repositories
+## Before you begin
 
-## Background
-{: #background}
+### Get the source code
 
-### General software installation principles
+1. Check out the tutorial source code
+   ```sh
+   git clone https://github.com/IBM-Cloud/vpc-tutorials.git
+   ```
+   {: codeblock}
+
+### Create a VPC ssh key
+
+xxx
+
+### Set environment variables
+
+This tutorial will walk through example steps on a terminal using the shell, `terraform` and `ansible`.
+
+1. Change to the tutorial directory:
+   ```sh
+   cd vpc-app-deploy
+   ```
+   {:codeblock}
+1. Copy the configuration file:
+   ```sh
+   cp export.template export
+   ```
+   {:codeblock}
+1. Edit the `export` file and set the environment variable values:
+   * `TF_VAR_ibmcloud_api_key` is an IBM Cloud API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
+   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key in the cloud. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
+      ```sh
+      ibmcloud is keys
+      ```
+      {:codeblock}
+   By default the private key is found here: $HOME/.ssh/id_rsa. For more info or instructions on how to manage and/or create an SSH key read [SSH keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
+   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
+1. Load the variables into the environments:
+   ```sh
+   source export
+   ```
+   {:codeblock}
+
+The environment variables in `export` are in terraform format (notice the `TF_` prefix) for convenience but are used in all environments.
+
+## Basics of software installation
+{: #basics}
+
+<!-- ### General software installation principles
 {: #general_software_installation}
-
-The base VSI image software supplied by {{site.data.keyword.IBM_notm}} can be augmented with software originating from places corresponding to the numbers in the architecture diagram above:
-1. File system of the workstation (provisioning system)
-2. {{site.data.keyword.IBM_notm}} mirrors
-3. Internet or intranet repositories
 
 Following the steps in this tutorial, you will be able to:
 - provision a frontend, a backend and a bastion VSI with the ubuntu-18.04 base image.
 - install nginx on the frontend and on the backend VSIs - demonstrating the use of {{site.data.keyword.IBM}} mirrors.
 - access Internet software - demonstrating the use of internet repositories on the public VSI and the lack of internet connection on the private VSI.
 - copy a file from the file system of the provisioning computer to the public VSI and then execute the file.
-- run tests and verify the configuration. 
+- run tests and verify the configuration.  -->
 
-### Base virtual server images
+<!-- 
+ The next step is usually to install and configure additional software originating from different sources: -->
+
+### Provision virtual server instances from base images
 {: #base-vsi-images}
 
-Base {{site.data.keyword.Bluemix}} VSI images are populated with popular off the shelf operating systems:
+When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Base {{site.data.keyword.Bluemix}} virtual server instance images are populated with popular off the shelf operating systems:
 
 ```
 ibmcloud is images
@@ -93,13 +137,11 @@ cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.
 ```
 {:pre}
 
-#### Maintain software on images with {{site.data.keyword.IBM_notm}} Mirrors
+{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors.
 
-{{site.data.keyword.IBM_notm}} has internal mirrors to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors.
+<!-- Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors. -->
 
-Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
-
-### Initialize and Customize cloud instances with Cloud-init
+### Initialize and customize cloud instances with cloud-init
 {: #cloud_init}
 
 [Cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances. In {{site.data.keyword.cloud_notm}}, the Cloud-init file contents are provided in the user-data parameter at the time the VSI is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content.
@@ -150,7 +192,7 @@ EOF
 
 See 1 on the architecture diagram
 
-### Test
+<!-- ### Test
 When nginx is initialized it will return the file: `/var/www/html/index.html`
 
 In the example above, the `initialize.sh` script will test if www.python.org can be accessed and put one of these strings in index html file:
@@ -212,15 +254,15 @@ test_provision.bash 1.2.3.4 INTERNET hi "ssh -F ../scripts/ssh.notstrict.config 
 ```
 {:pre}
 
-The actual test provision script loops waiting for success.  Provisioning and boot up can take a few minutes.
+The actual test provision script loops waiting for success.  Provisioning and boot up can take a few minutes. -->
 
 
-### Example Program
+<!-- ### Example Program
 
 [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) also contains some handy shell scripts that do everything that was done by hand in the GUI console as well.
-- [Securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
+- [Securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group. -->
 
-### Troubleshooting
+<!-- ### Troubleshooting
 You can check the provisioned resources on the [VPC overview](https://{DomainName}/vpc/overview) page.Alternatively, The `ibmcloud is` command line can also be used.
 
 Here is how to ssh into the bastion, frontend and backend instances, notice the frontend and backend jump through the bastion.
@@ -237,60 +279,15 @@ Network connectivity to any of the VSIs needs to be enabled through the VPC Secu
 - to ssh to a VSI ingress tcp port 22 is required
 - to install software egress to port 53 (DNS), 80 and 443 are required
 
-The default Network ACLs allow all traffic.  If this is changed keep in mind that both ingress and egress need to be allowed and the specification is not statefull (unlike security groups)
-
+The default Network ACLs allow all traffic.  If this is changed keep in mind that both ingress and egress need to be allowed and the specification is not statefull (unlike security groups) -->
+<!-- 
 ### Choose your technology
 The next sections will use the concepts described above and apply them to the following major technology mechanisms for provisioning and installing software:
 
 - VPC GUI Console and typing
 - CLI and shell scripts
 - terraform
-- ansible
-
-## Common steps (work in progress)
-
-### Get the source code
-
-1. Check out the tutorial source code
-   ```sh
-   git clone https://github.com/IBM-Cloud/vpc-tutorials.git
-   ```
-   {: codeblock}
-
-### Create a VPC ssh key
-
-xxx
-
-### Set environment variables
-
-This tutorial will walk through example steps on a terminal using the shell, `terraform` and `ansible`.
-
-1. Change to the tutorial directory:
-   ```sh
-   cd vpc-app-deploy
-   ```
-   {:codeblock}
-1. Copy the configuration file:
-   ```sh
-   cp export.template export
-   ```
-   {:codeblock}
-1. Edit the `export` file and set the environment variable values:
-   * `TF_VAR_ibmcloud_api_key` is an IBM Cloud API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
-   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key in the cloud. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
-      ```sh
-      ibmcloud is keys
-      ```
-      {:codeblock}
-   By default the private key is found here: $HOME/.ssh/id_rsa. For more info or instructions on how to manage and/or create an SSH key read [SSH keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
-   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
-1. Load the variables into the environments:
-   ```sh
-   source export
-   ```
-   {:codeblock}
-
-The environment variables in `export` are in terraform format (notice the `TF_` prefix) for convenience but are used in all environments.
+- ansible -->
 
 <!-- 
 ## VPC GUI console and typing
