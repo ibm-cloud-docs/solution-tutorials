@@ -356,7 +356,7 @@ The tutorial leaves both the frontend and backend VSIs in a maintenance mode rea
 Follow the instructions in the referencd tutorials or use the shell script to clean up as described in the next section. -->
 
 ## Using the IBM Cloud CLI and shell scripts
-{: #using-cli}
+{: #cli}
 
 ### Before you begin
 {: #prereqs}
@@ -439,8 +439,8 @@ The following script will delete the vpc and `all` of the conents in the vpc, be
 ```
 {:pre}
 
-
 ## Provisioning infrastructure with Terraform
+{: #terraform}
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
@@ -593,7 +593,6 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    success: provision of file from on premises worked and was replaced with the following contents:
    hi
    ```
-
 1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
    ```sh
    ../test_provision.bash $(terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(terraform output FRONT_NIC_IP) -o ProxyJump=root@$(terraform output BASTION_IP_ADDRESS)"
@@ -617,34 +616,25 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    {:pre}
 
 ## Installing software with Ansible
+{: #ansible}
 
-### Before you begin
-This tutorial uses both terraform and ansible
-- Install terraform and the terraform IBM provider on your workstation.  See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://{DomainName}/docs/terraform).
-- Install ansible and make sure ansible-playbook is on your path:
-Install ansible using pip, use --user if you are not root or do not want it installed for all users.
-```sh
-python --version
-Python 2.7.15
-pip install --user ansible-playbook
-...
-which ansible-playbook
-/Users/me/Library/Python/2.7/bin/ansible-playbook
-```
-{:pre}
-### Provision
+[Ansible](https://www.ansible.com/) is a configuration management and provisioning tool, similar to [Chef](https://www.chef.io/products/chef-infra/) and [Puppet](https://puppet.com/), and is designed to automate multitier app deployments and provisioning in the cloud. Written in Python, Ansible uses YAML syntax to describe automation tasks, which makes Ansible easy to learn and use.
 
-Ansible could be used to provision the cloud resources, but the approach we are going to use is to provision the resources using terraform then deploy the software on the VSIs using ansible.
+Although Ansible could be used to provision the VPC resources and install software, this section uses Terraform to provision the VPC resources and Ansible to deploy the software.
 
-{:#provisioning_resources}
-A new ansible/tf directory contains a terraform [configuration](ansible/tf/main.tf) similar to the one described previously except the software installation has been stripped out.
+<!-- TODO what is a good reason to use Terraform for the resources vs. Ansible? No specific VPC constructs in Ansible, it would be all scripting? -->
 
-The ansible script will install software from the mirrors and then upload software from your workstation.
+The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/tf/main.tf) similar to the one described in the previous section except the software installation has been stripped out.
+
+The Ansible script will install software from the mirrors and then upload software from your workstation.
 
 #### Ansible Playbook
 
-The ansible playbook provides the tasks to be run.  The example below has a set of tasks required to install nginx and upload a script.  You will notice the similarities to the Cloud-init script discussed earlier.  The uploaded.sh script is identical.
-```
+An Ansible playbook provides the tasks to be run. The example below has a set of tasks required to install nginx and upload a script. You will notice the similarities to the `cloud-init` script discussed earlier. The `uploaded.sh` script is identical.
+
+<!-- TODO make sure uploaded.sh is known in the tutorial!!! -->
+
+```yaml
 - hosts: FRONT_NIC_IP BACK_NIC_IP
   remote_user: root
   tasks:
@@ -676,8 +666,10 @@ The ansible playbook provides the tasks to be run.  The example below has a set 
 
 #### Ansible Inventory
 {:#ansible_inventory}
-Ansible inventory is generated from the terraform output by the inventory.bash script.  It uses the terraform output variables:
-```
+
+Ansible works against multiple systems in your infrastructure at the same time. The Ansible inventory contains the list of these systems. The tutorial provides a script [`inventory.bash`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/inventory.bash) to generate the Ansible inventory from the Terraform output.
+
+```sh
 #!/bin/bash
 TF=tf
 printf 'all:
@@ -689,54 +681,98 @@ printf 'all:
       hosts:
         %s
 ' $(cd $TF; terraform output FRONT_NIC_IP) $(cd $TF; terraform output BACK_NIC_IP)
-
 ```
 {:codeblock}
 
-#### Steps
+### Before you begin
 
-Provision resources but no software:
-```
-cd .../vpc-app-deploy/ansible/tf
-terraform init
-terraform apply
-terraform output
-```
-{:pre}
+This section uses both Terraform and Ansible.
 
-Create inventory:
-```
-cd .../vpc-app-deploy/ansible
-./inventory.bash > inventory
-```
-{:pre}
+1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the IBM Cloud Provider plug-in for Terraform on your workstation.
+1. Follow [these instructions](/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
 
-Provision software:
-```
-ansible-playbook -T 40 -l FRONT_NIC_IP -u root --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" -i inventory lamp.yaml 
-ansible-playbook -T 40 -l BACK_NIC_IP -u root --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" -i inventory lamp.yaml 
-```
-{:pre}
+### Provision
+
+1. Change to the Ansible script folder for this example:
+   ```sh
+   cd <checkout_dir>/vpc-app-deploy/ansible/tf
+   ```
+   {:pre}
+1. Initialize Terraform:
+   ```sh
+   terraform init
+   ```
+   {:pre}
+1. Apply the Terraform plan:
+   ```sh
+   terraform apply
+   ```
+   {:pre}
+1. View the output generated by the plan:
+   ```sh
+   terraform output
+   ```
+   {:pre}
+1. Generate the Ansible inventory:
+   ```sh
+   cd ..
+   ./inventory.bash > inventory
+   ```
+   {:pre}
+1. Provision software on the frontend server:
+   ```sh
+   ansible-playbook -T 40 -l FRONT_NIC_IP -u root \
+     --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" \
+     -i inventory lamp.yaml
+   ```
+   {:pre}
+1. Provision software on the backend server:
+   ```sh
+   ansible-playbook -T 40 -l BACK_NIC_IP -u root \
+     --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" \
+     -i inventory lamp.yaml
+   ```
+   {:pre}
 
 ### Test
-Test the frontend:
-```
-cd .../vpc-app-deploy/ansible/tf
-../../test_provision.bash $(terraform output FRONT_IP_ADDRESS) INTERNET hi
-```
-{:pre}
 
-Test the backend:
-```
-../../test_provision.bash $(terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../../scripts/ssh.notstrict.config root@$(terraform output FRONT_NIC_IP) -o ProxyJump=root@$(terraform output BASTION_IP_ADDRESS)"
-```
+Now that Terraform has deployed resources and Ansible installed the software, you can validate they were correctly provisioned.
+
+1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
+   ```sh
+   ../test_provision.bash $(cd tf && terraform output FRONT_IP_ADDRESS) INTERNET hi
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   INTERNET
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
+1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
+   ```sh
+   ../test_provision.bash $(cd tf && terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(cd tf && terraform output FRONT_NIC_IP) -o ProxyJump=root@$(cd tf && terraform output BASTION_IP_ADDRESS)"
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   ISOLATED
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
 
 ### Clean up
-```
-cd .../vpc-app-deploy/ansible/tf
-terraform destroy
-```
-{:pre}
+
+1. Remove the resources created by Terraform:
+   ```sh
+   cd <checkout_dir>/vpc-app-deploy/ansible/tf
+   terraform destroy
+   ```
+   {:pre}
 
 ## Related content
 {: #related}
