@@ -160,7 +160,7 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
    - Select a **Server** and choose **New** as the repository type
    - Select a **Owner** and provide **openshiftapp** as the repository name
    - Leave the checkboxes checked and Click **Create Integration**
-1. Click on **Git** tile under CODE to open your Git repository in a browser.
+1. Click on **Git** tile under CODE to open your Git repository in a browser. Copy the link to a clipboard for future reference.
 1. Copy the SSH key(e.g., id_rsa.pub) by running the below command on a terminal
     ```sh
      pbcopy < ~/.ssh/id_rsa.pub
@@ -302,7 +302,7 @@ In this step, you will automate the build and deploy process. So that whenever y
      ```
      {:pre}
    - Replace `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
-1. Using the provided link(e.g., https://us-south.git.cloud.ibm.com/vidyasagar.msc/nodeshiftapp.git), open your private git repo on a browser > Click on **Settings** > Integrations.
+1. Open your private git repo on a browser using the saved repo link > Click on **Settings** > Integrations.
 1. Paste the **URL** > click **Add webhook**. Test the URL by clicking **Test** > Push events.
 1. Update the image stream to point to ICR(e.g., us-icr-io/vmac)
    ```sh
@@ -314,7 +314,7 @@ In this step, you will automate the build and deploy process. So that whenever y
   oc patch imagestream openshiftapp --patch '{"spec":{"tags":[{"from":{"kind":"DockerImage","name":"<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest"},"name":"latest","importPolicy":{"scheduled":true}}]}}'
  ```
  {:pre}
-1. Update the `h1` tag of local *public/index.html* file in an IDE and change to **Congratulations! <YOUR_NAME>**.
+1. In an IDE, update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
 1. Save and push the code to the repo
    ```sh
     git add public/index.html
