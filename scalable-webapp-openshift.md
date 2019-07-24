@@ -177,20 +177,20 @@ In this section, you will generate a BuildConfig YAML file and update the file w
 A Kubernetes namespace provides a mechanism to scope resources in a cluster. In OpenShift, a project is a Kubernetes namespace with additional annotations.
 
 1. Create a new project
-    ```sh
-     oc new-project openshiftproject
-    ```
-1. Create a secret with the SSH key (sshsecret) to pass while creating a new OpenShift app
-  ```sh
-   oc create secret generic sshsecret \
-    --from-file=ssh-privatekey=$HOME/.ssh/id_rsa \
-    --type=kubernetes.io/ssh-auth
-  ```
-  {: pre}
-1. On your Git repo page, click on **Clone** and copy **Clone with SSH** URL.
-1. Generate a yaml file in the same folder as your starter kit code by replacing the placeholder and running the below command
    ```sh
-    oc new-app <CLONE_WITH_SSH_URL> --name=openshiftapp --source-secret=sshsecret --strategy=docker -o yaml > myapp.yaml
+    oc new-project openshiftproject
+   ```
+1. Create a **Deploy token**. Deploy tokens allow read-only access to your repository.
+      - On the left pane of the Git repo page, click **Settings** > Repository
+      - Click on **Expand** next to **Deploy Tokens**.
+      - Provide **foropenshift** as the name > check **read_repository** checkbox and click **create deploy token**.
+      - Save the generated **username** and **password** for future reference.
+1. Click on **Project** > Details, click on **Clone** and copy **Clone with HTTPS** URL.
+1. Generate a yaml file in the same folder as your starter kit code by replacing the placeholders and running the below command
+   ```sh
+    oc new-app https://<USERNAME>:<PASSWORD@<REPO_URL_WITHOUT_HTTPS> \
+    --name=openshiftapp \
+    --strategy=docker -o yaml > myapp.yaml
    ```
    {:pre}
 
@@ -199,23 +199,44 @@ In this step, you will update the generated BuildConfig section of the generated
 
 1. To automate access to your registry namespaces and to push generated builder Docker image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key
    ```sh
-    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=<API_KEY> --docker-server=<REGISTRY_URL>
+    oc create secret docker-registry push-secret \
+    --docker-username=iamapikey \
+    --docker-password=<API_KEY> \
+    --docker-server=<REGISTRY_URL>
    ```
    {:pre}
 
    For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create). For registry URL, run `ibmcloud cr region`.
    {:tip}
 1. Open the generated **myapp.yaml** in an IDE and
-   - Update the placeholders with the values. Thereafter, update the `spec` under `BuildConfig` section with
+   - Update the placeholders with the values. Thereafter, update the ImageStream item of the definition to look like the one shown below
     ```yaml
-       spec:
-        nodeSelector: null
-        output:
-          to:
-            kind: DockerImage
-            name: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
-          pushSecret:
-            name: push-secret
+    - apiVersion: image.openshift.io/v1
+      kind: ImageStream
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: openshiftapp
+        name: openshiftapp
+      spec:
+        dockerImageRepository: "<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp"
+        lookupPolicy:
+          local: false
+      status:
+        dockerImageRepository: ""
+    ```
+   - Update the `spec` under `BuildConfig` section with
+    ```yaml
+    spec:
+       nodeSelector: null
+       output:
+         to:
+           kind: DockerImage
+           name: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
+         pushSecret:
+           name: push-secret
    ```
    {:codeblock}
    - Search for `containers` and update the image with
@@ -244,11 +265,11 @@ In this section, you will deploy the application to the cluster using the genera
     oc patch -n openshiftproject serviceaccount/default -p '{"imagePullSecrets":[{"name": "openshiftproject-us-icr-io"}]}'
    ```
    {:pre}
-1.  Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
-   ```sh
+1. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
+  ```sh
    oc create -f myapp.yaml
-   ```
-   {:pre}
+  ```
+  {:pre}
     To learn about the core concepts of OpenShift, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
 
 1. To check the builder Docker image creation and pushing to the ICR, run the below command
@@ -257,10 +278,10 @@ In this section, you will deploy the application to the cluster using the genera
   ```
   {:pre}
 1. Configure an image stream to import tag and image metadata from an image repository in an external container image registry
-   ```sh
-    oc import-image openshiftapp --from=<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest --confirm
-   ```
-   {:pre}
+  ```sh
+   oc import-image openshiftapp --from=<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest --confirm
+  ```
+  {:pre}
 1. You can check the status of deployment and service using
   ```sh
    oc status
@@ -276,10 +297,10 @@ To access the app, you need to create a route. A route announces your service to
   ```
   {:pre}
 1. You can access the app through IBM provided domain. Run the below command for the URL
-   ```sh
-    oc get routes
-   ```
-   {:pre}
+  ```sh
+   oc get routes
+  ```
+  {:pre}
 1. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action.
 
 ### Update the app and redeploy
@@ -306,12 +327,14 @@ In this step, you will automate the build and deploy process. So that whenever y
 1. Paste the **URL** > click **Add webhook**. Test the URL by clicking **Test** > Push events.
 1. Update the image stream to point to ICR(e.g., us-icr-io/vmac)
    ```sh
-    oc patch imagestream openshiftapp --patch '{"spec":{"dockerImageRepository":"<REGISTRY_URL_SEPARATED_BY_HYPHENS/<REGISTRY_NAMESPACE>"}}'
+   oc patch imagestream openshiftapp --patch \
+   '{"spec":{"dockerImageRepository":"<REGISTRY_URL_SEPARATED_BY_HYPHENS/<REGISTRY_NAMESPACE>"}}'
    ```
    {:pre}
 1. Update the ImagePolicy of the image stream to query ICR at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
  ```sh
-  oc patch imagestream openshiftapp --patch '{"spec":{"tags":[{"from":{"kind":"DockerImage","name":"<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest"},"name":"latest","importPolicy":{"scheduled":true}}]}}'
+  oc patch imagestream openshiftapp --patch \
+  '{"spec":{"tags":[{"from":{"kind":"DockerImage","name":"<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest"},"name":"latest","importPolicy":{"scheduled":true}}]}}'
  ```
  {:pre}
 1. In an IDE, update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
