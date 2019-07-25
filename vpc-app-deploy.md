@@ -314,91 +314,122 @@ The next sections will use the concepts described above and apply them to the fo
 ## Using the {{site.data.keyword.Bluemix_notm}} CLI and shell scripts
 {: #cli}
 
+The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}.
+
+This section uses a shell script found in the [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups as shown in the following diagram.
+
+![Architecture of subnets and virtual server instances](images/solution40-vpc-public-app-private-backend/Architecture.png)
+
 ### Before you begin
 {: #cli-before-you-begin}
 
-- Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
+1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 
 ### Provision
 {: #cli-provision}
 
-the [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial provides a shell script for creating all of the infrastructure in the example.  In the .../vpc-app-deploy directory do the following:
+1. Change to the tutorial folder:
+   ```sh
+   cd <checkout_dir>/vpc-app-deploy/
+   ```
+   {:pre}
+1. Run the provisioning script:
+   ```sh
+   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tst $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh ubuntu-18.04-amd64
+   ```
+   {:pre}
 
-```sh
-cd .../vpc-app-deploy
-../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tst $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh ubuntu-18.04-amd64
-```
-{:pre}
+In the command above,
+   - `$TF_VAR_ssh_key_name` is the ssh key name described earlier
+   - `tst` is the common prefix to all resources and the name of the VPC. Keep this lower case and a valid DNS name.
+   - `$TF_VAR_resource_group_name` is the resource group name which will contain all of the resources created.
+   - `resources.sh` is the output of a successful build.
+   - [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) is the cloud-init file used to initialize the frontend and the backend servers.
+   - `ubuntu-18.04-amd64` is one of the virtual server images from the `ibmcloud is images` command, the scripts are expecting Ubuntu.
 
-In the script above,
-
-- $TF_VAR_ssh_key_name is the ssh key name described earlier
-- tst is the common prefix to all resources and the name of the vpc, keep this lower case and a valid dns name
-- $TF_VAR_resource_group_name is the resource group name described earlier which will contain all of the resources created
-- resources.sh is the output of a successful build
-- shared/install.sh is the frontend cloud-init file discussed in the introduction
-- shared/install.sh is the backend cloud-init file discussed in the introduction
-- ubuntu-18.04-amd64 one of the VSI images from the `ibmcloud is images` command, the scripts are expecting ubuntu
-
-The `vpc-pubpriv-create-with-bastion.sh` shell script once executed successfully will create three hosts: frontend, backend and bastion.  The `@shared/install.sh` will have been passed to a `ibmcloud is create-instance` cli command --user-data parameter like this:
+During its execution, the `vpc-pubpriv-create-with-bastion.sh` shell script creates three hosts: frontend, backend and bastion. The `@shared/install.sh` has been passed to a `ibmcloud is create-instance` CLI command `--user-data` parameter like this:
 
 ```sh
  ibmcloud is instance-create ... --user-data @shared/install.sh
 ```
 {:pre}
 
+The provisioning script leaves both the frontend and backend VSIs in maintenance mode ready to install from the Internet. You will now send files from your local workstation to these servers and execute these scripts.
 
-{:#upload_execute}
-Take a look at the `resources.sh` file after the script completes.  Shown below is example contents.
-```sh
-$ cat resources.sh
-FRONT_IP_ADDRESS=169.61.247.108
-BASTION_IP_ADDRESS=169.61.247.105
-FRONT_NIC_IP=10.240.2.12
-BACK_NIC_IP=10.240.1.8
-FRONT_VSI_NIC_ID=8976fbde-0f57-4829-a834-a773952f6d19
-BACK_VSI_NIC_ID=216aeb65-1296-4445-ab9e-694f751e773d
-```
-{:codeblock}
-
-The following snippet could be added to a script that you create to upload and execute a script from the workstation.  The -F parameter to ssh is used to avoid using a hosts file.  The floating IP addresses provisioned will be allocated from a fixed pool so SSH strict host checking is likely to fail.
-
-```sh
-source resources.sh
-scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
-ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP sh /uploaded.sh
-scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$BACK_NIC_IP:/uploaded.sh
-ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$BACK_NIC_IP sh /uploaded.sh
-```
-{:pre}
-
-../scripts/ssh.notstrict.config:
-```
-Host *
-  StrictHostKeyChecking no
-  UserKnownHostsFile=/dev/null
-```
-{:codeblock}
+1. Once the provisioning script completes, open the file the `resources.sh`. Shown below is example contents.
+   ```sh
+   $ cat resources.sh
+   FRONT_IP_ADDRESS=169.61.247.108
+   BASTION_IP_ADDRESS=169.61.247.105
+   FRONT_NIC_IP=10.240.2.12
+   BACK_NIC_IP=10.240.1.8
+   FRONT_VSI_NIC_ID=8976fbde-0f57-4829-a834-a773952f6d19
+   BACK_VSI_NIC_ID=216aeb65-1296-4445-ab9e-694f751e773d
+   ```
+   {:codeblock}
+1. Load the variables into your environment:
+   ```sh
+   source resources.sh
+   ```
+   {:pre}
+1. Send a script to the frontend server and execute this script:
+   ```sh
+   scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
+   ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP sh /uploaded.sh
+   ```
+   {:pre}
+1. Repeat the operation with the backend server:
+   ```sh
+   scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$BACK_NIC_IP:/uploaded.sh
+   ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$BACK_NIC_IP sh /uploaded.sh
+   ```
+   {:pre}
 
 ### Test
 {: #cli-test}
 
-The tutorial leaves both the frontend and backend VSIs in maintenance mode ready to install from the internet.  Try the following tests:
-```sh
-./test_provision.bash $FRONT_IP_ADDRESS INTERNET hi
-./test_provision.bash $BACK_NIC_IP INTERNET hi "ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP"
-```
-{:pre}
+ To validate the deployment:
+
+1. Import the output variables into the environment:
+   ```sh
+   source resource.sh
+   ```
+   {:pre}
+1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
+   ```sh
+   ./test_provision.bash $FRONT_IP_ADDRESS INTERNET hi
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   INTERNET
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
+1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
+   ```sh
+   ./test_provision.bash $BACK_NIC_IP INTERNET hi "ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP"
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   ISOLATED
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
 
 ### Clean up
 {: #cli-cleanup}
 
-The following script will delete the vpc and `all` of the conents in the vpc, be careful:
-
-```sh
-../scripts/vpc-cleanup.sh tstvpc-pubpriv
-```
-{:pre}
+1. Delete the VPC and **all of the resources** in the VPC, be careful:
+   ```sh
+   ../scripts/vpc-cleanup.sh tstvpc-pubpriv
+   ```
+   {:pre}
 
 ## Provisioning infrastructure with Terraform
 {: #terraform}
