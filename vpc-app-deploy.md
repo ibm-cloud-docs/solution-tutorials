@@ -499,13 +499,17 @@ Now that Terraform has deployed resources, you can validate they were correctly 
 
 Although Ansible could be used to provision the VPC resources and install software, this section uses Terraform to provision the VPC resources and Ansible to deploy the software.
 
+### Before you begin
+{: #ansible-before-you-begin}
+
+This section uses both Terraform and Ansible.
+
+1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
+1. Follow [these instructions](/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
+
 <!-- TODO what is a good reason to use Terraform for the resources vs. Ansible? No specific VPC constructs in Ansible, it would be all scripting? -->
 
-The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/tf/main.tf) similar to the one described in the previous section except the software installation has been stripped out.
-
-The Ansible script will install software from the mirrors and then upload software from your workstation.
-
-#### Ansible Playbook
+### Ansible Playbook
 
 An Ansible playbook provides the tasks to be run. The example below has a set of tasks required to install nginx and upload a script. You will notice the similarities to the `cloud-init` script discussed earlier. The `uploaded.sh` script is identical.
 
@@ -541,7 +545,7 @@ An Ansible playbook provides the tasks to be run. The example below has a set of
 ```
 {:codeblock}
 
-#### Ansible Inventory
+### Ansible Inventory
 
 Ansible works against multiple systems in your infrastructure at the same time. The Ansible inventory contains the list of these systems. The tutorial provides a script [`inventory.bash`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/inventory.bash) to generate the Ansible inventory from the Terraform output.
 
@@ -560,16 +564,10 @@ printf 'all:
 ```
 {:codeblock}
 
-### Before you begin
-{: #ansible-before-you-begin}
-
-This section uses both Terraform and Ansible.
-
-1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
-1. Follow [these instructions](/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
-
 ### Provision
 {: #ansible-provision}
+
+The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/tf/main.tf) similar to the one described in the previous section except the software installation has been stripped out. The Ansible script will install software from the mirrors and then upload software from your workstation.
 
 1. Change to the Ansible script folder for this example:
    ```sh
