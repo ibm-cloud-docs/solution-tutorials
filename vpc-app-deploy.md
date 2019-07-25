@@ -33,7 +33,7 @@ This tutorial starts with a general background and then has technology specific 
 
 * Understand operating system software provided by {{site.data.keyword.IBM_notm}}.
 * Utilize manual steps for updating the operating system software and installing new software.
-* Understand how to use the {{site.data.keyword.Bluemix_notm} CLI, Terraform and Ansible to automate the provisioning of resources and software installation.
+* Understand how to use the {{site.data.keyword.Bluemix_notm}} CLI, Terraform and Ansible to automate the provisioning of resources and software installation.
 
 ## Services used
 {: #services}
@@ -76,10 +76,10 @@ This tutorial comes with sample code to illustrate the different options to prov
 
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
-1. If you don't have an SSH key on your local machine, refer to [these instructions](https://test.cloud.ibm.com/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) for creating a key. By default, the private key is found at `$HOME/.ssh/id_rsa`.
+1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) for creating a key. By default, the private key is found at `$HOME/.ssh/id_rsa`.
 1. Add the SSH key in the [VPC console](https://{DomainName}/vpc/compute/sshKeys).
 
-For more info or instructions on how to manage and/or create an SSH key read [SSH keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
+For more info or instructions on how to manage and/or create an SSH key read [SSH keys](/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
 
 ### Set environment variables
 {: #set-env}
@@ -506,7 +506,6 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
 The Ansible script will install software from the mirrors and then upload software from your workstation.
 
 #### Ansible Playbook
-{: #ansible-playbook}
 
 An Ansible playbook provides the tasks to be run. The example below has a set of tasks required to install nginx and upload a script. You will notice the similarities to the `cloud-init` script discussed earlier. The `uploaded.sh` script is identical.
 
@@ -543,7 +542,6 @@ An Ansible playbook provides the tasks to be run. The example below has a set of
 {:codeblock}
 
 #### Ansible Inventory
-{: #ansible-inventory}
 
 Ansible works against multiple systems in your infrastructure at the same time. The Ansible inventory contains the list of these systems. The tutorial provides a script [`inventory.bash`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/inventory.bash) to generate the Ansible inventory from the Terraform output.
 
