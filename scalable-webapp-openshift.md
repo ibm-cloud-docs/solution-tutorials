@@ -40,6 +40,7 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
+* [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -213,7 +214,8 @@ In this step, you will update the generated BuildConfig section of the generated
    {:tip}
 1. Open the generated **myapp.yaml** in an IDE and
    - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item of the definition to look like the one shown below
-    ```
+
+    ```yaml
     - apiVersion: image.openshift.io/v1
       kind: ImageStream
       metadata:
@@ -233,7 +235,8 @@ In this step, you will update the generated BuildConfig section of the generated
     {:codeblock}
 
    - Update the `spec` under `BuildConfig` section with
-    ```
+
+    ```yaml
     spec:
        nodeSelector: null
        output:
@@ -246,7 +249,7 @@ In this step, you will update the generated BuildConfig section of the generated
    {:codeblock}
 
    - Search for `containers` and update the image with
-    ```
+    ```yaml
     containers:
             - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
               name: openshiftnodeapp
