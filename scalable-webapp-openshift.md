@@ -213,7 +213,7 @@ In this step, you will update the generated BuildConfig section of the generated
    {:tip}
 1. Open the generated **myapp.yaml** in an IDE and
    - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item of the definition to look like the one shown below
-    ```yaml
+    ```
     - apiVersion: image.openshift.io/v1
       kind: ImageStream
       metadata:
@@ -231,8 +231,9 @@ In this step, you will update the generated BuildConfig section of the generated
         dockerImageRepository: ""
     ```
     {:codeblock}
+
    - Update the `spec` under `BuildConfig` section with
-    ```yaml
+    ```
     spec:
        nodeSelector: null
        output:
@@ -243,8 +244,9 @@ In this step, you will update the generated BuildConfig section of the generated
            name: push-secret
    ```
    {:codeblock}
+
    - Search for `containers` and update the image with
-    ```yaml
+    ```
     containers:
             - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
               name: openshiftnodeapp
@@ -362,7 +364,7 @@ OpenShift Container Platform ships with a pre-configured and self-updating monit
    ```
    {:pre}
 1. In the expression box of Prometheus web UI, enter **namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace="openshiftproject"}** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
-1. Open the **Grafana** web UI URL on a browser and accept the access permissions.
+1. Open the **Grafana** web UI URL on a browser and authorize access by allowing selected permissions.
 1. On the Grafana **Home** page, click on **K8s / Compute Resources / Pod** and Select
    - datasource: **Prometheus**
    - namespace: **openshiftproject**
@@ -377,6 +379,24 @@ Follow the instructions mentioned in [this link](/docs/openshift?topic=openshift
 
 ## Scale the app
 {:#scaling_app}
+
+In this section, you will see the ways to scale your application based on the load.
+
+You can create a horizontal pod autoscaler with the `oc autoscale` command and specify the minimum and maximum number of pods you want to run, as well as the CPU utilization or memory utilization your pods or use `oc scale` to manually scale by setting a new size for a deployment or replication controller
+
+1. Use the `oc autoscale` command and specify at least the maximum number of pods you want to run at any given time. You can optionally specify the minimum number of pods and the average CPU utilization your pods should target, otherwise those are given default values from the OpenShift Container Platform server.
+   ```sh
+    oc autoscale dc/openshiftapp \
+    --min 1 \
+    --max 10 \
+    --cpu-percent=80
+   ```
+   {:pre}
+1. Alternatively, you can achieve manual scaling of your pods with `oc scale` command
+   ```sh
+    oc scale dc openshiftapp \
+    --replicas=3
+   ```
 
 ## Remove resources
 {:#cleanup}
