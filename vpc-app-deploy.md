@@ -19,10 +19,10 @@ lasttested: "2019-06-15"
 {:pre: .pre}
 {:important: .important}
 
-# Deploy applications on a VSI in VPC
+# Install software on virtual server instances in VPC
 {: #vpc-app-deploy}
 
-This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on a virtual server instance (VSI) using Infrastructure as code(IaC) tools like Terraform and Ansible.
+This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on a virtual server instance (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
 
 {:shortdesc}
 
@@ -33,10 +33,7 @@ This tutorial starts with a general background and then has technology specific 
 
 * Understand operating system software provided by {{site.data.keyword.IBM_notm}}.
 * Utilize manual steps for updating the operating system software and installing new software.
-* Understand the CLI provisioning capabilities of VPC and VSI.
-* Become familiar with the Terraform object model for VPC.
-* Understand how to use Terraform for installing software.
-* Become familiar with Ansible.
+* Understand how to use the {{site.data.keyword.Bluemix_notm} CLI, Terraform and Ansible to automate the provisioning of resources and software installation.
 
 ## Services used
 {: #services}

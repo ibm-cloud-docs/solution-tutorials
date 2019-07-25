@@ -510,9 +510,9 @@
                 ]
             },
             {
-                "name": "Install and update applications in a Virtual Private Cloud",
+                "name": "Install software on virtual server instances in VPC",
                 "url": "vpc-app-deploy.html",
-                "description": "Install and update applications in Virtual Private Cloud.",
+                "description": "Learn how to use the IBM Cloud CLI, Terraform and Ansible to install software on virtual server instances.",
                 "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
                 "hidden": true,
                 "tags": [
