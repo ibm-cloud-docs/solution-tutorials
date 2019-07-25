@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-24"
-lasttested: "2019-07-24"
+lastupdated: "2019-07-25"
+lasttested: "2019-07-25"
 ---
 
 {:shortdesc: .shortdesc}
@@ -346,8 +346,37 @@ In this step, you will automate the build and deploy process. So that whenever y
 1. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
 ## Monitor the app
+{:#monitor_app}
+
+### Logging and Monitoring with in-built OpenShift stack
+OpenShift Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
+
+1. To access the web UIs of Prometheus and Grafana along with Alertmanager, run the below command and make sure to prepend `https://` to the returned addresses(HOST). You cannot access web UIs using unencrypted connection.
+   ```sh
+    oc -n openshift-monitoring get routes
+   ```
+   {:pre}
+1. To generate some load on your deployed application, you will use Apache *ab* in order to get some data into Prometheus hitting the route URL 5000 times with 100 concurrent requests at a time.
+   ```sh
+    ab -n 5000 -c 100 <APPLICATION_ROUTE_URL>/
+   ```
+   {:pre}
+1. In the expression box of Prometheus web UI, enter **namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace="openshiftproject"}** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
+1. Open the **Grafana** web UI URL on a browser and accept the access permissions.
+1. On the Grafana **Home** page, click on **K8s / Compute Resources / Pod** and Select
+   - datasource: **Prometheus**
+   - namespace: **openshiftproject**
+   - pod: **openshiftnodeapp-*DEPLOYMENT_NUMBER*-*POD_ID***
+1. Check the CPU and memory usage.
+1. For logging, you can either use the in-built `oc logs` command or setup a EFK(Elasticsearch, Fluentd and Kibana) stack. Check this [link for setup](https://docs.openshift.com/container-platform/3.11/install_config/aggregate_logging.html)
+
+### Logging with LogDNA and Monitoring with Sysdig on IBM Cloud
+In this step, you will provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your OpenShift application.
+
+Follow the instructions mentioned in [this link](/docs/openshift?topic=openshift-openshift_health#openshift_logmet) to setup LogDNA and Sysdig add-ons to monitor cluster health.
 
 ## Scale the app
+{:#scaling_app}
 
 ## Remove resources
 {:#cleanup}
@@ -358,5 +387,5 @@ In this step, you will automate the build and deploy process. So that whenever y
 
 * [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
 * [Continuous Deployment to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
-* [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
+* [Pod Autoscaling](https://docs.openshift.com/container-platform/3.11/dev_guide/pod_autoscaling.html)
 * [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
