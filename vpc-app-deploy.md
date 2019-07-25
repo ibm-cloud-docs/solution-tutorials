@@ -26,17 +26,17 @@ This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC
 
 {:shortdesc}
 
-This tutorial starts with a general background and then has technology specific sections.  Each technology section is stand alone so feel free to jump to a specific section, like Terraform, after reviewing the overall architecture and the background section.
+This tutorial starts with a general background and then has technology specific sections. Each technology section is standalone so feel free to jump to a specific section, like Terraform, after reviewing the overall architecture and the _Before you begin_ and _Basics of software installation_ sections.
 
 ## Objectives
 {: #objectives}
 
-* Understand operating system software provided by {{site.data.keyword.IBM_notm}}
-* Utilize manual steps for updating the operating system software and installing new software
-* Understand the cli provisioning capabilities of VPC and VSI
-* Become familiar with the Terraform object model for VPC
-* Understand how to use Terraform for installing software
-* Become familiar with Ansible
+* Understand operating system software provided by {{site.data.keyword.IBM_notm}}.
+* Utilize manual steps for updating the operating system software and installing new software.
+* Understand the CLI provisioning capabilities of VPC and VSI.
+* Become familiar with the Terraform object model for VPC.
+* Understand how to use Terraform for installing software.
+* Become familiar with Ansible.
 
 ## Services used
 {: #services}
@@ -51,8 +51,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #architecture}
 
 When deploying applications in the cloud, software can originate from different sources:
-1. The file system of a local workstation using a provisioning system to create the required infrastructure and to copy files and scripts to the virtual server instances,
-2. {{site.data.keyword.IBM_notm}} mirrors,
+1. The file system of a local workstation using a provisioning system to create the required infrastructure, to copy files and scripts to the virtual server instances;
+2. {{site.data.keyword.IBM_notm}} mirrors;
 3. Internet or intranet software repositories.
 
 <p style="text-align: center;">
@@ -68,7 +68,7 @@ When deploying applications in the cloud, software can originate from different 
 
 This tutorial comes with sample code to illustrate the different options to provision resources and install or update software in a VPC environment.
 
-1. Check out the tutorial source code
+1. Check out the tutorial source code:
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
    ```
@@ -161,7 +161,7 @@ Consider both *updating* the version lists available to the provisioned instance
 
 When provisioning a virtual server instance, you can specify a [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) script to be executed during the server initialization. Cloud-init is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances.
 
-In {{site.data.keyword.cloud_notm}}, the cloud-init file contents are provided in the `user-data` parameter at the time the server is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content.
+In {{site.data.keyword.cloud_notm}}, the cloud-init file contents are provided in the `user-data` parameter at the time the server is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content. If you need to debug script execution, cloud-init logs the output of the initialization script in `/var/log/cloud-init-output.log` on virtual server instances.
 
 This tutorial uses a shell script named [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) as initialization script:
 
@@ -182,7 +182,7 @@ In this script, upgrading the installed software and installing `nginx` and othe
 
 The `curl` command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet. This is step 3 on the architecture diagram.
 
-Based on whether the host has internet connectivity, the script modifies the `index.html` page served by `nginx`. You will use this to test the results of the provisioning in the next sections.
+Based on whether the host has internet connectivity, the script modifies the `index.html` page served by `nginx`. 
 
 ### Upload from the filesystem and execute on the instance
 {: #scp-ssh}
@@ -191,125 +191,9 @@ There may be data and software that is available on the filesystem of your on-pr
 
 In such cases, you can use the SSH connection to the server to upload files (with `scp`) and then execute scripts on the server with `ssh`. The scripts could also retrieve software installers from the Internet, or from your on-premise systems assuming you have established a connection [such as a VPN](/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn) between your on-premise systems and the cloud.
 
-<!-- To demonstrate, a script will be uploaded from the filesystem of the workstation (see architecture diagram). The execution of the script will wait for the index html file to exist indicating that nginx has been installed.  It will then create a file, `testupload.html`, containing the string `hi`. Before executing, replace the `content`(User data) part of `write_files` directive in the above example with the shell script below
+The tutorial code contains a script named [`uploaded.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) which will be uploaded from your workstation to the virtual server instances (manually or through automation like Terraform and Ansible).
 
-```
-#!/bin/bash
-
-indexhtml=/var/www/html/index.nginx-debian.html
-testupload=/var/www/html/testupload.html
-
-# wait for nginx to be installed
-until [ -f $indexhtml ]; do
-  date
-  sleep 10
-done
-
-# initial value
-cat > $testupload <<EOF
-hi
-EOF
-```
-{:codeblock} -->
-
-<!-- See 1 on the architecture diagram -->
-
-<!-- ### Test
-When nginx is initialized it will return the file: `/var/www/html/index.html`
-
-In the example above, the `initialize.sh` script will test if www.python.org can be accessed and put one of these strings in index html file:
-- INTERNET - if it is possible to install software from the internet
-- ISOLATED - if the internet is not available
-
-You can test the connection to the frontend using curl with the attached floating ip (FRONT_IP_ADDRESS)
-```sh
-curl <FRONT_IP_ADDRESS>
-curl <FRONT_IP_ADDRESS>/testupload.html
-```
-{:pre}
-
-The backend is only accessible from the frontend.  The frontend is accessed through the bastion.
-```sh
-ssh -F shared/ssh.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP>
-curl <BACK_IP_ADDRESS>
-curl <BACK_IP_ADDRESS>/testupload.html
-```
-{:pre}
-
-The following test_provision.sh script will be used to verify the successful provisioning of resources:
-
-```sh
-#!/bin/bash
-host_ip=$1
-expectingIndex=$2
-expectingUploadtest=$3
-ssh_command="$4"
-
-testuploadfile=testupload.html
-contents=$($ssh_command curl -s $host_ip)
-if [ "x$contents" = x$expectingIndex ]; then
-  echo success: httpd default file was correctly replaced with the following contents:
-  echo $contents
-  hi=$($ssh_command curl -s $host_ip/$testuploadfile)
-  if [ "x$hi" = "x$expectingUploadtest" ]; then
-    echo success: provision of file from on premises worked and was replaced with the following contents:
-    echo $hi
-    exit 0
-  else
-    echo $hi
-    echo "fail: terraform provision does not work, expecting $expectingUploadtest but got the stuff above intead"
-    exit 2
-  fi
-fi
-```
-{:pre}
-
-This script will be used in each of the technologies.  To test the 1.2.3.4 host for internet access and that the upload from the workstation worked correctly:
-```sh
-./test_provision.bash 1.2.3.4 INTERNET hi
-```
-{:pre}
-
-To test the 1.2.3.4 host from the 1.2.3.5 host through the bastion 1.2.3.6:
-```sh
-test_provision.bash 1.2.3.4 INTERNET hi "ssh -F ../scripts/ssh.notstrict.config root@$1.2.3.5 -o ProxyJump=root@1.2.3.6"
-```
-{:pre}
-
-The actual test provision script loops waiting for success.  Provisioning and boot up can take a few minutes. -->
-
-
-<!-- ### Example Program
-
-[Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) also contains some handy shell scripts that do everything that was done by hand in the GUI console as well.
-- [Securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group. -->
-
-<!-- ### Troubleshooting
-You can check the provisioned resources on the [VPC overview](https://{DomainName}/vpc/overview) page.Alternatively, The `ibmcloud is` command line can also be used.
-
-Here is how to ssh into the bastion, frontend and backend instances, notice the frontend and backend jump through the bastion.
-```sh
-ssh -F shared/ssh.config root@<BASTION_IP_ADDRESS>
-ssh -F shared/ssh.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP>
-ssh -F shared/ssh.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<BACK_NIC_IP>
-```
-{:pre}
-
-The cloud-init log files on the frontend and backend instances can be found in the `/var/log/cloud-init-output.log` and will contain the standard output from the commands in the cloud-init.yaml file.
-
-Network connectivity to any of the VSIs needs to be enabled through the VPC Security Groups on the network interface:
-- to ssh to a VSI ingress tcp port 22 is required
-- to install software egress to port 53 (DNS), 80 and 443 are required
-
-The default Network ACLs allow all traffic.  If this is changed keep in mind that both ingress and egress need to be allowed and the specification is not statefull (unlike security groups) -->
-<!-- 
-### Choose your technology
-The next sections will use the concepts described above and apply them to the following major technology mechanisms for provisioning and installing software:
-
-- VPC GUI Console and typing
-- CLI and shell scripts
-- terraform
-- ansible -->
+In the next sections, you will use the script [test_provision.bash](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/test_provision.bash) to confirm that the servers have been provisioned successfully, are able (or not) to access the Internet and that the `uploaded.sh` script was correctly executed.
 
 ## Using the {{site.data.keyword.Bluemix_notm}} CLI and shell scripts
 {: #cli}
