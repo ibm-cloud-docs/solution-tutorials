@@ -213,55 +213,57 @@ In this step, you will update the generated BuildConfig section of the generated
    For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create). For registry URL, run `ibmcloud cr region`.
    {:tip}
 1. Open the generated **myapp.yaml** in an IDE and
-   - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item of the definition to look like the one shown below
 
-    ```yaml
-    - apiVersion: image.openshift.io/v1
-      kind: ImageStream
-      metadata:
-        annotations:
-          openshift.io/generated-by: OpenShiftNewApp
-        creationTimestamp: null
-        labels:
-          app: openshiftapp
-        name: openshiftapp
-      spec:
-        dockerImageRepository: "<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp"
-        lookupPolicy:
-          local: false
-      status:
-        dockerImageRepository: ""
-    ```
-    {:codeblock}
+      - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item of the definition to look like the one shown below
 
-   - Update the `spec` under `BuildConfig` section with
+      ```yaml
+        -
+            apiVersion: image.openshift.io/v1
+            kind: ImageStream
+            metadata:
+                annotations:
+                    openshift.io/generated-by: OpenShiftNewApp
+                creationTimestamp: null
+                labels:
+                    app: openshiftapp
+                name: openshiftapp
+            spec:
+                dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE/openshiftapp
+                lookupPolicy:
+                    local: false
+            status:
+                dockerImageRepository: ""
+      ```
+      {:codeblock}
 
-    ```yaml
-    spec:
-       nodeSelector: null
-       output:
-         to:
-           kind: DockerImage
-           name: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
-         pushSecret:
-           name: push-secret
-   ```
-   {:codeblock}
+      - Update the `spec` under `BuildConfig` section with
 
-   - Search for `containers` and update the image with
-    ```yaml
-    containers:
-            - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
-              name: openshiftnodeapp
-    ```
-   {:codeblock}
+      ```yaml
+        spec:
+           nodeSelector: null
+           output:
+             to:
+               kind: DockerImage
+               name: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
+             pushSecret:
+               name: push-secret
+      ```
+      {:codeblock}
+
+      - Search for `containers` and update the image with
+      ```yaml
+        containers:
+                - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
+                  name: openshiftnodeapp
+      ```
+      {:codeblock}
 1. Save the YAML file.
 
 ## Deploy the application to cluster
 {:#deploy_app_to_cluster}
 In this section, you will deploy the application to the cluster using the generated **myapp.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
 
-### Create the app using the buildconfig yaml
+### Create the app using the updated yaml
 
 1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project(openshiftproject)
    ```sh
