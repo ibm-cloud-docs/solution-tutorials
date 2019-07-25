@@ -186,7 +186,7 @@ The Cloud Foundry app manages access through an OpenID Connect client connecting
 ## Security: Rotate service credentials
 If you use this solution in production, then you should rotate the service credentials on a regular basis. Many security policies have a requirement to change passwords and credentials every 90 days or with similar frequency.
 
-- You can recreate and thereby rotate the credentials for the services bound to the backend Python app by unbinding, then again binding the services. Once done, the app needs to be restaged.
+- You can recreate and thereby rotate the credentials for the services bound to the backend Cloud Foundry app by unbinding, then again binding the services. Once done, the app needs to be restaged.
 - To update service credentials used with a {{site.data.keyword.openwhisk_short}} action, create a new service key and bind that key to the action.
 
 The [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) for this tutorial includes scripts to automate the steps.
