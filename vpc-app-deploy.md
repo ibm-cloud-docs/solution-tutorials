@@ -50,7 +50,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-Software can originate from different sources:
+When deploying applications in the cloud, software can originate from different sources:
 1. The file system of a local workstation using a provisioning system to create the required infrastructure and to copy files and scripts to the virtual server instances,
 2. {{site.data.keyword.IBM_notm}} mirrors,
 3. Internet or intranet software repositories.
@@ -61,10 +61,12 @@ Software can originate from different sources:
 </p>
 
 ## Before you begin
+{: #before-you-begin}
 
 ### Get the tutorial source code
+{: #get-source}
 
-The tutorial comes with sample code to provision VPC resources.
+This tutorial comes with sample code to illustrate the different options to provision resources and install or update software in a VPC environment.
 
 1. Check out the tutorial source code
    ```sh
@@ -73,6 +75,7 @@ The tutorial comes with sample code to provision VPC resources.
    {: codeblock}
 
 ### Create a VPC ssh key
+{: #create-ssh-key}
 
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
@@ -82,6 +85,7 @@ When provisioning virtual server instances, an SSH key will be injected into the
 For more info or instructions on how to manage and/or create an SSH key read [SSH keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
 
 ### Set environment variables
+{: #set-env}
 
 This tutorial will walk through example steps on a terminal using the shell, `terraform` and `ansible`. You will install these tools in later steps. For the scripts to work, you need to define a set of environment variables.
 
@@ -134,25 +138,32 @@ When provisioning a virtual server instance, you select the base image from a pr
 
 ```
 ibmcloud is images
+Listing images...
 ID                                     Name                    OS                                                        Created                         Status      Visibility
-...
-2d7acb16-3d4b-d0e5-d623-e43783a9b126   red-7.x-amd64           Red Hat Enterprise Linux (7.x - Minimal Install)          2019-03-10T19:30:57.249-07:00   available   public
-7eb4e35b-4257-56f8-d7da-326d85452591   ubuntu-16.04-amd64      Ubuntu Linux (16.04 LTS Xenial Xerus Minimal Install)     2018-10-29T23:12:06.537-07:00   available   public
-cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.04 LTS Bionic Beaver Minimal Install)    2018-10-29T23:12:06.51-07:00    available   public
-...
+cc8debe0-1b30-6e37-2e13-744bfb2a0c11   centos-7.x-amd64        CentOS (7.x - Minimal Install)                            2018-10-30T06:12:06.651+00:00   available   public
+660198a6-52c6-21cd-7b57-e37917cef586   debian-8.x-amd64        Debian GNU/Linux (8.x jessie/Stable - Minimal Install)    2018-10-30T06:12:06.624+00:00   available   public
+e15b69f1-c701-f621-e752-70eda3df5695   debian-9.x-amd64        Debian GNU/Linux (9.x Stretch/Stable - Minimal Install)   2018-10-30T06:12:06.705+00:00   available   public
+2d7acb16-3d4b-d0e5-d623-e43783a9b126   red-7.x-amd64           Red Hat Enterprise Linux (7.x - Minimal Install)          2019-03-11T02:30:57.249+00:00   available   public
+7eb4e35b-4257-56f8-d7da-326d85452591   ubuntu-16.04-amd64      Ubuntu Linux (16.04 LTS Xenial Xerus Minimal Install)     2018-10-30T06:12:06.537+00:00   available   public
+cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.04 LTS Bionic Beaver Minimal Install)    2018-10-30T06:12:06.51+00:00    available   public
+b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2012 Standard Edition)                    2018-10-30T06:12:06.678+00:00   available   public
+81485856-df27-93b8-a838-fa28a29b3b04   windows-2012-r2-amd64   Windows Server (2012 R2 Standard Edition)                 2018-10-30T06:12:06.564+00:00   available   public
+5ccbc579-dc22-0def-46a8-9c2e9b502d37   windows-2016-amd64      Windows Server (2016 Standard Edition)                    2018-10-30T06:12:06.59+00:00    available   public
 ```
 {:pre}
 
 {{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors.
 
-<!-- Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors. -->
+Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
 
 ### Initialize and customize cloud instances with cloud-init
 {: #cloud_init}
 
-[Cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances. In {{site.data.keyword.cloud_notm}}, the Cloud-init file contents are provided in the user-data parameter at the time the VSI is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content.
+When provisioning a virtual server instance, you can specify a [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) script to be executed during the server initialization. Cloud-init is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances.
 
-This tutorial will use a shell script (starts with `#!`). You can also find the source in [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh):
+In {{site.data.keyword.cloud_notm}}, the cloud-init file contents are provided in the `user-data` parameter at the time the server is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content.
+
+This tutorial uses a shell script named [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) as initialization script:
 
 ```sh
 #!/bin/bash
@@ -167,15 +178,20 @@ fi
 ```
 {:codeblock}
 
-In this script, upgrading the installed software and installing nginx and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM}} provided mirrors. For ubuntu that `apt-get` commands will access mirrors. This is step 2 on the architecture diagram.
+In this script, upgrading the installed software and installing `nginx` and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM}} provided mirrors. For Ubuntu, the `apt-get` commands will access mirrors. This is step 2 on the architecture diagram.
 
-The curl command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet. This is step 3 on the architecture diagram.
+The `curl` command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet. This is step 3 on the architecture diagram.
+
+Based on whether the host has internet connectivity, the script modifies the `index.html` page served by `nginx`. You will use this to test the results of the provisioning in the next sections.
 
 ### Upload from the filesystem and execute on the instance
+{: #scp-ssh}
 
-There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the VSI and then executed.
+There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the virtual server instance and then executed.
 
-To demonstrate, a script will be uploaded from the filesystem of the workstation (see architecture diagram). The execution of the script will wait for the index html file to exist indicating that nginx has been installed.  It will then create a file, `testupload.html`, containing the string `hi`. Before executing, replace the `content`(User data) part of `write_files` directive in the above example with the shell script below
+In such cases, you can use the SSH connection to the server to upload files (with `scp`) and then execute scripts on the server with `ssh`. The scripts could also retrieve software installers from the Internet, or from your on-premise systems assuming you have established a connection [such as a VPN](/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn) between your on-premise systems and the cloud.
+
+<!-- To demonstrate, a script will be uploaded from the filesystem of the workstation (see architecture diagram). The execution of the script will wait for the index html file to exist indicating that nginx has been installed.  It will then create a file, `testupload.html`, containing the string `hi`. Before executing, replace the `content`(User data) part of `write_files` directive in the above example with the shell script below
 
 ```
 #!/bin/bash
@@ -194,9 +210,9 @@ cat > $testupload <<EOF
 hi
 EOF
 ```
-{:codeblock}
+{:codeblock} -->
 
-See 1 on the architecture diagram
+<!-- See 1 on the architecture diagram -->
 
 <!-- ### Test
 When nginx is initialized it will return the file: `/var/www/html/index.html`
@@ -295,78 +311,16 @@ The next sections will use the concepts described above and apply them to the fo
 - terraform
 - ansible -->
 
-<!-- 
-## VPC GUI console and typing
-{: #provision-vpc-cloud-init}
-In this section, you will provision a new VPC with subnets and VSIs (if you don't have one) and configure instances to use cloud-init user data.
-
-Step through the instructions in the [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial.
-
-Now ssh to the frontend server:
-
-```sh
-ssh -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP>
-```
-{:codeblock}
-
-At the root prompt on the frontend server demonstrate installing software from the mirrors by executing the following:
-
-```sh
-apt-get update
-apt-get install -y nginx
-curl localhost
-```
-{:codeblock}
-
-To demonstrate the capability of installing from internet repositories try:
-
-```sh
-indexhtml=/var/www/html/index.html
-if curl -o /tmp/x https://www.python.org/downloads/release/python-373/; then
-    echo INTERNET > $indexhtml
-else
-    echo ISOLATED > $indexhtml
-fi
-curl localhost
-```
-{:codeblock}
-
-Exit the ssh connected to the frontend and repeat on the backend.
-
-    **Note:**   While provisioning a VSI it is possible to paste the cloud-init script into the **User Data** field.  Make sure to start with the line: #!/bin/sh
-
-To upload software to the frontend and backend VSIs, you can use the `scp` command and then SSH into the VSIs to install the software. On a terminal run the following commands to copy and then execute through the bastion:
-```sh
-cd .../vpc-app-deploy
-scp -o ProxyJump=root@<BASTION_IP_ADDRESS> shared/uploaded.sh root@<FRONT_NIC_IP>:/uploaded.sh
-ssh -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP> sh /uploaded.sh
-```
-{:codeblock}
-
-Repeat for the backend
-
-### Test
-
-The tutorial leaves both the frontend and backend VSIs in a maintenance mode ready to install from the internet.  Try the following tests:
-```sh
-./test_provision.bash <FRONT_IP_ADDRESS> INTERNET hi
-./test_provision.bash <BACK_NIC_IP> INTERNET hi 'ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@<BASTION_IP_ADDRESS> root@<FRONT_NIC_IP>'
-```
-{:pre}
-
-### Clean up
-
-Follow the instructions in the referencd tutorials or use the shell script to clean up as described in the next section. -->
-
 ## Using the {{site.data.keyword.Bluemix_notm}} CLI and shell scripts
 {: #cli}
 
 ### Before you begin
-{: #prereqs}
+{: #cli-before-you-begin}
 
 - Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 
 ### Provision
+{: #cli-provision}
 
 the [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial provides a shell script for creating all of the infrastructure in the example.  In the .../vpc-app-deploy directory do the following:
 
@@ -427,6 +381,8 @@ Host *
 {:codeblock}
 
 ### Test
+{: #cli-test}
+
 The tutorial leaves both the frontend and backend VSIs in maintenance mode ready to install from the internet.  Try the following tests:
 ```sh
 ./test_provision.bash $FRONT_IP_ADDRESS INTERNET hi
@@ -435,6 +391,8 @@ The tutorial leaves both the frontend and backend VSIs in maintenance mode ready
 {:pre}
 
 ### Clean up
+{: #cli-cleanup}
+
 The following script will delete the vpc and `all` of the conents in the vpc, be careful:
 
 ```sh
@@ -450,6 +408,7 @@ The following script will delete the vpc and `all` of the conents in the vpc, be
 If you are starting with terraform for the first time, or if you are unfamiliar with the IBM VPC object model expressed in terraform you can optionally spend a few minutes [with a smaller example](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples/ibm-is-vpc) before moving ahead with this tutorial.
 
 ### Before you begin
+{: #terraform-before-you-begin}
 
 Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
 
@@ -494,6 +453,7 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
    {:pre}
 
 ### Provision subnets and virtual server instances
+{: #terraform-provision}
 
 The tutorial [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) introduces a more complex example with several subnets and virtual server instances:
 
@@ -580,6 +540,7 @@ To provision the resources:
    {:pre}
 
 ### Test
+{: #terraform-test}
 
 Now that Terraform has deployed resources, you can validate they were correctly provisioned.
 
@@ -611,6 +572,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    ```
 
 ### Clean up
+{: #terraform-cleanup}
 
 1. Remove the resources created by Terraform:
    ```sh
@@ -632,6 +594,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
 The Ansible script will install software from the mirrors and then upload software from your workstation.
 
 #### Ansible Playbook
+{: #ansible-playbook}
 
 An Ansible playbook provides the tasks to be run. The example below has a set of tasks required to install nginx and upload a script. You will notice the similarities to the `cloud-init` script discussed earlier. The `uploaded.sh` script is identical.
 
@@ -668,7 +631,7 @@ An Ansible playbook provides the tasks to be run. The example below has a set of
 {:codeblock}
 
 #### Ansible Inventory
-{:#ansible_inventory}
+{: #ansible-inventory}
 
 Ansible works against multiple systems in your infrastructure at the same time. The Ansible inventory contains the list of these systems. The tutorial provides a script [`inventory.bash`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/inventory.bash) to generate the Ansible inventory from the Terraform output.
 
@@ -688,6 +651,7 @@ printf 'all:
 {:codeblock}
 
 ### Before you begin
+{: #ansible-before-you-begin}
 
 This section uses both Terraform and Ansible.
 
@@ -695,6 +659,7 @@ This section uses both Terraform and Ansible.
 1. Follow [these instructions](/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
 
 ### Provision
+{: #ansible-provision}
 
 1. Change to the Ansible script folder for this example:
    ```sh
@@ -738,6 +703,7 @@ This section uses both Terraform and Ansible.
    {:pre}
 
 ### Test
+{: #ansible-test}
 
 Now that Terraform has deployed resources and Ansible installed the software, you can validate they were correctly provisioned.
 
@@ -769,6 +735,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    ```
 
 ### Clean up
+{: #ansible-cleanup}
 
 1. Remove the resources created by Terraform:
    ```sh
