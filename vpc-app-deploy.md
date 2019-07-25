@@ -62,7 +62,9 @@ Software can originate from different sources:
 
 ## Before you begin
 
-### Get the source code
+### Get the tutorial source code
+
+The tutorial comes with sample code to provision VPC resources.
 
 1. Check out the tutorial source code
    ```sh
@@ -72,15 +74,20 @@ Software can originate from different sources:
 
 ### Create a VPC ssh key
 
-xxx
+When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
+
+1. If you don't have an SSH key on your local machine, refer to [these instructions](https://test.cloud.ibm.com/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) for creating a key. By default, the private key is found at `$HOME/.ssh/id_rsa`.
+1. Add the SSH key in the [VPC console](https://{DomainName}/vpc/compute/sshKeys).
+
+For more info or instructions on how to manage and/or create an SSH key read [SSH keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
 
 ### Set environment variables
 
-This tutorial will walk through example steps on a terminal using the shell, `terraform` and `ansible`.
+This tutorial will walk through example steps on a terminal using the shell, `terraform` and `ansible`. You will install these tools in later steps. For the scripts to work, you need to define a set of environment variables.
 
 1. Change to the tutorial directory:
    ```sh
-   cd vpc-app-deploy
+   cd <checkout_dir>/vpc-app-deploy
    ```
    {:codeblock}
 1. Copy the configuration file:
@@ -89,13 +96,12 @@ This tutorial will walk through example steps on a terminal using the shell, `te
    ```
    {:codeblock}
 1. Edit the `export` file and set the environment variable values:
-   * `TF_VAR_ibmcloud_api_key` is an IBM Cloud API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
-   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key in the cloud. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
+   * `TF_VAR_ibmcloud_api_key` is an {{site.data.keyword.Bluemix_notm}} API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
+   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
       ```sh
       ibmcloud is keys
       ```
       {:codeblock}
-   By default the private key is found here: $HOME/.ssh/id_rsa. For more info or instructions on how to manage and/or create an SSH key read [SSH keys](https://{DomainName}/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
    * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
 1. Load the variables into the environments:
    ```sh
@@ -103,7 +109,7 @@ This tutorial will walk through example steps on a terminal using the shell, `te
    ```
    {:codeblock}
 
-The environment variables in `export` are in terraform format (notice the `TF_` prefix) for convenience but are used in all environments.
+The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience but are used in all environments.
 
 ## Basics of software installation
 {: #basics}
@@ -352,7 +358,7 @@ The tutorial leaves both the frontend and backend VSIs in a maintenance mode rea
 
 Follow the instructions in the referencd tutorials or use the shell script to clean up as described in the next section. -->
 
-## Using the IBM Cloud CLI and shell scripts
+## Using the {{site.data.keyword.Bluemix_notm}} CLI and shell scripts
 {: #cli}
 
 ### Before you begin
@@ -445,7 +451,7 @@ If you are starting with terraform for the first time, or if you are unfamiliar 
 
 ### Before you begin
 
-Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the IBM Cloud Provider plug-in for Terraform on your workstation.
+Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
 
 ### Provision a single virtual server instance
 
@@ -685,7 +691,7 @@ printf 'all:
 
 This section uses both Terraform and Ansible.
 
-1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the IBM Cloud Provider plug-in for Terraform on your workstation.
+1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
 1. Follow [these instructions](/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
 
 ### Provision
@@ -775,8 +781,8 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 {: #related}
 
 - [VPC Glossary](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#vpc-glossary)
-- [VPC using the IBM Cloud CLI](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-cli)
+- [VPC using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-cli)
 - [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
-- [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-- [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
+- [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
+- [Deploy a LAMP stack using Terraform](/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
 
