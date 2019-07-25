@@ -14,7 +14,7 @@ lasttested: "2019-07-25"
 {:pre: .pre}
 
 # Scalable web application on OpenShift
-{: #scalable-webapp-kubernetes}
+{: #scalable-webapp-openshift}
 
 > :warning: Work in progress
 
