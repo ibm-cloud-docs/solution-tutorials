@@ -22,11 +22,11 @@ lasttested: "2019-06-15"
 # Install software on virtual server instances in VPC
 {: #vpc-app-deploy}
 
-This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on a virtual server instance (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
+This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
 
 {:shortdesc}
 
-This tutorial starts with a general background and then has technology specific sections. Each technology section is standalone so feel free to jump to a specific section, like Terraform, after reviewing the overall architecture and the _Before you begin_ and _Basics of software installation_ sections.
+The tutorial starts with a general background and then has technology specific sections. Each technology section is standalone so feel free to jump to a specific section, like Terraform, after reviewing the overall architecture and the _Before you begin_ and _Basics of software installation_ sections.
 
 ## Objectives
 {: #objectives}
@@ -47,7 +47,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-In this tutorial, you will deploy the configuration introduced in another tutorial, [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). It involves a frontend server accessible from the public Internet, the frontend server talks to a backend server.
+In this tutorial, you will deploy the configuration introduced in another tutorial, [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). It involves a frontend server accessible from the public Internet, the frontend server talks to a backend server. The backend server has no Internet connectivity.
 
 ![Architecture of subnets and virtual server instances](images/solution40-vpc-public-app-private-backend/Architecture.png)
 
@@ -56,8 +56,8 @@ It also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-s
 ![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
 
 While provisioning the resources, you will also deploy applications on the virtual server instances. When deploying applications in the cloud, software can originate from different sources:
-1. The file system of a local workstation using a provisioning system to create the required infrastructure, to copy files and scripts to the virtual server instances;
-2. {{site.data.keyword.IBM_notm}} mirrors;
+1. The file system of a local workstation and using a provisioning system to create the required infrastructure, to copy files and scripts to the virtual server instances;
+2. {{site.data.keyword.IBM_notm}} mirrors to update the operating systems or to install packages supported by the operating system;
 3. Internet or intranet software repositories.
 
 <p style="text-align: center;">
@@ -114,13 +114,13 @@ This tutorial will walk through example steps on a terminal using the shell, `te
       ```
       {:codeblock}
    * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
-1. Load the variables into the environments:
+1. Load the variables into the environment:
    ```sh
    source export
    ```
    {:codeblock}
 
-The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience but are used in all environments.
+Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience but are used in all environments.
 
 ## Basics of software installation
 {: #basics}
@@ -128,7 +128,7 @@ The environment variables in `export` are in Terraform format (notice the `TF_` 
 ### Provision virtual server instances from base images
 {: #base-vsi-images}
 
-When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Base {{site.data.keyword.Bluemix}} virtual server instance images are populated with popular off the shelf operating systems:
+When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Base {{site.data.keyword.Bluemix_notm}} virtual server instance images are populated with popular off the shelf operating systems:
 
 ```
 ibmcloud is images
@@ -172,7 +172,7 @@ This tutorial uses a shell script named [install.sh](https://github.com/IBM-Clou
    ```
    {:codeblock}
 
-In this script, upgrading the installed software and installing `nginx` and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM}} provided mirrors. For Ubuntu, the `apt-get` commands will access mirrors. This is step 2 on the architecture diagram.
+In this script, upgrading the installed software and installing `nginx` and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM_notm}} provided mirrors. For Ubuntu, the `apt-get` commands will access mirrors. This is step 2 on the architecture diagram.
 
 The `curl` command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet. This is step 3 on the architecture diagram.
 
