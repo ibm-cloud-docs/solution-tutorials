@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-25"
-lasttested: "2019-07-25"
+lastupdated: "2019-07-26"
+lasttested: "2019-07-26"
 ---
 
 {:shortdesc: .shortdesc}
@@ -406,11 +406,9 @@ You can create a horizontal pod autoscaler with the `oc autoscale` command and s
 ## Remove resources
 {:#cleanup}
 
-* Delete the cluster or only delete the Kubernetes artifacts created for the application if you plan to reuse the cluster.
+* Delete the cluster or only delete the OpenShift(oc) artifacts created for the application if you plan to reuse the cluster.
 
 ## Related content
 
-* [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
-* [Continuous Deployment to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
-* [Pod Autoscaling](https://docs.openshift.com/container-platform/3.11/dev_guide/pod_autoscaling.html)
-* [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
+* [Red Hat OpenShift on IBM Cloud](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
+* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/3.11/dev_guide/pod_autoscaling.html)
