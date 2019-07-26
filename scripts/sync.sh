@@ -26,6 +26,7 @@ tar cf - \
   --exclude=README.md \
   --exclude="*.course.json" \
   --exclude=scripts \
+  --exclude=.vscode \
   --exclude=.travis.yml . | (cd build && tar xvf - )
 
 # replace the private toc with the public version
