@@ -386,23 +386,15 @@ Follow the instructions mentioned in [this link](/docs/openshift?topic=openshift
 ## Scale the app
 {:#scaling_app}
 
-In this section, you will see the ways to scale your application based on the load.
+In this section, you will learn how to manually scale your application.
 
-You can create a horizontal pod autoscaler with the `oc autoscale` command and specify the minimum and maximum number of pods you want to run, as well as the CPU utilization or memory utilization your pods or use `oc scale` to manually scale by setting a new size for a deployment or replication controller
-
-1. Use the `oc autoscale` command and specify at least the maximum number of pods you want to run at any given time. You can optionally specify the minimum number of pods and the average CPU utilization your pods should target, otherwise those are given default values from the OpenShift Container Platform server.
-   ```sh
-    oc autoscale dc/openshiftapp \
-    --min 1 \
-    --max 10 \
-    --cpu-percent=80
-   ```
-   {:pre}
-1. Alternatively, you can achieve manual scaling of your pods with `oc scale` command
+1. You can achieve manual scaling of your pods with `oc scale` command. The command sets a new size for a deployment or replication controller
    ```sh
     oc scale dc openshiftapp \
-    --replicas=3
+    --replicas=2
    ```
+   {:pre}
+1. You can see a new pod being provisionsed by running `oc get pods` command.
 
 ## Remove resources
 {:#cleanup}
