@@ -49,14 +49,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution2/Architecture.png)
+  ![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png)
 </p>
 
 1. A developer generates a starter application with {{site.data.keyword.dev_cli_notm}}.
-1. Building the application produces a Docker container image.
-1. The image is pushed to a namespace in {{site.data.keyword.containershort_notm}}.
-1. The application is deployed to an Openshift cluster.
-1. Users access the application.
+2. The dev adds the generated starter kit code to a private Git repository on {{site.data.keyword.Bluemix}}
+3. A Docker container image is build from the code.
+4. The image is pushed to a namespace in {{site.data.keyword.containershort_notm}}.
+5. The application is deployed to an Openshift cluster by pulling the image.
+6. Users access the application.
 
 ## Before you begin
 {: #prereqs}
