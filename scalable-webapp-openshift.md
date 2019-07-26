@@ -53,9 +53,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 </p>
 
 1. A developer generates a starter application with {{site.data.keyword.dev_cli_notm}}.
-2. The dev adds the generated starter kit code to a private Git repository on {{site.data.keyword.Bluemix}}
+2. The dev adds the generated starter kit code to a private Git repository on {{site.data.keyword.Bluemix_notm}}
 3. A Docker container image is build from the code.
-4. The image is pushed to a namespace in {{site.data.keyword.containershort_notm}}.
+4. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
 5. The application is deployed to an Openshift cluster by pulling the image.
 6. Users access the application.
 
