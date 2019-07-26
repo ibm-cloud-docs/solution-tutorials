@@ -214,7 +214,7 @@ In this step, you will update the generated BuildConfig section of the generated
    {:tip}
 1. Open the generated **myapp.yaml** in an IDE and
 
-      - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item of the definition to look like the one shown below
+   - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item of the definition to look like the one shown below
 
       ```yaml
         -
@@ -236,7 +236,7 @@ In this step, you will update the generated BuildConfig section of the generated
       ```
       {:codeblock}
 
-      - Update the `spec` under `BuildConfig` section with
+   - Update the `spec` under `BuildConfig` section with
 
       ```yaml
         spec:
@@ -250,7 +250,7 @@ In this step, you will update the generated BuildConfig section of the generated
       ```
       {:codeblock}
 
-      - Search for `containers` and update the image with
+   - Search for `containers` and update the image with
       ```yaml
         containers:
                 - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
