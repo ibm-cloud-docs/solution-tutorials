@@ -5,3 +5,5 @@ npm-debug.log
 .DS_Store
 #vim swap files
 [._]*.sw[a-p]
+scripts/conref/conref.md
+scripts/conref/vscodesnippets.json

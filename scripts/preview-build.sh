@@ -45,8 +45,8 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.
 # remove all files from gh-pages
 (cd builddocs/output && git rm -rf .)
 
-# generate a md helping with the conref
-(cd scripts/conref && npm install && node tomd.js ../../builddocs/input/conref.md)
+# generate conref helpers
+(cd scripts/conref && npm install && node tomd.js ../../builddocs/input)
 
 # generate a list of all solutions, suitable to use in github issues
 (cd scripts/solution-table && npm install && node totable.js ../../builddocs/input/solution-table.md)
