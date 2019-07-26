@@ -162,18 +162,18 @@ In {{site.data.keyword.cloud_notm}}, the cloud-init file contents are provided i
 
 This tutorial uses a shell script named [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) as initialization script:
 
-```sh
-#!/bin/bash
-apt-get update
-apt-get install -y nginx
-indexhtml=/var/www/html/index.html
-if curl -o /tmp/x https://www.python.org/downloads/release/python-373/; then
-    echo INTERNET > $indexhtml
-else
-    echo ISOLATED > $indexhtml
-fi
-```
-{:codeblock}
+   ```sh
+   #!/bin/bash
+   apt-get update
+   apt-get install -y nginx
+   indexhtml=/var/www/html/index.html
+   if curl -o /tmp/x https://www.python.org/downloads/release/python-373/; then
+       echo INTERNET > $indexhtml
+   else
+       echo ISOLATED > $indexhtml
+   fi
+   ```
+   {:codeblock}
 
 In this script, upgrading the installed software and installing `nginx` and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM}} provided mirrors. For Ubuntu, the `apt-get` commands will access mirrors. This is step 2 on the architecture diagram.
 
@@ -515,54 +515,54 @@ An Ansible playbook provides the tasks to be run. The example below has a set of
 
 <!-- TODO make sure uploaded.sh is known in the tutorial!!! -->
 
-```yaml
-- hosts: FRONT_NIC_IP BACK_NIC_IP
-  remote_user: root
-  tasks:
-  - name: update apt cache manual
-    # this should not be required but without it the error: Failed to lock apt for exclusive operation is generated
-    shell: apt update
-    args:
-      executable: /bin/bash
-  - name: update apt cache
-    apt:
-      update_cache: yes
-  - name: ensure nginx is at the latest version
-    apt:
-      name: nginx
-      state: latest
-    notify:
-    - restart nginx
-  - name: execute init.bash
-    script: ./init.bash
-  - name: upload execute uploaded.sh
-    script: ../shared/uploaded.sh
-  handlers:
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted
-```
-{:codeblock}
+   ```yaml
+   - hosts: FRONT_NIC_IP BACK_NIC_IP
+     remote_user: root
+     tasks:
+     - name: update apt cache manual
+       # this should not be required but without it the error: Failed to lock apt for exclusive operation is generated
+       shell: apt update
+       args:
+         executable: /bin/bash
+     - name: update apt cache
+       apt:
+         update_cache: yes
+     - name: ensure nginx is at the latest version
+       apt:
+         name: nginx
+         state: latest
+       notify:
+       - restart nginx
+     - name: execute init.bash
+       script: ./init.bash
+     - name: upload execute uploaded.sh
+       script: ../shared/uploaded.sh
+     handlers:
+       - name: restart nginx
+         service:
+           name: nginx
+           state: restarted
+   ```
+   {:codeblock}
 
 ### Ansible Inventory
 
 Ansible works against multiple systems in your infrastructure at the same time. The Ansible inventory contains the list of these systems. The tutorial provides a script [`inventory.bash`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/inventory.bash) to generate the Ansible inventory from the Terraform output.
 
-```sh
-#!/bin/bash
-TF=tf
-printf 'all:
-  children:
-    FRONT_NIC_IP:
-      hosts:
-        %s
-    BACK_NIC_IP:
-      hosts:
-        %s
-' $(cd $TF; terraform output FRONT_NIC_IP) $(cd $TF; terraform output BACK_NIC_IP)
-```
-{:codeblock}
+   ```sh
+   #!/bin/bash
+   TF=tf
+   printf 'all:
+     children:
+       FRONT_NIC_IP:
+         hosts:
+           %s
+       BACK_NIC_IP:
+         hosts:
+           %s
+   ' $(cd $TF; terraform output FRONT_NIC_IP) $(cd $TF; terraform output BACK_NIC_IP)
+   ```
+   {:codeblock}
 
 ### Provision
 {: #ansible-provision}
