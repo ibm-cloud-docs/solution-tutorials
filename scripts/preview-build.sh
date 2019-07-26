@@ -59,7 +59,7 @@ marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-fil
 sed -i 's/"\/docs\/tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
 
 # check that there is no "{{"" not replaced in the output, ignoring binaries
-if grep -rI "{{" --exclude=conref.html builddocs/output
+if grep -rI "{{" --exclude=conref.html --exclude vscodesnippets.json builddocs/output
 then
   echo "Found incorrect references"
   exit 1
