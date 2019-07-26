@@ -47,7 +47,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-When deploying applications in the cloud, software can originate from different sources:
+In this tutorial, you will deploy the configuration introduced in another tutorial, [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). It involves a frontend server accessible from the public Internet, the frontend server talks to a backend server.
+
+![Architecture of subnets and virtual server instances](images/solution40-vpc-public-app-private-backend/Architecture.png)
+
+It also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned in a private subnet:
+
+![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
+
+While provisioning the resources, you will also deploy applications on the virtual server instances. When deploying applications in the cloud, software can originate from different sources:
 1. The file system of a local workstation using a provisioning system to create the required infrastructure, to copy files and scripts to the virtual server instances;
 2. {{site.data.keyword.IBM_notm}} mirrors;
 3. Internet or intranet software repositories.
@@ -56,6 +64,8 @@ When deploying applications in the cloud, software can originate from different 
 
   ![Architecture](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
 </p>
+
+You will explore how to consume these different sources.
 
 ## Before you begin
 {: #before-you-begin}
@@ -115,19 +125,6 @@ The environment variables in `export` are in Terraform format (notice the `TF_` 
 ## Basics of software installation
 {: #basics}
 
-<!-- ### General software installation principles
-{: #general_software_installation}
-
-Following the steps in this tutorial, you will be able to:
-- provision a frontend, a backend and a bastion VSI with the ubuntu-18.04 base image.
-- install nginx on the frontend and on the backend VSIs - demonstrating the use of {{site.data.keyword.IBM}} mirrors.
-- access Internet software - demonstrating the use of internet repositories on the public VSI and the lack of internet connection on the private VSI.
-- copy a file from the file system of the provisioning computer to the public VSI and then execute the file.
-- run tests and verify the configuration.  -->
-
-<!-- 
- The next step is usually to install and configure additional software originating from different sources: -->
-
 ### Provision virtual server instances from base images
 {: #base-vsi-images}
 
@@ -186,7 +183,7 @@ Based on whether the host has internet connectivity, the script modifies the `in
 
 There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the virtual server instance and then executed.
 
-In such cases, you can use the SSH connection to the server to upload files (with `scp`) and then execute scripts on the server with `ssh`. The scripts could also retrieve software installers from the Internet, or from your on-premise systems assuming you have established a connection [such as a VPN](/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn) between your on-premise systems and the cloud.
+In such cases, you can use the SSH connection to the server to upload files with `scp` and then execute scripts on the server with `ssh`. The scripts could also retrieve software installers from the Internet, or from your on-premise systems assuming you have established a connection [such as a VPN](/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn) between your on-premise systems and the cloud.
 
 The tutorial code contains a script named [`uploaded.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) which will be uploaded from your workstation to the virtual server instances (manually or through automation like Terraform and Ansible).
 
@@ -197,9 +194,7 @@ In the next sections, you will use the script [test_provision.bash](https://gith
 
 The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}.
 
-This section uses a shell script found in the [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups as shown in the following diagram.
-
-![Architecture of subnets and virtual server instances](images/solution40-vpc-public-app-private-backend/Architecture.png)
+This section uses a shell script found in the [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups.
 
 ### Before you begin
 {: #cli-before-you-begin}
@@ -216,13 +211,13 @@ This section uses a shell script found in the [Private and public subnets in a V
    {:pre}
 1. Run the provisioning script:
    ```sh
-   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tst $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh ubuntu-18.04-amd64
+   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh ubuntu-18.04-amd64
    ```
    {:pre}
 
 In the command above,
    - `$TF_VAR_ssh_key_name` is the ssh key name described earlier
-   - `tst` is the common prefix to all resources and the name of the VPC. Keep this lower case and a valid DNS name.
+   - `tutorial` is the common prefix to all resources and the name of the VPC. Keep this lower case and a valid DNS name.
    - `$TF_VAR_resource_group_name` is the resource group name which will contain all of the resources created.
    - `resources.sh` is the output of a successful build.
    - [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) is the cloud-init file used to initialize the frontend and the backend servers.
@@ -308,7 +303,7 @@ The provisioning script leaves both the frontend and backend VSIs in maintenance
 
 1. Delete the VPC and **all of the resources** in the VPC, be careful:
    ```sh
-   ../scripts/vpc-cleanup.sh tstvpc-pubpriv
+   ../scripts/vpc-cleanup.sh tutorialvpc-pubpriv
    ```
    {:pre}
 
@@ -367,66 +362,56 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
 ### Provision subnets and virtual server instances
 {: #terraform-provision}
 
-The tutorial [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) introduces a more complex example with several subnets and virtual server instances:
-
-![Architecture of subnets and virtual server instances](images/solution40-vpc-public-app-private-backend/Architecture.png)
-
-It also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned in a private subnet:
-
-![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
-
 The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the _Private and public subnets in a Virtual Private Cloud_ tutorial.
 
-<!-- WAIT
+The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) contains the definition of the resources. It imports a Terraform _module_ shared with this other tutorial:
 
-Continuing with the tutorial, let's dig deep into the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) script under `vpc-app-deploy/tf` folder of the repository. This set of Terraform files implement the architecture described in [this other tutorial](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend).
+   ```json
+   module vpc_pub_priv {
+     source = "../../vpc-public-app-private-backend/tfmodule"
+     basename = "${local.BASENAME}"
+     ssh_key_name = "${var.ssh_key_name}"
+     zone = "${var.zone}"
+     backend_pgw = false
+     profile = "${var.profile}"
+     image_name = "${var.image_name}"
+     resource_group_name = "${var.resource_group_name}"
+     maintenance = "${var.maintenance}"
+     frontend_user_data = "${file("../shared/install.sh")}"
+     backend_user_data = "${file("../shared/install.sh")}"
+   }
+   ```
+   {:pre}
 
-```json
-module vpc_pub_priv {
-  source = "../../vpc-public-app-private-backend/tfmodule"
-  basename = "${local.BASENAME}"
-  ssh_key_name = "${var.ssh_key_name}"
-  zone = "${var.zone}"
-  backend_pgw = false
-  profile = "${var.profile}"
-  image_name = "${var.image_name}"
-  resource_group_name = "${var.resource_group_name}"
-  maintenance = "${var.maintenance}"
-  frontend_user_data = "${file("../shared/install.sh")}"
-  backend_user_data = "${file("../shared/install.sh")}"
-}
-```
-{:pre}
+In this definition:
+   - **backend_pgw** controls whether the backend server has access to the public Internet. A public gateway can be connected to the backend subnet. The frontend has a floating IP assigned which provides both a public IP and gateway to the internet. This is going to allow open Internet access for software installation.  The backend will not have access to the Internet.
+   - **frontend_user_data**, **backend_user_data** point to the cloud-init initialization scripts.
 
-The parameters help us understand the concepts presented thus far,
+With Terraform, all resources can have associated provisioners. The `null_resource` provisioner does not provision a cloud resource but can be used to copy files to server instances. This construct is used in the script to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) file and then execute it as shown below. To connect to the servers, Terraform supports [using the bastion host](https://www.terraform.io/docs/provisioners/connection.html#connecting-through-a-bastion-host-with-ssh) as provisioned in the tutorial:
 
-- backend_pgw - a public gateway can be connected to the backend subnet.  The frontend has a floating ip connected which provides both a public IP and gateway to the internet.  This is going to allow open internet access for software installation.  The backend does not have access to the internet unless backend_pgw is true.
-- frontend_user_data, backend_user_data - cloud-init content described in the introduction.
-
-All terraform resources can have associated provisioners.  The null resource does not provision a cloud resource but can be used to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) file and then execute it.  Terraform has some special connection variables to use the bastion.
-```
-resource "null_resource" "copy_from_on_prem" {
-  connection {
-    type        = "ssh"
-    user        = "root"
-    host        = "${module.vpc_pub_priv.frontend_network_interface_address}"
-    private_key = "${file("~/.ssh/id_rsa")}"
-    bastion_user        = "root"
-    bastion_host        = "${local.bastion_ip}"
-    bastion_private_key = "${file("~/.ssh/id_rsa")}"
-  }
-  provisioner "file" {
-    source      = "../shared/${local.uploaded}"
-    destination = "/${local.uploaded}"
-  }
-  provisioner "remote-exec" {
-    inline      = [
-      "bash -x /${local.uploaded}",
-    ]
-  }
-}
-```
-{:codeblock} -->
+   ```json
+   resource "null_resource" "copy_from_on_prem" {
+     connection {
+       type        = "ssh"
+       user        = "root"
+       host        = "${module.vpc_pub_priv.frontend_network_interface_address}"
+       private_key = "${file("~/.ssh/id_rsa")}"
+       bastion_user        = "root"
+       bastion_host        = "${local.bastion_ip}"
+       bastion_private_key = "${file("~/.ssh/id_rsa")}"
+     }
+     provisioner "file" {
+       source      = "../shared/${local.uploaded}"
+       destination = "/${local.uploaded}"
+      }
+     provisioner "remote-exec" {
+       inline      = [
+         "bash -x /${local.uploaded}",
+        ]
+     }
+   }
+   ```
+   {:codeblock}
 
 To provision the resources:
 
