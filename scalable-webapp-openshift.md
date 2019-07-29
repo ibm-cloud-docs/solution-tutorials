@@ -30,9 +30,9 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 
 * Scaffold a starter application.
 * Deploy the application to the Red Hat OpenShift on IBM Cloud cluster.
+* Bind a custom domain.
 * Monitor the logs and health of the cluster.
 * Scale Openshift pods.
-* Bind a custom domain.
 
 ## Services used
 {: #services}
@@ -165,10 +165,10 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
    - Leave the checkboxes checked and Click **Create Integration**
 1. Click on **Git** tile under CODE to open your Git repository in a browser. Copy the link to a clipboard for future reference.
 1. Copy the SSH public key(e.g., id_rsa.pub) by running the below command on a terminal
-    ```sh
-     pbcopy < ~/.ssh/id_rsa.pub
-    ```
-    {:pre}
+   ```sh
+   pbcopy < ~/.ssh/id_rsa.pub
+   ```
+   {:pre}
 1. Under Git profile settings, click on **SSH Keys** and paste the SSH key > click **Add key**.
 1. Click **Projects** on the top ribbon > Your projects > Openshiftapp and Follow the instructions under **Existing folder** section by pointing it to the local folder where you have created the starter kit using `ibmcloud dev`.
 1. Once you push the code to the private repository, you should see the scaffolded code in the project.
@@ -182,7 +182,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
 
 1. Create a new project
    ```sh
-    oc new-project openshiftproject
+   oc new-project openshiftproject
    ```
    {:pre}
 1. Create a **Deploy token**. Deploy tokens allow read-only access to your repository.
@@ -193,7 +193,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
 1. Click on **Project** > Details, click on **Clone** and copy **Clone with HTTPS** URL.
 1. Generate a yaml file in the same folder as your starter kit code by replacing the placeholders and running the below command
    ```sh
-    oc new-app https://<USERNAME>:<PASSWORD@<REPO_URL_WITHOUT_HTTPS> \
+   oc new-app https://<USERNAME>:<PASSWORD@<REPO_URL_WITHOUT_HTTPS> \
     --name=openshiftapp \
     --strategy=docker -o yaml > myapp.yaml
    ```
@@ -204,7 +204,7 @@ In this step, you will update the generated BuildConfig section of the generated
 
 1. To automate access to your registry namespaces and to push generated builder Docker image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key
    ```sh
-    oc create secret docker-registry push-secret \
+   oc create secret docker-registry push-secret \
     --docker-username=iamapikey \
     --docker-password=<API_KEY> \
     --docker-server=<REGISTRY_URL>
@@ -268,7 +268,7 @@ In this section, you will deploy the application to the cluster using the genera
 
 1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project(openshiftproject)
    ```sh
-    oc get secret default-us-icr-io -n default -o yaml | sed 's/default/openshiftproject/g' | oc -n openshiftproject create -f -
+   oc get secret default-us-icr-io -n default -o yaml | sed 's/default/openshiftproject/g' | oc -n openshiftproject create -f -
    ```
    {:pre}
 
@@ -277,12 +277,12 @@ In this section, you will deploy the application to the cluster using the genera
 
 1. For the image pull secret to take effect, you need to add it in the `default` service account
    ```sh
-    oc secrets add serviceaccount/default secrets/openshiftproject-us-icr-io --for=pull
+   oc secrets add serviceaccount/default secrets/openshiftproject-us-icr-io --for=pull
    ```
    {:pre}
 1. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
-    oc create -f myapp.yaml
+   oc create -f myapp.yaml
    ```
    {:pre}
 
@@ -291,12 +291,12 @@ In this section, you will deploy the application to the cluster using the genera
 
 1. To check the builder Docker image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
    ```sh
-    oc logs -f bc/openshiftapp
+   oc logs -f bc/openshiftapp
    ```
    {:pre}
 1. You can check the status of deployment and service using
    ```sh
-    oc status
+   oc status
    ```
    {:pre}
 
@@ -305,12 +305,12 @@ To access the app, you need to create a route. A route announces your service to
 
 1. Create a route by running the below command in a terminal
    ```sh
-    oc expose service openshiftapp --port=3000
+   oc expose service openshiftapp --port=9080 or 3000
    ```
    {:pre}
 1. You can access the app through IBM provided domain. Run the below command for the URL
    ```sh
-    oc get routes
+   oc get routes
    ```
    {:pre}
 1. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action.
@@ -320,18 +320,18 @@ In this step, you will automate the build and deploy process. So that whenever y
 
 1. You will create a new **GitLab** Webhook trigger. Webhook triggers allow you to trigger a new build by sending a request to the OpenShift Container Platform API endpoint.You can define these triggers using GitHub, GitLab, Bitbucket, or Generic webhooks.
    ```sh
-    oc set triggers bc openshiftapp --from-gitlab
+   oc set triggers bc openshiftapp --from-gitlab
    ```
    {:pre}
 1. To add a webhook on the GitLab repository, you need a URL and a secret
    - For webhook GitLab URL,
      ```sh
-      oc describe bc openshiftapp
+     oc describe bc openshiftapp
      ```
      {:pre}
    - For secret that needs to be passed in the webhook URL,
      ```sh
-      oc get bc openshiftapp -o yaml
+     oc get bc openshiftapp -o yaml
      ```
      {:pre}
    - Replace `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
@@ -352,6 +352,38 @@ In this step, you will automate the build and deploy process. So that whenever y
    {:pre}
 4. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
+## Use your own custom domain
+{: #custom_domain}
+
+To use your custom domain, you need to update your DNS records with a CNAME record pointing to your IBM-provided domain.
+
+### With HTTP
+1. Create a route exposing the service at a host name, such as `www.example.com`, so that external clients can reach it by name.
+   ```sh
+   oc expose svc/openshiftapp --hostname=<YOUR_HOSTNAME> --name=openshiftappdomain --port=<9080 or 3000>
+   ```
+   {:pre}
+1. Access your application at `http://<customdomain>/`
+
+### With HTTPS
+
+1. To create a secured HTTPS route encrypted with the default certificate for OpenShift, you can use the `create route` command.
+   ```sh
+   oc create route edge openshifthttps --service=openshiftapp --port=<9080 or 3000>
+   ```
+   {:pre}
+   You have used Edge termination. To learn about Passthrough and re-encryption, refer [secure routes](https://docs.openshift.com/enterprise/3.0/architecture/core_concepts/routes.html#secured-routes)
+1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
+1. You can use your own certificate and key files from a CA like [letsencrypt.org/](http://letsencrypt.org/) and pass them with the `create route` command
+   ```sh
+   oc create route edge openshifthttpsca --service=openshiftapp \
+    --cert=example.crt \
+    --key=example.key \
+    --ca-cert=ca.crt \
+    --hostname=www.example.com
+    --port=<9080 or 3000>
+   ```
+   {:pre}
 ## Monitor the app
 {:#monitor_app}
 
@@ -363,19 +395,19 @@ OpenShift Container Platform ships with a pre-configured and self-updating monit
     oc -n openshift-monitoring get routes
    ```
    {:pre}
-1. To generate some load on your deployed application, you will use Apache *ab* in order to get some data into Prometheus hitting the route URL 5000 times with 100 concurrent requests at a time.
+2. To generate some load on your deployed application, you will use Apache *ab* in order to get some data into Prometheus hitting the route URL 5000 times with 100 concurrent requests at a time.
    ```sh
     ab -n 5000 -c 100 <APPLICATION_ROUTE_URL>/
    ```
    {:pre}
-1. In the expression box of Prometheus web UI, enter **namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace="openshiftproject"}** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
-1. Open the **Grafana** web UI URL on a browser and authorize access by allowing selected permissions.
-1. On the Grafana **Home** page, click on **K8s / Compute Resources / Pod** and Select
+3. In the expression box of Prometheus web UI, enter **namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace="openshiftproject"}** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
+4. Open the **Grafana** web UI URL on a browser and authorize access by allowing selected permissions.
+5. On the Grafana **Home** page, click on **K8s / Compute Resources / Pod** and Select
    - datasource: **Prometheus**
    - namespace: **openshiftproject**
    - pod: **openshiftnodeapp-*DEPLOYMENT_NUMBER*-*POD_ID***
-1. Check the CPU and memory usage.
-1. For logging, you can either use the in-built `oc logs` command or setup a EFK(Elasticsearch, Fluentd and Kibana) stack. Check this [link for setup](https://docs.openshift.com/container-platform/3.11/install_config/aggregate_logging.html)
+6. Check the CPU and memory usage.
+7. For logging, you can either use the in-built `oc logs` command or setup a EFK(Elasticsearch, Fluentd and Kibana) stack. Check this [link for setup](https://docs.openshift.com/container-platform/3.11/install_config/aggregate_logging.html)
 
 ### Logging with LogDNA and Monitoring with Sysdig on IBM Cloud
 In this step, you will provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your OpenShift application.
@@ -394,6 +426,7 @@ In this section, you will learn how to manually scale your application.
    ```
    {:pre}
 1. You can see a new pod being provisionsed by running `oc get pods` command.
+
 
 ## Remove resources
 {:#cleanup}
