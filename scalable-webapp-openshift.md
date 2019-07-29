@@ -13,15 +13,15 @@ lasttested: "2019-07-29"
 {:tip: .tip}
 {:pre: .pre}
 
-# Scalable web application on OpenShift
+# Scalable web application on {{site.data.keyword.openshiftshort}}
 {: #scalable-webapp-openshift}
 
 > :warning: Work in progress
 
-This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private repository and then deploy it to a standard Red Hat OpenShift on IBM Cloud cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how expose the app on an Openshift route, bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private repository and then deploy it to a standard {{site.data.keyword.openshiftlong_notm}} cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how expose the app on an Openshift route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
-With the Red Hat OpenShift on IBM Cloud, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the Red Hat OpenShift on IBM Cloud Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks&locale=en\043science) for your cluster infrastructure environment, while using the [OpenShift tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
+With the {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks&locale=en\043science) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
 For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions. In addition to generating starter application code, Docker container image and CloudFoundry assets, the code generators used by the dev CLI and web console generate files to aid deployment into [Kubernetes](https://kubernetes.io/) environments.
 
@@ -29,7 +29,7 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 {: #objectives}
 
 * Scaffold a starter application.
-* Deploy the application to the Red Hat OpenShift on IBM Cloud cluster.
+* Deploy the application to the {{site.data.keyword.openshiftlong_notm}} cluster.
 * Bind a custom domain.
 * Monitor the logs and health of the cluster.
 * Scale Openshift pods.
@@ -64,20 +64,20 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
 * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
-* [Install the OpenShift Origin (oc) CLI](/docs/containers?topic=containers-cs_cli_install&locale=en\043science#cli_oc)
+* [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/containers?topic=containers-cs_cli_install&locale=en\043science#cli_oc)
 * [Generate a new SSH key](https://help.github.com/en/enterprise/2.16/user/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
-## Create an OpenShift cluster
+## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
 
 {{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker containers, the Kubernetes technology, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
-You will provision a **Standard** Red Hat OpenShift on IBM Cloud cluster as OpenShift worker nodes are available for paid accounts and standard clusters only.
+You will provision a **Standard** {{site.data.keyword.openshiftlong_notm}} cluster as {{site.data.keyword.openshiftshort}} worker nodes are available for paid accounts and standard clusters only.
 
 1. Create an openshift cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
 1. Under **Select a plan**,
-    - Select a **Standard** cluster > Choose **OpenShift 3.11** as your cluster type and version.
+    - Select a **Standard** cluster > Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
     - Provide **myopenshiftcluster** as your cluster name > select a **resource group** name >  choose a **Geography**.
 1. Under **Location**,
     - Select a **Single zone** followed by a **Worker zone**.
@@ -89,7 +89,7 @@ You will provision a **Standard** Red Hat OpenShift on IBM Cloud cluster as Open
 
 ### Configure CLI
 
-In this step, you'll configure `oc` to point to your newly created cluster. The [OpenShift Container Platform CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. When the cluster is ready, click on the **Access** tab under the cluster name.
 1. Under **Gain access to your cluster** section, click on **oauth token request page** to follow instructions to log into your cluster on a terminal.
@@ -173,12 +173,12 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
 1. Click **Projects** on the top ribbon > Your projects > Openshiftapp and Follow the instructions under **Existing folder** section by pointing it to the local folder where you have created the starter kit using `ibmcloud dev`.
 1. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
-## Create a new OpenShift application
+## Create a new {{site.data.keyword.openshiftshort}} application
 {: #create_openshift_app}
 In this section, you will generate a BuildConfig YAML file and update the file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}.
 ### Generate a build configuration yaml file
 
-A Kubernetes namespace provides a mechanism to scope resources in a cluster. In OpenShift, a project is a Kubernetes namespace with additional annotations.
+A Kubernetes namespace provides a mechanism to scope resources in a cluster. In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
 
 1. Create a new project
    ```sh
@@ -286,7 +286,7 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {:pre}
 
-    To learn about the core concepts of OpenShift, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
+    To learn about the core concepts of {{site.data.keyword.openshiftshort}}, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
     {:tip}
 
 1. To check the builder Docker image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
@@ -318,7 +318,7 @@ To access the app, you need to create a route. A route announces your service to
 ### Update the app and redeploy
 In this step, you will automate the build and deploy process. So that whenever you update the application and push the changes to the Private repo, a new build config is generated creating a build in turn generating a new version of the builder Docker image. This image will be deployed automatically.
 
-1. You will create a new **GitLab** Webhook trigger. Webhook triggers allow you to trigger a new build by sending a request to the OpenShift Container Platform API endpoint.You can define these triggers using GitHub, GitLab, Bitbucket, or Generic webhooks.
+1. You will create a new **GitLab** Webhook trigger. Webhook triggers allow you to trigger a new build by sending a request to the {{site.data.keyword.openshiftshort}} Container Platform API endpoint.You can define these triggers using GitHub, GitLab, Bitbucket, or Generic webhooks.
    ```sh
    oc set triggers bc openshiftapp --from-gitlab
    ```
@@ -367,7 +367,7 @@ To use your custom domain, you need to update your DNS records with a CNAME reco
 
 ### With HTTPS
 
-1. To create a secured HTTPS route encrypted with the default certificate for OpenShift, you can use the `create route` command.
+1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
    ```sh
    oc create route edge openshifthttps --service=openshiftapp --port=<9080 or 3000>
    ```
@@ -387,8 +387,8 @@ To use your custom domain, you need to update your DNS records with a CNAME reco
 ## Monitor the app
 {:#monitor_app}
 
-### Logging and Monitoring with in-built OpenShift stack
-OpenShift Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
+### Logging and Monitoring with in-built {{site.data.keyword.openshiftshort}} stack
+{{site.data.keyword.openshiftshort}} Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
 
 1. To access the web UIs of Prometheus and Grafana along with Alertmanager, run the below command and make sure to prepend `https://` to the returned addresses(HOST). You cannot access web UIs using unencrypted connection.
    ```sh
@@ -410,7 +410,7 @@ OpenShift Container Platform ships with a pre-configured and self-updating monit
 7. For logging, you can either use the in-built `oc logs` command or setup a EFK(Elasticsearch, Fluentd and Kibana) stack. Check this [link for setup](https://docs.openshift.com/container-platform/3.11/install_config/aggregate_logging.html)
 
 ### Logging with LogDNA and Monitoring with Sysdig on IBM Cloud
-In this step, you will provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your OpenShift application.
+In this step, you will provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application.
 
 Follow the instructions mentioned in [this link](/docs/openshift?topic=openshift-openshift_health#openshift_logmet) to setup LogDNA and Sysdig add-ons to monitor cluster health.
 
@@ -431,9 +431,10 @@ In this section, you will learn how to manually scale your application.
 ## Remove resources
 {:#cleanup}
 
-* Delete the cluster or only delete the OpenShift(oc) artifacts created for the application if you plan to reuse the cluster.
+* Delete the cluster or only delete the {{site.data.keyword.openshiftshort}}(oc) artifacts created for the application if you plan to reuse the cluster.
 
 ## Related content
 
-* [Red Hat OpenShift on IBM Cloud](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
+* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
 * [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/3.11/dev_guide/pod_autoscaling.html)
+* [Routes overview](https://docs.openshift.com/container-platform/3.11/architecture/networking/routes.html)
