@@ -380,7 +380,10 @@ To use your custom domain, you need to update your domain DNS records with a `CN
    --port=<9080 or 3000>
    ```
    {:pre}
+
    You have used Edge termination. To learn about Passthrough and re-encryption, refer [secure routes](https://docs.openshift.com/enterprise/3.0/architecture/core_concepts/routes.html#secured-routes)
+   {:tip}
+
 1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
 1. You can use your own certificate and key files from a CA like [letsencrypt.org](http://letsencrypt.org/) and pass them with the `create route` command
    ```sh
