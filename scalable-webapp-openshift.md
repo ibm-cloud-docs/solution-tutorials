@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-26"
-lasttested: "2019-07-26"
+lastupdated: "2019-07-29"
+lasttested: "2019-07-29"
 ---
 
 {:shortdesc: .shortdesc}
@@ -30,9 +30,9 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 
 * Scaffold a starter application.
 * Deploy the application to the Red Hat OpenShift on IBM Cloud cluster.
-* Bind a custom domain.
 * Monitor the logs and health of the cluster.
 * Scale Openshift pods.
+* Bind a custom domain.
 
 ## Services used
 {: #services}
@@ -215,50 +215,50 @@ In this step, you will update the generated BuildConfig section of the generated
    {:tip}
 1. Open the generated **myapp.yaml** in an IDE and
 
-   - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item of the definition to look like the one shown below
+   - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item with the name *openshiftapp* of the definition to look like the one shown below
 
       ```yaml
-        -
-            apiVersion: image.openshift.io/v1
-            kind: ImageStream
-            metadata:
-                annotations:
-                    openshift.io/generated-by: OpenShiftNewApp
-                creationTimestamp: null
-                labels:
-                    app: openshiftapp
-                name: openshiftapp
-            spec:
-                dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE/openshiftapp
-                lookupPolicy:
-                    local: false
-            status:
-                dockerImageRepository: ""
+      -
+      apiVersion: image.openshift.io/v1
+      kind: ImageStream
+      metadata:
+            annotations:
+                  openshift.io/generated-by: OpenShiftNewApp
+            creationTimestamp: null
+            labels:
+                  app: openshiftapp
+            name: openshiftapp
+      spec:
+            dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp
+            lookupPolicy:
+                  local: false
+      status:
+            dockerImageRepository: ""
       ```
       {:codeblock}
 
    - Update the `spec` under `BuildConfig` section with
 
       ```yaml
-        spec:
-           nodeSelector: null
-           output:
-             to:
-               kind: DockerImage
-               name: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
-             pushSecret:
-               name: push-secret
+      spec:
+        nodeSelector: null
+        output:
+            to:
+                  kind: DockerImage
+                  name: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
+            pushSecret:
+                  name: push-secret
       ```
       {:codeblock}
 
    - Search for `containers` and update the image with
       ```yaml
         containers:
-                - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
-                  name: openshiftnodeapp
+          -image: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
+          name: openshiftnodeapp
       ```
       {:codeblock}
-1. Save the YAML file.
+2. Save the YAML file.
 
 ## Deploy the application to cluster
 {:#deploy_app_to_cluster}
@@ -339,19 +339,18 @@ In this step, you will automate the build and deploy process. So that whenever y
 1. Paste the **URL** > click **Add webhook**. Test the URL by clicking **Test** > Push events.
 1. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
    ```sh
-   oc patch imagestream openshiftapp --patch \
-   '{"spec":{"tags":[{"from":{"kind":"DockerImage","name":"<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest"},"name":"latest","importPolicy":{"scheduled":true}}]}}'
+   oc tag <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest openshiftapp:latest --scheduled=true
    ```
    {:pre}
-1. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
-1. Save and push the code to the repo
+2. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
+3. Save and push the code to the repo
    ```sh
     git add public/index.html
     git commit -m "Updated with my name"
     git push -u origin master
    ```
    {:pre}
-1. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
+4. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
 ## Monitor the app
 {:#monitor_app}
