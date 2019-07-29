@@ -255,7 +255,7 @@ In this step, you will update the generated BuildConfig section of the generated
       ```yaml
         containers:
           -image: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
-          name: openshiftnodeapp
+          name: openshiftapp
       ```
       {:codeblock}
 2. Save the YAML file.
@@ -405,7 +405,7 @@ To use your custom domain, you need to update your DNS records with a CNAME reco
 5. On the Grafana **Home** page, click on **K8s / Compute Resources / Pod** and Select
    - datasource: **Prometheus**
    - namespace: **openshiftproject**
-   - pod: **openshiftnodeapp-*DEPLOYMENT_NUMBER*-*POD_ID***
+   - pod: **openshiftapp-*DEPLOYMENT_NUMBER*-*POD_ID***
 6. Check the CPU and memory usage.
 7. For logging, you can either use the in-built `oc logs` command or setup a EFK(Elasticsearch, Fluentd and Kibana) stack. Check this [link for setup](https://docs.openshift.com/container-platform/3.11/install_config/aggregate_logging.html)
 
