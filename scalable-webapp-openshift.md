@@ -358,7 +358,7 @@ In this step, you will automate the build and deploy process. So that whenever y
 ## Use your own custom domain
 {: #custom_domain}
 
-To use your custom domain, you need to update your DNS records with a CNAME record pointing to your IBM-provided domain.
+To use your custom domain, you need to update your domain DNS records with a `CNAME` record pointing to your IBM-provided domain(route URL).
 
 ### With HTTP
 1. Create a route exposing the service at a host name, such as `www.example.com`, so that external clients can reach it by name.
