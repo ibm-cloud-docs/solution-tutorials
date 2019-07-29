@@ -384,8 +384,10 @@ To use your custom domain, you need to update your DNS records with a CNAME reco
     --port=<9080 or 3000>
    ```
    {:pre}
+
 ## Monitor the app
-{:#monitor_app}
+{:#monitor_application}
+In this section, you will learn to monitor the health and performance of your application.
 
 ### Logging and Monitoring with in-built {{site.data.keyword.openshiftshort}} stack
 {{site.data.keyword.openshiftshort}} Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
@@ -426,7 +428,6 @@ In this section, you will learn how to manually scale your application.
    ```
    {:pre}
 1. You can see a new pod being provisionsed by running `oc get pods` command.
-
 
 ## Remove resources
 {:#cleanup}
