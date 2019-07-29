@@ -51,7 +51,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. A developer generates a starter application with {{site.data.keyword.dev_cli_notm}}.
 1. Building the application produces a Docker container image.
-1. The image is pushed to a namespace in {{site.data.keyword.containershort_notm}}.
+1. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
 1. The application is deployed to a Kubernetes cluster.
 1. Users access the application.
 

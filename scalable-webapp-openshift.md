@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-25"
-lasttested: "2019-07-25"
+lastupdated: "2019-07-29"
+lasttested: "2019-07-29"
 ---
 
 {:shortdesc: .shortdesc}
@@ -30,9 +30,9 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 
 * Scaffold a starter application.
 * Deploy the application to the Red Hat OpenShift on IBM Cloud cluster.
-* Bind a custom domain.
 * Monitor the logs and health of the cluster.
 * Scale Openshift pods.
+* Bind a custom domain.
 
 ## Services used
 {: #services}
@@ -49,14 +49,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution2/Architecture.png)
+  ![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png)
 </p>
 
 1. A developer generates a starter application with {{site.data.keyword.dev_cli_notm}}.
-1. Building the application produces a Docker container image.
-1. The image is pushed to a namespace in {{site.data.keyword.containershort_notm}}.
-1. The application is deployed to an Openshift cluster.
-1. Users access the application.
+2. The dev adds the generated starter kit code to a private Git repository on {{site.data.keyword.Bluemix_notm}}
+3. A Docker container image is build from the code.
+4. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
+5. The application is deployed to an Openshift cluster by pulling the image.
+6. Users access the application.
 
 ## Before you begin
 {: #prereqs}
@@ -214,50 +215,50 @@ In this step, you will update the generated BuildConfig section of the generated
    {:tip}
 1. Open the generated **myapp.yaml** in an IDE and
 
-   - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item of the definition to look like the one shown below
+   - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item with the name *openshiftapp* of the definition to look like the one shown below
 
       ```yaml
-        -
-            apiVersion: image.openshift.io/v1
-            kind: ImageStream
-            metadata:
-                annotations:
-                    openshift.io/generated-by: OpenShiftNewApp
-                creationTimestamp: null
-                labels:
-                    app: openshiftapp
-                name: openshiftapp
-            spec:
-                dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE/openshiftapp
-                lookupPolicy:
-                    local: false
-            status:
-                dockerImageRepository: ""
+      -
+      apiVersion: image.openshift.io/v1
+      kind: ImageStream
+      metadata:
+            annotations:
+                  openshift.io/generated-by: OpenShiftNewApp
+            creationTimestamp: null
+            labels:
+                  app: openshiftapp
+            name: openshiftapp
+      spec:
+            dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp
+            lookupPolicy:
+                  local: false
+      status:
+            dockerImageRepository: ""
       ```
       {:codeblock}
 
    - Update the `spec` under `BuildConfig` section with
 
       ```yaml
-        spec:
-           nodeSelector: null
-           output:
-             to:
-               kind: DockerImage
-               name: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
-             pushSecret:
-               name: push-secret
+      spec:
+        nodeSelector: null
+        output:
+            to:
+                  kind: DockerImage
+                  name: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
+            pushSecret:
+                  name: push-secret
       ```
       {:codeblock}
 
    - Search for `containers` and update the image with
       ```yaml
         containers:
-                - image: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest
-                  name: openshiftnodeapp
+          -image: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
+          name: openshiftnodeapp
       ```
       {:codeblock}
-1. Save the YAML file.
+2. Save the YAML file.
 
 ## Deploy the application to cluster
 {:#deploy_app_to_cluster}
@@ -338,19 +339,18 @@ In this step, you will automate the build and deploy process. So that whenever y
 1. Paste the **URL** > click **Add webhook**. Test the URL by clicking **Test** > Push events.
 1. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
    ```sh
-   oc patch imagestream openshiftapp --patch \
-   '{"spec":{"tags":[{"from":{"kind":"DockerImage","name":"<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest"},"name":"latest","importPolicy":{"scheduled":true}}]}}'
+   oc tag <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest openshiftapp:latest --scheduled=true
    ```
    {:pre}
-1. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
-1. Save and push the code to the repo
+2. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
+3. Save and push the code to the repo
    ```sh
     git add public/index.html
     git commit -m "Updated with my name"
     git push -u origin master
    ```
    {:pre}
-1. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
+4. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
 ## Monitor the app
 {:#monitor_app}
@@ -385,32 +385,22 @@ Follow the instructions mentioned in [this link](/docs/openshift?topic=openshift
 ## Scale the app
 {:#scaling_app}
 
-In this section, you will see the ways to scale your application based on the load.
+In this section, you will learn how to manually scale your application.
 
-You can create a horizontal pod autoscaler with the `oc autoscale` command and specify the minimum and maximum number of pods you want to run, as well as the CPU utilization or memory utilization your pods or use `oc scale` to manually scale by setting a new size for a deployment or replication controller
-
-1. Use the `oc autoscale` command and specify at least the maximum number of pods you want to run at any given time. You can optionally specify the minimum number of pods and the average CPU utilization your pods should target, otherwise those are given default values from the OpenShift Container Platform server.
-   ```sh
-    oc autoscale dc/openshiftapp \
-    --min 1 \
-    --max 10 \
-    --cpu-percent=80
-   ```
-   {:pre}
-1. Alternatively, you can achieve manual scaling of your pods with `oc scale` command
+1. You can achieve manual scaling of your pods with `oc scale` command. The command sets a new size for a deployment or replication controller
    ```sh
     oc scale dc openshiftapp \
-    --replicas=3
+    --replicas=2
    ```
+   {:pre}
+1. You can see a new pod being provisionsed by running `oc get pods` command.
 
 ## Remove resources
 {:#cleanup}
 
-* Delete the cluster or only delete the Kubernetes artifacts created for the application if you plan to reuse the cluster.
+* Delete the cluster or only delete the OpenShift(oc) artifacts created for the application if you plan to reuse the cluster.
 
 ## Related content
 
-* [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
-* [Continuous Deployment to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
-* [Pod Autoscaling](https://docs.openshift.com/container-platform/3.11/dev_guide/pod_autoscaling.html)
-* [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
+* [Red Hat OpenShift on IBM Cloud](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
+* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/3.11/dev_guide/pod_autoscaling.html)
