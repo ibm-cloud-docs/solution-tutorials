@@ -268,7 +268,8 @@ In this section, you will deploy the application to the cluster using the genera
 
 1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project(openshiftproject)
    ```sh
-   oc get secret default-us-icr-io -n default -o yaml | sed 's/default/openshiftproject/g' | oc -n openshiftproject create -f -
+   oc get secret default-us-icr-io \
+   -n default -o yaml | sed 's/default/openshiftproject/g' | oc -n openshiftproject create -f -
    ```
    {:pre}
 
@@ -277,7 +278,8 @@ In this section, you will deploy the application to the cluster using the genera
 
 1. For the image pull secret to take effect, you need to add it in the `default` service account
    ```sh
-   oc secrets add serviceaccount/default secrets/openshiftproject-us-icr-io --for=pull
+   oc secrets add serviceaccount/default secrets/openshiftproject-us-icr-io \
+   --for=pull
    ```
    {:pre}
 1. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
@@ -305,7 +307,8 @@ To access the app, you need to create a route. A route announces your service to
 
 1. Create a route by running the below command in a terminal
    ```sh
-   oc expose service openshiftapp --port=9080 or 3000
+   oc expose service openshiftapp \
+   --port=9080 or 3000
    ```
    {:pre}
 1. You can access the app through IBM provided domain. Run the below command for the URL
@@ -360,7 +363,10 @@ To use your custom domain, you need to update your DNS records with a CNAME reco
 ### With HTTP
 1. Create a route exposing the service at a host name, such as `www.example.com`, so that external clients can reach it by name.
    ```sh
-   oc expose svc/openshiftapp --hostname=<YOUR_HOSTNAME> --name=openshiftappdomain --port=<9080 or 3000>
+   oc expose svc/openshiftapp \
+   --hostname=<YOUR_HOSTNAME> \
+   --name=openshiftappdomain \
+   --port=<9080 or 3000>
    ```
    {:pre}
 1. Access your application at `http://<customdomain>/`
@@ -369,18 +375,20 @@ To use your custom domain, you need to update your DNS records with a CNAME reco
 
 1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
    ```sh
-   oc create route edge openshifthttps --service=openshiftapp --port=<9080 or 3000>
+   oc create route edge openshifthttps \
+   --service=openshiftapp \
+   --port=<9080 or 3000>
    ```
    {:pre}
    You have used Edge termination. To learn about Passthrough and re-encryption, refer [secure routes](https://docs.openshift.com/enterprise/3.0/architecture/core_concepts/routes.html#secured-routes)
 1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
-1. You can use your own certificate and key files from a CA like [letsencrypt.org/](http://letsencrypt.org/) and pass them with the `create route` command
+1. You can use your own certificate and key files from a CA like [letsencrypt.org](http://letsencrypt.org/) and pass them with the `create route` command
    ```sh
    oc create route edge openshifthttpsca --service=openshiftapp \
     --cert=example.crt \
     --key=example.key \
     --ca-cert=ca.crt \
-    --hostname=www.example.com
+    --hostname=<www.HOSTNAME>
     --port=<9080 or 3000>
    ```
    {:pre}
@@ -394,7 +402,8 @@ In this section, you will learn to monitor the health and performance of your ap
 
 1. To access the web UIs of Prometheus and Grafana along with Alertmanager, run the below command and make sure to prepend `https://` to the returned addresses(HOST). You cannot access web UIs using unencrypted connection.
    ```sh
-    oc -n openshift-monitoring get routes
+    oc get routes \
+    -n openshift-monitoring
    ```
    {:pre}
 2. To generate some load on your deployed application, you will use Apache *ab* in order to get some data into Prometheus hitting the route URL 5000 times with 100 concurrent requests at a time.
