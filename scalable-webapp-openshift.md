@@ -221,51 +221,48 @@ In this step, you will update the generated BuildConfig section of the generated
 
    For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create). For registry URL, run `ibmcloud cr region`.
    {:tip}
-1. Open the generated **openshift.yaml** in an IDE and
+1. Edit the generated **openshift.yaml**.
+1. Locate the *ImageStream* object named *openshiftapp* and add a `dockerImageRepository` definition under `spec` replacing the placeholders `<REGISTRY_URL>` and `<REGISTRY_NAMESPACE>` with their respective values:
+   ```yaml
+   -
+   apiVersion: image.openshift.io/v1
+   kind: ImageStream
+   metadata:
+       annotations:
+               openshift.io/generated-by: OpenShiftNewApp
+       creationTimestamp: null
+       labels:
+               app: openshiftapp
+       name: openshiftapp
+   spec:
+       dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp
+       lookupPolicy:
+               local: false
+   status:
+       dockerImageRepository: ""
+   ```
+   {:codeblock}
 
-   -  Configure an image stream to import tag and image metadata from an image repository in an external container image registry by modifying the *openshiftapp* ImageStream item of the definition and adding a `dockerImageRepository` definition under `spec`. An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform.Replace the placeholders `<REGISTRY_URL>` and `<REGISTRY_NAMESPACE>` with their respective values.
-
-      ```yaml
-      -
-      apiVersion: image.openshift.io/v1
-      kind: ImageStream
-      metadata:
-            annotations:
-                  openshift.io/generated-by: OpenShiftNewApp
-            creationTimestamp: null
-            labels:
-                  app: openshiftapp
-            name: openshiftapp
-      spec:
-            dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp
-            lookupPolicy:
-                  local: false
-      status:
-            dockerImageRepository: ""
-      ```
-      {:codeblock}
-
-   - Update the `spec` under `BuildConfig` section by changing the output to kind `DockerImage` and adding a `pushSecret`
-
-      ```yaml
-      spec:
-        nodeSelector: null
-        output:
-            to:
-                  kind: DockerImage
-                  name: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
-            pushSecret:
-                  name: push-secret
-      ```
-      {:codeblock}
-
-   - Search for `containers` and update the image with
-      ```yaml
-        containers:
-          -image: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
-          name: openshiftapp
-      ```
-      {:codeblock}
+   An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform
+1. Update the `spec` under `BuildConfig` section by changing the output to kind `DockerImage` and adding a `pushSecret`
+   ```yaml
+   spec:
+   nodeSelector: null
+   output:
+       to:
+               kind: DockerImage
+               name: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
+       pushSecret:
+               name: push-secret
+   ```
+   {:codeblock}
+1. Search for `containers` and update the image with
+   ```yaml
+   containers:
+       -image: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
+       name: openshiftapp
+   ```
+   {:codeblock}
 2. Save the YAML file.
 
 ## Deploy the application to cluster
@@ -363,7 +360,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    {:pre}
 4. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
-   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image openshiftapp` command.Refer this [link](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html#importing-tag-and-image-metadata) for more info.
+   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image openshiftapp` command. Refer this [link](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html#importing-tag-and-image-metadata) for more info.
    {:tip}
 
 ## Use your own custom domain
