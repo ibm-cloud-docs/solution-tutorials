@@ -406,9 +406,8 @@ To use your custom domain, you need to update your domain DNS records with a `CN
 
 ## Monitor the app
 {:#monitor_application}
-In this section, you will learn to monitor the health and performance of your application.
 
-### Logging and Monitoring with in-built {{site.data.keyword.openshiftshort}} stack
+In this section, you will learn to monitor the health and performance of your application.
 {{site.data.keyword.openshiftshort}} Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
 
 1. To access the web UIs of Prometheus and Grafana along with Alertmanager, run the below command and make sure to prepend `https://` to the returned addresses(HOST). You cannot access web UIs using unencrypted connection.If prompted, click **Login with OpenShift** and authorize access by allowing selected permissions.
