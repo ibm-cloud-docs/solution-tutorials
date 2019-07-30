@@ -172,9 +172,9 @@ In this step, you will create a deploy token to allow read-only access to your r
 1. To create a **Deploy token**,
       - On the left pane of the Git repo page, click **Settings** > Repository
       - Click on **Expand** next to **Deploy Tokens**.
-      - Provide **foropenshift** as the name > check **read_repository** checkbox and click **create deploy token**.
+      - Provide **foropenshift** as the name then check **read_repository** checkbox and click **create deploy token**.
       - Save the generated **username** and **password** for future reference.
-2. Click on **Project** > Details, click on **Clone** and copy **Clone with HTTPS** URL.Save the URL for future reference.
+2. Click on **Project** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL.Save the URL for future reference.
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #create_openshift_app}
@@ -240,6 +240,9 @@ In this step, you will update the generated BuildConfig section of the generated
                name: push-secret
    ```
    {:codeblock}
+
+   A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A `BuildConfig` object is the definition of the entire build process.
+
 1. Search for `containers` and update the image with
    ```yaml
    containers:
