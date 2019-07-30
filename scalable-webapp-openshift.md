@@ -159,21 +159,20 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
 1. Create an [empty toolchain](https://{DomainName}/devops/setup/deploy?repository=https%3A%2F%2Fgithub.com%2Fopen-toolchain%2Fempty-toolchain)
    - Provide **openshift-toolchain** as the **Toolchain Name**.
    - Select a **region** preferably where you have the {{site.data.keyword.openshiftshort}} cluster created > select a **resource group**
-   - Select **GitLab** as the source provider and click **Create**.
-1. Once your toolchain is ready, click on **Add Tool**.
-1. Select **Git Repos and Issue Tracking**
+2. Once your toolchain is ready, click on **Add Tool**.
+3. Select **Git Repos and Issue Tracking**
    - Select a **Server** and choose **New** as the repository type
    - Select a **Owner** and provide **openshiftapp** as the repository name
    - Leave the checkboxes checked and Click **Create Integration**
-1. Click on **Git** tile under CODE to open your Git repository in a browser. Copy the link to a clipboard for future reference.
-1.  To copy and paste the SSH public key(e.g., id_rsa.pub),
+4. Click on **Git** tile under CODE to open your Git repository in a browser. Copy the link to a clipboard for future reference.
+5.  To copy and paste the SSH public key(e.g., id_rsa.pub),
    ```sh
    pbcopy < ~/.ssh/id_rsa.pub
    ```
    {:pre}
-1. Under Git profile settings, click on **SSH Keys** and paste the SSH key > click **Add key**.
-1. On the top ribbon, click **Projects** > Your projects then select the Openshiftapp and Follow the instructions under **Existing folder** to import the code you have generated with `ibmcloud dev`.
-1. Once you push the code to the private repository, you should see the scaffolded code in the project.
+6. Under your Git Profile, click **Settings** > click on **SSH Keys** and paste the SSH key > click **Add key**.
+7. On the top ribbon, click **Projects** > Your projects then select the Openshiftapp and Follow the instructions under **Existing folder** to import the code you have generated with `ibmcloud dev`.
+8. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
 ### Create a Git deploy token
 In this step, you will create a deploy token to allow read-only access to your repository
@@ -198,7 +197,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    {:pre}
 1. Generate a yaml file in the same folder as your starter kit code by replacing the placeholders and running the below command
    ```sh
-   oc new-app https://<USERNAME>:<PASSWORD>@<REPO_URL_WITHOUT_HTTPS> \
+   oc new-app https://<DEPLOY_TOKEN_USERNAME>:<DEPLOY_TOKEN_PASSWORD>@<REPO_URL_WITHOUT_HTTPS> \
     --name=openshiftapp \
     --strategy=docker -o yaml > openshift.yaml
    ```
@@ -334,12 +333,12 @@ In this step, you will automate the build and deploy process. So that whenever y
 1. To add a webhook on the GitLab repository, you need a URL and a secret
    - For webhook GitLab URL,
      ```sh
-     oc describe bc openshiftapp
+     oc describe bc openshiftapp | grep -A 1 "GitLab"
      ```
      {:pre}
    - For secret that needs to be passed in the webhook URL,
      ```sh
-     oc get bc openshiftapp -o yaml
+     oc get bc openshiftapp -o yaml | grep -A 3 "\- gitlab"
      ```
      {:pre}
    - Replace `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
