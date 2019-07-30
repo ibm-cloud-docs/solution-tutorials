@@ -448,13 +448,13 @@ In this section, you will learn how to manually scale your application.
 ## Remove resources
 {:#cleanup}
 
-1. Delete the cluster or only delete the {{site.data.keyword.openshiftshort}}(oc) artifacts created for the application if you plan to reuse the cluster.
-1. To delete all `openshiftapp` application resource objects, run the below command
+* Delete the cluster or only delete the {{site.data.keyword.openshiftshort}}(oc) artifacts created for the application if you plan to reuse the cluster.
+* To delete all `openshiftapp` application resource objects, run the below command
    ```sh
    oc delete all --selector app=openshiftapp
    ```
    {:pre}
-1. To delete the project
+* To delete the project
    ```sh
    oc delete project openshiftproject
    ```
