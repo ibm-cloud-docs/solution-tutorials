@@ -16,12 +16,12 @@ lasttested: "2019-07-30"
 # Scalable web application on {{site.data.keyword.openshiftshort}}
 {: #scalable-webapp-openshift}
 
-This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private repository and then deploy it to a standard {{site.data.keyword.openshiftlong_notm}} cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a standard {{site.data.keyword.openshiftlong_notm}} cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
 With the {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
-For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions. In addition to generating starter application code, Docker container image and CloudFoundry assets, the code generators used by the dev CLI and web console generate files to aid deployment into [Kubernetes](https://kubernetes.io/) environments.
+For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions.
 
 ## Objectives
 {: #objectives}
@@ -69,20 +69,20 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
 
-{{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker containers, the Kubernetes technology, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+With {{site.data.keyword.openshiftlong_notm}},you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
-You will provision a **Standard** {{site.data.keyword.openshiftlong_notm}} cluster as {{site.data.keyword.openshiftshort}} worker nodes are available for paid accounts and standard clusters only.
+In this section, you will provision a **Standard** {{site.data.keyword.openshiftlong_notm}} cluster as {{site.data.keyword.openshiftshort}} worker nodes are available for paid accounts and standard clusters only.
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
-1. Select a **Standard** cluster > Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
-1. Provide **myopenshiftcluster** as your cluster name > select a **resource group** name >  choose a **Geography**.
-1. Under **Location**,
+2. Select a **Standard** cluster > Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
+3. Provide **myopenshiftcluster** as your cluster name > select a **resource group** name >  choose a **Geography**.
+4. Under **Location**,
     - Select a **Single zone** followed by a **Worker zone**.
     - Select **Public endpoint only** as your Master service endpoint.
-1. Under **Default worker pool**,
+5. Under **Default worker pool**,
     - Select **4 Cores 16GB RAM** as the flavor for Worker nodes.
     - Select **2** Worker nodes for this tutorial.
-1. Check **Infrastructure permissions checker** to verify the required permissions and Click **Create** to provision an openshift cluster.
+6. Check **Infrastructure permissions checker** to verify the required permissions and Click **Create** to provision an openshift cluster.
 
 ### Configure CLI
 
@@ -114,7 +114,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 5. Do not add additional services.
 6. Do not add a DevOps toolchain, select **manual deployment**.
 
-This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes service.
+This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or {{site.data.keyword.containershort_notm}}.
 
 ### Run the application locally
 
