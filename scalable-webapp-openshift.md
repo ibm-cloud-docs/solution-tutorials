@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-29"
-lasttested: "2019-07-29"
+lastupdated: "2019-07-30"
+lasttested: "2019-07-30"
 ---
 
 {:shortdesc: .shortdesc}
@@ -16,10 +16,10 @@ lasttested: "2019-07-29"
 # Scalable web application on {{site.data.keyword.openshiftshort}}
 {: #scalable-webapp-openshift}
 
-This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private repository and then deploy it to a standard {{site.data.keyword.openshiftlong_notm}} cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how expose the app on an Openshift route, bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private repository and then deploy it to a standard {{site.data.keyword.openshiftlong_notm}} cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
-With the {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks&locale=en\043science) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
+With the {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
 For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions. In addition to generating starter application code, Docker container image and CloudFoundry assets, the code generators used by the dev CLI and web console generate files to aid deployment into [Kubernetes](https://kubernetes.io/) environments.
 
@@ -30,14 +30,14 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 * Deploy the application to the {{site.data.keyword.openshiftlong_notm}} cluster.
 * Bind a custom domain.
 * Monitor the logs and health of the cluster.
-* Scale Openshift pods.
+* Scale {{site.data.keyword.openshiftshort}} pods.
 
 ## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
+* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -54,7 +54,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 2. The dev adds the generated starter kit code to a private Git repository on {{site.data.keyword.Bluemix_notm}}
 3. A Docker container image is build from the code.
 4. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
-5. The application is deployed to an Openshift cluster by pulling the image.
+5. The application is deployed to an {{site.data.keyword.openshiftshort}} cluster by pulling the image.
 6. Users access the application.
 
 ## Before you begin
@@ -63,7 +63,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
 * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
 * [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/containers?topic=containers-cs_cli_install&locale=en\043science#cli_oc)
-* [Generate a new SSH key](https://help.github.com/en/enterprise/2.16/user/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+* [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key)
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create an {{site.data.keyword.openshiftshort}} cluster
@@ -73,10 +73,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 You will provision a **Standard** {{site.data.keyword.openshiftlong_notm}} cluster as {{site.data.keyword.openshiftshort}} worker nodes are available for paid accounts and standard clusters only.
 
-1. Create an openshift cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
-1. Under **Select a plan**,
-    - Select a **Standard** cluster > Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
-    - Provide **myopenshiftcluster** as your cluster name > select a **resource group** name >  choose a **Geography**.
+1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
+1. Select a **Standard** cluster > Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
+1. Provide **myopenshiftcluster** as your cluster name > select a **resource group** name >  choose a **Geography**.
 1. Under **Location**,
     - Select a **Single zone** followed by a **Worker zone**.
     - Select **Public endpoint only** as your Master service endpoint.
@@ -151,25 +150,39 @@ You can build and run the application as you normally would using `mvn` for java
 ### Push the code to a Private IBM Cloud Git repo
 In this step, you will create a private IBM Cloud Git repository and push the generated code.
 
-1. Create a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) service > provide a **Service name** > choose a **region/location** > select a **resource group** > select a **Lite** plan and click **Create**.
+1. Create a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) service
+   - Provide a **Service name**
+   - Choose a **region/location**
+   - Select a **resource group**
+   - Select a **Lite** plan and click **Create**.
 1. Once provisioned, click on **Manage** tab to authorize users and manage access to the toolchains.
-1. Create an [empty toolchain](https://{DomainName}/devops/setup/deploy?repository=https%3A%2F%2Fgithub.com%2Fopen-toolchain%2Fempty-toolchain) with **openshift-toolchain** as the **Toolchain Name**.
-1. Select a **region** preferably where you have created the cluster > select a **resource group**
-1. Select **GitLab** as the source provider and click **Create**.
+1. Create an [empty toolchain](https://{DomainName}/devops/setup/deploy?repository=https%3A%2F%2Fgithub.com%2Fopen-toolchain%2Fempty-toolchain)
+   - Provide **openshift-toolchain** as the **Toolchain Name**.
+   - Select a **region** preferably where you have the {{site.data.keyword.openshiftshort}} cluster created > select a **resource group**
+   - Select **GitLab** as the source provider and click **Create**.
 1. Once your toolchain is ready, click on **Add Tool**.
 1. Select **Git Repos and Issue Tracking**
    - Select a **Server** and choose **New** as the repository type
    - Select a **Owner** and provide **openshiftapp** as the repository name
    - Leave the checkboxes checked and Click **Create Integration**
 1. Click on **Git** tile under CODE to open your Git repository in a browser. Copy the link to a clipboard for future reference.
-1. Copy the SSH public key(e.g., id_rsa.pub) by running the below command on a terminal
+1.  To copy and paste the SSH public key(e.g., id_rsa.pub),
    ```sh
    pbcopy < ~/.ssh/id_rsa.pub
    ```
    {:pre}
 1. Under Git profile settings, click on **SSH Keys** and paste the SSH key > click **Add key**.
-1. Click **Projects** on the top ribbon > Your projects > Openshiftapp and Follow the instructions under **Existing folder** section by pointing it to the local folder where you have created the starter kit using `ibmcloud dev`.
+1. On the top ribbon, click **Projects** > Your projects then select the Openshiftapp and Follow the instructions under **Existing folder** to import the code you have generated with `ibmcloud dev`.
 1. Once you push the code to the private repository, you should see the scaffolded code in the project.
+
+### Create a Git deploy token
+In this step, you will create a deploy token to allow read-only access to your repository
+1. TO create a **Deploy token**,
+      - On the left pane of the Git repo page, click **Settings** > Repository
+      - Click on **Expand** next to **Deploy Tokens**.
+      - Provide **foropenshift** as the name > check **read_repository** checkbox and click **create deploy token**.
+      - Save the generated **username** and **password** for future reference.
+2. Click on **Project** > Details, click on **Clone** and copy **Clone with HTTPS** URL.Save the URL for future reference.
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #create_openshift_app}
@@ -183,17 +196,11 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    oc new-project openshiftproject
    ```
    {:pre}
-1. Create a **Deploy token**. Deploy tokens allow read-only access to your repository.
-      - On the left pane of the Git repo page, click **Settings** > Repository
-      - Click on **Expand** next to **Deploy Tokens**.
-      - Provide **foropenshift** as the name > check **read_repository** checkbox and click **create deploy token**.
-      - Save the generated **username** and **password** for future reference.
-1. Click on **Project** > Details, click on **Clone** and copy **Clone with HTTPS** URL.
 1. Generate a yaml file in the same folder as your starter kit code by replacing the placeholders and running the below command
    ```sh
-   oc new-app https://<USERNAME>:<PASSWORD@<REPO_URL_WITHOUT_HTTPS> \
+   oc new-app https://<USERNAME>:<PASSWORD>@<REPO_URL_WITHOUT_HTTPS> \
     --name=openshiftapp \
-    --strategy=docker -o yaml > myapp.yaml
+    --strategy=docker -o yaml > openshift.yaml
    ```
    {:pre}
 
@@ -211,9 +218,9 @@ In this step, you will update the generated BuildConfig section of the generated
 
    For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create). For registry URL, run `ibmcloud cr region`.
    {:tip}
-1. Open the generated **myapp.yaml** in an IDE and
+1. Open the generated **openshift.yaml** in an IDE and
 
-   - Update the placeholders with the values. Thereafter, configure an image stream to import tag and image metadata from an image repository in an external container image registry by updating the ImageStream item with the name *openshiftapp* of the definition to look like the one shown below
+   -  Configure an image stream to import tag and image metadata from an image repository in an external container image registry by modifying the *openshiftapp* ImageStream item of the definition and adding a `dockerImageRepository` definition under `spec`. An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform.Replace the placeholders `<REGISTRY_URL>` and `<REGISTRY_NAMESPACE>` with their respective values.
 
       ```yaml
       -
@@ -235,7 +242,7 @@ In this step, you will update the generated BuildConfig section of the generated
       ```
       {:codeblock}
 
-   - Update the `spec` under `BuildConfig` section with
+   - Update the `spec` under `BuildConfig` section by changing the output to kind `DockerImage` and adding a `pushSecret`
 
       ```yaml
       spec:
@@ -260,7 +267,7 @@ In this step, you will update the generated BuildConfig section of the generated
 
 ## Deploy the application to cluster
 {:#deploy_app_to_cluster}
-In this section, you will deploy the application to the cluster using the generated **myapp.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
+In this section, you will deploy the application to the cluster using the generated **openshift.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
 
 ### Create the app using the updated yaml
 
@@ -282,7 +289,7 @@ In this section, you will deploy the application to the cluster using the genera
    {:pre}
 1. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
    ```sh
-   oc create -f myapp.yaml
+   oc create -f openshift.yaml
    ```
    {:pre}
 
@@ -306,7 +313,7 @@ To access the app, you need to create a route. A route announces your service to
 1. Create a route by running the below command in a terminal
    ```sh
    oc expose service openshiftapp \
-   --port=9080 or 3000
+   --port=3000
    ```
    {:pre}
 1. You can access the app through IBM provided domain. Run the below command for the URL
