@@ -152,7 +152,8 @@ You can build and run the application as you normally would using `npm` for node
 In this step, you will create a private IBM Cloud Git repository and push the generated code.
 
 1. On a browser, open [IBM Cloud Git](https://us-south.git.cloud.ibm.com)
-   For other regions, run `ibmcloud regions`.
+
+   The link above is for `us-south` region. For other regions, run `ibmcloud regions` and replace `us-south` in the URL with region name.
    {:tip}
 2. Click on **New project** and provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
