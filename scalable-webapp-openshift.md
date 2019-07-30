@@ -108,17 +108,17 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
-1. Enter a **name** for your application.
-1. Select the **resource group** where to deploy this application.
-1. Do not add additional services.
-1. Do not add a DevOps toolchain, select **manual deployment**.
+2. Select `Backend Service / Web App` > `Node` > `Node.js Web App with Express.js` to create a Node starter.
+3. Enter a **name** for your application.
+4. Select the **resource group** where to deploy this application.
+5. Do not add additional services.
+6. Do not add a DevOps toolchain, select **manual deployment**.
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes service.
 
 ### Run the application locally
 
-You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
+You can build and run the application as you normally would using `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
 
 1. Ensure your local Docker engine is started.
    ```
@@ -138,14 +138,14 @@ You can build and run the application as you normally would using `mvn` for java
 
    This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
 
-1. Run the container.
+4. Run the container.
    ```
    ibmcloud dev run
    ```
    {: pre}
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
-1. After your container starts, go to `http://localhost:9080/`. If you created a Node.js application, go to `http://localhost:3000/`.
+5. After your container starts, go to `http://localhost:3000/`.
 
 ### Push the code to a Private IBM Cloud Git repo
 In this step, you will create a private IBM Cloud Git repository and push the generated code.
@@ -371,7 +371,7 @@ To use your custom domain, you need to update your domain DNS records with a `CN
    oc expose svc/openshiftapp \
    --hostname=<YOUR_HOSTNAME> \
    --name=openshiftappdomain \
-   --port=<9080 or 3000>
+   --port=3000
    ```
    {:pre}
 1. Access your application at `http://<customdomain>/`
@@ -382,7 +382,7 @@ To use your custom domain, you need to update your domain DNS records with a `CN
    ```sh
    oc create route edge openshifthttps \
    --service=openshiftapp \
-   --port=<9080 or 3000>
+   --port=3000
    ```
    {:pre}
 
@@ -397,7 +397,7 @@ To use your custom domain, you need to update your domain DNS records with a `CN
     --key=example.key \
     --ca-cert=ca.crt \
     --hostname=<www.HOSTNAME>
-    --port=<9080 or 3000>
+    --port=3000
    ```
    {:pre}
 
