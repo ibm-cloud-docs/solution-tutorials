@@ -175,7 +175,7 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
 
 ### Create a Git deploy token
 In this step, you will create a deploy token to allow read-only access to your repository
-1. TO create a **Deploy token**,
+1. To create a **Deploy token**,
       - On the left pane of the Git repo page, click **Settings** > Repository
       - Click on **Expand** next to **Deploy Tokens**.
       - Provide **foropenshift** as the name > check **read_repository** checkbox and click **create deploy token**.
@@ -394,10 +394,10 @@ To use your custom domain, you need to update your domain DNS records with a `CN
 1. You can use your own certificate and key files from a CA like [letsencrypt.org](http://letsencrypt.org/) and pass them with the `create route` command
    ```sh
    oc create route edge openshifthttpsca --service=openshiftapp \
-    --cert=example.crt \
+    --cert=example.pem \
     --key=example.key \
-    --ca-cert=ca.crt \
-    --hostname=<www.HOSTNAME>
+    --ca-cert=ca.pem \
+    --hostname=<www.HOSTNAME> \
     --port=3000
    ```
    {:pre}
@@ -409,10 +409,9 @@ In this section, you will learn to monitor the health and performance of your ap
 ### Logging and Monitoring with in-built {{site.data.keyword.openshiftshort}} stack
 {{site.data.keyword.openshiftshort}} Container Platform ships with a pre-configured and self-updating monitoring stack that is based on the [Prometheus](https://prometheus.io/) open source project and its wider eco-system. It provides monitoring of cluster components and ships with a set of [Grafana](https://grafana.com/) dashboards
 
-1. To access the web UIs of Prometheus and Grafana along with Alertmanager, run the below command and make sure to prepend `https://` to the returned addresses(HOST). You cannot access web UIs using unencrypted connection.
+1. To access the web UIs of Prometheus and Grafana along with Alertmanager, run the below command and make sure to prepend `https://` to the returned addresses(HOST). You cannot access web UIs using unencrypted connection.If prompted, click **Login with OpenShift** and authorize access by allowing selected permissions.
    ```sh
-    oc get routes \
-    -n openshift-monitoring
+    oc get routes -n openshift-monitoring
    ```
    {:pre}
 2. To generate some load on your deployed application, you will use Apache *ab* in order to get some data into Prometheus hitting the route URL 5000 times with 100 concurrent requests at a time.
@@ -421,18 +420,16 @@ In this section, you will learn to monitor the health and performance of your ap
    ```
    {:pre}
 3. In the expression box of Prometheus web UI, enter **namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace="openshiftproject"}** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
-4. Open the **Grafana** web UI URL on a browser and authorize access by allowing selected permissions.
+4. Open the **Grafana** web UI URL on a browser.
 5. On the Grafana **Home** page, click on **K8s / Compute Resources / Pod** and Select
    - datasource: **Prometheus**
    - namespace: **openshiftproject**
    - pod: **openshiftapp-*DEPLOYMENT_NUMBER*-*POD_ID***
 6. Check the CPU and memory usage.
-7. For logging, you can either use the in-built `oc logs` command or setup a EFK(Elasticsearch, Fluentd and Kibana) stack. Check this [link for setup](https://docs.openshift.com/container-platform/3.11/install_config/aggregate_logging.html)
+7. For logging, you can use the in-built `oc logs` command.
 
-### Logging with LogDNA and Monitoring with Sysdig on IBM Cloud
-In this step, you will provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application.
-
-Follow the instructions mentioned in [this link](/docs/openshift?topic=openshift-openshift_health#openshift_logmet) to setup LogDNA and Sysdig add-ons to monitor cluster health.
+  You can also provision and use {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} services for logging and monitoring your {{site.data.keyword.openshiftshort}} application. Follow the instructions mentioned in [this link](/docs/openshift?topic=openshift-openshift_health#openshift_logmet) to setup LogDNA and Sysdig add-ons to monitor cluster health.
+  {:tip}
 
 ## Scale the app
 {:#scaling_app}
@@ -445,7 +442,7 @@ In this section, you will learn how to manually scale your application.
     --replicas=2
    ```
    {:pre}
-1. You can see a new pod being provisionsed by running `oc get pods` command.
+2. You can see a new pod being provisionsed by running `oc get pods` command.
 
 ## Remove resources
 {:#cleanup}
