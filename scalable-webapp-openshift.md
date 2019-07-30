@@ -16,7 +16,7 @@ lasttested: "2019-07-30"
 # Scalable web application on {{site.data.keyword.openshiftshort}}
 {: #scalable-webapp-openshift}
 
-This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a standard {{site.data.keyword.openshiftlong_notm}} cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a standard [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
 With the {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
@@ -60,53 +60,57 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
-* [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
-* [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/containers?topic=containers-cs_cli_install&locale=en\043science#cli_oc)
-* [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key)
+1. [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
+1. [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/openshift?topic=openshift-openshift-cli#cli_oc)
+1. [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key)
+1. [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
 
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
 
-With {{site.data.keyword.openshiftlong_notm}},you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
+With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
 
 In this section, you will provision a **Standard** {{site.data.keyword.openshiftlong_notm}} cluster as {{site.data.keyword.openshiftshort}} worker nodes are available for paid accounts and standard clusters only.
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
-2. Select a **Standard** cluster > Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
-3. Provide **myopenshiftcluster** as your cluster name > select a **resource group** name >  choose a **Geography**.
+2. Select a **Standard** cluster.
+1. Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
+   1. Set **Cluster name** to **myopenshiftcluster**.
+   1. Select a **Resource group**.
+   1. Choose a **Geography**.
 4. Under **Location**,
-    - Select a **Single zone** followed by a **Worker zone**.
-    - Select **Public endpoint only** as your Master service endpoint.
+   - Select a **Single zone** followed by a **Worker zone**.
+   - Select **Public endpoint only** as your Master service endpoint.
 5. Under **Default worker pool**,
-    - Select **4 Cores 16GB RAM** as the flavor for Worker nodes.
-    - Select **2** Worker nodes for this tutorial.
-6. Check **Infrastructure permissions checker** to verify the required permissions and Click **Create** to provision an openshift cluster.
+   - Select **4 Cores 16GB RAM** as the flavor for Worker nodes.
+   - Select **2** Worker nodes for this tutorial.
+6. Review **Infrastructure permissions checker** to verify the required permissions
+1. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
 ### Configure CLI
 
 In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. When the cluster is ready, click on the **Access** tab under the cluster name.
-1. Under **Gain access to your cluster** section, click on **oauth token request page** to follow instructions to log into your cluster on a terminal.
+1. Under **Gain access to your cluster** section, click on **oauth token request page** and follow instructions to log into your cluster on a terminal.
 1. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
-    ```sh
-    oc get ns
-    ```
-    {:pre}
+   ```sh
+   oc get ns
+   ```
+   {:pre}
 
 ## Generate a starter kit
 {: #generate_starter_kit}
+
 The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
 ### Using ibmcloud dev plugin
 
-1. On a terminal, Start the `ibmcloud dev` wizard by running the below command
+1. On a terminal, start the `ibmcloud dev` wizard by running the below command
    ```
    ibmcloud dev create
    ```
    {: pre}
-
 2. Select `Backend Service / Web App` > `Node` > `Node.js Web App with Express.js` to create a Node starter.
 3. Enter a **name** for your application.
 4. Select the **resource group** where to deploy this application.
@@ -136,7 +140,6 @@ You can build and run the application as you normally would using `npm` for node
    {: pre}
 
    This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
-
 4. Run the container.
    ```
    ibmcloud dev run
@@ -147,6 +150,7 @@ You can build and run the application as you normally would using `npm` for node
 5. After your container starts, go to `http://localhost:3000/`.
 
 ### Push the code to a Private IBM Cloud Git repo
+
 In this step, you will create a private IBM Cloud Git repository and push the generated code.
 
 1. Create a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) service
