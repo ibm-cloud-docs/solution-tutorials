@@ -157,7 +157,8 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
 1. Once provisioned, click on **Manage** tab to authorize users and manage access to the toolchains.
 1. Create an [empty toolchain](https://{DomainName}/devops/setup/deploy?repository=https%3A%2F%2Fgithub.com%2Fopen-toolchain%2Fempty-toolchain)
    - Provide **openshift-toolchain** as the **Toolchain Name**.
-   - Select a **region** preferably where you have the {{site.data.keyword.openshiftshort}} cluster created > select a **resource group**
+   - Select a **region** preferably where you have the {{site.data.keyword.openshiftshort}} cluster created
+   - Select a **resource group** and click **Create**.
 2. Once your toolchain is ready, click on **Add Tool**.
 3. Select **Git Repos and Issue Tracking**
    - Select a **Server** and choose **New** as the repository type
