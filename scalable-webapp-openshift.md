@@ -379,19 +379,7 @@ To use your custom domain, you need to update your domain DNS records with a `CN
 
 ### With HTTPS
 
-1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
-   ```sh
-   oc create route edge openshifthttps \
-   --service=openshiftapp \
-   --port=3000
-   ```
-   {:pre}
-
-   Here, you have used Edge termination. To learn about other termination types like passthrough and re-encryption, refer [secure routes](https://docs.openshift.com/container-platform/3.11/architecture/networking/routes.html#secured-routes)
-   {:tip}
-
-1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
-1. You can use your own certificate and key files from a CA like [letsencrypt.org](http://letsencrypt.org/) and pass them with the `create route` command
+1. To create a secured HTTPS route, you can use your own certificate and key files from a CA like [letsencrypt.org](http://letsencrypt.org/) and pass them with the `create route` command
    ```sh
    oc create route edge openshifthttpsca --service=openshiftapp \
     --cert=example.pem \
@@ -401,6 +389,20 @@ To use your custom domain, you need to update your domain DNS records with a `CN
     --port=3000
    ```
    {:pre}
+
+   Here, you have used Edge termination. To learn about other termination types like passthrough and re-encryption, refer [secure routes](https://docs.openshift.com/container-platform/3.11/architecture/networking/routes.html#secured-routes)
+   {:tip}
+
+### Securing the default IBM provided domain route
+
+1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
+   ```sh
+   oc create route edge openshifthttps \
+   --service=openshiftapp \
+   --port=3000
+   ```
+   {:pre}
+1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
 
 ## Monitor the app
 {:#monitor_application}
