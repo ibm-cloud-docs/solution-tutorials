@@ -64,7 +64,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
 * [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/containers?topic=containers-cs_cli_install&locale=en\043science#cli_oc)
 * [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key)
-* [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
@@ -359,21 +358,24 @@ In this step, you will automate the build and deploy process. So that whenever y
    {:pre}
 4. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
+   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image openshiftapp` command.Refer this [link](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html#importing-tag-and-image-metadata) for more info.
+   {:tip}
+
 ## Use your own custom domain
 {: #custom_domain}
 
 To use your custom domain, you need to update your domain DNS records with a `CNAME` record pointing to your IBM-provided domain(route URL).
 
 ### With HTTP
-1. Create a route exposing the service at a host name, such as `www.example.com`, so that external clients can reach it by name.
+1. Create a route exposing the service at a hostname by replacing `<HOSTNAME>` with your hostname(e.g.,www.example.com), so that external clients can reach it by name.
    ```sh
    oc expose svc/openshiftapp \
-   --hostname=<YOUR_HOSTNAME> \
+   --hostname=<HOSTNAME> \
    --name=openshiftappdomain \
    --port=3000
    ```
    {:pre}
-1. Access your application at `http://<customdomain>/`
+2. Access your application at `http://<customdomain>/`
 
 ### With HTTPS
 
