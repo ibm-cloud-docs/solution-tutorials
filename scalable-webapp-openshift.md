@@ -38,7 +38,6 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-* [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -111,7 +110,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ibmcloud dev create
    ```
    {: pre}
-2. Select `Backend Service / Web App` > `Node` > `Node.js Web App with Express.js` to create a Node starter.
+2. Select `Backend Service / Web App` then `Node` and select `Node.js Web App with Express.js` to create a Node starter.
 3. Enter a **name** for your application.
 4. Select the **resource group** where to deploy this application.
 5. Do not add additional services.
@@ -153,29 +152,19 @@ You can build and run the application as you normally would using `npm` for node
 
 In this step, you will create a private IBM Cloud Git repository and push the generated code.
 
-1. Create a [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery) service
-   - Provide a **Service name**
-   - Choose a **region/location**
-   - Select a **resource group**
-   - Select a **Lite** plan and click **Create**.
-1. Once provisioned, click on **Manage** tab to authorize users and manage access to the toolchains.
-1. Create an [empty toolchain](https://{DomainName}/devops/setup/deploy?repository=https%3A%2F%2Fgithub.com%2Fopen-toolchain%2Fempty-toolchain)
-   - Provide **openshift-toolchain** as the **Toolchain Name**.
-   - Select a **region** preferably where you have the {{site.data.keyword.openshiftshort}} cluster created
-   - Select a **resource group** and click **Create**.
-2. Once your toolchain is ready, click on **Add Tool**.
-3. Select **Git Repos and Issue Tracking**
-   - Select a **Server** and choose **New** as the repository type
-   - Select a **Owner** and provide **openshiftapp** as the repository name
-   - Leave the checkboxes checked and Click **Create Integration**
-4. Click on **Git** tile under CODE to open your Git repository in a browser. Copy the link to a clipboard for future reference.
-5.  To copy and paste the SSH public key(e.g., id_rsa.pub),
+1. On a browser, open [IBM Cloud Git](https://us-south.git.cloud.ibm.com)
+   For other regions, run `ibmcloud regions`.
+   {:tip}
+2. Click on **New project** and provide `openshiftapp` as the project name.
+3. Set the visibility level to **Private** and click **Create project**
+4. To copy and paste the SSH public key(e.g., id_rsa.pub),
    ```sh
    pbcopy < ~/.ssh/id_rsa.pub
    ```
    {:pre}
-6. Under your Git Profile, click **Settings** > click on **SSH Keys** and paste the SSH key > click **Add key**.
-7. On the top ribbon, click **Projects** > Your projects then select the Openshiftapp and Follow the instructions under **Existing folder** to import the code you have generated with `ibmcloud dev`.
+5. Under your Git Profile, click **Settings** then click on **SSH Keys**.
+6. Paste the SSH key and click **Add key**.
+7. On the top ribbon, click **Projects** then **Your projects** then select the Openshiftapp and Follow the instructions under **Existing folder** to import the code you have generated with `ibmcloud dev`.
 8. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
 ### Create a Git deploy token
@@ -201,9 +190,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    {:pre}
 1. Generate a yaml file in the same folder as your starter kit code by replacing the placeholders and running the below command
    ```sh
-   oc new-app https://<DEPLOY_TOKEN_USERNAME>:<DEPLOY_TOKEN_PASSWORD>@<REPO_URL_WITHOUT_HTTPS> \
-    --name=openshiftapp \
-    --strategy=docker -o yaml > openshift.yaml
+   oc new-app https://<DEPLOY_TOKEN_USERNAME>:<DEPLOY_TOKEN_PASSWORD>@<REPO_URL_WITHOUT_HTTPS> --name=openshiftapp --strategy=docker -o yaml > openshift.yaml
    ```
    {:pre}
 
@@ -212,10 +199,7 @@ In this step, you will update the generated BuildConfig section of the generated
 
 1. To automate access to your registry namespaces and to push generated builder Docker image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key
    ```sh
-   oc create secret docker-registry push-secret \
-    --docker-username=iamapikey \
-    --docker-password=<API_KEY> \
-    --docker-server=<REGISTRY_URL>
+   oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=<API_KEY> --docker-server=<REGISTRY_URL>
    ```
    {:pre}
 
@@ -273,8 +257,7 @@ In this section, you will deploy the application to the cluster using the genera
 
 1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project(openshiftproject)
    ```sh
-   oc get secret default-us-icr-io \
-   -n default -o yaml | sed 's/default/openshiftproject/g' | oc -n openshiftproject create -f -
+   oc get secret default-us-icr-io -n default -o yaml | sed 's/default/openshiftproject/g' | oc -n openshiftproject create -f -
    ```
    {:pre}
 
@@ -283,8 +266,7 @@ In this section, you will deploy the application to the cluster using the genera
 
 1. For the image pull secret to take effect, you need to add it in the `default` service account
    ```sh
-   oc secrets add serviceaccount/default secrets/openshiftproject-us-icr-io \
-   --for=pull
+   oc secrets add serviceaccount/default secrets/openshiftproject-us-icr-io --for=pull
    ```
    {:pre}
 1. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
@@ -312,8 +294,7 @@ To access the app, you need to create a route. A route announces your service to
 
 1. Create a route by running the below command in a terminal
    ```sh
-   oc expose service openshiftapp \
-   --port=3000
+   oc expose service openshiftapp --port=3000
    ```
    {:pre}
 1. You can access the app through IBM provided domain. Run the below command for the URL
@@ -343,8 +324,8 @@ In this step, you will automate the build and deploy process. So that whenever y
      ```
      {:pre}
    - Replace `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
-1. Open your private git repo on a browser using the Git repo HTTPS link > Click on **Settings** > Integrations.
-1. Paste the **URL** > click **Add webhook**. Test the URL by clicking **Test** > Push events.
+1. Open your private git repo on a browser using the Git repo HTTPS link then click on **Settings** and click **Integrations**.
+1. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events.
 1. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
    ```sh
    oc tag <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest openshiftapp:latest --scheduled=true
@@ -363,6 +344,17 @@ In this step, you will automate the build and deploy process. So that whenever y
    Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image openshiftapp` command. Refer this [link](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html#importing-tag-and-image-metadata) for more info.
    {:tip}
 
+## Securing the default IBM provided domain route
+{: #secure_default_route}
+
+1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
+   ```sh
+   oc create route edge openshifthttps --service=openshiftapp --port=3000
+   ```
+   {:pre}
+1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
+
+
 ## Use your own custom domain
 {: #custom_domain}
 
@@ -371,10 +363,7 @@ To use your custom domain, you need to update your domain DNS records with a `CN
 ### With HTTP
 1. Create a route exposing the service at a hostname by replacing `<HOSTNAME>` with your hostname(e.g.,www.example.com), so that external clients can reach it by name.
    ```sh
-   oc expose svc/openshiftapp \
-   --hostname=<HOSTNAME> \
-   --name=openshiftappdomain \
-   --port=3000
+   oc expose svc/openshiftapp --hostname=<HOSTNAME> --name=openshiftappdomain --port=3000
    ```
    {:pre}
 2. Access your application at `http://<customdomain>/`
@@ -383,28 +372,12 @@ To use your custom domain, you need to update your domain DNS records with a `CN
 
 1. To create a secured HTTPS route, you can use your own certificate and key files from a CA like [letsencrypt.org](http://letsencrypt.org/) and pass them with the `create route` command
    ```sh
-   oc create route edge openshifthttpsca --service=openshiftapp \
-    --cert=example.pem \
-    --key=example.key \
-    --ca-cert=ca.pem \
-    --hostname=<www.HOSTNAME> \
-    --port=3000
+   oc create route edge openshifthttpsca --service=openshiftapp --cert=example.pem --key=example.key --ca-cert=ca.pem --hostname=<www.HOSTNAME> --port=3000
    ```
    {:pre}
 
    Here, you have used Edge termination. To learn about other termination types like passthrough and re-encryption, refer [secure routes](https://docs.openshift.com/container-platform/3.11/architecture/networking/routes.html#secured-routes)
    {:tip}
-
-### Securing the default IBM provided domain route
-
-1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
-   ```sh
-   oc create route edge openshifthttps \
-   --service=openshiftapp \
-   --port=3000
-   ```
-   {:pre}
-1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
 
 ## Monitor the app
 {:#monitor_application}
@@ -441,8 +414,7 @@ In this section, you will learn how to manually scale your application.
 
 1. You can achieve manual scaling of your pods with `oc scale` command. The command sets a new size for a deployment or replication controller
    ```sh
-    oc scale dc openshiftapp \
-    --replicas=2
+    oc scale dc openshiftapp --replicas=2
    ```
    {:pre}
 2. You can see a new pod being provisionsed by running `oc get pods` command.
