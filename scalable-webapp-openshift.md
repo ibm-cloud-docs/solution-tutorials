@@ -137,7 +137,6 @@ You can build and run the application as you normally would using `npm` for node
    ibmcloud dev build
    ```
    {: pre}
-
    This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
 4. Run the container.
    ```
@@ -315,7 +314,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    oc set triggers bc openshiftapp --from-gitlab
    ```
    {:pre}
-1. To add a webhook on the GitLab repository, you need a URL and a secret
+2. To add a webhook on the GitLab repository, you need a URL and a secret
    - For webhook GitLab URL,
      ```sh
      oc describe bc openshiftapp | grep -A 1 "GitLab"
@@ -327,27 +326,27 @@ In this step, you will automate the build and deploy process. So that whenever y
      ```
      {:pre}
    - Replace `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
-1. Open your private git repo on a browser using the Git repo HTTPS link then click on **Settings** and click **Integrations**.
-1. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events.
-1. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
+3. Open your private git repo on a browser using the Git repo HTTPS link then click on **Settings** and click **Integrations**.
+4. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events.
+5. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
    ```sh
    oc tag <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest openshiftapp:latest --scheduled=true
    ```
    {:pre}
-2. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
-3. Save and push the code to the repo
+6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
+7. Save and push the code to the repo
    ```sh
     git add public/index.html
     git commit -m "Updated with my name"
     git push -u origin master
    ```
    {:pre}
-4. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
+8. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
    Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image openshiftapp` command. Refer this [link](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html#importing-tag-and-image-metadata) for more info.
    {:tip}
 
-## Securing the default IBM provided domain route
+### Securing the default IBM provided domain route
 {: #secure_default_route}
 
 1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
@@ -356,7 +355,6 @@ In this step, you will automate the build and deploy process. So that whenever y
    ```
    {:pre}
 1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
-
 
 ## Use your own custom domain
 {: #custom_domain}
