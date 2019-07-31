@@ -49,20 +49,26 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 In this tutorial, you will deploy the configuration introduced in another tutorial, [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). It involves a frontend server accessible from the public Internet, the frontend server talks to a backend server. The backend server has no Internet connectivity.
 
-![Architecture of subnets and virtual server instances](images/solution40-vpc-public-app-private-backend/Architecture.png)
+<p style="text-align: center;">
+
+  ![Architecture of Private and public subnets in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png)
+</p>
 
 It also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned in a private subnet:
 
-![Architecture](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
+<p style="text-align: center;">
+
+  ![Architecture of Bastion Host](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
+</p>
 
 While provisioning the resources, you will also deploy applications on the virtual server instances. When deploying applications in the cloud, software can originate from different sources:
-1. The file system of a local workstation and using a provisioning system to create the required infrastructure, to copy files and scripts to the virtual server instances;
-2. {{site.data.keyword.IBM_notm}} mirrors to update the operating systems or to install packages supported by the operating system;
+1. The file system of a local workstation - using tools like Terraform to create the required infrastructure or Ansible, `ssh` and `scp` to install and configure software on the virtual server instances;
+2. {{site.data.keyword.IBM_notm}} mirrors to update the operating systems or to install supported packages;
 3. Internet or intranet software repositories.
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
+  ![Architecture diagram showing the different sources to install software from](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
 </p>
 
 You will explore how to consume these different sources.
@@ -120,7 +126,7 @@ This tutorial will walk through example steps on a terminal using the shell, `te
    ```
    {:codeblock}
 
-Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience but are used in all environments.
+Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience. They are used in subsequent sections.
 
 ## Basics of software installation
 {: #basics}
@@ -128,7 +134,7 @@ Make sure to always use the same terminal window in the next sections or to set 
 ### Provision virtual server instances from base images
 {: #base-vsi-images}
 
-When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Base {{site.data.keyword.Bluemix_notm}} virtual server instance images are populated with popular off the shelf operating systems:
+When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Use `ibmcloud is images` to find the list of available images:
 
 ```
 ibmcloud is images
@@ -172,9 +178,9 @@ This tutorial uses a shell script named [install.sh](https://github.com/IBM-Clou
    ```
    {:codeblock}
 
-In this script, upgrading the installed software and installing `nginx` and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM_notm}} provided mirrors. For Ubuntu, the `apt-get` commands will access mirrors. This is step 2 on the architecture diagram.
+In this script, upgrading the installed software and installing `nginx` and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM_notm}} provided mirrors. For Ubuntu, the `apt-get` commands will access mirrors.
 
-The `curl` command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet. This is step 3 on the architecture diagram.
+The `curl` command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet.
 
 Based on whether the host has internet connectivity, the script modifies the `index.html` page served by `nginx`. 
 
