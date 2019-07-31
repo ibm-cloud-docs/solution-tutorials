@@ -302,6 +302,16 @@ To access the app, you need to create a route. A route announces your service to
    {:pre}
 1. Copy the **HOST/PORT** value and paste the URL in a browser to see your app in action.
 
+### Secure the default IBM provided domain route
+{: #secure_default_route}
+
+1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
+   ```sh
+   oc create route edge openshifthttps --service=openshiftapp --port=3000
+   ```
+   {:pre}
+1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
+
 ### Update the app and redeploy
 In this step, you will automate the build and deploy process. So that whenever you update the application and push the changes to the Private repo, a new build config is generated creating a build in turn generating a new version of the builder Docker image. This image will be deployed automatically.
 
@@ -341,16 +351,6 @@ In this step, you will automate the build and deploy process. So that whenever y
 
    Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image openshiftapp` command. Refer this [link](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html#importing-tag-and-image-metadata) for more info.
    {:tip}
-
-### Securing the default IBM provided domain route
-{: #secure_default_route}
-
-1. To create a secured HTTPS route encrypted with the default certificate for {{site.data.keyword.openshiftshort}}, you can use the `create route` command.
-   ```sh
-   oc create route edge openshifthttps --service=openshiftapp --port=3000
-   ```
-   {:pre}
-1. For the HTTPS HOST URL, run `oc get routes`. Copy and paste the URL with HTTPS(`https://<HOST>`) next to the route *openshifthttps* in a browser.
 
 ## Use your own custom domain
 {: #custom_domain}
