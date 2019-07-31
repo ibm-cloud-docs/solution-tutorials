@@ -61,7 +61,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
 1. [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/openshift?topic=openshift-openshift-cli#cli_oc)
-1. [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key)
+1. [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key) to be able to commit source code to a private Git repository.
+   1. Use [these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
+   1. And [add your SSH public key to your Git settings](https://us-south.git.cloud.ibm.com/help/gitlab-basics/create-your-ssh-keys).
 1. [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
 
 ## Create an {{site.data.keyword.openshiftshort}} cluster
@@ -157,14 +159,7 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
    {:tip}
 2. Click on **New project** and provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
-4. To copy and paste the SSH public key(e.g., id_rsa.pub),
-   ```sh
-   pbcopy < ~/.ssh/id_rsa.pub
-   ```
-   {:pre}
-5. Under your Git Profile, click **Settings** then click on **SSH Keys**.
-6. Paste the SSH key and click **Add key**.
-7. On the top ribbon, click **Projects** then **Your projects** then select the Openshiftapp and Follow the instructions under **Existing folder** to import the code you have generated with `ibmcloud dev`.
+7. Follow the instructions under **Existing folder** to import the code you have generated with `ibmcloud dev`.
 8. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
 ### Create a Git deploy token
