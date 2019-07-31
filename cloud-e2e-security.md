@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-08"
-lasttested: "2019-06-18"
+lastupdated: "2019-07-31"
+lasttested: "2019-07-31"
 
 ---
 
@@ -345,6 +345,17 @@ An example of how to obtain a certificate from [Let's Encrypt](https://letsencry
    * Go to **Manage** under the **Identity Providers**, then to **Settings**.
    * In the **Add web redirect URLs** form add `https://secure-file-storage.<your custom domain>/appid_callback` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
+
+## Security: Rotate service credentials
+To maintain security, service credentials, passwords and other keys should be replaced (rotated) a regular basis. Many security policies have a requirement to change passwords and credentials every 90 days or with similar frequency. Moreover, in the case an employee leaves the team or in (suspected) security incidents, access privileges should be changed immediately.
+
+In this tutorial, services are utilized for different purposes, from storing files and metadata over securing application access to managing Docker images. Rotating the service credentials typically involves
+- renaming the existing service keys,
+- creating a new set of credentials with the previously used name,
+- replacing the access data in existing Kubernetes secrets and applying the changes,
+- and, after verification, deactivating the old credentials by deleting the old service keys.
+
+The [GitHub repository](https://github.com/IBM-Cloud/secure-file-storage) for this tutorial includes scripts to automate the steps, either by invoking them on the command line or as part of a continuous delivery pipeline.
 
 ## Expand the tutorial
 
