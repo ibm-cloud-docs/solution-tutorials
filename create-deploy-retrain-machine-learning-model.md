@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-17"
+lastupdated: "2019-07-31"
 lasttested: "2019-07-17"
 ---
 
@@ -19,7 +19,7 @@ lasttested: "2019-07-17"
 
 # Build, deploy, test, retrain and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
-This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.
+This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model, monitoring the deployed model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on IBM Cloud.
 
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
 
@@ -39,6 +39,7 @@ In the terminology of machine learning, classification is considered an instance
 * Build a machine learning model.
 * Deploy the model and try out the API.
 * Test a machine learning model.
+* Monitor the deployed model
 * Create a feedback data connection for continuous learning and model evaluation.
 * Retrain your model.
 
@@ -69,10 +70,10 @@ You can create a project to add data and open a data asset in the data refiner f
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section. **Create** the service.
 1. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
-2. Create a **project** and then on **Standard** tile, Click **Create Project**. Set the name to **iris_project**.
-3. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
-4. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
-5. Click **Create**. Your new project opens and you can start adding resources to it.
+1. Create a **project** and then on **Standard** tile, Click **Create Project**. Set the name to **iris_project**.
+1. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
+1. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
+1. Click **Create**. Your new project opens and you can start adding resources to it.
 
 **Import data:**
 
