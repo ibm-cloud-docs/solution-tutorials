@@ -128,7 +128,8 @@ It will walk you through example steps on a terminal using the shell, `terraform
    ```
    {:codeblock}
 
-Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience. They are used in subsequent sections.
+**Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window**. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience. They are used in subsequent sections.
+{:tip}
 
 ## Basics of software installation
 {: #basics}
@@ -136,10 +137,9 @@ Make sure to always use the same terminal window in the next sections or to set 
 ### Provision virtual server instances from base images
 {: #base-vsi-images}
 
-When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Use `ibmcloud is images` to find the list of available images:
+When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Use `ibmcloud is images` to find the list of available images. The output will look like:
 
 ```
-ibmcloud is images
 Listing images...
 ID                                     Name                    OS                                                        Created                         Status      Visibility
 cc8debe0-1b30-6e37-2e13-744bfb2a0c11   centos-7.x-amd64        CentOS (7.x - Minimal Install)                            2018-10-30T06:12:06.651+00:00   available   public
