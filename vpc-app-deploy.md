@@ -128,8 +128,8 @@ It will walk you through example steps on a terminal using the shell, `terraform
    ```
    {:codeblock}
 
-**Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window**. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience. They are used in subsequent sections.
-{:tip}
+   **Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window**. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience. They are used in subsequent sections.
+   {:tip}
 
 ## Basics of software installation
 {: #basics}
@@ -152,7 +152,6 @@ b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2
 81485856-df27-93b8-a838-fa28a29b3b04   windows-2012-r2-amd64   Windows Server (2012 R2 Standard Edition)                 2018-10-30T06:12:06.564+00:00   available   public
 5ccbc579-dc22-0def-46a8-9c2e9b502d37   windows-2016-amd64      Windows Server (2016 Standard Edition)                    2018-10-30T06:12:06.59+00:00    available   public
 ```
-{:pre}
 
 {{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There are no ingress charges for reading the mirrors.
 
@@ -169,9 +168,13 @@ This tutorial uses a shell script named [install.sh](https://github.com/IBM-Clou
 
    ```sh
    #!/bin/bash
+   set -x
    apt-get update
    apt-get install -y nginx
    indexhtml=/var/www/html/index.html
+
+   # Demonstrate the availability of internet repositories.  If www.python.org is availble then other software internet software like
+   # npm, pip, docker, ...  if isolated only the software from the ibm mirrors can be accessed
    if curl -o /tmp/x https://www.python.org/downloads/release/python-373/; then
        echo INTERNET > $indexhtml
    else
