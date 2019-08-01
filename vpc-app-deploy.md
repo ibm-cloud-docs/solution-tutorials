@@ -301,7 +301,7 @@ The provisioning script leaves both the frontend and backend VSIs in maintenance
    success: provision of file from on premises worked and was replaced with the following contents:
    hi
    ```
-1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
+1. Validate that the backend can be reached through the bastion host and has access to the internet:
    ```sh
    ./test_provision.bash $BACK_NIC_IP INTERNET hi "ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP"
    ```
@@ -310,7 +310,7 @@ The provisioning script leaves both the frontend and backend VSIs in maintenance
    The command output should be:
    ```
    success: httpd default file was correctly replaced with the following contents:
-   ISOLATED
+   INTERNET
    success: provision of file from on premises worked and was replaced with the following contents:
    hi
    ```
