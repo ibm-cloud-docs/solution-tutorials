@@ -47,14 +47,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-In this tutorial, you will deploy the configuration introduced in another tutorial, [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). It involves a frontend server accessible from the public Internet, the frontend server talks to a backend server. The backend server has no Internet connectivity.
+In this tutorial, you will deploy the configuration introduced in another tutorial, [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
 
 <p style="text-align: center;">
 
   ![Architecture of Private and public subnets in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png)
 </p>
 
-It also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned in a private subnet:
+The configuration also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned in a private subnet:
 
 <p style="text-align: center;">
 
@@ -76,17 +76,6 @@ You will explore how to consume these different sources.
 ## Before you begin
 {: #before-you-begin}
 
-### Get the tutorial source code
-{: #get-source}
-
-This tutorial comes with sample code to illustrate the different options to provision resources and install or update software in a VPC environment.
-
-1. Check out the tutorial source code:
-   ```sh
-   git clone https://github.com/IBM-Cloud/vpc-tutorials.git
-   ```
-   {: codeblock}
-
 ### Create a VPC ssh key
 {: #create-ssh-key}
 
@@ -100,8 +89,15 @@ For more info or instructions on how to manage and/or create an SSH key read [SS
 ### Set environment variables
 {: #set-env}
 
-This tutorial will walk through example steps on a terminal using the shell, `terraform` and `ansible`. You will install these tools in later steps. For the scripts to work, you need to define a set of environment variables.
+This tutorial comes with sample code to illustrate the different options to provision resources and install or update software in a VPC environment.
 
+It will walk you through example steps on a terminal using the shell, `terraform` and `ansible`. You will install these tools in later steps. For the scripts to work, you need to define a set of environment variables.
+
+1. Clone the tutorial [source code repository](https://github.com/IBM-Cloud/vpc-tutorials):
+   ```sh
+   git clone https://github.com/IBM-Cloud/vpc-tutorials.git
+   ```
+   {: codeblock}
 1. Change to the tutorial directory:
    ```sh
    cd <checkout_dir>/vpc-app-deploy
@@ -215,6 +211,11 @@ This section uses a shell script found in the [Private and public subnets in a V
    cd <checkout_dir>/vpc-app-deploy/
    ```
    {:pre}
+1. Set the current resource group
+   ```sh
+   ibmcloud target -g $TF_VAR_resource_group_name
+   ```
+   {:pre}
 1. Run the provisioning script:
    ```sh
    ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh ubuntu-18.04-amd64
@@ -260,6 +261,10 @@ The provisioning script leaves both the frontend and backend VSIs in maintenance
    ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP sh /uploaded.sh
    ```
    {:pre}
+
+   It can take a few minutes for the ssh service on the server to be initialized and it will take a few more minutes for the `cloud-init` script to complete. The `uploaded.sh` script will wait for the initialization to complete before exiting.
+   {:tip}
+
 1. Repeat the operation with the backend server:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$BACK_NIC_IP:/uploaded.sh
@@ -318,8 +323,6 @@ The provisioning script leaves both the frontend and backend VSIs in maintenance
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
-If you are starting with terraform for the first time, or if you are unfamiliar with the IBM VPC object model expressed in terraform you can optionally spend a few minutes [with a smaller example](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples/ibm-is-vpc) before moving ahead with this tutorial.
-
 ### Before you begin
 {: #terraform-before-you-begin}
 
@@ -327,7 +330,7 @@ Follow the instructions found in the [Getting started tutorial](https://{DomainN
 
 ### Provision a single virtual server instance
 
-Before deploying a more complex architecture, let's deploy a single VSI with a floating IP and access this VSI with `ssh`.
+Before deploying a more complex architecture and to validate the Terraform provider installation, let's deploy a single virtual server instance with a floating IP and then access this server with `ssh` 
 
 Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tfinstance/main.tf) file for a terraform script. It utilizes the environment variables defined earlier.
 
