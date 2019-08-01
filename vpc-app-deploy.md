@@ -98,9 +98,15 @@ It will walk you through example steps on a terminal using the shell, `terraform
    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
    ```
    {: codeblock}
+1. Define a variable named `CHECKOUT_DIR` pointing to the source code directory:
+   ```sh
+   cd vpc-tutorials
+   export CHECKOUT_DIR=$PWD
+   ```
+   {: codeblock}
 1. Change to the tutorial directory:
    ```sh
-   cd <checkout_dir>/vpc-app-deploy
+   cd $CHECKOUT_DIR/vpc-app-deploy
    ```
    {:codeblock}
 1. Copy the configuration file:
@@ -208,7 +214,7 @@ This section uses a shell script found in the [Private and public subnets in a V
 
 1. Change to the tutorial folder:
    ```sh
-   cd <checkout_dir>/vpc-app-deploy/
+   cd $CHECKOUT_DIR/vpc-app-deploy/
    ```
    {:pre}
 1. Set the current resource group
@@ -336,7 +342,7 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
 
 1. Change to the terraform script folder for this example:
    ```sh
-   cd <checkout_dir>/vpc-app-deploy/tfinstance
+   cd $CHECKOUT_DIR/vpc-app-deploy/tfinstance
    ```
    {:pre}
 1. Initialize Terraform:
@@ -426,7 +432,7 @@ To provision the resources:
 
 1. Change to the terraform script folder:
    ```sh
-   cd <checkout_dir>/vpc-app-deploy/tf
+   cd $CHECKOUT_DIR/vpc-app-deploy/tf
    ```
    {:pre}
 1. Initialize Terraform:
@@ -565,7 +571,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
 
 1. Change to the Ansible script folder for this example:
    ```sh
-   cd <checkout_dir>/vpc-app-deploy/ansible/tf
+   cd $CHECKOUT_DIR/vpc-app-deploy/ansible/tf
    ```
    {:pre}
 1. Initialize Terraform:
@@ -641,7 +647,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 
 1. Remove the resources created by Terraform:
    ```sh
-   cd <checkout_dir>/vpc-app-deploy/ansible/tf
+   cd $CHECKOUT_DIR/vpc-app-deploy/ansible/tf
    terraform destroy
    ```
    {:pre}
