@@ -317,7 +317,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-07-08"
+          "lastUpdated": "2019-07-31"
         }
       ]
     },
@@ -419,7 +419,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2019-07-17"
+          "lastUpdated": "2019-07-31"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -473,19 +473,6 @@
             "DevOps"
           ],
           "lastUpdated": "2019-04-19"
-        },
-        {
-          "name": "Reviewing IBM Cloud services, resources and usage",
-          "url": "cloud-usage.html",
-          "description": "An introduction to various approaches used to answer common usage-related questions.",
-          "imgSrc": "images/solution38/Architecture.png",
-          "tags": [
-            "Identity and Access Management",
-            "Cloud Foundry",
-            "Usage",
-            "Billing"
-          ],
-          "lastUpdated": "2019-06-14"
         }
       ]
     },

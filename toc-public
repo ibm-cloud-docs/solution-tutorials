@@ -59,7 +59,6 @@ Solution Tutorials
     {: .topicgroup}
     Identity and Access Management
         users-teams-applications.md
-        cloud-usage.md
 
     {: .topicgroup}
     Virtual Private Cloud
@@ -91,7 +90,6 @@ Solution Tutorials
         multi-region-webapp.md
         create-manage-secure-apis.md
         gather-visualize-analyze-iot-data.md
-        cloud-usage.md
 
     {: .topicgroup}
     Cloud Functions
