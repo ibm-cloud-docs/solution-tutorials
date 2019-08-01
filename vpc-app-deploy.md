@@ -26,7 +26,7 @@ This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC
 
 {:shortdesc}
 
-The tutorial starts with a general background and then has technology specific sections. Each technology section is standalone so feel free to jump to a specific section, like Terraform, after reviewing the overall architecture and the _Before you begin_ and _Basics of software installation_ sections.
+After an [introduction to the tutorial architecture](#architecture), you will [prepare your environment](#before-you-begin) for the tutorial and review the [basics of software installation](#basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#cli), [Terraform](#terraform) or [Ansible](#ansible).
 
 ## Objectives
 {: #objectives}
