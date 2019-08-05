@@ -97,36 +97,36 @@ It will walk you through example steps on a terminal using the shell, `terraform
    ```sh
    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
    ```
-   {: codeblock}
+   {: pre}
 1. Define a variable named `CHECKOUT_DIR` pointing to the source code directory:
    ```sh
    cd vpc-tutorials
    export CHECKOUT_DIR=$PWD
    ```
-   {: codeblock}
+   {: pre}
 1. Change to the tutorial directory:
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy
    ```
-   {:codeblock}
+   {:pre}
 1. Copy the configuration file:
    ```sh
    cp export.template export
    ```
-   {:codeblock}
+   {:pre}
 1. Edit the `export` file and set the environment variable values:
    * `TF_VAR_ibmcloud_api_key` is an {{site.data.keyword.Bluemix_notm}} API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
    * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
       ```sh
       ibmcloud is keys
       ```
-      {:codeblock}
+      {:pre}
    * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
 1. Load the variables into the environment:
    ```sh
    source export
    ```
-   {:codeblock}
+   {:pre}
 
    **Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window**. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience. They are used in subsequent sections.
    {:tip}
@@ -181,7 +181,6 @@ This tutorial uses a shell script named [install.sh](https://github.com/IBM-Clou
        echo ISOLATED > $indexhtml
    fi
    ```
-   {:codeblock}
 
 In this script, upgrading the installed software and installing `nginx` and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM_notm}} provided mirrors. For Ubuntu, the `apt-get` commands will access mirrors.
 
@@ -244,7 +243,6 @@ This section uses a shell script found in the [Private and public subnets in a V
    ```sh
    ibmcloud is instance-create ... --user-data @shared/install.sh
    ```
-   {:pre}
 
 1. Once the provisioning script completes. Open the file `resources.sh`. Shown below is example contents.
    ```sh
@@ -256,15 +254,19 @@ This section uses a shell script found in the [Private and public subnets in a V
    FRONT_VSI_NIC_ID=8976fbde-0f57-4829-a834-a773952f6d19
    BACK_VSI_NIC_ID=216aeb65-1296-4445-ab9e-694f751e773d
    ```
-   {:codeblock}
 1. Load the variables into your environment:
    ```sh
    source resources.sh
    ```
    {:pre}
-1.  The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server and execute this script:
+1.  The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
+   ```
+   {:pre}
+
+   Then execute this script:
+   ```sh
    ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP sh /uploaded.sh
    ```
    {:pre}
@@ -275,6 +277,10 @@ This section uses a shell script found in the [Private and public subnets in a V
 1. Repeat the operation with the backend server:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$BACK_NIC_IP:/uploaded.sh
+   ```
+   {:pre}
+
+   ```sh
    ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$BACK_NIC_IP sh /uploaded.sh
    ```
    {:pre}
@@ -382,7 +388,7 @@ The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tuto
 
 The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) contains the definition of the resources. It imports a Terraform _module_ shared with this other tutorial:
 
-   ```json
+   ```sh
    module vpc_pub_priv {
      source = "../../vpc-public-app-private-backend/tfmodule"
      basename = "${local.BASENAME}"
@@ -397,7 +403,6 @@ The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorial
      backend_user_data = "${file("../shared/install.sh")}"
    }
    ```
-   {:pre}
 
 In this definition:
    - **backend_pgw** controls whether the backend server has access to the public Internet. A public gateway can be connected to the backend subnet. The frontend has a floating IP assigned which provides both a public IP and gateway to the internet. This is going to allow open Internet access for software installation.  The backend will not have access to the Internet.
@@ -405,7 +410,7 @@ In this definition:
 
 With Terraform, all resources can have associated provisioners. The `null_resource` provisioner does not provision a cloud resource but can be used to copy files to server instances. This construct is used in the script to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) file and then execute it as shown below. To connect to the servers, Terraform supports [using the bastion host](https://www.terraform.io/docs/provisioners/connection.html#connecting-through-a-bastion-host-with-ssh) as provisioned in the tutorial:
 
-   ```json
+   ```sh
    resource "null_resource" "copy_from_on_prem" {
      connection {
        type        = "ssh"
@@ -427,7 +432,6 @@ With Terraform, all resources can have associated provisioners. The `null_resour
      }
    }
    ```
-   {:codeblock}
 
 To provision the resources:
 
@@ -540,7 +544,6 @@ An Ansible playbook provides the tasks to be run. The example below has a set of
            name: nginx
            state: restarted
    ```
-   {:codeblock}
 
 ### Ansible Inventory
 
@@ -559,7 +562,6 @@ Ansible works against multiple systems in your infrastructure at the same time. 
            %s
    ' $(cd $TF; terraform output FRONT_NIC_IP) $(cd $TF; terraform output BACK_NIC_IP)
    ```
-   {:codeblock}
 
 ### Provision subnets and virtual server instances
 {: #ansible-provision}
@@ -588,8 +590,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
    {:pre}
 1. Generate the Ansible inventory:
    ```sh
-   cd ..
-   ./inventory.bash > inventory
+   cd .. && ./inventory.bash > inventory
    ```
    {:pre}
 1. Provision software on the frontend server:
@@ -645,6 +646,12 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 1. Remove the resources created by Terraform:
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy/ansible/tf
+   ```
+   {:pre}
+
+   and
+
+   ```sh
    terraform destroy
    ```
    {:pre}
