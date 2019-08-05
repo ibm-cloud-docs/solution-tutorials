@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-30"
+lastupdated: "2019-08-05"
 lasttested: "2019-07-30"
 ---
 
@@ -37,7 +37,7 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
+* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -59,7 +59,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-1. [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
+1. [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
 1. [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/openshift?topic=openshift-openshift-cli#cli_oc)
 1. [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key) to be able to commit source code to a private Git repository.
    1. Use [these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
@@ -73,20 +73,19 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 
 In this section, you will provision a **Standard** {{site.data.keyword.openshiftlong_notm}} cluster as {{site.data.keyword.openshiftshort}} worker nodes are available for paid accounts and standard clusters only.
 
-1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
-2. Select a **Standard** cluster.
-1. Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
-   1. Set **Cluster name** to **myopenshiftcluster**.
-   1. Select a **Resource group**.
-   1. Choose a **Geography**.
+1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create?platformType=openshift).
+2. Set **Cluster name** to **myopenshiftcluster**.
+3. Select a **Resource group** and choose a **Geography**.
 4. Under **Location**,
-   - Select a **Single zone** followed by a **Worker zone**.
+   - Select a **Metro**.
+   - Choose a single **Worker zone** by unchecking the other worker zones.
    - Select **Public endpoint only** as your Master service endpoint.
 5. Under **Default worker pool**,
+   - Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
    - Select **4 Cores 16GB RAM** as the flavor for Worker nodes.
-   - Select **2** Worker nodes for this tutorial.
+   - Leave **Encrypt local disk** checked and select **2** Worker nodes for this tutorial.
 6. Review **Infrastructure permissions checker** to verify the required permissions
-1. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+7. Click **Create cluster** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
 ### Configure CLI
 
