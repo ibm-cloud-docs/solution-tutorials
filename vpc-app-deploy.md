@@ -231,24 +231,22 @@ This section uses a shell script found in the [Private and public subnets in a V
    ```
    {:pre}
 
-In the command above,
-   - `$TF_VAR_ssh_key_name` is the ssh key name described earlier
-   - `tutorial` is the common prefix to all resources and the name of the VPC. Keep this lower case and a valid DNS name.
-   - `$TF_VAR_resource_group_name` is the resource group name which will contain all of the resources created.
-   - `resources.sh` is the output of a successful build.
-   - [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) is the cloud-init file used to initialize the frontend and the backend servers.
-   - `ubuntu-18.04-amd64` is one of the virtual server images from the `ibmcloud is images` command, the scripts are expecting Ubuntu.
+   In the command above,
+      - `$TF_VAR_ssh_key_name` is the ssh key name described earlier
+      - `tutorial` is the common prefix to all resources and the name of the VPC. Keep this lower case and a valid DNS name.
+      - `$TF_VAR_resource_group_name` is the resource group name which will contain all of the resources created.
+      - `resources.sh` is the output of a successful build.
+      - [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) is the cloud-init file used to initialize the frontend and the backend servers.
+      - `ubuntu-18.04-amd64` is one of the virtual server images from the `ibmcloud is images` command, the scripts are expecting Ubuntu.
 
-During its execution, the `vpc-pubpriv-create-with-bastion.sh` shell script creates three hosts: frontend, backend and bastion. The `@shared/install.sh` has been passed to a `ibmcloud is create-instance` CLI command `--user-data` parameter like this:
+   During its execution, the `vpc-pubpriv-create-with-bastion.sh` shell script creates three hosts: frontend, backend and bastion. The `@shared/install.sh` has been passed to a `ibmcloud is create-instance` CLI command `--user-data` parameter like this:
 
-```sh
- ibmcloud is instance-create ... --user-data @shared/install.sh
-```
-{:pre}
+   ```sh
+   ibmcloud is instance-create ... --user-data @shared/install.sh
+   ```
+   {:pre}
 
-The provisioning script leaves both the frontend and backend VSIs in maintenance mode ready to install from the Internet. You will now send files from your local workstation to these servers and execute these scripts.
-
-1. Once the provisioning script completes, open the file the `resources.sh`. Shown below is example contents.
+1. The provisioning script leaves both the frontend and backend VSIs in maintenance mode ready to install from the Internet. You will now send files from your local workstation to these servers and execute these scripts. Once the provisioning script completes, open the file the `resources.sh`. Shown below is example contents.
    ```sh
    $ cat resources.sh
    FRONT_IP_ADDRESS=169.61.247.108
