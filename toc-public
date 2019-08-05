@@ -65,6 +65,7 @@ Solution Tutorials
         vpc-public-app-private-backend.md
         vpc-multi-region.md
         vpc-site2site-vpn.md
+        vpc-app-deploy.md
         vpc-secure-management-bastion-server.md
 
     {: .topicgroup}
@@ -123,6 +124,7 @@ Solution Tutorials
         vpc-public-app-private-backend.md
         vpc-multi-region.md
         vpc-site2site-vpn.md
+        vpc-app-deploy.md
         vpc-secure-management-bastion-server.md
         secure-network-enclosure.md
         nat-config-private.md

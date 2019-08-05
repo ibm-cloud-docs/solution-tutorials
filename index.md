@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-08-01"
+lastupdated: "2019-08-05"
 ---
 
 {:shortdesc: .shortdesc}
@@ -136,6 +136,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
+    <a href = "/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn#vpc-site2site-vpn">
+    <div class = "solutionBox solutionBoxFeatured">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution46-vpc-vpn/ArchitectureDiagram.png" alt="Architecture diagram for the solution Use a VPC/VPN gateway for secure and private on-premises access to cloud resources" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
     <a href = "/docs/tutorials?topic=solution-tutorials-cloud-e2e-security#cloud-e2e-security">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
@@ -148,23 +165,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to a cloud application" />
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-isolated-cloud-foundry-enterprise-apps#isolated-cloud-foundry-enterprise-apps">
-    <div class = "solutionBox solutionBoxFeatured">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Isolated Cloud Foundry Enterprise Apps
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Provide an innovation platform to your organization by deploying an isolated, enterprise-grade Cloud Foundry platform using Cloud Foundry Enterprise Environment.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution45-CFEE-apps/Architecture.png" alt="Architecture diagram for the solution Isolated Cloud Foundry Enterprise Apps" />
                 </div>
             </div>
         </div>
@@ -800,6 +800,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution46-vpc-vpn/ArchitectureDiagram.png" alt="Architecture diagram for the solution Use a VPC/VPN gateway for secure and private on-premises access to cloud resources"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/tutorials?topic=solution-tutorials-vpc-app-deploy#vpc-app-deploy">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Install software on virtual server instances in VPC
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Learn how to use the IBM Cloud CLI, Terraform and Ansible to install software on virtual server instances running in a Virtual Private Cloud.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution49-vpc-app-deploy/ArchitectureDiagram.png" alt="Architecture diagram for the solution Install software on virtual server instances in VPC"/>
                 </div>
             </div>
         </div>

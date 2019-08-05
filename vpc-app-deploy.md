@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-10"
-lasttested: "2019-06-15"
+lastupdated: "2019-08-05"
+lasttested: "2019-08-05"
 
 ---
 

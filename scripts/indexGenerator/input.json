@@ -219,8 +219,7 @@
                   "Cloud Foundry Enterprise Environment",
                   "Node.js",
                   "Kubernetes"
-                ],
-                "featuredPosition": 2
+                ]
               }
         ]
     },
@@ -299,7 +298,7 @@
                 "url": "cloud-e2e-security.html",
                 "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
                 "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
-                "featuredPosition": 1,
+                "featuredPosition": 2,
                 "tags": [
                     "Kubernetes",
                     "Encryption",
@@ -491,6 +490,7 @@
                 "url": "vpc-site2site-vpn.html",
                 "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.",
                 "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
+                "featuredPosition": 1,
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",
@@ -500,9 +500,8 @@
             {
                 "name": "Install software on virtual server instances in VPC",
                 "url": "vpc-app-deploy.html",
-                "description": "Learn how to use the IBM Cloud CLI, Terraform and Ansible to install software on virtual server instances.",
+                "description": "Learn how to use the IBM Cloud CLI, Terraform and Ansible to install software on virtual server instances running in a Virtual Private Cloud.",
                 "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
-                "hidden": true,
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",

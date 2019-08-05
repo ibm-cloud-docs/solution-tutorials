@@ -19,8 +19,6 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=autoscale-virtual-server.md \
   --exclude=extended-cloud-security.md \
-  --exclude="images/solution49-*" \
-  --exclude=vpc-app-deploy.md \
   --exclude="images/solution50-*" \
   --exclude=scalable-webapp-openshift.md \
   --exclude=README.md \

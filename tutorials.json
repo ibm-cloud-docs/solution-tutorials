@@ -222,7 +222,6 @@
             "Node.js",
             "Kubernetes"
           ],
-          "featuredPosition": 2,
           "lastUpdated": "2019-06-04"
         }
       ]
@@ -307,7 +306,7 @@
           "url": "cloud-e2e-security.html",
           "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
           "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
-          "featuredPosition": 1,
+          "featuredPosition": 2,
           "tags": [
             "Kubernetes",
             "Encryption",
@@ -419,7 +418,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2019-07-31"
+          "lastUpdated": "2019-08-05"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -512,12 +511,25 @@
           "url": "vpc-site2site-vpn.html",
           "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.",
           "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
+          "featuredPosition": 1,
           "tags": [
             "Infrastructure",
             "Virtual Private Cloud",
             "Network"
           ],
           "lastUpdated": "2019-07-15"
+        },
+        {
+          "name": "Install software on virtual server instances in VPC",
+          "url": "vpc-app-deploy.html",
+          "description": "Learn how to use the IBM Cloud CLI, Terraform and Ansible to install software on virtual server instances running in a Virtual Private Cloud.",
+          "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Network"
+          ],
+          "lastUpdated": "2019-08-05"
         },
         {
           "name": "Securely access remote instances with a bastion host",
