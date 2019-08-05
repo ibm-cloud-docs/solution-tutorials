@@ -229,7 +229,7 @@ You can either generate load by sending multiple requests with random petal_widt
     array_of_values_to_be_scored=[round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1)]
     # NOTE: generate iam_token and retrieve ml_instance_id from the ML service credentials
     header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + iam_token, 'ML-Instance-ID': ml_instance_id}
-    payload_scoring = {"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"], "values": [array_of_values_to_be_scored, another_array_of_values_to_be_scored]}]}
+    payload_scoring = {"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"], "values": [array_of_values_to_be_scored]}]}
     response_scoring = requests.post(scoring_endpoint, json=payload_scoring, headers=header)
     print("Scoring response")
     print(json.loads(response_scoring.text))
