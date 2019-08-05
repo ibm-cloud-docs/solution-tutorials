@@ -59,7 +59,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-1. [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
+1. [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
 1. [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/openshift?topic=openshift-openshift-cli#cli_oc)
 1. [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key) to be able to commit source code to a private Git repository.
    1. Use [these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
@@ -78,14 +78,14 @@ In this section, you will provision a **Standard** {{site.data.keyword.openshift
 3. Select a **Resource group** and choose a **Geography**.
 4. Under **Location**,
    - Select a **Metro**.
-   - Choose a single **Worker zone** say **Dallas 10** if your metro is Dallas.
+   - Choose a single **Worker zone** by unchecking the other worker zones.
    - Select **Public endpoint only** as your Master service endpoint.
 5. Under **Default worker pool**,
    - Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
    - Select **4 Cores 16GB RAM** as the flavor for Worker nodes.
    - Leave **Encrypt local disk** checked and select **2** Worker nodes for this tutorial.
 6. Review **Infrastructure permissions checker** to verify the required permissions
-7. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+7. Click **Create cluster** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
 ### Configure CLI
 
