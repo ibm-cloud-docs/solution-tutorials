@@ -112,16 +112,16 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
   4. Click **Create**.
 2. Once the model is created,
   1. Add training data by clicking **Select from project**.
-  2. Choose the **iris_initial.csv** .
-  3. click **Select asset**.
-3. Click on **Configure source** then Set **Holdout data split** to **25%** and click **Save**.
+  2. Choose the **iris_initial.csv** file.
+  3. Click **Select asset**.
+3. On the subsequent page, click on **Configure source** then Set **Holdout data split** to **25%** and click **Save**.
 4. Select **Species** as your Select column to predict.
 5. Click **Configure prediction**
    1. Select **Multiclass classification** as the prediction type.
    2. Choose **Accuracy** as the Optimized metric.
    3. Click **Apply**.
 6. Click **Run experiment**.
-7. Once the experiment completes running, under the **Pipeline** leaderboard, Click **Save as model** next to the model with *Rank 1*.
+7. Once the experiment completes running, under the **Pipeline** leaderboard, click **Save as model** next to the model with *Rank 1*.
 8. Check the details of the model and click **Save**.
 9. In the received notification, click **View in project** then click on **Overview** to check the details of the model.
 
