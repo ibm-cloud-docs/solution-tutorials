@@ -508,13 +508,9 @@ This section uses both Terraform and Ansible.
 1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
 1. Follow [these instructions](/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
 
-<!-- TODO what is a good reason to use Terraform for the resources vs. Ansible? No specific VPC constructs in Ansible, it would be all scripting? -->
-
 ### Ansible Playbook
 
 An Ansible playbook provides the tasks to be run. The example below has a set of tasks required to install nginx and upload a script. You will notice the similarities to the `cloud-init` script discussed earlier. The `uploaded.sh` script is identical.
-
-<!-- TODO make sure uploaded.sh is known in the tutorial!!! -->
 
    ```yaml
    - hosts: FRONT_NIC_IP BACK_NIC_IP
