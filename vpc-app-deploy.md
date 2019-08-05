@@ -246,7 +246,7 @@ This section uses a shell script found in the [Private and public subnets in a V
    ```
    {:pre}
 
-1. The provisioning script leaves both the frontend and backend VSIs in maintenance mode ready to install from the Internet. You will now send files from your local workstation to these servers and execute these scripts. Once the provisioning script completes, open the file the `resources.sh`. Shown below is example contents.
+1. Once the provisioning script completes. Open the file the `resources.sh`. Shown below is example contents.
    ```sh
    $ cat resources.sh
    FRONT_IP_ADDRESS=169.61.247.108
@@ -262,7 +262,7 @@ This section uses a shell script found in the [Private and public subnets in a V
    source resources.sh
    ```
    {:pre}
-1. Send a script to the frontend server and execute this script:
+1.  The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server and execute this script:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
    ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP sh /uploaded.sh
