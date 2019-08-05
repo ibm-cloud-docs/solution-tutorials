@@ -337,7 +337,7 @@ Follow the instructions found in the [Getting started tutorial](https://{DomainN
 
 ### Provision a single virtual server instance
 
-Before deploying a more complex architecture and to validate the Terraform provider installation, let's deploy a single virtual server instance with a floating IP and then access this server with `ssh` 
+Before deploying a more complex architecture and in order to validate the Terraform provider installation, let's deploy a single virtual server instance with a floating IP and then access this server with `ssh` 
 
 Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tfinstance/main.tf) file for a terraform script. It utilizes the environment variables defined earlier.
 
