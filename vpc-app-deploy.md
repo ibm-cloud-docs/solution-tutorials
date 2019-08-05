@@ -246,7 +246,7 @@ This section uses a shell script found in the [Private and public subnets in a V
    ```
    {:pre}
 
-1. Once the provisioning script completes. Open the file the `resources.sh`. Shown below is example contents.
+1. Once the provisioning script completes. Open the file `resources.sh`. Shown below is example contents.
    ```sh
    $ cat resources.sh
    FRONT_IP_ADDRESS=169.61.247.108
