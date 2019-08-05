@@ -212,7 +212,7 @@ This section uses a shell script found in the [Private and public subnets in a V
 
 1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
 
-### Provision
+### Provision subnets and virtual server instances
 {: #cli-provision}
 
 1. Change to the tutorial folder:
@@ -279,7 +279,7 @@ This section uses a shell script found in the [Private and public subnets in a V
    ```
    {:pre}
 
-### Test
+### Test the configuration of the virtual servers
 {: #cli-test}
 
  To validate the deployment:
@@ -452,7 +452,7 @@ To provision the resources:
    ```
    {:pre}
 
-### Test
+### Test the configuration of the virtual servers
 {: #terraform-test}
 
 Now that Terraform has deployed resources, you can validate they were correctly provisioned.
@@ -565,7 +565,7 @@ Ansible works against multiple systems in your infrastructure at the same time. 
    ```
    {:codeblock}
 
-### Provision
+### Provision subnets and virtual server instances
 {: #ansible-provision}
 
 The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/tf/main.tf) similar to the one described in the previous section except the software installation has been stripped out. The Ansible script will install software from the mirrors and then upload software from your workstation.
@@ -611,7 +611,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
    ```
    {:pre}
 
-### Test
+### Test the configuration of the virtual servers
 {: #ansible-test}
 
 Now that Terraform has deployed resources and Ansible installed the software, you can validate they were correctly provisioned.
