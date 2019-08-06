@@ -113,7 +113,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    {: pre}
 2. Select `Backend Service / Web App` then `Node` and select `Node.js Web App with Express.js` to create a Node starter.
 3. Enter a **name** for your application.
-4. Select the **resource group** where to deploy this application.
+4. Select a **resource group** same as the cluster to deploy this application.
 5. Do not add additional services.
 6. Do not add a DevOps toolchain, select **manual deployment**.
 
@@ -158,7 +158,7 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
    {:tip}
 2. Click on **New project** and provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
-7. Follow the instructions under **Existing folder** to import the code you have generated with `ibmcloud dev`.
+7. Follow the instructions under *Existing folder* section to import the code you have generated with `ibmcloud dev`. Use your IBM Cloud Git profile username and personal access token to authenticate.
 8. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
 ### Create a Git deploy token
