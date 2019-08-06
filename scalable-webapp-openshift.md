@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-08-05"
+lastupdated: "2019-08-06"
 lasttested: "2019-07-30"
 ---
 
@@ -92,7 +92,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. When the cluster is ready, click on the **Access** tab under the cluster name.
-1. Under **Gain access to your cluster** section, click on **oauth token request page** and follow instructions to log into your cluster on a terminal.
+1. Under **After your cluster provisions, gain access** section, click on **oauth token request page** link and follow instructions to log into your cluster on a terminal.
 1. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
