@@ -187,6 +187,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    oc new-app https://<DEPLOY_TOKEN_USERNAME>:<DEPLOY_TOKEN_PASSWORD>@<REPO_URL_WITHOUT_HTTPS> --name=openshiftapp --strategy=docker -o yaml > openshift.yaml
    ```
    {:pre}
+
    Replace `<REPO_URL_WITHOUT_HTTPS>` with the Git Repo URL without `https://`.
    {:tip}
 
