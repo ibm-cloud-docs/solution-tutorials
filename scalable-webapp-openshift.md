@@ -188,7 +188,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    ```
    {:pre}
 
-   Replace `<REPO_URL_WITHOUT_HTTPS>` with the Git Repo URL without `https://`.
+   Replace `<REPO_URL_WITHOUT_HTTPS>` with the Git repository URL without `https://`.
    {:tip}
 
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
