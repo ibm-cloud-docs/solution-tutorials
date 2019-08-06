@@ -182,11 +182,13 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    oc new-project openshiftproject
    ```
    {:pre}
-1. Generate a yaml file in the same folder as your starter kit code by replacing the placeholders and running the below command
+1. Generate a yaml file `openshift.yaml` in the same folder as your starter kit code by replacing the placeholders and running the below command
    ```sh
    oc new-app https://<DEPLOY_TOKEN_USERNAME>:<DEPLOY_TOKEN_PASSWORD>@<REPO_URL_WITHOUT_HTTPS> --name=openshiftapp --strategy=docker -o yaml > openshift.yaml
    ```
    {:pre}
+   Replace `<REPO_URL_WITHOUT_HTTPS>` with the Git Repo URL without `https://`.
+   {:tip}
 
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
 In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}
@@ -199,8 +201,8 @@ In this step, you will update the generated BuildConfig section of the generated
 
    For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create). For registry URL, run `ibmcloud cr region`.
    {:tip}
-1. Edit the generated **openshift.yaml**.
-1. Locate the *ImageStream* object named *openshiftapp* and add a `dockerImageRepository` definition under `spec` replacing the placeholders `<REGISTRY_URL>` and `<REGISTRY_NAMESPACE>` with their respective values:
+2. Edit the generated **openshift.yaml**.
+3. Locate the *ImageStream* object named *openshiftapp* and add a `dockerImageRepository` definition under `spec` replacing the placeholders `<REGISTRY_URL>` and `<REGISTRY_NAMESPACE>` with their respective values:
    ```yaml
    -
    apiVersion: image.openshift.io/v1
@@ -222,7 +224,7 @@ In this step, you will update the generated BuildConfig section of the generated
    {:codeblock}
 
    An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform
-1. Update the `spec` under `BuildConfig` section by changing the output to kind `DockerImage` and adding a `pushSecret`
+4. Update the `spec` under `BuildConfig` section by changing the output to kind `DockerImage` and adding a `pushSecret`
    ```yaml
    spec:
    nodeSelector: null
@@ -237,14 +239,14 @@ In this step, you will update the generated BuildConfig section of the generated
 
    A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A `BuildConfig` object is the definition of the entire build process.
 
-1. Search for `containers` and update the image with
+5. Search for `containers` and update the image with
    ```yaml
    containers:
        -image: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
        name: openshiftapp
    ```
    {:codeblock}
-2. Save the YAML file.
+6. Save the YAML file.
 
 ## Deploy the application to cluster
 {:#deploy_app_to_cluster}
