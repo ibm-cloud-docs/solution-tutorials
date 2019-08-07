@@ -158,8 +158,8 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
    {:tip}
 2. Click on **New project** and provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
-7. Follow the instructions under *Existing folder* section to import the code you have generated with `ibmcloud dev`. Use your IBM Cloud Git profile username and personal access token to authenticate.
-8. Once you push the code to the private repository, you should see the scaffolded code in the project.
+4. Follow the instructions under *Git global setup* and *Existing folder* sections to setup Git and to import the code you have generated with `ibmcloud dev`.
+5. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
 ### Create a Git deploy token
 In this step, you will create a deploy token to allow read-only access to your repository
