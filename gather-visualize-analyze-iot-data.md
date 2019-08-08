@@ -64,12 +64,12 @@ To begin, you will create Internet of Things Platform service - The hub which ca
 2. Enter `IoT demo hub` as the service name, choose a pricing plan, click **Create** and **Launch**(under Manage) the dashboard.
 3. From the side menu, select **Security** > click Edit icon next to **Connection Security** and choose **TLS Optional** under **Default Rule** > **Security Level** and click **Save**.
 4. From the side menu, select **Devices** > **Device Types**  and **+ Add Device Type**.
-5. Enter `simulator` as the **Name** and click **Next** and **Done**.
+5. Enter `simulator` as the **Name** and click **Next** and **Finish**.
 6. Next, click on **Register Devices**.
-7. Under **Browse** > **Identity** enter `phone` for **Device ID**.
+7. Select **simulator** as **Device Type** and enter `phone` for **Device ID**.
 8. Click **Next** until the **Security** screen is displayed.
 9. Enter a value for the **Authentication Token**, for example: `myauthtoken` and click **Next**.
-10. After clicking **Done**, your connection information is displayed. Keep this tab open.
+10. After clicking **Finish**, your connection information is displayed. Keep this tab open.
 
 The IoT platform is now configured to start receiving data. Devices will need to send their data to the IoT Platform with the Device Type, ID and Token specified.
 
@@ -82,15 +82,14 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    git clone https://github.com/IBM-Cloud/iot-device-phone-simulator
    cd iot-device-phone-simulator
    ```
-2. Open the code in an IDE of your choice and change the `name` value in the **manifest.yml** file to a **unique** value.
 3. Push the application to the {{site.data.keyword.Bluemix_notm}}.
    ```bash
    ibmcloud login
    ibmcloud target --cf
    ibmcloud cf push
    ```
-4. In a few minutes, your application will be deployed and you should see a URL similar to `<UNIQUE_NAME>.mybluemix.net`
-5. Visit the application URL with HTTPS (`https://<UNIQUE_NAME>.mybluemix.net`) on your phone using a browser.
+4. In a few minutes, your application will be deployed and you should see a URL similar to `<random-name>.mybluemix.net`
+5. Visit the application URL with HTTPS (`https://<random-name>.mybluemix.net`) on your phone using a browser.
 6. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
 7. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
   ![](images/solution16/recent_events_with_phone.png)
@@ -162,24 +161,38 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
 3. Verify the **Credentials** and then click **Create**.
 
-### Create an {{site.data.keyword.iae_full_notm}} service
+### Select or Create an {{site.data.keyword.iae_full_notm}} service
 
-1. Click **Settings** on the top navigation bar > Associated Services.
-1. Click **Add service**.
+If you don't have an existing **{{site.data.keyword.iae_full_notm}}** service:
+1. Go to {{site.data.keyword.cloud_notm}} catalog, select [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine).
+1. Select the **Lite** plan and click **Configure**.
+1. In the configuration page, set the Software package to **AE 1.2 Spark and Hadoop**.
+1. Click **Create**.
+
+Once the service is provisioned or if you have an existing service instance you want to use and configured with software package **AE 1.2 Spark and Hadoop**:
+1. Open the service details page.
+1. Under **Service credentials**, create new credentials:
+   1. Set **Name** to **wdp-writer**
+   1. Set **Role** to **Writer**
+1. Under **Manage**, retrieve the user name and password for the cluster. You may need to reset the cluster password.
+
+In {{site.data.keyword.DSX}},:
+1. Select the **Detect Anomaly** project.
+1. Click **Settings** on the top navigation bar.
+1. Scroll to **Associated Services.**
+   1. Click **Add service**.
    1. Select **{{site.data.keyword.iae_full_notm}}**.
-   1. Click **New** > Select the **Lite** plan.
-   1. Click **Create**.
-   1. Select a resource group.
-   1. Select **AE 1.1 Spark** as software package and **Confirm**.
-1. If you don't see the service in the associated services list, Click **Add service**, select **{{site.data.keyword.iae_full_notm}}**.
-1. Select the **{{site.data.keyword.iae_full_notm}}** instance previously created under **Existing**. If the service is not showing in the list, make sure it is fully provisioned first.
+1. Select the **Existing** service instance discussed above.
+1. Enter the cluster user name and password.
+1. Click **Select**.
 
 ### Create a Jupyter (ipynb) notebook
 1. Click **+ Add to Project** and add a new **Notebook**.
 2. Enter `Anomaly-detection-notebook` for the **Name**.
 3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio-python3.ipynb` in the **Notebook URL**.
 4. Select the **{{site.data.keyword.iae_full_notm}}** service associated previously as the runtime.
-5. Create **Notebook**. Set `Python 3.5 with Spark 2.3 (YARN Client Mode)` as your Kernel. Check that the notebook is created with metadata and code.
+5. Create **Notebook**.
+1. Set `Python 3.7 with Spark 2.3 (YARN Client Mode)` as your Kernel. Check that the notebook is created with metadata and code.
    ![Jupyter Notebook Watson Studio](images/solution16/jupyter_notebook_watson_studio.png)
    To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
    {:tip}
