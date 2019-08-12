@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-22"
+lastupdated: "2019-08-12"
 lasttested: "2019-05-22"
 ---
 
@@ -308,9 +308,7 @@ See [Using the Ingress controller with a custom domain](https://{DomainName}/doc
 
 If you were to try to access your application with HTTPS at this time `https://<customdomain>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
-1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key:
-  https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3
-   You can use [Let's Encrypt](https://letsencrypt.org/) to generate trusted certificate.
+1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key as described [here](https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3) . To generate a trusted certificate, You can either use [Let's Encrypt](https://letsencrypt.org/) or [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates)
 2. Save the cert and the key in base64 ascii format files.
 3. Create a TLS secret to store the cert and the key:
    ```

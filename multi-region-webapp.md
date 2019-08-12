@@ -116,7 +116,7 @@ Next, we will deploy the same application to a different {{site.data.keyword.Blu
 ## Register a custom domain with {{site.data.keyword.cis_full_notm}}
 {: #domain_cis}
 
-[{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.  
+[{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started-with-ibm-cloud-internet-services-cis-#getting-started-with-ibm-cloud-internet-services-cis-) is a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for web applications. It provides a fast, highly performant, reliable, and secure internet service for customers running their business on IBM Cloud with three main capabilities to enhance your workflow: security, reliability, and performance.
 
 When deploying a real world application, you will likely want to use your own domain instead of the IBM-provided domain (_mybluemix.net_). In this step, after you have a custom domain, you can use the DNS servers provided by {{site.data.keyword.cis_full_notm}}.
 
@@ -150,7 +150,7 @@ In this section, you will use the Global Load Balancer (GLB) in {{site.data.keyw
 5. Click **Provision 1 Resource**.
    ![Origin Pool](images/solution1/origin_pool.png)
 
-### Create a Global Load Balancer (GLB). 
+### Create a Global Load Balancer (GLB).
 
 1. Click **Create Load Balancer**.
 2. Enter a name for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the location.
@@ -218,7 +218,7 @@ For the application deployed in London, use a separate manifest to configure the
    cf push "${CF_APP}" -f eu-gb.manifest.yml
    ```
 
-Finally commit the changes to the manifest files and make sure the builds for both locations succeed.  
+Finally commit the changes to the manifest files and make sure the builds for both locations succeed.
 
 ## Alternative: Map the custom domain to the IBM Cloud system domain
 
@@ -258,7 +258,7 @@ For your Cloud Foundry applications to be reachable through the custom domain, y
 1. Obtain a SSL certificate. You can generate a free one directly at https://letsencrypt.org/ or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
 2. Navigate to Application **Overview** > **Routes** > **Manage Domains**.
 3. Click the SSL Certificate upload button and upload the certificate.
-5. Access your application with https instead of http.
+4. Access your application with https instead of http.
 
 ## Monitor application performance
 {: #monitor}
