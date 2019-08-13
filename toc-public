@@ -13,6 +13,7 @@ Solution Tutorials
         vm-to-containers-and-kubernetes.md
         strategies-for-resilient-applications.md
         continuous-deployment-to-kubernetes.md
+        scalable-webapp-openshift.md
         static-files-cdn.md
         pub-sub-object-storage.md
         lamp-stack.md
@@ -80,6 +81,24 @@ Solution Tutorials
     
     {: .navgroup id="howto"}
     {: .topicgroup}
+    Kubernetes
+        scalable-webapp-kubernetes.md
+        vm-to-containers-and-kubernetes.md
+        strategies-for-resilient-applications.md
+        continuous-deployment-to-kubernetes.md
+        pub-sub-object-storage.md
+        plan-create-update-deployments.md
+        application-log-analysis.md
+        isolated-cloud-foundry-enterprise-apps.md
+        multi-region-k8s-cis.md
+        cloud-e2e-security.md
+        users-teams-applications.md
+
+    {: .topicgroup}
+    OpenShift
+        scalable-webapp-openshift.md
+
+    {: .topicgroup}
     Cloud Foundry
         strategies-for-resilient-applications.md
         static-files-cdn.md
@@ -100,20 +119,6 @@ Solution Tutorials
         slack-chatbot-database-watson.md
         serverless-mobile-backend.md
         serverless-github-traffic-analytics.md
-
-    {: .topicgroup}
-    Kubernetes
-        scalable-webapp-kubernetes.md
-        vm-to-containers-and-kubernetes.md
-        strategies-for-resilient-applications.md
-        continuous-deployment-to-kubernetes.md
-        pub-sub-object-storage.md
-        plan-create-update-deployments.md
-        application-log-analysis.md
-        isolated-cloud-foundry-enterprise-apps.md
-        multi-region-k8s-cis.md
-        cloud-e2e-security.md
-        users-teams-applications.md
 
     {: .topicgroup}
     Infrastructure

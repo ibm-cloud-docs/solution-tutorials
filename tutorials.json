@@ -1,8 +1,9 @@
 {
   "tags": [
+    "Kubernetes",
+    "OpenShift",
     "Cloud Foundry",
     "Cloud Functions",
-    "Kubernetes",
     "Infrastructure"
   ],
   "categories": [
@@ -22,7 +23,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2019-05-22"
+          "lastUpdated": "2019-08-12"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -70,6 +71,20 @@
             "Vulnerability Advisor"
           ],
           "lastUpdated": "2019-07-08"
+        },
+        {
+          "name": "Scalable web app on OpenShift",
+          "url": "scalable-webapp-openshift.html",
+          "description": "Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+          "imgSrc": "images/solution50-scalable-webapp-openshift/Architecture.png",
+          "featuredPosition": 2,
+          "tags": [
+            "OpenShift",
+            "Container Service",
+            "Container Registry",
+            "Node.js"
+          ],
+          "lastUpdated": "2019-08-13"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -287,7 +302,7 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2019-06-03"
+          "lastUpdated": "2019-08-12"
         },
         {
           "name": "Create, secure and manage REST APIs",
@@ -306,7 +321,6 @@
           "url": "cloud-e2e-security.html",
           "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
           "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
-          "featuredPosition": 2,
           "tags": [
             "Kubernetes",
             "Encryption",
@@ -316,7 +330,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-07-31"
+          "lastUpdated": "2019-08-12"
         }
       ]
     },

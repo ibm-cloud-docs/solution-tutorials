@@ -12,19 +12,6 @@
         "anchor": "websites",
         "solutions": [
             {
-                "name": "Scalable web app on OpenShift",
-                "url": "scalable-webapp-openshift.html",
-                "description": "Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
-                "imgSrc": "images/solution50-scalable-webapp-openshift/Architecture.png",
-                "hidden": true,
-                "tags": [
-                    "OpenShift",
-                    "Container Service",
-                    "Container Registry",
-                    "Node.js"
-                ]
-            },
-            {
                 "name": "Scalable web app on Kubernetes",
                 "url": "scalable-webapp-kubernetes.html",
                 "description": "Scaffold a Java web application, run it locally in a container and then deploy it to a Kubernetes cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
@@ -79,6 +66,19 @@
                     "DevOps",
                     "Node.js",
                     "Vulnerability Advisor"
+                ]
+            },
+            {
+                "name": "Scalable web app on OpenShift",
+                "url": "scalable-webapp-openshift.html",
+                "description": "Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+                "imgSrc": "images/solution50-scalable-webapp-openshift/Architecture.png",
+                "featuredPosition": 2,
+                "tags": [
+                    "OpenShift",
+                    "Container Service",
+                    "Container Registry",
+                    "Node.js"
                 ]
             },
             {
@@ -299,7 +299,6 @@
                 "url": "cloud-e2e-security.html",
                 "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
                 "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
-                "featuredPosition": 2,
                 "tags": [
                     "Kubernetes",
                     "Encryption",

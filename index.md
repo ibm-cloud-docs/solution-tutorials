@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-08-08"
+lastupdated: "2019-08-13"
 ---
 
 {:shortdesc: .shortdesc}
@@ -153,18 +153,18 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-cloud-e2e-security#cloud-e2e-security">
+    <a href = "/docs/tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Apply end to end security to a cloud application
+                Scalable web app on OpenShift
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.</p>
+                    <p>Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to a cloud application" />
+                    <img class="architectureDiagram" src = "images/solution50-scalable-webapp-openshift/Architecture.png" alt="Architecture diagram for the solution Scalable web app on OpenShift" />
                 </div>
             </div>
         </div>
@@ -238,6 +238,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution21/Architecture.png" alt="Architecture diagram for the solution Continuous Deployment to Kubernetes"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Scalable web app on OpenShift
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution50-scalable-webapp-openshift/Architecture.png" alt="Architecture diagram for the solution Scalable web app on OpenShift"/>
                 </div>
             </div>
         </div>
