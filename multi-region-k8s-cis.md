@@ -356,7 +356,7 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
    1. Set **Action** to `Simulate` to log all the events.
 1. Click **CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
 
-For secured(HTTPS) connection, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
+For a secured HTTP connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
 {: tip}
 
 ### Increase performance and protect from Denial of Service attacks
