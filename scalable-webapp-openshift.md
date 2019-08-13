@@ -196,7 +196,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    {:tip}
 
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
-In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}
+In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}. In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is used for persistent storage of created images.
 
 1. To automate access to your registry namespaces and to push generated builder Docker image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key
    ```sh
@@ -421,6 +421,7 @@ In this section, you will learn how to manually scale your application.
    ```
    {:pre}
 2. You can see a new pod being provisionsed by running `oc get pods` command.
+3.Rerun the [Monitoring](/docs/tutorials?topic=solution-tutorials-scalable-webapp-openshift#monitor_application) step to see the updated logs for both the pods.
 
 ## Remove resources
 {:#cleanup}
