@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-08-06"
+lastupdated: "2019-08-13"
 lasttested: "2019-07-30"
 ---
 
@@ -107,10 +107,14 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 ### Using ibmcloud dev plugin
 
 1. On a terminal, start the `ibmcloud dev` wizard by running the below command
-   ```
+   ```sh
    ibmcloud dev create
    ```
    {: pre}
+
+   You may be asked to target an organization and a space, follow the instructions on the CLI
+   {:tip}
+
 2. Select `Backend Service / Web App` then `Node` and select `Node.js Web App with Express.js` to create a Node starter.
 3. Enter a **name** for your application.
 4. Select a **resource group** same as the cluster to deploy this application.
@@ -124,23 +128,23 @@ This generates a starter application complete with the code and all the necessar
 You can build and run the application as you normally would using `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
 
 1. Ensure your local Docker engine is started.
-   ```
+   ```sh
    docker ps
    ```
    {: pre}
 2. Change to the directory of the generated project.
-   ```
+   ```sh
    cd <project name>
    ```
    {: pre}
 3. Build the application.
-   ```
+   ```sh
    ibmcloud dev build
    ```
    {: pre}
    This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
 4. Run the container.
-   ```
+   ```sh
    ibmcloud dev run
    ```
    {: pre}
