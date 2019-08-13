@@ -82,7 +82,10 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
 ### Request a certificate using {{site.data.keyword.cloudcerts_short}} and a custom sample code
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
-1. Use the [code sample](https://github.com/ibm-cloud-security/certificate-manager-domain-validation-cloud-function-sample) and included instructions to request and import a certificate using {{site.data.keyword.openwhisk_short}} for a domain maintained by {{site.data.keyword.cis_full_notm}}. The code sample can be deployed using similar steps as provided below. 
+1. Use the [code sample](https://github.com/ibm-cloud-security/certificate-manager-domain-validation-cloud-function-sample) and included instructions to request and import a certificate using {{site.data.keyword.openwhisk_short}} for a domain maintained by {{site.data.keyword.cis_full_notm}}. The code sample can be deployed using similar steps as provided below.
+
+For secured connection, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
+{: tip}
 
 ## Deploy actions in multiple locations
 
@@ -100,13 +103,13 @@ The three following sections will need to be repeated for every location where y
 ### Define actions
 
 1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/openwhisk/actions).
-1. Switch to the target location and select an organization and space where to deploy the actions.
-1. Create an action
+2. Switch to the target location and select an organization and space where to deploy the actions.
+3. Create an action
    1. Set **Name** to **doWork**.
-   1. Set **Enclosing Package** to **default**.
-   1. Set **Runtime** to the most recent version of **Node.js**.
-   1. **Create**.
-1. Change the action code to:
+   2. Set **Enclosing Package** to **default**.
+   3. Set **Runtime** to the most recent version of **Node.js**.
+   4. **Create**.
+4. Change the action code to:
    ```js
    function main(params) {
      msg = "Hello, " + params.name + " from " + params.place;
@@ -114,20 +117,20 @@ The three following sections will need to be repeated for every location where y
    }
    ```
    {: codeblock}
-1. **Save**
-1. Create another action to be used as health check for our API:
+5. **Save**
+6. Create another action to be used as health check for our API:
    1. Set **Name** to **healthz**.
-   1. Set **Enclosing Package** to **default**.
-   1. Set **Runtime** to most recent **Node.js**.
-   1. **Create**.
-1. Change the action code to:
+   2. Set **Enclosing Package** to **default**.
+   3. Set **Runtime** to most recent **Node.js**.
+   4. **Create**.
+7. Change the action code to:
    ```js
    function main(params) {
      return { ok: true };
    }
    ```
    {: codeblock}
-1. **Save**
+8. **Save**
 
 ### Expose the actions with a managed API
 
