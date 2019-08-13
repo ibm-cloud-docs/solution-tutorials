@@ -421,7 +421,7 @@ In this section, you will learn how to manually scale your application.
    ```
    {:pre}
 2. You can see a new pod being provisionsed by running `oc get pods` command.
-3.Rerun the [Monitoring](/docs/tutorials?topic=solution-tutorials-scalable-webapp-openshift#monitor_application) step to see the updated logs for both the pods.
+3. Rerun the [Monitoring](/docs/tutorials?topic=solution-tutorials-scalable-webapp-openshift#monitor_application) step to see the updated logs for both the pods.
 
 ## Remove resources
 {:#cleanup}
