@@ -1,8 +1,9 @@
 {
     "tags": [
+        "Kubernetes",
+        "OpenShift",
         "Cloud Foundry",
         "Cloud Functions",
-        "Kubernetes",
         "Infrastructure"
     ],
     "categories": [
