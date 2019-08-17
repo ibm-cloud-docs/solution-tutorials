@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-08-12"
+lastupdated: "2019-08-17"
 lasttested: "2019-07-31"
 
 ---
@@ -398,3 +398,4 @@ If you share an account with other users, always make sure to delete only your o
 * [Security in the IBM Cloud](https://www.ibm.com/cloud/security)
 * [Tutorial: Best practices for organizing users, teams, applications](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates)
+* [Cloud Offboarding: How to Remove a User and Maintain Security](https://www.ibm.com/cloud/blog/cloud-offboarding-how-to-remove-a-user-and-maintain-security)
