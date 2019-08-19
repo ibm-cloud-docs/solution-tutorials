@@ -30,7 +30,7 @@ In this tutorial you will build a streaming analytics pipeline which collects an
 * Understand Apache Kafka publish-subscribe messaging.
 * Perform cleaning and transformation operations on the streaming data.
 * Push the cleaned data to a persistent {{site.data.keyword.cos_short}}.
-* Analyse the data with the help of Hive queries.
+* Analyse the data with the help of Hive and Spark SQL queries.
 
 ## Services used
 {: #services}
@@ -56,6 +56,7 @@ This tutorial uses the following runtimes and services:
 * [IBM Analytics Engine](https://{DomainName}/catalog/services/analytics-engine)
 * [Event Streams](https://{DomainName}/catalog/services/message-hub)
 * [Cloud Object Storage](https://{DomainName}/catalog/services/cloud-object-storage)
+* [SQL Query](https://{DomainName}/catalog/services/sql-query)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/pricing/) to generate a cost estimate based on your projected usage.
 
@@ -87,6 +88,7 @@ In this section, you will create the services required to perform analysis of lo
 
 1. From the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) navigate to the **Integration** section. Create an instance of [Event Streams](https://{DomainName}/catalog/services/event-streams).  Give the service a name and choose any region to deploy in. Name your service `log-analysis-hub`.
 2. From the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) navigate to the **Storage** section. Create an instance of [Cloud Object Storage](https://{DomainName}/catalog/services/cloud-object-storage). Name your object store `log-analysis-cos`. In the resource page navigate to the **Service Credentials** tab and click on the **New Credential** button. Select the **Include HMAC Credential** option, give an appropriate name to the credential and click **Add**.
+3. From the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) search for **SQL Query**. Create the **SQL Query service**. Name the service `log-analysis-sql` and choose any region to deploy in.
 
 ## Create Analytics Engine instance
 {: #ae_setup}
@@ -147,45 +149,45 @@ required username="USER" password="PASSWORD";
 
 3. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the user and password values seen in **Service Credentials** from the previous section. Save `message-hub.config`.
 4. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. 
-5. The Kafka console tool is awaiting input. Sample data provided in the repository ( Hyperlink to the file in the repository ) can be pasted into the console or the entire file can be piped to the prompt of the producer script. An example is given below: 
-If the data is stored in a file: 
- {: pre}
-```sh
-./kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL \
- --producer.config message-hub.config --topic webserver
- ./kafka-console-producer.sh --broker-list \
- kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,\
- kafka05-prod02.messagehub.services.us-south.bluemix.net:9093,\
- kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,\
- kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,\
- kafka03-prod02.messagehub.services.us-south.bluemix.net:9093 \
- --producer.config message-hub.config --topic webserver > data.json
-```
-If the data is to be pasted paste the following after running the kafka-console-producer script.  
+5. The Kafka console tool is awaiting input. Sample data provided in the [repository]( https://dataplatform.cloud.ibm.com/exchange/public/entry/view/aa07a773f71cf1172a349f33e2028e4e) can be pasted into the console or the entire file can be piped to the prompt of the producer script. An example is given below: 
+  
  {: pre}
 ```
-{"InvoiceNo":5370812,"StockCode":"85114B","Description":"IVORY ENCHANTED FOREST PLACEMAT","Quantity":24,"InvoiceDate":1291593600000,"UnitPrice":1.65,"CustomerID":15332,"Country":"Lithuania}
-{"InvoiceNo":5382402,"StockCode":22816,"Description":"CARD MOTORBIKE SANTA","Quantity":24,"InvoiceDate":1292025600000,"UnitPrice":0.42,"CustomerID":16062,"Country":"United Kingdom}
-{"InvoiceNo":5382402,"StockCode":22086,"Description":"PAPER CHAIN KIT 50'S CHRISTMAS ","Quantity":40,"InvoiceDate":1292025600000,"UnitPrice":2.55,"CustomerID":16062,"Country":"United Kingdom}
-{"InvoiceNo":5382402,"StockCode":21733,"Description":"RED HANGING HEART T-LIGHT HOLDER","Quantity":6,"InvoiceDate":12920200000,"UnitPrice":2.95,"CustomerID":16062,"Country":"United Kingdom"
+{"GENDER": "M","AGE": 27,"MARITAL_STATUS": "Single","PROFESSION": "Professional","IS_TENT": 
+"TRUE","PRODUCT_LINE": "Camping Eq
+uipment","PURCHASE_AMOUNT": 144.78}
+{"GENDER": "F","AGE": 27,"MARITAL_STATUS": "Single","PROFESSION": "Professional","IS_TENT": 
+"TRUE","PRODUCT_LINE": "Camping Equipment","PURCHASE_AMOUNT": 144.78}
+{"GENDER": "M","AGE": 27,"MARITAL_STATUS": "Married","
+PROFESSION": "Professional","IS_TENT": 
+"TRUE","PRODUCT_LINE": "Camping Equipment","PURCHASE_AMOUNT": 144.78}
+{"GENDER": "F","AGE": 28,"MARITAL_STATUS": "Single","PROFESSION": "Professioning","IS_TENT": 
+"TRUE","PRODUCT_LINE": "Camping Equipment","PURCHASE
+_AMOUNT": 144.78} 
 ```
-
 
 ## Running Spark Streaming Job on {{site.data.keyword.iae_short}} 
 {: #spark_ae}
 
 In this section you will run a Spark Streaming job on {{site.data.keyword.iae_short}} which will take a stream of data from Kakfa, perform some transformations, clean the data and then push the modified data to a {{site.data.keyword.cos_short}} bucket. 
 
-In the repository, sample data of Online Retail transactions is given. The data is cleaned by the code to remove all fields where `InvoiceNo` or `CustomerId` is null and if the `Quantity` is less than 0. An extra column is also added to the data which is the product of two rows ( `Quantity` and `UnitPrice`). The fields of a particular country (`Lithuania` ) are then filtered out and pushed to a {{site.data.keyword.cos_short}} bucket. 
+In the repository, sample data of `Sales transactions` is given. The data is cleaned by the code to remove all fields where `Profession` or `Purchase Amount` is. The fields of a particular gender (M) are then filtered out and pushed to a {{site.data.keyword.cos_short}} bucket in parquet format. The recommended format for storing data is parquet. 
 
-Clone the repository (Hyperlink to the file in the repository ) containing the sample code for submitting and running Spark Streaming on {{site.data.keyword.iae_short}}. Run the following commands to package the Scala program and copy it to  	{{site.data.keyword.iae_short}}. 
+Clone the [repository](https://github.com/IBM-Cloud/IBM-Analytics-Engine)  containing the sample code for submitting and running Spark Streaming on {{site.data.keyword.iae_short}}. Run the following commands to package the Scala program and copy it to  	{{site.data.keyword.iae_short}}. 
 
-1.	git clone (name of repository) 
-2.	cd (name of the folder) 
-3.	sbt package 
-4.	scp target/scala-2.11/spark-structured-streaming-on-iae-to-cos_2.11-1.0.jar clsadmin@chs-xxxxx-mn003.(changeme).ae.appdomain.cloud:./
-Cluster credentials can be obtained from the Service Credentials tab of the Analytics Engine service. The endpoint can be found under ambari_console. 
-5.	Create a jaas.conf for spark to authenticate to  	{{site.data.keyword.messagehub}}. 
+1.	git clone https://github.com/IBM-Cloud/IBM-Analytics-Engine.git 
+2.	cd `IBM-Analytics-Engine/solution-samples/streaming` 
+3.	Download the Scala build tool from https://www.scala-sbt.org/download.html
+4.	sbt package 
+5.	scp target/scala-2.11/spark-structured-streaming-on-iae-to-cos_2.11-1.0.jar clsadmin@chs-xxxxx-mn003.(changeme).ae.appdomain.cloud:./
+Cluster credentials can be obtained from the Service Credentials tab of the {{site.data.keyword.iae_short}} service. The endpoint can be found under `ambari_console`. 
+6.	SSH into your IAE cluster. The following section needs to be executed on the {{site.data.keyword.iae_short}}  cluster. 
+
+```
+ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud
+``` 
+
+7.	Create a jaas.conf for spark to authenticate to  	{{site.data.keyword.messagehub}}. 
 ```sh
 cat << EOF > jaas.conf
 KafkaClient {
@@ -199,7 +201,7 @@ EOF
 
 Replace `CHANGEME` in the file with the username and password of the `Event Stream` instance. This can be obtained from the **Service Credentials** tab of the `Event Streams` service. 
 
-6.	Create a script which contains configuration variables needed by Spark. 
+8.	Create a script which contains configuration variables needed by Spark. 
 
 ```sh
 cat << EOF > config_vars.sh
@@ -223,7 +225,7 @@ EOF
 S3 access key and secret key can be obtained from the service credential created before. The value of the private endpoint can be obtained from the **Endpoints** tab of the {{site.data.keyword.cos_short}} service. 
 Kafka bootstrap server can be obtained from the **Service Credentials** tab of the {{site.data.keyword.messagehub}} service. 
 
-7.	Create a script to start spark interactively via yarn
+9. Create a script to start spark interactively via yarn
 ```sh
 cat << 'EOF' > start_yarn_client.sh
 source config_vars.sh
@@ -252,6 +254,8 @@ Run the interactive script, you should see spark saving to {{site.data.keyword.c
 bash -x start_yarn_client.sh
 ```
 Navigate to your bucket in the {{site.data.keyword.cos_short}} resource page to see the csv files. 
+
+Navigate to your bucket in the {{site.data.keyword.cos_short}} resource page to see the parquet files. Once the data is pushed to {{site.data.keyword.cos_short}}, it can be analysed either using Hive queries, SparkSQL queries on {{site.data.keyword.iae_short}} or by using the {{site.data.keyword.sql_query}}. These three methods are listed below: 
 
 
 ## Analysing the data using Hive 
