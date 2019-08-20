@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-04-19"
+lastupdated: "2019-08-20"
 lasttested: "2019-04-19"
 ---
 
@@ -123,6 +123,9 @@ The following diagram shows where the project resources are created under the ac
 Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam#iam).
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
+
+Note that by default accounts are configured for [unrestricted user view access](https://{DomainName}/docs/iam?topic=iam-userlistview). Any user in the account can see any other user information. You can [change the setting](https://{DomainName}/iam/settings) to a restrictive mode.
+{: tip}
 
 A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/) to configure in-cluster authorizations.
 
