@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-08-20"
+lastupdated: "2019-08-21"
 lasttested: "2019-04-19"
 ---
 
@@ -75,6 +75,9 @@ When it comes to assigning responsibilities to the project team members, let's d
 {: #first_objective}
 
 {{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. A set of {{site.data.keyword.cloud_notm}} services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
+
+This tutorial focusses on a single account. Multiple accounts can be grouped within an [enterprise account](https://{DomainName}/docs/account?topic=account-enterprise) and organized in account groups to centrally manage billing and resource usage.
+{: tip}
 
 A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
