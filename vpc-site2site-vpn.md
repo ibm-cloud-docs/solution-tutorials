@@ -240,7 +240,7 @@ In the following, you will add a VPN gateway and an associated connection to the
 ### Create the on-premises Virtual Private Network gateway
 Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
 
-1. Source the file **network_config.sh** to make the configuration available for further shell commands.
+1. Load the file **network_config.sh** into the shell environment to make the configuration available for further shell commands.
    ```sh
    source network_config.sh
    ```

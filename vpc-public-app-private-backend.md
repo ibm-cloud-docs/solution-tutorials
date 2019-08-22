@@ -288,7 +288,7 @@ The frontend instance has its software installed but it can not yet be reached.
 
 ### Test the connectivity between the frontend and the backend
 
-The backend server is running the same web server software than the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
+The backend server is running the same web server software as the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
 
 1. In the [Virtual Server Instances list](https://{DomainName}/vpc/compute/vs), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
 1. Use `ssh` to connect to the frontend virtual server:
