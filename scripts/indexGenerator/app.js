@@ -13,7 +13,7 @@ Handlebars.registerHelper('replace', function( find, replace, options) {
 
 Handlebars.registerHelper('tocLink', function(solution, options) {
   if (helper.isExternalSolution(solution)) {
-    return `[${solution.name}](${solution.url})]`;
+    return solution.name ? `[${solution.name}](${solution.url})]` : solution.url;
   } else {
     return helper.htmlTomd(solution.url);
   }

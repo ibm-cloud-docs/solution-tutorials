@@ -518,6 +518,13 @@
                     "Virtual Private Cloud",
                     "Network"
                 ]
+            },
+            {
+                "url": "/containers/containers-vpc_ks_tutorial",
+                "tags": [
+                    "Virtual Private Cloud",
+                    "Kubernetes"
+                ]
             }
         ]
     },
