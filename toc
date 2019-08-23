@@ -68,6 +68,7 @@ Solution Tutorials
         vpc-site2site-vpn.md
         vpc-app-deploy.md
         vpc-secure-management-bastion-server.md
+        /containers/containers-vpc_ks_tutorial
 
     {: .topicgroup}
     Classic Infrastructure
@@ -93,6 +94,7 @@ Solution Tutorials
         multi-region-k8s-cis.md
         cloud-e2e-security.md
         users-teams-applications.md
+        /containers/containers-vpc_ks_tutorial
 
     {: .topicgroup}
     OpenShift
