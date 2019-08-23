@@ -69,6 +69,7 @@ Solution Tutorials
         vpc-app-deploy.md
         vpc-secure-management-bastion-server.md
         /containers/containers-vpc_ks_tutorial
+        [Creating a classic cluster in your Virtual Private Cloud](/containers/containers-vpc_ks_tutorial)]
 
     {: .topicgroup}
     Classic Infrastructure
@@ -95,6 +96,7 @@ Solution Tutorials
         cloud-e2e-security.md
         users-teams-applications.md
         /containers/containers-vpc_ks_tutorial
+        [Creating a classic cluster in your Virtual Private Cloud](/containers/containers-vpc_ks_tutorial)]
 
     {: .topicgroup}
     OpenShift
