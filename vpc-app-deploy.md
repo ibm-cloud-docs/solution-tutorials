@@ -153,7 +153,7 @@ b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2
 5ccbc579-dc22-0def-46a8-9c2e9b502d37   windows-2016-amd64      Windows Server (2016 Standard Edition)                    2018-10-30T06:12:06.59+00:00    available   public
 ```
 
-{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There is ingress cost for reading the mirrors.
+{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There is no ingress cost for reading the mirrors.
 
 Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
 
