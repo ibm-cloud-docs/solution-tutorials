@@ -393,7 +393,7 @@ In this section, you will learn to monitor the health and performance of your ap
     oc get routes -n openshift-monitoring
    ```
    {:pre}
-2. To generate some load on your deployed application, you will use Apache *ab* in order to get some data into Prometheus hitting the route URL 5000 times with 100 concurrent requests at a time.
+2. You will use Apache *ab* to generate load on your deployed application by hitting the route URL 5000 times with 100 concurrent requests at a time. This will in turn generate data into Prometheus.
    ```sh
     ab -n 5000 -c 100 <APPLICATION_ROUTE_URL>/
    ```

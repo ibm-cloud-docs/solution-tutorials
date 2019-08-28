@@ -135,7 +135,7 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
     - Select the **Aspera high-speed transfer.Requires installation.** radio button.
     - Click **Install Aspera connect** > Download Connect. This will download the Aspera plugin to your machine.
     - Once the plugin is successfully installed. You may have to refresh the browser.
-    - Click **Select files** > Browse to and select the previously downloaded CSV file.
+    - Click **Select files** > Browse and select the previously downloaded CSV file.
 
 ## Working with data
 
