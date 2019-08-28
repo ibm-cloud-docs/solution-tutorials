@@ -38,7 +38,7 @@ sed -i 's/{DomainName}/cloud.ibm.com/g' builddocs/input/*.md
 
 # get the gh-pages branch
 rm -rf builddocs/output
-git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.git builddocs/output
+git clone --depth=1 --branch=gh-pages git@github.ibm.com:cloud-docs/tutorials.git builddocs/output
 
 # retrieve the conref
 (cd builddocs && curl -sSO "https://oauth2:$GITHUB_ENTERPRISE_TOKEN@raw.github.ibm.com/cloud-doc-build/markdown/master/cloudoeconrefs.yml")
