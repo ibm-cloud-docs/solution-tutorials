@@ -1,8 +1,9 @@
 #!/bin/bash
 COMMIT_MESSAGE=`date +"%Y-%m-%d %T%z"`' ('`git rev-parse HEAD`')'
 
+# get the publish branch
 mkdir build
-git clone https://$PUBLIC_GITHUB_USER:$PUBLIC_GITHUB_TOKEN@github.com/IBM-Bluemix-Docs/tutorials build
+git clone --branch=publish git@github.ibm.com/cloud-docs/tutorials.git build
 
 git config --global push.default simple
 git config --global user.email "autobuild@not-a-dom.ain"
@@ -25,9 +26,6 @@ tar cf - \
 
 # replace the private toc with the public version
 (cd build && rm -f toc && mv toc-public toc)
-
-# restore the translation files
-(cd build && git checkout HEAD nl)
 
 # add all files
 (cd build && git add . && git commit -m "$COMMIT_MESSAGE" && git push)
