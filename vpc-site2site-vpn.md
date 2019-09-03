@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-07-15"
-lasttested: "2019-07-02"
+lastupdated: "2019-09-03"
+lasttested: "2019-09-03"
 ---
 
 {:shortdesc: .shortdesc}
@@ -64,6 +64,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 2. The microservice interfaces with {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} through private endpoints.
 3. A VPC/VPN Gateway is provisioned to expose the virtual private cloud environment to the on-premises network.
 4. The Strongswan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
+5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://cloud.ibm.com/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-vpn-with-your-vpc&locale=en#build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
 
 ## Before you begin
 {: #prereqs}
@@ -169,6 +170,20 @@ In this section, you will create the database service.
    ```
    {: codeblock}
 
+4. Save the self-signed certificate to a file **<generated>**. The file will be used later on.
+   ```sh
+   ibmcloud cdb deployment-cacert vpns2s-pg -e private -c ../sampleapps/nodejs-graphql/ -s
+   ```
+   {: codeblock}
+
+   You will get a result similar to the following, take note of the name of the file generated following `nodejs-graphql/`: 
+   
+   ```
+   Retrieving certificate for vpns2s-pg...
+   OK
+
+   Certificate written to nodejs-graphql/1575c397-934c-11e9-a1a6-c27ac0347fc3
+   ```
 
 ### Create Virtual Private Cloud baseline resources
 {: #create-vpc}
@@ -232,7 +247,7 @@ In the following, you will add a VPN gateway and an associated connection to the
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and **vpns2s-cloud-subnet** as subnet are selected.
 2. Leave **New VPN connection for VPC** activated. Enter **vpns2s-gateway-conn** as name.
 3. For the **Peer gateway address** use the floating IP address of **vpns2s-onprem-vsi** (**VSI_ONPREM_IP**). Type in **20_PRESHARED_KEY_KEEP_SECRET_19** as **Preshared key**.
-4. For **Local subnets** use the information provided for **CLOUD_CIDR**, for **Peer subnets** the one for **ONPREM_CIDR**.
+4. For **Local subnets** use the information provided for **CLOUD_CIDR** and add the CIDR for the IBM Cloud service endpoints: 166.8.0.0/14, 161.26.0.0/16. For **Peer subnets** the one for **ONPREM_CIDR**.
 5. Leave the settings in **Dead peer detection** as is. Click **Create VPN gateway** to create the gateway and an associated connection.
 6. Wait for the VPN gateway to become available (you may need to refresh the screen).
 7. Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**.
@@ -517,6 +532,29 @@ With the microservice app set up and running, test the scenario by accessing the
    {:pre}
 
 6. Using your browser, access the [Resource List][https://{DomainName}/resources], navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
+
+### Test connecting from on-premises to service endpoint over the VPN connection
+In some situations, it might be desirable to interact directly from an on-premises application to a Cloud service that is only accessible via a private endpoint. For example, leveraging a message-queueing service such as [Messages for RabbitMQ](https://cloud.ibm.com/catalog/services/messages-for-rabbitmq) with a Producer running in the Cloud and a Consumer running on-premises.  In our example, we will interact directly with the {{site.data.keyword.databases-for-postgresql}} we have been using from the on-prem VSI.
+
+1. Obtain your {{site.data.keyword.databases-for-postgresql}} credentials from the [**pg_credentials.json**](#create-postgresql) file created earlier. Edit the file located under the 
+**sampleapps/nodejs-graphql/config** subdirectory in your local system. Copy the command found under credentials.cli.composed to be used later. 
+
+2. In the same terminal window used to conduct the previous test and connected to the "onprem" VSI terminal via SSH. Issue the following command:
+
+   ```sh
+   apt-get install postgresql-client
+   ```
+
+3. From the shell, issue the command captured in step 1 to connect to the {{site.data.keyword.databases-for-postgresql}} directly over the private endpoint. 
+
+4. From the `ibmclouddb=>` prompt issue the following command:
+
+   ```sql
+   select * from accounts;
+   ```
+
+   You should get a listing of all records previously created via the curl command in the previous section. This demonstrate that you are able to access the {{site.data.keyword.databases-for-postgresql}} database over the private endpoint from an on-premises server.
+
 
 ## Remove resources
 {: #remove-resources}
