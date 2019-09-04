@@ -64,7 +64,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 2. The microservice interfaces with {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} through private endpoints.
 3. A VPC/VPN Gateway is provisioned to expose the virtual private cloud environment to the on-premises network.
 4. The Strongswan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
-5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://cloud.ibm.com/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-vpn-with-your-vpc&locale=en#build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
+5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://{DomainName}/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-vpn-with-your-vpc&locale=en#build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
 
 ## Before you begin
 {: #prereqs}
@@ -534,7 +534,7 @@ With the microservice app set up and running, test the scenario by accessing the
 6. Using your browser, access the [Resource List][https://{DomainName}/resources], navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
 
 ### Test connecting from on-premises to service endpoint over the VPN connection
-In some situations, it might be desirable to interact directly from an on-premises application to a Cloud service that is only accessible via a private endpoint. For example, leveraging a message-queueing service such as [Messages for RabbitMQ](https://cloud.ibm.com/catalog/services/messages-for-rabbitmq) with a Producer running in the Cloud and a Consumer running on-premises.  In our example, we will interact directly with the {{site.data.keyword.databases-for-postgresql}} we have been using from the on-prem VSI.
+In some situations, it might be desirable to interact directly from an on-premises application to a Cloud service that is only accessible via a private endpoint. For example, leveraging a message-queueing service such as [{{site.data.keyword.messages-for-rabbitmq}}](https://{DomainName}/catalog/services/messages-for-rabbitmq) with a Producer running in the Cloud and a Consumer running on-premises.  In our example, we will interact directly with the {{site.data.keyword.databases-for-postgresql}} we have been using from the on-prem VSI.
 
 1. Obtain your {{site.data.keyword.databases-for-postgresql}} credentials from the [**pg_credentials.json**](#create-postgresql) file created earlier. Edit the file located under the 
 **sampleapps/nodejs-graphql/config** subdirectory in your local system. Copy the command found under credentials.cli.composed to be used later. 
