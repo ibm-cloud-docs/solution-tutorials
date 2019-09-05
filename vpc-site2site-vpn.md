@@ -76,6 +76,8 @@ The following diagram shows the virtual private cloud containing an app server. 
 - Install [**jq**](https://stedolan.github.io/jq/download/). It is used by the provided scripts to process JSON output.
 
 ## Deploy a virtual app server in a virtual private cloud
+{: #deploy}
+
 In the following, you will download the scripts to set up a baseline VPC environment and code for a microservice to interface with the {{site.data.keyword.cos_short}}. Then, you will provision the services and set up the baseline VPC and simulated on-prem resources.
 
 ### Get the code
@@ -96,8 +98,11 @@ The tutorial uses scripts to deploy a baseline of infrastructure resources befor
 
 
 ### Create services
+{: #create-services}
 
 #### {{site.data.keyword.cos_short}}
+{: #create-cos}
+
 In this section, you will login to {{site.data.keyword.cloud_notm}} on the CLI and create an instance of {{site.data.keyword.cos_short}}.
 
 1. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target`.
@@ -242,6 +247,8 @@ To simulate the on-premises environment, you create a virtual server (VSI) with 
 
 
 ### Create the Virtual Private Network gateway and connection
+{: #create-vpn}
+
 In the following, you will add a VPN gateway and an associated connection to the subnet with the application VSI.
 
 1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page, then click on **VPNs** in the navigation tab and on **New VPN gateway** in the dialog. In the form **New VPN gateway for VPC** enter **vpns2s-gateway** as name. Make sure that the correct VPC, resource group and **vpns2s-cloud-subnet** as subnet are selected.
@@ -253,6 +260,8 @@ In the following, you will add a VPN gateway and an associated connection to the
 7. Note down the assigned **Gateway IP** address as **GW_CLOUD_IP**.
 
 ### Create the on-premises Virtual Private Network gateway
+{: create-on-prem}
+
 Next, you will create the VPN gateway on the other site, in the simulated on-premises environment. You will use the open source-based IPsec software [strongSwan](https://strongswan.org/).
 
 1. Load the file **network_config.sh** into the shell environment to make the configuration available for further shell commands.
@@ -344,9 +353,13 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    It should report that a connection has been established. Keep the terminal and ssh connection to this machine open.
 
 ## Test the connectivity
+{: #test-connectivity}
+
 You can test the site to site VPN connection by using SSH or by deploying the microservice interfacing {{site.data.keyword.cos_short}}.
 
 ### Test using ssh
+{: #test-with-ssh}
+
 To test that the VPN connection has been successfully established, use the simulated on-premises environment as proxy to log in to the cloud-based application server.
 
 1. In a new terminal, execute the following command after sourcing **network_config.sh** again. It uses the strongSwan host as jump host to connect via VPN to the application server's private IP address.
@@ -383,6 +396,8 @@ To test that the VPN connection has been successfully established, use the simul
 
 
 ### Set up a microservice for testing
+{: #setup-microservice}
+
 You can test the working VPN connection by accessing a microservice on the cloud VSI from the "onprem" VSI. You need to make sure to have completed all the steps found under [Create Services {{site.data.keyword.databases-for-postgresql}}](#create-postgresql) prior to proceeding through the steps in this section. Here you set up the app.
 
 1. Back on your local machine, change the working directory and switch to **sampleapps**:
@@ -477,6 +492,8 @@ You can test the working VPN connection by accessing a microservice on the cloud
    {:pre}
 
 ### Test using a microservice
+{: #test-with-microservice}
+
 With the microservice app set up and running, test the scenario by accessing the cloud resources from the on-prem machine.
 
 1. In a new terminal, retrieve the network configuration and then access the "onprem" VSI terminal via SSH.
@@ -534,6 +551,8 @@ With the microservice app set up and running, test the scenario by accessing the
 6. Using your browser, access the [Resource List][https://{DomainName}/resources], navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
 
 ### Test connecting from on-premises to service endpoint over the VPN connection
+{: #test-service-endpoint}
+
 In some situations, it might be desirable to interact directly from an on-premises application to a Cloud service that is only accessible via a private endpoint. For example, leveraging a message-queueing service such as [{{site.data.keyword.messages-for-rabbitmq}}](https://{DomainName}/catalog/services/messages-for-rabbitmq) with a Producer running in the Cloud and a Consumer running on-premises.  In our example, we will interact directly with the {{site.data.keyword.databases-for-postgresql}} we have been using from the on-prem VSI.
 
 1. Obtain your {{site.data.keyword.databases-for-postgresql}} credentials from the [**pg_credentials.json**](#create-postgresql) file created earlier. Edit the file located under the 
