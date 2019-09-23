@@ -15,6 +15,7 @@ Solution Tutorials
         continuous-deployment-to-kubernetes.md
         scalable-webapp-openshift.md
         static-files-cdn.md
+        dynamic-content-cdn.md
         pub-sub-object-storage.md
         lamp-stack.md
         infrastructure-as-code-terraform.md
