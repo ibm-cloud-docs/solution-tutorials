@@ -16,12 +16,12 @@ lasttested: "2019-09-30"
 # Accelerate a dynamic website using Dynamic Content Acceleration with IBM CDN
 {: #dynamic-cdn}
 
-In a previous tutorial [Accelerate delivery of static files using a CDN](/docs/tutorials?topic=solution-tutorials-static-files-cdn) we have known how to host and serve static assets (images, videos, documents) of a website in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
+In a previous tutorial [Accelerate delivery of static files using a CDN](/docs/tutorials?topic=solution-tutorials-static-files-cdn) we have known how to host and serve static assets (images, videos, and documents) of a website in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
 
-Web applications are composed of not only static content like text, images, cascading style sheets, and JavaScript files but also personalized and dynamicly changing contents that can’t be cached at CDN. A common example of non-cacheable content is adding an item to a cart in a e-commerce website that might be generated from JavaScript on the base page. Before Dynamic Content Acceleation is available, a CDN will pass every request for a non-cacheable object through to the owner’s origin server, and pass the result back to the user.
+Web applications are composed of not only static content like text, images, cascading style sheets, and JavaScript files but also personalized and dynamicly changing contents that can’t be cached at CDN. A common example of non-cacheable content is adding an item to a cart in an e-commerce website that might be generated from JavaScript on the base page. Before Dynamic Content Acceleation is available, a CDN will pass every request for a non-cacheable object through to the owner’s origin server, and pass the result back to the user.
 
 To stop these dynamic contents from being a performance bottleneck, you can utilize the new Dynamic Content Acceleration (DCA) capablity of IBM [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) to optimze the performance of dynamic contents:
-* the DCA capablity of CDN will choose the optimal routes for requests and responses
+* the DCA capablity of CDN will choose the optimal routes for requests
 * proactively pre-fetch contents from origin servers so that users can access these contents rapidly from the edge
 * extend the duration of TCP connections for multiple requests
 * automatically compress images for lower latency.
@@ -51,9 +51,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ![Architecture](images/solution52-cdn-dca/solution_52_architecture.png)
 </p>
 
-![Architecture](images/solution52-cdn-dca/solution_52_architecture.png)
-
-
 1. The developer creates a simple dynamic application and produces a Docker container image.
 2. The image is pushed to a namespace in IBM Cloud Container Registry.
 3. The application is deployed to the Kubernates cluster on IBM Cloud.
@@ -69,22 +66,18 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Prepare the dynamic web application
 
-
-### Get the web application code
-{: #get_code}
-
 Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team to-do items together.
 
-This [sample application](https://github.com/beego/samples) is based on [Beego](https://beego.me/docs/intro/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services. 
+This [sample application](https://github.com/beego/samples) is based on [Beego](https://beego.me/docs/intro/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
 
-```
-go get github.com/beego/samples/todo
-```
-{: pre}
+### Optional: Build the application locally
 
-### Build the application locally
-
-1. Makre sure you have set your `$GOPTAH`.
+1. Make sure you have set your `$GOPTAH`.
+2. Get the code. 
+	```
+	go get github.com/beego/samples/todo
+	```
+	{: pre}
 2. From your local to-do application directory, for example, `$GOPATH/src/github.com/beego/samples/todo`, run the application locally:
 	```bash
 	bee run
@@ -92,30 +85,54 @@ go get github.com/beego/samples/todo
 	{: pre}
 2. After the application starts, go to `http://localhost:8080/`.
    ![](images/solution52-cdn-dca/local_todo_application.png)
+   
+### Customize the application to include a test object 
 
-### Make a Docker image from the application
+The Dynamic Content Acceleration (DCA) feature will utilize a test object on your origin server to determine the optimal routes for real requests. For this purpose, we will customize the application to include this test object. 
 
-1. clone the application code from GitHub to local.
+1. Clone the application code from GitHub to local.
    ```bash
    cd $GOPATH/src/github.com/beego
    git clone git@github.com:beego/samples.git
 	```
 	{: pre}
- 
-1. From the local to-do application directory, for example, `$GOPATH/src/github.com/beego/samples/todo`, prepare a dockerfile. An example can be download from [this GitHub repository](https://github.com/ying-tang/solution_tutorial).
-2. In the same directory, prepare a GO dependency file Gopkg.toml. An example can be download from [this GitHub repository](https://github.com/ying-tang/solution_tutorial).
-3. Build a Docker image (*mytodo*) from these files, and tag it, for example, with *cdn*.
+2. Download the test object from [this directory](https://github.com/ying-tang/solution_tutorial/blob/master/detection-test-object.html) or prepare a simple HTML file in about 10KB size.
+3. Edit your `main.go` file in the to-do application directy. We will add an addtional router.
+   ```bash
+   beego.Router("/test-dca/", &controllers.TaskController{}, "get:TestDca")
+	```
+	{: pre}
+4. Edit your `controller/task.go`file and add another function to make the test object accessible:
+	```bash
+	func (this *TaskController) TestDca() {
+	       this.TplName = "detection-test-object.html"
+	       this.Render()
+	}
+	{: pre}
+
+
+### Make a Docker image from the application
+
+1. Prepare a dockerfile. An example can be download from [this GitHub repository](https://github.com/ying-tang/solution_tutorial).
+2. Prepare a GO dependency file Gopkg.toml. An example can be download from [this GitHub repository](https://github.com/ying-tang/solution_tutorial).
+3. Build a Docker image (*mytodo*) from the application directy where the dockerfile and `Gopkg.toml` are stored, and tag the image, for example, with *cdn*.
 	```bash
 	docker build -t mytodo:cdn .
 	```
 	{: pre}
+5. Run the application inside the container. 
+   	```bash
+	docker run -d -p 8080:8080 mytodo:cdn
+	```
+	{: pre} 
+6. Verify that you can access the application and the test object: `http://localhost:8080/test-dca`.
    
 ## Create a Kubernates cluster
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create). For simplicity of the tutorial, a FREE cluster is used.
+1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create). A standard cluster is used in this tutorial. 
 2. When the cluster is ready, follow the steps described in the **Access** tab of your cluster to gain access to `kubectl`, a command line tool that you use to interact with a Kubernetes cluster. 
 3. Use `ibmcloud login` to log in interactively, and set the KUBECONFIG environment variable as directed.  
-
+4. Kubernates nodePorts contridicts with IBM CDN allowed port range. So we have to make a change to the nodeport
 For more information about setting the Kubernates cluster and the command line, see [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index).
 
 ## Save the Docker image into the IBM Cloud Container Registry
@@ -141,7 +158,7 @@ For more information about setting the Kubernates cluster and the command line, 
 ## Deploy the image to the Kubernates cluster
 
 1. Create a deployment configuration file, for example, `mydeployment.yaml`. For more information about how to prepare this file, see [Building containers from images](https://{DomainName}/docs/containers?topic=containers-images).
-2. Before pulling an image from a registry, IBM Cloud Kubernetes Service cluster requires a special type of Kubernetes secret, an `imagePullSecret`. You must prepare a secret YAML and add it to the same namespace of the deployment YAML. The secret YAML may look likt the following:
+2. Before pulling an image from a registry, IBM Cloud Kubernetes Service cluster requires a special type of Kubernetes secret, an `imagePullSecret`. You must prepare a secret YAML and add it to the same namespace of the deployment YAML. The secret YAML may look like the following:
 	```
    apiVersion: v1
 	kind: Secret
@@ -164,22 +181,21 @@ For more information about setting the Kubernates cluster and the command line, 
 	kubectl apply -f mydeployment.yaml
 	```
 	{:pre}	
-5. You will be able to see this application running on `https://<worker_node_IP>:<port>`.
-6. Optionaly, if you would like to use a custom domain for your application, [set up ingress](https://{DomainName}/docs/containers?topic=containers-ingress#ingress). 
+   Now you are able to see this application running on `https://<worker_node_IP>:<port>`.
+5. Specify ingress resource with a YAML file to set an IBM-provided ingress domain for your application. See more information in [set up ingress](https://{DomainName}/docs/containers?topic=containers-ingress#ingress). 
 
 ## Create a CDN instance
 
-1. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
-2. On the next dialog, set the **Hostname** for CDN to your custom domain. If you have set up ingress with your Kubernates cluster, you can specify the  customer domain of the Kubernates application as CDN Hostname. In this example, we will access the CDN contents through the IBM CDN provided CNAME, so the field can be an arbitary name.
-3. Set the rest of CDN configurations:
-	* Set the **Custom CNAME** prefix to a unique value.
+1. Before you create CDN instance, apply for a domain name for your application. 
+2. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. This CDN is powered by Akamai. Click **Create**.
+3. On the next dialog, set the **Hostname** for CDN to your custom domain. 
+4. Set the rest of CDN configurations:
+	* Set the **Custom CNAME** prefix to a unique value. With your DNS service provider, configure the CDN CNAME to point to your custom domain.
 	* Leave **Host header** and **Path** empty. 
-	* Use the default **Server** option. Type the worker node public IP address as **Origin serer address**.
-	* Check HTTPS only. 
-	* Find the TCP **nodePort** from the internal endpoints of your Kubernates service, and specify it as the **HTTPS port**.
-	* For **SSL certificate** select the **Wildcard Certificate** option.
-4. Accept the **Master Service Agreement** and click **Create**.
-5. Configure the CDN CNAME with your DNS provider.
+	* Use the default **Server** option. Specify the Kubernates ingress domain as **Origin serer address**, for example, `cdncluster.us-south.containers.appdomain.cloud`.
+	* Check HTTP only and enable the HTTP 80 port.
+5. Accept the **Master Service Agreement** and click **Create**.
+
 
 After you can sucessfully created the CDN mapping, to view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
 
@@ -187,9 +203,8 @@ After you can sucessfully created the CDN mapping, to view your CDN instance, se
 
 1. Click the origin from the [CDN Overview](https://{DomainName}/classic/network/cdn), and navigate to the **Settings** tab of your origin.
 2. Under the **Optimized for** section, select **Dynamic Content Acceleration** from the drop-down list.
-3. Download the test object from the **Detection path** section, and upload it to your Kubernates Pod. In this example, we assume the whole website is dynamic and needs to be enabled for DCA. 
-4. Specify the root path `/` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by IBM CDN to determine the fastest path to the origin. 
-5. Make sure Prefetching and Image compression are both set to **On**.
+3. Under the **Detection path** section, specify the path `/test-dca/detection-test-object.html` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by IBM CDN to determine the fastest path to the origin. 
+4. Make sure Prefetching and Image compression are both set to **On**.
    ![](images/solution52-cdn-dca/detection_path.png)
 5. Click **Save**. You have successfully accelerated your todo application deployed in IBM Cloud Kubernates cluster with IBM CDN DCA.
 
