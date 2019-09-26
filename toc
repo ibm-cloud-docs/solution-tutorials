@@ -38,6 +38,7 @@ Solution Tutorials
         multi-region-k8s-cis.md
         create-manage-secure-apis.md
         cloud-e2e-security.md
+        extended-app-security.md
 
     {: .topicgroup}
     Mobile

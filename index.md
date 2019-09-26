@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-08-13"
+lastupdated: "2019-09-26"
 ---
 
 {:shortdesc: .shortdesc}
@@ -571,6 +571,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to a cloud application"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/tutorials?topic=solution-tutorials-extended-app-security#extended-app-security">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Enhance security of your deployed application
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Enhance security of your cloud application by isolating compute, network and runtime resources.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution51-extended-app-security/Sol51_Architecture.png" alt="Architecture diagram for the solution Enhance security of your deployed application"/>
                 </div>
             </div>
         </div>

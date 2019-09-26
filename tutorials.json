@@ -331,6 +331,21 @@
             "Activity Tracker"
           ],
           "lastUpdated": "2019-08-17"
+        },
+        {
+          "name": "Enhance security of your deployed application",
+          "url": "extended-app-security.html",
+          "description": "Enhance security of your cloud application by isolating compute, network and runtime resources.",
+          "imgSrc": "images/solution51-extended-app-security/Sol51_Architecture.png",
+          "tags": [
+            "Encryption",
+            "Security",
+            "App ID",
+            "Key Protect",
+            "Hyper Protect",
+            "Activity Tracker"
+          ],
+          "lastUpdated": "2019-09-26"
         }
       ]
     },
