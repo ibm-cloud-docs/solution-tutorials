@@ -593,6 +593,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
+    <a href = "/docs/tutorials?topic=solution-tutorials-extended-app-security#extended-app-security">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Enhance security of your deployed application
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Enhance security of your cloud application by isolating compute, network and runtime resources.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution51-extended-app-security/Sol51_Architecture.png" alt="Architecture diagram for the solution Enhance security of your deployed application"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
 </div>
 
 ## Mobile

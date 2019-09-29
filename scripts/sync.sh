@@ -18,6 +18,7 @@ tar cf - \
   --exclude=.git \
   --exclude=.gitignore \
   --exclude=solution-template.md \
+  --exclude=extended-app-security.md \
   --exclude=README.md \
   --exclude="*.course.json" \
   --exclude=scripts \
