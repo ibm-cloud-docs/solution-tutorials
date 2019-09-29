@@ -110,7 +110,7 @@
             "Container Service",
             "Docker"
           ],
-          "lastUpdated": "2019-09-30"
+          "lastUpdated": "2019-10-11"
         },
         {
           "name": "Asynchronous data processing using object storage and pub/sub messaging",
