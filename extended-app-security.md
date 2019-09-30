@@ -134,7 +134,7 @@ Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.
 One of the most often used services is {{site.data.keyword.cos_short}}. After you provisioned either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}} and created a root key, you can use that key when creating a new storage bucket. The following screenshot shows the UI to create a bucket with option to use a key from either service.
 
 <p style="text-align: center;">
-  ![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto2.png)
+  ![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto.png)
 </p>
 
 ## Conclusions
