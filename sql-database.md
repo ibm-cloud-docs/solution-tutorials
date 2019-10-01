@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-07"
+lastupdated: "2019-10-01"
 lasttested: "2019-06-11"
 ---
 
@@ -45,7 +45,7 @@ Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](
 
 1. Visit the [{{site.data.keyword.Bluemix_short}} dashboard](https://{DomainName}). Click on **Catalog** in the top navigation bar.
 2. Click on **Data & Analytics** under Platform on the left pane and select **{{site.data.keyword.dashdbshort_notm}}**.
-3. Pick the **Entry** plan and change the suggested service name to "sqldatabase" (you will use that name later on). Pick a location for the deployment of the database and make sure that the correct organization and space are selected.
+3. Pick the **Flex One** plan and change the suggested service name to "sqldatabase" (you will use that name later on). Pick a location for the deployment of the database and make sure that the correct organization and space are selected.
 4. Click on **Create**. After a short moment you should get a success notification.
 5. In the **Resource List**, click on the entry for your newly created {{site.data.keyword.dashdbshort_notm}} service.
 6. Click on **Open** to launch the database console. If it is the first time using the console, you are offered to take a tour.
@@ -111,7 +111,7 @@ The ready-to-run [code for the database app is located in this Github repository
 3. Once the push process is finished you should be able to access the app. No further configuration is needed. The file `manifest.yml` tells the IBM Cloud to bind the app and the database service named "sqldatabase" together.
 
 ## Security, Backup & Recovery, Monitoring
-The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. In the entry plan the database environment is a multi-tenant setup with reduced administration and configured options for users. However, if you are using one of the enterprise plans there are [several options to manage users, to configure additional database security](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.security.doc/doc/security.html), and to [monitor the database](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.admin.mon.doc/doc/c0001138.html).   
+The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage users, to configure additional database security](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.security.doc/doc/security.html), and to [monitor the database](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.admin.mon.doc/doc/c0001138.html).   
 
 In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/connecting/connect_api.html). The executable Swagger interface of that API can be accessed in the menu behind the "book" icon under "Rest APIs". Some tools that can be used for monitoring and more, e.g., the IBM Data Server Manager, can even be downloaded under the "Downloads" section in that same menu.
 
@@ -134,6 +134,6 @@ Want to extend this app? Here are some ideas:
 ## Related Content
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort_notm}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Frequently asked questions about {{site.data.keyword.Db2_on_Cloud_long_notm}} and {{site.data.keyword.dashdblong_notm}}](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.doc/managed_service.html) answering questions related to managed service, data backup, data encryption and security, and much more.
-* [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
+* [Free Db2 edition for developers](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of ibm_db Python driver](https://github.com/ibmdb/python-ibmdb/wiki/APIs)
 * [IBM Data Server Manager](https://www.ibm.com/us-en/marketplace/data-server-manager)
