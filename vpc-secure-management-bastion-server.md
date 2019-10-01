@@ -55,8 +55,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and  [VPC on Classic](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC](/docs/vpc?topic=vpc-ssh-keys) and for [VPC on Classic](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
+
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
+
 - The tutorial assumes that you are adding the bastion host in an existing [virtual private cloud](https://{DomainName}/vpc/network/vpcs). **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
 
 ## Create a bastion host
@@ -72,7 +74,7 @@ In this section, you will create and configure a bastion host along with a secur
    - Select a location and zone.
    - Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
    
-   If you are using VPC on Classic, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   If you are using VPC for Gen 1, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
    {:note}
    
 1. Switch the **Public gateway** to **Attached**.
@@ -130,7 +132,7 @@ With the subnet and security group already in place, next, create the bastion vi
    - Leave the **Region** as is.
    - Copy the contents of your existing local SSH key and paste it under **Public key**.
    - Click **Add SSH key**.
-1. Select **Canonical Ubuntu Linux** as your image. You can pick any version of the image.
+1. Select **Ubuntu Linux** as your image. You can pick any version of the image.
 1. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    - Make sure that **vpc-secure-bastion-subnet** is selected as the subnet.
    - Uncheck the default security group and mark **vpc-secure-bastion-sg**.
@@ -253,7 +255,7 @@ To create a new subnet,
    - Select a location.
    - Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
    
-   If you are using VPC on Classic, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   If you are using VPC for Gen 1, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
    {:note}
 
 1. Switch the **Public gateway** to **Attached**.
@@ -276,7 +278,7 @@ To create a virtual server instance in the newly created subnet:
 1. Select the same **Location** already used by the bastion virtual server.
 1. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile. To check other available profiles, click **All profiles**
 1. For **SSH keys** pick the SSH key you created earlier for the bastion.
-1. Select **Canonical Ubuntu Linux** as your image. You can pick any version of the image.
+1. Select **Ubuntu Linux** as your image. You can pick any version of the image.
 1. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    - Select **vpc-secure-private-subnet** as the subnet.
    - Uncheck the default security and group and activate **vpc-secure-private-sg**.

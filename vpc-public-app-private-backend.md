@@ -61,9 +61,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and  [VPC on Classic](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC](/docs/vpc?topic=vpc-ssh-keys) and for [VPC on Classic](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites).
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
 
 ## Create a Virtual Private Cloud
 {: #create-vpc}
@@ -157,7 +157,7 @@ To create a virtual server instance in the newly created subnet:
       ```
       {:pre}
       This will install a simple web server into the instance.
-   1. Set the **image** to **Canonical Ubuntu Linux**.  You can pick any version of the image.
+   1. Set the **image** to **Ubuntu Linux**.  You can pick any version of the image.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    * Select **vpc-pubpriv-backend-subnet** as the subnet.
    * Uncheck the default security group and check **vpc-pubpriv-backend-sg** and **vpc-secure-maintenance-sg**.
@@ -213,7 +213,7 @@ To create a virtual server instance in the newly created subnet:
       ```
       {:pre}
       This will install a simple web server into the instance.
-   1. Set the **image** to **Canonical Ubuntu Linux**.  You can pick any version of the image.
+   1. Set the **image** to **Ubuntu Linux**.  You can pick any version of the image.
 6. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
    * Select **vpc-pubpriv-frontend-subnet** as the subnet.
    * Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg** and **vpc-secure-maintenance-sg**.
