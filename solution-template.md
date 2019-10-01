@@ -18,6 +18,7 @@ lasttested: "2019-03-08"
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{:note: .note}
 
 # TUTORIAL TITLE
 {: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
