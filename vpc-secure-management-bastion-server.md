@@ -55,7 +55,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and  [VPC on Classic](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites).
 - The tutorial assumes that you are adding the bastion host in an existing [virtual private cloud](https://{DomainName}/vpc/network/vpcs). **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
 
@@ -213,7 +213,7 @@ With access to the bastion working, continue and create the security group for m
    </table>
 
 3. Create the security group.
-4. Navigate to **All Security Groups for VPC**, then select **vpc-secure-bastion-sg**.
+4. Navigate to **Security Groups**, then select **vpc-secure-bastion-sg**.
 5. Finally, edit the security group and add the following **outbound** rule.
 
    <table>
@@ -249,7 +249,10 @@ To create a new subnet,
    - Enter **vpc-secure-private-subnet** as name, then select the VPC you created.
    - Select a location.
    - Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   
+   If you are using VPC on Classic, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   {:tip}
+
 1. Switch the **Public gateway** to **Attached**.
 1. Click **Create subnet** to provision it.
 
@@ -264,12 +267,10 @@ To create a new security group:
 ### Create a virtual server instance
 
 To create a virtual server instance in the newly created subnet:
-Click on **Attached resources** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC and resource group.
-
 1. Click on the private subnet under **Subnets**.
 1. Click **Attached resources**, then **New instance**.
 1. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created and resource group as earlier.
-1. Select a **Location** and make sure to later use the same location again.
+1. Select the same **Location** already used by the bastion virtual server.
 1. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile. To check other available profiles, click **All profiles**
 1. For **SSH keys** pick the SSH key you created earlier for the bastion.
 1. Select **Ubuntu Linux** as your image. You can pick any version of the image.
