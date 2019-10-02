@@ -22,8 +22,10 @@ lasttested: "2019-08-05"
 # Install software on virtual server instances in VPC
 {: #vpc-app-deploy}
 
-This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
+This tutorial is compatible with VPC for Generation 1 compute and VPC for Generation 2 compute. Throughout the tutorial, you will find notes highlighting differences where applicable.
+{:note}
 
+This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
 {:shortdesc}
 
 After an [introduction to the tutorial architecture](#architecture), you will [prepare your environment](#before-you-begin) for the tutorial and review the [basics of software installation](#basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#cli), [Terraform](#terraform) or [Ansible](#ansible).
@@ -81,7 +83,7 @@ You will explore how to consume these different sources.
 
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
-1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) for creating a key. By default, the private key is found at `$HOME/.ssh/id_rsa`.
+1. If you don't have an SSH key on your local machine, refer to these instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`.
 1. Add the SSH key in the [VPC console](https://{DomainName}/vpc/compute/sshKeys).
 
 For more info or instructions on how to manage and/or create an SSH key read [SSH keys](/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
@@ -658,9 +660,6 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 ## Related content
 {: #related}
 
-- [VPC Glossary](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#vpc-glossary)
-- [VPC using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-cli)
-- [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
 - [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 - [Deploy a LAMP stack using Terraform](/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
 

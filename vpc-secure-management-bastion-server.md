@@ -22,7 +22,7 @@ lasttested: "2019-06-17"
 # Securely access remote instances with a bastion host
 {: #vpc-secure-management-bastion-server}
 
-This tutorial is compatible with VPC for Generation 1 compute and VPC for Generation 2 compute. Throughout the tutorial, you will find notes highlighting differences when they exist.
+This tutorial is compatible with VPC for Generation 1 compute and VPC for Generation 2 compute. Throughout the tutorial, you will find notes highlighting differences where applicable.
 {:note}
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
