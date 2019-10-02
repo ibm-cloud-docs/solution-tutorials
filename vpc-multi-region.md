@@ -21,6 +21,9 @@ lasttested: "2019-06-18"
 # Deploy isolated workloads across multiple locations and zones
 {: #vpc-multi-region}
 
+This tutorial is compatible with VPC for Generation 1 compute.
+{:note}
+
 This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
 For global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
