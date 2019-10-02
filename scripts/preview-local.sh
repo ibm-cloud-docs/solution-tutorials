@@ -19,6 +19,9 @@ tar cf - \
 # generate the new files
 marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-file=scripts/header.txt
 
+# revert the "?topic" links to plain html files
+sed -i 's/"\/docs\/tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
+
 # start server
 watch-http-server builddocs/output/ &
 
