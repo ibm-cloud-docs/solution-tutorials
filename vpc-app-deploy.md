@@ -226,7 +226,7 @@ This section uses a shell script found in the [Private and public subnets in a V
    {:pre}
 1. Run the provisioning script:
    ```sh
-   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh ubuntu-18.04-amd64
+   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh
    ```
    {:pre}
 
@@ -236,9 +236,8 @@ This section uses a shell script found in the [Private and public subnets in a V
       - `$TF_VAR_resource_group_name` is the resource group name which will contain all of the resources created.
       - `resources.sh` is the output of a successful build.
       - [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) is the cloud-init file used to initialize the frontend and the backend servers.
-      - `ubuntu-18.04-amd64` is one of the virtual server images from the `ibmcloud is images` command, the scripts are expecting Ubuntu.
 
-   During its execution, the `vpc-pubpriv-create-with-bastion.sh` shell script creates three hosts: frontend, backend and bastion. The `@shared/install.sh` has been passed to a `ibmcloud is create-instance` CLI command `--user-data` parameter like this:
+   During its execution, the `vpc-pubpriv-create-with-bastion.sh` shell script creates three hosts: frontend, backend and bastion using Ubuntu as operating system. The `@shared/install.sh` has been passed to a `ibmcloud is create-instance` CLI command `--user-data` parameter like this:
 
    ```sh
    ibmcloud is instance-create ... --user-data @shared/install.sh
