@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-08-05"
-lasttested: "2019-07-17"
+lastupdated: "2019-10-05"
+lasttested: "2019-10-05"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -69,10 +69,10 @@ You can create a project to add data and open a data asset in the data refiner f
 **Create a project:**
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section.
-  1. Provide a **Service name**.
-  2. Choose a **region/location**.
-  3. Select a **resource group**.
-  4. Select a **Lite** plan and click **Create**.
+  1. Select a **region**.
+  2. Select a **Lite** pricing plan.
+  3. Provide a **Service name**.
+  4. Select a **resource group** and click **Create**.
 2. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
 3. Create a **project** by clicking **Create an empty project**.
 4. Provide **iris_project** as the project name and Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
@@ -107,21 +107,21 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Click **Add to project** and select **AutoAI experiment**. In the dialog,
   1. Select **From blank**.
-  2. Set the name to **iris_model**.
+  2. Set the Asset name to **iris_model**.
   3. Under **Associated service**, select the **Machine learning service instance**.
   4. Click **Create**.
 2. Once the model is created,
   1. Add training data by clicking **Select from project**.
   2. Choose the **iris_initial.csv** file.
   3. Click **Select asset**.
-3. On the subsequent page, click on **Configure source** then Set **Holdout data split** to **25%** and click **Save**.
-4. Select **Species** as your Select column to predict.
-5. Click **Configure prediction**
+3. Select **Species** as your Select column to predict.
+4. Click **Experiment settings** > Set **Holdout data split** under source settings to **25%**.
+5. Click **Prediction settings**
    1. Select **Multiclass classification** as the prediction type.
    2. Choose **Accuracy** as the Optimized metric.
-   3. Click **Apply**.
+   3. Click **Save and close**.
 6. Click **Run experiment**.
-7. Once the experiment completes running, under the **Pipeline** leaderboard, click **Save as model** next to the model with *Rank 1*.
+7. Once the experiment completes running, under the **Pipeline** leaderboard, click **Save as** > **Model** next to the model with *Rank 1*.
 8. Check the details of the model and click **Save**.
 9. In the received notification, click **View in project** then click on **Overview** to check the details of the model.
 
@@ -131,7 +131,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Under the created model, click on **Deployments** > **Add Deployment**.
 1. Choose **Web Service**. Add a name say `iris_deployment` and an optional description.
-2. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **ready** (You may have to refresh the page), you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation**.
+2. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **ready** (You may have to refresh the page), you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation** tab of the deployment.
 3. Open a terminal and export the required values for the **cURL** code snippet by replacing the placeholders below
    ```sh
    export IAM_TOKEN='<IAM_TOKEN>'
@@ -169,16 +169,12 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 {:#create_feedback_connection}
 
-1. For continuous learning and model evaluation, you need to store new data somewhere. Create a [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service > **Entry** plan which acts as our feedback data connection.
-
-  Make sure to select the **Entry** plan when creating the above instance.
-  {:tip}
-
-2. On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open Console**. Click **Load** under Load activity section.
+1. For continuous learning and model evaluation, you need to store new data somewhere. Create a [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service by choosing **Flex One** plan which acts as our feedback data connection.
+2. Once the service is provisioned, On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open Console**. Click the Menu icon > click **Load Data** under LOAD .
 3. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
-4. Select **DASHXXXX**, e.g., DASH1234 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
+4. Select **DB2XXXXX**, e.g., DB2INST1 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
 5. Datatypes are automatically detected. Click **Next** and then **Begin Load**.
-6. A new target **DASHXXXX.IRIS_FEEDBACK** is created.
+6. A new target **DB2XXXXX.IRIS_FEEDBACK** is created.
 
    You will be using this in the next step where you will be re-training the model for better performance and precision.
 
@@ -194,7 +190,7 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
       - In the dropdown, select the {{site.data.keyword.pm_full}} service you created above.
       - Provide a service provider instance name (say `iris-wml-provider`)
       - Click **Save**
-1. Click **Go to Dashboard** to add a deployment > Click **Add deployments** and select `iris_deployment`> Click **Configure**.
+1. Click **Go to Dashboard** to add a deployment > Click **Add** and select `iris_deployment`> Click **Configure**.
 1. Click **Configure monitors** to setup your monitors.
 1. Under **Payload logging**,
       - Select **Numerical/categorical** as Data type
@@ -203,7 +199,7 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
 1. Under **Model details**,
       - Click **Begin** and select **Manually configure monitors** > Click **Next**.
       - Select **Db2** as the location for your training data > Provide the credentials of your Db2 service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) > Click **Test**. Once the connection is successful, Click **Next**
-      - Select the schema - DASHXXXX and the Table - IRIS_FEEDBACK > Click **Next**
+      - Select the schema - DB2XXXXX and the Table - IRIS_FEEDBACK > Click **Next**
       - Click on **Species** tile as your column that contains the answers to be predicted by the model > Click **Next**
       - Select petal_length, petal_width as your features used to train the model.> Click **Next**
       - Select petal_length, petal_width as the text and categorical features.> Click **Next**
@@ -259,7 +255,7 @@ You can either generate load by sending multiple requests with random petal_widt
    * Choose **weightedPrecision** as your metric and set `0.98` as the optional threshold.
    * Click on **Create new connection** to point to the IBM Db2 Warehouse on cloud which you created in the above section.This will open on a new tab. Once done, return to the main tab.
    * Select the Db2 warehouse connection and once the connection details are populated, click **Create**.
-   * Click on **Select feedback data reference**, Select the schema - DASHXXXX and point to the IRIS_FEEDBACK table and click **Select**.
+   * Click on **Select feedback data reference**, Select the schema - DB2XXXXX and point to the IRIS_FEEDBACK table and click **Select**.
    * In the **Record count required for re-evaluation** box, type the minimum number of new records to trigger retraining. Use **10** or leave blank to use the default value of 1000.
    * In the **Auto retrain** box, select one of the following options:
      - To start automatic retraining whenever model performance is below the threshold that you set, select **when model performance is below threshold**. For this tutorial, you will choose this option as our precision is below the threshold (.98).
