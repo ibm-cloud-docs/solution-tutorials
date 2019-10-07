@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-12"
+lastupdated: "2019-10-07"
 lasttested: "2019-06-12"
 ---
 
@@ -274,6 +274,7 @@ Once the DNS changes have been propagated, you will be able to access your guest
 * Delete actions from {{site.data.keyword.openwhisk_short}}
 
 ## Related content
+* [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * [More guides and samples on serverless](https://developer.ibm.com/code/journey/category/serverless/)
 * [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-index#getting-started-with-openwhisk)
 * [{{site.data.keyword.openwhisk}} common use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_common_use_cases#openwhisk_common_use_cases)
