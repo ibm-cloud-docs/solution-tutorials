@@ -246,7 +246,7 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
 1. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
 1. Copy and run the command under **Install Sysdig Agent to your cluster** on a terminal where you have set the `KUBECONFIG` environment variable to deploy the Sysdig agent in your cluster. Wait for the deployment to complete.
 
-Note: The Sysdig agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. In addtion, the deployment yaml `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Premetheus metrics. 
+Note: The Sysdig agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics. 
   ```yaml
   spec:
     template:
@@ -255,7 +255,7 @@ Note: The Sysdig agent installation as provided by the IBM Cloud script includes
           prometheus.io/scrape: "true"
           prometheus.io/port: "8002"
   ```
-and finally the application includes a Prometheus library `prometheus_client` that is used to generate custom metrics, something that we will see later in the sample app used in this tutorial.  Depending on the development language that is used in your application, you can find a Prometheus client to use. Some examples are described on the [Sysdig Blog](https://sysdig.com/blog/prometheus-metrics/)
+Finally, the application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Sysdig Blog](https://sysdig.com/blog/prometheus-metrics/) for details. 
 {: tip}
 
 ### Configure {{site.data.keyword.mon_short}}
@@ -273,7 +273,7 @@ To check the health and performance of your app and cluster you can review the d
 Note: Change the interval to **10 M** on the bottom bar of the Sysdig UI.
 {: tip}
 
-1. Back in the application running at `http://worker-ip-address:portnumber/` and click on the `Monitoring` tab, generate several metrics.
+1. Go back to the application running at `http://worker-ip-address:portnumber/` and click on the **Monitoring** tab, generate several metrics.
 1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 1. To check **default metrics** such as the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. 
 1. To monitor the latency of the application,
@@ -286,19 +286,19 @@ Note: Change the interval to **10 M** on the bottom bar of the Sysdig UI.
 1. To monitor the Kubernetes namespace where the application is running,
    - From the Explore tab, select **Deployments and Pods**.
    - Click the arrow next to `net.http.request.time`.
-   - Select Default Dashboards > Kubernetes.
-   - Select Kubernetes State > Kubernetes State Overview.
+   - Select **Default Dashboards** > **Kubernetes**.
+   - Select **Kubernetes State** > **Kubernetes State Overview**.
 
-This sample application also generates **custom metrics**, and are specific to what a developer may want to capture on the application.  In our sample application, a series of custom metrics are generated via a Prometheus client in the application to simulate multiple access to API endpoints.
+This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
 ![](images/solution12/wolam_api_counter.png)
 
 1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 1. To monitor the calls to a given api endpoint of the application,
    - From the Explore tab, select **Deployments and Pods**.
-   - Click the arrow next to `Kubernetes State Overview` and then Select Prometheus > wolam_api_counter.
+   - Click the arrow next to **Kubernetes State Overview** and then Select **Prometheus** > **wolam_api_counter**.
    - Select Time: **Sum**, Group: **Average**, Segment: **endpoint**
-1. Back in the application running at `http://worker-ip-address:portnumber/` and click on the `Monitoring` tab, generate a few metrics after changing the region.
+1. Go back to the application running at `http://worker-ip-address:portnumber/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
 1. To monitor the calls to a given api endpoint of the application by region,
    - Select Time: **Sum**, Group: **Average**, Segment: **region**
 
@@ -341,7 +341,7 @@ To create a dashboard:
 - Use the [{{site.data.keyword.at_full}} service](/docs/services/Activity-Tracker-with-LogDNA?topic=logdnaat-getting-started#getting-started) to track how applications interact with IBM Cloud services.
 - [Add alerts](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-alerts#alerts) to your view.
 - [Export logs](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-export#export) to a local file.
-- Examine the `views.py` in the sample application and experiment updating the application to capture additional custom metrics. Create an updated image version and update and apply the `app-log-analysis.yaml` to redeploy your updates. 
+- Examine `views.py` in the sample application and experiment updating the application to capture additional custom metrics. Create an updated image version and update and apply `app-log-analysis.yaml` to redeploy your updates. 
 
 ## Related content
 {:related}
