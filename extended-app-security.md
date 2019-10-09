@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-09-26"
+lastupdated: "2019-10-08"
 lasttested: "2019-09-26"
 
 ---
@@ -134,7 +134,7 @@ Supported services include {{site.data.keyword.cos_short}}, {{site.data.keyword.
 One of the most often used services is {{site.data.keyword.cos_short}}. After you provisioned either {{site.data.keyword.keymanagementserviceshort}} or {{site.data.keyword.hscrypto}} and created a root key, you can use that key when creating a new storage bucket. The following screenshot shows the UI to create a bucket with option to use a key from either service.
 
 <p style="text-align: center;">
-  ![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto2.png)
+  ![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto.png)
 </p>
 
 ## Conclusions
@@ -146,6 +146,7 @@ In this tutorial, you learned how to increase application security by moving fro
 
 * Tutorial: [Apply end to end security to a cloud application](https://{DomainName}/docs/tutorials?topic=solution-tutorials-cloud-e2e-security)
 * Blog: [Cloud App Security: What Makes a Secure App?](https://www.ibm.com/cloud/blog/cloud-app-security)
+* Blog: [Use Your FIDO2 Key for 2FA on IBM Cloud Apps](https://www.ibm.com/cloud/blog/use-your-fido2-key-for-2fa-on-ibm-cloud-apps)
 * IBM Architecture Center: [Security to safeguard and monitor your cloud apps](https://www.ibm.com/devops/method/content/architecture/securityArchitecture)
 * [{{site.data.keyword.cloud_notm}} platform service CLIs and APIs](https://{DomainName}/docs/overview?topic=overview-platform-svc-cli-api)
 * [IBM Cloud Compliance Programs](https://www.ibm.com/cloud/compliance)

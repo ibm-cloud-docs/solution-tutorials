@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-08"
-lasttested: "2019-04-22"
+lastupdated: "2019-10-01"
+lasttested: "2019-10-01"
 ---
 
 {:shortdesc: .shortdesc}
@@ -18,7 +18,7 @@ lasttested: "2019-04-22"
 
 In this tutorial, you are going to build a Slackbot to create and search Db2 database entries for events and conferences. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using an Assistant integration.
 
-The  Slack integration channels messages between Slack and {{site.data.keyword.conversationshort}}. There, some server-side dialog actions perform SQL queries against a Db2 database. All (but not much) code is written in Node.js.
+The Slack integration channels messages between Slack and {{site.data.keyword.conversationshort}}. There, some server-side dialog actions perform SQL queries against a Db2 database. All (but not much) code is written in Node.js.
 
 ## Objectives
 {: #objectives}
@@ -33,7 +33,7 @@ The  Slack integration channels messages between Slack and {{site.data.keyword.c
 This tutorial uses the following runtimes and services:
    * [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/conversation)
    * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk/)
-   * [{{site.data.keyword.dashdblong}} ](https://{DomainName}/catalog/services/db2-warehouse) or [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
+   * [{{site.data.keyword.Db2_on_Cloud_long}}}} ](https://{DomainName}/catalog/services/db2) or [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
 
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -61,39 +61,43 @@ In this section, you are going to set up the needed services and prepare the env
    cd slack-chatbot-database-watson
    ```
    {: pre}
-2. If you are not logged in, use `ibmcloud login` to log in interactively.
-3. Target the organization and space where to create the database service with:
+2. If you are not logged in, use `ibmcloud login` to log in interactively. Target the organization and space where to create the database service with:
    ```sh
    ibmcloud target --cf
    ```
    {: pre}
-4. Create a {{site.data.keyword.dashdbshort}} instance and name it **eventDB**:
+3. Create a {{site.data.keyword.Db2_on_Cloud_short}}}} instance and name it **eventDB**. Adapt the region **us-south** to your region.
    ```sh
-   ibmcloud cf create-service dashDB Entry eventDB
+   ibmcloud resource service-instance-create eventDB dashdb-for-transactions free us-south
    ```
    {: pre}
-   You can also use another than the **Entry** plan.
-5. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:
+   You can also use another than the **free** (lite) plan. Next, create a service alias. Replace **YOUR_SPACE** with the space name you selected in step 3.
+   ```sh
+   ibmcloud resource service-alias-create eventDB --instance-name eventDB -s YOUR_SPACE
+   ```
+   {: pre}
+
+   To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:
    ```sh
    ibmcloud cf create-service-key eventDB slackbotkey
    ```
    {: pre}
-6. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan.
+4. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan.
    ```sh
    ibmcloud cf create-service conversation free eventConversation
    ```
    {: pre}
-7. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Some of the actions are enabled as web actions and a secret is set to prevent unauthorized invocations. Choose a secret and pass it in as parameter - replace **YOURSECRET** accordingly.
+5. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Some of the actions are enabled as web actions and a secret is set to prevent unauthorized invocations. Choose a secret and pass it in as parameter - replace **YOURSECRET** accordingly.
 
    One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
 
    ```sh
-   sh setup.sh YOURSECRET
+   sh setup.sh YOURSECRET "dashDB for Transactions"
    ```
    {: pre}
 
    **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud fn action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
-8. Extract the namespace information for the deployed actions.
+6.  Extract the namespace information for the deployed actions.
 
    ```sh
    ibmcloud fn action list | grep eventInsert
@@ -188,6 +192,6 @@ Documentation and SDKs:
 * GitHub repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
 * [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_about#about-cloud-functions)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
-* [Free Db2 Developer Community Edition](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
+* [Free Db2 edition for developers](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
 * [{{site.data.keyword.cloudantfull}} documentation](https://{DomainName}/docs/services/Cloudant?topic=cloudant-overview#overview)

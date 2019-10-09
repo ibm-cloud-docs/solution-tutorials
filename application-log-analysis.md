@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-08"
-lasttested: "2019-05-27"
+lastupdated: "2019-10-04"
+lasttested: "2019-10-04"
 
 ---
 
@@ -126,6 +126,7 @@ On a terminal:
       ```
       {: pre}
    - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest`
+   
 6. Run the command below to retrieve cluster configuration and set the `KUBECONFIG` environment variable:
    ```sh
    $(ibmcloud ks cluster-config --export mycluster)
@@ -170,7 +171,7 @@ The application deployed in the previous steps allows you to log a message at a 
 
 Take a look at the code in the file [**views.py**](https://github.com/IBM-Cloud/application-log-analysis/blob/master/app/views.py). The code contains **print** statements as well as calls to **logger** functions. Printed messages are written to the **stdout** stream (regular output, application console / terminal), logger messages appear in the **stderr** stream (error log).
 
-1. Visit the web app at `http://worker-ip-address:portnumber`.
+1. Visit the web app at `http://worker-ip-address:portnumber/` and click on the `Logging` tab.
 1. Generate several log entries by submitting messages at different levels. The UI allows to change the logger setting for the server log level as well. Change the server-side log level in-between to make it more interesting. For example, you can log a "500 internal server error" as an **error** or "This is my first log entry" as an **info**.
 
 ### Access application logs
@@ -245,6 +246,18 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
 1. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
 1. Copy and run the command under **Install Sysdig Agent to your cluster** on a terminal where you have set the `KUBECONFIG` environment variable to deploy the Sysdig agent in your cluster. Wait for the deployment to complete.
 
+Note: The Sysdig agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics. 
+  ```yaml
+  spec:
+    template:
+      metadata:
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "8002"
+  ```
+Finally, the application includes a Prometheus library `prometheus_client`, which is used by the sample app in this tutorial to generate custom metrics.  You can find a Prometheus client to use for most programming languages. See the [Sysdig Blog](https://sysdig.com/blog/prometheus-metrics/) for details. 
+{: tip}
+
 ### Configure {{site.data.keyword.mon_short}}
 
 To Configure Sysdig to monitor health and performance of your cluster:
@@ -255,10 +268,14 @@ To Configure Sysdig to monitor health and performance of your cluster:
 
 ### Monitor your cluster
 
-To check the health and performance of your app amd cluster:
-1. Back in the application running at `http://worker-ip-address:portnumber`, generate several log entries.
-1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment** to see the Request count, Response Time etc., on the Sysdig monitor wizard.
-1. To check the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. Change the interval to **10 M** on the bottom bar of the Sysdig UI.
+To check the health and performance of your app and cluster you can review the default (out-of-the-box) and/or custom application generated metrics that are captured.
+
+Note: Change the interval to **10 M** on the bottom bar of the Sysdig UI.
+{: tip}
+
+1. Go back to the application running at `http://worker-ip-address:portnumber/` and click on the **Monitoring** tab, generate several metrics.
+1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
+1. To check **default metrics** such as the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. 
 1. To monitor the latency of the application,
    - From the Explore tab, select **Deployments and Pods**.
    - Click the arrow next to `HTTP` and then Select Metrics > Network.
@@ -269,8 +286,21 @@ To check the health and performance of your app amd cluster:
 1. To monitor the Kubernetes namespace where the application is running,
    - From the Explore tab, select **Deployments and Pods**.
    - Click the arrow next to `net.http.request.time`.
-   - Select Default Dashboards > Kubernetes.
-   - Select Kubernetes State > Kubernetes State Overview.
+   - Select **Default Dashboards** > **Kubernetes**.
+   - Select **Kubernetes State** > **Kubernetes State Overview**.
+
+This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
+
+![](images/solution12/wolam_api_counter.png)
+
+1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
+1. To monitor the calls to a given api endpoint of the application,
+   - From the Explore tab, select **Deployments and Pods**.
+   - Click the arrow next to **Kubernetes State Overview** and then Select **Prometheus** > **wolam_api_counter**.
+   - Select Time: **Sum**, Group: **Average**, Segment: **endpoint**
+1. Go back to the application running at `http://worker-ip-address:portnumber/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
+1. To monitor the calls to a given api endpoint of the application by region,
+   - Select Time: **Sum**, Group: **Average**, Segment: **region**
 
 ### Create a custom dashboard
 
@@ -311,6 +341,7 @@ To create a dashboard:
 - Use the [{{site.data.keyword.at_full}} service](/docs/services/Activity-Tracker-with-LogDNA?topic=logdnaat-getting-started#getting-started) to track how applications interact with IBM Cloud services.
 - [Add alerts](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-alerts#alerts) to your view.
 - [Export logs](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-export#export) to a local file.
+- Examine `views.py` in the sample application and experiment updating the application to capture additional custom metrics. Create an updated image version and update and apply `app-log-analysis.yaml` to redeploy your updates. 
 
 ## Related content
 {:related}

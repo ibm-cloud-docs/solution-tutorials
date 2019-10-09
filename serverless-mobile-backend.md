@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-04"
+lastupdated: "2019-10-07"
 lasttested: "2019-06-04"
 ---
 
@@ -357,7 +357,7 @@ Our {{site.data.keyword.openwhisk_short}} actions are ready for our mobile app. 
 2. Delete the {{site.data.keyword.cloudant_short_notm}}, {{site.data.keyword.appid_short}}, {{site.data.keyword.mobilepushshort}} and {{site.data.keyword.toneanalyzershort}} services from the {{site.data.keyword.Bluemix_notm}} console.
 
 ## Related content
-
+* [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * {{site.data.keyword.appid_short}} provides a default configuration to help with the initial set up of your identity providers. Prior to publishing your app, [update the configuration to your own credentials](https://{DomainName}/docs/services/appid?topic=appid-social#social). You will also be able to [customize the login widget](https://{DomainName}/docs/services/appid?topic=appid-login-widget#login-widget).
 
 

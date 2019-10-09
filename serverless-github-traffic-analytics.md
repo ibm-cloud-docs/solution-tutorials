@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-25"
-lasttested: "2019-05-24"
+lastupdated: "2019-10-02"
+lasttested: "2019-10-02"
 ---
 
 {:shortdesc: .shortdesc}
@@ -50,9 +50,9 @@ In this section, you set up the needed services and prepare the environment. All
 
 2. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command. You need to have an organization and space set.
 
-3. Create a {{site.data.keyword.dashdbshort}} instance with the **Entry** plan and name it **ghstatsDB**:
+3. Create a {{site.data.keyword.dashdbshort}} instance with the **Flex One** plan and name it **ghstatsDB**. Replace `eu-de:frankfurt` with a [value according to your set region](https://{DomainName}/docs/services/Db2whc?topic=Db2whc-plans_cfgs#availability).
    ```sh
-   ibmcloud cf create-service dashDB Entry ghstatsDB
+   ibmcloud cf create-service dashDB "Flex One" ghstatsDB -c '{"datacenter" : "eu-de:frankfurt", "oracle_compatible":"yes"}'
    ```
    {: pre}
 

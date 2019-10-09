@@ -605,6 +605,6 @@ Want to add to or extend this tutorial? Here are some ideas:
 {: #related}
 
 - [VPC Glossary](/docs/vpc?topic=vpc-vpc-glossary)
-- [IBM Cloud CLI plugin for VPC Reference](/docs/infrastructure-service-cli-plugin?topic=infrastructure-service-cli-vpc-reference)
+- [IBM Cloud CLI plugin for VPC Reference](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-reference)
 - [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
 - Solution tutorial: [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
