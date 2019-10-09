@@ -32,7 +32,7 @@ The Slack integration channels messages between Slack and {{site.data.keyword.co
 
 This tutorial uses the following runtimes and services:
    * [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/conversation)
-   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk/)
+   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions/)
    * [{{site.data.keyword.Db2_on_Cloud_long}}}} ](https://{DomainName}/catalog/services/db2) or [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
 
 
