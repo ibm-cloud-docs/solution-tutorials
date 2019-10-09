@@ -193,8 +193,8 @@ For more information about how to deploy an image from IBM Cloud Container Regis
 
 ## Create a CDN instance
 
-1. Before you create CDN instance, apply for a domain name for your application. For example, you can click **Add DNS Zone** from [DNS Forward Zone](https://{DomainName}/classic/network/dns/forwardzones).
-2. Go to the catalog in the console, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
+1. Before you create CDN instance, apply for a domain name for your application. For example, you can register a domain from [IBM Cloud Domains](https://{DomainName}/classic/services/domains).
+2. Go to the cloud catalog, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
 3. On the next dialog, set the hostname for CDN to the custom domain of your application, for example, `todo.exampledomain.net`. 
 4. Set the rest of CDN configurations:
 	* Set the **Custom CNAME** prefix to a unique value, for example, `todo-sample`. 
