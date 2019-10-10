@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-25"
-lasttested: "2019-06-17"
+lastupdated: "2019-10-10"
+lasttested: "2019-10-10"
 ---
 
 {:shortdesc: .shortdesc}
@@ -113,8 +113,10 @@ This section uses the command line to create service instances. Alternatively, y
 Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keyword.cos_short}} bucket. Topics define where applications deliver messages in publish-subscribe messaging systems. After messages are received and processed, they will be stored within a file located in an {{site.data.keyword.cos_short}} bucket.
 
 1. In your browser, access the `log-analysis-hub` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis).
-2. Click the **+** button to create a topic.
-3. Enter the **Topic Name** `webserver` and click the **Create topic** button.
+2. Click **Create a topic** tile.
+3. Enter the **Topic Name** `webserver` and click **Next**
+   - Set **Partitions** to 1 and click **Next**
+   - Choose **A day** for Message Retention and click **Create topic**
 4. Click **Service Credentials** and the **New Credential** button.
 5. In the resulting dialog, type `webserver-flow` as the **Name** and click the **Add** button.
 6. Click **View Credentials** and copy the information to a safe place. It will be used in the next section.
@@ -123,6 +125,7 @@ Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keywo
     * Enter a unique **Name** for the bucket.
     * Select **Cross Region** for **Resiliency**.
     * Select **us-geo** as the **Location**.
+    * Select a **Standard** storage class.
     * Click **Create bucket**.
 
 ## Create a Streams flow source
@@ -131,7 +134,7 @@ Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keywo
 In this section, you will begin configuring a Streams flow that receives log messages. The {{site.data.keyword.streaminganalyticsshort}} service is powered by {{site.data.keyword.streamsshort}}, which can analyze millions of events per second, enabling sub-millisecond response times and instant decision-making.
 
 1. In your browser, access [Watson Data Platform](https://dataplatform.ibm.com).
-2. Click **Create a project** tile, then **create project** on **Standard** tile.
+2. Click **Create a project** tile, then **Create an empty project**.
     * Enter the **Name** `webserver-logs`.
     * The **Define storage** option should be set to `log-analysis-cos`. If not, select the Cloud object storage instance from the list.
     * Click the **Create** button.
@@ -141,13 +144,15 @@ In this section, you will begin configuring a Streams flow that receives log mes
     * Provide the **Service name** as `log-analysis-sa` and click **Confirm**.
     * Type the streams flow **Name** as `webserver-flow`.
     * Select **Wizard** and Finish by clicking **Create**.
-5. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
+4. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
     * Click **Add Connection** and select your `log-analysis-hub` {{site.data.keyword.messagehub}} instance. If you do not see your instance listed, select the **IBM {{site.data.keyword.messagehub}}** option. Manually enter the **Connection details** that you obtained from the **Service credentials** in the previous section. **Name** the connection `webserver-flow`.
     * Click **Create** to create the connection.
     * Select `webserver` from the **Topic** dropdown.
     * Select **Start with the first new message** from the **Initial Offset** dropdown.
+    * Select **JSON** from **Record value parsing** dropdown.
+    * Select **1** as the **Number of parallel workers**.
     * Click **Continue**.
-6. Leave the **Preview Data** page open; it will be used in the next section.
+5. Leave the **Preview Data** page open; it will be used in the next section.
 
 ## Using Kafka console tools with {{site.data.keyword.messagehub}}
 
@@ -182,12 +187,13 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     kafka03-prod02.messagehub.services.us-south.bluemix.net:9093 \
     --producer.config message-hub.config --topic webserver
     ```
-5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}. Notice the sent messages also display on the `webserver-flow` **Preview Data** page.
+5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}.
     ```javascript
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
     {: pre}
-![Preview page](images/solution31/preview_data.png)
+
+    Notice the sent messages displayed on the `webserver-flow` **Preview Data** page.
 
 ## Create a Streams flow target
 
@@ -201,6 +207,7 @@ In this section, you will complete the streams flow configuration by defining a 
     * Click **Create**.
     * Enter the **File path** `/YOUR_BUCKET_NAME/http-logs_%TIME.csv`. Replace `YOUR_BUCKET_NAME` with the one used in the first section.
     * Select **csv** in the **Format** dropdown.
+    * Select **Comma(,)** as the **Delimiter**.
     * Check the **Column header row** checkbox.
     * Select **File Size** in the **File Creation Policy** dropdown.
     * Set the limit to be 100MB by entering `102400` in the **File Size (KB)** textbox.
@@ -213,8 +220,6 @@ In this section, you will complete the streams flow configuration by defining a 
     ```
     {: pre}
 6. Return to your bucket in {{site.data.keyword.cos_short}}. A new `log.csv` file will exist after enough messages have entered the flow or the flow is restarted.
-
-![webserver-flow](images/solution31/flow.png)
 
 ## Add conditional behavior to Streams flows
 
@@ -242,8 +247,6 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
 4. Click the play button to **Save and run the streams flow**.
 5. If prompted click the link to **run the new version**.
 
-![Flow designer](images/solution31/flow_design.png)
-
 ## Increasing message load
 
 {: #streamsload}
@@ -262,9 +265,11 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
     ```sh
     npm install
     ```
+    {: pre}
     ```sh
     npm run build
     ```
+    {: pre}
     ```sh
     node dist/index.js --file LOGFILE --parser httpd --broker-list BROKERLIST \
     --api-key APIKEY --topic webserver --rate 100
@@ -281,14 +286,13 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
     --api-key Np15YZKN3SCdABUsOpJYtpue6jgJ7CwYgsoCWaPbuyFbdM4R \
     --topic webserver --rate 100
     ```
+    {: pre}
 4. In your browser, return to your `webserver-flow` after the simulator begins producing messages.
 5. Stop the simulator after a desired number of messages have gone through the conditional branches using `control+C`.
 6. Experiment with {{site.data.keyword.messagehub}} scaling by increasing or decreasing the `--rate` value.
 
 The simulator will delay sending the next message based on the elapsed time in the webserver log. Setting `--rate 1` sends events in realtime. Setting `--rate 100` means that for every 1 second of elapsed time in the webserver log a 10ms delay between messages is used.
 {: tip}
-
-![Flow load set to 10](images/solution31/flow_load_10.png)
 
 ## Investigating log data using SQL Query
 
@@ -299,7 +303,7 @@ Depending on the number of messages sent by the simulator, the log file on {{sit
 If you prefer not to wait for the simulator to send all log messages, upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0fptwsp) to {{site.data.keyword.cos_short}} to get started immediately.
 {: tip}
 
-1. Access the `log-analysis-sql` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis). Select **Open UI** to launch SQL Query.
+1. Access the `log-analysis-sql` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis). Click **Launch SQL Query UI**.
 2. Enter the following SQL into the **Type SQL here ...** text area.
     ```sql
     -- What are the top 10 web pages on NASA from July 1995?
@@ -319,7 +323,7 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     * **Copy** the URL to the clipboard.
 4. Update the `FROM` clause with your Object SQL URL and click **Run**.
 5. The result can be seen on the **Result** tab. While some pages - like the Kennedy Space Center home page - are expected one mission is quite popular at the time.
-6. Select the **Query Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
+6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
 7. Try the following question and answer pairs by adding them individually to the **Type SQL here ...** text area.
     ```sql
     -- Who are the top 5 viewers?
@@ -329,7 +333,6 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     ORDER BY 2 DESC
     LIMIT 5
     ```
-    {: pre}
 
     ```sql
     -- Which viewer has suspicious activity based on application failures?
@@ -339,7 +342,6 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     GROUP BY HOST
     ORDER BY 2 DESC
     ```
-    {: pre}
 
     ```sql
     -- Which requests showed a page not found error to the user?
@@ -347,7 +349,6 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE `responseCode` == 404
     ```
-    {: pre}
 
     ```sql
     -- What are the top 10 largest files?
@@ -357,7 +358,6 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     ORDER BY CAST(BYTES as Integer) DESC
     LIMIT 10
     ```
-    {: pre}
 
     ```sql
     -- What is the distribution of total traffic by hour?
@@ -366,7 +366,6 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     GROUP BY 1
     ORDER BY 1 ASC
     ```
-    {: pre}
 
     ```sql
     -- Why did the previous result return an empty hour?
@@ -375,7 +374,6 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
     WHERE SUBSTRING(TIMESTAMP, 13, 2) == ''
     ```
-    {: pre}
 
 FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAME/` to run SQL queries on all files in the bucket.
 {: tip}
