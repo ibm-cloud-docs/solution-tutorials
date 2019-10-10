@@ -191,8 +191,6 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     ```javascript
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
-    {: pre}
-
     Notice the sent messages displayed on the `webserver-flow` **Preview Data** page.
 
 ## Create a Streams flow target
@@ -218,7 +216,7 @@ In this section, you will complete the streams flow configuration by defining a 
     ```javascript
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
-    {: pre}
+
 6. Return to your bucket in {{site.data.keyword.cos_short}}. A new `log.csv` file will exist after enough messages have entered the flow or the flow is restarted.
 
 ## Add conditional behavior to Streams flows
@@ -235,7 +233,7 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
       ```sh
       responseCode == 200
       ```
-      {: pre}
+
     * With your mouse, draw a line from the **{{site.data.keyword.messagehub}}** node's output (right side) to your **OK** node's input (left side).
     * From the **Nodes** palette, drag the **Debug** node found under **TARGETS** to the canvas.
     * Connect the **Debug** node to the **OK** node by drawing a line between the two.
@@ -243,7 +241,7 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
     ```sh
     responseCode >= 300
     ```
-    {: pre}
+
 4. Click the play button to **Save and run the streams flow**.
 5. If prompted click the link to **run the new version**.
 
