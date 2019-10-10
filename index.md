@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-06-25"
+lastupdated: "2019-09-26"
 ---
 
 {:shortdesc: .shortdesc}
@@ -136,35 +136,35 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 
 ## Featured Tutorials
 <div class = "solutionBoxContainer">
-    <a href = "/docs/tutorials?topic=solution-tutorials-cloud-e2e-security#cloud-e2e-security">
+    <a href = "/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn#vpc-site2site-vpn">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Apply end to end security to a cloud application
+                Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.</p>
+                    <p>Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution34-cloud-e2e-security/Architecture.png" alt="Architecture diagram for the solution Apply end to end security to a cloud application" />
+                    <img class="architectureDiagram" src = "images/solution46-vpc-vpn/ArchitectureDiagram.png" alt="Architecture diagram for the solution Use a VPC/VPN gateway for secure and private on-premises access to cloud resources" />
                 </div>
             </div>
         </div>
     </div>
     </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-isolated-cloud-foundry-enterprise-apps#isolated-cloud-foundry-enterprise-apps">
+    <a href = "/docs/tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift">
     <div class = "solutionBox solutionBoxFeatured">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
-                Isolated Cloud Foundry Enterprise Apps
+                Scalable web app on OpenShift
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Provide an innovation platform to your organization by deploying an isolated, enterprise-grade Cloud Foundry platform using Cloud Foundry Enterprise Environment.</p>
+                    <p>Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution45-CFEE-apps/Architecture.png" alt="Architecture diagram for the solution Isolated Cloud Foundry Enterprise Apps" />
+                    <img class="architectureDiagram" src = "images/solution50-scalable-webapp-openshift/Architecture.png" alt="Architecture diagram for the solution Scalable web app on OpenShift" />
                 </div>
             </div>
         </div>
@@ -238,6 +238,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution21/Architecture.png" alt="Architecture diagram for the solution Continuous Deployment to Kubernetes"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/tutorials?topic=solution-tutorials-scalable-webapp-openshift#scalable-webapp-openshift">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Scalable web app on OpenShift
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution50-scalable-webapp-openshift/Architecture.png" alt="Architecture diagram for the solution Scalable web app on OpenShift"/>
                 </div>
             </div>
         </div>
@@ -559,6 +576,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
+    <a href = "/docs/tutorials?topic=solution-tutorials-extended-app-security#extended-app-security">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Enhance security of your deployed application
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Enhance security of your cloud application by isolating compute, network and runtime resources.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution51-extended-app-security/Sol51_Architecture.png" alt="Architecture diagram for the solution Enhance security of your deployed application"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
 </div>
 
 ## Mobile
@@ -593,23 +627,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution9/Architecture.png" alt="Architecture diagram for the solution Android native mobile app with Push Notifications"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-hybrid-mobile-push-analytics#hybrid-mobile-push-analytics">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Hybrid mobile application with Push Notifications
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Develop a hybrid Cordova application with Push Notifications on IBM Cloud.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution15/Architecture.png" alt="Architecture diagram for the solution Hybrid mobile application with Push Notifications"/>
                 </div>
             </div>
         </div>
@@ -766,23 +783,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-cloud-usage#cloud-usage">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Reviewing IBM Cloud services, resources and usage
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>An introduction to various approaches used to answer common usage-related questions.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution38/Architecture.png" alt="Architecture diagram for the solution Reviewing IBM Cloud services, resources and usage"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
 </div>
 
 ## Virtual Private Cloud
@@ -834,6 +834,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution46-vpc-vpn/ArchitectureDiagram.png" alt="Architecture diagram for the solution Use a VPC/VPN gateway for secure and private on-premises access to cloud resources"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/tutorials?topic=solution-tutorials-vpc-app-deploy#vpc-app-deploy">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Install software on virtual server instances in VPC
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Learn how to use the IBM Cloud CLI, Terraform and Ansible to install software on virtual server instances running in a Virtual Private Cloud.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution49-vpc-app-deploy/ArchitectureDiagram.png" alt="Architecture diagram for the solution Install software on virtual server instances in VPC"/>
                 </div>
             </div>
         </div>

@@ -84,27 +84,28 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 2.  Now, create the following inbound rules by clicking **Add rule** in the inbound section. They allow SSH access and Ping (ICMP).
     **Inbound rule:**
     <table>
-     <thead>
-      <tr>
-         <td><strong>Protocol</strong></td>
-         <td><strong>Source type</strong></td>
-         <td><strong>Source</strong></td>
-         <td><strong>Value</strong></td>
-      </tr>
-     <tbody>
-      <tr>
-         <td>TCP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Ports 22-22</td>
-      </tr>
-      <tr>
-         <td>ICMP</td>
-         <td>Any</td>
-         <td>0.0.0.0/0</td>
-         <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
-      </tr>
-     </tbody>
+      <thead>
+        <tr>
+          <td><strong>Protocol</strong></td>
+          <td><strong>Source type</strong></td>
+          <td><strong>Source</strong></td>
+          <td><strong>Value</strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TCP</td>
+          <td>Any</td>
+          <td>0.0.0.0/0</td>
+          <td>Ports 22-22</td>
+        </tr>
+        <tr>
+          <td>ICMP</td>
+          <td>Any</td>
+          <td>0.0.0.0/0</td>
+          <td>Type: <strong>8</strong>,Code: <strong>Leave empty</strong></td>
+        </tr>
+      </tbody>
     </table>
 
     To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
@@ -151,38 +152,39 @@ With access to the bastion working, continue and create the security group for m
 
 1. Navigate to **Security groups** and provision a new security group called **vpc-secure-maintenance-sg** with the below outbound rules
    <table>
-    <thead>
-      <tr>
+     <thead>
+       <tr>
          <td><strong>Protocol</strong></td>
          <td><strong>Destination type</strong></td>
          <td><strong>Destination</strong></td>
          <td><strong>Value</strong></td>
-      </tr>
+       </tr>
+     </thead>
      <tbody>
-      <tr>
+       <tr>
          <td>TCP</td>
          <td>Any</td>
          <td>0.0.0.0/0</td>
          <td>Ports 80-80</td>
-      </tr>
-      <tr>
+       </tr>
+       <tr>
          <td>TCP</td>
          <td>Any</td>
          <td>0.0.0.0/0</td>
          <td>Ports 443-443</td>
-      </tr>
-      <tr>
+       </tr>
+       <tr>
          <td>TCP</td>
          <td>Any</td>
          <td>0.0.0.0/0</td>
          <td>Ports 53-53</td>
-      </tr>
-      <tr>
+       </tr>
+       <tr>
          <td>UDP</td>
          <td>Any</td>
          <td>0.0.0.0/0</td>
          <td>Ports 53-53</td>
-      </tr>
+       </tr>
      </tbody>
    </table>
 

@@ -217,8 +217,8 @@ In this section, you will create {{site.data.keyword.cis_full_notm}} ({{site.dat
 
 You should obtain a SSL certificate for the domain and subdomain you plan to use with the global load balancer. Assuming a domain like mydomain.com, the global load balancer could be hosted at `lb.mydomain.com`. The certificate will need to be issued for lb.mydomain.com.
 
-You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in the DNS interface of {{site.data.keyword.cis_full_notm}} to prove you are the owner of the domain.
-{:tip}
+You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates). During the process you may need to configure a DNS record of type TXT in the DNS interface of {{site.data.keyword.cis_full_notm}} to prove you are the owner of the domain.
+{:tip}.
 
 Once you have obtained the SSL certificate and private key for your domain make sure to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
 

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-24"
-lasttested: "2019-05-24"
+lastupdated: "2019-10-02"
+lasttested: "2019-10-02"
 ---
 
 {:shortdesc: .shortdesc}
@@ -28,7 +28,7 @@ In this tutorial, you create an application to automatically collect GitHub traf
 
 ## Products
 This tutorial uses the following products:
-   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
+   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)
    * [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
    * [{{site.data.keyword.appid_long}}](https://{DomainName}/catalog/services/app-id)
    * [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
@@ -36,7 +36,7 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview) and the {{site.data.keyword.openwhisk_short}} [plugin installed](/docs/cli?topic=cloud-cli-install-ibmcloud-cli).
+To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started) and the {{site.data.keyword.openwhisk_short}} [plugin installed](/docs/cli?topic=cloud-cli-install-ibmcloud-cli).
 
 ## Service and Environment Setup (shell)
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
@@ -50,9 +50,9 @@ In this section, you set up the needed services and prepare the environment. All
 
 2. Use `ibmcloud login` to log in interactively into {{site.data.keyword.cloud}}. You can reconfirm the details by running `ibmcloud target` command. You need to have an organization and space set.
 
-3. Create a {{site.data.keyword.dashdbshort}} instance with the **Entry** plan and name it **ghstatsDB**:
+3. Create a {{site.data.keyword.dashdbshort}} instance with the **Flex One** plan and name it **ghstatsDB**. Replace `eu-de:frankfurt` with a [value according to your set region](https://{DomainName}/docs/services/Db2whc?topic=Db2whc-plans_cfgs#availability).
    ```sh
-   ibmcloud cf create-service dashDB Entry ghstatsDB
+   ibmcloud cf create-service dashDB "Flex One" ghstatsDB -c '{"datacenter" : "eu-de:frankfurt", "oracle_compatible":"yes"}'
    ```
    {: pre}
 
@@ -182,6 +182,15 @@ In this tutorial, you deployed a serverless action and a related trigger and rul
 
 The Cloud Foundry app manages access through an OpenID Connect client connecting to {{site.data.keyword.appid_short}}.
 ![](images/solution24-github-traffic-analytics/EmbeddedDashboard.png)
+
+## Security: Rotate service credentials
+If you use this solution in production, then you should rotate the service credentials on a regular basis. Many security policies have a requirement to change passwords and credentials every 90 days or with similar frequency.
+
+- You can recreate and thereby rotate the credentials for the services bound to the backend Cloud Foundry app by unbinding, then again binding the services. Once done, the app needs to be restaged.
+- To update service credentials used with a {{site.data.keyword.openwhisk_short}} action, create a new service key and bind that key to the action.
+
+The [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats) for this tutorial includes scripts to automate the steps.
+
 
 ## Remove resources
 {:removeresources}

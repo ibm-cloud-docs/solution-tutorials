@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-22"
+lastupdated: "2019-08-12"
 lasttested: "2019-05-22"
 ---
 
@@ -51,15 +51,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. A developer generates a starter application with {{site.data.keyword.dev_cli_notm}}.
 1. Building the application produces a Docker container image.
-1. The image is pushed to a namespace in {{site.data.keyword.containershort_notm}}.
+1. The image is pushed to a namespace in {{site.data.keyword.registrylong_notm}}.
 1. The application is deployed to a Kubernetes cluster.
 1. Users access the application.
 
 ## Before you begin
 {: #prereqs}
 
-* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
-* [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
+* [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
+* [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
 ## Create a Kubernetes cluster
@@ -308,9 +308,7 @@ See [Using the Ingress controller with a custom domain](https://{DomainName}/doc
 
 If you were to try to access your application with HTTPS at this time `https://<customdomain>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
-1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key:
-  https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3
-   You can use [Let's Encrypt](https://letsencrypt.org/) to generate trusted certificate.
+1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key as described [here](https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3). To generate a trusted certificate, you can either use [Let's Encrypt](https://letsencrypt.org/) or [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
 2. Save the cert and the key in base64 ascii format files.
 3. Create a TLS secret to store the cert and the key:
    ```

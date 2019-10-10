@@ -1,8 +1,9 @@
 {
   "tags": [
+    "Kubernetes",
+    "OpenShift",
     "Cloud Foundry",
     "Cloud Functions",
-    "Kubernetes",
     "Infrastructure"
   ],
   "categories": [
@@ -22,7 +23,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2019-05-22"
+          "lastUpdated": "2019-08-12"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -69,7 +70,21 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2019-05-23"
+          "lastUpdated": "2019-07-08"
+        },
+        {
+          "name": "Scalable web app on OpenShift",
+          "url": "scalable-webapp-openshift.html",
+          "description": "Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+          "imgSrc": "images/solution50-scalable-webapp-openshift/Architecture.png",
+          "featuredPosition": 2,
+          "tags": [
+            "OpenShift",
+            "Container Service",
+            "Container Registry",
+            "Node.js"
+          ],
+          "lastUpdated": "2019-08-13"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -196,7 +211,7 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2019-06-17"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
@@ -209,7 +224,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2019-05-27"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Isolated Cloud Foundry Enterprise Apps",
@@ -222,7 +237,6 @@
             "Node.js",
             "Kubernetes"
           ],
-          "featuredPosition": 2,
           "lastUpdated": "2019-06-04"
         }
       ]
@@ -244,7 +258,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2019-06-24"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -288,7 +302,7 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2019-06-03"
+          "lastUpdated": "2019-08-12"
         },
         {
           "name": "Create, secure and manage REST APIs",
@@ -307,7 +321,6 @@
           "url": "cloud-e2e-security.html",
           "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
           "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
-          "featuredPosition": 1,
           "tags": [
             "Kubernetes",
             "Encryption",
@@ -317,7 +330,22 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-06-19"
+          "lastUpdated": "2019-08-17"
+        },
+        {
+          "name": "Enhance security of your deployed application",
+          "url": "extended-app-security.html",
+          "description": "Enhance security of your cloud application by isolating compute, network and runtime resources.",
+          "imgSrc": "images/solution51-extended-app-security/Sol51_Architecture.png",
+          "tags": [
+            "Encryption",
+            "Security",
+            "App ID",
+            "Key Protect",
+            "Hyper Protect",
+            "Activity Tracker"
+          ],
+          "lastUpdated": "2019-09-26"
         }
       ]
     },
@@ -345,17 +373,6 @@
           "tags": [
             "Android",
             "Java",
-            "Push Notifications"
-          ],
-          "lastUpdated": "2019-06-20"
-        },
-        {
-          "name": "Hybrid mobile application with Push Notifications",
-          "url": "hybrid-mobile-push-analytics.html",
-          "description": "Develop a hybrid Cordova application with Push Notifications on IBM Cloud.",
-          "imgSrc": "images/solution15/Architecture.png",
-          "tags": [
-            "Cordova",
             "Push Notifications"
           ],
           "lastUpdated": "2019-06-20"
@@ -391,7 +408,7 @@
             "SQL Query",
             "Streaming Analytics"
           ],
-          "lastUpdated": "2019-06-24"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -403,7 +420,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2019-06-24"
+          "lastUpdated": "2019-07-08"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -416,7 +433,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2019-06-24"
+          "lastUpdated": "2019-07-25"
         },
         {
           "name": "Build, deploy, test, and retrain a predictive machine learning model",
@@ -430,7 +447,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2019-06-12"
+          "lastUpdated": "2019-08-05"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -463,7 +480,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-05-27"
+          "lastUpdated": "2019-08-08"
         }
       ]
     },
@@ -483,20 +500,7 @@
             "Container Registry",
             "DevOps"
           ],
-          "lastUpdated": "2019-04-19"
-        },
-        {
-          "name": "Reviewing IBM Cloud services, resources and usage",
-          "url": "cloud-usage.html",
-          "description": "An introduction to various approaches used to answer common usage-related questions.",
-          "imgSrc": "images/solution38/Architecture.png",
-          "tags": [
-            "Identity and Access Management",
-            "Cloud Foundry",
-            "Usage",
-            "Billing"
-          ],
-          "lastUpdated": "2019-06-14"
+          "lastUpdated": "2019-08-21"
         }
       ]
     },
@@ -536,12 +540,25 @@
           "url": "vpc-site2site-vpn.html",
           "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.",
           "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
+          "featuredPosition": 1,
           "tags": [
             "Infrastructure",
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-05-07"
+          "lastUpdated": "2019-07-15"
+        },
+        {
+          "name": "Install software on virtual server instances in VPC",
+          "url": "vpc-app-deploy.html",
+          "description": "Learn how to use the IBM Cloud CLI, Terraform and Ansible to install software on virtual server instances running in a Virtual Private Cloud.",
+          "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
+          "tags": [
+            "Infrastructure",
+            "Virtual Private Cloud",
+            "Network"
+          ],
+          "lastUpdated": "2019-08-05"
         },
         {
           "name": "Securely access remote instances with a bastion host",

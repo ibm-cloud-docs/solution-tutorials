@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-04-19"
+lastupdated: "2019-08-21"
 lasttested: "2019-04-19"
 ---
 
@@ -76,6 +76,9 @@ When it comes to assigning responsibilities to the project team members, let's d
 
 {{site.data.keyword.iamshort}} (IAM) enables you to securely authenticate users for both platform and infrastructure services and control access to **resources** consistently across the {{site.data.keyword.cloud_notm}} platform. A set of {{site.data.keyword.cloud_notm}} services are enabled to use Cloud IAM for access control and are organized into **resource groups** within your **account** to enable giving **users** quick and easy access to more than one resource at a time. Cloud IAM access **policies** are used to assign users and service IDs access to the resources within your account.
 
+This tutorial focusses on a single account. Multiple accounts can be grouped within an [enterprise account](https://{DomainName}/docs/account?topic=account-enterprise) and organized in account groups to centrally manage billing and resource usage.
+{: tip}
+
 A **policy** assigns a user or service ID one or more **roles** with a combination of attributes that define the scope of access. The policy can provide access to a single service down to the instance level, or the policy can apply to a set of resources organized together in a resource group. Depending on the user roles that you assign, the user or service ID is allowed varying levels of access for completing platform management tasks or accessing a service by using the UI or performing specific types of API calls.
 
 <p style="text-align: center;">
@@ -123,6 +126,9 @@ The following diagram shows where the project resources are created under the ac
 Refer to the documentation of services to understand how a service is mapping IAM and Cloud Foundry roles to specific actions. See for example [how the {{site.data.keyword.mon_full_notm}} service maps IAM roles to actions](https://{DomainName}/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam#iam).
 
 Assigning the right roles to users will require several iterations and refinement. Given permissions can be controlled at the resource group level, for all resources in a group or be fine-grained down to a specific instance of a service, you will discover over time what are the ideal access policies for your project.
+
+Note that by default accounts are configured for [unrestricted user view access](https://{DomainName}/docs/iam?topic=iam-userlistview). Any user in the account can see any other user information. You can [change the setting](https://{DomainName}/iam/settings) to a restrictive mode.
+{: tip}
 
 A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/) to configure in-cluster authorizations.
 

@@ -13,6 +13,7 @@ Solution Tutorials
         vm-to-containers-and-kubernetes.md
         strategies-for-resilient-applications.md
         continuous-deployment-to-kubernetes.md
+        scalable-webapp-openshift.md
         static-files-cdn.md
         pub-sub-object-storage.md
         lamp-stack.md
@@ -37,12 +38,12 @@ Solution Tutorials
         multi-region-k8s-cis.md
         create-manage-secure-apis.md
         cloud-e2e-security.md
+        extended-app-security.md
 
     {: .topicgroup}
     Mobile
         ios-mobile-push-analytics.md
         android-mobile-push-analytics.md
-        hybrid-mobile-push-analytics.md
         serverless-mobile-backend.md
 
     {: .topicgroup}
@@ -60,7 +61,6 @@ Solution Tutorials
     {: .topicgroup}
     Identity and Access Management
         users-teams-applications.md
-        cloud-usage.md
 
     {: .topicgroup}
     Virtual Private Cloud
@@ -69,6 +69,7 @@ Solution Tutorials
         vpc-site2site-vpn.md
         vpc-app-deploy.md
         vpc-secure-management-bastion-server.md
+        /containers/containers-vpc_ks_tutorial
 
     {: .topicgroup}
     Classic Infrastructure
@@ -82,29 +83,6 @@ Solution Tutorials
     
     {: .navgroup id="howto"}
     {: .topicgroup}
-    Cloud Foundry
-        strategies-for-resilient-applications.md
-        static-files-cdn.md
-        plan-create-update-deployments.md
-        mean-stack.md
-        sql-database.md
-        isolated-cloud-foundry-enterprise-apps.md
-        slack-chatbot-database-watson.md
-        multi-region-webapp.md
-        create-manage-secure-apis.md
-        gather-visualize-analyze-iot-data.md
-        cloud-usage.md
-
-    {: .topicgroup}
-    Cloud Functions
-        strategies-for-resilient-applications.md
-        serverless-api-webapp.md
-        multi-region-serverless.md
-        slack-chatbot-database-watson.md
-        serverless-mobile-backend.md
-        serverless-github-traffic-analytics.md
-
-    {: .topicgroup}
     Kubernetes
         scalable-webapp-kubernetes.md
         vm-to-containers-and-kubernetes.md
@@ -117,6 +95,33 @@ Solution Tutorials
         multi-region-k8s-cis.md
         cloud-e2e-security.md
         users-teams-applications.md
+        /containers/containers-vpc_ks_tutorial
+
+    {: .topicgroup}
+    OpenShift
+        scalable-webapp-openshift.md
+
+    {: .topicgroup}
+    Cloud Foundry
+        strategies-for-resilient-applications.md
+        static-files-cdn.md
+        plan-create-update-deployments.md
+        mean-stack.md
+        sql-database.md
+        isolated-cloud-foundry-enterprise-apps.md
+        slack-chatbot-database-watson.md
+        multi-region-webapp.md
+        create-manage-secure-apis.md
+        gather-visualize-analyze-iot-data.md
+
+    {: .topicgroup}
+    Cloud Functions
+        strategies-for-resilient-applications.md
+        serverless-api-webapp.md
+        multi-region-serverless.md
+        slack-chatbot-database-watson.md
+        serverless-mobile-backend.md
+        serverless-github-traffic-analytics.md
 
     {: .topicgroup}
     Infrastructure

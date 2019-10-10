@@ -1,8 +1,9 @@
 {
     "tags": [
+        "Kubernetes",
+        "OpenShift",
         "Cloud Foundry",
         "Cloud Functions",
-        "Kubernetes",
         "Infrastructure"
     ],
     "categories": [
@@ -65,6 +66,19 @@
                     "DevOps",
                     "Node.js",
                     "Vulnerability Advisor"
+                ]
+            },
+            {
+                "name": "Scalable web app on OpenShift",
+                "url": "scalable-webapp-openshift.html",
+                "description": "Scaffold a nodejs web application, run it locally in a container and then deploy it to an OpenShift cluster. Additionally, bind a custom domain, monitor the health of the environment and scale.",
+                "imgSrc": "images/solution50-scalable-webapp-openshift/Architecture.png",
+                "featuredPosition": 2,
+                "tags": [
+                    "OpenShift",
+                    "Container Service",
+                    "Container Registry",
+                    "Node.js"
                 ]
             },
             {
@@ -206,8 +220,7 @@
                   "Cloud Foundry Enterprise Environment",
                   "Node.js",
                   "Kubernetes"
-                ],
-                "featuredPosition": 2
+                ]
               }
         ]
     },
@@ -286,7 +299,6 @@
                 "url": "cloud-e2e-security.html",
                 "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
                 "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
-                "featuredPosition": 1,
                 "tags": [
                     "Kubernetes",
                     "Encryption",
@@ -296,7 +308,22 @@
                     "Key Protect",
                     "Activity Tracker"
                 ]
+            },
+            {
+                "name": "Enhance security of your deployed application",
+                "url": "extended-app-security.html",
+                "description": "Enhance security of your cloud application by isolating compute, network and runtime resources.",
+                "imgSrc": "images/solution51-extended-app-security/Sol51_Architecture.png",
+                "tags": [
+                    "Encryption",
+                    "Security",
+                    "App ID",
+                    "Key Protect",
+                    "Hyper Protect",
+                    "Activity Tracker"
+                ]
             }
+
         ]
     },
     {
@@ -322,16 +349,6 @@
                 "tags": [
                     "Android",
                     "Java",
-                    "Push Notifications"
-                ]
-            },
-            {
-                "name": "Hybrid mobile application with Push Notifications",
-                "url": "hybrid-mobile-push-analytics.html",
-                "description": "Develop a hybrid Cordova application with Push Notifications on IBM Cloud.",
-                "imgSrc": "images/solution15/Architecture.png",
-                "tags": [
-                    "Cordova",
                     "Push Notifications"
                 ]
             },
@@ -451,18 +468,6 @@
                     "Container Registry",
                     "DevOps"
                 ]
-            },
-            {
-                "name": "Reviewing IBM Cloud services, resources and usage",
-                "url": "cloud-usage.html",
-                "description": "An introduction to various approaches used to answer common usage-related questions.",
-                "imgSrc": "images/solution38/Architecture.png",
-                "tags": [
-                    "Identity and Access Management",
-                    "Cloud Foundry",
-                    "Usage",
-                    "Billing"
-                ]
             }
         ]
     },
@@ -500,6 +505,7 @@
                 "url": "vpc-site2site-vpn.html",
                 "description": "Connect a Virtual Private Cloud to another computing environment over a secure Virtual Private Network and consume IBM Cloud services.",
                 "imgSrc": "images/solution46-vpc-vpn/ArchitectureDiagram.png",
+                "featuredPosition": 1,
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",
@@ -507,11 +513,10 @@
                 ]
             },
             {
-                "name": "Install and update applications in a Virtual Private Cloud",
+                "name": "Install software on virtual server instances in VPC",
                 "url": "vpc-app-deploy.html",
-                "description": "Install and update applications in Virtual Private Cloud.",
+                "description": "Learn how to use the IBM Cloud CLI, Terraform and Ansible to install software on virtual server instances running in a Virtual Private Cloud.",
                 "imgSrc": "images/solution49-vpc-app-deploy/ArchitectureDiagram.png",
-                "hidden": true,
                 "tags": [
                     "Infrastructure",
                     "Virtual Private Cloud",
@@ -527,6 +532,13 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network"
+                ]
+            },
+            {
+                "url": "/containers/containers-vpc_ks_tutorial",
+                "tags": [
+                    "Virtual Private Cloud",
+                    "Kubernetes"
                 ]
             }
         ]

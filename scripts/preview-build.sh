@@ -28,6 +28,7 @@ fi
 tar cf - \
   --exclude=builddocs \
   --exclude=scripts \
+  --exclude=.vscode \
   --exclude=.git \
   --exclude=README.md \
   . | (cd builddocs/input && tar xvf - )
@@ -37,7 +38,7 @@ sed -i 's/{DomainName}/cloud.ibm.com/g' builddocs/input/*.md
 
 # get the gh-pages branch
 rm -rf builddocs/output
-git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.git builddocs/output
+git clone --depth=1 --branch=gh-pages git@github.ibm.com:cloud-docs/tutorials.git builddocs/output
 
 # retrieve the conref
 (cd builddocs && curl -sSO "https://oauth2:$GITHUB_ENTERPRISE_TOKEN@raw.github.ibm.com/cloud-doc-build/markdown/master/cloudoeconrefs.yml")
@@ -45,8 +46,8 @@ git clone --depth=1 --branch=gh-pages git@github.ibm.com:Bluemix-Docs/tutorials.
 # remove all files from gh-pages
 (cd builddocs/output && git rm -rf .)
 
-# generate a md helping with the conref
-(cd scripts/conref && npm install && node tomd.js ../../builddocs/input/conref.md)
+# generate conref helpers
+(cd scripts/conref && npm install && node tomd.js ../../builddocs/input)
 
 # generate a list of all solutions, suitable to use in github issues
 (cd scripts/solution-table && npm install && node totable.js ../../builddocs/input/solution-table.md)
@@ -59,7 +60,7 @@ marked-it-cli builddocs/input --output=builddocs/output --overwrite --header-fil
 sed -i 's/"\/docs\/tutorials?topic=solution-tutorials-\(.*\)#\(.*\)"/"\1.html"/g' builddocs/output/index.html
 
 # check that there is no "{{"" not replaced in the output, ignoring binaries
-if grep -rI "{{" --exclude=conref.html builddocs/output
+if grep -rI "{{" --exclude=conref.html --exclude vscodesnippets.json builddocs/output
 then
   echo "Found incorrect references"
   exit 1

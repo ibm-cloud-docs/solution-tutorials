@@ -41,7 +41,6 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 - [{{site.data.keyword.containershort}}](https://{DomainName}/kubernetes/catalog/cluster)
 - [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/private)
-- [{{site.data.keyword.composeForMySQL_full}}](https://{DomainName}/catalog/services/compose-for-mysql)
 
 **Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -53,8 +52,8 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 The following diagram shows an example of a traditional app architecture that is based on virtual machines.
 
 <p style="text-align: center;">
-![Architecture diagram](images/solution30/traditional_architecture.png)
-
+   
+   ![Architecture diagram](images/solution30/traditional_architecture.png)
 </p>
 
 1. The user sends a request to the public endpoint of the app. The public endpoint is represented by a load balancer service that load balances incoming network traffic between available app server instances.
@@ -66,6 +65,7 @@ The following diagram shows an example of a traditional app architecture that is
 The following diagram shows an example of a modern container architecture that runs in a Kubernetes cluster.
 
 <p style="text-align: center;">
+
 ![Architecture diagram](images/solution30/modern_architecture.png)
 </p>
 

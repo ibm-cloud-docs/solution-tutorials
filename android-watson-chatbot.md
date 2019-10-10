@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-24"
-lasttested: "2019-05-24"
+lastupdated: "2019-10-09"
+lasttested: "2019-10-09"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -99,9 +99,10 @@ A skill is a container for the artifacts that define the conversation flow.
 
 For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_skill.json) file with predefined intents, entities and dialog flow to your machine.
 
-1. In the {{site.data.keyword.conversationshort}} service details page, navigate to **Manage** on the left pane, click on **Launch tool** to see the {{site.data.keyword.conversationshort}} dashboard.
+1. In the {{site.data.keyword.conversationshort}} service details page, navigate to **Manage** on the left pane, click on **Launch {{site.data.keyword.conversationshort}}** to see the {{site.data.keyword.conversationshort}} dashboard.
 1. Click on **Skills** tab.
-1. **Create skill** then **Import skill** and choose the JSON file downloaded above.
+1. **Create skill**, select **Dialog skill** and **Next**.
+2. **Import skill** and choose the JSON file downloaded above.
 1. Select **Everything** option and click **Import**. A new skill is created with predefined intents, entities and dialog flow.
 1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**.
 
@@ -115,7 +116,7 @@ Simply put, intents are the intentions of the end-user. The following are exampl
  - `#pay_bill`
  - `#escalate_to_agent`
 
-1. Click on the newly create skill - **Ana**.
+1. Click on the newly created skill - **Ana**.
 
    Ana is an insurance bot for users to query their health benefits and file claims.
    {:tip}
@@ -159,7 +160,7 @@ The following are examples of entity names
 
    System entities can be used to recognize a broad range of values for the object types they represent. For example, the `@sys-number` system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words.
    {:tip}
-7. Toggle the **Status** from off to `on` for @sys-person and @sys-location system entities.
+7. Toggle the **Status** from off to `on` for `@sys-person` and `@sys-location` system entities.
 
 ### Build the dialog flow
 {:#build_dialog}

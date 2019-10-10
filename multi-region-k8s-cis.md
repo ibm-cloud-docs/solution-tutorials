@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-03"
+lastupdated: "2019-08-12"
 lasttested: "2019-06-03"
 ---
 
@@ -79,8 +79,8 @@ To create a cluster:
 1. Set **Cluster name** to **my-us-cluster**.
 1. Set the **Geography** to **North America**.
 1. Select multi-zone under **Availability**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers?topic=containers-plan_clusters#ha_clusters).
-1. Set **Metro** to **Dallas**.  
-1. You can choose to deploy in 1 or more **Worker zones**, note the number of worker zones entered here will be multiplied to the number of worker nodes entered below.  
+1. Set **Metro** to **Dallas**.
+1. You can choose to deploy in 1 or more **Worker zones**, note the number of worker zones entered here will be multiplied to the number of worker nodes entered below.
 1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
 1. Use **1** worker nodes, note the number of worker nodes entered here will be multiplied to the number of worker zones entered above.
 1. Click on **Create cluster**.
@@ -356,7 +356,10 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
    1. Set **Action** to `Simulate` to log all the events.
 1. Click **CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
 
-### Increase performance and protect from Denial of Service attacks 
+For a secured connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
+{: tip}
+
+### Increase performance and protect from Denial of Service attacks
 {: #proxy_setting}
 
 A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. {{site.data.keyword.cis_short_notm}} is equipped to protect your domain from DDoS.

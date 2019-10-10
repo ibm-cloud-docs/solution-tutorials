@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-24"
+lastupdated: "2019-07-08"
 lasttested: "2019-06-14"
 ---
 
@@ -46,7 +46,7 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 ## Before you begin
 
 - [Install Git](https://git-scm.com/)
-- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview)
+- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started)
 - [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
 - [Install Node.js and NPM](https://nodejs.org)
 
@@ -57,7 +57,7 @@ In this section, you will create the services required to build your data lake.
 This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the [catalog](https://{DomainName}/catalog) using the provided links.
 {: tip}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
     ```sh
     ibmcloud login
     ```
@@ -135,7 +135,7 @@ In this section, you will upload data to an {{site.data.keyword.cos_short}} buck
     - Select the **Aspera high-speed transfer.Requires installation.** radio button.
     - Click **Install Aspera connect** > Download Connect. This will download the Aspera plugin to your machine.
     - Once the plugin is successfully installed. You may have to refresh the browser.
-    - Click **Select files** > Browse to and select the previously downloaded CSV file.
+    - Click **Select files** > Browse and select the previously downloaded CSV file.
 
 ## Working with data
 
@@ -176,7 +176,7 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
     - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
     - Click **Create a Project** tile followed by **Data Science and AutoAI**.
-    - Click **Create project** > Select a region and then provide a **Project name**. Uncheck the checkboxes as there's no need to restrict and also data analysis.
+    - Click **Create project** > Select a region and then provide a **Project name**.
     - Ensure **Storage** is set to **data-lake-cos**.
     - Click **Create**.
     - In the resulting project, click **Add to project** and **Notebook**.

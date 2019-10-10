@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-06-15"
-lasttested: "2019-06-15"
+lastupdated: "2019-08-05"
+lasttested: "2019-08-05"
 
 ---
 
@@ -19,18 +19,21 @@ lasttested: "2019-06-15"
 {:pre: .pre}
 {:important: .important}
 
-# Deploy applications on VSI in VPC
+# Install software on virtual server instances in VPC
 {: #vpc-app-deploy}
 
+This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
+
 {:shortdesc}
-This tutorial will walk you through the following mechanisms for installing software onto {{site.data.keyword.vsi_is_full}}
+
+After an [introduction to the tutorial architecture](#architecture), you will [prepare your environment](#before-you-begin) for the tutorial and review the [basics of software installation](#basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#cli), [Terraform](#terraform) or [Ansible](#ansible).
 
 ## Objectives
 {: #objectives}
 
-* Understand operating system software provided by IBM
-* Utilize manual steps for updating the operating system software and installing new software
-* Identify automated processes that can be used for installing software
+* Understand operating system software provided by {{site.data.keyword.IBM_notm}}.
+* Utilize manual steps for updating the operating system software and installing new software.
+* Understand how to use the {{site.data.keyword.Bluemix_notm}} CLI, Terraform and Ansible to automate the provisioning of resources and software installation.
 
 ## Services used
 {: #services}
@@ -44,321 +47,621 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
+In this tutorial, you will deploy the configuration introduced in another tutorial, [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
+
 <p style="text-align: center;">
-  ![Architecture](images/solution49-vpc-app-deploy/Architecture.png)
+
+  ![Architecture of Private and public subnets in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png)
 </p>
 
-1. The user identifies the software that is required
-1. Manually practices the installation of the software
-1. Optionally automates the procedures using API, CLI, Terraform or Ansible
+The configuration also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned in a private subnet:
 
-## General software installation principles
-{: #section_one}
-Software can originate from the following locations:
-- Initial VSI image
-- IBM cloud mirrors
-- Internet or intranet available repositories
-- On the file system of the provisioning system
+<p style="text-align: center;">
 
-Initial IBM images are populated with popular off the shelf operating systems:
+  ![Architecture of Bastion Host](images/solution47-vpc-secure-management-bastion-server/ArchitectureDiagram.png)
+</p>
 
-```
-$ ibmcloud is images
-Listing images under account Powell Quiring's Account as user pquiring@us.ibm.com...
-ID                                     Name                    OS                                                        Created        Status   Visibility   
-cc8debe0-1b30-6e37-2e13-744bfb2a0c11   centos-7.x-amd64        CentOS (7.x - Minimal Install)                            6 months ago   READY    public   
-660198a6-52c6-21cd-7b57-e37917cef586   debian-8.x-amd64        Debian GNU/Linux (8.x jessie/Stable - Minimal Install)    6 months ago   READY    public   
-e15b69f1-c701-f621-e752-70eda3df5695   debian-9.x-amd64        Debian GNU/Linux (9.x Stretch/Stable - Minimal Install)   6 months ago   READY    public   
-2d7acb16-3d4b-d0e5-d623-e43783a9b126   red-7.x-amd64           Red Hat Enterprise Linux (7.x - Minimal Install)          2 months ago   READY    public   
-...
-```
+While provisioning the resources, you will also deploy applications on the virtual server instances. When deploying applications in the cloud, software can originate from different sources:
+1. The file system of a local workstation - using tools like Terraform to create the required infrastructure or Ansible, `ssh` and `scp` to install and configure software on the virtual server instances;
+2. {{site.data.keyword.IBM_notm}} mirrors to update the operating systems or to install supported packages;
+3. Internet or intranet software repositories.
 
-For illustrative purposes the software initially described in the following tutorial,
-[Deploy a LAMP stack using Terraform](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform),
-will be used.
+<p style="text-align: center;">
 
-At a high level:
-- A public and private VSI are provisioned with centos-7 as the base image
-- Httpd and other software is installed - demonstrating the use of IBM mirrors
-- Internet software is accessed - demonstrating the use of internet repositories on the public VSI and failure on the private VSI
-- A file is copied from the file system of the provisioning computer to the public VSI and executed
-- Tests are run to verify the above
+  ![Architecture diagram showing the different sources to install software from](images/solution49-vpc-app-deploy/ArchitectureDiagram.png)
+</p>
 
-### IBM Mirrors
-IBM has internal mirrors for the images that we provide.
-The mirrors are part of the
-[Service endpoints available for IBM Cloud VPC](https://{DomainName}/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc)
-There are no ingress charges for reading the mirrors.
-The mirrors will contain new versions for the software in the IBM provided images as well as optional packages.
+You will explore how to consume these different sources.
 
-Consider both `updating` the version lists available to the provisioned instances and `upgrading` the installed software from these mirrors.
+## Before you begin
+{: #before-you-begin}
 
+### Create a VPC ssh key
+{: #create-ssh-key}
 
-### Linux cloud-init
-The [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) syntax is readable, even by a novice linux administrator.
-A portion of the cloud-config.yaml file is shown below and does what you would expect:
-- bootcmd works around an initial problem with the centos image that should be resolved by GA (todo)
-- package\_update - update the list of software packages available for either upgrade or installation
-- package\_upgrade - upgrade the software in the base with the latest versions
-- packages - software packages to install
-- write\_files - paths to text files with contents
-- runcmd - commands to be executed
+When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
-These packages will all be available from the IBM mirrors so both the public and private VSIs will be configured to this base level:
+1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) for creating a key. By default, the private key is found at `$HOME/.ssh/id_rsa`.
+1. Add the SSH key in the [VPC console](https://{DomainName}/vpc/compute/sshKeys).
 
-```
-#cloud-config
-bootcmd:
-- sed -i -e "s/mirrors.service.networklayer.com\|mirrors.service.softlayer.com/mirrors.adn.networklayer.com/g" /etc/yum.repos.d/*.repo*
-package_update: true
-package_upgrade: true
-packages:
-  - httpd
-...
-write_files:
-  - path: /var/www/html/info.php
-    content: |
-      <?php
-      phpinfo();
-      ?>
-  - path: /init.bash
-    content: |
-      #!/bin/bash
-      indexhtml=/usr/share/httpd/noindex/index.html
+For more info or instructions on how to manage and/or create an SSH key read [SSH keys](/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
 
-      # wait for the cloud-init boot process to complete
-      until [ -f /$indexhtml ]; do
-...
-runcmd:
-...
-  - systemctl start httpd.service
-  - systemctl enable httpd.service
-  - bash -x /init.bash
-...
-```
+### Set environment variables
+{: #set-env}
 
-### Demonstrate the mirrors
-Upgrading the installed software and installing httpd and other packages will demonstrate that even the private instances have access to the IBM provided mirrors.
+This tutorial comes with sample code to illustrate the different options to provision resources and install or update software in a VPC environment.
 
-### Demonstrating internet access
+It will walk you through example steps on a terminal using the shell, `terraform` and `ansible`. You will install these tools in later steps. For the scripts to work, you need to define a set of environment variables.
 
-When httpd is initialized it will surface the following files:
-|url|file|
-|/|/usr/share/httpd/noindex/index.html|
-|/|/usr/share/httpd/noindex/css/bootstrap.min.css|
+1. Clone the tutorial [source code repository](https://github.com/IBM-Cloud/vpc-tutorials):
+   ```sh
+   git clone https://github.com/IBM-Cloud/vpc-tutorials.git
+   ```
+   {: pre}
+1. Define a variable named `CHECKOUT_DIR` pointing to the source code directory:
+   ```sh
+   cd vpc-tutorials
+   export CHECKOUT_DIR=$PWD
+   ```
+   {: pre}
+1. Change to the tutorial directory:
+   ```sh
+   cd $CHECKOUT_DIR/vpc-app-deploy
+   ```
+   {:pre}
+1. Copy the configuration file:
+   ```sh
+   cp export.template export
+   ```
+   {:pre}
+1. Edit the `export` file and set the environment variable values:
+   * `TF_VAR_ibmcloud_api_key` is an {{site.data.keyword.Bluemix_notm}} API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
+   * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
+      ```sh
+      ibmcloud is keys
+      ```
+      {:pre}
+   * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
+1. Load the variables into the environment:
+   ```sh
+   source export
+   ```
+   {:pre}
 
-The /init.bash script executed by cloud-init will put one of these strings in index.html:
-- INTERNET - if it is possible to install software from the internet
-- ISOLATED - if the internet is not available
+   **Make sure to always use the same terminal window in the next sections or to set the environment variables if you use a new window**. The environment variables in `export` are in Terraform format (notice the `TF_` prefix) for convenience. They are used in subsequent sections.
+   {:tip}
 
-### Demonstrating upload of file from the on premises environment
+## Basics of software installation
+{: #basics}
 
-A script will be uploaded from on premise and executed.  This mechanism could be extended for arbitrary data upload.  The execution of the script will replace the bootstrap.min.css file contents with the string `hi`
+### Provision virtual server instances from base images
+{: #base-vsi-images}
 
-The mechanism for upload and excution depends on the type of automation and can be extended for arbitrary data upload and script execution.
-
-Once these steps are complete testing will verify the initialization.  Repeating a subset of the process allows for the update of the resources.
-
-## Let us do it
-
-Clone the github repository 
-We are going to walk through this example using shell scripts, terraform and ansible.
-Regardless of the method used some initialization is going to be required:
-1. Install the command line (CLI) tools [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
-1. Clone the git repository used in this example git@github.com:IBM-Cloud/vpc-tutorials.git
-1. cd .../vpc-app-deploy
-
-The scripts in this directory assume you have exported some environment variables.  Start with the provided template:
-```
-cp export.template export; # create your copy
-edit export; # edit your copy by substituting in your values
-source export; # source the values into each shell environment that you create
-```
-
-Additional documentation for then environment variables in the export.template but a couple of the variables deserve additional explination:
-
-`TF_VAR_bluemix_api_key` is an ibm cloud api key. todo better description
-
-`TF_VAR_ssh_key_name` is the name of the VPC SSH public key in the cloud.  This is the public key that will be loaded into the instance to provide secure ssh access via the private key on my laptop.
-Use the cli to verify it exists:
-```
-ibmcloud is keys
-```
-My private key is in the default location: /Users/pquiring/.ssh/id_rsa
-If the public key was not previoulsy copied the cloud, copy it now using the gui console or use this CLI command:
-```
-ibmcloud is key-create $TF_VAR_bluemix_api_key @/Users/pquiring/.ssh/id_rsa.pub
-```
-
-If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
-
-## Using shell scripts in the cli or the GUI
-Even if you do not plan to use the gui or cli to automate your software automation workflow you will find it informative to read through this description to get the feel for the process.
-
-The steps are captured in the Makefile, but are easy to execute them with your fingers.  These steps will create a new VPC with all the resources, test the installation, delete the newly created vpc and all the resources including subnets, security groups, and instances.  In the Makefile:
-```
-all_cli:
-  todo this needs to be fixed up when complete
-	bash -x ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $(TF_VAR_ssh_key_name) vadcli default resources.sh
-	$(MAKE) test_public FRONT_IP_ADDRESS
-  do the work
-	$(MAKE) test_private BASTION_IP_ADDRESS BACK_NIC_IP
-	../scripts/vpc-cleanup.sh pfqclivpc-pubpriv -f
-```
-
-### Cloud init
-The first step executes a shell script to create three hosts: front, back, and bastion.  The cloud-config.yaml file is passed as a paramter, it's contents will be passed to the `ibmcloud is create-instance` command.  When this step is complete Front vsi is a publically accessible host with an attached floating ip.  Back is isolated from the internet.  A great explination of this environment is found in these two tutorials.
-
-Instead of running the script you can walk through these two tutorials in the gui console in just a few minutes and create the resources interactively:
-- [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) only the public subnet and web server is required for this tutorial.
-- [Securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
-
-If you do execute this interactively you will need to paste in the shared/cloud-config.yaml file into the text box provided in the instance create screen.
-
-### Copy file from on prem to the instance and execute
-The next steps copy the file to both the Front and the Back hosts through the bastion.  Then the script is executed.
-
-### Test
-Verify that the Front host was initialized with software from the internet and the Back host was not.  Verify both hosts have the contents of the on premises file.
-
-### Update and analysis
-To update the system software from the mirrors create a shell script and scp it to the computers and execute it.  Similarly new versions of on premises files can be deployed.  Extend the tests to verify correct results.
-
-The difficulty of managing instances in the console UI has lead to scripting.
-Integrating scripting into your CI/CD pipeline can be hard. 
-This has led to other kinds of orchestration systems.
-Two of them: terraform and ansible, are discussed below.
-
-## Repeat the same steps with terraform
-{: #section_two}
-Install terraform and the terraform IBM provider on your laptop.
-See, Automating cloud resource provisioning with Terraform [Getting started tutorial](https://{DomainName}/docs/terraform).
-
-The main.tf file creates the vpc, subnets, security groups and instances.  Notice that the the previous two tutorials contribute terraform modules that are referenced [main.tf](./tf/main.tf)
+When provisioning a virtual server instance, you select the base image from a predefined set of operating system images supplied by {{site.data.keyword.IBM_notm}}. Use `ibmcloud is images` to find the list of available images. The output will look like:
 
 ```
-module vpc_pub_priv {
-  source = "../../vpc-public-app-private-backend/tfmodule"
-  basename = "${local.BASENAME}"
-  ssh_key_name = "${var.ssh_key_name}"
-  zone = "${var.zone}"
-  backend_pgw = false
-  profile = "${var.profile}"
-  image_name = "${var.image_name}"
-  maintenance = "${var.maintenance}"
-  frontend_user_data = "${file("../shared/cloud-config.yaml")}"
-  backend_user_data = "${file("../shared/cloud-config.yaml")}"
-}
-```
-The parameters help us understand the concepts presented thus far:
-- backend_pgw - a public gateway can be connected to the backend subnet.  The frontend has a floating ip connected which provides both a public IP and gateway to the internet.  This is going to allow open internet access for software installation.  The backend does not have have access to the internet unless backend_pgw is true.  A test will verify by checking the value of htp://HOST:/index.html which will be either ISOLATED or INTERNET.  
-- frontend_user_data - cloud-init contents that is executed at provision time
-
-In addition a null resource will provision the on premises file by copying it to the instance and then execute it.  Terraform has some special connection variables to use the bastion.  Pretty nifty:
-
-```
-resource "null_resource" "back_copy_from_on_prem" {
-  connection {
-    type        = "ssh"
-    user        = "root"
-    host        = "${module.vpc_pub_priv.backend_network_interface_address}"
-    private_key = "${file("~/.ssh/id_rsa")}"
-    bastion_user        = "root"
-    bastion_host        = "${local.bastion_ip}"
-    bastion_private_key = "${file("~/.ssh/id_rsa")}"
-  }
-  provisioner "file" {
-    source      = "../shared/bootstrapmin.sh"
-    destination = "/bootstrapmin.sh"
-  }
-  provisioner "remote-exec" {
-    inline      = [
-      "pwd > /pwd.txt",
-      "bash -x /bootstrapmin.sh",
-    ]
-  }
-}
+Listing images...
+ID                                     Name                    OS                                                        Created                         Status      Visibility
+cc8debe0-1b30-6e37-2e13-744bfb2a0c11   centos-7.x-amd64        CentOS (7.x - Minimal Install)                            2018-10-30T06:12:06.651+00:00   available   public
+660198a6-52c6-21cd-7b57-e37917cef586   debian-8.x-amd64        Debian GNU/Linux (8.x jessie/Stable - Minimal Install)    2018-10-30T06:12:06.624+00:00   available   public
+e15b69f1-c701-f621-e752-70eda3df5695   debian-9.x-amd64        Debian GNU/Linux (9.x Stretch/Stable - Minimal Install)   2018-10-30T06:12:06.705+00:00   available   public
+2d7acb16-3d4b-d0e5-d623-e43783a9b126   red-7.x-amd64           Red Hat Enterprise Linux (7.x - Minimal Install)          2019-03-11T02:30:57.249+00:00   available   public
+7eb4e35b-4257-56f8-d7da-326d85452591   ubuntu-16.04-amd64      Ubuntu Linux (16.04 LTS Xenial Xerus Minimal Install)     2018-10-30T06:12:06.537+00:00   available   public
+cfdaf1a0-5350-4350-fcbc-97173b510843   ubuntu-18.04-amd64      Ubuntu Linux (18.04 LTS Bionic Beaver Minimal Install)    2018-10-30T06:12:06.51+00:00    available   public
+b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2012 Standard Edition)                    2018-10-30T06:12:06.678+00:00   available   public
+81485856-df27-93b8-a838-fa28a29b3b04   windows-2012-r2-amd64   Windows Server (2012 R2 Standard Edition)                 2018-10-30T06:12:06.564+00:00   available   public
+5ccbc579-dc22-0def-46a8-9c2e9b502d37   windows-2016-amd64      Windows Server (2016 Standard Edition)                    2018-10-30T06:12:06.59+00:00    available   public
 ```
 
-## Repeat the same steps with ansible
-{: #section_two}
-Install ansible and add it to your path.  Use --user if you are not root or do not want it installed for all users.  Search the web for `python virtualenv` for creating an isolated python environment for further isolation.
-```
-$ python --version
-Python 2.7.15
-$ pip install --user ansible
-...
-$ which ansible
-/Users/pquiring/Library/Python/2.7/bin/ansible
-```
+{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There is no ingress cost for reading the mirrors.
 
-Ansible could be used to provision the cloud resources, but the approach we are going to use is to provision the resources using terraform then deploy the software on the virtual maching instances using ansible.  The second will be to provision software on the provisioned instances using the ansible.
+Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
 
-A new ansible/tf directory contains a terraform [configuration](ansible/tf/main.tf) similar to the one described previously except the software installation has been stripped out.
+### Initialize and customize cloud instances with cloud-init
+{: #cloud_init}
 
-The ansible script will both provision the software and 
+When provisioning a virtual server instance, you can specify a [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html) script to be executed during the server initialization. Cloud-init is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances.
 
-### Inventory
-Ansible inventory is generated from the terraform output in a simple script:
-```
-```
+In {{site.data.keyword.cloud_notm}}, the cloud-init file contents are provided in the `user-data` parameter at the time the server is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats) for acceptable user-data content. If you need to debug script execution, cloud-init logs the output of the initialization script in `/var/log/cloud-init-output.log` on virtual server instances.
 
+This tutorial uses a shell script named [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) as initialization script:
 
+   ```sh
+   #!/bin/bash
+   set -x
+   apt-get update
+   apt-get install -y nginx
+   indexhtml=/var/www/html/index.html
 
-## Remove resources
-{: #removeresources}
+   # Demonstrate the availability of internet repositories.  If www.python.org is availble then other software internet software like
+   # npm, pip, docker, ...  if isolated only the software from the ibm mirrors can be accessed
+   if curl -o /tmp/x https://www.python.org/downloads/release/python-373/; then
+       echo INTERNET > $indexhtml
+   else
+       echo ISOLATED > $indexhtml
+   fi
+   ```
 
-Steps to take to remove the resources created in this tutorial
+In this script, upgrading the installed software and installing `nginx` and other packages using the operating system provided software installation tools demonstrates that even the isolated instances have access to the {{site.data.keyword.IBM_notm}} provided mirrors. For Ubuntu, the `apt-get` commands will access mirrors.
 
-## Expand the tutorial (this section is optional, remove it if you don't have content for it)
+The `curl` command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet.
 
-Want to add to or change this tutorial? Here are some ideas:
-- add a load balancer for high availability and zero down time software upgrades
-- install operating system patches
-- install new software/data from internet repositories
-- install new software/data from on premises
+Based on whether the host has internet connectivity, the script modifies the `index.html` page served by `nginx`. 
+
+### Upload from the filesystem and execute on the instance
+{: #scp-ssh}
+
+There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the virtual server instance and then executed.
+
+In such cases, you can use the SSH connection to the server to upload files with `scp` and then execute scripts on the server with `ssh`. The scripts could also retrieve software installers from the Internet, or from your on-premise systems assuming you have established a connection [such as a VPN](/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn) between your on-premise systems and the cloud.
+
+The tutorial code contains a script named [`uploaded.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) which will be uploaded from your workstation to the virtual server instances (manually or through automation like Terraform and Ansible).
+
+In the next sections, you will use the script [test_provision.bash](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/test_provision.bash) to confirm that the servers have been provisioned successfully, are able (or not) to access the Internet and that the `uploaded.sh` script was correctly executed.
+
+## Using the {{site.data.keyword.Bluemix_notm}} CLI and shell scripts
+{: #cli}
+
+The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}.
+
+This section uses a shell script found in the [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups.
+
+### Before you begin
+{: #cli-before-you-begin}
+
+1. Install the command line (CLI) tools by [following these steps](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
+
+### Provision subnets and virtual server instances
+{: #cli-provision}
+
+1. Change to the tutorial folder:
+   ```sh
+   cd $CHECKOUT_DIR/vpc-app-deploy/
+   ```
+   {:pre}
+1. Set the current resource group
+   ```sh
+   ibmcloud target -g $TF_VAR_resource_group_name
+   ```
+   {:pre}
+1. Run the provisioning script:
+   ```sh
+   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh ubuntu-18.04-amd64
+   ```
+   {:pre}
+
+   In the command above,
+      - `$TF_VAR_ssh_key_name` is the ssh key name described earlier
+      - `tutorial` is the common prefix to all resources and the name of the VPC. Keep this lower case and a valid DNS name.
+      - `$TF_VAR_resource_group_name` is the resource group name which will contain all of the resources created.
+      - `resources.sh` is the output of a successful build.
+      - [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) is the cloud-init file used to initialize the frontend and the backend servers.
+      - `ubuntu-18.04-amd64` is one of the virtual server images from the `ibmcloud is images` command, the scripts are expecting Ubuntu.
+
+   During its execution, the `vpc-pubpriv-create-with-bastion.sh` shell script creates three hosts: frontend, backend and bastion. The `@shared/install.sh` has been passed to a `ibmcloud is create-instance` CLI command `--user-data` parameter like this:
+
+   ```sh
+   ibmcloud is instance-create ... --user-data @shared/install.sh
+   ```
+
+1. Once the provisioning script completes. Open the file `resources.sh`. Shown below is example contents.
+   ```sh
+   $ cat resources.sh
+   FRONT_IP_ADDRESS=169.61.247.108
+   BASTION_IP_ADDRESS=169.61.247.105
+   FRONT_NIC_IP=10.240.2.12
+   BACK_NIC_IP=10.240.1.8
+   FRONT_VSI_NIC_ID=8976fbde-0f57-4829-a834-a773952f6d19
+   BACK_VSI_NIC_ID=216aeb65-1296-4445-ab9e-694f751e773d
+   ```
+1. Load the variables into your environment:
+   ```sh
+   source resources.sh
+   ```
+   {:pre}
+1.  The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server:
+   ```sh
+   scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
+   ```
+   {:pre}
+
+   Then execute this script:
+   ```sh
+   ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP sh /uploaded.sh
+   ```
+   {:pre}
+
+   It can take a few minutes for the ssh service on the server to be initialized and it will take a few more minutes for the `cloud-init` script to complete. The `uploaded.sh` script will wait for the initialization to complete before exiting.
+   {:tip}
+
+1. Repeat the operation with the backend server:
+   ```sh
+   scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$BACK_NIC_IP:/uploaded.sh
+   ```
+   {:pre}
+
+   ```sh
+   ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$BACK_NIC_IP sh /uploaded.sh
+   ```
+   {:pre}
+
+### Test the configuration of the virtual servers
+{: #cli-test}
+
+ To validate the deployment:
+
+1. Import the output variables into the environment:
+   ```sh
+   source resource.sh
+   ```
+   {:pre}
+1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
+   ```sh
+   ./test_provision.bash $FRONT_IP_ADDRESS INTERNET hi
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   INTERNET
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
+1. Validate that the backend can be reached through the bastion host and has access to the internet:
+   ```sh
+   ./test_provision.bash $BACK_NIC_IP INTERNET hi "ssh -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS root@$FRONT_NIC_IP"
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   INTERNET
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
+
+### Clean up
+{: #cli-cleanup}
+
+1. Delete the VPC and **all of the resources** in the VPC, be careful:
+   ```sh
+   ../scripts/vpc-cleanup.sh tutorialvpc-pubpriv
+   ```
+   {:pre}
+
+## Provisioning infrastructure with Terraform
+{: #terraform}
+
+[Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
+
+### Before you begin
+{: #terraform-before-you-begin}
+
+Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
+
+### Provision a single virtual server instance
+
+Before deploying a more complex architecture and in order to validate the Terraform provider installation, let's deploy a single virtual server instance with a floating IP and then access this server through SSH.
+
+Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tfinstance/main.tf) file for a terraform script. It utilizes the environment variables defined earlier.
+
+1. Change to the terraform script folder for this example:
+   ```sh
+   cd $CHECKOUT_DIR/vpc-app-deploy/tfinstance
+   ```
+   {:pre}
+1. Initialize Terraform:
+   ```sh
+   terraform init
+   ```
+   {:pre}
+1. Apply the Terraform plan:
+   ```sh
+   terraform apply
+   ```
+   {:pre}
+   The script creates a VPC, a VSI and enable SSH access.
+1. View the output generated by the plan:
+   ```sh
+   terraform output
+   ```
+   {:pre}
+1. You could copy paste the output of the previous command or you can use `terraform output` as follow to SSH into the VSI
+   ```sh
+   $(terraform output sshcommand)
+   ```
+   {:pre}
+   Using outputs in Terraform can become quite handy when you want to reuse resource properties in other scripts after you have applied a Terraform plan.
+   {:tip}
+1. Remove the resources created by Terraform:
+   ```sh
+   terraform destroy
+   ```
+   {:pre}
+
+### Provision subnets and virtual server instances
+{: #terraform-provision}
+
+The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the _Private and public subnets in a Virtual Private Cloud_ tutorial.
+
+The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) contains the definition of the resources. It imports a Terraform _module_ shared with this other tutorial:
+
+   ```sh
+   module vpc_pub_priv {
+     source = "../../vpc-public-app-private-backend/tfmodule"
+     basename = "${local.BASENAME}"
+     ssh_key_name = "${var.ssh_key_name}"
+     zone = "${var.zone}"
+     backend_pgw = false
+     profile = "${var.profile}"
+     image_name = "${var.image_name}"
+     resource_group_name = "${var.resource_group_name}"
+     maintenance = "${var.maintenance}"
+     frontend_user_data = "${file("../shared/install.sh")}"
+     backend_user_data = "${file("../shared/install.sh")}"
+   }
+   ```
+
+In this definition:
+   - **backend_pgw** controls whether the backend server has access to the public Internet. A public gateway can be connected to the backend subnet. The frontend has a floating IP assigned which provides both a public IP and gateway to the internet. This is going to allow open Internet access for software installation.  The backend will not have access to the Internet.
+   - **frontend_user_data**, **backend_user_data** point to the cloud-init initialization scripts.
+
+With Terraform, all resources can have associated provisioners. The `null_resource` provisioner does not provision a cloud resource but can be used to copy files to server instances. This construct is used in the script to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) file and then execute it as shown below. To connect to the servers, Terraform supports [using the bastion host](https://www.terraform.io/docs/provisioners/connection.html#connecting-through-a-bastion-host-with-ssh) as provisioned in the tutorial:
+
+   ```sh
+   resource "null_resource" "copy_from_on_prem" {
+     connection {
+       type        = "ssh"
+       user        = "root"
+       host        = "${module.vpc_pub_priv.frontend_network_interface_address}"
+       private_key = "${file("~/.ssh/id_rsa")}"
+       bastion_user        = "root"
+       bastion_host        = "${local.bastion_ip}"
+       bastion_private_key = "${file("~/.ssh/id_rsa")}"
+     }
+     provisioner "file" {
+       source      = "../shared/${local.uploaded}"
+       destination = "/${local.uploaded}"
+      }
+     provisioner "remote-exec" {
+       inline      = [
+         "bash -x /${local.uploaded}",
+        ]
+     }
+   }
+   ```
+
+To provision the resources:
+
+1. Change to the terraform script folder:
+   ```sh
+   cd $CHECKOUT_DIR/vpc-app-deploy/tf
+   ```
+   {:pre}
+1. Initialize Terraform:
+   ```sh
+   terraform init
+   ```
+   {:pre}
+1. Apply the Terraform plan:
+   ```sh
+   terraform apply
+   ```
+   {:pre}
+1. View the output generated by the plan:
+   ```sh
+   terraform output
+   ```
+   {:pre}
+
+### Test the configuration of the virtual servers
+{: #terraform-test}
+
+Now that Terraform has deployed resources, you can validate they were correctly provisioned.
+
+1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
+   ```sh
+   ../test_provision.bash $(terraform output FRONT_IP_ADDRESS) INTERNET hi
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   INTERNET
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
+1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
+   ```sh
+   ../test_provision.bash $(terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(terraform output FRONT_NIC_IP) -o ProxyJump=root@$(terraform output BASTION_IP_ADDRESS)"
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   ISOLATED
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
+
+### Clean up
+{: #terraform-cleanup}
+
+1. Remove the resources created by Terraform:
+   ```sh
+   terraform destroy
+   ```
+   {:pre}
+
+## Installing software with Ansible
+{: #ansible}
+
+[Ansible](https://www.ansible.com/) is a configuration management and provisioning tool, similar to [Chef](https://www.chef.io/products/chef-infra/) and [Puppet](https://puppet.com/), and is designed to automate multitier app deployments and provisioning in the cloud. Written in Python, Ansible uses YAML syntax to describe automation tasks, which makes Ansible easy to learn and use.
+
+Although Ansible could be used to provision the VPC resources and install software, this section uses Terraform to provision the VPC resources and Ansible to deploy the software.
+
+### Before you begin
+{: #ansible-before-you-begin}
+
+This section uses both Terraform and Ansible.
+
+1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
+1. Follow [these instructions](/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
+
+### Ansible Playbook
+
+An Ansible playbook provides the tasks to be run. The example below has a set of tasks required to install nginx and upload a script. You will notice the similarities to the `cloud-init` script discussed earlier. The `uploaded.sh` script is identical.
+
+   ```yaml
+   - hosts: FRONT_NIC_IP BACK_NIC_IP
+     remote_user: root
+     tasks:
+     - name: update apt cache manual
+       # this should not be required but without it the error: Failed to lock apt for exclusive operation is generated
+       shell: apt update
+       args:
+         executable: /bin/bash
+     - name: update apt cache
+       apt:
+         update_cache: yes
+     - name: ensure nginx is at the latest version
+       apt:
+         name: nginx
+         state: latest
+       notify:
+       - restart nginx
+     - name: execute init.bash
+       script: ./init.bash
+     - name: upload execute uploaded.sh
+       script: ../shared/uploaded.sh
+     handlers:
+       - name: restart nginx
+         service:
+           name: nginx
+           state: restarted
+   ```
+
+### Ansible Inventory
+
+Ansible works against multiple systems in your infrastructure at the same time. The Ansible inventory contains the list of these systems. The tutorial provides a script [`inventory.bash`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/inventory.bash) to generate the Ansible inventory from the Terraform output.
+
+   ```sh
+   #!/bin/bash
+   TF=tf
+   printf 'all:
+     children:
+       FRONT_NIC_IP:
+         hosts:
+           %s
+       BACK_NIC_IP:
+         hosts:
+           %s
+   ' $(cd $TF; terraform output FRONT_NIC_IP) $(cd $TF; terraform output BACK_NIC_IP)
+   ```
+
+### Provision subnets and virtual server instances
+{: #ansible-provision}
+
+The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/ansible/tf/main.tf) similar to the one described in the previous section except the software installation has been stripped out. The Ansible script will install software from the mirrors and then upload software from your workstation.
+
+1. Change to the Ansible script folder for this example:
+   ```sh
+   cd $CHECKOUT_DIR/vpc-app-deploy/ansible/tf
+   ```
+   {:pre}
+1. Initialize Terraform:
+   ```sh
+   terraform init
+   ```
+   {:pre}
+1. Apply the Terraform plan:
+   ```sh
+   terraform apply
+   ```
+   {:pre}
+1. View the output generated by the plan:
+   ```sh
+   terraform output
+   ```
+   {:pre}
+1. Generate the Ansible inventory:
+   ```sh
+   cd .. && ./inventory.bash > inventory
+   ```
+   {:pre}
+1. Provision software on the frontend server:
+   ```sh
+   ansible-playbook -T 40 -l FRONT_NIC_IP -u root \
+     --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" \
+     -i inventory lamp.yaml
+   ```
+   {:pre}
+1. Provision software on the backend server:
+   ```sh
+   ansible-playbook -T 40 -l BACK_NIC_IP -u root \
+     --ssh-common-args "-F ../../scripts/ssh.notstrict.config -o ProxyJump=root@$(cd tf; terraform output BASTION_IP_ADDRESS)" \
+     -i inventory lamp.yaml
+   ```
+   {:pre}
+
+### Test the configuration of the virtual servers
+{: #ansible-test}
+
+Now that Terraform has deployed resources and Ansible installed the software, you can validate they were correctly provisioned.
+
+1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
+   ```sh
+   ../test_provision.bash $(cd tf && terraform output FRONT_IP_ADDRESS) INTERNET hi
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   INTERNET
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
+1. Validate that the backend can be reached through the bastion host and does not have access to the internet:
+   ```sh
+   ../test_provision.bash $(cd tf && terraform output BACK_NIC_IP) ISOLATED hi "ssh -F ../../scripts/ssh.notstrict.config root@$(cd tf && terraform output FRONT_NIC_IP) -o ProxyJump=root@$(cd tf && terraform output BASTION_IP_ADDRESS)"
+   ```
+   {:pre}
+
+   The command output should be:
+   ```
+   success: httpd default file was correctly replaced with the following contents:
+   ISOLATED
+   success: provision of file from on premises worked and was replaced with the following contents:
+   hi
+   ```
+
+### Clean up
+{: #ansible-cleanup}
+
+1. Remove the resources created by Terraform:
+   ```sh
+   cd $CHECKOUT_DIR/vpc-app-deploy/ansible/tf
+   ```
+   {:pre}
+
+   and
+
+   ```sh
+   terraform destroy
+   ```
+   {:pre}
 
 ## Related content
 {: #related}
 
-------------------
+- [VPC Glossary](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#vpc-glossary)
+- [VPC using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-cli)
+- [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
+- [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
+- [Deploy a LAMP stack using Terraform](/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
 
-
-## Create a VPC VSI with a floating ip
-{: #setup}
-This is an optional step required for some of the installation mechanisms below.
-After this step is completed a VPC VSI should be provisioned and it should be possible to ssh
-Before continuing with the ssh and cli examples a VPC VSI will need to be created.
-Each of the mechanisms below are independent.
-Feel free to skip the skip the ssh and cli and the manual steps described here:
-these you can go straight to the terraform and ansible examples wich will create a VPC, subnet, security groups and VSI.
-Creating a VPC VSI can be done 
-
-- Optionally follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
-
-
-## Manually perform steps using gui console and ssh
-{: #section_two}
-
-C
-- Run the provided script or follow the steps mentioned in [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) only the public subnet and web server is required for this tutorial.
-
-- Run the provided script or follow the steps mentioned in [Private and public subnets in a Virtual Private Cloud](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) only the public subnet and web server is required for this tutorial.
-
-replace /usr/share/httpd/noindex/index.html with the new contents
-
-Create a VPC VSI with a floating ip
-
-Using Centos as an example:
-
-Identify the VSI created above.  Modify the steps to use the bastion host as required:
-1. scp data.zip root@ip:<IP>
-1. ssh root@ip
-1. update repositories
-1. upgrade software intalled
-1. install nginx
-1. install git
-1. git clone static website repository
-1. unzip data.zip into the website
-1. systemctl ...nginx
-1. test

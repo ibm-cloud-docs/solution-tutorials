@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-17"
-lasttested: "2019-06-13"
+lastupdated: "2019-10-09"
+lasttested: "2019-10-09"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -62,7 +62,7 @@ The tutorial considers a public web application with a back-end implemented with
 {: #prereqs}
 
 1. {{site.data.keyword.cis_full_notm}} requires you to own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers. If you do not own a domain, you can buy one from a registrar.
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
 
 ## Configure a custom domain
 
@@ -82,7 +82,10 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
 ### Request a certificate using {{site.data.keyword.cloudcerts_short}} and a custom sample code
 
 1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
-1. Use the [code sample](https://github.com/ibm-cloud-security/certificate-manager-domain-validation-cloud-function-sample) and included instructions to request and import a certificate using {{site.data.keyword.openwhisk_short}} for a domain maintained by {{site.data.keyword.cis_full_notm}}. The code sample can be deployed using similar steps as provided below. 
+1. Use the [code sample](https://github.com/ibm-cloud-security/certificate-manager-domain-validation-cloud-function-sample) and included instructions to request and import a certificate using {{site.data.keyword.openwhisk_short}} for a domain maintained by {{site.data.keyword.cis_full_notm}}. The code sample can be deployed using similar steps as provided below.
+
+For secured connection, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
+{: tip}
 
 ## Deploy actions in multiple locations
 
@@ -99,14 +102,14 @@ The three following sections will need to be repeated for every location where y
 
 ### Define actions
 
-1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/openwhisk/actions).
-1. Switch to the target location and select an organization and space where to deploy the actions.
-1. Create an action
+1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/functions/actions).
+2. Switch to the target namespace and location where to deploy the actions.
+3. Create an action
    1. Set **Name** to **doWork**.
-   1. Set **Enclosing Package** to **default**.
-   1. Set **Runtime** to the most recent version of **Node.js**.
-   1. **Create**.
-1. Change the action code to:
+   2. Set **Enclosing Package** to **default**.
+   3. Set **Runtime** to the most recent version of **Node.js**.
+   4. **Create**.
+4. Change the action code to:
    ```js
    function main(params) {
      msg = "Hello, " + params.name + " from " + params.place;
@@ -114,26 +117,26 @@ The three following sections will need to be repeated for every location where y
    }
    ```
    {: codeblock}
-1. **Save**
-1. Create another action to be used as health check for our API:
+5. **Save**
+6. Create another action to be used as health check for our API:
    1. Set **Name** to **healthz**.
-   1. Set **Enclosing Package** to **default**.
-   1. Set **Runtime** to most recent **Node.js**.
-   1. **Create**.
-1. Change the action code to:
+   2. Set **Enclosing Package** to **default**.
+   3. Set **Runtime** to most recent **Node.js**.
+   4. **Create**.
+7. Change the action code to:
    ```js
    function main(params) {
      return { ok: true };
    }
    ```
    {: codeblock}
-1. **Save**
+8. **Save**
 
 ### Expose the actions with a managed API
 
 The next step involves creating a managed API to expose your actions.
 
-1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://{DomainName}/openwhisk/apimanagement).
+1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://{DomainName}/functions/apimanagement).
 1. Create a new managed {{site.data.keyword.openwhisk_short}} API:
    1. Set **API name** to **App API**.
    1. Set **Base path** to **/api**.
@@ -219,7 +222,7 @@ After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Eart
 
 To test the fail over, a pool health check must fail so that the GLB would redirect to the next healthy pool. To simulate a failure, you can modify the health check function to make it fail.
 
-1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/openwhisk/actions).
+1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/functions/actions).
 1. Select the first location configured in the GLB.
 1. Edit the `healthz` function and change its implementation to `throw new Error()`.
 1. Save.
@@ -243,8 +246,8 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 
 ### Remove actions
 
-1. Remove [APIs](https://{DomainName}/openwhisk/apimanagement)
-1. Remove [actions](https://{DomainName}/openwhisk/actions)
+1. Remove [APIs](https://{DomainName}/functions/apimanagement)
+1. Remove [actions](https://{DomainName}/functions/actions)
 
 ## Related content
 {: #related}

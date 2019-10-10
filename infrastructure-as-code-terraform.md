@@ -128,7 +128,7 @@ In this section, you are going to look at how to scale the virtual server resour
    memory = 2048
    ```
    {: codeblock}
-2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage) service. To do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippets below to the newly created file. The code snippets below creates a variable for the Identity and Access Management, IAM, resource group. It sets the {{site.data.keyword.cos_full_notm}} service name to `lamp_objectstorage`, service to the fully qualified name and plan type. The code below will create a standard plan. This is a pay-as-you-go plan. You can also use the lite plan, but note that the lite plan is limited to only one service per account.
+2. Next, add a new [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage) service. To do that create a new file and name it **ibm-cloud-object-storage.tf**. Add the code snippet below to the newly created file. This code defines a resource group and an instance of {{site.data.keyword.cos_full_notm}} named `lamp_objectstorage`. It uses the `standard` paid plan for the service. You can also use the `lite` plan, but note that the `lite` plan is limited to only one service instance per account.
 
    ```
    # a cloud object storage
