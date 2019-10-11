@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-10-01"
+lastupdated: "2019-10-11"
 lasttested: "2019-10-01"
 ---
 
@@ -172,9 +172,8 @@ Want to add to or change this tutorial? Here are some ideas:
 1. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
 2. Use {{site.data.keyword.databases-for-postgresql}} instead of {{site.data.keyword.dashdbshort}}. The [GitHub repository for this Slackbot tutorial](https://github.com/IBM-Cloud/slack-chatbot-database-watson) already has code to support {{site.data.keyword.databases-for-postgresql}}.
 3. Add a weather service and retrieve forecast data for the event date and location.
-4. Export event data as iCalendar **.ics** file.
-5. Connect the chatbot to Facebook Messenger by adding another integration.
-6. Add interactive elements, such as buttons, to the output.
+4. [Control the encryption keys for your database by adding {{site.data.keyword.keymanagementservicelong_notm}}](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-key-protect).
+5. Export event data as iCalendar **.ics** file.
 
 
 ## Related content
