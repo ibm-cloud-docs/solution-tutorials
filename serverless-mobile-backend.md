@@ -45,7 +45,7 @@ This tutorial is configurable based on your target platform. You are currently v
 {: #services}
 
 This tutorial uses the following runtimes and services:
-   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
+   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)
    * [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID)
    * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
    * [{{site.data.keyword.toneanalyzershort}}](https://{DomainName}/catalog/services/tone_analyzer)
@@ -64,7 +64,7 @@ The application shown in this tutorial is a feedback app that smartly analyses t
 
 1. The user authenticates against [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID). {{site.data.keyword.appid_short}} provides access and identification tokens.
 2. Further calls to the backend API include the access token.
-3. The backend is implemented with [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk). The serverless actions, exposed as Web Actions, expect the token to be sent in the request headers and verify its validity (signature and expiration date) before allowing access to the actual API.
+3. The backend is implemented with [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions). The serverless actions, exposed as Web Actions, expect the token to be sent in the request headers and verify its validity (signature and expiration date) before allowing access to the actual API.
 4. When the user submits a feedback, the feedback is stored in [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
 5. The feedback text is processed with [{{site.data.keyword.toneanalyzershort}}](https://{DomainName}/catalog/services/tone_analyzer).
 6. Based on the analysis result, a notification is sent back to the user with [{{site.data.keyword.mobilepushshort}}](https://{DomainName}/catalog/services/imfpush).

@@ -28,7 +28,7 @@ In this tutorial, you create an application to automatically collect GitHub traf
 
 ## Products
 This tutorial uses the following products:
-   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
+   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)
    * [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
    * [{{site.data.keyword.appid_long}}](https://{DomainName}/catalog/services/app-id)
    * [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)

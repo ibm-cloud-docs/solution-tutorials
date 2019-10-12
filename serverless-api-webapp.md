@@ -189,10 +189,10 @@ Complete the sequence:
 1. Click on **Save** and then **Invoke**.
 
 ## Create an API
-1. Go to [Actions](https://{DomainName}/openwhisk/actions).
+1. Go to [Actions](https://{DomainName}/functions/actions).
 2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable as Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
-4. Go to [APIs](https://{DomainName}/openwhisk/apimanagement) and **Create a {{site.data.keyword.openwhisk_short}} API** (or **Create Managed API** if you have existing APIs).
+4. Go to [APIs](https://{DomainName}/functions/apimanagement) and **Create a {{site.data.keyword.openwhisk_short}} API** (or **Create Managed API** if you have existing APIs).
 5. Set API name to `guestbook` and base path to `/guestbook`
 6. Click on **Create operation** and create an operation to retrieve guestbook entries:
    1. Set **path** to `/entries`

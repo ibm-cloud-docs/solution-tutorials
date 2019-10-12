@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-08"
-lasttested: "2019-06-13"
+lastupdated: "2019-10-09"
+lasttested: "2019-10-09"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -102,8 +102,8 @@ The three following sections will need to be repeated for every location where y
 
 ### Define actions
 
-1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/openwhisk/actions).
-2. Switch to the target location and select an organization and space where to deploy the actions.
+1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/functions/actions).
+2. Switch to the target namespace and location where to deploy the actions.
 3. Create an action
    1. Set **Name** to **doWork**.
    2. Set **Enclosing Package** to **default**.
@@ -136,7 +136,7 @@ The three following sections will need to be repeated for every location where y
 
 The next step involves creating a managed API to expose your actions.
 
-1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://{DomainName}/openwhisk/apimanagement).
+1. Go to [{{site.data.keyword.openwhisk_short}} / API](https://{DomainName}/functions/apimanagement).
 1. Create a new managed {{site.data.keyword.openwhisk_short}} API:
    1. Set **API name** to **App API**.
    1. Set **Base path** to **/api**.
@@ -222,7 +222,7 @@ After a short while, go to `https://api.mydomain.com/api/do?name=John&place=Eart
 
 To test the fail over, a pool health check must fail so that the GLB would redirect to the next healthy pool. To simulate a failure, you can modify the health check function to make it fail.
 
-1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/openwhisk/actions).
+1. Go to [{{site.data.keyword.openwhisk_short}} / Actions](https://{DomainName}/functions/actions).
 1. Select the first location configured in the GLB.
 1. Edit the `healthz` function and change its implementation to `throw new Error()`.
 1. Save.
@@ -246,8 +246,8 @@ To test the fail over, a pool health check must fail so that the GLB would redir
 
 ### Remove actions
 
-1. Remove [APIs](https://{DomainName}/openwhisk/apimanagement)
-1. Remove [actions](https://{DomainName}/openwhisk/actions)
+1. Remove [APIs](https://{DomainName}/functions/apimanagement)
+1. Remove [actions](https://{DomainName}/functions/actions)
 
 ## Related content
 {: #related}
