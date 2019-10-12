@@ -89,6 +89,7 @@ Solution Tutorials
         vm-to-containers-and-kubernetes.md
         strategies-for-resilient-applications.md
         continuous-deployment-to-kubernetes.md
+        dynamic-content-cdn.md
         pub-sub-object-storage.md
         plan-create-update-deployments.md
         application-log-analysis.md
