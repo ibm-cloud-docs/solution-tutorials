@@ -146,7 +146,7 @@ In the cloned application code, the following code changes were made to the [Bee
 
 As said in the [Prerequisite](#prereqs) you should have a running cluster on {{site.data.keyword.containershort_notm}}. If yes, move on to the [deployment steps](#deploy-to-cluster).
 
-You can take the following steps to create a cluster on {{site.data.keyword.containershort_notm}}:
+If not, you can take the following steps to create a cluster on {{site.data.keyword.containershort_notm}}:
 
 1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create). A standard cluster is used in this tutorial. 
 2. When the cluster is ready, follow the steps described in the **Access** tab of your cluster to gain access to `kubectl`, a command line tool that you use to interact with a Kubernetes cluster. 
@@ -156,15 +156,20 @@ You can take the following steps to create a cluster on {{site.data.keyword.cont
 
 {: #deploy-to-cluster}
 
-1. Create a deployment configuration file, for example, `deployment.yaml`. You can find an example in the [cloned application code](https://github.com/IBM-Cloud/cdn-with-cda-todolist), and replace parameters in angle brackets (<>) with your own. This configuration file contains the following sections:
+1. Create a deployment configuration file, for example, `deployment.yaml`. You can find an example in the [cloned application code](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/deployment.yaml), and replace parameters in angle brackets (<>) with your own. This configuration file contains the following sections:
    * Deployment configuration
    * Service configuration
-   * Ingress resource configuration to set an IBM-provided ingress domain for your application.  
+   * Ingress resource configuration to set an IBM-provided ingress domain and IBM-provided TLS certificate.  
 2. Apply the configuration to your Kubernetes cluster.
 	```
 	kubectl apply -f deployment.yaml --cluster <cluster_name> 
 	```
 	{:pre}	  
+
+So far your application is available from the following URL: 
+```
+https://<app_name>.<cluster_name>.<region>.containers.appdomain.cloud
+```
 
 For more information about how to deploy an image from {{site.data.keyword.registrylong_notm}}, see [Deploying containers from an {site.data.keyword.registryshort_notm} image to the default Kubernetes namespace](https://{DomainName}/docs/containers?containers?topic=containers-images#namespace).
 
@@ -183,10 +188,13 @@ Before you create CDN instance, you should have registered a domain name for you
 	![](images/solution52-cdn-dca/dns_record.png) 
 	* Leave **Host header** and **Path** empty. 
 	* Use the default **Server** option. Specify the Kubernetes ingress domain as **Origin server address**, for example, `mytodo.<cluster-name>.<region>.containers.appdomain.cloud`.
-	* Check HTTP only and enable the HTTP 80 port.
+	* Check both the HTTP and HTTPS protocols. Use the default port numbers.
+	* Select **Wildcard** SSL certificate. 
 5. Accept the **Master Service Agreement** and click **Create**.
 
-After you have successfully created the CDN mapping, to view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
+After you have successfully created the CDN mapping, 
+* To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
+* You application is now accessible through the CNAME only: `https://<CNAME>`.
 
 ## Enable Dynamic Content Acceleration (DCA)
 
