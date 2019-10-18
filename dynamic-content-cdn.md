@@ -13,7 +13,7 @@ lasttested: "2019-10-12"
 {:tip: .tip}
 {:pre: .pre}
 
-# Accelerate a dynamic website using Dynamic Content Acceleration with IBM CDN
+# Accelerate a dynamic website using Dynamic Content Acceleration with {{site.data.keyword.cdn_full}}
 {: #dynamic-cdn}
 
 In a previous tutorial [Accelerate delivery of static files using a CDN](/docs/tutorials?topic=solution-tutorials-static-files-cdn) you have known how to host and serve static assets (images, videos, and documents) of a website in {{site.data.keyword.cos_full_notm}}, and how to use [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
@@ -29,7 +29,7 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 ## Objectives
 {: #objectives}
 
-* Deploy a starter dynamic web application to a Kubernetes cluster
+* Deploy a starter dynamic web application to a {{site.data.keyword.containershort_notm}} cluster
 * Make content globally available with {{site.data.keyword.cdn_full}}
 * Enable the Dynamic Content Acceleration (DCA) capability for performance optimization
 
@@ -41,7 +41,7 @@ This tutorial uses the following products:
 * [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-* [DNS Forward Zones](https://{DomainName}/classic/network/dns/forwardzones)
+* [{{site.data.keyword.dns_notm}}s](https://{DomainName}/classic/network/dns/forwardzones)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -64,7 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
    * Install [Docker](https://docs.docker.com/engine/installation/)
    * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install Docker, `kubectl`, IBM Cloud CLI and required plug-ins
    * Create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}
-   * Register a new domain for your web application (if not existing), for example from [IBM Cloud Domains](https://{DomainName}/classic/services/domains)
+   * Register a new domain for your web application (if not existing), for example from [{{site.data.keyword.domain_notm}}](https://{DomainName}/classic/services/domains)
 
 ## Prepare the dynamic web application
 
@@ -149,7 +149,7 @@ As said in the [Prerequisite](#prereqs) you should have a running cluster on {{s
 If not, you can take the following steps to create a cluster on {{site.data.keyword.containershort_notm}}:
 
 1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create). A standard cluster is used in this tutorial. 
-2. When the cluster is ready, follow the steps described in the **Access** tab of your cluster to gain access to `kubectl`, a command line tool that you use to interact with a Kubernetes cluster. 
+2. When the cluster is ready, follow the steps described in the **Access** tab of your cluster to gain access to `kubectl`, a command line tool that you use to interact with a {{site.data.keyword.containershort_notm}} cluster. 
 3. If not logged in, use `ibmcloud login` to log in interactively, and set the KUBECONFIG environment variable as directed. 
 
 ### Deploy the image
@@ -160,7 +160,7 @@ If not, you can take the following steps to create a cluster on {{site.data.keyw
    * Deployment configuration
    * Service configuration
    * Ingress resource configuration to set an IBM-provided ingress domain and IBM-provided TLS certificate.  
-2. Apply the configuration to your Kubernetes cluster.
+2. Apply the configuration to your {{site.data.keyword.containershort_notm}} cluster.
 	```
 	kubectl apply -f deployment.yaml --cluster <cluster_name> 
 	```
@@ -181,13 +181,13 @@ Before you create CDN instance, you should have registered a domain name for you
 3. On the next dialog, set the hostname for CDN to the custom domain of your application, for example, `todo.exampledomain.net`. 
 4. Set the rest of CDN configurations:
 	* Set the **Custom CNAME** prefix to a unique value, for example, `todo-sample`. 
-	* Go back to your DNS service provider and configure CNAME record. For example, in [DNS Forward Zone](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
+	* Go back to your DNS service provider and configure CNAME record. For example, in [{{site.data.keyword.dns_notm}}](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
 	  1. Click the name of your domain. 
 	  2. Under **Add a new record**, select **CNAME** as resource type, and map the host `todo.exampledomain.net` to the CNAME `todo-sample.cdn.appdomain.cloud.`
 	  3. Click **Add Record**.  
 	![](images/solution52-cdn-dca/dns_record.png) 
 	* Leave **Host header** and **Path** empty. 
-	* Use the default **Server** option. Specify the Kubernetes ingress domain as **Origin server address**, for example, `mytodo.<cluster-name>.<region>.containers.appdomain.cloud`.
+	* Use the default **Server** option. Specify the ingress domain as **Origin server address**, for example, `mytodo.<cluster-name>.<region>.containers.appdomain.cloud`.
 	* Check both the HTTP and HTTPS protocols. Use the default port numbers.
 	* Select **Wildcard** SSL certificate. 
 5. Accept the **Master Service Agreement** and click **Create**.
@@ -200,10 +200,10 @@ After you have successfully created the CDN mapping,
 
 1. Click the origin from the [Overview](https://{DomainName}/classic/network/cdn) page, and navigate to the **Settings** tab of your origin.
 2. Under the **Optimized for** section, select **Dynamic Content Acceleration** from the drop-down list.
-3. Under the **Detection path** section, specify the path `/test-dca/detection-test-object.html` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by IBM CDN to determine the fastest path to the origin. 
+3. Under the **Detection path** section, specify the path `/test-dca/detection-test-object.html` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by {{site.data.keyword.cdn_full}} to determine the fastest path to the origin. 
 4. Make sure **Prefetching** and **Image compression** are both set to **On**.
    ![](images/solution52-cdn-dca/detection_path.png)
-5. Click **Save**. You have successfully accelerated your todo application deployed in IBM Cloud Kubernetes cluster with IBM CDN DCA.
+5. Click **Save**. You have successfully accelerated your todo application deployed in {{site.data.keyword.containershort_notm}} cluster with DCA.
 
 ## Verify DCA performance
 
@@ -213,7 +213,7 @@ After enabling DCA for a period, you can view the both static and dynamic traffi
 
 ## Conclusion
 
-With DCA turned on and the detection path specified, CDN edge servers periodically fetch the test object from the origin to look for any path between the internal network of CDN edge servers that have lower latency and/or packet loss rate than the default route on the Internet. When a real request comes in, IBM CDN consults the most recent data to send that request over the best path to the origin.
+With DCA turned on and the detection path specified, CDN edge servers periodically fetch the test object from the origin to look for any path between the internal network of CDN edge servers that have lower latency and/or packet loss rate than the default route on the Internet. When a real request comes in, {{site.data.keyword.cdn_full}} consults the most recent data to send that request over the best path to the origin.
 
 With **Prefetching** enabled, DCA also finds which content is required by the application and preemptively fetches content from origin and stores it close to the user by analyzing user behavior data and web sessions. The **Image compression** option serves compressed images to reduces the amount of content required to load a page, especially when end users have slow network speed. DCA also employs TCP-layer optimizations that accelerate connection set-up and reduce round trips.
 
@@ -222,7 +222,7 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 * Delete the application from the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * Delete the image from the [{{site.data.keyword.cregistryshort_notm}}](https://{DomainName}/kubernetes/catalog/registry)
 * Delete the [{{site.data.keyword.cdn_full}} service](https://{DomainName}/classic/network/cdn)
-* Delete the CNAME record and the zone from [DNS forward zone](https://{DomainName}/classic/network/dns/forwardzones)
+* Delete the CNAME record and the zone from [{{site.data.keyword.dns_notm}}](https://{DomainName}/classic/network/dns/forwardzones)
 
 ## Related content
 
