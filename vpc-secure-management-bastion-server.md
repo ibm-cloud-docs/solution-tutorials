@@ -78,7 +78,6 @@ In this section, you will create and configure a bastion host along with a secur
    
    If you are using VPC for Gen 1, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
    {:note}
-   
 1. Switch the **Public gateway** to **Attached**.
 1. Click **Create subnet** to provision it.
 
@@ -117,8 +116,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 
     To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
     {:tip }
-
-3.  Click **Create security group** to create it.
+3. Click **Create security group** to create it.
 
 ### Create a bastion instance
 {: #create-bastion-instance}
