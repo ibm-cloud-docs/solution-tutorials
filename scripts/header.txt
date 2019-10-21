@@ -43,6 +43,10 @@
     background-color: #fbeaae;
     padding: 1rem;
   }
+  .note {
+    background-color: #deedf7;
+    padding: 1rem;
+  }
   img {
     max-width: 100%;
   }

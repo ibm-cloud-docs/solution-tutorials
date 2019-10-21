@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-06-18"
+lastupdated: "2019-10-18"
 lasttested: "2019-06-18"
 ---
 
@@ -20,6 +20,9 @@ lasttested: "2019-06-18"
 
 # Deploy isolated workloads across multiple locations and zones
 {: #vpc-multi-region}
+
+This tutorial is compatible with VPC for Generation 1 compute.
+{:note}
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
