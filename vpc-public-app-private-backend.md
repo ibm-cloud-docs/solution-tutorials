@@ -66,7 +66,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
-
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
 
 ## Create a Virtual Private Cloud
@@ -78,7 +77,7 @@ To perform maintenance tasks on these servers such as installing software, perfo
 
 In this section, you will create the VPC and the bastion host.
 
-1. Navigate to the [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
+1. Navigate to the **VPC overview** ([Gen 1](https://{DomainName}/vpc/overview) / [Gen 2](https://{DomainName}/vpc-ext/overview)) page and click on **Create a VPC**.
 1. Under **New virtual private cloud** section:
    * Enter **vpc-pubpriv** as name for your VPC.
    * Select a **Resource group**.
@@ -89,13 +88,12 @@ In this section, you will create the VPC and the bastion host.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 
-   If you are using VPC on Classic, select **Use VPC default** for your subnet access control list (ACL).
+   If you are using VPC with Gen 1 compute, select **Use VPC default** for your subnet access control list (ACL).
    {:note}
-
 1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access to all virtual server instances in the VPC. In this tutorial, the servers do not require such connectivity.
 1. Click **Create virtual private cloud**.
 
-To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainName}/vpc/network/subnets) page and wait until the status changes to **Available**.
+To confirm the creation of the subnet, go to the **Subnets** ([Gen 1](https://{DomainName}/vpc/network/subnets) / [Gen 2](https://{DomainName}/vpc-ext/network/subnets)) page and wait until the status changes to **Available**.
 
 ### Create and configure bastion security group
 
@@ -123,7 +121,7 @@ To create a new subnet for the backend,
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
    
-   If you are using VPC on Classic, select **VPC default** for your subnet access control list (ACL).
+   If you are using VPC with Gen 1 compute, select **VPC default** for your subnet access control list (ACL).
    {:note}
 
 1. Click **Create subnet** to provision it.
@@ -182,7 +180,7 @@ To create a new subnet for the frontend,
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 
-   If you are using VPC on Classic, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   If you are using VPC with Gen 1 compute, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
    {:note}
 
 1. Given all virtual server instances in the frontend subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
@@ -302,7 +300,7 @@ The frontend instance has its software installed but it can not yet be reached.
 
 The backend server is running the same web server software as the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
 
-1. In the [Virtual Server Instances list](https://{DomainName}/vpc/compute/vs), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
+1. In the **Virtual Server Instances** list ([Gen 1](https://{DomainName}/vpc/compute/vs) / [Gen 2](https://{DomainName}/vpc-ext/compute/vs)), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
 1. Use `ssh` to connect to the frontend virtual server:
    ```sh
    ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>
