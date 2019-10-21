@@ -17,6 +17,7 @@ lasttested: "2019-06-18"
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{:note: .note}
 
 # Deploy isolated workloads across multiple locations and zones
 {: #vpc-multi-region}

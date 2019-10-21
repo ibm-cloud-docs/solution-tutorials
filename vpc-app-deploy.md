@@ -18,6 +18,7 @@ lasttested: "2019-08-05"
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{:note: .note}
 
 # Install software on virtual server instances in VPC
 {: #vpc-app-deploy}

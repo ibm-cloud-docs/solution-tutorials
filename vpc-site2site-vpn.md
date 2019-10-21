@@ -13,6 +13,7 @@ lasttested: "2019-09-03"
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{:note: .note}
 
 # Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
 {: #vpc-site2site-vpn}
