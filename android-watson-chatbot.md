@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-10-09"
-lasttested: "2019-10-09"
+lastupdated: "2019-10-22"
+lasttested: "2019-10-22"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -199,14 +199,14 @@ An **assistant** is a cognitive bot that you can customize for your business nee
 
 The repository contains Android application code with required gradle dependencies.
 
-1. Run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/chatbot-watson-android):
+1. Run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/chatbot-watson-android) to your machine:
    ```bash
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
    {: codeblock}
 
-2. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
-3. Open `app/src/main/res/values/config.xml` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
+2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
+3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
    ```xml
    <?xml version="1.0" encoding="utf-8"?>
    <resources>
@@ -235,12 +235,15 @@ The repository contains Android application code with required gradle dependenci
        <string name="TTS_url">TTS_URL_HERE</string>
    </resources>
    ```
-4. Build the project and start the application on a real device or with a simulator.
+4. Build and Run the project by clicking **Run** from the Android studio menu > click **Run app** and start the application on a real Android device or with a simulator.
    <p style="text-align: center; width:200">
    ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)![](images/solution28-watson-chatbot-android/android_chatbot.png)
 
     </p>
-5. **Enter your query** in the space provided below and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
+    For detailed instructions to run your app on a real Android device or on an emulator, follow the [instructions here](https://developer.android.com/training/basics/firstapp/running-app). To build your app from the command line, follow the instructions [provided here](https://developer.android.com/studio/build/building-cmdline)
+    {:tip}
+
+5. In the **Enter your query** space provided below, interact with your chatbot by typing 'Hi' and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
 6. The response will be passed to {{site.data.keyword.texttospeechshort}} service and you should hear a voice reading out the response.
 7. Click the **mic** icon in the left bottom corner of the app to input speech that gets converted to text and then can be sent to {{site.data.keyword.conversationshort}} service by clicking the arrow icon.
 
