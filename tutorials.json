@@ -421,7 +421,7 @@
             "SQL Query",
             "Streaming Analytics"
           ],
-          "lastUpdated": "2019-07-08"
+          "lastUpdated": "2019-10-10"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -534,7 +534,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-06-17"
+          "lastUpdated": "2019-10-18"
         },
         {
           "name": "Deploy isolated workloads across multiple locations and zones",
@@ -546,7 +546,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-06-18"
+          "lastUpdated": "2019-10-18"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -559,7 +559,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-09-03"
+          "lastUpdated": "2019-10-18"
         },
         {
           "name": "Install software on virtual server instances in VPC",
@@ -571,7 +571,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-08-05"
+          "lastUpdated": "2019-10-18"
         },
         {
           "name": "Securely access remote instances with a bastion host",
@@ -583,7 +583,7 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "lastUpdated": "2019-06-17"
+          "lastUpdated": "2019-10-18"
         }
       ]
     },

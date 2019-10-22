@@ -200,7 +200,7 @@ After you have successfully created the CDN mapping,
 
 1. Click the origin from the [Overview](https://{DomainName}/classic/network/cdn) page, and navigate to the **Settings** tab of your origin.
 2. Under the **Optimized for** section, select **Dynamic Content Acceleration** from the drop-down list.
-3. Under the **Detection path** section, specify the path `/test-dca/detection-test-object.html` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by {{site.data.keyword.cdn_full}} to determine the fastest path to the origin. 
+3. Under the **Detection path** section, specify the path `/test-dca` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by {{site.data.keyword.cdn_full}} to determine the fastest path to the origin. 
 4. Make sure **Prefetching** and **Image compression** are both set to **On**.
    ![](images/solution52-cdn-dca/detection_path.png)
 5. Click **Save**. You have successfully accelerated your todo application deployed in {{site.data.keyword.containershort_notm}} cluster with DCA.
