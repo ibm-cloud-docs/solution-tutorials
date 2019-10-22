@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-09-03"
+lastupdated: "2019-10-18"
 lasttested: "2019-09-03"
 ---
 
@@ -13,9 +13,13 @@ lasttested: "2019-09-03"
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{:note: .note}
 
 # Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
 {: #vpc-site2site-vpn}
+
+This tutorial is compatible with VPC for Generation 1 compute.
+{:note}
 
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the {{site.data.keyword.cloud_notm}}. This allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
@@ -580,7 +584,7 @@ In some situations, it might be desirable to interact directly from an on-premis
 
 1. In the VPC management console, click on **VPNs**. In the action menu on the VPN gateway select **Delete** to remove gateway.
 2. Next, click **Floating IPs** in the navigation, then on the IP address for your VSIs. In the action menu select **Release**. Confirm that you want to release the IP address.
-3. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
+3. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances.
 4. Once the VSIs are gone, switch to **Subnets**. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
 5. After the subnets have been deleted, switch to **VPC** and delete your VPC.
 6. In the terminal and while in the directory **vpc-site2site-vpn**, remove the classic VSI by executing the script:

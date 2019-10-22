@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-08-05"
+lastupdated: "2019-10-18"
 lasttested: "2019-08-05"
 
 ---
@@ -18,12 +18,15 @@ lasttested: "2019-08-05"
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{:note: .note}
 
 # Install software on virtual server instances in VPC
 {: #vpc-app-deploy}
 
-This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
+This tutorial is compatible with VPC for Generation 1 compute and VPC for Generation 2 compute. Throughout the tutorial, you will find notes highlighting differences where applicable.
+{:note}
 
+This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
 {:shortdesc}
 
 After an [introduction to the tutorial architecture](#architecture), you will [prepare your environment](#before-you-begin) for the tutorial and review the [basics of software installation](#basics) in {{site.data.keyword.cloud_notm}}. At that point you can decide to evaluate all the technologies or to jump to one of the specific standalone sections like [{{site.data.keyword.cloud_notm}} CLI](#cli), [Terraform](#terraform) or [Ansible](#ansible).
@@ -81,10 +84,8 @@ You will explore how to consume these different sources.
 
 When provisioning virtual server instances, an SSH key will be injected into the instances so that you can later connect to the servers.
 
-1. If you don't have an SSH key on your local machine, refer to [these instructions](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) for creating a key. By default, the private key is found at `$HOME/.ssh/id_rsa`.
-1. Add the SSH key in the [VPC console](https://{DomainName}/vpc/compute/sshKeys).
-
-For more info or instructions on how to manage and/or create an SSH key read [SSH keys](/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-managing-ssh-keys#managing-ssh-keys).
+1. If you don't have an SSH key on your local machine, refer to these instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`.
+1. Add the SSH key in the **VPC console** under **Compute / SSH keys**.
 
 ### Set environment variables
 {: #set-env}
@@ -98,23 +99,23 @@ It will walk you through example steps on a terminal using the shell, `terraform
    git clone https://github.com/IBM-Cloud/vpc-tutorials.git
    ```
    {: pre}
-1. Define a variable named `CHECKOUT_DIR` pointing to the source code directory:
+2. Define a variable named `CHECKOUT_DIR` pointing to the source code directory:
    ```sh
    cd vpc-tutorials
    export CHECKOUT_DIR=$PWD
    ```
    {: pre}
-1. Change to the tutorial directory:
+3. Change to the tutorial directory:
    ```sh
    cd $CHECKOUT_DIR/vpc-app-deploy
    ```
    {:pre}
-1. Copy the configuration file:
+4. Copy the configuration file:
    ```sh
    cp export.template export
    ```
    {:pre}
-1. Edit the `export` file and set the environment variable values:
+5. Edit the `export` file and set the environment variable values:
    * `TF_VAR_ibmcloud_api_key` is an {{site.data.keyword.Bluemix_notm}} API key. You can create one [from the console](https://{DomainName}/iam/apikeys).
    * `TF_VAR_ssh_key_name` is the name of the VPC SSH public key identified in the previous section. This is the public key that will be loaded into the virtual service instances to provide secure ssh access via the private key on your workstation. Use the CLI to verify it exists:
       ```sh
@@ -122,7 +123,8 @@ It will walk you through example steps on a terminal using the shell, `terraform
       ```
       {:pre}
    * `TF_VAR_resource_group_name` is a resource group where resources will be created. See [Creating and managing resource groups](https://{DomainName}/docs/resources?topic=resources-rgs).
-1. Load the variables into the environment:
+   * `TF_VAR_generation` specifies which generation of compute you want to use. It defaults to 2.
+6. Load the variables into the environment:
    ```sh
    source export
    ```
@@ -153,7 +155,7 @@ b45450d3-1a17-2226-c518-a8ad0a75f5f8   windows-2012-amd64      Windows Server (2
 5ccbc579-dc22-0def-46a8-9c2e9b502d37   windows-2016-amd64      Windows Server (2016 Standard Edition)                    2018-10-30T06:12:06.59+00:00    available   public
 ```
 
-{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the [service endpoints available for {{site.data.keyword.vpc_short}}](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc). There is no ingress cost for reading the mirrors.
+{{site.data.keyword.IBM_notm}} has **internal mirrors** to support the {{site.data.keyword.IBM_notm}} images. The mirrors will contain new versions for the software in the {{site.data.keyword.IBM_notm}} provided images as well as the optional packages associated with the distribution. The mirrors are part of the service endpoints available for {{site.data.keyword.vpc_short}} (see details for [Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-service-endpoints-available-for-ibm-cloud-vpc) and [Gen 2](/docs/vpc?topic=vpc-service-endpoints-for-vpc)). There is no ingress cost for reading the mirrors.
 
 Consider both *updating* the version lists available to the provisioned instances and *upgrading* the installed software from these mirrors.
 
@@ -219,14 +221,19 @@ This section uses a shell script found in the [Private and public subnets in a V
    cd $CHECKOUT_DIR/vpc-app-deploy/
    ```
    {:pre}
-1. Set the current resource group
+1. Set the current resource group:
    ```sh
    ibmcloud target -g $TF_VAR_resource_group_name
    ```
    {:pre}
-1. Run the provisioning script:
+1. Set the generation of compute to use:
    ```sh
-   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh ubuntu-18.04-amd64
+   ibmcloud is target --gen $TF_VAR_generation
+   ```
+   {:pre}
+2. Run the provisioning script:
+   ```sh
+   ../vpc-public-app-private-backend/vpc-pubpriv-create-with-bastion.sh us-south-1 $TF_VAR_ssh_key_name tutorial $TF_VAR_resource_group_name resources.sh @shared/install.sh @shared/install.sh
    ```
    {:pre}
 
@@ -236,15 +243,14 @@ This section uses a shell script found in the [Private and public subnets in a V
       - `$TF_VAR_resource_group_name` is the resource group name which will contain all of the resources created.
       - `resources.sh` is the output of a successful build.
       - [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh) is the cloud-init file used to initialize the frontend and the backend servers.
-      - `ubuntu-18.04-amd64` is one of the virtual server images from the `ibmcloud is images` command, the scripts are expecting Ubuntu.
 
-   During its execution, the `vpc-pubpriv-create-with-bastion.sh` shell script creates three hosts: frontend, backend and bastion. The `@shared/install.sh` has been passed to a `ibmcloud is create-instance` CLI command `--user-data` parameter like this:
+   During its execution, the `vpc-pubpriv-create-with-bastion.sh` shell script creates three hosts: frontend, backend and bastion using Ubuntu as operating system. The `@shared/install.sh` has been passed to a `ibmcloud is create-instance` CLI command `--user-data` parameter like this:
 
    ```sh
    ibmcloud is instance-create ... --user-data @shared/install.sh
    ```
 
-1. Once the provisioning script completes. Open the file `resources.sh`. Shown below is example contents.
+3. Once the provisioning script completes. Open the file `resources.sh`. Shown below is example contents.
    ```sh
    $ cat resources.sh
    FRONT_IP_ADDRESS=169.61.247.108
@@ -254,12 +260,12 @@ This section uses a shell script found in the [Private and public subnets in a V
    FRONT_VSI_NIC_ID=8976fbde-0f57-4829-a834-a773952f6d19
    BACK_VSI_NIC_ID=216aeb65-1296-4445-ab9e-694f751e773d
    ```
-1. Load the variables into your environment:
+4. Load the variables into your environment:
    ```sh
    source resources.sh
    ```
    {:pre}
-1.  The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server:
+5.  The provisioning script leaves both the frontend and backend VSIs in maintenance mode making them ready for installing software from the Internet. Send a script to the frontend server:
    ```sh
    scp -F ../scripts/ssh.notstrict.config -o ProxyJump=root@$BASTION_IP_ADDRESS shared/uploaded.sh root@$FRONT_NIC_IP:/uploaded.sh
    ```
@@ -659,9 +665,6 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 ## Related content
 {: #related}
 
-- [VPC Glossary](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#vpc-glossary)
-- [VPC using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-cli)
-- [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
 - [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 - [Deploy a LAMP stack using Terraform](/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
 

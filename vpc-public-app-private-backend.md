@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-06-17"
+lastupdated: "2019-10-18"
 lasttested: "2019-06-17"
 ---
 
@@ -17,13 +17,17 @@ lasttested: "2019-06-17"
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{:note: .note}
 
 # Private and public subnets in a Virtual Private Cloud
 {: #vpc-public-app-private-backend}
 
+This tutorial is compatible with VPC for Generation 1 compute and VPC for Generation 2 compute. Throughout the tutorial, you will find notes highlighting differences where applicable.
+{:note}
+
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
-A [subnet](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#subnet) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Network [Access Control Lists](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#access-control-list) (ACLs) that act as firewalls to control the flow of data packets among subnets. Similarly, [Security Groups](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#security-group) (SGs) act as virtual firewalls to control the flow of data packets to and from individual VSIs.
+A [subnet](/docs/vpc?topic=vpc-vpc-concepts#subnet-def) is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by [Security Groups](/docs/vpc?topic=vpc-vpc-concepts#security-group-def) that act as firewalls to control inbound and outbound traffic for one or more virtual server instances.
 
 The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define SGs to allow or deny traffic to the VSIs.
 {:shortdesc}
@@ -61,9 +65,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
-
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites).
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
 
 ## Create a Virtual Private Cloud
 {: #create-vpc}
@@ -74,22 +77,23 @@ To perform maintenance tasks on these servers such as installing software, perfo
 
 In this section, you will create the VPC and the bastion host.
 
-1. Navigate to the [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
+1. Navigate to the **VPC overview** ([Gen 1](https://{DomainName}/vpc/overview) / [Gen 2](https://{DomainName}/vpc-ext/overview)) page and click on **Create a VPC**.
 1. Under **New virtual private cloud** section:
    * Enter **vpc-pubpriv** as name for your VPC.
    * Select a **Resource group**.
    * Optionally, add **Tags** to organize your resources.
-1. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
 1. Uncheck SSH and ping from the **Default security group**.
 1. Under **New subnet for VPC**:
    * As a unique name enter **vpc-secure-bastion-subnet**.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **Use VPC default** for your subnet access control list (ACL).
+
+   If you are using VPC with Gen 1 compute, select **Use VPC default** for your subnet access control list (ACL).
+   {:note}
 1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access to all virtual server instances in the VPC. In this tutorial, the servers do not require such connectivity.
 1. Click **Create virtual private cloud**.
 
-To confirm the creation of the subnet, go to the [**Subnets**](https://{DomainName}/vpc/network/subnets) page and wait until the status changes to **Available**.
+To confirm the creation of the subnet, go to the **Subnets** ([Gen 1](https://{DomainName}/vpc/network/subnets) / [Gen 2](https://{DomainName}/vpc-ext/network/subnets)) page and wait until the status changes to **Available**.
 
 ### Create and configure bastion security group
 
@@ -116,7 +120,10 @@ To create a new subnet for the backend,
    * Enter **vpc-pubpriv-backend-subnet** as name, then select the VPC you created.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **VPC default** for your subnet access control list (ACL).
+   
+   If you are using VPC with Gen 1 compute, select **VPC default** for your subnet access control list (ACL).
+   {:note}
+
 1. Click **Create subnet** to provision it.
 
 ### Create a backend security group
@@ -140,7 +147,7 @@ To create a virtual server instance in the newly created subnet:
    1. Set the **name** to **vpc-pubpriv-backend-vsi**.
    1. Select the VPC you created and resource group as earlier.
    1. Select the same **Location** as before.
-   1. Select **Compute** with 2vCPUs and 4 GB RAM as your profile.To check other available profiles, click **All profiles**
+   1. Select **Compute** with 2vCPUs and 4 GB RAM as your profile. To check available profiles, click **All profiles**.
    1. Set **SSH keys** to the the SSH key you created earlier.
    1. Set **User data** to
       ```sh
@@ -172,7 +179,10 @@ To create a new subnet for the frontend,
    * Enter **vpc-pubpriv-frontend-subnet** as name, then select the VPC you created.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.2.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+
+   If you are using VPC with Gen 1 compute, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   {:note}
+
 1. Given all virtual server instances in the frontend subnet will have a floating IP attached, it is not required to enable a public gateway for the subnet. The virtual server instances will have Internet connectivity through their floating IP.
 1. Click **Create subnet** to provision it.
 
@@ -290,7 +300,7 @@ The frontend instance has its software installed but it can not yet be reached.
 
 The backend server is running the same web server software as the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
 
-1. In the [Virtual Server Instances list](https://{DomainName}/vpc/compute/vs), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
+1. In the **Virtual Server Instances** list ([Gen 1](https://{DomainName}/vpc/compute/vs) / [Gen 2](https://{DomainName}/vpc-ext/compute/vs)), retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
 1. Use `ssh` to connect to the frontend virtual server:
    ```sh
    ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>
@@ -356,25 +366,9 @@ In this tutorial, you deployed two tiers of an application, one frontend server 
 {: #remove-resources}
 
 1. In the VPC management console, click on **Floating IPs**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
-2. Next, switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
+2. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances.
 3. Once the VSIs are gone, switch to **Subnets**. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
 4. After the subnets have been deleted, switch to **VPC** tab and delete your VPC.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {:tip}
-
-## Expand the tutorial
-{: #expand-tutorial}
-
-Want to add to or extend this tutorial? Here are some ideas:
-
-- Add a [load balancer](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-console#creating-a-load-balancer) to distribute inbound traffic across multiple instances.
-- Create a [virtual private network](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-console#creating-a-vpn) (VPN) so your VPC can connect securely to another private network, such as an on-premises network or another VPC.
-
-
-## Related content
-{: #related}
-
-- [VPC Glossary](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-glossary#vpc-glossary)
-- [VPC using the IBM Cloud CLI](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-ibm-cloud-cli)
-- [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)

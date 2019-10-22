@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-06-17"
+lastupdated: "2019-10-18"
 lasttested: "2019-06-17"
 ---
 
@@ -17,9 +17,13 @@ lasttested: "2019-06-17"
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{:note: .note}
 
 # Securely access remote instances with a bastion host
 {: #vpc-secure-management-bastion-server}
+
+This tutorial is compatible with VPC for Generation 1 compute and VPC for Generation 2 compute. Throughout the tutorial, you will find notes highlighting differences where applicable.
+{:note}
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
 
@@ -55,9 +59,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites).
-- The tutorial assumes that you are adding the bastion host in an existing [virtual private cloud](https://{DomainName}/vpc/network/vpcs). **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of required permissions for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources) or for [VPC for Gen 2](https://{DomainName}/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the instructions for creating a key for [VPC for Gen 1](/docs/vpc-on-classic?topic=vpc-on-classic-getting-started#prerequisites) or for [VPC for Gen 2](/docs/vpc?topic=vpc-ssh-keys). 
+- The tutorial assumes that you are adding the bastion host in an existing virtual private cloud. **If you don't have a virtual private cloud in your account, create one before proceeding with the next steps.**
 
 ## Create a bastion host
 {: #create-bastion-host}
@@ -71,7 +75,9 @@ In this section, you will create and configure a bastion host along with a secur
    - Enter **vpc-secure-bastion-subnet** as name, then select the VPC you created.
    - Select a location and zone.
    - Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   
+   If you are using VPC for Gen 1, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   {:note}
 1. Switch the **Public gateway** to **Attached**.
 1. Click **Create subnet** to provision it.
 
@@ -110,8 +116,7 @@ Let's create a security group and configure inbound rules to your bastion VSI.
 
     To enhance security further, the inbound traffic could be restricted to the company network or a typical home network. You could run `curl ipecho.net/plain ; echo` to obtain your network's external IP address and use that instead.
     {:tip }
-
-3.  Click **Create security group** to create it.
+3. Click **Create security group** to create it.
 
 ### Create a bastion instance
 {: #create-bastion-instance}
@@ -213,7 +218,7 @@ With access to the bastion working, continue and create the security group for m
    </table>
 
 3. Create the security group.
-4. Navigate to **All Security Groups for VPC**, then select **vpc-secure-bastion-sg**.
+4. Navigate to **Security Groups**, then select **vpc-secure-bastion-sg**.
 5. Finally, edit the security group and add the following **outbound** rule.
 
    <table>
@@ -249,7 +254,10 @@ To create a new subnet,
    - Enter **vpc-secure-private-subnet** as name, then select the VPC you created.
    - Select a location.
    - Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.1.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
-1. Select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   
+   If you are using VPC for Gen 1, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
+   {:note}
+
 1. Switch the **Public gateway** to **Attached**.
 1. Click **Create subnet** to provision it.
 
@@ -264,12 +272,10 @@ To create a new security group:
 ### Create a virtual server instance
 
 To create a virtual server instance in the newly created subnet:
-Click on **Attached resources** and provision a **New instance** called **vpc-secure-bastion-vsi** under your own VPC and resource group.
-
 1. Click on the private subnet under **Subnets**.
 1. Click **Attached resources**, then **New instance**.
 1. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created and resource group as earlier.
-1. Select a **Location** and make sure to later use the same location again.
+1. Select the same **Location** already used by the bastion virtual server.
 1. Select **Compute** (2 vCPUs and 4 GB RAM) as your profile. To check other available profiles, click **All profiles**
 1. For **SSH keys** pick the SSH key you created earlier for the bastion.
 1. Select **Ubuntu Linux** as your image. You can pick any version of the image.
@@ -335,7 +341,7 @@ Once you're done installing software or performing maintenance, you should remov
 ## Remove resources
 {: #removeresources}
 
-1. Switch to **Virtual server instances** and **Delete** your instances. The instances will be deleted and their status will remain in **Deleting** for a while. Make sure to refresh the browser from time to time.
+1. Switch to **Virtual server instances**, **Stop** and **Delete** your instances.
 2. Once the VSIs are gone, switch to **Subnets** and delete your subnets.
 3. After the subnets have been deleted, switch to the **Virtual private clouds** tab and delete your VPC.
 

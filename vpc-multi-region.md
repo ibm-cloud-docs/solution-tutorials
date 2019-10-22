@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-06-18"
+lastupdated: "2019-10-18"
 lasttested: "2019-06-18"
 ---
 
@@ -17,9 +17,13 @@ lasttested: "2019-06-18"
 {:tip: .tip}
 {:pre: .pre}
 {:important: .important}
+{:note: .note}
 
 # Deploy isolated workloads across multiple locations and zones
 {: #vpc-multi-region}
+
+This tutorial is compatible with VPC for Generation 1 compute.
+{:note}
 
 This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
@@ -73,7 +77,7 @@ In this section, you will create your own VPC in region 1 with subnets created i
 
 To create your own {{site.data.keyword.vpc_short}} in region 1,
 
-1. Navigate to [VPC overview](https://{DomainName}/vpc/overview) page and click on **Create a VPC**.
+1. Navigate to the **VPC overview** page and click on **Create a VPC**.
 2. Under **New virtual private cloud** section:
    * Enter **vpc-region1** as name for your VPC.
    * Select a **Resource group**.
@@ -252,8 +256,7 @@ You can manage the SSL certificates through IBM Certificate Manager.
 
 ### Create a HTTPS listener
 
-Now, navigate to the [Load balancers](https://{DomainName}/vpc/network/loadBalancers)
-
+1. Navigate to the **Load balancers** page.
 1. Select **vpc-lb-region1**
 2. Under **Front-end listeners**, Click **New listener**
 
@@ -297,7 +300,7 @@ Wait until the **Health** check status changes to **Healthy**. Open the link **l
 ### Failover test
 By now, you should have seen that most of the time you are hitting the servers in **region 1** as it's assigned higher weight compared to the servers in **region 2**. Let's introduce a health check failure in the **region 1** origin pool,
 
-1. Navigate to [virtual server instances](https://{DomainName}/vpc/compute/vs).
+1. Navigate to the list of **virtual server instances**.
 2. Click **three dots(...)** next to the server(s) running in **zone 1** of **region 1** and click **Stop**.
 3. **REPEAT** the same for server(s) running in **zone 2** of **region 1**.
 4. Return to GLB under {{site.data.keyword.cis_short_notm}} service and wait until the health status changes to **Critical**.
