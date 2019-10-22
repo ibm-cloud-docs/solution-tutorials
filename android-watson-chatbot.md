@@ -244,7 +244,7 @@ The repository contains Android application code with required gradle dependenci
     For detailed instructions to run your app on a real Android device or on an emulator, follow the [instructions here](https://developer.android.com/training/basics/firstapp/running-app). To build your app from the command line, follow the instructions [provided here](https://developer.android.com/studio/build/building-cmdline)
     {:tip}
 
-5. In the **Enter your query** space provided below, interact with your chatbot by typing 'Hi' and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
+5. In the **Enter your query** space provided below, interact with your chatbot by typing `Hi` and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
 6. The response will be passed to {{site.data.keyword.texttospeechshort}} service and you should hear a voice reading out the response.
 7. Click the **mic** icon in the left bottom corner of the app to input speech that gets converted to text and then can be sent to {{site.data.keyword.conversationshort}} service by clicking the arrow icon.
 
