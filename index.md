@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018
-lastupdated: "2019-10-22"
+lastupdated: "2019-10-23"
 ---
 
 {:shortdesc: .shortdesc}
@@ -272,23 +272,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution3/Architecture.png" alt="Architecture diagram for the solution Accelerate delivery of static files using Object Storage and CDN"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-dynamic-content-cdn#dynamic-content-cdn">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Accelerate a dynamic website using Dynamic Content Acceleration with IBM CDN
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Use the Dynamic Content Acceleration capability of IBM Content Delivery Network (CDN) to reduce latency for dynamic and uncacheable contents of your web application.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution52-cdn-dca/solution_52_architecture.png" alt="Architecture diagram for the solution Accelerate a dynamic website using Dynamic Content Acceleration with IBM CDN"/>
                 </div>
             </div>
         </div>
