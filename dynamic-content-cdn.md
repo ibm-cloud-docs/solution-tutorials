@@ -41,7 +41,7 @@ This tutorial uses the following products:
 * [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
-* [{{site.data.keyword.dns_notm}}s](https://{DomainName}/classic/network/dns/forwardzones)
+* [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
