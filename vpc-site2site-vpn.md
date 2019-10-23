@@ -552,7 +552,7 @@ With the microservice app set up and running, test the scenario by accessing the
    ```
    {:pre}
 
-6. Using your browser, access the [Resource List][https://{DomainName}/resources], navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
+6. Using your browser, access the [Resource List](https://{DomainName}/resources), navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
 
 ### Test connecting from on-premises to service endpoint over the VPN connection
 {: #test-service-endpoint}
