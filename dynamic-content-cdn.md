@@ -64,7 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
    * Install [Docker](https://docs.docker.com/engine/installation/)
    * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install Docker, `kubectl`, IBM Cloud CLI and required plug-ins
    * Create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}
-   * Register a new domain for your web application (if not existing), for example from [{{site.data.keyword.domain_notm}}](https://{DomainName}/classic/services/domains)
+   * Register a new domain for your web application (if not existing), for example from [IBM Domain Name Service](https://{DomainName}/classic/services/domains)
 
 ## Prepare the dynamic web application
 
@@ -181,7 +181,7 @@ Before you create CDN instance, you should have registered a domain name for you
 3. On the next dialog, set the hostname for CDN to the custom domain of your application, for example, `todo.exampledomain.net`. 
 4. Set the rest of CDN configurations:
 	* Set the **Custom CNAME** prefix to a unique value, for example, `todo-sample`. 
-	* Go back to your DNS service provider and configure CNAME record. For example, in [{{site.data.keyword.dns_notm}}](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
+	* Go back to your DNS service provider and configure CNAME record. For example, in [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
 	  1. Click the name of your domain. 
 	  2. Under **Add a new record**, select **CNAME** as resource type, and map the host `todo.exampledomain.net` to the CNAME `todo-sample.cdn.appdomain.cloud.`
 	  3. Click **Add Record**.  
@@ -220,9 +220,9 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 ## Remove resources
 
 * Delete the application from the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-* Delete the image from the [{{site.data.keyword.cregistryshort_notm}}](https://{DomainName}/kubernetes/catalog/registry)
+* Delete the image from the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/catalog/registry)
 * Delete the [{{site.data.keyword.cdn_full}} service](https://{DomainName}/classic/network/cdn)
-* Delete the CNAME record and the zone from [{{site.data.keyword.dns_notm}}](https://{DomainName}/classic/network/dns/forwardzones)
+* Delete the CNAME record and the zone from [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones)
 
 ## Related content
 
