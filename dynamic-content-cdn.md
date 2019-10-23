@@ -4,21 +4,28 @@ copyright:
   years: 2019
 lastupdated: "2019-10-18"
 lasttested: "2019-10-12"
+
 ---
 
+{:java: #java .ph data-hd-programlang='java'}
+{:swift: #swift .ph data-hd-programlang='swift'}
+{:ios: #ios data-hd-operatingsystem="ios"}
+{:android: #android data-hd-operatingsystem="android"}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:important: .important}
+{:note: .note}
 
 # Accelerate a dynamic website using Dynamic Content Acceleration with {{site.data.keyword.cdn_full}}
-{: #dynamic-cdn}
+{: #dynamic-content-cdn}
 
-In a previous tutorial [Accelerate delivery of static files using a CDN](/docs/tutorials?topic=solution-tutorials-static-files-cdn) you have known how to host and serve static assets (images, videos, and documents) of a website in {{site.data.keyword.cos_full_notm}}, and how to use [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
+Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. The tutorial [Accelerate delivery of static files using a CDN](/docs/tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai).
 
-Web applications are composed of not only static content like text, images, cascading style sheets, and JavaScript files but also personalized and dynamically changing contents that can’t be cached at CDN. A common example of non-cacheable dynamic content is adding an item to a cart in an e-commerce website that might be generated from JavaScript on the base page. Before Dynamic Content Acceleration is available, a CDN will pass every request for a non-cacheable object through to the owner’s origin server, and pass the result back to the user.
+But applications also contain personalized and dynamically changing contents that can’t be cached at CDN. A common example of non-cacheable dynamic content is adding an item to a cart in an e-commerce website that might be generated from JavaScript on the base page. Before Dynamic Content Acceleration is available, a CDN will pass every request for a non-cacheable object through to the owner’s origin server, and pass the result back to the user.
 
 To stop these dynamic contents from being a performance bottleneck, you can utilize the new Dynamic Content Acceleration (DCA) capability of [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) to optimize the performance of dynamic contents:
 * the DCA capability of CDN will choose the optimal routes for requests
@@ -29,9 +36,9 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 ## Objectives
 {: #objectives}
 
-* Deploy a starter dynamic web application to a {{site.data.keyword.containershort_notm}} cluster
-* Make content globally available with {{site.data.keyword.cdn_full}}
-* Enable the Dynamic Content Acceleration (DCA) capability for performance optimization
+* Deploy a starter dynamic web application to a {{site.data.keyword.containershort_notm}} cluster.
+* Make static content globally available with {{site.data.keyword.cdn_full}}.
+* Enable the Dynamic Content Acceleration (DCA) capability for performance optimization of non-static content.
 
 ## Services used
 {: #services}
@@ -49,11 +56,12 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #architecture}
 
 <p style="text-align: center;">
+
 ![Architecture](images/solution52-cdn-dca/solution_52_architecture.png)
 </p>
 
 1. The developer creates a simple dynamic application and produces a Docker container image.
-2. The image is pushed to a namespace in {site.data.keyword.registryshort_notm}. 
+2. The image is pushed to a namespace in {{site.data.keyword.registryshort_notm}}.
 3. The application is deployed to {{site.data.keyword.containershort_notm}}.
 4. User accesses the application.
 5. The application is accelerated through the Dynamic Content Acceleration capability of {{site.data.keyword.cdn_full}}.
@@ -61,30 +69,88 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Before you begin
 {: #prereqs}
-   * Install [Docker](https://docs.docker.com/engine/installation/)
-   * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install Docker, `kubectl`, IBM Cloud CLI and required plug-ins
-   * Create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}
-   * Register a new domain for your web application (if not existing), for example from [IBM Domain Name Service](https://{DomainName}/classic/services/domains)
+   * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install Docker, `kubectl`, IBM Cloud CLI and required plug-ins.
+   * Create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}.
+   * Obtain a domain for your web application. If you don't own a custom domain, you can register one from [IBM Domain Name Service](https://{DomainName}/classic/services/domains).
 
-## Prepare the dynamic web application
+## Deploy a dynamic web application to be accelerated
 
 Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team to-do items together.
 
 This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is based on [Beego](https://beego.me/docs/intro/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
 
-### Customize the application to include a test object 
+### Build the application
 
+1. Clone the application
+   ```bash
+   git clone https://github.com/IBM-Cloud/cdn-with-cda-todolist.git
+	 ```
+	 {: pre}
+1. Change to the application directory
+   ```bash
+   cd cdn-with-cda-todolist
+	 ```
+	 {: pre}
+1. Identify the {{site.data.keyword.registryshort_notm}} to use with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
+1. Create a namespace to store the container image.
+   ```bash
+	 ibmcloud cr namespace-add cdn-with-cda
+   ```
+	 {: pre}
+1. Build a Docker image using the [Dockerfile](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}, replacing `<CONTAINER_REGISTRY>` with your container registry value and use **cdn-with-cda-todolist** as the image name:
+   ```bash
+	 docker build -t <CONTAINER_REGISTRY>/cdn-with-cda/cdn-with-cda-todolist:latest .
+	 ```
+	 {: pre}
+1. Log in {{site.data.keyword.registryshort_notm}}:
+   ```bash
+	 ibmcloud cr login
+	 ```
+	 {: pre}
+1. Push the image to {{site.data.keyword.registryshort_notm}}:
+   ```bash
+	 docker push <CONTAINER_REGISTRY>/cdn-with-cda/cdn-with-cda-todolist:latest
+	 ```
+	 {: pre}
+
+### Run the application in the cluster
+
+1. Run the command below to target the cluster where to deploy the application. This will set the KUBECONFIG environment variable.
+   ```bash
+   $(ibmcloud ks cluster config --export mycluster)
+	 ```
+	 {: pre}
+1. Retrieve the cluster ingress subdomain and secret name:
+   ```bash
+	 ibmcloud ks cluster get mycluster
+	 ```
+	 {: pre}
+1. Copy `deployment.yaml.template` to `deployment.yaml`:
+   ```bash
+	 cp deployment.yaml.template deployment.yaml
+	 ```
+	 {: pre}
+1. Edit `deployment.yaml` and replace the placeholders `<image>`, `<ingress-subdomain>` and `<ingress-secret>` with values matching your environment.
+1. Deploy the application to the cluster:
+   ```bash
+	 kubectl apply -f deployment.yaml
+	 ```
+	 {: pre}
+1. Access the application at `https://cdn-with-cda-todolist.<ingress-subdomain>`
+
+<!-- 
+TODO this should move as explanation in the repo README
+
+### Customize the application to include a test object 
 {: #customize-test-object}
 
 The Dynamic Content Acceleration (DCA) feature will utilize a test object in about 10KB size on your origin server to determine the optimal routes for real requests. For this purpose, the application has been customized from the [Beego sample](https://github.com/beego/samples) to include the test object `test-object.html`. 
 
-1. Clone the application code from GitHub to local.
+1. Clone the application code: from GitHub to local.
    ```bash
-   mkdir $GOPATH/src/github.com/IBM-Cloud/
-   cd $GOPATH/src/github.com/IBM-Cloud/
    git clone https://github.com/IBM-Cloud/cdn-with-cda-todolist.git
-	```
-	{: pre}
+	 ```
+	 {: pre}
 	
 In the cloned application code, the following code changes were made to the [Beego sample](https://github.com/beego/samples):
 
@@ -97,7 +163,11 @@ In the cloned application code, the following code changes were made to the [Bee
 	       this.TplName = "detection-test-object.html"
 	       this.Render()
 	}
-	```
+	``` -->
+
+<!-- 
+
+THIS IS NOT NEEDED
 
 ### Make a Docker image from the application
 
@@ -114,33 +184,9 @@ In the cloned application code, the following code changes were made to the [Bee
 	{: pre} 
 6. Verify that you can access the application `http://localhost:8080/` as well as the test object: `http://localhost:8080/test-dca`.
 	![](images/solution52-cdn-dca/local_todo_application.png)
-    
-## Save the Docker image into {{site.data.keyword.registrylong_notm}}
-
-1. Add a namespace for your image.
-	```
-	ibmcloud cr namespace-add <namespace>
-	```
-	{:pre}
-2. Log on to the container registry. 
-	```
-	ibmcloud cr login
-	```
-	{:pre}
-3. Tag your local image before pushing it to {site.data.keyword.registryshort_notm}.
-   ```
-	docker tag <image_name>:<tag> <region>.icr.io/<namespace>/<image_name>:<tag_name>
-	```
-	{:pre}
-
-3. Push the image to the {site.data.keyword.registryshort_notm}.
-	```
-	docker push <region>.icr.io/<namespace>/<image_name>:<tag>
-	```
-	{:pre}	
-	
+     -->
    
-## Deploy the image to the {{site.data.keyword.containershort_notm}} cluster
+<!-- ## Deploy the image to the {{site.data.keyword.containershort_notm}} cluster
 
 ### Create a {{site.data.keyword.containershort_notm}} cluster
 
@@ -171,30 +217,29 @@ So far your application is available from the following URL:
 https://<app_name>.<cluster_name>.<region>.containers.appdomain.cloud
 ```
 
-For more information about how to deploy an image from {{site.data.keyword.registrylong_notm}}, see [Deploying containers from an {site.data.keyword.registryshort_notm} image to the default Kubernetes namespace](https://{DomainName}/docs/containers?containers?topic=containers-images#namespace).
+For more information about how to deploy an image from {{site.data.keyword.registrylong_notm}}, see [Deploying containers from an {{site.data.keyword.registryshort_notm}} image to the default Kubernetes namespace](https://{DomainName}/docs/containers?containers?topic=containers-images#namespace). -->
 
 ## Create a CDN instance
 
-Before you create CDN instance, you should have registered a domain name for your application as said in the [Prerequisite](#prereqs). 
+Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application as said in the [Prerequisites](#prereqs).
 
-2. Go to the cloud catalog, and select [**Content Delivery Network**](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
-3. On the next dialog, set the hostname for CDN to the custom domain of your application, for example, `todo.exampledomain.net`. 
-4. Set the rest of CDN configurations:
-	* Set the **Custom CNAME** prefix to a unique value, for example, `todo-sample`. 
-	* Go back to your DNS service provider and configure CNAME record. For example, in [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
-	  1. Click the name of your domain. 
-	  2. Under **Add a new record**, select **CNAME** as resource type, and map the host `todo.exampledomain.net` to the CNAME `todo-sample.cdn.appdomain.cloud.`
-	  3. Click **Add Record**.  
-	![](images/solution52-cdn-dca/dns_record.png) 
-	* Leave **Host header** and **Path** empty. 
-	* Use the default **Server** option. Specify the ingress domain as **Origin server address**, for example, `mytodo.<cluster-name>.<region>.containers.appdomain.cloud`.
-	* Check both the HTTP and HTTPS protocols. Use the default port numbers.
-	* Select **Wildcard** SSL certificate. 
-5. Accept the **Master Service Agreement** and click **Create**.
+1. Go to the cloud catalog, and select [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
+   1. Set **Hostname** to the custom domain of your application, for example, `todo.exampledomain.net`. 
+   1. Set **Custom CNAME** prefix to a unique value, for example, `todo-sample`.
+	 1. Leave **Host header** and **Path** empty.
+	 1. Use the default **Server** option and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
+	 1. Check HTTP port.
+	 1. Check HTTPS port and select **Wildcard** SSL certificate.
+1. Accept the **Master Service Agreement** and click **Create**.
+1. In the DNS service provider for your custom domain, create a new CNAME record mapping the CDN domain to the Custom CNAME. If using [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
+   1. Click the name of your domain. 
+	 1. Under **Add a new record**, select **CNAME** as resource type, and map the host `todo.exampledomain.net` to the CNAME `todo-sample.cdn.appdomain.cloud.`
+	 1. Click **Add Record**.
+      ![](images/solution52-cdn-dca/dns_record.png) 
 
-After you have successfully created the CDN mapping, 
-* To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
-* You application is now accessible through the CNAME only: `https://<CNAME>`.
+After you have successfully created the CDN mapping:
+   * To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
+   * You application is now accessible through the CNAME only: `https://<CNAME>`.
 
 ## Enable Dynamic Content Acceleration (DCA)
 
