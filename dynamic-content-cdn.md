@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-10-18"
-lasttested: "2019-10-12"
+lastupdated: "2019-10-24"
+lasttested: "2019-10-24"
 
 ---
 
@@ -20,7 +20,7 @@ lasttested: "2019-10-12"
 {:important: .important}
 {:note: .note}
 
-# Accelerate a dynamic website using Dynamic Content Acceleration with {{site.data.keyword.cdn_full}}
+# Accelerate a dynamic website using Dynamic Content Acceleration
 {: #dynamic-content-cdn}
 
 Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. The tutorial [Accelerate delivery of static files using a CDN](/docs/tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai).
