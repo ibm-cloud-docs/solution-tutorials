@@ -138,87 +138,6 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 	 {: pre}
 1. Access the application at `https://cdn-with-cda-todolist.<ingress-subdomain>`
 
-<!-- 
-TODO this should move as explanation in the repo README
-
-### Customize the application to include a test object 
-{: #customize-test-object}
-
-The Dynamic Content Acceleration (DCA) feature will utilize a test object in about 10KB size on your origin server to determine the optimal routes for real requests. For this purpose, the application has been customized from the [Beego sample](https://github.com/beego/samples) to include the test object `test-object.html`. 
-
-1. Clone the application code: from GitHub to local.
-   ```bash
-   git clone https://github.com/IBM-Cloud/cdn-with-cda-todolist.git
-	 ```
-	 {: pre}
-	
-In the cloned application code, the following code changes were made to the [Beego sample](https://github.com/beego/samples):
-
-* An additional router has been added to the `main.go` file:  
-   ```
-   beego.Router("/test-dca/", &controllers.TaskController{}, "get:TestDca")   ```
-* A new function has been added to the `controller/task.go` file to make the test object accessible:
-	```
-	func (this *TaskController) TestDca() {
-	       this.TplName = "detection-test-object.html"
-	       this.Render()
-	}
-	``` -->
-
-<!-- 
-
-THIS IS NOT NEEDED
-
-### Make a Docker image from the application
-
-1. Before you start to make a Docker image, you must prepare a Dockerfile and a GO dependency file `Gopkg.toml`. Examples of both are already available from your [cloned application code](https://github.com/IBM-Cloud/cdn-with-cda-todolist). 
-2. Build a Docker image from the application directly where the Dockerfile and `Gopkg.toml` are stored. At the same time, name and tag the image, for example, with a name `mytodoimage` and a tag `cdn`.
-	```bash
-	docker build -t <image_name>:<tag_name> .
-	```
-	{: pre}
-5. Run the application inside the container. 
-   	```bash
-	docker run -d -p 8080:8080 <image_name>:<tag_name>
-	```
-	{: pre} 
-6. Verify that you can access the application `http://localhost:8080/` as well as the test object: `http://localhost:8080/test-dca`.
-	![](images/solution52-cdn-dca/local_todo_application.png)
-     -->
-   
-<!-- ## Deploy the image to the {{site.data.keyword.containershort_notm}} cluster
-
-### Create a {{site.data.keyword.containershort_notm}} cluster
-
-As said in the [Prerequisite](#prereqs) you should have a running cluster on {{site.data.keyword.containershort_notm}}. If yes, move on to the [deployment steps](#deploy-to-cluster).
-
-If not, you can take the following steps to create a cluster on {{site.data.keyword.containershort_notm}}:
-
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create). A standard cluster is used in this tutorial. 
-2. When the cluster is ready, follow the steps described in the **Access** tab of your cluster to gain access to `kubectl`, a command line tool that you use to interact with a {{site.data.keyword.containershort_notm}} cluster. 
-3. If not logged in, use `ibmcloud login` to log in interactively, and set the KUBECONFIG environment variable as directed. 
-
-### Deploy the image
-
-{: #deploy-to-cluster}
-
-1. Create a deployment configuration file, for example, `deployment.yaml`. You can find an example in the [cloned application code](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/deployment.yaml), and replace parameters in angle brackets (<>) with your own. This configuration file contains the following sections:
-   * Deployment configuration
-   * Service configuration
-   * Ingress resource configuration to set an IBM-provided ingress domain and IBM-provided TLS certificate.  
-2. Apply the configuration to your {{site.data.keyword.containershort_notm}} cluster.
-	```
-	kubectl apply -f deployment.yaml --cluster <cluster_name> 
-	```
-	{:pre}	  
-
-So far your application is available from the following URL: 
-```
-https://<app_name>.<cluster_name>.<region>.containers.appdomain.cloud
-```
-
-For more information about how to deploy an image from {{site.data.keyword.registrylong_notm}}, see [Deploying containers from an {{site.data.keyword.registryshort_notm}} image to the default Kubernetes namespace](https://{DomainName}/docs/containers?containers?topic=containers-images#namespace). -->
-
 ## Create a CDN instance
 
 Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application as said in the [Prerequisites](#prereqs).
@@ -230,6 +149,9 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
 	 1. Use the default **Server** option and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
 	 1. Check HTTP port.
 	 1. Check HTTPS port and select **Wildcard** SSL certificate.
+
+      With the **Wildcard** certificate, you will access your app through the IBM provided CNAME.
+			{: note}
 1. Accept the **Master Service Agreement** and click **Create**.
 1. In the DNS service provider for your custom domain, create a new CNAME record mapping the CDN domain to the Custom CNAME. If using [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
    1. Click the name of your domain. 
@@ -243,12 +165,17 @@ After you have successfully created the CDN mapping:
 
 ## Enable Dynamic Content Acceleration (DCA)
 
-1. Click the origin from the [Overview](https://{DomainName}/classic/network/cdn) page, and navigate to the **Settings** tab of your origin.
+At that stage, the static content of the application is cached by the CDN but not the dynamic content.
+
+The Dynamic Content Acceleration (DCA) feature will query a test object in about 10KB size on your origin server to determine the optimal routes for real requests. For this purpose, the application has been customized from the [Beego sample](https://github.com/beego/samples) to include [a test object](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/views/detection-test-object.html) made available at [`/test-dca`](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/main.go#L11).
+
+To activate DCA:
+1. Select the **Settings** tab in the CDN configuration.
 2. Under the **Optimized for** section, select **Dynamic Content Acceleration** from the drop-down list.
 3. Under the **Detection path** section, specify the path `/test-dca` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by {{site.data.keyword.cdn_full}} to determine the fastest path to the origin. 
 4. Make sure **Prefetching** and **Image compression** are both set to **On**.
    ![](images/solution52-cdn-dca/detection_path.png)
-5. Click **Save**. You have successfully accelerated your todo application deployed in {{site.data.keyword.containershort_notm}} cluster with DCA.
+5. Click **Save**. You have successfully accelerated your application deployed in {{site.data.keyword.containershort_notm}} cluster with **Dynamic Content Acceleration**.
 
 ## Verify DCA performance
 
@@ -264,10 +191,10 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 
 ## Remove resources
 
-* Delete the application from the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-* Delete the image from the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/catalog/registry)
-* Delete the [{{site.data.keyword.cdn_full}} service](https://{DomainName}/classic/network/cdn)
-* Delete the CNAME record and the zone from [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones)
+* Delete the application from the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster).
+* Delete the image from the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/catalog/registry).
+* Delete the [{{site.data.keyword.cdn_full}} service](https://{DomainName}/classic/network/cdn).
+* Delete the CNAME record and the zone from [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones) if you were using the service.
 
 ## Related content
 
