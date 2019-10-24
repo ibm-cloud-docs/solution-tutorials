@@ -94,6 +94,19 @@
                 ]
             },
             {
+                "name": "Accelerate a dynamic website using Dynamic Content Acceleration with IBM CDN",
+                "url": "dynamic-content-cdn.html?pos=2",
+                "description": "Use the Dynamic Content Acceleration capability of IBM Content Delivery Network (CDN) to reduce latency for dynamic and uncacheable contents of your web application.",
+                "imgSrc": "images/solution52-cdn-dca/solution_52_architecture.png",
+                "tags": [
+                    "Content Delivery Network",
+                    "Kubernetes",
+                    "Container Service",
+                    "Docker"
+                ],
+                "hidden": true
+            },
+            {
               "name": "Asynchronous data processing using object storage and pub/sub messaging",
               "url": "pub-sub-object-storage.html",
               "description": "Use the Apache Kafka based Message Hub to orchestrate workloads between microservices running in a Kubernetes cluster and store data in Object Storage.",
