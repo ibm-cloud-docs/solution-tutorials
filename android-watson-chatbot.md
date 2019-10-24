@@ -211,6 +211,7 @@ The repository contains Android application code with required gradle dependenci
    ```xml
    <?xml version="1.0" encoding="UTF-8"?>
    <resources>
+
       <!--Watson Assistant service credentials-->
       <!-- REPLACE `ASSISTANT_ID_HERE` with ID of the Assistant to use -->
       <string name="assistant_id">ASSISTANT_ID_HERE</string>
