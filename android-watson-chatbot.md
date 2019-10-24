@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-10-22"
+lastupdated: "2019-10-24"
 lasttested: "2019-10-22"
 ---
 
@@ -200,41 +200,52 @@ An **assistant** is a cognitive bot that you can customize for your business nee
 The repository contains Android application code with required gradle dependencies.
 
 1. Run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/chatbot-watson-android) to your machine:
-   ```bash
+   ```sh
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
-   {: codeblock}
+   {:pre}
 
 2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
 3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
+
    ```xml
-   <?xml version="1.0" encoding="utf-8"?>
+   <?xml version="1.0" encoding="UTF-8"?>
    <resources>
-       <!--Watson Assistant service credentials-->
-       <!-- REPLACE `ASSISTANT_ID_HERE` with ID of the Assistant to use -->
-       <string name="assistant_id">ASSISTANT_ID_HERE</string>
+      <!--Watson Assistant service credentials-->
+      <!-- REPLACE `ASSISTANT_ID_HERE` with ID of the Assistant to use -->
+      <string name="assistant_id">ASSISTANT_ID_HERE</string>
 
-       <!-- REPLACE `ASSISTANT_API_KEY_HERE` with Watson Assistant service API Key-->
-       <string name="assistant_apikey">ASSISTANT_API_KEY_HERE</string>
+      <!-- REPLACE `ASSISTANT_API_KEY_HERE` with Watson Assistant service API Key-->
+      <string name="assistant_apikey">ASSISTANT_API_KEY_HERE</string>
 
-       <!-- REPLACE `ASSISTANT_URL_HERE` with Watson Assistant service URL-->
-       <string name="assistant_url">ASSISTANT_URL_HERE</string>
+      <!-- The URL provided below is for DALLAS region/location -->
+      <!-- If the Assistant service is created in another region/lpcation -->
+      <!-- REPLACE the URL with the one provided in the credentials of the service you created-->
+      <string name="assistant_url">https://gateway.watsonplatform.net/assistant/api</string>
 
-       <!--Watson Speech To Text(STT) service credentials-->
-       <!-- REPLACE `STT_API_KEY_HERE` with Watson Speech to Text service API Key-->
-       <string name="STT_apikey">STT_API_KEY_HERE</string>
+      <!--Watson Speech To Text(STT) service credentials-->
+      <!-- REPLACE `STT_API_KEY_HERE` with Watson Speech to Text service API Key-->
+      <string name="STT_apikey">STT_API_KEY_HERE</string>
 
-       <!-- REPLACE `STT_URL_HERE` with Watson Speech to Text service URL-->
-       <string name="STT_url">STT_URL_HERE</string>
+      <!-- The URL provided below is for DALLAS region/location -->
+      <!-- If the STT service is created in another region/lpcation -->
+      <!-- REPLACE the URL with STT URL provided in the service credentials -->
+      <string name="STT_url">https://stream.watsonplatform.net/speech-to-text/api</string>
 
-       <!--Watson Text To Speech(TTS) service credentials-->
-       <!-- REPLACE `TTS_API_KEY_HERE` with Watson Text to Speech service API Key-->
-       <string name="TTS_apikey">TTS_API_KEY_HERE</string>
+      <!--Watson Text To Speech(TTS) service credentials-->
+      <!-- REPLACE `TTS_API_KEY_HERE` with Watson Text to Speech service API Key-->
+      <string name="TTS_apikey">TTS_API_KEY_HERE</string>
 
-       <!-- REPLACE `TTS_URL_HERE` with Watson Text to Speech service URL-->
-       <string name="TTS_url">TTS_URL_HERE</string>
+      <!-- The URL provided below is for DALLAS region/location -->
+      <!-- If the TTS service is created in another region/lpcation -->
+      <!-- REPLACE the URL with TTS URL provided in the service credentials -->
+      <string name="TTS_url">https://stream.watsonplatform.net/text-to-speech/api</string>
    </resources>
    ```
+
+   The URLs provided are for Dallas region/location. If you have created the services in a different region/location, replace with the URL provided in the service credentials of the respective service.
+   {:tip}
+
 4. Build and Run the project by clicking **Run** from the Android studio menu > click **Run app** and start the application on a real Android device or with a simulator.
    <p style="text-align: center; width:200">
    ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)![](images/solution28-watson-chatbot-android/android_chatbot.png)
