@@ -200,10 +200,10 @@ An **assistant** is a cognitive bot that you can customize for your business nee
 The repository contains Android application code with required gradle dependencies.
 
 1. Run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/chatbot-watson-android) to your machine:
-   ```bash
+   ```sh
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
-   {: codeblock}
+   {:pre}
 
 2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
 3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
@@ -211,7 +211,6 @@ The repository contains Android application code with required gradle dependenci
    ```xml
    <?xml version="1.0" encoding="UTF-8"?>
    <resources>
-
       <!--Watson Assistant service credentials-->
       <!-- REPLACE `ASSISTANT_ID_HERE` with ID of the Assistant to use -->
       <string name="assistant_id">ASSISTANT_ID_HERE</string>
