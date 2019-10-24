@@ -140,7 +140,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 
 ## Create a CDN instance
 
-Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application as said in the [Prerequisites](#prereqs).
+Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application.
 
 1. Go to the cloud catalog, and select [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
    1. Set **Hostname** to the custom domain of your application, for example, `todo.exampledomain.net`. 
