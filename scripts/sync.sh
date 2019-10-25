@@ -18,8 +18,6 @@ tar cf - \
   --exclude=.git \
   --exclude=.gitignore \
   --exclude=solution-template.md \
-  --exclude=dynamic-content-cdn.md \
-  --exclude=images/solution52* \
   --exclude=README.md \
   --exclude="*.course.json" \
   --exclude=scripts \

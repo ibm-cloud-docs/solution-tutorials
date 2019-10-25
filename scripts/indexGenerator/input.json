@@ -103,8 +103,7 @@
                     "Kubernetes",
                     "Container Service",
                     "Docker"
-                ],
-                "hidden": true
+                ]
             },
             {
               "name": "Asynchronous data processing using object storage and pub/sub messaging",
