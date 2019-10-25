@@ -125,9 +125,9 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 	 ibmcloud ks cluster get mycluster
 	 ```
 	 {: pre}
-1. Copy `deployment.yaml.sample` to `deployment.yaml`:
+1. Copy `deployment.sample.yaml` to `deployment.yaml`:
    ```bash
-	 cp deployment.yaml.sample deployment.yaml
+	 cp deployment.sample.yaml deployment.yaml
 	 ```
 	 {: pre}
 1. Edit `deployment.yaml` and replace the placeholders `<image>`, `<ingress-subdomain>` and `<ingress-secret>` with values matching your environment.
