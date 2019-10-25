@@ -23,9 +23,9 @@ lasttested: "2019-10-24"
 # Accelerate a dynamic website using Dynamic Content Acceleration
 {: #dynamic-content-cdn}
 
-Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. The tutorial [Accelerate delivery of static files using a CDN](/docs/tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai).
+Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. This tutorial [Accelerate delivery of static files using a CDN](/docs/tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai).
 
-But applications also contain personalized and dynamically changing contents that can’t be cached at CDN. A common example of non-cacheable dynamic content is adding an item to a cart in an e-commerce website that might be generated from JavaScript on the base page. Before Dynamic Content Acceleration is available, a CDN will pass every request for a non-cacheable object through to the owner’s origin server, and pass the result back to the user.
+Applications also contain personalized and dynamically changing contents that can’t be cached at CDN. A common example of non-cacheable dynamic content is adding an item to a cart in an e-commerce website that might be generated from JavaScript on the base page. Before Dynamic Content Acceleration is available, a CDN will pass every request for a non-cacheable object through to the owner’s origin server, and pass the result back to the user.
 
 To stop these dynamic contents from being a performance bottleneck, you can utilize the new Dynamic Content Acceleration (DCA) capability of [{{site.data.keyword.cdn_full}} (CDN)](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) to optimize the performance of dynamic contents:
 * the DCA capability of CDN will choose the optimal routes for requests
@@ -75,7 +75,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Deploy a dynamic web application to be accelerated
 
-Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team to-do items together.
+Let's consider a simple dynamic web application for collaboration for a team geographically distributed. With this application, team members can create and manage team's to-do items together.
 
 This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is based on [Beego](https://beego.me/docs/intro/), a RESTful HTTP framework for the rapid development of Go applications including APIs, web apps and backend services.
 
@@ -125,9 +125,9 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 	 ibmcloud ks cluster get mycluster
 	 ```
 	 {: pre}
-1. Copy `deployment.yaml.template` to `deployment.yaml`:
+1. Copy `deployment.yaml.sample` to `deployment.yaml`:
    ```bash
-	 cp deployment.yaml.template deployment.yaml
+	 cp deployment.yaml.sample deployment.yaml
 	 ```
 	 {: pre}
 1. Edit `deployment.yaml` and replace the placeholders `<image>`, `<ingress-subdomain>` and `<ingress-secret>` with values matching your environment.
@@ -143,7 +143,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 Before you create a {{site.data.keyword.cdn_full}} instance, you should have registered a domain name for your application.
 
 1. Go to the cloud catalog, and select [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai) from the Network section. Click **Create**.
-   1. Set **Hostname** to the custom domain of your application, for example, `todo.exampledomain.net`. 
+   1. Set **Hostname** to the custom domain of your application, for example, `todo.exampledomain.net`.
    1. Set **Custom CNAME** prefix to a unique value, for example, `todo-sample`.
 	 1. Leave **Host header** and **Path** empty.
 	 1. Use the default **Server** option and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
@@ -154,10 +154,10 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
 			{: note}
 1. Accept the **Master Service Agreement** and click **Create**.
 1. In the DNS service provider for your custom domain, create a new CNAME record mapping the CDN domain to the Custom CNAME. If using [IBM Domain Name Service](https://{DomainName}/classic/network/dns/forwardzones), take the following steps:
-   1. Click the name of your domain. 
+   1. Click the name of your domain.
 	 1. Under **Add a new record**, select **CNAME** as resource type, and map the host `todo.exampledomain.net` to the CNAME `todo-sample.cdn.appdomain.cloud.`
 	 1. Click **Add Record**.
-      ![](images/solution52-cdn-dca/dns_record.png) 
+      ![](images/solution52-cdn-dca/dns_record.png)
 
 After you have successfully created the CDN mapping:
    * To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
@@ -172,14 +172,14 @@ The Dynamic Content Acceleration (DCA) feature will query a test object in about
 To activate DCA:
 1. Select the **Settings** tab in the CDN configuration.
 2. Under the **Optimized for** section, select **Dynamic Content Acceleration** from the drop-down list.
-3. Under the **Detection path** section, specify the path `/test-dca` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by {{site.data.keyword.cdn_full}} to determine the fastest path to the origin. 
+3. Under the **Detection path** section, specify the path `/test-dca` as the detection path, and click **Test** to verify the path is set correctly. This detection path will be used periodically by {{site.data.keyword.cdn_full}} to determine the fastest path to the origin.
 4. Make sure **Prefetching** and **Image compression** are both set to **On**.
    ![](images/solution52-cdn-dca/detection_path.png)
 5. Click **Save**. You have successfully accelerated your application deployed in {{site.data.keyword.containershort_notm}} cluster with **Dynamic Content Acceleration**.
 
 ## Verify DCA performance
 
-You can use common website performance tools such as [Web Page Test](https://www.webpagetest.org/) to compare the website response time before and after DCA is turned on.  
+You can use common website performance tools such as [Web Page Test](https://www.webpagetest.org/) to compare the website response time before and after DCA is turned on.
 
 After enabling DCA for a period, you can view the both static and dynamic traffic bandwidth by clicking on the **View CDN report** on the [CDN Overview](https://{DomainName}/classic/network/cdn) page.
 
@@ -201,5 +201,3 @@ With **Prefetching** enabled, DCA also finds which content is required by the ap
 * [Getting Started with CDN](https://{DomainName}/docs/infrastructure/CDN?topic=CDN-getting-started#getting-started)
 * [IBM Cloud Kubernetes Service](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
 * [IBM Cloud Container Registry](https://{DomainName}/docs/services/Registry?topic=registry-getting-started#getting-started)
-
-
