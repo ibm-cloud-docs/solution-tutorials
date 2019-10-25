@@ -94,22 +94,22 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 1. Identify the {{site.data.keyword.registryshort_notm}} to use with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
 1. Create a namespace to store the container image.
    ```bash
-	 ibmcloud cr namespace-add cdn-with-cda
+   ibmcloud cr namespace-add cdn-with-cda
    ```
 	 {: pre}
 1. Build a Docker image using the [Dockerfile](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}, replacing `<CONTAINER_REGISTRY>` with your container registry value and use **cdn-with-cda-todolist** as the image name:
    ```bash
-	 docker build -t <CONTAINER_REGISTRY>/cdn-with-cda/cdn-with-cda-todolist:latest .
+   docker build -t <CONTAINER_REGISTRY>/cdn-with-cda/cdn-with-cda-todolist:latest .
 	 ```
 	 {: pre}
 1. Log in {{site.data.keyword.registryshort_notm}}:
    ```bash
-	 ibmcloud cr login
+   ibmcloud cr login
 	 ```
 	 {: pre}
 1. Push the image to {{site.data.keyword.registryshort_notm}}:
    ```bash
-	 docker push <CONTAINER_REGISTRY>/cdn-with-cda/cdn-with-cda-todolist:latest
+   docker push <CONTAINER_REGISTRY>/cdn-with-cda/cdn-with-cda-todolist:latest
 	 ```
 	 {: pre}
 
@@ -122,18 +122,18 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 	 {: pre}
 1. Retrieve the cluster ingress subdomain and secret name:
    ```bash
-	 ibmcloud ks cluster get mycluster
+   ibmcloud ks cluster get mycluster
 	 ```
 	 {: pre}
 1. Copy `deployment.sample.yaml` to `deployment.yaml`:
    ```bash
-	 cp deployment.sample.yaml deployment.yaml
+   cp deployment.sample.yaml deployment.yaml
 	 ```
 	 {: pre}
 1. Edit `deployment.yaml` and replace the placeholders `<image>`, `<ingress-subdomain>` and `<ingress-secret>` with values matching your environment.
 1. Deploy the application to the cluster:
    ```bash
-	 kubectl apply -f deployment.yaml
+   kubectl apply -f deployment.yaml
 	 ```
 	 {: pre}
 1. Access the application at `https://cdn-with-cda-todolist.<ingress-subdomain>`
