@@ -79,55 +79,55 @@ This section uses the command line to create service instances. Alternatively, y
 {: tip}
 
 1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-ibmcloud-cli#ibmcloud-cli).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
+   ```sh
+   ibmcloud login
+   ```
+   {: pre}
+   ```sh
+   ibmcloud target --cf
+   ```
+   {: pre}
 2. Create a Lite instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
-    ```sh
-    ibmcloud resource service-instance-create log-analysis-cos cloud-object-storage \
-    lite global
-    ```
-    {: pre}
+   ```sh
+   ibmcloud resource service-instance-create log-analysis-cos cloud-object-storage \
+   lite global
+   ```
+   {: pre}
 3. Create a Lite instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
-    ```sh
-    ibmcloud resource service-instance-create log-analysis-sql sql-query lite \
-    us-south
-    ```
-    {: pre}
+   ```sh
+   ibmcloud resource service-instance-create log-analysis-sql sql-query lite \
+   us-south
+   ```
+   {: pre}
 4. Create a Standard instance of [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams).
-    ```sh
-    ibmcloud service create messagehub standard log-analysis-hub
-    ```
-    {: pre}
+   ```sh
+   ibmcloud service create messagehub standard log-analysis-hub
+   ```
+   {: pre}
 
 5. Creare a Lite instance of [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine).
 
-    From the IBM Cloud™ catalog search for `Analytics Engine`. Create the Analytics Engine service. Give the service a name and choose any region to deploy in. Click on Configure. 
+   From the IBM Cloud™ catalog search for `Analytics Engine`. Create the Analytics Engine service. Give the service a name and choose any region to deploy in. Click on Configure. 
 
-•	On the next screen, select Default for the Hardware configuration and enter the number of compute nodes you will need. You will need one node.
+   * On the next screen, select Default for the Hardware configuration and enter the number of compute nodes you will need. You will need one node.
+   * Select the latest version of Spark and Hadoop as the Software Package.
+   * Under Advanced Options enter the below given configuration options for the {{site.data.keyword.cos_short}} which was created in the previous step. 
 
-•	Select the latest version of Spark and Hadoop as the Software Package 
+   ```json
+   {
+      "core-site": {
+         "fs.cos.<identifier>.access.key": "<userKey>",
+         "fs.cos.<identifier>.secret.key": "<SecretKey>"
+         "fs.cos.<identifier>.endpoint": "<cosEndpoint>"
+      }
+   }
+   ```
+   {: pre}
+      - The `<identifier>` is the name of the {{site.data.keyword.cos_short}} service `log-analysis-cos`.
+      - The access key and secret key can be obtained from the Service Credentials tab of your {{site.data.keyword.cos_short}} resource.
+      - Refer the service detail page to get the correct endpoint for the type of bucket that you created earlier. Make sure to use the private endpoint. 
 
-•	Under Advanced Options enter the below given configuration options for the Object Storage which was created in the previous step. 
-
-
-
-{
-"core-site": {
-                "fs.cos.<identifier>.access.key": "<userKey>",
-                "fs.cos.<identifier>.secret.key": "<SecretKey>"
-                "fs.cos.<identifier>.endpoint": "<cosEndpoint>"
-             }
-}
-The <identifier> is any name/string that you can define, for example:- joesobjectstore  or myinstance 
-The access key and secret key can be obtained from the Service Credentials tab of your Object Storage resource. 
-Refer here to get the correct endpoint for the type of bucket that you created earlier. Make sure to use the private endpoint. 
-Note also the cluster password for the Analytics Engine instance as described here
+   Note also the cluster password for the Analytics Engine instance as described here
 
  {: pre}
 
@@ -318,7 +318,6 @@ The simulator will delay sending the next message based on the elapsed time in t
 ![Flow load set to 10](images/solution31/flow_load_10.png)
 
 ## Investigating log data using SQL Query
-
 {: #sqlquery}
 
 Depending on the number of messages sent by the simulator, the log file on {{site.data.keyword.cos_short}} has certainly grown in file size. You will now act as an investigator answering audit or compliance questions by combining SQL Query with your log file. The benefit of using SQL Query is that the log file is directly accessible - no additional transformations or database servers are necessary.
@@ -407,74 +406,74 @@ If you prefer not to wait for the simulator to send all log messages, upload the
 FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAME/` to run SQL queries on all files in the bucket.
 {: tip}
 
-## Investigating log data using Apache Hive
+## Investigating data using {{site.data.keyword.iae_short}}
+
+### Investigating log data using Apache Hive
+{: #hive}
+
 Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also run SQL analytical commands from Apache Hive that is part of the {{site.data.keyword.iae_short}} service.
 
-1.	First SSH to the {{site.data.keyword.iae_short}} cluster using the following command
- ```sh
- ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud 
-```
-2.	Connect to the Hive server by using with Beeline client.
+1. First SSH to the {{site.data.keyword.iae_short}} cluster using the following command
+   ```sh
+   ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud 
+   ```
+   {: pre}
+2. Connect to the Hive server by using with Beeline client.
+   ```sh
+   $ beeline -u ‘jdbc:hive2://chs-xxxxx-mn001.<change-me>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive’ -n clsadmin -p <password>
+   ```
+   {: pre}
+   The hive_jdbc service endpoint can be found under the service credential tab of the IAE resource page. 
+3. Create an external hive table with the following command.
+   ```sql
+   CREATE EXTERNAL TABLE myhivetable (host string, ts string, request string, responseCode int, bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<bucketname>.<identifer>/' tblproperties ("skip.header.line.count"="1");
+   ```
 
-```sh
-$ beeline -u ‘jdbc:hive2://chs-xxxxx-mn001.<change-me>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive’ -n clsadmin -p <password> 
-```
-The hive_jdbc service endpoint can be found under the service credential tab of the IAE resource page. 
+   The value of `<identifer>` will be the same one that you defined during the creation of Analytics Engine initially.
 
-3.	Create an external hive table with the following command. 
-```sql
-CREATE EXTERNAL TABLE myhivetable (host string, ts string, request string, responseCode int, bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<bucketname>.<identifer>/' tblproperties ("skip.header.line.count"="1")   ;
-```
+   Note that for Hive you need to point to a parent folder which contains the CSV file. In the example above, the data got written directly in the root folder of the bucket. If there are other files within the root folder, the above command will not work. You need to then use a slightly different URI `cos://<bucketname>.<identifer>/nasadata`  assuming that .csv has been stored under folder called nasadata.
 
-The value of < identifer > will be the same one that you defined during the creation of Analytics Engine initially.
+4. Just like the commands executed earlier SQL queries can be executed on the table. For example:
 
-Note that for Hive you need to point to a parent folder which contains the CSV file. In the example above, the data got written directly in the root folder of the bucket. If there are other files within the root folder, the above command will not work. You need to then use a slightly different URI `cos://<bucketname>.<identifer>/nasadata`  assuming that .csv has been stored under folder called nasadata.
+   ```sql
+   SELECT HOST, COUNT(*)
+   FROM myhivetable
+   GROUP BY HOST
+   ORDER BY 2 DESC
+   LIMIT 5;
+   ```
 
-4.	Just like the commands executed earlier SQL queries can be executed on the table. For example:
-
-```sql
-SELECT HOST, COUNT(*)
-FROM myhivetable
-GROUP BY HOST
-ORDER BY 2 DESC
-LIMIT 5;
-```
-
-##Investigating data using Spark SQL
+### Investigating data using Spark SQL
+{: #sparksql}
 
 The data pushed to cos can be also queried using Apache Spark that is part of the {{site.data.keyword.iae_short}} service.
 
-1.	SSH to the cluster
-```sh
-ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud 
-```
-
-2.	Open a pyspark-shell on your {{site.data.keyword.iae_short}} cluster. 
-```sh
-$ pyspark
-```
-
-3.	Create a spark dataframe of the csv file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up. 
-
-```sh
-$df = spark.read.csv ('cos://<buckename>.<identifer>/<objectname> ')
-```
-For example if the name of the bucket is `log-analysis-cos`, service name is joesobjectstore and the path to the parquet file is nasadata/: 
-
-df = spark.read.csv('cos://log-analysis. joesobjectstore/nasadata/ NASA_access_log_Jul95.csv')
-
-4.	Any SQL query can be performed on the data and the result can be stored in a new dataframe. 
-5.	The following code block will perform an SQL query the data frame. A view is then created and first 10 rows are printed.
-```sh
-$sqlContext.registerDataFrameAsTable(df, "Table")
-$df_query = sqlContext.sql("SELECT * FROM Table LIMIT 10")
-$df_query.show(10)
-```
-The query given here can be replaced with any other query which needs to be performed. 
-
+1. SSH to the cluster
+   ```sh
+   ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud 
+   ```
+2. Open a pyspark-shell on your {{site.data.keyword.iae_short}} cluster. 
+   ```sh
+   $ pyspark
+   ```
+3. Create a spark dataframe of the csv file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up.
+   ```sh
+   $df = spark.read.csv ('cos://<buckename>.<identifer>/<objectname> ')
+   ```
+   For example if the name of the bucket is `log-analysis-cos`, service name is joesobjectstore and the path to the parquet file is nasadata/: 
+   ```sh
+   df = spark.read.csv('cos://log-analysis. joesobjectstore/nasadata/ NASA_access_log_Jul95.csv')
+   ```
+4. Any SQL query can be performed on the data and the result can be stored in a new dataframe.
+5. The following code block will perform an SQL query the data frame. A view is then created and first 10 rows are printed.
+   ```sh
+   $sqlContext.registerDataFrameAsTable(df, "Table")
+   $df_query = sqlContext.sql("SELECT * FROM Table LIMIT 10")
+   $df_query.show(10)
+   ```
+   The query given here can be replaced with any other query which needs to be performed. 
 
 ## Expand the tutorial
-
 {: #expand}
 
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
