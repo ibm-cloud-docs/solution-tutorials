@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-10-10"
-lasttested: "2019-10-10"
+lastupdated: "2019-10-31"
+lasttested: "2019-10-31"
 ---
 
 {:shortdesc: .shortdesc}
@@ -16,15 +16,14 @@ lasttested: "2019-10-10"
 # Big data logs with streaming analytics and SQL
 {: #big-data-log-analytics}
 
-In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, SQL Query and {{site.data.keyword.streaminganalyticsshort}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
+In this tutorial, you will build a log analysis pipeline designed to collect, store and analyze log records to support regulatory requirements or aid information discovery. This solution leverages several services available in {{site.data.keyword.cloud_notm}}: {{site.data.keyword.messagehub}}, {{site.data.keyword.cos_short}}, {{site.data.keyword.sqlquery_short}}, {{site.data.keyword.streaminganalyticsshort}} and {{site.data.keyword.iae_full_notm}}. A program will assist you by simulating transmission of web server log messages from a static file to {{site.data.keyword.messagehub}}.
 
-With {{site.data.keyword.messagehub}} the pipeline scales to receive millions of log records from a variety of producers. By applying {{site.data.keyword.streaminganalyticsshort}} log data can be inspected in realtime to integrate business processes. Log messages can also be easily redirected to long term storage using {{site.data.keyword.cos_short}} where developers, support staff and auditors can work directly with data using SQL Query.
+With {{site.data.keyword.messagehub}} the pipeline scales to receive millions of log records from a variety of producers. Using a combination of {{site.data.keyword.streaminganalyticsshort}} and {{site.data.keyword.sqlquery_short}}, or {{site.data.keyword.iae_full_notm}}, log data can be inspected in realtime to integrate business processes. Log messages can also be easily redirected to long term storage using {{site.data.keyword.cos_short}} where developers, support staff and auditors can work directly with data.
 
 While this tutorial focuses on log analysis, it is applicable to other scenarios: storage-limited IoT devices can similarly stream messages to {{site.data.keyword.cos_short}} or marketing professionals can segment and analyze customer events across digital properties with SQL Query.
 {:shortdesc}
 
 ## Objectives
-
 {: #objectives}
 
 * Understand Apache Kafka publish-subscribe messaging
@@ -33,7 +32,6 @@ While this tutorial focuses on log analysis, it is applicable to other scenarios
 * Conduct forensic and statistical analysis on log data
 
 ## Services used
-
 {: #services}
 
 This tutorial uses the following runtimes and services:
@@ -42,11 +40,11 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/message-hub)
 * [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query)
 * [{{site.data.keyword.streaminganalyticsshort}}](https://{DomainName}/catalog/services/streaming-analytics)
+* [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
-
 {: #architecture}
 
 <p style="text-align: center;">
@@ -54,113 +52,120 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
   ![Architecture](images/solution31/Architecture.png)
 </p>
 
-1. Application generates log events to {{site.data.keyword.messagehub}}
-2. Log event is intercepted and analyzed by {{site.data.keyword.streaminganalyticsshort}}
-3. Log event is appended to a CSV file located in {{site.data.keyword.cos_short}}
-4. Auditor or support staff issues SQL job
-5. SQL Query executes on log file in {{site.data.keyword.cos_short}}
-6. Result set is stored in {{site.data.keyword.cos_short}} and delivered to auditor and support staff
+1. Application generates log events to {{site.data.keyword.messagehub}}.
+2. Log event is intercepted and analyzed by {{site.data.keyword.streaminganalyticsshort}}.
+3. Log event is appended to a CSV file located in {{site.data.keyword.cos_short}}.
+4. Auditor or support staff use {{site.data.keyword.sqlquery_short}} or {{site.data.keyword.iae_short}} to perform requests.
+5. Requests are executed against the data stored in {{site.data.keyword.cos_short}}.
 
 ## Before you begin
-
 {: #prereqs}
 
 * [Install Git](https://git-scm.com/)
 * [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started)
 * [Install Node.js](https://nodejs.org)
-* [Download Kafka 0.10.2.X client](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz)
 
 ## Create services
-
 {: #setup}
 
 In this section, you will create the services required to perform analysis of log events generated by your applications.
 
-This section uses the command line to create service instances. Alternatively, you may do the same from the service page in the catalog using the provided links.
-{: tip}
+### {{site.data.keyword.cos_short}}
+{: #new-cos}
 
-1. Login to {{site.data.keyword.cloud_notm}} via the command line and target your Cloud Foundry account. See [CLI Getting Started](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
-    ```sh
-    ibmcloud login
-    ```
-    {: pre}
-    ```sh
-    ibmcloud target --cf
-    ```
-    {: pre}
-2. Create a Lite instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
-    ```sh
-    ibmcloud resource service-instance-create log-analysis-cos cloud-object-storage \
-    lite global
-    ```
-    {: pre}
-3. Create a Lite instance of [SQL Query](https://{DomainName}/catalog/services/sql-query).
-    ```sh
-    ibmcloud resource service-instance-create log-analysis-sql sql-query lite \
-    us-south
-    ```
-    {: pre}
-4. Create a Standard instance of [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams).
-    ```sh
-    ibmcloud cf create-service messagehub standard log-analysis-hub
-    ```
-    {: pre}
+1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
+   1. Set **Service name** to **log-analysis-cos**.
+   1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
+   1. Click **Create**
+1. Under **Service Credentials**, create new credential and select **Include HMAC Credential**.
+   1. Make note of the _access_key_id_ and _secret_access_key_ values.
+1. Create a bucket named `\<your-initial>-log-analysis with **Cross Region** resiliency.
+1. Under **Endpoint**, find the **private** endpoint to access your bucket.
 
-## Create a messaging topic and {{site.data.keyword.cos_short}} bucket
+### {{site.data.keyword.messagehub}}
+{: #new-eventstreams}
 
-{: #topics}
+1. Create an instance of [{{site.data.keyword.messagehub}}](https://{DomainName}/catalog/services/event-streams).
+   1. Set the **Service name** to **log-analysis-hub**.
+   1. Select the **Lite** plan.
+   1. Click **Create**.
+1. Switch to **Topics**, click **Create topic**
+   1. Set the **Topic Name** to `webserver`.
+   1. Click the **Create topic** button.
+1. Under **Service credentials**, create new credential named `webserver-flow`.
+1. Make note of the values. They will be used in the next section.
 
-Begin by creating a {{site.data.keyword.messagehub}} topic and {{site.data.keyword.cos_short}} bucket. Topics define where applications deliver messages in publish-subscribe messaging systems. After messages are received and processed, they will be stored within a file located in an {{site.data.keyword.cos_short}} bucket.
+### {{site.data.keyword.sqlquery_short}}
+{: #new-sqlquery}
 
-1. In your browser, access the `log-analysis-hub` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis).
-2. Click **Create a topic** tile.
-3. Enter the **Topic Name** `webserver` and click **Next**
-   - Set **Partitions** to 1 and click **Next**
-   - Choose **A day** for Message Retention and click **Create topic**
-4. Click **Service Credentials** and the **New Credential** button.
-5. In the resulting dialog, type `webserver-flow` as the **Name** and click the **Add** button.
-6. Click **View Credentials** and copy the information to a safe place. It will be used in the next section.
-7. Back in the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
-8. Click **Create bucket**.
-    * Enter a unique **Name** for the bucket.
-    * Select **Cross Region** for **Resiliency**.
-    * Select **us-geo** as the **Location**.
-    * Select a **Standard** storage class.
-    * Click **Create bucket**.
+1. Create an instance of [{{site.data.keyword.sqlquery_short}}](https://{DomainName}/catalog/services/sql-query).
+   1. Set the **Service name** to **log-analysis-sql**.
+   1. Select the **Lite** plan.
+   1. Click **Create**.
 
-## Create a Streams flow source
+### {{site.data.keyword.iae_short}}
+{: #new-iae}
+
+1. Create an instance of [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine).
+   1. Set the **Service name** to **log-analysis-iae**
+   1. Click on Configure. 
+1. Set **Hardware configuration** to **Default**.
+1. Set **Number of compute nodes** to **1**.
+1. Select the **latest** version of **Spark and Hadoop** as the **Software Package**.
+1. Under Advanced Options enter the below given configuration options for the {{site.data.keyword.cos_short}} which was created in the previous step. 
+
+   ```json
+   {
+     "core-site": {
+       "fs.cos.<identifier>.access.key": "<access_key_id>",
+       "fs.cos.<identifier>.secret.key": "<secret_access_key>",
+       "fs.cos.<identifier>.endpoint": "<cosEndpoint>"
+     }
+   }
+   ```
+   {: pre}
+
+   where:
+      - `identifier` is the name of the name of the {{site.data.keyword.cos_short}} service (`log-analysis-cos`),
+      - `access_key_id` and `secret_access_key` are found in the service credentials created earlier.
+      - `cosEndpoint` is a private endpoint to access the public.
+1. Once the service is provisioned, go to **Manage** to retrieve the user name and password for the cluster. You may need to reset the cluster password.
+1. Under **Service credentials**, create new credential.
+1. From the credentials, make note of the `ssh` value.
+
+## Process log messages with Streams in Watson Data Platform
+{: #configure-streams}
+
+### Create a Streams flow source
 {: #streamsflow}
 
 In this section, you will begin configuring a Streams flow that receives log messages. The {{site.data.keyword.streaminganalyticsshort}} service is powered by {{site.data.keyword.streamsshort}}, which can analyze millions of events per second, enabling sub-millisecond response times and instant decision-making.
 
 1. In your browser, access [Watson Data Platform](https://dataplatform.ibm.com).
-2. Click **Create a project** tile, then **Create an empty project**.
+2. Select the **New project** button or tile, then the **Basic** tile and click **OK**.
     * Enter the **Name** `webserver-logs`.
-    * The **Define storage** option should be set to `log-analysis-cos`. If not, select the Cloud object storage instance from the list.
+    * The **Storage** option should be set to `log-analysis-cos`. If not, select the service instance.
     * Click the **Create** button.
-3. On the resulting page, click the **Add to project** button, then choose **Streams flow** as your asset type.
+4. Click the **Add to project** button then **Streams flow** from the top navigation bar.
     * Click **Associate an IBM Streaming Analytics instance with a container-based plan**.
     * Create a new {{site.data.keyword.streaminganalyticsshort}} instance by selecting the **Lite** radio button and clicking **Create**.
     * Provide the **Service name** as `log-analysis-sa` and click **Confirm**.
     * Type the streams flow **Name** as `webserver-flow`.
-    * Select **Wizard** and Finish by clicking **Create**.
-4. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
+    * Finish by clicking **Create**.
+5. On the resulting page, select the **{{site.data.keyword.messagehub}}** tile.
     * Click **Add Connection** and select your `log-analysis-hub` {{site.data.keyword.messagehub}} instance. If you do not see your instance listed, select the **IBM {{site.data.keyword.messagehub}}** option. Manually enter the **Connection details** that you obtained from the **Service credentials** in the previous section. **Name** the connection `webserver-flow`.
     * Click **Create** to create the connection.
     * Select `webserver` from the **Topic** dropdown.
     * Select **Start with the first new message** from the **Initial Offset** dropdown.
-    * Select **JSON** from **Record value parsing** dropdown.
-    * Select **1** as the **Number of parallel workers**.
     * Click **Continue**.
-5. Leave the **Preview Data** page open; it will be used in the next section.
+6. Leave the **Preview Data** page open; it will be used in the next section.
 
-## Using Kafka console tools with {{site.data.keyword.messagehub}}
-
+### Using Kafka console tools with {{site.data.keyword.messagehub}}
 {: #kafkatools}
 
 The `webserver-flow` is currently idle and awaiting messages. In this section, you will configure Kafka console tools to work with {{site.data.keyword.messagehub}}. Kafka console tools allow you to produce arbitrary messages from the terminal and send them to {{site.data.keyword.messagehub}}, which will trigger the `webserver-flow`.
 
-1. Download and unzip the [Kafka 2.2.1 client or newer](https://www.apache.org/dyn/closer.cgi?path=/kafka/2.2.1/kafka_2.11-2.2.1.tgz) from the [Apache Kafka download page](http://kafka.apache.org/downloads).
+1. Download and unzip the [Kafka 0.10.2.X client](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz).
 2. Change directory to `bin` and create a text file named `message-hub.config` with the following contents.
     ```sh
     sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="USER" password="PASSWORD";
@@ -174,8 +179,7 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
 3. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the `user` and `password` values seen in **Service Credentials** from the previous section. Save `message-hub.config`.
 4. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
     ```sh
-    ./kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL \
-    --producer.config message-hub.config --topic webserver
+    ./kafka-console-producer.sh --broker-list KAFKA_BROKERS_SASL --producer.config message-hub.config --topic webserver
     ```
     {: pre}
     ```sh
@@ -187,14 +191,14 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     kafka03-prod02.messagehub.services.us-south.bluemix.net:9093 \
     --producer.config message-hub.config --topic webserver
     ```
-5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}.
+5. The Kafka console tool is awaiting input. Copy and paste the log message from below into the terminal. Hit `enter` to send the log message to {{site.data.keyword.messagehub}}. Notice the sent messages also display on the `webserver-flow` **Preview Data** page.
     ```javascript
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
-    Notice the sent messages displayed on the `webserver-flow` **Preview Data** page.
+    {: pre}
+![Preview page](images/solution31/preview_data.png)
 
-## Create a Streams flow target
-
+### Create a Streams flow target
 {: #streamstarget}
 
 In this section, you will complete the streams flow configuration by defining a target. The target will be used to store incoming log messages in the {{site.data.keyword.cos_short}} bucket created earlier. The process of storing and appending incoming log messages to a file will be done automatically by {{site.data.keyword.streaminganalyticsshort}}.
@@ -203,12 +207,11 @@ In this section, you will complete the streams flow configuration by defining a 
 2. Select the **{{site.data.keyword.cos_full_notm}}** tile as a target.
     * Click **Add Connection** and select `log-analysis-cos`.
     * Click **Create**.
-    * Enter the **File path** `/YOUR_BUCKET_NAME/http-logs_%TIME.csv`. Replace `YOUR_BUCKET_NAME` with the one used in the first section.
+    * Enter the **File path** `/YOUR_BUCKET_NAME/logs/http-logs_%TIME.csv`. Replace `YOUR_BUCKET_NAME` with the one used in the first section.
     * Select **csv** in the **Format** dropdown.
-    * Select **Comma(,)** as the **Delimiter**.
     * Check the **Column header row** checkbox.
-    * Select **File Size** in the **File Creation Policy** dropdown.
-    * Set the limit to be 100MB by entering `102400` in the **File Size (KB)** textbox.
+    * Select **Time** in the **File Creation Policy** dropdown.
+    * Set the **Amount of time** to **60** seconds.
     * Click **Continue**.
 3. Click **Save**.
 4. Click the **>** play button to **Start the streams flow**.
@@ -216,11 +219,12 @@ In this section, you will complete the streams flow configuration by defining a 
     ```javascript
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
+    {: pre}
+6. Return to your bucket in {{site.data.keyword.cos_short}}. New CSV files will added 60 seconds after messages have entered the flow or the flow is restarted.
 
-6. Return to your bucket in {{site.data.keyword.cos_short}}. A new `log.csv` file will exist after enough messages have entered the flow or the flow is restarted.
+![webserver-flow](images/solution31/flow.png)
 
-## Add conditional behavior to Streams flows
-
+### Add conditional behavior to Streams flows
 {: #streamslogic}
 
 Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.keyword.messagehub}} to {{site.data.keyword.cos_short}}. More than likely, teams will want to know events of interest in realtime. For example individual teams might benefit from alerts when HTTP 500 (application error) events occur. In this section, you will add conditional logic to the flow to identify HTTP 200 (OK) and non HTTP 200 codes.
@@ -233,7 +237,7 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
       ```sh
       responseCode == 200
       ```
-
+      {: pre}
     * With your mouse, draw a line from the **{{site.data.keyword.messagehub}}** node's output (right side) to your **OK** node's input (left side).
     * From the **Nodes** palette, drag the **Debug** node found under **TARGETS** to the canvas.
     * Connect the **Debug** node to the **OK** node by drawing a line between the two.
@@ -241,19 +245,20 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
     ```sh
     responseCode >= 300
     ```
-
+    {: pre}
 4. Click the play button to **Save and run the streams flow**.
 5. If prompted click the link to **run the new version**.
 
-## Increasing message load
+![Flow designer](images/solution31/flow_design.png)
 
+### Increasing message load
 {: #streamsload}
 
 To view conditional handling in your Streams flow, you will increase the message volume sent to {{site.data.keyword.messagehub}}. The provided Node.js program simulates a realistic flow of messages to {{site.data.keyword.messagehub}} based on traffic to the webserver. To demonstrate the scalability of {{site.data.keyword.messagehub}} and {{site.data.keyword.streaminganalyticsshort}}, you will increase the throughput of log messages.
 
 This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). See the npmjs page for troubleshooting instructions if the simulator installation fails. If problems persist, you can skip to the next section and manually upload the data.
 
-1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 19.7 MB gzip compressed](ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz) log file from NASA.
+1. Download and unzip the [Jul 01 to Jul 31, ASCII format, 20.7 MB gzip compressed](ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz) log file from NASA.
 2. Clone and install the log simulator from [IBM-Cloud on GitHub](https://github.com/IBM-Cloud/kafka-log-simulator).
     ```sh
     git clone https://github.com/IBM-Cloud/kafka-log-simulator.git
@@ -263,14 +268,12 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
     ```sh
     npm install
     ```
-    {: pre}
     ```sh
     npm run build
     ```
-    {: pre}
     ```sh
-    node dist/index.js --file LOGFILE --parser httpd --broker-list BROKERLIST \
-    --api-key APIKEY --topic webserver --rate 100
+    node dist/index.js --file <LOGFILE> --parser httpd --broker-list <BROKERLIST> \
+    --api-key <APIKEY> --topic webserver --rate 100
     ```
     {: pre}
     ```sh
@@ -281,10 +284,10 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
     kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,\
     kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,\
     kafka03-prod02.messagehub.services.us-south.bluemix.net:9093" \
-    --api-key Np15YZKN3SCdABUsOpJYtpue6jgJ7CwYgsoCWaPbuyFbdM4R \
+    --api-key 12345678901234567890 \
     --topic webserver --rate 100
     ```
-    {: pre}
+
 4. In your browser, return to your `webserver-flow` after the simulator begins producing messages.
 5. Stop the simulator after a desired number of messages have gone through the conditional branches using `control+C`.
 6. Experiment with {{site.data.keyword.messagehub}} scaling by increasing or decreasing the `--rate` value.
@@ -292,22 +295,23 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
 The simulator will delay sending the next message based on the elapsed time in the webserver log. Setting `--rate 1` sends events in realtime. Setting `--rate 100` means that for every 1 second of elapsed time in the webserver log a 10ms delay between messages is used.
 {: tip}
 
-## Investigating log data using SQL Query
+![Flow load set to 10](images/solution31/flow_load_10.png)
 
+## Investigating log data using {{site.data.keyword.sqlquery_short}}
 {: #sqlquery}
 
-Depending on the number of messages sent by the simulator, the log file on {{site.data.keyword.cos_short}} has certainly grown in file size. You will now act as an investigator answering audit or compliance questions by combining SQL Query with your log file. The benefit of using SQL Query is that the log file is directly accessible - no additional transformations or database servers are necessary.
+Depending on the number of messages sent by the simulator, the log file on {{site.data.keyword.cos_short}} has certainly grown in file size. You will now act as an investigator answering audit or compliance questions by combining {{site.data.keyword.sqlquery_short}} with your log file. The benefit of using {{site.data.keyword.sqlquery_short}} is that the log file is directly accessible - no additional transformations or database servers are necessary.
 
-If you prefer not to wait for the simulator to send all log messages, upload the [complete CSV file](https://ibm.box.com/s/dycyvojotfpqvumutehdwvp1o0fptwsp) to {{site.data.keyword.cos_short}} to get started immediately.
+If you prefer not to wait for the simulator to send all log messages, upload a [sample CSV file](https://github.com/IBM-Cloud/kafka-log-simulator/blob/master/data/http-logs_20191031_143106.csv.gz) to {{site.data.keyword.cos_short}} to get started immediately.
 {: tip}
 
-1. Access the `log-analysis-sql` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis). Click **Launch SQL Query UI**.
+1. Access the `log-analysis-sql` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis). Select **Launch {{site.data.keyword.sqlquery_short}} UI** to launch {{site.data.keyword.sqlquery_short}}.
 2. Enter the following SQL into the **Type SQL here ...** text area.
     ```sql
     -- What are the top 10 web pages on NASA from July 1995?
     -- Which mission might be significant?
     SELECT REQUEST, COUNT(REQUEST)
-    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     WHERE REQUEST LIKE '%.htm%'
     GROUP BY REQUEST
     ORDER BY 2 DESC
@@ -321,63 +325,131 @@ If you prefer not to wait for the simulator to send all log messages, upload the
     * **Copy** the URL to the clipboard.
 4. Update the `FROM` clause with your Object SQL URL and click **Run**.
 5. The result can be seen on the **Result** tab. While some pages - like the Kennedy Space Center home page - are expected one mission is quite popular at the time.
-6. Select the **Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
+6. Select the **Query Details** tab to view additional information such as the location where the result was stored on {{site.data.keyword.cos_short}}.
 7. Try the following question and answer pairs by adding them individually to the **Type SQL here ...** text area.
     ```sql
     -- Who are the top 5 viewers?
     SELECT HOST, COUNT(*)
-    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     GROUP BY HOST
     ORDER BY 2 DESC
     LIMIT 5
     ```
+    {: pre}
 
     ```sql
     -- Which viewer has suspicious activity based on application failures?
     SELECT HOST, COUNT(*)
-    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     WHERE `responseCode` == 500
     GROUP BY HOST
     ORDER BY 2 DESC
     ```
+    {: pre}
 
     ```sql
     -- Which requests showed a page not found error to the user?
     SELECT DISTINCT REQUEST
-    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     WHERE `responseCode` == 404
     ```
+    {: pre}
 
     ```sql
     -- What are the top 10 largest files?
     SELECT DISTINCT REQUEST, BYTES
-    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     WHERE BYTES > 0
     ORDER BY CAST(BYTES as Integer) DESC
     LIMIT 10
     ```
+    {: pre}
 
     ```sql
     -- What is the distribution of total traffic by hour?
     SELECT SUBSTRING(TIMESTAMP, 13, 2), COUNT(*)
-    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     GROUP BY 1
     ORDER BY 1 ASC
     ```
+    {: pre}
 
     ```sql
     -- Why did the previous result return an empty hour?
     -- Hint, find the malformed hostname.
     SELECT HOST, REQUEST
-    FROM cos://us-geo/YOUR_BUCKET_NAME/http-logs_TIME.csv
+    FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     WHERE SUBSTRING(TIMESTAMP, 13, 2) == ''
     ```
+    {: pre}
 
-FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAME/` to run SQL queries on all files in the bucket.
+FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAME/logs/` to run SQL queries on all files in the bucket.
 {: tip}
 
-## Expand the tutorial
+## Investigating data using {{site.data.keyword.iae_short}}
 
+### Investigating log data using Apache Hive
+{: #hive}
+
+Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also run SQL analytical commands from Apache Hive that is part of the {{site.data.keyword.iae_short}} service.
+
+1. First SSH to the {{site.data.keyword.iae_short}} cluster using the following command
+   ```sh
+   ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud 
+   ```
+   {: pre}
+2. Connect to the Hive server by using with Beeline client.
+   ```sh
+   $ beeline -u ‘jdbc:hive2://chs-xxxxx-mn001.<change-me>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive’ -n clsadmin -p <password>
+   ```
+   {: pre}
+   The hive_jdbc service endpoint can be found under the service credential tab of the IAE resource page. 
+3. Create an external hive table with the following command.
+   ```sql
+   CREATE EXTERNAL TABLE myhivetable (host string, ts string, request string, responseCode int, bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<bucketname>.<identifer>/' tblproperties ("skip.header.line.count"="1");
+   ```
+
+   The value of `<identifer>` will be the same one that you defined during the creation of {{site.data.keyword.iae_short}} initially. Note that for Hive you need to point to a parent folder which contains the CSV file. In the example above, the data got written in the `logs` folder for this purpose.
+4. Just like the commands executed earlier SQL queries can be executed on the table. For example:
+   ```sql
+   SELECT HOST, COUNT(*)
+   FROM myhivetable
+   GROUP BY HOST
+   ORDER BY 2 DESC
+   LIMIT 5;
+   ```
+
+### Investigating data using Spark SQL
+{: #sparksql}
+
+The data pushed to cos can be also queried using Apache Spark that is part of the {{site.data.keyword.iae_short}} service.
+
+1. SSH to the cluster
+   ```sh
+   ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud 
+   ```
+2. Open a pyspark-shell on your {{site.data.keyword.iae_short}} cluster. 
+   ```sh
+   pyspark
+   ```
+3. Create a spark dataframe of the csv file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up.
+   ```sh
+   df = spark.read.csv('cos://<bucketname>.<identifer>/<objectname>')
+   ```
+   For example if the name of the bucket is `log-analysis-cos`, service name is joesobjectstore and the path to the parquet file is nasadata/: 
+   ```sh
+   df = spark.read.csv('cos://log-analysis.joesobjectstore/nasadata/ NASA_access_log_Jul95.csv')
+   ```
+4. Any SQL query can be performed on the data and the result can be stored in a new dataframe.
+5. The following code block will perform an SQL query the data frame. A view is then created and first 10 rows are printed.
+   ```sh
+   sqlContext.registerDataFrameAsTable(df, "Table")
+   df_query = sqlContext.sql("SELECT * FROM Table LIMIT 10")
+   df_query.show(10)
+   ```
+   The query given here can be replaced with any other query which needs to be performed. 
+
+## Expand the tutorial
 {: #expand}
 
 Congratulations, you have built a log analysis pipeline with {{site.data.keyword.cloud_notm}}. Below are additional suggestions to enhance your solution.
@@ -387,7 +459,6 @@ Congratulations, you have built a log analysis pipeline with {{site.data.keyword
 * Integrate additional systems with {{site.data.keyword.messagehub}} using [{{site.data.keyword.appconserviceshort}}](https://{DomainName}/catalog/services/app-connect).
 
 ## Remove services
-
 {: #removal}
 
 From the [Resource List](https://{DomainName}/resources?search=log-analysis), use the **Delete** or **Delete service** menu item in the overflow menu to remove the following service instances.
