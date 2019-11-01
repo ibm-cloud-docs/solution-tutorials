@@ -25,7 +25,7 @@ lasttested: "2019-06-18"
 This tutorial is compatible with VPC for Generation 1 compute.
 {:note}
 
-This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
+This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to ensure high availability of the application, to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
 For global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
 
@@ -36,7 +36,7 @@ For global load balancer, you will provision an {{site.data.keyword.cis_full_not
 
 * Understand the isolation of workloads through infrastructure objects available for virtual private clouds.
 * Use a load balancer between zones within a region to distribute traffic among virtual servers.
-* Use a global load balancer between regions to increase resiliency and reduce latency.
+* Use a global load balancer between regions to implement high availability, increase resiliency and reduce latency.
 
 ## Services used
 {: #services}
