@@ -392,7 +392,8 @@
                     "Cloud Object Storage",
                     "Event Streams",
                     "SQL Query",
-                    "Streaming Analytics"
+                    "Streaming Analytics",
+                    "Analytics Engine"
                 ]
             },
             {
