@@ -221,8 +221,7 @@ In this section, you will complete the streams flow configuration by defining a 
     ```
     {: pre}
 6. Return to your bucket in {{site.data.keyword.cos_short}}. New CSV files will added 60 seconds after messages have entered the flow or the flow is restarted.
-
-![webserver-flow](images/solution31/flow.png)
+   ![webserver-flow](images/solution31/flow.png)
 
 ### Add conditional behavior to Streams flows
 {: #streamslogic}
@@ -231,25 +230,24 @@ Up to now, the Streams flow is a simple pipe - moving messages from {{site.data.
 
 1. Use the pencil button to **Edit the streams flow**.
 2. Create a filter node that handles HTTP 200 responses.
-    * From the **Nodes** palette, drag the **Filter** node from **PROCESSING AND ANALYTICS** to the canvas.
-    * Type `OK` in the name textbox, which currently contains the word `Filter`.
-    * Enter the following statement in the **Condition Expression** text area.
+   * From the **Nodes** palette, drag the **Filter** node from **PROCESSING AND ANALYTICS** to the canvas.
+   * Type `OK` in the name textbox, which currently contains the word `Filter`.
+   * Enter the following statement in the **Condition Expression** text area.
       ```sh
       responseCode == 200
       ```
-      {: pre}
-    * With your mouse, draw a line from the **{{site.data.keyword.messagehub}}** node's output (right side) to your **OK** node's input (left side).
-    * From the **Nodes** palette, drag the **Debug** node found under **TARGETS** to the canvas.
-    * Connect the **Debug** node to the **OK** node by drawing a line between the two.
+      {: codeblock}
+   * With your mouse, draw a line from the **{{site.data.keyword.messagehub}}** node's output (right side) to your **OK** node's input (left side).
+   * From the **Nodes** palette, drag the **Debug** node found under **TARGETS** to the canvas.
+   * Connect the **Debug** node to the **OK** node by drawing a line between the two.
 3. Repeat the process to create a `Not OK` filter using the same nodes and the following condition statement.
-    ```sh
-    responseCode >= 300
-    ```
-    {: pre}
+   ```sh
+   responseCode >= 300
+   ```
+   {: codeblock}
 4. Click the play button to **Save and run the streams flow**.
-5. If prompted click the link to **run the new version**.
-
-![Flow designer](images/solution31/flow_design.png)
+5. When prompted click the link to **run the new version**.
+   ![Flow designer](images/solution31/flow_design.png)
 
 ### Increasing message load
 {: #streamsload}
@@ -279,30 +277,29 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
     ```sh
     node dist/index.js --file /Users/ibmcloud/Downloads/NASA_access_log_Jul95 \
     --parser httpd --broker-list \
-    "kafka04-prod02.messagehub.services.us-south.bluemix.net:9093,\
-    kafka05-prod02.messagehub.services.us-south.bluemix.net:9093,\
-    kafka02-prod02.messagehub.services.us-south.bluemix.net:9093,\
-    kafka01-prod02.messagehub.services.us-south.bluemix.net:9093,\
-    kafka03-prod02.messagehub.services.us-south.bluemix.net:9093" \
+    "kafka04-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093,\
+    kafka05-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093,\
+    kafka02-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093,\
+    kafka01-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093,\
+    kafka03-prod02.kafka.svc01.us-south.eventstreams.cloud.ibm.com:9093" \
     --api-key 12345678901234567890 \
     --topic webserver --rate 100
     ```
-
 4. In your browser, return to your `webserver-flow` after the simulator begins producing messages.
 5. Stop the simulator after a desired number of messages have gone through the conditional branches using `control+C`.
 6. Experiment with {{site.data.keyword.messagehub}} scaling by increasing or decreasing the `--rate` value.
+   ![Flow load set to 10](images/solution31/flow_load_10.png)
 
-The simulator will delay sending the next message based on the elapsed time in the webserver log. Setting `--rate 1` sends events in realtime. Setting `--rate 100` means that for every 1 second of elapsed time in the webserver log a 10ms delay between messages is used.
+The simulator will delay sending the next message based on the elapsed time in the webserver log. Setting `--rate 1` sends events in realtime. Setting `--rate 100` means that for every 1 second of elapsed time in the webserver log a 10ms delay between messages is used. Setting `--rate 0` sends all events immediately with no delay between events.
 {: tip}
 
-![Flow load set to 10](images/solution31/flow_load_10.png)
 
 ## Investigating log data using {{site.data.keyword.sqlquery_short}}
 {: #sqlquery}
 
-Depending on the number of messages sent by the simulator, the log file on {{site.data.keyword.cos_short}} has certainly grown in file size. You will now act as an investigator answering audit or compliance questions by combining {{site.data.keyword.sqlquery_short}} with your log file. The benefit of using {{site.data.keyword.sqlquery_short}} is that the log file is directly accessible - no additional transformations or database servers are necessary.
+Depending on how long you ran the simulator, the number of files on {{site.data.keyword.cos_short}} has certainly grown. You will now act as an investigator answering audit or compliance questions by combining {{site.data.keyword.sqlquery_short}} with your log file. The benefit of using {{site.data.keyword.sqlquery_short}} is that the log file is directly accessible - no additional transformations or database servers are necessary.
 
-If you prefer not to wait for the simulator to send all log messages, upload a [sample CSV file](https://github.com/IBM-Cloud/kafka-log-simulator/blob/master/data/http-logs_20191031_143106.csv.gz) to {{site.data.keyword.cos_short}} to get started immediately.
+If you prefer not to wait for the simulator to send all log messages, upload a [sample CSV file](https://github.com/IBM-Cloud/kafka-log-simulator/blob/master/data/http-logs_20191031_143106.csv.gz) to {{site.data.keyword.cos_short}} to get started immediately. You can use the {{site.data.keyword.cos_short}} plugin for the {{site.data.keyword.cloud_notm}} CLI to upload the file to the bucket: `ibmcloud cos upload --bucket <YOUR_BUCKET_NAME> --key logs/http-logs_20191031_143106.csv.gz  --file http-logs_20191031_143106.csv.gz --region us-geo`.
 {: tip}
 
 1. Access the `log-analysis-sql` service instance from the [Resource List](https://{DomainName}/resources?search=log-analysis). Select **Launch {{site.data.keyword.sqlquery_short}} UI** to launch {{site.data.keyword.sqlquery_short}}.
@@ -317,7 +314,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     ORDER BY 2 DESC
     LIMIT 10
     ```
-    {: pre}
+    {: codeblock}
 3. Retrieve the Object SQL URL from the logs file.
     * From the [Resource List](https://{DomainName}/resources?search=log-analysis), select the `log-analysis-cos` service instance.
     * Select the bucket you created previously.
@@ -335,7 +332,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     ORDER BY 2 DESC
     LIMIT 5
     ```
-    {: pre}
+    {: codeblock}
 
     ```sql
     -- Which viewer has suspicious activity based on application failures?
@@ -345,7 +342,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     GROUP BY HOST
     ORDER BY 2 DESC
     ```
-    {: pre}
+    {: codeblock}
 
     ```sql
     -- Which requests showed a page not found error to the user?
@@ -353,7 +350,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     WHERE `responseCode` == 404
     ```
-    {: pre}
+    {: codeblock}
 
     ```sql
     -- What are the top 10 largest files?
@@ -363,7 +360,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     ORDER BY CAST(BYTES as Integer) DESC
     LIMIT 10
     ```
-    {: pre}
+    {: codeblock}
 
     ```sql
     -- What is the distribution of total traffic by hour?
@@ -372,7 +369,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     GROUP BY 1
     ORDER BY 1 ASC
     ```
-    {: pre}
+    {: codeblock}
 
     ```sql
     -- Why did the previous result return an empty hour?
@@ -381,7 +378,7 @@ If you prefer not to wait for the simulator to send all log messages, upload a [
     FROM cos://us-geo/YOUR_BUCKET_NAME/logs/http-logs_TIME.csv
     WHERE SUBSTRING(TIMESTAMP, 13, 2) == ''
     ```
-    {: pre}
+    {: codeblock}
 
 FROM clauses are not limited to a single file. Use `cos://us-geo/YOUR_BUCKET_NAME/logs/` to run SQL queries on all files in the bucket.
 {: tip}
@@ -400,13 +397,13 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
    {: pre}
 2. Connect to the Hive server by using with Beeline client.
    ```sh
-   $ beeline -u ‘jdbc:hive2://chs-xxxxx-mn001.<change-me>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive’ -n clsadmin -p <password>
+   beeline -u ‘jdbc:hive2://chs-xxxxx-mn001.<change-me>.ae.appdomain.cloud:8443/;ssl=true;transportMode=http;httpPath=gateway/default/hive’ -n clsadmin -p <password>
    ```
    {: pre}
    The hive_jdbc service endpoint can be found under the service credential tab of the IAE resource page. 
 3. Create an external hive table with the following command.
    ```sql
-   CREATE EXTERNAL TABLE myhivetable (host string, ts string, request string, responseCode int, bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<bucketname>.<identifer>/' tblproperties ("skip.header.line.count"="1");
+   CREATE EXTERNAL TABLE myhivetable (host string, ts string, request string, responseCode int, bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifer>/logs/' tblproperties ("skip.header.line.count"="1");
    ```
 
    The value of `<identifer>` will be the same one that you defined during the creation of {{site.data.keyword.iae_short}} initially. Note that for Hive you need to point to a parent folder which contains the CSV file. In the example above, the data got written in the `logs` folder for this purpose.
@@ -428,17 +425,20 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    ```sh
    ssh clsadmin@chs-xxxxx-mn003.<changeme>.ae.appdomain.cloud 
    ```
+   {: pre}
 2. Open a pyspark-shell on your {{site.data.keyword.iae_short}} cluster. 
    ```sh
    pyspark
    ```
-3. Create a spark dataframe of the csv file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up.
+   {: pre}
+3. Create a Spark dataframe of a csv file which is present in the {{site.data.keyword.cos_short}} bucket. Note that the {{site.data.keyword.cos_short}} credentials have already been added to the {{site.data.keyword.iae_short}} cluster during set up.
    ```sh
    df = spark.read.csv('cos://<bucketname>.<identifer>/<objectname>')
    ```
-   For example if the name of the bucket is `log-analysis-cos`, service name is joesobjectstore and the path to the parquet file is nasadata/: 
+   {: pre}
+   For example if the name of the bucket is `john-log-analysis`, service name is `log-analysis-cos` and the path to the file is nasadata/: 
    ```sh
-   df = spark.read.csv('cos://log-analysis.joesobjectstore/nasadata/ NASA_access_log_Jul95.csv')
+   df = spark.read.csv('cos://john-log-analysis.log-analysis-cos/nasadata/NASA_access_log_Jul95.csv')
    ```
 4. Any SQL query can be performed on the data and the result can be stored in a new dataframe.
 5. The following code block will perform an SQL query the data frame. A view is then created and first 10 rows are printed.
@@ -469,7 +469,6 @@ From the [Resource List](https://{DomainName}/resources?search=log-analysis), us
 * log-analysis-cos
 
 ## Related content
-
 {:related}
 
 * [Apache Kafka](https://kafka.apache.org/)
