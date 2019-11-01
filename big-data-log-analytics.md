@@ -266,9 +266,11 @@ This section uses [node-rdkafka](https://www.npmjs.com/package/node-rdkafka). Se
     ```sh
     npm install
     ```
+    {: pre}
     ```sh
     npm run build
     ```
+    {: pre}
     ```sh
     node dist/index.js --file <LOGFILE> --parser httpd --broker-list <BROKERLIST> \
     --api-key <APIKEY> --topic webserver --rate 100
@@ -405,6 +407,7 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
    ```sql
    CREATE EXTERNAL TABLE myhivetable (host string, ts string, request string, responseCode int, bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifer>/logs/' tblproperties ("skip.header.line.count"="1");
    ```
+   {: codeblock}
 
    The value of `<identifer>` will be the same one that you defined during the creation of {{site.data.keyword.iae_short}} initially. Note that for Hive you need to point to a parent folder which contains the CSV file. In the example above, the data got written in the `logs` folder for this purpose.
 4. Just like the commands executed earlier SQL queries can be executed on the table. For example:
@@ -415,6 +418,7 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
    ORDER BY 2 DESC
    LIMIT 5;
    ```
+   {: codeblock}
 
 ### Investigating data using Spark SQL
 {: #sparksql}
@@ -447,6 +451,7 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    df_query = sqlContext.sql("SELECT * FROM Table LIMIT 10")
    df_query.show(10)
    ```
+   {: codeblock}
    The query given here can be replaced with any other query which needs to be performed. 
 
 ## Expand the tutorial
@@ -472,3 +477,4 @@ From the [Resource List](https://{DomainName}/resources?search=log-analysis), us
 {:related}
 
 * [Apache Kafka](https://kafka.apache.org/)
+* [Configure a {{site.data.keyword.cos_full_notm}} connection through Ambari](https://{DomainName}/docs/services/AnalyticsEngine?topic=AnalyticsEngine-config-cos-ambari)
