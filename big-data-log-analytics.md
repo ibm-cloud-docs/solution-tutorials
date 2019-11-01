@@ -79,7 +79,7 @@ In this section, you will create the services required to perform analysis of lo
    1. Click **Create**
 1. Under **Service Credentials**, create new credential and select **Include HMAC Credential**.
    1. Make note of the _access_key_id_ and _secret_access_key_ values.
-1. Create a bucket named `\<your-initial>-log-analysis with **Cross Region** resiliency.
+1. Create a bucket named `<your-initial>-log-analysis` with **Cross Region** resiliency.
 1. Under **Endpoint**, find the **private** endpoint to access your bucket.
 
 ### {{site.data.keyword.messagehub}}
