@@ -102,17 +102,51 @@ To confirm the creation of subnet, click **Subnets** on the left pane and wait u
 1. Select **VPC default** for your subnet access control list (ACL).
 1. Leave the public gateway to **Detached** and click **Create subnet**.
 
+### Create a security group to allow inbound traffic to your application
+
+To allow traffic to the application you will deploy on virtual server instances, you need to enable inbound rules for HTTP (80) and HTTPS (443) ports. In later steps, when creating virtual server instances, you will add these instances to the security group defining those rules.
+
+1. Navigate to **Security groups**.
+2. Create a new security group called **vpc-region1-sg** in **vpc-region1** with the below inbound rules:
+   <table>
+     <thead>
+       <tr>
+         <td><strong>Protocol</strong></td>
+         <td><strong>Destination type</strong></td>
+         <td><strong>Destination</strong></td>
+         <td><strong>Value</strong></td>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <td>TCP</td>
+         <td>Any</td>
+         <td>0.0.0.0/0</td>
+         <td>Ports 80-80</td>
+       </tr>
+       <tr>
+         <td>TCP</td>
+         <td>Any</td>
+         <td>0.0.0.0/0</td>
+         <td>Ports 443-443</td>
+       </tr>
+     </tbody>
+   </table>
+
 ### Provision VSIs
 Once the status of the subnets changes to **Available**,
 
 1. Click on **vpc-region1-zone1-subnet** and click **Attached resources**, then **New instance**.
-1. Enter **vpc-region1-zone1-vsi** as your virtual server's unique name. Then, select the VPC your created earlier, resource group and the **Location** along with the **zone** as before.
+   1. Enter **vpc-region1-zone1-vsi** as your virtual server's unique name.
+   2. Select the VPC your created earlier, resource group and the **Location** along with the **zone** as before.
 1. Select **Compute** with 2vCPUs and 4 GB RAM as your profile.To check other available profiles, click **All profiles**
 1. Set **SSH keys** to the the SSH key you created earlier.
 1. Set the **image** to **Ubuntu Linux** and pick any version of the image.
 1. Under **Network interfaces**, click on the **Edit** icon next to the Security Groups
-   * Check whether **vpc-region1-zone1-subnet** is selected as the subnet. If not, select and click **Save**.
-   * Click **Create virtual server instance**.
+   * Select **vpc-region1-zone1-subnet** as the subnet.
+   * Uncheck the default security group and check **vpc-region1-sg**.
+   * Click **Save**.
+1. Click **Create virtual server instance**.
 1.  Wait until the status of the VSI changes to **Powered On**. Then, select the VSI **vpc-region1-zone1-vsi**, scroll to **Network Interfaces** and click **Reserve** under **Floating IP** to associate a public IP address to your VSI. Save the associated IP Address to a clipboard for future reference.
 1. **REPEAT** the above steps to provision a VSI in **zone 2** of **region 1**.
 
@@ -157,7 +191,6 @@ Once you successfully SSH into the server provisioned in subnet of zone 1 of reg
    {:codeblock}
 
 **REPEAT** the above steps to install and configure the webserver on the VSIs in subnets of all the zones and don't forget to update the html with respective zone information.
-
 
 ## Distribute traffic between zones with load balancers
 {: #distribute-traffic-with-load-balancers}
