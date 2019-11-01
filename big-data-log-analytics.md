@@ -128,10 +128,10 @@ In this section, you will create the services required to perform analysis of lo
    where:
       - `identifier` is the name of the name of the {{site.data.keyword.cos_short}} service (`log-analysis-cos`),
       - `access_key_id` and `secret_access_key` are found in the service credentials created earlier.
-      - `cosEndpoint` is a private endpoint to access the public.
+      - `cosEndpoint` is a private endpoint to access the {{site.data.keyword.cos_short}} bucket.
 1. Once the service is provisioned, go to **Manage** to retrieve the user name and password for the cluster. You may need to reset the cluster password.
 1. Under **Service credentials**, create new credential.
-1. From the credentials, make note of the `ssh` value.
+1. From the credentials, make note of the `ssh` value giving the *ssh* command line to execute to connect to the cluster.
 
 ## Process log messages with Streams in Watson Data Platform
 {: #configure-streams}
@@ -175,7 +175,7 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     ssl.enabled.protocols=TLSv1.2
     ssl.endpoint.identification.algorithm=HTTPS
     ```
-    {: pre}
+    {: codeblock}
 3. Replace `USER` and `PASSWORD` in your `message-hub.config` file with the `user` and `password` values seen in **Service Credentials** from the previous section. Save `message-hub.config`.
 4. From the `bin` directory, run the following command. Replace `KAFKA_BROKERS_SASL` with the `kafka_brokers_sasl` value seen in **Service Credentials**. An example is provided.
     ```sh
@@ -195,7 +195,7 @@ The `webserver-flow` is currently idle and awaiting messages. In this section, y
     ```javascript
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
-    {: pre}
+    {: codeblock}
 ![Preview page](images/solution31/preview_data.png)
 
 ### Create a Streams flow target
@@ -207,7 +207,7 @@ In this section, you will complete the streams flow configuration by defining a 
 2. Select the **{{site.data.keyword.cos_full_notm}}** tile as a target.
     * Click **Add Connection** and select `log-analysis-cos`.
     * Click **Create**.
-    * Enter the **File path** `/YOUR_BUCKET_NAME/logs/http-logs_%TIME.csv`. Replace `YOUR_BUCKET_NAME` with the one used in the first section.
+    * Enter the **File path** `/YOUR_BUCKET_NAME/logs/http-logs_%TIME.csv`. Replace `YOUR_BUCKET_NAME` with the one created in the first section.
     * Select **csv** in the **Format** dropdown.
     * Check the **Column header row** checkbox.
     * Select **Time** in the **File Creation Policy** dropdown.
