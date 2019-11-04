@@ -306,7 +306,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    {:codeblock}
 
-   Execute the following command to load the values the file created above: 
+   Execute the following command to load values from the file created above: 
    ```sh
    sysctl -p
    ```
