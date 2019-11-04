@@ -67,7 +67,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 1. The infrastructure (VPC, Subnets, Security Groups with rules, Network ACL and VSIs) are set up using a provided script.
 2. The microservice interfaces with {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} through private endpoints.
 3. A VPC/VPN Gateway is provisioned to expose the virtual private cloud environment to the on-premises network.
-4. The Strongswan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
+4. The strongSwan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
 5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://{DomainName}/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-vpn-with-your-vpc&locale=en#build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
 
 ## Before you begin
