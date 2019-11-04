@@ -202,7 +202,7 @@ Complete the sequence:
    1. Set **path** to `/entries`
    2. Set **verb** to `PUT`
    3. Select the **save-guestbook-entry-sequence** action
-8. Save and expose the API. Make note of the provided route, as you will it from your web application.
+8. Save and expose the API. Make note of the provided route, as you will use it from your web application.
 
 ## Deploy the web app
 
