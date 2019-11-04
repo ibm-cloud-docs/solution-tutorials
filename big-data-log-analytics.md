@@ -123,7 +123,7 @@ In this section, you will create the services required to perform analysis of lo
      }
    }
    ```
-   {: pre}
+   {: codeblock}
 
    where:
       - `identifier` is the name of the name of the {{site.data.keyword.cos_short}} service (`log-analysis-cos`),
@@ -219,7 +219,7 @@ In this section, you will complete the streams flow configuration by defining a 
     ```javascript
     { "host": "199.72.81.55", "timestamp": "01/Jul/1995:00:00:01 -0400", "request": "GET /history/apollo/ HTTP/1.0", "responseCode": 200, "bytes": 6245 }
     ```
-    {: pre}
+    {: codeblock}
 6. Return to your bucket in {{site.data.keyword.cos_short}}. New CSV files will added 60 seconds after messages have entered the flow or the flow is restarted.
    ![webserver-flow](images/solution31/flow.png)
 
@@ -439,11 +439,12 @@ The data pushed to cos can be also queried using Apache Spark that is part of th
    ```sh
    df = spark.read.csv('cos://<bucketname>.<identifer>/<objectname>')
    ```
-   {: pre}
+   {: codeblock}
    For example if the name of the bucket is `john-log-analysis`, service name is `log-analysis-cos` and the path to the file is nasadata/: 
    ```sh
    df = spark.read.csv('cos://john-log-analysis.log-analysis-cos/nasadata/NASA_access_log_Jul95.csv')
    ```
+   {: codeblock}
 4. Any SQL query can be performed on the data and the result can be stored in a new dataframe.
 5. The following code block will perform an SQL query the data frame. A view is then created and first 10 rows are printed.
    ```sh
