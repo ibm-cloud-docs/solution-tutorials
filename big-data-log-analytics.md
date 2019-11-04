@@ -405,7 +405,7 @@ Just as you ran queries using {{site.data.keyword.sqlquery_short}}, you can also
    The hive_jdbc service endpoint can be found under the service credential tab of the IAE resource page. 
 3. Create an external hive table with the following command.
    ```sql
-   CREATE EXTERNAL TABLE myhivetable (host string, ts string, request string, responseCode int, bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifer>/logs/' tblproperties ("skip.header.line.count"="1");
+   CREATE EXTERNAL TABLE myhivetable (event_key string, event_topic string, event_offset int, event_partition int,event_timestamp string, host string, ts string, request string, responseCode int,bytes int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION 'cos://<YOUR_BUCKET_NAME>.<identifer>/logs/' tblproperties ("skip.header.line.count"="1");
    ```
    {: codeblock}
 
