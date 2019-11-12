@@ -64,11 +64,11 @@ This guide uses GitHub Pages to host the static website. Make sure you have a pu
 
 Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data.keyword.cloudant_short_notm}} is a fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB and accessible through a secure HTTPS API, which scales as your application grows.
 
-1. In the Catalog, select **Cloudant** under Databases.
+1. In the [Catalog](https://{DomainName}/catalog/), select **Cloudant** under Databases.
 2. Set the service name to ***guestbook-db*** > choose a region/location > select a resource group > select **Use both legacy credentials and IAM** as authentication method and click **Create**.
 3. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), click on the **guestbook-db** instance name to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Provisioned`.
 4. Under **Manage**, click on  **Launch Cloudant Dashboard** which will open in a new browser tab. Note: You may be asked to log into your Cloudant instance.
-5. Click on **Create Database** and create a database named ***guestbook***, leave **Partitioned** unchecked.
+5. Click on **Create Database** and create a database named ***guestbook***. Select **Non-Partitioned** under **Partitioning**.
 6. Back in the service, Under **Service credentials**
    1. Create **New credential**, accept the defaults and click **Add**.
    2. Click **View credentials** under Actions. We will need these credentials later to allow Cloud Functions actions to read/write to your Cloudant service.
@@ -196,21 +196,21 @@ Complete the sequence:
 5. Set API name to `guestbook` and base path to `/guestbook`
 6. Click on **Create operation** and create an operation to retrieve guestbook entries:
    1. Set **path** to `/entries`
-   2. Set **verb** to `GET*`
+   2. Set **verb** to `GET`
    3. Select the **read-guestbook-entries-sequence** action
 7. Click on **Create operation** and create an operation to persist a guestbook entry:
    1. Set **path** to `/entries`
    2. Set **verb** to `PUT`
    3. Select the **save-guestbook-entry-sequence** action
-8. Save and expose the API.
+8. Save and expose the API. Make note of the provided route, as you will use it from your web application.
 
 ## Deploy the web app
 
-1. Fork the Guestbook user interface repository https://github.com/IBM-Cloud/serverless-guestbook to your public GitHub.
-2. Modify **docs/guestbook.js** and replace the value of **apiUrl** with the route given by API Gateway.
-3. Commit the modified file to your forked repository.
-4. In the Settings page of your repository, scroll to **GitHub Pages**, change the source to **master branch /docs folder** and Save.
-5. Access the public page for your repository.
+1. Fork the Guestbook user interface repository https://github.com/IBM-Cloud/serverless-guestbook to your public GitHub. You can do this by going to https://github.com/IBM-Cloud/serverless-guestbook in the browser, and then clicking the **Fork** button.
+2. In your forked version of the code, modify **docs/guestbook.js** and replace the value of **apiUrl** with the route given by API Gateway. You can do this by navigating to the **docs/guestbook.js** file, and then clicking the edit pencil.
+3. Commit the modified file to your forked repository by clicking the **Commit Changes** button at the bottom of the page.
+4. In the Settings page of your repository, scroll to **GitHub Pages**, and change the source to **master branch /docs folder**. This setting will be automatically saved.
+5. Access the public page for your repository. The link to your public page can be found under the **GitHub Pages** section.
 6. You should see the "test" guestbook entry created earlier.
 7. Add new entries.
 

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-10-11"
+lastupdated: "2019-11-11"
 lasttested: "2019-10-01"
 ---
 
@@ -66,7 +66,7 @@ In this section, you are going to set up the needed services and prepare the env
    ibmcloud target --cf
    ```
    {: pre}
-3. Create a {{site.data.keyword.Db2_on_Cloud_short}}}} instance and name it **eventDB**. Adapt the region **us-south** to your region.
+3. Create a {{site.data.keyword.Db2_on_Cloud_short}} instance and name it **eventDB**. Adapt the region **us-south** to your region.
    ```sh
    ibmcloud resource service-instance-create eventDB dashdb-for-transactions free us-south
    ```
@@ -89,7 +89,7 @@ In this section, you are going to set up the needed services and prepare the env
    {: pre}
 5. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Some of the actions are enabled as web actions and a secret is set to prevent unauthorized invocations. Choose a secret and pass it in as parameter - replace **YOURSECRET** accordingly.
 
-   One of the actions gets invoked to create a table in {{site.data.keyword.dashdbshort}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
+   One of the actions gets invoked to create a table in {{site.data.keyword.Db2_on_Cloud_short}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
 
    ```sh
    sh setup.sh YOURSECRET "dashDB for Transactions"
@@ -159,7 +159,7 @@ After some more searches and new event entries, you can revisit the chat history
 ## Remove resources
 {:removeresources}
 
-Executing the cleanup script in the main directory deletes the event table from {{site.data.keyword.dashdbshort}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script does not change the {{site.data.keyword.conversationshort}} workspace or skill.
+Executing the cleanup script in the main directory deletes the event table from {{site.data.keyword.Db2_on_Cloud_short}} and removes the actions from {{site.data.keyword.openwhisk_short}}. This might be useful when you start modifying and extending the code. The cleanup script does not change the {{site.data.keyword.conversationshort}} workspace or skill.
 ```sh
 sh cleanup.sh
 ```
@@ -170,7 +170,7 @@ In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
 1. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
-2. Use {{site.data.keyword.databases-for-postgresql}} instead of {{site.data.keyword.dashdbshort}}. The [GitHub repository for this Slackbot tutorial](https://github.com/IBM-Cloud/slack-chatbot-database-watson) already has code to support {{site.data.keyword.databases-for-postgresql}}.
+2. Use {{site.data.keyword.databases-for-postgresql}} instead of {{site.data.keyword.Db2_on_Cloud_short}}. The [GitHub repository for this Slackbot tutorial](https://github.com/IBM-Cloud/slack-chatbot-database-watson) already has code to support {{site.data.keyword.databases-for-postgresql}}.
 3. Add a weather service and retrieve forecast data for the event date and location.
 4. [Control the encryption keys for your database by adding {{site.data.keyword.keymanagementservicelong_notm}}](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-key-protect).
 5. Export event data as iCalendar **.ics** file.
@@ -190,7 +190,7 @@ Chatbot-related blog posts:
 Documentation and SDKs:
 * GitHub repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
 * [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_about#about-cloud-functions)
-* Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
+* Documentation: [IBM Knowledge Center for {{site.data.keyword.Db2_on_Cloud_short}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [Free Db2 edition for developers](https://www.ibm.com/us-en/marketplace/ibm-db2-direct-and-developer-editions) for developers
 * Documentation: [API Description of the ibm_db Node.js driver](https://github.com/ibmdb/node-ibm_db)
 * [{{site.data.keyword.cloudantfull}} documentation](https://{DomainName}/docs/services/Cloudant?topic=cloudant-overview#overview)

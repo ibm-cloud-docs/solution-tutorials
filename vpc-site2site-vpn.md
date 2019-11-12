@@ -67,7 +67,7 @@ The following diagram shows the virtual private cloud containing an app server. 
 1. The infrastructure (VPC, Subnets, Security Groups with rules, Network ACL and VSIs) are set up using a provided script.
 2. The microservice interfaces with {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-postgresql}} through private endpoints.
 3. A VPC/VPN Gateway is provisioned to expose the virtual private cloud environment to the on-premises network.
-4. The Strongswan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
+4. The strongSwan open source IPsec gateway software is used on-premises to establish the VPN connection with the cloud environment.
 5. The VPC/VPN allows access to service endpoints from on-premises [Access service endpoints using VPN](https://{DomainName}/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-vpn-with-your-vpc&locale=en#build-se-connectivity-using-vpn), we will test this scenario at then end of this tutorial.
 
 ## Before you begin
@@ -185,8 +185,8 @@ In this section, you will create the database service.
    ```
    {: codeblock}
 
-   You will get a result similar to the following, take note of the name of the file generated following `nodejs-graphql/`: 
-   
+   You will get a result similar to the following, take note of the name of the file generated following `nodejs-graphql/`:
+
    ```
    Retrieving certificate for vpns2s-pg...
    OK
@@ -235,7 +235,7 @@ In the following, create these resources by configuring and then running a setup
 
    Note down for later use the returned values for **BASTION_IP_ADDRESS**, **VSI_CLOUD_IP**, and **CLOUD_CIDR**. The output is also stored in the file **network_config.sh**. The file can be used for automated setup.
 
-### Create an on-premises virtual server 
+### Create an on-premises virtual server
 {: #create-onprem}
 
 To simulate the on-premises environment, you create a virtual server (VSI) with classic infrastructure. In the same directory as for the previous section, follow these steps:
@@ -273,7 +273,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    source network_config.sh
    ```
    {:pre}
-2. Connect to the "on-premises" VSI **vpns2s-onprem-vsi** using ssh. 
+2. Connect to the "on-premises" VSI **vpns2s-onprem-vsi** using ssh.
 
    ```sh
    ssh root@$VSI_ONPREM_IP
@@ -303,6 +303,12 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    net.ipv4.conf.all.accept_redirects = 0
    net.ipv4.conf.all.send_redirects = 0
    EOF
+   ```
+   {:codeblock}
+
+   Execute the following command to load values from the file created above: 
+   ```sh
+   sysctl -p
    ```
    {:codeblock}
 
@@ -371,7 +377,7 @@ To test that the VPN connection has been successfully established, use the simul
    source network_config.sh
    ```
    {:pre}
-   
+
    ```sh
    ssh -J root@$VSI_ONPREM_IP root@$VSI_CLOUD_IP
    ```
@@ -532,7 +538,7 @@ With the microservice app set up and running, test the scenario by accessing the
    ```
    {:pre}
 
-4. The API server will in a single operation create a record in the {{site.data.keyword.databases-for-postgresql}} using the private endpoint and add an item to the {{site.data.keyword.cos_short}} bucket using the direct endpoint and return the results in JSON format. 
+4. The API server will in a single operation create a record in the {{site.data.keyword.databases-for-postgresql}} using the private endpoint and add an item to the {{site.data.keyword.cos_short}} bucket using the direct endpoint and return the results in JSON format.
    ```sh
    curl \
    -X POST \
@@ -552,15 +558,15 @@ With the microservice app set up and running, test the scenario by accessing the
    ```
    {:pre}
 
-6. Using your browser, access the [Resource List](https://{DomainName}/resources), navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it. 
+6. Using your browser, access the [Resource List](https://{DomainName}/resources), navigate to the **Storage** category and open the `vpns2s-cos` {{site.data.keyword.cos_short}}.  You can open the storage bucket that was created and view the file that was added by the API server along with the metadata associated with it.
 
 ### Test connecting from on-premises to service endpoint over the VPN connection
 {: #test-service-endpoint}
 
 In some situations, it might be desirable to interact directly from an on-premises application to a Cloud service that is only accessible via a private endpoint. For example, leveraging a message-queueing service such as [{{site.data.keyword.messages-for-rabbitmq}}](https://{DomainName}/catalog/services/messages-for-rabbitmq) with a Producer running in the Cloud and a Consumer running on-premises.  In our example, we will interact directly with the {{site.data.keyword.databases-for-postgresql}} we have been using from the on-prem VSI.
 
-1. Obtain your {{site.data.keyword.databases-for-postgresql}} credentials from the [**pg_credentials.json**](#create-postgresql) file created earlier. Edit the file located under the 
-**sampleapps/nodejs-graphql/config** subdirectory in your local system. Copy the command found under credentials.cli.composed to be used later. 
+1. Obtain your {{site.data.keyword.databases-for-postgresql}} credentials from the [**pg_credentials.json**](#create-postgresql) file created earlier. Edit the file located under the
+**sampleapps/nodejs-graphql/config** subdirectory in your local system. Copy the command found under credentials.cli.composed to be used later.
 
 2. In the same terminal window used to conduct the previous test and connected to the "onprem" VSI terminal via SSH. Issue the following command:
 
@@ -568,7 +574,7 @@ In some situations, it might be desirable to interact directly from an on-premis
    apt-get install postgresql-client
    ```
 
-3. From the shell, issue the command captured in step 1 to connect to the {{site.data.keyword.databases-for-postgresql}} directly over the private endpoint. 
+3. From the shell, issue the command captured in step 1 to connect to the {{site.data.keyword.databases-for-postgresql}} directly over the private endpoint.
 
 4. From the `ibmclouddb=>` prompt issue the following command:
 
@@ -608,7 +614,6 @@ Want to add to or extend this tutorial? Here are some ideas:
 ## Related content
 {: #related}
 
-- [VPC Glossary](/docs/vpc?topic=vpc-vpc-glossary)
 - [IBM Cloud CLI plugin for VPC Reference](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-reference)
 - [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
 - Solution tutorial: [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
