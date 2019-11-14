@@ -62,7 +62,7 @@ An existing solution with the application and connected (micro-) services is ext
 ## Assess your application
 {: #app_properties}
 
-You developed a solution and successfully deployed it to {{site.data.keyword.cloud_notm}}. Now you want to look into how to harden the app environment. This can be motivated by regular activity as part of (agile) development and the next steps towards a fully secure app or by increasing requirements for an app already in production. 
+You developed a solution and successfully deployed it to {{site.data.keyword.cloud_notm}}. Now you want to look into how to harden the app environment. This can be part of the regular activities of (agile) development and the next steps towards a fully secure app or by increasing requirements for an app already in production. 
 
 If you tried the tutorial on how to [apply end to end security to a cloud application](https://{DomainName}/docs/tutorials?topic=solution-tutorials-cloud-e2e-security), you already know how to rotate service credentials. But there is far more to app security than regular changes of passwords and access keys. You may want to assess the application, its deployment and usage  characteristics to better understand what needs to, could be and should be addressed. Depending on your industry, country and region, etc. there exist different [security and resiliency requirements](https://www.ibm.com/cloud/compliance). It could mean
 
@@ -75,7 +75,7 @@ If you tried the tutorial on how to [apply end to end security to a cloud applic
 ## Isolate runtime environments, networks traffic and data
 {: #isolate_environments}
 
-One of the fundamental principles of Cloud Computing is the sharing of resources. This could be the sharing of a machine, i.e., applications from many users running on the same computer, to just sharing the data center and parts of the infrastructure. In the following, you learn how you can isolate runtime environments, network traffic and stored data to increase application security.
+One of the fundamental principles of Cloud Computing is the sharing of resources. This could be from the sharing of a machine (i.e., the sharing of applications by many users who are running on the same computer) to just sharing the data center and parts of the infrastructure. In the following, you learn how you can isolate runtime environments, network traffic and stored data to increase application security.
 
 ### Use dedicated resources and virtual private clouds
 {: #isolate_runtimes}
@@ -139,7 +139,7 @@ One of the most often used services is {{site.data.keyword.cos_short}}. After yo
 
 ## Conclusions
 
-In this tutorial, you learned how to increase application security by moving from standard to advanced capabilities. The journey included the isolation of compute, network and data resources and by asserting even greater control over encryption keys. Security by design is not a hollow phrase, it means to assess security requirements early on and take them into account when designing a solution. As you have seen, {{site.data.keyword.cloud_notm}} provides the building blocks for different security requirements and types of applications. Now it is to you to combine them for your secure cloud application. And don't forget to check out the next section with links to further security-related resources.
+In this tutorial, you learned how to increase application security by moving from standard to advanced capabilities. The journey included the isolation of compute, network and data resources, and also included asserting greater control over encryption keys. Security by design is not a hollow phrase, it means to assess security requirements early on and take them into account when designing a solution. As you have seen, {{site.data.keyword.cloud_notm}} provides the building blocks for different security requirements and types of applications. Now you are recommended to combine the blocks for your secure cloud application. And don't forget to check out the next section with links to further security-related resources.
 
 ## Related content
 {: #related}
