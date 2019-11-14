@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-11-11"
-lasttested: "2019-10-01"
+lastupdated: "2019-11-14"
+lasttested: "2019-11-14"
 ---
 
 {:shortdesc: .shortdesc}
@@ -61,58 +61,64 @@ In this section, you are going to set up the needed services and prepare the env
    cd slack-chatbot-database-watson
    ```
    {: pre}
-2. If you are not logged in, use `ibmcloud login` to log in interactively. Target the organization and space where to create the database service with:
+2. If you are not logged in, use `ibmcloud login` to log in interactively. Make sure to target the resource group to work with. It is used to create the services and actions. You can list your available resource groups using `ibmcloud resource groups`.
+   ```sh
+   ibmcloud target -g RESOURCE_GROUP
+   ```
+   {: pre}
+
+   Use `ibmcloud target -g default` to switch to the default resource group.
+   {: tip}
+
+   Even though it is not used, you need to target a Cloud Foundry organization and space. Use the following to pick it interactively. 
    ```sh
    ibmcloud target --cf
    ```
    {: pre}
-3. Create a {{site.data.keyword.Db2_on_Cloud_short}} instance and name it **eventDB**. Adapt the region **us-south** to your region.
+3. Create a {{site.data.keyword.Db2_on_Cloud_short}} instance and name it **eventDB**. Adapt the region **us-south** to your region, e.g., **eu-de**.
    ```sh
    ibmcloud resource service-instance-create eventDB dashdb-for-transactions free us-south
    ```
    {: pre}
-   You can also use another than the **free** (lite) plan. Next, create a service alias. Replace **YOUR_SPACE** with the space name you selected in step 3.
-   ```sh
-   ibmcloud resource service-alias-create eventDB --instance-name eventDB -s YOUR_SPACE
-   ```
-   {: pre}
+   
+   You can also use another than the **free** (lite) plan. The free plan is not available in all locations.
 
-   To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:
+4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **slackbotkey**:
    ```sh
-   ibmcloud cf create-service-key eventDB slackbotkey
+   ibmcloud resource service-key-create slackbotkey Manager --instance-name eventDB
    ```
    {: pre}
-4. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan.
+5. Create an instance of the {{site.data.keyword.conversationshort}} service. Use **eventConversation** as name and the free Lite plan. Adapt **us-south** to your location.
    ```sh
-   ibmcloud cf create-service conversation free eventConversation
+   ibmcloud resource service-instance-create eventConversation conversation free us-south
    ```
    {: pre}
-5. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Some of the actions are enabled as web actions and a secret is set to prevent unauthorized invocations. Choose a secret and pass it in as parameter - replace **YOURSECRET** accordingly.
+6. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Some of the actions are enabled as web actions and a secret is set to prevent unauthorized invocations. Choose a secret and pass it in as parameter - replace **YOURSECRET** accordingly.
 
    One of the actions gets invoked to create a table in {{site.data.keyword.Db2_on_Cloud_short}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
 
    ```sh
-   sh setup.sh YOURSECRET "dashDB for Transactions"
+   sh setup.sh YOURSECRET "dashdb-for-transactions"
    ```
    {: pre}
 
    **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud fn action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
-6.  Extract the namespace information for the deployed actions.
+7.  Extract the namespace information for the deployed actions.
 
    ```sh
    ibmcloud fn action list | grep eventInsert
    ```
    {: pre}
 
-   Note down the part before **/slackdemo/eventInsert**. It is the encoded organisation and space. You need it in the next section.
+   Note down the part before **/slackdemo/eventInsert**, it is the namespace. You need it in the next section.
 
 ## Load the skill / workspace
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
-2. Click on **Launch Tool** to get to the {{site.data.keyword.conversationshort}} Tool.
-3. Switch to **Skills**, then click **Create skill** and then on **Import skill**.
-4. In the dialog, after clicking **Choose JSON file**, select the file **assistant-skill.json** from the local directory. Leave the import option at **Everything (Intents, Entities, and Dialog)**, then click **Import**. This creates a new skill named **TutorialSlackbot**.
-5. Click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
+2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
+3. On the left navigation select **Skills**, then click **Create skill**, continue with **Next** and the preselected **Dialog skill**, finally click on **Import skill**.
+4. In the dialog, after clicking **Choose JSON file**, select the file **assistant-skill.json** from the local directory. Click **Import**. This creates a new skill named **TutorialSlackbot**.
+5. On the left click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
 
    The dialog has nodes to handle questions for help and simple "Thank You". The node **newEvent** and it's child gather the necessary input and then call an action to insert a new event record into Db2.
 
@@ -122,19 +128,19 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
 
   Details will be explained later below once everything is set up.
   ![](images/solution19/SlackBot_Dialog.png)
-6. Click on the dialog node **credential_node**, open the JSON editor by clicking on the menu icon on the right of **Then respond with**.
+6. Click on the dialog node **credential_node**, open the JSON editor by clicking on the menu icon on the right of **Then set context**.
 
-   ![](images/solution19/SlackBot_DialogCredentials.png)
+   Replace the value **FN_NAMESPACE** for the variable **fn_namespace** with the namespace information which you retrieved earlier. Next, change **YOURSECRET** for **web_action_key** to your actual secret from before. Close the JSON editor by clicking on the icon again.
 
-   Replace **org_space** with the encoded organisation and space information which you retrieved earlier. Substitute any "@" with "%40". Next, change **YOURSECRET** to your actual secret from before. Close the JSON editor by clicking on the icon again.
+7. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase "show event by date 2019". It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
 
 ## Create an assistant and integrate with Slack
 
 Now, you will create an assistant associated with the skill from before and integrate it with Slack.
-1. Click on **Skills** in the top left, then select on **Assistants**. Next, click on **Create assistant**.
+1. Click on **Assistants** in the top left, then click on **Create assistant**.
 2. In the dialog, fill in **TutorialAssistant** as name, then click **Create assistant**. On the next screen, choose **Add dialog skill**. Thereafter, choose **Add existing skill**, pick **TutorialSlackbot** from the list and add it.
-3. After adding the skill, click **Add integration**, then from the list of **Managed integrations** select **Slack**.
-4. Follow the instructions to integrate your chatbot with Slack.
+3. After adding the skill, click **Add integration**, then from the list of **Third-party integrations** select **Slack**.
+4. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/services/assistant?topic=assistant-deploy-slack).
 
 ## Test the Slackbot and learn
 Open up your Slack workspace for a test drive of the chatbot. Begin a direct chat with the bot.
