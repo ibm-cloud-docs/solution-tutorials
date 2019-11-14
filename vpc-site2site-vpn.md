@@ -317,7 +317,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
    ```
    VSI_ONPREM_IP GW_CLOUD_IP : PSK "20_PRESHARED_KEY_KEEP_SECRET_19"
    ```
-   {:pre}
+   {:codeblock}
 
 6. The last file you need to configure is **/etc/ipsec.conf**. Add the following codeblock to the end of that file. Replace **VSI_ONPREM_IP**, **ONPREM_CIDR**, **GW_CLOUD_IP**, and **CLOUD_CIDR** with the respective known values.
 
@@ -347,7 +347,7 @@ Next, you will create the VPN gateway on the other site, in the simulated on-pre
       dpdaction=restart
       auto=start
    ```
-   {:pre}
+   {:codeblock}
 
 7. Restart the VPN gateway, then check its status by running: ipsec restart
 
