@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-29"
+lastupdated: "2019-11-18"
 lasttested: "2019-05-20"
 ---
 
@@ -232,7 +232,7 @@ With the Cloud Intenet Services application, take the following steps to set up 
 4. Similarly, set the `CNAME` record for the London endpoint.
    ![CNAME records](images/solution1/cnames.png)
 
-When using another default domain than `mybluemix.net` such as `cf.appdomain.cloud` or `cf.cloud.ibm.com`, make sure to use the [respective system domain](https://{DomainName}/docs/apps?topic=creating-apps-updatingapps#mapcustomdomain).
+When using another default domain than `mybluemix.net` such as `cf.appdomain.cloud` or `cf.cloud.ibm.com`, make sure to use the [respective system domain](https://{DomainName}/docs/cloud-foundry-public?topic=cloud-foundry-public-custom-domains#mapcustomdomain).
 {:tip}
 
 If you are using a different DNS provider, the steps for setting up the CNAME record vary depending on your DNS provider.
