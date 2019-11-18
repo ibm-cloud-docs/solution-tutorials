@@ -237,7 +237,7 @@ When using another default domain than `mybluemix.net` such as `cf.appdomain.clo
 
 If you are using a different DNS provider, the steps for setting up the CNAME record vary depending on your DNS provider.
 
-For your Cloud Foundry applications to be reachable through the custom domain, you will need to add the custom domain to the [list of domains in the Cloud Foundry organization where the applications are deployed](https://{DomainName}/docs/apps?topic=creating-apps-updatingapps#updatingapps). Once done you can add the routes to the application manifests:
+For your Cloud Foundry applications to be reachable through the custom domain, you will need to add the custom domain to the [list of domains in the Cloud Foundry organization where the applications are deployed](https://{DomainName}/docs/cloud-foundry-public?topic=cloud-foundry-public-custom-domains#mapcustomdomain). Once done you can add the routes to the application manifests:
 
    ```
    applications:
