@@ -127,7 +127,7 @@ After the preparation, you configure and test the app. The app is written in Pyt
 ![](images/solution24-github-traffic-analytics/RepositoryList.png)
 
 ## Deploy Cloud Function and Trigger
-With the management app in place, deploy an action, a trigger and a rule to connect the two in for {{site.data.keyword.openwhisk_short}}. These objects are used to automatically collect the GitHub traffic data on the specified schedule. The action connects to the database, iterates over all tenants and their repositories and obtains the view and cloning data for each repository. Those statistics are merged into the database.
+With the management app in place, deploy an action, a trigger and a rule to connect the two in {{site.data.keyword.openwhisk_short}}. These objects are used to automatically collect the GitHub traffic data on the specified schedule. The action connects to the database, iterates over all tenants and their repositories and obtains the view and cloning data for each repository. Those statistics are merged into the database.
 
 1. Change into the **functions** directory.
    ```sh
