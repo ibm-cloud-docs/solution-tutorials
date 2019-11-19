@@ -60,6 +60,10 @@ Solution Tutorials
         gather-visualize-analyze-iot-data.md
 
     {: .topicgroup}
+    Work In Progress Section
+        cloud-e2e-security-inprogress.md
+
+    {: .topicgroup}
     Identity and Access Management
         users-teams-applications.md
 
@@ -96,6 +100,7 @@ Solution Tutorials
         isolated-cloud-foundry-enterprise-apps.md
         multi-region-k8s-cis.md
         cloud-e2e-security.md
+        cloud-e2e-security-inprogress.md
         users-teams-applications.md
         /containers/containers-vpc_ks_tutorial
 

@@ -271,7 +271,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2019-10-11"
+          "lastUpdated": "2019-11-14"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -284,7 +284,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2019-10-24"
+          "lastUpdated": "2019-11-19"
         }
       ]
     },
@@ -303,7 +303,7 @@
             "Continuous Delivery",
             "Cloud Internet Services"
           ],
-          "lastUpdated": "2019-05-29"
+          "lastUpdated": "2019-11-18"
         },
         {
           "name": "Resilient and secure multi-region Kubernetes clusters",
@@ -343,7 +343,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-10-08"
+          "lastUpdated": "2019-11-05"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -358,7 +358,7 @@
             "Hyper Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-10-08"
+          "lastUpdated": "2019-11-05"
         }
       ]
     },
@@ -419,9 +419,10 @@
             "Cloud Object Storage",
             "Event Streams",
             "SQL Query",
-            "Streaming Analytics"
+            "Streaming Analytics",
+            "Analytics Engine"
           ],
-          "lastUpdated": "2019-10-10"
+          "lastUpdated": "2019-10-31"
         },
         {
           "name": "Build a data lake with Object Storage",
@@ -446,7 +447,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2019-10-02"
+          "lastUpdated": "2019-11-19"
         },
         {
           "name": "Build, deploy, test, and retrain a predictive machine learning model",
