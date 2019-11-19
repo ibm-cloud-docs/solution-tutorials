@@ -60,7 +60,7 @@ Solution Tutorials
         gather-visualize-analyze-iot-data.md
 
     {: .topicgroup}
-    Work In Progress Section
+    Work In Progress
         cloud-e2e-security-inprogress.md
 
     {: .topicgroup}
