@@ -94,6 +94,8 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 Skip this section if you have an existing **Standard** cluster you want to reuse with this tutorial.
 {: tip}
 
+| Kubernetes on Classic |
+|:-----------------|
 | Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
 | Set the **Location** to the one used in previous steps. |
 | Set **Cluster type** to **Standard**. |
@@ -104,8 +106,11 @@ Skip this section if you have an existing **Standard** cluster you want to reuse
 {: caption="Table 1. IAM roles" caption-side="top"}
 {: #simpletabtable1}
 {: tab-title="Kubernetes on Classic"}
-{: tab-group="IAM-simple"}
+{: tab-group="K8s-simple"}
+{: class="simple-tab-table"}
 
+| Kubernetes on VPC |
+|:-----------------|
 | Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
 | Set the **Location** to the one used in previous steps. |
 | Set **Cluster type** to **Standard**. |
@@ -115,7 +120,7 @@ Skip this section if you have an existing **Standard** cluster you want to reuse
 {: caption="Table 2. IAM roles - Access" caption-side="top"}
 {: #simpletabtable2}
 {: tab-title="Kubernetes on VPC"}
-{: tab-group="IAM-simple"}
+{: tab-group="K8s-simple"}
 {: class="simple-tab-table"}
 
 
