@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-10-02"
-lasttested: "2019-10-02"
+lastupdated: "2019-11-19"
+lasttested: "2019-11-19"
 ---
 
 {:shortdesc: .shortdesc}
@@ -55,6 +55,7 @@ In this section, you set up the needed services and prepare the environment. All
    ibmcloud cf create-service dashDB "Flex One" ghstatsDB -c '{"datacenter" : "eu-de:frankfurt", "oracle_compatible":"yes"}'
    ```
    {: pre}
+   Wait for the service to be ready. You can use the command `ibmcloud cf service ghstatsdb` to check the progress.
 
 4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **ghstatskey**:
    ```sh
@@ -97,7 +98,7 @@ In this section, you set up the needed services and prepare the environment. All
 The following steps are all performed using your Internet browser. First, you configure {{site.data.keyword.appid_short}} to use the Cloud Directory and to work with the Python app. Thereafter, you create a GitHub access token. It is needed for the deployed function to retrieve the traffic data.
 
 1. In the [{{site.data.keyword.cloud}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
-2. In the service dashboard, click on **Manage Authentication** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **On**, all other providers to **Off**.
+2. In the service dashboard, click on **Manage Authentication** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **Enabled**, all other providers to **Disabled**.
 
    You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/services/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
    {:tip}
@@ -107,7 +108,7 @@ The following steps are all performed using your Internet browser. First, you co
    For testing the app locally, the redirect URL is `http://0.0.0.0:5000/redirect_uri`. You can configure multiple redirect URLs.
    {:tip}
 
-4. In the menu on the left, click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Add User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
+4. In the menu on the left, expand **Cloud Directory** and click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Create User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
 5. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
    ![](images/solution24-github-traffic-analytics/GithubAccessToken.png)
 
@@ -134,7 +135,18 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    cd ../functions
    ```
    {: pre}
-2. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_reference#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
+2. [Create a new IAM namespace](https://{DomainName}/docs/openwhisk?topic=cloud-functions-namespaces#namespaces_create) which will hold the objects. It is created in your currently set resource group.
+   ```sh
+   ibmcloud fn namespace create ghstats --description "objects for GitHub statistics"
+   ```
+   {: pre}
+   Now set it as default for {{site.data.keyword.openwhisk_short}}:
+   ```sh
+   ibmcloud fn property set --namespace ghstats
+   ```
+   {: pre}
+
+3. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_reference#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
    ```sh
    ibmcloud fn action create collectStats --kind python-jessie:3 ghstats.zip
    ```
@@ -142,12 +154,12 @@ With the management app in place, deploy an action, a trigger and a rule to conn
 
    If you modify the source code for the action (`__main__.py`), then you can repackage the zip archive with `zip -r ghstats.zip  __main__.py github.py` again. See the file `setup.sh` for details.
    {:tip}
-3. Bind the action to the database service. Use the instance and the service key that you created during the environment setup.
+4. Bind the action to the database service. Use the instance and the service key that you created during the environment setup.
    ```sh
    ibmcloud fn service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
    ```
    {: pre}
-4. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_catalog_alarm#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
+5. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_catalog_alarm#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
    ```sh
    ibmcloud fn trigger create myDaily --feed /whisk.system/alarms/alarm \
               --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
@@ -157,12 +169,12 @@ With the management app in place, deploy an action, a trigger and a rule to conn
 
   You can change the trigger from a daily to a weekly schedule by applying `"0 6 * * 0"`. This would fire every Sunday at 6am.
   {:tip}
-5. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
+6. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
    ```sh
    ibmcloud fn rule create myStatsRule myDaily collectStats
    ```
    {: pre}
-6. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
+7. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
    ```sh
    ibmcloud fn action invoke collectStats  -r
    ```
@@ -174,7 +186,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    }
    ```
    {:codeblock}
-7. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories. You could enter a date and an organization name and then sort by viewcount to list the top scorers for a particular day.
+8. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories. You could enter a date and an organization name and then sort by viewcount to list the top scorers for a particular day.
    ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 ## Conclusions
