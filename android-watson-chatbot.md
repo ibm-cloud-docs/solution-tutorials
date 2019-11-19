@@ -64,32 +64,35 @@ This tutorial uses the following products:
 
 In this section, you will create the services required by the tutorial starting with {{site.data.keyword.conversationshort}} to build cognitive virtual assistants that help your customers.
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.conversationshort}}](https://{DomainName}/catalog/services/watson-assistant) service > **Lite** plan:
-   1. Set **Name** to **android-chatbot-assistant**
-   1. **Create**.
-2. Click **Service credentials** on the left pane and click **New credential**.
-   1. Set **Name** to **for-android-app**.
-   1. **Add**.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.conversationshort}}](https://{DomainName}/catalog/services/watson-assistant) service
+   1. Select a region and **Lite** as your pricing plan
+   2. Set **Name** to **android-chatbot-assistant** and select a resource group
+   3. Click **Create** to provision
+2. Click **Service credentials** on the left pane and click **New credential**
+   1. Set **Name** to **for-android-app**
+   2. Click **Add** to create a new credential
 3. Click **View Credentials** to see the credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}}.
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://{DomainName}/catalog/services/speech-to-text) service > **Lite** plan.
-   1. Set **Name** to **android-chatbot-stt**.
-   1. **Create**.
-2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
-   1. Set **Name** to **for-android-app**.
-   1. **Add**.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://{DomainName}/catalog/services/speech-to-text) service
+   1. Select a region and **Lite** as your pricing plan
+   2. Set **Name** to **android-chatbot-stt** and select a resource group
+   3. Click **Create** to provision
+2. Click **Service credentials** on the left pane and click **New credential** to add a new credential
+   1. Set **Name** to **for-android-app**
+   2. Click **Add** to create a new credential
 3. Click **View Credentials** to see the credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. The service provides several voices and can be configured in the Android app.
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.texttospeechshort}}](https://{DomainName}/catalog/services/text-to-speech) service > **Lite** plan.
-   1. Set **Name** to **android-chatbot-tts**.
-   1. **Create**.
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.texttospeechshort}}](https://{DomainName}/catalog/services/text-to-speech) service
+   1. Select a region and **Lite** as your pricing plan
+   2. Set **Name** to **android-chatbot-tts** and select a resource group
+   3. Click **Create** to provision
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
    1. Set **Name** to **for-android-app**.
-   1. **Add**.
+   2. Click **Add** to create a new credential
 3. Click **View Credentials** to see the credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 ## Create a skill
@@ -169,11 +172,11 @@ A dialog is a branching conversation flow that defines how your application resp
 1. Click on **Dialog** to see the existing dialog flow with intents and entities.
 2. Click **Add node** to add a new node to the dialog.
 3. Under **if assistant recognizes**, enter `#cancel_policy`.
-4. Under **Then respond with**, enter the response `This facility is not available online. Please visit our nearest branch to cancel your policy.`
+4. Under **Assistant responds**, select **Text** and enter the response `This facility is not available online. Please visit our nearest branch to cancel your policy.`
 5. Click on ![](images/solution28-watson-chatbot-android/save_node.png) to close and save the node.
-6. Scroll to see the `#greeting` node. Click on the node to see the details.
+6. Scroll to find the `#greeting` node. Click on the node to see the details.
    ![](images/solution28-watson-chatbot-android/build_dialog.png)
-7. Click the ![](images/solution28-watson-chatbot-android/add_condition.png) icon to **add a new condition**. Select `or` from the dropdown and enter `#General_Greetings` as the intent. **Then respond with section** shows the assistant's response when greeted by the user.
+7. Click the ![](images/solution28-watson-chatbot-android/add_condition.png) icon to **add a new condition**. Select `or` from the dropdown and enter `#General_Greetings` as the intent. **Assistant responds** shows the assistant's response when greeted by the user. Click on close icon to save the changes.
    ![](images/solution28-watson-chatbot-android/apply_condition.png)
 
    A context variable is a variable that you define in a node, and optionally specify a default value for. Other nodes or application logic can subsequently set or change the value of the context variable. The application can pass information to the dialog, and the dialog can update this information and pass it back to the application, or to a subsequent node. The dialog does so by using context variables.
@@ -185,13 +188,13 @@ A dialog is a branching conversation flow that defines how your application resp
 
 An **assistant** is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. You customize the assistant by adding to it the **skills** it needs to satisfy your customers' goals.
 
-1. In the {{site.data.keyword.conversationshort}} tool, switch to **Assistants** and use **Create assistant**.
+1. In the {{site.data.keyword.conversationshort}} tool, switch to **Assistants** on the left navigation pane and use **Create assistant**.
    1. Set **Name** to **android-chatbot-assistant**
-   1. **Create assistant**
-1. Use **Add dialog skill** to select the skill created in the previous sections.
-   1. **Add existing skill**
-   1. Select **Ana**
-1. Select the action menu on the Assistant > **Settings** > **API Details**, make note of the **Assistant ID**, you will need to reference it from the mobile application( in the `config.xml` file of the Android app).
+   1. Click on **Create assistant**
+1. Use **Add dialog skill** under **Add a dialog skill to design your conversation flow** to select the skill created in the previous sections.
+   1. **Add dialog skill**
+   2. Select **Ana**
+2. Select the action menu on the Assistant > **Settings** > **API Details**, make note of the **Assistant ID**, you will need to reference it from the mobile application( in the `config.xml` file of the Android app).
 
 ## Configure and run the Android app
 {:#configure_run_android_app}
