@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-10-02"
-lasttested: "2019-10-02"
+lastupdated: "2019-11-19"
+lasttested: "2019-11-19"
 ---
 
 {:shortdesc: .shortdesc}
@@ -55,6 +55,7 @@ In this section, you set up the needed services and prepare the environment. All
    ibmcloud cf create-service dashDB "Flex One" ghstatsDB -c '{"datacenter" : "eu-de:frankfurt", "oracle_compatible":"yes"}'
    ```
    {: pre}
+   Wait for the service to be ready. You can use the command `ibmcloud cf service ghstatsdb` to check the progress.
 
 4. To access the database service from {{site.data.keyword.openwhisk_short}} later on, you need the authorization. Thus, you create service credentials and label them **ghstatskey**:
    ```sh
@@ -97,7 +98,7 @@ In this section, you set up the needed services and prepare the environment. All
 The following steps are all performed using your Internet browser. First, you configure {{site.data.keyword.appid_short}} to use the Cloud Directory and to work with the Python app. Thereafter, you create a GitHub access token. It is needed for the deployed function to retrieve the traffic data.
 
 1. In the [{{site.data.keyword.cloud}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.appid_short}} service in the **Services** section. Click on its entry to open the details.
-2. In the service dashboard, click on **Manage Authentication** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **On**, all other providers to **Off**.
+2. In the service dashboard, click on **Manage Authentication** in the menu on the left side. It brings a list of the available identity providers, such as Facebook, Google, SAML 2.0 Federation and the Cloud Directory. Switch the Cloud Directory to **Enabled**, all other providers to **Disabled**.
 
    You may want to configure [Multi-Factor Authentication (MFA)](https://{DomainName}/docs/services/appid?topic=appid-cd-mfa#cd-mfa) and advanced password rules. They are not discussed as part of this tutorial.
    {:tip}
@@ -107,7 +108,7 @@ The following steps are all performed using your Internet browser. First, you co
    For testing the app locally, the redirect URL is `http://0.0.0.0:5000/redirect_uri`. You can configure multiple redirect URLs.
    {:tip}
 
-4. In the menu on the left, click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Add User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
+4. In the menu on the left, expand **Cloud Directory** and click on **Users**. It opens the list of users in the Cloud Directory. Click on the **Create User** button to add yourself as the first user. You are now done configuring the {{site.data.keyword.appid_short}} service.
 5. In the browser, visit [Github.com](https://github.com/settings/tokens) and go to **Settings -> Developer settings -> Personal access tokens**. Click on the button **Generate new token**. Enter **GHStats Tutorial** for the **Token description**. Thereafter, enable **public_repo** under the **repo** category and **read:org** under **admin:org**. Now, at the bottom of that page, click on **Generate token**. The new access token is displayed on the next page. You need it during the following application setup.
    ![](images/solution24-github-traffic-analytics/GithubAccessToken.png)
 
