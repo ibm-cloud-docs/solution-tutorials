@@ -277,4 +277,4 @@ The repository contains Android application code with required gradle dependenci
 - [Building a complex dialog](https://{DomainName}/docs/services/assistant?topic=assistant-tutorial#tutorial)
 - [Gathering information with slots](https://{DomainName}/docs/services/assistant?topic=assistant-dialog-slots#dialog-slots)
 - [Deployment options](https://{DomainName}/docs/services/assistant?topic=assistant-deploy-integration-add#deploy-integration-add)
-- [Improve your skill](https://{DomainName}/docs/services/assistant?topic=assistant-logs-intro#logs-intro)
+- [Improve your skill](https://{DomainName}/docs/services/assistant?topic=assistant-logs)
