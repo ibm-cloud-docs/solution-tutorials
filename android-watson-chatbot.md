@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-10-24"
+lastupdated: "2019-11-18"
 lasttested: "2019-10-22"
 ---
 
@@ -100,10 +100,9 @@ A skill is a container for the artifacts that define the conversation flow.
 For this tutorial, you will save and use [Ana_skill.json](https://github.com/IBM-Cloud/chatbot-watson-android/raw/master/training/Ana_skill.json) file with predefined intents, entities and dialog flow to your machine.
 
 1. In the {{site.data.keyword.conversationshort}} service details page, navigate to **Manage** on the left pane, click on **Launch {{site.data.keyword.conversationshort}}** to see the {{site.data.keyword.conversationshort}} dashboard.
-1. Click on **Skills** tab.
-1. **Create skill**, select **Dialog skill** and **Next**.
-2. **Import skill** and choose the JSON file downloaded above.
-1. Select **Everything** option and click **Import**. A new skill is created with predefined intents, entities and dialog flow.
+1. On the left navigation pane, Click on **Skills**.
+1. Click **Create skill**, select **Dialog skill** and **Next**.
+1. Under **Import skill**, click **Choose the JSON File** to select the `Ana_skill.json`file and click **Import**.
 1. Go back to the list of Skills. Select the action menu on the `Ana` skill to **View API Details**.
 
 ### Define an intent
@@ -120,22 +119,19 @@ Simply put, intents are the intentions of the end-user. The following are exampl
 
    Ana is an insurance bot for users to query their health benefits and file claims.
    {:tip}
-2. Click on the first tab to see all the **Intents**.
-3. Click on **Create intent**. Enter `Cancel_Policy` as your intent name after `#`and provide an optional description.
-
-   ![](images/solution28-watson-chatbot-android/add_intent.png)
-4. Click **Create intent**.
-5. Add user examples when requested to cancel a policy
+2. Click on **Create intent** under Intents. Enter `cancel_policy` as your intent name and provide an optional description.
+3. Click **Create intent**.
+4. Add user examples when requested to cancel a policy
    - `I want to cancel my policy`
    - `Drop my policy now`
    - `I wish to stop making payments on my policy.`
-6. Add user examples one after another and click **Add example**. Repeat this for all the other user examples.
+5. Add user examples one after another and click **Add example**. Repeat this for all the other user examples.
 
    Remember to add at least 5 user examples to train your bot better.
    {:tip}
 
-7. Click the **close** ![](images/solution28-watson-chatbot-android/close_icon.png) button next to the intent name to save the intent.
-8. Click on **Content Catalog** and select **General**. Click **Add to skill**.
+6. Click the **Close panel** ![](images/solution28-watson-chatbot-android/close_icon.png) button next to the intent name to save the intent.
+7. Click on **Content Catalog** and select **General**. Click **Add to skill**.
 
    Content catalog helps you in getting started faster by adding existing intents (banking, customer care, insurance, telco, e-commerce and many more). These intents are trained on common questions that users may ask.
    {:tip}
@@ -150,13 +146,16 @@ The following are examples of entity names
  - `@menu_item`
  - `@product`
 
-1. Click **Entities** tab to see the existing entities.
-2. Click **Create entity** and enter the name of the entity as `location` after `@`. Click **Create entity**.
+1. Click **Entities** on the left pane to see the existing entities.
+2. Click **Create entity** and enter the name of the entity as `location`. Click **Create entity**.
 3. Enter `address` as the value name and select **Synonyms**.
 4. Add `place` as a synonym and click the ![](images/solution28-watson-chatbot-android/plus_icon.png)icon. Repeat with synonyms `office`, `centre`, `branch` etc., and click **Add Value**.
-   ![](images/solution28-watson-chatbot-android/add_entity.png)
-5. Click **close** ![](images/solution28-watson-chatbot-android/close_icon.png) to save the changes.
-6. Click **System entities** tab to check the common entities created by IBM that could be used across any use case.
+
+   You can use the **Recommend synonyms** button for synonym recommendations. Either select all or individual suggestions as synonyms by clicking **Add selected**.
+   {: tip}
+
+5. Click **close panel** ![](images/solution28-watson-chatbot-android/close_icon.png) to save the changes.
+6. Click **System entities** under **Entities** to check the common entities created by IBM that could be used across any use case.
 
    System entities can be used to recognize a broad range of values for the object types they represent. For example, the `@sys-number` system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words.
    {:tip}
@@ -167,9 +166,9 @@ The following are examples of entity names
 
 A dialog is a branching conversation flow that defines how your application responds when it recognizes the defined intents and entities. You use the dialog builder in the tool to create conversations with users, providing responses based on the intents and entities that you recognize in their input.
 
-1. Click on **Dialog** tab to see the existing dialog flow with intents and entities.
+1. Click on **Dialog** to see the existing dialog flow with intents and entities.
 2. Click **Add node** to add a new node to the dialog.
-3. Under **if assistant recognizes**, enter `#Cancel_Policy`.
+3. Under **if assistant recognizes**, enter `#cancel_policy`.
 4. Under **Then respond with**, enter the response `This facility is not available online. Please visit our nearest branch to cancel your policy.`
 5. Click on ![](images/solution28-watson-chatbot-android/save_node.png) to close and save the node.
 6. Scroll to see the `#greeting` node. Click on the node to see the details.
