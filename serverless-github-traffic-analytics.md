@@ -135,7 +135,18 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    cd ../functions
    ```
    {: pre}
-2. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_reference#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
+2. [Create a new IAM namespace](https://{DomainName}/docs/openwhisk?topic=cloud-functions-namespaces#namespaces_create) which will hold the objects. It is created in your currently set resource group.
+   ```sh
+   ibmcloud fn namespace create ghstats --description "objects for GitHub statistics"
+   ```
+   {: pre}
+   Now set it as default for {{site.data.keyword.openwhisk_short}}:
+   ```sh
+   ibmcloud fn property set --namespace ghstats
+   ```
+   {: pre}
+
+3. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_reference#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
    ```sh
    ibmcloud fn action create collectStats --kind python-jessie:3 ghstats.zip
    ```
@@ -143,12 +154,12 @@ With the management app in place, deploy an action, a trigger and a rule to conn
 
    If you modify the source code for the action (`__main__.py`), then you can repackage the zip archive with `zip -r ghstats.zip  __main__.py github.py` again. See the file `setup.sh` for details.
    {:tip}
-3. Bind the action to the database service. Use the instance and the service key that you created during the environment setup.
+4. Bind the action to the database service. Use the instance and the service key that you created during the environment setup.
    ```sh
    ibmcloud fn service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
    ```
    {: pre}
-4. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_catalog_alarm#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
+5. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_catalog_alarm#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
    ```sh
    ibmcloud fn trigger create myDaily --feed /whisk.system/alarms/alarm \
               --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
@@ -158,12 +169,12 @@ With the management app in place, deploy an action, a trigger and a rule to conn
 
   You can change the trigger from a daily to a weekly schedule by applying `"0 6 * * 0"`. This would fire every Sunday at 6am.
   {:tip}
-5. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
+6. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
    ```sh
    ibmcloud fn rule create myStatsRule myDaily collectStats
    ```
    {: pre}
-6. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
+7. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
    ```sh
    ibmcloud fn action invoke collectStats  -r
    ```
@@ -175,7 +186,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    }
    ```
    {:codeblock}
-7. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories. You could enter a date and an organization name and then sort by viewcount to list the top scorers for a particular day.
+8. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories. You could enter a date and an organization name and then sort by viewcount to list the top scorers for a particular day.
    ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
 ## Conclusions
