@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-11-18"
+lastupdated: "2019-11-19"
 lasttested: "2019-10-22"
 ---
 
@@ -175,9 +175,7 @@ A dialog is a branching conversation flow that defines how your application resp
 4. Under **Assistant responds**, select **Text** and enter the response `This facility is not available online. Please visit our nearest branch to cancel your policy.`
 5. Click on ![](images/solution28-watson-chatbot-android/save_node.png) to close and save the node.
 6. Scroll to find the `#greeting` node. Click on the node to see the details.
-   ![](images/solution28-watson-chatbot-android/build_dialog.png)
 7. Click the ![](images/solution28-watson-chatbot-android/add_condition.png) icon to **add a new condition**. Select `or` from the dropdown and enter `#General_Greetings` as the intent. **Assistant responds** shows the assistant's response when greeted by the user. Click on close icon to save the changes.
-   ![](images/solution28-watson-chatbot-android/apply_condition.png)
 
    A context variable is a variable that you define in a node, and optionally specify a default value for. Other nodes or application logic can subsequently set or change the value of the context variable. The application can pass information to the dialog, and the dialog can update this information and pass it back to the application, or to a subsequent node. The dialog does so by using context variables.
    {:tip}
