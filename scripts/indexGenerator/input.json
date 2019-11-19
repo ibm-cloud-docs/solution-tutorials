@@ -476,6 +476,7 @@
                 "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
                 "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
                 "tags": [
+                    "Kubernetes"
                 ]
             }
         ]
