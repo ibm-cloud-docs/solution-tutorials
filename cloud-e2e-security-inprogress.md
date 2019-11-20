@@ -91,17 +91,17 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
 
-Skip this section if you have an existing **Standard** cluster you want to reuse with this tutorial.
+Skip this section if you have an existing cluster you want to reuse with this tutorial.
 {: tip}
 
 | Kubernetes on Classic |
 |:-----------------|
 | Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
-| Set the **Location** to the one used in previous steps. |
-| Set **Cluster type** to **Standard**. |
-| Set **Availability** to **Single Zone**. |
-| Select a **Master Zone**. |
-| Keep the default **Kubernetes version** and **Hardware isolation**. |
+| 1. Set the **Location** to the one used in previous steps. |
+| 1. Set **Cluster type** to **Standard**. |
+| 1. Set **Availability** to **Single Zone**. |
+| 1. Select a **Master Zone**. |
+| 1. Keep the default **Kubernetes version** and **Hardware isolation**. |
 {: class="simple-tab-table"}
 {: caption="Table 1. IAM roles" caption-side="top"}
 {: #simpletabtable1}
@@ -111,12 +111,12 @@ Skip this section if you have an existing **Standard** cluster you want to reuse
 
 | Kubernetes on VPC |
 |:-----------------|
-| Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
-| Set the **Location** to the one used in previous steps. |
-| Set **Cluster type** to **Standard**. |
-| Set **Availability** to **Single Zone**. |
-| Select a **Master Zone**. |
-| Keep the default **Kubernetes version** and **Hardware isolation**. |
+| 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
+| 2. Set the **Location** to the one used in previous steps. |
+| 3. Set **Cluster type** to **Standard**. |
+| 4. Set **Availability** to **Single Zone**. |
+| 5. Select a **Master Zone**. |
+| 6. Keep the default **Kubernetes version** and **Hardware isolation**. |
 {: caption="Table 2. IAM roles - Access" caption-side="top"}
 {: #simpletabtable2}
 {: tab-title="Kubernetes on VPC"}
