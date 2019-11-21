@@ -466,6 +466,22 @@
         ]
     },
     {
+        "name": "Work In Progress",
+        "hidden": "hidden",
+        "anchor": "working",
+        "solutions": [
+            {
+                "name": "Apply end to end security to a cloud application - In Progress",
+                "url": "cloud-e2e-security-inprogress.html",
+                "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
+                "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
+                "tags": [
+                    "Kubernetes"
+                ]
+            }
+        ]
+    },
+    {
         "name": "Identity and Access Management",
         "anchor": "iam",
         "solutions": [
