@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-11-19"
-lasttested: "2019-11-19"
+lastupdated: "2019-11-21"
+lasttested: "2019-11-21"
 ---
 
 {:shortdesc: .shortdesc}
@@ -159,22 +159,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    ibmcloud fn service bind dashDB collectStats --instance ghstatsDB --keyname ghstatskey
    ```
    {: pre}
-5. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_catalog_alarm#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
-   ```sh
-   ibmcloud fn trigger create myDaily --feed /whisk.system/alarms/alarm \
-              --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
-              --param stopDate "2018-12-31T00:00:00.000Z"
-   ```
-   {: pre}
-
-  You can change the trigger from a daily to a weekly schedule by applying `"0 6 * * 0"`. This would fire every Sunday at 6am.
-  {:tip}
-6. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
-   ```sh
-   ibmcloud fn rule create myStatsRule myDaily collectStats
-   ```
-   {: pre}
-7. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
+5. Invoke the action for an initial test run. The returned **repoCount** should reflect the number of repositories that you configured earlier.
    ```sh
    ibmcloud fn action invoke collectStats  -r
    ```
@@ -186,6 +171,22 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    }
    ```
    {:codeblock}
+6. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_catalog_alarm#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
+   ```sh
+   ibmcloud fn trigger create myDaily --feed /whisk.system/alarms/alarm \
+              --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
+              --param stopDate "2018-12-31T00:00:00.000Z"
+   ```
+   {: pre}
+
+  You can change the trigger from a daily to a weekly schedule by applying `"0 6 * * 0"`. This would fire every Sunday at 6am.
+  {:tip}
+7. Finally, you create a rule **myStatsRule** that connects the trigger **myDaily** to the **collectStats** action. Now, the trigger causes the action to be executed on the schedule specified in the previous step.
+   ```sh
+   ibmcloud fn rule create myStatsRule myDaily collectStats
+   ```
+   {: pre}
+
 8. In your browser window with the app page, you can now visit the repository traffic. By default, 10 entries are displayed. You can change it to different values. It is also possible to sort the table columns or use the search box to filter for specific repositories. You could enter a date and an organization name and then sort by viewcount to list the top scorers for a particular day.
    ![](images/solution24-github-traffic-analytics/RepositoryTraffic.png)
 
