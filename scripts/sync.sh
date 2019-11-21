@@ -19,6 +19,7 @@ tar cf - \
   --exclude=.gitignore \
   --exclude=solution-template.md \
   --exclude=README.md \
+  --exclude=cloud-e2e-security-inprogress.md \
   --exclude="*.course.json" \
   --exclude=scripts \
   --exclude=.vscode \
