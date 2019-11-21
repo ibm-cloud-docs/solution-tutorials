@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-17"
-lasttested: "2019-06-17"
+lastupdated: "2019-11-21"
+lasttested: "2019-11-21"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -75,7 +75,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 1. Use `ibmcloud login` to log in interactively. Select the region where the cluster was created.
 2. When the cluster is ready, retrieve the cluster configuration:
    ```bash
-   ibmcloud cs cluster-config <cluster-name>
+   ibmcloud ks cluster config --cluster <cluster-name>
    ```
    {: pre}
 
@@ -95,15 +95,20 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 
 {{site.data.keyword.messagehub}} is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
 
- 1. From the Dashboard, click on [**Create resource**](https://{DomainName}/catalog/) and select [**{{site.data.keyword.messagehub}}**](https://{DomainName}/catalog/services/event-streams) from the Application Services section.
- 2. Name the service `myeventstreams` and click **Create**.
- 3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
+1. From the Dashboard, click on [**Create resource**](https://{DomainName}/catalog/) and select [**{{site.data.keyword.messagehub}}**](https://{DomainName}/catalog/services/event-streams) from the Application Services section.
+   1. Select the **Standard** plan.
+   1. Set the **Service name** to `myeventstreams`.
+   1. Click **Create**.
+1. Switch to **Topics**.
+   1. Create a topic named **work-topic**, with 1 partition and retention of a day.
+   1. Create a topic named **result-topic**, with 1 partition and retention of a day.
+1. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
    ```sh
-   ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service myeventstreams --role Manager
+   ibmcloud ks cluster service bind --cluster mycluster --namespace default --service myeventstreams --role Manager
    ```
    {:pre}
 
-The cluster-service-bind command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-myeventstreams`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-integrations#integrations) for more info
+The `cluster service bind` command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-myeventstreams`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-integrations#integrations) for more info
 
 {:tip}
 
@@ -120,7 +125,7 @@ The cluster-service-bind command creates a cluster secret that holds the credent
 5. Select **Cross Region** Resiliency and **us-geo** Location and click **Create**
 6. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
    ```sh
-   ibmcloud cs cluster-service-bind --cluster mycluster --namespace default --service myobjectstorage
+   ibmcloud cs cluster service bind --cluster mycluster --namespace default --service myobjectstorage
    ```
 
 ## Deploy the UI application to the cluster
@@ -144,7 +149,7 @@ The UI application is a simple Node.js Express web application which allows the 
 
 ## Deploy the worker application to the cluster
 
-The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka `work-topic` topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the `result-work` topic upon completion. The UI application will listen this topic and update the status.
+The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka `work-topic` topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the `result-topic` topic upon completion. The UI application will listen this topic and update the status.
 
 1. Change dir to the `pubsub-worker` directory
 ```sh
