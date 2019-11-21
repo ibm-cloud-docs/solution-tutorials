@@ -22,6 +22,8 @@ tar cf - \
   --exclude=cloud-e2e-security-inprogress.md \
   --exclude="*.course.json" \
   --exclude=scripts \
+  --exclude="*.hidden.md" \
+  --exclude="images/*hidden*" \
   --exclude=.vscode \
   --exclude=.travis.yml . | (cd build && tar xvf - )
 
