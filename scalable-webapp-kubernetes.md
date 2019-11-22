@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
 lastupdated: "2019-11-22"
-lasttested: "2019-05-22"
+lasttested: "2019-11-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -71,9 +71,8 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 
 1. Create a **Free** Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
 
-   For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
+   For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Free and Standard plans.
    {:tip}
-
 2.  Select a resource group and click **Create Cluster** to provision a Kubernetes cluster.
 3.  Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
@@ -212,11 +211,11 @@ In this section, you first push the Docker image to the IBM Cloud private contai
   ```
   {: pre}
 
-  With Helm 3, use this command `helm install ${MYPROJECT} .` to install the Helm chart
+  With Helm 3, run `helm install ${MYPROJECT} .` command to install the Helm chart
   {: tip}
 
-10. Use `kubectl get service ${MYPROJECT}-service` for your Java application and `kubectl get service ${MYPROJECT}-application-service`  for your Node.js application to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
-11. For the public IP of worker node, run the below command
+11. Use `kubectl get service ${MYPROJECT}-service` for your Java application and `kubectl get service ${MYPROJECT}-application-service`  for your Node.js application to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
+12. For the public IP of worker node, run the below command
    ```sh
    ibmcloud ks workers ${MYCLUSTER}
    ```
