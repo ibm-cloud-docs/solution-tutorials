@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-08-12"
+lastupdated: "2019-11-22"
 lasttested: "2019-05-22"
 ---
 
@@ -69,13 +69,12 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 The major portion of this tutorial can be accomplished with a **Free** cluster. Two optional sections relating to Kubernetes Ingress and custom domain require a **Paid** cluster of type **Standard**.
 
-1. Create a Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
+1. Create a **Free** Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
 
    For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Lite and Standard plans.
    {:tip}
 
-   ![Kubernetes Cluster Creation on IBM Cloud](images/solution2/KubernetesClusterCreation.png)
-2. Select the **Cluster type** and click **Create Cluster** to provision a Kubernetes cluster.
+2.  Select a resource group and click **Create Cluster** to provision a Kubernetes cluster.
 3.  Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 ### Configure kubectl
@@ -86,7 +85,7 @@ In this step, you'll configure kubectl to point to your newly created cluster. [
 2. When the cluster is ready, retrieve the cluster configuration by setting MYCLUSTER environment variable to your cluster name:
    ```bash
    export MYCLUSTER=<CLUSTER_NAME>
-   ibmcloud ks cluster-config ${MYCLUSTER}
+   ibmcloud ks cluster config ${MYCLUSTER}
    ```
    {: pre}
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
@@ -208,11 +207,15 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 
 8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
 
-9. To install a Helm chart, change to the `chart\YOUR PROJECT NAME` directory and run the below command
+9. To install a Helm chart, change to `chart\YOUR PROJECT NAME` directory and run the below command
   ```sh
   helm install . --name ${MYPROJECT}
   ```
   {: pre}
+
+  With Helm 3, use this command `helm install ${MYPROJECT} .` to install the Helm chart
+  {: tip}
+
 10. Use `kubectl get service ${MYPROJECT}-service` for your Java application and `kubectl get service ${MYPROJECT}-application-service`  for your Node.js application to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 11. For the public IP of worker node, run the below command
    ```sh
@@ -234,7 +237,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 1. Identify your IBM-provided **Ingress domain**
    ```
-   ibmcloud ks cluster-get ${MYCLUSTER}
+   ibmcloud ks cluster get ${MYCLUSTER}
    ```
    {: pre}
    to find
@@ -364,7 +367,7 @@ If you were to try to access your application with HTTPS at this time `https://<
 As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
 
    ```sh
- kubectl scale deployment <nameofproject>-deployment --replicas=2
+   kubectl scale deployment <nameofproject>-deployment --replicas=2
    ```
    {: pre}
 
@@ -385,7 +388,12 @@ Refer [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#a
 
 ## Remove resources
 
-* Delete the cluster or only delete the Kubernetes artifacts created for the application if you plan to reuse the cluster.
+* Delete the cluster or run the below command to delete the Kubernetes artifacts created for this application if you plan to reuse the cluster
+
+  ```sh
+  helm delete ${MYPROJECT}
+  ```
+  {:pre}
 
 ## Related content
 
