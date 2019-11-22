@@ -152,8 +152,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
-2. After your container starts, go to `http://localhost:9080/`. If you created a Node.js application, go to `http://localhost:3000/`.
-  ![](images/solution2/LibertyLocal.png)
+2. After your container starts, on a browser go to `http://localhost:9080/` to see the app. If you created a Node.js application, go to `http://localhost:3000/`.
 
 ## Deploy application to cluster using helm chart
 {: #deploy}
@@ -185,29 +184,29 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ibmcloud cr login
    ```
    {: pre}
-3. Identify your **Container Registry** (e.g. us.icr.io) by running `ibmcloud cr info`
-4. Set MYREGISTRY env var to your registry.
+4. Identify your **Container Registry** (e.g. us.icr.io) by running `ibmcloud cr info`
+5. Set MYREGISTRY env var to your registry.
    ```sh
    export MYREGISTRY=<REGISTRY>
    ```
    {: pre}
-5. Build and tag (`-t`)the docker image
+6. Build and tag (`-t`)the docker image
    ```sh
    docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
    {: pre}
-6. Push the docker image to your container registry on IBM Cloud
+7. Push the docker image to your container registry on IBM Cloud
    ```sh
    docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
    {: pre}
-7. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
+8. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
 
    For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
 
-8. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
+9. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
 
-9. To install a Helm chart, change to `chart\YOUR PROJECT NAME` directory and run the below command
+10. To install a Helm chart, change to `chart\YOUR PROJECT NAME` directory and run the below command
   ```sh
   helm install . --name ${MYPROJECT}
   ```
