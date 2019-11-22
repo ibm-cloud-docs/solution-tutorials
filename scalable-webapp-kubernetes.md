@@ -349,9 +349,7 @@ If you were to try to access your application with HTTPS at this time `https://<
 
 1. To check the health of your application, navigate to [clusters](https://{DomainName}/kubernetes/clusters) to see a list of clusters and click on the cluster you created above.
 2. Click **Kubernetes Dashboard** to launch the dashboard in a new tab.
-   ![](images/solution2/launch_kubernetes_dashboard.png)
 3. Select **Nodes** on the left pane, click the **Name** of the nodes and see the **Allocation Resources** to see the health of your nodes.
-   ![](images/solution2/KubernetesDashboard.png)
 4. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.
 5. To **ssh** into the container, identify your pod name from the previous step and run
    ```sh
