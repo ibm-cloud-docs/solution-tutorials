@@ -13,6 +13,8 @@ lasttested: "2019-11-25"
 {:tip: .tip}
 {:pre: .pre}
 
+> **WARNING**: Work in Progress...
+
 # Computer vision with PowerAI and Schematics
 {: #computer-vision-powerai-schematics}
 
@@ -66,7 +68,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 2. Enter a **Workspace name** and select a resource group.
 3. Provide the [GitHub repository URL](https://github.com/abc/abc.git) to import the Terraform template.
 4. Click on **Retrieve input variables** and complete the fields
-    For the 'ssh_priv_key', on a terminal run `cat ~/.ssh/id_rsa` command and paste the output between <<EOF and EOF.
+    For the 'ssh_priv_key', on a terminal run `cat ~/.ssh/id_rsa` command and paste the output between `<<EOF` and `EOF`.
    {:tip}
 5. Click on **Create** to start creation.
 6. On the Schematics page, Click on **Generate Plan**.
