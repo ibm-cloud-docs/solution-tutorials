@@ -62,6 +62,8 @@ Solution Tutorials
     {: .topicgroup}
     Work In Progress
         cloud-e2e-security-inprogress.md
+        computer-vision-powerai-inprogress.md
+
 
     {: .topicgroup}
     Identity and Access Management
