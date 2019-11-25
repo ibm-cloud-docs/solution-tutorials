@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-11-14"
+lastupdated: "2019-11-25"
 lasttested: "2019-11-14"
 ---
 
@@ -127,10 +127,11 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
    The **credential_node** sets up the secret for the dialog actions and the information about the Cloud Foundry organization. The latter is needed for invoking the actions.
 
   Details will be explained later below once everything is set up.
-  ![](images/solution19/SlackBot_Dialog.png)
+  ![](images/solution19/SlackBot_Dialog.png)   
 6. Click on the dialog node **credential_node**, open the JSON editor by clicking on the menu icon on the right of **Then set context**.
 
-   Replace the value **FN_NAMESPACE** for the variable **fn_namespace** with the namespace information which you retrieved earlier. Next, change **YOURSECRET** for **web_action_key** to your actual secret from before. Close the JSON editor by clicking on the icon again.
+   Replace the value **FN_NAMESPACE** for the variable **fn_namespace** with the namespace information which you retrieved earlier. Do not enter any leading slash (`/`). Next, change **YOURSECRET** for **web_action_key** to your actual secret from before. Close the JSON editor by clicking on the icon again.
+   ![](images/solution19/Slackbot_credentials.png)   
 
 7. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase "show event by date 2019". It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
 
