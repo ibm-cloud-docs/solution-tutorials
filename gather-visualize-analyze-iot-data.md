@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-08-08"
-lasttested: "2019-08-08"
+lastupdated: "2019-11-26"
+lasttested: "2019-11-26"
 ---
 
 {:shortdesc: .shortdesc}
@@ -61,15 +61,17 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 To begin, you will create Internet of Things Platform service - The hub which can manage devices, securely connect and **collect data**, and make historical data available for visualizations and applications.
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [**Internet of Things Platform**](https://{DomainName}/catalog/services/internet-of-things-platform) under the **Internet of Things** section.
-2. Enter `IoT demo hub` as the service name, choose a pricing plan, click **Create** and **Launch**(under Manage) the dashboard.
-3. From the side menu, select **Security** > click Edit icon next to **Connection Security** and choose **TLS Optional** under **Default Rule** > **Security Level** and click **Save**.
-4. From the side menu, select **Devices** > **Device Types**  and **+ Add Device Type**.
-5. Enter `simulator` as the **Name** and click **Next** and **Finish**.
-6. Next, click on **Register Devices**.
-7. Select **simulator** as **Device Type** and enter `phone` for **Device ID**.
-8. Click **Next** until the **Security** screen is displayed.
-9. Enter a value for the **Authentication Token**, for example: `myauthtoken` and click **Next**.
-10. After clicking **Finish**, your connection information is displayed. Keep this tab open.
+2. Select a region and choose **Lite** as the pricing plan.
+3. Enter `IoT demo hub` as the service name.
+4. Click **Create** and then **Launch**(under Manage) the dashboard.
+5. From the side menu, select **Security** > click Edit icon next to **Connection Security** and choose **TLS Optional** under **Default Rule** > **Security Level** and click **Save**.
+6. From the side menu, select **Devices** > **Device Types**  and **Add Device Type**.
+7. Enter `simulator` as the **Name** and click **Next** and **Finish**.
+8. Next, click on **Register Devices**.
+9. Select **simulator** as **Device Type** and enter `phone` for **Device ID**.
+10. Click **Next** until the **Security** screen is displayed.
+11. Enter a value for the **Authentication Token**, for example: `myauthtoken` and click **Next**.
+12. After clicking **Finish**, your connection information is displayed. Keep this tab open.
 
 The IoT platform is now configured to start receiving data. Devices will need to send their data to the IoT Platform with the Device Type, ID and Token specified.
 
@@ -94,7 +96,8 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 7. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
   ![](images/solution16/recent_events_with_phone.png)
 
-From iOS 12.2+, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
+On iOS 13.x if prompted, Allow the website to access motion and orientation sensor data.
+On iOS 12.x, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
 {: tip}
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
@@ -105,8 +108,8 @@ Next, you will create a board and cards to display device data in the dashboard.
 {: #createboard}
 
 1. Select **Boards** from the left menu, and then click **Create New Board**.
-1. Enter a name for the board, `Simulators` as example,  and click **Next** and then **Submit**.
-1. Select the board that you just created to open it.
+2. Enter a name for the board, `Simulators` as example,  and click **Next** and then **Submit**.
+3. Select the board that you just created to open it.
 
 ### Display device data
 {: #cardtemp}
