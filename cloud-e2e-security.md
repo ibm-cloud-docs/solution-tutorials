@@ -363,7 +363,7 @@ Security is never done. Try the below suggestions to enhance the security of you
 
 * Use [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights) to perform static and dynamic code scans
 * Ensure only quality code is released by using policies and rules with [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights)
-* Replace {{site.data.keyword.keymanagementservicelong_notm}} by {{site.data.keyword.hscrypto}} for even greater security and control over encryption keys.
+* Replace {{site.data.keyword.keymanagementservicelong_notm}} by [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/services/hs-crypto?topic=hs-crypto-get-started) for even greater security and control over encryption keys.
 
 ## Remove resources
 {:removeresources}
