@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-11-05"
+lastupdated: "2019-11-26"
 lasttested: "2019-07-31"
 
 ---
@@ -151,7 +151,7 @@ Before creating the bucket, you will grant **secure-file-storage-cos** access to
 Finally create the bucket.
 
 1. Access the **secure-file-storage-cos** service instance from the [Resource List](https://{DomainName}/resources).
-2. Click **Create bucket**.
+2. Click **Create bucket** and then **Custom bucket**.
    1. Set the **name** to a unique value, such as **&lt;your-initials&gt;-secure-file-upload**.
    2. Set **Resiliency** to **Regional**.
    3. Set **Location** to the same location where you created the **secure-file-storage-kp** service.
@@ -159,7 +159,10 @@ Finally create the bucket.
 3. Select the checkbox to **Add Key Protect Keys**.
    1. Select the **secure-file-storage-kp** service.
    2. Select **secure-file-storage-root-enckey** as the key.
-4. Click **Create bucket**.
+4. Enable {{site.data.keyword.at_short}} events to be recorded under **Additional Services**.
+   1. After clicking the checkmark the service information for the previously created {{site.data.keyword.at_short}} instance should be shown.
+   2. Now, enable **Track Data events** and select **read & write** as **Data Events**.
+5. Click **Create bucket**.
 
 #### A database map relationships between users and their files
 
@@ -187,10 +190,12 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 With {{site.data.keyword.appid_short}}, you can secure resources and add authentication to your applications. {{site.data.keyword.appid_short}} [integrates](https://{DomainName}/docs/containers?topic=containers-ingress_annotation#appid-auth) with {{site.data.keyword.containershort_notm}} to authenticate users accessing applications deployed in the cluster.
 
 1. Create an instance of [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID).
+   * Select the **Graduated tier** as plan.
    * Set the **Service name** to **secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
-2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
+3. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
 `<cluster-name>.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
+3. In the same tab under **Authentication Settings** under **Runtime Activity** enable capturing events in {{site.data.keyword.at_short}}.
 
 You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
 {: tip}
@@ -363,7 +368,7 @@ Security is never done. Try the below suggestions to enhance the security of you
 
 * Use [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights) to perform static and dynamic code scans
 * Ensure only quality code is released by using policies and rules with [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights)
-* Replace {{site.data.keyword.keymanagementservicelong_notm}} by {{site.data.keyword.hscrypto}} for even greater security and control over encryption keys.
+* Replace {{site.data.keyword.keymanagementservicelong_notm}} by [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/services/hs-crypto?topic=hs-crypto-get-started) for even greater security and control over encryption keys.
 
 ## Remove resources
 {:removeresources}

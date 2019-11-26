@@ -20,6 +20,7 @@ tar cf - \
   --exclude=solution-template.md \
   --exclude=README.md \
   --exclude=cloud-e2e-security-inprogress.md \
+  --exclude=computer-vision-powerai-inprogress.md \
   --exclude="*.course.json" \
   --exclude=scripts \
   --exclude="*.hidden.md" \

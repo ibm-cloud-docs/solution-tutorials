@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-11-05"
+lastupdated: "2019-11-26"
 lasttested: "2019-09-26"
 
 ---
@@ -105,7 +105,7 @@ It is important to note that network traffic, i.e., data in transit, is secured 
 ## Evaluate and monitor app security
 {: #evaluate_security}
 
-Events related to {{site.data.keyword.cloud_notm}} account activities, such as logging in or provisioning a service, are logged to {{site.data.keyword.at_short}}. It does not, however, integrate any application-related events. Applications can ingest security and diagnostic events into [{{site.data.keyword.la_short}}](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-about). Moreover, several [services support sending usage logs directly to {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-cloud_services).
+Events related to {{site.data.keyword.cloud_notm}} account activities, such as logging in or provisioning a service, are logged to {{site.data.keyword.at_short}}. It does not, however, directly integrate any application-related events. But some services have options to enable tracking of security events. Examples are [{{site.data.keyword.cos_short}} which allows both read and write events to be tracked](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-at) and [{{site.data.keyword.appid_short_notm}} which can track sign-in, sign-up and other runtime events](https://{DomainName}/docs/services/appid?topic=appid-at-monitor-runtime) when enabled. Applications can ingest security and diagnostic events into [{{site.data.keyword.la_short}}](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-about). Moreover, several [services support sending usage logs directly to {{site.data.keyword.loganalysisshort}}](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-cloud_services).
 
 By sending both application logs, such as general diagnostics and security-related information like failed logins to a single logging facility, you can aggregate the logs and perform security analysis in application context, across the full stack. You can use the queries as foundation for [defining alerts](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-alerts). Alerts help you to monitor your app and related services. You should [set up notification channels](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-alerts#channels), so that once a defined event is detected, you get notified via e.g., email, Slack or PagerDuty.
 
