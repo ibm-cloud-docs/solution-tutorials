@@ -121,10 +121,12 @@ Next, you will create a board and cards to display device data in the dashboard.
    - Property: ob
    - Name: OrientationBeta
    - Type: Float
+   - Unit: &deg;
+   - Precision: 1
    - Min: -180
    - Max: 180
 5. In the Card Preview page, select **L** for the line chart size, and click **Next** > **Submit**
-6. The  card appears on the dashboard and includes a line chart of the live OrientationBeta(ob) data.
+6. The card appears on the dashboard and includes a line chart of the live OrientationBeta(ob) data.
 7. Use your mobile phone browser to launch the simulator again and slowly tilt the phone forward and backward.
 8. Back in the **IBM {{site.data.keyword.iot_short_notm}} Boards tab**, you should see the chart getting updated.
 
