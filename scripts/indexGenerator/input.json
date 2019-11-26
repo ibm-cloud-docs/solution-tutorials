@@ -478,6 +478,15 @@
                 "tags": [
                     "Kubernetes"
                 ]
+            },
+            {
+                "name": "Computer vision with PowerAI and Schematics - In Progress",
+                "url": "computer-vision-powerai-inprogress.html",
+                "description": "Provision a backend instance of PowerAI vision in VPC and access the deployed deep learning model through a webapp for image classification",
+                "imgSrc": "images/solution53-powerai-vision/architecture_diagram.png",
+                "tags": [
+                    "PowerAI"
+                ]
             }
         ]
     },
