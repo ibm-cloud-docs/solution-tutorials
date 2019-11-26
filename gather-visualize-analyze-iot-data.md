@@ -18,6 +18,12 @@ lasttested: "2019-11-26"
 This tutorial walks you through setting up an IoT device, gathering data in the {{site.data.keyword.iot_short_notm}}, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
 {:shortdesc}
 
+{{site.data.keyword.iot_full}} is a fully managed, cloud-hosted service that makes it simple to derive value from Internet of Things (IoT) devices.
+
+Simply register and connect your device, be it a sensor, a gateway, or something else, to  {{site.data.keyword.iot_short_notm}} and start sending data securely up to the cloud using the open, lightweight MQTT messaging protocol. You can set up and manage your devices using your online dashboard or our secure APIs, so that your apps can access and use your live and historical data.
+
+{{site.data.keyword.DSX_full}} provides you with the environment and tools to solve your business problems by collaboratively working with data. You can choose the tools you need to analyze and visualize data, to cleanse and shape data, to ingest streaming data, or to create and train machine learning models.
+
 ## Objectives
 {: #objectives}
 
@@ -113,6 +119,7 @@ Next, you will create a board and cards to display device data in the dashboard.
 
 ### Display device data
 {: #cardtemp}
+
 1. Click **Add New Card**, and then select the **Line Chart** card type, which is located in the Devices section.
 2. Select your device from the list, then click **Next**.
 3. Click **Connect new data set**.
@@ -131,6 +138,8 @@ Next, you will create a board and cards to display device data in the dashboard.
 8. Back in the **IBM {{site.data.keyword.iot_short_notm}} Boards tab**, you should see the chart getting updated.
 
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
+{: #historical_data_cloudant}
+
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) named `iot-db` using both legacy credentials and IAM as the authentication method.
 2. Under **Connections**:
    1. **Create connection**
@@ -148,7 +157,7 @@ Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. Afte
 ![](images/solution16/cloudant.png)
 
 ## Detect Anomalies using Machine Learning
-{: #data_experience}
+{: #detect_anomalies}
 
 In this section, you will use the Jupyter Notebook that is available in the IBM {{site.data.keyword.DSX_short}} service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
 
