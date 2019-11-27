@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-11-25"
-lasttested: "2019-11-25"
+lastupdated: "2019-11-27"
+lasttested: "2019-11-27"
 ---
 
 {:shortdesc: .shortdesc}
@@ -74,10 +74,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 6. On the Schematics page, Click on **Generate Plan**.
 7. Once the plan has successfully generated, a new item appears under Recent Activity saying Plan Generated. Click **Apply plan** to provision
    * a VPC
-   * Front-end and Back-end subnets
-   * VM in each subnet within the VPC and a particular region and availability zone (AZ)
+   * a backend subnet
+   * VM within the backend subnet in VPC (particular region and availability zone (AZ))
    * Floating IP (FIP) address on the public Internet for the front-end subnet
    * Security group with a rule that allows ingress traffic on port 22 (for SSH)
 
-## Access the frontend webapp
+## Create and access a web app
 ## Train and deploy a deep learning model
