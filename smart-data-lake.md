@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-08"
-lasttested: "2019-06-14"
+lastupdated: "2019-11-27"
+lasttested: "2019-11-27"
 ---
 
 {:shortdesc: .shortdesc}
@@ -175,8 +175,8 @@ In this section, you will use the SQL Query client within a Jupyter Notebook. Th
 
 1. Create a new Jupyter Notebook in {{site.data.keyword.DSX}}.
     - In a browser, open [{{site.data.keyword.DSX}}](https://dataplatform.ibm.com/home?context=analytics&apps=data_science_experience&nocache=true).
-    - Click **Create a Project** tile followed by **Data Science and AutoAI**.
-    - Click **Create project** > Select a region and then provide a **Project name**.
+    - Click **Create a Project** tile followed by **Create an empty project**.
+    - Provide a **Project name**.
     - Ensure **Storage** is set to **data-lake-cos**.
     - Click **Create**.
     - In the resulting project, click **Add to project** and **Notebook**.
