@@ -150,10 +150,10 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
    - Click **New credential** and then **Add**
    - Expand **View credentials** and save the credentials for future reference
 3. Under **Connections**:
-   1. Click **Create connection**
-   2. Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
-   3. Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot-solution-tutorial** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space.
-   4. Connect and restage the app.
+   - Click **Create connection**
+   - Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
+   - Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot-solution-tutorial** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space.
+   - Connect and restage the app.
 4. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 5. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under **Historical Data Storage**. A new tab will be opened showing the **{{site.data.keyword.iot_full_notm}} - Historical Data Storage Extension APIs** Swagger UI.
 6. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**.
@@ -209,16 +209,16 @@ If you don't have an existing **{{site.data.keyword.iae_full_notm}}** service:
 Once the service is provisioned or if you have an existing service instance you want to use and configured with software package **AE 1.2 Spark and Hadoop**:
 1. Open the service details page.
 1. Under **Service credentials**, create new credentials:
-   1. Set **Name** to **wdp-writer**
-   1. Set **Role** to **Writer**
+   - Set **Name** to **wdp-writer**
+   - Set **Role** to **Writer**
 1. Under **Manage**, retrieve the user name and password for the cluster. You may need to reset the cluster password.
 
 In {{site.data.keyword.DSX}},:
 1. Select the **Detect Anomaly** project.
 1. Click **Settings** on the top navigation bar.
 1. Scroll to **Associated Services.**
-   1. Click **Add service**.
-   1. Select **{{site.data.keyword.iae_full_notm}}**.
+   - Click **Add service**.
+   - Select **{{site.data.keyword.iae_full_notm}}**.
 1. Select the **Existing** service instance discussed above.
 1. Enter the cluster user name and password.
 1. Click **Select**.
