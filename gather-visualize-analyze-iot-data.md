@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-11-26"
-lasttested: "2019-11-26"
+lastupdated: "2019-11-27"
+lasttested: "2019-11-27"
 ---
 
 {:shortdesc: .shortdesc}
@@ -17,7 +17,6 @@ lasttested: "2019-11-26"
 {: #gather-visualize-analyze-iot-data}
 This tutorial walks you through setting up an IoT device, gathering data in the {{site.data.keyword.iot_short_notm}}, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
 {:shortdesc}
-
 {{site.data.keyword.iot_full}} is a fully managed, cloud-hosted service that makes it simple to derive value from Internet of Things (IoT) devices.
 
 Simply register and connect your device, be it a sensor, a gateway, or something else, to  {{site.data.keyword.iot_short_notm}} and start sending data securely up to the cloud using the open, lightweight MQTT messaging protocol. You can set up and manage your devices using your online dashboard or our secure APIs, so that your apps can access and use your live and historical data.
@@ -140,17 +139,41 @@ Next, you will create a board and cards to display device data in the dashboard.
 ## Store historical data in {{site.data.keyword.cloudant_short_notm}}
 {: #historical_data_cloudant}
 
-1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) named `iot-db` using both legacy credentials and IAM as the authentication method.
-2. Under **Connections**:
-   1. **Create connection**
-   1. Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
-   1. Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot-solution-tutorial** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space.
-   1. Connect and restage the app.
-3. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
-4. Select **Extensions** from the left menu, and then click **Setup** under **Historical Data Storage**.
-5. Select the `iot-db` {{site.data.keyword.cloudant_short_notm}} database.
-6. Enter `devicedata` for **Database Name** and click **Done**.
-7. A new window should load prompting for authorization. If you don't see this window, disable your pop-up blocker and refresh the page.
+In this section, you will create a {{site.data.keyword.cloudant_short_notm}} service and bind the service to {{site.data.keyword.iot_short_notm}} to store the historical data.
+
+1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
+   - Select a region and choose **Lite** plan
+   - Enter `iot-db` as the service name
+   - Select **both legacy credentials and IAM** as the authentication method and click **Create**
+2. Go to the [Resource list](https://cloud.ibm.com/resources) and enter `iot-db` in the Name field to check the status of the service.Once the status changes to **Provisioned**, click on the service name to see the Manage page.
+   - On the left menu, click **Service credentials**
+   - Click **New credential** and then **Add**
+   - Expand **View credentials** and save the credentials for future reference
+3. Under **Connections**:
+   1. Click **Create connection**
+   2. Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
+   3. Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot-solution-tutorial** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space.
+   4. Connect and restage the app.
+4. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
+5. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under **Historical Data Storage**. A new tab will be opened showing the **{{site.data.keyword.iot_full_notm}} - Historical Data Storage Extension APIs** Swagger UI.
+6. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**.
+7. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value**.
+
+   ```json
+    {
+      "name": "iot-cloudant",
+      "type": "cloudant",
+      "description": "for IoT solution tutorial",
+      "credentials": {
+        "username": "CLOUDANT_USERNAME",
+        "password": "CLOUDANT_PASSWORD",
+        "host": "CLOUDANT_HOST",
+        "port": 443,
+        "url": "CLOUDANT_URL"
+      }
+    }
+   ```
+8. Click **Execute** to see the Response. Save the `id` from the response for the next API call.
 
 Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. After a few minutes, launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
 
