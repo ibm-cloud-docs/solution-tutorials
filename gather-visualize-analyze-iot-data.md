@@ -148,7 +148,7 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
    - Select a region and choose **Lite** plan
    - Enter `iot-db` as the service name
    - Select **both legacy credentials and IAM** as the authentication method and click **Create**
-2. Go to the [Resource list](https://cloud.ibm.com/resources) and enter `iot-db` in the Name field to check the status of the service.Once the status changes to **Provisioned**, click on the service name to see the Manage page.
+2. Go to the [Resource list](https://{DomainName}/resources) and enter `iot-db` in the Name field to check the status of the service.Once the status changes to **Provisioned**, click on the service name to see the Manage page.
    - On the left menu, click **Service credentials**
    - Click **New credential** and then **Add**
    - Expand **View credentials** and save the credentials for future reference
@@ -161,8 +161,16 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
 ### Create a data connector to store the historical data
 {:#historical_data_connector}
 
+Setting up a new connection is a four-step process:
+
+1. Create a service binding that provides {{site.data.keyword.iot_short_notm}} with the necessary information to connect to the Cloudant service.
+2. Create a connector instance for the service binding.
+3. Configure one or more destinations on the connector.
+4. Set up one or more forwarding rules for each destination.
+
+To setup a connection,
 1. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
-2. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under Historical Data Storage. A new tab will be opened showing the **{{site.data.keyword.iot_short_notm}} - Historical Data Storage Extension APIs** Swagger UI.
+2. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under Historical Data Storage. A new tab will be opened showing the **IBM {{site.data.keyword.iot_short_notm}} - Historical Data Storage Extension APIs** Swagger UI.
 3. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**.
 4. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value** under **Service** body.
 
@@ -180,8 +188,8 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
       }
     }
    ```
-5. Click **Execute** to see the Response. Save the `id` from the response for the next API call.
-6. Expand the **POST /historianconnectors** endpoint and click **Try it out**. Replace the **Example Value** under **Connector** body with the JSON below. Don't forget to replace the `SERVICE_ID` with the `id` from the response above.
+5. Click **Execute** to see the Response. Save the `id` (serviceID) from the response for the next API call.
+6. Under HistorianConnectors, expand the **POST /historianconnectors** endpoint and click **Try it out**. Replace the **Example Value** under **Connector** body with the JSON below. Don't forget to replace the `SERVICE_ID` with the `id` from the response above.
     ```json
     {
       "name": "iot-cloudant-connector",
@@ -191,7 +199,8 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
       "enabled": true
     }
     ```
-
+7. Click **Execute** to see the Response. Save the `id`(connectorID) from the response for future reference.
+8. Under **Connectors**
 Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. After a few minutes, launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
 
 ![](images/solution16/cloudant.png)
