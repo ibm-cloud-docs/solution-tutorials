@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-11-28"
-lasttested: "2019-11-28"
+lastupdated: "2019-11-29"
+lasttested: "2019-11-29"
 ---
 
 {:shortdesc: .shortdesc}
@@ -141,7 +141,7 @@ Next, you will create a board and cards to display device data in the dashboard.
 
 In this section, you will create a {{site.data.keyword.cloudant_short_notm}} service and bind the service to {{site.data.keyword.iot_short_notm}} to store the historical data.
 
-### Create a {{site.data.keyword.cloudant_short_notm}} DB and connect the app
+### Create an {{site.data.keyword.cloudant_short_notm}} DB and connect to the app
 {: #create_cloudant_db}
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
@@ -237,31 +237,35 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 {: #create_project}
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and under **AI**, select [**{{site.data.keyword.DSX_short}}**](https://{DomainName}/catalog/services/data-science-experience).
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
-3. Create a Project > Select **Data Science and AutoML** > Click **Create project** and enter `Detect Anomaly` as the **Name** of the project.
+   - Select a region and choose **Lite** pricing plan
+   - Enter a **Service name** and select a resource group
+3. Click **Create project** > Create an empty project and enter `Detect Anomaly` as the **Name** of the project.
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 5. Select an existing **Cloud Object Storage** service under **Define Storage** or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Connection to {{site.data.keyword.cloudant_short_notm}} for data
+{: #connection_cloudant}
 
-1. Click on **Assets** > **+ Add to Project** > **Connection**
+1. Click on **+ Add to Project** > **Connection**
 2. Select the **iot-db** {{site.data.keyword.cloudant_short_notm}} where the device data is stored.
 3. Verify the **Credentials** and then click **Create**.
 
 ### Select or Create an {{site.data.keyword.iae_full_notm}} service
+{: #analytics_engine}
 
 If you don't have an existing **{{site.data.keyword.iae_full_notm}}** service:
 1. Go to {{site.data.keyword.cloud_notm}} catalog, select [{{site.data.keyword.iae_short}}](https://{DomainName}/catalog/services/analytics-engine).
-1. Select the **Lite** plan and click **Configure**.
-1. In the configuration page, set the Software package to **AE 1.2 Spark and Hadoop**.
-1. Click **Create**.
+2. Select a region and choose the **Lite** plan
+3. Enter a service name, select a resource group and click **Configure**.
+4. In the configuration page, set the Software package to **AE 1.2 Spark and Hadoop** and click **Create**.
 
 Once the service is provisioned or if you have an existing service instance you want to use and configured with software package **AE 1.2 Spark and Hadoop**:
-1. Open the service details page.
-1. Under **Service credentials**, create new credentials:
+1. From the [Resources list](https://{DomainName/resources}), open the created service.
+2. Under **Service credentials**, create new credential:
    - Set **Name** to **wdp-writer**
-   - Set **Role** to **Writer**
-1. Under **Manage**, retrieve the user name and password for the cluster. You may need to reset the cluster password.
+   - Set **Role** to **Writer** and click **Add**
+3. Under **Manage**, retrieve the user name and password for the cluster. You may need to reset the cluster password.
 
 In {{site.data.keyword.DSX}},:
 1. Select the **Detect Anomaly** project.
@@ -275,11 +279,11 @@ In {{site.data.keyword.DSX}},:
 
 ### Create a Jupyter (ipynb) notebook
 1. Click **+ Add to Project** and add a new **Notebook**.
-2. Enter `Anomaly-detection-notebook` for the **Name**.
+2. Select **From URL** and Enter `Anomaly-detection-notebook` as your Notebook **Name**.
 3. Enter `https://github.com/IBM-Cloud/iot-device-phone-simulator/raw/master/anomaly-detection/Anomaly-detection-watson-studio-python3.ipynb` in the **Notebook URL**.
-4. Select the **{{site.data.keyword.iae_full_notm}}** service associated previously as the runtime.
+4. Select the **{{site.data.keyword.iae_full_notm}}** service associated in the above step as the runtime.
 5. Create **Notebook**.
-1. Set `Python 3.7 with Spark 2.3 (YARN Client Mode)` as your Kernel. Check that the notebook is created with metadata and code.
+6. Set `Python 3.7 with Spark 2.3 (YARN Client Mode)` as your Kernel. Check that the notebook is created with metadata and code.
    ![Jupyter Notebook Watson Studio](images/solution16/jupyter_notebook_watson_studio.png)
    To update, **Kernel** > Change kernel. To **Trust** the notebook, **File** > Trust Notebook.
    {:tip}
@@ -290,7 +294,7 @@ In {{site.data.keyword.DSX}},:
 3. In the next code cell, Import your {{site.data.keyword.cloudant_short_notm}} credentials to that cell by completing the following steps:
    * Click ![](images/solution16/data_icon.png)
    * Select the **Connections** tab.
-   * Click **Insert to code**. A dictionary called _credentials_1_ is created with your {{site.data.keyword.cloudant_short_notm}} credentials. If the name is not specified as _credentials_1_, rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
+   * Click **Insert to code** > Insert Credentials. A dictionary called _credentials_1_ is created with your {{site.data.keyword.cloudant_short_notm}} credentials. If the name is not specified as _credentials_1_, rename the dictionary to `credentials_1`. `credentials_1` is used in the remaining cells.
 4. In the cell with the database name (`dbName`) enter the name of the {{site.data.keyword.cloudant_short_notm}} database that is the source of data, for example, *iotp_yourWatsonIoTProgId_DBName_Year-month-day*. To visualize data of different devices, change the values of `deviceId` and `deviceType` accordingly.
    You can find the exact database by navigating to your **iot-db** {{site.data.keyword.cloudant_short_notm}} instance you created earlier > Launch Dashboard.
    {:tip}
