@@ -155,7 +155,7 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
    - Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot-solution-tutorial** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space.
    - Connect and restage the app.
 4. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
-5. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under **Historical Data Storage**. A new tab will be opened showing the **{{site.data.keyword.iot_full_notm}} - Historical Data Storage Extension APIs** Swagger UI.
+5. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under **Historical Data Storage**. A new tab will be opened showing the **{{site.data.keyword.iot_short_notm}} - Historical Data Storage Extension APIs** Swagger UI.
 6. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**.
 7. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value**.
 
@@ -258,7 +258,7 @@ In {{site.data.keyword.DSX}},:
     ![](images/solution16/density_plots_sensor_data.png)
 
 ## Remove resources
-{:removeresources}
+{:#removeresources}
 
 1. Navigate to [Resource List](https://{DomainName}/resources/) > choose the Location, Org and Space where you have created the app and services. Under **Cloud Foundry Apps**, delete the Node.JS App your created above.
 2. Under **Services**, delete the respective {{site.data.keyword.iot_full}}, {{site.data.keyword.iae_full_notm}}, {{site.data.keyword.cloudant_short_notm}} and {{site.data.keyword.cos_full_notm}} services which you created for this tutorial.
