@@ -168,11 +168,10 @@ Setting up a new connection is a four-step process:
 3. Configure one or more destinations on the connector.
 4. Set up one or more forwarding rules for each destination.
 
-To setup a connection,
+To setup a new connection,
 1. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
 2. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under Historical Data Storage. A new tab will be opened showing the **IBM {{site.data.keyword.iot_short_notm}} - Historical Data Storage Extension APIs** Swagger UI.
-3. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**.
-4. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value** under **Service** body.
+3. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value** under **Service** body.
 
    ```json
     {
@@ -188,8 +187,8 @@ To setup a connection,
       }
     }
    ```
-5. Click **Execute** to see the Response. Save the `id` (serviceID) from the response for the next API call.
-6. Under HistorianConnectors, expand the **POST /historianconnectors** endpoint and click **Try it out**. Replace the **Example Value** under **Connector** body with the JSON below. Don't forget to replace the `SERVICE_ID` with the `id` from the response above.
+4. Click **Execute** to see `HTTP 201` response. Save the `id` (serviceID) from the response for the next API call.
+5. Under HistorianConnectors, expand the **POST /historianconnectors** endpoint and click **Try it out**. Replace the **Example Value** under **Connector** body with the JSON below. Don't forget to replace the `SERVICE_ID` with the `id` from the response above.
     ```json
     {
       "name": "iot-cloudant-connector",
@@ -199,9 +198,33 @@ To setup a connection,
       "enabled": true
     }
     ```
-7. Click **Execute** to see the Response. Save the `id`(connectorID) from the response for future reference.
-8. Under **Connectors**
-Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. After a few minutes, launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
+6. Click **Execute** to see `HTTP 201` response. Save the `id`(connectorID) from the response for future reference.
+7. Under **Connectors**, expand the **POST /historianconnectors/{connectorId}/destinations** endpoint and click **Try it out**. Provide the `id`(connectorID) and replace the **Example Value** under **Destination** body with the JSON below.
+   ```json
+   {
+    "name": "default",
+    "type": "cloudant",
+    "configuration": {
+      "bucketInterval": "DAY"
+     }
+   }
+   ```
+8. Click **Execute** to see `HTTP 201` response.
+9. Under **Forwarding Rules**, expand **POST /historianconnectors/{connectorId}/forwardingrules** endpoint and click **Try it out**. Provide the `id`(connectorID) and replace the **Example Value** under **Forwarding Rule** body with the JSON below.
+    ```json
+    {
+    "name": "iot-cloudant-rule",
+    "destinationName": "default",
+    "type": "event",
+    "selector": {
+      "deviceType": "simulator",
+      "eventId": "sensorData"
+     }
+    }
+    ```
+10. Click **Execute** to see `HTTP 201` response.
+
+Your device data will now be saved in {{site.data.keyword.cloudant_short_notm}}. Reconnect the browser app to generate new data. After a few minutes, launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
 
 ![](images/solution16/cloudant.png)
 
@@ -293,7 +316,8 @@ In {{site.data.keyword.DSX}},:
 ## Related content
 {:related}
 
-* [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
+* Tutorial - [Build, deploy, test, and retrain a predictive machine learning model](https://{DomainName}/docs/tutorials?topic=solution-tutorials-create-deploy-retrain-machine-learning-model#build-deploy-test-and-retrain-a-predictive-machine-learning-model)
+* [Data store connector for {{site.data.keyword.cloudant_short_notm}}](https://www.ibm.com/support/knowledgecenter/SSQP8H/iot/platform/reference/dsc/cloudant.html)
 * Overview of [IBM {{site.data.keyword.DSX_short}}](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/overview-ws.html)
 * [Understanding z-score](https://en.wikipedia.org/wiki/Standard_score)
 * Developing cognitive IoT solutions for anomaly detection by using deep learning - [5 post series](https://developer.ibm.com/series/iot-anomaly-detection-deep-learning/)
