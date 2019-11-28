@@ -51,9 +51,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 </p>
 
 * Devices send sensor data to {{site.data.keyword.iot_full}} using MQTT protocol
-* Historical data is exported into a {{site.data.keyword.cloudant_short_notm}} database
+* Historical data is exported into an {{site.data.keyword.cloudant_short_notm}} database
 * {{site.data.keyword.DSX_short}} pulls data from this database
-* Data is analyzed and visualized through a Jupyter notebook
+* Data is analyzed and visualized through a Jupyter notebook on {{site.data.keyword.DSX_short}}
 
 ## Before you begin
 {: #prereqs}
