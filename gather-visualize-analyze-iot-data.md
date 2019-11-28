@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-11-27"
-lasttested: "2019-11-27"
+lastupdated: "2019-11-28"
+lasttested: "2019-11-28"
 ---
 
 {:shortdesc: .shortdesc}
@@ -13,7 +13,7 @@ lasttested: "2019-11-27"
 {:tip: .tip}
 {:pre: .pre}
 
-# Gather, visualize, and analyze IoT data
+# Gather, visualize, analyze and detect anomalies in IoT data
 {: #gather-visualize-analyze-iot-data}
 This tutorial walks you through setting up an IoT device, gathering data in the {{site.data.keyword.iot_short_notm}}, exploring data and creating visualizations and then using advanced machine learning services to analyze data and detect anomalies in the historical data.
 {:shortdesc}
@@ -81,7 +81,7 @@ To begin, you will create Internet of Things Platform service - The hub which ca
 The IoT platform is now configured to start receiving data. Devices will need to send their data to the IoT Platform with the Device Type, ID and Token specified.
 
 ## Create device simulator
-{: #confignodered}
+{: #create_device_simulator}
 Next, you will deploy a Node.js web application and visit it on your phone, which will connect to and send device accelerometer and orientation data to the IoT Platform.
 
 1. Clone the Github repository:
@@ -89,16 +89,16 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    git clone https://github.com/IBM-Cloud/iot-device-phone-simulator
    cd iot-device-phone-simulator
    ```
-3. Push the application to the {{site.data.keyword.Bluemix_notm}}.
+2. Push the application to the {{site.data.keyword.Bluemix_notm}}.
    ```bash
    ibmcloud login
    ibmcloud target --cf
    ibmcloud cf push
    ```
-4. In a few minutes, your application will be deployed and you should see a URL similar to `<random-name>.mybluemix.net`
-5. Visit the application URL with HTTPS (`https://<random-name>.mybluemix.net`) on your phone using a browser.
-6. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
-7. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
+3. In a few minutes, your application will be deployed and you should see a URL similar to `<random-name>.mybluemix.net`
+4. Visit the application URL with HTTPS (`https://<random-name>.mybluemix.net`) on your phone using a browser.
+5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
+6. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
   ![](images/solution16/recent_events_with_phone.png)
 
 On iOS 13.x if prompted, Allow the website to access motion and orientation sensor data.
@@ -106,18 +106,18 @@ On iOS 12.x, Sensor access is disabled by default in Safari. To enable manually,
 {: tip}
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
-{: #createcards}
+{: #creat_ecards}
 Next, you will create a board and cards to display device data in the dashboard.
 
 ### Create a board
-{: #createboard}
+{: #create_board}
 
 1. Select **Boards** from the left menu, and then click **Create New Board**.
 2. Enter a name for the board, `Simulators` as example,  and click **Next** and then **Submit**.
 3. Select the board that you just created to open it.
 
 ### Display device data
-{: #cardtemp}
+{: #display_device_data}
 
 1. Click **Add New Card**, and then select the **Line Chart** card type, which is located in the Devices section.
 2. Select your device from the list, then click **Next**.
@@ -141,6 +141,9 @@ Next, you will create a board and cards to display device data in the dashboard.
 
 In this section, you will create a {{site.data.keyword.cloudant_short_notm}} service and bind the service to {{site.data.keyword.iot_short_notm}} to store the historical data.
 
+### Create a {{site.data.keyword.cloudant_short_notm}} DB and connect the app
+{: #create_cloudant_db}
+
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and create a new [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
    - Select a region and choose **Lite** plan
    - Enter `iot-db` as the service name
@@ -154,10 +157,14 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
    - Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
    - Expand the space name in the **Connection Location** table and use the **Connect** button next to **iot-solution-tutorial** to create an alias for the {{site.data.keyword.cloudant_short_notm}} service in that space.
    - Connect and restage the app.
-4. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
-5. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under **Historical Data Storage**. A new tab will be opened showing the **{{site.data.keyword.iot_short_notm}} - Historical Data Storage Extension APIs** Swagger UI.
-6. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**.
-7. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value**.
+
+### Create a data connector to store the historical data
+{:#historical_data_connector}
+
+1. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
+2. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under Historical Data Storage. A new tab will be opened showing the **{{site.data.keyword.iot_short_notm}} - Historical Data Storage Extension APIs** Swagger UI.
+3. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**.
+4. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value** under **Service** body.
 
    ```json
     {
@@ -173,7 +180,17 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
       }
     }
    ```
-8. Click **Execute** to see the Response. Save the `id` from the response for the next API call.
+5. Click **Execute** to see the Response. Save the `id` from the response for the next API call.
+6. Expand the **POST /historianconnectors** endpoint and click **Try it out**. Replace the **Example Value** under **Connector** body with the JSON below. Don't forget to replace the `SERVICE_ID` with the `id` from the response above.
+    ```json
+    {
+      "name": "iot-cloudant-connector",
+      "description": "Historian connector connecting IoT platform to cloudant",
+      "serviceId": "SERVICE_ID",
+      "type": "cloudant",
+      "enabled": true
+    }
+    ```
 
 Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. After a few minutes, launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
 
@@ -185,6 +202,7 @@ Your device data is now saved in {{site.data.keyword.cloudant_short_notm}}. Afte
 In this section, you will use the Jupyter Notebook that is available in the IBM {{site.data.keyword.DSX_short}} service to load your historical mobile data and detect anomalies using z-score. *z-score* is a standard score that indicates how many standard deviations an element is from the mean
 
 ### Create a new project
+{: #create_project}
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and under **AI**, select [**{{site.data.keyword.DSX_short}}**](https://{DomainName}/catalog/services/data-science-experience).
 2. **Create** the service and launch it's dashboard by clicking **Get Started**
 3. Create a Project > Select **Data Science and AutoML** > Click **Create project** and enter `Detect Anomaly` as the **Name** of the project.
