@@ -50,10 +50,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
    ![](images/solution16/Architecture.png)
 </p>
 
-1. User moves the mobile device to send sensor data to {{site.data.keyword.iot_full}} using MQTT protocol
-2. The historical sensor data is then exported into an {{site.data.keyword.cloudant_short_notm}} database
-3. {{site.data.keyword.DSX_short}} pulls data from this database
-4. Data is analyzed and visualized through a Jupyter notebook on {{site.data.keyword.DSX_short}}
+1. User moves the mobile device to generate and send sensor data to {{site.data.keyword.iot_full}} using MQTT protocol.
+2. The historical sensor data is then exported into an {{site.data.keyword.cloudant_short_notm}} database.
+3. {{site.data.keyword.DSX_short}} pulls data from {{site.data.keyword.cloudant_short_notm}} database.
+4. Data is analyzed and visualized through a Jupyter notebook on {{site.data.keyword.DSX_short}}.
 5. User can now see the visualizations and check the anomalies in the sensor data.
 
 ## Before you begin
