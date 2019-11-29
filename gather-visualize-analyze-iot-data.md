@@ -26,9 +26,9 @@ Simply register and connect your device, be it a sensor, a gateway, or something
 ## Objectives
 {: #objectives}
 
-* Set up IoT Simulator.
-* Send collection data to {{site.data.keyword.iot_short_notm}}.
-* Create visualizations.
+* Set up IoT Simulator to collect mobile device sensor data.
+* Send collected data to {{site.data.keyword.iot_short_notm}}.
+* Create visualizations with a Jupyter notebook.
 * Analyze the device generated data and detect anomalies.
 
 ## Services used
@@ -50,10 +50,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
    ![](images/solution16/Architecture.png)
 </p>
 
-* Devices send sensor data to {{site.data.keyword.iot_full}} using MQTT protocol
-* Historical data is exported into an {{site.data.keyword.cloudant_short_notm}} database
-* {{site.data.keyword.DSX_short}} pulls data from this database
-* Data is analyzed and visualized through a Jupyter notebook on {{site.data.keyword.DSX_short}}
+1. User moves the mobile device to send sensor data to {{site.data.keyword.iot_full}} using MQTT protocol
+2. The historical sensor data is then exported into an {{site.data.keyword.cloudant_short_notm}} database
+3. {{site.data.keyword.DSX_short}} pulls data from this database
+4. Data is analyzed and visualized through a Jupyter notebook on {{site.data.keyword.DSX_short}}
+5. User can now see the visualizations and check the anomalies in the sensor data.
 
 ## Before you begin
 {: #prereqs}
