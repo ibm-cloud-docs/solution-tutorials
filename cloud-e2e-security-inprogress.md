@@ -300,7 +300,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Deploy to the cluster
 
-(**TODO** kubectl fails with an error as seen here https://cloud.ibm.com/docs/containers?topic=containers-cs_troubleshoot_clusters#kubectl_fails. Need to make sure the right version of kubectl is used.  Add an issue for adding the correct version of kubectl for the cluster in the Access page of the cluster)
+(**TODO** kubectl fails with an error as seen here https://{DomainName}/docs/containers?topic=containers-cs_troubleshoot_clusters#kubectl_fails. Need to make sure the right version of kubectl is used.  Add an issue for adding the correct version of kubectl for the cluster in the Access page of the cluster)
 
 1. Retrieve the cluster configuration and set the KUBECONFIG environment variable.
    ```sh
