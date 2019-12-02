@@ -171,6 +171,8 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 
 Before creating the bucket, you will grant **secure-file-storage-cos** access to the root key stored in **secure-file-storage-kp**.
 
+(**TODO** The following steps are not accurate, step 4 is not an option)
+
 1. Go to [Identity & Access > Authorizations](https://{DomainName}/iam/#/authorizations) in the {{site.data.keyword.cloud_notm}} console.
 2. Click the **Create** button.
 3. In the **Source service** menu, select **Cloud Object Storage**.
@@ -202,14 +204,18 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
    * Set the location.
    * Use the same **resource group** as for the previous services.
    * Set **Available authentication methods** to **Use only IAM**.
-2. Under **Service credentials**, create *New credential*.
+   * Click **Create**.
+2. Back to the **Resource List**, locate the newly created service and click on it. (Note: you might need until the status changes to Provisioned) 
+   * Under **Service credentials**, create *New credential*.
    * Set the **name** to **secure-file-storage-cloudant-acckey**.
    * Set **Role** to **Manager**
    * Keep the default values for the *Optional* fields
    * **Add**.
-3. Make note of the credentials by clicking **View credentials**. You will need them in a later step.
+3. Make note of the credentials by clicking **View credentials**.  You will need them in a later step.
 4. Under **Manage**, launch the Cloudant dashboard.
 5. Click **Create Database** to create a database named **secure-file-storage-metadata**.
+
+(**TODO** When creating the database user is prompted for Partitioned or Non-partitioned database, what to select??)
 
 {{site.data.keyword.cloudant_short_notm}} instances on dedicated hardware allow private endpoints. Instances with dedicated service plans allow IP whitelisting. See [{{site.data.keyword.cloudant_short_notm}} Secure access control](https://{DomainName}/docs/services/Cloudant?topic=cloudant-security#secure-access-control) for details.
 {: tip}
@@ -245,6 +251,8 @@ All services have been configured. In this section you will deploy the tutorial 
    {: codeblock}
 
 ### Build the Docker image
+
+(**TODO** When adding the namespace below user gets an error that it already exists, need to make sure to add a unique identifier for the namespace used)
 
 1. [Build the Docker image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
    - Find the registry endpoint with `ibmcloud cr info`, such as **us**.icr.io or **uk**.icr.io.
@@ -291,6 +299,8 @@ All services have been configured. In this section you will deploy the tutorial 
 {: tip}
 
 ### Deploy to the cluster
+
+(**TODO** kubectl fails with an error as seen here https://cloud.ibm.com/docs/containers?topic=containers-cs_troubleshoot_clusters#kubectl_fails. Need to make sure the right version of kubectl is used.  Add an issue for adding the correct version of kubectl for the cluster in the Access page of the cluster)
 
 1. Retrieve the cluster configuration and set the KUBECONFIG environment variable.
    ```sh
@@ -402,6 +412,9 @@ Security is never done. Try the below suggestions to enhance the security of you
 
 To remove the resource, delete the deployed container and then the provisioned services.
 
+If you share an account with other users, always make sure to delete only your own resources.
+{: tip}
+
 1. Delete the deployed container:
    ```sh
    kubectl delete -f secure-file-storage.yaml
@@ -419,8 +432,6 @@ To remove the resource, delete the deployed container and then the provisioned s
    {: codeblock}
 4. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
 
-If you share an account with other users, always make sure to delete only your own resources.
-{: tip}
 
 ## Related content
 {:related}
