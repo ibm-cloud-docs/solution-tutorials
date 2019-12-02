@@ -205,7 +205,7 @@ In the following, create these resources by configuring and then running a setup
    {: codeblock}
 
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is or are explained in the next section.
-3. Make sure that your CLI environment is set up to the target generation you want to user, VPC resources. Run:
+3. Make sure that your CLI environment is set up to the target generation you want to use, VPC resources. Run:
    ```sh
    ibmcloud is target --gen 1
    
