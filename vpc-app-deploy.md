@@ -23,9 +23,6 @@ lasttested: "2019-08-05"
 # Install software on virtual server instances in VPC
 {: #vpc-app-deploy}
 
-This tutorial is compatible with VPC for Generation 1 compute and VPC for Generation 2 compute. Throughout the tutorial, you will find notes highlighting differences where applicable.
-{:note}
-
 This tutorial walks you through provisioning {{site.data.keyword.vpc_full}} (VPC) infrastructure and installing software on virtual server instances (VSI) using Infrastructure as Code (IaC) tools like Terraform and Ansible.
 {:shortdesc}
 
