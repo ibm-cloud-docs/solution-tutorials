@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-07-08"
+lastupdated: "2019-12-02"
 lasttested: "2019-03-08"
 
 ---
@@ -20,6 +20,8 @@ lasttested: "2019-03-08"
 {:important: .important}
 {:note: .note}
 
+> Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, you don't need to find and update them in the tutorial. The conrefs will take care [Conrefs table](https://pages.github.ibm.com/Cloud-Docs/tutorials/conref.html). E.g., conref for IBM cloud is {{site.data.keyword.Bluemix_notm}}
+
 # TUTORIAL TITLE
 {: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
 
@@ -35,12 +37,12 @@ This tutorial...
 ## Services used
 {: #services}
 
-<!-- Please Note when creating links:  
+<!-- Please Note when creating links:
 
 For anchors within the same document always only use the following format:
-  [link_description](#anchor_name) 
+  [link_description](#anchor_name)
 
-For anchors or any links to external documents, even for those are are within our tutorials use the following format: 
+For anchors or any links to external documents, even for those are are within our tutorials use the following format:
   [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
 
 If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
@@ -89,9 +91,9 @@ In this section, you will create the services required to ...
     ```
     {: pre}
 2. Create an instance of [Service A](https://{DomainName}/catalog/services/the-service-name).
-  ```sh
-  ibmcloud resource service-instance-create service-instance-name service-name lite global
-  ```
+    ```sh
+    ibmcloud resource service-instance-create service-instance-name service-name lite global
+    ```
 3. Create an instance of [Service B](https://{DomainName}/catalog/services/the-service-name).
 
 ## Solution Specific Section
