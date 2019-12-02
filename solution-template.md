@@ -20,7 +20,7 @@ lasttested: "2019-03-08"
 {:important: .important}
 {:note: .note}
 
-> Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, you don't need to find and update them in the tutorial. The conrefs will take care [Conrefs table](https://pages.github.ibm.com/Cloud-Docs/tutorials/conref.html). E.g., conref for IBM cloud is {{site.data.keyword.Bluemix_notm}}
+> Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/Cloud-Docs/tutorials/conref.html). E.g., conref for IBM cloud is {{site.data.keyword.Bluemix_notm}}
 
 # TUTORIAL TITLE
 {: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
