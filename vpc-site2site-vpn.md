@@ -18,7 +18,7 @@ lasttested: "2019-09-03"
 # Use a VPC/VPN gateway for secure and private on-premises access to cloud resources
 {: #vpc-site2site-vpn}
 
-This tutorial is compatible with VPC for Generation 1 compute.
+This tutorial is compatible with VPC for Generation 1 compute and VPC for Generation 2 compute. Throughout the tutorial, you will find notes highlighting differences where applicable.
 {:note}
 
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the {{site.data.keyword.cloud_notm}}. This allows you to benefit from the elasticity of provisioning servers when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
@@ -208,9 +208,13 @@ In the following, create these resources by configuring and then running a setup
    {: codeblock}
 
 2. Edit the file **config.sh** and adapt the settings to your environment. You need to change the value of **SSHKEYNAME** to the name or comma-separated list of names of SSH keys (see "Before you begin"). Modify the different **ZONE** settings to match your cloud region. All other variables can be kept as is or are explained in the next section.
-3. Make sure that your CLI environment is set up to target generation 1 VPC resources. Run:
+3. Make sure that your CLI environment is set up to the target generation you want to user, VPC resources. Run:
    ```sh
    ibmcloud is target --gen 1
+   
+   or
+
+   ibmcloud is target --gen 2
    ```
    {: codeblock}
 
