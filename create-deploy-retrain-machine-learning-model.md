@@ -20,13 +20,14 @@ lasttested: "2019-10-05"
 # Build, deploy, test, retrain and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
 This tutorial walks you through the process of building a predictive machine learning model, deploying it as an API to be used in applications, testing the model, monitoring the deployed model and retraining the model with feedback data. All of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}.
+{:shortdesc}
 
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
 
 In the terminology of machine learning, classification is considered an instance of supervised learning, i.e. learning where a training set of correctly identified observations is available.
 {:tip}
 
-{:shortdesc}
+{{site.data.keyword.DSX}} provides you with the environment and tools to solve your business problems by collaboratively working with data. You can choose the tools you need to analyze and visualize data, to cleanse and shape data, to ingest streaming data, or to create and train machine learning models.
 
 ## Objectives
 {: #objectives}
@@ -51,12 +52,13 @@ This tutorial uses the following runtimes and services:
 
 ## Architecture
 {: #architecture}
+![](images/solution22-build-machine-learning-model/architecture_diagram.png)
 
-<p style="text-align: center;">
-  ![](images/solution22-build-machine-learning-model/architecture_diagram.png)
-</p>
-
-1.
+1. The user uploads a CSV file from a local machine.
+2. The uploaded CSV file is stored in {{site.data.keyword.cos_full_notm}} serving as the dataset.
+3. The dataset is then used to build a machine learning model.
+4. A part of the dataset is used to retrain the model to improve the prediction accuracy and other parameters.
+5. The deployed machine learning model is monitored for performance, accuracy and other key parameters.
 
 ## Before you begin
 {: #prereqs}
