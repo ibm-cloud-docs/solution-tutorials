@@ -94,7 +94,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 Skip this section if you have an existing cluster you want to reuse with this tutorial.
 {: tip}
 
-<!-- | Kubernetes on Classic |
+| Kubernetes on Classic |
 |:-----------------|
 | Create the Kubernetes cluster |
 | 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
@@ -144,7 +144,7 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 {: #simpletabtable2}
 {: tab-title="Kubernetes on VPC"}
 {: tab-group="K8s-simple"}
-{: class="simple-tab-table"} -->
+{: class="simple-tab-table"}
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
 
