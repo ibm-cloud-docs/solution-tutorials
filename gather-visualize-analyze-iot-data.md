@@ -229,6 +229,9 @@ To setup a new connection,
     {:pre}
 10. Click **Execute** to see `HTTP 201` response.
 
+By using the Python SDK, you can set up a Cloudant NoSQL DB binding in just a few lines of code.For more information about how to get your IoT data forwarded to Cloudant NoSQL DB, check the [configuration section](https://www.ibm.com/support/knowledgecenter/SSQP8H/iot/platform/reference/dsc/cloudant.html) of data connector documentation.
+{:tip}
+
 Your device data will now be saved in {{site.data.keyword.cloudant_short_notm}}. Reconnect the browser app to generate new data. After a few minutes, launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
 
 ![](images/solution16/cloudant.png)
