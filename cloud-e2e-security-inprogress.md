@@ -126,6 +126,7 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 | 5. Set the **Location** to your chosen location. |
 | 6. Set **Public gateway** to **Attached**. |
 | 7. Click **Create virtual private cloud**. |
+| 7. Click **Create virtual private cloud**. |
 | Create the Kubernetes cluster |
 | 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). |
 | 2. Under **Select a plan**, select **Standard**. |
