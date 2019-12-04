@@ -90,12 +90,14 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    git clone https://github.com/IBM-Cloud/iot-device-phone-simulator
    cd iot-device-phone-simulator
    ```
+   {:pre}
 2. Push the application to the {{site.data.keyword.Bluemix_notm}}.
    ```bash
    ibmcloud login
    ibmcloud target --cf
    ibmcloud cf push
    ```
+   {:pre}
 3. In a few minutes, your application will be deployed and you should see a URL similar to `<random-name>.mybluemix.net`
 4. Visit the application URL with HTTPS (`https://<random-name>.mybluemix.net`) on your phone using a browser.
 5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
