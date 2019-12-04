@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-11-29"
-lasttested: "2019-11-29"
+lastupdated: "2019-12-04"
+lasttested: "2019-12-04"
 ---
 
 {:shortdesc: .shortdesc}
@@ -37,7 +37,7 @@ Simply register and connect your device, be it a sensor, a gateway, or something
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.iot_full}}](https://{DomainName}/catalog/services/internet-of-things-platform)
 * [Node.js Application](https://{DomainName}/catalog/starters/sdk-for-nodejs)
-* [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience) with [{{site.data.keyword.iae_full_notm}}](https://{DomainName}/catalog/services/analytics-engine) and {{site.data.keyword.cos_full_notm}}
+* [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience) with [{{site.data.keyword.iae_full_notm}}](https://{DomainName}/catalog/services/analytics-engine) and [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -90,12 +90,14 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    git clone https://github.com/IBM-Cloud/iot-device-phone-simulator
    cd iot-device-phone-simulator
    ```
+   {:pre}
 2. Push the application to the {{site.data.keyword.Bluemix_notm}}.
    ```bash
    ibmcloud login
    ibmcloud target --cf
    ibmcloud cf push
    ```
+   {:pre}
 3. In a few minutes, your application will be deployed and you should see a URL similar to `<random-name>.mybluemix.net`
 4. Visit the application URL with HTTPS (`https://<random-name>.mybluemix.net`) on your phone using a browser.
 5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
@@ -164,10 +166,10 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
 
 Setting up a new connection is a four-step process:
 
-1. Create a service binding that provides {{site.data.keyword.iot_short_notm}} with the necessary information to connect to the Cloudant service.
-2. Create a connector instance for the service binding.
-3. Configure one or more destinations on the connector.
-4. Set up one or more forwarding rules for each destination.
+* Create a service binding that provides {{site.data.keyword.iot_short_notm}} with the necessary information to connect to the Cloudant service.
+* Create a connector instance for the service binding.
+* Configure one or more destinations on the connector.
+* Set up one or more forwarding rules for each destination.
 
 To setup a new connection,
 1. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
@@ -188,8 +190,9 @@ To setup a new connection,
       }
     }
    ```
+   {:codeblock}
 4. Click **Execute** to see `HTTP 201` response. Save the `id` (serviceID) from the response for the next API call.
-5. Under HistorianConnectors, expand the **POST /historianconnectors** endpoint and click **Try it out**. Replace the **Example Value** under **Connector** body with the JSON below. Don't forget to replace the `SERVICE_ID` with the `id` from the response above.
+5. Under **HistorianConnectors**, expand the **POST /historianconnectors** endpoint and click **Try it out**. Replace the **Example Value** under **Connector** body with the JSON below. Don't forget to replace the `SERVICE_ID` with the `id` from the response above.
     ```json
     {
       "name": "iot-cloudant-connector",
@@ -199,8 +202,9 @@ To setup a new connection,
       "enabled": true
     }
     ```
+    {:codeblock}
 6. Click **Execute** to see `HTTP 201` response. Save the `id`(connectorID) from the response for future reference.
-7. Under **Connectors**, expand the **POST /historianconnectors/{connectorId}/destinations** endpoint and click **Try it out**. Provide the `id`(connectorID) and replace the **Example Value** under **Destination** body with the JSON below.
+7. Under **Destinations**, expand the **POST /historianconnectors/{connectorId}/destinations** endpoint and click **Try it out**. Provide the `id`(connectorID) and replace the **Example Value** under **Destination** body with the JSON below.
    ```json
    {
     "name": "default",
@@ -210,6 +214,7 @@ To setup a new connection,
      }
    }
    ```
+   {:codeblock}
 8. Click **Execute** to see `HTTP 201` response.
 9. Under **Forwarding Rules**, expand **POST /historianconnectors/{connectorId}/forwardingrules** endpoint and click **Try it out**. Provide the `id`(connectorID) and replace the **Example Value** under **Forwarding Rule** body with the JSON below.
     ```json
@@ -223,7 +228,11 @@ To setup a new connection,
      }
     }
     ```
+    {:codeblock}
 10. Click **Execute** to see `HTTP 201` response.
+
+By using the Python SDK, you can set up a Cloudant NoSQL DB binding in just a few lines of code.For more information about how to get your IoT data forwarded to Cloudant NoSQL DB, check the [configuration section](https://www.ibm.com/support/knowledgecenter/SSQP8H/iot/platform/reference/dsc/cloudant.html) of data connector documentation.
+{:tip}
 
 Your device data will now be saved in {{site.data.keyword.cloudant_short_notm}}. Reconnect the browser app to generate new data. After a few minutes, launch the {{site.data.keyword.cloudant_short_notm}} dashboard to see your data.
 
@@ -237,10 +246,10 @@ In this section, you will use the Jupyter Notebook that is available in the IBM 
 ### Create a new project
 {: #create_project}
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and under **AI**, select [**{{site.data.keyword.DSX_short}}**](https://{DomainName}/catalog/services/data-science-experience).
-2. **Create** the service and launch it's dashboard by clicking **Get Started**
+2. **Create** the service
    - Select a region and choose **Lite** pricing plan
    - Enter a **Service name** and select a resource group
-3. Click **Create project** > Create an empty project and enter `Detect Anomaly` as the **Name** of the project.
+3. Launch the dashboard by clicking **Get Started** and click **Create project** > Create an empty project and enter `Detect Anomaly` as the **Name** of the project.
 4. Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 5. Select an existing **Cloud Object Storage** service under **Define Storage** or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
 6. Click **Create**. Your new project opens and you can start adding resources to it.
