@@ -96,14 +96,21 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 
 | Kubernetes on Classic |
 |:-----------------|
-| Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
-| 1. Set the **Location** to the one used in previous steps. |
-| 1. Set **Cluster type** to **Standard**. |
-| 1. Set **Availability** to **Single Zone**. |
-| 1. Select a **Master Zone**. |
-| 1. Keep the default **Kubernetes version** and **Hardware isolation**. |
+| Create the Kubernetes cluster |
+| 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
+| 2. Under **Select a plan**, select **Standard**. | 
+| 3. Set **Cluster type and version** to **Kubernetes** and at minimum use version 1.15.x. | 
+| 4. Under **Select an environment** choose either **Classic infrastructure** or **VPC infrastructure**. | 
+| 5. Set the **Cluster name** to **secure-file-storage-cluster**. | 
+| 6. Select the **Resource group** where to create the cluster. | 
+| 7. Set **Availability** to **Single Zone**. | 
+| 8. Set the **Worker Zone** to your chosen location. | 
+| 9. Set the **Master service endpoint** to **Both private & public endpoints**. | 
+| 10. Select the **Flavor** for the worker nodes, the smallest available option will work for this tutorial. | 
+| 11. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**. | 
+| 12. Click **Create cluster** to create the cluster. | 
 {: class="simple-tab-table"}
-{: caption="Table 1. IAM roles" caption-side="top"}
+{: caption=" " caption-side="top"}
 {: #simpletabtable1}
 {: tab-title="Kubernetes on Classic"}
 {: tab-group="K8s-simple"}
@@ -111,28 +118,34 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 
 | Kubernetes on VPC |
 |:-----------------|
-| 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
-| 2. Set the **Location** to the one used in previous steps. |
-| 3. Set **Cluster type** to **Standard**. |
-| 4. Set **Availability** to **Single Zone**. |
-| 5. Select a **Master Zone**. |
-| 6. Keep the default **Kubernetes version** and **Hardware isolation**. |
-{: caption="Table 2. IAM roles - Access" caption-side="top"}
+| Create the Virtual Private Cloud |
+| 1. Access the [VPC provision page](https://{DomainName}/vpc/provision/vpc)
+| 2. Set the **Name** to **secure-file-storage-vpc**
+| 3. Select the **Resource group** where to create the VPC.
+| 4. Set the **New subnet for VPC** **Name** to **secure-file-storage-subnet**
+| 5. Set the **Location** to your chosen location.
+| 6. Set **Public gateway** to **Attached**
+| 7. Click **Create virtual private cloud**. 
+
+| Create the Kubernetes cluster |
+| 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). |
+| 2. Under **Select a plan**, select **Standard**. |
+| 3. Set **Cluster type and version** to **Kubernetes** and at minimum use version 1.15.x. |
+| 4. Under **Select an environment** choose either **Classic infrastructure** or **VPC infrastructure**. |
+| 6. Select the **Virtual Private Cloud** you created earlier. |
+| 7. Set the **Cluster name** to **secure-file-storage-cluster**. |
+| 6. Select the **Resource group** where to create the cluster. |
+| 7. Set **Availability** to **Single Zone**. |
+| 8. Set the **Worker zones** to only one of three available zones. |
+| 9. Set the **Master service endpoint** to **Both private & public endpoints**. |
+| 10. Select the **Flavor** for the worker nodes, the smallest available option will work for this tutorial. |
+| 11. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**. |
+| 12. Click **Create cluster** to create the cluster. |
+{: caption=" " caption-side="top"}
 {: #simpletabtable2}
 {: tab-title="Kubernetes on VPC"}
 {: tab-group="K8s-simple"}
 {: class="simple-tab-table"}
-
-
-1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create).
-   1. Set the **Location** to the one used in previous steps.
-   2. Set **Cluster type** to **Standard**.
-   3. Set **Availability** to **Single Zone**.
-   4. Select a **Master Zone**.
-2. Keep the default **Kubernetes version** and **Hardware isolation**.
-3. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**.
-4. Set the **Cluster name** to **secure-file-storage-cluster**.
-5. Click the **Create Cluster** button.
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
 
@@ -146,7 +159,7 @@ While the cluster is being provisioned, you will create the other services requi
 2. Under **Manage**, click the **Add Key** button to create a new root key. It will be used to encrypt the storage bucket content.
    * Set the name to **secure-file-storage-root-enckey**.
    * Set the key type to **Root key**.
-   * Then **Generate key**.
+   * Then **Create key**.
 
 Bring your own key (BYOK) by [importing an existing root key](https://{DomainName}/docs/services/key-protect?topic=key-protect-import-root-keys#import-root-keys).
 {: tip}
@@ -167,11 +180,11 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
    * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to generate pre-signed URLs.
    * Click **Add**.
    * Make note of the credentials by clicking **View credentials**. You will need them in a later step.
-3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location. Copy the **Private** service endpoint. It will be used later in the configuration of the application.
+3. Follow the steps to obtain the endpoint to use depending on the infrastructure used by your cluster: 
+   * Classic infrastructure: Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location. Copy the **Private** service endpoint. It will be used later in the configuration of the application.
+   * VPC infrastructure: [How to connect to IBM Cloud Object Storage (COS) from a VPC](https://{DomainName}/docs/vpc-on-classic?topic=vpc-on-classic-connecting-to-ibm-cloud-object-storage-from-a-vpc#how-to-connect-to-ibm-cloud-object-storage-cos-from-a-vpc)
 
 Before creating the bucket, you will grant **secure-file-storage-cos** access to the root key stored in **secure-file-storage-kp**.
-
-(**TODO** The following steps are not accurate, step 4 is not an option)
 
 1. Go to [Identity & Access > Authorizations](https://{DomainName}/iam/#/authorizations) in the {{site.data.keyword.cloud_notm}} console.
 2. Click the **Create** button.
@@ -205,17 +218,15 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
    * Use the same **resource group** as for the previous services.
    * Set **Available authentication methods** to **Use only IAM**.
    * Click **Create**.
-2. Back to the **Resource List**, locate the newly created service and click on it. (Note: you might need until the status changes to Provisioned) 
-   * Under **Service credentials**, create *New credential*.
+2. Back to the **Resource List**, locate the newly created service and click on it. (Note: You will need to wait until the status changes to Provisioned) 
+   * Under **Service credentials**, create **New credential**.
    * Set the **name** to **secure-file-storage-cloudant-acckey**.
    * Set **Role** to **Manager**
-   * Keep the default values for the *Optional* fields
+   * Keep the default values for the the remaining fields
    * **Add**.
 3. Make note of the credentials by clicking **View credentials**.  You will need them in a later step.
 4. Under **Manage**, launch the Cloudant dashboard.
-5. Click **Create Database** to create a database named **secure-file-storage-metadata**.
-
-(**TODO** When creating the database user is prompted for Partitioned or Non-partitioned database, what to select??)
+5. Click **Create Database** to create a **Non-partitioned** database named **secure-file-storage-metadata**.
 
 {{site.data.keyword.cloudant_short_notm}} instances on dedicated hardware allow private endpoints. Instances with dedicated service plans allow IP whitelisting. See [{{site.data.keyword.cloudant_short_notm}} Secure access control](https://{DomainName}/docs/services/Cloudant?topic=cloudant-security#secure-access-control) for details.
 {: tip}
@@ -252,19 +263,17 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Build the Docker image
 
-(**TODO** When adding the namespace below user gets an error that it already exists, need to make sure to add a unique identifier for the namespace used)
-
 1. [Build the Docker image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
    - Find the registry endpoint with `ibmcloud cr info`, such as **us**.icr.io or **uk**.icr.io.
    - Create a namespace to store the container image.
       ```sh
-      ibmcloud cr namespace-add secure-file-storage-namespace
+      ibmcloud cr namespace-add &lt;your-initials&gt;-secure-file-storage-ns
       ```
       {: codeblock}
    - Use **secure-file-storage** as the image name.
 
       ```sh
-      ibmcloud cr build -t <location>.icr.io/secure-file-storage-namespace/secure-file-storage:latest .
+      ibmcloud cr build -t <location>.icr.io/&lt;your-initials&gt;-secure-file-storage-ns/secure-file-storage:latest .
       ```
       {: codeblock}
 
