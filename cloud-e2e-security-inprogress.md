@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-11-05"
-lasttested: "2019-07-31"
+lastupdated: "2019-12-05"
+lasttested: "2019-12-05"
 
 ---
 
@@ -96,7 +96,7 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 
 | Kubernetes on Classic |
 |:-----------------|
-| --- Create the Kubernetes cluster --- |
+| Create the Kubernetes cluster |
 | 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
 | 2. Under **Select a plan**, select **Standard**. | 
 | 3. Set **Cluster type and version** to **Kubernetes** and at minimum use version 1.15.x. | 
@@ -118,7 +118,7 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 
 | Kubernetes on VPC |
 |:-----------------|
-| --- Create the Virtual Private Cloud --- |
+| Create the Virtual Private Cloud |
 | 1. Access the [VPC provision page](https://{DomainName}/vpc/provision/vpc). |
 | 2. Set the **Name** to **secure-file-storage-vpc**. |
 | 3. Select the **Resource group** where to create the VPC. |
@@ -126,7 +126,7 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 | 5. Set the **Location** to your chosen location. |
 | 6. Set **Public gateway** to **Attached**. |
 | 7. Click **Create virtual private cloud**. |
-| --- Create the Kubernetes cluster --- |
+| Create the Kubernetes cluster |
 | 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). |
 | 2. Under **Select a plan**, select **Standard**. |
 | 3. Set **Cluster type and version** to **Kubernetes** and at minimum use version 1.15.x. |
