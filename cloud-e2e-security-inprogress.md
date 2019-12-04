@@ -110,7 +110,7 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 | 11. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**. | 
 | 12. Click **Create cluster** to create the cluster. | 
 {: class="simple-tab-table"}
-{: caption=" " caption-side="top"}
+{: caption="Create the Kubernetes cluster on Classic infrastructure" caption-side="top"}
 {: #simpletabtable1}
 {: tab-title="Kubernetes on Classic"}
 {: tab-group="K8s-simple"}
@@ -141,7 +141,7 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 | 10. Select the **Flavor** for the worker nodes, the smallest available option will work for this tutorial. |
 | 11. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**. |
 | 12. Click **Create cluster** to create the cluster. |
-{: caption=" " caption-side="top"}
+{: caption="Create the Kubernetes cluster on VPC infrastructure" caption-side="top"}
 {: #simpletabtable2}
 {: tab-title="Kubernetes on VPC"}
 {: tab-group="K8s-simple"}
