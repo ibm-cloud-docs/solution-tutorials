@@ -44,15 +44,13 @@ This tutorial uses the following products:
 ## Architecture
 {: #architecture}
 
-<p style="text-align: center;">
-
 ![](images/solution28-watson-chatbot-android/architecture.png)
-</p>
 
-* Users interact with a mobile application using their voice.
-* The audio is transcribed to text with {{site.data.keyword.speechtotextfull}}.
-* The text is passed to {{site.data.keyword.conversationfull}}.
-* The reply from {{site.data.keyword.conversationfull}} is converted to audio by {{site.data.keyword.texttospeechfull}} and the result sent back to the mobile application.
+1. User launches the mobile application on an Android device.
+2. User sends a text message to {{site.data.keyword.conversationfull}}.
+3. User sends a voice input.The audio is transcribed to text with {{site.data.keyword.speechtotextfull}}.The text is then passed to {{site.data.keyword.conversationfull}}.
+4. The reply from {{site.data.keyword.conversationfull}} is converted to audio by {{site.data.keyword.texttospeechfull}}
+5. The response from {{site.data.keyword.conversationfull}} is sent back to the mobile application.
 
 ## Before you begin
 {: #prereqs}
