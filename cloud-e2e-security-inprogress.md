@@ -94,58 +94,28 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 Skip this section if you have an existing cluster you want to reuse with this tutorial.
 {: tip}
 
-| Kubernetes on Classic |
-|:-----------------|
-| Create the Kubernetes cluster |
-| 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). | 
-| 2. Under **Select a plan**, select **Standard**. | 
-| 3. Set **Cluster type and version** to **Kubernetes** and at minimum use version 1.15.x. | 
-| 4. Under **Select an environment** choose either **Classic infrastructure** or **VPC infrastructure**. | 
-| 5. Set the **Cluster name** to **secure-file-storage-cluster**. | 
-| 6. Select the **Resource group** where to create the cluster. | 
-| 7. Set **Availability** to **Single Zone**. | 
-| 8. Set the **Worker Zone** to your chosen location. | 
-| 9. Set the **Master service endpoint** to **Both private & public endpoints**. | 
-| 10. Select the **Flavor** for the worker nodes, the smallest available option will work for this tutorial. | 
-| 11. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**. | 
-| 12. Click **Create cluster** to create the cluster. | 
-{: class="simple-tab-table"}
-{: caption="Create the Kubernetes cluster on Classic infrastructure" caption-side="top"}
-{: #simpletabtable1}
-{: tab-title="Kubernetes on Classic"}
-{: tab-group="K8s-simple"}
-{: class="simple-tab-table"}
+  * For Kubernetes on VPC infrastructure, you need to create a VPC with subnets as needed and make sure to select that VPC during the cluster creation. 
+    1. Access the [VPC provision page](https://{DomainName}/vpc/provision/vpc).
+    2. Set the **Name** to **secure-file-storage-vpc**.
+    3. Select the **Resource group** where to create the VPC.
+    4. Set the **New subnet for VPC** **Name** to **secure-file-storage-subnet**
+    5. Set the **Location** to your chosen location.
+    6. Set **Public gateway** to **Attached**.
+    7. Click **Create virtual private cloud**.
 
-| Kubernetes on VPC |
-|:-----------------|
-| Create the Virtual Private Cloud |
-| 1. Access the [VPC provision page](https://{DomainName}/vpc/provision/vpc). |
-| 2. Set the **Name** to **secure-file-storage-vpc**. |
-| 3. Select the **Resource group** where to create the VPC. |
-| 4. Set the **New subnet for VPC** **Name** to **secure-file-storage-subnet** |
-| 5. Set the **Location** to your chosen location. |
-| 6. Set **Public gateway** to **Attached**. |
-| 7. Click **Create virtual private cloud**. |
-| 7. Click **Create virtual private cloud**. |
-| Create the Kubernetes cluster |
-| 1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create). |
-| 2. Under **Select a plan**, select **Standard**. |
-| 3. Set **Cluster type and version** to **Kubernetes** and at minimum use version 1.15.x. |
-| 4. Under **Select an environment** choose either **Classic infrastructure** or **VPC infrastructure**. |
-| 6. Select the **Virtual Private Cloud** you created earlier. |
-| 7. Set the **Cluster name** to **secure-file-storage-cluster**. |
-| 6. Select the **Resource group** where to create the cluster. |
-| 7. Set **Availability** to **Single Zone**. |
-| 8. Set the **Worker zones** to only one of three available zones. |
-| 9. Set the **Master service endpoint** to **Both private & public endpoints**. |
-| 10. Select the **Flavor** for the worker nodes, the smallest available option will work for this tutorial. |
-| 11. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**. |
-| 12. Click **Create cluster** to create the cluster. |
-{: caption="Create the Kubernetes cluster on VPC infrastructure" caption-side="top"}
-{: #simpletabtable2}
-{: tab-title="Kubernetes on VPC"}
-{: tab-group="K8s-simple"}
-{: class="simple-tab-table"}
+  * For Kubernetes on Classic infrastructure or VPC infrastructure
+    1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create).
+    2. Under **Select a plan**, select **Standard**.
+    3. Set **Cluster type and version** to **Kubernetes** and at minimum use version 1.15.x.
+    4. Under **Select an environment** choose **Classic infrastructure** or **VPC infrastructure**.
+    5. Set the **Cluster name** to **secure-file-storage-cluster**.
+    6. Select the **Resource group** where to create the cluster.
+    7. Set **Availability** to **Single Zone**.
+    8. Set the **Worker Zone** to your chosen location.
+    9. Set the **Master service endpoint** to **Both private & public endpoints**.
+    10. Select the **Flavor** for the worker nodes, the smallest available option will work for this tutorial.
+    11. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**.
+    12. Click **Create cluster** to create the cluster.
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
 
@@ -180,9 +150,9 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
    * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to generate pre-signed URLs.
    * Click **Add**.
    * Make note of the credentials by clicking **View credentials**. You will need them in a later step.
-3. Follow the steps to obtain the endpoint to use depending on the infrastructure used by your cluster: 
-   * Classic infrastructure: Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location. Copy the **Private** service endpoint. It will be used later in the configuration of the application.
-   * VPC infrastructure: [How to connect to IBM Cloud Object Storage (COS) from a VPC](https://{DomainName}/docs/vpc-on-classic?topic=vpc-on-classic-connecting-to-ibm-cloud-object-storage-from-a-vpc#how-to-connect-to-ibm-cloud-object-storage-cos-from-a-vpc)
+3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location: 
+   * Classic infrastructure: Copy the **Private** service endpoint. It will be used later in the configuration of the application.
+   * VPC infrastructure: Copy the **Direct** service endpoint. It will be used later in the configuration of the application.
 
 Before creating the bucket, you will grant **secure-file-storage-cos** access to the root key stored in **secure-file-storage-kp**.
 
