@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-20"
+lastupdated: "2019-12-05"
 lasttested: "2019-06-20"
 ---
 
@@ -33,13 +33,22 @@ This tutorial walks you through the creation of a mobile starter application, ad
 - Download the code and setup client SDK.
 - Send and monitor {{site.data.keyword.mobilepushshort}}.
 
+## Services
+{:#services}
+
+This tutorial uses the following services:
+   * [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
+
+## Architecture
+{:#architecture}
+
   ![](images/solution6/Architecture.png)
 
-## Products
-{:#products}
-
-This tutorial uses the following products:
-   * [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
+1. The user creates a project on the mobile dashboard.
+2. Adds and configures the push notifications SDK to interact with APNS.
+3. Sends a push notification.
+4. The {{site.data.keyword.mobilepushshort}} service sends the notification to APNS.
+5. The notification is received on the device and monitored.
 
 ## Before you begin
 {: #prereqs}
