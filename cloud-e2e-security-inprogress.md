@@ -92,7 +92,6 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
 
 Skip this section if you have an existing cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is expected to be named **secure-file-storage-cluster**, simply substitute with the name of your cluster.
-
 {: tip}
 
 If you plan to deploy only this tutorial on this cluster, you can keep things at minimum, i.e. 
@@ -100,11 +99,12 @@ If you plan to deploy only this tutorial on this cluster, you can keep things at
   - 1 worker node.
   - The smallest available **Flavor** for the worker node will work for this tutorial.
   - Set the cluster name to **secure-file-storage-cluster**.
-{: note}
+{: tip}
 
-  * For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
-    - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for App ID.
-  * For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
+* For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
+  - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for App ID.
+
+* For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
 
