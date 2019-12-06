@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-08-13"
-lasttested: "2019-07-30"
+lastupdated: "2019-12-06"
+lasttested: "2019-12-06"
 ---
 
 {:shortdesc: .shortdesc}
@@ -16,10 +16,10 @@ lasttested: "2019-07-30"
 # Scalable web application on {{site.data.keyword.openshiftshort}}
 {: #scalable-webapp-openshift}
 
-This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
-With the {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
+With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
 For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions.
 
@@ -213,16 +213,16 @@ In this step, you will update the generated BuildConfig section of the generated
    apiVersion: image.openshift.io/v1
    kind: ImageStream
    metadata:
-       annotations:
-               openshift.io/generated-by: OpenShiftNewApp
-       creationTimestamp: null
-       labels:
-               app: openshiftapp
-       name: openshiftapp
+     annotations:
+       openshift.io/generated-by: OpenShiftNewApp
+     creationTimestamp: null
+     labels:
+       app: openshiftapp
+     name: openshiftapp
    spec:
-       dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp
-       lookupPolicy:
-               local: false
+     dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp
+     lookupPolicy:
+       local: false
    status:
        dockerImageRepository: ""
    ```
@@ -232,13 +232,13 @@ In this step, you will update the generated BuildConfig section of the generated
 4. Update the `spec` under `BuildConfig` section by changing the output to kind `DockerImage` and adding a `pushSecret`
    ```yaml
    spec:
-   nodeSelector: null
-   output:
+     nodeSelector: null
+     output:
        to:
-               kind: DockerImage
-               name: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
+         kind: DockerImage
+         name: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
        pushSecret:
-               name: push-secret
+         name: push-secret
    ```
    {:codeblock}
 
@@ -345,7 +345,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    oc tag <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest openshiftapp:latest --scheduled=true
    ```
    {:pre}
-6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
+6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to `Congratulations! <YOUR_NAME>`.
 7. Save and push the code to the repo
    ```sh
     git add public/index.html
