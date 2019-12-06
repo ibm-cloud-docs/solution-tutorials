@@ -263,13 +263,8 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Deploy to the cluster
 
-(**TODO** kubectl fails with an error as seen here https://{DomainName}/docs/containers?topic=containers-cs_troubleshoot_clusters#kubectl_fails. Need to make sure the right version of kubectl is used.  Add an issue for adding the correct version of kubectl for the cluster in the Access page of the cluster)
+1. Gain access to your cluster as described on the **Access** tab of your cluster.  
 
-1. Retrieve the cluster configuration and set the KUBECONFIG environment variable.
-   ```sh
-   $(ibmcloud ks cluster-config --export secure-file-storage-cluster)
-   ```
-   {: codeblock}
 2. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
