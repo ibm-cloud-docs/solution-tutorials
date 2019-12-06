@@ -91,31 +91,15 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
 
-Skip this section if you have an existing cluster you want to reuse with this tutorial.
+Skip this section if you have an existing cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is expected to be named **secure-file-storage-cluster**, simply substitute with the name of your cluster.
 {: tip}
 
-  * For Kubernetes on VPC infrastructure, you need to create a VPC with subnets as needed and make sure to select that VPC during the cluster creation. 
-    1. Access the [VPC provision page](https://{DomainName}/vpc/provision/vpc).
-    2. Set the **Name** to **secure-file-storage-vpc**.
-    3. Select the **Resource group** where to create the VPC.
-    4. Set the **New subnet for VPC** **Name** to **secure-file-storage-subnet**
-    5. Set the **Location** to your chosen location.
-    6. Set **Public gateway** to **Attached**.
-    7. Click **Create virtual private cloud**.
-
-  * For Kubernetes on Classic infrastructure or VPC infrastructure
-    1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create).
-    2. Under **Select a plan**, select **Standard**.
-    3. Set **Cluster type and version** to **Kubernetes** and at minimum use version 1.15.x.
-    4. Under **Select an environment** choose **Classic infrastructure** or **VPC infrastructure**.
-    5. Set the **Cluster name** to **secure-file-storage-cluster**.
-    6. Select the **Resource group** where to create the cluster.
-    7. Set **Availability** to **Single Zone**.
-    8. Set the **Worker Zone** to your chosen location.
-    9. Set the **Master service endpoint** to **Both private & public endpoints**.
-    10. Select the **Flavor** for the worker nodes, the smallest available option will work for this tutorial.
-    11. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**.
-    12. Click **Create cluster** to create the cluster.
+  * For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://cloud.ibm.com/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
+    - Set the cluster name to **secure-file-storage-cluster**.
+    - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for App ID.
+    
+  * For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://cloud.ibm.com/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
+    - Set the cluster name to **secure-file-storage-cluster**.
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
 
