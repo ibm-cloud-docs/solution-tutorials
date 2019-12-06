@@ -176,7 +176,11 @@ In this step, you will create a deploy token to allow read-only access to your r
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #create_openshift_app}
+
 In this section, you will generate a BuildConfig YAML file and update the file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}.
+
+
+
 ### Generate a build configuration yaml file
 
 A Kubernetes namespace provides a mechanism to scope resources in a cluster. In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
@@ -195,19 +199,43 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    Replace `<REPO_URL_WITHOUT_HTTPS>` with the Git repository URL without `https://`.
    {:tip}
 
-### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
-In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}. In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is used for persistent storage of created images.
+### Prepare the access to {{site.data.keyword.registryshort_notm}}
 
-1. To automate access to your registry namespaces and to push generated builder Docker image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key
+In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is used for persistent storage of created images.
+
+1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
+   ```sh
+   ibmcloud cr region
+   ```
+   {:pre}
+
+   The tutorial will refer to this URL as `<REGISTRY_URL>`.
+1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
+   ```sh
+   ibmcloud cr namespaces
+   ```
+   {:pre}
+
+   To create a new namespace:
+   ```sh
+   ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
+   ```
+   {:pre}
+1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key:
    ```sh
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=<API_KEY> --docker-server=<REGISTRY_URL>
    ```
    {:pre}
 
-   For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create). For registry URL, run `ibmcloud cr region`.
+   For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
    {:tip}
-2. Edit the generated **openshift.yaml**.
-3. Locate the *ImageStream* object named *openshiftapp* and add a `dockerImageRepository` definition under `spec` replacing the placeholders `<REGISTRY_URL>` and `<REGISTRY_NAMESPACE>` with their respective values:
+
+### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
+
+In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
+
+1. Edit the generated **openshift.yaml**.
+1. Locate the *ImageStream* object named *openshiftapp* and add a `dockerImageRepository` definition under `spec` replacing the placeholders `<REGISTRY_URL>` and `<REGISTRY_NAMESPACE>` with the values idenfitied in the previous steps:
    ```yaml
    -
    apiVersion: image.openshift.io/v1
@@ -255,6 +283,7 @@ In this step, you will update the generated BuildConfig section of the generated
 
 ## Deploy the application to cluster
 {:#deploy_app_to_cluster}
+
 In this section, you will deploy the application to the cluster using the generated **openshift.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
 
 ### Create the app using the updated yaml
