@@ -29,13 +29,20 @@ This tutorial walks you through the creation of a mobile starter application, ad
 * Download the code and complete required setup.
 * Configure, send, and monitor {{site.data.keyword.mobilepushshort}}.
 
-![](images/solution9/Architecture.png)
+## Services
+{: #services}
 
-## Products
-{: #products}
-
-This tutorial uses the following products:
+This tutorial uses the following services:
    * [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
+
+## Architecture
+{:#architecture}
+![](images/solution9/Architecture.png)
+1. The user creates a project on the mobile dashboard.
+2. Adds and configures the push notifications SDK to interact with FCM.
+3. Sends a push notification.
+4. The {{site.data.keyword.mobilepushshort}} service sends the notification to FCM.
+5. The notification is received on the device and monitored.
 
 ## Before you begin
 {: #prereqs}
@@ -47,14 +54,14 @@ This tutorial uses the following products:
 {: #get_code}
 The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your app from a Starter Kit.
 1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard) and click on **Get a Starter Kit**.
-1. Scroll and click on **Basic** starter kit.
-1. Click **Create app** and enter an app name(this will be your android project name as well) > select a resource group.
-1. Select **Android** as your platform.
-1. Under **Service details** section,
+2. Scroll and click on **Basic** starter kit.
+3. Click **Create app** and enter an app name(this will be your android project name as well) > select a resource group.
+4. Select **Android** as your platform.
+5. Under **Service details** section,
     - Select {{site.data.keyword.pushfull}} region
     - Select a resource group
     - Select a **Lite** plan.
-1. Click **Create**. A new App will be created under **Apps** of [Resource list](https://{DomainName}/resources).
+6. Click **Create**. A new App will be created under **Apps** of [Resource list](https://{DomainName}/resources).
 
     **Note:** {{site.data.keyword.mobilepushshort}} service should be added with the Empty Starter.
 
