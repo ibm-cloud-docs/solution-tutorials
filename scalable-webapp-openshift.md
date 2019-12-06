@@ -66,6 +66,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
    1. And [add your SSH public key to your Git settings](https://us-south.git.cloud.ibm.com/help/gitlab-basics/create-your-ssh-keys).
 1. [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
 
+<!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
 
@@ -98,6 +99,16 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
    oc get ns
    ```
    {:pre}
+<!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+## Get access to your cluster
+{: #access-cluster}
+
+this is a text for workshops only.
+-->
+<!--#/isworkshop#-->
 
 ## Generate a starter kit
 {: #generate_starter_kit}
