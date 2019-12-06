@@ -358,6 +358,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image openshiftapp` command. Refer this [link](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html#importing-tag-and-image-metadata) for more info.
    {:tip}
 
+<!--##istutorial#-->
 ## Use your own custom domain
 {: #custom_domain}
 
@@ -381,6 +382,7 @@ To use your custom domain, you need to update your domain DNS records with a `CN
 
    Here, you have used Edge termination. To learn about other termination types like passthrough and re-encryption, refer [secure routes](https://docs.openshift.com/container-platform/3.11/architecture/networking/routes.html#secured-routes)
    {:tip}
+<!--#/istutorial#-->
 
 ## Monitor the app
 {:#monitor_application}
