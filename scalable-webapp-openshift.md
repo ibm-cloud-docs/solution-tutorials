@@ -103,10 +103,32 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 
 <!--##isworkshop#-->
 <!--
-## Get access to your cluster
+## Configure the access to your cluster
 {: #access-cluster}
 
-this is a text for workshops only.
+`ibmcloud` is the command line tool to interact with {{site.data.keyword.cloud_notm}}. It comes with plugins to work with {{site.data.keyword.cloud_notm}} services.
+
+1. Open a command prompt.
+1. Run the login command
+   ```sh
+   ibmcloud login
+   ```
+   {:pre}
+2. When prompted, select a region.
+3. Enter your IBMid email and password.
+4. Select the account where you have been invited.
+
+### Log in to your cluster
+
+In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+
+1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift) and click on the **Access** tab under the cluster name.
+1. Under **After your cluster provisions, gain access** section, click on **oauth token request page** link and follow instructions to log into your cluster on a terminal.
+1. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
+   ```sh
+   oc get ns
+   ```
+   {:pre}
 -->
 <!--#/isworkshop#-->
 
