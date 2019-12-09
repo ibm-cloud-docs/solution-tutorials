@@ -339,10 +339,8 @@ In this section, you will deploy the application to the cluster using the genera
    oc get secret default-us-icr-io -n default -o yaml | sed 's/default/'$MYPROJECT'/g' | oc -n $MYPROJECT create -f -
    ```
    {:pre}
-
    If you are using {{site.data.keyword.registryshort_notm}} from a region other than US, follow the instructions in this [link](https://{DomainName}/docs/containers?topic=containers-images#copy_imagePullSecret) to copy pull secrets.
    {:tip}
-
 1. For the image pull secret to take effect, you need to add it in the `default` service account
    ```sh
    oc secrets add serviceaccount/default secrets/$MYPROJECT-us-icr-io --for=pull
@@ -353,10 +351,8 @@ In this section, you will deploy the application to the cluster using the genera
    oc create -f openshift.yaml
    ```
    {:pre}
-
    To learn about the core concepts of {{site.data.keyword.openshiftshort}}, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
    {:tip}
-   
 1. To check the builder Docker image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
    ```sh
    oc logs -f bc/$MYPROJECT
