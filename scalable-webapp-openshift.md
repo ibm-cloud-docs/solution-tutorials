@@ -214,8 +214,6 @@ In this step, you will create a deploy token to allow read-only access to your r
 
 In this section, you will generate a BuildConfig YAML file and update the file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}.
 
-
-
 ### Generate a build configuration yaml file
 
 A Kubernetes namespace provides a mechanism to scope resources in a cluster. In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
