@@ -71,19 +71,17 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 This tutorial deploys a Kubernetes application to clusters in multiple locations. You will start with one location, Dallas, and then repeat these steps for London.
 
 ### Create a Kubernetes cluster
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
+
+
+In the process of creating the cluster:
+1. Set **Cluster name** to **my-us-cluster**.
+1. Locate in **North America** and **Dallas**
+
+  - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
+  - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
 {: #create_cluster}
 
-To create a cluster:
-1. Select **{{site.data.keyword.containershort_notm}}** from the [{{site.data.keyword.cloud_notm}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
-1. Select **Standard** cluster.
-1. Set **Cluster name** to **my-us-cluster**.
-1. Set the **Geography** to **North America**.
-1. Select multi-zone under **Availability**. Creating a multi-zone cluster increases the application resiliency. Users are much less likely to experience downtime when app are distributed across multiple zones. More on multi-zone clusters can be found [here](https://{DomainName}/docs/containers?topic=containers-plan_clusters#ha_clusters).
-1. Set **Metro** to **Dallas**.
-1. You can choose to deploy in 1 or more **Worker zones**, note the number of worker zones entered here will be multiplied to the number of worker nodes entered below.
-1. Set **Machine type** to the smallest available - **2 CPUs** and **4GB RAM** is sufficient for this tutorial.
-1. Use **1** worker nodes, note the number of worker nodes entered here will be multiplied to the number of worker zones entered above.
-1. Click on **Create cluster**.
 
 While the cluster is getting ready, you are going to prepare the application.
 
@@ -97,7 +95,8 @@ While the cluster is getting ready, you are going to prepare the application.
    {: pre}
 2. Create a namespace for the application.
    ```bash
-   ibmcloud cr namespace-add <your_namespace>
+   MYNAMESPACE=<your_namespace>
+   ibmcloud cr namespace-add $MYNAMESPACE
    ```
    {: pre}
 
@@ -131,27 +130,22 @@ This step builds the application into a Docker image. You can skip this step if 
 
 2. Build and push the image.
    ```bash
-   ibmcloud cr build -t us.icr.io/<your_namespace>/multi-region-hello-world:1 .
+   ibmcloud cr build -t us.icr.io/$MYNAMESPACE/multi-region-hello-world:1 .
    ```
    {: pre}
 
-  The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag multi-region-hello-world:1 .` (b) `docker tag multi-region-hello-world:1 us.icr.io/<your_namespace>/multi-region-hello-world:1` (c) `docker push us.icr.io/<your_namespace>/multi-region-hello-world:1`.
+  The above command builds the Docker image, tags it and pushes it to the registry. You could achieve the same thing using traditional Docker CLI commands: (a) `docker build --tag us.icr.io/$MYNAMESPACE/multi-region-hello-world:1 .` (b) `docker push us.icr.io/$MYNAMESPACE/multi-region-hello-world:1`.
   {: tip}
 
 ### Deploy the application to the Kubernetes cluster
 {: #deploy_application}
 
-At that stage, the cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/clusters) console.
+The cluster should be ready. You can check its status in the [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/clusters) console.
 
-1. Retrieve the configuration of the cluster:
-   ```bash
-   ibmcloud ks cluster-config <cluster-name>
-   ```
-   {: pre}
-1. Copy and paste the output to set the KUBECONFIG environment variable. The variable is used by `kubectl`.
+1. Gain access to your cluster as described on the Access tab of your cluster.
 
    ```bash
-   kubectl create deploy hello-world-deployment --image=us.icr.io/<your_namespace>/multi-region-hello-world:1
+   kubectl create deploy hello-world-deployment --image=us.icr.io/$MYNAMESPACE/multi-region-hello-world:1
    ```
    {: pre}
    Example output: `deployment "hello-world-deployment" created`.
@@ -187,13 +181,14 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
 
 1. Retrieve the Ingress subdomain of the cluster:
    ```bash
-   ibmcloud ks cluster-get <cluster-name>
+   MYCLUSTER=my-us-cluster
+   ibmcloud ks cluster-get $MYCLUSTER
    ```
    {: pre}
    Look for the `Ingress Subdomain` value.
 1. Make note of this information for a later step.
 
-This tutorial uses the Ingress subdomain to configure the Global Load Balancer. You could also replace the subdomain for the public Application Load Balancer IP address (`ibmcloud ks albs --cluster <cluster-name>`). Both options are supported.
+This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. You could also replace the Ingress Subdomain with the public Application Load Balancer, ALB of the cluster.  The command `ibmcloud ks alb ls --cluster $MYCLUSTER` will display the public and private ALBs and the ALB IP (classic) or Load Balancer Hostname (VPC) identify the ALB.
 {: tip}
 
 ## And then to another location
@@ -247,6 +242,7 @@ A health check helps gain insight into the availability of pools so that traffic
 1. In the {{site.data.keyword.cis_full_notm}} dashboard, navigate to **Reliability** > **Global Load Balancers**, and at the bottom of the page, click **Create health check**.
 1. Set **Path** to **/**
 1. Set **Monitor Type** to **HTTP**.
+1. In the **Configure request headers (optional)** add Header name: `Host` and Value: `<glb_name>.<your_domain_name>`
 1. Click **Provision 1 Resource**.
 
    When building your own applications, you could define a dedicated health endpoint such as */heathz* where you would report the application state.
