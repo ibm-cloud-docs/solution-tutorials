@@ -354,9 +354,9 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {:pre}
 
-    To learn about the core concepts of {{site.data.keyword.openshiftshort}}, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
-    {:tip}
-
+   To learn about the core concepts of {{site.data.keyword.openshiftshort}}, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
+   {:tip}
+   
 1. To check the builder Docker image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
    ```sh
    oc logs -f bc/$MYPROJECT
