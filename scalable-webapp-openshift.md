@@ -146,10 +146,8 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ibmcloud dev create
    ```
    {: pre}
-
    You may be asked to target an organization and a space, follow the instructions on the CLI
    {:tip}
-
 2. Select `Backend Service / Web App` then `Node` and select `Node.js Web App with Express.js` to create a Node starter.
 3. Enter a **unique name** for your application such as `<your-initials>-openshiftapp`.
 4. Select a **resource group** same as the cluster to deploy this application.
@@ -233,7 +231,6 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    oc new-app https://<DEPLOY_TOKEN_USERNAME>:<DEPLOY_TOKEN_PASSWORD>@<REPO_URL_WITHOUT_HTTPS> --name=$MYPROJECT --strategy=docker -o yaml > openshift.yaml
    ```
    {:pre}
-
    Replace `<REPO_URL_WITHOUT_HTTPS>` with the Git repository URL without `https://`.
    {:tip}
 
@@ -272,7 +269,6 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=$API_KEY --docker-server=$MYREGISTRY
    ```
    {:pre}
-
    For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
    {:tip}
 
