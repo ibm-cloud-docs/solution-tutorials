@@ -51,6 +51,8 @@ This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?to
 
 The tutorial features a sample application that enables groups of users to upload files to a common storage pool and to provides access to those files via shareable links. The application is written in Node.js and deployed as a Docker container to the {{site.data.keyword.containershort_notm}}. It leverages several security-related services and features to improve the application's security posture.
 
+This tutorial will work with a Kubernetes cluster running in Classic Infrastructure or VPC Infrastructure.
+
 <p style="text-align: center;">
 
   ![Architecture](images/solution34-cloud-e2e-security/Architecture.png)
@@ -91,10 +93,10 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
 
-Skip this section if you have an existing cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is expected to be named **secure-file-storage-cluster**, simply substitute with the name of your cluster.
+Skip this section if you have an existing cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster.
 {: tip}
 
-A minimal cluster with 1 zone, 1 worker node and smallest available **Flavor** is sufficient for this tutorial.
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
   - Set the cluster name to **secure-file-storage-cluster**.
   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
     - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for App ID.
