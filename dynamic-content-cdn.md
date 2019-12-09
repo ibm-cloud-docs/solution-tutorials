@@ -71,6 +71,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
    * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install Docker, `kubectl`, IBM Cloud CLI and required plug-ins.
    * Create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}.
+     - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
+     - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
+{: #create_cluster}
    * Obtain a domain for your web application. If you don't own a custom domain, you can register one from [IBM Domain Name Service](https://{DomainName}/classic/services/domains).
 
 ## Deploy a dynamic web application to be accelerated
@@ -91,15 +94,17 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
    cd cdn-with-cda-todolist
 	 ```
 	 {: pre}
-1. Identify the {{site.data.keyword.registryshort_notm}} to use with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
+1. Identify the {{site.data.keyword.registryshort_notm}} to use with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.  Notice how **myname-** is used to create a unique namespace name within the registry.  Feel free to use an exising namespace.
 1. Create a namespace to store the container image.
    ```bash
-   ibmcloud cr namespace-add cdn-with-cda
+   MYCONTAINERREGISTRY=us.icr.io
+   MYNAMESPACE=myname-cdn-with-cda
+   ibmcloud cr namespace-add $MYNAMESPACE
    ```
 	 {: pre}
-1. Build a Docker image using the [Dockerfile](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}, replacing `<CONTAINER_REGISTRY>` with your container registry value and use **cdn-with-cda-todolist** as the image name:
+1. Build a Docker image using the [Dockerfile](https://github.com/IBM-Cloud/cdn-with-cda-todolist/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}} and use **cdn-with-cda-todolist** as the image name:
    ```bash
-   docker build -t <CONTAINER_REGISTRY>/cdn-with-cda/cdn-with-cda-todolist:latest .
+   docker build -t $MYCONTAINERREGISTRY/$MYNAMESPACE/cdn-with-cda-todolist:latest .
 	 ```
 	 {: pre}
 1. Log in {{site.data.keyword.registryshort_notm}}:
@@ -109,7 +114,7 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 	 {: pre}
 1. Push the image to {{site.data.keyword.registryshort_notm}}:
    ```bash
-   docker push <CONTAINER_REGISTRY>/cdn-with-cda/cdn-with-cda-todolist:latest
+   docker push $MYCONTAINERREGISTRY/$MYNAMESPACE/cdn-with-cda-todolist:latest
 	 ```
 	 {: pre}
 
@@ -146,7 +151,7 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
    1. Set **Hostname** to the custom domain of your application, for example, `todo.exampledomain.net`.
    1. Set **Custom CNAME** prefix to a unique value, for example, `todo-sample`.
 	 1. Leave **Host header** and **Path** empty.
-	 1. Use the default **Server** option and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
+	 1. Click the **Server** tab and specify the application ingress subdomain as **Origin server address**, for example  `cdn-with-cda-todolist.<ingress-subdomain>`.
 	 1. Check HTTP port.
 	 1. Check HTTPS port and select **Wildcard** SSL certificate.
 
@@ -161,7 +166,7 @@ Before you create a {{site.data.keyword.cdn_full}} instance, you should have reg
 
 After you have successfully created the CDN mapping:
    * To view your CDN instance, select the CDN instance [in the list](https://{DomainName}/classic/network/cdn). The **Details** panel shows both the **Hostname** and the **CNAME** for your CDN.
-   * You application is now accessible through the CNAME only: `https://<CNAME>`.
+   * You application is now accessible through the CNAME only: `https://<CNAME>`.  Note that the application is not available via todo.exampledomain.net - this will take a little additional configuration and associated delay.
 
 ## Enable Dynamic Content Acceleration (DCA)
 
