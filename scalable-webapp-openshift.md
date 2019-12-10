@@ -146,6 +146,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ibmcloud dev create
    ```
    {: pre}
+
    You may be asked to target an organization and a space, follow the instructions on the CLI
    {:tip}
 2. Select `Backend Service / Web App` then `Node` and select `Node.js Web App with Express.js` to create a Node starter.
@@ -230,6 +231,7 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    oc new-app https://<DEPLOY_TOKEN_USERNAME>:<DEPLOY_TOKEN_PASSWORD>@<REPO_URL_WITHOUT_HTTPS> --name=$MYPROJECT --strategy=docker -o yaml > openshift.yaml
    ```
    {:pre}
+
    Replace `<REPO_URL_WITHOUT_HTTPS>` with the Git repository URL without `https://`.
    {:tip}
 
@@ -267,6 +269,7 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=$API_KEY --docker-server=$MYREGISTRY
    ```
    {:pre}
+
    For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
    {:tip}
 
@@ -330,6 +333,7 @@ In this section, you will deploy the application to the cluster using the genera
    oc get secret default-us-icr-io -n default -o yaml | sed 's/default/'$MYPROJECT'/g' | oc -n $MYPROJECT create -f -
    ```
    {:pre}
+
    If you are using {{site.data.keyword.registryshort_notm}} from a region other than US, follow the instructions in this [link](https://{DomainName}/docs/containers?topic=containers-images#copy_imagePullSecret) to copy pull secrets.
    {:tip}
 1. For the image pull secret to take effect, you need to add it in the `default` service account
@@ -342,6 +346,7 @@ In this section, you will deploy the application to the cluster using the genera
    oc create -f openshift.yaml
    ```
    {:pre}
+
    To learn about the core concepts of {{site.data.keyword.openshiftshort}}, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
    {:tip}
 1. To check the builder Docker image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
