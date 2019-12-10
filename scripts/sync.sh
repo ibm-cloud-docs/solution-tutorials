@@ -31,5 +31,11 @@ tar cf - \
 # replace the private toc with the public version
 (cd build && rm -f toc && mv toc-public toc)
 
+# remove the custom markup used by tutorials-to-gitbook conversion
+(cd scripts/remove-markup && npm install)
+for source in build/*.md; do
+  node scripts/remove-markup/main.js $source $source
+done
+
 # add all files
 (cd build && git add . && git commit -m "$COMMIT_MESSAGE" && git push)
