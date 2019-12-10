@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-11-27"
-lasttested: "2019-11-27"
+lastupdated: "2019-12-10"
+lasttested: "2019-12-10"
 ---
 
 {:shortdesc: .shortdesc}
@@ -18,7 +18,7 @@ lasttested: "2019-11-27"
 # Computer vision with PowerAI and Schematics
 {: #computer-vision-powerai-schematics}
 
-This tutorial walks you through how to instantiate a dedicated backend instance(VSI) of PowerAI Vision in {{site.data.keyword.vpc_full}}, deploy the front-end application to a VSI, upload an image dataset, train and deploy an optimized deep learning model using a GPU provisioned on the VSI and classify an image. Once the VM is created on {{site.data.keyword.vpc_short}} using {{site.data.keyword.bplong_notm}}, its public IP address along with the username and password to log into the application will be displayed for easy access.
+This tutorial walks you through how to provision a dedicated backend instance(VSI) of PowerAI Vision in {{site.data.keyword.vpc_full}}, upload an image dataset, train, deploy an optimized deep learning model as an API using a GPU provisioned on the VSI and deploy a front-end application to a VSI to interact with the backend API to classify an image. Once the VM is created on {{site.data.keyword.vpc_short}} using {{site.data.keyword.bplong_notm}}, its public IP address along with the username and password to log into the application will be displayed for easy access.
 {:shortdesc}
 
 Cameras are everywhere. Videos and images have become one of the most interesting data sets for artificial intelligence. In particular, deep learning is being used to create models for computer vision, and you can train these models to let your applications recognize what an image (or video) represents.
@@ -29,15 +29,15 @@ PowerAI Vision includes tools and interfaces that allow anyone with limited skil
 ## Objectives
 {: #objectives}
 
-* Understand how to setup PowerAI vision running on Power CPU using {{site.data.keyword.bpshort}}
+* Understand how to setup PowerAI vision trial running on Power CPU
 * Deploy an object detection and image classification application to a VSI on {{site.data.keyword.vpc_short}}
-* Upload an image dataset to train and deploy a model
+* Upload an image dataset to train and deploy a deep learning model
 
 ## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* PowerAI Vision
+* PowerAI Vision Trial
 * [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview)
 * [{{site.data.keyword.vpc_short}}](https://{DomainName}/vpc/provision/vpc)
 
@@ -46,10 +46,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-<p style="text-align: center;">
-
   ![Architecture](images/solution53-powerai-vision/architecture_diagram.png)
-</p>
 
 ## Before you begin
 {: #prereqs}
@@ -57,6 +54,54 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. [Download and configure](https://github.com/IBM-Cloud/terraform-provider-ibm) the IBM Cloud Terraform provider (0.17.3 or later)
 2. Obtain your [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 3. If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to IBM Cloud and save the UUID for future reference.
+
+
+## Deploy a PowerAI Vision Trial
+{: #deploy_powerai_vision}
+In this section, you will provision a PowerAI vision Trial service. Once successfully provisioned, the result is a VPC, subnet and a VSI where PowerAI Vision trial is pre-installed.
+
+1. Create [PowerAI vision trial](https://{DomainName}/catalog/services/powerai) service from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/catalog).
+2. Click on **Create** to provision
+   * a VPC
+   * a backend subnet
+   * VM within the backend subnet in VPC (particular region and availability zone (AZ))
+   * Floating IP (FIP) address on the public Internet for the back-end subnet. _Temporarily attached to train the model._
+   * Security group with a rule that allows ingress traffic on port 22 (for SSH)
+
+## Train, deploy and test the deep learning model
+{: #train_deploy_dl_model}
+In this section, you will train, deploy a deep learning model and expose it as an API
+
+### Train the model
+{: #train_model}
+
+1. Access the application via the Floating IP of the backend subnet and login with the credentials generated. Click **Get started**.
+2. Click **Create new data set** and give it a name
+   - Click on the data set tile.
+   - Click on **Import files** and point to the images to be uploaded for classification
+3. Label the objects
+   - Select at least 5 images of a type and click **Label Objects**
+   - Click **Assign category**, give a name and click **Assign**
+   - Repeat the steps if you have images of different type
+
+   There must be at least two categories.Each category must have at least five images.
+   {:tip}
+
+4. Click **Train model**
+   - Modify the model name
+   - Select **Image classification** as your type of training
+   - Select **System Default(GoogLeNet)** as your Optimization technique
+   - Click **Train model**
+### Deploy and test the model
+{: #deploy_test_model}
+
+1. Once the training is completed, check the accuracy and other parameters.
+2. To deploy the trained model, click **Deploy model**
+   - Give it a name and click **Deploy**
+   - Once the status changes to **Ready**, click on the model **name**
+3. To test the deployed model,
+   - Click on **import** and select an image
+   - Check the **Results** section to check the category and the confidence value
 
 
 ## Create VPC and other resources with Schematics
@@ -80,4 +125,3 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
    * Security group with a rule that allows ingress traffic on port 22 (for SSH)
 
 ## Create and access a web app
-## Train and deploy a deep learning model

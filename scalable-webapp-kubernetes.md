@@ -67,52 +67,44 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 
-The major portion of this tutorial can be accomplished with a **Free** cluster. Two optional sections relating to Kubernetes Ingress and custom domain require a **Paid** cluster of type **Standard**.
+The major portion of this tutorial can be accomplished with a **Free** cluster. Two optional sections relating to Kubernetes Ingress and custom domain require a **Standard** cluster.
 
-1. Create a **Free** Kubernetes cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
-   For ease of use, check the configuration details like the number of CPUs, memory and the number of worker nodes you get with Free and Standard plans.
-   {:tip}
-2.  Select a resource group and click **Create Cluster** to provision a Kubernetes cluster.
-3.  Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
+- Create the Kubernetes cluster:
+  - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
+  - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
+{: #create_cluster}
 
-### Configure kubectl
+- Gain access to your cluster as described on the Access tab of your cluster.
+- Initialize the environment variable with the cluster name
 
-In this step, you'll configure kubectl to point to your newly created cluster. [kubectl](https://kubernetes.io/docs/user-guide/kubectl-overview/) is a command line tool that you use to interact with a Kubernetes cluster.
-
-1. Use `ibmcloud login` to log in interactively. Provide the location where the cluster was created. You can reconfirm the details by running `ibmcloud target` command.
-2. When the cluster is ready, retrieve the cluster configuration by setting MYCLUSTER environment variable to your cluster name:
    ```bash
    export MYCLUSTER=<CLUSTER_NAME>
    ibmcloud ks cluster config ${MYCLUSTER}
    ```
-   {: pre}
-3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
-  `echo $KUBECONFIG`
-4. Check that the `kubectl` command is correctly configured
-   ```bash
-   kubectl cluster-info
-   ```
-   {: pre}
-   ![](images/solution2/kubectl_cluster-info.png)
-
 
 ## Create a starter application
 {: #create_application}
 
 The `ibmcloud dev` tooling greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
-1. Start the `ibmcloud dev` wizard.
+1. Start the `ibmcloud dev` wizard to create a new directory in the current working directory.
    ```
    ibmcloud dev create
    ```
    {: pre}
 
 1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
-1. Enter a **name** for your application.
+1. Enter a **name** for your application, this is the project name.
 1. Select the resource group where to deploy this application.
 1. Do not add additional services.
 1. Do not add a DevOps toolchain, select **manual deployment**.
+1. Export the environment variable with the project name
+   ```
+   export MYPROJECT=name
+   ```
+   {: pre}
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes.
 
@@ -168,14 +160,10 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ibmcloud cr namespace-add <Name>
    ```
    {: pre}
-2. Set MYNAMESPACE and MYPROJECT environment variables to your namespace and project name respectively
+2. Set MYNAMESPACE environment variable to your namespace
 
     ```sh
     export MYNAMESPACE=<NAMESPACE>
-    ```
-    {: pre}
-    ```sh
-    export MYPROJECT=<PROJECT_NAME>
     ```
     {: pre}
 3. Log in the **Container Registry**:
@@ -223,7 +211,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ibmcloud ks workers ${MYCLUSTER}
    ```
    {: pre}
-12. Access the application at `http://worker-ip-address:portnumber/`.
+12. Access the application at `http://worker-ip-address:portnumber/`.  For VPC the IP address of the clusters are private to the VPC.  These can be accessed by opening the **Web Console** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
 
 ## Use the IBM-provided domain for your cluster
 {: #ibm_domain}
@@ -248,6 +236,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    ```
    {: screen}
 2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output. **service-name** is the name under `==> v1/Service` in the above step. You can also use `kubectl get svc` to find the service name of type **NodePort**.
+
    ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
@@ -278,7 +267,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 ## Use your own custom domain
 {: #custom_domain}
 
-To use your custom domain, you need to update your DNS records with either a CNAME record pointing to your IBM-provided domain or an A record pointing to the portable public IP address of the IBM-provided Ingress. Given a paid cluster comes with fixed IP addresses, an A record is a good option.
+To use your custom domain, you need to update your DNS records with a CNAME record pointing to your IBM-provided domain.
 
 See [Using the Ingress controller with a custom domain](https://{DomainName}/docs/containers?topic=containers-ingress#ingress) for more information.
 
