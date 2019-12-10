@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-08-13"
-lasttested: "2019-07-30"
+lastupdated: "2019-12-06"
+lasttested: "2019-12-06"
 ---
 
 {:shortdesc: .shortdesc}
@@ -16,10 +16,10 @@ lasttested: "2019-07-30"
 # Scalable web application on {{site.data.keyword.openshiftshort}}
 {: #scalable-webapp-openshift}
 
-This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
-With the {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
+With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
 For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions.
 
@@ -176,7 +176,11 @@ In this step, you will create a deploy token to allow read-only access to your r
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #create_openshift_app}
+
 In this section, you will generate a BuildConfig YAML file and update the file with Private registry details to push the generated builder Docker image to {{site.data.keyword.registryshort_notm}}.
+
+
+
 ### Generate a build configuration yaml file
 
 A Kubernetes namespace provides a mechanism to scope resources in a cluster. In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
@@ -195,34 +199,58 @@ A Kubernetes namespace provides a mechanism to scope resources in a cluster. In 
    Replace `<REPO_URL_WITHOUT_HTTPS>` with the Git repository URL without `https://`.
    {:tip}
 
-### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
-In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}. In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is used for persistent storage of created images.
+### Prepare the access to {{site.data.keyword.registryshort_notm}}
 
-1. To automate access to your registry namespaces and to push generated builder Docker image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key
+In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is used for persistent storage of created images.
+
+1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
+   ```sh
+   ibmcloud cr region
+   ```
+   {:pre}
+
+   The tutorial will refer to this URL as `<REGISTRY_URL>`.
+1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
+   ```sh
+   ibmcloud cr namespaces
+   ```
+   {:pre}
+
+   To create a new namespace:
+   ```sh
+   ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
+   ```
+   {:pre}
+1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key:
    ```sh
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=<API_KEY> --docker-server=<REGISTRY_URL>
    ```
    {:pre}
 
-   For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create). For registry URL, run `ibmcloud cr region`.
+   For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
    {:tip}
-2. Edit the generated **openshift.yaml**.
-3. Locate the *ImageStream* object named *openshiftapp* and add a `dockerImageRepository` definition under `spec` replacing the placeholders `<REGISTRY_URL>` and `<REGISTRY_NAMESPACE>` with their respective values:
+
+### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
+
+In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
+
+1. Edit the generated **openshift.yaml**.
+1. Locate the *ImageStream* object named *openshiftapp* and add a `dockerImageRepository` definition under `spec` replacing the placeholders `<REGISTRY_URL>` and `<REGISTRY_NAMESPACE>` with the values idenfitied in the previous steps:
    ```yaml
    -
    apiVersion: image.openshift.io/v1
    kind: ImageStream
    metadata:
-       annotations:
-               openshift.io/generated-by: OpenShiftNewApp
-       creationTimestamp: null
-       labels:
-               app: openshiftapp
-       name: openshiftapp
+     annotations:
+       openshift.io/generated-by: OpenShiftNewApp
+     creationTimestamp: null
+     labels:
+       app: openshiftapp
+     name: openshiftapp
    spec:
-       dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp
-       lookupPolicy:
-               local: false
+     dockerImageRepository: <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp
+     lookupPolicy:
+       local: false
    status:
        dockerImageRepository: ""
    ```
@@ -232,13 +260,13 @@ In this step, you will update the generated BuildConfig section of the generated
 4. Update the `spec` under `BuildConfig` section by changing the output to kind `DockerImage` and adding a `pushSecret`
    ```yaml
    spec:
-   nodeSelector: null
-   output:
+     nodeSelector: null
+     output:
        to:
-               kind: DockerImage
-               name: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
+         kind: DockerImage
+         name: '<REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest'
        pushSecret:
-               name: push-secret
+         name: push-secret
    ```
    {:codeblock}
 
@@ -255,6 +283,7 @@ In this step, you will update the generated BuildConfig section of the generated
 
 ## Deploy the application to cluster
 {:#deploy_app_to_cluster}
+
 In this section, you will deploy the application to the cluster using the generated **openshift.yaml** file. Once deployed, you will access the application by creating a route. You will also learn how to automatically build and redeploy when the app is updated.
 
 ### Create the app using the updated yaml
@@ -345,7 +374,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    oc tag <REGISTRY_URL>/<REGISTRY_NAMESPACE>/openshiftapp:latest openshiftapp:latest --scheduled=true
    ```
    {:pre}
-6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to 'Congratulations! <YOUR_NAME>'.
+6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to `Congratulations! <YOUR_NAME>`.
 7. Save and push the code to the repo
    ```sh
     git add public/index.html
@@ -358,6 +387,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image openshiftapp` command. Refer this [link](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html#importing-tag-and-image-metadata) for more info.
    {:tip}
 
+<!--##istutorial#-->
 ## Use your own custom domain
 {: #custom_domain}
 
@@ -381,6 +411,7 @@ To use your custom domain, you need to update your domain DNS records with a `CN
 
    Here, you have used Edge termination. To learn about other termination types like passthrough and re-encryption, refer [secure routes](https://docs.openshift.com/container-platform/3.11/architecture/networking/routes.html#secured-routes)
    {:tip}
+<!--#/istutorial#-->
 
 ## Monitor the app
 {:#monitor_application}

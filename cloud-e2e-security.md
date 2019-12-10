@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-11-26"
-lasttested: "2019-07-31"
+lastupdated: "2019-12-09"
+lasttested: "2019-12-05"
 
 ---
 
@@ -51,6 +51,8 @@ This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?to
 
 The tutorial features a sample application that enables groups of users to upload files to a common storage pool and to provides access to those files via shareable links. The application is written in Node.js and deployed as a Docker container to the {{site.data.keyword.containershort_notm}}. It leverages several security-related services and features to improve the application's security posture.
 
+This tutorial will work with a Kubernetes cluster running in Classic Infrastructure or VPC Infrastructure.
+
 <p style="text-align: center;">
 
   ![Architecture](images/solution34-cloud-e2e-security/Architecture.png)
@@ -67,7 +69,9 @@ The tutorial features a sample application that enables groups of users to uploa
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
+1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started). The following plugins are required:
+  * container-service/kubernetes-service
+  * activity-tracker
 2. Ensure you have the latest version of plugins used in this tutorial; use `ibmcloud plugin update --all` to upgrade.
 
 ## Create services
@@ -89,18 +93,14 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
 
-Skip this section if you have an existing **Standard** cluster you want to reuse with this tutorial.
+Skip this section if you have an existing cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster.
 {: tip}
 
-1. Access the [cluster creation page](https://{DomainName}/kubernetes/catalog/cluster/create).
-   1. Set the **Location** to the one used in previous steps.
-   2. Set **Cluster type** to **Standard**.
-   3. Set **Availability** to **Single Zone**.
-   4. Select a **Master Zone**.
-2. Keep the default **Kubernetes version** and **Hardware isolation**.
-3. If you plan to deploy only this tutorial on this cluster, set **Worker nodes** to **1**.
-4. Set the **Cluster name** to **secure-file-storage-cluster**.
-5. Click the **Create Cluster** button.
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
+  - Set the cluster name to **secure-file-storage-cluster**.
+  - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
+    - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for App ID.
+  - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
 
@@ -114,7 +114,7 @@ While the cluster is being provisioned, you will create the other services requi
 2. Under **Manage**, click the **Add Key** button to create a new root key. It will be used to encrypt the storage bucket content.
    * Set the name to **secure-file-storage-root-enckey**.
    * Set the key type to **Root key**.
-   * Then **Generate key**.
+   * Then **Create key**.
 
 Bring your own key (BYOK) by [importing an existing root key](https://{DomainName}/docs/services/key-protect?topic=key-protect-import-root-keys#import-root-keys).
 {: tip}
@@ -135,7 +135,9 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
    * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to generate pre-signed URLs.
    * Click **Add**.
    * Make note of the credentials by clicking **View credentials**. You will need them in a later step.
-3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location. Copy the **Private** service endpoint. It will be used later in the configuration of the application.
+3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location: 
+   * Classic infrastructure: Copy the **Private** service endpoint. It will be used later in the configuration of the application.
+   * VPC infrastructure: Copy the **Direct** service endpoint. It will be used later in the configuration of the application.
 
 Before creating the bucket, you will grant **secure-file-storage-cos** access to the root key stored in **secure-file-storage-kp**.
 
@@ -173,14 +175,16 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
    * Set the location.
    * Use the same **resource group** as for the previous services.
    * Set **Available authentication methods** to **Use only IAM**.
-2. Under **Service credentials**, create *New credential*.
+   * Click **Create**.
+2. Back to the **Resource List**, locate the newly created service and click on it. (Note: You will need to wait until the status changes to Provisioned) 
+   * Under **Service credentials**, create **New credential**.
    * Set the **name** to **secure-file-storage-cloudant-acckey**.
    * Set **Role** to **Manager**
-   * Keep the default values for the *Optional* fields
+   * Keep the default values for the the remaining fields
    * **Add**.
-3. Make note of the credentials by clicking **View credentials**. You will need them in a later step.
+3. Make note of the credentials by clicking **View credentials**.  You will need them in a later step.
 4. Under **Manage**, launch the Cloudant dashboard.
-5. Click **Create Database** to create a database named **secure-file-storage-metadata**.
+5. Click **Create Database** to create a **Non-partitioned** database named **secure-file-storage-metadata**.
 
 {{site.data.keyword.cloudant_short_notm}} instances on dedicated hardware allow private endpoints. Instances with dedicated service plans allow IP whitelisting. See [{{site.data.keyword.cloudant_short_notm}} Secure access control](https://{DomainName}/docs/services/Cloudant?topic=cloudant-security#secure-access-control) for details.
 {: tip}
@@ -193,7 +197,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
    * Select the **Graduated tier** as plan.
    * Set the **Service name** to **secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
-3. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
+2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
 `<cluster-name>.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
 3. In the same tab under **Authentication Settings** under **Runtime Activity** enable capturing events in {{site.data.keyword.at_short}}.
 
@@ -223,13 +227,13 @@ All services have been configured. In this section you will deploy the tutorial 
    - Find the registry endpoint with `ibmcloud cr info`, such as **us**.icr.io or **uk**.icr.io.
    - Create a namespace to store the container image.
       ```sh
-      ibmcloud cr namespace-add secure-file-storage-namespace
+      ibmcloud cr namespace-add &lt;your-initials&gt;-secure-file-storage-ns
       ```
       {: codeblock}
    - Use **secure-file-storage** as the image name.
 
       ```sh
-      ibmcloud cr build -t <location>.icr.io/secure-file-storage-namespace/secure-file-storage:latest .
+      ibmcloud cr build -t <location>.icr.io/&lt;your-initials&gt;-secure-file-storage-ns/secure-file-storage:latest .
       ```
       {: codeblock}
 
@@ -265,11 +269,8 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Deploy to the cluster
 
-1. Retrieve the cluster configuration and set the KUBECONFIG environment variable.
-   ```sh
-   $(ibmcloud ks cluster-config --export secure-file-storage-cluster)
-   ```
-   {: codeblock}
+1. Gain access to your cluster as described on the **Access** tab of your cluster.  
+
 2. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
@@ -375,6 +376,9 @@ Security is never done. Try the below suggestions to enhance the security of you
 
 To remove the resource, delete the deployed container and then the provisioned services.
 
+If you share an account with other users, always make sure to delete only your own resources.
+{: tip}
+
 1. Delete the deployed container:
    ```sh
    kubectl delete -f secure-file-storage.yaml
@@ -392,8 +396,6 @@ To remove the resource, delete the deployed container and then the provisioned s
    {: codeblock}
 4. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
 
-If you share an account with other users, always make sure to delete only your own resources.
-{: tip}
 
 ## Related content
 {:related}
