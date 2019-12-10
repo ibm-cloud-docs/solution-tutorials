@@ -100,9 +100,8 @@ In this section, you will train, deploy a deep learning model and expose it as a
    - Click on **import** and select an image
    - Check the **Results** section to check the category and the confidence value
 
-
-## Create VPC and other resources with Schematics
-{: #vpc_schematics}
+## Create and access a web app
+{: #create_access_webapp}
 
 {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your IBM Cloud environment, and enable Infrastructure as Code (IaC). Terraform is an Open Source software that is developed by HashiCorp that enables predictable and consistent resource provisioning to rapidly build complex, multi-tier cloud environments.
 
@@ -116,9 +115,13 @@ In this section, you will train, deploy a deep learning model and expose it as a
 6. On the Schematics page, Click on **Generate Plan**.
 7. Once the plan has successfully generated, a new item appears under Recent Activity saying Plan Generated. Click **Apply plan** to provision
    * a VPC
-   * a backend subnet
+   * a front-end subnet
    * VM within the backend subnet in VPC (particular region and availability zone (AZ))
    * Floating IP (FIP) address on the public Internet for the front-end subnet
    * Security group with a rule that allows ingress traffic on port 22 (for SSH)
 
-## Create and access a web app
+## Remove resources
+{: #cleanup}
+
+## Related resources
+{: #related_resources}
