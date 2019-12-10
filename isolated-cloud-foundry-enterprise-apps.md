@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-06-04"
-lasttested: "2019-06-04"
+lastupdated: "2019-12-10"
+lasttested: "2019-12-10"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -46,6 +46,8 @@ This tutorial uses the following runtimes and services:
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
+In this tutorial {{site.data.keyword.cfee_full_notm}} is deployed on a Kubernetes cluster running in Classic Infrastructure or VPC Infrastructure.
+
 ## Architecture
 
 {: #architecture}
@@ -72,20 +74,21 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {:provision_cfee}
 
-In this section, you'll create an instance of {{site.data.keyword.cfee_full_notm}} deployed to Kubernetes worker nodes from {{site.data.keyword.containershort_notm}}.
+In this section, you'll create an instance of {{site.data.keyword.cfee_full_notm}} deployed to Kubernetes worker nodes from {{site.data.keyword.containershort_notm}}. You will have a choice to deploy the Kubernetes cluster on Classic infrastructure or on VPC infrastructure, for VPC you are required to create a VPC and subnet(s) prior to creating the {{site.data.keyword.cfee_full_notm}}. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui).
 
 1. [Prepare your {{site.data.keyword.cloud_notm}} account](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-prepare#prepare) to ensure the creation of required infrastructure resources.
 2. From the {{site.data.keyword.cloud_notm}} catalog, create a service instance of [{{site.data.keyword.cfee_full_notm}} ](https://{DomainName}/cfadmin/create).
 3. Configure CFEE by providing the following:
    - Select the **Standard** plan.
+   - Select **Classic** or **VPC** depending on the infrastructure you want to use.
    - Enter a **Name** for the service instance.
    - Select a **Resource group** in which the environment is created. You'll need permission to access at least one resource group in the account to be able to create a CFEE instance.
-   - Select a **Geography** and **Region** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#provisioning-targets).
+   - If you selected **Classic** as the infrastructure you will now select a **Geography** and **Region** where the instance is deployed. See the list of [available provisioning locations and data centers](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#provisioning-targets).
+   - If you selected **VPC** as the infrastructure you will now select a **Virtual Private Cloud**
    - Select the **Worker Zones** where the Kubernetes worker nodes will be deployed.
    - Select the **Number of cells** for the Cloud Foundry environment. A cell runs Diego and Cloud Foundry applications. At least **2** cells are required for highly available applications.
-   - Select the **Node size**, which determines the size of the Cloud Foundry cells (CPU and memory) and the CFEE and Cloud Foundry deployment **Version**.
-4. Review the **Infrastructure** section to view the properties of the Kubernetes cluster supporting CFEE. The **Number of worker nodes** equals the number of cells plus 2. Two of the provisioned Kubernetes worker nodes act as the CFEE control plane. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{DomainName}/kubernetes/clusters) dashboard.
-5. Click the **Create** button to begin automated deployment.
+   - Select the **Cell node size** and **Control plane node size**, which determines the size of the Cloud Foundry cells (CPU and memory) and the CFEE and Cloud Foundry deployment **Version**.
+4. Click the **Create** button to begin automated deployment. The Kubernetes cluster on which the environment is deployed will appear in the {{site.data.keyword.cloud_notm}} [Clusters](https://{DomainName}/kubernetes/clusters) dashboard.
 
 The automated deployment takes approximately 90 to 120 minutes. Once successfully created, you'll receive an email confirming the provisioning of CFEE and supporting services.
 
@@ -97,7 +100,7 @@ Note: The **Manage > Account > Cloud Foundry orgs** menu located in the top {{si
 
 Follow the steps below to create a CFEE org and space.
 
-1. From the [Cloud Foundry dashboard](https://{DomainName}/dashboard/cloudfoundry/overview) select **Environments** under **Enterprise** on the left pane.
+1. From the [Cloud Foundry dashboard](https://{DomainName}/cloudfoundry/overview) select **Environments** under **Enterprise** on the left pane.
 2. Click on the name of your CFEE instance and then select **Organizations**.
 3. Click on the **Create Organization** button, provide `tutorial` as the **Organization Name**, and select a **Quota Plan**. Finish by clicking **Add**.
 4. Click on the newly created organization `tutorial`, and then select the **Spaces** tab, and click the **Create Space** button.
@@ -133,10 +136,9 @@ In this section, you'll deploy a Node.js application to CFEE. Once deployed, you
    ```sh
    cd get-started-node
    npm install
-   npm start
    ```
    {: pre}
-3. Log in to {{site.data.keyword.cloud_notm}} and target your CFEE instance. An interactive prompt will help you select your new CFEE instance. Since only one organization and space exist in the CFEE instance, these will be the defaulted target. You can run `ibmcloud target -o tutorial -s dev` if you've added more than one org or space.
+3. Log in to {{site.data.keyword.cloud_notm}} and target your CFEE instance. An interactive prompt will help you select your new CFEE instance. Select the `tutorial` organization you previously created. Since only one space exist in the CFEE instance, it will be the defaulted target. You can run `ibmcloud target -o tutorial -s dev` if you've added more than one org or space.
    ```sh
    ibmcloud login
    ibmcloud target --cf
@@ -160,7 +162,8 @@ To bind {{site.data.keyword.cloud_notm}} services to the **get-started-node** ap
    1. Provide the **service name** `cfee-cloudant`, choose `Use both legacy credentials and IAM` as your authentication method and choose the same location where the CFEE instance has been created. Once the service is created it will appear in the list.
    1. To find an existing service, Type the name in the search textbox and select the result. Finish by clicking **Add**. The service is now available to CFEE applications; however, it still resides in public {{site.data.keyword.cloud_notm}}.
 1. On the overflow menu of the service instance shown, select **Bind to application**.
-1. Select the **GetStartedNode** application you pushed earlier and check **Restage application after binding**. Finally, click the **Bind** button. Wait for the application to restage. You can check the status under the **Applications** tab.
+1. Select the **GetStartedNode** application you pushed earlier and check **Restage application after binding**. 
+1. Click on **Next** and select **Manager** as the **Service access role**.  Finally, click the **Bind** button. Wait for the application to restage. You can check the status under the **Applications** tab.
 1. In your browser, access the application, add your name and hit the `enter` key. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
 1. Confirm by selecting the `cfee-cloudant`instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
 1. Click **Launch Cloudant Dashboard** and select the `mydb` database. A JSON document with your name should exist.
@@ -184,7 +187,7 @@ To install the Stratos Console application:
 3. In the Install Stratos Console dialog, select an installation option. You can install the Stratos console application either as a Cloud Foundry application in a cell, or as a Kubernetes deployment in the CFEE control plane. Select the number of instances of the application to install. If you install the Stratos console app as a Cloud Foundry application in a cell, you're prompted for the organization and space where to deploy the application.
 4. Click **Install**.
 
-The application may take about 5 minutes to install. Once the installation is complete, the **Stratos Console** button appears in place of the **Install Stratos Console** button on the overview page. More on Stratos console can be found [here](https://{DomainName}/docs/tutorials?topic=solution-tutorials-isolated-cloud-foundry-enterprise-apps#install-the-stratos-console-to-manage-the-app).
+The application may take about 5 minutes to install. Once the installation is complete, the **Stratos Console** button appears in place of the **Install Stratos Console** button on the overview page. More on Stratos console can be found [here](https://github.com/cloudfoundry/stratos).
 
 ## The relationship between CFEE and Kubernetes
 
@@ -304,16 +307,18 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
    ```
    {: pre}
 
+   You may not see a prompt, but you can type commands. 
+
    ```sh
    export CLUSTER_IP=<CLUSTER-IP address>
    ```
    {: pre}
 
    ```sh
-   wget --user TestServiceBrokerUser --password TestServiceBrokerPassword -O- http://$CLUSTER_IP/v2/catalog
+   wget --user TestServiceBrokerUser --password TestServiceBrokerPassword http://$CLUSTER_IP/v2/catalog
    ```
    {: pre}
-4. It's likely that you may receive a **Connection refused** error. This is due to CFEE's default [application security groups](https://docs.cloudfoundry.org/concepts/asg.html). An application security group (ASG) defines the allowable IP range for egress traffic from a Cloud Foundry container. Since the `GetStartedNode` exists outside the default range, the error occurs. Exit the SSH session and download the `public_networks` ASG.
+4. It's possible that you receive a **Connection refused** error. If you do follow these steps.  This is due to CFEE's default [application security groups](https://docs.cloudfoundry.org/concepts/asg.html). An application security group (ASG) defines the allowable IP range for egress traffic from a Cloud Foundry container. Since the `GetStartedNode` exists outside the default range, the error occurs. Exit the SSH session and download the `public_networks` ASG.
    ```sh
    exit
    ```
