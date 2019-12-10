@@ -186,7 +186,6 @@ You can build and run the application as you normally would using `npm` for node
    ibmcloud dev run
    ```
    {: pre}
-
    This uses your local Docker engine to run the docker image that you built in the previous step.
 5. After your container starts, go to `http://localhost:3000/`.
 
@@ -210,7 +209,7 @@ In this step, you will create a deploy token to allow read-only access to your r
       - Click on **Expand** next to **Deploy Tokens**.
       - Provide **foropenshift** as the name then check **read_repository** checkbox and click **create deploy token**.
       - Save the generated **username** and **password** for future reference.
-2. Click on **Project** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL.Save the URL for future reference.
+2. Click on **Project** then click **Details**, click on **Clone** and copy **Clone with HTTPS** URL. Save the URL for future reference.
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #create_openshift_app}
@@ -253,7 +252,6 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    ibmcloud cr namespaces
    ```
    {:pre}
-
    To create a new namespace:
    ```sh
    ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
@@ -297,7 +295,6 @@ In this step, you will update the generated BuildConfig section of the generated
        dockerImageRepository: ""
    ```
    {:codeblock}
-
    An image stream and its associated tags provide an abstraction for referencing container images from within {{site.data.keyword.openshiftshort}} Container Platform
 4. Update the `spec` under `BuildConfig` section by changing the output to kind `DockerImage` and adding a `pushSecret`
    ```yaml
@@ -311,9 +308,7 @@ In this step, you will update the generated BuildConfig section of the generated
          name: push-secret
    ```
    {:codeblock}
-
    A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A `BuildConfig` object is the definition of the entire build process.
-
 5. Search for `containers` and update the image with
    ```yaml
    containers:
