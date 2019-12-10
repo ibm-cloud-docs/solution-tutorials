@@ -68,14 +68,41 @@ In this section, you will provision a PowerAI vision Trial service. Once success
    * Floating IP (FIP) address on the public Internet for the back-end subnet. _Temporarily attached to train the model._
    * Security group with a rule that allows ingress traffic on port 22 (for SSH)
 
-## Train and deploy a deep learning model
+## Train, deploy and test the deep learning model
 {: #train_deploy_dl_model}
 In this section, you will train, deploy a deep learning model and expose it as an API
-1. Access the application via the Floating IP of the backend subnet and login with the credentials provided. Click **Get started**.
+
+### Train the model
+{: #train_model}
+
+1. Access the application via the Floating IP of the backend subnet and login with the credentials generated. Click **Get started**.
 2. Click **Create new data set** and give it a name
    - Click on the data set tile.
-   - Select a sample data set.
-3.
+   - Click on **Import files** and point to the images to be uploaded for classification
+3. Label the objects
+   - Select at least 5 images of a type and click **Label Objects**
+   - Click **Assign category**, give a name and click **Assign**
+   - Repeat the steps if you have images of different type
+
+   There must be at least two categories.Each category must have at least five images.
+   {:tip}
+
+4. Click **Train model**
+   - Modify the model name
+   - Select **Image classification** as your type of training
+   - Select **System Default(GoogLeNet)** as your Optimization technique
+   - Click **Train model**
+### Deploy and test the model
+{: #deploy_test_model}
+
+1. Once the training is completed, check the accuracy and other parameters.
+2. To deploy the trained model, click **Deploy model**
+   - Give it a name and click **Deploy**
+   - Once the status changes to **Ready**, click on the model **name**
+3. To test the deployed model,
+   - Click on **import** and select an image
+   - Check the **Results** section to check the category and the confidence value
+
 
 ## Create VPC and other resources with Schematics
 {: #vpc_schematics}
