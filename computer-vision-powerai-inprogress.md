@@ -13,8 +13,6 @@ lasttested: "2019-12-10"
 {:tip: .tip}
 {:pre: .pre}
 
-> **WARNING**: Work in Progress...
-
 # Computer vision with PowerAI and Schematics
 {: #computer-vision-powerai-schematics}
 
@@ -74,7 +72,6 @@ In this section, you will train, deploy a deep learning model and expose it as a
 
 ### Train the model
 {: #train_model}
-
 1. Access the application via the Floating IP of the backend subnet and login with the credentials generated. Click **Get started**.
 2. Click **Create new data set** and give it a name
    - Click on the data set tile.
@@ -92,9 +89,9 @@ In this section, you will train, deploy a deep learning model and expose it as a
    - Select **Image classification** as your type of training
    - Select **System Default(GoogLeNet)** as your Optimization technique
    - Click **Train model**
+
 ### Deploy and test the model
 {: #deploy_test_model}
-
 1. Once the training is completed, check the accuracy and other parameters.
 2. To deploy the trained model, click **Deploy model**
    - Give it a name and click **Deploy**
