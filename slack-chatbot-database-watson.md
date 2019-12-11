@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-11-25"
-lasttested: "2019-11-14"
+lastupdated: "2019-12-11"
+lasttested: "2019-12-11"
 ---
 
 {:shortdesc: .shortdesc}
@@ -33,7 +33,7 @@ The Slack integration channels messages between Slack and {{site.data.keyword.co
 This tutorial uses the following runtimes and services:
    * [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/conversation)
    * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions/)
-   * [{{site.data.keyword.Db2_on_Cloud_long}} ](https://{DomainName}/catalog/services/db2) or [{{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/catalog/services/databases-for-postgresql)
+   * [{{site.data.keyword.Db2_on_Cloud_long}} ](https://{DomainName}/catalog/services/db2)
 
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -93,9 +93,9 @@ In this section, you are going to set up the needed services and prepare the env
    ibmcloud resource service-instance-create eventConversation conversation free us-south
    ```
    {: pre}
-6. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. Some of the actions are enabled as web actions and a secret is set to prevent unauthorized invocations. Choose a secret and pass it in as parameter - replace **YOURSECRET** accordingly.
+6. Next, you are going to register actions for {{site.data.keyword.openwhisk_short}} and bind service credentials to those actions. The **dispatch** action is enabled as web action and a secret is set to prevent unauthorized invocations. Choose a secret and pass it in as parameter - replace **YOURSECRET** accordingly.
 
-   One of the actions gets invoked to create a table in {{site.data.keyword.Db2_on_Cloud_short}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** file which contains all the actions. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
+   One of the actions gets invoked to create a table in {{site.data.keyword.Db2_on_Cloud_short}}. By using an action of {{site.data.keyword.openwhisk_short}}, you neither need a local Db2 driver nor have to use the browser-based interface to manually create the table. To perform the registration and setup, run the line below and this will execute the **setup.sh** script. If your system does not support shell commands, copy each line out of the file **setup.sh** and execute it individually.
 
    ```sh
    sh setup.sh YOURSECRET "dashdb-for-transactions"
@@ -103,42 +103,39 @@ In this section, you are going to set up the needed services and prepare the env
    {: pre}
 
    **Note:** By default the script also inserts few rows of sample data. You can disable this by outcommenting the following line in the above script: `#ibmcloud fn action invoke slackdemo/db2Setup -p mode "[\"sampledata\"]" -r`
-7.  Extract the namespace information for the deployed actions.
+7.  Obtain the URI for the deployed **dispatch** action.
 
    ```sh
-   ibmcloud fn action list | grep eventInsert
+   ibmcloud fn action get slackdemo/dispatch --url
    ```
    {: pre}
 
-   Note down the part before **/slackdemo/eventInsert**, it is the namespace. You need it in the next section.
+   Keep this information available for the next section.
 
 ## Load the skill / workspace
 In this part of the tutorial you are going to load a pre-defined workspace or skill into the {{site.data.keyword.conversationshort}} service.
 1. In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service created in the previous section. Click on its entry and then the service alias to open the service details.
 2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
 3. On the left navigation select **Skills**, then click **Create skill**, continue with **Next** and the preselected **Dialog skill**, finally click on **Import skill**.
-4. In the dialog, after clicking **Choose JSON file**, select the file **assistant-skill.json** from the local directory. Click **Import**. This creates a new skill named **TutorialSlackbot**.
+4. In the dialog, after clicking **Choose JSON file**, select the file **skill-TutorialSlackbot.json** from the local directory. Click **Import**. This creates a new skill named **TutorialSlackbot**.
 5. On the left click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
 
-   The dialog has nodes to handle questions for help and simple "Thank You". The node **newEvent** and it's child gather the necessary input and then call an action to insert a new event record into Db2.
+   The dialog has nodes to handle questions for help and simple "Thank You". The node **newEvent** gathers the necessary input and then invokes the webhook to insert a new event record into Db2.
 
    The node **query events** clarifies whether events are searched by their identifier or by date. The actual search and collecting the necessary data are then performed by the child nodes **query events by shortname** and **query event by dates**.
 
-   The **credential_node** sets up the secret for the dialog actions and the information about the Cloud Foundry organization. The latter is needed for invoking the actions.
-
   Details will be explained later below once everything is set up.
   ![](images/solution19/SlackBot_Dialog.png)   
-6. Click on the dialog node **credential_node**, open the JSON editor by clicking on the menu icon on the right of **Then set context**.
+6. On the left, click on **Options** and then on **Webhooks**. 
 
-   Replace the value **FN_NAMESPACE** for the variable **fn_namespace** with the namespace information which you retrieved earlier. Do not enter any leading slash (`/`). Next, change **YOURSECRET** for **web_action_key** to your actual secret from before. Close the JSON editor by clicking on the icon again.
-   ![](images/solution19/Slackbot_credentials.png)   
+   Replace the value for **URL** with the one obtained in the previous section. Add `.json` to the URL to indicate that [JSON data should be returned](https://{DomainName}/docs/openwhisk?topic=cloud-functions-actions_web#return_json). Next, replace **YOURSECRET** in **HEADER VALUE** with your actual value that you set earlier.
 
 7. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase "show event by date 2019". It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
 
 ## Create an assistant and integrate with Slack
 
 Now, you will create an assistant associated with the skill from before and integrate it with Slack.
-1. Click on **Assistants** in the top left, then click on **Create assistant**.
+1. Click on **Assistants** in the top left navigation, then click on **Create assistant**.
 2. In the dialog, fill in **TutorialAssistant** as name, then click **Create assistant**. On the next screen, choose **Add dialog skill**. Thereafter, choose **Add existing skill**, pick **TutorialSlackbot** from the list and add it.
 3. After adding the skill, click **Add integration**, then from the list of **Third-party integrations** select **Slack**.
 4. Follow the step by step instructions to integrate your chatbot with Slack. More information about it is available in the topic [Integrating with Slack](https://{DomainName}/docs/services/assistant?topic=assistant-deploy-slack).
@@ -177,7 +174,7 @@ In the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/
 ## Expand the tutorial
 Want to add to or change this tutorial? Here are some ideas:
 1. Add search capabilities to, e.g., wildcard search or search for event durations ("give me all events longer than 8 hours").
-2. Use {{site.data.keyword.databases-for-postgresql}} instead of {{site.data.keyword.Db2_on_Cloud_short}}. The [GitHub repository for this Slackbot tutorial](https://github.com/IBM-Cloud/slack-chatbot-database-watson) already has code to support {{site.data.keyword.databases-for-postgresql}}.
+2. Use {{site.data.keyword.databases-for-postgresql}} instead of {{site.data.keyword.Db2_on_Cloud_short}}.
 3. Add a weather service and retrieve forecast data for the event date and location.
 4. [Control the encryption keys for your database by adding {{site.data.keyword.keymanagementservicelong_notm}}](https://{DomainName}/docs/services/Db2onCloud?topic=Db2onCloud-key-protect).
 5. Export event data as iCalendar **.ics** file.
