@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-12-10"
-lasttested: "2019-12-10"
+lastupdated: "2019-12-11"
+lasttested: "2019-12-11"
 ---
 
 {:shortdesc: .shortdesc}
@@ -16,7 +16,7 @@ lasttested: "2019-12-10"
 # Computer vision with PowerAI and Schematics
 {: #computer-vision-powerai-schematics}
 
-This tutorial walks you through how to provision a dedicated backend instance(VSI) of PowerAI Vision in {{site.data.keyword.vpc_full}}, upload an image dataset, train, deploy an optimized deep learning model as an API using a GPU provisioned on the VSI and deploy a front-end application to a VSI to interact with the backend API to classify an image. Once the VM is created on {{site.data.keyword.vpc_short}} using {{site.data.keyword.bplong_notm}}, its public IP address along with the username and password to log into the application will be displayed for easy access.
+This tutorial walks you through how to provision a dedicated backend instance(VSI) of PowerAI Vision in {{site.data.keyword.vpc_full}}, upload an image dataset, train, deploy an optimized deep learning model as an API using a GPU provisioned on the VSI and deploy a front-end application to a VSI to interact with the backend API to classify an image. Once the front-end VM is created on {{site.data.keyword.vpc_short}} using {{site.data.keyword.bplong_notm}}, its public IP address along with the username and password to log into the application will be displayed for easy access.
 {:shortdesc}
 
 Cameras are everywhere. Videos and images have become one of the most interesting data sets for artificial intelligence. In particular, deep learning is being used to create models for computer vision, and you can train these models to let your applications recognize what an image (or video) represents.
@@ -30,6 +30,7 @@ PowerAI Vision includes tools and interfaces that allow anyone with limited skil
 * Understand how to setup PowerAI vision trial running on Power CPU
 * Deploy an object detection and image classification application to a VSI on {{site.data.keyword.vpc_short}}
 * Upload an image dataset to train and deploy a deep learning model
+* Test the accuracy and adjust the hyperparameters for an optimized model
 
 ## Services used
 {: #services}
@@ -46,16 +47,19 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
   ![Architecture](images/solution53-powerai-vision/architecture_diagram.png)
 
+1. User logs into a backend application running in a VSI with PowerAI vision trial preinstalled to train and deploy a deep learning model(API)
+2. User deploys a web application to a front-end subnet on [{{site.data.keyword.vpc_short}} provisioned using {{site.data.keyword.bplong_notm}}
+3. The front-end app interacts with the back-end API
+4. User uploads an image for classification to the front-end web app
+
 ## Before you begin
 {: #prereqs}
 
-1. [Download and configure](https://github.com/IBM-Cloud/terraform-provider-ibm) the IBM Cloud Terraform provider (0.17.3 or later)
-2. Obtain your [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
-3. If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to IBM Cloud and save the UUID for future reference.
+1. Obtain your [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
+2. If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to IBM Cloud and save the UUID for future reference.
 
-
-## Deploy a PowerAI Vision Trial
-{: #deploy_powerai_vision}
+## Provision a PowerAI Vision Trial service
+{: #provision_powerai_vision}
 In this section, you will provision a PowerAI vision Trial service. Once successfully provisioned, the result is a VPC, subnet and a VSI where PowerAI Vision trial is pre-installed.
 
 1. Create [PowerAI vision trial](https://{DomainName}/catalog/services/powerai) service from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/catalog).
