@@ -45,7 +45,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-  ![Architecture](images/solution53-powerai-vision/architecture_diagram.png)
+  ![Architecture](images/solution53-powerai-vision-hidden/architecture_diagram.png)
 
 1. User logs into a backend application running in a VSI with PowerAI vision trial preinstalled to train and deploy a deep learning model(API)
 2. User deploys a web application to a front-end subnet on {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}
