@@ -211,7 +211,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ibmcloud ks workers ${MYCLUSTER}
    ```
    {: pre}
-12. Access the application at `http://worker-ip-address:portnumber/`.  For VPC the IP address of the clusters are private to the VPC.  These can be accessed by opening the **Web Console** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
+12. Access the application at `http://worker-ip-address:portnumber/`.  For VPC the IP address of the clusters are private to the VPC.  These can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
 
 ## Use the IBM-provided domain for your cluster
 {: #ibm_domain}
