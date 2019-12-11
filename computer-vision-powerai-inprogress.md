@@ -48,7 +48,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
   ![Architecture](images/solution53-powerai-vision/architecture_diagram.png)
 
 1. User logs into a backend application running in a VSI with PowerAI vision trial preinstalled to train and deploy a deep learning model(API)
-2. User deploys a web application to a front-end subnet on [{{site.data.keyword.vpc_short}} provisioned using {{site.data.keyword.bplong_notm}}
+2. User deploys a web application to a front-end subnet on {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}
 3. The front-end app interacts with the back-end API
 4. User uploads an image for classification to the front-end web app
 
@@ -66,7 +66,7 @@ In this section, you will provision a PowerAI vision Trial service. Once success
 2. Click on **Create** to provision
    * a VPC
    * a backend subnet
-   * VM within the backend subnet in VPC (particular region and availability zone (AZ))
+   * Virtual server instance(VSI) within the backend subnet in VPC (particular region and availability zone (AZ))
    * Floating IP (FIP) address on the public Internet for the back-end subnet. _Temporarily attached to train the model._
    * Security group with a rule that allows ingress traffic on port 22 (for SSH)
 
@@ -103,11 +103,15 @@ In this section, you will train, deploy a deep learning model and expose it as a
 3. To test the deployed model,
    - Click on **import** and select an image
    - Check the **Results** section to check the category and the confidence value
+You should also see the created API for the deployed model and the endpoints.
 
-## Create and access a web app
+## Create a web app with {{site.data.keyword.bplong_notm}} to upload and classify images
 {: #create_access_webapp}
 
 {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your IBM Cloud environment, and enable Infrastructure as Code (IaC). Terraform is an Open Source software that is developed by HashiCorp that enables predictable and consistent resource provisioning to rapidly build complex, multi-tier cloud environments.
+
+### Create web app with {{site.data.keyword.bplong_notm}}
+{: #create_webapp}
 
 1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click **Create a workspace**.
 2. Enter a **Workspace name** and select a resource group.
@@ -118,11 +122,21 @@ In this section, you will train, deploy a deep learning model and expose it as a
 5. Click on **Create** to start creation.
 6. On the Schematics page, Click on **Generate Plan**.
 7. Once the plan has successfully generated, a new item appears under Recent Activity saying Plan Generated. Click **Apply plan** to provision
-   * a VPC
    * a front-end subnet
-   * VM within the backend subnet in VPC (particular region and availability zone (AZ))
-   * Floating IP (FIP) address on the public Internet for the front-end subnet
+   * VSI within the front-end subnet to deploy the web app
+   * Floating IP (FIP) address on the public Internet for the front-end subnet to access the web app
    * Security group with a rule that allows ingress traffic on port 22 (for SSH)
+8. In a browser, enter `http://<Floating_IP>` to see the front-end web app that calls the deployed deep learning model via an API call.
+
+### Classify images
+{: #classify_images}
+
+1. Click on **Upload** to select an image from your machine.
+2. Click on **Classify** to see the response from the deployed model.
+3. Check the configure and confidence output.
+4. Repeat the above steps with different types of images.
+
+
 
 ## Remove resources
 {: #cleanup}
