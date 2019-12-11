@@ -105,7 +105,7 @@ In this section, you will train, deploy a deep learning model and expose it as a
    - Check the **Results** section to check the category and the confidence value
 You should also see the created API for the deployed model and the endpoints.
 
-## Create a web app with {{site.data.keyword.bplong_notm}} to upload and classify images
+## Create a web app with {{site.data.keyword.bpshort}} to classify images
 {: #create_access_webapp}
 
 {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your IBM Cloud environment, and enable Infrastructure as Code (IaC). Terraform is an Open Source software that is developed by HashiCorp that enables predictable and consistent resource provisioning to rapidly build complex, multi-tier cloud environments.
