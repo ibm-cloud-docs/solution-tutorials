@@ -179,10 +179,10 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 2. Back to the **Resource List**, locate the newly created service and click on it. (Note: You will need to wait until the status changes to Provisioned) 
    * Under **Service credentials**, create **New credential**.
    * Set the **name** to **secure-file-storage-cloudant-acckey**.
-   * Set **Role** to **Manager**
-   * Keep the default values for the the remaining fields
+   * Set **Role** to **Manager**.
+   * Keep the default values for the the remaining fields.
    * **Add**.
-3. Make note of the credentials by clicking **View credentials**.  You will need them in a later step.
+3. Make note of the credentials by clicking **View credentials**. You will need them in a later step.
 4. Under **Manage**, launch the Cloudant dashboard.
 5. Click **Create Database** to create a **Non-partitioned** database named **secure-file-storage-metadata**.
 
