@@ -61,7 +61,7 @@ Solution Tutorials
 
     {: .topicgroup}
     Work In Progress
-        computer-vision-powerai-inprogress.md
+        computer-vision-powerai.hidden.md
 
 
     {: .topicgroup}
