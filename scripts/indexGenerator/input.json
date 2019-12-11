@@ -471,19 +471,16 @@
         "anchor": "working",
         "solutions": [
             {
-                "name": "Apply end to end security to a cloud application - In Progress",
-                "url": "cloud-e2e-security-inprogress.html",
-                "description": "Create a secure cloud application that features data encrypted with your own keys, user authentication, and security auditing.",
-                "imgSrc": "images/solution34-cloud-e2e-security/Architecture.png",
-                "tags": [
-                    "Kubernetes"
-                ]
+                "name": "Solution Template",
+                "url": "solution-template.html",
+                "description": "Solution Template",
+                "imgSrc": ""
             },
             {
-                "name": "Computer vision with PowerAI and Schematics - In Progress",
-                "url": "computer-vision-powerai-inprogress.html",
+                "name": "Computer vision with PowerAI and Schematics",
+                "url": "computer-vision-powerai.hidden.html",
                 "description": "Provision a backend instance of PowerAI vision in VPC and access the deployed deep learning model through a webapp for image classification",
-                "imgSrc": "images/solution53-powerai-vision/architecture_diagram.png",
+                "imgSrc": "images/solution53-powerai-vision-hidden/architecture_diagram.png",
                 "tags": [
                     "PowerAI"
                 ]
