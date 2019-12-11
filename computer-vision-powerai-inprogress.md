@@ -136,10 +136,9 @@ You should also see the created API for the deployed model and the endpoints.
 3. Check the configure and confidence output.
 4. Repeat the above steps with different types of images.
 
-
-
 ## Remove resources
 {: #cleanup}
+Navigate to [resource list](https://{DomainName}/resources) and delete the services.
 
 ## Related resources
 {: #related_resources}
