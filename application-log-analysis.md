@@ -37,7 +37,9 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging)
 * [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring)
 
+<!--#/istutorial#-->
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+<!--#/istutorial#-->
 
 ## Architecture
 {: #architecture}
@@ -49,14 +51,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. The user will configure {{site.data.keyword.la_full_notm}} service agent to access application and cluster-level logs.
 1. The user will configure {{site.data.keyword.mon_full_notm}} service agent to monitor the health and performance of the {{site.data.keyword.containerlong_notm}} cluster and also the app deployed to the cluster.
 
-## Prerequisites
-{: #prereq}
+## Before you begin
+{: #prereqs}
 
 * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
 * [Grant permissions to a user to view logs in LogDNA](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam#user_logdna)
 * [Grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam_work#user_sysdig)
 
+<!--##istutorial#-->
 ## Create a Kubernetes cluster
 {: #create_cluster}
 
@@ -67,6 +70,38 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
   - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
 - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
+<!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+## Configure the access to your cluster
+{: #access-cluster}
+
+`ibmcloud` is the command line tool to interact with {{site.data.keyword.cloud_notm}}. It comes with plugins to work with {{site.data.keyword.cloud_notm}} services.
+
+1. Open a command prompt.
+1. Run the login command
+   ```sh
+   ibmcloud login
+   ```
+   {:pre}
+2. When prompted, select a region.
+3. Enter your IBMid email and password.
+4. Select the account where you have been invited.
+
+### Log in to your cluster
+
+In this step, you'll configure `kubectl` to point to the cluster assigned to you.
+
+1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters) and click on the **Access** tab under the cluster name.
+1. Under **After your cluster provisions, gain access** section, follow instructions to log into your cluster on a terminal.
+1. Rrun the below command to see all the namespaces in your cluster:
+   ```sh
+   kubectl get namespaces
+   ```
+   {:pre}
+-->
+<!--#/isworkshop#-->
 
 ## Provision a {{site.data.keyword.la_short}} instance
 {: #provision_logna_instance}
