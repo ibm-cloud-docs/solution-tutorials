@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-12-11"
-lasttested: "2019-12-11"
+lastupdated: "2019-12-12"
+lasttested: "2019-12-12"
 ---
 
 {:shortdesc: .shortdesc}
@@ -45,7 +45,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-  ![Architecture](images/solution53-powerai-vision/architecture_diagram.png)
+  ![Architecture](images/solution53-powerai-vision-hidden/architecture_diagram.png)
 
 1. User logs into a backend application running in a VSI with PowerAI vision trial preinstalled to train and deploy a deep learning model(API)
 2. User deploys a web application to a front-end subnet on {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}
@@ -76,10 +76,14 @@ In this section, you will train, deploy a deep learning model and expose it as a
 
 ### Train the model
 {: #train_model}
+
+For training the model and testing the deployed deep learning model, Download the [Caltech 101 dataset](http://www.vision.caltech.edu/Image_Datasets/Caltech101/) that contains pictures of objects belonging to 101 categories. Unzip and extract the dataset folder.
+
 1. Access the application via the Floating IP of the backend subnet and login with the credentials generated. Click **Get started**.
 2. Click **Create new data set** and give it a name
    - Click on the data set tile.
-   - Click on **Import files** and point to the images to be uploaded for classification
+   - Click on **Import files** and point to the downloaded dataset folder
+   - Select a category folder and import the pictures to be uploaded for classification
 3. Label the objects
    - Select at least 5 images of a type and click **Label Objects**
    - Click **Assign category**, give a name and click **Assign**
@@ -117,15 +121,13 @@ You should also see the created API for the deployed model and the endpoints.
 2. Enter a **Workspace name** and select a resource group.
 3. Provide the [GitHub repository URL](https://github.com/abc/abc.git) to import the Terraform template.
 4. Click on **Retrieve input variables** and complete the fields
-    For the 'ssh_priv_key', on a terminal run `cat ~/.ssh/id_rsa` command and paste the output between `<<EOF` and `EOF`.
-   {:tip}
 5. Click on **Create** to start creation.
 6. On the Schematics page, Click on **Generate Plan**.
 7. Once the plan has successfully generated, a new item appears under Recent Activity saying Plan Generated. Click **Apply plan** to provision
    * a front-end subnet
    * VSI within the front-end subnet to deploy the web app
    * Floating IP (FIP) address on the public Internet for the front-end subnet to access the web app
-   * Security group with a rule that allows ingress traffic on port 22 (for SSH)
+   * Security group with rules that allows ingress traffic on port 22 (for SSH), HTTP requests on port 80 and HTTPS on port 443.
 8. In a browser, enter `http://<Floating_IP>` to see the front-end web app that calls the deployed deep learning model via an API call.
 
 ### Classify images
@@ -136,10 +138,9 @@ You should also see the created API for the deployed model and the endpoints.
 3. Check the configure and confidence output.
 4. Repeat the above steps with different types of images.
 
-
-
 ## Remove resources
 {: #cleanup}
+Navigate to [resource list](https://{DomainName}/resources) and delete the services.
 
 ## Related resources
 {: #related_resources}

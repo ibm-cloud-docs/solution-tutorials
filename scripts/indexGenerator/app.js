@@ -30,7 +30,7 @@ Handlebars.registerHelper('htmlLink', function(solution, options) {
 
 Handlebars.registerHelper('hasTag', function( solution, tag, options) {
   const string = options.fn(this);
-  return (solution.tags.indexOf(tag) >= 0) ? string : null;
+  return (solution.tags && solution.tags.indexOf(tag) >= 0) ? string : null;
 });
 
 const input = require('./input.json');
@@ -60,7 +60,11 @@ solutions.filter((solution) => !helper.isExternalSolution(solution)).forEach((so
 });
 
 const tagsSet = new Set();
-solutions.forEach((solution) => solution.tags.forEach((tag) => tagsSet.add(tag)));
+solutions.forEach((solution) => {
+  if (solution.tags) {
+    solution.tags.forEach((tag) => tagsSet.add(tag));
+  }
+});
 const tags = Array.from(tagsSet).sort();
 console.log(tags);
 

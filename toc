@@ -61,9 +61,8 @@ Solution Tutorials
 
     {: .topicgroup}
     Work In Progress
-        cloud-e2e-security-inprogress.md
-        computer-vision-powerai-inprogress.md
-
+        solution-template.md
+        computer-vision-powerai.hidden.md
 
     {: .topicgroup}
     Identity and Access Management
@@ -102,7 +101,6 @@ Solution Tutorials
         isolated-cloud-foundry-enterprise-apps.md
         multi-region-k8s-cis.md
         cloud-e2e-security.md
-        cloud-e2e-security-inprogress.md
         users-teams-applications.md
         /containers/containers-vpc_ks_tutorial
 
