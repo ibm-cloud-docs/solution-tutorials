@@ -140,7 +140,7 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
    {:pre}
 1. Define an environment variable named `MYCONTAINERREGISTRY` pointing to the URL such as:
    ```sh
-   export MYCONTAINERREGISTRY=us.icr.io
+   MYCONTAINERREGISTRY=us.icr.io
    ```
    {:pre}
 1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
@@ -155,12 +155,12 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
    {:pre}
 1. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
    ```sh
-   export MYNAMESPACE=<REGISTRY_NAMESPACE>
+   MYNAMESPACE=<REGISTRY_NAMESPACE>
    ```
    {:pre}
-1. Define a **unique name** for the container image `<your-initials>-app-log-analysis`.
+1. Define a **unique name** for the container image such as `<your-initials>-app-log-analysis`.
    ```sh
-   export MYIMAGE=<your-initials>-app-log-analysis
+   MYIMAGE=<your-initials>-app-log-analysis
    ```
    {:pre}
 
@@ -189,11 +189,15 @@ On a terminal:
 1. Gain access to your cluster as described on the Access tab of your cluster.
 1. Define an environment variable named `MYCLUSTER` with your cluster name:
    ```sh
-   export MYCLUSTER=mycluster
+   MYCLUSTER=mycluster
    ```
-7. The MYINGRESSSUBDOMAIN is the Ingress Subdomain field from the command:
+1. Retrieve the cluster ingress subdomain:
    ```sh
    kubectl ks cluster get $MYCLUSTER
+   ```
+   {:pre}
+1. Define a variable pointing to the subdomain:
+   ```sh
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
    ```
    {: pre}
@@ -202,22 +206,7 @@ On a terminal:
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
-8. To access the application, you need the `public IP` of the worker node and the `NodePort`
-   - For public IP, run the following command:
-      ```sh
-      ibmcloud ks workers $MYCLUSTER
-      ```
-      {: pre}
-   - For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command:
-      ```sh
-      kubectl describe service app-log-analysis-svc
-      ```
-      {: pre}
-   You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.  For VPC the IP address of the clusters are private to the VPC.  These can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web).  In the web terminal try:
-      ```sh
-      curl http://MYINGRESSSUBDOMAIN
-      ```
-      {: pre}
+8. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
 
 ### Configure the cluster to send logs to your LogDNA instance
 
@@ -225,7 +214,7 @@ To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la
 
 1. Navigate to [Observability](https://{DomainName}/observe/) page and click **Logging**.
 1. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
-1. Copy and run the first command on a terminal where you have set the `KUBECONFIG` environment variable to create a kubernetes secret with the LogDNA ingestion key for your service instance.
+1. Copy and run the first command on a terminal where you have set the `KUBECONFIG` environment variable to create a Kubernetes secret with the LogDNA ingestion key for your service instance.
 1. Copy and run the second command to deploy a LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension **.log** and extensionless files that are stored in the */var/log* directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
 1. After you configure a log source, launch the LogDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
 
@@ -310,7 +299,7 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
 
 1. Navigate to [observability](https://{DomainName}/observe/) page and under **Monitoring**, click **Create instance**.
 1. Provide a unique **Service name** such as `<your-initials>-monitoring`
-1. Choose a region/location and Select a resource group.
+1. Choose a region/location and select a resource group.
 1. Select **Graduated Tier** as your plan and Click **Create**.
 1. Click on **Edit sources** next to the service which you created earlier and select **Kubernetes**.
 1. Copy and run the command under **Install Sysdig Agent to your cluster** on a terminal where you have set the `KUBECONFIG` environment variable to deploy the Sysdig agent in your cluster. Wait for the deployment to complete.
