@@ -124,7 +124,7 @@ The service provides a centralized log management system where log data is hoste
 
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
-### Deploy the Python application
+### Build the application
 
 On a terminal:
 1. Log in to {{site.data.keyword.Bluemix_notm}} and set the target region and resource group to the same that you used to provision the cluster in the UI. 
@@ -159,6 +159,9 @@ On a terminal:
       ibmcloud cr build -t $MYCONTAINERREGISTRY/$MYNAMESPACE/app-log-analysis:latest .
       ```
       {: pre}
+
+### Deploy the application
+
 6. Gain access to your cluster as described on the Access tab of your cluster.
 7. The MYINGRESSSUBDOMAIN is the Ingress Subdomain field from the command:
    ```sh
