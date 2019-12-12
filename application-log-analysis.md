@@ -37,7 +37,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging)
 * [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring)
 
-<!--#/istutorial#-->
+<!--##istutorial#-->
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 <!--#/istutorial#-->
 
