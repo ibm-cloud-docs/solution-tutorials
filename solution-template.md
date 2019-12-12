@@ -20,7 +20,7 @@ lasttested: "2019-03-08"
 {:important: .important}
 {:note: .note}
 
-# TUTORIAL TITLE
+# How to write a tutorial
 {: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
 
 This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
