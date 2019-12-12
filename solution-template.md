@@ -20,12 +20,10 @@ lasttested: "2019-03-08"
 {:important: .important}
 {:note: .note}
 
-> Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/Cloud-Docs/tutorials/conref.html). E.g., conref for IBM cloud is {{site.data.keyword.Bluemix_notm}}
-
 # TUTORIAL TITLE
 {: #change-me-to-the-filename-without-md-extension-it-must-be-unique-across-all-tutorials}
 
-This tutorial...
+This template shows how to structure a tutorial but also some writing tips and general documentation on how to work with tutorials.
 {:shortdesc}
 
 ## Objectives
@@ -36,20 +34,6 @@ This tutorial...
 
 ## Services used
 {: #services}
-
-<!-- Please Note when creating links:
-
-For anchors within the same document always only use the following format:
-  [link_description](#anchor_name)
-
-For anchors or any links to external documents, even for those are are within our tutorials use the following format:
-  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
-
-If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
-
-Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/developing/writing?topic=writing-linking#linking
-
--->
 
 This tutorial uses the following runtimes and services:
 * [IaaS or PaaS service name](https://{DomainName}/catalog/services/ServiceName)
@@ -120,7 +104,6 @@ Introductory statement that overviews the section
    ```
    {: pre}
 
-
 This paragraph only appears in the iOS documentation
 {: ios}
 
@@ -132,7 +115,6 @@ This paragraph only appears for Java code
 
 And this paragraph only appears for Swift code
 {: swift}
-
 
 ## Another Solution Specific Section
 {: #section_two}
@@ -160,3 +142,53 @@ Want to add to or change this tutorial? Here are some ideas:
 
 * [Relevant links in IBM Cloud docs](https://{DomainName}/docs/cli?topic=blah)
 * [Relevant links in external sources, i.e. normal link](https://kubernetes.io/docs/tutorials/hello-minikube/)
+
+## Writing guide
+{: #writing_guide}
+
+### Creating links
+
+For anchors within the same document always only use the following format:
+  [link_description](#anchor_name)
+
+For anchors or any links to external documents, even for those are are within our tutorials use the following format:
+  [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started#overview)
+
+If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
+
+Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/developing/writing?topic=writing-linking#linking
+
+### Conrefs
+
+Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/Cloud-Docs/tutorials/conref.html). E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
+
+## Markup for workshops
+
+Some tutorials are [turned into workshops](https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/.travis.yml#L9).
+
+### Tutorial-only content
+
+To mark content as visible only in a tutorials enclose the content with `<!--##istutorial#-->` and `<!--#/istutorial#-->` as:
+
+```markdown
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+<!--#/istutorial#-->
+```
+
+### Workshop-only content
+
+To have content showing only in a workshop, use:
+
+```markdown
+<!--##isworkshop#-->
+<!--
+## Configure the access to your cluster
+{: #access-cluster}
+
+This section will only appear in a workshop and not in the tutorial.
+-->
+<!--#/isworkshop#-->
+```
+
+Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs/tutorials/blob/draft/scripts/sync.sh#L32) makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
