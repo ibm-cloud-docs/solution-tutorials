@@ -142,6 +142,10 @@ On a terminal:
    cd application-log-analysis
    ```
    {: pre}
+1. Define an environment variable named `MYCLUSTER` with your cluster name:
+   ```sh
+   export MYCLUSTER=mycluster
+   ```
 5. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
    - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.  Find or create a registry namespace, notice how **myname-** is used to create a unique namespace name within the registry.
       ```sh
@@ -158,7 +162,7 @@ On a terminal:
 6. Gain access to your cluster as described on the Access tab of your cluster.
 7. The MYINGRESSSUBDOMAIN is the Ingress Subdomain field from the command:
    ```sh
-   kubectl ks cluster get mycluster
+   kubectl ks cluster get $MYCLUSTER
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
    ```
    {: pre}
@@ -170,7 +174,7 @@ On a terminal:
 8. To access the application, you need the `public IP` of the worker node and the `NodePort`
    - For public IP, run the following command:
       ```sh
-      ibmcloud ks workers mycluster
+      ibmcloud ks workers $MYCLUSTER
       ```
       {: pre}
    - For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command:
@@ -309,7 +313,7 @@ Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
 1. Under `Explore` choose `Deployments and Pods` for `My Groupings`
-1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
+1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 1. To check **default metrics** such as the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. 
 1. To monitor the latency of the application,
    - From the Explore tab, select **Deployments and Pods**.
@@ -328,7 +332,7 @@ This sample application includes code to generate **custom metrics**. These cust
 
 ![](images/solution12/wolam_api_counter.png)
 
-1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
+1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 1. To monitor the calls to a given api endpoint of the application,
    - From the Explore tab, select **Deployments and Pods**.
    - Click the arrow next to **Kubernetes State Overview** and then Select **Prometheus** > **wolam_api_counter**.
@@ -358,7 +362,7 @@ To create a dashboard:
    - Click **Edit Scope** in the title panel.
    - Select/Type **Kubernetes.cluster.name** in the dropdown
    - Leave display name empty and select **is**.
-   - Select **mycluster** as the value and click **Save**.
+   - Select your cluster name as the value and click **Save**.
 
 ## Remove resources
 {: #remove_resource}
@@ -366,7 +370,7 @@ To create a dashboard:
 - Remove the LogDNA and Sysdig instances from [Observability](https://{DomainName}/observe) page.
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
-   ibmcloud ks cluster-rm mycluster -f
+   ibmcloud ks cluster-rm $MYCLUSTER -f
    ```
    {:pre}
 
