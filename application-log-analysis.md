@@ -95,7 +95,7 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
 
 1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters) and click on the **Access** tab under the cluster name.
 1. Under **After your cluster provisions, gain access** section, follow instructions to log into your cluster on a terminal.
-1. Rrun the below command to see all the namespaces in your cluster:
+1. Run the below command to see all the namespaces in your cluster:
    ```sh
    kubectl get namespaces
    ```
