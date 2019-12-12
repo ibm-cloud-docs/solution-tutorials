@@ -56,8 +56,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
+<!--##istutorial#-->
 * [Grant permissions to a user to view logs in LogDNA](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam#user_logdna)
 * [Grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam_work#user_sysdig)
+<!--#/istutorial#-->
 
 <!--##istutorial#-->
 ## Create a Kubernetes cluster
@@ -85,7 +87,7 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
    ibmcloud login
    ```
    {:pre}
-2. When prompted, select a region.
+2. When prompted, select the region where your cluster was allocated.
 3. Enter your IBMid email and password.
 4. Select the account where you have been invited.
 
@@ -113,7 +115,7 @@ By using the {{site.data.keyword.la_short}} service, it is possible to aggregate
 To provision a {{site.data.keyword.la_short}} service,
 
 1. Navigate to [observability](https://{DomainName}/observe/) page and under **Logging**, click **Create instance**.
-1. Provide a unique **Service name**.
+1. Provide a unique **Service name** such as `<your-initials>-logging`.
 1. Choose a region/location and select a resource group.
 1. Select **7 day Log Search** as your plan and click **Create**.
 
@@ -124,45 +126,71 @@ The service provides a centralized log management system where log data is hoste
 
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
-### Build the application
+### Prepare the access to {{site.data.keyword.registryshort_notm}}
 
-On a terminal:
-1. Log in to {{site.data.keyword.Bluemix_notm}} and set the target region and resource group to the same that you used to provision the cluster in the UI. 
+1. Log in to {{site.data.keyword.Bluemix_notm}} and set the target region and resource group to the same as your cluster.
    ```sh
    ibmcloud target -r YOUR_REGION -g YOUR_RESOURCE_GROUP
     ```
    {: pre}
-3. Clone the GitHub repository:
+1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
+   ```sh
+   ibmcloud cr region
+   ```
+   {:pre}
+1. Define an environment variable named `MYCONTAINERREGISTRY` pointing to the URL such as:
+   ```sh
+   export MYCONTAINERREGISTRY=us.icr.io
+   ```
+   {:pre}
+1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
+   ```sh
+   ibmcloud cr namespaces
+   ```
+   {:pre}
+   To create a new namespace:
+   ```sh
+   ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
+   ```
+   {:pre}
+1. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
+   ```sh
+   export MYNAMESPACE=<REGISTRY_NAMESPACE>
+   ```
+   {:pre}
+1. Define a **unique name** for the container image `<your-initials>-app-log-analysis`.
+   ```sh
+   export MYIMAGE=<your-initials>-app-log-analysis
+   ```
+   {:pre}
+
+### Build the application
+
+On a terminal:
+
+1. Clone the GitHub repository:
    ```sh
    git clone https://github.com/IBM-Cloud/application-log-analysis
    ```
    {: pre}
-4. Change to the application directory
+1. Change to the application directory
    ```sh
    cd application-log-analysis
    ```
    {: pre}
+5. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
+   ```sh
+   ibmcloud cr build -t $MYCONTAINERREGISTRY/$MYNAMESPACE/$MYIMAGE:latest .
+   ```
+   {: pre}
+
+### Deploy the application
+
+1. Gain access to your cluster as described on the Access tab of your cluster.
 1. Define an environment variable named `MYCLUSTER` with your cluster name:
    ```sh
    export MYCLUSTER=mycluster
    ```
-5. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
-   - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.  Find or create a registry namespace, notice how **myname-** is used to create a unique namespace name within the registry.
-      ```sh
-      MYCONTAINERREGISTRY=us.icr.io
-      MYNAMESPACE=myname-app-log-analysis-namespace
-      ibmcloud cr namespace-add $MYNAMESPACE
-      ```
-      {: pre}
-   - Build **app-log-analysis** latest:
-      ```sh
-      ibmcloud cr build -t $MYCONTAINERREGISTRY/$MYNAMESPACE/app-log-analysis:latest .
-      ```
-      {: pre}
-
-### Deploy the application
-
-6. Gain access to your cluster as described on the Access tab of your cluster.
 7. The MYINGRESSSUBDOMAIN is the Ingress Subdomain field from the command:
    ```sh
    kubectl ks cluster get $MYCLUSTER
@@ -281,7 +309,7 @@ In this section, you will create a board and then add a graph with a breakdown t
 In the following, you are going to add {{site.data.keyword.mon_full_notm}} to the application. The service regularly checks the availability and response time of the app.
 
 1. Navigate to [observability](https://{DomainName}/observe/) page and under **Monitoring**, click **Create instance**.
-1. Provide a unique **Service name**.
+1. Provide a unique **Service name** such as `<your-initials>-monitoring`
 1. Choose a region/location and Select a resource group.
 1. Select **Graduated Tier** as your plan and Click **Create**.
 1. Click on **Edit sources** next to the service which you created earlier and select **Kubernetes**.
