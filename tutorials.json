@@ -23,7 +23,7 @@
             "Container Registry",
             "Java"
           ],
-          "lastUpdated": "2019-08-12"
+          "lastUpdated": "2019-11-22"
         },
         {
           "name": "Move a VM based application to Kubernetes",
@@ -84,7 +84,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2019-08-13"
+          "lastUpdated": "2019-12-06"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -124,7 +124,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-06-17"
+          "lastUpdated": "2019-11-21"
         },
         {
           "name": "Web application on LAMP stack",
@@ -250,7 +250,7 @@
             "Node.js",
             "Kubernetes"
           ],
-          "lastUpdated": "2019-06-04"
+          "lastUpdated": "2019-12-10"
         }
       ]
     },
@@ -271,7 +271,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2019-11-14"
+          "lastUpdated": "2019-12-11"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -284,7 +284,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2019-11-19"
+          "lastUpdated": "2019-12-05"
         }
       ]
     },
@@ -343,7 +343,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-11-05"
+          "lastUpdated": "2019-12-09"
         },
         {
           "name": "Enhance security of your deployed application",
@@ -358,7 +358,7 @@
             "Hyper Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-11-05"
+          "lastUpdated": "2019-11-26"
         }
       ]
     },
@@ -376,7 +376,7 @@
             "Swift",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-06-20"
+          "lastUpdated": "2019-12-05"
         },
         {
           "name": "Android native mobile app with Push Notifications",
@@ -388,7 +388,7 @@
             "Java",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-06-20"
+          "lastUpdated": "2019-12-06"
         },
         {
           "name": "Mobile application with a serverless backend",
@@ -434,7 +434,7 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "lastUpdated": "2019-07-08"
+          "lastUpdated": "2019-11-27"
         },
         {
           "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
@@ -447,7 +447,7 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "lastUpdated": "2019-11-19"
+          "lastUpdated": "2019-11-21"
         },
         {
           "name": "Build, deploy, test, and retrain a predictive machine learning model",
@@ -461,7 +461,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2019-10-05"
+          "lastUpdated": "2019-12-03"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -494,7 +494,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-08-08"
+          "lastUpdated": "2019-12-04"
         }
       ]
     },

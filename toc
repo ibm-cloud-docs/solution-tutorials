@@ -61,8 +61,8 @@ Solution Tutorials
 
     {: .topicgroup}
     Work In Progress
+        solution-template.md
         computer-vision-powerai.hidden.md
-
 
     {: .topicgroup}
     Identity and Access Management

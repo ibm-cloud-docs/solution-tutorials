@@ -62,17 +62,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
 
-Skip this section if you have an existing **Standard** cluster and want to reuse with this tutorial.
-{: tip}
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
-1. Create **a new Cluster** from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create) and choose the **Standard** cluster.
-   Log forwarding is *not* enabled for the **Free** cluster.
-   {:tip}
-1. Select a resource group and geography.
-1. For convenience, use the name `mycluster` to be consistent with this tutorial.
-1. Select a **Worker Zone** and select the smallest **Machine type** with 2 **CPUs** and 4 **GB RAM** as it is sufficient for this tutorial.
-1. Select 1 **Worker node** and leave all other options set to defaults. Click **Create Cluster**.
-1. Check the status of your **Cluster** and **Worker Node** and wait for them to be **ready**.
+- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
+  - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
+- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
 
 ## Provision a {{site.data.keyword.la_short}} instance
 {: #provision_logna_instance}
@@ -114,25 +108,26 @@ On a terminal:
    ```
    {: pre}
 5. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
-   - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.
-   - Create a namespace to store the container image.
+   - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.  Find or create a registry namespace, notice how **myname-** is used to create a unique namespace name within the registry.
       ```sh
-      ibmcloud cr namespace-add app-log-analysis-namespace
+      MYCONTAINERREGISTRY=us.icr.io
+      MYNAMESPACE=myname-app-log-analysis-namespace
+      ibmcloud cr namespace-add $MYNAMESPACE
       ```
       {: pre}
-   - Replace `<CONTAINER_REGISTRY>` with your container registry value and use **app-log-analysis** as the image name.
+   - Build **app-log-analysis** latest:
       ```sh
-      ibmcloud cr build -t <CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest .
+      ibmcloud cr build -t $MYCONTAINERREGISTRY/$MYNAMESPACE/app-log-analysis:latest .
       ```
       {: pre}
-   - Replace the **image** value in `app-log-analysis.yaml` file with the image tag `<CONTAINER_REGISTRY>/app-log-analysis-namespace/app-log-analysis:latest`
-   
-6. Run the command below to retrieve cluster configuration and set the `KUBECONFIG` environment variable:
+6. Gain access to your cluster as described on the Access tab of your cluster.
+7. The MYINGRESSSUBDOMAIN is the Ingress Subdomain field from the command:
    ```sh
-   $(ibmcloud ks cluster-config --export mycluster)
+   kubectl ks cluster get mycluster
+   MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
    ```
    {: pre}
-7. Deploy the app:
+7. Edit app-log-analysis.yaml changing the strings in MYx, then Deploy the app:
    ```sh
    kubectl apply -f app-log-analysis.yaml
    ```
@@ -148,7 +143,11 @@ On a terminal:
       kubectl describe service app-log-analysis-svc
       ```
       {: pre}
-   You can now access the application at `http://worker-ip-address:portnumber`
+   You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.  For VPC the IP address of the clusters are private to the VPC.  These can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web).  In the web terminal try:
+      ```sh
+      curl http://MYINGRESSSUBDOMAIN
+      ```
+      {: pre}
 
 ### Configure the cluster to send logs to your LogDNA instance
 
@@ -157,7 +156,7 @@ To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la
 1. Navigate to [Observability](https://{DomainName}/observe/) page and click **Logging**.
 1. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
 1. Copy and run the first command on a terminal where you have set the `KUBECONFIG` environment variable to create a kubernetes secret with the LogDNA ingestion key for your service instance.
-1. Copy and run the second command to deploy a LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension **.log* and extensionless files that are stored in the */var/log* directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
+1. Copy and run the second command to deploy a LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension **.log** and extensionless files that are stored in the */var/log* directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
 1. After you configure a log source, launch the LogDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
 
 ## Generate and access application logs
@@ -171,7 +170,7 @@ The application deployed in the previous steps allows you to log a message at a 
 
 Take a look at the code in the file [**views.py**](https://github.com/IBM-Cloud/application-log-analysis/blob/master/app/views.py). The code contains **print** statements as well as calls to **logger** functions. Printed messages are written to the **stdout** stream (regular output, application console / terminal), logger messages appear in the **stderr** stream (error log).
 
-1. Visit the web app at `http://worker-ip-address:portnumber/` and click on the `Logging` tab.
+1. Open the web app at `http://$MYINGRESSSUBDOMAIN/` and click on the `Logging` tab.
 1. Generate several log entries by submitting messages at different levels. The UI allows to change the logger setting for the server log level as well. Change the server-side log level in-between to make it more interesting. For example, you can log a "500 internal server error" as an **error** or "This is my first log entry" as an **info**.
 
 ### Access application logs
@@ -243,7 +242,7 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
 1. Provide a unique **Service name**.
 1. Choose a region/location and Select a resource group.
 1. Select **Graduated Tier** as your plan and Click **Create**.
-1. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
+1. Click on **Edit sources** next to the service which you created earlier and select **Kubernetes**.
 1. Copy and run the command under **Install Sysdig Agent to your cluster** on a terminal where you have set the `KUBECONFIG` environment variable to deploy the Sysdig agent in your cluster. Wait for the deployment to complete.
 
 Note: The Sysdig agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics. 
@@ -270,10 +269,11 @@ To Configure Sysdig to monitor health and performance of your cluster:
 
 To check the health and performance of your app and cluster you can review the default (out-of-the-box) and/or custom application generated metrics that are captured.
 
-Note: Change the interval to **10 M** on the bottom bar of the Sysdig UI.
+Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
 {: tip}
 
-1. Go back to the application running at `http://worker-ip-address:portnumber/` and click on the **Monitoring** tab, generate several metrics.
+1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
+1. Under `Explore` choose `Deployments and Pods` for `My Groupings`
 1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 1. To check **default metrics** such as the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. 
 1. To monitor the latency of the application,
@@ -298,7 +298,7 @@ This sample application includes code to generate **custom metrics**. These cust
    - From the Explore tab, select **Deployments and Pods**.
    - Click the arrow next to **Kubernetes State Overview** and then Select **Prometheus** > **wolam_api_counter**.
    - Select Time: **Sum**, Group: **Average**, Segment: **endpoint**
-1. Go back to the application running at `http://worker-ip-address:portnumber/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
+1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
 1. To monitor the calls to a given api endpoint of the application by region,
    - Select Time: **Sum**, Group: **Average**, Segment: **region**
 

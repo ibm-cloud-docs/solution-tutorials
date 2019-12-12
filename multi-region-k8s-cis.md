@@ -74,7 +74,7 @@ This tutorial deploys a Kubernetes application to clusters in multiple locations
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
 
-When creating the Kubrer cluster below:
+When creating the Kubernetes cluster below:
 1. Set **Cluster name** to **my-us-cluster**.
 1. Locate in **North America** and **Dallas**
 
