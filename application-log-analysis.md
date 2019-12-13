@@ -114,7 +114,7 @@ By using the {{site.data.keyword.la_short}} service, it is possible to aggregate
 
 To provision a {{site.data.keyword.la_short}} service,
 
-1. Navigate to [observability](https://{DomainName}/observe/) page and under **Logging**, click **Create instance**.
+1. Navigate to [Observability](https://{DomainName}/observe/) page and under **Logging**, click **Create instance**.
 1. Provide a unique **Service name** such as `<your-initials>-logging`.
 1. Choose a region/location and select a resource group.
 1. Select **7 day Log Search** as your plan and click **Create**.
@@ -354,8 +354,8 @@ This sample application includes code to generate **custom metrics**. These cust
 
 1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 1. To monitor the calls to a given api endpoint of the application,
-   - From the Explore tab, select **Deployments and Pods**.
-   - Click the arrow next to **Kubernetes State Overview** and then Select **Prometheus** > **wolam_api_counter**.
+   - From the Explore tab, select `Deployments and Pods`.
+   - Select `Prometheus` > `wolam_api_counter` in the `Metrics and Dashboards` dropdown.
    - Select Time: **Sum**, Group: **Average**, Segment: **endpoint**
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
 1. To monitor the calls to a given api endpoint of the application by region,
