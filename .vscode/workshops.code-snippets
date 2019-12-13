@@ -1,0 +1,28 @@
+{
+  "istutorial": {
+    "scope": "markdown",
+    "prefix": [
+      "istutorial"
+    ],
+    "body": [
+      "<!--##istutorial#-->",
+      "${1:text}",
+      "<!--#/istutorial#-->"
+    ],
+    "description": "Tutorial-only content"
+  },
+  "isworkshop": {
+    "scope": "markdown",
+    "prefix": [
+      "isworkshop"
+    ],
+    "body": [
+      "<!--##isworkshop#-->",
+      "<!--",
+      "${1:text}",
+      "-->",
+      "<!--#/isworkshop#-->"
+    ],
+    "description": "Workshop-only content"
+  }
+}

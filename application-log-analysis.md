@@ -37,7 +37,9 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.la_full_notm}}](https://{DomainName}/observe/logging)
 * [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring)
 
+<!--##istutorial#-->
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+<!--#/istutorial#-->
 
 ## Architecture
 {: #architecture}
@@ -49,14 +51,17 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. The user will configure {{site.data.keyword.la_full_notm}} service agent to access application and cluster-level logs.
 1. The user will configure {{site.data.keyword.mon_full_notm}} service agent to monitor the health and performance of the {{site.data.keyword.containerlong_notm}} cluster and also the app deployed to the cluster.
 
-## Prerequisites
-{: #prereq}
+## Before you begin
+{: #prereqs}
 
 * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins.
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
+<!--##istutorial#-->
 * [Grant permissions to a user to view logs in LogDNA](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam#user_logdna)
 * [Grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam_work#user_sysdig)
+<!--#/istutorial#-->
 
+<!--##istutorial#-->
 ## Create a Kubernetes cluster
 {: #create_cluster}
 
@@ -67,6 +72,38 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
   - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
 - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
+<!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+## Configure the access to your cluster
+{: #access-cluster}
+
+`ibmcloud` is the command line tool to interact with {{site.data.keyword.cloud_notm}}. It comes with plugins to work with {{site.data.keyword.cloud_notm}} services.
+
+1. Open a command prompt.
+1. Run the login command
+   ```sh
+   ibmcloud login
+   ```
+   {:pre}
+2. When prompted, select the region where your cluster was allocated.
+3. Enter your IBMid email and password.
+4. Select the account where you have been invited.
+
+### Log in to your cluster
+
+In this step, you'll configure `kubectl` to point to the cluster assigned to you.
+
+1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters) and click on the **Access** tab under the cluster name.
+1. Under **After your cluster provisions, gain access** section, follow instructions to log into your cluster on a terminal.
+1. Run the below command to see all the namespaces in your cluster:
+   ```sh
+   kubectl get namespaces
+   ```
+   {:pre}
+-->
+<!--#/isworkshop#-->
 
 ## Provision a {{site.data.keyword.la_short}} instance
 {: #provision_logna_instance}
@@ -77,8 +114,8 @@ By using the {{site.data.keyword.la_short}} service, it is possible to aggregate
 
 To provision a {{site.data.keyword.la_short}} service,
 
-1. Navigate to [observability](https://{DomainName}/observe/) page and under **Logging**, click **Create instance**.
-1. Provide a unique **Service name**.
+1. Navigate to [Observability](https://{DomainName}/observe/) page and under **Logging**, click **Create instance**.
+1. Provide a unique **Service name** such as `<your-initials>-logging`.
 1. Choose a region/location and select a resource group.
 1. Select **7 day Log Search** as your plan and click **Create**.
 
@@ -89,41 +126,78 @@ The service provides a centralized log management system where log data is hoste
 
 The ready-to-run [code for the logging app is located in this GitHub repository](https://github.com/IBM-Cloud/application-log-analysis). The application is written using [Django](https://www.djangoproject.com/), a popular Python server-side web framework. Clone or download the repository, then deploy the app to {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}}.
 
-### Deploy the Python application
+### Prepare the access to {{site.data.keyword.registryshort_notm}}
 
-On a terminal:
-1. Log in to {{site.data.keyword.Bluemix_notm}} and set the target region and resource group to the same that you used to provision the cluster in the UI. 
+1. Log in to {{site.data.keyword.Bluemix_notm}} and set the target region and resource group to the same as your cluster.
    ```sh
    ibmcloud target -r YOUR_REGION -g YOUR_RESOURCE_GROUP
     ```
    {: pre}
-3. Clone the GitHub repository:
+1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
+   ```sh
+   ibmcloud cr region
+   ```
+   {:pre}
+1. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
+   ```sh
+   MYREGISTRY=us.icr.io
+   ```
+   {:pre}
+1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
+   ```sh
+   ibmcloud cr namespaces
+   ```
+   {:pre}
+   To create a new namespace:
+   ```sh
+   ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
+   ```
+   {:pre}
+1. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
+   ```sh
+   MYNAMESPACE=<REGISTRY_NAMESPACE>
+   ```
+   {:pre}
+1. Define a **unique name** for the container image such as `<your-initials>-app-log-analysis`.
+   ```sh
+   MYIMAGE=<your-initials>-app-log-analysis
+   ```
+   {:pre}
+
+### Build the application
+
+On a terminal:
+
+1. Clone the GitHub repository:
    ```sh
    git clone https://github.com/IBM-Cloud/application-log-analysis
    ```
    {: pre}
-4. Change to the application directory
+1. Change to the application directory
    ```sh
    cd application-log-analysis
    ```
    {: pre}
 5. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
-   - Find the **Container Registry** with `ibmcloud cr info`, such as us.icr.io or uk.icr.io.  Find or create a registry namespace, notice how **myname-** is used to create a unique namespace name within the registry.
-      ```sh
-      MYCONTAINERREGISTRY=us.icr.io
-      MYNAMESPACE=myname-app-log-analysis-namespace
-      ibmcloud cr namespace-add $MYNAMESPACE
-      ```
-      {: pre}
-   - Build **app-log-analysis** latest:
-      ```sh
-      ibmcloud cr build -t $MYCONTAINERREGISTRY/$MYNAMESPACE/app-log-analysis:latest .
-      ```
-      {: pre}
-6. Gain access to your cluster as described on the Access tab of your cluster.
-7. The MYINGRESSSUBDOMAIN is the Ingress Subdomain field from the command:
    ```sh
-   kubectl ks cluster get mycluster
+   ibmcloud cr build -t $MYREGISTRY/$MYNAMESPACE/$MYIMAGE:latest .
+   ```
+   {: pre}
+
+### Deploy the application
+
+1. Gain access to your cluster as described on the Access tab of your cluster.
+1. Define an environment variable named `MYCLUSTER` with your cluster name:
+   ```sh
+   MYCLUSTER=mycluster
+   ```
+1. Retrieve the cluster ingress subdomain:
+   ```sh
+   kubectl ks cluster get $MYCLUSTER
+   ```
+   {:pre}
+1. Define a variable pointing to the subdomain:
+   ```sh
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
    ```
    {: pre}
@@ -132,22 +206,7 @@ On a terminal:
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
-8. To access the application, you need the `public IP` of the worker node and the `NodePort`
-   - For public IP, run the following command:
-      ```sh
-      ibmcloud ks workers mycluster
-      ```
-      {: pre}
-   - For the NodePort which will be 5-digits (e.g., 3xxxx), run the below command:
-      ```sh
-      kubectl describe service app-log-analysis-svc
-      ```
-      {: pre}
-   You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.  For VPC the IP address of the clusters are private to the VPC.  These can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web).  In the web terminal try:
-      ```sh
-      curl http://MYINGRESSSUBDOMAIN
-      ```
-      {: pre}
+8. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
 
 ### Configure the cluster to send logs to your LogDNA instance
 
@@ -155,7 +214,7 @@ To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la
 
 1. Navigate to [Observability](https://{DomainName}/observe/) page and click **Logging**.
 1. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
-1. Copy and run the first command on a terminal where you have set the `KUBECONFIG` environment variable to create a kubernetes secret with the LogDNA ingestion key for your service instance.
+1. Copy and run the first command on a terminal where you have set the `KUBECONFIG` environment variable to create a Kubernetes secret with the LogDNA ingestion key for your service instance.
 1. Copy and run the second command to deploy a LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension **.log** and extensionless files that are stored in the */var/log* directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
 1. After you configure a log source, launch the LogDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
 
@@ -238,9 +297,9 @@ In this section, you will create a board and then add a graph with a breakdown t
 
 In the following, you are going to add {{site.data.keyword.mon_full_notm}} to the application. The service regularly checks the availability and response time of the app.
 
-1. Navigate to [observability](https://{DomainName}/observe/) page and under **Monitoring**, click **Create instance**.
-1. Provide a unique **Service name**.
-1. Choose a region/location and Select a resource group.
+1. Navigate to [Observability](https://{DomainName}/observe/) page and under **Monitoring**, click **Create instance**.
+1. Provide a unique **Service name** such as `<your-initials>-monitoring`
+1. Choose a region/location and select a resource group.
 1. Select **Graduated Tier** as your plan and Click **Create**.
 1. Click on **Edit sources** next to the service which you created earlier and select **Kubernetes**.
 1. Copy and run the command under **Install Sysdig Agent to your cluster** on a terminal where you have set the `KUBECONFIG` environment variable to deploy the Sysdig agent in your cluster. Wait for the deployment to complete.
@@ -274,29 +333,29 @@ Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
 1. Under `Explore` choose `Deployments and Pods` for `My Groupings`
-1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
-1. To check **default metrics** such as the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. 
+1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
+1. To check **default metrics** such as the HTTP request-response codes, select `HTTP` under `Applications` in the `Metrics and Dashboards` dropdown.
 1. To monitor the latency of the application,
-   - From the Explore tab, select **Deployments and Pods**.
-   - Click the arrow next to `HTTP` and then Select Metrics > Network.
+   - From the Explore tab, select `Deployments and Pods`.
+   - Select `Metrics` > `Network` in the `Metrics and Dashboards` dropdown.
    - Select **net.http.request.time**.
    - Select Time: **Sum** and Group: **Average**.
    - Click **More options** and then click **Topology** icon.
    - Click **Done** and Double click the box to expand the view.
 1. To monitor the Kubernetes namespace where the application is running,
-   - From the Explore tab, select **Deployments and Pods**.
+   - From the Explore tab, select `Deployments and Pods`.
    - Click the arrow next to `net.http.request.time`.
-   - Select **Default Dashboards** > **Kubernetes**.
-   - Select **Kubernetes State** > **Kubernetes State Overview**.
+   - Select `Default Dashboards` > `Kubernetes`.
+   - Select `Kubernetes State` > `Kubernetes State Overview`.
 
 This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
 ![](images/solution12/wolam_api_counter.png)
 
-1. Expand **mycluster** on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
+1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 1. To monitor the calls to a given api endpoint of the application,
-   - From the Explore tab, select **Deployments and Pods**.
-   - Click the arrow next to **Kubernetes State Overview** and then Select **Prometheus** > **wolam_api_counter**.
+   - From the Explore tab, select `Deployments and Pods`.
+   - Select `Prometheus` > `wolam_api_counter` in the `Metrics and Dashboards` dropdown.
    - Select Time: **Sum**, Group: **Average**, Segment: **endpoint**
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate a few metrics after changing the region.
 1. To monitor the calls to a given api endpoint of the application by region,
@@ -308,7 +367,7 @@ Along with the pre-defined dashboards, you can create your own custom dashboard 
 
 To create a dashboard:
 1. Click on **Dashboards** on the left most pane > click **Add Dashboard**.
-1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview** > click **Create Dashboard**.
+1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview**.
 1. Select **Top List** as your new panel and name the panel as **Request time per container**
    - Under **Metrics**, Type **net.http.request.time**.
    - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
@@ -323,17 +382,19 @@ To create a dashboard:
    - Click **Edit Scope** in the title panel.
    - Select/Type **Kubernetes.cluster.name** in the dropdown
    - Leave display name empty and select **is**.
-   - Select **mycluster** as the value and click **Save**.
+   - Select your cluster name as the value and click **Save**.
 
 ## Remove resources
 {: #remove_resource}
 
 - Remove the LogDNA and Sysdig instances from [Observability](https://{DomainName}/observe) page.
+<!--##istutorial#-->
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
-   ibmcloud ks cluster-rm mycluster -f
+   ibmcloud ks cluster-rm $MYCLUSTER -f
    ```
    {:pre}
+<!--#/istutorial#-->
 
 ## Expand the tutorial
 {: #expand_tutorial}

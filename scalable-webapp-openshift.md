@@ -116,7 +116,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
    ibmcloud login
    ```
    {:pre}
-2. When prompted, select a region.
+2. When prompted, select the region where your cluster was allocated.
 3. Enter your IBMid email and password.
 4. Select the account where you have been invited.
 
