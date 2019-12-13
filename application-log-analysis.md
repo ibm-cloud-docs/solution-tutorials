@@ -297,7 +297,7 @@ In this section, you will create a board and then add a graph with a breakdown t
 
 In the following, you are going to add {{site.data.keyword.mon_full_notm}} to the application. The service regularly checks the availability and response time of the app.
 
-1. Navigate to [observability](https://{DomainName}/observe/) page and under **Monitoring**, click **Create instance**.
+1. Navigate to [Observability](https://{DomainName}/observe/) page and under **Monitoring**, click **Create instance**.
 1. Provide a unique **Service name** such as `<your-initials>-monitoring`
 1. Choose a region/location and select a resource group.
 1. Select **Graduated Tier** as your plan and Click **Create**.
@@ -334,19 +334,19 @@ Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
 1. Under `Explore` choose `Deployments and Pods` for `My Groupings`
 1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
-1. To check **default metrics** such as the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. 
+1. To check **default metrics** such as the HTTP request-response codes, select `HTTP` under `Applications` in the `Metrics and Dashboards` dropdown.
 1. To monitor the latency of the application,
-   - From the Explore tab, select **Deployments and Pods**.
-   - Click the arrow next to `HTTP` and then Select Metrics > Network.
+   - From the Explore tab, select `Deployments and Pods`.
+   - Select `Metrics` > `Network` in the `Metrics and Dashboards` dropdown.
    - Select **net.http.request.time**.
    - Select Time: **Sum** and Group: **Average**.
    - Click **More options** and then click **Topology** icon.
    - Click **Done** and Double click the box to expand the view.
 1. To monitor the Kubernetes namespace where the application is running,
-   - From the Explore tab, select **Deployments and Pods**.
+   - From the Explore tab, select `Deployments and Pods`.
    - Click the arrow next to `net.http.request.time`.
-   - Select **Default Dashboards** > **Kubernetes**.
-   - Select **Kubernetes State** > **Kubernetes State Overview**.
+   - Select `Default Dashboards` > `Kubernetes`.
+   - Select `Kubernetes State` > `Kubernetes State Overview`.
 
 This sample application includes code to generate **custom metrics**. These custom metrics are provided using a Prometheus client and mock multiple access to API endpoints.
 
@@ -367,7 +367,7 @@ Along with the pre-defined dashboards, you can create your own custom dashboard 
 
 To create a dashboard:
 1. Click on **Dashboards** on the left most pane > click **Add Dashboard**.
-1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview** > click **Create Dashboard**.
+1. Click on **Blank Dashboard** > name the dashboard as **Container Request Overview**.
 1. Select **Top List** as your new panel and name the panel as **Request time per container**
    - Under **Metrics**, Type **net.http.request.time**.
    - Scope: Click on **Override Dashboard Scope** > select **container.image** > select **is** > select _the application image_
