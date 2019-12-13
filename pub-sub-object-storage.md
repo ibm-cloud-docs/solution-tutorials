@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-11-21"
+lastupdated: "2019-12-13"
 lasttested: "2019-11-21"
 ---
 
@@ -19,7 +19,7 @@ lasttested: "2019-11-21"
 
 # Asynchronous data processing using object storage and pub/sub messaging
 {: #pub-sub-object-storage}
-In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. This pattern is used to decouple your application allowing greater control over scaling and performance. {{site.data.keyword.messagehub}} can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks. 
+In this tutorial, you will learn how to use an Apache Kafka based messaging service to orchestrate long running workloads to applications running in a Kubernetes cluster. This pattern is used to decouple your application allowing greater control over scaling and performance. {{site.data.keyword.messagehub}} can be used to queue up the work to be done without impacting the producer applications, making it an ideal system for long-running tasks.
 
 {:shortdesc}
 
@@ -74,7 +74,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 
 1. Use `ibmcloud login` to log in interactively. Select the region where the cluster was created.
 2. When the cluster is ready, retrieve the cluster configuration:
-   ```bash
+   ```sh
    ibmcloud ks cluster config --cluster <cluster-name>
    ```
    {: pre}
@@ -84,7 +84,7 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
   `echo $KUBECONFIG`
 4. Check that the `kubectl` command is correctly configured
-   ```bash
+   ```sh
    kubectl cluster-info
    ```
    {: pre}
@@ -109,11 +109,9 @@ In this step, you'll configure kubectl to point to your newly created cluster go
    {:pre}
 
 The `cluster service bind` command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-myeventstreams`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-integrations#integrations) for more info
-
 {:tip}
 
 ## Create an Object Storage instance
-
 {: #create_cos}
 
 {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. You will use this to store the files uploaded by the UI.
@@ -125,24 +123,27 @@ The `cluster service bind` command creates a cluster secret that holds the crede
 5. Select **Cross Region** Resiliency and **us-geo** Location and click **Create**
 6. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
    ```sh
-   ibmcloud cs cluster service bind --cluster mycluster --namespace default --service myobjectstorage
+   ibmcloud ks cluster service bind --cluster mycluster --namespace default --service myobjectstorage
    ```
+   {:pre}
 
 ## Deploy the UI application to the cluster
 
 The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to {{site.data.keyword.messagehub}} topic `work-topic` that a new file is ready to be processed.
 
 1. Clone the sample application repository locally and change directory to the `pubsub-ui` folder.
-```sh
-  git clone https://github.com/IBM-Cloud/pub-sub-storage-processing
-  cd pub-sub-storage-processing/pubsub-ui
-```
+   ```sh
+   git clone https://github.com/IBM-Cloud/pub-sub-storage-processing
+   cd pub-sub-storage-processing/pubsub-ui
+   ```
+   {:pre}
 2. Open `config.js` and update COSBucketName with your bucket name.
 3. Build and deploy the application. The deploy command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment. Follow the interactive instructions while deploying the app.
-```sh
-  ibmcloud dev build
-  ibmcloud dev deploy -t container
-```
+   ```sh
+   ibmcloud dev build
+   ibmcloud dev deploy -t container
+   ```
+   {:pre}
 4. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
 
    ![](images/solution25/files_uploaded.png)
@@ -152,16 +153,19 @@ The UI application is a simple Node.js Express web application which allows the 
 The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka `work-topic` topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the `result-topic` topic upon completion. The UI application will listen this topic and update the status.
 
 1. Change dir to the `pubsub-worker` directory
-```sh
-  cd ../pubsub-worker
-```
+   ```sh
+   cd ../pubsub-worker
+   ```
+   {:pre}
 2. Open `resources/cos.properties` and update `bucket.name`,  property with your bucket name.
-2. Build and deploy the worker application.
-```
-  ibmcloud dev build
-  ibmcloud dev deploy -t container
-```
-3. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
+3. Build and deploy the worker application.
+   ```sh
+   ibmcloud dev build
+   ibmcloud dev deploy -t container
+   ```
+   {:pre}
+
+4. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 ![](images/solution25/files_processed.png)
 
 In this tutorial, you learned how you can use Kafka based {{site.data.keyword.messagehub}} to implement a producer-consumer pattern. This allows the web application to be fast and offload the heavy processing to other applications. When work needs to be done, the producer (web application) creates messages and the work is load balanced between one or more workers who subscribe to the messages. You used a Java application running on Kubernetes to handle the processing, but these applications can also be [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_common_use_cases#data-processing). Applications running on Kubernetes are ideal for long running and intensive workloads, where as {{site.data.keyword.openwhisk_short}} would be a better fit for short lived processes.
