@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-10-07"
+lastupdated: "2019-12-13"
 lasttested: "2019-06-12"
 ---
 
@@ -224,7 +224,7 @@ Creating a managed API gives you a default endpoint like `https://service.us.api
 
 Exposing {{site.data.keyword.openwhisk_short}} actions through a custom domain will require a secure HTTPS connection. You should obtain a SSL certificate for the domain and subdomain you plan to use with the serverless back-end. Assuming a domain like *mydomain.com*, the actions could be hosted at *guestbook-api.mydomain.com*. The certificate will need to be issued for *guestbook-api.mydomain.com* (or **.mydomain.com*).
 
-You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/). During the process you may need to configure a DNS record of type TXT in your DNS interface to prove you are the owner of the domain.
+You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/) or directly through [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts). During the process you may need to configure a DNS record of type TXT in your DNS interface to prove you are the owner of the domain.
 {:tip}
 
 Once you have obtained the SSL certificate and private key for your domain make sure to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.

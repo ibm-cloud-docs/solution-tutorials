@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019
-lastupdated: "2019-11-26"
+lastupdated: "2019-12-13"
 lasttested: "2019-09-26"
 
 ---
@@ -100,7 +100,7 @@ In most cases an application consists of the app itself and one or many services
 
 When your application does not serve public users, but is only accessed from corporate networks, then a method to isolate network traffic is to access {{site.data.keyword.cloud_notm}} using a Virtual Private Network (VPN) or Direct Link. The [catalog has offerings for both types](https://{DomainName}/catalog?search=label%3Aibm%20vpn). A VPN creates a secure, encrypted transmission channel over a public network whereas the Direct Link offers private network access to {{site.data.keyword.cloud_notm}}.
 
-It is important to note that network traffic, i.e., data in transit, is secured by an encrypted transmission channel. Thus, you should use TLS / SSL. For your domains, you should utilize the [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-about-certificate-manager) or similar tools to actively manage encryption certificates and their validity. By setting up notifications you can make sure that certifications do not expire.
+It is important to note that network traffic, i.e., data in transit, is secured by an encrypted transmission channel. Thus, you should use TLS / SSL. For your domains, you should utilize the [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-about-certificate-manager) or similar tools to actively manage encryption certificates and their validity. By setting up notifications you can make sure that certifications do not expire. Note that {{site.data.keyword.cloudcerts_short}} allows you to order certificates and to automate the process.
 
 ## Evaluate and monitor app security
 {: #evaluate_security}
