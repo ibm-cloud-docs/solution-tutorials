@@ -138,9 +138,9 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
    ibmcloud cr region
    ```
    {:pre}
-1. Define an environment variable named `MYCONTAINERREGISTRY` pointing to the URL such as:
+1. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
    ```sh
-   MYCONTAINERREGISTRY=us.icr.io
+   MYREGISTRY=us.icr.io
    ```
    {:pre}
 1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
@@ -180,7 +180,7 @@ On a terminal:
    {: pre}
 5. Build a Docker image with the [Dockerfile](https://github.com/IBM-Cloud/application-log-analysis/blob/master/Dockerfile) in {{site.data.keyword.registryshort_notm}}.
    ```sh
-   ibmcloud cr build -t $MYCONTAINERREGISTRY/$MYNAMESPACE/$MYIMAGE:latest .
+   ibmcloud cr build -t $MYREGISTRY/$MYNAMESPACE/$MYIMAGE:latest .
    ```
    {: pre}
 
@@ -388,11 +388,13 @@ To create a dashboard:
 {: #remove_resource}
 
 - Remove the LogDNA and Sysdig instances from [Observability](https://{DomainName}/observe) page.
+<!--##istutorial#-->
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
    ibmcloud ks cluster-rm $MYCLUSTER -f
    ```
    {:pre}
+<!--#/istutorial#-->
 
 ## Expand the tutorial
 {: #expand_tutorial}
