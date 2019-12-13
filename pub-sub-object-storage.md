@@ -132,18 +132,18 @@ The `cluster service bind` command creates a cluster secret that holds the crede
 The UI application is a simple Node.js Express web application which allows the user to upload files. It stores the files in the Object Storage instance created above and then sends a message to {{site.data.keyword.messagehub}} topic `work-topic` that a new file is ready to be processed.
 
 1. Clone the sample application repository locally and change directory to the `pubsub-ui` folder.
-    ```sh
-    git clone https://github.com/IBM-Cloud/pub-sub-storage-processing
-    cd pub-sub-storage-processing/pubsub-ui
-    ```
-    {:pre}
+   ```sh
+   git clone https://github.com/IBM-Cloud/pub-sub-storage-processing
+   cd pub-sub-storage-processing/pubsub-ui
+   ```
+   {:pre}
 2. Open `config.js` and update COSBucketName with your bucket name.
 3. Build and deploy the application. The deploy command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment. Follow the interactive instructions while deploying the app.
-    ```sh
-    ibmcloud dev build
-    ibmcloud dev deploy -t container
-    ```
-    {:pre}
+   ```sh
+   ibmcloud dev build
+   ibmcloud dev deploy -t container
+   ```
+   {:pre}
 4. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
 
    ![](images/solution25/files_uploaded.png)
@@ -153,17 +153,17 @@ The UI application is a simple Node.js Express web application which allows the 
 The worker application is a Java application which listens to the {{site.data.keyword.messagehub}} Kafka `work-topic` topic for messages. On a new message, the worker will retrieve the name of the file from the message and then get the file contents from Object Storage. It will then simulate processing of the file and send another message to the `result-topic` topic upon completion. The UI application will listen this topic and update the status.
 
 1. Change dir to the `pubsub-worker` directory
-    ```sh
-    cd ../pubsub-worker
-    ```
-    {:pre}
+   ```sh
+   cd ../pubsub-worker
+   ```
+   {:pre}
 2. Open `resources/cos.properties` and update `bucket.name`,  property with your bucket name.
 3. Build and deploy the worker application.
-    ```sh
-    ibmcloud dev build
-    ibmcloud dev deploy -t container
-    ```
-    {:pre}
+   ```sh
+   ibmcloud dev build
+   ibmcloud dev deploy -t container
+   ```
+   {:pre}
 
 4. After deployment completes, check the browser window with your web application again. Note that the status next to each file is now changed to "processed".
 ![](images/solution25/files_processed.png)
