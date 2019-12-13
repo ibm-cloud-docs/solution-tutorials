@@ -70,11 +70,6 @@ In this section, you are going to set up the needed services and prepare the env
    Use `ibmcloud target -g default` to switch to the default resource group.
    {: tip}
 
-   Even though it is not used, you need to target a Cloud Foundry organization and space. Use the following to pick it interactively. 
-   ```sh
-   ibmcloud target --cf
-   ```
-   {: pre}
 3. Create a {{site.data.keyword.Db2_on_Cloud_short}} instance and name it **eventDB**. Adapt the region **us-south** to your region, e.g., **eu-de**.
    ```sh
    ibmcloud resource service-instance-create eventDB dashdb-for-transactions free us-south
