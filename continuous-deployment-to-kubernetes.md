@@ -30,7 +30,7 @@ This tutorial walks you through the process setting up a continuous integration 
 * Create development and production Kubernetes clusters.
 <!--#/istutorial#-->
 * Create a starter application, run it locally and push it to a Git repository.
-* Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod clusters.
+* Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod environments.
 * Explore and integrate the app to use Slack notifications.
 
 ## Services used
@@ -53,9 +53,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. The code is pushed to a private Git repository.
 2. The pipeline picks up changes in Git and builds container image.
-3. The container image is uploaded to registry. The app is deployed to the Development cluster.
-4. Once changes are validated, the app is deployed to the Production cluster.
-5. Notications are sent to Slack to track the deployment activities.
+3. The container image is uploaded to registry. The app is deployed to the Development environment.
+4. Once changes are validated, the app is deployed to the Production environment.
+5. Notifications are sent to Slack to track the deployment activities.
 
 ## Before you begin
 {: #prereq}
@@ -125,7 +125,7 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [Web Apps](https://{DomainName}/developer/appservice/dashboard).
 2. Under **Start from the Web**, section click on the **Get Started** button.
 3. Select the `Node.js Web App with Express.js` tile and then `Create app` to create a Node.js starter application.
-4. Enter the **name** `mynodestarter`. Then, click **Create**.
+4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter`. Then, click **Create**.
 
 ## Configure DevOps delivery pipeline
 {: #create_devops}
@@ -222,7 +222,7 @@ If you don't see your application updating, check the logs of the DEPLOY and BUI
 ## Deploy to a production environment
 {: #deploytoproduction}
 
-In this section, you will complete the deployment pipeline by deploying the Kubernetes application to development and production environments respectively.
+In this section, you will complete the deployment pipeline by deploying the application to development and production environments respectively.
 
 There are [different options](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
 
@@ -235,7 +235,7 @@ There are [different options](https://{DomainName}/docs/tutorials?topic=solution
 6. In **Environment properties**, set **CLUSTER_NAMESPACE** to **production**.
 7. **Save** the stage.
 
-You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
+You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
    ![](images/solution21/full-deploy.png)
 
 ## Setup Slack notifications
@@ -260,7 +260,9 @@ In this step, you will clean up the resources to remove what you created above.
 
 - Delete the Git repository.
 - Delete the toolchain.
-- Delete the two clusters.
+<!--##istutorial#-->
+- Delete the cluster.
+<!--#/istutorial#-->
 - Delete the Slack channel.
 
 ## Expand the Tutorial
@@ -269,9 +271,8 @@ In this step, you will clean up the resources to remove what you created above.
 Do you want to learn more? Here are some ideas of what you can do next:
 
 - [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
-- Add a testing environment and deploy it to a 3rd cluster.
-- Deploy the production cluster [across multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
-- Enhance your pipeline with additional quality controls and analyics using [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
+- Add a 3rd environment dedicated to testing.
+- Deploy the production app [across multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 
 ## Related Content
 {: #related}
