@@ -88,32 +88,11 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
 <!--##isworkshop#-->
 <!--
-## Configure the access to your cluster
+## Log in {{site.data.keyword.cloud_notm}}
 {: #access-cluster}
 
-`ibmcloud` is the command line tool to interact with {{site.data.keyword.cloud_notm}}. It comes with plugins to work with {{site.data.keyword.cloud_notm}} services.
-
-1. Open a command prompt.
-1. Run the login command
-   ```sh
-   ibmcloud login
-   ```
-   {:pre}
-2. When prompted, select the region where your cluster was allocated.
-3. Enter your IBMid email and password.
-4. Select the account where you have been invited.
-
-### Log in to your cluster
-
-In this step, you'll configure `kubectl` to point to the cluster assigned to you.
-
-1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters) and click on the **Access** tab under the cluster name.
-1. Under **After your cluster provisions, gain access** section, follow instructions to log into your cluster on a terminal.
-1. Run the below command to see all the namespaces in your cluster:
-   ```sh
-   kubectl get namespaces
-   ```
-   {:pre}
+1. Open the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}).
+2. Switch to the account where you have been invited.
 -->
 <!--#/isworkshop#-->
 
