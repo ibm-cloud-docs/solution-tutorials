@@ -16,7 +16,7 @@ lasttested: "2019-11-22"
 # Scalable web application on Kubernetes
 {: #scalable-webapp-kubernetes}
 
-This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how to bind a custom domain, monitor the health of the environment, and scale the application.
+This tutorial walks you through how to scaffold a web application, run it locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster). Additionally, you will learn how to <!--##istutorial#-->bind a custom domain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
 {:shortdesc}
 
 Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
@@ -28,7 +28,9 @@ For developers looking to kickstart their projects, the {{site.data.keyword.dev_
 
 * Scaffold a starter application.
 * Deploy the application to the Kubernetes cluster.
+<!--##istutorial#-->
 * Bind a custom domain.
+<!--#/istutorial#-->
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
@@ -39,7 +41,9 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 
+<!--##istutorial#-->
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+<!--#/istutorial#-->
 
 ## Architecture
 {: #architecture}
@@ -62,6 +66,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 * [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, helm, ibmcloud cli and required plug-ins
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
+<!--##istutorial#-->
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
 
@@ -83,6 +88,44 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
    export MYCLUSTER=<CLUSTER_NAME>
    ibmcloud ks cluster config ${MYCLUSTER}
    ```
+<!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+## Configure the access to your cluster
+{: #access-cluster}
+
+`ibmcloud` is the command line tool to interact with {{site.data.keyword.cloud_notm}}. It comes with plugins to work with {{site.data.keyword.cloud_notm}} services.
+
+1. Open a command prompt.
+1. Run the login command
+   ```sh
+   ibmcloud login
+   ```
+   {:pre}
+2. When prompted, select the region where your cluster was allocated.
+3. Enter your IBMid email and password.
+4. Select the account where you have been invited.
+
+### Log in to your cluster
+
+In this step, you'll configure `kubectl` to point to the cluster assigned to you.
+
+1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters) and click on the **Access** tab under the cluster name.
+1. Under **After your cluster provisions, gain access** section, follow instructions to log into your cluster on a terminal.
+1. Initialize the environment variable with the cluster name:
+
+   ```bash
+   export MYCLUSTER=<CLUSTER_NAME>
+   ibmcloud ks cluster config ${MYCLUSTER}
+   ```
+1. Run the below command to see all the namespaces in your cluster:
+   ```sh
+   kubectl get namespaces
+   ```
+   {:pre}
+-->
+<!--#/isworkshop#-->
 
 ## Create a starter application
 {: #create_application}
@@ -95,20 +138,15 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
+   You may be asked to target an organization and a space, follow the instructions on the CLI
+   {:tip}
 1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
-1. Enter a **name** for your application, this is the project name.
-1. Select the resource group where to deploy this application.
+1. Enter a **unique name** for your application such as `<your-initials>-kubeapp`.
+4. Select the **resource group** where your cluster has been created.
 1. Do not add additional services.
 1. Do not add a DevOps toolchain, select **manual deployment**.
-1. Export the environment variable with the project name
-   ```
-   export MYPROJECT=name
-   ```
-   {: pre}
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes.
-
-<!-- For an overview of the files generated, see [Project Contents Documentation](https://{DomainName}/docs/cloudnative/projects/java_project_contents.html#java-project-files). -->
 
 ![](images/solution2/Contents.png)
 
@@ -121,9 +159,14 @@ You can build and run the application as you normally would using `mvn` for java
    docker ps
    ```
    {: pre}
+1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
+   ```sh
+   export MYPROJECT=<your-initials>-openshiftapp
+   ```
+   {:pre}
 2. Change to the directory of the generated project.
    ```
-   cd <project name>
+   cd $MYPROJECT
    ```
    {: pre}
 3. Build the application.
@@ -150,53 +193,58 @@ You can build and run the application as you normally would using `mvn` for java
 
 In this section, you first push the Docker image to the IBM Cloud private container registry, and then create a Kubernetes deployment pointing to that image.
 
-1. Find your **namespace** by listing all the namespace in the registry.
+### Prepare the access to {{site.data.keyword.registryshort_notm}}
+
+1. To identify your {{site.data.keyword.registryshort_notm}} URL, run
+   ```sh
+   ibmcloud cr region
+   ```
+   {:pre}
+1. Define an environment variable named `MYREGISTRY` pointing to the URL such as:
+   ```sh
+   export MYREGISTRY=us.icr.io
+   ```
+   {:pre}
+1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
    ```sh
    ibmcloud cr namespaces
    ```
-   {: pre}
-   If you have a namespace, make note of the name for use later. If you don't have one, create it.
+   {:pre}
+   To create a new namespace:
    ```sh
-   ibmcloud cr namespace-add <Name>
+   ibmcloud cr namespace-add <REGISTRY_NAMESPACE>
    ```
-   {: pre}
-2. Set MYNAMESPACE environment variable to your namespace
+   {:pre}
+1. Define an environment variable named `MYNAMESPACE` pointing to the registry namespace:
+   ```sh
+   export MYNAMESPACE=<REGISTRY_NAMESPACE>
+   ```
+   {:pre}
 
-    ```sh
-    export MYNAMESPACE=<NAMESPACE>
-    ```
-    {: pre}
-3. Log in the **Container Registry**:
-   ```sh
-   ibmcloud cr login
-   ```
-   {: pre}
-4. Identify your **Container Registry** (e.g. us.icr.io) by running `ibmcloud cr info`
-5. Set MYREGISTRY env var to your registry.
-   ```sh
-   export MYREGISTRY=<REGISTRY>
-   ```
-   {: pre}
-6. Build and tag (`-t`)the docker image
+### Build the application
+
+1. Build and tag (`-t`)the docker image
    ```sh
    docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
    {: pre}
-7. Push the docker image to your container registry on IBM Cloud
+1. Push the docker image to your container registry on IBM Cloud
    ```sh
    docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
    {: pre}
-8. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
+
+### Deploy the application
+
+1. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
 
    For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
-
-9. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize Helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
+1. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize Helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
 
    With Helm 3, you can skip the configure tiller and initialize Helm steps.
    {: tip}
 
-10. To install a Helm chart, change to `chart\YOUR PROJECT NAME` directory and run the below command
+1. To install a Helm chart, change to `chart\YOUR PROJECT NAME` directory and run the below command
   ```sh
   helm install . --name ${MYPROJECT}
   ```
@@ -205,13 +253,13 @@ In this section, you first push the Docker image to the IBM Cloud private contai
   With Helm 3, run `helm install ${MYPROJECT} .` command to install the Helm chart
   {: tip}
 
-11. Use `kubectl get service ${MYPROJECT}-service` for your Java application and `kubectl get service ${MYPROJECT}-application-service`  for your Node.js application to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
-12. For the public IP of worker node, run the below command
+1. Use `kubectl get service ${MYPROJECT}-service` for your Java application and `kubectl get service ${MYPROJECT}-application-service`  for your Node.js application to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
+1. For the public IP of worker node, run the below command
    ```sh
    ibmcloud ks workers ${MYCLUSTER}
    ```
    {: pre}
-12. Access the application at `http://worker-ip-address:portnumber/`.  For VPC the IP address of the clusters are private to the VPC.  These can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
+1. Access the application at `http://worker-ip-address:portnumber/`.  For VPC the IP address of the clusters are private to the VPC.  These can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
 
 ## Use the IBM-provided domain for your cluster
 {: #ibm_domain}
@@ -264,6 +312,7 @@ Use Ingress to set up the cluster inbound connection to the service.
    {: pre}
 4. Access your application at `https://<nameofproject>.<ingress-sub-domain>/`
 
+<!--##istutorial#-->
 ## Use your own custom domain
 {: #custom_domain}
 
@@ -335,11 +384,12 @@ If you were to try to access your application with HTTPS at this time `https://<
    ```
    {: pre}
 6. Access your application at `https://<customdomain>/`.
+<!--#/istutorial#-->
 
 ## Monitor application health
 {: #monitor_application}
 
-1. To check the health of your application, navigate to [clusters](https://{DomainName}/kubernetes/clusters) to see a list of clusters and click on the cluster you created above.
+1. To check the health of your application, navigate to [clusters](https://{DomainName}/kubernetes/clusters) to see a list of clusters and click on your cluster.
 2. Click **Kubernetes Dashboard** to launch the dashboard in a new tab.
 3. Select **Nodes** on the left pane, click the **Name** of the nodes and see the **Allocation Resources** to see the health of your nodes.
 4. To review the application logs from the container, select **Pods**, **pod-name** and **Logs**.
@@ -376,12 +426,14 @@ Refer [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#a
 
 ## Remove resources
 
-* Delete the cluster or run the below command to delete the Kubernetes artifacts created for this application if you plan to reuse the cluster
-
+* Delete the Kubernetes artifacts created for this application:
   ```sh
   helm delete ${MYPROJECT}
   ```
   {:pre}
+<!--##istutorial#-->
+* Delete the cluster.
+<!--#/istutorial#-->
 
 ## Related content
 
