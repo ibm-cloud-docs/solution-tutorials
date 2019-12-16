@@ -26,9 +26,11 @@ This tutorial walks you through the process setting up a continuous integration 
 ## Objectives
 {: #objectives}
 
+<!--##istutorial#-->
 * Create development and production Kubernetes clusters.
+<!--#/istutorial#-->
 * Create a starter application, run it locally and push it to a Git repository.
-* Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod clusters.
+* Configure the DevOps delivery pipeline to connect to your Git repository, build and deploy the starter app to dev/prod environments.
 * Explore and integrate the app to use Slack notifications.
 
 ## Services used
@@ -39,9 +41,10 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 - [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 - [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 - [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)
-- Slack
 
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+<!--#/istutorial#-->
 
 ## Architecture
 {: #architecture}
@@ -50,9 +53,9 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 
 1. The code is pushed to a private Git repository.
 2. The pipeline picks up changes in Git and builds container image.
-3. The container image is uploaded to registry. The app is deployed to the Development cluster.
-4. Once changes are validated, the app is deployed to the Production cluster.
-5. Notications are sent to Slack to track the deployment activities.
+3. The container image is uploaded to registry. The app is deployed to the Development environment.
+4. Once changes are validated, the app is deployed to the Production environment.
+5. Notifications are sent to Slack to track the deployment activities.
 
 ## Before you begin
 {: #prereq}
@@ -61,6 +64,7 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 * [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace).
 * [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
+<!--##istutorial#-->
 ## Create development Kubernetes cluster
 {: #create_kube_cluster}
 
@@ -80,6 +84,17 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 3. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
 
 **Note:** Do not proceed until your workers are ready.
+<!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+## Log in {{site.data.keyword.cloud_notm}}
+{: #access-cluster}
+
+1. Open the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}).
+2. Switch to the account where you have been invited.
+-->
+<!--#/isworkshop#-->
 
 ## Create a starter application
 {: #create_application}
@@ -89,20 +104,26 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [Web Apps](https://{DomainName}/developer/appservice/dashboard).
 2. Under **Start from the Web**, section click on the **Get Started** button.
 3. Select the `Node.js Web App with Express.js` tile and then `Create app` to create a Node.js starter application.
-4. Enter the **name** `mynodestarter`. Then, click **Create**.
+4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter`. Then, click **Create**.
 
 ## Configure DevOps delivery pipeline
 {: #create_devops}
 
 Now that you successfully created the starter application, you can automate its deployment to the Kubernetes cluster.
 
-1. Under the **Deploy your App** tile, click on the **Configure continuous delivery** button.
-1. Select the Kubernetes deployment target and the cluster created earlier and click **Next**.
-1. Set the **toolchain name** to **mynodestarter-toolchain** and click **Create**
-1. Once the pipeline created, click on **View Toolchain** and then **Delivery Pipeline** to view the pipeline. ![](images/solution21/Delivery-pipeline.png)
-4. After the deploy stages complete, click on the **View logs and history** to see the logs.
-5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`). ![](images/solution21/Logs.png)
-Done, you've used the App Service UI to create the starter applications, and configured the pipeline to build and deploy the application to your cluster.
+1. Click **Deploy your app**, under the **Configure continuous delivery** tile.
+1. Select **{{site.data.keyword.containershort_notm}}** as the **Deployment target**.
+1. Select your cluster from the list.
+1. Select **Helm** as the **Deployment type**.
+1. Define a unique **toolchain name**.
+1. Click **Create**.
+
+The toolchain will build your application and deploy it to the cluster.
+
+1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
+4. After the deploy stages complete, click on **View logs and history** to see the logs.
+5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
+   ![](images/solution21/Logs.png)
 
 ## Clone, build and run the application locally
 {: #cloneandbuildapp}
@@ -177,25 +198,24 @@ In this section, you will commit your change to your Git repository. The pipelin
 
 If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
 
-## Create production Kubernetes cluster
-
+## Deploy to a production environment
 {: #deploytoproduction}
 
-In this section, you will complete the deployment pipeline by deploying the Kubernetes application to development and production environments respectively. Ideally, we want to set up an automatic deployment for the development environment and a manual deployment for the production environment. Before we do that, let's explore the two ways in which you can deliver this. It's possible to use one cluster for both development and production environment. However, it's recommended to have two separate clusters, one for development and one for production. Let's explore setting up a second cluster for production.
-{: shortdesc}
+In this section, you will complete the deployment pipeline by deploying the application to development and production environments respectively.
 
-1. Following instructions in [Create development Kubernetes cluster](#create_kube_cluster) section, and create a new cluster. Name this cluster `prod-cluster`.
-2. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
-3. Rename the **Deploy Stage** to `Deploy dev`, you can do that by clicking on settings Icon >  **Configure Stage**.
+There are [different options](https://{DomainName}/docs/tutorials?topic=solution-tutorials-users-teams-applications) to handle the deployment of an application to multiple environments. In this tutorial, you will deploy the application to two different namespaces.
+
+1. Go to the toolchain you created earlier and click the **Delivery Pipeline** tile.
+1. Rename the **Deploy Stage** to `Deploy dev` by clicking on settings Icon > **Configure Stage**.
    ![](images/solution21/deploy_stage.png)
-4. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
+1. Clone the **Deploy dev** stage (settings icon > Clone Stage) and name the cloned stage as `Deploy prod`.
 5. Change the **stage trigger** to `Run jobs only when this stage is run manually`.
    ![](images/solution21/prod-stage.png)
-6. Under the **Job** tab, change the cluster name to the newly created cluster and then **Save** the stage.
-7. You now should have the full deployment setup, to deploy from dev to production, you must manually run the `Deploy prod` stage to deploy to production.
-   ![](images/solution21/full-deploy.png)
+6. In **Environment properties**, set **CLUSTER_NAMESPACE** to **production**.
+7. **Save** the stage.
 
-Done, you've now created a production cluster and configured the pipeline to push updates to your production cluster manually. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
+You now have the full deployment setup. To deploy from dev to production, you must manually run the `Deploy prod` stage. This is a simplification process stage over a more advanced scenario where you would include unit tests and integration tests as part of the pipeline.
+   ![](images/solution21/full-deploy.png)
 
 ## Setup Slack notifications
 {: #setup_slack}
@@ -219,7 +239,9 @@ In this step, you will clean up the resources to remove what you created above.
 
 - Delete the Git repository.
 - Delete the toolchain.
-- Delete the two clusters.
+<!--##istutorial#-->
+- Delete the cluster.
+<!--#/istutorial#-->
 - Delete the Slack channel.
 
 ## Expand the Tutorial
@@ -228,9 +250,8 @@ In this step, you will clean up the resources to remove what you created above.
 Do you want to learn more? Here are some ideas of what you can do next:
 
 - [Analyze logs and monitor application health with LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
-- Add a testing environment and deploy it to a 3rd cluster.
-- Deploy the production cluster [across multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
-- Enhance your pipeline with additional quality controls and analyics using [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
+- Add a 3rd environment dedicated to testing.
+- Deploy the production app [across multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp).
 
 ## Related Content
 {: #related}
