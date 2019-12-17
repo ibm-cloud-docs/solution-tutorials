@@ -221,9 +221,9 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```
    {:pre}
 
-### Build the application
+### Build the container image
 
-1. Build and tag (`-t`)the docker image
+1. Build and tag (`-t`) the docker image
    ```sh
    docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
