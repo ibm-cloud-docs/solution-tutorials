@@ -441,7 +441,7 @@ kubectl autoscale deployment <deployment-name> --cpu-percent=<percentage> --min=
 Once the autoscaler is successfully created, you should see
 `horizontalpodautoscaler.autoscaling/<deployment-name> autoscaled`
 
-Refer [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
+Refer to [scaling apps](https://{DomainName}/docs/containers?topic=containers-app#app_scaling) for prerequisites and additional info.
 
 ## Remove resources
 
