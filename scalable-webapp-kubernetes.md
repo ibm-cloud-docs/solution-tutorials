@@ -113,15 +113,14 @@ In this step, you'll configure `kubectl` to point to the cluster assigned to you
 
 1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters) and click on the **Access** tab under the cluster name.
 1. Under **After your cluster provisions, gain access** section, follow instructions to log into your cluster on a terminal.
-1. Initialize the environment variable with the cluster name:
-
-   ```bash
-   export MYCLUSTER=<CLUSTER_NAME>
-   ibmcloud ks cluster config ${MYCLUSTER}
-   ```
 1. Run the below command to see all the namespaces in your cluster:
    ```sh
    kubectl get namespaces
+   ```
+   {:pre}
+1. Initialize the environment variable with the cluster name:
+   ```sh
+   export MYCLUSTER=<CLUSTER_NAME>
    ```
    {:pre}
 -->
@@ -161,7 +160,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
    ```sh
-   export MYPROJECT=<your-initials>-openshiftapp
+   export MYPROJECT=<your-initials>-kubeapp
    ```
    {:pre}
 2. Change to the directory of the generated project.
@@ -186,6 +185,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 
    This uses your local Docker engine to run the docker image that you built in the previous step.
+
 2. After your container starts, on a browser go to `http://localhost:9080/` to see the app. If you created a Node.js application, go to `http://localhost:3000/`.
 
 ## Deploy application to cluster using helm chart
@@ -236,30 +236,52 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 
 ### Deploy the application
 
-1. On an IDE, navigate to **values.yaml** under `chart\YOUR PROJECT NAME` and update the **image repository** value pointing to your image on IBM Cloud container registry. **Save** the file.
+[Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
+ 
+#### With Helm 2
 
-   For image repository details, run `echo ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}`
-1. [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application. Navigate to `chart\YOUR PROJECT NAME`, then [follow steps 2) and 3) on how to configure tiller and initialize Helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
+1. Install Helm into your cluster [by following steps 2) and 3) on how to configure tiller and initialize Helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
+1. Change to the chart directory:
+   ```sh
+   cd chart/$MYPROJECT
+   ```
+   {:pre}
+1. Install the chart:
+   ```sh
+   helm install . --name ${MYPROJECT} --set image.repository=${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}
+   ```
+   {:pre}
 
-   With Helm 3, you can skip the configure tiller and initialize Helm steps.
-   {: tip}
+#### With Helm 3
 
-1. To install a Helm chart, change to `chart\YOUR PROJECT NAME` directory and run the below command
-  ```sh
-  helm install . --name ${MYPROJECT}
-  ```
-  {: pre}
+1. Change to the chart directory:
+   ```sh
+   cd chart/$MYPROJECT
+   ```
+   {:pre}
+1. Install the chart:
+   ```
+   helm install ${MYPROJECT} . --set image.repository=${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}
+   ```
+   {:pre}
 
-  With Helm 3, run `helm install ${MYPROJECT} .` command to install the Helm chart
-  {: tip}
+### View the application
 
-1. Use `kubectl get service ${MYPROJECT}-service` for your Java application and `kubectl get service ${MYPROJECT}-application-service`  for your Node.js application to identify the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
-1. For the public IP of worker node, run the below command
+1. List the Kubernetes services in the namespace:
+   ```sh
+   kubectl get services
+   ```
+   {:pre}
+1. Locate the service linked to your application. It is named after your project.
+   If your project name contains hyphens, they may have been removed by the chart, e.g `my-project` would become `myproject`.
+   {:tip}
+1. Make note of the the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
+1. Identify a public IP of a worker node with the command below:
    ```sh
    ibmcloud ks workers ${MYCLUSTER}
    ```
    {: pre}
-1. Access the application at `http://worker-ip-address:portnumber/`.  For VPC the IP address of the clusters are private to the VPC.  These can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
+1. Access the application at `http://worker-ip-address:portnumber/`. For VPC the IP address of the clusters are private to the VPC. These can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
 
 ## Use the IBM-provided domain for your cluster
 {: #ibm_domain}
