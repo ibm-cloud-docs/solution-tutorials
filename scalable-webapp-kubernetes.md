@@ -140,7 +140,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    You may be asked to target an organization and a space, follow the instructions on the CLI
    {:tip}
 1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
-1. Enter a **unique name** for your application such as `<your-initials>-kubeapp`.
+1. Enter a **unique name** for your application such as `<your-initials>kubeapp`.
 4. Select the **resource group** where your cluster has been created.
 1. Do not add additional services.
 1. Do not add a DevOps toolchain, select **manual deployment**.
@@ -160,7 +160,7 @@ You can build and run the application as you normally would using `mvn` for java
    {: pre}
 1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
    ```sh
-   export MYPROJECT=<your-initials>-kubeapp
+   export MYPROJECT=<your-initials>kubeapp
    ```
    {:pre}
 2. Change to the directory of the generated project.
