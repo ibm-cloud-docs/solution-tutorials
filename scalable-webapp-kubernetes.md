@@ -183,9 +183,6 @@ You can build and run the application as you normally would using `mvn` for java
    ibmcloud dev run
    ```
    {: pre}
-
-   This uses your local Docker engine to run the docker image that you built in the previous step.
-
 2. After your container starts, on a browser go to `http://localhost:9080/` to see the app. If you created a Node.js application, go to `http://localhost:3000/`.
 
 ## Deploy application to cluster using helm chart
