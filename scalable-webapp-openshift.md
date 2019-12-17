@@ -151,7 +151,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    {:tip}
 2. Select `Backend Service / Web App` then `Node` and select `Node.js Web App with Express.js` to create a Node starter.
 3. Enter a **unique name** for your application such as `<your-initials>-openshiftapp`.
-4. Select a **resource group** same as the cluster to deploy this application.
+4. Select the **resource group** where your cluster has been created.
 5. Do not add additional services.
 6. Do not add a DevOps toolchain, select **manual deployment**.
 
@@ -495,17 +495,19 @@ In this section, you will learn how to manually scale your application.
 ## Remove resources
 {:#cleanup}
 
-* Delete the cluster or only delete the {{site.data.keyword.openshiftshort}}(oc) artifacts created for the application if you plan to reuse the cluster.
-* To delete all application resource objects, run the below command
+* Delete all application resource objects:
    ```sh
    oc delete all --selector app=$MYPROJECT
    ```
    {:pre}
-* To delete the project
+* Delete the project:
    ```sh
    oc delete project $MYPROJECT
    ```
    {:pre}
+<!--##istutorial#-->
+* Delete the cluster you created.
+<!--#/istutorial#-->
 
 ## Related content
 
