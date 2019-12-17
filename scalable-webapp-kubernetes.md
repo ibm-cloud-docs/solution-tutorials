@@ -274,7 +274,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {:pre}
 1. Locate the service linked to your application. It is named after your project.
    If your project name contains hyphens, they may have been removed by the chart, e.g `my-project` would become `myproject`.
-   {:tip}
+
 1. Make note of the the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 1. Identify a public IP of a worker node with the command below:
    ```sh
@@ -427,7 +427,7 @@ If you were to try to access your application with HTTPS at this time `https://<
 As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
 
    ```sh
-   kubectl scale deployment <nameofproject>-deployment --replicas=2
+   kubectl scale deployment <deployment-name> --replicas=2
    ```
    {: pre}
 
@@ -437,7 +437,7 @@ With Kubernetes, you can enable [horizontal pod autoscaling](https://kubernetes.
 
 To create an autoscaler and to define your policy, run the below command
    ```sh
-kubectl autoscale deployment <nameofproject>-deployment --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
+kubectl autoscale deployment <deployment-name> --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
    ```
    {: pre}
 
