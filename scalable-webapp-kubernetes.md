@@ -257,7 +257,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```
    {:pre}
 1. Install the chart:
-   ```
+   ```sh
    helm install ${MYPROJECT} . --set image.repository=${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}
    ```
    {:pre}
@@ -271,7 +271,6 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {:pre}
 1. Locate the service linked to your application. It is named after your project.
    If your project name contains hyphens, they may have been removed by the chart, e.g `my-project` would become `myproject`.
-
 1. Make note of the the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 1. Identify a public IP of a worker node with the command below:
    ```sh
@@ -292,14 +291,14 @@ Use Ingress to set up the cluster inbound connection to the service.
 ![Ingress](images/solution2/Ingress.png)
 
 1. Identify your IBM-provided **Ingress domain**
-   ```
+   ```sh
    ibmcloud ks cluster get ${MYCLUSTER}
    ```
    {: pre}
    to find
-   ```
-   Ingress subdomain:	mycluster.us-south.containers.appdomain.cloud
-   Ingress secret:		mycluster
+   ```yaml
+   Ingress subdomain: mycluster.us-south.containers.appdomain.cloud
+   Ingress secret:    mycluster
    ```
    {: screen}
 2. Create an Ingress file `ingress-ibmdomain.yml` pointing to your domain with support for HTTP and HTTPS. Use the following file as a template, replacing all the values wrapped in <> with the appropriate values from the above output. **service-name** is the name under `==> v1/Service` in the above step. You can also use `kubectl get svc` to find the service name of type **NodePort**.
@@ -342,7 +341,7 @@ See [Using the Ingress controller with a custom domain](https://{DomainName}/doc
 ### with HTTP
 
 1. Create an Ingress file `ingress-customdomain-http.yml` pointing to your domain:
-   ```
+   ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
    metadata:
@@ -357,7 +356,7 @@ See [Using the Ingress controller with a custom domain](https://{DomainName}/doc
              serviceName: <service-name>
              servicePort: 9080
    ```
-   {: pre}
+   {: codeblock}
 2. Deploy the Ingress
    ```sh
    kubectl apply -f ingress-customdomain-http.yml
@@ -372,12 +371,12 @@ If you were to try to access your application with HTTPS at this time `https://<
 1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key as described [here](https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3). To generate a trusted certificate, you can either use [Let's Encrypt](https://letsencrypt.org/) or [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
 2. Save the cert and the key in base64 ascii format files.
 3. Create a TLS secret to store the cert and the key:
-   ```
+   ```sh
    kubectl create secret tls my-custom-domain-secret-name --cert=<custom-domain.cert> --key=<custom-domain.key>
    ```
    {: pre}
 4. Create an Ingress file `ingress-customdomain-https.yml` pointing to your domain:
-   ```
+   ```yaml
    apiVersion: extensions/v1beta1
    kind: Ingress
    metadata:
@@ -396,9 +395,9 @@ If you were to try to access your application with HTTPS at this time `https://<
              serviceName: <service-name>
              servicePort: 9080
    ```
-   {: pre}
+   {: codeblock}
 5. Deploy the Ingress:
-   ```
+   ```sh
    kubectl apply -f ingress-customdomain-https.yml
    ```
    {: pre}
@@ -423,20 +422,20 @@ If you were to try to access your application with HTTPS at this time `https://<
 
 As load increases on your application, you can manually increase the number of pod replicas in your deployment. Replicas are managed by a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/). To scale the application to two replicas, run the following command:
 
-   ```sh
-   kubectl scale deployment <deployment-name> --replicas=2
-   ```
-   {: pre}
+```sh
+kubectl scale deployment <deployment-name> --replicas=2
+```
+{: pre}
 
 After a shortwhile, you will see two pods for your application in the Kubernetes dashboard (or with `kubectl get pods`). The Ingress controller in the cluster will handles the load balancing between the two replicas.
 
 With Kubernetes, you can enable [horizontal pod autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to automatically increase or decrease the number of instances of your apps based on CPU.
 
 To create an autoscaler and to define your policy, run the below command
-   ```sh
+```sh
 kubectl autoscale deployment <deployment-name> --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
-   ```
-   {: pre}
+```
+{: pre}
 
 Once the autoscaler is successfully created, you should see
 `horizontalpodautoscaler.autoscaling/<deployment-name> autoscaled`
@@ -446,10 +445,10 @@ Refer to [scaling apps](https://{DomainName}/docs/containers?topic=containers-ap
 ## Remove resources
 
 * Delete the Kubernetes artifacts created for this application:
-  ```sh
-  helm delete ${MYPROJECT}
-  ```
-  {:pre}
+   ```sh
+   helm delete ${MYPROJECT}
+   ```
+   {:pre}
 <!--##istutorial#-->
 * Delete the cluster.
 <!--#/istutorial#-->
