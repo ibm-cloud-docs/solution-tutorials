@@ -279,7 +279,7 @@ Manage the SSL certificates through IBM Certificate Manager.
 ### Alternative 1: Proxy in {{site.data.keyword.cis_short_notm}} with wildcard certificate from Let's Encrypt
 This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the Cloud Internet Services allowing you to take advantage of industry leading security, protection and performance capabilities.
 
-1. Continuing in Authorizations, create an authorization that gives gives the IBM Certificate Manager manager access to the IBM Cloud Internet Services
+1. Continuing in the Authorizations panel, create an authorization that gives gives the IBM Certificate Manager manager access to the IBM Cloud Internet Services
    - Click **Create** and choose **Certificate Manager** as the source service
    - Choose **All instances** or just the Certificate Manager created earlier
    - **Internet Services** as the target service
@@ -288,9 +288,9 @@ This first alternative creates a wildcard certificate for **mydomain.com** and t
 1. Order a certficate in Certificate Manager
    - Open the IBM Certificat Manager service and Order a certificate.  Choose **I'm using Cloud Internet Services**.  Provide the Name, Description, Let's encrypt, select the Cloud Internet Service.
    - Choose **Wildcard certificate**
-1. Configure https from client web browsers to the Cloud Internet Services terminated endpoint.  In the Cloud Internet Services configure TLS Security:
+1. Configure https from client web browsers to the Cloud Internet Services endpoint.  In the Cloud Internet Services configure TLS Security:
    - Open the **Security** panel and choose **TLS**.
-   - For the **Mode** choose **Client-to-edge**.  This will terminate https connections at the Global Load Balancer and conver to http connections to the VPC load balancer.
+   - For the **Mode** choose **Client-to-edge**.  This will terminate https connections at the Global Load Balancer and will switch to http connections to the VPC load balancer.
 1. In the Cloud Internet Services configure the Global Load Balancer to use TLS:
    - Open **Reliability** panel and choose **Global Load Balancer**
    - Locate the Global Load Balancer created earlier and turn on Proxy
@@ -309,8 +309,8 @@ If the SSL Certificate drop down does not have **mydomain.com** you may have mis
 
 The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**.  Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-us-south.lb.appdomain.cloud.  The wildcard certificate is not going to work.  Let's fix that problem by creating an alias and then update the configuration.
 
-1. A DNS CNAME record can be created to allow clients to lookup vpc-lb-region1.**mydomain.com** and resolve xxxxxxx-us-south.lb.appdomain.cloud.  Back in the Cloud Internet Service:
-   - Open **Reliability** panel and choose **DNS**
+1. A DNS CNAME record can be created to allow clients to lookup vpc-lb-region1.**mydomain.com** and resolve xxxxxxx-us-south.lb.appdomain.cloud.
+   - In the Cloud Internet Service, open **Reliability** panel and choose **DNS**
    - Scroll down to DNS Records and create a record of Type: **CNAME**, Name: **vpc-lb-region1**, TTL: **Automatic** and Alias Domain Name: **VPC load balancer Hostname**
    - Add a DNS CNAME record for **vpc-lb-region2**
 
