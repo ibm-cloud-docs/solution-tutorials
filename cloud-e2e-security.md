@@ -99,7 +99,7 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
   - Set the cluster name to **secure-file-storage-cluster**.
   - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
-    - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for App ID.
+    - Make sure to attach a Public Gateway for each of the subnets that you create as it is required for App ID.
   - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
