@@ -28,7 +28,9 @@ Any action (or function) in {{site.data.keyword.openwhisk_short}} can be turned 
 * Deploy a serverless backend and a database
 * Expose a REST API
 * Host a static website
+<!--##istutorial#-->
 * Optional: Use a custom domain for the REST API
+<!--#/istutorial#-->
 
 ## Services used
 {: #services}
@@ -37,7 +39,9 @@ This tutorial uses the following runtimes and services:
    * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
    * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
 
+<!--##istutorial#-->
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+<!--#/istutorial#-->
 
 ## Architecture
 {: #architecture}
@@ -65,7 +69,11 @@ This guide uses GitHub Pages to host the static website. Make sure you have a pu
 Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data.keyword.cloudant_short_notm}} is a fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB and accessible through a secure HTTPS API, which scales as your application grows.
 
 1. In the [Catalog](https://{DomainName}/catalog/), select **Cloudant** under Databases.
-2. Set the service name to ***guestbook-db*** > choose a region/location > select a resource group > select **Use both legacy credentials and IAM** as authentication method and click **Create**.
+   1. Set the service name to ***guestbook-db***.
+   1. Select a region.
+   1. Select a resource group.
+   2. Select **Use both legacy credentials and IAM** as authentication method.
+   3. Click **Create**.
 3. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), click on the **guestbook-db** instance name to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Provisioned`.
 4. Under **Manage**, click on  **Launch Cloudant Dashboard** which will open in a new browser tab. Note: You may be asked to log into your Cloudant instance.
 5. Click on **Create Database** and create a database named ***guestbook***. Select **Non-Partitioned** under **Partitioning**.
@@ -86,6 +94,7 @@ You will create a **sequence** which is a chain of actions where output of one a
 Start by creating the first action:
 
 1. Switch to [**Functions**](https://{DomainName}/openwhisk).
+2. Select or create a namespace.
 2. On the left pane, click on **Actions** and then **Create**.
 3. **Create Action** with name `prepare-entry-for-save` under Default Package and select **Node.js** as the Runtime (Note: Pick the latest version).
 4. Replace the existing code with the code snippet below:
@@ -114,7 +123,8 @@ Start by creating the first action:
 Then add the action to a sequence:
 
 1. On the left pane, click on **Enclosing Sequences** and then **Add To Sequence**.
-1. For the sequence name, enter `save-guestbook-entry-sequence` > Leave the Default Package and then click **Create and Add**.
+1. Set the **Sequence name** to `save-guestbook-entry-sequence`. Leave the Default Package.
+1. Click **Create and Add**.
 
 Finally add a second action to the sequence:
 
@@ -192,7 +202,7 @@ Complete the sequence:
 1. Go to [Actions](https://{DomainName}/functions/actions).
 2. Select the **read-guestbook-entries-sequence** sequence. Next to the name, click on **Web Action**, check **Enable as Web Action** and **Save**.
 3. Do the same for the **save-guestbook-entry-sequence** sequence.
-4. Go to [APIs](https://{DomainName}/functions/apimanagement) and **Create a {{site.data.keyword.openwhisk_short}} API** (or **Create Managed API** if you have existing APIs).
+4. Go to [APIs](https://{DomainName}/functions/apimanagement) and **Create API** (or **Create Managed API** if you have existing APIs).
 5. Set API name to `guestbook` and base path to `/guestbook`
 6. Click on **Create operation** and create an operation to retrieve guestbook entries:
    1. Set **path** to `/entries`
@@ -210,12 +220,13 @@ Complete the sequence:
 2. In your forked version of the code, modify **docs/guestbook.js** and replace the value of **apiUrl** with the route given by API Gateway. You can do this by navigating to the **docs/guestbook.js** file, and then clicking the edit pencil.
 3. Commit the modified file to your forked repository by clicking the **Commit Changes** button at the bottom of the page.
 4. In the Settings page of your repository, scroll to **GitHub Pages**, and change the source to **master branch /docs folder**. This setting will be automatically saved.
-5. Access the public page for your repository. The link to your public page can be found under the **GitHub Pages** section.
-6. You should see the "test" guestbook entry created earlier.
+5. Access the public page for your repository. The link to your public page can be found under the **GitHub Pages** section. Give it a few minutes before it gets activated.
+6. You should see the `test` guestbook entry created earlier.
 7. Add new entries.
 
 ![](images/solution8/Guestbook.png)
 
+<!--##istutorial#-->
 ## Optional: Use your own domain for the API
 
 Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain.
@@ -266,6 +277,7 @@ Once the DNS changes have been propagated, you will be able to access your guest
 1. Edit **docs/guestbook.js** and update the value of **apiUrl** with https://guestbook-api.mydomain.com/guestbook
 1. Commit the modified file.
 1. Your application now accesses the API through your custom domain.
+<!--#/istutorial#-->
 
 ## Remove resources
 
