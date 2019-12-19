@@ -125,7 +125,7 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
 
    Replace the value for **URL** with the one obtained in the previous section. Add `.json` to the URL to indicate that [JSON data should be returned](https://{DomainName}/docs/openwhisk?topic=cloud-functions-actions_web#return_json). Next, replace **YOURSECRET** in **HEADER VALUE** with your actual value that you set earlier.
 
-7. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase "show event by date 2019". It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
+7. Click the **Try it** button on the upper right. The chatbot should be functional now. Enter the phrase `show event by date 2019`. It should return event information. If this is not the case, make sure the information entered in step 6 is correct.
 
 ## Create an assistant and integrate with Slack
 
