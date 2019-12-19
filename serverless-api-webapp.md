@@ -68,13 +68,13 @@ This guide uses GitHub Pages to host the static website. Make sure you have a pu
 
 Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data.keyword.cloudant_short_notm}} is a fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB and accessible through a secure HTTPS API, which scales as your application grows.
 
-1. In the [Catalog](https://{DomainName}/catalog/), select **Cloudant** under Databases.
-   1. Set the service name to ***guestbook-db***.
+1. In the [Catalog](https://{DomainName}/catalog/), select **{{site.data.keyword.cloudant}}** under Databases.
+   1. Pick a **unique* name for the service, such as `<yourinitials>-guestbook-db`.
    1. Select a region.
    1. Select a resource group.
    2. Select **Use both legacy credentials and IAM** as authentication method.
    3. Click **Create**.
-3. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), click on the **guestbook-db** instance name to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Provisioned`.
+3. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Provisioned`.
 4. Under **Manage**, click on  **Launch Cloudant Dashboard** which will open in a new browser tab. Note: You may be asked to log into your Cloudant instance.
 5. Click on **Create Database** and create a database named ***guestbook***. Select **Non-Partitioned** under **Partitioning**.
 6. Back in the service, Under **Service credentials**
