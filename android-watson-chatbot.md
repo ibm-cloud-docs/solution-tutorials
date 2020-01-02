@@ -35,11 +35,14 @@ This tutorial walks you through the process of defining intents and entities and
 ## Services used
 {: #services}
 
-This tutorial uses the following products:
-
+This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.conversationfull}}](https://{DomainName}/catalog/services/watson-assistant)
 - [{{site.data.keyword.speechtotextfull}}](https://{DomainName}/catalog/services/speech-to-text)
 - [{{site.data.keyword.texttospeechfull}}](https://{DomainName}/catalog/services/text-to-speech)
+
+<!--##istutorial#-->
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+<!--#/istutorial#-->
 
 ## Architecture
 {: #architecture}
@@ -64,7 +67,7 @@ In this section, you will create the services required by the tutorial starting 
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.conversationshort}}](https://{DomainName}/catalog/services/watson-assistant) service
    1. Select a region and **Lite** as your pricing plan
-   2. Set **Name** to **android-chatbot-assistant** and select a resource group
+   2. Set a unique **Name** for the service, such as `<your-initials>-android-chatbot-assistant` and select a resource group
    3. Click **Create** to provision
 2. Click **Service credentials** on the left pane and click **New credential**
    1. Set **Name** to **for-android-app**
@@ -75,7 +78,7 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.speechtotextshort}}](https://{DomainName}/catalog/services/speech-to-text) service
    1. Select a region and **Lite** as your pricing plan
-   2. Set **Name** to **android-chatbot-stt** and select a resource group
+   2. Set a unique **Name** for the service, such as `<your-initials>-android-chatbot-stt` and select a resource group
    3. Click **Create** to provision
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential
    1. Set **Name** to **for-android-app**
@@ -86,7 +89,7 @@ The {{site.data.keyword.texttospeechshort}} service processes text and natural l
 
 1. Go to the [**{{site.data.keyword.Bluemix_notm}} Catalog**](https://{DomainName}/catalog/) and select [{{site.data.keyword.texttospeechshort}}](https://{DomainName}/catalog/services/text-to-speech) service
    1. Select a region and **Lite** as your pricing plan
-   2. Set **Name** to **android-chatbot-tts** and select a resource group
+   2. Set a unique **Name** for the service, such as `<your-initials>-android-chatbot-tts` and select a resource group
    3. Click **Create** to provision
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
    1. Set **Name** to **for-android-app**.
