@@ -247,9 +247,9 @@ The repository contains Android application code with required gradle dependenci
    {:tip}
 
 4. Build and Run the project by clicking **Run** from the Android studio menu > click **Run app** and start the application on a real Android device or with a simulator.
-   <p style="text-align: center; width:200">
-   ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)![](images/solution28-watson-chatbot-android/android_chatbot.png)
-   </p>
+
+   ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)
+   ![](images/solution28-watson-chatbot-android/android_chatbot.png)
 
    For detailed instructions to run your app on a real Android device or on an emulator, follow the [instructions here](https://developer.android.com/training/basics/firstapp/running-app). To build your app from the command line, follow the instructions [provided here](https://developer.android.com/studio/build/building-cmdline)
    {:tip}
