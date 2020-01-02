@@ -205,7 +205,6 @@ The repository contains Android application code with required gradle dependenci
    git clone https://github.com/IBM-Cloud/chatbot-watson-android
    ```
    {:pre}
-
 2. Launch Android Studio on your machine. Choose **Open an existing Android Studio project** from the options and point to the cloned code on your machine.**Gradle** build will automatically be triggered and all the dependencies will be downloaded.
 3. From the left pane of Android Studio or from the cloned folder, Open the `config.xml` file under the path `app/src/main/res/values` to see the placeholders(`ASSISTANT_ID_HERE`) for service credentials. Enter the service credentials (you saved earlier) in their respective placeholders and save the file.
 
@@ -250,11 +249,10 @@ The repository contains Android application code with required gradle dependenci
 4. Build and Run the project by clicking **Run** from the Android studio menu > click **Run app** and start the application on a real Android device or with a simulator.
    <p style="text-align: center; width:200">
    ![](images/solution28-watson-chatbot-android/android_watson_chatbot.png)![](images/solution28-watson-chatbot-android/android_chatbot.png)
+   </p>
 
-    </p>
-
-    For detailed instructions to run your app on a real Android device or on an emulator, follow the [instructions here](https://developer.android.com/training/basics/firstapp/running-app). To build your app from the command line, follow the instructions [provided here](https://developer.android.com/studio/build/building-cmdline)
-    {:tip}
+   For detailed instructions to run your app on a real Android device or on an emulator, follow the [instructions here](https://developer.android.com/training/basics/firstapp/running-app). To build your app from the command line, follow the instructions [provided here](https://developer.android.com/studio/build/building-cmdline)
+   {:tip}
 
 5. In the **Enter your query** space provided below, interact with your chatbot by typing `Hi` and click the arrow icon to send the query to {{site.data.keyword.conversationshort}} service.
 6. The response will be passed to {{site.data.keyword.texttospeechshort}} service and you should hear a voice reading out the response.
