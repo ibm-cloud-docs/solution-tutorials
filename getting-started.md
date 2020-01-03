@@ -43,6 +43,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    ```sh
    ibmcloud version
    ```
+   {:pre}
 1. Install the following plugins:
    ```sh
    ibmcloud plugin install dev
@@ -50,9 +51,11 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    ibmcloud plugin install kubernetes-service
    ibmcloud plugin install cloud-functions
    ```
+   {:pre}
 
 ### Docker
 
+1. If you don't have one, sign up for a free account at https://docker.com.
 1. Download and install Docker Desktop on Windows from https://docs.docker.com/docker-for-windows/install/.
 1. Verify installation with:
    ```sh
@@ -72,6 +75,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    ```sh
    kubectl version --client=true
    ```
+   {:pre}
 
 ### oc
 
@@ -81,6 +85,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    ```sh
    oc version
    ```
+   {:pre}
 
 ### Helm 3
 
@@ -90,6 +95,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    ```sh
    helm version
    ```
+   {:pre}
 
 ### jq
 
@@ -100,6 +106,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    ```sh
    jq --version
    ```
+   {:pre}
 
 ### Git
 
@@ -109,6 +116,134 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    git --version
    ```
    {:pre}
+
+## Apple macOS
+{: #macos}
+
+The following sections assume you are running macOS High Sierra or later under a user with Administrator privileges.
+
+### {{site.data.keyword.cloud_notm}} CLI
+
+1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
+1. Verify installation with:
+   ```sh
+   ibmcloud version
+   ```
+   {:pre}
+1. Install the following plugins:
+   ```sh
+   ibmcloud plugin install dev
+   ibmcloud plugin install container-registry
+   ibmcloud plugin install kubernetes-service
+   ibmcloud plugin install cloud-functions
+   ```
+   {:pre}
+
+### Docker
+
+1. If you don't have one, sign up for a free account at https://docker.com.
+1. Download and install Docker Desktop on Mac from https://docs.docker.com/docker-for-mac/install/.
+1. Verify installation with:
+   ```sh
+   docker --version
+   docker run hello-world
+   ```
+   {:pre}
+
+   You may need to log out and to wait for the Docker daemon to be started.
+   {:tip}
+
+### kubectl
+
+1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-macos.
+1. Make the kubectl binary executable.
+   ```sh
+   chmod +x ./kubectl
+   ```
+   {:pre}
+1. Move the binary in to your PATH.
+   ```sh
+   sudo mv ./kubectl /usr/local/bin/kubectl
+   ```
+   {:pre}
+1. Verify installation with:
+   ```sh
+   kubectl version --client=true
+   ```
+   {:pre}
+
+### oc
+
+1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
+1. Extract `oc.tar.gz`:
+   ```sh
+   tar zxvf oc.tar.gz
+   ```
+   {:pre}
+1. Move the `oc` binary in to your PATH.
+   ```sh
+   sudo mv ./oc /usr/local/bin/oc
+   ```
+   {:pre}
+1. Verify installation with:
+   ```sh
+   oc version
+   ```
+   {:pre}
+   
+   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, in the Finder on your Mac, locate the `oc` binary. Control-click its icon, then choose **Open** from the shortcut menu.
+   {:pre}
+
+### Helm 3
+
+1. Download `helm` from https://github.com/helm/helm/releases/latest.
+1. Uncompress the downloaded archive.
+1. Move the `helm` binary in to your PATH.
+   ```sh
+   sudo mv ./darwin-amd64/helm /usr/local/bin/helm
+   ```
+   {:pre}
+1. Verify installation with:
+   ```sh
+   helm version
+   ```
+   {:pre}
+
+   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `helm` to be executed anyway, in the Finder on your Mac, locate the `helm` binary. Control-click its icon, then choose **Open** from the shortcut menu.
+   {:pre}
+
+### jq
+
+1. Download `jq` from https://stedolan.github.io/jq/.
+1. Rename the downloaded file to `jq`.
+1. Move the `jq` binary in to your PATH.
+   ```sh
+   sudo mv ./jq /usr/local/bin/jq
+   ```
+   {:pre}
+1. Verify installation with:
+   ```sh
+   jq --version
+   ```
+   {:pre}
+
+### Git
+
+1. Check that `git` is installed:
+   ```sh
+   git --version
+   ```
+   {:pre}
+
+   macOS may prompt you to install the developer tools. These tools include the `git` command line.
+   {:tip}
+
+## Linux
+{: #linux}
+
+mmm
+
+## Common to all operating systems
 
 ### GitHub account
 
@@ -124,13 +259,3 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    1. Checkout the project from the command line.
    1. Update README file.
    1. Commit and push the changes.
-
-## Apple macOS
-{: #macos}
-
-mmm
-
-## Linux
-{: #linux}
-
-mmm
