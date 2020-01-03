@@ -34,14 +34,22 @@ This guide will help you set up your development environment to successfully fol
 ## Microsoft Windows
 {: #windows}
 
-### Git
+The following sections assume you are running Microsoft Windows 10 under a user with Administrator privileges.
 
-1. Download Git from https://github.com/git-for-windows/git/releases/latest.
+### {{site.data.keyword.cloud_notm}} CLI
+
+1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
 1. Verify installation with:
    ```sh
-   git --version
+   ibmcloud version
    ```
-   {:pre}
+1. Install the following plugins:
+   ```sh
+   ibmcloud plugin install dev
+   ibmcloud plugin install container-registry
+   ibmcloud plugin install kubernetes-service
+   ibmcloud plugin install cloud-functions
+   ```
 
 ### Docker
 
@@ -58,16 +66,25 @@ This guide will help you set up your development environment to successfully fol
 
 ### kubectl
 
-1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows
+1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows.
 1. Move `kubectl.exe` binary to one directory found in your PATH environment variable.
 1. Verify installation with:
    ```sh
    kubectl version --client=true
    ```
 
+### oc
+
+1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
+1. Move `oc.exe` binary to one directory found in your PATH environment variable.
+1. Verify installation with:
+   ```sh
+   oc version
+   ```
+
 ### Helm 3
 
-1. Download Helm from https://github.com/helm/helm/releases/latest.
+1. Download `helm` from https://github.com/helm/helm/releases/latest.
 1. Move `helm.exe` binary to one directory found in your PATH environment variable.
 1. Verify installation with:
    ```sh
@@ -84,20 +101,14 @@ This guide will help you set up your development environment to successfully fol
    jq --version
    ```
 
-### {{site.data.keyword.cloud_notm}} CLI
+### Git
 
-1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
+1. Download and install `git` from https://github.com/git-for-windows/git/releases/latest.
 1. Verify installation with:
    ```sh
-   ibmcloud version
+   git --version
    ```
-1. Install the following plugins:
-   ```sh
-   ibmcloud plugin install dev
-   ibmcloud plugin install container-registry
-   ibmcloud plugin install kubernetes-service
-   ibmcloud plugin install cloud-functions
-   ```
+   {:pre}
 
 ### GitHub account
 
