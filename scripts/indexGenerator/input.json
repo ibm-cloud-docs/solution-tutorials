@@ -8,6 +8,17 @@
     ],
     "categories": [
     {
+        "name": "Getting Started",
+        "anchor": "gettingstarted",
+        "tocOnly": true,
+        "solutions": [
+            {
+                "name": "Getting Started",
+                "url": "getting-started.html"
+            }
+        ]
+    },
+    {
         "name": "Websites and Web Apps",
         "anchor": "websites",
         "solutions": [

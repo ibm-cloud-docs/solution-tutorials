@@ -8,6 +8,10 @@ Solution Tutorials
     index.md
 
     {: .topicgroup}
+    Getting Started
+        getting-started.md
+
+    {: .topicgroup}
     Websites and Web Apps
         scalable-webapp-kubernetes.md
         vm-to-containers-and-kubernetes.md
