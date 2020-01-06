@@ -150,9 +150,6 @@ The following sections assume you are running macOS High Sierra or later under a
    ```
    {:pre}
 
-   You may need to log out and to wait for the Docker daemon to be started.
-   {:tip}
-
 ### kubectl
 
 1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-macos.
@@ -238,10 +235,120 @@ The following sections assume you are running macOS High Sierra or later under a
    macOS may prompt you to install the developer tools. These tools include the `git` command line.
    {:tip}
 
-## Linux
-{: #linux}
+## Ubuntu Linux
+{: #ubuntu}
 
-mmm
+The following sections assume you are running Ubuntu Linux under a user with root privileges.
+
+### {{site.data.keyword.cloud_notm}} CLI
+
+1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
+1. Verify installation with:
+   ```sh
+   ibmcloud version
+   ```
+   {:pre}
+1. Install the following plugins:
+   ```sh
+   ibmcloud plugin install dev
+   ibmcloud plugin install container-registry
+   ibmcloud plugin install kubernetes-service
+   ibmcloud plugin install cloud-functions
+   ```
+   {:pre}
+
+### Docker
+
+1. If you don't have one, sign up for a free account at https://docker.com.
+1. Install Docker Engine - Community for Ubuntu following the instructions from https://docs.docker.com/install/linux/docker-ce/ubuntu/.
+1. Verify installation with:
+   ```sh
+   docker --version
+   sudo docker run hello-world
+   ```
+   {:pre}
+
+   To run Docker under your own user instead of root, perfom the [post install](https://docs.docker.com/install/linux/linux-postinstall/) steps.
+   {:tip}
+
+### kubectl
+
+1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux.
+1. Make the kubectl binary executable.
+   ```sh
+   chmod +x ./kubectl
+   ```
+   {:pre}
+1. Move the binary in to your PATH.
+   ```sh
+   sudo mv ./kubectl /usr/local/bin/kubectl
+   ```
+   {:pre}
+1. Verify installation with:
+   ```sh
+   kubectl version --client=true
+   ```
+   {:pre}
+
+### oc
+
+1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
+1. Extract `oc.tar.gz`:
+   ```sh
+   tar zxvf oc.tar.gz
+   ```
+   {:pre}
+1. Move the `oc` binary in to your PATH.
+   ```sh
+   sudo mv ./oc /usr/local/bin/oc
+   ```
+   {:pre}
+1. Verify installation with:
+   ```sh
+   oc version
+   ```
+   {:pre}
+
+### Helm 3
+
+1. Download `helm` from https://github.com/helm/helm/releases/latest.
+1. Uncompress the downloaded archive.
+1. Move the `helm` binary in to your PATH.
+   ```sh
+   sudo mv ./linux-amd64/helm /usr/local/bin/helm
+   ```
+   {:pre}
+1. Verify installation with:
+   ```sh
+   helm version
+   ```
+   {:pre}
+
+### jq
+
+1. Install `jq` with:
+   ```sh
+   sudo apt install jq
+   ```
+   {:pre}
+1. Verify installation with:
+   ```sh
+   jq --version
+   ```
+   {:pre}
+
+### Git
+
+1. Install `git` with:
+   ```sh
+   sudo apt install git
+   ```
+   {:pre}
+1. Verify installation with:
+   ```sh
+   git --version
+   ```
+   {:pre}
 
 ## Common to all operating systems
 
