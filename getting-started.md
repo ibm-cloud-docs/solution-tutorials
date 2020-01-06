@@ -53,14 +53,6 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
    ibmcloud version
    ```
    {:pre}
-1. Install the following plugins:
-   ```sh
-   ibmcloud plugin install dev
-   ibmcloud plugin install container-registry
-   ibmcloud plugin install kubernetes-service
-   ibmcloud plugin install cloud-functions
-   ```
-   {:pre}
 
 ### Docker
 {: #windows_docker}
@@ -146,14 +138,6 @@ The following sections assume you are running macOS High Sierra or later under a
 1. Verify the installation with:
    ```sh
    ibmcloud version
-   ```
-   {:pre}
-1. Install the following plugins:
-   ```sh
-   ibmcloud plugin install dev
-   ibmcloud plugin install container-registry
-   ibmcloud plugin install kubernetes-service
-   ibmcloud plugin install cloud-functions
    ```
    {:pre}
 
@@ -275,14 +259,6 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    ibmcloud version
    ```
    {:pre}
-1. Install the following plugins:
-   ```sh
-   ibmcloud plugin install dev
-   ibmcloud plugin install container-registry
-   ibmcloud plugin install kubernetes-service
-   ibmcloud plugin install cloud-functions
-   ```
-   {:pre}
 
 ### Docker
 {: #ubuntu_docker}
@@ -389,6 +365,18 @@ Proceed to the configuration [common to all operating systems](#common).
 {: #common}
 
 The next sections are common to all operating systems. 
+
+### {{site.data.keyword.cloud_notm}} CLI plugins
+
+1. Install the following plugins:
+   ```sh
+   ibmcloud plugin install container-registry
+   ibmcloud plugin install cloud-functions
+   ibmcloud plugin install cloud-object-storage
+   ibmcloud plugin install dev
+   ibmcloud plugin install kubernetes-service
+   ```
+   {:pre}
 
 ### GitHub account
 {: #common_github}
