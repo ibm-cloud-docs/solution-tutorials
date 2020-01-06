@@ -393,16 +393,19 @@ The next sections are common to all operating systems.
 ### GitHub account
 {: #common_github}
 
-1. Sign up for a free account at https://github.com/
+1. Sign up for a free account at https://github.com/.
+1. Create a new public repository at https://github.com/new.
 
 ### {{site.data.keyword.cloud_notm}} GitLab
 {: #common_gitlab}
 
-1. [Configure your access to {{site.data.keyword.cloud_notm}} GitLab](https://cloud.ibm.com/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key) to be able to commit source code to a private Git repository.
-   1. [Use these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
-   1. And [add your SSH public key](https://us-south.git.cloud.ibm.com/help/gitlab-basics/create-your-ssh-keys) to your Git settings.
-1. To verify the configuration:
-   1. Create a new private project in GitLab, select the option to initialize the repository with a README.
-   1. Checkout the project from the command line.
-   1. Update README file.
-   1. Commit and push the changes.
+To work with Git repositories hosted in {{site.data.keyword.cloud_notm}} GitLab, it is recommended to define your SSH public key in the GitLab settings.
+
+1. [Use these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
+1. [Add your SSH public key](https://us-south.git.cloud.ibm.com/help/gitlab-basics/create-your-ssh-keys) to your Git settings in the region where you plan to host your Git repositories, such as [Dallas (us-south.git.cloud.ibm.com)](https://us-south.git.cloud.ibm.com), [London (eu-gb.git.cloud.ibm.com)](https://eu-gb.git.cloud.ibm.com) or [Frankfurt (eu-de.git.cloud.ibm.com)](https://eu-de.git.cloud.ibm.com).
+
+To verify the configuration:
+1. Create a new private project in GitLab, select the option to initialize the repository with a README.
+1. Checkout the project from the command line by cloning with the SSH link.
+1. Update the README file.
+1. Commit and push the changes.
