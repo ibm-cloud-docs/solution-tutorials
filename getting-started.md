@@ -20,10 +20,18 @@ lasttested: "2020-01-01"
 {:important: .important}
 {:note: .note}
 
+<!--##istutorial#-->
+# Getting started with tutorials
+{: #getting-started}
+<!--#/istutorial#-->
+<!--##isworkshop#-->
+<!--
 # Getting started with workshops
 {: #getting-started}
+-->
+<!--#/isworkshop#-->
 
-This guide will help you set up your development environment to successfully follow the instructions of the tutorials found in this collection.
+This guide will help you set up your development environment to successfully follow the instructions of the guides found in this collection.
 {:shortdesc}
 
 ## Objectives
@@ -34,13 +42,13 @@ This guide will help you set up your development environment to successfully fol
 ## Microsoft Windows
 {: #windows}
 
-The following sections assume you are running Microsoft Windows 10 under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
+The following sections assume you are running Microsoft Windows 10 64-bit under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
 
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #windows_cli}
 
-1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
-1. Verify installation with:
+1. Download and install the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
+1. Verify the installation with:
    ```sh
    ibmcloud version
    ```
@@ -59,7 +67,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
 
 1. If you don't have one, sign up for a free account at https://docker.com.
 1. Download and install Docker Desktop on Windows from https://docs.docker.com/docker-for-windows/install/.
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    docker --version
    docker run hello-world
@@ -74,7 +82,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
 
 1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows.
 1. Move `kubectl.exe` binary to one directory found in your PATH environment variable.
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    kubectl version --client=true
    ```
@@ -85,7 +93,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
 
 1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
 1. Move `oc.exe` binary to one directory found in your PATH environment variable.
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    oc version
    ```
@@ -96,7 +104,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
 
 1. Download `helm` from https://github.com/helm/helm/releases/latest.
 1. Move `helm.exe` binary to one directory found in your PATH environment variable.
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    helm version
    ```
@@ -108,7 +116,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
 1. Download jq from https://stedolan.github.io/jq/.
 1. Rename `jq-win64.exe` to `jq.exe`.
 1. Move `jq.exe` to one directory found in your PATH environment variable.
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    jq --version
    ```
@@ -118,7 +126,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
 {: #windows_git}
 
 1. Download and install `git` from https://github.com/git-for-windows/git/releases/latest.
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    git --version
    ```
@@ -134,8 +142,8 @@ The following sections assume you are running macOS High Sierra or later under a
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #macos_cli}
 
-1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
-1. Verify installation with:
+1. Download and install the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
+1. Verify the installation with:
    ```sh
    ibmcloud version
    ```
@@ -154,7 +162,7 @@ The following sections assume you are running macOS High Sierra or later under a
 
 1. If you don't have one, sign up for a free account at https://docker.com.
 1. Download and install Docker Desktop on Mac from https://docs.docker.com/docker-for-mac/install/.
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    docker --version
    docker run hello-world
@@ -170,12 +178,12 @@ The following sections assume you are running macOS High Sierra or later under a
    chmod +x ./kubectl
    ```
    {:pre}
-1. Move the binary in to your PATH.
+1. Move the binary to your PATH.
    ```sh
    sudo mv ./kubectl /usr/local/bin/kubectl
    ```
    {:pre}
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    kubectl version --client=true
    ```
@@ -190,50 +198,50 @@ The following sections assume you are running macOS High Sierra or later under a
    tar zxvf oc.tar.gz
    ```
    {:pre}
-1. Move the `oc` binary in to your PATH.
+1. Move the `oc` binary to your PATH.
    ```sh
    sudo mv ./oc /usr/local/bin/oc
    ```
    {:pre}
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    oc version
    ```
    {:pre}
    
    macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, in the Finder on your Mac, locate the `oc` binary. Control-click its icon, then choose **Open** from the shortcut menu.
-   {:pre}
+   {:tip}
 
 ### Helm 3
 {: #macos_helm}
 
 1. Download `helm` from https://github.com/helm/helm/releases/latest.
 1. Uncompress the downloaded archive.
-1. Move the `helm` binary in to your PATH.
+1. Move the `helm` binary to your PATH.
    ```sh
    sudo mv ./darwin-amd64/helm /usr/local/bin/helm
    ```
    {:pre}
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    helm version
    ```
    {:pre}
 
    macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `helm` to be executed anyway, in the Finder on your Mac, locate the `helm` binary. Control-click its icon, then choose **Open** from the shortcut menu.
-   {:pre}
+   {:tip}
 
 ### jq
 {: #macos_jq}
 
 1. Download `jq` from https://stedolan.github.io/jq/.
 1. Rename the downloaded file to `jq`.
-1. Move the `jq` binary in to your PATH.
+1. Move the `jq` binary to your PATH.
    ```sh
    sudo mv ./jq /usr/local/bin/jq
    ```
    {:pre}
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    jq --version
    ```
@@ -261,8 +269,8 @@ The following sections assume you are running Ubuntu Linux under a user with roo
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #ubuntu_cli}
 
-1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
-1. Verify installation with:
+1. Download the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
+1. Verify the installation with:
    ```sh
    ibmcloud version
    ```
@@ -281,7 +289,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
 
 1. If you don't have one, sign up for a free account at https://docker.com.
 1. Install Docker Engine - Community for Ubuntu following the instructions from https://docs.docker.com/install/linux/docker-ce/ubuntu/.
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    docker --version
    sudo docker run hello-world
@@ -300,12 +308,12 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    chmod +x ./kubectl
    ```
    {:pre}
-1. Move the binary in to your PATH.
+1. Move the binary to your PATH.
    ```sh
    sudo mv ./kubectl /usr/local/bin/kubectl
    ```
    {:pre}
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    kubectl version --client=true
    ```
@@ -320,12 +328,12 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    tar zxvf oc.tar.gz
    ```
    {:pre}
-1. Move the `oc` binary in to your PATH.
+1. Move the `oc` binary to your PATH.
    ```sh
    sudo mv ./oc /usr/local/bin/oc
    ```
    {:pre}
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    oc version
    ```
@@ -336,12 +344,12 @@ The following sections assume you are running Ubuntu Linux under a user with roo
 
 1. Download `helm` from https://github.com/helm/helm/releases/latest.
 1. Uncompress the downloaded archive.
-1. Move the `helm` binary in to your PATH.
+1. Move the `helm` binary to your PATH.
    ```sh
    sudo mv ./linux-amd64/helm /usr/local/bin/helm
    ```
    {:pre}
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    helm version
    ```
@@ -355,7 +363,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    sudo apt install jq
    ```
    {:pre}
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    jq --version
    ```
@@ -369,7 +377,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    sudo apt install git
    ```
    {:pre}
-1. Verify installation with:
+1. Verify the installation with:
    ```sh
    git --version
    ```
