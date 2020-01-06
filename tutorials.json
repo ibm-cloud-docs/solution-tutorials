@@ -37,7 +37,7 @@
             "MySQL",
             "Java"
           ],
-          "lastUpdated": "2019-06-10"
+          "lastUpdated": "2019-12-12"
         },
         {
           "name": "Strategies for resilient applications",
@@ -54,7 +54,7 @@
             "File Storage",
             "Watson"
           ],
-          "lastUpdated": "2019-06-24"
+          "lastUpdated": "2019-12-12"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -84,7 +84,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2019-12-06"
+          "lastUpdated": "2019-12-13"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -124,7 +124,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-11-21"
+          "lastUpdated": "2019-12-13"
         },
         {
           "name": "Web application on LAMP stack",
@@ -212,7 +212,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2019-10-07"
+          "lastUpdated": "2019-12-13"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -358,7 +358,7 @@
             "Hyper Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-11-26"
+          "lastUpdated": "2019-12-13"
         }
       ]
     },

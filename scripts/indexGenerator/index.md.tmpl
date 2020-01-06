@@ -160,6 +160,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 </div>
 
 {{#each categories}}
+{{#unless tocOnly}}
 {{#unless hidden}}
 ## {{name}}
 {{#if anchor}}{: #{{anchor}} }{{/if}}
@@ -191,5 +192,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
     {{/each}}
 </div>
 
+{{/unless}}
 {{/unless}}
 {{/each}}
