@@ -34,9 +34,10 @@ This guide will help you set up your development environment to successfully fol
 ## Microsoft Windows
 {: #windows}
 
-The following sections assume you are running Microsoft Windows 10 under a user with Administrator privileges.
+The following sections assume you are running Microsoft Windows 10 under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
 
 ### {{site.data.keyword.cloud_notm}} CLI
+{: #windows_cli}
 
 1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
 1. Verify installation with:
@@ -54,6 +55,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    {:pre}
 
 ### Docker
+{: #windows_docker}
 
 1. If you don't have one, sign up for a free account at https://docker.com.
 1. Download and install Docker Desktop on Windows from https://docs.docker.com/docker-for-windows/install/.
@@ -68,6 +70,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    {:tip}
 
 ### kubectl
+{: #windows_kubectl}
 
 1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows.
 1. Move `kubectl.exe` binary to one directory found in your PATH environment variable.
@@ -78,6 +81,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    {:pre}
 
 ### oc
+{: #windows_oc}
 
 1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
 1. Move `oc.exe` binary to one directory found in your PATH environment variable.
@@ -88,6 +92,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    {:pre}
 
 ### Helm 3
+{: #windows_helm}
 
 1. Download `helm` from https://github.com/helm/helm/releases/latest.
 1. Move `helm.exe` binary to one directory found in your PATH environment variable.
@@ -98,6 +103,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    {:pre}
 
 ### jq
+{: #windows_jq}
 
 1. Download jq from https://stedolan.github.io/jq/.
 1. Rename `jq-win64.exe` to `jq.exe`.
@@ -109,6 +115,7 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    {:pre}
 
 ### Git
+{: #windows_git}
 
 1. Download and install `git` from https://github.com/git-for-windows/git/releases/latest.
 1. Verify installation with:
@@ -117,12 +124,15 @@ The following sections assume you are running Microsoft Windows 10 under a user 
    ```
    {:pre}
 
+Proceed to the configuration [common to all operating systems](#common).
+
 ## Apple macOS
 {: #macos}
 
-The following sections assume you are running macOS High Sierra or later under a user with Administrator privileges.
+The following sections assume you are running macOS High Sierra or later under a user with Administrator privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
 
 ### {{site.data.keyword.cloud_notm}} CLI
+{: #macos_cli}
 
 1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
 1. Verify installation with:
@@ -140,6 +150,7 @@ The following sections assume you are running macOS High Sierra or later under a
    {:pre}
 
 ### Docker
+{: #macos_docker}
 
 1. If you don't have one, sign up for a free account at https://docker.com.
 1. Download and install Docker Desktop on Mac from https://docs.docker.com/docker-for-mac/install/.
@@ -151,6 +162,7 @@ The following sections assume you are running macOS High Sierra or later under a
    {:pre}
 
 ### kubectl
+{: #macos_kubectl}
 
 1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-macos.
 1. Make the kubectl binary executable.
@@ -170,6 +182,7 @@ The following sections assume you are running macOS High Sierra or later under a
    {:pre}
 
 ### oc
+{: #macos_oc}
 
 1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
 1. Extract `oc.tar.gz`:
@@ -192,6 +205,7 @@ The following sections assume you are running macOS High Sierra or later under a
    {:pre}
 
 ### Helm 3
+{: #macos_helm}
 
 1. Download `helm` from https://github.com/helm/helm/releases/latest.
 1. Uncompress the downloaded archive.
@@ -210,6 +224,7 @@ The following sections assume you are running macOS High Sierra or later under a
    {:pre}
 
 ### jq
+{: #macos_jq}
 
 1. Download `jq` from https://stedolan.github.io/jq/.
 1. Rename the downloaded file to `jq`.
@@ -225,6 +240,7 @@ The following sections assume you are running macOS High Sierra or later under a
    {:pre}
 
 ### Git
+{: #macos_git}
 
 1. Check that `git` is installed:
    ```sh
@@ -235,12 +251,15 @@ The following sections assume you are running macOS High Sierra or later under a
    macOS may prompt you to install the developer tools. These tools include the `git` command line.
    {:tip}
 
+Proceed to the configuration [common to all operating systems](#common).
+
 ## Ubuntu Linux
 {: #ubuntu}
 
-The following sections assume you are running Ubuntu Linux under a user with root privileges.
+The following sections assume you are running Ubuntu Linux under a user with root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
 
 ### {{site.data.keyword.cloud_notm}} CLI
+{: #ubuntu_cli}
 
 1. Download {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
 1. Verify installation with:
@@ -258,6 +277,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    {:pre}
 
 ### Docker
+{: #ubuntu_docker}
 
 1. If you don't have one, sign up for a free account at https://docker.com.
 1. Install Docker Engine - Community for Ubuntu following the instructions from https://docs.docker.com/install/linux/docker-ce/ubuntu/.
@@ -272,6 +292,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    {:tip}
 
 ### kubectl
+{: #ubuntu_kubectl}
 
 1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux.
 1. Make the kubectl binary executable.
@@ -291,6 +312,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    {:pre}
 
 ### oc
+{: #ubuntu_oc}
 
 1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
 1. Extract `oc.tar.gz`:
@@ -310,6 +332,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    {:pre}
 
 ### Helm 3
+{: #ubuntu_helm}
 
 1. Download `helm` from https://github.com/helm/helm/releases/latest.
 1. Uncompress the downloaded archive.
@@ -325,6 +348,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    {:pre}
 
 ### jq
+{: #ubuntu_jq}
 
 1. Install `jq` with:
    ```sh
@@ -338,6 +362,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    {:pre}
 
 ### Git
+{: #ubuntu_git}
 
 1. Install `git` with:
    ```sh
@@ -350,13 +375,20 @@ The following sections assume you are running Ubuntu Linux under a user with roo
    ```
    {:pre}
 
+Proceed to the configuration [common to all operating systems](#common).
+
 ## Common to all operating systems
+{: #common}
+
+The next sections are common to all operating systems. 
 
 ### GitHub account
+{: #common_github}
 
 1. Sign up for a free account at https://github.com/
 
 ### {{site.data.keyword.cloud_notm}} GitLab
+{: #common_gitlab}
 
 1. [Configure your access to {{site.data.keyword.cloud_notm}} GitLab](https://cloud.ibm.com/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key) to be able to commit source code to a private Git repository.
    1. [Use these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
