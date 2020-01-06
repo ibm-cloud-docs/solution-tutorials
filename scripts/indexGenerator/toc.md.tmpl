@@ -6,7 +6,9 @@ Solution Tutorials
 
     {: .navgroup id="learn"}
     index.md
+    getting-started.md
 {{#each categories}}
+{{#unless alreadyInToc}}
 {{#if (or (not hidden) @root.includeHidden)}}
 
     {: .topicgroup}
@@ -17,6 +19,7 @@ Solution Tutorials
     {{/if}}
     {{/each}}
 {{/if}}
+{{/unless}}
 {{/each}}
     {: .navgroup-end}
     

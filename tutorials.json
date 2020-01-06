@@ -11,6 +11,7 @@
       "name": "Getting Started",
       "anchor": "gettingstarted",
       "tocOnly": true,
+      "alreadyInToc": true,
       "solutions": [
         {
           "name": "Getting Started",
