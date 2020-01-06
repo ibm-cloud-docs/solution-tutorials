@@ -23,6 +23,8 @@ tar cf - \
   --exclude=scripts \
   --exclude="*.hidden.md" \
   --exclude="images/*hidden*" \
+  --exclude="getting-started.md" \
+  --exclude="images/gettingstarted" \
   --exclude=.vscode \
   --exclude=.travis.yml . | (cd build && tar xvf - )
 

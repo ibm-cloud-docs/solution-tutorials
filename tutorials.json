@@ -8,21 +8,6 @@
   ],
   "categories": [
     {
-      "name": "Getting Started",
-      "anchor": "gettingstarted",
-      "tocOnly": true,
-      "alreadyInToc": true,
-      "solutions": [
-        {
-          "name": "Getting Started",
-          "url": "getting-started.html",
-          "description": "Configure your development environment to be productive with IBM Cloud.",
-          "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2020-01-01"
-        }
-      ]
-    },
-    {
       "name": "Websites and Web Apps",
       "anchor": "websites",
       "solutions": [
