@@ -57,7 +57,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### Docker
 {: #windows_docker}
 
-1. If you don't have one, sign up for a free account at https://docker.com.
+1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Windows from https://docs.docker.com/docker-for-windows/install/.
 1. Verify the installation with:
    ```sh
@@ -66,14 +66,14 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
    ```
    {:pre}
 
-   You may need to log out and to wait for the Docker daemon to be started.
+   You may need to log out and wait for the Docker daemon to be started.
    {:tip}
 
 ### kubectl
 {: #windows_kubectl}
 
 1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows.
-1. Move `kubectl.exe` binary to one directory found in your PATH environment variable.
+1. Move `kubectl.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
    kubectl version --client=true
@@ -84,7 +84,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 {: #windows_oc}
 
 1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
-1. Move `oc.exe` binary to one directory found in your PATH environment variable.
+1. Move `oc.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
    oc version
@@ -95,7 +95,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 {: #windows_helm}
 
 1. Download `helm` from https://github.com/helm/helm/releases/latest.
-1. Move `helm.exe` binary to one directory found in your PATH environment variable.
+1. Move `helm.exe` binary to our PATH.
 1. Verify the installation with:
    ```sh
    helm version
@@ -107,7 +107,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 
 1. Download jq from https://stedolan.github.io/jq/.
 1. Rename `jq-win64.exe` to `jq.exe`.
-1. Move `jq.exe` to one directory found in your PATH environment variable.
+1. Move `jq.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
    jq --version
@@ -144,7 +144,7 @@ The following sections assume you are running macOS High Sierra or later under a
 ### Docker
 {: #macos_docker}
 
-1. If you don't have one, sign up for a free account at https://docker.com.
+1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Mac from https://docs.docker.com/docker-for-mac/install/.
 1. Verify the installation with:
    ```sh
@@ -263,7 +263,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
 ### Docker
 {: #ubuntu_docker}
 
-1. If you don't have one, sign up for a free account at https://docker.com.
+1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Install Docker Engine - Community for Ubuntu following the instructions from https://docs.docker.com/install/linux/docker-ce/ubuntu/.
 1. Verify the installation with:
    ```sh
