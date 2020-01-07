@@ -95,7 +95,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 {: #windows_helm}
 
 1. Download `helm` from https://github.com/helm/helm/releases/latest.
-1. Move `helm.exe` binary to our PATH.
+1. Move `helm.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
    helm version
