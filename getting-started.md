@@ -62,6 +62,9 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
    ```
    {:pre}
 
+   You may need to restart your machine after the installation.
+   {:tip}
+
 ### Docker
 {: #windows_docker}
 
