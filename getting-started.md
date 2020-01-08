@@ -37,7 +37,15 @@ This guide will help you set up your development environment to successfully fol
 ## Objectives
 {: #objectives}
 
-* Install must-have tools to be productive with {{site.data.keyword.cloud_notm}}.
+Install must-have tools to be productive with {{site.data.keyword.cloud_notm}}:
+
+* **{{site.data.keyword.cloud_notm}} CLI** - the command line interface to interact with {{site.data.keyword.cloud_notm}} API.
+* **Docker** - to deliver and run software in packages called containers.
+* **kubectl** - a command line interface for running commands against Kubernetes clusters.
+* **oc** - manages OpenShift applications, and provides tools to interact with each component of your system.
+* **Helm 3** - helps you manage Kubernetes applications — Helm Charts help you define, install, and upgrade even the most complex Kubernetes application.
+* **jq** - a lightweight and flexible command-line JSON processor.
+* **Git** - a free and open source distributed version control system.
 
 ## Microsoft Windows
 {: #windows}
@@ -53,6 +61,9 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
    ibmcloud version
    ```
    {:pre}
+
+   You may need to restart your machine after the installation.
+   {:tip}
 
 ### Docker
 {: #windows_docker}
@@ -367,6 +378,8 @@ Proceed to the configuration [common to all operating systems](#common).
 The next sections are common to all operating systems. 
 
 ### {{site.data.keyword.cloud_notm}} CLI plugins
+
+Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service.
 
 1. Install the following plugins:
    ```sh
