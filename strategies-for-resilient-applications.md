@@ -291,7 +291,7 @@ All of these services share the same characteristics:
 * Each cluster is spread over multiple zones.
 * Data is replicated across the zones.
 * Users can scale up storage and memory resources for an instance. See the [documentation on scaling for, e.g., {{site.data.keyword.databases-for-redis}}](https://{DomainName}/docs/services/databases-for-redis?topic=databases-for-redis-dashboard-settings#settings) for details.
-* Backups are taken daily or on demand. Details are documented for each service. Here is [backup documentation for, e.g., {{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/docs/services/databases-for-postgresql?topic=databases-for-postgresql-dashboard-backups#backups).
+* Backups are taken daily or on demand. Details are documented for each service. Here is [backup documentation for, e.g., {{site.data.keyword.databases-for-postgresql}}](https://{DomainName}/docs/services/databases-for-postgresql?topic=cloud-databases-dashboard-backups).
 * Data at rest, backups and network traffic are encrypted.
 * Each [service can be managed using the {{site.data.keyword.databases-for}} CLI plugin](https://{DomainName}/docs/databases-cli-plugin?topic=cloud-databases-cli-cdb-reference#cloud-databases-cli-plug-in)
 
