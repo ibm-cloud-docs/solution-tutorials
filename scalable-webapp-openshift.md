@@ -66,7 +66,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key) to be able to commit source code to a private Git repository.
    1. Use [these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
    1. And [add your SSH public key to your Git settings](https://us-south.git.cloud.ibm.com/help/gitlab-basics/create-your-ssh-keys).
-1. [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
+1. [Set up a namespace in {{site.data.keyword.registrylong_notm}}](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
 
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
