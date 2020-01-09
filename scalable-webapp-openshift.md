@@ -152,7 +152,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
    You may be asked to target a Cloud Foundry organization and a space. The organization and space would be used in case you decide to deploy the application to Cloud Foundry. This will not be used in this tutorial but the command requires them to be configured in any case.
    {:tip}
-2. Select `Backend Service / Web App` then `Node` and select `Node.js Web App with Express.js` to create a Node starter.
+2. Select `Backend Service / Web App` then `Node` and select `Node.js Express App` to create a Node starter.
 3. Enter a **unique name** for your application such as `<your-initials>-openshiftapp`.
 4. Select the **resource group** where your cluster has been created.
 5. Do not add additional services.
