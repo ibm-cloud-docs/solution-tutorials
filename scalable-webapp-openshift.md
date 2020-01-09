@@ -267,21 +267,23 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    export MYNAMESPACE=<REGISTRY_NAMESPACE>
    ```
    {:pre}
-1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret using an IAM API key:
+1. Define an environment variable name `API_KEY` pointing to an IAM API key.
+   For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
+   {:tip}
+1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
    ```sh
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=$API_KEY --docker-server=$MYREGISTRY
    ```
    {:pre}
 
-   For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
-   {:tip}
+
 
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
 
 In this step, you will update the generated BuildConfig section of the generated yaml to point to {{site.data.keyword.registryshort_notm}} namespace and push the generated builder image to {{site.data.keyword.registryshort_notm}}.
 
 1. Edit the generated **openshift.yaml**.
-1. Locate the *ImageStream* object named after your project (`$MYPROJECT`) and add a `dockerImageRepository` definition under `spec` replacing the placeholders `$MYPROJECT` and `$MYNAMESPACE` with the actual values identified in the previous steps:
+1. Locate the *ImageStream* object with the **name** attribute set to your project (`$MYPROJECT`) and add a `dockerImageRepository` definition under `spec` replacing the placeholders `$MYPROJECT` and `$MYNAMESPACE` with the actual values identified in the previous steps:
    ```yaml
    -
    apiVersion: image.openshift.io/v1
@@ -291,10 +293,10 @@ In this step, you will update the generated BuildConfig section of the generated
        openshift.io/generated-by: OpenShiftNewApp
      creationTimestamp: null
      labels:
-       app: $MYPROJECT
-     name: $MYPROJECT
+       app: <$MYPROJECT>
+     name: <$MYPROJECT>
    spec:
-     dockerImageRepository: $MYREGISTRY/$MYNAMESPACE/$MYPROJECT
+     dockerImageRepository: <$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>
      lookupPolicy:
        local: false
    status:
@@ -309,7 +311,7 @@ In this step, you will update the generated BuildConfig section of the generated
      output:
        to:
          kind: DockerImage
-         name: '$MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest'
+         name: '<$MYREGISTRY>/<$MYNAMESPACE>/<$MYPROJECT>:latest'
        pushSecret:
          name: push-secret
    ```
@@ -318,8 +320,8 @@ In this step, you will update the generated BuildConfig section of the generated
 5. Search for `containers` and update the image with
    ```yaml
    containers:
-       -image: '$MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest'
-       name: $MYPROJECT
+       -image: '<$MYREGISTRY>/<$MYNAMESPACE?/<$MYPROJECT>:latest'
+       name: <$MYPROJECT>
    ```
    {:codeblock}
 6. Save the YAML file.
