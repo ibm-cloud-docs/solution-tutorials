@@ -77,18 +77,20 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes.
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create?platformType=openshift).
-2. Set **Cluster name** to **myopenshiftcluster**.
-3. Select a **Resource group** and choose a **Geography**.
-4. Under **Location**,
-   - Select a **Metro**.
+1. Under **Location**,
+   - Select **Single zone** as **Availability**.
+   - Select a **Geography**.
+   - Select a **Worker zone**.
    - Choose a single **Worker zone** by unchecking the other worker zones.
    - Select **Public endpoint only** as your Master service endpoint.
-5. Under **Default worker pool**,
+1. Set **Cluster name** to **myopenshiftcluster**.
+1. Select a **Resource group**.
+1. Under **Default worker pool**,
    - Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
    - Select **4 Cores 16GB RAM** as the flavor for Worker nodes.
    - Leave **Encrypt local disk** checked and select **2** Worker nodes for this tutorial.
-6. Review **Infrastructure permissions checker** to verify the required permissions
-7. Click **Create cluster** to provision an {{site.data.keyword.openshiftshort}} cluster.
+1. Review **Infrastructure permissions checker** to verify the required permissions
+1. Click **Create cluster** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
 ### Configure CLI
 
