@@ -63,10 +63,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
 1. [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/openshift?topic=openshift-openshift-cli#cli_oc)
-1. [Configure your access to {{site.data.keyword.Bluemix_notm}} Git](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-git_working#creating-an-ssh-key) to be able to commit source code to a private Git repository.
-   1. Use [these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
-   1. And [add your SSH public key to your Git settings](https://us-south.git.cloud.ibm.com/help/gitlab-basics/create-your-ssh-keys).
-1. [Set up the {{site.data.keyword.registrylong_notm}} CLI and your registry namespace](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
+1. [Set up a namespace in {{site.data.keyword.registrylong_notm}}](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
+1. {{site.data.keyword.cloud_notm}} provides you with hosted Git repositories built on GitLab Community Edition and accessible with the same credentials used to log in {{site.data.keyword.cloud_notm}}. It is recommended to configure your SSH public key to simplify the command line interactions with the Git repositories.
+   1. [Use these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
+   1. [Add your SSH public key](https://us-south.git.cloud.ibm.com/help/gitlab-basics/create-your-ssh-keys) under User Settings > SSH keys in the region where you plan to host source code, such as [Dallas (us-south.git.cloud.ibm.com)](https://us-south.git.cloud.ibm.com/profile/keys), [London (eu-gb.git.cloud.ibm.com)](https://eu-gb.git.cloud.ibm.com/profile/keys) or [Frankfurt (eu-de.git.cloud.ibm.com)](https://eu-de.git.cloud.ibm.com/profile/keys).
+
 
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
@@ -77,18 +78,20 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes.
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create?platformType=openshift).
-2. Set **Cluster name** to **myopenshiftcluster**.
-3. Select a **Resource group** and choose a **Geography**.
-4. Under **Location**,
-   - Select a **Metro**.
+1. Under **Location**,
+   - Select **Single zone** as **Availability**.
+   - Select a **Geography**.
+   - Select a **Worker zone**.
    - Choose a single **Worker zone** by unchecking the other worker zones.
    - Select **Public endpoint only** as your Master service endpoint.
-5. Under **Default worker pool**,
+1. Set **Cluster name** to **myopenshiftcluster**.
+1. Select a **Resource group**.
+1. Under **Default worker pool**,
    - Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
    - Select **4 Cores 16GB RAM** as the flavor for Worker nodes.
    - Leave **Encrypt local disk** checked and select **2** Worker nodes for this tutorial.
-6. Review **Infrastructure permissions checker** to verify the required permissions
-7. Click **Create cluster** to provision an {{site.data.keyword.openshiftshort}} cluster.
+1. Review **Infrastructure permissions checker** to verify the required permissions
+1. Click **Create cluster** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
 ### Configure CLI
 
@@ -147,7 +150,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
    ```
    {: pre}
 
-   You may be asked to target an organization and a space, follow the instructions on the CLI
+   You may be asked to target a Cloud Foundry organization and a space. The organization and space would be used in case you decide to deploy the application to Cloud Foundry. This will not be used in this tutorial but the command requires them to be configured in any case.
    {:tip}
 2. Select `Backend Service / Web App` then `Node` and select `Node.js Web App with Express.js` to create a Node starter.
 3. Enter a **unique name** for your application such as `<your-initials>-openshiftapp`.
