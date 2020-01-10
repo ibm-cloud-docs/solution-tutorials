@@ -179,6 +179,7 @@ The generated Dockerfile needs two updates to work with the Docker Engine versio
    RUN chown -R 1001:1001 /app/
    ```
    {:pre}
+
 1. On line 12, replace:
 
    ```Docker
@@ -193,6 +194,7 @@ The generated Dockerfile needs two updates to work with the Docker Engine versio
    RUN chown -R 1001:1001 /app
    ```
    {:pre}
+
 1. Save the file
 
 ### Run the application locally
