@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-12-09"
+  years: 2018, 2019, 2020
+lastupdated: "2020-01-10"
 lasttested: "2019-12-05"
 
 ---
@@ -98,9 +98,9 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
   - Set the cluster name to **secure-file-storage-cluster**.
-  - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
+  - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui).
     - Make sure to attach a Public Gateway for each of the subnets that you create as it is required for App ID.
-  - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
+  - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
 
@@ -135,7 +135,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
    * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to generate pre-signed URLs.
    * Click **Add**.
    * Make note of the credentials by clicking **View credentials**. You will need them in a later step.
-3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location: 
+3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location:
    * Classic infrastructure: Copy the **Private** service endpoint. It will be used later in the configuration of the application.
    * VPC infrastructure: Copy the **Direct** service endpoint. It will be used later in the configuration of the application.
 
@@ -176,7 +176,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
    * Use the same **resource group** as for the previous services.
    * Set **Available authentication methods** to **Use only IAM**.
    * Click **Create**.
-2. Back to the **Resource List**, locate the newly created service and click on it. (Note: You will need to wait until the status changes to Provisioned) 
+2. Back to the **Resource List**, locate the newly created service and click on it. (Note: You will need to wait until the status changes to Provisioned)
    * Under **Service credentials**, create **New credential**.
    * Set the **name** to **secure-file-storage-cloudant-acckey**.
    * Set **Role** to **Manager**.
@@ -198,7 +198,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
    * Set the **Service name** to **secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
 2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
-`<cluster-name>.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster-get <cluster-name>`.
+`<cluster-name>.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
 3. In the same tab under **Authentication Settings** under **Runtime Activity** enable capturing events in {{site.data.keyword.at_short}}.
 
 You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
@@ -261,15 +261,15 @@ All services have been configured. In this section you will deploy the tutorial 
 | `$REGISTRY_NAMESPACE` | *secure-file-storage-namespace* | The registry namespace where the image was built in the previous section. |
 | `$IMAGE_NAME` | *secure-file-storage* | The name of the Docker image. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
-| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster-get secure-file-storage-cluster`. |
-| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster-get secure-file-storage-cluster`. |
+| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster secure-file-storage-cluster`. |
+| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster secure-file-storage-cluster`. |
 
 `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a Docker registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-images#other)).
 {: tip}
 
 ### Deploy to the cluster
 
-1. Gain access to your cluster as described on the **Access** tab of your cluster.  
+1. Gain access to your cluster as described on the **Access** tab of your cluster.
 
 2. Create the secret used by the application to obtain service credentials:
    ```sh
@@ -278,7 +278,7 @@ All services have been configured. In this section you will deploy the tutorial 
    {: codeblock}
 3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster.
    ```sh
-   ibmcloud ks cluster-service-bind --cluster secure-file-storage-cluster --namespace default --service secure-file-storage-appid
+   ibmcloud ks cluster service bind --cluster secure-file-storage-cluster --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
    If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance secure-file-storage-appid`.
@@ -329,12 +329,12 @@ For secured connection, you can either obtain a certificate from [Let's Encrypt]
    * Click the **copy** symbol next to the certificate's **crn**.
 4. Switch to the command line to deploy the certificate information as a secret to the cluster. Execute the following command after copying in the crn from the previous step.
    ```sh
-   ibmcloud ks alb-cert-deploy --secret-name secure-file-storage-certificate --cluster secure-file-storage-cluster --cert-crn <the copied crn from previous step>
+   ibmcloud ks alb cert deploy --secret-name secure-file-storage-certificate --cluster secure-file-storage-cluster --cert-crn <the copied crn from previous step>
    ```
    {: codeblock}
    Verify that the cluster knows about the certificate by executing the following command.
    ```sh
-   ibmcloud ks alb-certs --cluster secure-file-storage-cluster
+   ibmcloud ks alb certs --cluster secure-file-storage-cluster
    ```
    {: codeblock}
 5. Edit the file `secure-file-storage.yaml`.

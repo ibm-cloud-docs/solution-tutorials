@@ -77,8 +77,8 @@ The major portion of this tutorial can be accomplished with a **Free** cluster. 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
 - Create the Kubernetes cluster:
-  - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
-  - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
+  - For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui).
+  - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 {: #create_cluster}
 
 - Gain access to your cluster as described on the Access tab of your cluster.
@@ -234,7 +234,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 ### Deploy the application
 
 [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
- 
+
 #### With Helm 2
 
 1. Install Helm into your cluster [by following steps 2) and 3) on how to configure tiller and initialize Helm](https://{DomainName}/docs/containers?topic=containers-helm#public_helm_install).
@@ -292,7 +292,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 
 1. Identify your IBM-provided **Ingress domain**
    ```sh
-   ibmcloud ks cluster get ${MYCLUSTER}
+   ibmcloud ks cluster get --cluster ${MYCLUSTER}
    ```
    {: pre}
    to find

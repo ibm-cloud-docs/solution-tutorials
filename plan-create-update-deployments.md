@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-06-18"
+  years: 2018, 2019, 2020
+lastupdated: "2020-01-10"
 lasttested: "2019-06-18"
 ---
 
@@ -420,33 +420,33 @@ This section will focus on the `development` environment. The steps will be the 
 1. Edit `development.tfvars`
    1. Set **environment_name** to the name of the Cloud Foundry space you want to create
    1. Set **space_developers** to the list of developers for this space. **Make sure to add your name to the list so that Terraform can provision services on your behalf.**
-   1. Set **cluster_datacenter** to the location where you want to create the cluster. Find the available locations with:
+   2. Set **cluster_datacenter** to the zone where you want to create the cluster. Find the available zones with:
       ```sh
-      ibmcloud ks locations
+      ibmcloud ks zones
       ```
       {: codeblock}
-   1. Set the private (**cluster_private_vlan_id**) and public (**cluster_public_vlan_id**) VLANs for the cluster. Find the available VLANs for the location with:
+   3. Set the private (**cluster_private_vlan_id**) and public (**cluster_public_vlan_id**) VLANs for the cluster. Find the available VLANs for the zone with:
       ```sh
-      ibmcloud ks vlans <location>
+      ibmcloud ks vlans --zone <zone>
       ```
       {: codeblock}
-   1. Set the **cluster_machine_type**. Find the available machine types and characteristics for the location with:
+   4. Set the **cluster_machine_type**. Find the available flavors and characteristics for the zone with:
       ```sh
-      ibmcloud ks machine-types <location>
+      ibmcloud ks flavors --zone <zone>
       ```
       {: codeblock}
 
-   1. Set the **resource_quota**. Find the available resource quota definitions with:
+   5. Set the **resource_quota**. Find the available resource quota definitions with:
       ```sh
       ibmcloud resource quotas
       ```
       {: codeblock}
-1. Initialize Terraform
+2. Initialize Terraform
    ```sh
    terraform init
    ```
    {: codeblock}
-1. Create a new Terraform workspace for the *development* environment
+3. Create a new Terraform workspace for the *development* environment
    ```sh
    terraform workspace new development
    ```
@@ -456,7 +456,7 @@ This section will focus on the `development` environment. The steps will be the 
    terraform workspace select development
    ```
    {: codeblock}
-1. Look at the Terraform plan
+4. Look at the Terraform plan
    ```sh
    terraform plan -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
@@ -466,7 +466,7 @@ This section will focus on the `development` environment. The steps will be the 
    Plan: NN to add, 0 to change, 0 to destroy.
    ```
    {: codeblock}
-1. Apply the changes
+5. Apply the changes
    ```sh
    terraform apply -var-file=../credentials.tfvars -var-file=development.tfvars
    ```
