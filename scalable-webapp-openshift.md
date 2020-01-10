@@ -303,7 +303,7 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    ```
    {:pre}
 1. Define an environment variable name `API_KEY` pointing to an IAM API key.
-   For creating an API key, refer this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
+   For creating an API key, refer to this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
    {:tip}
 1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
    ```sh
