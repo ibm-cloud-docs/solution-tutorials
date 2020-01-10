@@ -165,36 +165,18 @@ This generates a starter application complete with the code and all the necessar
 The generated Dockerfile needs two updates to work with the Docker Engine version shipping with OpenShift 3.11.
 
 1. Edit the `Dockerfile` file found in the generated directory.
-1. On line 9, replace:
-
-   ```Docker
-   COPY --chown=1001:1001 package.json /app/
-   ```
-   {:codeblock}
-
-   with
-
+1. On line 9, replace `COPY --chown=1001:1001 package.json /app/` with:
    ```Docker
    COPY package.json /app/
    RUN chown -R 1001:1001 /app/
    ```
    {:pre}
-
-1. On line 12, replace:
-
-   ```Docker
-   COPY --chown=1001:1001 . /app
-   ```
-   {:codeblock}
-
-   with
-
+1. On line 12, replace `COPY --chown=1001:1001 . /app` with:
    ```Docker
    COPY . /app
    RUN chown -R 1001:1001 /app
    ```
    {:pre}
-
 1. Save the file
 
 ### Run the application locally
