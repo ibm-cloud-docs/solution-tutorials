@@ -162,7 +162,7 @@ To bind {{site.data.keyword.cloud_notm}} services to the **get-started-node** ap
    1. Provide the **service name** `cfee-cloudant`, choose `Use both legacy credentials and IAM` as your authentication method and choose the same location where the CFEE instance has been created. Once the service is created it will appear in the list.
    1. To find an existing service, Type the name in the search textbox and select the result. Finish by clicking **Add**. The service is now available to CFEE applications; however, it still resides in public {{site.data.keyword.cloud_notm}}.
 1. On the overflow menu of the service instance shown, select **Bind to application**.
-1. Select the **GetStartedNode** application you pushed earlier and check **Restage application after binding**. 
+1. Select the **GetStartedNode** application you pushed earlier and check **Restage application after binding**.
 1. Click on **Next** and select **Manager** as the **Service access role**.  Finally, click the **Bind** button. Wait for the application to restage. You can check the status under the **Applications** tab.
 1. In your browser, access the application, add your name and hit the `enter` key. Your name will be added to a {{site.data.keyword.cloudant_short_notm}} database.
 1. Confirm by selecting the `cfee-cloudant`instance from the list on the **Services** tab. This will open the service instance's details page in public {{site.data.keyword.cloud_notm}}.
@@ -248,7 +248,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
    {: pre}
 
    ```sh
-   $(ibmcloud ks cluster-config <CFEE_CLUSTER_NAME> --export)
+   $(ibmcloud ks cluster config <CFEE_CLUSTER_NAME> --export)
    ```
    {: pre}
 
@@ -307,7 +307,7 @@ To demonstrate Cloud Foundry to Kubernetes communication, you'll connect to the 
    ```
    {: pre}
 
-   You may not see a prompt, but you can type commands. 
+   You may not see a prompt, but you can type commands.
 
    ```sh
    export CLUSTER_IP=<CLUSTER-IP address>
