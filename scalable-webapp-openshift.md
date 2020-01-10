@@ -160,6 +160,41 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or {{site.data.keyword.containershort_notm}}.
 
+### Modify the Dockerfile
+
+The generated Dockerfile needs two updates to work with the Docker Engine version shipping with OpenShift 3.11.
+
+1. Edit the `Dockerfile` file found in the generated directory.
+1. On line 9, replace:
+
+   ```Docker
+   COPY --chown=1001:1001 package.json /app/
+   ```
+   {:codeblock}
+
+   with
+
+   ```Docker
+   COPY package.json /app/
+   RUN chown -R 1001:1001 /app/
+   ```
+   {:pre}
+1. On line 12, replace:
+
+   ```Docker
+   COPY --chown=1001:1001 . /app
+   ```
+   {:codeblock}
+
+   with
+
+   ```Docker
+   COPY . /app
+   RUN chown -R 1001:1001 /app
+   ```
+   {:pre}
+1. Save the file
+
 ### Run the application locally
 
 You can build and run the application as you normally would using `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
