@@ -79,8 +79,8 @@ When creating the Kubernetes cluster below:
 1. Locate in **North America** and **Dallas**
 
 Create the Kubernetes cluster:
-- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui). 
-- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions. 
+- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui).
+- For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 {: #create_cluster}
 
 
@@ -183,7 +183,7 @@ When a Kubernetes cluster is created, it gets assigned an Ingress subdomain (eg.
 1. Retrieve the Ingress subdomain of the cluster:
    ```bash
    MYCLUSTER=my-us-cluster
-   ibmcloud ks cluster-get $MYCLUSTER
+   ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
    {: pre}
    Look for the `Ingress Subdomain` value.
