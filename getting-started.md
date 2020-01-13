@@ -264,7 +264,7 @@ The following sections assume you are running Ubuntu Linux under a user with roo
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #ubuntu_cli}
 
-1. Download the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
+1. Download and install the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
 1. Verify the installation with:
    ```sh
    ibmcloud version
