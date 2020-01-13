@@ -395,7 +395,7 @@ Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with
 {: #common_github}
 
 1. Sign up for a free account at https://github.com/.
-1. Create a new public repository at https://github.com/new.
+1. Create a new public repository at https://github.com/new to get familiar with GitHub.
 
 ### {{site.data.keyword.cloud_notm}} GitLab
 {: #common_gitlab}
