@@ -6,10 +6,7 @@ Solution Tutorials
 
     {: .navgroup id="learn"}
     index.md
-
-    {: .topicgroup}
-    Getting Started
-        getting-started.md
+    getting-started.md
 
     {: .topicgroup}
     Websites and Web Apps
