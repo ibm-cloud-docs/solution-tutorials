@@ -334,7 +334,7 @@ Use Ingress to set up the cluster inbound connection to the service.
 ## Use your own custom domain
 {: #custom_domain}
 
-To use your custom domain, you need to update your DNS records with a CNAME record pointing to your IBM-provided domain.
+This section requires you to own a custom domain and to be able to modify the DNS records of the domain. You will need to create a `CNAME` record pointing to the IBM-provided domain.
 
 See [Using the Ingress controller with a custom domain](https://{DomainName}/docs/containers?topic=containers-ingress#ingress) for more information.
 
@@ -362,11 +362,11 @@ See [Using the Ingress controller with a custom domain](https://{DomainName}/doc
    kubectl apply -f ingress-customdomain-http.yml
    ```
    {: pre}
-3. Access your application at `http://<customdomain>/`
+3. Access your application at `http://<my-custom-domain.com>/`
 
 ### with HTTPS
 
-If you were to try to access your application with HTTPS at this time `https://<customdomain>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
+If you were to try to access your application with HTTPS at this time `https://<my-custom-domain.com>/`, you will likely get a security warning from your web browser telling you the connection is not private. You would also get a 404 as the Ingress just configured would not know how to direct HTTPS traffic.
 
 1. Obtain a trusted SSL certificate for your domain. You'll need the certificate and the key as described [here](https://{DomainName}/docs/containers?topic=containers-ingress#public_inside_3). To generate a trusted certificate, you can either use [Let's Encrypt](https://letsencrypt.org/) or [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
 2. Save the cert and the key in base64 ascii format files.
@@ -401,7 +401,7 @@ If you were to try to access your application with HTTPS at this time `https://<
    kubectl apply -f ingress-customdomain-https.yml
    ```
    {: pre}
-6. Access your application at `https://<customdomain>/`.
+6. Access your application at `https://<my-custom-domain.com>/`.
 <!--#/istutorial#-->
 
 ## Monitor application health
