@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-01-01"
-lasttested: "2020-01-01"
+lastupdated: "2020-01-20"
+lasttested: "2020-01-20"
 
 ---
 
@@ -259,12 +259,12 @@ Proceed to the configuration [common to all operating systems](#common).
 ## Ubuntu Linux
 {: #ubuntu}
 
-The following sections assume you are running Ubuntu Linux under a user with root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
+The following sections assume you are running Ubuntu Linux as non-root user with access to root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
 
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #ubuntu_cli}
 
-1. Download the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
+1. Download and install the {{site.data.keyword.cloud_notm}} CLI from https://github.com/IBM-Cloud/ibm-cloud-cli-release/releases/latest.
 1. Verify the installation with:
    ```sh
    ibmcloud version
@@ -395,7 +395,7 @@ Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with
 {: #common_github}
 
 1. Sign up for a free account at https://github.com/.
-1. Create a new public repository at https://github.com/new.
+1. Create a new public repository at https://github.com/new to get familiar with GitHub.
 
 ### {{site.data.keyword.cloud_notm}} GitLab
 {: #common_gitlab}
