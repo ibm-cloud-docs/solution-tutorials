@@ -35,8 +35,16 @@
                     "Container Service",
                     "Container Registry",
                     "Java"
-                ]
-            },
+          ],
+          "requirements": [
+            "container_registry",
+            "kubernetes_service",
+            "ibmcloud_cli",
+            "ibmcloud_plugin_dev",
+            "docker"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Move a VM based application to Kubernetes",
                 "url": "vm-to-containers-and-kubernetes.html",
@@ -48,8 +56,15 @@
                     "File Storage",
                     "MySQL",
                     "Java"
-                ]
-            },
+          ],
+          "requirements": [
+            "container_registry",
+            "kubernetes_service",
+            "ibmcloud_cli",
+            "docker"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Strategies for resilient applications",
                 "url": "strategies-for-resilient-applications.html",
@@ -64,8 +79,20 @@
                     "Databases",
                     "File Storage", 
                     "Watson"
-                ]
-            },
+          ],
+          "requirements": [
+            "container_registry",
+            "kubernetes_service",
+            "ibmcloud_cli",
+            "docker",
+            "cloudant",
+            "cloud_object_storage",
+            "cloud_internet_services",
+            "cloud_functions",
+            "cloud_foundry"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Continuous Deployment to Kubernetes",
                 "url": "continuous-deployment-to-kubernetes.html",
@@ -79,8 +106,17 @@
                     "DevOps",
                     "Node.js",
                     "Vulnerability Advisor"
-                ]
-            },
+          ],
+          "requirements": [
+            "container_registry",
+            "kubernetes_service",
+            "ibmcloud_cli",
+            "ibmcloud_plugin_dev",
+            "docker",
+            "continuous_delivery"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Scalable web app on OpenShift",
                 "url": "scalable-webapp-openshift.html",
@@ -92,8 +128,16 @@
                     "Container Service",
                     "Container Registry",
                     "Node.js"
-                ]
-            },
+          ],
+          "requirements": [
+            "container_registry",
+            "openshift_on_ibm_cloud",
+            "ibmcloud_cli",
+            "ibmcloud_plugin_dev",
+            "docker"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Accelerate delivery of static files using Object Storage and CDN",
                 "url": "static-files-cdn.html?pos=2",
@@ -104,8 +148,16 @@
                     "Node.js",
                     "Content Delivery Network",
                     "Cloud Object Storage"
-                ]
-            },
+          ],
+          "requirements": [
+            "cloud_object_storage",
+            "content_delivery_network",
+            "ibmcloud_cli",
+            "ibmcloud_plugin_dev",
+            "cloud_foundry"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Accelerate a dynamic website using Dynamic Content Acceleration",
                 "url": "dynamic-content-cdn.html?pos=2",
@@ -116,8 +168,16 @@
                     "Kubernetes",
                     "Container Service",
                     "Docker"
-                ]
-            },
+          ],
+          "requirements": [
+            "kubernetes_service",
+            "content_delivery_network",
+            "ibmcloud_cli",
+            "docker",
+            "container_registry"
+          ],
+          "supportsCloudShell": false
+        },
             {
               "name": "Asynchronous data processing using object storage and pub/sub messaging",
               "url": "pub-sub-object-storage.html",
@@ -129,8 +189,18 @@
                   "Java",
                   "Message hub",
                   "Cloud Object Storage"
-              ]
-            },
+          ],
+          "requirements": [
+            "kubernetes_service",
+            "cloud_object_storage",
+            "ibmcloud_cli",
+            "ibmcloud_plugin_dev",
+            "event_stream",
+            "docker",
+            "container_registry"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Web application on LAMP stack",
                 "url": "lamp-stack.html",
@@ -141,8 +211,13 @@
                     "PHP",
                     "WordPress",
                     "Vulnerability Scanner"
-                ]
-            },
+          ],
+          "requirements": [
+            "virtual_servers"
+          ],
+          "supportsCloudShell": "yes_with_modifications",
+          "lastUpdated": "2019-05-20"
+        },
             {
                 "name": "Deploy a LAMP stack using Terraform",
                 "url": "infrastructure-as-code-terraform.html",
@@ -153,8 +228,14 @@
                     "Infrastructure",
                     "PHP",
                     "Object Storage"
-                ]
-            },
+          ],
+          "requirements": [
+            "virtual_servers",
+            "cloud_object_storage",
+            "terraform"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Plan, create and update deployment environments",
                 "url": "plan-create-update-deployments.html",
@@ -165,8 +246,15 @@
                     "Kubernetes",
                     "Cloud Foundry",
                     "Identity and Access Management"
-                ]
-            },
+          ],
+          "requirements": [
+            "virtual_servers",
+            "cloud_object_storage",
+            "cloudant",
+            "terraform"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Use Virtual Servers to build highly available and scalable web app",
                 "url": "highly-available-and-scalable-web-application.html",
@@ -177,8 +265,17 @@
                     "Load Balancer",
                     "PHP",
                     "File Storage"
-                ]
-            },
+          ],
+          "requirements": [
+            "virtual_servers",
+            "file_storage",
+            "cloud_internet_services",
+            "cloud_load_balancers",
+            "vpn"
+          ],
+          "supportsCloudShell": "yes_with_modifications",
+          "cloudShellComments": "Using VPN is optional which may not work with cloudshell"
+        },
             {
                 "name": "Modern web application using MEAN stack",
                 "url": "mean-stack.html",
@@ -188,8 +285,13 @@
                     "Cloud Foundry",
                     "Node.js",
                     "Compose for MongoDB"
-                ]
-            },
+          ],
+          "requirements": [
+            "cloud_foundry",
+            "databases_for_mongodb"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "SQL Database for Cloud Data",
                 "url": "sql-database.html",
@@ -199,8 +301,13 @@
                     "Cloud Foundry",
                     "Python",
                     "Db2 Warehouse"
-                ]
-            },
+          ],
+          "requirements": [
+            "cloud_foundry",
+            "db2_warehouse"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Serverless web application and API",
                 "url": "serverless-api-webapp.html",
@@ -210,8 +317,14 @@
                     "Cloud Functions",
                     "API Gateway",
                     "Cloudant NoSQL DB"
-                ]
-            },
+          ],
+          "requirements": [
+            "cloud_functions",
+            "cloudant",
+            "api_gateway"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Deploy serverless apps across multiple regions",
                 "url": "multi-region-serverless.html",
@@ -221,8 +334,14 @@
                     "Internet Services",
                     "Cloud Functions",
                     "Certificate Manager"
-                ]
-            },
+          ],
+          "requirements": [
+            "cloud_functions",
+            "cloud_internet_services",
+            "certificate_manager"
+          ],
+          "supportsCloudShell": "not_applicable"
+        },
             {
                 "name": "Analyze logs and monitor application health with LogDNA and Sysdig",
                 "url": "application-log-analysis.html",
@@ -233,8 +352,16 @@
                     "Python",
                     "Log Analysis",
                     "Availability Monitoring"
-                ]
-            },
+          ],
+          "requirements": [
+            "container_registry",
+            "kubernetes_service",
+            "docker",
+            "logdna",
+            "sysdig"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Isolated Cloud Foundry Enterprise Apps",
                 "url": "isolated-cloud-foundry-enterprise-apps.html",
@@ -245,7 +372,17 @@
                   "Cloud Foundry Enterprise Environment",
                   "Node.js",
                   "Kubernetes"
-                ]
+          ],
+          "requirements": [
+            "cfee",
+            "cloudant",
+            "kubernetes_service",
+            "container_registry",
+            "docker",
+            "cloud_foundry",
+            "ibmcloud_cli"
+          ],
+          "supportsCloudShell": false
               }
         ]
     },
@@ -265,8 +402,13 @@
                     "Db2 Warehouse",
                     "Cloud Functions",
                     "Slack"
-                ]
-            },
+          ],
+          "requirements": [
+            "cloud_functions",
+            "db2_on_cloud"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Build a voice-enabled Android chatbot",
                 "url": "android-watson-chatbot.html",
@@ -277,7 +419,14 @@
                     "Speech to Text",
                     "Text to Speech",
                     "Android"
-                ]
+          ],
+          "requirements": [
+            "watson_assistant",
+            "speech_to_text",
+            "text_to_speech",
+            "android_studio"
+          ],
+          "supportsCloudShell": false
             }
         ]
     },
@@ -295,8 +444,14 @@
                     "Node.js",
                     "Continuous Delivery",
                     "Cloud Internet Services"
-                ]
-            },
+          ],
+          "requirements": [
+            "cloud_internet_services",
+            "continuous_delivery"
+          ],
+          "supportsCloudShell": "yes_with_modifications",
+          "cloudShellComments": "do not modify now, wait for future cloud shell IDE support"
+        },
             {
                 "name": "Resilient and secure multi-region Kubernetes clusters",
                 "url": "multi-region-k8s-cis.html?pos=2",
@@ -306,8 +461,15 @@
                     "Kubernetes",
                     "Container Registry",
                     "Cloud Internet Services"
-                ]
-            },
+          ],
+          "requirements": [
+            "cloud_internet_services",
+            "container_registry",
+            "kubernetes_service",
+            "docker"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Create, secure and manage REST APIs",
                 "url": "create-manage-secure-apis.html",
@@ -317,8 +479,13 @@
                     "Cloud Foundry",
                     "Node.js",
                     "API Connect"
-                ]
-            },
+          ],
+          "requirements": [
+            "api_connect",
+            "api_designer"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Apply end to end security to a cloud application",
                 "url": "cloud-e2e-security.html",
@@ -332,8 +499,19 @@
                     "Cloud Object Storage",
                     "Key Protect",
                     "Activity Tracker"
-                ]
-            },
+          ],
+          "requirements": [
+            "kubernetes_service",
+            "container_registry",
+            "certificate_manager",
+            "app_id",
+            "cloud_object_storage",
+            "cloudant",
+            "key_protect",
+            "logdna"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Enhance security of your deployed application",
                 "url": "extended-app-security.html",
@@ -346,9 +524,14 @@
                     "Key Protect",
                     "Hyper Protect",
                     "Activity Tracker"
-                ]
-            }
-
+          ],
+          "requirements": [
+            "certificate_manager",
+            "key_protect",
+            "logdna"
+          ],
+          "supportsCloudShell": "not_applicable"
+        }
         ]
     },
     {
@@ -364,8 +547,13 @@
                     "iOS",
                     "Swift",
                     "Push Notifications"
-                ]
-            },
+          ],
+          "requirements": [
+            "xcode",
+            "app_id"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Android native mobile app with Push Notifications",
                 "url": "android-mobile-push-analytics.html",
@@ -375,8 +563,12 @@
                     "Android",
                     "Java",
                     "Push Notifications"
-                ]
-            },
+          ],
+          "requirements": [
+            "android_studio"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Mobile application with a serverless backend",
                 "url": "serverless-mobile-backend.html?pos=2",
@@ -388,7 +580,15 @@
                     "Cloudant NoSQL DB",
                     "Watson Tone Analyzer",
                     "Push Notifications"
-                ]
+          ],
+          "requirements": [
+            "app_id",
+            "cloud_functions",
+            "cloudant",
+            "tone_analyzer",
+            "android_studio"
+          ],
+          "supportsCloudShell": false
             }
         ]
     },
@@ -407,8 +607,17 @@
                     "SQL Query",
                     "Streaming Analytics",
                     "Analytics Engine"
-                ]
-            },
+          ],
+          "requirements": [
+            "sql_query",
+            "cloud_object_storage",
+            "streaming_analytics",
+            "event_stream",
+            "analytics_engine",
+            "kafka_client"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
               "name": "Build a data lake with Object Storage",
               "url": "smart-data-lake.html",
@@ -418,8 +627,16 @@
                   "Cloud Object Storage",
                   "SQL Query",
                   "Watson Studio"
-              ]
-          },
+          ],
+          "requirements": [
+            "sql_query",
+            "cloud_object_storage",
+            "watson_studio",
+            "cognos_dashboard",
+            "ibmcloud_cli"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
           {
               "name": "Combining serverless and Cloud Foundry for data retrieval and analytics",
               "url": "serverless-github-traffic-analytics.html?pos=2",
@@ -430,8 +647,17 @@
                   "App ID",
                   "Cloud Functions",
                   "GitHub"
-              ]
-          },
+          ],
+          "requirements": [
+            "cognos_dashboard",
+            "ibmcloud_cli",
+            "db2_warehouse",
+            "cloud_functions",
+            "app_id",
+            "cloud_foundry"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
           {
                 "name": "Build, deploy, test, and retrain a predictive machine learning model",
                 "url": "create-deploy-retrain-machine-learning-model.html",
@@ -443,8 +669,16 @@
                     "Watson Studio",
                     "Cloud Object Storage",
                     "Db2 Warehouse"
-                ]
-            },
+          ],
+          "requirements": [
+            "watson_studio",
+            "cloud_object_storage",
+            "machine_learning",
+            "watson_openscale",
+            "db2_warehouse"
+          ],
+          "supportsCloudShell": "not_applicable"
+        },
             {
                 "name": "Analyze and visualize open data with Apache Spark",
                 "url": "big-data-analytics-spark.html",
@@ -454,7 +688,13 @@
                     "Apache Spark",
                     "Watson Studio",
                     "Cloud Object Storage"
-                ]
+          ],
+          "requirements": [
+            "watson_studio",
+            "cloud_object_storage",
+            "analytics_engine"
+          ],
+          "supportsCloudShell": "not_applicable"
             }
         ]
     },
@@ -474,7 +714,16 @@
                     "Watson Studio",
                     "Apache Spark",
                     "Cloud Object Storage"
-                ]
+                ],
+                "requirements": [
+                    "watson_studio",
+                    "cloud_object_storage",
+                    "analytics_engine",
+                    "cloudant",
+                    "iot_platform",
+                    "cloud_foundry"
+                  ],
+                  "supportsCloudShell": "yes_with_modifications"
             }
         ]
     },
@@ -515,7 +764,10 @@
                     "Container Service",
                     "Container Registry",
                     "DevOps"
-                ]
+          ],
+          "requirements": [
+          ],
+          "supportsCloudShell": "not_applicable"
             }
         ]
     },
@@ -535,8 +787,12 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network"
-                ]
-            },
+          ],
+          "requirements": [
+            "vpc"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Deploy isolated workloads across multiple locations and zones",
                 "url": "vpc-multi-region.html",
@@ -546,8 +802,16 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network"
-                ]
-            },
+          ],
+          "requirements": [
+            "vpc",
+            "cloud_internet_services",
+            "certificate_manager",
+            "docker"
+          ],
+          "supportsCloudShell": "yes_with_modifications",
+          "cloudShellComments": "change the let's encrypt process to not use Docker"
+        },
             {
                 "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
                 "url": "vpc-site2site-vpn.html",
@@ -558,8 +822,18 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network"
-                ]
-            },
+          ],
+          "requirements": [
+            "ibmcloud_cli",
+            "vpc",
+            "vpc_vpn",
+            "cloud_object_storage",
+            "databases_for_postgresql",
+            "bash",
+            "jq"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Install software on virtual server instances in VPC",
                 "url": "vpc-app-deploy.html",
@@ -569,8 +843,13 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network"
-                ]
-            },
+          ],
+          "requirements": [
+            "vpc",
+            "ansible"
+          ],
+          "supportsCloudShell": false
+        },
             {
                 "name": "Securely access remote instances with a bastion host",
                 "url": "vpc-secure-management-bastion-server.html",
@@ -580,7 +859,11 @@
                     "Infrastructure",
                     "Virtual Private Cloud",
                     "Network"
-                ]
+                ],
+                "requirements": [
+                    "vpc"
+                  ],
+                  "supportsCloudShell": "yes_with_modifications"
             },
             {
                 "url": "/containers/containers-vpc_ks_tutorial",
@@ -605,8 +888,13 @@
                     "Vyatta",
                     "Firewall",
                     "Network"
-                ]
-            },
+          ],
+          "requirements": [
+            "virtual_router_appliance",
+            "classic_infrastructure"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Configure NAT for Internet access from a private network",
                 "url": "nat-config-private.html",
@@ -617,8 +905,13 @@
                     "Vyatta",
                     "Firewall",
                     "Network"
-                ]
-            },
+          ],
+          "requirements": [
+            "virtual_router_appliance",
+            "classic_infrastructure"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Bring Your Own IP Address",
                 "url": "byoip.html",
@@ -629,8 +922,12 @@
                     "Vyatta",
                     "Firewall",
                     "Network"
-                ]
-            },
+          ],
+          "requirements": [
+            "virtual_router_appliance"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "VPN into a secure private network",
                 "url": "configuring-IPSEC-VPN.html",
@@ -641,8 +938,11 @@
                     "Vyatta",
                     "Firewall",
                     "Network"
-                ]
-            },
+          ],
+          "requirements": [
+          ],
+          "supportsCloudShell": "not_applicable"
+        },
             {
                 "name": "Linking secure private networks over the IBM network",
                 "url": "vlan-spanning.html",
@@ -654,8 +954,13 @@
                     "Firewall",
                     "Network",
                     "VLAN Spanning"
-                ]
-            },
+          ],
+          "requirements": [
+            "virtual_router_appliance",
+            "vlan_spanning"
+          ],
+          "supportsCloudShell": "yes_with_modifications"
+        },
             {
                 "name": "Hosting web applications from a secure private network",
                 "url": "web-app-private-network.html",
@@ -667,7 +972,12 @@
                     "Load Balancer",
                     "Network",
                     "Virtual Router Appliance VPN"
-                ]
+          ],
+          "requirements": [
+            "virtual_router_appliance",
+            "vlan_spanning"
+          ],
+          "supportsCloudShell": "not_applicable"
             }
         ]
     }
