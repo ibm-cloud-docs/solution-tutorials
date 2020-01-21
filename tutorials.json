@@ -8,6 +8,20 @@
   ],
   "categories": [
     {
+      "name": "Getting Started",
+      "anchor": "gettingstarted",
+      "tocOnly": true,
+      "solutions": [
+        {
+          "name": "Getting Started",
+          "url": "getting-started.html",
+          "description": "Configure your development environment to be productive with IBM Cloud.",
+          "imgSrc": "images/gettingstarted/logo.jpg",
+          "lastUpdated": "2020-01-01"
+        }
+      ]
+    },
+    {
       "name": "Websites and Web Apps",
       "anchor": "websites",
       "solutions": [
@@ -84,7 +98,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2019-12-13"
+          "lastUpdated": "2020-01-10"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -163,7 +177,7 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "lastUpdated": "2019-06-18"
+          "lastUpdated": "2020-01-10"
         },
         {
           "name": "Use Virtual Servers to build highly available and scalable web app",
@@ -343,7 +357,7 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "lastUpdated": "2019-12-09"
+          "lastUpdated": "2020-01-10"
         },
         {
           "name": "Enhance security of your deployed application",

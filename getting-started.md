@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-01-01"
-lasttested: "2020-01-01"
+lastupdated: "2020-01-20"
+lasttested: "2020-01-20"
 
 ---
 
@@ -259,7 +259,7 @@ Proceed to the configuration [common to all operating systems](#common).
 ## Ubuntu Linux
 {: #ubuntu}
 
-The following sections assume you are running Ubuntu Linux under a user with root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
+The following sections assume you are running Ubuntu Linux as non-root user with access to root privileges. Once you're done with the specific sections, proceed to the configuration [common to all operating systems](#common).
 
 ### {{site.data.keyword.cloud_notm}} CLI
 {: #ubuntu_cli}
