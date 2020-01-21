@@ -166,13 +166,13 @@ The generated Dockerfile needs two updates to work with the Docker Engine versio
 
 1. Edit the `Dockerfile` file found in the generated directory.
 1. On line 9, replace `COPY --chown=1001:1001 package.json /app/` with:
-   ```Docker
+   ```
    COPY package.json /app/
    RUN chown -R 1001:1001 /app/
    ```
    {:pre}
 1. On line 12, replace `COPY --chown=1001:1001 . /app` with:
-   ```Docker
+   ```
    COPY . /app
    RUN chown -R 1001:1001 /app
    ```
