@@ -262,7 +262,7 @@ Wait until the **Health** check status changes to **Healthy**. Open the link **l
 
 ## Secure with HTTPS
 
-HTTPS encryption requires signed certificates to be stored and accessed. Below the {{site.data.keyword.cloudcerts_long}} will be provisioned.  Then the Identity and Access Management (IAM) service authorization is configured.
+HTTPS encryption requires signed certificates to be stored and accessed. Below the {{site.data.keyword.cloudcerts_long}} will be provisioned to order or import, then manage the certificate. Then the Identity and Access Management (IAM) service authorization is configured to allow read access.
 
 ### Create and authorize a {{site.data.keyword.cloudcerts_short}} instance
 
