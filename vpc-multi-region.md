@@ -220,13 +220,13 @@ If you observe, the requests are not encrypted and supports only HTTP. You will 
 
 **REPEAT** the steps 1-7 above in **region 2**.
 
-### Provision a {{site.data.keyword.cis_short_notm}} service and configure custom domain
+### Provision a {{site.data.keyword.cis_short_notm}} instance and configure custom domain
 
 In this section, you will create a {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) instance, configure a custom domain by pointing it to {{site.data.keyword.cis_short_notm}} name servers and later configure a global load balancer.
 
 1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Enter a service name, select a resource group and click **Create** to provision an instance of the service. You can use any pricing plans for this tutorial.
-3. When the service instance is provisioned, set your domain name by clicking **Let's get started** > enter your domain name and click **Connect and continue**.
+3. When the service instance is provisioned, set your domain name by clicking **Let's get started**, enter your domain name and click **Connect and continue**.
 4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
@@ -274,29 +274,29 @@ Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm
    - **Load Balancer for VPC** as the resource type
    - **Certificate Manager** as the target service
    - Assign the **Reader** service access role.
-   - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific {{site.data.keyword.cloudcerts_short}} resource instance.
+   - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific {{site.data.keyword.cloudcerts_short}} instance.
 
 ### Alternative 1: Proxy in {{site.data.keyword.cis_short_notm}} with wildcard certificate from Let's Encrypt
-This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
+This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
 
-1. Continuing in the Authorizations panel, create an authorization that gives the {{site.data.keyword.cloudcerts_short}} access to {{site.data.keyword.cis_short}}:
+1. Continuing in the Authorizations panel, create an authorization that gives the {{site.data.keyword.cloudcerts_short}} access to {{site.data.keyword.cis_short_notm}}:
    - Click **Create** and choose **Certificate Manager** as the source service
    - Choose **All instances** or just the {{site.data.keyword.cloudcerts_short}} created earlier
    - **Internet Services** as the target service
-   - Choose **All instances** or just the {{site.data.keyword.cis_short}} created earlier
+   - Choose **All instances** or just the {{site.data.keyword.cis_short_notm}} created earlier
    - Assign the **Manager** service access role.
 1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
    - Open the {{site.data.keyword.cloudcerts_short}} service and order a certificate. Choose **I'm using Cloud Internet Services**.  Provide the **Name**, **Description**, **Let's encrypt**, select the **Cloud Internet Service**.
    - Choose **Wildcard certificate**
-1. Configure https from client web browsers to the {{site.data.keyword.cis_short}} endpoint. In {{site.data.keyword.cis_short}} configure TLS Security:
+1. Configure https from client web browsers to the {{site.data.keyword.cis_short_notm}} endpoint. In {{site.data.keyword.cis_short_notm}} configure TLS Security:
    - Open the **Security** panel and choose **TLS**.
    - For the **Mode** choose **Client-to-edge**.  This will terminate https connections at the Global Load Balancer and will switch to http connections to the VPC load balancer.
-1. In the {{site.data.keyword.cis_short}} configure the Global Load Balancer to use TLS:
+1. In the {{site.data.keyword.cis_short_notm}} configure the Global Load Balancer to use TLS:
    - Open **Reliability** panel and choose **Global Load Balancer**
    - Locate the Global Load Balancer created earlier and turn on Proxy
 1. In a browser open https://**lb.mydomain.com** to verify success
 
-Next configure https from {{site.data.keyword.cis_short}} to the VPC load balancer.
+Next configure https from {{site.data.keyword.cis_short_notm}} to the VPC load balancer.
 
 Add an HTTPS listener to the VPC load balancers:
 1. Navigate to **VPC** then **Load balancers** and click **vpc-lb-region1**
@@ -304,13 +304,14 @@ Add an HTTPS listener to the VPC load balancers:
 1. Click **New listener**
 1. Select HTTPS, Port: 443, SSL Certificate drop down should show **mydomain.com**, leave the rest as defaults
 
+
 If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.cloudcerts_short}} service. Verify that the {{site.data.keyword.cloudcerts_short}} service has a certificate for **mydomain.com**
 {:tip}.
 
 The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**.  Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-us-south.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
 
 1. A DNS CNAME record can be created to allow clients to lookup vpc-lb-region1.**mydomain.com** and resolve xxxxxxx-us-south.lb.appdomain.cloud.
-   - In the {{site.data.keyword.cis_short}}, open **Reliability** panel and choose **DNS**
+   - In the {{site.data.keyword.cis_short_notm}}, open **Reliability** panel and choose **DNS**
    - Scroll down to DNS Records and create a record of Type: **CNAME**, Name: **vpc-lb-region1**, TTL: **Automatic** and Alias Domain Name: **VPC load balancer Hostname**
    - Add a DNS CNAME record for **vpc-lb-region2**
 
