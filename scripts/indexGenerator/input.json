@@ -91,7 +91,7 @@
             "cloud_functions",
             "cloud_foundry"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": "not_applicable"
         },
             {
                 "name": "Continuous Deployment to Kubernetes",
@@ -426,7 +426,7 @@
             "text_to_speech",
             "android_studio"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": "not_applicable"
             }
         ]
     },
@@ -552,7 +552,7 @@
             "xcode",
             "app_id"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": "not_applicable"
         },
             {
                 "name": "Android native mobile app with Push Notifications",
@@ -567,7 +567,7 @@
           "requirements": [
             "android_studio"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": "not_applicable"
         },
             {
                 "name": "Mobile application with a serverless backend",
@@ -588,7 +588,7 @@
             "tone_analyzer",
             "android_studio"
           ],
-          "supportsCloudShell": false
+          "supportsCloudShell": "not_applicable"
             }
         ]
     },
