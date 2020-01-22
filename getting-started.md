@@ -44,6 +44,7 @@ Install must-have tools to be productive with {{site.data.keyword.cloud_notm}}:
 * **kubectl** - a command line interface for running commands against Kubernetes clusters.
 * **oc** - manages OpenShift applications, and provides tools to interact with each component of your system.
 * **Helm 3** - helps you manage Kubernetes applications — Helm Charts help you define, install, and upgrade even the most complex Kubernetes application.
+* **Terraform** - automates your resource provisioning.
 * **jq** - a lightweight and flexible command-line JSON processor.
 * **Git** - a free and open source distributed version control system.
 
@@ -106,10 +107,44 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 {: #windows_helm}
 
 1. Download `helm` from https://github.com/helm/helm/releases/latest.
+1. Uncompress the downloaded archive.
 1. Move `helm.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
    helm version
+   ```
+   {:pre}
+
+### Terraform
+{: #windows_terraform}
+
+1. Download `terraform` from https://www.terraform.io/downloads.html.
+1. Uncompress the downloaded archive.
+1. Move the `terraform.exe` binary to your PATH.
+1. Verify the installation with:
+   ```sh
+   terraform version
+   ```
+   {:pre}
+
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider.
+
+1. Download the latest version of the {{site.data.keyword.cloud_notm}} Provider binary file from https://github.com/IBM-Cloud/terraform-provider-ibm/releases.
+1. Uncompress the downloaded archive.
+1. Create a folder for your plug-in.
+   ```sh
+   mkdir "%APPDATA%\terraform.d\plugins"
+   ```
+   {:pre}
+1. Move the {{site.data.keyword.cloud_notm}} Provider plug-in into the `plugins` folder.
+   ```sh
+   move terraform-provider-ibm* "%APPDATA%\terraform.d\plugins"
+   ```
+   {:pre}
+1. Navigate into the `plugins` directory and verify that the installation is complete by executing the provider binary file:
+   ```sh
+   cd "%APPDATA%\terraform.d\plugins"
+   .\terraform-provider-ibm_<version>.exe
    ```
    {:pre}
 
@@ -226,6 +261,42 @@ The following sections assume you are running macOS High Sierra or later under a
    macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `helm` to be executed anyway, in the Finder on your Mac, locate the `helm` binary. Control-click its icon, then choose **Open** from the shortcut menu.
    {:tip}
 
+### Terraform
+{: #macos_terraform}
+
+1. Download `terraform` from https://www.terraform.io/downloads.html.
+1. Uncompress the downloaded archive.
+1. Move the `terraform` binary to your PATH.
+   ```sh
+   sudo mv ./terraform /usr/local/bin/terraform
+   ```
+   {:pre}
+1. Verify the installation with:
+   ```sh
+   terraform version
+   ```
+   {:pre}
+
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider.
+
+1. Download the latest version of the {{site.data.keyword.cloud_notm}} Provider binary file from https://github.com/IBM-Cloud/terraform-provider-ibm/releases.
+1. Uncompress the downloaded archive.
+1. Create a hidden folder for your plug-in.
+   ```sh
+   mkdir $HOME/.terraform.d/plugins
+   ```
+   {:pre}
+1. Move the {{site.data.keyword.cloud_notm}} Provider plug-in into your hidden folder.
+   ```sh
+   mv terraform-provider-ibm* $HOME/.terraform.d/plugins/
+   ```
+   {:pre}
+1. Navigate into your hidden directory and verify that the installation is complete.
+   ```sh
+   cd $HOME/.terraform.d/plugins && ./terraform-provider-ibm_*
+   ```
+   {:pre}
+
 ### jq
 {: #macos_jq}
 
@@ -339,6 +410,42 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 1. Verify the installation with:
    ```sh
    helm version
+   ```
+   {:pre}
+
+### Terraform
+{: #ubuntu_terraform}
+
+1. Download `terraform` from https://www.terraform.io/downloads.html.
+1. Uncompress the downloaded archive.
+1. Move the `terraform` binary to your PATH.
+   ```sh
+   sudo mv ./terraform /usr/local/bin/terraform
+   ```
+   {:pre}
+1. Verify the installation with:
+   ```sh
+   terraform version
+   ```
+   {:pre}
+
+To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also need to install the {{site.data.keyword.cloud_notm}} Provider.
+
+1. Download the latest version of the {{site.data.keyword.cloud_notm}} Provider binary file from https://github.com/IBM-Cloud/terraform-provider-ibm/releases.
+1. Uncompress the downloaded archive.
+1. Create a hidden folder for your plug-in.
+   ```sh
+   mkdir $HOME/.terraform.d/plugins
+   ```
+   {:pre}
+1. Move the {{site.data.keyword.cloud_notm}} Provider plug-in into your hidden folder.
+   ```sh
+   mv terraform-provider-ibm* $HOME/.terraform.d/plugins/
+   ```
+   {:pre}
+1. Navigate into your hidden directory and verify that the installation is complete.
+   ```sh
+   cd $HOME/.terraform.d/plugins && ./terraform-provider-ibm_*
    ```
    {:pre}
 
