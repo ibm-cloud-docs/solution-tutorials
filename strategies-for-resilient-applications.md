@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-12-12"
+  years: 2018, 2019, 2020
+lastupdated: "2020-01-23"
 lasttested: "2019-05-28"
 ---
 
@@ -48,6 +48,7 @@ This tutorial uses the following runtimes and services:
 * {{site.data.keyword.databases-for}}
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services)
+* [{{site.data.keyword.cloudcerts_full_notm}}](https://{DomainName}/catalog/services/certificate-manager)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -109,7 +110,7 @@ In a multi-region architecture, an application is deployed to different location
 
 A region is a specific geographical location where you can deploy apps, services, and other {{site.data.keyword.cloud_notm}} resources. [{{site.data.keyword.cloud_notm}} regions](https://{DomainName}/docs/containers?topic=containers-regions-and-zones) consist of one or more zones, which are physical data centers that host the compute, network, and storage resources and related cooling and power that host services and applications. Zones are isolated from each other, which ensures no shared single point of failure.
 
-Additionally, in a multi-region architecture, a Global load balancer like [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) is required in order to distribute traffic between regions.
+Additionally, in a multi-region architecture, a Global load balancer like [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) ({{site.data.keyword.cis_short_notm}}) is required in order to distribute traffic between regions. The [{{site.data.keyword.cloudcerts_full_notm}}](https://{DomainName}/catalog/services/certificate-manager) is integrated with {{site.data.keyword.cis_short_notm}} and allows to order or import, manage and make available SSL/TLS certificates to secure the network traffic.
 
 Deploying a solution across multiple regions comes with the following benefits:
 - Improve latency for end-users - speed is the key, the closer your backend origin is to end-users, the better the experience for users and the faster.
@@ -322,17 +323,9 @@ Replication can be scheduled to automatically copy snapshots to a destination vo
 ## Non-database services
 {: #nondatabaseservices}
 
-{{site.data.keyword.cloud_notm}} offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party services. When planning for multi-region architecture, you need to understand how services like Watson services can work in a multi-region setup.
+{{site.data.keyword.cloud_notm}} offers a selection of non-database [services](https://{DomainName}/catalog), these are both IBM services and 3rd party services. When planning for multi-region architecture, you need to understand how services can work in a multi-region setup.
 
-### {{site.data.keyword.conversationfull}}
-
-[{{site.data.keyword.conversationfull}}](https://{DomainName}/docs/services/assistant?topic=assistant-index#about) is a platform that allows developers and non-technical users to collaborate on building conversational AI-powered assistants.
-
-An assistant is a cognitive bot that you can customize for your business needs, and deploy across multiple channels to bring help to your customers where and when they need it. The assistant includes one or many skills. A dialog skill contains the training data and logic that enables an assistant to help your customers.
-
-It's important to note that {{site.data.keyword.conversationshort}} V1 is stateless. {{site.data.keyword.conversationshort}} delivers 99.5% uptime, but still, for highly available applications across multiple regions, you may even want to have multiple instances of this service across regions.
-
-Once you have created instances in multiple locations, use the tooling {{site.data.keyword.conversationshort}} to export, from one instance, an existing workspace, including intents, entities, and dialog. Then import this workspace in other locations.
+Many of the services provide stateless APIs and offer high-availability through multi-zone deployments. But still, for highly available applications across multiple regions, you may even want to have multiple instances of this service across regions. Then it is important to understand how configuration and user-specific data can be made available across regions. In some cases this might be by utilizing built-in replication capabilities, in others it could mean to manually keeping data in sync by exporting and importing data sets.
 
 ## Summary
 
