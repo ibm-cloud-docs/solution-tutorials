@@ -68,7 +68,7 @@
             "File Storage",
             "Watson"
           ],
-          "lastUpdated": "2019-12-12"
+          "lastUpdated": "2020-01-23"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -190,7 +190,6 @@
             "PHP",
             "File Storage"
           ],
-          "cloudShellComments": "Using VPN is optional which may not work with cloudshell",
           "lastUpdated": "2019-06-19"
         },
         {
@@ -318,7 +317,6 @@
             "Continuous Delivery",
             "Cloud Internet Services"
           ],
-          "cloudShellComments": "do not modify now, wait for future cloud shell IDE support",
           "lastUpdated": "2019-11-18"
         },
         {
@@ -563,7 +561,6 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "cloudShellComments": "change the let's encrypt process to not use Docker",
           "lastUpdated": "2020-01-22"
         },
         {
