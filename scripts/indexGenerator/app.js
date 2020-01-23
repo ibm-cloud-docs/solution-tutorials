@@ -94,6 +94,7 @@ input.categories.forEach((category) => {
   category.solutions.forEach((solution) => {
     delete solution.requirements;
     delete solution.supportsCloudShell;
+    delete solution.cloudShellComments;
   });
 });
 fs.writeFileSync('../../tutorials.json', JSON.stringify(input, null, 2));
