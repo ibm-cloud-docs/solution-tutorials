@@ -22,7 +22,7 @@ lasttested: "2019-06-17"
 # Securely access remote instances with a bastion host
 {: #vpc-secure-management-bastion-server}
 
-This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned in a public subnet and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned in a private subnet.
+This tutorial walks you through the deployment of a bastion host to securely access remote instances within a virtual private cloud. Bastion host is an instance that is provisioned with a public IP address and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server allowing secure connection to instances provisioned without a public IP address.
 
 To reduce exposure of servers within the VPC you will create and use a bastion host. Administrative tasks on the individual servers are going to be performed using SSH, proxied through the bastion. Access to the servers and regular internet access from the servers, e.g., for software installation, will only be allowed with a special maintenance security group attached to those servers.
 {:shortdesc}
@@ -238,7 +238,7 @@ With access to the bastion working, continue and create the security group for m
 ## Use the bastion host to access other instances in the VPC
 {: #bastion-host-access-instances}
 
-In this section, you will create a private subnet with virtual server instance and a security group. By default, any subnet created in a VPC is private.
+In this section, you will create a subnet with virtual server instance and a security group.
 
 If you already have virtual server instances in your VPC that you want to connect to, you can skip the next three sections and start [adding your virtual server instances to the maintenance security group](#add-vsi-to-maintenance).
 
@@ -269,7 +269,7 @@ To create a new security group:
 ### Create a virtual server instance
 
 To create a virtual server instance in the newly created subnet:
-1. Click on the private subnet under **Subnets**.
+1. Click on the subnet **vpc-secure-private-subnet** created earlier under **Subnets**.
 1. Click **Attached resources**, then **New instance**.
 1. Enter a unique name, **vpc-secure-private-vsi**, select the VPC your created and resource group as earlier.
 1. Select the same **Location** already used by the bastion virtual server.
@@ -312,7 +312,7 @@ To SSH into an instance using its **private IP**, you will use the bastion host 
 
 ### Install software and perform maintenance tasks
 
-Once connected, you can install software on the virtual server in the private subnet or perform maintenance tasks.
+Once connected, you can install software on the virtual server or perform maintenance tasks.
 
 1. First, update the software package information:
    ```sh
@@ -323,7 +323,7 @@ Once connected, you can install software on the virtual server in the private su
 
 When done, disconnect from the server with `exit` command.
 
-To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI in the private subnet and open required ports (80 - HTTP and 443 - HTTPS) via the inbound rules in the security group of private VSI.
+To allow HTTP/HTTPS requests from the internet user, assign a **floating IP** to the VSI and open required ports (80 - HTTP and 443 - HTTPS) via the inbound rules in the security group of private VSI.
 {:tip}
 
 ### Disable the maintenance security group
@@ -348,4 +348,4 @@ When using the console, you may need to refresh your browser to see updated stat
 ## Related content
 {: #related}
 
-- [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)
+- [Public frontend and private backend in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)

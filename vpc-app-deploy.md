@@ -47,14 +47,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-In this tutorial, you will deploy the configuration introduced in another tutorial, [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
+In this tutorial, you will deploy the configuration introduced in another tutorial, [Public frontend and private backend in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
 
 <p style="text-align: center;">
 
-  ![Architecture of Private and public subnets in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png)
+  ![Architecture of Public frontend and private backend in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png)
 </p>
 
-The configuration also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned in a private subnet:
+The configuration also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned without a public IP address:
 
 <p style="text-align: center;">
 
@@ -203,7 +203,7 @@ In the next sections, you will use the script [test_provision.bash](https://gith
 
 The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}.
 
-This section uses a shell script found in the [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups.
+This section uses a shell script found in the [Public frontend and private backend in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups.
 
 ### Before you begin
 {: #cli-before-you-begin}
@@ -387,7 +387,7 @@ Check the [main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-a
 ### Provision subnets and virtual server instances
 {: #terraform-provision}
 
-The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the _Private and public subnets in a Virtual Private Cloud_ tutorial.
+The set of Terraform files under the `vpc-app-deploy/tf` folder of the `vpc-tutorials` repository implements the architecture of the _Public frontend and private backend in a Virtual Private Cloud_ tutorial.
 
 The script [vpc-app-deploy/tf/main.tf](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/tf/main.tf) contains the definition of the resources. It imports a Terraform _module_ shared with this other tutorial:
 
@@ -662,6 +662,6 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 ## Related content
 {: #related}
 
-- [Private and public subnets in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
+- [Public frontend and private backend in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 - [Deploy a LAMP stack using Terraform](/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
 
