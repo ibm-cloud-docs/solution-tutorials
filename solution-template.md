@@ -58,7 +58,28 @@ intro sentence
 ## Before you begin
 {: #prereqs}
 
-1. Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started).
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+   * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
+   * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
+   * `dev` plugin,
+* a Docker engine,
+* `kubectl` to interact with Kubernetes clusters,
+* `oc` to interact with OpenShift,
+* `helm` to deploy charts,
+* `terraform` to use Infrastructure as Code to provision resources,
+* `jq` to query JSON files,
+* `git` to clone source code repository,
+* a GitHub account,
+* {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
+
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+
+In addition, make sure you have:
+- a **namespace** created in the {{site.data.keyword.registryfull_notm}}
+- and Android Studio installed.
 
 ## Create services
 {: #setup}
