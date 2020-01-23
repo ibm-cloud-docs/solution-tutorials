@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019
-lastupdated: "2019-10-18"
+  years: 2019, 2020
+lastupdated: "2020-01-22"
 lasttested: "2019-06-18"
 ---
 
@@ -22,9 +22,9 @@ lasttested: "2019-06-18"
 # Deploy isolated workloads across multiple locations and zones
 {: #vpc-multi-region}
 
-This tutorial walks you through the steps of setting up isolated workloads by provisioning VPCs in different IBM Cloud regions. Regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to ensure high availability of the application, to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
+This tutorial walks you through the steps of setting up isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs) in different regions with subnets and virtual server instances (VSIs). These VSIs are created in multiple zones within a region to ensure high availability of the application, to increase resiliency within a region and globally by configuring load balancers with back-end pools, front-end listeners and proper health checks.
 
-For global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog and for managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
+For the global load balancer, you will provision an {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service from the catalog. For managing the SSL certificate for all incoming HTTPS requests, {{site.data.keyword.cloudcerts_long_notm}} catalog service will be created and the certificate along with the private key will be imported.
 
 {:shortdesc}
 
@@ -56,9 +56,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. The admin (DevOps) provisions VSIs in subnets under two different zones in a VPC in region 1 and repeats the same in a VPC created in region 2.
 2. The admin creates a load balancer with a backend pool of servers of subnets in different zones of region 1 and a frontend listener. Repeats the same in region 2.
 3. The admin provisions a {{site.data.keyword.cis_full_notm}} instance with an associated custom domain and creates a global load balancer pointing to the load balancers created in two different VPCs.
-4. The admin enables HTTPS encryption by adding the domain SSL certificate to the Certificate manager service.
+4. The admin enables HTTPS encryption by adding the domain SSL certificate to the {{site.data.keyword.cloudcerts_short}} service.
 5. The internet user makes an HTTP/HTTPS request and the global load balancer handles the request.
-6. The request is routed to the load balancers both global and local. The request is then fulfilled by the available server instance.
+6. The request is routed to the load balancers both on the global and local level. The request is then fulfilled by the available server instance.
 
 ## Before you begin
 {: #prereqs}
@@ -84,7 +84,7 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
 5. Under **New subnet for VPC**:
    * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
    * Select a **Resource group**.
-   * Select a location (e.g., Dallas), let's call this **region 1** and a zone in region 1 (e.g., Dallas 1), let's call this **zone 1**.
+   * Select a location (e.g., Dallas), name it **region 1** and a zone in region 1 (e.g., Dallas 1), name it **zone 1**.
    * Leave the defaults for the IP range selection
 8. Click **Create virtual private cloud** to provision the instance.
 
@@ -93,7 +93,7 @@ To confirm the creation of subnet, click **Subnets** on the left pane and wait u
 ### Create subnet in a different zone
 
 1. Click on **New Subnet**, enter **vpc-region1-zone2-subnet** as a unique name for your subnet, select **vpc-region1** as the VPC, and select a **Resource group**.
-1. Select a location which we called as region 1 above (e.g., Dallas) and select a different zone in region 1 (e.g., Dallas 2), let's call the selected zone as **zone 2**.
+1. Select the location which we named as **region 1** above (e.g., Dallas) and select a different zone that region (e.g., Dallas 2). Name the selected zone **zone 2**.
 1. Leave the defaults for the IP range selection
 1. Leave the public gateway to **Detached** and click **Create subnet**.
 
@@ -152,7 +152,7 @@ Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REP
 Follow the steps mentioned in [securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
 {:tip}
 
-Once you successfully SSH into the server provisioned in subnet of zone 1 of region 1,
+Once you successfully SSH into the server provisioned in subnet of **zone 1** of **region 1**,
 
 1. At the prompt, run the below commands to install Nginx as your web server
    ```
@@ -220,17 +220,17 @@ If you observe, the requests are not encrypted and supports only HTTP. You will 
 
 **REPEAT** the steps 1-7 above in **region 2**.
 
-### Provision a {{site.data.keyword.cis_short_notm}} service and configure custom domain
+### Provision a {{site.data.keyword.cis_short_notm}} instance and configure custom domain
 
-In this section, you will create {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) service,  configure a custom domain by pointing it to {{site.data.keyword.cis_short_notm}} name servers and later configure a global load balancer.
+In this section, you will create a {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) instance, configure a custom domain by pointing it to {{site.data.keyword.cis_short_notm}} name servers and later configure a global load balancer.
 
 1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Enter a service name, select a resource group and click **Create** to provision an instance of the service. You can use any pricing plans for this tutorial.
-3. When the service instance is provisioned, set your domain name by clicking **Let's get started** > enter your domain name and click **Connect and continue**.
+3. When the service instance is provisioned, set your domain name by clicking **Let's get started**, enter your domain name and click **Connect and continue**.
 4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
 5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
-   When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <mydomain.com> ns` command to verify that the new name servers have taken effect.
+   When the domain's status on the overview page changes from *Pending* to *Active*, you can use the `dig <mydomain.com> ns` command to verify that the new name servers have taken effect.
    {:tip}
 
 ## Configure a global load balancer
@@ -262,41 +262,41 @@ Wait until the **Health** check status changes to **Healthy**. Open the link **l
 
 ## Secure with HTTPS
 
-HTTPS encryption requires signed certificates to be stored and accessed.  Below the {{site.data.keyword.cloudcerts_long}} will be provisioned.  Then the Identity and Access Management, IAM, service authorization is configured.
+HTTPS encryption requires signed certificates to be stored and accessed. Below the {{site.data.keyword.cloudcerts_long}} will be provisioned to order or import, then manage the certificate. Then the Identity and Access Management (IAM) service authorization is configured to allow read access.
 
-### Create and authorize a Certificate Manager instance
+### Create and authorize a {{site.data.keyword.cloudcerts_short}} instance
 
-Manage the SSL certificates through IBM Certificate Manager.
+Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm}}.
 
-1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location and under a resource group.
-1. Create an authorization that gives the VPC load balancer service instance access to the certificate manager instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam#/authorizations).
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location and in a resource group.
+2. Create an authorization that gives the VPC load balancer service instance access to the {{site.data.keyword.cloudcerts_short}} instance that contains the SSL certificate. You may manage such an authorization through [Identity and Access Authorizations](https://{DomainName}/iam#/authorizations).
    - Click **Create** and choose **Infrastructure Service** as the source service
    - **Load Balancer for VPC** as the resource type
    - **Certificate Manager** as the target service
    - Assign the **Reader** service access role.
-   - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific certificate manager resource instance.
+   - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific {{site.data.keyword.cloudcerts_short}} instance.
 
 ### Alternative 1: Proxy in {{site.data.keyword.cis_short_notm}} with wildcard certificate from Let's Encrypt
-This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the Cloud Internet Services allowing you to take advantage of industry leading security, protection and performance capabilities.
+This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
 
-1. Continuing in the Authorizations panel, create an authorization that gives gives the IBM Certificate Manager manager access to the IBM Cloud Internet Services
+1. Continuing in the Authorizations panel, create an authorization that gives the {{site.data.keyword.cloudcerts_short}} access to {{site.data.keyword.cis_short_notm}}:
    - Click **Create** and choose **Certificate Manager** as the source service
-   - Choose **All instances** or just the Certificate Manager created earlier
+   - Choose **All instances** or just the {{site.data.keyword.cloudcerts_short}} created earlier
    - **Internet Services** as the target service
-   - Choose **All instances** or just the Cloud Internet Service created earlier
+   - Choose **All instances** or just the {{site.data.keyword.cis_short_notm}} created earlier
    - Assign the **Manager** service access role.
-1. Order a certficate in Certificate Manager
-   - Open the IBM Certificat Manager service and Order a certificate.  Choose **I'm using Cloud Internet Services**.  Provide the Name, Description, Let's encrypt, select the Cloud Internet Service.
+1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
+   - Open the {{site.data.keyword.cloudcerts_short}} service and order a certificate. Choose **I'm using Cloud Internet Services**.  Provide the **Name**, **Description**, **Let's encrypt**, select the **Cloud Internet Service**.
    - Choose **Wildcard certificate**
-1. Configure https from client web browsers to the Cloud Internet Services endpoint.  In the Cloud Internet Services configure TLS Security:
+1. Configure https from client web browsers to the {{site.data.keyword.cis_short_notm}} endpoint. In {{site.data.keyword.cis_short_notm}} configure TLS Security:
    - Open the **Security** panel and choose **TLS**.
    - For the **Mode** choose **Client-to-edge**.  This will terminate https connections at the Global Load Balancer and will switch to http connections to the VPC load balancer.
-1. In the Cloud Internet Services configure the Global Load Balancer to use TLS:
+1. In the {{site.data.keyword.cis_short_notm}} configure the Global Load Balancer to use TLS:
    - Open **Reliability** panel and choose **Global Load Balancer**
    - Locate the Global Load Balancer created earlier and turn on Proxy
 1. In a browser open https://**lb.mydomain.com** to verify success
 
-Next configure https from the Cloud Interenet Services to the VPC load balancer.
+Next configure https from {{site.data.keyword.cis_short_notm}} to the VPC load balancer.
 
 Add an HTTPS listener to the VPC load balancers:
 1. Navigate to **VPC** then **Load balancers** and click **vpc-lb-region1**
@@ -304,13 +304,14 @@ Add an HTTPS listener to the VPC load balancers:
 1. Click **New listener**
 1. Select HTTPS, Port: 443, SSL Certificate drop down should show **mydomain.com**, leave the rest as defaults
 
-If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the Certificate Manager service.  Verify that the Certificate Manager service has a certificate for **mydomain.com**
+
+If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.cloudcerts_short}} service. Verify that the {{site.data.keyword.cloudcerts_short}} service has a certificate for **mydomain.com**
 {:tip}.
 
-The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**.  Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-us-south.lb.appdomain.cloud.  The wildcard certificate is not going to work.  Let's fix that problem by creating an alias and then update the configuration.
+The wildcard certificate created will allow access to domain name like vpc-lb-region1.**mydomain.com**.  Open the the **Overview** tab of the VPC load balancer **vpc-lb-region1** and notice that the **Hostname** is xxxxxxx-us-south.lb.appdomain.cloud. The wildcard certificate is not going to work. Fix that problem by creating an alias and then update the configuration.
 
 1. A DNS CNAME record can be created to allow clients to lookup vpc-lb-region1.**mydomain.com** and resolve xxxxxxx-us-south.lb.appdomain.cloud.
-   - In the Cloud Internet Service, open **Reliability** panel and choose **DNS**
+   - In the {{site.data.keyword.cis_short_notm}}, open **Reliability** panel and choose **DNS**
    - Scroll down to DNS Records and create a record of Type: **CNAME**, Name: **vpc-lb-region1**, TTL: **Automatic** and Alias Domain Name: **VPC load balancer Hostname**
    - Add a DNS CNAME record for **vpc-lb-region2**
 
@@ -328,11 +329,13 @@ In a browser open https://**lb.mydomain.com** to verify success
 ### Alternative 2: Have the Global Load Balancer pass through directly to VPC load balancers
 In this alternative you should obtain an SSL certificate for the subdomain you plan to use with the global load balancer. Assuming a domain like mydomain.com, the global load balancer could be hosted at `lb.mydomain.com`. The certificate will need to be issued for lb.mydomain.com.
 
-You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).  This is the process I used:
+You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates). Use these steps:
+
 ```
 mkdir letsencrypt
 docker run -it -v $(pwd)/letsencrypt:/etc/letsencrypt certbot/certbot certonly --manual --preferred-challenges dns -d lb.mydomain.com
 ``` 
+
 During the process you may need to configure a DNS record of type TXT in the DNS interface of {{site.data.keyword.cis_full_notm}} to prove you are the owner of the domain.
 
 Once you have obtained the SSL certificate and private key for your domain you may need to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format (not required if you follow the letsencrypt instructions above).
@@ -389,7 +392,7 @@ Don't forget to **start** the servers in zone 1 and zone 2 of region 1
 {: #removeresources}
 
 - Remove the Global load balancer, origin pools and health checks under the {{site.data.keyword.cis_short_notm}} service
-- Remove the certificates in the certificate manager service.
+- Remove the certificates in the {{site.data.keyword.cloudcerts_short}} service.
 - Remove the load balancers, VSIs, subnets and VPCs.
 - Under [Resource list](https://{DomainName}/resources), delete the services used in this tutorial.
 

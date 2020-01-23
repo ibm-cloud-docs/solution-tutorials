@@ -513,7 +513,7 @@ Although Ansible could be used to provision the VPC resources and install softwa
 This section uses both Terraform and Ansible.
 
 1. Follow the instructions found in the [Getting started tutorial](https://{DomainName}/docs/terraform) to install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform on your workstation.
-1. Follow [these instructions](/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
+1. Follow [these instructions](https://{DomainName}/docs/terraform?topic=terraform-ansible#install_ansible) to install Ansible.
 
 ### Ansible Playbook
 

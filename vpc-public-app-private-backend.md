@@ -19,14 +19,14 @@ lasttested: "2019-06-17"
 {:important: .important}
 {:note: .note}
 
-# Private and public subnets in a Virtual Private Cloud
+# Public frontend and private backend in a Virtual Private Cloud
 {: #vpc-public-app-private-backend}
 
-This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with a public and a private subnet and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
+This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with multiple subnets and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 
 A subnet is an IP address range. It is bound to a single zone and cannot span multiple zones or regions. For the purposes of VPC, the important characteristic of a subnet is the fact that subnets can be isolated from one another, as well as being interconnected in the usual way. Subnet isolation can be accomplished by Security Groups that act as firewalls to control inbound and outbound traffic for one or more virtual server instances.
 
-The public subnet is used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within the private subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define SGs to allow or deny traffic to the VSIs.
+A good practice is to have a subnet used for resources that must be exposed to the outside world. Resources with restricted access that should never be directly accessed from the outside world are placed within a different subnet. Instances on such a subnet could be your backend database or some secret store that you do not want to be publicly accessible. You will define Security Groups to allow or deny traffic to the VSIs.
 {:shortdesc}
 
 In short, using VPC you can:
@@ -74,20 +74,23 @@ To perform maintenance tasks on these servers such as installing software, perfo
 
 In this section, you will create the VPC and the bastion host.
 
+This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend).
+{:note}
+
 1. Navigate to the **VPC overview** ([Gen 1](https://{DomainName}/vpc/overview) / [Gen 2](https://{DomainName}/vpc-ext/overview)) page and click on **Create a VPC**.
 1. Under **New virtual private cloud** section:
    * Enter **vpc-pubpriv** as name for your VPC.
    * Select a **Resource group**.
    * Optionally, add **Tags** to organize your resources.
 1. Uncheck SSH and ping from the **Default security group**.
-1. Under **New subnet for VPC**:
+1. You will create your first subnet, under **New subnet for VPC**:
    * As a unique name enter **vpc-secure-bastion-subnet**.
    * Select a location.
    * Enter the IP range for the subnet in CIDR notation, i.e., **10.xxx.0.0/24**. Leave the **Address prefix** as it is and select the **Number of addresses** as 256.
 
    If you are using VPC with Gen 1 compute, select **Use VPC default** for your subnet access control list (ACL).
    {:note}
-1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access to all virtual server instances in the VPC. In this tutorial, the servers do not require such connectivity.
+1. Leave the **Public gateway** to **Detached**. Enabling the public gateway would enable public Internet access from all virtual server instances in that subnet. In this tutorial, the servers do not require such connectivity.
 1. Click **Create virtual private cloud**.
 
 To confirm the creation of the subnet, go to the **Subnets** ([Gen 1](https://{DomainName}/vpc/network/subnets) / [Gen 2](https://{DomainName}/vpc-ext/network/subnets)) page and wait until the status changes to **Available**.

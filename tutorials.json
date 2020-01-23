@@ -17,7 +17,7 @@
           "url": "getting-started.html",
           "description": "Configure your development environment to be productive with IBM Cloud.",
           "imgSrc": "images/gettingstarted/logo.jpg",
-          "lastUpdated": "2020-01-01"
+          "lastUpdated": "2020-01-20"
         }
       ]
     },
@@ -94,7 +94,7 @@
             "cloud_functions",
             "cloud_foundry"
           ],
-          "supportsCloudShell": false,
+          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-12-12"
         },
         {
@@ -445,7 +445,7 @@
             "text_to_speech",
             "android_studio"
           ],
-          "supportsCloudShell": false,
+          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-12-05"
         }
       ]
@@ -577,7 +577,7 @@
             "xcode",
             "app_id"
           ],
-          "supportsCloudShell": false,
+          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-12-05"
         },
         {
@@ -593,7 +593,7 @@
           "requirements": [
             "android_studio"
           ],
-          "supportsCloudShell": false,
+          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-12-06"
         },
         {
@@ -615,7 +615,7 @@
             "tone_analyzer",
             "android_studio"
           ],
-          "supportsCloudShell": false,
+          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-10-07"
         }
       ]
@@ -777,8 +777,7 @@
             "Container Registry",
             "DevOps"
           ],
-          "requirements": [
-          ],
+          "requirements": [],
           "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-08-21"
         }
@@ -792,7 +791,7 @@
       ],
       "solutions": [
         {
-          "name": "Private and public subnets in a Virtual Private Cloud",
+          "name": "Public frontend and private backend in a Virtual Private Cloud",
           "url": "vpc-public-app-private-backend.html",
           "description": "Create a virtual private cloud with subnets and instances. Secure your resources by attaching security groups and only allow minimal access.",
           "imgSrc": "images/solution40-vpc-public-app-private-backend/Architecture.png",
@@ -825,7 +824,7 @@
           ],
           "supportsCloudShell": "yes_with_modifications",
           "cloudShellComments": "change the let's encrypt process to not use Docker",
-          "lastUpdated": "2019-10-18"
+          "lastUpdated": "2020-01-22"
         },
         {
           "name": "Use a VPC/VPN gateway for secure and private on-premises access to cloud resources",
@@ -953,8 +952,7 @@
             "Firewall",
             "Network"
           ],
-          "requirements": [
-          ],
+          "requirements": [],
           "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-03-07"
         },
