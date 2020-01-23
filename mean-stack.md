@@ -51,16 +51,15 @@ This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
 2. The Node.js app accesses the {{site.data.keyword.databases-for-mongodb}} database to fetch data.
 
 ## Before you begin
-
 {: #prereqs}
 
-1. [Install Git](https://git-scm.com/)
-2. [Install {{site.data.keyword.Bluemix_notm}} CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+* `git` to clone source code repository.
 
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
 
-And to develop and run the application locally:
-1. [Install Node.js and NPM](https://nodejs.org/)
-
+In addition, make sure you [install Node.js](https://nodejs.org/).
 
 ## Create an instance of MongoDB database in the cloud
 

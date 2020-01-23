@@ -61,14 +61,19 @@ In this tutorial {{site.data.keyword.cfee_full_notm}} is deployed on a Kubernete
 5. Node.js starter app binds the new service from a custom service broker.
 6. Node.js starter app displays "welcome" in different languages from the service.
 
-## Prerequisites
-
+## Before you begin
 {: #prereq}
 
-- [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cloud-cli-install-ibmcloud-cli)
-- [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
-- [Git](https://git-scm.com/downloads)
-- [Node.js](https://nodejs.org/en/)
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+* `kubectl` to interact with Kubernetes clusters,
+* `git` to clone source code repository.
+
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+
+In addition, make sure you install [Node.js](https://nodejs.org/en/).
 
 ## Provision {{site.data.keyword.cfee_full_notm}}
 
