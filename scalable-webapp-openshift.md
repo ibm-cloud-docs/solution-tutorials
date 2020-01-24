@@ -67,7 +67,6 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
    * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
    * `dev` plugin,
 * a Docker engine,
 * `oc` to interact with OpenShift,
