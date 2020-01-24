@@ -45,10 +45,15 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 
 ## Before you begin
 
-- [Install Git](https://git-scm.com/)
-- [Install {{site.data.keyword.Bluemix_notm}} CLI](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started)
-- [Install Aspera Connect](http://downloads.asperasoft.com/connect2/)
-- [Install Node.js and NPM](https://nodejs.org)
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+* `git` to clone source code repository.
+
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+
+In addition, make sure you:
+- [install Aspera Connect](http://downloads.asperasoft.com/connect2/)
+- and [install Node.js and NPM](https://nodejs.org).
 
 ## Create services
 

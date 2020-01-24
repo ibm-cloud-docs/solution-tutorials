@@ -70,11 +70,18 @@ The following diagram shows the virtual private cloud containing an app server. 
 ## Before you begin
 {: #prereqs}
 
-- Install all the necessary command line (CLI) tools by [following these steps](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started). You need the optional CLI infrastructure plugin.
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
-- You need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/infrastructure/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
-- Install [**jq**](https://stedolan.github.io/jq/download/). It is used by the provided scripts to process JSON output.
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
+* `jq` to query JSON files,
+* `git` to clone source code repository.
+
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+
+In addition:
+- check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. For a list of required permissions, see [Granting permissions needed for VPC users](/docs/vpc-on-classic?topic=vpc-on-classic-managing-user-permissions-for-vpc-resources).
+- you need an SSH key to connect to the virtual servers. If you don't have an SSH key, see the [instructions for creating a key](/docs/vpc?topic=vpc-getting-started-with-ibm-cloud-virtual-private-cloud-infrastructure#prerequisites).
+- you need another SSH key to connect to the classic infrastructure virtual server. If you don't have such an SSH key, see [Adding an SSH key](https://{DomainName}/docs/infrastructure/ssh-keys?topic=ssh-keys-adding-an-ssh-key).
 
 ## Deploy a virtual app server in a virtual private cloud
 {: #deploy}

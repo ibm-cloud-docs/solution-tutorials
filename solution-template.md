@@ -60,6 +60,7 @@ intro sentence
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
    * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
    * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),

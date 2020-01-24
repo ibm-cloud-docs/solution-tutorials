@@ -73,9 +73,12 @@ The application shown in this tutorial is a feedback app that smartly analyses t
 ## Before you begin
 {: #prereqs}
 
-This tutorial uses the {{site.data.keyword.Bluemix_notm}} command line tool to provision resources and deploy code. Make sure to install the `ibmcloud` command line tool.
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
+* `git` to clone source code repository.
 
-* [{{site.data.keyword.Bluemix_notm}} Developer Tools](https://github.com/IBM-Cloud/ibm-cloud-developer-tools) - Script to install ibmcloud CLI and required plug-ins (Cloud Foundry and {{site.data.keyword.openwhisk_short}})
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
 
 Additionally you will need the following software and accounts:
 

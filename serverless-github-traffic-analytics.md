@@ -36,7 +36,13 @@ This tutorial uses the following products:
 ## Before you begin
 {: #prereqs}
 
-To complete this tutorial, you need the latest version of the [IBM Cloud CLI](https://{DomainName}/docs/cli?topic=cloud-cli-getting-started) and the {{site.data.keyword.openwhisk_short}} [plugin installed](/docs/cli?topic=cloud-cli-install-ibmcloud-cli).
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
+* `git` to clone source code repository,
+* a GitHub account.
+
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
 
 ## Service and Environment Setup (shell)
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
