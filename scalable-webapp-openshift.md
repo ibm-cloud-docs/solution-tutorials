@@ -19,7 +19,7 @@ lasttested: "2020-01-26"
 This tutorial walks you through how to scaffold a web application, run it locally in a container, push the scaffolded code to a private Git repository and then deploy it to a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. Additionally, you will learn how to expose the app on an {{site.data.keyword.openshiftshort}} route, bind a custom domain, monitor the health of the environment, and scale the application.
 {:shortdesc}
 
-With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/3.11/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
+With {{site.data.keyword.openshiftlong_notm}}, you can create {{site.data.keyword.containerlong_notm}} clusters with worker nodes that come installed with the {{site.data.keyword.openshiftlong_notm}} Container Platform orchestration software. You get all the [advantages of managed {{site.data.keyword.containerlong_notm}}](https://{DomainName}/docs/containers?topic=containers-responsibilities_iks) for your cluster infrastructure environment, while using the [{{site.data.keyword.openshiftshort}} tooling and catalog](https://docs.openshift.com/container-platform/4.3/welcome/index.html) that runs on Red Hat Enterprise Linux for your app deployments.
 
 For developers looking to kickstart their projects, the {{site.data.keyword.dev_cli_notm}} CLI enables rapid application development and deployment by generating template applications that you can run immediately or customize as the starter for your own solutions.
 
@@ -103,7 +103,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 
 ### Configure CLI
 
-In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. When the cluster is ready, click on the **Access** tab under the cluster name.
 1. Under **After your cluster provisions, gain access** section, click on **oauth token request page** link and follow instructions to log into your cluster on a terminal.
@@ -133,7 +133,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
 
 ### Log in to your cluster
 
-In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
+In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. Navigate to your cluster from the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift) and click on the **Access** tab under the cluster name.
 1. Under **After your cluster provisions, gain access** section, click on **oauth token request page** link and follow instructions to log into your cluster on a terminal.
@@ -167,25 +167,6 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 6. Do not add a DevOps toolchain, select **manual deployment**.
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or {{site.data.keyword.containershort_notm}}.
-
-### Modify the Dockerfile
-
-The generated Dockerfile needs two updates to work with the Docker Engine version shipping with OpenShift 3.11.
-
-1. Edit the `Dockerfile` file found in the generated directory.
-1. On line 9, replace `COPY --chown=1001:1001 package.json /app/` with:
-   ```Docker
-   COPY package.json /app/
-   RUN chown -R 1001:1001 /app/
-   ```
-   {:pre}
-1. On line 12, replace `COPY --chown=1001:1001 . /app` with:
-   ```Docker
-   COPY . /app
-   RUN chown -R 1001:1001 /app
-   ```
-   {:pre}
-1. Save the file
 
 ### Run the application locally
 
@@ -302,7 +283,6 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=$API_KEY --docker-server=$MYREGISTRY
    ```
    {:pre}
-
 
 
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
@@ -441,7 +421,7 @@ In this step, you will automate the build and deploy process. So that whenever y
 4. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events.
 5. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
    ```sh
-   oc tag $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:latest $MYPROJECT:latest --scheduled=true
+   oc tag $MYREGISTRY/$MYNAMESPACE/${MYPROJECT}:latest ${MYPROJECT}:latest --scheduled=true
    ```
    {:pre}
 6. Open the cloned repo in an IDE to update the `h1` tag of local *public/index.html* file and change it to `Congratulations! <YOUR_NAME>`.
@@ -454,7 +434,7 @@ In this step, you will automate the build and deploy process. So that whenever y
    {:pre}
 8. You can check the progress of the build and deploy with `oc status` command. Once the deployment is successful, refresh the route HOST address to see the updated web app.
 
-   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer this [link](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html#importing-tag-and-image-metadata) for more info.
+   Sometimes, the deployment may take up to 15 minutes to import the latest image stream. You can either wait or manually import using `oc import-image $MYPROJECT` command. Refer this [link](https://docs.openshift.com/container-platform/4.3/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
    {:tip}
 
 <!--##istutorial#-->
@@ -479,7 +459,7 @@ This section requires you to own a custom domain and to be able to modify the DN
    ```
    {:pre}
 
-   Here, you have used Edge termination. To learn about other termination types like passthrough and re-encryption, refer [secure routes](https://docs.openshift.com/container-platform/3.11/architecture/networking/routes.html#secured-routes)
+   Here, you have used Edge termination. To learn about other secured routes and termination types like passthrough and re-encryption, run `oc create route --help`)
    {:tip}
 <!--#/istutorial#-->
 
