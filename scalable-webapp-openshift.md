@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-01-10"
-lasttested: "2020-01-10"
+lastupdated: "2020-01-26"
+lasttested: "2020-01-26"
 ---
 
 {:shortdesc: .shortdesc}
@@ -86,20 +86,20 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes.
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create?platformType=openshift).
-1. Under **Location**,
-   - Select **Single zone** as **Availability**.
-   - Select a **Geography**.
-   - Select a **Worker zone**.
-   - Choose a single **Worker zone** by unchecking the other worker zones.
-   - Select **Public endpoint only** as your Master service endpoint.
 1. Set **Cluster name** to **myopenshiftcluster**.
 1. Select a **Resource group**.
-1. Under **Default worker pool**,
-   - Choose **{{site.data.keyword.openshiftshort}} 3.11** as your cluster type and version.
-   - Select **4 Cores 16GB RAM** as the flavor for Worker nodes.
+2. Under **Location**,
+   - Select **Single zone** as **Availability**.
+   - Select a **Geography**.
+   - Choose a **Worker zone**.
+   - Select **Public endpoint only** as your Master service endpoint.
+3. Under **Default worker pool**,
+   - Choose **{{site.data.keyword.openshiftshort}} 4.3.x** as your cluster type and version.
+   - Select **4 vCPUs 16GB RAM** as the flavor for Worker nodes.
    - Leave **Encrypt local disk** checked and select **2** Worker nodes for this tutorial.
-1. Review **Infrastructure permissions checker** to verify the required permissions
-1. Click **Create cluster** to provision an {{site.data.keyword.openshiftshort}} cluster.
+   - Select **Purchase additional licenses for this worker pool** as your OCP entitlement.
+4. Review **Infrastructure permissions checker** to verify the required permissions
+5. Click **Create cluster** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
 ### Configure CLI
 
@@ -230,7 +230,7 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
    {:tip}
 2. Click on **New project** and provide `openshiftapp` as the project name.
 3. Set the visibility level to **Private** and click **Create project**
-4. Follow the instructions under *Git global setup* and *Existing folder* sections to setup Git and to import the code you have generated with `ibmcloud dev`.
+4. Follow the instructions under *Git global setup* and *Push an existing folder* sections to setup Git and to import the code you have generated with `ibmcloud dev`.
 5. Once you push the code to the private repository, you should see the scaffolded code in the project.
 
 ### Create a Git deploy token
