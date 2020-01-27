@@ -459,7 +459,7 @@ This section requires you to own a custom domain and to be able to modify the DN
    ```
    {:pre}
 
-   Here, you have used Edge termination. To learn about other secured routes and termination types like passthrough and re-encryption, run `oc create route --help`)
+   Here, you have used Edge termination. To learn about other secured routes and termination types like passthrough and re-encryption, run `oc create route --help` command)
    {:tip}
 <!--#/istutorial#-->
 
@@ -479,9 +479,9 @@ In this section, you will learn to monitor the health and performance of your ap
     ab -n 5000 -c 100 <APPLICATION_ROUTE_URL>/
    ```
    {:pre}
-3. In the expression box of Prometheus web UI, enter **`namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
+3. In the expression box of Prometheus web UI, enter **`namespace:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
 4. Open the **Grafana** web UI URL on a browser.
-5. On the Grafana **Home** page, click on **K8s / Compute Resources / Pod** and Select
+5. On the Grafana **Home** page, click on **Kubernetes / Compute Resources / Pod** and Select
    - datasource: **Prometheus**
    - namespace: **`<MYPROJECT>`**
    - pod: **`<MYPROJECT>-*DEPLOYMENT_NUMBER*-*POD_ID*`**
