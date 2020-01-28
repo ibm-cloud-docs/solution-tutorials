@@ -377,7 +377,7 @@ To access the app, you need to create a route. A route announces your service to
 
 1. Create a route by running the below command in a terminal
    ```sh
-   oc expose service $MYPROJECT --port=3000
+   oc expose service/$MYPROJECT --port=3000
    ```
    {:pre}
 1. You can access the app through IBM provided domain. Run the below command for the URL
@@ -408,12 +408,12 @@ In this step, you will automate the build and deploy process. So that whenever y
 2. To add a webhook on the GitLab repository, you need a URL and a secret
    - For webhook GitLab URL,
      ```sh
-     oc describe bc $MYPROJECT | grep -A 1 "GitLab"
+     oc describe bc/$MYPROJECT | grep -A 1 "GitLab"
      ```
      {:pre}
    - For secret that needs to be passed in the webhook URL,
      ```sh
-     oc get bc $MYPROJECT -o yaml | grep -A 3 "\- gitlab"
+     oc get bc/$MYPROJECT -o yaml | grep -A 3 "\- gitlab"
      ```
      {:pre}
    - Replace `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
@@ -476,12 +476,12 @@ In this section, you will learn to monitor the health and performance of your ap
    {:pre}
 2. You will use Apache *ab* to generate load on your deployed application by hitting the route URL 5000 times with 100 concurrent requests at a time. This will in turn generate data into Prometheus.
    ```sh
-    ab -n 5000 -c 100 <APPLICATION_ROUTE_URL>/
+    ab -n 10000 -c 50 <APPLICATION_ROUTE_URL>/
    ```
    {:pre}
 3. In the expression box of Prometheus web UI, enter **`namespace:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
 4. Open the **Grafana** web UI URL on a browser.
-5. On the Grafana **Home** page, click on **Kubernetes / Compute Resources / Pod** and Select
+5. On the Grafana **Home** page, click on **Kubernetes / Compute Resources / Namespace (Pods)** and Select
    - datasource: **Prometheus**
    - namespace: **`<MYPROJECT>`**
    - pod: **`<MYPROJECT>-*DEPLOYMENT_NUMBER*-*POD_ID*`**
@@ -494,11 +494,34 @@ In this section, you will learn to monitor the health and performance of your ap
 ## Scale the app
 {:#scaling_app}
 
-In this section, you will learn how to manually scale your application.
+In this section, you will learn how to autoscale and also manually scale your application.
 
-1. You can achieve manual scaling of your pods with `oc scale` command. The command sets a new size for a deployment or replication controller
+### Autoscaling
+
+You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword.openshiftshort}} should automatically increase or decrease the scale of a deployment configuration(dc) or replication controller(rc), based on metrics collected from the pods that belong to that `dc` or `rc`.
+
+1. Before you can setup autoscaling for your pods, you first need to set resource limits on the pods running in the cluster. Limits allows you to choose the minimum and maximum CPU and memory usage for a pod. You can set the limits and requests on a container using `oc set resources` command.
    ```sh
-    oc scale dc $MYPROJECT --replicas=2
+   oc set resources dc/$MYPROJECT --limits=cpu=250m,memory=512Mi --requests=cpu=100m,memory=256Mi
+   ```
+   {:pre}
+   To verify, run `oc describe dc/$MYPROJECT` and look for `Limits` and `Requests`.
+2. To create an autoscaler, you need to run the `oc autoscale` command with the lower(min) and upper(max) limits for the number of pods that can be set by the autoscaler and the target average CPU utilization (represented as a percent of requested CPU) over all the pods. For test, let's set `--cpu-percent` to 5%.
+   ```sh
+   oc autoscale dc/$MYPROJECT \
+    --min=1 \
+    --max=5 \
+    --cpu-percent=5
+   ```
+   {:pre}
+3. You can see new pods being provisionsed by running `oc get pods --watch` command.
+4. Rerun the [Monitoring](/docs/tutorials?topic=solution-tutorials-scalable-webapp-openshift#monitor_application) step to see the updated logs for all the pods.
+
+### Manual scaling
+
+1. You can achieve manual scaling of your pods with `oc scale` command. The command sets a new size for a deployment configuration or replication controller
+   ```sh
+    oc scale dc/$MYPROJECT --replicas=2
    ```
    {:pre}
 2. You can see a new pod being provisionsed by running `oc get pods` command.
@@ -524,5 +547,5 @@ In this section, you will learn how to manually scale your application.
 ## Related content
 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/3.11/dev_guide/pod_autoscaling.html)
+* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.3/nodes/pods/nodes-pods-autoscaling.html)
 * [Routes overview](https://docs.openshift.com/container-platform/3.11/architecture/networking/routes.html)
