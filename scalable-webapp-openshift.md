@@ -476,7 +476,7 @@ In this section, you will learn to monitor the health and performance of your ap
    {:pre}
 2. You will use Apache *ab* to generate load on your deployed application by hitting the route URL 5000 times with 100 concurrent requests at a time. This will in turn generate data into Prometheus.
    ```sh
-    ab -n 10000 -c 50 <APPLICATION_ROUTE_URL>/
+    ab -n 10000 -c 100 <APPLICATION_ROUTE_URL>/
    ```
    {:pre}
 3. In the expression box of Prometheus web UI, enter **`namespace:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
@@ -484,7 +484,6 @@ In this section, you will learn to monitor the health and performance of your ap
 5. On the Grafana **Home** page, click on **Kubernetes / Compute Resources / Namespace (Pods)** and Select
    - datasource: **Prometheus**
    - namespace: **`<MYPROJECT>`**
-   - pod: **`<MYPROJECT>-*DEPLOYMENT_NUMBER*-*POD_ID*`**
 6. Check the CPU and memory usage.
 7. For logging, you can use the in-built `oc logs` command.
 
@@ -506,7 +505,7 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
    ```
    {:pre}
    To verify, run `oc describe dc/$MYPROJECT` and look for `Limits` and `Requests`.
-2. To create an autoscaler, you need to run the `oc autoscale` command with the lower(min) and upper(max) limits for the number of pods that can be set by the autoscaler and the target average CPU utilization (represented as a percent of requested CPU) over all the pods. For test, let's set `--cpu-percent` to 5%.
+2. To create an autoscaler, you need to run the `oc autoscale` command with the lower(min) and upper(max) limits for the number of pods that can be set by the autoscaler and the target average CPU utilization (represented as a percent of requested CPU) over all the pods. For testing, let's set `--cpu-percent` to 5%.
    ```sh
    oc autoscale dc/$MYPROJECT \
     --min=1 \
