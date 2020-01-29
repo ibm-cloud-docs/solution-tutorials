@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
+  years: 2017, 2020
 lastupdated: "2019-12-05"
-lasttested: "2019-06-20"
+lasttested: "2020-01-29"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -56,14 +56,14 @@ This tutorial uses the following services:
 1. [Apple Developers](https://developer.apple.com/) account to send remote notifications from {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_short}} (the provider) to iOS devices and applications.
 2. Xcode for importing and enhancing your code.
 
-## Create a mobile app from basic Swift starter kit
+## Create a mobile app from Swift starter kit
 {: #get_code}
 
-1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard) and click on **Get a Starter Kit**.
-1. Scroll and click on **Basic** starter kit.
+1. Navigate to [App Development Dashboard](https://{DomainName}/developer/appservice/dashboard) and click **Get Started**.
+1. Scroll and select a Swift starter kit.
 1. Click **Create app** and enter an app name > select a resource group.
 1. Select **iOS Swift** as your platform.
-1. Under **Service details** section,
+1. On the **App details** page,
     - Select {{site.data.keyword.pushfull}} region
     - Select a resource group
     - Select a **Lite** plan
