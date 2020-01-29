@@ -359,14 +359,12 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {:pre}
 
-   To learn about the core concepts of {{site.data.keyword.openshiftshort}}, refer this [link](https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/index.html)
-   {:tip}
-1. To check the builder Docker image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
+2. To check the builder Docker image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
    ```sh
    oc logs -f bc/$MYPROJECT
    ```
    {:pre}
-1. You can check the status of deployment and service using
+3. You can check the status of deployment and service using
    ```sh
    oc status
    ```
@@ -476,7 +474,7 @@ In this section, you will learn to monitor the health and performance of your ap
    {:pre}
 2. You will use Apache *ab* to generate load on your deployed application by hitting the route URL 5000 times with 100 concurrent requests at a time. This will in turn generate data into Prometheus.
    ```sh
-    ab -n 10000 -c 100 <APPLICATION_ROUTE_URL>/
+    ab -n 10000 -c 50 <APPLICATION_ROUTE_URL>/
    ```
    {:pre}
 3. In the expression box of Prometheus web UI, enter **`namespace:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
@@ -547,4 +545,4 @@ You can use a horizontal pod autoscaler (HPA) to specify how {{site.data.keyword
 
 * [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
 * [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.3/nodes/pods/nodes-pods-autoscaling.html)
-* [Routes overview](https://docs.openshift.com/container-platform/3.11/architecture/networking/routes.html)
+* [Secured routes](https://docs.openshift.com/container-platform/4.3/networking/routes/secured-routes.html)
