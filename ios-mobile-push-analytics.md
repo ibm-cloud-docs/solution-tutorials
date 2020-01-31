@@ -44,7 +44,7 @@ This tutorial uses the following services:
 
   ![](images/solution6/Architecture.png)
 
-1. The user creates a project on the mobile dashboard.
+1. The user creates a project on the App Development page.
 2. Adds and configures the push notifications SDK to interact with APNS.
 3. Sends a push notification.
 4. The {{site.data.keyword.mobilepushshort}} service sends the notification to APNS.
@@ -60,7 +60,7 @@ This tutorial uses the following services:
 {: #get_code}
 
 1. Navigate to [App Development Dashboard](https://{DomainName}/developer/appservice/dashboard) and click **Get Started**.
-1. Scroll and select a Swift starter kit.
+1. Scroll and select **Mobile App with Push Notifications** starter kit.
 1. Click **Create app** and enter an app name > select a resource group.
 1. Select **iOS Swift** as your platform.
 1. On the **App details** page,
@@ -195,7 +195,7 @@ To set up APNs on the `Push Notification services` console, complete the steps:
 
 1. Push initialization code (under `func application`) and notification registration code can be found in `AppDelegate.swift`. Provide a unique USER_ID(Optional).
 2. Run the app on a physical device as notifications can't be sent to an iPhone Simulator.
-3. Open {{site.data.keyword.mobilepushshort}} service under **App details** on {{site.data.keyword.Bluemix_short}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
+3. Open {{site.data.keyword.mobilepushshort}} service under **App details** on {{site.data.keyword.Bluemix_short}} App Development and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
   * Select `Messages`, and compose a message by choosing a Send to option. The supported options are _Device by Tag_, _Device Id_, _User Id_, _Android devices_, _iOS devices_, _Web Notifications_, _All Devices_ and _other browsers_.
 
        **Note:** When you select the All Devices option, all devices subscribed to {{site.data.keyword.mobilepushshort}} will receive notifications.
