@@ -37,14 +37,6 @@
             "Container Registry",
             "Java"
           ],
-          "requirements": [
-            "container_registry",
-            "kubernetes_service",
-            "ibmcloud_cli",
-            "ibmcloud_plugin_dev",
-            "docker"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2019-11-22"
         },
         {
@@ -59,13 +51,6 @@
             "MySQL",
             "Java"
           ],
-          "requirements": [
-            "container_registry",
-            "kubernetes_service",
-            "ibmcloud_cli",
-            "docker"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2019-12-12"
         },
         {
@@ -83,19 +68,7 @@
             "File Storage",
             "Watson"
           ],
-          "requirements": [
-            "container_registry",
-            "kubernetes_service",
-            "ibmcloud_cli",
-            "docker",
-            "cloudant",
-            "cloud_object_storage",
-            "cloud_internet_services",
-            "cloud_functions",
-            "cloud_foundry"
-          ],
-          "supportsCloudShell": "not_applicable",
-          "lastUpdated": "2019-12-12"
+          "lastUpdated": "2020-01-23"
         },
         {
           "name": "Continuous Deployment to Kubernetes",
@@ -111,16 +84,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "requirements": [
-            "container_registry",
-            "kubernetes_service",
-            "ibmcloud_cli",
-            "ibmcloud_plugin_dev",
-            "docker",
-            "continuous_delivery"
-          ],
-          "supportsCloudShell": false,
-          "lastUpdated": "2019-07-08"
+          "lastUpdated": "2020-01-31"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -134,14 +98,6 @@
             "Container Registry",
             "Node.js"
           ],
-          "requirements": [
-            "container_registry",
-            "openshift_on_ibm_cloud",
-            "ibmcloud_cli",
-            "ibmcloud_plugin_dev",
-            "docker"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2020-01-10"
         },
         {
@@ -155,14 +111,6 @@
             "Content Delivery Network",
             "Cloud Object Storage"
           ],
-          "requirements": [
-            "cloud_object_storage",
-            "content_delivery_network",
-            "ibmcloud_cli",
-            "ibmcloud_plugin_dev",
-            "cloud_foundry"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-05-17"
         },
         {
@@ -176,14 +124,6 @@
             "Container Service",
             "Docker"
           ],
-          "requirements": [
-            "kubernetes_service",
-            "content_delivery_network",
-            "ibmcloud_cli",
-            "docker",
-            "container_registry"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2019-10-24"
         },
         {
@@ -198,16 +138,6 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "requirements": [
-            "kubernetes_service",
-            "cloud_object_storage",
-            "ibmcloud_cli",
-            "ibmcloud_plugin_dev",
-            "event_stream",
-            "docker",
-            "container_registry"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2019-12-13"
         },
         {
@@ -221,10 +151,6 @@
             "WordPress",
             "Vulnerability Scanner"
           ],
-          "requirements": [
-            "virtual_servers"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-05-20"
         },
         {
@@ -238,12 +164,6 @@
             "PHP",
             "Object Storage"
           ],
-          "requirements": [
-            "virtual_servers",
-            "cloud_object_storage",
-            "terraform"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-06-25"
         },
         {
@@ -257,13 +177,6 @@
             "Cloud Foundry",
             "Identity and Access Management"
           ],
-          "requirements": [
-            "virtual_servers",
-            "cloud_object_storage",
-            "cloudant",
-            "terraform"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2020-01-10"
         },
         {
@@ -277,15 +190,6 @@
             "PHP",
             "File Storage"
           ],
-          "requirements": [
-            "virtual_servers",
-            "file_storage",
-            "cloud_internet_services",
-            "cloud_load_balancers",
-            "vpn"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
-          "cloudShellComments": "Using VPN is optional which may not work with cloudshell",
           "lastUpdated": "2019-06-19"
         },
         {
@@ -298,11 +202,6 @@
             "Node.js",
             "Compose for MongoDB"
           ],
-          "requirements": [
-            "cloud_foundry",
-            "databases_for_mongodb"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-05-15"
         },
         {
@@ -315,11 +214,6 @@
             "Python",
             "Db2 Warehouse"
           ],
-          "requirements": [
-            "cloud_foundry",
-            "db2_warehouse"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-10-01"
         },
         {
@@ -332,12 +226,6 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "requirements": [
-            "cloud_functions",
-            "cloudant",
-            "api_gateway"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-12-13"
         },
         {
@@ -350,12 +238,6 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "requirements": [
-            "cloud_functions",
-            "cloud_internet_services",
-            "certificate_manager"
-          ],
-          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-10-09"
         },
         {
@@ -369,14 +251,6 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "requirements": [
-            "container_registry",
-            "kubernetes_service",
-            "docker",
-            "logdna",
-            "sysdig"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2019-10-04"
         },
         {
@@ -390,16 +264,6 @@
             "Node.js",
             "Kubernetes"
           ],
-          "requirements": [
-            "cfee",
-            "cloudant",
-            "kubernetes_service",
-            "container_registry",
-            "docker",
-            "cloud_foundry",
-            "ibmcloud_cli"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2019-12-10"
         }
       ]
@@ -421,11 +285,6 @@
             "Cloud Functions",
             "Slack"
           ],
-          "requirements": [
-            "cloud_functions",
-            "db2_on_cloud"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-12-11"
         },
         {
@@ -439,13 +298,6 @@
             "Text to Speech",
             "Android"
           ],
-          "requirements": [
-            "watson_assistant",
-            "speech_to_text",
-            "text_to_speech",
-            "android_studio"
-          ],
-          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-12-05"
         }
       ]
@@ -465,12 +317,6 @@
             "Continuous Delivery",
             "Cloud Internet Services"
           ],
-          "requirements": [
-            "cloud_internet_services",
-            "continuous_delivery"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
-          "cloudShellComments": "do not modify now, wait for future cloud shell IDE support",
           "lastUpdated": "2019-11-18"
         },
         {
@@ -483,13 +329,6 @@
             "Container Registry",
             "Cloud Internet Services"
           ],
-          "requirements": [
-            "cloud_internet_services",
-            "container_registry",
-            "kubernetes_service",
-            "docker"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2019-08-12"
         },
         {
@@ -502,11 +341,6 @@
             "Node.js",
             "API Connect"
           ],
-          "requirements": [
-            "api_connect",
-            "api_designer"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2019-05-21"
         },
         {
@@ -523,17 +357,6 @@
             "Key Protect",
             "Activity Tracker"
           ],
-          "requirements": [
-            "kubernetes_service",
-            "container_registry",
-            "certificate_manager",
-            "app_id",
-            "cloud_object_storage",
-            "cloudant",
-            "key_protect",
-            "logdna"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2020-01-10"
         },
         {
@@ -549,12 +372,6 @@
             "Hyper Protect",
             "Activity Tracker"
           ],
-          "requirements": [
-            "certificate_manager",
-            "key_protect",
-            "logdna"
-          ],
-          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-12-13"
         }
       ]
@@ -573,12 +390,7 @@
             "Swift",
             "Push Notifications"
           ],
-          "requirements": [
-            "xcode",
-            "app_id"
-          ],
-          "supportsCloudShell": "not_applicable",
-          "lastUpdated": "2019-12-05"
+          "lastUpdated": "2020-01-31"
         },
         {
           "name": "Android native mobile app with Push Notifications",
@@ -590,11 +402,7 @@
             "Java",
             "Push Notifications"
           ],
-          "requirements": [
-            "android_studio"
-          ],
-          "supportsCloudShell": "not_applicable",
-          "lastUpdated": "2019-12-06"
+          "lastUpdated": "2020-01-31"
         },
         {
           "name": "Mobile application with a serverless backend",
@@ -608,14 +416,6 @@
             "Watson Tone Analyzer",
             "Push Notifications"
           ],
-          "requirements": [
-            "app_id",
-            "cloud_functions",
-            "cloudant",
-            "tone_analyzer",
-            "android_studio"
-          ],
-          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-10-07"
         }
       ]
@@ -636,15 +436,6 @@
             "Streaming Analytics",
             "Analytics Engine"
           ],
-          "requirements": [
-            "sql_query",
-            "cloud_object_storage",
-            "streaming_analytics",
-            "event_stream",
-            "analytics_engine",
-            "kafka_client"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-10-31"
         },
         {
@@ -657,14 +448,6 @@
             "SQL Query",
             "Watson Studio"
           ],
-          "requirements": [
-            "sql_query",
-            "cloud_object_storage",
-            "watson_studio",
-            "cognos_dashboard",
-            "ibmcloud_cli"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-11-27"
         },
         {
@@ -678,15 +461,6 @@
             "Cloud Functions",
             "GitHub"
           ],
-          "requirements": [
-            "cognos_dashboard",
-            "ibmcloud_cli",
-            "db2_warehouse",
-            "cloud_functions",
-            "app_id",
-            "cloud_foundry"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-11-21"
         },
         {
@@ -701,14 +475,6 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "requirements": [
-            "watson_studio",
-            "cloud_object_storage",
-            "machine_learning",
-            "watson_openscale",
-            "db2_warehouse"
-          ],
-          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-12-03"
         },
         {
@@ -721,12 +487,6 @@
             "Watson Studio",
             "Cloud Object Storage"
           ],
-          "requirements": [
-            "watson_studio",
-            "cloud_object_storage",
-            "analytics_engine"
-          ],
-          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-05-22"
         }
       ]
@@ -748,15 +508,6 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "requirements": [
-            "watson_studio",
-            "cloud_object_storage",
-            "analytics_engine",
-            "cloudant",
-            "iot_platform",
-            "cloud_foundry"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-12-04"
         }
       ]
@@ -777,8 +528,6 @@
             "Container Registry",
             "DevOps"
           ],
-          "requirements": [],
-          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-08-21"
         }
       ]
@@ -800,10 +549,6 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "requirements": [
-            "vpc"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-10-18"
         },
         {
@@ -816,14 +561,6 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "requirements": [
-            "vpc",
-            "cloud_internet_services",
-            "certificate_manager",
-            "docker"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
-          "cloudShellComments": "change the let's encrypt process to not use Docker",
           "lastUpdated": "2020-01-22"
         },
         {
@@ -837,16 +574,6 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "requirements": [
-            "ibmcloud_cli",
-            "vpc",
-            "vpc_vpn",
-            "cloud_object_storage",
-            "databases_for_postgresql",
-            "bash",
-            "jq"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-10-18"
         },
         {
@@ -859,11 +586,6 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "requirements": [
-            "vpc",
-            "ansible"
-          ],
-          "supportsCloudShell": false,
           "lastUpdated": "2019-10-18"
         },
         {
@@ -876,10 +598,6 @@
             "Virtual Private Cloud",
             "Network"
           ],
-          "requirements": [
-            "vpc"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-10-18"
         }
       ]
@@ -899,12 +617,7 @@
             "Firewall",
             "Network"
           ],
-          "requirements": [
-            "virtual_router_appliance",
-            "classic_infrastructure"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
-          "lastUpdated": "2019-05-23"
+          "lastUpdated": "2020-02-03"
         },
         {
           "name": "Configure NAT for Internet access from a private network",
@@ -917,11 +630,6 @@
             "Firewall",
             "Network"
           ],
-          "requirements": [
-            "virtual_router_appliance",
-            "classic_infrastructure"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-03-07"
         },
         {
@@ -935,10 +643,6 @@
             "Firewall",
             "Network"
           ],
-          "requirements": [
-            "virtual_router_appliance"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-03-07"
         },
         {
@@ -952,8 +656,6 @@
             "Firewall",
             "Network"
           ],
-          "requirements": [],
-          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-03-07"
         },
         {
@@ -968,11 +670,6 @@
             "Network",
             "VLAN Spanning"
           ],
-          "requirements": [
-            "virtual_router_appliance",
-            "vlan_spanning"
-          ],
-          "supportsCloudShell": "yes_with_modifications",
           "lastUpdated": "2019-03-07"
         },
         {
@@ -987,11 +684,6 @@
             "Network",
             "Virtual Router Appliance VPN"
           ],
-          "requirements": [
-            "virtual_router_appliance",
-            "vlan_spanning"
-          ],
-          "supportsCloudShell": "not_applicable",
           "lastUpdated": "2019-03-07"
         }
       ]

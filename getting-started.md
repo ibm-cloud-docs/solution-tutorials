@@ -95,7 +95,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### oc
 {: #windows_oc}
 
-1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
+1. Download the latest 3.11 OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/.
 1. Move `oc.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
@@ -222,7 +222,7 @@ The following sections assume you are running macOS High Sierra or later under a
 ### oc
 {: #macos_oc}
 
-1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
+1. Download the latest 3.11 OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/.
 1. Extract `oc.tar.gz`:
    ```sh
    tar zxvf oc.tar.gz
@@ -380,7 +380,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 ### oc
 {: #ubuntu_oc}
 
-1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
+1. Download the latest 3.11 OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/.
 1. Extract `oc.tar.gz`:
    ```sh
    tar zxvf oc.tar.gz

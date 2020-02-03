@@ -54,7 +54,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-Contact the master user of your Infrastructure account to get the following permissions:
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+* `git` to clone source code repository.
+
+<!--##istutorial#-->
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
+
+In addition, contact the master user of your Infrastructure account to get the following permissions:
    * Manage CDN Account
    * Manage Storage
    * API Key

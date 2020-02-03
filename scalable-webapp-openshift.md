@@ -63,13 +63,21 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-1. [Install {{site.data.keyword.dev_cli_notm}}](/docs/cli?topic=cloud-cli-getting-started) - Script to install docker, kubectl, ibmcloud cli and required plug-ins like dev, ks, cr ...
-1. [Install the {{site.data.keyword.openshiftshort}} Origin (oc) CLI](/docs/openshift?topic=openshift-openshift-cli#cli_oc)
-1. [Set up a namespace in {{site.data.keyword.registrylong_notm}}](https://{DomainName}/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
-1. {{site.data.keyword.cloud_notm}} provides you with hosted Git repositories built on GitLab Community Edition and accessible with the same credentials used to log in {{site.data.keyword.cloud_notm}}. It is recommended to configure your SSH public key to simplify the command line interactions with the Git repositories.
-   1. [Use these instructions](https://us-south.git.cloud.ibm.com/help/ssh/README#generating-a-new-ssh-key-pair) to generate a new SSH key pair if you don't have one.
-   1. [Add your SSH public key](https://us-south.git.cloud.ibm.com/help/gitlab-basics/create-your-ssh-keys) under User Settings > SSH keys in the region where you plan to host source code, such as [Dallas (us-south.git.cloud.ibm.com)](https://us-south.git.cloud.ibm.com/profile/keys), [London (eu-gb.git.cloud.ibm.com)](https://eu-gb.git.cloud.ibm.com/profile/keys) or [Frankfurt (eu-de.git.cloud.ibm.com)](https://eu-de.git.cloud.ibm.com/profile/keys).
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+   * `dev` plugin,
+* a Docker engine,
+* `oc` to interact with OpenShift,
+* `git` to clone source code repository,
+* {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
 
+<!--##istutorial#-->
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
+
+In addition, make sure you [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
 
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster

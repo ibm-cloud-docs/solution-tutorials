@@ -91,6 +91,11 @@ console.log('Writing ../../tutorials.json');
 input.categories = input.categories.filter((category) => !category.hidden);
 input.categories.forEach((category) => {
   category.solutions = category.solutions.filter((solution) => !solution.hidden && !helper.isExternalSolution(solution));
+  category.solutions.forEach((solution) => {
+    delete solution.requirements;
+    delete solution.supportsCloudShell;
+    delete solution.cloudShellComments;
+  });
 });
 fs.writeFileSync('../../tutorials.json', JSON.stringify(input, null, 2));
 

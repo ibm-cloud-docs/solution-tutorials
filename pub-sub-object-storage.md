@@ -59,7 +59,18 @@ In this tutorial, the UI application is written in Node.js and the worker applic
 ## Before you begin
 {: #prereqs}
 
-* [IBM Cloud Developer Tools](/docs/cli?topic=cloud-cli-install-ibmcloud-cli) - Tool to install {{site.data.keyword.cloud_notm}} CLI, Kubernetes, Helm, and Docker.
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+   * `dev` plugin,
+* a Docker engine,
+* `kubectl` to interact with Kubernetes clusters,
+* `git` to clone source code repository.
+
+<!--##istutorial#-->
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
