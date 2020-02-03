@@ -84,7 +84,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2019-07-08"
+          "lastUpdated": "2020-01-31"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -390,7 +390,7 @@
             "Swift",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-12-05"
+          "lastUpdated": "2020-01-31"
         },
         {
           "name": "Android native mobile app with Push Notifications",
@@ -402,7 +402,7 @@
             "Java",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-12-06"
+          "lastUpdated": "2020-01-31"
         },
         {
           "name": "Mobile application with a serverless backend",
@@ -617,7 +617,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2019-05-23"
+          "lastUpdated": "2020-02-03"
         },
         {
           "name": "Configure NAT for Internet access from a private network",
