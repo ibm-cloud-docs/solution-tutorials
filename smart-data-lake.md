@@ -49,7 +49,9 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
 * `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, make sure you:
 - [install Aspera Connect](http://downloads.asperasoft.com/connect2/)

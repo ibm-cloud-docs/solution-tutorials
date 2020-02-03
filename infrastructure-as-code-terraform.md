@@ -55,7 +55,9 @@ This tutorial requires:
 * `terraform` to use Infrastructure as Code to provision resources,
 * and `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, contact your Infrastructure master user to get the following permissions:
 - Network (to add **Public and Private Network Uplink**)

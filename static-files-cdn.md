@@ -58,7 +58,9 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
 * `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, contact the master user of your Infrastructure account to get the following permissions:
    * Manage CDN Account

@@ -78,7 +78,9 @@ This tutorial requires:
    * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
 * `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 Additionally you will need the following software and accounts:
 

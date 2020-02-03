@@ -54,7 +54,9 @@ This tutorial requires:
    * {{site.data.keyword.openwhisk}} plugin (`cloud-functions`),
 * `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 ## Service and Environment Setup
 In this section, you are going to set up the needed services and prepare the environment. Most of this can be accomplished from the command line interface (CLI) using scripts. They are available on GitHub.

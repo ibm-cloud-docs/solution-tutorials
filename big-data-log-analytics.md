@@ -66,7 +66,9 @@ This tutorial requires:
    * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
 * `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, [install Node.js](https://nodejs.org). 
 
