@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2019-12-06"
+  years: 2017, 2019, 2020
+lastupdated: "2020-01-31"
 lasttested: "2019-06-20"
 
 ---
@@ -38,7 +38,7 @@ This tutorial uses the following services:
 ## Architecture
 {:#architecture}
 ![](images/solution9/Architecture.png)
-1. The user creates a project on the mobile dashboard.
+1. The user creates a project on the App Development page.
 2. Adds and configures the push notifications SDK to interact with FCM.
 3. Sends a push notification.
 4. The {{site.data.keyword.mobilepushshort}} service sends the notification to FCM.
@@ -52,9 +52,9 @@ This tutorial uses the following services:
 
 ## Create Android mobile app from starter kit
 {: #get_code}
-The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track your mobile app development by creating your app from a Starter Kit.
-1. Navigate to [Mobile Dashboard](https://{DomainName}/developer/mobile/dashboard) and click on **Get a Starter Kit**.
-2. Scroll and click on **Basic** starter kit.
+The {{site.data.keyword.Bluemix_notm}} App Development allows you to fast-track your mobile app development by creating your app from a Starter Kit.
+1. Navigate to [App Development](https://{DomainName}/appservice/dashboard) and click on **Get Started**.
+2. Scroll and click on **Mobile App with Push Notifications** starter kit.
 3. Click **Create app** and enter an app name(this will be your android project name as well) > select a resource group.
 4. Select **Android** as your platform.
 5. Under **Service details** section,
@@ -62,8 +62,6 @@ The {{site.data.keyword.Bluemix_notm}} Mobile Dashboard allows you to fast-track
     - Select a resource group
     - Select a **Lite** plan.
 6. Click **Create**. A new App will be created under **Apps** of [Resource list](https://{DomainName}/resources).
-
-    **Note:** {{site.data.keyword.mobilepushshort}} service should be added with the Empty Starter.
 
 In the next step, you will obtain Firebase Cloud Messaging (FCM) credentials.
 
@@ -102,7 +100,7 @@ In the next step, you will download the scaffolded code and setup the Push Andro
 ## Download the code and complete required setup
 {: #download_code}
 
-If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_notm}} Mobile dashboard to get the code by clicking on the  **Download Code** button under Apps > **Your Mobile App**.
+If you haven't downloaded the code yet, then use {{site.data.keyword.Bluemix_notm}} App Development to get the code by clicking on the  **Download Code** button under Apps > **Your Mobile App**.
 The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client SDK included. The client SDK is available on Gradle and Maven. For this tutorial, you will use **Gradle**.
 
 1. Launch Android Studio > **Open an existing Android Studio project** and point to the downloaded code.
@@ -119,7 +117,7 @@ The downloaded code comes with **{{site.data.keyword.mobilepushshort}}** client 
     **Note:** The service credentials are part of `/res/values/credentials.xml` file.
 2. Registration for notifications happens in `MainActivity.java`.  (Optional) Provide a unique USER_ID.
 3. Run the app on a physical device or Emulator to receive notifications.
-4. Open {{site.data.keyword.mobilepushshort}} service under **App details** on {{site.data.keyword.Bluemix_notm}} Mobile dashboard and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
+4. Open {{site.data.keyword.mobilepushshort}} service under **App details** on {{site.data.keyword.Bluemix_notm}} App Development and to send basic {{site.data.keyword.mobilepushshort}}, complete the following steps:
    - Click **Manage** > **Configure**.
    - Select **Mobile** and then update the GCM/FCM Push Credentials tab with the Sender ID/Project number and API Key(Server Key) which you initially created on Firebase console.
 
