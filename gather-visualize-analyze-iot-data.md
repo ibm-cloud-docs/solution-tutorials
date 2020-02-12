@@ -178,7 +178,7 @@ Setting up a new connection is a four-step process:
 * Set up one or more forwarding rules for each destination.
 
 To setup a new connection,
-1. Navigate to [**Historical Data Storage Extension REST API**](https://docs.internetofthings.ibmcloud.com/apis/swagger/v0002/historian-connector.html) to see the **IBM {{site.data.keyword.iot_short_notm}} - Historical Data Storage Extension APIs** Swagger UI.
+1. On the {{site.data.keyword.iot_short_notm}} dashboard, click on the **Watson IoT Platform Help** icon (menu bar help icon) on the top ribbon, click on **API** and then **View APIs** next to **Historian Connector** to see the interactive API docs.
 2. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value** under **Service** body.
 
    ```json
