@@ -197,26 +197,29 @@ On a terminal:
 ### Deploy the application
 
 1. Gain access to your cluster as described under the **Access** section of your cluster.
-1. Define an environment variable named `MYCLUSTER` with your cluster name:
+
+   For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
+   {:tip}
+2. Define an environment variable named `MYCLUSTER` with your cluster name:
    ```sh
    MYCLUSTER=mycluster
    ```
-1. Retrieve the cluster ingress subdomain:
+3. Retrieve the cluster ingress subdomain:
    ```sh
    ibmcloud ks cluster get $MYCLUSTER
    ```
    {:pre}
-1. Define a variable pointing to the subdomain:
+4. Define a variable pointing to the subdomain:
    ```sh
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
    ```
    {: pre}
-7. Edit app-log-analysis.yaml changing the strings in MYx, then Deploy the app:
+5. Edit app-log-analysis.yaml changing the strings in MYx, then Deploy the app:
    ```sh
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
-8. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
+6. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
 
 ### Configure the cluster to send logs to your LogDNA instance
 
