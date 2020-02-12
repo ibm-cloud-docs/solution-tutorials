@@ -196,7 +196,7 @@ On a terminal:
 
 ### Deploy the application
 
-1. Gain access to your cluster as described on the Access tab of your cluster.
+1. Gain access to your cluster as described under the **Access** section of your cluster.
 1. Define an environment variable named `MYCLUSTER` with your cluster name:
    ```sh
    MYCLUSTER=mycluster
