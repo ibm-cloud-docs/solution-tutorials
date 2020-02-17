@@ -746,6 +746,17 @@
           "tags": [
             "PowerAI"
           ]
+        },
+        {
+          "name": "Coligo tutorial",
+          "url": "coligo.hidden.html",
+          "description": "provision a Coligo cluster and deploy an image processing application",
+          "imgSrc": "images/solution54-coligo-hidden/architecture_diagram.png",
+          "tags": [
+            "Coligo",
+            "Knative",
+            "Kubernetes"
+          ]
         }
       ]
     },
