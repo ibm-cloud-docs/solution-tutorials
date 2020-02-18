@@ -83,7 +83,7 @@ This tutorial requires:
 
 In this section, you will provision a Coligo service and a subsequent project to group applications and jobs. You will also provision other services required
 
-### Create a Coligo service and project
+### Provision Coligo service and create a project
 {:#coligo_service_project}
 
 1. On {{site.data.keyword.Bluemix_notm}} catalog, provision a Coligo service.
@@ -108,8 +108,17 @@ In this section, you will provision a Coligo service and a subsequent project to
    ibmcloud coligo target $COLIGO_PROJECT
    ```
    {:pre}
+
 ### Create {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:#create_services}
+
+1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
+   1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
+   2. Set **Service name** to **coligo-cos** and select a resource group.
+   3. Click **Create**
+2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for future reference
+3. Create a **Standard** bucket named `<your-initial>-coligo-images` with **Cross Region** resiliency and another bucket named `<your-initial>-coligo-results` with **Cross Region** resiliency.
+4. Under **Endpoint**, find the **private** endpoint to access each of your bucket and save the endpoint for future reference.
 
 ## Deploy the frontend and backend apps as Coligo services
 {: #deploy_app}
@@ -128,7 +137,7 @@ In this section, you will deploy your front-end application as a Knative service
    ibmcloud coligo service list
    ```
    {:pre}
-3. Copy the URL from the output above and open it in a browser to see an output as mentioned below
+3. Copy the URL from the output above and open it in a browser to see an output as similar to the one below
    ```
    Hello World!! from the frontend.
    Connection to the backend failed as there is no backend defined yet.
