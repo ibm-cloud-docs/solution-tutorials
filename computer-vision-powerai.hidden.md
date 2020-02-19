@@ -61,9 +61,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Setup a {{site.data.keyword.cos_short}} bucket with PowerAI Vision Trial
 
-In this section, you will download PowerAI Vision Trial and upload it to a {{site.data.keyword.cos_short}} bucket later to be used with {{site.data.keyword.bplong_notm}} to create a VPC.
+In this section, you will download PowerAI Vision Trial and upload it to a {{site.data.keyword.cos_short}}(COS) bucket later to be used with {{site.data.keyword.bplong_notm}} to create a VPC.
 
-Download the PowerAI Vision Trial by clicking on the [download link](http://ibm.biz/vision_trial).
+Download the PowerAI Vision Trial by clicking on the [download link](http://ibm.biz/vision_trial). Once downloaded, extract the contents of the `tar` file.
 
   You may be asked to provide your IBMid (the one you use to log into your IBM Cloud account). The download is approx. 15GB.
   {:tip}
@@ -72,7 +72,7 @@ Download the PowerAI Vision Trial by clicking on the [download link](http://ibm.
    - Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account
    - Set **Service name** to **powerai-cos** and select a resource group
    - Click on **Create**
-2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for future reference
+2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for quick reference
 3. Create a **Custom** bucket,
    - Provide `powerai-vision-trial-bucket` as the unique bucket name
    - Select **Cross Region** as the resiliency
@@ -84,7 +84,7 @@ Download the PowerAI Vision Trial by clicking on the [download link](http://ibm.
    You will be asked to download and setup the IBM Aspera connect client.
    {:tip}
 
-6. Once the client is setup, upload the downloaded PowerAI Vision Trial file via the IBM Aspera connect client.
+6. Once the client is setup, upload the downloaded PowerAI Vision Trial files(`.deb`,`.rpm`,`.tar`) from the extracted folder via the IBM Aspera connect client.
 
 ## Provision a VPC using {{site.data.keyword.bplong_notm}} service
 
@@ -94,19 +94,19 @@ In this section, you will provision a VPC with PowerAI vision installed on a vir
    - Enter **powerai-vision-workspace** as the workspace name and select a resource group
    - Enter `https://github.com/ibm/vision-terraform`as the GitHub URL under Import your Terraform template section
    - Click **Retrieve input variables**.
-2. Enter the values as shown in the table below
+2. Enter the values as shown in the table below. If no **override value is provided, the **Default value** will be used.
 
    |Name  	| Description 	|  Type	|  Default	|  Override value	|  Sensitive	|
 |---	|---	|---	|---	|---	|---	|
-| ibmcloud_api_key 	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
+| ibmcloud_api_key 	|  key from [IBM Cloud api keys](https://cloud.ibm.com/iam/apikeys)	| string 	|  	|  ENTER THE KEY HERE	|  	|
+| vision_version 	|  Check the name of the downloaded file	|  string	| 1.1.5.1 	|  	|  	|
+|  vpc_basename	|  	| string  	| powerai-vision-trial 	|  	|  	|
+|  expect_gpus	|  	|  string	| 1|  	|  	|
+| cos_access_key 	| From saved credentials W/O spaces 	| string 	|  	|  	| true 	|
+| cos_secret_access_key 	| From saved credentials W/O spaces 	|string  	|  	|  	| true 	|
+| cos_bucket_base 	| For endpoint, refer COS service endpoint	| string 	|  	| Example: **http://s3.ap.cloud-object-storage.appdomain.cloud/powerai-vision-trial-bucket**  	|  	|
+| vision_deb_name 	| Name of the `.deb` file in the extracted folder 	| string 	|  	|  	|  	|
+| vision_tar_name 	|  	|  	|  	|  	|  	|
 |  	|  	|  	|  	|  	|  	|
 |  	|  	|  	|  	|  	|  	|
 |  	|  	|  	|  	|  	|  	|
