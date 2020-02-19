@@ -96,20 +96,23 @@ In this section, you will provision a VPC with PowerAI vision installed on a vir
    - Click **Retrieve input variables**.
 2. Enter the values as shown in the table below. If no **override value is provided, the **Default value** will be used.
 
-   |Name  	| Description 	|  Type	|  Default	|  Override value	|  Sensitive	|
-|---	|---	|---	|---	|---	|---	|
-| ibmcloud_api_key 	|  key from [IBM Cloud api keys](https://cloud.ibm.com/iam/apikeys)	| string 	|  	|  ENTER THE KEY HERE	|  	|
-| vision_version 	|  Check the name of the downloaded file	|  string	| 1.1.5.1 	|  	|  	|
-|  vpc_basename	|  	| string  	| powerai-vision-trial 	|  	|  	|
-|  expect_gpus	|  	|  string	| 1|  	|  	|
-| cos_access_key 	| From saved credentials W/O spaces 	| string 	|  	|  	| true 	|
-| cos_secret_access_key 	| From saved credentials W/O spaces 	|string  	|  	|  	| true 	|
-| cos_bucket_base 	| For endpoint, refer COS service endpoint	| string 	|  	| Example: **http://s3.ap.cloud-object-storage.appdomain.cloud/powerai-vision-trial-bucket**  	|  	|
-| vision_deb_name 	| Name of the `.deb` file in the extracted folder 	| string 	|  	|  	|  	|
-| vision_tar_name 	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
-|  	|  	|  	|  	|  	|  	|
+  | Name                  | Description                                                                                           | Type   | Default                              | Override value                                                                     | Sensitive |
+|-----------------------|-------------------------------------------------------------------------------------------------------|--------|--------------------------------------|------------------------------------------------------------------------------------|-----------|
+| ibmcloud_api_key      | key from [IBM Cloud api keys](https://cloud.ibm.com/iam/apikeys)                                      | string |                                      | ENTER THE KEY HERE without trialing spaces                                         |           |
+| vision_version        | Check the name of the downloaded file                                                                 | string | 1.1.5.1                              |                                                                                    |           |
+| vpc_basename          |                                                                                                       | string | powerai-vision-trial                 |                                                                                    |           |
+| expect_gpus           |                                                                                                       | string | 1                                    |                                                                                    |           |
+| cos_access_key        | From saved credentials W/O spaces                                                                     | string |                                      | ENTER THE KEY HERE without trialing spaces                                         | true      |
+| cos_secret_access_key | From saved credentials W/O spaces                                                                     | string |                                      | ENTER THE KEY HERE without trialing spaces                                         | true      |
+| cos_bucket_base       | For endpoint, refer COS service endpoint                                                              | string |                                      | e.g. http://s3.ap.cloud-object-storage.appdomain.cloud/powerai-vision-trial-bucket |           |
+| vision_deb_name       | Name of the `.deb` file in the extracted folder                                                       | string |                                      | e.g. powerai-vision-1.1.5~trial.deb                                                |           |
+| vision_tar_name       | Name of the images tar file                                                                           | string |                                      | e.g. powerai-vision-1.1.5-images.tar                                               |           |
+| boot_image_name       |                                                                                                       | string | ibm-ubuntu-18-04-3-minimal-ppc64le-2 |                                                                                    |           |
+| vpc_region            | Target region to create this instance of PowerAI Vision                                               | string | us-south                             |                                                                                    |           |
+| vpc_zone              | Target availbility zone to create this instance of PowerAI Vision                                     | string | us-south-1                           |                                                                                    |           |
+| vm_profile            | What resources or VM profile should we create for compute? gp2-24x224x2 provides 2 GPUs and 224GB RAM | string | gp2-24x224x2                         |                                                                                    |           |
+
+
 
 <!--## Provision a PowerAI Vision Trial service
 {: #provision_powerai_vision}
