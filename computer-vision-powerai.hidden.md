@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2019
-lastupdated: "2019-12-12"
-lasttested: "2019-12-12"
+  years: 2019, 2020
+lastupdated: "2020-02-19"
+lasttested: "2020-02-19"
 ---
 
 {:shortdesc: .shortdesc}
@@ -39,6 +39,7 @@ This tutorial uses the following runtimes and services:
 * PowerAI Vision Trial
 * [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview)
 * [{{site.data.keyword.vpc_short}}](https://{DomainName}/vpc/provision/vpc)
+* [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -58,7 +59,59 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. Obtain your [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 2. If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to IBM Cloud and save the UUID for future reference.
 
-## Provision a PowerAI Vision Trial service
+## Setup a {{site.data.keyword.cos_short}} bucket with PowerAI Vision Trial
+
+In this section, you will download PowerAI Vision Trial and upload it to a {{site.data.keyword.cos_short}} bucket later to be used with {{site.data.keyword.bplong_notm}} to create a VPC.
+
+Download the PowerAI Vision Trial by clicking on the [download link](http://ibm.biz/vision_trial).
+
+  You may be asked to provide your IBMid (the one you use to log into your IBM Cloud account). The download is approx. 15GB.
+  {:tip}
+
+1. While the download is in progress, create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
+   - Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account
+   - Set **Service name** to **powerai-cos** and select a resource group
+   - Click on **Create**
+2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for future reference
+3. Create a **Custom** bucket,
+   - Provide `powerai-vision-trial-bucket` as the unique bucket name
+   - Select **Cross Region** as the resiliency
+   - Select **Standard** as the storage class
+   - Click on **Create bucket**
+4. Open the created bucket, click on **Upload** and select **Files**.
+5. Choose **Aspera high-speed transfer** as the transfer type.
+
+   You will be asked to download and setup the IBM Aspera connect client.
+   {:tip}
+
+6. Once the client is setup, upload the downloaded PowerAI Vision Trial file via the IBM Aspera connect client.
+
+## Provision a VPC using {{site.data.keyword.bplong_notm}} service
+
+In this section, you will provision a VPC with PowerAI vision installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service,
+
+1. Navigate to [{{site.data.keyword.bplong_notm}}](https://cloud.ibm.com/schematics/overview) overview page and click on **Create a workspace**,
+   - Enter **powerai-vision-workspace** as the workspace name and select a resource group
+   - Enter `https://github.com/ibm/vision-terraform`as the GitHub URL under Import your Terraform template section
+   - Click **Retrieve input variables**.
+2. Enter the values as shown in the table below
+
+   |Name  	| Description 	|  Type	|  Default	|  Override value	|  Sensitive	|
+|---	|---	|---	|---	|---	|---	|
+| ibmcloud_api_key 	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+|  	|  	|  	|  	|  	|  	|
+
+<!--## Provision a PowerAI Vision Trial service
 {: #provision_powerai_vision}
 In this section, you will provision a PowerAI vision Trial service. Once successfully provisioned, the result is a VPC, subnet and a VSI where PowerAI Vision trial is pre-installed.
 
@@ -69,7 +122,7 @@ In this section, you will provision a PowerAI vision Trial service. Once success
    * Virtual server instance(VSI) within the backend subnet in VPC (particular region and availability zone (AZ))
    * Floating IP (FIP) address on the public Internet for the back-end subnet. _Temporarily attached to train the model._
    * Security group with a rule that allows ingress traffic on port 22 (for SSH)
-
+-->
 ## Train, deploy and test the deep learning model
 {: #train_deploy_dl_model}
 In this section, you will train, deploy a deep learning model and expose it as an API
