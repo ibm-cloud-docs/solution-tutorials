@@ -96,123 +96,127 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
    - Enter `https://github.com/ibm/vision-terraform`as the GitHub URL under Import your Terraform template section
    - Click **Retrieve input variables**.
 2. Enter the values as shown in the table below. If no **override value** is provided, the **Default value** will be used.Once entered, click on **Create**.
-
-  <table>
-    <tr>
-        <td>Name</td>
-        <td>Description</td>
-        <td>Type</td>
-        <td>Default</td>
-        <td>Override value</td>
-        <td>Sensitive</td>
-    </tr>
-    <tr>
-        <td>ibmcloud_api_key</td>
-        <td>key from [IBM Cloud api keys](https://cloud.ibm.com/iam/apikeys)</td>
-        <td>string</td>
-        <td></td>
-        <td>ENTER THE KEY HERE without trialing spaces</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>vision_version</td>
-        <td>Check the name of the downloaded file</td>
-        <td>string</td>
-        <td>1.1.5.1</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>vpc_basename</td>
-        <td></td>
-        <td>string</td>
-        <td>powerai-vision-trial </td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>expect_gpus</td>
-        <td></td>
-        <td>string</td>
-        <td>1</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>cos_access_key </td>
-        <td>From saved credentials W/O spaces</td>
-        <td>string</td>
-        <td></td>
-        <td>ENTER THE KEY HERE without trialing spaces</td>
-        <td>true</td>
-    </tr>
-    <tr>
-        <td>cos_secret_access_key</td>
-        <td>From saved credentials W/O spaces </td>
-        <td>string</td>
-        <td></td>
-        <td>ENTER THE KEY HERE without trialing spaces</td>
-        <td>true</td>
-    </tr>
-    <tr>
-        <td>cos_bucket_base</td>
-        <td>For endpoint, refer COS service endpoint</td>
-        <td>string</td>
-        <td></td>
-        <td>e.g. http://s3.ap.cloud-object-storage.appdomain.cloud/powerai-vision-trial-bucket</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>vision_deb_name</td>
-        <td>Name of the `.deb` file in the extracted folder</td>
-        <td>string</td>
-        <td></td>
-        <td>e.g. powerai-vision-1.1.5~trial.deb</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>vision_tar_name </td>
-        <td>Name of the images tar file </td>
-        <td>string</td>
-        <td></td>
-        <td>e.g. powerai-vision-1.1.5-images.tar</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>boot_image_name</td>
-        <td></td>
-        <td>string</td>
-        <td>ibm-ubuntu-18-04-3-minimal-ppc64le-2</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>vpc_region</td>
-        <td>Target region to create this instance of PowerAI Vision</td>
-        <td>string</td>
-        <td>us-south</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>vpc_zone</td>
-        <td>Target availbility zone to create this instance of PowerAI Vision</td>
-        <td>string</td>
-        <td>us-south-1</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>vm_profile</td>
-        <td>What resources or VM profile should we create for compute? gp2-24x224x2 provides 2 GPUs and 224GB RAM</td>
-        <td>string</td>
-        <td>gp2-24x224x2</td>
-        <td></td>
-        <td></td>
-    </tr>
+   <table>
+    <thead>
+        <tr>
+            <td><strong>Name</strong></td>
+            <td><strong>Description</strong></td>
+            <td><strong>Type</strong></td>
+            <td><strong>Default</strong></td>
+            <td><strong>Override value</strong></td>
+            <td><strong>Sensitive</strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ibmcloud_api_key</td>
+            <td>key from [IBM Cloud api keys](https://cloud.ibm.com/iam/apikeys)</td>
+            <td>string</td>
+            <td></td>
+            <td>ENTER THE KEY HERE without trialing spaces</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>vision_version</td>
+            <td>Check the name of the downloaded file</td>
+            <td>string</td>
+            <td>1.1.5.1</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>vpc_basename</td>
+            <td></td>
+            <td>string</td>
+            <td>powerai-vision-trial </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>expect_gpus</td>
+            <td></td>
+            <td>string</td>
+            <td>1</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>cos_access_key </td>
+            <td>From saved credentials W/O spaces</td>
+            <td>string</td>
+            <td></td>
+            <td>ENTER THE KEY HERE without trialing spaces</td>
+            <td>true</td>
+        </tr>
+        <tr>
+            <td>cos_secret_access_key</td>
+            <td>From saved credentials W/O spaces </td>
+            <td>string</td>
+            <td></td>
+            <td>ENTER THE KEY HERE without trialing spaces</td>
+            <td>true</td>
+        </tr>
+        <tr>
+            <td>cos_bucket_base</td>
+            <td>For endpoint, refer COS service endpoint</td>
+            <td>string</td>
+            <td></td>
+            <td>e.g. http://s3.ap.cloud-object-storage.appdomain.cloud/powerai-vision-trial-bucket</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>vision_deb_name</td>
+            <td>Name of the `.deb` file in the extracted folder</td>
+            <td>string</td>
+            <td></td>
+            <td>e.g. powerai-vision-1.1.5~trial.deb</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>vision_tar_name </td>
+            <td>Name of the images tar file </td>
+            <td>string</td>
+            <td></td>
+            <td>e.g. powerai-vision-1.1.5-images.tar</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>boot_image_name</td>
+            <td></td>
+            <td>string</td>
+            <td>ibm-ubuntu-18-04-3-minimal-ppc64le-2</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>vpc_region</td>
+            <td>Target region to create this instance of PowerAI Vision</td>
+            <td>string</td>
+            <td>us-south</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>vpc_zone</td>
+            <td>Target availbility zone to create this instance of PowerAI Vision</td>
+            <td>string</td>
+            <td>us-south-1</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>vm_profile</td>
+            <td>What resources or VM profile should we create for compute? gp2-24x224x2 provides 2 GPUs and 224GB RAM</td>
+            <td>string</td>
+            <td>gp2-24x224x2</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
 </table>
 
-1. Click on **Apply plan** and then **View log** next to the plan to see the logs.
+
+3. Click on **Apply plan** and then **View log** next to the plan to see the logs.
 
 
 
