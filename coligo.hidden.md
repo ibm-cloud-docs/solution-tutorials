@@ -165,6 +165,35 @@ In this section, you will deploy your front-end application as a Knative service
    ibmcloud coligo service update frontend --env backend=backend.XXX.svc.cluster.local
    ```
    {:pre}
-4. Refresh the frontend URL on the browser to test the connection to the backend service.
+4. Refresh the frontend URL on the browser to test the connection to the backend service. Not backend should be available. Try uploading an image from your computer to detect objects, you should still see an error message as the backend is still not connected with the required services to store the image and process it.
 
 ## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
+{:connect_cloud_services}
+
+> Under :construction:
+
+1. Create a secret each for {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services. There are multiple options to use the created secret
+   - Refer the secret as a ENV variable.
+
+     Currently, `kn service update` has a flag `--env-from` stringArray
+     Add environment variables from a ConfigMap (prefix cm: or config-map:) or a Secret (prefix secret:). Example: --env-from cm:myconfigmap or --env-from secret:mysecret. You can use this flag multiple times.
+     {:tip}
+
+   - Mount the secret as a Kubernetes Volume.
+
+2. To verify whether the backend-service `yaml` is updated with the secret. You can run the below command
+   ```sh
+   kn service describe backend -o yaml
+   ```
+   {:pre}
+
+## Test the application
+{:test_app}
+
+1. Now, test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} service.
+2. Run the below command to see the pods getting created to serve the request
+   ```sh
+   kubectl get pods --watch
+   ```
+   {:pre}
+3. Upload multiple images to process them in parallel
