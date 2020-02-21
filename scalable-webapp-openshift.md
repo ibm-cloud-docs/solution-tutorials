@@ -167,27 +167,9 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 4. Select the **resource group** where your cluster has been created.
 5. Do not add additional services.
 6. Do not add a DevOps toolchain, select **manual deployment**.
+7. Select **Helm-based** deployment target.
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or {{site.data.keyword.containershort_notm}}.
-
-### Modify the Dockerfile
-
-The generated Dockerfile needs two updates to work with the Docker Engine version shipping with OpenShift 3.11.
-
-1. Edit the `Dockerfile` file found in the generated directory.
-1. On line 9, replace `COPY --chown=1001:1001 package.json /app/` with:
-   ```Docker
-   COPY package.json /app/
-   RUN chown -R 1001:1001 /app/
-   ```
-   {:pre}
-1. On line 12, replace `COPY --chown=1001:1001 . /app` with:
-   ```Docker
-   COPY . /app
-   RUN chown -R 1001:1001 /app
-   ```
-   {:pre}
-1. Save the file
 
 ### Run the application locally
 
