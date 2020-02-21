@@ -96,7 +96,7 @@ Download the PowerAI Vision Trial by clicking on the [download link](http://ibm.
 In this section, you will provision a VPC with PowerAI vision trial installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service,
 
 ### Create a workspace
-1. Navigate to [{{site.data.keyword.bplong_notm}}](https://cloud.ibm.com/schematics/overview) overview page and click on **Create a workspace**,
+1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click on **Create a workspace**,
    - Enter **powerai-vision-workspace** as the workspace name and select a resource group
    - Enter `https://github.com/ibm/vision-terraform` as the GitHub URL under Import your Terraform template section
    - Click **Retrieve input variables**.
@@ -115,7 +115,7 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
     <tbody>
         <tr>
             <td>ibmcloud_api_key</td>
-            <td>key from [IBM Cloud api keys](https://cloud.ibm.com/iam/apikeys)</td>
+            <td>key from [IBM Cloud api keys](https://{DomainName}/iam/apikeys)</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without trialing spaces</td>
