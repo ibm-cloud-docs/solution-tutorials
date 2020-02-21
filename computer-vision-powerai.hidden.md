@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-02-19"
+lastupdated: "2020-02-21"
 lasttested: "2020-02-19"
 ---
 
@@ -56,8 +56,12 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Before you begin
 {: #prereqs}
 
-1. Obtain your [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
-2. If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to IBM Cloud and save the UUID for future reference.
+This tutorial requires:
+* {{site.data.keyword.cloud_notm}} CLI,
+   * vpc-infrastructure/infrastructure-service plugin
+
+* Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
+* If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to IBM Cloud and save the UUID for future reference.
 
 ## Setup a {{site.data.keyword.cos_short}} bucket with PowerAI Vision Trial
 
@@ -282,8 +286,9 @@ You should also see the created API for the deployed model and the endpoints.
 {: #create_webapp}
 
 1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click **Create a workspace**.
-2. Enter a **Workspace name** and select a resource group.
-3. Provide the [GitHub repository URL](https://github.com/abc/abc.git) to import the Terraform template.
+2. Enter **powerai-vision-frontend-workspace** as the Workspace name and select a resource group.
+3. Provide the [GitHub repository URL](https://github.ibm.com/portfolio-solutions/powerai-image-classifier) and Enterprise Git access token to import the Terraform template.
+   Check steps to create a [personal access token](https://{DomainName}/docs/services/ghededicated?topic=ghededicated-getting-started#ghe_auth) on GitHub Enterprise
 4. Click on **Retrieve input variables** and complete the fields
 5. Click on **Create** to start creation.
 6. On the Schematics page, Click on **Generate Plan**.
@@ -291,8 +296,8 @@ You should also see the created API for the deployed model and the endpoints.
    * a front-end subnet
    * VSI within the front-end subnet to deploy the web app
    * Floating IP (FIP) address on the public Internet for the front-end subnet to access the web app
-   * Security group with rules that allows ingress traffic on port 22 (for SSH), HTTP requests on port 80 and HTTPS on port 443.
-8. In a browser, enter `http://<Floating_IP>` to see the front-end web app that calls the deployed deep learning model via an API call.
+   * Security group with rules that allows ingress traffic on port 22 (for SSH), HTTP requests on port 80 , HTTP requests on port 3000 to allow nodeJS traffic and HTTPS on port 443.
+8. In a browser, enter `http://<Floating_IP>:3000` to see the front-end web app that calls the deployed deep learning model via an API call.
 
 ### Classify images
 {: #classify_images}
