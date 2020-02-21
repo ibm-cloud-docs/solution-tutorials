@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-02-18"
+lastupdated: "2020-02-20"
 lasttested: "2020-02-17"
 
 ---
@@ -196,4 +196,4 @@ In this section, you will deploy your front-end application as a Knative service
    kubectl get pods --watch
    ```
    {:pre}
-3. Upload multiple images to process them in parallel
+3. Upload multiple images to process them in parallel using jobs.
