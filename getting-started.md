@@ -297,6 +297,9 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    ```
    {:pre}
 
+   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow the provider to be executed anyway, in the Finder on your Mac, locate the provider binary. Control-click its icon, then choose **Open** from the shortcut menu.
+   {:tip}
+
 ### jq
 {: #macos_jq}
 

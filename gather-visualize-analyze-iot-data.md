@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2019-12-04"
+  years: 2017, 2019, 2020
+lastupdated: "2020-02-12"
 lasttested: "2019-12-04"
 ---
 
@@ -178,9 +178,8 @@ Setting up a new connection is a four-step process:
 * Set up one or more forwarding rules for each destination.
 
 To setup a new connection,
-1. Open the **IBM {{site.data.keyword.iot_short_notm}} dashboard**.
-2. Select **Extensions** from the left menu, and then click **Historical Data Storage Extension REST API** under Historical Data Storage. A new tab will be opened showing the **IBM {{site.data.keyword.iot_short_notm}} - Historical Data Storage Extension APIs** Swagger UI.
-3. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value** under **Service** body.
+1. On the {{site.data.keyword.iot_short_notm}} dashboard, click on the **Watson IoT Platform Help** icon (menu bar help icon) on the top ribbon, click on **API** and then **View APIs** next to **Historian Connector** to see the interactive API docs.
+2. Under **Services**, expand the **POST /s2s/services** endpoint and click **Try it out**. Replace the placeholders in the JSON below with the cloudant service credentials and use it as content for **Example Value** under **Service** body.
 
    ```json
     {
@@ -197,8 +196,8 @@ To setup a new connection,
     }
    ```
    {:codeblock}
-4. Click **Execute** to see `HTTP 201` response. Save the `id` (serviceID) from the response for the next API call.
-5. Under **HistorianConnectors**, expand the **POST /historianconnectors** endpoint and click **Try it out**. Replace the **Example Value** under **Connector** body with the JSON below. Don't forget to replace the `SERVICE_ID` with the `id` from the response above.
+3. Click **Execute** to see `HTTP 201` response. Save the `id` (serviceID) from the response for the next API call.
+4. Under **HistorianConnectors**, expand the **POST /historianconnectors** endpoint and click **Try it out**. Replace the **Example Value** under **Connector** body with the JSON below. Don't forget to replace the `SERVICE_ID` with the `id` from the response above.
     ```json
     {
       "name": "iot-cloudant-connector",
@@ -209,8 +208,8 @@ To setup a new connection,
     }
     ```
     {:codeblock}
-6. Click **Execute** to see `HTTP 201` response. Save the `id`(connectorID) from the response for future reference.
-7. Under **Destinations**, expand the **POST /historianconnectors/{connectorId}/destinations** endpoint and click **Try it out**. Provide the `id`(connectorID) and replace the **Example Value** under **Destination** body with the JSON below.
+5. Click **Execute** to see `HTTP 201` response. Save the `id`(connectorID) from the response for future reference.
+6. Under **Destinations**, expand the **POST /historianconnectors/{connectorId}/destinations** endpoint and click **Try it out**. Provide the `id`(connectorID) and replace the **Example Value** under **Destination** body with the JSON below.
    ```json
    {
     "name": "default",
@@ -221,8 +220,8 @@ To setup a new connection,
    }
    ```
    {:codeblock}
-8. Click **Execute** to see `HTTP 201` response.
-9. Under **Forwarding Rules**, expand **POST /historianconnectors/{connectorId}/forwardingrules** endpoint and click **Try it out**. Provide the `id`(connectorID) and replace the **Example Value** under **Forwarding Rule** body with the JSON below.
+7. Click **Execute** to see `HTTP 201` response.
+8. Under **Forwarding Rules**, expand **POST /historianconnectors/{connectorId}/forwardingrules** endpoint and click **Try it out**. Provide the `id`(connectorID) and replace the **Example Value** under **Forwarding Rule** body with the JSON below.
     ```json
     {
     "name": "iot-cloudant-rule",
@@ -235,7 +234,7 @@ To setup a new connection,
     }
     ```
     {:codeblock}
-10. Click **Execute** to see `HTTP 201` response.
+9.  Click **Execute** to see `HTTP 201` response.
 
 By using the Python SDK, you can set up a Cloudant NoSQL DB binding in just a few lines of code.For more information about how to get your IoT data forwarded to Cloudant NoSQL DB, check the [configuration section](https://www.ibm.com/support/knowledgecenter/SSQP8H/iot/platform/reference/dsc/cloudant.html) of data connector documentation.
 {:tip}

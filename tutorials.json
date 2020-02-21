@@ -98,7 +98,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-01-10"
+          "lastUpdated": "2020-02-21"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -251,7 +251,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2019-10-04"
+          "lastUpdated": "2020-02-12"
         },
         {
           "name": "Isolated Cloud Foundry Enterprise Apps",
@@ -508,7 +508,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-12-04"
+          "lastUpdated": "2020-02-12"
         }
       ]
     },

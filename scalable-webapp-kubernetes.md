@@ -95,6 +95,9 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 {: #create_cluster}
 
 - Gain access to your cluster as described on the Access tab of your cluster.
+
+  For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
+   {:tip}
 - Initialize the environment variable with the cluster name
 
    ```bash
