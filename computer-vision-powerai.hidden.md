@@ -115,7 +115,7 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
     <tbody>
         <tr>
             <td>ibmcloud_api_key</td>
-            <td>key from [IBM Cloud api keys](https://cloud.ibm.com/iam/apikeys)</td>
+            <td>key from [IBM Cloud api keys](https://{DomainName}/iam/apikeys)</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without trialing spaces</td>
