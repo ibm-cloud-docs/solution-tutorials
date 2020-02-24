@@ -160,6 +160,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 4. Select the **resource group** where your cluster has been created.
 1. Do not add additional services.
 1. Do not add a DevOps toolchain, select **manual deployment**.
+1. Select **Helm-based** deployment target.
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes.
 
