@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-02-21"
-lasttested: "2020-02-19"
+lastupdated: "2020-02-24"
+lasttested: "2020-02-24"
 ---
 
 {:shortdesc: .shortdesc}
@@ -96,7 +96,7 @@ Download the PowerAI Vision Trial by clicking on the [download link](http://ibm.
 In this section, you will provision a VPC with PowerAI vision trial installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service,
 
 ### Create a workspace
-1. Navigate to [{{site.data.keyword.bplong_notm}}](https://cloud.ibm.com/schematics/overview) overview page and click on **Create a workspace**,
+1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click on **Create a workspace**,
    - Enter **powerai-vision-workspace** as the workspace name and select a resource group
    - Enter `https://github.com/ibm/vision-terraform` as the GitHub URL under Import your Terraform template section
    - Click **Retrieve input variables**.
@@ -251,13 +251,13 @@ For training the model and testing the deployed deep learning model, Download th
 2. Click **Create new data set** and give it a name
    - Click on the data set tile.
    - Click on **Import files** and point to the downloaded dataset folder
-   - Select a category folder and import the pictures to be uploaded for classification
-3. Label the objects
-   - Select at least 5 images of a type and click **Label Objects**
+   - Select a **lotus** image dataset folder and import the images to be uploaded for classification
+3. Categorize the objects
+   - Select at least 5 images of a category type
    - Click **Assign category**, give a name and click **Assign**
-   - Repeat the steps if you have images of different type
+   - Repeat the steps with images from **sunflower** dataset folder
 
-   There must be at least two categories.Each category must have at least five images.
+   There must be at least 2 categories.Each category must at least have 5 images.
    {:tip}
 
 4. Click **Train model**
