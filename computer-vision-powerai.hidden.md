@@ -351,7 +351,7 @@ You should also see the created API for the deployed model and the endpoints.
             <td>number</td>
             <td>900</td>
             <td></td>
-            <td>true</td>
+            <td></td>
         </tr>
         <tr>
             <td>region</td>
@@ -379,10 +379,10 @@ You should also see the created API for the deployed model and the endpoints.
         </tr>
         <tr>
             <td>powerai_vision_api_url</td>
-            <td></td>
-            <td>string</td>
             <td>The URL of backend PowerAI vision trial API</td>
-            <td>ENTER </td>
+            <td>string</td>
+            <td></td>
+            <td>ENTER THE URL HERE without any trailing spaces</td>
             <td></td>
         </tr>
     </tbody>
