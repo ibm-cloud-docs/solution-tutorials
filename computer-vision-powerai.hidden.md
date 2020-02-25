@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-02-24"
-lasttested: "2020-02-24"
+lastupdated: "2020-02-25"
+lasttested: "2020-02-25"
 ---
 
 {:shortdesc: .shortdesc}
@@ -59,7 +59,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * vpc-infrastructure/infrastructure-service plugin
-
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 * If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to IBM Cloud and save the UUID for future reference.
 
@@ -251,24 +250,24 @@ For training the model and testing the deployed deep learning model, Download th
 2. Click **Create new data set** and give it a name
    - Click on the data set tile.
    - Click on **Import files** and point to the downloaded dataset folder
-   - Select a **lotus** image dataset folder and import the images to be uploaded for classification
+   - Select **lotus** image dataset folder and import the images to be uploaded for classification
+
+     There must be at least 2 categories.Each category must at least have 5 images. If you wish to categorize all the images, expand **categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar and then Assign a category.
+     {:tip}
+
 3. Categorize the objects
    - Select at least 5 images of a category type
-   - Click **Assign category**, give a name and click **Assign**
+   - Click **Assign category**, give **Lotus** as the name and click **Assign**
    - Repeat the steps with images from **sunflower** dataset folder
-
-   There must be at least 2 categories.Each category must at least have 5 images.
-   {:tip}
-
 4. Click **Train model**
-   - Modify the model name
+   - Modify the model name if you wish to
    - Select **Image classification** as your type of training
    - Select **System Default(GoogLeNet)** as your Optimization technique
    - Click **Train model**
 
 ### Deploy and test the model
 {: #deploy_test_model}
-1. Once the training is completed, check the accuracy and other parameters.
+1. Once the training is completed, check the accuracy and other parameters by clicking on **Model details**.
 2. To deploy the trained model, click **Deploy model**
    - Give it a name and click **Deploy**
    - Once the status changes to **Ready**, click on the model **name**
@@ -288,7 +287,10 @@ You should also see the created API for the deployed model and the endpoints.
 1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click **Create a workspace**.
 2. Enter **powerai-vision-frontend-workspace** as the Workspace name and select a resource group.
 3. Provide the [GitHub repository URL](https://github.ibm.com/portfolio-solutions/powerai-image-classifier) and Enterprise Git access token to import the Terraform template.
+
    Check steps to create a [personal access token](https://{DomainName}/docs/services/ghededicated?topic=ghededicated-getting-started#ghe_auth) on GitHub Enterprise
+   {:tip}
+
 4. Click on **Retrieve input variables** and complete the fields
 5. Click on **Create** to start creation.
 6. On the Schematics page, Click on **Generate Plan**.
@@ -302,14 +304,17 @@ You should also see the created API for the deployed model and the endpoints.
 ### Classify images
 {: #classify_images}
 
-1. Click on **Upload** to select an image from your machine.
-2. Click on **Classify** to see the response from the deployed model.
-3. Check the configure and confidence output.
-4. Repeat the above steps with different types of images.
+1. Click on **Upload a JPEG image** to select a `.JPEG` or `.JPG` image from your machine.
+2. Click on **Classify image** to see the response from the deployed model.
+3. Check the category and confidence output.
+4. Repeat the above steps with images of different categories.
 
 ## Remove resources
 {: #cleanup}
-Navigate to [resource list](https://{DomainName}/resources) and delete the services.
+
+1. Navigate to [{{site.data.keyword.bpshort}}]([https://{DomainName}/schematics/workspaces) workspaces.
+2. Click on the action menu next to each of the workspaces.
+3. Click on **Delete** to cleanup all the provisioned resources.
 
 ## Related resources
 {: #related_resources}
