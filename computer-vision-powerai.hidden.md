@@ -27,10 +27,10 @@ PowerAI Vision includes tools and interfaces that allow anyone with limited skil
 ## Objectives
 {: #objectives}
 
-* Understand how to setup PowerAI vision trial running on Power CPU
-* Deploy an object detection and image classification application to a VSI on {{site.data.keyword.vpc_short}}
-* Upload an image dataset to train and deploy a deep learning model
-* Test the accuracy and adjust the hyperparameters for an optimized model
+* Understand how to setup PowerAI vision trial running on Power CPU.
+* Deploy an image classification application to a VSI on {{site.data.keyword.vpc_short}}.
+* Upload an image dataset with images of different categories to train and deploy a deep learning model.
+* Test the accuracy and adjust the hyperparameters for an optimized model.
 
 ## Services used
 {: #services}
@@ -48,9 +48,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
   ![Architecture](images/solution53-powerai-vision-hidden/architecture_diagram.png)
 
-1. User logs into a backend application running in a VSI with PowerAI vision trial preinstalled to train and deploy a deep learning model(API)
-2. User deploys a web application to a front-end subnet on {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}
-3. The front-end app interacts with the back-end API
+1. User provisions a PowerAI vision trial preinstalled VSI and logs into a backend application to train and deploy a deep learning model(API) for image classification.
+2. User deploys a web application to a front-end subnet on {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}.
+3. The front-end app provides the UI to upload an image that is passed to the back-end API for classification.
 4. User uploads an image for classification to the front-end web app
 
 ## Before you begin
