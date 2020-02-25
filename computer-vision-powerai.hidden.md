@@ -60,7 +60,7 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * vpc-infrastructure/infrastructure-service plugin
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
-* If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to IBM Cloud and save the UUID for future reference.
+* If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to [{{site.data.keyword.Bluemix}}.
 
 ## Setup a {{site.data.keyword.cos_short}} bucket with PowerAI Vision Trial
 
@@ -117,14 +117,14 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
             <td>key from [IBM Cloud api keys](https://{DomainName}/iam/apikeys)</td>
             <td>string</td>
             <td></td>
-            <td>ENTER THE KEY HERE without trialing spaces</td>
-            <td></td>
+            <td>ENTER THE KEY HERE without any trailing spaces</td>
+            <td>yes</td>
         </tr>
         <tr>
             <td>vision_version</td>
-            <td>Check the name of the downloaded file</td>
+            <td>Check the name of the downloaded file for the version number</td>
             <td>string</td>
-            <td>1.1.5.1</td>
+            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -145,20 +145,20 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
             <td></td>
         </tr>
         <tr>
-            <td>cos_access_key </td>
+            <td>cos_access_key</td>
             <td>From saved credentials W/O spaces</td>
             <td>string</td>
             <td></td>
-            <td>ENTER THE KEY HERE without trialing spaces</td>
-            <td>true</td>
+            <td>ENTER THE KEY HERE without any trailing spaces</td>
+            <td>yes</td>
         </tr>
         <tr>
             <td>cos_secret_access_key</td>
             <td>From saved credentials W/O spaces </td>
             <td>string</td>
             <td></td>
-            <td>ENTER THE KEY HERE without trialing spaces</td>
-            <td>true</td>
+            <td>ENTER THE KEY HERE without trailing spaces</td>
+            <td>yes</td>
         </tr>
         <tr>
             <td>cos_bucket_base</td>
@@ -271,7 +271,8 @@ For training the model and testing the deployed deep learning model, Download th
 2. To deploy the trained model, click **Deploy model**
    - Give it a name and click **Deploy**
    - Once the status changes to **Ready**, click on the model **name**
-3. To test the deployed model,
+3. Click on **Copy** under Deployed model API endpoint. Save the endpoint for quick reference.
+4. To test the deployed model,
    - Click on **import** and select an image
    - Check the **Results** section to check the category and the confidence value
 You should also see the created API for the deployed model and the endpoints.
@@ -284,7 +285,7 @@ You should also see the created API for the deployed model and the endpoints.
 ### Create web app with {{site.data.keyword.bplong_notm}}
 {: #create_webapp}
 
-1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click **Create a workspace**.
+1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click on **Create a workspace**.
 2. Enter **powerai-vision-frontend-workspace** as the Workspace name and select a resource group.
 3. Provide the [GitHub repository URL](https://github.ibm.com/portfolio-solutions/powerai-image-classifier) and Enterprise Git access token to import the Terraform template.
 
@@ -292,6 +293,100 @@ You should also see the created API for the deployed model and the endpoints.
    {:tip}
 
 4. Click on **Retrieve input variables** and complete the fields
+   <table>
+    <thead>
+        <tr>
+            <td><strong>Name</strong></td>
+            <td><strong>Description</strong></td>
+            <td><strong>Type</strong></td>
+            <td><strong>Default</strong></td>
+            <td><strong>Override value</strong></td>
+            <td><strong>Sensitive</strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ibmcloud_api_key</td>
+            <td>Use the same API key used with PowerAI vision trial backend</td>
+            <td>string</td>
+            <td></td>
+            <td>ENTER THE KEY HERE without any trailing spaces</td>
+            <td>yes</td>
+        </tr>
+        <tr>
+            <td>ssh_key_name</td>
+            <td>Name of your SSH key created under VPC</td>
+            <td>string</td>
+            <td></td>
+            <td>ENTER THE NAME HERE without trailing spaces</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>resource_group_name</td>
+            <td>Name of your resource group</td>
+            <td>string</td>
+            <td></td>
+            <td>ENTER THE NAME HERE without trailing spaces</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>vpc_id</td>
+            <td>Run this command: ibmcloud is vpcs</td>
+            <td>string</td>
+            <td></td>
+            <td>ENTER THE ID HERE without trailing spaces</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>generation</td>
+            <td>VPC generation</td>
+            <td>string</td>
+            <td>2</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ibmcloud_timeout</td>
+            <td>Timeout for API operations in seconds.</td>
+            <td>number</td>
+            <td>900</td>
+            <td></td>
+            <td>true</td>
+        </tr>
+        <tr>
+            <td>region</td>
+            <td>Region in which you want to provision the resources</td>
+            <td>string</td>
+            <td>us-south</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>basename</td>
+            <td>All the resources to be provisioned will have this value in the beginning</td>
+            <td>string</td>
+            <td>powerai-vision</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ssh_private_key_file_path</td>
+            <td>Path to the SSH private key file on your local computer E.g., ~/.ssh/id_rsa</td>
+            <td>string</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>powerai_vision_api_url</td>
+            <td></td>
+            <td>string</td>
+            <td>The URL of backend PowerAI vision trial API</td>
+            <td>ENTER </td>
+            <td></td>
+        </tr>
+    </tbody>
+   </table>
 5. Click on **Create** to start creation.
 6. On the Schematics page, Click on **Generate Plan**.
 7. Once the plan has successfully generated, a new item appears under Recent Activity saying Plan Generated. Click **Apply plan** to provision
