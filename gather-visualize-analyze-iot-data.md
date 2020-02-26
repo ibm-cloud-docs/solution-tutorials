@@ -107,6 +107,10 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
 3. In a few minutes, your application will be deployed and you should see a URL similar to `<random-name>.mybluemix.net`
 4. Visit the application URL with HTTPS (`https://<random-name>.mybluemix.net`) on your phone using a browser.
 5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**. Your connection values should look something similar to the parameters mentioned below
+   On iOS 13.x if prompted, Allow the website to access motion and orientation sensor data.
+   On iOS 12.x, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
+   {:tip}
+
    <table>
     <thead>
         <tr>
@@ -134,11 +138,6 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
     </tbody>
    </table>
 6. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
-  ![](images/solution16/recent_events_with_phone.png)
-
-On iOS 13.x if prompted, Allow the website to access motion and orientation sensor data.
-On iOS 12.x, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
-{: tip}
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
 {: #creat_ecards}
