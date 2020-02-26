@@ -128,7 +128,7 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
             <td>phone</td>
         </tr>
         <tr>
-            <td>Authorization Token</td>
+            <td>Authentication Token</td>
             <td>myauthtoken</td>
         </tr>
     </tbody>
