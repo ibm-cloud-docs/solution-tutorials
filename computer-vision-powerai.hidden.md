@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-02-25"
-lasttested: "2020-02-25"
+lastupdated: "2020-02-28"
+lasttested: "2020-02-28"
 ---
 
 {:shortdesc: .shortdesc}
@@ -318,15 +318,15 @@ You should also see the created API for the deployed model and the endpoints.
             <td>Name of your SSH key created under VPC</td>
             <td>string</td>
             <td></td>
-            <td>ENTER THE NAME HERE without trailing spaces</td>
+            <td>ENTER THE NAME HERE without any trailing space</td>
             <td></td>
         </tr>
         <tr>
             <td>resource_group_name</td>
             <td>Name of your resource group</td>
             <td>string</td>
+            <td>default</td>
             <td></td>
-            <td>ENTER THE NAME HERE without trailing spaces</td>
             <td></td>
         </tr>
         <tr>
@@ -334,7 +334,7 @@ You should also see the created API for the deployed model and the endpoints.
             <td>Run this command: ibmcloud is vpcs</td>
             <td>string</td>
             <td></td>
-            <td>ENTER THE ID HERE without trailing spaces</td>
+            <td>ENTER THE ID HERE without any trailing space</td>
             <td></td>
         </tr>
         <tr>
