@@ -60,9 +60,10 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
   * vpc-infrastructure/infrastructure-service plugin
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
-* If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to [{{site.data.keyword.Bluemix}}.
+* If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to [{{site.data.keyword.Bluemix}}].
 
 ## Setup a {{site.data.keyword.cos_short}} bucket with PowerAI Vision Trial
+{:#cos_setup}
 
 In this section, you will download PowerAI Vision Trial and upload it to a {{site.data.keyword.cos_short}}(COS) bucket later to be used with {{site.data.keyword.bplong_notm}} to create a VPC.
 
@@ -89,8 +90,8 @@ Download the PowerAI Vision Trial by clicking on the [download link](http://ibm.
 
 6. Once the client is setup, upload the downloaded PowerAI Vision Trial files(`.deb`,`.rpm`,`.tar`) from the extracted folder via the IBM Aspera connect client.
 
-## Provision a VPC and VSI using {{site.data.keyword.bplong_notm}} service
-{:#provision_VPC}
+## Provision a VPC and back-end VSI using {{site.data.keyword.bplong_notm}} service
+{:#provision_VPC_backend_vsi}
 
 In this section, you will provision a VPC with PowerAI vision trial installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service,
 
@@ -237,14 +238,14 @@ In this section, you will provision a PowerAI vision Trial service. Once success
    * Floating IP (FIP) address on the public Internet for the back-end subnet. _Temporarily attached to train the model._
    * Security group with a rule that allows ingress traffic on port 22 (for SSH)
 -->
-## Train, deploy and test the deep learning model
+## Train, deploy and test the image classification model
 {: #train_deploy_dl_model}
-In this section, you will train, deploy a deep learning model and expose it as an API
+In this section, you will train, deploy a model for image classification and expose it as an API
 
 ### Train the model
 {: #train_model}
 
-For training the model and testing the deployed deep learning model, Download the [Caltech 101 dataset](http://www.vision.caltech.edu/Image_Datasets/Caltech101/) that contains pictures of objects belonging to 101 categories. Unzip and extract the dataset folder.
+For training the model and testing the deployed model, Download the [Caltech 101 dataset](http://www.vision.caltech.edu/Image_Datasets/Caltech101/) that contains pictures of objects belonging to 101 categories. Unzip and extract the dataset folder.
 
 1. Access the application via the Floating IP of the backend subnet and login with the credentials generated. Click **Get started**.
 2. Click **Create new data set** and give it a name
@@ -277,7 +278,7 @@ For training the model and testing the deployed deep learning model, Download th
    - Check the **Results** section to check the category and the confidence value
 You should also see the created API for the deployed model and the endpoints.
 
-## Create a web app with {{site.data.keyword.bpshort}} to classify images
+## Create a web app with {{site.data.keyword.bpshort}} for image classification
 {: #create_access_webapp}
 
 {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your IBM Cloud environment, and enable Infrastructure as Code (IaC). Terraform is an Open Source software that is developed by HashiCorp that enables predictable and consistent resource provisioning to rapidly build complex, multi-tier cloud environments.
@@ -394,7 +395,7 @@ You should also see the created API for the deployed model and the endpoints.
    * VSI within the front-end subnet to deploy the web app
    * Floating IP (FIP) address on the public Internet for the front-end subnet to access the web app
    * Security group with rules that allows ingress traffic on port 22 (for SSH), HTTP requests on port 80 , HTTP requests on port 3000 to allow nodeJS traffic and HTTPS on port 443.
-8. In a browser, enter `http://<Floating_IP>:3000` to see the front-end web app that calls the deployed deep learning model via an API call.
+8. In a browser, enter `http://<Floating_IP>:3000` to see the front-end web app that calls the deployed model via an API call.
 
 ### Classify images
 {: #classify_images}
