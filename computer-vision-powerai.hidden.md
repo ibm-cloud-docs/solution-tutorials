@@ -48,17 +48,17 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
   ![Architecture](images/solution53-powerai-vision-hidden/architecture_diagram.png)
 
-1. User provisions a PowerAI vision trial preinstalled VSI and logs into a backend application to train and deploy a deep learning model(API) for image classification.
-2. User deploys a web application to a front-end subnet on {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}.
-3. The front-end app provides the UI to upload an image that is passed to the back-end API for classification.
-4. User uploads an image for classification to the front-end web app
+1. Admin logs into a backend PowerAI vision trial application running on a VSI to train and deploy a deep learning model(API) for image classification.The VSI {{site.data.keyword.bplong_notm}} is provisioned through {{site.data.keyword.bplong_notm}} on a {{site.data.keyword.vpc_short}}.
+2. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}.
+3. The front-end communicates with the backend, sending and receiving images for classification and displaying the results on the web page.
+4. User uploads an image to the front-end web app for classification
 
 ## Before you begin
 {: #prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * vpc-infrastructure/infrastructure-service plugin
+  * vpc-infrastructure/infrastructure-service plugin
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 * If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to [{{site.data.keyword.Bluemix}}.
 
@@ -118,7 +118,7 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without any trailing spaces</td>
-            <td>yes</td>
+            <td></td>
         </tr>
         <tr>
             <td>vision_version</td>
@@ -150,7 +150,7 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without any trailing spaces</td>
-            <td>yes</td>
+            <td></td>
         </tr>
         <tr>
             <td>cos_secret_access_key</td>
@@ -158,7 +158,7 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without trailing spaces</td>
-            <td>yes</td>
+            <td></td>
         </tr>
         <tr>
             <td>cos_bucket_base</td>
@@ -413,3 +413,5 @@ You should also see the created API for the deployed model and the endpoints.
 
 ## Related resources
 {: #related_resources}
+
+* [Introduction to computer vision using PowerAI Vision](https://developer.ibm.com/articles/introduction-powerai-vision/)
