@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-02-28"
-lasttested: "2020-02-28"
+lastupdated: "2020-03-02"
+lasttested: "2020-03-02"
 ---
 
 {:shortdesc: .shortdesc}
@@ -39,7 +39,6 @@ This tutorial uses the following runtimes and services:
 * PowerAI Vision Trial
 * [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview)
 * [{{site.data.keyword.vpc_short}}](https://{DomainName}/vpc/provision/vpc)
-* [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -61,34 +60,6 @@ This tutorial requires:
   * vpc-infrastructure/infrastructure-service plugin
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 * If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to [{{site.data.keyword.Bluemix}}].
-
-## Setup a {{site.data.keyword.cos_short}} bucket with PowerAI Vision Trial
-{:#cos_setup}
-
-In this section, you will download PowerAI Vision Trial and upload it to a {{site.data.keyword.cos_short}}(COS) bucket later to be used with {{site.data.keyword.bplong_notm}} to create a VPC.
-
-Download the PowerAI Vision Trial by clicking on the [download link](http://ibm.biz/vision_trial). Once downloaded, extract the contents of the `tar` file.
-
-  You may be asked to provide your IBMid (the one you use to log into your IBM Cloud account). The download is approx. 15GB.
-  {:tip}
-
-1. While the download is in progress, create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
-   - Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account
-   - Set **Service name** to **powerai-cos** and select a resource group
-   - Click on **Create**
-2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for quick reference
-3. Create a **Custom** bucket,
-   - Provide `powerai-vision-trial-bucket` as the unique bucket name
-   - Select **Cross Region** as the resiliency
-   - Select **Standard** as the storage class
-   - Click on **Create bucket**
-4. Open the created bucket, click on **Upload** and select **Files**.
-5. Choose **Aspera high-speed transfer** as the transfer type.
-
-   You will be asked to download and setup the IBM Aspera connect client.
-   {:tip}
-
-6. Once the client is setup, upload the downloaded PowerAI Vision Trial files(`.deb`,`.rpm`,`.tar`) from the extracted folder via the IBM Aspera connect client.
 
 ## Provision a VPC and back-end VSI using {{site.data.keyword.bplong_notm}} service
 {:#provision_VPC_backend_vsi}
@@ -119,11 +90,11 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without any trailing spaces</td>
-            <td></td>
+            <td>yes</td>
         </tr>
         <tr>
             <td>vision_version</td>
-            <td>Check the name of the downloaded file for the version number</td>
+            <td></td>
             <td>string</td>
             <td></td>
             <td></td>
@@ -133,7 +104,7 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
             <td>vpc_basename</td>
             <td></td>
             <td>string</td>
-            <td>powerai-vision-trial </td>
+            <td>powerai-vision-trial</td>
             <td></td>
             <td></td>
         </tr>
@@ -146,43 +117,27 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
             <td></td>
         </tr>
         <tr>
-            <td>cos_access_key</td>
-            <td>From saved credentials W/O spaces</td>
-            <td>string</td>
-            <td></td>
-            <td>ENTER THE KEY HERE without any trailing spaces</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>cos_secret_access_key</td>
-            <td>From saved credentials W/O spaces </td>
-            <td>string</td>
-            <td></td>
-            <td>ENTER THE KEY HERE without trailing spaces</td>
-            <td></td>
-        </tr>
-        <tr>
             <td>cos_bucket_base</td>
-            <td>For endpoint, refer COS service endpoint</td>
-            <td>string</td>
             <td></td>
-            <td>e.g. http://s3.ap.cloud-object-storage.appdomain.cloud/powerai-vision-trial-bucket</td>
+            <td>string</td>
+            <td>https://vision-cloud-trial.s3.direct.us-east.cloud-object-storage.appdomain.cloud</td>
+            <td></td>
             <td></td>
         </tr>
         <tr>
             <td>vision_deb_name</td>
             <td>Name of the `.deb` file in the extracted folder</td>
             <td>string</td>
+            <td>powerai-vision_1.1.5.1-494.08411ee~trial_ppc64el.deb</td>
             <td></td>
-            <td>e.g. powerai-vision-1.1.5~trial.deb</td>
             <td></td>
         </tr>
         <tr>
             <td>vision_tar_name </td>
             <td>Name of the images tar file </td>
             <td>string</td>
+            <td>powerai-vision-images-1.1.5.1.tar</td>
             <td></td>
-            <td>e.g. powerai-vision-1.1.5-images.tar</td>
             <td></td>
         </tr>
         <tr>
