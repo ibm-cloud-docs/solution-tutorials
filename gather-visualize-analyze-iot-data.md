@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019, 2020
-lastupdated: "2020-02-12"
+lastupdated: "2020-02-26"
 lasttested: "2019-12-04"
 ---
 
@@ -106,13 +106,38 @@ Next, you will deploy a Node.js web application and visit it on your phone, whic
    {:pre}
 3. In a few minutes, your application will be deployed and you should see a URL similar to `<random-name>.mybluemix.net`
 4. Visit the application URL with HTTPS (`https://<random-name>.mybluemix.net`) on your phone using a browser.
-5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**.
-6. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
-  ![](images/solution16/recent_events_with_phone.png)
+5. Enter the connection information from your IoT Dashboard tab under **Device Credentials** and click **Connect**. Your connection values should look something similar to the parameters mentioned below
 
-On iOS 13.x if prompted, Allow the website to access motion and orientation sensor data.
-On iOS 12.x, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
-{: tip}
+   On iOS 13.x if prompted, Allow the website to access motion and orientation sensor data.On iOS 12.x, Sensor access is disabled by default in Safari. To enable manually, Open Settings -> Safari -> Motion & Orientation access
+   {:tip}
+
+   <table>
+    <thead>
+        <tr>
+            <td><strong>Parameter</strong></td>
+            <td><strong>Value</strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Organization ID</td>
+            <td>Find this value under your USER NAME on the TOP ribbon</td>
+        </tr>
+        <tr>
+            <td>Device Type</td>
+            <td>simulator</td>
+        </tr>
+        <tr>
+            <td>Device ID</td>
+            <td>phone</td>
+        </tr>
+        <tr>
+            <td>Authentication Token</td>
+            <td>myauthtoken</td>
+        </tr>
+    </tbody>
+   </table>
+6. Your phone will start transmitting data. Check for new entries in the **Recent Events** section.
 
 ## Display live data in IBM {{site.data.keyword.iot_short_notm}}
 {: #creat_ecards}
