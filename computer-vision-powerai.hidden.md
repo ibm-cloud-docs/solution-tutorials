@@ -87,7 +87,7 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
     <tbody>
         <tr>
             <td>ibmcloud_api_key</td>
-            <td>key from [IBM Cloud api keys](https://{DomainName}/iam/apikeys)</td>
+            <td>Key from [IBM Cloud api keys](https://{DomainName}/iam/apikeys)</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without any trailing spaces</td>
@@ -341,7 +341,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
             <td>profile_name</td>
             <td>Name of the instance profile.Run ibmcloud is instance-profiles command</td>
             <td>string</td>
-            <td>ibm-ubuntu-18-04-1-minimal-amd64-1</td>
+            <td>cx2-2x4</td>
             <td></td>
             <td></td>
         </tr>
