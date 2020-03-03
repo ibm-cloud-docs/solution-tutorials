@@ -181,6 +181,7 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
       - a Virtual Server Instance within the VPC and a particular region and availability zone (AZ)
       - a floating IP (FIP) address on the public Internet
       - a security group that allows ingress traffic on port 443 (SSL) and on port 22 (for debug)
+      -  a SSH keypair - For private key, check the logs. For public key, Refer [this link](https://{DomainName}/vpc-ext/compute/sshKeys)
 4. Click on **View log** next to the current running plan to follow the logs.
 5. Wait for the plan to complete and save the **Outputs** from the log for quick reference.
 
@@ -312,24 +313,49 @@ In this section, you will deploy a web application to a new VSI and upload an im
             <td></td>
             <td></td>
         </tr>
+         <tr>
+            <td>zone</td>
+            <td>Should be same as the PowerAI vision zone</td>
+            <td>string</td>
+            <td>us-south-1</td>
+            <td></td>
+            <td></td>
+        </tr>
         <tr>
             <td>basename</td>
-            <td>All the resources to be provisioned will have this value in the beginning</td>
+            <td>Name for the VPC to create and prefix to use for all other resources</td>
             <td>string</td>
             <td>powerai-vision</td>
             <td></td>
             <td></td>
         </tr>
+        <tr>
+            <td>image_name</td>
+            <td>Name of the base image for the virtual server (should be an Ubuntu 18.04 base).Run ibmcloud is images command</td>
+            <td>string</td>
+            <td>ibm-ubuntu-18-04-1-minimal-amd64-1</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>profile_name</td>
+            <td>Name of the instance profile.Run ibmcloud is instance-profiles command</td>
+            <td>string</td>
+            <td>ibm-ubuntu-18-04-1-minimal-amd64-1</td>
+            <td></td>
+            <td></td>
+        </tr>
     </tbody>
    </table>
-5. Click on **Create** to start creation.
-6. On the Schematics page, Click on **Generate Plan**.
-7. Once the plan has successfully generated, a new item appears under Recent Activity saying Plan Generated. Click **Apply plan** to provision
+5. Click on **Create** to create the workspace.
+6. On the subsequent page, Click **Apply plan** to provision
    * a front-end subnet
    * VSI within the front-end subnet to deploy the web app
    * Floating IP (FIP) address on the public Internet for the front-end subnet to access the web app
    * Security group with rules that allows ingress traffic on port 22 (for SSH), HTTP requests on port 80 , HTTP requests on port 3000 to allow nodeJS traffic and HTTPS on port 443.
-8. In a browser, enter `http://<Floating_IP>:3000` to see the front-end web app that calls the deployed model via an API call.
+   * a SSH keypair - For private key, check the logs. For public key, Refer [this link](https://{DomainName}/vpc-ext/compute/sshKeys)
+7. Click on **View log** next to the current running plan to follow the logs.
+8. Wait for the plan to complete and check the **Outputs** from the log for the application access URL. In a browser, enter `http://<Floating_IP>:3000` to see the front-end web app that calls the deployed model via an API call.
 
 ### Classify images
 {: #classify_images}
@@ -344,9 +370,10 @@ In this section, you will deploy a web application to a new VSI and upload an im
 
 1. Navigate to [{{site.data.keyword.bpshort}}]([https://{DomainName}/schematics/workspaces) workspaces.
 2. Click on the action menu next to each of the workspaces.
-3. Click on **Delete** to cleanup all the provisioned resources.
+3. Click on **Delete**, check all the Delete options, enter the name of the workspace and click **Delete** to cleanup all the provisioned resources.
 
 ## Related resources
 {: #related_resources}
 
 * [Introduction to computer vision using PowerAI Vision](https://developer.ibm.com/articles/introduction-powerai-vision/)
+* If you wish to log into the respective servers for debugging or troubleshooting using the generated SSH keypair, check this [VPC tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#test-your-bastion)
