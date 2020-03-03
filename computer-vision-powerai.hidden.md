@@ -58,7 +58,7 @@ This tutorial requires:
   * vpc-infrastructure/infrastructure-service plugin
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 
-## Provision a virtual server instance with Power AI Vision using {{site.data.keyword.bplong_notm}}
+## Provision a virtual server instance with Power AI Vision using {{site.data.keyword.bpshort}}
 {:#provision_VPC_backend_vsi}
 
 In this section, you will provision a VPC with PowerAI Vision installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service. {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure-as-Code (IaC).
@@ -83,9 +83,9 @@ Once applied, the workspace will lead to the provisioning of:
    - a security group that allows ingress traffic on port 443 (SSL) and on port 22 (for debug)
    - a SSH keypair - For private key, check the logs. For public key, Refer [this link](https://{DomainName}/vpc-ext/compute/sshKeys).
 
-1. Once the workspace is created, click on **Apply plan**.
+1. Click on **Apply plan**.
 1. Click on **View log** next to the current running plan to follow the logs.
-1. Wait for the plan to complete and save the **Outputs** from the log for quick reference.
+1. Wait for the plan to complete (it may take around 20 minutes) and save the **Outputs** from the log for quick reference.
 
 ## Train, deploy and test the image classification model
 {: #train_deploy_dl_model}
@@ -98,51 +98,53 @@ In this section, you will create a flower data set and train a image classificat
 For training the model and testing the deployed model, Download the [Caltech 101 dataset](http://www.vision.caltech.edu/Image_Datasets/Caltech101/) that contains pictures of objects belonging to 101 categories. Unzip and extract the dataset folder.
 
 1. Access the application via the **PowerAI Vision UI** URL saved from the log output and login with the **PowerAI Vision** credentials provided in the log. Click **Get started**.
+
    Ignore the certificate warning as the SSL certificate is self signed with no potential security threats.
    {:tip}
+1. Click **Create new data set**, set the **Data set name** to `flower_classification_dataset` and click **Create**.
+1. To add images to the dataset:
+   1. Click on the data set tile.
+   1. Click on **Import files** and point to the downloaded dataset folder.
+   1. Select **lotus** image dataset folder and import the images to be uploaded for classification
 
-2. Click **Create new data set**, provide `flower_classification_dataset` as the name and click **Create**
-   - Click on the data set tile.
-   - Click on **Import files** and point to the downloaded dataset folder
-   - Select **lotus** image dataset folder and import the images to be uploaded for classification
-
-     There must be at least **2 categories**.Each category must at least have **5 images**.
-     {:tip}
-
+   There must be at least **2 categories**.Each category must at least have **5 images**.
+   {:tip}
 3. Categorize the objects
    - Select at least 5 images of a category type
    - Click **Assign category**, give **Lotus** as the name and click **Assign**
    - Repeat the steps with images from **Sunflower** dataset folder
 
-     If you wish to categorize multiple images, expand **categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar and then Assign a category.
-     {:tip}
+   If you wish to categorize multiple images, expand **categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar and then Assign a category.
+   {:tip}
 
 4. Click **Train model**
-   - Modify the suggested model name if you wish to
    - Select **Image classification** as your type of training
    - Select **System Default(GoogLeNet)** as your Optimization technique
    - Click **Train model**
 
 ### Deploy and test the model
 {: #deploy_test_model}
+
 1. Once the training is completed, check the accuracy, model hyperparameters, precision and other details by clicking on **Model details**.
-2. To deploy the trained model, click **Deploy model**
-   - Modify the suggested deployed model name if you wish to and click **Deploy**
-   - Once the status changes to **Ready**, click on the model **name**
+2. Click **Deploy model** to deploy the trained model.
+   - Keep the suggested deployed model name.
+   - Click **Deploy**.
+1. Once the status changes to **Ready**, click on the model **name**.
 3. Click on **Copy** under Deployed model API endpoint. Save the endpoint for quick reference.
 
    To learn more about the exposed APIs reference and their usage, click on **GET** or **POST** next to the endpoint.
    {:tip}
 
 4. To test the deployed model,
-   - Click on **import** and select an image
+   - Click on **Import** and select an image
    - Check the **Results** section to check the category and the confidence value
 
 ## Create a web app with {{site.data.keyword.bpshort}} for image classification
 {: #create_access_webapp}
+
 In this section, you will deploy a web application to a new VSI and upload an image for classification. An URL is provided for you to access the web app from any browser anywhere.
 
-### Deploy a web app with {{site.data.keyword.bplong_notm}}
+### Deploy a web app with {{site.data.keyword.bpshort}}
 {: #deploy_webapp}
 
 1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click on **Create a workspace**.
