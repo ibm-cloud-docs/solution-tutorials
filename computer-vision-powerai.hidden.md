@@ -58,137 +58,43 @@ This tutorial requires:
   * vpc-infrastructure/infrastructure-service plugin
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 
-## Provision a VPC and back-end VSI using {{site.data.keyword.bplong_notm}} service
+## Provision a virtual server instance with Power AI Vision using {{site.data.keyword.bplong_notm}}
 {:#provision_VPC_backend_vsi}
 
-In this section, you will provision a VPC with PowerAI vision trial installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service.
+In this section, you will provision a VPC with PowerAI Vision installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service. {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure-as-Code (IaC).
 
-{{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your IBM Cloud environment, and enable Infrastructure as Code (IaC). Terraform is an Open Source software that is developed by HashiCorp that enables predictable and consistent resource provisioning to rapidly build complex, multi-tier cloud environments.
+### Create a {{site.data.keyword.bplong_notm}} workspace
 
-### Create a workspace
-1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click on **Create a workspace**,
-   - Enter **powerai-vision-workspace** as the workspace name and select a resource group
-   - Enter `https://github.com/ibm/vision-terraform` as the GitHub URL under Import your Terraform template section
-   - Click **Retrieve input variables**.
-2. Enter the values as shown in the table below. If no **override value** is provided, the **Default value** will be used. Once entered, click on **Create**.
-   <table>
-    <thead>
-        <tr>
-            <td><strong>Name</strong></td>
-            <td><strong>Description</strong></td>
-            <td><strong>Type</strong></td>
-            <td><strong>Default</strong></td>
-            <td><strong>Override value</strong></td>
-            <td><strong>Sensitive</strong></td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>ibmcloud_api_key</td>
-            <td>Key from [IBM Cloud api keys](https://{DomainName}/iam/apikeys)</td>
-            <td>string</td>
-            <td></td>
-            <td>ENTER THE KEY HERE without any trailing spaces</td>
-            <td>yes</td>
-        </tr>
-        <tr>
-            <td>vision_version</td>
-            <td></td>
-            <td>string</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>vpc_basename</td>
-            <td></td>
-            <td>string</td>
-            <td>powerai-vision-trial</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>expect_gpus</td>
-            <td></td>
-            <td>string</td>
-            <td>1</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>cos_bucket_base</td>
-            <td></td>
-            <td>string</td>
-            <td>https://vision-cloud-trial.s3.direct.us-east.cloud-object-storage.appdomain.cloud</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>vision_deb_name</td>
-            <td>Name of the `.deb` file in the extracted folder</td>
-            <td>string</td>
-            <td>powerai-vision_1.1.5.1-494.08411ee~trial_ppc64el.deb</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>vision_tar_name </td>
-            <td>Name of the images tar file </td>
-            <td>string</td>
-            <td>powerai-vision-images-1.1.5.1.tar</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>boot_image_name</td>
-            <td></td>
-            <td>string</td>
-            <td>ibm-ubuntu-18-04-3-minimal-ppc64le-2</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>vpc_region</td>
-            <td>Target region to create this instance of PowerAI Vision</td>
-            <td>string</td>
-            <td>us-south</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>vpc_zone</td>
-            <td>Target availability zone to create this instance of PowerAI Vision</td>
-            <td>string</td>
-            <td>us-south-1</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>vm_profile</td>
-            <td>What resources or VM profile should we create for compute?</td>
-            <td>string</td>
-            <td>gp2-24x224x2</td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
-   </table>
-3.  Once the workspace is created, click on **Apply plan** to provision the following
-      - a Virtual Private Cloud (VPC)
-      - a backend Subnet
-      - a Virtual Server Instance within the VPC and a particular region and availability zone (AZ)
-      - a floating IP (FIP) address on the public Internet
-      - a security group that allows ingress traffic on port 443 (SSL) and on port 22 (for debug)
-      -  a SSH keypair - For private key, check the logs. For public key, Refer [this link](https://{DomainName}/vpc-ext/compute/sshKeys)
-4. Click on **View log** next to the current running plan to follow the logs.
-5. Wait for the plan to complete and save the **Outputs** from the log for quick reference.
+1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page, and click on **Create a workspace**.
+1. Set **Workspace name** to **powerai-vision-workspace**.
+1. Select a resource group.
+1. Set **GitHub or GitLab repository URL** to `https://github.com/ibm/vision-terraform`.
+1. Click **Retrieve input variables**.
+1. Once the input variables have been discovered, set `ibmcloud_api_key` to your {{site.data.keyword.Bluemix_notm}} API key. Other variables can be kept to their default values unless you want to customize the deployed environment.
+1. Create the workspace.
+
+### Apply the workspace plan
+
+Once applied, the workspace will lead to the provisioning of:
+   - a Virtual Private Cloud (VPC)
+   - a backend Subnet
+   - a Virtual Server Instance within the VPC and a particular region and availability zone (AZ)
+   - a floating IP (FIP) address on the public Internet
+   - a security group that allows ingress traffic on port 443 (SSL) and on port 22 (for debug)
+   - a SSH keypair - For private key, check the logs. For public key, Refer [this link](https://{DomainName}/vpc-ext/compute/sshKeys).
+
+1. Once the workspace is created, click on **Apply plan**.
+1. Click on **View log** next to the current running plan to follow the logs.
+1. Wait for the plan to complete and save the **Outputs** from the log for quick reference.
 
 ## Train, deploy and test the image classification model
 {: #train_deploy_dl_model}
+
 In this section, you will create a flower data set and train a image classification model based on the flower images uploaded. Once you are happy with the accuracy and other model parameters, you will deploy and test the image classification model.
 
 ### Train the model
 {: #train_model}
+
 For training the model and testing the deployed model, Download the [Caltech 101 dataset](http://www.vision.caltech.edu/Image_Datasets/Caltech101/) that contains pictures of objects belonging to 101 categories. Unzip and extract the dataset folder.
 
 1. Access the application via the **PowerAI Vision UI** URL saved from the log output and login with the **PowerAI Vision** credentials provided in the log. Click **Get started**.
