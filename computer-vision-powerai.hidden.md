@@ -243,7 +243,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
 
 1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click on **Create a workspace**.
 2. Enter **powerai-vision-frontend-workspace** as the Workspace name and select a resource group.
-3. Provide the [GitHub repository URL](https://github.ibm.com/portfolio-solutions/powerai-image-classifier/tree/tf-0.11)
+3. Enter the GitHub repository URL - `https://github.ibm.com/portfolio-solutions/powerai-image-classifier/tree/tf-0.11`
 4. Click on **Retrieve input variables** and complete the fields
    <table>
     <thead>
