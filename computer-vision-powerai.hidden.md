@@ -16,27 +16,24 @@ lasttested: "2020-03-03"
 # Computer vision with PowerAI and Schematics
 {: #computer-vision-powerai-schematics}
 
-This tutorial walks you through how to provision a dedicated backend instance(VSI) of PowerAI Vision trial in {{site.data.keyword.vpc_full}} through {{site.data.keyword.bplong_notm}}. Once provisioned, you will upload an image data set, train, deploy, and test an optimized deep learning (image classification) model through a GPU on the VSI. You will also deploy a front-end application through {{site.data.keyword.bplong_notm}} to a new VSI on the same {{site.data.keyword.vpc_full}}.Once deployed, you will upload an image for classification by communicating with the backend deployed model exposed an an API.
+This tutorial walks you through provisioning a dedicated backend virtual server instance (VSI) of PowerAI Vision in {{site.data.keyword.vpc_full}} through {{site.data.keyword.bplong_notm}}. Once provisioned, you will upload an image data set, train, deploy, and test an optimized deep learning (image classification) model through a GPU on the VSI. You will also deploy a front-end application through {{site.data.keyword.bplong_notm}} to a new VSI on the same {{site.data.keyword.vpc_full}}. Once deployed, you will upload an image for classification by communicating with the backend deployed model exposed an an API.
 {:shortdesc}
 
-Cameras are everywhere. Videos and images have become one of the most interesting data sets for artificial intelligence. In particular, deep learning is being used to create models for computer vision, and you can train these models to let your applications recognize what an image (or video) represents.
+Videos and images have become one of the most interesting data sets for artificial intelligence. In particular, deep learning is being used to create models for computer vision, and you can train these models to let your applications recognize what an image (or video) represents.
 
-IBM PowerAI Vision is a new generation video/image analysis platform that offers built-in deep learning models that learn to analyze images and video streams for classification and object detection.
-PowerAI Vision includes tools and interfaces that allow anyone with limited skills in deep learning technologies to get up and running quickly and easily. And because PowerAI Vision is built on open source frameworks for modeling and managing containers it delivers a highly available platform that includes application life-cycle support, centralized management and monitoring, and support from IBM.
+IBM PowerAI Vision is a new generation video and image analysis platform that offers built-in deep learning models that learn to analyze images and video streams for classification and object detection. PowerAI Vision includes tools and interfaces that allow anyone with limited skills in deep learning technologies to get up and running quickly and easily. And because PowerAI Vision is built on open source frameworks for modeling and managing containers it delivers a highly available platform that includes application life-cycle support, centralized management and monitoring, and support from IBM.
 
 ## Objectives
 {: #objectives}
 
-* Understand how to setup PowerAI vision trial running on Power CPU.
-* Deploy an image classification application to a VSI on {{site.data.keyword.vpc_short}}.
-* Upload an image dataset with images of different categories to train and deploy a deep learning model.
-* Test the accuracy and adjust the hyperparameters for an optimized model.
+* Use {{site.data.keyword.bpshort}} to deploy a virtual server instance running PowerAI on Power CPU in {{site.data.keyword.vpc_full}}.
+* Train and test an image classification model.
+* Augment the VPC environment by deploying an image classification application to a new virtual server instance.
 
 ## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* PowerAI Vision Trial
 * [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview)
 * [{{site.data.keyword.vpc_short}}](https://{DomainName}/vpc/provision/vpc)
 
@@ -47,10 +44,11 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
   ![Architecture](images/solution53-powerai-vision-hidden/architecture_diagram.png)
 
-1. Admin logs into a backend PowerAI vision trial application running on a VSI to train and deploy a deep learning model(API) for image classification.The VSI {{site.data.keyword.bplong_notm}} is provisioned through {{site.data.keyword.bplong_notm}} on a {{site.data.keyword.vpc_short}}.
-2. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}.
-3. The front-end communicates with the backend, sending and receiving images for classification and displaying the results on the web page.
-4. User uploads an image to the front-end web app for classification
+1. Admin uses {{site.data.keyword.bpshort}} and a Terraform template to provision a virtual server instance running PowerAI Vision.
+1. Once the environment is provisioned, the admin deploys a deep learning model(API) for image classification.
+1. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}.
+1. User uploads an image to the front-end web app for classification
+1. The front-end communicates with the backend, sending and receiving images for classification and displaying the results on the web page.
 
 ## Before you begin
 {: #prereqs}
