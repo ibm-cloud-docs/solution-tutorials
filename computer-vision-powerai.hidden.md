@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-03-02"
-lasttested: "2020-03-02"
+lastupdated: "2020-03-03"
+lasttested: "2020-03-03"
 ---
 
 {:shortdesc: .shortdesc}
@@ -16,7 +16,7 @@ lasttested: "2020-03-02"
 # Computer vision with PowerAI and Schematics
 {: #computer-vision-powerai-schematics}
 
-This tutorial walks you through how to provision a dedicated backend instance(VSI) of PowerAI Vision in {{site.data.keyword.vpc_full}}, upload an image dataset, train, deploy an optimized deep learning model as an API using a GPU provisioned on the VSI and deploy a front-end application to a VSI to interact with the backend API to classify an image. Once the front-end VM is created on {{site.data.keyword.vpc_short}} using {{site.data.keyword.bplong_notm}}, its public IP address along with the username and password to log into the application will be displayed for easy access.
+This tutorial walks you through how to provision a dedicated backend instance(VSI) of PowerAI Vision trial in {{site.data.keyword.vpc_full}} through {{site.data.keyword.bplong_notm}}. Once provisioned, you will upload an image data set, train, deploy, and test an optimized deep learning (image classification) model through a GPU on the VSI. You will also deploy a front-end application through {{site.data.keyword.bplong_notm}} to a new VSI on the same {{site.data.keyword.vpc_full}}.Once deployed, you will upload an image for classification by communicating with the backend deployed model exposed an an API.
 {:shortdesc}
 
 Cameras are everywhere. Videos and images have become one of the most interesting data sets for artificial intelligence. In particular, deep learning is being used to create models for computer vision, and you can train these models to let your applications recognize what an image (or video) represents.
@@ -59,12 +59,13 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
   * vpc-infrastructure/infrastructure-service plugin
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
-* If you don't have an SSH key on your local machine, [refer to these instructions for creating a key](/docs/vpc?topic=vpc-ssh-keys). By default, the private key is found at `$HOME/.ssh/id_rsa`. [Upload your public SSH key](https://{DomainName}/vpc/compute/sshKeys) to [{{site.data.keyword.Bluemix}}].
 
 ## Provision a VPC and back-end VSI using {{site.data.keyword.bplong_notm}} service
 {:#provision_VPC_backend_vsi}
 
-In this section, you will provision a VPC with PowerAI vision trial installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service,
+In this section, you will provision a VPC with PowerAI vision trial installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service.
+
+{{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your IBM Cloud environment, and enable Infrastructure as Code (IaC). Terraform is an Open Source software that is developed by HashiCorp that enables predictable and consistent resource provisioning to rapidly build complex, multi-tier cloud environments.
 
 ### Create a workspace
 1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click on **Create a workspace**,
@@ -180,74 +181,68 @@ In this section, you will provision a VPC with PowerAI vision trial installed on
       - a Virtual Server Instance within the VPC and a particular region and availability zone (AZ)
       - a floating IP (FIP) address on the public Internet
       - a security group that allows ingress traffic on port 443 (SSL) and on port 22 (for debug)
+4. Click on **View log** next to the current running plan to follow the logs.
+5. Wait for the plan to complete and save the **Outputs** from the log for quick reference.
 
-<!--## Provision a PowerAI Vision Trial service
-{: #provision_powerai_vision}
-In this section, you will provision a PowerAI vision Trial service. Once successfully provisioned, the result is a VPC, subnet and a VSI where PowerAI Vision trial is pre-installed.
-
-1. Create [PowerAI vision trial](https://{DomainName}/catalog/services/powerai) service from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/catalog).
-2. Click on **Create** to provision
-   * a VPC
-   * a backend subnet
-   * Virtual server instance(VSI) within the backend subnet in VPC (particular region and availability zone (AZ))
-   * Floating IP (FIP) address on the public Internet for the back-end subnet. _Temporarily attached to train the model._
-   * Security group with a rule that allows ingress traffic on port 22 (for SSH)
--->
 ## Train, deploy and test the image classification model
 {: #train_deploy_dl_model}
-In this section, you will train, deploy a model for image classification and expose it as an API
+In this section, you will create a flower data set and train a image classification model based on the flower images uploaded. Once you are happy with the accuracy and other model parameters, you will deploy and test the image classification model.
 
 ### Train the model
 {: #train_model}
-
 For training the model and testing the deployed model, Download the [Caltech 101 dataset](http://www.vision.caltech.edu/Image_Datasets/Caltech101/) that contains pictures of objects belonging to 101 categories. Unzip and extract the dataset folder.
 
-1. Access the application via the Floating IP of the backend subnet and login with the credentials generated. Click **Get started**.
-2. Click **Create new data set** and give it a name
+1. Access the application via the **PowerAI Vision UI** URL saved from the log output and login with the **PowerAI Vision** credentials provided in the log. Click **Get started**.
+   Ignore the certificate warning as the SSL certificate is self signed with no potential security threats.
+   {:tip}
+
+2. Click **Create new data set**, provide `flower_classification_dataset` as the name and click **Create**
    - Click on the data set tile.
    - Click on **Import files** and point to the downloaded dataset folder
    - Select **lotus** image dataset folder and import the images to be uploaded for classification
 
-     There must be at least 2 categories.Each category must at least have 5 images. If you wish to categorize all the images, expand **categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar and then Assign a category.
+     There must be at least **2 categories**.Each category must at least have **5 images**.
      {:tip}
 
 3. Categorize the objects
    - Select at least 5 images of a category type
    - Click **Assign category**, give **Lotus** as the name and click **Assign**
-   - Repeat the steps with images from **sunflower** dataset folder
+   - Repeat the steps with images from **Sunflower** dataset folder
+
+     If you wish to categorize multiple images, expand **categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar and then Assign a category.
+     {:tip}
+
 4. Click **Train model**
-   - Modify the model name if you wish to
+   - Modify the suggested model name if you wish to
    - Select **Image classification** as your type of training
    - Select **System Default(GoogLeNet)** as your Optimization technique
    - Click **Train model**
 
 ### Deploy and test the model
 {: #deploy_test_model}
-1. Once the training is completed, check the accuracy and other parameters by clicking on **Model details**.
+1. Once the training is completed, check the accuracy, model hyperparameters, precision and other details by clicking on **Model details**.
 2. To deploy the trained model, click **Deploy model**
-   - Give it a name and click **Deploy**
+   - Modify the suggested deployed model name if you wish to and click **Deploy**
    - Once the status changes to **Ready**, click on the model **name**
 3. Click on **Copy** under Deployed model API endpoint. Save the endpoint for quick reference.
+
+   To learn more about the exposed APIs reference and their usage, click on **GET** or **POST** next to the endpoint.
+   {:tip}
+
 4. To test the deployed model,
    - Click on **import** and select an image
    - Check the **Results** section to check the category and the confidence value
-You should also see the created API for the deployed model and the endpoints.
 
 ## Create a web app with {{site.data.keyword.bpshort}} for image classification
 {: #create_access_webapp}
+In this section, you will deploy a web application to a new VSI and upload an image for classification. An URL is provided for you to access the web app from any browser anywhere.
 
-{{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your IBM Cloud environment, and enable Infrastructure as Code (IaC). Terraform is an Open Source software that is developed by HashiCorp that enables predictable and consistent resource provisioning to rapidly build complex, multi-tier cloud environments.
-
-### Create web app with {{site.data.keyword.bplong_notm}}
-{: #create_webapp}
+### Deploy a web app with {{site.data.keyword.bplong_notm}}
+{: #deploy_webapp}
 
 1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click on **Create a workspace**.
 2. Enter **powerai-vision-frontend-workspace** as the Workspace name and select a resource group.
-3. Provide the [GitHub repository URL](https://github.ibm.com/portfolio-solutions/powerai-image-classifier) and Enterprise Git access token to import the Terraform template.
-
-   Check steps to create a [personal access token](https://{DomainName}/docs/services/ghededicated?topic=ghededicated-getting-started#ghe_auth) on GitHub Enterprise
-   {:tip}
-
+3. Provide the [GitHub repository URL](https://github.ibm.com/portfolio-solutions/powerai-image-classifier/tree/tf-0.11)
 4. Click on **Retrieve input variables** and complete the fields
    <table>
     <thead>
@@ -263,39 +258,39 @@ You should also see the created API for the deployed model and the endpoints.
     <tbody>
         <tr>
             <td>ibmcloud_api_key</td>
-            <td>Use the same API key used with PowerAI vision trial backend</td>
+            <td>Enter the IBM Cloud API key. Use the same API key used with PowerAI vision trial backend</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without any trailing spaces</td>
             <td>yes</td>
         </tr>
-        <tr>
-            <td>ssh_key_name</td>
-            <td>Name of your SSH key created under VPC</td>
-            <td>string</td>
-            <td></td>
-            <td>ENTER THE NAME HERE without any trailing space</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>resource_group_name</td>
-            <td>Name of your resource group</td>
-            <td>string</td>
-            <td>default</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
+         <tr>
             <td>vpc_id</td>
-            <td>Run this command: ibmcloud is vpcs</td>
+            <td>Retrieve the VPC ID by running the command - ibmcloud is vpcs</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE ID HERE without any trailing space</td>
             <td></td>
         </tr>
         <tr>
+            <td>powerai_vision_api_url</td>
+            <td>The URL of backend PowerAI vision trial API</td>
+            <td>string</td>
+            <td></td>
+            <td>ENTER THE URL HERE without any trailing spaces</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>resource_group_name</td>
+            <td>Name of the resource group to provision the resources</td>
+            <td>string</td>
+            <td>default</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
             <td>generation</td>
-            <td>VPC generation</td>
+            <td>VPC generation to provision the resources</td>
             <td>string</td>
             <td>2</td>
             <td></td>
@@ -311,7 +306,7 @@ You should also see the created API for the deployed model and the endpoints.
         </tr>
         <tr>
             <td>region</td>
-            <td>Region in which you want to provision the resources</td>
+            <td>Should be same as the PowerAI vision region</td>
             <td>string</td>
             <td>us-south</td>
             <td></td>
@@ -323,22 +318,6 @@ You should also see the created API for the deployed model and the endpoints.
             <td>string</td>
             <td>powerai-vision</td>
             <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>ssh_private_key_file_path</td>
-            <td>Path to the SSH private key file on your local computer E.g., ~/.ssh/id_rsa</td>
-            <td>string</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>powerai_vision_api_url</td>
-            <td>The URL of backend PowerAI vision trial API</td>
-            <td>string</td>
-            <td></td>
-            <td>ENTER THE URL HERE without any trailing spaces</td>
             <td></td>
         </tr>
     </tbody>
