@@ -49,7 +49,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. Admin creates a backend workspace on {{site.data.keyword.bpshort}} and uses a Terraform template to provision a virtual server instance(VSI) running PowerAI Vision.
 2. Once the environment is provisioned, the admin logs into the PowerAI vision backend app and deploys a deep learning model(API) for image classification.
-3. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} by creating a front-end workspace on the same {{site.data.keyword.bplong_notm}}.
+3. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} by creating a front-end workspace on the same {{site.data.keyword.bpshort}}.
 4. User uploads an image to the front-end web app for classification.
 5. The front-end communicates with the backend, sending and receiving images for classification and displaying the results on the web page.
 
