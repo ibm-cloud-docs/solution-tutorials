@@ -23,6 +23,9 @@ Videos and images have become one of the most interesting data sets for artifici
 
 IBM PowerAI Vision is a new generation video and image analysis platform that offers built-in deep learning models that learn to analyze images and video streams for classification and object detection. PowerAI Vision includes tools and interfaces that allow anyone with limited skills in deep learning technologies to get up and running quickly and easily. And because PowerAI Vision is built on open source frameworks for modeling and managing containers it delivers a highly available platform that includes application life-cycle support, centralized management and monitoring, and support from IBM.
 
+In this tutorial, [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1](http://dx.doi.org/10.17632/4drtyfjtfy.1) is used for training and testing the image classification model.
+
+
 ## Objectives
 {: #objectives}
 
@@ -44,10 +47,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
   ![Architecture](images/solution53-powerai-vision-hidden/architecture_diagram.png)
 
-1. Admin uses {{site.data.keyword.bpshort}} and a Terraform template to provision a virtual server instance running PowerAI Vision.
-1. Once the environment is provisioned, the admin deploys a deep learning model(API) for image classification.
-1. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} through {{site.data.keyword.bplong_notm}}.
-1. User uploads an image to the front-end web app for classification
+1. Admin creates a backend workspace on {{site.data.keyword.bpshort}} and uses a Terraform template to provision a virtual server instance(VSI) running PowerAI Vision.
+1. Once the environment is provisioned, the admin logs into the VSI and deploys a deep learning model(API) for image classification.
+1. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} by creating a front-end workspace on the same {{site.data.keyword.bplong_notm}}.
+1. User uploads an image to the front-end web app for classification.
 1. The front-end communicates with the backend, sending and receiving images for classification and displaying the results on the web page.
 
 ## Before you begin
@@ -90,53 +93,49 @@ Once applied, the workspace will lead to the provisioning of:
 ## Train, deploy and test the image classification model
 {: #train_deploy_dl_model}
 
-In this section, you will create a flower data set and train a image classification model based on the flower images uploaded. Once you are happy with the accuracy and other model parameters, you will deploy and test the image classification model.
+In this section, you will create a flower data set, assign a category, and train a image classification model based on the flower images uploaded. Once you are happy with the accuracy and other model parameters, you will deploy and test the image classification model.
 
 ### Train the model
 {: #train_model}
 
-For training the model and testing the deployed model, Download the [Caltech 101 dataset](http://www.vision.caltech.edu/Image_Datasets/Caltech101/) that contains pictures of objects belonging to 101 categories. Unzip and extract the dataset folder.
+For training the model, Download the [train.zip](https://ibm.box.com/shared/static/pl4ysss4uivdjnhyh2wyvyta9gccxyae.zip) file which is a subset of images extracted from the original [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1](http://dx.doi.org/10.17632/4drtyfjtfy.1) that contains pictures pertaining to four weather conditions - cloudy, sunshine, rain and shine respectively. **Unzip and extract** the `train` folder.
+
+Multi-class weather dataset(MWD) for image classification is a valuable dataset used in the research paper entitled "Multi-class weather recognition from still image using heterogeneous ensemble method". The dataset provides a platform for outdoor weather analysis by extracting various features for recognizing different weather conditions.
+
 
 1. Access the application via the **PowerAI Vision UI** URL saved from the log output and login with the **PowerAI Vision** credentials provided in the log. Click **Get started**.
 
    Ignore the certificate warning as the SSL certificate is self signed with no potential security threats.
    {:tip}
-1. Click **Create new data set**, set the **Data set name** to `flower_classification_dataset` and click **Create**.
-1. To add images to the dataset:
-   1. Click on the data set tile.
-   1. Click on **Import files** and point to the downloaded dataset folder.
-   1. Select **lotus** image dataset folder and import the images to be uploaded for classification
-
-   There must be at least **2 categories**.Each category must at least have **5 images**.
-   {:tip}
-3. Categorize the objects
-   - Select at least 5 images of a category type
-   - Click **Assign category**, give **Lotus** as the name and click **Assign**
-   - Repeat the steps with images from **Sunflower** dataset folder
-
-   If you wish to categorize multiple images, expand **categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar and then Assign a category.
-   {:tip}
-
-4. Click **Train model**
-   - Select **Image classification** as your type of training
-   - Select **System Default(GoogLeNet)** as your Optimization technique
-   - Click **Train model**
+2. Click **Create new data set**, set the **Data set name** to `weather_classification_dataset` and click **Create**.
+3. To add images to the dataset and to categorize, Click on the `weather_classification_dataset` tile.
+   1. Click on **Import files** and point to the downloaded `train` folder.
+   2. Select **cloudy** image folder and import all the images to be uploaded for classification.
+   3. Once all the images are imported, expand **categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar
+   4. Click on **Assign category**, give **Cloudy** as the name and click **Assign**
+   5. **Repeat** the steps with images from **sunshine**, **rain**, **shine** dataset folders
+4. Click on **Train model**
+   1. Select **Image classification** as your type of training
+   2. Select **System Default(GoogLeNet)** as your Optimization technique
+   3. Click **Train model**
 
 ### Deploy and test the model
 {: #deploy_test_model}
 
+To test the deployed model, download the [test.zip](https://ibm.box.com/shared/static/mh3je6om9mo415bd5fdiehsbegn77rk1.zip) file, unzip and extract the `test` folder.
+
 1. Once the training is completed, check the accuracy, model hyperparameters, precision and other details by clicking on **Model details**.
-2. Click **Deploy model** to deploy the trained model.
+2. Click on **Deploy model** to deploy the trained model.
    - Keep the suggested deployed model name.
    - Click **Deploy**.
-1. Once the status changes to **Ready**, click on the model **name**.
-3. Click on **Copy** under Deployed model API endpoint. Save the endpoint for quick reference.
+3. Once the status changes to **Ready**, click on the model **name**.
+4. Click on **Copy** under Deployed model API endpoint. Save the API URL(endpoint) for quick reference.
 
    To learn more about the exposed APIs reference and their usage, click on **GET** or **POST** next to the endpoint.
    {:tip}
 
-4. To test the deployed model,
-   - Click on **Import** and select an image
+5. To test the deployed model,
+   - Click on **Import** and select an image from the downloaded `test` folder
    - Check the **Results** section to check the category and the confidence value
 
 ## Create a web app with {{site.data.keyword.bpshort}} for image classification
@@ -150,7 +149,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
 1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click on **Create a workspace**.
 2. Enter **powerai-vision-frontend-workspace** as the Workspace name and select a resource group.
 3. Enter the GitHub repository URL - `https://github.ibm.com/portfolio-solutions/powerai-image-classifier/tree/tf-0.11`
-4. Click on **Retrieve input variables** and complete the fields
+4. Click on **Retrieve input variables** and complete the required fields.Other variables can be kept to their default values unless you want to customize the deployed environment.
    <table>
     <thead>
         <tr>
@@ -181,74 +180,10 @@ In this section, you will deploy a web application to a new VSI and upload an im
         </tr>
         <tr>
             <td>powerai_vision_api_url</td>
-            <td>The URL of backend PowerAI vision trial API</td>
+            <td>The API URL of backend PowerAI vision trial</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE URL HERE without any trailing spaces</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>resource_group_name</td>
-            <td>Name of the resource group to provision the resources</td>
-            <td>string</td>
-            <td>default</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>generation</td>
-            <td>VPC generation to provision the resources</td>
-            <td>string</td>
-            <td>2</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>ibmcloud_timeout</td>
-            <td>Timeout for API operations in seconds.</td>
-            <td>number</td>
-            <td>900</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>region</td>
-            <td>Should be same as the PowerAI vision region</td>
-            <td>string</td>
-            <td>us-south</td>
-            <td></td>
-            <td></td>
-        </tr>
-         <tr>
-            <td>zone</td>
-            <td>Should be same as the PowerAI vision zone</td>
-            <td>string</td>
-            <td>us-south-1</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>basename</td>
-            <td>Name for the VPC to create and prefix to use for all other resources</td>
-            <td>string</td>
-            <td>powerai-vision</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>image_name</td>
-            <td>Name of the base image for the virtual server (should be an Ubuntu 18.04 base).Run ibmcloud is images command</td>
-            <td>string</td>
-            <td>ibm-ubuntu-18-04-1-minimal-amd64-1</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>profile_name</td>
-            <td>Name of the instance profile.Run ibmcloud is instance-profiles command</td>
-            <td>string</td>
-            <td>cx2-2x4</td>
-            <td></td>
             <td></td>
         </tr>
     </tbody>
@@ -266,10 +201,11 @@ In this section, you will deploy a web application to a new VSI and upload an im
 ### Classify images
 {: #classify_images}
 
-1. Click on **Upload a JPEG image** to select a `.JPEG` or `.JPG` image from your machine.
+1. Click on **Upload a JPEG image** to select a `.JPEG` or `.JPG` image from `cloudy` folder of downloaded `test` folder from your machine.
 2. Click on **Classify image** to see the response from the deployed model.
 3. Check the category and confidence output.
-4. Repeat the above steps with images of different categories.
+4. Repeat the above steps with images from other `test` folders namely `sunshine`, `rain` and `shine`.
+5. You can also upload any random `.JPEG` or `.JPG` image for classification.
 
 ## Remove resources
 {: #cleanup}
