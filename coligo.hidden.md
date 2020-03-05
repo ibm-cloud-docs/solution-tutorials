@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-02-20"
-lasttested: "2020-02-17"
+lastupdated: "2020-03-05"
+lasttested: "2020-03-05"
 
 ---
 
@@ -23,9 +23,9 @@ lasttested: "2020-02-17"
 # Coligo tutorial
 {: #coligo}
 
-In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. Coligo aims to create a platform to unify the deployment of functions, applications and pre-built containers to Kubernetes-based infrastructure. It provides a “one-stop-shop” experience for developers, enabling higher productivity and faster time to market. Delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, knative, Tekton etc.,).
+In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. Coligo aims to create a platform to unify the deployment of functions, applications and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. Delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, knative, Tekton etc.,).
 
-Starting with a multi-tenant shared container environment, but extendable to ”bring your own cluster” (either IKS or OpenShift) for higher isolation.
+Starting with a multi-tenant shared container environment, but extendable to "bring your own cluster" (either IKS or OpenShift) for higher isolation.
 {:shortdesc}
 
 Kubernetes is a complex product that needs a lot of configuration to run properly. Developers must log into individual worker nodes to carry out repetitive tasks, such as installing dependencies and configuring networking rules. They must generate configuration files, manage logging and tracing, and write their own CI/CD scripts using tools like Jenkins. Before they can deploy their containers, they have to go through multiple steps to containerize their source code in the first place.
@@ -109,17 +109,6 @@ In this section, you will provision a Coligo service and a subsequent project to
    ```
    {:pre}
 
-### Create {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
-{:#create_services}
-
-1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
-   1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
-   2. Set **Service name** to **coligo-cos** and select a resource group.
-   3. Click **Create**
-2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for future reference
-3. Create a **Standard** bucket named `<your-initial>-coligo-images` with **Cross Region** resiliency and another bucket named `<your-initial>-coligo-results` with **Cross Region** resiliency.
-4. Under **Endpoint**, find the **private** endpoint to access each of your bucket and save the endpoint for future reference.
-
 ## Deploy the frontend and backend apps as Coligo services
 {: #deploy_app}
 
@@ -127,9 +116,9 @@ In this section, you will deploy your front-end application as a Knative service
 
 ### Deploy a frontend application
 
-1. To deploy a new Knative service, run the below command
+1. To deploy a new Knative service, you need to run the below command by provide a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
    ```sh
-   ibmcloud coligo service create frontend --image ibmcom/coligo-frontend --requests-cpu 50m --requests-memory 128Mi --limits-cpu 2000m --limits-memory 4Gi
+   ibmcloud coligo service create frontend --image ibmcom/coligo-frontend
    ```
    {:pre}
 2. Run the below command to get the public endpoint(URL) of the frontend service
@@ -137,16 +126,16 @@ In this section, you will deploy your front-end application as a Knative service
    ibmcloud coligo service list
    ```
    {:pre}
-3. Copy the URL from the output above and open it in a browser to see an output as similar to the one below
+3. Copy the secured URL with HTTPS from the output above and open it in a browser to see an output as similar to the one below
    ```
    Hello World!! from the frontend.
    Connection to the backend failed as there is no backend defined yet.
    ```
-4. List the pods of the service and notice that it has a running pod
+<!--4. List the pods of the service and notice that it has a running pod
    ```sh
    kubectl get pods --watch
    ```
-   {:pre}
+   {:pre}-->
 
 ### Deploy a backend app and test the connection
 
@@ -170,7 +159,25 @@ In this section, you will deploy your front-end application as a Knative service
 ## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:connect_cloud_services}
 
-> Under :construction:
+In this section, you will create the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service.
+
+### Create {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
+{:#create_services}
+
+1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
+   1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
+   2. Set **Service name** to **coligo-cos** and select a resource group.
+   3. Click on **Create**.
+2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for future reference
+3. Create a **Standard** bucket named `<your-initial>-coligo-images` with **Cross Region** resiliency and another bucket named `<your-initial>-coligo-results` with **Cross Region** resiliency.
+4. Under **Endpoint**, find the **private** endpoint to access each of your bucket and save the endpoint for quick reference.
+5. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
+   1. Select a region and select **Lite** plan.
+   2. Set **Service name** to **coligo-vr** and select a resource group.
+   3. Click on **Create**.
+6. Under **Service Credentials**, expand **View credentials** and save the credentials for quick reference. If you don't see auto-generated credentials, create a **New credential**.
+
+### Bind the services to the backend service
 
 1. Create a secret each for {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services. There are multiple options to use the created secret
    - Refer the secret as a ENV variable.
@@ -183,7 +190,7 @@ In this section, you will deploy your front-end application as a Knative service
 
 2. To verify whether the backend-service `yaml` is updated with the secret. You can run the below command
    ```sh
-   kn service describe backend -o yaml
+   ibmcloud coligo service describe backend -o yaml
    ```
    {:pre}
 
