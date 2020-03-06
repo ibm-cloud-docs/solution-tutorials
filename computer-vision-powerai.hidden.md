@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-03-03"
+lastupdated: "2020-03-06"
 lasttested: "2020-03-03"
 ---
 
@@ -210,7 +210,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
 ## Remove resources
 {: #cleanup}
 
-1. Navigate to [{{site.data.keyword.bpshort}}]([https://{DomainName}/schematics/workspaces) workspaces.
+1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces.
 2. Click on the action menu next to each of the workspaces.
 3. Click on **Delete**, check all the Delete options, enter the name of the workspace and click **Delete** to cleanup all the provisioned resources.
 
