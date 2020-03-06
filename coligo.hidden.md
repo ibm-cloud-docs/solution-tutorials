@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-03-05"
+lastupdated: "2020-03-06"
 lasttested: "2020-03-05"
 
 ---
@@ -198,9 +198,27 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
 {:test_app}
 
 1. Now, test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} service.
-2. Run the below command to see the pods getting created to serve the request
-   ```sh
-   kubectl get pods --watch
-   ```
-   {:pre}
-3. Upload multiple images to process them in parallel using jobs.
+2. Upload multiple images to process them in parallel using jobs.
+3. Check the results of the processed images.
+
+## Build your own container image and push it to {{site.data.keyword.registrylong_notm}}
+{:#container_image_registry}
+
+> Optional step
+
+In this section, you will build your own container image from the source code and store the image in a private registry - {{site.data.keyword.registrylong_notm}}
+
+1. If you wish to build your own container image from source code, run the below command
+    - If `ibmcloud coligo CLI` provides a way to build a container from the source code, we can mention that here
+    - Or we can talk about Kaniko, Jib, Skaffold etc., to build the container image from source code.
+    - Or follow the usual Dockerfile create flow
+
+
+## Remove resources
+{:#cleanup}
+
+1. Navigate to [Resource List](https://{DomainName}/resources/)
+1. Delete the services you have created:
+ * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
+ * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
+ * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
