@@ -209,7 +209,7 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
 In this section, you will build your own container image from the source code and store the image in a private registry - {{site.data.keyword.registrylong_notm}}
 
 1. If you wish to build your own container image from source code, run the below command
-    - If `ibmcloud coligo CLI` provides a way to build a container from the source code, we can mention that here or Tekton pipelines with/without or toolchain
+    - If `ibmcloud coligo CLI` provides a way to build a container from the source code, we can mention that here or use Tekton pipelines
     - Or we can talk about Kaniko, Buildkit, Jib, Skaffold etc., to build the container image from source code.
     - Or follow the usual Dockerfile create flow
 2. With Coligo, I am assuming something like this (internally using any of the methods above)
