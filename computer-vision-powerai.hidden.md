@@ -190,7 +190,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
     </tbody>
    </table>
 
-   If you already have an existing {site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, update the `resource_group_name` input variable to `default`.
+   If you already have an existing {{site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, set the `resource_group_name` input variable to `default`.
    {:tip}
 
 5. Click on **Create** to create the workspace.
