@@ -103,6 +103,7 @@ Solution Tutorials
         isolated-cloud-foundry-enterprise-apps.md
         multi-region-k8s-cis.md
         cloud-e2e-security.md
+        coligo.hidden.md
         users-teams-applications.md
         /containers/containers-vpc_ks_tutorial
 
