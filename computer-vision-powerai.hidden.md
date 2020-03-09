@@ -66,17 +66,19 @@ This tutorial requires:
 
 In this section, you will provision a VPC with PowerAI Vision installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service. {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure-as-Code (IaC).
 
-### Create a {{site.data.keyword.bplong_notm}} workspace
+### Create a {{site.data.keyword.bplong_notm}} backend workspace
+{:#backend_workspace}
 
 1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page, and click on **Create a workspace**.
 1. Set **Workspace name** to **powerai-vision-workspace**.
 1. Select a resource group.
 1. Set **GitHub or GitLab repository URL** to `https://github.com/ibm/vision-terraform`.
 1. Click **Retrieve input variables**.
-1. Once the input variables have been discovered, set `ibmcloud_api_key` to your {{site.data.keyword.Bluemix_notm}} API key. Other variables can be kept to their default values unless you want to customize the deployed environment.
-1. Create the workspace.
+1. Once the input variables have been discovered, set `ibmcloud_api_key` to your {{site.data.keyword.Bluemix_notm}} API key and mark the variable as **sensitive**. Other variables can be kept to their default values unless you want to customize the deployed environment.
+1. Click on **Create** to create the workspace.
 
 ### Apply the workspace plan
+{:#Apply_plan}
 
 Once applied, the workspace will lead to the provisioning of:
    - a Virtual Private Cloud (VPC)
@@ -101,7 +103,6 @@ In this section, you will create a flower data set, assign a category, and train
 For training the model, Download the [train.zip](https://ibm.box.com/shared/static/pl4ysss4uivdjnhyh2wyvyta9gccxyae.zip) file which is a subset of images extracted from the original [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1](http://dx.doi.org/10.17632/4drtyfjtfy.1) that contains pictures pertaining to four weather conditions - cloudy, sunshine, rain and shine respectively. **Unzip and extract** the `train` folder.
 
 Multi-class weather dataset(MWD) for image classification is a valuable dataset used in the research paper entitled "Multi-class weather recognition from still image using heterogeneous ensemble method". The dataset provides a platform for outdoor weather analysis by extracting various features for recognizing different weather conditions.
-
 
 1. Access the application via the **PowerAI Vision UI** URL saved from the log output and login with the **PowerAI Vision** credentials provided in the log. Click **Get started**.
 
