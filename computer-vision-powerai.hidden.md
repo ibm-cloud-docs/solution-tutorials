@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-03-06"
-lasttested: "2020-03-03"
+lastupdated: "2020-03-09"
+lasttested: "2020-03-09"
 ---
 
 {:shortdesc: .shortdesc}
@@ -112,7 +112,7 @@ Multi-class weather dataset(MWD) for image classification is a valuable dataset 
 3. To add images to the dataset and to categorize, Click on the `weather_classification_dataset` tile.
    1. Click on **Import files** and point to the downloaded `train` folder.
    2. Select **cloudy** image folder and import all the images to be uploaded for classification.
-   3. Once all the images are imported, expand **categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar
+   3. Once all the images are imported, expand **Categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar
    4. Click on **Assign category**, give **Cloudy** as the name and click **Assign**
    5. **Repeat** the steps with images from **sunshine**, **rain**, **shine** dataset folders
 4. Click on **Train model**
@@ -189,6 +189,10 @@ In this section, you will deploy a web application to a new VSI and upload an im
         </tr>
     </tbody>
    </table>
+
+   If you already have an existing {site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, update the `resource_group_name` input variable to `default`.
+   {:tip}
+
 5. Click on **Create** to create the workspace.
 6. On the subsequent page, Click **Apply plan** to provision
    * a front-end subnet
