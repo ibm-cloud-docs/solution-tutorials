@@ -739,9 +739,9 @@
           "imgSrc": ""
         },
         {
-          "name": "Computer vision with PowerAI and Schematics",
+          "name": "Computer vision with PowerAI Vision and Schematics",
           "url": "computer-vision-powerai.hidden.html",
-          "description": "Provision a backend instance of PowerAI vision in VPC and access the deployed deep learning model through a webapp for image classification",
+          "description": "Provision a backend instance of PowerAI Vision in VPC and access the deployed deep learning model through a webapp for image classification",
           "imgSrc": "images/solution53-powerai-vision-hidden/architecture_diagram.png",
           "tags": [
             "PowerAI"
