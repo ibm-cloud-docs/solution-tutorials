@@ -13,7 +13,7 @@ lasttested: "2020-03-03"
 {:tip: .tip}
 {:pre: .pre}
 
-# Computer vision with PowerAI and Schematics
+# Computer vision with PowerAI Vision and Schematics
 {: #computer-vision-powerai-schematics}
 
 This tutorial walks you through provisioning a dedicated backend virtual server instance (VSI) of PowerAI Vision in {{site.data.keyword.vpc_full}} through {{site.data.keyword.bplong_notm}}. Once provisioned, you will upload an image data set, train, deploy, and test an optimized deep learning (image classification) model through a GPU on the VSI. You will also deploy a front-end application through {{site.data.keyword.bplong_notm}} to a new VSI on the same {{site.data.keyword.vpc_full}}. Once deployed, you will upload an image for classification by communicating with the backend deployed model exposed an an API.
@@ -165,7 +165,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
     <tbody>
         <tr>
             <td>ibmcloud_api_key</td>
-            <td>Enter the IBM Cloud API key. Use the same API key used with PowerAI vision trial backend</td>
+            <td>Enter the IBM Cloud API key. Use the same API key used with PowerAI Vision trial backend</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without any trailing spaces</td>
@@ -181,7 +181,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
         </tr>
         <tr>
             <td>powerai_vision_api_url</td>
-            <td>The URL of backend PowerAI vision trial API</td>
+            <td>The URL of backend PowerAI Vision trial API</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE URL HERE without any trailing spaces</td>
@@ -213,7 +213,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
         </tr>
         <tr>
             <td>region</td>
-            <td>Should be same as the PowerAI vision region</td>
+            <td>Should be same as the PowerAI Vision region</td>
             <td>string</td>
             <td>us-south</td>
             <td></td>
@@ -221,7 +221,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
         </tr>
          <tr>
             <td>zone</td>
-            <td>Should be same as the PowerAI vision zone</td>
+            <td>Should be same as the PowerAI Vision zone</td>
             <td>string</td>
             <td>us-south-1</td>
             <td></td>
