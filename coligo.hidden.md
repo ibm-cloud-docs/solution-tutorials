@@ -80,7 +80,7 @@ In this section, you will provision a Coligo service and a subsequent project to
    - Select a region and a resource group
    - Provide a service name
    - Click **Create** to provision he Coligo service
-2. Once provisioned, create a new project to group your artifacts (applications,jobs etc.,).
+2. Create a new project to group your components (applications,jobs etc.,). Use projects to organize your Coligo related entities like a folder and work on focused context. On the Coligo dashboard, click **Projects** on the left pane,
    - Provide a project name
    - Click on **Create Project**
 3. On a terminal, define an environment variable `COLIGO_PROJECT` and set it to your project name.
@@ -102,7 +102,7 @@ In this section, you will provision a Coligo service and a subsequent project to
 ## Deploy the frontend and backend apps as Coligo services
 {: #deploy_app}
 
-In this section, you will deploy your front-end application to Coligo under the targeted project. Once deployed and tested, you will deploy your back-end application and verify the connection. You will use the pre-built container images to deploy the respective applications,
+In this section, you will deploy your front-end web application to Coligo under the targeted project. Once deployed and tested, you will deploy your back-end application and verify the connection. You will use the pre-built container images to deploy the respective applications,
 
 ### Deploy a frontend application
 
@@ -123,7 +123,8 @@ In this section, you will deploy your front-end application to Coligo under the 
    kubectl get pods --watch
    ```
    {:pre}-->
-Congratulations!! for deploying a web application with a simple command and also without the intricacies of Kubernetes such as pods, deployments, services, and ingress.
+
+Congratulations!! on deploying a web application to Coligo with a simple command and also without the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
 ### Deploy a backend app and test the connection
 
@@ -185,7 +186,7 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
 2. Upload multiple images to process them in parallel using jobs.
 3. Check the results of the processed images.
 
-## Build your own container image and push it to {{site.data.keyword.registrylong_notm}}
+<!--## Build your own container image and push it to {{site.data.keyword.registrylong_notm}}
 {:#container_image_registry}
 
 > Optional step
@@ -200,7 +201,7 @@ In this section, you will build your own container image from the source code an
    ```sh
    ibmcloud coligo service frontend --source https://github.com/test/nodeapp.git
    ```
-   {:pre}
+   {:pre}-->
 
 ## Remove resources
 {:#cleanup}
