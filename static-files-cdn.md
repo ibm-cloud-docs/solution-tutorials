@@ -109,7 +109,7 @@ In this section, you will use the {{site.data.keyword.cos_short}} plugin to uplo
    ```sh
    ibmcloud target -r us-south
    ```
-1. Set a variable with the bucket name and with the target region.
+1. Set a variable with the bucket name:
    ```sh
    export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
    ```
