@@ -13,15 +13,15 @@ lasttested: "2020-03-10"
 {:tip: .tip}
 {:pre: .pre}
 
-# Computer vision with PowerAI Vision and Schematics
-{: #computer-vision-powerai-schematics}
+# Computer vision with {{site.data.keyword.visualinsightsshort}} and {{site.data.keyword.bpshort}}
+{: #computer-vision-visual-insights-schematics}
 
-This tutorial walks you through provisioning a dedicated backend virtual server instance (VSI) of PowerAI Vision in {{site.data.keyword.vpc_full}} through {{site.data.keyword.bplong_notm}}. Once provisioned, you will upload an image data set, train, deploy, and test an optimized deep learning (image classification) model through a GPU on the VSI. You will also deploy a front-end application through {{site.data.keyword.bplong_notm}} to a new VSI on the same {{site.data.keyword.vpc_full}}. Once deployed, you will upload an image for classification by communicating with the backend deployed model exposed an an API.
+This tutorial walks you through provisioning a dedicated backend virtual server instance (VSI) of {{site.data.keyword.visualinsightsfull}} in {{site.data.keyword.vpc_full}}(VPC) through {{site.data.keyword.bplong}}. Once provisioned, you will upload an image data set, train, deploy, and test an optimized deep learning (image classification) model through a GPU on the VSI. You will also deploy a front-end web application through {{site.data.keyword.bplong_notm}} to a new VSI on the same {{site.data.keyword.vpc_short}}. Once deployed, you will upload an image for classification by communicating with the backend deployed model exposed an an API.
 {:shortdesc}
 
 Videos and images have become one of the most interesting data sets for artificial intelligence. In particular, deep learning is being used to create models for computer vision, and you can train these models to let your applications recognize what an image (or video) represents.
 
-IBM PowerAI Vision is a new generation video and image analysis platform that offers built-in deep learning models that learn to analyze images and video streams for classification and object detection. PowerAI Vision includes tools and interfaces that allow anyone with limited skills in deep learning technologies to get up and running quickly and easily. And because PowerAI Vision is built on open source frameworks for modeling and managing containers it delivers a highly available platform that includes application life-cycle support, centralized management and monitoring, and support from IBM.
+{{site.data.keyword.visualinsightsfull}} is a new generation video and image analysis platform that offers built-in deep learning models that learn to analyze images and video streams for classification and object detection. {{site.data.keyword.visualinsightsshort}} includes tools and interfaces that allow anyone with limited skills in deep learning technologies to get up and running quickly and easily. And because {{site.data.keyword.visualinsightsshort}} is built on open source frameworks for modeling and managing containers it delivers a highly available platform that includes application life-cycle support, centralized management and monitoring, and support from IBM.
 
 In this tutorial, [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1](http://dx.doi.org/10.17632/4drtyfjtfy.1) is used for training and testing the image classification model.
 
@@ -29,7 +29,7 @@ In this tutorial, [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Ima
 ## Objectives
 {: #objectives}
 
-* Use {{site.data.keyword.bpshort}} to deploy a virtual server instance running PowerAI on Power CPU in {{site.data.keyword.vpc_full}}.
+* Use {{site.data.keyword.bpshort}} to deploy a virtual server instance running {{site.data.keyword.visualinsightsshort}} on Power CPU in {{site.data.keyword.vpc_short}}.
 * Train and test an image classification model.
 * Augment the VPC environment by deploying an image classification application to a new virtual server instance.
 
@@ -37,18 +37,18 @@ In this tutorial, [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Ima
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview)
-* [{{site.data.keyword.vpc_short}}](https://{DomainName}/vpc/provision/vpc)
+* [{{site.data.keyword.bpfull}}](https://{DomainName}/schematics/overview)
+* [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc/provision/vpc)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
 
-  ![Architecture](images/solution53-powerai-vision-hidden/architecture_diagram.png)
+  ![Architecture](images/solution53-visual-insights-schematics-hidden/architecture_diagram.png)
 
-1. Admin creates a backend workspace on {{site.data.keyword.bpshort}} and uses a Terraform template to provision a virtual server instance(VSI) running PowerAI Vision.
-2. Once the environment is provisioned, the admin logs into the PowerAI vision backend app and deploys a deep learning model(API) for image classification.
+1. Admin creates a backend workspace on {{site.data.keyword.bpshort}} and uses a Terraform template to provision a virtual server instance(VSI) running {{site.data.keyword.visualinsightsshort}}.
+2. Once the environment is provisioned, the admin logs into the {{site.data.keyword.visualinsightsshort}} backend app and deploys a deep learning model(API) for image classification.
 3. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} by creating a front-end workspace on the same {{site.data.keyword.bpshort}}.
 4. User uploads an image to the front-end web app for classification.
 5. The front-end communicates with the backend, sending and receiving images for classification and displaying the results on the web page.
@@ -61,16 +61,16 @@ This tutorial requires:
   * vpc-infrastructure/infrastructure-service plugin
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 
-## Provision a virtual server instance with Power AI Vision using {{site.data.keyword.bpshort}}
+## Provision a virtual server instance with {{site.data.keyword.visualinsightsshort}} using {{site.data.keyword.bpshort}}
 {:#provision_VPC_backend_vsi}
 
-In this section, you will provision a VPC with PowerAI Vision installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service. {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure-as-Code (IaC).
+In this section, you will provision a VPC with {{site.data.keyword.visualinsightsshort}} installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service. {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure-as-Code (IaC).
 
 ### Create a {{site.data.keyword.bplong_notm}} backend workspace
 {:#backend_workspace}
 
 1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page, and click on **Create a workspace**.
-1. Set **Workspace name** to **powerai-vision-workspace**.
+1. Set **Workspace name** to **visual-insights-workspace**.
 1. Select a resource group.
 1. Set **GitHub or GitLab repository URL** to `https://github.com/ibm/vision-terraform`.
 1. Click **Retrieve input variables**.
@@ -104,7 +104,7 @@ For training the model, **Download** the [train.zip](https://ibm.box.com/shared/
 
 Multi-class weather dataset(MWD) for image classification is a valuable dataset used in the research paper entitled "Multi-class weather recognition from still image using heterogeneous ensemble method". The dataset provides a platform for outdoor weather analysis by extracting various features for recognizing different weather conditions.
 
-1. Access the application via the **PowerAI Vision UI** URL saved from the log output and login with the **PowerAI Vision** credentials provided in the log. Click **Get started**.
+1. Access the application via the **{{site.data.keyword.visualinsightsshort}} UI** URL saved from the log output and login with the **{{site.data.keyword.visualinsightsshort}}** credentials provided in the log. Click **Get started**.
 
    Ignore the certificate warning as the SSL certificate is self signed with no potential security threats.
    {:tip}
@@ -130,7 +130,7 @@ To test the deployed model, **Download** the [test.zip](https://ibm.box.com/shar
    - Keep the suggested deployed model name.
    - Click **Deploy**.
 3. Once the status changes to **Ready**, click on the model **name**.
-4. Click on **Copy** under Deployed model API endpoint. Save the API URL(endpoint) for quick reference.
+4. Click on **Copy** under Deployed model API endpoint. **Save** the Deployed Model API URL(endpoint) for quick reference.
 
    To learn more about the exposed APIs reference and their usage, click on **GET** or **POST** next to the endpoint.
    {:tip}
@@ -147,8 +147,8 @@ In this section, you will deploy a web application to a new VSI and upload an im
 ### Deploy a web app with {{site.data.keyword.bpshort}}
 {: #deploy_webapp}
 
-1. Navigate to [Schematics overview page](https://{DomainName}/schematics/overview) and click on **Create a workspace**.
-2. Enter **powerai-vision-frontend-workspace** as the Workspace name and select a resource group.
+1. Navigate to [{{site.data.keyword.bpshort}} overview page](https://{DomainName}/schematics/overview) and click on **Create a workspace**.
+2. Enter **visual-insights-frontend-workspace** as the Workspace name and select a resource group.
 3. Enter the GitHub repository URL - `https://github.ibm.com/portfolio-solutions/powerai-image-classifier/tree/tf-0.11`
 4. Click on **Retrieve input variables** and complete the required fields.Other variables can be kept to their default values unless you want to customize the deployed environment.
    <table>
@@ -165,7 +165,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
     <tbody>
         <tr>
             <td>ibmcloud_api_key</td>
-            <td>Enter the IBM Cloud API key. Use the same API key used with PowerAI Vision trial backend</td>
+            <td>Enter the IBM Cloud API key. Use the same API key used with {{site.data.keyword.visualinsightsshort}} backend</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without any trailing spaces</td>
@@ -180,8 +180,8 @@ In this section, you will deploy a web application to a new VSI and upload an im
             <td></td>
         </tr>
         <tr>
-            <td>powerai_vision_api_url</td>
-            <td>The API URL of backend PowerAI vision trial</td>
+            <td>visual_insights_model_api_url</td>
+            <td>The deployed model API URL of {{site.data.keyword.visualinsightsshort}}</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE URL HERE without any trailing spaces</td>
@@ -190,7 +190,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
     </tbody>
    </table>
 
-   If you already have an {{site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, set the `resource_group_name` input variable to `default`. For resource group name, Run this command - ibmcloud resource groups
+   If you already have an {{site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, set the `resource_group_name` input variable to `default`. For resource group name, Run this command - `ibmcloud resource groups`
    {:tip}
 
 5. Click on **Create** to create the workspace.
@@ -222,5 +222,5 @@ In this section, you will deploy a web application to a new VSI and upload an im
 ## Related resources
 {: #related_resources}
 
-* [Introduction to computer vision using PowerAI Vision](https://developer.ibm.com/articles/introduction-powerai-vision/)
+* [Introduction to computer vision using {{site.data.keyword.visualinsightsshort}}](https://developer.ibm.com/articles/introduction-powerai-vision/)
 * If you wish to log into the respective servers for debugging or troubleshooting using the generated SSH keypair, check this [VPC tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#test-your-bastion)

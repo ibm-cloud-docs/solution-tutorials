@@ -63,7 +63,7 @@ Solution Tutorials
     {: .topicgroup}
     Work In Progress
         solution-template.md
-        computer-vision-powerai.hidden.md
+        computer-vision-visual-insights-schematics.hidden.md
         coligo.hidden.md
 
     {: .topicgroup}
