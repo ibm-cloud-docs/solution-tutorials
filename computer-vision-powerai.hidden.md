@@ -173,7 +173,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
         </tr>
          <tr>
             <td>vpc_id</td>
-            <td>Retrieve the VPC ID by running the command - ibmcloud is vpcs</td>
+            <td>Target VPC gen 2 with this command - ibmcloud is target --gen 2 and retrieve the VPC ID - ibmcloud is vpcs</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE ID HERE without any trailing space</td>
@@ -190,7 +190,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
     </tbody>
    </table>
 
-   If you already have an existing {{site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, set the `resource_group_name` input variable to `default`.
+   If you already have an {{site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, set the `resource_group_name` input variable to `default`. For resource group name, Run this command - ibmcloud resource groups
    {:tip}
 
 5. Click on **Create** to create the workspace.
