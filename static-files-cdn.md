@@ -56,6 +56,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.cos_full_notm}} plugin (`cloud-object-storage`),
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
@@ -91,65 +92,33 @@ To start, retrieve the application code:
 4. In the service dashboard, click **Create Bucket**.
    * Set the **Resiliency** to **Regional**.
 5. Set a unique bucket name such as `username-mywebsite` and click **Create**. Avoid dots (.) in the bucket name.
+1. Select **Buckets > Access Policies**, then select **Public Access** and **Create access policy**. This will enable all contents in the bucket to be publicly accessible.
 1. Select **Endpoint** in the left menu and identify the service endpoint to use with the bucket you created. As example for a bucket with resiliency set to _Regional_ in the _us-south_ region, the public service endpoint would be _s3.us-south.cloud-object-storage.appdomain.cloud_.
 
 ## Upload files to a bucket
 {: #upload}
 
-In this section, you will use the command line tool **curl** to upload files to the bucket.
+In this section, you will use the {{site.data.keyword.cos_short}} plugin to upload files to the bucket.
 
 1. Log in to {{site.data.keyword.Bluemix_notm}} from the CLI.
    ```sh
    ibmcloud login
    ```
    {: pre}
-1. Get a token from IBM Cloud IAM.
+1. Target the region where the bucket was created. As example for a bucket created in `us-south`:
    ```sh
-   ibmcloud iam oauth-tokens
+   ibmcloud target -r us-south
    ```
-   {: pre}
-2. Copy the token from the output of the command in the previous step.
-   ```
-   IAM token:  Bearer <token>
-   ```
-   {: screen}
-3. Set the value of the token, the bucket name and the service endpoint to an environment variable for easy access.
+1. Set a variable with the bucket name and with the target region.
    ```sh
-   export IAM_TOKEN=<REPLACE_WITH_TOKEN>
    export BUCKET_NAME=<REPLACE_WITH_BUCKET_NAME>
-   export SERVICE_ENDPOINT=<REPLACE_WITH_SERVICE_ENDPOINT>
    ```
    {: pre}
 4. Upload the files named `a-css-file.css`, `a-picture.png`, and `a-video.mp4` from the content directory of the web application code you downloaded previously. Upload the files to the root of the bucket.
   ```sh
-   cd content
-  ```
-  {: pre}
-  ```sh
-   curl -X "PUT" \
-         "https://$SERVICE_ENDPOINT/$BUCKET_NAME/a-picture.png" \
-        -H "x-amz-acl: public-read" \
-        -H "Authorization: Bearer $IAM_TOKEN" \
-        -H "Content-Type: image/png" \
-        -T a-picture.png
-  ```
-  {: pre}
-  ```sh
-   curl -X "PUT" \
-         "https://$SERVICE_ENDPOINT/$BUCKET_NAME/a-css-file.css" \
-        -H "x-amz-acl: public-read" \
-        -H "Authorization: Bearer $IAM_TOKEN" \
-        -H "Content-Type: text/css" \
-        -T a-css-file.css
-  ```
-  {: pre}
-  ```sh
-   curl -X "PUT" \
-         "https://$SERVICE_ENDPOINT/$BUCKET_NAME/a-video.mp4" \
-        -H "x-amz-acl: public-read" \
-        -H "Authorization: Bearer $IAM_TOKEN" \
-        -H "Content-Type: video/mp4" \
-        -T a-video.mp4
+  ibmcloud cos upload --bucket $BUCKET_NAME --key a-picture.png --file content/a-picture.png 
+  ibmcloud cos upload --bucket $BUCKET_NAME --key a-css-file.css --file content/a-css-file.css
+  ibmcloud cos upload --bucket $BUCKET_NAME --key a-video.mp4 --file content/a-video.mp4
   ```
   {: pre}
 5. View your files from your dashboard.
