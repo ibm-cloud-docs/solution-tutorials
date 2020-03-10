@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-03-09"
+lastupdated: "2020-03-10"
 lasttested: "2020-03-05"
 
 ---
@@ -160,20 +160,26 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **coligo-vr** and select a resource group.
    3. Click on **Create**.
-6. Under **Service Credentials**, expand **View credentials** and save the credentials for quick reference. If you don't see auto-generated credentials, create a **New credential**.
+6. Under **Service Credentials**, expand **View credentials** and **save** the credentials for quick reference. If you don't see auto-generated credentials, create a **New credential**.
 
 ### Bind the services to the backend service
 
-1. Create a secret each for {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services. There are multiple options to use the created secret
-   - Refer the secret as a ENV variable.
-
-     Currently, `kn service update` has a flag `--env-from` stringArray
-     Add environment variables from a ConfigMap (prefix cm: or config-map:) or a Secret (prefix secret:). Example: --env-from cm:myconfigmap or --env-from secret:mysecret. You can use this flag multiple times.
-     {:tip}
-
-   - Mount the secret as a Kubernetes Volume.
-
-2. To verify whether the backend-service `yaml` is updated with the secret. You can run the below command
+1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials,
+   ```sh
+   ibmcloud coligo secret create generic cos-secret --from-literal=cos-access-key=ACCESS_KEY_ID --from-literal=access-secret=SECRET_ACCESS_KEY
+   ```
+   {:pre}
+   Similarly, create a secret for {{site.data.keyword.visualrecognitionshort}} services
+   ```sh
+   ibmcloud coligo secret create generic vr-secret --from-literal=api-key=VISUAL_RECOGNITION_APIKEY --from-literal=url=VISUAL_RECOGNITION_URL
+   ```
+   {:pre}
+2. Update the environment variables from the created secrets with the below command
+   ```sh
+     ibmcloud coligo service update backend --env-from secret:cos-secret --env-from secret:vr-secret
+   ```
+   {:pre}
+3. To verify whether the backend-service `yaml` is updated with the secret. You can run the below command
    ```sh
    ibmcloud coligo service describe backend -o yaml
    ```
