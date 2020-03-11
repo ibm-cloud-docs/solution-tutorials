@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-03-10"
+lastupdated: "2020-03-11"
 lasttested: "2020-03-05"
 
 ---
@@ -45,7 +45,6 @@ This tutorial uses the following runtimes and services:
 * Coligo service
 * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
-* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 
 
 <!--##istutorial#-->
@@ -108,7 +107,8 @@ In this section, you will deploy your front-end web application to Coligo under 
 
 1. To deploy a new Coligo application, you need to run the below command by provide a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
    ```sh
-   ibmcloud coligo service create frontend --image ibmcom/coligo-frontend
+   ibmcloud coligo service create frontend \
+   --image ibmcom/coligo-frontend
    ```
    {:pre}
 
@@ -117,7 +117,7 @@ In this section, you will deploy your front-end web application to Coligo under 
    Hello World!! from the frontend.
    Connection to the backend failed as there is no backend defined yet.
    ```
-3. For secured browsing, you can also browse the application with `HTTPS.`
+3. For secured browsing, you can also browse the application with `HTTPS`.
 <!--4. List the pods of the service and notice that it has a running pod
    ```sh
    kubectl get pods --watch
@@ -130,13 +130,16 @@ Congratulations!! on deploying a web application to Coligo with a simple command
 
 1. To deploy a new backend application, run the below command
    ```sh
-   ibmcloud coligo service create backend --image ibmcom/coligo-backend -l serving.knative.dev/visibility=cluster-local --requests-cpu 50m --requests-memory 128Mi --limits-cpu 2000m --limits-memory 4Gi
+   ibmcloud coligo service create backend \
+   --image ibmcom/coligo-backend \
+   --cluster-local
    ```
    {:pre}
 2. Copy the private endpoint (URL) from the output above.
 3. Edit the frontend application to set the environment variable pointing to the backend private endpoint
    ```sh
-   ibmcloud coligo service update frontend --env backend=backend.XXX.svc.cluster.local
+   ibmcloud coligo service update frontend \
+   --env backend=backend.XXX.svc.cluster.local
    ```
    {:pre}
 4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Try uploading an image from your computer to detect objects, you should still see an error message as the backend is still not connected with the required services to store the image and process it.
@@ -166,17 +169,23 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
 
 1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials,
    ```sh
-   ibmcloud coligo secret create generic cos-secret --from-literal=cos-access-key=ACCESS_KEY_ID --from-literal=access-secret=SECRET_ACCESS_KEY
+   ibmcloud coligo secret create generic cos-secret \
+   --from-literal=cos-access-key=ACCESS_KEY_ID \
+   --from-literal=access-secret=SECRET_ACCESS_KEY
    ```
    {:pre}
    Similarly, create a secret for {{site.data.keyword.visualrecognitionshort}} services
    ```sh
-   ibmcloud coligo secret create generic vr-secret --from-literal=api-key=VISUAL_RECOGNITION_APIKEY --from-literal=url=VISUAL_RECOGNITION_URL
+   ibmcloud coligo secret create generic vr-secret \
+   --from-literal=api-key=VISUAL_RECOGNITION_APIKEY \
+   --from-literal=url=VISUAL_RECOGNITION_URL
    ```
    {:pre}
 2. Update the environment variables from the created secrets with the below command
    ```sh
-     ibmcloud coligo service update backend --env-from secret:cos-secret --env-from secret:vr-secret
+     ibmcloud coligo service update backend \
+     --env-from secret:cos-secret \
+     --env-from secret:vr-secret
    ```
    {:pre}
 3. To verify whether the backend-service `yaml` is updated with the secret. You can run the below command
@@ -216,4 +225,3 @@ In this section, you will build your own container image from the source code an
 1. Delete the services you have created:
  * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
  * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
- * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
