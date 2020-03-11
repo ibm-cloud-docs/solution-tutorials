@@ -222,5 +222,4 @@ In this section, you will deploy a web application to a new VSI and upload an im
 ## Related resources
 {: #related_resources}
 
-* [Introduction to computer vision using {{site.data.keyword.visualinsightsshort}}](https://developer.ibm.com/articles/introduction-powerai-vision/)
 * If you wish to log into the respective servers for debugging or troubleshooting using the generated SSH keypair, check this [VPC tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#test-your-bastion)
