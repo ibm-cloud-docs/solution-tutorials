@@ -338,7 +338,7 @@ To put everything you've learned in practice, follow the [demo](https://github.c
 ## Related Content
 {: #related}
 
-- [Get started](https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
+- [Get started](https://developer.ibm.com/gettingstarted/containers/) with Kubernetes and {{site.data.keyword.containershort_notm}}.
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt).
 - Kubernetes main [docs](http://kubernetes.io/).
 - [Persistent storage](https://{DomainName}/docs/containers?topic=containers-storage_planning#storage_planning) in {{site.data.keyword.containershort_notm}}.
