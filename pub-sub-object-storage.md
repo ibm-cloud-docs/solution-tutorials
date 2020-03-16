@@ -92,8 +92,6 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 
    Make sure you are targeting the resource group where the cluster was created before running this command. You can view and set the current resource group with `ibmcloud target`.
    {: tip}
-3. Copy and paste the **export** command to set the KUBECONFIG environment variable as directed. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
-  `echo $KUBECONFIG`
 4. Check that the `kubectl` command is correctly configured
    ```sh
    kubectl cluster-info

@@ -133,14 +133,14 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 
 ### Run the application in the cluster
 
-1. Run the command below to target the cluster where to deploy the application. This will set the KUBECONFIG environment variable.
+1. Run the command below to target the cluster where to deploy the application.
    ```bash
-   $(ibmcloud ks cluster config --export mycluster)
+   ibmcloud ks cluster config --cluster mycluster
 	 ```
 	 {: pre}
 1. Retrieve the cluster ingress subdomain and secret name:
    ```bash
-   ibmcloud ks cluster get mycluster
+   ibmcloud ks cluster get --cluster mycluster
 	 ```
 	 {: pre}
 1. Copy `deployment.sample.yaml` to `deployment.yaml`:
