@@ -206,7 +206,7 @@ On a terminal:
    ```
 3. Retrieve the cluster ingress subdomain:
    ```sh
-   ibmcloud ks cluster get $MYCLUSTER
+   ibmcloud ks cluster get --cluster $MYCLUSTER
    ```
    {:pre}
 4. Define a variable pointing to the subdomain:
@@ -227,7 +227,7 @@ To configure your Kubernetes cluster to send logs to your {{site.data.keyword.la
 
 1. Navigate to [Observability](https://{DomainName}/observe/) page and click **Logging**.
 1. Click on **Edit log resources** next to the service which you created earlier and select **Kubernetes**.
-1. Copy and run the first command on a terminal where you have set the `KUBECONFIG` environment variable to create a Kubernetes secret with the LogDNA ingestion key for your service instance.
+1. Copy and run the first command on a terminal where you have targeted your cluster to create a Kubernetes secret with the LogDNA ingestion key for your service instance.
 1. Copy and run the second command to deploy a LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension **.log** and extensionless files that are stored in the */var/log* directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the {{site.data.keyword.la_full_notm}} service.
 1. After you configure a log source, launch the LogDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
 
@@ -315,7 +315,7 @@ In the following, you are going to add {{site.data.keyword.mon_full_notm}} to th
 1. Choose a region/location and select a resource group.
 1. Select **Graduated Tier** as your plan and Click **Create**.
 1. Click on **Edit sources** next to the service which you created earlier and select **Kubernetes**.
-1. Copy and run the command under **Install Sysdig Agent to your cluster** on a terminal where you have set the `KUBECONFIG` environment variable to deploy the Sysdig agent in your cluster. Wait for the deployment to complete.
+1. Copy and run the command under **Install Sysdig Agent to your cluster** on a terminal where you targeted your cluster to deploy the Sysdig agent in your cluster. Wait for the deployment to complete.
 
 Note: The Sysdig agent installation as provided by the IBM Cloud script includes the enablement of the Prometheus metrics feature by default. The deployment configuration `app-log-analysis.yaml` used for the example Python application in this tutorial [here](#deploy_configure_kubernetes_app) includes the appropriate annotations to `scrape` for Prometheus metrics.
   ```yaml
@@ -404,7 +404,7 @@ To create a dashboard:
 <!--##istutorial#-->
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
-   ibmcloud ks cluster-rm $MYCLUSTER -f
+   ibmcloud ks cluster rm --cluster $MYCLUSTER -f
    ```
    {:pre}
 <!--#/istutorial#-->

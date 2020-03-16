@@ -338,7 +338,7 @@ The Global Load Balancer is now ready to serve requests. All health checks shoul
    ```
     {: pre}
     Replace `<glb_name>.<your_domain_name>` with the URL you defined in the previous section.
-1. Deploy this resource in both London and Dallas clusters, after setting the KUBECONFIG variable for the respective location clusters:
+1. Deploy this resource in both London and Dallas clusters, after targeting the respective location clusters with `ibmcloud ks cluster config --cluster <cluster>`:
    ```bash
    kubectl create -f glb-ingress.yaml
    ```

@@ -211,4 +211,4 @@ Congratulations, your application can now safely be deployed from dev to product
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
 * [Develop a microservices application with Kubernetes and Helm](https://github.com/open-toolchain/microservices-helm-toolchain)
 * [Grant permissions to a user to view logs in LogDNA](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam)
-* [Grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam_work)
+* [Grant permissions to a user to view metrics in Sysdig](/docs/services/Monitoring-with-Sysdig?topic=Sysdig-iam)

@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
-lastupdated: "2019-12-11"
-lasttested: "2019-12-11"
+lastupdated: "2020-03-16"
+lasttested: "2020-03-16"
 ---
 
 {:shortdesc: .shortdesc}
@@ -121,7 +121,7 @@ In this part of the tutorial you are going to load a pre-defined workspace or sk
 4. In the dialog, after clicking **Choose JSON file**, select the file **skill-TutorialSlackbot.json** from the local directory. Click **Import**. This creates a new skill named **TutorialSlackbot**.
 5. On the left click on **Dialog** to see the dialog nodes. You can expand them to see a structure like shown below.
 
-   The dialog has nodes to handle questions for help and simple "Thank You". The node **newEvent** gathers the necessary input and then invokes the webhook to insert a new event record into Db2.
+   The dialog has nodes to handle questions for help and simple "Thank You". The node **newEvent** gathers the necessary input and then invokes the webhook to insert a new event record into Db2. It uses the entity **eventLocation** to detect the location for an event in the user-provided answer. The entity is modeled as [contextual entity](https://{DomainName}/docs/assistant?topic=assistant-entities#entities-annotations-overview) and uses annotations in intent examples to enhance the defition.
 
    The node **query events** clarifies whether events are searched by their identifier or by date. The actual search and collecting the necessary data are then performed by the child nodes **query events by shortname** and **query event by dates**.
 
