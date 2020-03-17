@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-12-05"
+  years: 2018, 2019, 2020
+lastupdated: "2020-03-17"
 lasttested: "2019-10-22"
 ---
 
@@ -150,6 +150,9 @@ The following are examples of entity names
  - `@menu_item`
  - `@product`
 
+   System entities can be used to recognize a broad range of values for the object types they represent. For example, the `@sys-number` system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words.Click **System entities** under **Entities** to check the common entities created by {{site.data.keyword.IBM_notm}} that could be used across any use case.
+   {:tip}
+
 1. Click **Entities** on the left pane to see the existing entities.
 2. Click **Create entity** and enter the name of the entity as `location`. Click **Create entity**.
 3. Enter `address` as the value name and select **Synonyms**.
@@ -159,11 +162,6 @@ The following are examples of entity names
    {: tip}
 
 5. Click **close panel** ![](images/solution28-watson-chatbot-android/close_icon.png) to save the changes.
-6. Click **System entities** under **Entities** to check the common entities created by IBM that could be used across any use case.
-
-   System entities can be used to recognize a broad range of values for the object types they represent. For example, the `@sys-number` system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words.
-   {:tip}
-7. Toggle the **Status** from off to `on` for `@sys-person` and `@sys-location` system entities.
 
 ### Build the dialog flow
 {:#build_dialog}
