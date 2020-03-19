@@ -40,7 +40,7 @@ Multiple environments are pretty common in a project to support the different ph
 {: #services}
 
 This tutorial uses the following products:
-* [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/index.html)
+* [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
@@ -664,5 +664,5 @@ You can repeat the steps for `testing` and `production`.
 ## Related content
 
 * [Terraform tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#infrastructure-as-code-terraform)
-* [Terraform provider](https://ibm-cloud.github.io/tf-ibm-docs/)
+* [Terraform provider](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
 * [Examples using {{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm/tree/master/examples)
