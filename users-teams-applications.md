@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-08-21"
+  years: 2020
+lastupdated: "2020-03-18"
 lasttested: "2019-04-19"
 ---
 
@@ -60,7 +60,7 @@ In this project, we define three environments:
 
 **A delivery pipeline manages the progression of a build through the environment.** It can be fully automated or include manual validation gates to promote approved builds between environments - this is really open and should be set up to match the company best practices and workflows.
 
-To support the execution of the build pipeline,  we introduce **a functional user** - a regular {{site.data.keyword.cloud_notm}} user but a team member with no real identity in the physical world. This functional user will own the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The functional user will be dedicated to your project and will not change over the lifetime of the project. The next thing you will want to create is [an API key](https://{DomainName}/docs/iam?topic=iam-manapikey#manapikey) for this functional user. You will select this API key when you setup the DevOps pipelines, or when you want to run automation scripts, to impersonate the functional user.
+To support the execution of the build pipeline,  we introduce **a [Service ID](https://{DomainName}/docs/iam?topic=iam-serviceids)**. A service ID identifies a service or application similar to how a user ID identifies a user. Policies can be assigned to a service ID, providing it access to resources. This service ID is used in the delivery pipelines and any other cloud resources requiring strong ownership. This approach helps in the case where a team member leaves the company or is moving to another project. The service ID will be dedicated to your project and will not change over the lifetime of the project. The next thing you will want to create is [an API key](https://{DomainName}/iam/serviceids) for this service ID. You will select this API key when you setup the DevOps pipelines, or when you want to run automation scripts, to impersonate the service ID.
 
 When it comes to assigning responsibilities to the project team members, let's define the following roles and related permissions:
 
@@ -69,7 +69,7 @@ When it comes to assigning responsibilities to the project team members, let's d
 | Developer | <ul><li>contributes code</li><li>can access log files</li><li>can view app and service configuration</li><li>use the deployed applications</li></ul> | <ul><li>can access log files</li><li>can view app and service configuration</li><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
 | Tester    | <ul><li>use the deployed applications</li></ul> | <ul><li>use the deployed applications</li></ul> | <ul><li>no access</li></ul> |
 | Operator  | <ul><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can access log files</li><li>can view/set app and service configuration</li></ul> | <ul><li>can access log files</li><li>can view/set app and service configuration</li></ul> |
-| Pipeline Functional User  | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> |
+| Pipeline Service ID  | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> | <ul><li>can deploy/undeploy applications</li><li>can view/set app and service configuration</li></ul> |
 
 ## Identity and Access Management (IAM)
 {: #first_objective}
@@ -139,7 +139,7 @@ For the Development environment, the user responsibilities defined earlier could
 | Developer | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Auditor*</li></ul> |
 | Tester    | <ul><li>No configuration needed. Tester accesses the deployed application, not the development environments</li></ul> | <ul><li>No configuration needed</li></ul> |
 | Operator  | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Operator*, *Viewer*</li><li>Logging & Monitoring service role: *Writer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
-| Pipeline Functional User | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
+| Pipeline Service ID | <ul><li>Resource Group: *Viewer*</li><li>Platform Access Roles in the Resource Group: *Editor*, *Viewer*</li></ul> | <ul><li>Organization Role: *Auditor*</li><li>Space Role: *Developer*</li></ul> |
 
 The IAM access policies and Cloud Foundry roles are defined in the [Identify and Access Management user interface](https://{DomainName}/iam/#/users):
 
@@ -188,7 +188,7 @@ When it comes to deploying to the different environments, your continuous integr
   <img src="./images/solution20-users-teams-applications/cicd.png" alt="A CI/CD pipeline from build to deploy" />
 </p>
 
-When configuring the DevOps pipeline, make sure to use the API key of a functional user. Only the functional user should need to have the required rights to deploy apps to your clusters.
+When configuring the DevOps pipeline, make sure to use the API key of a service ID. Only the service ID should need to have the required rights to deploy apps to your clusters.
 
 During the build phase, it is important to properly version the Docker images. You can use the Git commit revision as part of the image tag, or a unique identifier provided by your DevOps toolchain; any identifier that will make it easy for you to map the image to the actual build and source code contained in the image.
 

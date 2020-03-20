@@ -285,7 +285,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2019-12-11"
+          "lastUpdated": "2020-03-16"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -298,7 +298,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2019-12-05"
+          "lastUpdated": "2020-03-17"
         }
       ]
     },
@@ -528,7 +528,7 @@
             "Container Registry",
             "DevOps"
           ],
-          "lastUpdated": "2019-08-21"
+          "lastUpdated": "2020-03-18"
         }
       ]
     },
