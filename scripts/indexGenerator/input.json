@@ -8,6 +8,19 @@
   ],
   "categories": [
     {
+      "name": "External",
+      "anchor": "external",
+      "hidden": true,
+      "solutions": [
+        {
+          "name": "Istio 101 Lab",
+          "url": "https://istio101.gitbook.io/lab/workshop",
+          "description": "Learn how to build your next app with Kubernetes, Istio and advanced services like Watson.",
+          "imgSrc": "images/external-hidden/istio101.jpg"
+        }
+      ]
+    },
+    {
       "name": "Getting Started",
       "anchor": "gettingstarted",
       "tocOnly": true,
