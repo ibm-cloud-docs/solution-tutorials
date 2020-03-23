@@ -119,6 +119,9 @@ In this section, you will deploy your front-end web application to Coligo under 
    Connection to the backend failed as there is no backend defined yet.
    ```
 3. For secured browsing, you can also browse the application with `HTTPS`.
+
+   For troubleshooting and to display logs of your application, run the command `ibmcloud coligo application logs --name APPLICATION_NAME
+   {:tip}
 <!--4. List the pods of the service and notice that it has a running pod
    ```sh
    kubectl get pods --watch
@@ -192,36 +195,30 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
    {:pre}
 3. Update the environment variables from the created secrets with the below command
    ```sh
-     ibmcloud coligo service update backend \
+     ibmcloud coligo application update --name backend \
      --env-from secret:cos-secret \
      --env-from secret:vr-secret \
      --env-from configmap:cos-bucket-name
    ```
    {:pre}
-4. To verify whether the backend-service `yaml` is updated with the secret. You can run the below command
+4. To verify whether the backend application `yaml` is updated with the secret. You can run the below command
    ```sh
-   ibmcloud coligo service describe backend -o yaml
+   ibmcloud coligo application describe --name backend -o yaml
    ```
    {:pre}
 
-## Detect objects in images through the application
+## Detect objects in images through jobs
 {:detect_objects}
 
 In this section, you will upload images to be processed for object detection through batch jobs. The Coligo platform provides support for run-to-completion workloads. When using the term batch, we talk about this support. Jobs are units of run-to-completion workloads Users define and submit jobs. A job runs one or more job containers according to their definition. A job is complete once all job containers have completed
-
-### Test the application
-{:test_app}
 
 1. Test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} bucket - `<your-initial>-coligo-images`.
 2. Uploading an image to {{site.data.keyword.cos_short}} bucket triggers a new job and the uploading image is passed to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in `<your-initial>-coligo-results` bucket.
 3. Upload multiple images to trigger individual jobs. Each job retrieves a single image to process from the bucket.
 4. Check the results of the processed images on the UI.
-5. If you are interested to check the job resource YAML, run the below commands to see the list of job runs and the individual job details
-   ```sh
-   ibmcloud coligo job list
-   ibmcloud coligo job get --name JOBRUN_NAME
-   ```
-   {pre}
+
+   If you are interested in checking the job details, run the command `ibmcloud coligo job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud coligo job get --name JOBRUN_NAME`
+   {:tip}
 
 <!--## Build your own container image and push it to {{site.data.keyword.registrylong_notm}}
 {:#container_image_registry}
