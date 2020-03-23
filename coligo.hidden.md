@@ -240,7 +240,11 @@ In this section, you will build your own container image from the source code an
 ## Remove resources
 {:#cleanup}
 
-1.
+1. With the command below, delete the project to delete all it's components (applications, jobs etc.,).
+   ```sh
+   ibmcloud coligo project delete --name $COLIGO_PROJECT
+   ```
+   {:pre}
 2. Navigate to [Resource List](https://{DomainName}/resources/)
 3. Delete the services you have created:
  * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
