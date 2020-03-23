@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-03-11"
+lastupdated: "2020-03-23"
 lasttested: "2020-03-05"
 
 ---
@@ -89,12 +89,12 @@ In this section, you will provision a Coligo service and a subsequent project to
    {:pre}
 4. Check the details of your project by running the following command
    ```sh
-   ibmcloud coligo project get $COLIGO_PROJECT
+   ibmcloud coligo project get --name $COLIGO_PROJECT
    ```
    {:pre}
 5. Target the project to run the future commands
    ```sh
-   ibmcloud coligo target $COLIGO_PROJECT
+   ibmcloud coligo target --name $COLIGO_PROJECT
    ```
    {:pre}
 
@@ -107,8 +107,9 @@ In this section, you will deploy your front-end web application to Coligo under 
 
 1. To deploy a new Coligo application, you need to run the below command by provide a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
    ```sh
-   ibmcloud coligo service create frontend \
-   --image ibmcom/coligo-frontend
+   ibmcloud coligo application create --name frontend \
+   --image ibmcom/coligo-frontend \
+   --project $COLIGO_PROJECT
    ```
    {:pre}
 
@@ -130,15 +131,16 @@ Congratulations!! on deploying a web application to Coligo with a simple command
 
 1. To deploy a new backend application, run the below command
    ```sh
-   ibmcloud coligo service create backend \
+   ibmcloud coligo application create --name backend \
    --image ibmcom/coligo-backend \
+   --project $COLIGO_PROJECT \
    --cluster-local
    ```
    {:pre}
 2. Copy the private endpoint (URL) from the output above.
 3. Edit the frontend application to set the environment variable pointing to the backend private endpoint
    ```sh
-   ibmcloud coligo service update frontend \
+   ibmcloud coligo application update --name frontend \
    --env backend=backend.XXX.svc.cluster.local
    ```
    {:pre}
@@ -167,39 +169,59 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
 
 ### Bind the services to the backend service
 
-1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials,
+1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials and a configmap to hold the bucket name,
    ```sh
-   ibmcloud coligo secret create generic cos-secret \
+   ibmcloud coligo secret create --name cos-secret \
    --from-literal=cos-access-key=ACCESS_KEY_ID \
    --from-literal=access-secret=SECRET_ACCESS_KEY
    ```
    {:pre}
-   Similarly, create a secret for {{site.data.keyword.visualrecognitionshort}} services
+
    ```sh
-   ibmcloud coligo secret create generic vr-secret \
+   ibmcloud coligo configmap create --name cos-bucket-name \
+   --from-literal=bucket.name=COS_BUCKET_NAME
+   ```
+   {:pre}
+
+2. Similarly, create a secret for {{site.data.keyword.visualrecognitionshort}} service,
+   ```sh
+   ibmcloud coligo secret create --name vr-secret \
    --from-literal=api-key=VISUAL_RECOGNITION_APIKEY \
    --from-literal=url=VISUAL_RECOGNITION_URL
    ```
    {:pre}
-2. Update the environment variables from the created secrets with the below command
+3. Update the environment variables from the created secrets with the below command
    ```sh
      ibmcloud coligo service update backend \
      --env-from secret:cos-secret \
-     --env-from secret:vr-secret
+     --env-from secret:vr-secret \
+     --env-from configmap:cos-bucket-name
    ```
    {:pre}
-3. To verify whether the backend-service `yaml` is updated with the secret. You can run the below command
+4. To verify whether the backend-service `yaml` is updated with the secret. You can run the below command
    ```sh
    ibmcloud coligo service describe backend -o yaml
    ```
    {:pre}
 
-## Test the application
+## Detect objects in images through the application
+{:detect_objects}
+
+In this section, you will upload images to be processed for object detection through batch jobs. The Coligo platform provides support for run-to-completion workloads. When using the term batch, we talk about this support. Jobs are units of run-to-completion workloads Users define and submit jobs. A job runs one or more job containers according to their definition. A job is complete once all job containers have completed
+
+### Test the application
 {:test_app}
 
-1. Now, test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} service.
-2. Upload multiple images to process them in parallel using jobs.
-3. Check the results of the processed images.
+1. Test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} bucket - `<your-initial>-coligo-images`.
+2. Uploading an image to {{site.data.keyword.cos_short}} bucket triggers a new job and the uploading image is passed to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in `<your-initial>-coligo-results` bucket.
+3. Upload multiple images to trigger individual jobs. Each job retrieves a single image to process from the bucket.
+4. Check the results of the processed images on the UI.
+5. If you are interested to check the job resource YAML, run the below commands to see the list of job runs and the individual job details
+   ```sh
+   ibmcloud coligo job list
+   ibmcloud coligo job get --name JOBRUN_NAME
+   ```
+   {pre}
 
 <!--## Build your own container image and push it to {{site.data.keyword.registrylong_notm}}
 {:#container_image_registry}
@@ -221,7 +243,8 @@ In this section, you will build your own container image from the source code an
 ## Remove resources
 {:#cleanup}
 
-1. Navigate to [Resource List](https://{DomainName}/resources/)
-1. Delete the services you have created:
+1.
+2. Navigate to [Resource List](https://{DomainName}/resources/)
+3. Delete the services you have created:
  * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
  * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
