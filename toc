@@ -87,6 +87,10 @@ Solution Tutorials
         configuring-IPSEC-VPN.md
         vlan-spanning.md
         web-app-private-network.md
+
+    {: .topicgroup}
+    External
+        [Istio 101 Lab](https://istio101.gitbook.io/lab/workshop)]
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
