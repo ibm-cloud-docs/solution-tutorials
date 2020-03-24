@@ -23,7 +23,9 @@ lasttested: "2020-03-05"
 # Coligo tutorial
 {: #coligo}
 
-In this tutorial, you will be learn about Coligo by deploying an object detection application. Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop shop" experience for developers, enabling higher productivity and faster time to market. Coligo is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton etc.).
+In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. The application is actually made up of two separate applications: a frontend and a backend. The frontend application is a web server that will host a browser based application that people will use to upload images. This frontend application will then send those images to the backend application for processing. The backend application will upload the images into an object storage "bucket" and then initiate a "batch" job over the uploaded images. A batch job is a collection of tasks that wehre each task performs exactly one action and then exits. In this case, we will define a batch job to process all of the images uploaded to the bucket - one job per image. This processing will involve passing the image to the Watson image analysis service to determine what is in the image. The result of that analysis will then be uploaded into another bucket. And finally, the results of those scans will then be visible on the frontend application/UI.
+
+Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. Delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton etc.,).
 {:shortdesc}
 
 Kubernetes is a complex product that requires developers to understand a lot of configuration knobs in order to properly run their applications. Developers need to carry out repetitive tasks, such as installing dependencies and configuring networking rules. They must generate configuration files, manage logging and tracing, and write their own CI/CD scripts using tools like Jenkins. Before they can deploy their containers, they have to go through multiple steps to containerize their source code in the first place.
@@ -199,10 +201,10 @@ Now we'll need to pass in the credentials for the services we just created into 
    {:pre}
    and look for the "env" section.
 
-## Detect objects in images through jobs
-{:detect_objects}
+## Testing the entire application
+{:testing_app}
 
-In this section, you will upload images to be processed for object detection through batch jobs. The Coligo platform provides support for run-to-completion workloads. When using the term batch, we talk about this support. Jobs are units of run-to-completion workloads Users define and submit jobs. A job runs one or more job containers according to their definition. A job is complete once all job containers have completed
+Now that we have the backend application connected to the frontend application, let's test it by uploading images for processing.
 
 1. Test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-images`.
 2. Uploading an image to {{site.data.keyword.cos_short}} bucket triggers a new job and the uploading image is passed to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in `<your-initials>-coligo-results` bucket.
