@@ -141,7 +141,7 @@ Congratulations!! You've just deployed a web application to Coligo with a simple
 ## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:connect_cloud_services}
 
-In this section, you will create the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service.
+In this section, you will create the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service. The backend service will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to analyze the images.
 
 ### Create {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:#create_services}
@@ -151,8 +151,8 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
    2. Set **Service name** to **coligo-cos** and select a resource group.
    3. Click on **Create**.
 2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for future reference
-3. Create a **Standard** bucket named `<your-initial>-coligo-images` with **Cross Region** resiliency and another bucket named `<your-initial>-coligo-results` with **Cross Region** resiliency.
-4. Under **Endpoint**, find the **private** endpoint to access each of your bucket and save the endpoint for quick reference.
+3. Create a **Standard** bucket named `<your-initials>-coligo-images` with **Cross Region** resiliency and another bucket named `<your-initials>-coligo-results` with **Cross Region** resiliency.
+4. Under **Endpoint**, find the **private** endpoint to access your buckets and save the endpoint for quick reference.
 5. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **coligo-vr** and select a resource group.
@@ -161,6 +161,7 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
 
 ### Bind the services to the backend service
 
+Now we'll need to pass in the credentials for the services we just created into our backend application. We'll do this by storing the credentials into "secrets", and then asking the Coligo runtime to make them available to the application via environment variables.
 1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials and a configmap to hold the bucket name,
    ```sh
    ibmcloud coligo secret create --name cos-secret \
@@ -169,6 +170,7 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
    ```
    {:pre}
 
+   Next we'll put the bucket name into a "configmap". Technically, we could have put this into the secret as well but since this information isn't sensitive a configmap will work just fine.
    ```sh
    ibmcloud coligo configmap create --name cos-bucket-name \
    --from-literal=bucket.name=COS_BUCKET_NAME
@@ -182,7 +184,7 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
    --from-literal=url=VISUAL_RECOGNITION_URL
    ```
    {:pre}
-3. Update the environment variables from the created secrets with the below command
+3. With the secrets and configmap defined, we can now update the backend service by asking Coligo to set environment variables in the runtime of the application based on the values in those resources. Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key". Update the backend appliation with the following command
    ```sh
      ibmcloud coligo application update --name backend \
      --env-from secret:cos-secret \
@@ -190,19 +192,20 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
      --env-from configmap:cos-bucket-name
    ```
    {:pre}
-4. To verify whether the backend application `yaml` is updated with the secret. You can run the below command
+4. To verify whether the backend application was updated with the secret. You can run the below command
    ```sh
    ibmcloud coligo application describe --name backend -o yaml
    ```
    {:pre}
+   and look for the "env" section.
 
 ## Detect objects in images through jobs
 {:detect_objects}
 
 In this section, you will upload images to be processed for object detection through batch jobs. The Coligo platform provides support for run-to-completion workloads. When using the term batch, we talk about this support. Jobs are units of run-to-completion workloads Users define and submit jobs. A job runs one or more job containers according to their definition. A job is complete once all job containers have completed
 
-1. Test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} bucket - `<your-initial>-coligo-images`.
-2. Uploading an image to {{site.data.keyword.cos_short}} bucket triggers a new job and the uploading image is passed to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in `<your-initial>-coligo-results` bucket.
+1. Test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-images`.
+2. Uploading an image to {{site.data.keyword.cos_short}} bucket triggers a new job and the uploading image is passed to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in `<your-initials>-coligo-results` bucket.
 3. Upload multiple images to trigger individual jobs. Each job retrieves a single image to process from the bucket.
 4. Check the results of the processed images on the UI.
 
