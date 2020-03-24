@@ -23,10 +23,10 @@ lasttested: "2020-03-05"
 # Coligo tutorial
 {: #coligo}
 
-In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. Delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton etc.,).
+In this tutorial, you will be learn about Coligo by deploying an object detection application. Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop shop" experience for developers, enabling higher productivity and faster time to market. Coligo is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton etc.).
 {:shortdesc}
 
-Kubernetes is a complex product that needs a lot of configuration to run properly. Developers need to carry out repetitive tasks, such as installing dependencies and configuring networking rules. They must generate configuration files, manage logging and tracing, and write their own CI/CD scripts using tools like Jenkins. Before they can deploy their containers, they have to go through multiple steps to containerize their source code in the first place.
+Kubernetes is a complex product that requires developers to understand a lot of configuration knobs in order to properly run their applications. Developers need to carry out repetitive tasks, such as installing dependencies and configuring networking rules. They must generate configuration files, manage logging and tracing, and write their own CI/CD scripts using tools like Jenkins. Before they can deploy their containers, they have to go through multiple steps to containerize their source code in the first place.
 
 Knative helps developers by hiding many of these tasks, simplifying container-based management and enabling you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
 
@@ -79,20 +79,10 @@ In this section, you will provision a Coligo service and a subsequent project to
    - Select a region and a resource group
    - Provide a service name
    - Click **Create** to provision he Coligo service
-2. Create a new project to group your components (applications,jobs etc.,). Use projects to organize your Coligo related entities like a folder and work on focused context. On the Coligo dashboard, click **Projects** on the left pane,
+2. Create a new project to group your components (applications,jobs etc.). Use projects to organize your Coligo related entities like a folder and work on focused context. On the Coligo dashboard, click **Projects** on the left pane,
    - Provide a project name
    - Click on **Create Project**
-3. On a terminal, define an environment variable `COLIGO_PROJECT` and set it to your project name.
-   ```sh
-   export COLIGO_PROJECT=<your-project-name>
-   ```
-   {:pre}
-4. Check the details of your project by running the following command
-   ```sh
-   ibmcloud coligo project get --name $COLIGO_PROJECT
-   ```
-   {:pre}
-5. Target the project to run the future commands
+3. On a terminal, make the command line tooling point to your project
    ```sh
    ibmcloud coligo target --name $COLIGO_PROJECT
    ```
@@ -108,12 +98,11 @@ In this section, you will deploy your front-end web application to Coligo under 
 1. To deploy a new Coligo application, you need to run the below command by provide a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
    ```sh
    ibmcloud coligo application create --name frontend \
-   --image ibmcom/coligo-frontend \
-   --project $COLIGO_PROJECT
+   --image ibmcom/coligo-frontend
    ```
    {:pre}
-
-2. Copy the URL from the output above and open it in a browser to see an output as similar to the one below
+   Notice that there are only two parameters to the command; the name we want to give to this new application ("frontend"), and the container image that has its running code ("ibmcom/colig-frontend"). No other options are needed - Coligo will handle everything else for you.
+2. Copy the URL from the output above and open it in a browser to see an output as similar to this
    ```
    Hello World!! from the frontend.
    Connection to the backend failed as there is no backend defined yet.
@@ -128,25 +117,25 @@ In this section, you will deploy your front-end web application to Coligo under 
    ```
    {:pre}-->
 
-Congratulations!! on deploying a web application to Coligo with a simple command and also without the intricacies of Kubernetes such as pods, deployments, services, and ingress.
+Congratulations!! You've just deployed a web application to Coligo with a simple command and also without the intricacies of Kubernetes such as pods, deployments, services, and ingress.
 
 ### Deploy a backend app and test the connection
 
-1. To deploy a new backend application, run the below command
+1. To deploy a new backend application, run this command
    ```sh
    ibmcloud coligo application create --name backend \
-   --image ibmcom/coligo-backend \
-   --project $COLIGO_PROJECT \
-   --cluster-local
+   --image ibmcom/coligo-backend --cluster-local
    ```
    {:pre}
+   You'll notice that this command is very much like the previous commmand except of the additional `--cluster-local` flag. This will instruct Coligo to keep the endpoint for this new application private. Meaning, it will only be available from within the cluster. This is often used for security purposes.
 2. Copy the private endpoint (URL) from the output above.
-3. Edit the frontend application to set the environment variable pointing to the backend private endpoint
+3. The frontend application uses an environment variable to know where the backend application is hosted. We now need to modify the frontend application to set this value to point to the backend application's endpoint - make sure to use the value from the previous command
    ```sh
    ibmcloud coligo application update --name frontend \
    --env backend=backend.XXX.svc.cluster.local
    ```
    {:pre}
+   Notice that the `--env` option on this command. It can appear as many times as you'd like if you need to set more than one environment variable. This option could have also been used on the `application create` command for the frontend application as well if we knew its value at that time.
 4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Try uploading an image from your computer to detect objects, you should still see an error message as the backend is still not connected with the required services to store the image and process it.
 
 ## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
@@ -240,7 +229,7 @@ In this section, you will build your own container image from the source code an
 ## Remove resources
 {:#cleanup}
 
-1. With the command below, delete the project to delete all it's components (applications, jobs etc.,).
+1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
    ```sh
    ibmcloud coligo project delete --name $COLIGO_PROJECT
    ```
