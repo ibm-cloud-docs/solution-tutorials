@@ -20,7 +20,7 @@ lasttested: "2020-03-05"
 {:important: .important}
 {:note: .note}
 
-# Coligo tutorial
+# Object detection with Coligo
 {: #coligo}
 
 In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. The application is actually made up of two separate applications: a frontend and a backend. The frontend application is a web server that will host a browser based application that people will use to upload images. This frontend application will then send those images to the backend application for processing. The backend application will upload the images into an object storage "bucket" and then initiate a "batch" job over the uploaded images. A batch job is a collection of tasks that where each task performs exactly one action and then exits. In this case, you will define a batch job to process all of the images uploaded to the bucket - one job per image. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result of that analysis will then be uploaded into another bucket. And finally, the results of those scans will then be visible on the frontend application/UI.
@@ -188,10 +188,10 @@ Now, you will need to pass in the credentials for the services you just created 
    {:pre}
 3. With the secrets and configmap defined, you can now update the backend service by asking Coligo to set environment variables in the runtime of the application based on the values in those resources. Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key". Update the backend application with the following command
    ```sh
-     ibmcloud coligo application update --name backend \
-     --env-from secret:cos-secret \
-     --env-from secret:vr-secret \
-     --env-from configmap:cos-bucket-name
+   ibmcloud coligo application update --name backend \
+   --env-from secret:cos-secret \
+   --env-from secret:vr-secret \
+   --env-from configmap:cos-bucket-name
    ```
    {:pre}
 4. To verify whether the backend application was updated with the secret. You can run the below command
@@ -199,7 +199,7 @@ Now, you will need to pass in the credentials for the services you just created 
    ibmcloud coligo application describe --name backend -o yaml
    ```
    {:pre}
-   and look for the "env" section.
+   and look for the "env" section .
 
 ## Testing the entire application
 {:testing_app}
