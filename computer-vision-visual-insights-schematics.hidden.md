@@ -57,9 +57,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 This tutorial requires:
+* Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 * {{site.data.keyword.cloud_notm}} CLI,
   * vpc-infrastructure/infrastructure-service plugin
-* Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
+
+<!--##istutorial#-->
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 ## Provision a virtual server instance with {{site.data.keyword.visualinsightsshort}} using {{site.data.keyword.bpshort}}
 {:#provision_VPC_backend_vsi}
@@ -104,7 +108,7 @@ For training the model, **Download** the [train.zip](https://ibm.box.com/shared/
 
 Multi-class weather dataset(MWD) for image classification is a valuable dataset used in the research paper entitled "Multi-class weather recognition from still image using heterogeneous ensemble method". The dataset provides a platform for outdoor weather analysis by extracting various features for recognizing different weather conditions.
 
-1. Access the application via the **{{site.data.keyword.visualinsightsshort}} UI** URL saved from the log output and login with the **{{site.data.keyword.visualinsightsshort}}** credentials provided in the log. Click **Get started**.
+1. Access the application via the **{{site.data.keyword.visualinsightsshort}}** URL saved from the log output and login with the **{{site.data.keyword.visualinsightsshort}}** credentials provided in the log. Click **Get started**.
 
    Ignore the certificate warning as the SSL certificate is self signed with no potential security threats.
    {:tip}
