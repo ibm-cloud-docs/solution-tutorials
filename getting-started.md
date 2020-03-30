@@ -238,7 +238,7 @@ The following sections assume you are running macOS High Sierra or later under a
    oc version
    ```
    {:pre}
-   
+
    macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, in the Finder on your Mac, locate the `oc` binary. Control-click its icon, then choose **Open** from the shortcut menu.
    {:tip}
 
@@ -485,7 +485,7 @@ Proceed to the configuration [common to all operating systems](#common).
 ## Common to all operating systems
 {: #common}
 
-The next sections are common to all operating systems. 
+The next sections are common to all operating systems.
 
 ### {{site.data.keyword.cloud_notm}} CLI plugins
 
@@ -500,6 +500,9 @@ Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with
    ibmcloud plugin install kubernetes-service
    ```
    {:pre}
+
+   To see all the available plugins, run `ibmcloud plugin repo-plugins` and to install a plugin `ibmcloud plugin install <PLUGIN_NAME>`
+   {:tip}
 
 ### GitHub account
 {: #common_github}
