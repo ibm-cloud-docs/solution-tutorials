@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-03-23"
-lasttested: "2020-03-23"
+lastupdated: "2020-03-30"
+lasttested: "2020-03-30"
 ---
 
 {:shortdesc: .shortdesc}
@@ -165,7 +165,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
     <tbody>
         <tr>
             <td>ibmcloud_api_key</td>
-            <td>Enter the IBM Cloud API key. Use the same API key used with {{site.data.keyword.visualinsightsshort}} backend</td>
+            <td>Enter the IBM Cloud API key. Use the same API key used for {{site.data.keyword.visualinsightsshort}} backend</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without any trailing spaces</td>
@@ -190,8 +190,8 @@ In this section, you will deploy a web application to a new VSI and upload an im
     </tbody>
    </table>
 
-   If you already have an {{site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, set the `resource_group_name` input variable to `default`. For resource group name, Run this command - `ibmcloud resource groups`
-   {:tip}
+   <!--If you already have an {{site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, set the `resource_group_name` input variable to `default`. For resource group name, Run this command - `ibmcloud resource groups`
+   {:tip}-->
 
 5. Click on **Create** to create the workspace.
 6. On the subsequent page, Click **Apply plan** to provision
@@ -223,3 +223,4 @@ In this section, you will deploy a web application to a new VSI and upload an im
 {: #related_resources}
 
 * If you wish to log into the respective servers for debugging or troubleshooting using the generated SSH keypair, check this [VPC tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#test-your-bastion)
+* Monitoring [usage metrics](https://www.ibm.com/support/knowledgecenter/en/SSRU69_1.2.0/base/vision_usage_metrics.html)
