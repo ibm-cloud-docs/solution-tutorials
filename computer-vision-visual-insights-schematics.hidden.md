@@ -153,7 +153,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
 
 1. Navigate to [{{site.data.keyword.bpshort}} overview page](https://{DomainName}/schematics/overview) and click on **Create a workspace**.
 2. Enter **visual-insights-frontend-workspace** as the Workspace name and select a resource group.
-3. Enter the GitHub repository URL - `https://github.ibm.com/portfolio-solutions/powerai-image-classifier/tree/tf-0.11`
+3. Enter the GitHub repository URL - `https://github.com/IBM-Cloud/visual-insights-image-classifier`
 4. Click on **Retrieve input variables** and complete the required fields.Other variables can be kept to their default values unless you want to customize the deployed environment.
    <table>
     <thead>
