@@ -105,7 +105,7 @@ In this section, you will create a flower data set, assign a category, and train
 ### Train the model
 {: #train_model}
 
-For training the model, **Download** the [train.zip](https://ibm.box.com/shared/static/4clf808ds083jp9fppe2dorb7txtutf5.zip) file which is a subset of images extracted from the original [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1](http://dx.doi.org/10.17632/4drtyfjtfy.1) that contains pictures pertaining to four weather conditions - cloudy, sunrise, rain and shine respectively. **Unzip and extract** the `train` folder.
+For training the model, **Download** the [train.zip](https://github.com/IBM-Cloud/visual-insights-image-classifier/blob/files/train.zip?raw=true) file which is a subset of images extracted from the original [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1](http://dx.doi.org/10.17632/4drtyfjtfy.1) that contains pictures pertaining to four weather conditions - cloudy, sunrise, rain and shine respectively. **Unzip and extract** the `train` folder.
 
 Multi-class weather dataset(MWD) for image classification is a valuable dataset used in the research paper entitled "Multi-class weather recognition from still image using heterogeneous ensemble method". The dataset provides a platform for outdoor weather analysis by extracting various features for recognizing different weather conditions.
 
@@ -128,7 +128,7 @@ Multi-class weather dataset(MWD) for image classification is a valuable dataset 
 ### Deploy and test the model
 {: #deploy_test_model}
 
-To test the deployed model, **Download** the [test.zip](https://ibm.box.com/shared/static/ule6kf2vo6q0wafruxgqzyqzycd7hkb6.zip) file, unzip and extract the `test` folder.
+To test the deployed model, **Download** the [test.zip](https://github.com/IBM-Cloud/visual-insights-image-classifier/blob/files/test.zip?raw=true) file, unzip and extract the `test` folder.
 
 1. Once the training is completed, check the accuracy, model hyperparameters, precision and other details by clicking on **Model details**.
 2. Click on **Deploy model** to deploy the trained model.
