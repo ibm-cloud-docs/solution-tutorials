@@ -131,21 +131,22 @@ Then add the action to a sequence:
 Finally add a second action to the sequence:
 
 1. Click on **save-guestbook-entry-sequence** and then click **Add**.
-1. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**
-1. Create **New Binding**
-1. For Name, enter `binding-for-guestbook`
-1. For Cloudant Instance, select `Input your own credentials` and fill in the following fields with the credentials information captured for your cloudant service: Username, Password, Host and Database = `guestbook` and click **Add** and then **Save**.
-   {: tip}
-1. To test it, click on **Change Input** and enter the JSON below
-    ```json
-    {
-      "name": "John Smith",
-      "email": "john@smith.com",
-      "comment": "this is my comment"
-    }
-    ```
-    {: codeblock}
+1. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**.
+1. Create **New Binding**.
+1. For Name, enter `binding-for-guestbook`.
+1. For Cloudant Instance, select the instance, credentials and database created earlier in the tutorial.
+1. Click **Add**.
+1. To test it, click on **Invoke with parameters** and enter the JSON below
+   ```json
+   {
+     "name": "John Smith",
+     "email": "john@smith.com",
+     "comment": "this is my comment"
+   }
+   ```
+   {: codeblock}
 1. Click **Apply** and then click **Invoke**.
+1. Click **Save**.
 
 ### Sequence of actions to retrieve entries
 
