@@ -153,7 +153,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    * List all documents from the database.
    * Format the documents and returning them.
 
-1. Under [**Functions**](https://{DomainName}/openwhisk), click on **Actions** and then **Create** a new Node.js action under Default Package and name it `set-read-input`.
+1. Under [**Functions**](https://{DomainName}/functions), click on **Actions** and then **Create** a new Node.js action under Default Package and name it `set-read-input`.
 2. Replace the existing code with the code snippet below. This action passes the appropriate parameters to the next action.
    ```js
    function main(params) {
