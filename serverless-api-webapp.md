@@ -214,7 +214,7 @@ Complete the sequence:
    1. Set **path** to `/entries`
    2. Set **verb** to `PUT`
    3. Select the **save-guestbook-entry-sequence** action
-8. Save and expose the API. Make note of the provided route, as you will use it from your web application.
+8. Scroll to the end of the page to **Create** the API. Make note of the provided route, as you will use it from your web application.
 
 ## Deploy the web app
 
@@ -231,7 +231,7 @@ Complete the sequence:
 <!--##istutorial#-->
 ## Optional: Use your own domain for the API
 
-Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain.
+Creating a managed API gives you a default endpoint like `https://1234abcd.us-south.apigw.appdomain.cloud/guestbook`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain.
 
 ### Obtain a certificate for the custom domain
 
