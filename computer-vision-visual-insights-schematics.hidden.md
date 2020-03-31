@@ -51,7 +51,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 2. Once the environment is provisioned, the admin logs into the {{site.data.keyword.visualinsightsshort}} backend app and deploys a deep learning model(API) for image classification.
 3. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} by creating a front-end workspace on the same {{site.data.keyword.bpshort}}.
 4. User uploads an image to the front-end web app for classification.
-5. The front-end sends the uploaded images for classification to the backend and displays the results on the web page.
+5. The front-end sends the uploaded images to the backend for classification and displays the results on the web page.
 
 ## Before you begin
 {: #prereqs}
@@ -229,4 +229,4 @@ In this section, you will deploy a web application to a new VSI and upload an im
 {: #related_resources}
 
 * If you wish to log into the respective servers for debugging or troubleshooting using the generated SSH keypair, check this [VPC tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server#test-your-bastion)
-* Monitoring [usage metrics](https://www.ibm.com/support/knowledgecenter/en/SSRU69_1.2.0/base/vision_usage_metrics.html)
+* {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} [documentation](https://www.ibm.com/support/knowledgecenter/en/SSRU69)
