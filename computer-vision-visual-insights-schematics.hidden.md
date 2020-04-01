@@ -197,7 +197,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
 
    <!--If you already have an {{site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, set the `resource_group_name` input variable to `default`. For resource group name, Run this command - `ibmcloud resource groups`
    {:tip}-->
-   If you wish to check the details of the created VPC and it resources, target VPC gen 2 with this command - `ibmcloud is target --gen 2` and run the help command - `ibmcloud is --help` for more
+   If you wish to check the details of the created VPC and it resources, target VPC gen 2 with this command - `ibmcloud is target --gen 2` and run the help command - `ibmcloud is --help` for more info.
    {:tip}
 
 5. Click on **Create** to create the workspace.
