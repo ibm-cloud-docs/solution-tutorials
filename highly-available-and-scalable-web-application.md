@@ -87,8 +87,8 @@ Contact your Infrastructure master user to get the following permissions:
 
 In this section, you configure one server to act as the master database.
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group) from the Infrastructure section.
-2. Select **Public Virtual Server** and then click **Create**.
+1. In the IBM Cloud catalog, select **Virtual Server** from the **Compute** section.
+2. For the type of virtual server, select Public. 
 3. Configure the server with the following:
    - Set **Name** to **db1**
    - Select a location where to provision the server. **All other servers and resources created in this tutorial will need to be created in the same location.**
@@ -210,7 +210,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
 ### Create the file storage
 {: #create_for_backup}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
+1. In the IBM Cloud catalog , and select **File Storage** in the **Storage** section.
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
@@ -319,31 +319,32 @@ The File Storage can be mounted as an NFS drive into the virtual server.
 
 In this section, you will create two web application servers.
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
-2. Select **Public Virtual Server** and then click **Create**.
-3. Configure the server with the following:
-   - Set **Name** to **app1**
-   - Select the same location where you provisioned the database server
-   - Select the **Ubuntu Minimal** image. You can pick any version of the image.
-   - Keep the default compute profile.
-   - Under **Attached Storage Disks**, select 25GB as your boot disk.
-   - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
-
-     If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
-     {: tip}
-   - Review the other configuration options and click **Provision** to provision the server.
-     ![Configure virtual server](images/solution14/db-server.png)
-4. Repeat steps 1-3 to provision another virtual server named **app2**
+1.  In the IBM Cloud catalog, select **Virtual Server** from the **Compute** section.
+2.  For the type of virtual server, select **Public**.
+3.  Configure the server with the following:
+  * Set Quantity to 2
+  * Set Name to **app2**
+  * Create a new Placement Group.  Placement group ensures the app Virtual Servers are provisioned on different hypervisors.
+      * Set Name to **app-group**
+      * Select Location to **Dal13**
+      * Click **Create**
+        Note: Placement Group is auto filled with the one you just created.  If it is not autofilled, click and select the Placement Group.
+  * Select a location where to provision the server. All other servers and resources created in this tutorial will need to be created in the same location.  For this example, it will be Dal13.
+  * This tutorial has been tested with the smallest profile but will work with any profile. You can keep the default profile or to reduce costs, select **Compute C1.1x1**.
+  * Select the **Ubuntu Minimal image**. You can choose any version of the image.
+  * In the **Network interface** section, select the **100 Mbps Private Network Uplink** option as the uplink port speed. If you did not configure the VPN access, select the **100 Mbps Public and Private Network Uplink** option.
+  * Other options or parameters that were not mentioned can be left at default.  Otherwise, change as needed based on your site requirement.
+  * Review the other configuration options and click **Create** to provision the server.
 
 ## Create a file storage to share files between the application servers
 {: shared_storage}
 
-This file storage is used to share the application files between *app1* and *app2* servers.
+This file storage is used to share the application files between **app1** and **app2** servers.
 
 ### Create the file storage
 {: #create_for_sharing}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
+In the IBM Cloud catalog, and select **File Storage** in the **Storage** section.
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
