@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-03-31"
-lasttested: "2020-03-30"
+lastupdated: "2020-04-01"
+lasttested: "2020-04-01"
 ---
 
 {:shortdesc: .shortdesc}
@@ -94,7 +94,7 @@ Once applied, the workspace will lead to the provisioning of:
 
 1. Click on **Apply plan**.
 1. Click on **View log** next to the current running plan to follow the logs.
-1. Wait for the plan to complete. It may take around 20 minutes for Schematics to download and install {{site.data.keyword.IBM_notm}} Vision Insights on the VSI.
+1. Wait for the plan to complete. It may take around 20 minutes for Schematics to download and install {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} on the VSI.
 1. Save the **Outputs** from the log for quick reference.
 
 ## Train, deploy and test the image classification model
@@ -178,7 +178,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
         </tr>
          <tr>
             <td>vpc_id</td>
-            <td>Target VPC gen 2 with this command - ibmcloud is target --gen 2 and retrieve the VPC ID - ibmcloud is vpcs</td>
+            <td>Check the Schematics output of {{site.data.keyword.visualinsightsshort}} backend</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE ID HERE without any trailing space</td>
@@ -197,6 +197,8 @@ In this section, you will deploy a web application to a new VSI and upload an im
 
    <!--If you already have an {{site.data.keyword.Bluemix_notm}} account and planning to use the `default` resource group, set the `resource_group_name` input variable to `default`. For resource group name, Run this command - `ibmcloud resource groups`
    {:tip}-->
+   If you wish to check the details of the created VPC and it resources, target VPC gen 2 with this command - `ibmcloud is target --gen 2` and run the help command - `ibmcloud is --help` for more
+   {:tip}
 
 5. Click on **Create** to create the workspace.
 6. On the subsequent page, Click **Apply plan** to provision
