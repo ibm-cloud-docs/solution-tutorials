@@ -54,6 +54,9 @@ You can provision services for {{site.data.keyword.cloud_notm}} from the [Resour
 5. On the overview page, click **Settings**.
 6. From the **Associated services** section, click **Add Service** and select **Analytics Engine** from the menu. In the resulting screen, you can choose an existing service instance or create a new one. Create a new one and make sure that the **Software package** includes **Spark**.
 
+   The Lite plan for {{site.data.keyword.iae_full_notm}} [is available only to institutions](https://{DomainName}/docs/services/AnalyticsEngine?topic=AnalyticsEngine-general-faqs#free-usage) that have signed up with IBM to try out the Lite plan. 
+   {:tip}
+
 ## Create and prepare a notebook
 The [Jupyter Notebook](http://jupyter.org/) is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Notebooks and other resources are organized in projects.
 1. Click the **Add to project** button and in the **Choose asset type** dialog select **Notebook**.
