@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-04-01"
+lastupdated: "2020-04-02"
 lasttested: "2020-04-01"
 ---
 
@@ -23,7 +23,7 @@ Videos and images have become one of the most interesting data sets for artifici
 
 [{{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} (previously PowerAI Vision)](https://www.ibm.com/us-en/marketplace/ibm-visual-insights) is a new generation video and image analysis platform that offers built-in deep learning models that learn to analyze images and video streams for classification and object detection. {{site.data.keyword.visualinsightsshort}} includes tools and interfaces that allow anyone with limited skills in deep learning technologies to get up and running quickly and easily. And because {{site.data.keyword.visualinsightsshort}} is built on open source frameworks for modeling and managing containers it delivers a highly available platform that includes application life-cycle support, centralized management and monitoring, and support from IBM.
 
-In this tutorial, [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1](http://dx.doi.org/10.17632/4drtyfjtfy.1) is used for training and testing the image classification model.
+In this tutorial, **Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1** *http://dx.doi.org/10.17632/4drtyfjtfy.1* is used for training and testing the image classification model.
 
 
 ## Objectives
@@ -105,7 +105,7 @@ In this section, you will create a flower data set, assign a category, and train
 ### Train the model
 {: #train_model}
 
-For training the model, **Download** the [train.zip](https://github.com/IBM-Cloud/visual-insights-image-classifier/blob/files/train.zip?raw=true) file which is a subset of images extracted from the original [Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1](http://dx.doi.org/10.17632/4drtyfjtfy.1) that contains pictures pertaining to four weather conditions - cloudy, sunrise, rain and shine respectively. **Unzip and extract** the `train` folder.
+For training the model, **Download** the [train.zip](https://github.com/IBM-Cloud/visual-insights-image-classifier/blob/files/train.zip?raw=true) file which is a subset of images extracted from the original Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1 *http://dx.doi.org/10.17632/4drtyfjtfy.1* that contains pictures pertaining to four weather conditions - cloudy, sunrise, rain and shine respectively. **Unzip and extract** the `train` folder.
 
 Multi-class weather dataset(MWD) for image classification is a valuable dataset used in the research paper entitled "Multi-class weather recognition from still image using heterogeneous ensemble method". The dataset provides a platform for outdoor weather analysis by extracting various features for recognizing different weather conditions.
 
@@ -128,7 +128,7 @@ Multi-class weather dataset(MWD) for image classification is a valuable dataset 
 ### Deploy and test the model
 {: #deploy_test_model}
 
-To test the deployed model, **Download** the [test.zip](https://github.com/IBM-Cloud/visual-insights-image-classifier/blob/files/test.zip?raw=true) file, unzip and extract the `test` folder.
+To test the deployed model, **Download** the [test.zip](https://github.com/IBM-Cloud/visual-insights-image-classifier/blob/files/test.zip?raw=true) file which is a subset of images extracted from the original Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1 *http://dx.doi.org/10.17632/4drtyfjtfy.1*, **unzip** and **extract** the `test` folder.
 
 1. Once the training is completed, check the accuracy, model hyperparameters, precision and other details by clicking on **Model details**.
 2. Click on **Deploy model** to deploy the trained model.
