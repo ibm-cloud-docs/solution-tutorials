@@ -21,7 +21,7 @@ Adding more servers to an application is a common pattern to handle additional l
 This tutorial walks you through a scenario with the creation of:
 
 - Two web application servers in Dallas.
-- Cloud Load Balancer, to load balance traffic between two servers within a location.
+- {{site.data.keyword.loadbalancer_full}}, to load balance traffic between two servers within a location.
 - One MySQL database server.
 - A durable file storage to store application files and backups.
 - Configure the second location with the same configurations as the first location, then add {{site.data.keyword.cis_full_notm}} to point traffic to the healthy location if one copy fails.
@@ -87,7 +87,7 @@ Contact your Infrastructure master user to get the following permissions:
 
 In this section, you configure one server to act as the master database.
 
-1. In the IBM Cloud catalog, select **Virtual Server** from the **Compute** section.
+1. In the {{site.data.keyword.Bluemix_notm}} catalog, select **Virtual Server** from the **Compute** section.
 2. For the type of virtual server, select Public. 
 3. Configure the server with the following:
    - Set **Name** to **db1**
@@ -210,7 +210,7 @@ There are many ways in which backups can be done and stored when it comes to MyS
 ### Create the file storage
 {: #create_for_backup}
 
-1. In the IBM Cloud catalog , and select **File Storage** in the **Storage** section.
+1. In the {{site.data.keyword.Bluemix_notm}} catalog , and select **[{{site.data.keyword.filestorage_short}}]** in the **Storage** section.
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
@@ -223,14 +223,14 @@ There are many ways in which backups can be done and stored when it comes to MyS
 
 ### Authorize the database server to use the file storage
 
-Before a virtual server can mount a File Storage, it needs to be authorized.
+Before a virtual server can mount a file storage, it needs to be authorized.
 
-1. Select the newly created File Storage from the [list of existing items](https://{DomainName}/classic/storage/file).
+1. Select the newly created file storage from the [list of existing items](https://{DomainName}/classic/storage/file).
 2. Under **Authorized Hosts**, click **Authorize Host** and select the virtual(database) server (Choose **Devices** > Virtual Server as Device Type > Type the name of the server).
 
 ### Mount the file storage for database backups
 
-The File Storage can be mounted as an NFS drive into the virtual server.
+The file storage can be mounted as an NFS drive into the virtual server.
 
 1. Install the NFS client libraries:
    ```sh
@@ -287,7 +287,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    ```
    {:pre}
 
-   The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
+   The last lines should list the file storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
 ### Setup a backup at regular interval
@@ -319,7 +319,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
 
 In this section, you will create two web application servers.
 
-1.  In the IBM Cloud catalog, select **Virtual Server** from the **Compute** section.
+1.  In the {{site.data.keyword.Bluemix_notm}} catalog, select **Virtual Server** from the **Compute** section.
 2.  For the type of virtual server, select **Public**.
 3.  Configure the server with the following:
   * Set Quantity to 2
@@ -344,7 +344,7 @@ This file storage is used to share the application files between **app1** and **
 ### Create the file storage
 {: #create_for_sharing}
 
-In the IBM Cloud catalog, and select **File Storage** in the **Storage** section.
+In the {{site.data.keyword.Bluemix_notm}} catalog, and select **F[{{site.data.keyword.filestorage_short}}]** in the **Storage** section.
 2. Click **Create**
 3. Configure the service with the following:
    - Set **Storage Type** to **Endurance**
@@ -359,7 +359,7 @@ In the IBM Cloud catalog, and select **File Storage** in the **Storage** section
 
 [Snapshots](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
 
-1. Select the File Storage from the [list of existing items](https://{DomainName}/classic/storage/file)
+1. Select the file storage from the [list of existing items](https://{DomainName}/classic/storage/file)
 2. Under **Snapshot Schedules**, edit the snapshot schedule. The schedule could be defined as follow:
    1. Add a hourly snapshot, set the minute to 30 and keep the last 24 snapshots
    2. Add a daily snapshot, set the time to 11pm and keep the last 7 snapshots
@@ -623,7 +623,7 @@ The Wordpress configuration needs to be changed to use the Load Balancer address
 
 ### Test the Load Balancer behavior
 
-The Load Balancer is configured to check the health of the servers and to redirect users only to healthy servers. To understand how the Load Balancer is working, you can
+The load balancer is configured to check the health of the servers and to redirect users only to healthy servers. To understand how the Load Balancer is working, you can
 
 1. Watch the nginx logs on both *app1* and *app2* with:
    ```sh
