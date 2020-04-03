@@ -291,6 +291,6 @@ Once the DNS changes have been propagated, you will be able to access your guest
 ## Related content
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * [More guides and samples on serverless](https://developer.ibm.com/code/journey/category/serverless/)
-* [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-index#getting-started-with-openwhisk)
-* [{{site.data.keyword.openwhisk}} common use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_common_use_cases#openwhisk_common_use_cases)
-* [Create REST APIs from actions](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_apigateway#openwhisk_apigateway)
+* [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-getting-started)
+* [{{site.data.keyword.openwhisk}} common use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-use_cases)
+* [Create REST APIs from actions](https://{DomainName}/docs/openwhisk?topic=cloud-functions-apigateway)
