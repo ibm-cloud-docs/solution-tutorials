@@ -42,7 +42,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-  ![Architecture](images/solution53-visual-insights-schematics-hidden/architecture_diagram.png)
+  ![Architecture](images/solution53-visual-insights-schematics/architecture_diagram.png)
 
 1. Admin creates a backend workspace on {{site.data.keyword.bpshort}} and uses a Terraform template to provision a virtual server instance(VSI) running {{site.data.keyword.visualinsightsshort}}.
 2. Once the environment is provisioned, the admin logs into the {{site.data.keyword.visualinsightsshort}} backend app and deploys a deep learning model(API) for image classification.

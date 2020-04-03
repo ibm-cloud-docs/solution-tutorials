@@ -226,7 +226,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2019-12-13"
+          "lastUpdated": "2020-03-31"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -424,6 +424,19 @@
       "name": "Machine Learning and Analytics",
       "anchor": "ml",
       "solutions": [
+        {
+          "name": "Computer vision with Visual Insights and Schematics",
+          "url": "computer-vision-visual-insights-schematics.html",
+          "description": "Provision a backend instance of Visual Insights in VPC and access the deployed deep learning model through a webapp for image classification",
+          "imgSrc": "images/solution53-visual-insights-schematics/architecture_diagram.png",
+          "tags": [
+            "Visual Insights",
+            "Schematics",
+            "Infrastructure",
+            "Virtual Private Cloud"
+          ],
+          "lastUpdated": "2020-04-03"
+        },
         {
           "name": "Big data logs with streaming analytics and SQL",
           "url": "big-data-log-analytics.html",
