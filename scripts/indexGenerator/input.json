@@ -597,6 +597,24 @@
       "anchor": "ml",
       "solutions": [
         {
+          "name": "Computer vision with Visual Insights and Schematics",
+          "url": "computer-vision-visual-insights-schematics.html",
+          "description": "Provision a backend instance of Visual Insights in VPC and access the deployed deep learning model through a webapp for image classification",
+          "imgSrc": "images/solution53-visual-insights-schematics/architecture_diagram.png",
+          "tags": [
+            "Visual Insights",
+            "Schematics",
+            "Infrastructure",
+            "Virtual Private Cloud"
+          ],
+          "requirements": [
+            "visual_insights",
+            "schematics",
+            "vpc"
+          ],
+          "supportsCloudShell": "not_applicable"
+        },
+        {
           "name": "Big data logs with streaming analytics and SQL",
           "url": "big-data-log-analytics.html",
           "description": "Collect, store and analyze log records to support regulatory requirements and aid information discovery. Using publish-subscribe messaging, scale the solution to millions of records and then perform analysis on persisted logs with familiar SQL.",
@@ -737,16 +755,6 @@
           "url": "solution-template.html",
           "description": "Solution Template",
           "imgSrc": ""
-        },
-        {
-          "name": "Computer vision with Visual Insights and Schematics",
-          "url": "computer-vision-visual-insights-schematics.hidden.html",
-          "description": "Provision a backend instance of Visual Insights in VPC and access the deployed deep learning model through a webapp for image classification",
-          "imgSrc": "images/solution53-visual-insights-schematics-hidden/architecture_diagram.png",
-          "tags": [
-            "Visual Insights",
-            "Schematics"
-          ]
         },
         {
           "name": "Coligo tutorial",
