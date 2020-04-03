@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-04-02"
+lastupdated: "2020-04-03"
 lasttested: "2020-04-01"
 ---
 
@@ -22,9 +22,6 @@ This tutorial walks you through provisioning a dedicated backend virtual server 
 Videos and images have become one of the most interesting data sets for artificial intelligence. In particular, deep learning is being used to create models for computer vision, and you can train these models to let your applications recognize what an image (or video) represents.
 
 [{{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} (previously PowerAI Vision)](https://www.ibm.com/us-en/marketplace/ibm-visual-insights) is a new generation video and image analysis platform that offers built-in deep learning models that learn to analyze images and video streams for classification and object detection. {{site.data.keyword.visualinsightsshort}} includes tools and interfaces that allow anyone with limited skills in deep learning technologies to get up and running quickly and easily. And because {{site.data.keyword.visualinsightsshort}} is built on open source frameworks for modeling and managing containers it delivers a highly available platform that includes application life-cycle support, centralized management and monitoring, and support from IBM.
-
-In this tutorial, **Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1** *http://dx.doi.org/10.17632/4drtyfjtfy.1* is used for training and testing the image classification model. Click the link provided above to **download** the `.zip` file. Once downloaded, **unzip** and **extract** image folders.
-
 
 ## Objectives
 {: #objectives}
@@ -100,7 +97,9 @@ Once applied, the workspace will lead to the provisioning of:
 ## Train, deploy and test the image classification model
 {: #train_deploy_dl_model}
 
-In this section, you will create a weather data set from the images you downloaded initially, assign a category, and train a image classification model based on the weather images uploaded. Once you are happy with the accuracy and other model parameters, you will deploy and test the image classification model.
+In this tutorial, **Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1** *http://dx.doi.org/10.17632/4drtyfjtfy.1* will be used for training and testing the image classification model. Click the link provided above to **download** the `.zip` file. Once downloaded, **unzip** and **extract** image folders.
+
+In this section, you will create a weather data set from the images you downloaded, assign a category, and train a image classification model based on the weather images uploaded. Once you are happy with the accuracy and other model parameters, you will deploy and test the image classification model.
 
 ### Train the model
 {: #train_model}
@@ -112,10 +111,12 @@ In this section, you will create a weather data set from the images you download
 2. Click **Create new data set**, set the **Data set name** to `weather_classification_dataset` and click **Create**.
 3. To add images to the dataset and to categorize, Click on the `weather_classification_dataset` tile.
    1. Click on **Import files** and point to the downloaded dataset folder.
-   2. Select **cloudy** image folder and import images numbered `cloudy1.jpg` to `cloudy240.jpg` to be uploaded for classification.
-   3. Once all the images are imported, expand **Categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar
-   4. Click on **Assign category**, give **Cloudy** as the name and click **Assign**
-   5. **Repeat** the steps with images from **rain (rain**, **shine** and **sunrise** dataset folders by assigning category names - **Rain**, **Shine** and **Sunrise** respectively
+   2. Select **cloudy** image folder and import images numbered `cloudy1.jpg` to `cloudy240.jpg` to be uploaded for classification. The rest of the images in the folder will be used for testing the model.
+     You will split the data around 80%-20% between training and testing stages.
+     {:tip}
+   4. Once all the images are imported, expand **Categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar
+   5. Click on **Assign category**, give **Cloudy** as the name and click **Assign**
+   6. **Repeat** the steps with images from **rain (rain1.jpg to rain172.jpg)**, **shine (shine1.jpg to shine201.jpg)** and **sunrise (sunrise1.jpg to sunrise285.jpg)** dataset folders by assigning category names - **Rain**, **Shine** and **Sunrise** respectively
 4. Click on **Train model**
    1. Select **Image classification** as your type of training
    2. Select **System Default(GoogLeNet)** as your Optimization technique
@@ -123,8 +124,6 @@ In this section, you will create a weather data set from the images you download
 
 ### Deploy and test the model
 {: #deploy_test_model}
-
-To test the deployed model, **Download** the [test.zip](https://github.com/IBM-Cloud/visual-insights-image-classifier/blob/files/test.zip?raw=true) file which is a subset of images extracted from the original Ajayi, Gbeminiyi (2018), "Multi-class Weather Dataset for Image Classification", Mendeley Data, v1 *http://dx.doi.org/10.17632/4drtyfjtfy.1*, **unzip** and **extract** the `test` folder.
 
 1. Once the training is completed, check the accuracy, model hyperparameters, precision and other details by clicking on **Model details**.
 2. Click on **Deploy model** to deploy the trained model.
@@ -137,7 +136,7 @@ To test the deployed model, **Download** the [test.zip](https://github.com/IBM-C
    {:tip}
 
 5. To test the deployed model,
-   - Click on **Import** and select an image from the downloaded `test` folder
+   - Click on **Import** and select an image from the respective folder. Remember to import an image that is not part of training.
    - Check the **Results** section to check the category and the confidence value
 
 ## Create a web app with {{site.data.keyword.bpshort}} for image classification
@@ -209,10 +208,10 @@ In this section, you will deploy a web application to a new VSI and upload an im
 ### Classify images
 {: #classify_images}
 
-1. Click on **Upload a JPEG image** to select a `.JPEG` or `.JPG` image from `cloudy` folder of downloaded `test` folder from your machine.
+1. Click on **Upload a JPEG image** to select a `.JPEG` or `.JPG` image from `cloudy`(between cloudy241.jpg and cloudy300.jpg) folder on your machine.
 2. Click on **Classify image** to see the response from the deployed model.
 3. Check the category and confidence output.
-4. Repeat the above steps with images from other `test` folders namely `sunrise`, `rain` and `shine`.
+4. Repeat the above steps with images from other folders namely `sunrise`, `rain` and `shine`. Remember to upload an image that is not part of training.
 5. You can also upload any random `.JPEG` or `.JPG` image for classification.
 
 ## Remove resources
