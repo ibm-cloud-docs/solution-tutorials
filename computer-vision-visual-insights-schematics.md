@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-04-03"
+lastupdated: "2020-04-06"
 lasttested: "2020-04-01"
 ---
 
@@ -13,7 +13,7 @@ lasttested: "2020-04-01"
 {:tip: .tip}
 {:pre: .pre}
 
-# Computer vision with {{site.data.keyword.visualinsightsshort}} and {{site.data.keyword.bpshort}}
+# Computer vision with {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} and {{site.data.keyword.bpshort}}
 {: #computer-vision-visual-insights-schematics}
 
 This tutorial walks you through provisioning a dedicated backend virtual server instance (VSI) of {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} (previously PowerAI Vision) in {{site.data.keyword.vpc_full}}(VPC) through {{site.data.keyword.bplong}}. Once provisioned, you will upload an image data set, train, deploy, and test an optimized deep learning (image classification) model through a GPU on the VSI. You will also deploy a front-end web application through {{site.data.keyword.bplong_notm}} to a new VSI on the same {{site.data.keyword.vpc_short}}. Once deployed, you will upload an image for classification by communicating with the backend deployed model exposed an an API.
@@ -21,12 +21,12 @@ This tutorial walks you through provisioning a dedicated backend virtual server 
 
 Videos and images have become one of the most interesting data sets for artificial intelligence. In particular, deep learning is being used to create models for computer vision, and you can train these models to let your applications recognize what an image (or video) represents.
 
-[{{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} (previously PowerAI Vision)](https://www.ibm.com/us-en/marketplace/ibm-visual-insights) is a new generation video and image analysis platform that offers built-in deep learning models that learn to analyze images and video streams for classification and object detection. {{site.data.keyword.visualinsightsshort}} includes tools and interfaces that allow anyone with limited skills in deep learning technologies to get up and running quickly and easily. And because {{site.data.keyword.visualinsightsshort}} is built on open source frameworks for modeling and managing containers it delivers a highly available platform that includes application life-cycle support, centralized management and monitoring, and support from IBM.
+[{{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} (previously PowerAI Vision)](https://www.ibm.com/us-en/marketplace/ibm-visual-insights) is a new generation video and image analysis platform that offers built-in deep learning models that learn to analyze images and video streams for classification and object detection. {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} includes tools and interfaces that allow anyone with limited skills in deep learning technologies to get up and running quickly and easily. And because {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} is built on open source frameworks for modeling and managing containers it delivers a highly available platform that includes application life-cycle support, centralized management and monitoring, and support from IBM.
 
 ## Objectives
 {: #objectives}
 
-* Use {{site.data.keyword.bpshort}} to deploy a virtual server instance running {{site.data.keyword.visualinsightsshort}} on Power CPU in {{site.data.keyword.vpc_short}}.
+* Use {{site.data.keyword.bpshort}} to deploy a virtual server instance running {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} on Power CPU in {{site.data.keyword.vpc_short}}.
 * Train and test an image classification model.
 * Augment the VPC environment by deploying an image classification application to a new virtual server instance.
 
@@ -44,8 +44,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
   ![Architecture](images/solution53-visual-insights-schematics/architecture_diagram.png)
 
-1. Admin creates a backend workspace on {{site.data.keyword.bpshort}} and uses a Terraform template to provision a virtual server instance(VSI) running {{site.data.keyword.visualinsightsshort}}.
-2. Once the environment is provisioned, the admin logs into the {{site.data.keyword.visualinsightsshort}} backend app and deploys a deep learning model(API) for image classification.
+1. Admin creates a backend workspace on {{site.data.keyword.bpshort}} and uses a Terraform template to provision a virtual server instance(VSI) running {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}}.
+2. Once the environment is provisioned, the admin logs into the {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} backend app and deploys a deep learning model(API) for image classification.
 3. Admin deploys a web application to a front-end subnet on the same {{site.data.keyword.vpc_short}} by creating a front-end workspace on the same {{site.data.keyword.bpshort}}.
 4. User uploads an image to the front-end web app for classification.
 5. The front-end sends the uploaded images to the backend for classification and displays the results on the web page.
@@ -62,10 +62,10 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
-## Provision a virtual server instance with {{site.data.keyword.visualinsightsshort}} using {{site.data.keyword.bpshort}}
+## Provision a virtual server instance with {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} using {{site.data.keyword.bpshort}}
 {:#provision_VPC_backend_vsi}
 
-In this section, you will provision a VPC with {{site.data.keyword.visualinsightsshort}} installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service. {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure-as-Code (IaC).
+In this section, you will provision a VPC with {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} installed on a virtual server instance via {{site.data.keyword.bplong_notm}} service. {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure-as-Code (IaC).
 
 ### Create a {{site.data.keyword.bplong_notm}} backend workspace
 {:#backend_workspace}
@@ -91,8 +91,8 @@ Once applied, the workspace will lead to the provisioning of:
 
 1. Click on **Apply plan**.
 1. Click on **View log** next to the current running plan to follow the logs.
-1. Wait for the plan to complete. It may take around 20 minutes for Schematics to download and install {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} on the VSI.
-1. Save the **Outputs** from the log for quick reference.
+2. Wait for the plan to complete. It may take around 20 minutes for Schematics to download and install {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} on the VSI.
+3. Save the **Outputs** from the log for quick reference.
 
 ## Train, deploy and test the image classification model
 {: #train_deploy_dl_model}
@@ -104,7 +104,7 @@ In this section, you will create a weather data set from the images you download
 ### Train the model
 {: #train_model}
 
-1. Access the application via the **{{site.data.keyword.visualinsightsshort}}** URL saved from the log output and login with the **{{site.data.keyword.visualinsightsshort}}** credentials provided in the log. Click **Get started**.
+1. Access the application via the **{{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}}** URL saved from the log output and login with the **{{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}}** credentials provided in the log. Click **Get started**.
 
    Ignore the certificate warning as the SSL certificate is self signed with no potential security threats.
    {:tip}
@@ -167,7 +167,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
     <tbody>
         <tr>
             <td>ibmcloud_api_key</td>
-            <td>Enter the IBM Cloud API key. Use the same API key used for {{site.data.keyword.visualinsightsshort}} backend</td>
+            <td>Enter the IBM Cloud API key. Use the same API key used for {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} backend</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE KEY HERE without any trailing spaces</td>
@@ -175,7 +175,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
         </tr>
          <tr>
             <td>vpc_id</td>
-            <td>Check the Schematics output of {{site.data.keyword.visualinsightsshort}} backend</td>
+            <td>Check the Schematics output of {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} backend</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE ID HERE without any trailing space</td>
@@ -183,7 +183,7 @@ In this section, you will deploy a web application to a new VSI and upload an im
         </tr>
         <tr>
             <td>visual_insights_model_api_url</td>
-            <td>The deployed model API URL of {{site.data.keyword.visualinsightsshort}}</td>
+            <td>The deployed model API URL of {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}}</td>
             <td>string</td>
             <td></td>
             <td>ENTER THE URL HERE without any trailing spaces</td>
