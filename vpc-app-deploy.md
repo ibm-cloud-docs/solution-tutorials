@@ -295,7 +295,7 @@ This section uses a shell script found in the [Public frontend and private backe
 
 1. Import the output variables into the environment:
    ```sh
-   source resource.sh
+   source resources.sh
    ```
    {:pre}
 1. Validate that the frontend virtual server instance is reachable and has outbound access to the Internet:
