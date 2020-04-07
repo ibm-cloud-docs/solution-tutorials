@@ -50,6 +50,7 @@ Solution Tutorials
 
     {: .topicgroup}
     Machine Learning and Analytics
+        computer-vision-visual-insights-schematics.md
         big-data-log-analytics.md
         smart-data-lake.md
         serverless-github-traffic-analytics.md
@@ -132,6 +133,7 @@ Solution Tutorials
         lamp-stack.md
         infrastructure-as-code-terraform.md
         highly-available-and-scalable-web-application.md
+        computer-vision-visual-insights-schematics.md
         vpc-public-app-private-backend.md
         vpc-multi-region.md
         vpc-site2site-vpn.md
