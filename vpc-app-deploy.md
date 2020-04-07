@@ -325,10 +325,10 @@ This section uses a shell script found in the [Public frontend and private backe
    hi
    ```
 
-### Clean up
+### Remove resources
 {: #cli-cleanup}
 
-1. Delete the VPC and **all of the resources** in the VPC, be careful:
+1. Delete the VPC and **all of the resources** in the VPC:
    ```sh
    ../scripts/vpc-cleanup.sh tutorialvpc-pubpriv
    ```
@@ -491,7 +491,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
    hi
    ```
 
-### Clean up
+### Remove resources
 {: #terraform-cleanup}
 
 1. Remove the resources created by Terraform:
@@ -643,7 +643,7 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
    hi
    ```
 
-### Clean up
+### Remove resources
 {: #ansible-cleanup}
 
 1. Remove the resources created by Terraform:
