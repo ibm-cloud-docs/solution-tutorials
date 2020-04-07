@@ -223,8 +223,8 @@ Now that you have the backend application connected to the frontend application,
    --from-literal=url=VISUAL_RECOGNITION_URL
    ```
    {:pre}
-2. Test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-images`.
-3. Uploading an image to {{site.data.keyword.cos_short}} bucket creates a new job and the uploading image is passed to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in `<your-initials>-coligo-results` bucket.
+2. Test the app by uploading an image through the frontend UI. You should see the preview of the image with "Not Analyzed" tag on it. Click on **Upload Images** to store the image in the {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-images`.
+3. Click on **Analyze** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} bucket to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in a separate {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-results` and can be seen on the UI.
 4. Upload multiple images to create individual jobs. Each job retrieves a single image to process from the bucket.
 5. Check the results of the processed images on the UI.
 
