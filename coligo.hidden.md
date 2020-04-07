@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-04-03"
+lastupdated: "2020-04-07"
 lasttested: "2020-03-05"
 
 ---
@@ -23,6 +23,8 @@ lasttested: "2020-03-05"
 # Object detection with Coligo
 {: #coligo}
 
+> :warning: WORK-IN-PROGRESS
+
 In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. The application is made up of frontend and backend applications:. The frontend application is a web application that user will use to upload images. This web app will send the uploaded images to the backend application for processing. The backend application will store the images into an object storage "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job per image. A batch job is a collection of tasks that where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another bucket. And finally, the results of those scans will then be visible on the web application.
 {:shortdesc}
 
@@ -36,9 +38,8 @@ Knative helps developers by hiding many of these tasks, simplifying container-ba
 {: #objectives}
 
 * Understand Coligo and how it simplifies the developer experience.
-* Deploy a frontend application to Coligo to upload images for object detection.
-* Store the uploaded images in COS service bucket on {{site.data.keyword.Bluemix}}.
-* Process the images as individual jobs and store the results of object detection in a different bucket on COS service.
+* Understand how easy it is to deploy and scale an application to Coligo.
+* Learn the use the jobs to execute task-to-completion workloads.
 
 ## Services used
 {: #services}
@@ -69,21 +70,20 @@ This tutorial requires:
    * Coligo plugin (`coligo-service`),
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`)
 
-## Create Coligo and required cloud services
+<!--##istutorial#-->
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
+
+## Create a IBM Coligo project
 {: #create_coligo_project}
 
-In this section, you will provision a Coligo service and a subsequent project to group applications and jobs. You will also provision other services required
+In this section, you will provision a Coligo service and a subsequent project to group applications and jobs.
 
-### Provision Coligo service and create a project
-{:#coligo_service_project}
-
-1. On {{site.data.keyword.Bluemix_notm}} catalog, provision a Coligo service.
-   - Select a region and a resource group
-   - Provide a service name
-   - Click **Create** to provision he Coligo service
-2. Create a new project to group your components (applications,jobs etc.). Use projects to organize your Coligo related entities like a folder and work on focused context. On the Coligo dashboard, click **Projects** on the left pane,
+1. Navigate to [IBM Coligo Overview](https://{DomainName}/knative/overview) page
+2. Click on **Create project**. Create a new project to group your components (applications,jobs etc.). Use projects to organize your Coligo related entities like a folder and work on focused context.
    - Provide a project name
-   - Click on **Create Project**
+   - Select a resource group and Location
+   - Click on **Create**
 3. On a terminal, make the command line tooling point to your project
    ```sh
    ibmcloud coligo target --name $COLIGO_PROJECT
@@ -121,8 +121,14 @@ In this section, you will deploy your front-end web application to Coligo under 
    kubectl get pods --watch
    ```
    {:pre}-->
-
 Congratulations!! You've just deployed a web application to Coligo with a simple command and also without the intricacies of Kubernetes such as pods, deployments, services, and ingress.
+
+### Scale the application
+
+To check the autoscaling capabilities of Coligo,
+1. Navigate to the [load generator URL](https://load.fun.{DomainName}/) and paste the frontend application URL from the above step
+2. Click on **Generate load* to generate traffic.
+3. Run the below command to check the autoscaling
 
 ### Deploy a backend app and test the connection
 
@@ -151,9 +157,9 @@ Congratulations!! You've just deployed a web application to Coligo with a simple
 ## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:connect_cloud_services}
 
-In this section, you will create the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service. The backend service will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to analyze the images.
+In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service. The backend service will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to analyze the images.
 
-### Create {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
+### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:#create_services}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
@@ -172,11 +178,13 @@ In this section, you will create the required {{site.data.keyword.cos_short}} an
 ### Bind the services to the backend service
 
 Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by storing the credentials into "secrets", and then asking the Coligo runtime to make them available to the application via environment variables.
+
 1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials and a configmap to hold the bucket name,
    ```sh
    ibmcloud coligo secret create --name cos-secret \
-   --from-literal=cos-access-key=ACCESS_KEY_ID \
-   --from-literal=access-secret=SECRET_ACCESS_KEY
+   --from-literal=cos-endpoint=ENDPOINT \
+   --from-literal=cos-api-key=API_KEY
+   --from-literal=cos-resource-instance-id=RESOURCE_INSTANCE_ID
    ```
    {:pre}
 
@@ -189,37 +197,39 @@ Now, you will need to pass in the credentials for the services you just created 
    ```
    {:pre}
 
-2. Similarly, create a secret for {{site.data.keyword.visualrecognitionshort}} service,
-   ```sh
-   ibmcloud coligo secret create --name vr-secret \
-   --from-literal=api-key=VISUAL_RECOGNITION_APIKEY \
-   --from-literal=url=VISUAL_RECOGNITION_URL
-   ```
-   {:pre}
-3. With the secrets and configmap defined, you can now update the backend service by asking Coligo to set environment variables in the runtime of the application based on the values in those resources. Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key". Update the backend application with the following command
+2. With the secrets and configmap defined, you can now update the backend service by asking Coligo to set environment variables in the runtime of the application based on the values in those resources.Update the backend application with the following command
    ```sh
    ibmcloud coligo application update --name backend \
    --env-from secret:cos-secret \
-   --env-from secret:vr-secret \
    --env-from configmap:cos-bucket-name
    ```
    {:pre}
-4. To verify whether the backend application was updated with the secret. You can run the below command
+
+   Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
+   {:tip}
+
+3. To verify whether the backend application is updated with the secret. You can run the below command and look for the "env" section
    ```sh
    ibmcloud coligo application describe --name backend -o yaml
    ```
    {:pre}
-   and look for the "env" section .
 
 ## Testing the entire application
 {:testing_app}
 
 Now that you have the backend application connected to the frontend application, let's test it by uploading images for processing.
 
-1. Test the app by uploading an image through the frontend UI. The image will be stored in the {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-images`.
-2. Uploading an image to {{site.data.keyword.cos_short}} bucket triggers a new job and the uploading image is passed to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in `<your-initials>-coligo-results` bucket.
-3. Upload multiple images to trigger individual jobs. Each job retrieves a single image to process from the bucket.
-4. Check the results of the processed images on the UI.
+1. Before testing the application, let's create a secret for {{site.data.keyword.visualrecognitionshort}} service to be used with the jobs in the subsequent steps,
+   ```sh
+   ibmcloud coligo secret create --name vr-secret \
+   --from-literal=api-key=VISUAL_RECOGNITION_APIKEY \
+   --from-literal=url=VISUAL_RECOGNITION_URL
+   ```
+   {:pre}
+2. Test the app by uploading an image through the frontend UI. You should see the preview of the image with "Not Analyzed" tag on it. Click on **Upload Images** to store the image in the {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-images`.
+3. Click on **Analyze** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} bucket to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in a separate {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-results` and can be seen on the UI.
+4. Upload multiple images to create individual jobs. Each job retrieves a single image to process from the bucket.
+5. Check the results of the processed images on the UI.
 
    If you are interested in checking the job details, run the command `ibmcloud coligo job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud coligo job get --name JOBRUN_NAME`
    {:tip}
