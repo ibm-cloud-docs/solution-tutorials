@@ -38,9 +38,8 @@ Knative helps developers by hiding many of these tasks, simplifying container-ba
 {: #objectives}
 
 * Understand Coligo and how it simplifies the developer experience.
-* Deploy a frontend application to Coligo to upload images for object detection.
-* Store the uploaded images in COS service bucket on {{site.data.keyword.Bluemix}}.
-* Process the images as individual jobs and store the results of object detection in a different bucket on COS service.
+* Understand how easy it is to deploy and scale an application to Coligo.
+* Learn the use the jobs to execute task-to-completion workloads.
 
 ## Services used
 {: #services}
@@ -183,8 +182,9 @@ Now, you will need to pass in the credentials for the services you just created 
 1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials and a configmap to hold the bucket name,
    ```sh
    ibmcloud coligo secret create --name cos-secret \
-   --from-literal=cos-access-key=ACCESS_KEY_ID \
-   --from-literal=access-secret=SECRET_ACCESS_KEY
+   --from-literal=cos-endpoint=ENDPOINT \
+   --from-literal=cos-api-key=API_KEY
+   --from-literal=cos-resource-instance-id=RESOURCE_INSTANCE_ID
    ```
    {:pre}
 
@@ -197,7 +197,7 @@ Now, you will need to pass in the credentials for the services you just created 
    ```
    {:pre}
 
-1. With the secrets and configmap defined, you can now update the backend service by asking Coligo to set environment variables in the runtime of the application based on the values in those resources.Update the backend application with the following command
+2. With the secrets and configmap defined, you can now update the backend service by asking Coligo to set environment variables in the runtime of the application based on the values in those resources.Update the backend application with the following command
    ```sh
    ibmcloud coligo application update --name backend \
    --env-from secret:cos-secret \
@@ -208,7 +208,7 @@ Now, you will need to pass in the credentials for the services you just created 
    Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
    {:tip}
 
-1. To verify whether the backend application is updated with the secret. You can run the below command and look for the "env" section
+3. To verify whether the backend application is updated with the secret. You can run the below command and look for the "env" section
    ```sh
    ibmcloud coligo application describe --name backend -o yaml
    ```
