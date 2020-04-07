@@ -75,13 +75,10 @@ This tutorial requires:
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
-## Create Coligo project and provision cloud services
+## Create a IBM Coligo project
 {: #create_coligo_project}
 
-In this section, you will provision a Coligo service and a subsequent project to group applications and jobs. You will also provision other services required
-
-### Create a Coligo project
-{:#coligo_service_project}
+In this section, you will provision a Coligo service and a subsequent project to group applications and jobs.
 
 1. Navigate to [IBM Coligo Overview](https://{DomainName}/knative/overview) page
 2. Click on **Create project**. Create a new project to group your components (applications,jobs etc.). Use projects to organize your Coligo related entities like a folder and work on focused context.
@@ -125,8 +122,14 @@ In this section, you will deploy your front-end web application to Coligo under 
    kubectl get pods --watch
    ```
    {:pre}-->
-
 Congratulations!! You've just deployed a web application to Coligo with a simple command and also without the intricacies of Kubernetes such as pods, deployments, services, and ingress.
+
+### Scale the application
+
+To check the autoscaling capabilities of Coligo,
+1. Navigate to the [load generator URL](https://load.fun.{DomainName}/) and paste the frontend application URL from the above step
+2. Click on **Generate load* to generate traffic.
+3. Run the below command to check the autoscaling
 
 ### Deploy a backend app and test the connection
 
@@ -155,9 +158,9 @@ Congratulations!! You've just deployed a web application to Coligo with a simple
 ## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:connect_cloud_services}
 
-In this section, you will create the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service. The backend service will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to analyze the images.
+In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service. The backend service will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to analyze the images.
 
-### Create {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
+### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:#create_services}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
