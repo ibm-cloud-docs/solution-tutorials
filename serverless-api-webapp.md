@@ -133,9 +133,12 @@ Finally add a second action to the sequence:
 1. Click on **save-guestbook-entry-sequence** and then click **Add**.
 1. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**.
 1. Create **New Binding**.
-1. For Name, enter `binding-for-guestbook`.
-1. For Cloudant Instance, select the instance, credentials and database created earlier in the tutorial.
-1. Click **Add**.
+   1. Set **Name** to `binding-for-guestbook`.
+   1. Set **Instance** to **Input your own credentials**.
+   1. Set **Username**, **Password**, **Host** and **IAM API Key** from the values found in the Cloudant credentials **for-guestbook** created earlier.
+   1. Set **Database** to **guestbook**.
+   1. Set **whiskoverwriteLabel** to **true**.
+1. Click **Save**.
 1. To test it, click on **Invoke with parameters** and enter the JSON below
    ```json
    {
@@ -145,8 +148,7 @@ Finally add a second action to the sequence:
    }
    ```
    {: codeblock}
-1. Click **Apply** and then click **Invoke**.
-1. Click **Save**.
+1. Click **Invoke**.
 
 ### Sequence of actions to retrieve entries
 
