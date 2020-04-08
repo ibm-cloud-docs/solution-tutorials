@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-03-18"
+lastupdated: "2020-04-03"
 ---
 
 {:shortdesc: .shortdesc}
@@ -671,6 +671,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 ## Machine Learning and Analytics
 {: #ml }
 <div class = "solutionBoxContainer">
+    <a href = "/docs/tutorials?topic=solution-tutorials-computer-vision-visual-insights-schematics#computer-vision-visual-insights-schematics">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Computer vision with Visual Insights and Schematics
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Provision a backend instance of Visual Insights in VPC and access the deployed deep learning model through a webapp for image classification</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution53-visual-insights-schematics/architecture_diagram.png" alt="Architecture diagram for the solution Computer vision with Visual Insights and Schematics"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
     <a href = "/docs/tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
