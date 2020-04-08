@@ -100,7 +100,7 @@ In this section, you will deploy your front-end web application to Coligo under 
 1. To deploy a new Coligo application, you need to run the below command by providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
    ```sh
    ibmcloud coligo application create --name frontend \
-   --image ibmcom/coligo-frontend
+   --image ibmcom/frontend
    ```
    {:pre}
 
@@ -140,7 +140,7 @@ To check the autoscaling capabilities of Coligo,
 1. To deploy a new backend application, run this command
    ```sh
    ibmcloud coligo application create --name backend \
-   --image ibmcom/coligo-backend --cluster-local
+   --image ibmcom/backend --cluster-local
    ```
    {:pre}
    The `--cluster-local` flag will instruct Coligo to keep the endpoint for this application private. Meaning, it will only be available from within the cluster often used for security purposes.
