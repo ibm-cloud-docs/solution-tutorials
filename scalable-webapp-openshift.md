@@ -171,39 +171,6 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or {{site.data.keyword.containershort_notm}}.
 
-<!-- ### Run the application locally
-
-You can build and run the application as you normally would using `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
-
-1. Ensure your local Docker engine is started.
-   ```sh
-   docker ps
-   ```
-   {: pre}
-1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
-   ```sh
-   export MYPROJECT=<your-initials>-openshiftapp
-   ```
-   {:pre}
-2. Change to the directory of the generated project.
-   ```sh
-   cd $MYPROJECT
-   ```
-   {: pre}
-3. Build the application.
-   ```sh
-   ibmcloud dev build
-   ```
-   {: pre}
-   This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
-4. Run the container.
-   ```sh
-   ibmcloud dev run
-   ```
-   {: pre}
-   This uses your local Docker engine to run the docker image that you built in the previous step.
-5. After your container starts, go to `http://localhost:3000/`. -->
-
 ### Push the code to a Private IBM Cloud Git repo
 
 In this step, you will create a private IBM Cloud Git repository and push the generated code.
