@@ -166,42 +166,6 @@ This generates a starter application complete with the code and all the necessar
 
 ![](images/solution2/Contents.png)
 
-<!-- ### Build the application
-
-You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
-
-1. Ensure your local Docker engine is started.
-   ```
-   docker ps
-   ```
-   {: pre}
-1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
-   ```sh
-   export MYPROJECT=<your-initials>kubeapp
-   ```
-   {:pre}
-2. Change to the directory of the generated project.
-   ```
-   cd $MYPROJECT
-   ```
-   {: pre}
-3. Build the application.
-   ```
-   ibmcloud dev build
-   ```
-   {: pre}
-
-   This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
-
-### Run the application locally
-
-1. Run the container.
-   ```
-   ibmcloud dev run
-   ```
-   {: pre}
-2. After your container starts, on a browser go to `http://localhost:9080/` to see the app. If you created a Node.js application, go to `http://localhost:3000/`. -->
-
 ## Deploy application to cluster using helm chart
 {: #deploy}
 
