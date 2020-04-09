@@ -171,7 +171,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or {{site.data.keyword.containershort_notm}}.
 
-### Run the application locally
+<!-- ### Run the application locally
 
 You can build and run the application as you normally would using `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
 
@@ -202,7 +202,7 @@ You can build and run the application as you normally would using `npm` for node
    ```
    {: pre}
    This uses your local Docker engine to run the docker image that you built in the previous step.
-5. After your container starts, go to `http://localhost:3000/`.
+5. After your container starts, go to `http://localhost:3000/`. -->
 
 ### Push the code to a Private IBM Cloud Git repo
 
@@ -235,7 +235,17 @@ In this section, you will generate a BuildConfig YAML file and update the file w
 
 A Kubernetes namespace provides a mechanism to scope resources in a cluster. In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
 
-1. Create a new project
+1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
+   ```sh
+   export MYPROJECT=<your-initials>-openshiftapp
+   ```
+   {:pre}
+2. Change to the directory of the generated project.
+   ```sh
+   cd $MYPROJECT
+   ```
+   {: pre}
+1. Create a new OpenShift project
    ```sh
    oc new-project $MYPROJECT
    ```
@@ -286,8 +296,6 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=$API_KEY --docker-server=$MYREGISTRY
    ```
    {:pre}
-
-
 
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
 

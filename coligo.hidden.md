@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-04-07"
+lastupdated: "2020-04-09"
 lasttested: "2020-03-05"
 
 ---
@@ -38,14 +38,14 @@ Knative helps developers by hiding many of these tasks, simplifying container-ba
 {: #objectives}
 
 * Understand Coligo and how it simplifies the developer experience.
-* Understand how easy it is to deploy and scale an application to Coligo.
-* Learn the use the jobs to execute task-to-completion workloads.
+* Understand how easy it is to deploy and scale an application using Coligo.
+* Learn the use of jobs to execute run to completion workloads.
 
 ## Services used
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* Coligo service
+* [IBM Coligo](https://{DomainName}/knative/overview)
 * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
 
@@ -90,7 +90,7 @@ In this section, you will provision a Coligo service and a subsequent project to
    ```
    {:pre}
 
-## Deploy the frontend and backend apps as Coligo services
+## Deploy the frontend and backend apps as Coligo applications
 {: #deploy_app}
 
 In this section, you will deploy your front-end web application to Coligo under the targeted project. Once deployed and tested, you will deploy your back-end application and verify the connection. You will use the pre-built container images to deploy the respective applications,
@@ -100,7 +100,7 @@ In this section, you will deploy your front-end web application to Coligo under 
 1. To deploy a new Coligo application, you need to run the below command by providing a service name "frontend" and the pre-built container image as a parameter to `--image` flag.
    ```sh
    ibmcloud coligo application create --name frontend \
-   --image ibmcom/coligo-frontend
+   --image ibmcom/frontend
    ```
    {:pre}
 
@@ -127,15 +127,20 @@ Congratulations!! You've just deployed a web application to Coligo with a simple
 
 To check the autoscaling capabilities of Coligo,
 1. Navigate to the [load generator URL](https://load.fun.{DomainName}/) and paste the frontend application URL from the above step
-2. Click on **Generate load* to generate traffic.
-3. Run the below command to check the autoscaling
+2. Click on **Generate load** to generate traffic.
+3. Run the below command to see the pod count incrementing as part the autoscaling
+   ```sh
+   kubectl get pods --watch
+   ```
+   {:pre}
+4. Once load generation is stopped, wait for a minute to see the pods scaling to zero.
 
 ### Deploy a backend app and test the connection
 
 1. To deploy a new backend application, run this command
    ```sh
    ibmcloud coligo application create --name backend \
-   --image ibmcom/coligo-backend --cluster-local
+   --image ibmcom/backend --cluster-local
    ```
    {:pre}
    The `--cluster-local` flag will instruct Coligo to keep the endpoint for this application private. Meaning, it will only be available from within the cluster often used for security purposes.
@@ -226,7 +231,9 @@ Now that you have the backend application connected to the frontend application,
    --from-literal=url=VISUAL_RECOGNITION_URL
    ```
    {:pre}
-2. Test the app by uploading an image through the frontend UI. You should see the preview of the image with "Not Analyzed" tag on it. Click on **Upload Images** to store the image in the {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-images`.
+2. Test the app by uploading an image through the frontend UI
+   1. Click on **Choose an image...** and point to the image on your computer. You should see the preview of the image with a "Not Analyzed" tag on it.
+   2. Click on **Upload Images** to store the image in the {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-images`.
 3. Click on **Analyze** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} bucket to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in a separate {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-results` and can be seen on the UI.
 4. Upload multiple images to create individual jobs. Each job retrieves a single image to process from the bucket.
 5. Check the results of the processed images on the UI.
