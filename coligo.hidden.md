@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-04-07"
+lastupdated: "2020-04-09"
 lasttested: "2020-03-05"
 
 ---
@@ -39,7 +39,7 @@ Knative helps developers by hiding many of these tasks, simplifying container-ba
 
 * Understand Coligo and how it simplifies the developer experience.
 * Understand how easy it is to deploy and scale an application using Coligo.
-* Learn the use of jobs to execute task-to-completion workloads.
+* Learn the use of jobs to execute run to completion workloads.
 
 ## Services used
 {: #services}
