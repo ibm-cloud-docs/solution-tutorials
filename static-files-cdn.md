@@ -90,6 +90,7 @@ To start, retrieve the application code:
 1. Go to the [catalog](https://{DomainName}/catalog/) in the console, and select [**Object Storage**](https://{DomainName}/catalog/services/cloud-object-storage) from the Storage section.
 2. Create a new instance of {{site.data.keyword.cos_full_notm}}
 4. In the service dashboard, click **Create Bucket**.
+   * Select **Custom bucket**
    * Set the **Resiliency** to **Regional**.
 5. Set a unique bucket name such as `username-mywebsite` and click **Create**. Avoid dots (.) in the bucket name.
 1. Select **Buckets > Access Policies**, then select **Public Access** and **Create access policy**. This will enable all contents in the bucket to be publicly accessible.
