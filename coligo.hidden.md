@@ -25,14 +25,14 @@ lasttested: "2020-03-05"
 
 > :warning: WORK-IN-PROGRESS
 
-In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. The application is made up of frontend and backend applications:. The frontend application is a web application that user will use to upload images. This web app will send the uploaded images to the backend application for processing. The backend application will store the images into an object storage "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job per image. A batch job is a collection of tasks that where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another bucket. And finally, the results of those scans will then be visible on the web application.
+In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. The application is made up of frontend and backend applications. The frontend application is a web application that users will use to upload images. This web application will send the uploaded images to the backend application for processing. The backend application will store the images into an object storage "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job task per image. A batch job is a collection of tasks where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another bucket. And finally, the results of those scans will then be visible on the web application.
 {:shortdesc}
 
-Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. Delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton etc.,)
+Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton etc.).
 
 Kubernetes is a complex product that requires developers to understand a lot of configuration knobs in order to properly run their applications. Developers need to carry out repetitive tasks, such as installing dependencies and configuring networking rules. They must generate configuration files, manage logging and tracing, and write their own CI/CD scripts using tools like Jenkins. Before they can deploy their containers, they have to go through multiple steps to containerize their source code in the first place.
 
-Knative helps developers by hiding many of these tasks, simplifying container-based management and enabling you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
+Coligo helps developers by hiding many of these tasks, simplifying container-based management and enabling you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
 
 ## Objectives
 {: #objectives}
@@ -77,10 +77,10 @@ You will find instructions to download and install these tools for your operatin
 ## Create a IBM Coligo project
 {: #create_coligo_project}
 
-In this section, you will provision a Coligo service and a subsequent project to group applications and jobs.
+In this section, you will first need to create a Coligo project. A project is a grouping of applications and jobs that are typically meant to go together as part of some overall workload similar to a folder on your computer.
 
 1. Navigate to [IBM Coligo Overview](https://{DomainName}/knative/overview) page
-2. Click on **Create project**. Create a new project to group your components (applications,jobs etc.). Use projects to organize your Coligo related entities like a folder and work on focused context.
+2. Click on **Create project**.
    - Provide a project name
    - Select a resource group and Location
    - Click on **Create**
@@ -104,7 +104,7 @@ In this section, you will deploy your front-end web application to Coligo under 
    ```
    {:pre}
 
-    The only two parameters includes the name you want to give to this new application ("frontend"), and the container image that has its running code ("ibmcom/coligo-frontend") as Coligo will handle everything else for you.
+    With just these two pieces of data, Coligo can deploy your application and it will handle all of the complexities of configuring it and managing it for you.
     {:tip}
 
 2. Copy the URL from the output above and open it in a browser to see an output as similar to this
@@ -126,7 +126,7 @@ Congratulations!! You've just deployed a web application to Coligo with a simple
 ### Scale the application
 
 To check the autoscaling capabilities of Coligo,
-1. Navigate to the [load generator URL](https://load.fun.{DomainName}/) and paste the frontend application URL from the above step
+1. Navigate to the [load generator URL](https://load.fun.{DomainName}/) and paste the frontend application URL from the step above.
 2. Click on **Generate load** to generate traffic.
 3. Run the below command to see the pod count incrementing as part the autoscaling
    ```sh
