@@ -16,7 +16,7 @@ lasttested: "2020-04-01"
 # Computer vision with {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} and {{site.data.keyword.bpshort}}
 {: #computer-vision-visual-insights-schematics}
 
-This tutorial walks you through provisioning a dedicated backend virtual server instance (VSI) of {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} (previously PowerAI Vision) in {{site.data.keyword.vpc_full}}(VPC) through {{site.data.keyword.bplong}}. Once provisioned, you will upload an image data set, train, deploy, and test an optimized deep learning (image classification) model through a GPU on the VSI. You will also deploy a front-end web application through {{site.data.keyword.bplong_notm}} to a new VSI on the same {{site.data.keyword.vpc_short}}. Once deployed, you will upload an image for classification by communicating with the backend deployed model exposed an an API.
+This tutorial walks you through provisioning a dedicated backend virtual server instance (VSI) of {{site.data.keyword.IBM_notm}} {{site.data.keyword.visualinsightsshort}} (previously PowerAI Vision) in {{site.data.keyword.vpc_full}}(VPC) through {{site.data.keyword.bplong}}. Once provisioned, you will upload an image data set, train, deploy, and test an optimized deep learning (image classification) model through a GPU on the VSI. You will also deploy a front-end web application through {{site.data.keyword.bplong_notm}} to a new VSI on the same {{site.data.keyword.vpc_short}}. Once deployed, you will upload an image for classification by communicating with the backend deployed model exposed as an API.
 {:shortdesc}
 
 Videos and images have become one of the most interesting data sets for artificial intelligence. In particular, deep learning is being used to create models for computer vision, and you can train these models to let your applications recognize what an image (or video) represents.
@@ -54,9 +54,9 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 This tutorial requires:
-* Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
-* Install {{site.data.keyword.cloud_notm}} CLI,
-  * vpc-infrastructure/infrastructure-service plugin
+* an [IBM Cloud API key](https://{DomainName}/iam/apikeys). Save the key for future reference.
+* {{site.data.keyword.cloud_notm}} CLI,
+  * vpc-infrastructure/infrastructure-service plugin.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
@@ -84,7 +84,7 @@ In this section, you will provision a VPC with {{site.data.keyword.IBM_notm}} {{
 Once applied, the workspace will lead to the provisioning of:
    - a Virtual Private Cloud (VPC)
    - a backend Subnet
-   - a Virtual Server Instance within the VPC and a particular region and availability zone (AZ)
+   - a Virtual Server Instance within the VPC
    - a floating IP (FIP) address on the public Internet
    - a security group that allows ingress traffic on port 443 (SSL) and on port 22 (for debug)
    - a SSH keypair - For private key, check the logs. For public key, Refer [this link](https://{DomainName}/vpc-ext/compute/sshKeys).
@@ -116,13 +116,13 @@ In this section, you will create a weather data set from the images you download
      The rest of the images in the folder will be used for testing the model. You are splitting the data around 80%-20% between training and testing stages.
      {:tip}
 
-   3. Once all the images are imported, expand **Categories** on the left pane, select **Uncategorized**, check **Select** on the top menu bar
-   4. Click on **Assign category**, give **Cloudy** as the name and click **Assign**
-   5. **Repeat** the steps with images from **rain (rain1.jpg to rain172.jpg)**, **shine (shine1.jpg to shine201.jpg)** and **sunrise (sunrise1.jpg to sunrise285.jpg)** dataset folders by assigning category names - **Rain**, **Shine** and **Sunrise** respectively
-4. Click on **Train model**
-   1. Select **Image classification** as your type of training
-   2. Select **System Default(GoogLeNet)** as your Optimization technique
-   3. Click **Train model**
+   3. Once all the images are imported, expand **Categories** on the left pane, select **Uncategorized**, and on the top menu bar, check **Select**.
+   4. Click on **Assign category**, give **Cloudy** as the name and click **Assign**.
+   5. **Repeat** the steps with images from **rain (rain1.jpg to rain172.jpg)**, **shine (shine1.jpg to shine201.jpg)** and **sunrise (sunrise1.jpg to sunrise285.jpg)** dataset folders by assigning category names - **Rain**, **Shine** and **Sunrise** respectively.
+4. Click on **Train model**:
+   1. Select **Image classification** as your type of training.
+   2. Select **System Default(GoogLeNet)** as your Optimization technique.
+   3. Click **Train model**.
 
 ### Deploy and test the model
 {: #deploy_test_model}
