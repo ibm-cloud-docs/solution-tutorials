@@ -82,7 +82,7 @@ This tutorial also comes with companion shell scripts and a Terraform template, 
    * Enter **vpc-pubpriv** as name for your VPC.
    * Select a **Resource group**.
    * Optionally, add **Tags** to organize your resources.
-1. Uncheck SSH and ping from the **Default security group**.
+1. Uncheck SSH and ping from the **Default security group**.  SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
 1. You will create your first subnet, under **New subnet for VPC**:
    * As a unique name enter **vpc-secure-bastion-subnet**.
    * Select a location.
@@ -306,6 +306,10 @@ The backend server is running the same web server software as the frontend serve
    ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>
    ```
    {:pre}
+
+   SSH to the frontend is only be possible through the bastion and only when the **vpc-secure-maintenance-sg** has been attached to the frontend instance.
+   {:note}
+
 1. Call the backend web server:
    ```sh
    curl -v -m 30 http://<private-ip-address-of-the-backend-vsi>
