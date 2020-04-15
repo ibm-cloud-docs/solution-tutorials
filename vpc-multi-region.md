@@ -79,7 +79,7 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
    * Select a **Resource group**.
    * Optionally, add **Tags** to organize your resources.
 3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
-4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked.
+4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked. SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
 4. Leave **Create a default prefix for each zone** checked.
 5. Under **New subnet for VPC**:
    * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
