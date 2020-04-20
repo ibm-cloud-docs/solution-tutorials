@@ -114,14 +114,14 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {:#build_model}
 
 1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
-  1. Select **From blank**.
-  2. Set the Asset name to **iris_model**.
-  3. Under **Associated service**, select the **Machine learning service instance**.
-  4. Click **Create**.
+   1. Select **From blank**.
+   2. Set the Asset name to **iris_model**.
+   3. Under **Associated service**, select the **Machine learning service instance**.
+   4. Click **Create**.
 2. Once the model is created,
-  1. Add training data by clicking **Select from project**.
-  2. Choose the **iris_initial.csv** file.
-  3. Click **Select asset**.
+   1. Add training data by clicking **Select from project**.
+   2. Choose the **iris_initial.csv** file.
+   3. Click **Select asset**.
 3. Select **Species** as your Select column to predict.
 4. Click **Experiment settings** > Set **Holdout data split** under **Data source** to **15%** by moving the slider.
 5. On the left menu, Click on **Prediction**
