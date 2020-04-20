@@ -244,19 +244,11 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
       - Select **Numerical/categorical** as Data type
       - Select **Multi-class classification** as the Algorithm type > Click **Save** and then **OK**
       - Send a payload scoring request using the `POST /online` API call or using the TEST section. Once done, click **I'm finished**
-9.  Under **Model details**,
-      - Click **Begin** and select **Manually configure monitors** > Click **Next**.
-      - Select **Db2** as the location for your training data > Provide the credentials of your Db2 service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) > Click **Test**. Once the connection is successful, Click **Next**
-      - Select the schema - DB2XXXXX and the Table - IRIS_FEEDBACK > Click **Next**
-      - Click on **Species** tile as your column that contains the answers to be predicted by the model > Click **Next**
-      - Select petal_length, petal_width as your features used to train the model.> Click **Next**
-      - Select petal_length, petal_width as the text and categorical features.> Click **Next**
-      - Select nodeADP_class as the deployment prediction column.
-      - Click **Save**.
-10. Under **Accuracy**,
+9.  Under **Accuracy**,
       - Click **Begin** and let the accuracy alert threshold be **80%**.
       - Set the minimum threshold to 10 and maximum threshold to 40 > Click **Next** and then **Save**.
       - Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.
+
 ## Generate load and check metrics
 {:#generate_load_metrics}
 You can either generate load by sending multiple requests with random petal_width, petal_length, sepal_width and sepal_length values in the JSON to the scoring API endpoint or by executing the Python script below
