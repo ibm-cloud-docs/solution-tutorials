@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-04-09"
+lastupdated: "2020-04-13"
 lasttested: "2020-03-05"
 
 ---
@@ -77,7 +77,7 @@ You will find instructions to download and install these tools for your operatin
 ## Create a IBM Coligo project
 {: #create_coligo_project}
 
-In this section, you will first need to create a Coligo project. A project is a grouping of applications and jobs that are typically meant to go together as part of some overall workload similar to a folder on your computer.
+In this section, you will create a Coligo project. A project is a grouping of applications and jobs that are typically meant to go together as part of some overall workload similar to a folder on your computer.
 
 1. Navigate to [IBM Coligo Overview](https://{DomainName}/knative/overview) page
 2. Click on **Create project**.

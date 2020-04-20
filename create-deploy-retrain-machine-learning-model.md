@@ -189,12 +189,18 @@ In this section, you will deploy the saved model and expose the model as an API 
 ## Create a feedback data connection
 {:#create_feedback_connection}
 
-1. For continuous learning and model evaluation, you need to store new data somewhere. Create a [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service by choosing **Flex One** plan which acts as our feedback data connection.
-2. Once the service is provisioned, On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open Console**. Click the Menu icon > click **Load Data** under LOAD .
-3. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
-4. Select **DB2XXXXX**, e.g., DB2INST1 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
-5. Datatypes are automatically detected. Click **Next** and then **Begin Load**.
-6. A new target **DB2XXXXX.IRIS_FEEDBACK** is created.
+1. For continuous learning and model evaluation, you need to store new data somewhere. Create a [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service which acts as our feedback data connection.
+   1. Select a region preferably `Dallas`
+   2. Choose **Flex One** plan
+   3. Change the service name if you wish to
+   4. Choose an Organization and a space
+   5. Leave the datacenter location to default and click **Create**
+2. Once the service is provisioned, On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open Console**.
+3. Click the Hamburger Menu icon on the top leftmost corner of the page and click **Load Data** under LOAD.
+4. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
+5. Select **DB2XXXXX**, e.g., DB2INST1 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
+6. Datatypes are automatically detected. Click **Next** and then **Begin Load**.
+7. A new target **DB2XXXXX.IRIS_FEEDBACK** is created.
 
    You will be using this in the next step where you will be re-training the model for better performance and precision.
 
@@ -202,21 +208,27 @@ In this section, you will deploy the saved model and expose the model as an API 
 {:#monitor_openscale}
 
 In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
-1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog and click **Launch Application**.
-1. Click on **No thanks** to manually setup the monitors.
-1. If prompted, click on `Show beta features` to enable the latest capabilities.
-1. Click **Use the free lite plan database** to store model deployment output and retraining data > click **Save**.
-1. Click **Select Provider** > Click **Add machine learning provider** > Select **Watson Machine Learning** as your service provider
+1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog
+   1. Select a region preferably Dallas
+   2. Choose **Lite** plan
+   3. Provide a service name if you wish to and select a resource group
+   4. Click **Create**.
+2. Once the service is provisioned, Click **Manage** on the left pane and click **Launch Application**.
+3. Click on **Manual setup** to manually setup the monitors.
+4. Choose **Free lite plan database** as your Database type and click **Save**. This is to store your model transactions and model evaluation results.
+5. Click **Machine learning providers**
+   1. Click on **Add machine learning provider** and click the edit icon on the **connection** tile
+   2. Select **Watson Machine Learning** as your service provider
       - In the dropdown, select the {{site.data.keyword.pm_full}} service you created above.
-      - Provide a service provider instance name (say `iris-wml-provider`)
+      - Leave the Environment type to **Pre-production**
       - Click **Save**
-1. Click **Go to Dashboard** to add a deployment > Click **Add** and select `iris_deployment`> Click **Configure**.
-1. Click **Configure monitors** to setup your monitors.
-1. Under **Payload logging**,
+6. Click **Go to Dashboard** to add a deployment > Click **Add** and select `iris_deployment`> Click **Configure**.
+7. Click **Configure monitors** to setup your monitors.
+8. Under **Payload logging**,
       - Select **Numerical/categorical** as Data type
       - Select **Multi-class classification** as the Algorithm type > Click **Save** and then **OK**
       - Send a payload scoring request using the `POST /online` API call or using the TEST section. Once done, click **I'm finished**
-1. Under **Model details**,
+9.  Under **Model details**,
       - Click **Begin** and select **Manually configure monitors** > Click **Next**.
       - Select **Db2** as the location for your training data > Provide the credentials of your Db2 service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) > Click **Test**. Once the connection is successful, Click **Next**
       - Select the schema - DB2XXXXX and the Table - IRIS_FEEDBACK > Click **Next**
@@ -225,7 +237,7 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
       - Select petal_length, petal_width as the text and categorical features.> Click **Next**
       - Select nodeADP_class as the deployment prediction column.
       - Click **Save**.
-1. Under **Accuracy**,
+10. Under **Accuracy**,
       - Click **Begin** and let the accuracy alert threshold be **80%**.
       - Set the minimum threshold to 10 and maximum threshold to 40 > Click **Next** and then **Save**.
       - Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.
