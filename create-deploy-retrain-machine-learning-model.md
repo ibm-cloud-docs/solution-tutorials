@@ -19,7 +19,7 @@ lasttested: "2020-04-20"
 
 # Build, deploy and test a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
-This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model.All of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}.
+This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model.Also, monitor the deployed model and retrain the model with feedback dataAll of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}.
 {:shortdesc}
 
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
@@ -36,6 +36,8 @@ In the terminology of machine learning, classification is considered an instance
 * Build a machine learning model.
 * Deploy the model and try out the API.
 * Test a machine learning model.
+* Monitor the deployed model
+* Retrain your model.
 
 ## Services used
 {: #services}
@@ -45,7 +47,6 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
 * [{{site.data.keyword.pm_full}}](https://{DomainName}/catalog/services/machine-learning)
 
-This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {: #architecture}
@@ -55,11 +56,13 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 2. The uploaded CSV file is stored in {{site.data.keyword.cos_full_notm}} service as a dataset.
 3. The dataset is then used to build and deploy a machine learning model. The deployed model is exposed as an API (scoring-endpoint).
 4. The user makes an API call to predict the outcome with the test data.
+5. The deployed machine learning model is monitored for performance, accuracy and other key parameters.
 
 ## Before you begin
 {: #prereqs}
 
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
+* Install [Python 3.x](https://www.python.org/downloads/)
 
 ## Import data to a project
 {: #import_data_project}
@@ -216,6 +219,73 @@ Along with CLI, you can also do predictions using an UI.
    ```
 2. Click **Predict** and you should see the **Predictions** JSON output.
 3. You can change the input data and continue testing your model.
+
+## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
+{:#monitor_openscale}
+
+In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
+1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog
+   1. Select a region preferably Dallas
+   2. Choose **Lite** plan
+   3. Provide a service name if you wish to and select a resource group
+   4. Click **Create**.
+2. Once the service is provisioned, Click **Manage** on the left pane and click **Launch Application**.
+3. Click on **Manual setup** to manually setup the monitors.
+4. Choose **Free lite plan database** as your Database type and click **Save**. This is to store your model transactions and model evaluation results.
+5. Click **Machine learning providers**
+   1. Click on **Add machine learning provider** and click the edit icon on the **connection** tile
+   2. Select **Watson Machine Learning** as your service provider
+      - In the dropdown, select the {{site.data.keyword.pm_full}} service you created above.
+      - Leave the Environment type to **Pre-production**
+      - Click **Save**
+6. Click **Go to Dashboard** to add a deployment > Click **Add** and select `iris_deployment`> Click **Configure**.
+7. Click **Configure monitors** to setup your monitors.
+8. Under **Payload logging**,
+      - Select **Numerical/categorical** as Data type
+      - Select **Multi-class classification** as the Algorithm type > Click **Save** and then **OK**
+      - Send a payload scoring request using the `POST /online` API call or using the TEST section. Once done, click **I'm finished**
+9.  Under **Model details**,
+      - Click **Begin** and select **Manually configure monitors** > Click **Next**.
+      - Select **Db2** as the location for your training data > Provide the credentials of your Db2 service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) > Click **Test**. Once the connection is successful, Click **Next**
+      - Select the schema - DB2XXXXX and the Table - IRIS_FEEDBACK > Click **Next**
+      - Click on **Species** tile as your column that contains the answers to be predicted by the model > Click **Next**
+      - Select petal_length, petal_width as your features used to train the model.> Click **Next**
+      - Select petal_length, petal_width as the text and categorical features.> Click **Next**
+      - Select nodeADP_class as the deployment prediction column.
+      - Click **Save**.
+10. Under **Accuracy**,
+      - Click **Begin** and let the accuracy alert threshold be **80%**.
+      - Set the minimum threshold to 10 and maximum threshold to 40 > Click **Next** and then **Save**.
+      - Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.
+## Generate load and check metrics
+{:#generate_load_metrics}
+You can either generate load by sending multiple requests with random petal_width, petal_length, sepal_width and sepal_length values in the JSON to the scoring API endpoint or by executing the Python script below
+1. Create a file with the name `scoring.py`, paste the code below and save the file.
+   ```
+    import os, urllib3, requests, json, random
+    iam_token=os.environ.get('IAM_TOKEN')
+    ml_instance_id=os.environ.get('ML_INSTANCE_ID')
+    scoring_endpoint=os.environ.get('SCORING_ENDPOINT')
+    array_of_values_to_be_scored=[round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1)]
+    # NOTE: generate iam_token and retrieve ml_instance_id from the ML service credentials
+    header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + iam_token, 'ML-Instance-ID': ml_instance_id}
+    payload_scoring = {"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"], "values": [array_of_values_to_be_scored]}]}
+    response_scoring = requests.post(scoring_endpoint, json=payload_scoring, headers=header)
+    print("Scoring response")
+    print(json.loads(response_scoring.text))
+   ```
+   {:codeblock}
+1. On a terminal, point to the directory where the Python script is saved and run the below bash command
+   ```sh
+   for i in {1..100}; do python3 scoring.py; done
+   ```
+   {:pre}
+1. Once the command exits, Navigate to the {{site.data.keyword.aios_full_notm}} dashboard and click on the **Insights** on the left pane.
+1. Once on the insights page, click on the WML deployment tile to see the Quality, Performance and Analytics monitors and metrics.
+1. Click on **Throughput** under Performance to see the average number of requests per minute.
+1. Click on **Accuracy** under Quality to check the quality of your model. Accuracy is proportion of correct predictions.On the generated chart, click on any point to see the confusion matrix.
+1. Click on **Predictions by Confidence** under Analytics to check the Prediction Confidence of your model.
+1. Explore the chart builder under to visualize various metrics plotted on X-axis and Y-axis of the generated chart.
 
 ## Remove resources
 {:removeresources}
