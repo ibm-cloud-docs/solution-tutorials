@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-04-20"
-lasttested: "2020-04-20"
+lastupdated: "2020-04-21"
+lasttested: "2020-04-21"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -46,7 +46,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience)
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/infrastructure/cloud-object-storage)
 * [{{site.data.keyword.pm_full}}](https://{DomainName}/catalog/services/machine-learning)
-
+* [{{site.data.keyword.aios_full}} service](https://{DomainName}/catalog/services/watson-openscale)
 
 ## Architecture
 {: #architecture}
@@ -56,13 +56,7 @@ This tutorial uses the following runtimes and services:
 2. The uploaded CSV file is stored in {{site.data.keyword.cos_full_notm}} service as a dataset.
 3. The dataset is then used to build and deploy a machine learning model. The deployed model is exposed as an API (scoring-endpoint).
 4. The user makes an API call to predict the outcome with the test data.
-5. The deployed machine learning model is monitored for performance, accuracy and other key parameters.
-
-## Before you begin
-{: #prereqs}
-
-* Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
-* Install [Python 3.x](https://www.python.org/downloads/)
+5. The deployed machine learning model is monitored for quality, accuracy and other key parameters.
 
 ## Import data to a project
 {: #import_data_project}
@@ -75,17 +69,17 @@ You can create a project to add data and open a data asset in the data refiner f
 {: #create_project}
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section.
-  1. Select a **region**.
-  2. Select a **Lite** pricing plan.
-  3. Provide a **Service name**.
-  4. Select a **resource group** and click **Create**.
+  1. Select a **region**
+  2. Select a **Lite** pricing plan
+  3. Provide a **Service name**
+  4. Select a **resource group** and click **Create**
 2. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
 3. Create a **project** by clicking **Create an empty project**.
 4. Provide **iris_project** as the project name and Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
 5. Under **Define Storage**, Click on **Add** and choose an **existing** Cloud Object Storage service or create a **new** service. If you choose to create a **New** service
    1. Select a **Lite** plan
    2. Click on **Create**
-   3. Select a Resource group and change the service name if you wish to
+   3. Select a Resource group and change the service name to **cloud-object-storage-tutorial**
    4. Click on **Confirm**
    6. Hit **Refresh** to see the created service.
 7. Click **Create**. Your new project opens and you can start adding resources to it.
@@ -96,7 +90,7 @@ You can create a project to add data and open a data asset in the data refiner f
 As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, [The Use of Multiple Measurements in Taxonomic Problems](http://rcs.chemometrics.ru/Tutorials/classification/Fisher.pdf), and can also be found on the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 ![](images/solution22-build-machine-learning-model/iris_machinelearning.png)
 
-**Download** [iris_initial.csv](https://ibm.box.com/shared/static/nnxx7ozfvpdkjv17x4katwu385cm6k5d.csv) which consists of 40 instances of each class.
+**Download** [iris_initial.csv](https://ibm.box.com/shared/static/nnxx7ozfvpdkjv17x4katwu385cm6k5d.csv) which consists of 40 instances of each species.
 
 1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution22-build-machine-learning-model/data_icon.png).
 2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
@@ -111,7 +105,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 4. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
    1. Choose the **Lite** plan and click **Create**.
    2. Leave the default values for Region,Plan and Resource group.
-   3. Enter `pm-20-lab` as the **Service name** and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
+   3. Enter `pm-20-tutorial` as the **Service name** and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
 
 ## Build a machine learning model
 {:#build_model}
@@ -138,14 +132,17 @@ Once the model is created,
    Each model pipeline is scored for a variety of metrics and then ranked. The default ranking metric for binary classification models is the area under the ROC curve, for multi-class classification models is accuracy, and for for regression models is the root mean-squared error (RMSE). The highest-ranked pipelines are displayed in a leaderboard, so you can view more information about them. The leaderboard also provides the option to save select model pipelines after reviewing them.
    {:tip}
 
-Once the experiment completes running, under the **Pipeline** leaderboard:
+Once the experiment completes running, under the **Pipeline** leaderboard,
 1. Click on **Pipeline comparison** to view how the top pipelines compare.
 2. Sort the leaderboard by a different metric by selecting the **Rank by** dropdown
 3. Click a pipeline to view more detail about the metrics and performance.
-1. Select the model with *Rank 1* to view the model details.
-   1. Click on **Save as** > **Model**.
-   2. **Save** the model.
-10. When the _Saved_ notification pops up, click **View in project** then under **Overview** tab check the details of the model.
+
+   You may not say any noted changes in the leadership board as the dataset used in this tutorial is very simple and used only for your understanding of the concepts. With other datasets, the rank will vary
+   {:tip}
+
+8. Next to the model with *Rank 1*, click on **Save as** > **Model**.
+9.  Check the details of the model and click **Save**.
+10. In the received notification, click **View in project** then under **Overview** tab check the details of the model.
 
 ## Deploy the model and try out the API
 {:#deploy_model}
@@ -161,7 +158,7 @@ Once the status changes to **Ready** (You may have to refresh the page):
 1. click on the **Name** of the new web service.
 2. Under **Implementation** tab of the deployment, you can see the *Scoring End-point*, code snippets in various programming languages, and API Specification.
 3. **Copy** the *Scoring End-point* in a notepad for future reference.
-3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests.
+3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests. Make sure to keep this window open.
    ```sh
    export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
    ```
@@ -169,28 +166,23 @@ Once the status changes to **Ready** (You may have to refresh the page):
 
    {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
    {:tip}
-4. To use the Watson Machine Learning REST API, you need to obtain an [{{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command by replacing the `<IBM_CLOUD_API_KEY>` placeholder with your [{{site.data.keyword.Bluemix_notm}} API key to see the `access token` in the response
+4. To use the Watson Machine Learning REST API, you need to obtain an [{{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command
    ```sh
-   curl -k -X POST \
-   --header "Content-Type: application/x-www-form-urlencoded" \
-   --header "Accept: application/json" \
-   --data-urlencode "grant_type=urn:ibm:params:oauth:grant-type:apikey" \
-   --data-urlencode "apikey=<IBM_CLOUD_API_KEY>" \
-   "https://iam.cloud.ibm.com/identity/token" | jq --raw-output '.access_token'
+   ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
    ```
    {:pre}
-5. Copy the `access token` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
+5. Copy the IAM token from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
    ```sh
    export IAM_TOKEN='<IAM_TOKEN>'
    ```
    {:pre}
 
-6. For`ML_INSTANCE_ID`, run the below command in the Cloud Shell with the name of the machine learning service
+6. For `ML_INSTANCE_ID`, run the below command in the Cloud Shell by passing the name of the machine learning service key
    ```sh
-   ibmcloud resource service-instance pm-20-lab --output JSON | jq -r '.[] | .guid'
+   ibmcloud resource service-key wdp-writer
    ```
    {:pre}
-7. Export the returned `GUID` as `ML_INSTANCE_ID` for use in subsequent API requests
+7. Export the returned `instance_id` as `ML_INSTANCE_ID` for use in subsequent API requests
    ```sh
    export ML_INSTANCE_ID='<ML_SERVICE_INSTANCE_GUID>'
    ```
@@ -201,7 +193,7 @@ Once the status changes to **Ready** (You may have to refresh the page):
    curl -X POST \
    --header 'Content-Type: application/json' \
    --header 'Accept: application/json' \
-   --header "Authorization: Bearer  $IAM_TOKEN" \
+   --header "Authorization: $IAM_TOKEN" \
    --header "ML-Instance-ID: $ML_INSTANCE_ID" \
    -d '{"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"],"values": [[5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]]}]}' \
    $SCORING_ENDPOINT
@@ -214,7 +206,7 @@ Once the status changes to **Ready** (You may have to refresh the page):
 ## Test your model
 {:#test_model}
 
-Along with CLI, you can also do predictions using an UI.
+Along with CLI, you can also do predictions using the UI.
 
 1. Under **Test**, click on **Provide input data as JSON** icon next to **Enter input data** and provide the JSON below as input.
    ```json
@@ -233,9 +225,27 @@ Along with CLI, you can also do predictions using an UI.
 ## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
 {:#monitor_openscale}
 
-In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
-1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog:
-   1. Select a region preferably Dallas
+### Create a {{site.data.keyword.pm_short}} model using a Jupyter notebook
+In this section, you will create a ML model using the same iris dataset for exploring {{site.data.keyword.aios_full_notm}}
+
+1. In the top navigation bar, click on the project name `iris_project` to see the project view.
+2. Click on **Add to project** in the menu bar and then click **Notebook**
+   1. Select **From URL** and give **iris_notebook** as the name
+   2. Under **Notebook URL**, enter `https://github.com/IBM-Cloud/ml-iris-classification/blob/master/classify_iris.ipynb`
+   3. Click **Create**
+3. Once the notebook is created, scroll to **Set up the WML instance** section of the notebook and provide the {{site.data.keyword.aios_full_notm}} service credentials.
+4. In the top menu of the notebook, Click **Cell** and then click **Run All**.
+5. This should create a ML model and also a deployment under `iris_project`.
+6. If you scroll to **Test the model** section, you can see that the accuracy score of the the model is around 0.9-0.9333. DON'T CLOSE THIS WINDOW/TAB.
+
+Let's improve the quality and accuracy of the model in the next section.
+
+### Monitor the deployed model
+
+In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
+
+1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog
+   1. Select a region preferably Dallas. Create the service in the same region where you created the {{site.data.keyword.pm_short}} service.
    2. Choose **Lite** plan
    3. Provide a service name if you wish to and select a resource group
    4. Click **Create**.
@@ -248,52 +258,51 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
    1. In the **Watson Machine Learning service** dropdown, select the {{site.data.keyword.pm_full}} service you created above.
    1. Leave the Environment type to **Pre-production**.
    2. Click **Save**.
-6. Click **Go to Dashboard** to add a deployment > Click **Add** and select `iris_deployment`> Click **Configure**.
+6. On the notification, click **go to the dashboard** to add a deployment > Click **Add** and select `Deployment of iris model`> Click **Configure**.
 7. Click **Configure monitors** to setup your monitors.
-8. Under **Payload logging**,
-      - Select **Numerical/categorical** as Data type
-      - Select **Multi-class classification** as the Algorithm type > Click **Save** and then **OK**
-      - Send a payload scoring request using the `POST /online` API call or using the TEST section. Once done, click **I'm finished**
-9.  Under **Accuracy**,
-      - Click **Begin** and let the accuracy alert threshold be **80%**.
-      - Set the minimum threshold to 10 and maximum threshold to 40 > Click **Next** and then **Save**.
-      - Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.
+8. Provide the Model details by clicking the **edit** icon on the Model input tile and select
+   1. Data type: **Numerical/categorical**
+   2. Algorithm type: **Multi-class classification**
+   3. Click **Save and continue**
+9. Click the **edit** icon on the Training data tile and select
+   1. Storage type: **Database or cloud storage**
+   2. Location: **Cloud Object Storage**
+   3. Login URL: **https://s3.us.cloud-object-storage.appdomain.cloud**
+   4. For Resource instance ID and API key, Run the below command in the Cloud Shell
+      ```sh
+      ibmcloud resource service-key $(ibmcloud resource service-keys --instance-name "cloud-object-storage-tutorial" | awk '/WDP-Project-Management/ {print $1}')
+      ```
+      {:pre}
+   5. Copy and paste the credentials and click **Connect**
+   6. Select the Bucket that starts with `irisproject-donotdelete-`
+   7. Select `iris_initial.csv` from the Data set dropdown and click **Next**
+   8. Select **species** as your label column and click **Next**
+   9. Select **all** the four training features and click **Next**
+10. Before clicking on **Check now**, let's generate scoring payload required for logging. To do this, Go to the tab where you have your notebook open, scroll to **score data** section, select the code block and click **Run** on the top.
+11. Click **Check now**. You should see `Logging is active Click Next` response. Click **Next**
+12. Check both **prediction** and **probability** and click **Save**.
+13. On the left pane, click on **Quality** and click the **edit** icon on the Quality threshold tile
+    1. Threshold value: Accuracy - **0.98** and click **Next**
+    2. Minimum sample size (number of transactions) - **10**, Maximum sample size (number of transactions) - **100** and click **Save**
+    3. On the left pane, Click on **Go to model summary**
 
-## Generate load and check metrics
-{:#generate_load_metrics}
-You can either generate load by sending multiple requests with random petal_width, petal_length, sepal_width and sepal_length values in the JSON to the scoring API endpoint or by executing the Python script below
-1. Create a file with the name `scoring.py`, paste the code below and save the file.
-   ```
-    import os, urllib3, requests, json, random
-    iam_token=os.environ.get('IAM_TOKEN')
-    ml_instance_id=os.environ.get('ML_INSTANCE_ID')
-    scoring_endpoint=os.environ.get('SCORING_ENDPOINT')
-    array_of_values_to_be_scored=[round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1), round(random.uniform(0.0,10.0),1)]
-    # NOTE: generate iam_token and retrieve ml_instance_id from the ML service credentials
-    header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + iam_token, 'ML-Instance-ID': ml_instance_id}
-    payload_scoring = {"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"], "values": [array_of_values_to_be_scored]}]}
-    response_scoring = requests.post(scoring_endpoint, json=payload_scoring, headers=header)
-    print("Scoring response")
-    print(json.loads(response_scoring.text))
-   ```
-   {:codeblock}
-1. On a terminal, point to the directory where the Python script is saved and run the below bash command
-   ```sh
-   for i in {1..100}; do python3 scoring.py; done
-   ```
-   {:pre}
-1. Once the command exits, Navigate to the {{site.data.keyword.aios_full_notm}} dashboard and click on the **Insights** on the left pane.
-1. Once on the insights page, click on the WML deployment tile to see the Quality, Performance and Analytics monitors and metrics.
-1. Click on **Throughput** under Performance to see the average number of requests per minute.
-1. Click on **Accuracy** under Quality to check the quality of your model. Accuracy is proportion of correct predictions.On the generated chart, click on any point to see the confusion matrix.
-1. Click on **Predictions by Confidence** under Analytics to check the Prediction Confidence of your model.
-1. Explore the chart builder under to visualize various metrics plotted on X-axis and Y-axis of the generated chart.
+As the tutorial uses a small dataset, configuring Fairness and Drift won't have an impact.
+
+### Evaluate the deployed model
+In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. Download [iris_retrain.csv](https://ibm.box.com/s/96kvmwhb54700pjcwrd9hd3j6exiqms8).
+
+1. Click on **Actions** and then **Evaluate now**.
+2. Click on **browse**, upload the `iris_retrain.csv` file and click on **Upload and evaluate**.
+3. After the evaluation is completed, you should see the dashboard with different metrics.
+   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **Deployment of iris model Evaluations**
+   2. Click on the Number of explanations (2), select one of the transactions and click **View**.
+   3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
 ## Remove resources
 {:removeresources}
 
 1. Navigate to [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/) > choose the Location, Org and Space where you have created the services.
-2. Delete the respective {{site.data.keyword.DSX_short}}, {{site.data.keyword.sparks}}, {{site.data.keyword.pm_short}}, {{site.data.keyword.dashdbshort}} and {{site.data.keyword.cos_short}} services which you created for this tutorial.
+2. Delete the respective {{site.data.keyword.DSX_short}}, {{site.data.keyword.pm_short}}, {{site.data.keyword.dashdbshort}} and {{site.data.keyword.cos_short}} services which you created for this tutorial.
 
 ## Related content
 {:related}
