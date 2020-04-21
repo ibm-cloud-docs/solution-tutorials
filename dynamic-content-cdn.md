@@ -43,8 +43,7 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 ## Services used
 {: #services}
 
-This tutorial uses the following products:
-
+This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)

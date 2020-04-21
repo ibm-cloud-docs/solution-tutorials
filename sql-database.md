@@ -30,8 +30,8 @@ This tutorial shows how to provision a SQL (relational) database service, create
 
 ## Products
 
-This tutorial uses the following products:
-   * [{{site.data.keyword.dashdblong_notm}}](https://{DomainName}/catalog/services/db2-warehouse-on-cloud)
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.dashdblong_notm}}](https://{DomainName}/catalog/services/db2-warehouse-on-cloud)
 
 ## Before you begin
 {: #prereqs}

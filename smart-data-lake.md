@@ -27,10 +27,11 @@ Definitions of the term data lake vary, but in the context of this tutorial, a d
 
 ## Services used
 
-- [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
-- [SQL Query](https://{DomainName}/catalog/services/sql-query)
-- [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio)
-- [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
+* [SQL Query](https://{DomainName}/catalog/services/sql-query)
+* [{{site.data.keyword.DSX}}](https://{DomainName}/catalog/services/watson-studio)
+* [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
 
 ## Architecture
 

@@ -27,11 +27,12 @@ In this tutorial, you create an application to automatically collect GitHub traf
 * Integrate {{site.data.keyword.dynamdashbemb_short}} for graphical traffic analytics
 
 ## Products
-This tutorial uses the following products:
-   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)
-   * [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
-   * [{{site.data.keyword.appid_long}}](https://{DomainName}/catalog/services/app-id)
-   * [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
+
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)
+* [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
+* [{{site.data.keyword.appid_long}}](https://{DomainName}/catalog/services/app-id)
+* [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
 
 ## Before you begin
 {: #prereqs}

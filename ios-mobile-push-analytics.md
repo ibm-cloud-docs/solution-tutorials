@@ -36,8 +36,8 @@ This tutorial walks you through the creation of a mobile starter application, ad
 ## Services
 {:#services}
 
-This tutorial uses the following services:
-   * [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.pushfull}}](https://{DomainName}/catalog/services/push-notifications)
 
 ## Architecture
 {:#architecture}
