@@ -258,7 +258,10 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
    1. In the **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service** dropdown, select the {{site.data.keyword.pm_full}} service you created above.
    1. Leave the Environment type to **Pre-production**.
    2. Click **Save**.
-6. On the notification, click **go to the dashboard** to add a deployment > Click **Add** and select `Deployment of iris model`> Click **Configure**.
+6. On the notification:
+   7. click **go to the dashboard** to add a deployment
+   8. Click **Add** and select `Deployment of iris model`
+   9. Click **Configure**.
 7. Click **Configure monitors** to setup your monitors.
 8. Provide the Model details by clicking the **edit** icon on the Model input tile and select
    1. Data type: **Numerical/categorical**
