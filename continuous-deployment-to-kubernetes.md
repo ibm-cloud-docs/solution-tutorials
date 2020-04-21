@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-07-08"
+  years: 2018, 2019, 2020
+lastupdated: "2020-01-31"
 lasttested: "2019-05-23"
 
 ---
@@ -36,8 +36,7 @@ This tutorial walks you through the process setting up a continuous integration 
 ## Services used
 {: #services}
 
-This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
-
+This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 - [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 - [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)
@@ -71,7 +70,9 @@ This tutorial requires:
 * `git` to clone source code repository,
 * {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
@@ -114,21 +115,23 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications, these starter applications can be created using the `ibmcloud dev create` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
-1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [Web Apps](https://{DomainName}/developer/appservice/dashboard).
+1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [App Development](https://{DomainName}/developer/appservice/dashboard).
 2. Under **Start from the Web**, section click on the **Get Started** button.
-3. Select the `Node.js Web App with Express.js` tile and then `Create app` to create a Node.js starter application.
-4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter`. Then, click **Create**.
+3. Select the `Node.js with Express App` tile and then `Create app` to create a Node.js starter application.
+4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter` and select a resource group. Then, click **Create**.
 
 ## Configure DevOps delivery pipeline
 {: #create_devops}
 
 Now that you successfully created the starter application, you can automate its deployment to the Kubernetes cluster.
 
-1. Click **Deploy your app**, under the **Configure continuous delivery** tile.
+1. Click **Deploy your app**, under the **Configure Continuous Delivery** tile.
 1. Select **{{site.data.keyword.containershort_notm}}** as the **Deployment target**.
-1. Select your cluster from the list.
+1. Provide an {{site.data.keyword.Bluemix_notm}} API Key. If you don't have one, create by clicking on **New**.
+1. Select a region and your cluster from the list.
 1. Select **Helm** as the **Deployment type**.
-1. Define a unique **toolchain name**.
+1. Define a unique **DevOps toolchain name**.
+1. Select a region to create your toolchain in, and then select the resource group that provides access to your new toolchain.
 1. Click **Create**.
 
 The toolchain will build your application and deploy it to the cluster.

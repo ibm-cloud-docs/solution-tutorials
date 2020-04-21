@@ -30,8 +30,7 @@ In this tutorial, you will use a sample configuration to provision a **L**inux v
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.virtualmachinesshort}}
-](https://{DomainName}/catalog/infrastructure/virtual-server-group)
+* [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -55,7 +54,9 @@ This tutorial requires:
 * `terraform` to use Infrastructure as Code to provision resources,
 * and `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, contact your Infrastructure master user to get the following permissions:
 - Network (to add **Public and Private Network Uplink**)
@@ -201,6 +202,6 @@ Delete resources using the following command:
 
 - [Terraform](https://www.terraform.io/)
 - [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
-- [{{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://ibm-cloud.github.io/tf-ibm-docs/)
+- [{{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
 - [Accelerate delivery of static files using a CDN - {{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn)
 

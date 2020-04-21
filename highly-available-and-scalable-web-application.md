@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2017, 2019
-lastupdated: "2019-06-19"
-lasttested: "2019-06-19"
+  years: 2017, 2019, 2020
+lastupdated: "2020-04-08"
+lasttested: "2020-04-08"
 ---
 
 {:shortdesc: .shortdesc}
@@ -20,8 +20,8 @@ Adding more servers to an application is a common pattern to handle additional l
 
 This tutorial walks you through a scenario with the creation of:
 
-- Two web application servers in Dallas.
-- Cloud Load Balancer, to load balance traffic between two servers within a location.
+- Two web application servers.
+- {{site.data.keyword.loadbalancer_full}}, to load balance traffic between two servers within a location.
 - One MySQL database server.
 - A durable file storage to store application files and backups.
 - Configure the second location with the same configurations as the first location, then add {{site.data.keyword.cis_full_notm}} to point traffic to the healthy location if one copy fails.
@@ -51,7 +51,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 The application is a simple PHP frontend - a Wordpress blog - with a MySQL database. Several frontend servers handle the requests.
 
 <p style="text-align: center;">
-  ![Architecture diagram](images/solution14/Architecture.png)
+   
+   ![Architecture diagram](images/solution14/Architecture.png)
 </p>
 
 1. The user connects to the application.
@@ -87,8 +88,8 @@ Contact your Infrastructure master user to get the following permissions:
 
 In this section, you configure one server to act as the master database.
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group) from the Infrastructure section.
-2. Select **Public Virtual Server** and then click **Create**.
+1. In the {{site.data.keyword.Bluemix_notm}} catalog, select [**Virtual Server**](https://{DomainName}/gen1/infrastructure/provision/vs) from the **Compute** section.
+2. For the type of virtual server, select Public. 
 3. Configure the server with the following:
    - Set **Name** to **db1**
    - Select a location where to provision the server. **All other servers and resources created in this tutorial will need to be created in the same location.**
@@ -210,27 +211,26 @@ There are many ways in which backups can be done and stored when it comes to MyS
 ### Create the file storage
 {: #create_for_backup}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
+1. In the {{site.data.keyword.Bluemix_notm}} catalog , and select **[{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)** in the **Storage** section.
 2. Click **Create**
 3. Configure the service with the following:
-   - Set **Storage Type** to **Endurance**
-   - Select the same **Location** as the one where you created the database server
-   - Select a billing method
-   - Under **Storage Packages**, select **2 IOPS/GB**
-   - Under **Storage Size**, select **20GB**
-   - Keep the **Snapshot Space Size** to **0GB**
-   - Click continue to create the service.
+   - Select the same **Location** as the one where you created the database server.
+   - Select a billing method.
+   - Set **Size** to **20GB**.
+   - Under **Endurance**, select **2 IOPS/GB**.
+   - Set **Snapshot space** to **0GB**.
+4. **Create** the volume.
 
 ### Authorize the database server to use the file storage
 
-Before a virtual server can mount a File Storage, it needs to be authorized.
+Before a virtual server can mount a file storage, it needs to be authorized.
 
-1. Select the newly created File Storage from the [list of existing items](https://{DomainName}/classic/storage/file).
+1. Select the newly created file storage from the [list of existing items](https://{DomainName}/classic/storage/file).
 2. Under **Authorized Hosts**, click **Authorize Host** and select the virtual(database) server (Choose **Devices** > Virtual Server as Device Type > Type the name of the server).
 
 ### Mount the file storage for database backups
 
-The File Storage can be mounted as an NFS drive into the virtual server.
+The file storage can be mounted as an NFS drive into the virtual server.
 
 1. Install the NFS client libraries:
    ```sh
@@ -287,7 +287,7 @@ The File Storage can be mounted as an NFS drive into the virtual server.
    ```
    {:pre}
 
-   The last lines should list the File Storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
+   The last lines should list the file storage mount. If this is not the case, use `journalctl -xe` to debug the mount operation.
    {: tip}
 
 ### Setup a backup at regular interval
@@ -319,51 +319,47 @@ The File Storage can be mounted as an NFS drive into the virtual server.
 
 In this section, you will create two web application servers.
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select the [{{site.data.keyword.virtualmachinesshort}}](https://{DomainName}/catalog/infrastructure/virtual-server-group) service from the Infrastructure section.
-2. Select **Public Virtual Server** and then click **Create**.
-3. Configure the server with the following:
-   - Set **Name** to **app1**
-   - Select the same location where you provisioned the database server
-   - Select the **Ubuntu Minimal** image. You can pick any version of the image.
-   - Keep the default compute profile.
-   - Under **Attached Storage Disks**, select 25GB as your boot disk.
-   - Under **Network Interface**, select the **100Mbps Private Network Uplink** option.
-
-     If you did not configure the VPN Access, select the **100Mbps Public and Private Network Uplink** option.
-     {: tip}
-   - Review the other configuration options and click **Provision** to provision the server.
-     ![Configure virtual server](images/solution14/db-server.png)
-4. Repeat steps 1-3 to provision another virtual server named **app2**
+1.  In the {{site.data.keyword.Bluemix_notm}} catalog, select [**Virtual Server**](https://{DomainName}/gen1/infrastructure/provision/vs) from the **Compute** section.
+2.  For the type of virtual server, select **Public**.
+3.  Configure the server with the following:
+   * Set **Quantity** to **2**
+   * Set **Name** to **app1**
+   * Create a new **Placement Group**.  Placement group ensures the app Virtual Servers are provisioned on different hypervisors.
+      * Set **Name** to **app-group**
+      * Select **Location** to the same location as the database server.
+      * Click **Create**
+   * Keep the default compute profile. The tutorial has been tested with the smallest profile but should work with any profile.
+   * Select the **Ubuntu Minimal image**. You can choose any version of the image.
+   * In the **Network interface** section, select the **100 Mbps Private Network Uplink** option as the uplink port speed. If you did not configure the VPN access, select the **100 Mbps Public and Private Network Uplink** option.
+1. Review the other configuration options and click **Create** to provision the server.
 
 ## Create a file storage to share files between the application servers
 {: shared_storage}
 
-This file storage is used to share the application files between *app1* and *app2* servers.
+This file storage is used to share the application files between **app1** and **app2** servers.
 
 ### Create the file storage
 {: #create_for_sharing}
 
-1. Go to the catalog in the {{site.data.keyword.Bluemix}} console, and select [{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)
+In the {{site.data.keyword.Bluemix_notm}} catalog, and select **[{{site.data.keyword.filestorage_short}}](https://{DomainName}/catalog/infrastructure/file-storage)** in the **Storage** section.
 2. Click **Create**
 3. Configure the service with the following:
-   - Set **Storage Type** to **Endurance**
-   - Select the same **Location** as the one where you created the application servers
-   - Select a billing method
-   - Under **Storage Packages**, select **2 IOPS/GB**
-   - Under **Storage Size**, select **20GB**
-   - Under **Snapshot Space Size**, select **20GB**
+   - Select the same **Location** as the one where you created the application servers.
+   - Select a billing method.
+   - Set **Size** to **20GB**.
+   - Under **Endurance**, select **2 IOPS/GB**.
+   - Set **Snapshot space** to **20GB**.
    - Click continue to create the service.
 
 ### Configure regular snapshots
 
 [Snapshots](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) give you a convenient option to protect your data with no performance impact. Additionally, you can replicate snapshots to another data center.
 
-1. Select the File Storage from the [list of existing items](https://{DomainName}/classic/storage/file)
-2. Under **Snapshot Schedules**, edit the snapshot schedule. The schedule could be defined as follow:
+1. Select the file storage from the [list of existing items](https://{DomainName}/classic/storage/file).
+2. Under **Snapshots**, edit the **snapshot schedule**. The schedule could be defined as follow:
    1. Add a hourly snapshot, set the minute to 30 and keep the last 24 snapshots
    2. Add a daily snapshot, set the time to 11pm and keep the last 7 snapshots
    3. Add a weekly snapshot, set the time to 1am and keep the last 4 snapshots and click Save.
-      ![Backup snapshots](images/solution14/snapshots.png)
 
 ### Authorize the application servers to use the file storage
 
@@ -597,14 +593,14 @@ At this point, we have two application servers with separate IP addresses. They 
 
 1. Go to the catalog to create a [{{site.data.keyword.loadbalancer_short}}](https://{DomainName}/catalog/infrastructure/ibm-cloud-load-balancer)
 1. Set **Name** to **app-lb-1**.
+1. Set **Type** to **Public to Private**.
 1. Select the same datacenter as *app1* and *app2* servers.
-1. Set **Type** to **Public**.
 1. Select the same subnet as the one where *app1* and *app2* where provisioned.
 1. Select the **IBM system pool** for **Public IPs**.
 1. Keep the default protocol configuration - by default the load balancer is configured for HTTP. SSL protocol is supported with your own certificates. Refer to [Import your SSL certificates in the load balancer](https://{DomainName}/docs/infrastructure/ssl-certificates?topic=ssl-certificates-accessing-ssl-certificates#accessing-ssl-certificates)
       {: tip}
-5. In **Server Instances**, add *app1* and *app2* servers
-6. Review and Create to complete the wizard.
+5. In **Server Instances**, add *app1* and *app2* servers.
+6. Review and **Create** to complete the wizard.
 
 ### Change Wordpress configuration to use the load balancer URL
 
@@ -622,7 +618,7 @@ The Wordpress configuration needs to be changed to use the Load Balancer address
 
 ### Test the Load Balancer behavior
 
-The Load Balancer is configured to check the health of the servers and to redirect users only to healthy servers. To understand how the Load Balancer is working, you can
+The load balancer is configured to check the health of the servers and to redirect users only to healthy servers. To understand how the Load Balancer is working, you can
 
 1. Watch the nginx logs on both *app1* and *app2* with:
    ```sh

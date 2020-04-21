@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2019-12-13"
-lasttested: "2019-06-12"
+lastupdated: "2020-03-31"
+lasttested: "2020-03-31"
 ---
 
 {:shortdesc: .shortdesc}
@@ -19,7 +19,7 @@ lasttested: "2019-06-12"
 
 In this tutorial, you will create a serverless web application by hosting static website content on GitHub Pages and implementing the application backend using {{site.data.keyword.openwhisk}}.
 
-As an event-driven platform, {{site.data.keyword.openwhisk_short}} supports a [variety of use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_common_use_cases#openwhisk_common_use_cases). Building web applications and APIs is one of them. With web apps, events are the interactions between the web browsers (or REST clients) and your web app, the HTTP requests. Instead of provisioning a virtual machine, a container or a Cloud Foundry runtime to deploy your backend, you can implement your backend API with a serverless platform. This can be a good solution to avoid paying for idle time and to let the platform scale as needed.
+As an event-driven platform, {{site.data.keyword.openwhisk_short}} supports a [variety of use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-use_cases). Building web applications and APIs is one of them. With web apps, events are the interactions between the web browsers (or REST clients) and your web app, the HTTP requests. Instead of provisioning a virtual machine, a container or a Cloud Foundry runtime to deploy your backend, you can implement your backend API with a serverless platform. This can be a good solution to avoid paying for idle time and to let the platform scale as needed.
 
 Any action (or function) in {{site.data.keyword.openwhisk_short}} can be turned into a HTTP endpoint ready to be consumed by web clients. When enabled for web, these actions are called *web actions*. Once you have web actions, you can assemble them into a full-featured API with API Gateway. API Gateway is a component of {{site.data.keyword.openwhisk_short}} to expose APIs. It comes with security, OAuth support, rate limiting, custom domain support.
 
@@ -69,16 +69,18 @@ This guide uses GitHub Pages to host the static website. Make sure you have a pu
 Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data.keyword.cloudant_short_notm}} is a fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema. {{site.data.keyword.cloudant_short_notm}} is built upon and compatible with Apache CouchDB and accessible through a secure HTTPS API, which scales as your application grows.
 
 1. In the [Catalog](https://{DomainName}/catalog/), select **{{site.data.keyword.cloudant}}** under Databases.
-   1. Pick a **unique* name for the service, such as `<yourinitials>-guestbook-db`.
    1. Select a region.
+   1. Pick a **unique* name for the service, such as `<yourinitials>-guestbook-db`.
    1. Select a resource group.
    2. Select **Use both legacy credentials and IAM** as authentication method.
    3. Click **Create**.
 3. Back in the [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources/), click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Provisioned`.
 4. Under **Manage**, click on  **Launch Cloudant Dashboard** which will open in a new browser tab. Note: You may be asked to log into your Cloudant instance.
 5. Click on **Create Database** and create a database named ***guestbook***. Select **Non-Partitioned** under **Partitioning**.
-6. Back in the service, Under **Service credentials**
-   1. Create **New credential**, accept the defaults and click **Add**.
+6. Back to the service dashboard page, under **Service credentials**
+   1. Create **New credential**.
+   1. Set name to **for-guestbook**.
+   1. Accept the other defaults and click **Add**.
    2. Click **View credentials** under Actions. We will need these credentials later to allow Cloud Functions actions to read/write to your Cloudant service.
 
 ## Create serverless actions
@@ -93,8 +95,8 @@ You will create a **sequence** which is a chain of actions where output of one a
 
 Start by creating the first action:
 
-1. Switch to [**Functions**](https://{DomainName}/openwhisk).
-2. Select or create a namespace.
+1. Switch to [**Functions**](https://{DomainName}/functions).
+2. Select or create a namespace from the namespace drop-down on the top right.
 2. On the left pane, click on **Actions** and then **Create**.
 3. **Create Action** with name `prepare-entry-for-save` under Default Package and select **Node.js** as the Runtime (Note: Pick the latest version).
 4. Replace the existing code with the code snippet below:
@@ -129,21 +131,24 @@ Then add the action to a sequence:
 Finally add a second action to the sequence:
 
 1. Click on **save-guestbook-entry-sequence** and then click **Add**.
-1. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**
-1. Create **New Binding**
-1. For Name, enter `binding-for-guestbook`
-1. For Cloudant Instance, select `Input your own credentials` and fill in the following fields with the credentials information captured for your cloudant service: Username, Password, Host and Database = `guestbook` and click **Add** and then **Save**.
-   {: tip}
-1. To test it, click on **Change Input** and enter the JSON below
-    ```json
-    {
-      "name": "John Smith",
-      "email": "john@smith.com",
-      "comment": "this is my comment"
-    }
-    ```
-    {: codeblock}
-1. Click **Apply** and then click **Invoke**.
+1. Select **Use Public**, **Cloudant** and then choose **create-document** under **Actions**.
+1. Create **New Binding**.
+   1. Set **Name** to `binding-for-guestbook`.
+   1. Set **Instance** to **Input your own credentials**.
+   1. Set **Username**, **Password**, **Host** and **IAM API Key** from the values found in the Cloudant credentials **for-guestbook** created earlier.
+   1. Set **Database** to **guestbook**.
+   1. Set **whiskoverwriteLabel** to **true**.
+1. Click **Save**.
+1. To test it, click on **Invoke with parameters** and enter the JSON below
+   ```json
+   {
+     "name": "John Smith",
+     "email": "john@smith.com",
+     "comment": "this is my comment"
+   }
+   ```
+   {: codeblock}
+1. Click **Invoke**.
 
 ### Sequence of actions to retrieve entries
 
@@ -151,7 +156,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    * List all documents from the database.
    * Format the documents and returning them.
 
-1. Under [**Functions**](https://{DomainName}/openwhisk), click on **Actions** and then **Create** a new Node.js action under Default Package and name it `set-read-input`.
+1. Under [**Functions**](https://{DomainName}/functions), click on **Actions** and then **Create** a new Node.js action under Default Package and name it `set-read-input`.
 2. Replace the existing code with the code snippet below. This action passes the appropriate parameters to the next action.
    ```js
    function main(params) {
@@ -212,7 +217,7 @@ Complete the sequence:
    1. Set **path** to `/entries`
    2. Set **verb** to `PUT`
    3. Select the **save-guestbook-entry-sequence** action
-8. Save and expose the API. Make note of the provided route, as you will use it from your web application.
+8. Scroll to the end of the page to **Create** the API. Make note of the provided route, as you will use it from your web application.
 
 ## Deploy the web app
 
@@ -229,7 +234,7 @@ Complete the sequence:
 <!--##istutorial#-->
 ## Optional: Use your own domain for the API
 
-Creating a managed API gives you a default endpoint like `https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/1234abcd/app`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain.
+Creating a managed API gives you a default endpoint like `https://1234abcd.us-south.apigw.appdomain.cloud/guestbook`. In this section, you will configure this endpoint to be able to handle requests coming from your custom subdomain.
 
 ### Obtain a certificate for the custom domain
 
@@ -288,6 +293,6 @@ Once the DNS changes have been propagated, you will be able to access your guest
 ## Related content
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
 * [More guides and samples on serverless](https://developer.ibm.com/code/journey/category/serverless/)
-* [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-index#getting-started-with-openwhisk)
-* [{{site.data.keyword.openwhisk}} common use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_common_use_cases#openwhisk_common_use_cases)
-* [Create REST APIs from actions](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_apigateway#openwhisk_apigateway)
+* [Getting started with {{site.data.keyword.openwhisk}}](https://{DomainName}/docs/openwhisk?topic=cloud-functions-getting-started)
+* [{{site.data.keyword.openwhisk}} common use cases](https://{DomainName}/docs/openwhisk?topic=cloud-functions-use_cases)
+* [Create REST APIs from actions](https://{DomainName}/docs/openwhisk?topic=cloud-functions-apigateway)

@@ -76,7 +76,9 @@ This tutorial requires:
 * a GitHub account,
 * {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, make sure you have:
 - a **namespace** created in the {{site.data.keyword.registryfull_notm}}

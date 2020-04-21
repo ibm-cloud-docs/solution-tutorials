@@ -66,7 +66,9 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 * `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, make sure you:
 - own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers.
@@ -336,7 +338,7 @@ The Global Load Balancer is now ready to serve requests. All health checks shoul
    ```
     {: pre}
     Replace `<glb_name>.<your_domain_name>` with the URL you defined in the previous section.
-1. Deploy this resource in both London and Dallas clusters, after setting the KUBECONFIG variable for the respective location clusters:
+1. Deploy this resource in both London and Dallas clusters, after targeting the respective location clusters with `ibmcloud ks cluster config --cluster <cluster>`:
    ```bash
    kubectl create -f glb-ingress.yaml
    ```
@@ -403,6 +405,6 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 * [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](https://{DomainName}/docs/infrastructure/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-2-configure-your-security-level-selectively)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-container_index#container_index)
 * [{{site.data.keyword.registrylong_notm}} Basic](https://{DomainName}/docs/services/Registry?topic=registry-registry_overview#registry_planning)
-* [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-cs_apps_tutorial#cs_apps_tutorial_lesson1)
+* [Deploying single instance apps to Kubernetes clusters](https://{DomainName}/docs/containers?topic=containers-cs_cluster_tutorial)
 * [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
 * [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)

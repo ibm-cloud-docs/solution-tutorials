@@ -71,7 +71,9 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 * `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, make sure you install [Node.js](https://nodejs.org/en/).
 
@@ -241,7 +243,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
    {: pre}
 
    Edit `./cfee-service-broker-kubernetes/deployment.yml` file. Check and update the `image` attribute to reflect your container registry URL.
-3. Deploy the container image to CFEE's Kubernetes cluster (<CFEE_INSTANCE_NAME>-cluster). Target the resource group in which the cluster is created.  Using your cluster's name, export the KUBECONFIG variable using the `cluster-config` command. Then create the deployment.
+3. Deploy the container image to CFEE's Kubernetes cluster (<CFEE_INSTANCE_NAME>-cluster). Target the resource group in which the cluster is created. Set the `kubectl` context to your cluster then create the deployment.
    ```sh
    ibmcloud ks clusters
    ```
@@ -253,7 +255,7 @@ In this section, you'll deploy a microservice to Kubernetes that acts as a servi
    {: pre}
 
    ```sh
-   $(ibmcloud ks cluster config <CFEE_CLUSTER_NAME> --export)
+   ibmcloud ks cluster config --cluster <CFEE_CLUSTER_NAME>
    ```
    {: pre}
 

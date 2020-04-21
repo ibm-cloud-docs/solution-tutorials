@@ -50,6 +50,7 @@ Solution Tutorials
 
     {: .topicgroup}
     Machine Learning and Analytics
+        computer-vision-visual-insights-schematics.md
         big-data-log-analytics.md
         smart-data-lake.md
         serverless-github-traffic-analytics.md
@@ -63,7 +64,7 @@ Solution Tutorials
     {: .topicgroup}
     Work In Progress
         solution-template.md
-        computer-vision-powerai.hidden.md
+        coligo.hidden.md
 
     {: .topicgroup}
     Identity and Access Management
@@ -102,6 +103,7 @@ Solution Tutorials
         isolated-cloud-foundry-enterprise-apps.md
         multi-region-k8s-cis.md
         cloud-e2e-security.md
+        coligo.hidden.md
         users-teams-applications.md
         /containers/containers-vpc_ks_tutorial
 
@@ -137,6 +139,7 @@ Solution Tutorials
         lamp-stack.md
         infrastructure-as-code-terraform.md
         highly-available-and-scalable-web-application.md
+        computer-vision-visual-insights-schematics.md
         vpc-public-app-private-backend.md
         vpc-multi-region.md
         vpc-site2site-vpn.md

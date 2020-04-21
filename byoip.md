@@ -42,7 +42,7 @@ The {{site.data.keyword.Bluemix_notm}} utilizes a number of private address rang
 -	Virtual Overlay Network
 
 The choice of pattern is determined by the applications intended to be hosted on the {{site.data.keyword.Bluemix_notm}}. There are two key aspects, application sensitivity to the pattern implementation and the extent of overlap of address ranges between the client network and {{site.data.keyword.Bluemix_notm}}. Additional considerations will also apply if there is an intent to use a dedicated private network connection to {{site.data.keyword.Bluemix_notm}}. The documentation for [{{site.data.keyword.BluDirectLink}}
-](https://{DomainName}/docs/infrastructure/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link) is recommended reading for all users considering BYOIP. For {{site.data.keyword.BluDirectLink}} users, the associated guidance should be followed in deference to the information presented here.
+](https://{DomainName}/docs/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link) is recommended reading for all users considering BYOIP. For {{site.data.keyword.BluDirectLink}} users, the associated guidance should be followed in deference to the information presented here.
 
 ## Implementation patterns overview
 {: #patterns_overview}
@@ -60,7 +60,7 @@ The addressing scheme is unified by routing IP traffic over a GRE tunnel between
 4. Virtual Overlay Network
 [{{site.data.keyword.Bluemix_notm}} Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc-on-classic?topic=vpc-on-classic-getting-started) supports BYOIP for fully virtual environments on the {{site.data.keyword.Bluemix_notm}}. It could be considered as an alternative to the secure private network enclosure described in [this tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure).
 
-Alternatively consider a solution such as VMware NSX that implements a virtual overlay network in a layer over the {{site.data.keyword.Bluemix_notm}} network. All BYOIP addresses in the virtual overlay are independent of {{site.data.keyword.Bluemix_notm}} network address ranges. See [Getting started with VMware and {{site.data.keyword.Bluemix_notm}}](https://{DomainName}/docs/infrastructure/vmware?topic=VMware-getting-started-tutorial#getting-started-with-vmware-and-ibm-cloud).
+Alternatively consider a solution such as VMware NSX that implements a virtual overlay network in a layer over the {{site.data.keyword.Bluemix_notm}} network. All BYOIP addresses in the virtual overlay are independent of {{site.data.keyword.Bluemix_notm}} network address ranges. See [Getting started with VMware and {{site.data.keyword.Bluemix_notm}}](https://{DomainName}/docs/vmware?topic=VMware-vmware-getting-started).
 
 ## Pattern decision tree
 {: #decision_tree}
@@ -106,5 +106,5 @@ Additional routing configuration on the VRA will be required to create dynamic r
 {: #related}
 
 - [{{site.data.keyword.BluDirectLink}}
-]( https://{DomainName}/docs/infrastructure/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link)
+]( https://{DomainName}/docs/direct-link?topic=direct-link-configure-ibm-cloud-direct-link#configure-ibm-cloud-direct-link)
 - [Virtual Private Cloud (VPC)](https://{DomainName}/docs/vpc-on-classic?topic=vpc-on-classic-about)

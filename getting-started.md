@@ -95,7 +95,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### oc
 {: #windows_oc}
 
-1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
+1. Download the latest 3.11 OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/.
 1. Move `oc.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
@@ -222,7 +222,7 @@ The following sections assume you are running macOS High Sierra or later under a
 ### oc
 {: #macos_oc}
 
-1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
+1. Download the latest 3.11 OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/.
 1. Extract `oc.tar.gz`:
    ```sh
    tar zxvf oc.tar.gz
@@ -238,7 +238,7 @@ The following sections assume you are running macOS High Sierra or later under a
    oc version
    ```
    {:pre}
-   
+
    macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, in the Finder on your Mac, locate the `oc` binary. Control-click its icon, then choose **Open** from the shortcut menu.
    {:tip}
 
@@ -296,6 +296,9 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    cd $HOME/.terraform.d/plugins && ./terraform-provider-ibm_*
    ```
    {:pre}
+
+   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow the provider to be executed anyway, in the Finder on your Mac, locate the provider binary. Control-click its icon, then choose **Open** from the shortcut menu.
+   {:tip}
 
 ### jq
 {: #macos_jq}
@@ -380,7 +383,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 ### oc
 {: #ubuntu_oc}
 
-1. Download the OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/. The current default OpenShift version is 3.11.
+1. Download the latest 3.11 OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v3/clients/.
 1. Extract `oc.tar.gz`:
    ```sh
    tar zxvf oc.tar.gz
@@ -482,7 +485,7 @@ Proceed to the configuration [common to all operating systems](#common).
 ## Common to all operating systems
 {: #common}
 
-The next sections are common to all operating systems. 
+The next sections are common to all operating systems.
 
 ### {{site.data.keyword.cloud_notm}} CLI plugins
 
@@ -493,10 +496,13 @@ Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with
    ibmcloud plugin install container-registry
    ibmcloud plugin install cloud-functions
    ibmcloud plugin install cloud-object-storage
-   ibmcloud plugin install dev
    ibmcloud plugin install kubernetes-service
+   ibmcloud cf install --version 6.49.0 --force
    ```
    {:pre}
+
+   To see all the available plugins, run `ibmcloud plugin repo-plugins` and to install a plugin `ibmcloud plugin install <PLUGIN_NAME>`
+   {:tip}
 
 ### GitHub account
 {: #common_github}

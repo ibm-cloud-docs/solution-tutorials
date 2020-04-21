@@ -35,7 +35,7 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 ## Services used
 {: #products}
 
-This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
+This tutorial uses the following runtimes and services:
 * [Virtual Router Appliance](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#about)
 * [{{site.data.keyword.virtualmachinesshort}}]( https://{DomainName}/catalog/infrastructure/virtual-server-group)
 * [VLAN Spanning]( https://{DomainName}/docs/infrastructure/vlans?topic=vlans-vlan-spanning#vlan-spanning)

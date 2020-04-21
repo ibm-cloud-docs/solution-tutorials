@@ -27,11 +27,12 @@ In this tutorial, you create an application to automatically collect GitHub traf
 * Integrate {{site.data.keyword.dynamdashbemb_short}} for graphical traffic analytics
 
 ## Products
-This tutorial uses the following products:
-   * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)
-   * [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
-   * [{{site.data.keyword.appid_long}}](https://{DomainName}/catalog/services/app-id)
-   * [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
+
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions)
+* [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
+* [{{site.data.keyword.appid_long}}](https://{DomainName}/catalog/services/app-id)
+* [{{site.data.keyword.dynamdashbemb_notm}}](https://{DomainName}/catalog/services/ibm-cognos-dashboard-embedded)
 
 ## Before you begin
 {: #prereqs}
@@ -42,7 +43,9 @@ This tutorial requires:
 * `git` to clone source code repository,
 * a GitHub account.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 ## Service and Environment Setup (shell)
 In this section, you set up the needed services and prepare the environment. All of this can be accomplished from the shell environment.
@@ -152,7 +155,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    ```
    {: pre}
 
-3. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_reference#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
+3. Create a new action **collectStats**. It uses a [Python 3 environment](https://{DomainName}/docs/openwhisk?topic=cloud-functions-runtimes#openwhisk_ref_python_environments) which already includes the required database driver. The source code for the action is provided in the file `ghstats.zip`.
    ```sh
    ibmcloud fn action create collectStats --kind python-jessie:3 ghstats.zip
    ```
@@ -177,7 +180,7 @@ With the management app in place, deploy an action, a trigger and a rule to conn
    }
    ```
    {:codeblock}
-6. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_catalog_alarm#openwhisk_catalog_alarm). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
+6. Create a trigger based on the [alarms package](https://{DomainName}/docs/openwhisk?topic=cloud-functions-pkg_alarms). It supports different forms of specifying the alarm. Use the [cron](https://en.wikipedia.org/wiki/Cron)-like style. Starting April 21st and ending December 21st, the trigger fires daily at 6am UTC. Make sure to have a future start date.
    ```sh
    ibmcloud fn trigger create myDaily --feed /whisk.system/alarms/alarm \
               --param cron "0 6 * * *" --param startDate "2018-04-21T00:00:00.000Z"\
@@ -247,7 +250,7 @@ Want to add to or change this tutorial? Here are some ideas:
 Here are links to additional information on the topics covered in this tutorial.
 
 Documentation and SDKs:
-* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=cloud-functions-openwhisk_about#about-cloud-functions)
+* [{{site.data.keyword.openwhisk_short}} documentation](https://{DomainName}/docs/openwhisk?topic=cloud-functions-getting-started)
 * Documentation: [IBM Knowledge Center for {{site.data.keyword.dashdbshort}}](https://www.ibm.com/support/knowledgecenter/en/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html)
 * [{{site.data.keyword.appid_short}} documentation](https://{DomainName}/docs/services/appid?topic=appid-gettingstarted#gettingstarted)
 * [Python runtime on IBM Cloud](https://{DomainName}/docs/runtimes/python?topic=Python-python_runtime#python_runtime)

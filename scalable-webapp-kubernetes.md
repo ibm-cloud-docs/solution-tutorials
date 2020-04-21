@@ -71,7 +71,9 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 * `helm` to deploy charts.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
@@ -93,11 +95,14 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 {: #create_cluster}
 
 - Gain access to your cluster as described on the Access tab of your cluster.
+
+  For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
+   {:tip}
 - Initialize the environment variable with the cluster name
 
    ```bash
    export MYCLUSTER=<CLUSTER_NAME>
-   ibmcloud ks cluster config ${MYCLUSTER}
+   ibmcloud ks cluster config --cluster ${MYCLUSTER}
    ```
 <!--#/istutorial#-->
 
@@ -155,46 +160,11 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 4. Select the **resource group** where your cluster has been created.
 1. Do not add additional services.
 1. Do not add a DevOps toolchain, select **manual deployment**.
+1. Select **Helm-based** deployment target.
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or Kubernetes.
 
 ![](images/solution2/Contents.png)
-
-### Build the application
-
-You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
-
-1. Ensure your local Docker engine is started.
-   ```
-   docker ps
-   ```
-   {: pre}
-1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
-   ```sh
-   export MYPROJECT=<your-initials>kubeapp
-   ```
-   {:pre}
-2. Change to the directory of the generated project.
-   ```
-   cd $MYPROJECT
-   ```
-   {: pre}
-3. Build the application.
-   ```
-   ibmcloud dev build
-   ```
-   {: pre}
-
-   This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
-
-### Run the application locally
-
-1. Run the container.
-   ```
-   ibmcloud dev run
-   ```
-   {: pre}
-2. After your container starts, on a browser go to `http://localhost:9080/` to see the app. If you created a Node.js application, go to `http://localhost:3000/`.
 
 ## Deploy application to cluster using helm chart
 {: #deploy}
@@ -231,6 +201,21 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 
 ### Build the container image
 
+1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
+   ```sh
+   export MYPROJECT=<your-initials>kubeapp
+   ```
+   {:pre}
+1. Change to the directory of the generated project.
+   ```
+   cd $MYPROJECT
+   ```
+   {: pre}
+1. Ensure your local Docker engine is started.
+   ```
+   docker ps
+   ```
+   {: pre}
 1. Build and tag (`-t`) the docker image
    ```sh
    docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0

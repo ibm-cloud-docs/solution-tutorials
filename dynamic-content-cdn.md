@@ -43,8 +43,7 @@ To stop these dynamic contents from being a performance bottleneck, you can util
 ## Services used
 {: #services}
 
-This tutorial uses the following products:
-
+This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cdn_full}}](https://{DomainName}/catalog/infrastructure/cdn-powered-by-akamai)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
@@ -79,7 +78,9 @@ This tutorial requires:
 * `kubectl` to interact with Kubernetes clusters,
 * `git` to clone source code repository.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition:
 - create a Kubernetes cluster with {{site.data.keyword.containershort_notm}}.
@@ -131,14 +132,14 @@ This [sample application](https://github.com/IBM-Cloud/cdn-with-cda-todolist) is
 
 ### Run the application in the cluster
 
-1. Run the command below to target the cluster where to deploy the application. This will set the KUBECONFIG environment variable.
+1. Run the command below to target the cluster where to deploy the application.
    ```bash
-   $(ibmcloud ks cluster config --export mycluster)
+   ibmcloud ks cluster config --cluster mycluster
 	 ```
 	 {: pre}
 1. Retrieve the cluster ingress subdomain and secret name:
    ```bash
-   ibmcloud ks cluster get mycluster
+   ibmcloud ks cluster get --cluster mycluster
 	 ```
 	 {: pre}
 1. Copy `deployment.sample.yaml` to `deployment.yaml`:

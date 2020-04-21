@@ -84,7 +84,7 @@
             "Node.js",
             "Vulnerability Advisor"
           ],
-          "lastUpdated": "2019-07-08"
+          "lastUpdated": "2020-01-31"
         },
         {
           "name": "Scalable web app on OpenShift",
@@ -98,7 +98,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-01-10"
+          "lastUpdated": "2020-02-21"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -226,7 +226,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2019-12-13"
+          "lastUpdated": "2020-03-31"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -251,7 +251,7 @@
             "Log Analysis",
             "Availability Monitoring"
           ],
-          "lastUpdated": "2019-10-04"
+          "lastUpdated": "2020-02-12"
         },
         {
           "name": "Isolated Cloud Foundry Enterprise Apps",
@@ -285,7 +285,7 @@
             "Cloud Functions",
             "Slack"
           ],
-          "lastUpdated": "2019-12-11"
+          "lastUpdated": "2020-03-16"
         },
         {
           "name": "Build a voice-enabled Android chatbot",
@@ -298,7 +298,7 @@
             "Text to Speech",
             "Android"
           ],
-          "lastUpdated": "2019-12-05"
+          "lastUpdated": "2020-03-17"
         }
       ]
     },
@@ -390,7 +390,7 @@
             "Swift",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-12-05"
+          "lastUpdated": "2020-01-31"
         },
         {
           "name": "Android native mobile app with Push Notifications",
@@ -402,7 +402,7 @@
             "Java",
             "Push Notifications"
           ],
-          "lastUpdated": "2019-12-06"
+          "lastUpdated": "2020-01-31"
         },
         {
           "name": "Mobile application with a serverless backend",
@@ -424,6 +424,19 @@
       "name": "Machine Learning and Analytics",
       "anchor": "ml",
       "solutions": [
+        {
+          "name": "Computer vision with Visual Insights and Schematics",
+          "url": "computer-vision-visual-insights-schematics.html",
+          "description": "Provision a backend instance of Visual Insights in VPC and access the deployed deep learning model through a webapp for image classification",
+          "imgSrc": "images/solution53-visual-insights-schematics/architecture_diagram.png",
+          "tags": [
+            "Visual Insights",
+            "Schematics",
+            "Infrastructure",
+            "Virtual Private Cloud"
+          ],
+          "lastUpdated": "2020-04-03"
+        },
         {
           "name": "Big data logs with streaming analytics and SQL",
           "url": "big-data-log-analytics.html",
@@ -508,7 +521,7 @@
             "Apache Spark",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-12-04"
+          "lastUpdated": "2020-02-26"
         }
       ]
     },
@@ -528,7 +541,7 @@
             "Container Registry",
             "DevOps"
           ],
-          "lastUpdated": "2019-08-21"
+          "lastUpdated": "2020-03-18"
         }
       ]
     },
@@ -617,7 +630,7 @@
             "Firewall",
             "Network"
           ],
-          "lastUpdated": "2019-05-23"
+          "lastUpdated": "2020-02-03"
         },
         {
           "name": "Configure NAT for Internet access from a private network",

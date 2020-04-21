@@ -34,8 +34,7 @@ This tutorial presents the setup of Network Address Translation (NAT) masquerade
 ## Services used
 {: #products}
 
-This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
-
+This tutorial uses the following runtimes and services:
 * [Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
 
 This tutorial may incur costs. The VRA is only available on a monthly pricing plan.

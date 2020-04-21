@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-01-26"
-lasttested: "2020-01-26"
+lastupdated: "2020-04-21"
+lasttested: "2020-04-21"
 ---
 
 {:shortdesc: .shortdesc}
@@ -73,7 +73,9 @@ This tutorial requires:
 * `git` to clone source code repository,
 * {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
 
+<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+<!--#/istutorial#-->
 
 In addition, make sure you [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
 
@@ -85,21 +87,21 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes.
 
-1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/cluster/create?platformType=openshift).
-1. Set **Cluster name** to **myopenshiftcluster**.
-1. Select a **Resource group**.
-2. Under **Location**,
+1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
+1. Set the **Cluster type and version** to **the latest version of OpenShift**.
+1. Under **Location**,
    - Select **Single zone** as **Availability**.
    - Select a **Geography**.
    - Choose a **Worker zone**.
-   - Select **Public endpoint only** as your Master service endpoint.
+1. Under **Cluster Metadata**,
+   - Set **Cluster name** to **myopenshiftcluster**.
+   - Select a **Resource group**.
 3. Under **Default worker pool**,
-   - Choose **{{site.data.keyword.openshiftshort}} 4.3.x** as your cluster type and version.
    - Select **4 vCPUs 16GB RAM** as the flavor for Worker nodes.
    - Leave **Encrypt local disk** checked and select **2** Worker nodes for this tutorial.
    - Select **Purchase additional licenses for this worker pool** as your OCP entitlement.
 4. Review **Infrastructure permissions checker** to verify the required permissions
-5. Click **Create cluster** to provision an {{site.data.keyword.openshiftshort}} cluster.
+5. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
 ### Configure CLI
 
@@ -165,41 +167,9 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 4. Select the **resource group** where your cluster has been created.
 5. Do not add additional services.
 6. Do not add a DevOps toolchain, select **manual deployment**.
+7. Select **Helm-based** deployment target.
 
 This generates a starter application complete with the code and all the necessary configuration files for local development and deployment to cloud on Cloud Foundry or {{site.data.keyword.containershort_notm}}.
-
-### Run the application locally
-
-You can build and run the application as you normally would using `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
-
-1. Ensure your local Docker engine is started.
-   ```sh
-   docker ps
-   ```
-   {: pre}
-1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
-   ```sh
-   export MYPROJECT=<your-initials>-openshiftapp
-   ```
-   {:pre}
-2. Change to the directory of the generated project.
-   ```sh
-   cd $MYPROJECT
-   ```
-   {: pre}
-3. Build the application.
-   ```sh
-   ibmcloud dev build
-   ```
-   {: pre}
-   This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
-4. Run the container.
-   ```sh
-   ibmcloud dev run
-   ```
-   {: pre}
-   This uses your local Docker engine to run the docker image that you built in the previous step.
-5. After your container starts, go to `http://localhost:3000/`.
 
 ### Push the code to a Private IBM Cloud Git repo
 
@@ -232,7 +202,17 @@ In this section, you will generate a BuildConfig YAML file and update the file w
 
 A Kubernetes namespace provides a mechanism to scope resources in a cluster. In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
 
-1. Create a new project
+1. Define an environment variable named `MYPROJECT` set with the name of the application you generated in the previous section:
+   ```sh
+   export MYPROJECT=<your-initials>-openshiftapp
+   ```
+   {:pre}
+2. Change to the directory of the generated project.
+   ```sh
+   cd $MYPROJECT
+   ```
+   {: pre}
+1. Create a new OpenShift project
    ```sh
    oc new-project $MYPROJECT
    ```
@@ -275,7 +255,7 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    export MYNAMESPACE=<REGISTRY_NAMESPACE>
    ```
    {:pre}
-1. Define an environment variable name `API_KEY` pointing to an IAM API key.
+1. Define an environment variable name `API_KEY` pointing to an {{site.data.keyword.Bluemix_notm}} IAM API key.
    For creating an API key, refer to this [link](https://{DomainName}/docs/services/Registry?topic=registry-registry_access#registry_api_key_create).
    {:tip}
 1. To automate access to your registry namespaces and to push the generated builder container image to {{site.data.keyword.registryshort_notm}}, create a secret:
@@ -283,7 +263,6 @@ In this tutorial, a remote private {{site.data.keyword.registryshort_notm}} is u
    oc create secret docker-registry push-secret --docker-username=iamapikey --docker-password=$API_KEY --docker-server=$MYREGISTRY
    ```
    {:pre}
-
 
 ### Update the BuildConfig and Push the builder image to {{site.data.keyword.registryshort_notm}}
 
@@ -342,15 +321,13 @@ In this section, you will deploy the application to the cluster using the genera
 
 1. Before creating the app, you need to copy and patch the image-pull secret from the `default` project to your project:
    ```sh
-   oc get secret default-us-icr-io -n default -o yaml | sed 's/default/'$MYPROJECT'/g' | oc -n $MYPROJECT create -f -
+   oc get secret all-icr-io -n default -o yaml | sed 's/default/'$MYPROJECT'/g' | oc -n $MYPROJECT create -f -
    ```
    {:pre}
 
-   If you are using {{site.data.keyword.registryshort_notm}} from a region other than US, follow the instructions in this [link](https://{DomainName}/docs/containers?topic=containers-images#copy_imagePullSecret) to copy pull secrets.
-   {:tip}
 1. For the image pull secret to take effect, you need to add it in the `default` service account
    ```sh
-   oc secrets add serviceaccount/default secrets/$MYPROJECT-us-icr-io --for=pull
+   oc secrets link serviceaccount/default secrets/all-icr-io --for=pull
    ```
    {:pre}
 1. Create a new openshift app along with a buildconfig(bc), deploymentconfig(dc), service(svc), imagestream(is) using the updated yaml
@@ -359,14 +336,19 @@ In this section, you will deploy the application to the cluster using the genera
    ```
    {:pre}
 
-2. To check the builder Docker image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
+2. To check the builder container image creation and pushing to the {{site.data.keyword.registryshort_notm}}, run the below command
    ```sh
    oc logs -f bc/$MYPROJECT
    ```
    {:pre}
-3. You can check the status of deployment and service using
+3. Wait till the build is successful and the image is pushed. You can check the status of deployment and service using
    ```sh
    oc status
+   ```
+   {:pre}
+4. Ensure the deployment takes place as soon as possible by manually importing the latest image stream. Refer this [link](https://docs.openshift.com/container-platform/4.3/registry/registry-options.html#registry-third-party-registries_registry-options) for more info.
+   ```sh
+   oc import-image $MYPROJECT
    ```
    {:pre}
 
@@ -416,7 +398,7 @@ In this step, you will automate the build and deploy process. So that whenever y
      {:pre}
    - Replace `<secret>` in the webhook GitLab URL with the secret value under *gitlab* in the above command output.
 3. Open your private git repo on a browser using the Git repo HTTPS link then click on **Settings** and click **Integrations**.
-4. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events.
+4. Paste the **URL** and click **Add webhook**. Test the URL by clicking **Test** and selecting Push events. This triggers a new build.
 5. Update the ImagePolicy of the image stream to query {{site.data.keyword.registryshort_notm}} at a scheduled interval to synchronize tag and image metadata. This will update the `tags` definition
    ```sh
    oc tag $MYREGISTRY/$MYNAMESPACE/${MYPROJECT}:latest ${MYPROJECT}:latest --scheduled=true
