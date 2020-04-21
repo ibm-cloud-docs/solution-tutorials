@@ -38,8 +38,7 @@ This tutorial takes you through the creation of a scalable and secure Internet f
 ## Services used
 {: #products}
 
-This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services: 
-
+This tutorial uses the following runtimes and services:
 * [Virtual Router Appliance VPN](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#virtual-private-network-vpn-gateway)
 * [Load Balancer]( https://{DomainName}/catalog/infrastructure/load-balancer-group)
 * [{{site.data.keyword.virtualmachinesshort}}]( https://{DomainName}/catalog/infrastructure/virtual-server-group)

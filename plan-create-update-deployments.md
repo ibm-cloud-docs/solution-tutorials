@@ -39,7 +39,7 @@ Multiple environments are pretty common in a project to support the different ph
 ## Services used
 {: #services}
 
-This tutorial uses the following products:
+This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.Bluemix_notm}} provider for Terraform](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB)

@@ -78,13 +78,13 @@ To create your own {{site.data.keyword.vpc_short}} in region 1,
    * Enter **vpc-region1** as name for your VPC.
    * Select a **Resource group**.
    * Optionally, add **Tags** to organize your resources.
-3. Select **Create new default (Allow all)** as your VPC default access control list (ACL).
-4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked.
+3. The default access control list (ACL) **(Allow all)** is appropriate for your VPC
+4. Uncheck SSH and ping from the **Default security group** and leave **classic access** unchecked. SSH access will later be added to the maintenance security group.  The maintenance security group must be added to an instance to allow SSH access from the bastion server.  Ping access is not required for this tutorial.
 4. Leave **Create a default prefix for each zone** checked.
 5. Under **New subnet for VPC**:
    * Enter **vpc-region1-zone1-subnet** as your subnet's unique name.
    * Select a **Resource group**.
-   * Select a location (e.g., Dallas), name it **region 1** and a zone in region 1 (e.g., Dallas 1), name it **zone 1**.
+   * Select a location and zone 1 for example: **Dallas** and **Dallas 1**.
    * Leave the defaults for the IP range selection
 8. Click **Create virtual private cloud** to provision the instance.
 
@@ -93,7 +93,7 @@ To confirm the creation of subnet, click **Subnets** on the left pane and wait u
 ### Create subnet in a different zone
 
 1. Click on **New Subnet**, enter **vpc-region1-zone2-subnet** as a unique name for your subnet, select **vpc-region1** as the VPC, and select a **Resource group**.
-1. Select the location which we named as **region 1** above (e.g., Dallas) and select a different zone that region (e.g., Dallas 2). Name the selected zone **zone 2**.
+1. Select a location zone 2 for example: **Dallas 2**
 1. Leave the defaults for the IP range selection
 1. Leave the public gateway to **Detached** and click **Create subnet**.
 
@@ -107,8 +107,8 @@ To allow traffic to the application you will deploy on virtual server instances,
      <thead>
        <tr>
          <td><strong>Protocol</strong></td>
-         <td><strong>Destination type</strong></td>
-         <td><strong>Destination</strong></td>
+         <td><strong>Source type</strong></td>
+         <td><strong>Source</strong></td>
          <td><strong>Value</strong></td>
        </tr>
      </thead>
@@ -149,7 +149,7 @@ Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REP
 {: #install-configure-web-server-vsis}
 
 
-Follow the steps mentioned in [securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.
+Follow the steps mentioned in [securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.  One bastion host in each VPC will be required.
 {:tip}
 
 Once you successfully SSH into the server provisioned in subnet of **zone 1** of **region 1**,
@@ -227,7 +227,7 @@ In this section, you will create a {{site.data.keyword.cis_full_notm}} ({{site.d
 1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Enter a service name, select a resource group and click **Create** to provision an instance of the service. You can use any pricing plans for this tutorial.
 3. When the service instance is provisioned, set your domain name by clicking **Let's get started**, enter your domain name and click **Connect and continue**.
-4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
+4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed. If you are using the IBM Classic Domain Name Server you can find instructions [here](https://{DomainName}/docs/dns?topic=dns-add-edit-or-delete-custom-name-servers-for-a-domain).
 5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the overview page changes from *Pending* to *Active*, you can use the `dig <mydomain.com> ns` command to verify that the new name servers have taken effect.
@@ -242,7 +242,7 @@ In this section, you will configure a global load balancer (GLB) distributing th
 Open the {{site.data.keyword.cis_short_notm}} service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
 
 1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
-2. Enter **lb.mydomain.com** as your hostname, leave Proxy off, leave TTL as 60 seconds.
+2. Enter the prefix **lb** to provide a balancer hostname (the resulting fully qualified name would be **lb.mydomain.com**), leave Proxy off, leave TTL as 60 seconds.
 3. Click **Add pool** to define a default origin pool
    - **Name**: lb-region1
    - **Health check**: Create new
@@ -256,9 +256,9 @@ Open the {{site.data.keyword.cis_short_notm}} service you created by navigating 
      - **weight**: 1
      - Click **Add**
 
-4. **ADD** one more **origin pool** pointing to **region2** load balancer in the **Western Europe** region and click **Create** to provision your global load balancer.
+4. **ADD** one more **origin pool** pointing to **region2** load balancer in the **Eastern North America** region and click **Create** to provision your global load balancer.
 
-Wait until the **Health** check status changes to **Healthy**. Open the link **lb.mydomain.com** in a browser of your choice to see the global load balancer in action.
+Wait until the **Health** check status changes to **Healthy**. Open the link **lb.mydomain.com** in a browser of your choice to see the global load balancer in action. The global load balancer is a DNS resolver. Most clients, like browsers, only resolve the DNS address one time or infrequently.  The load is balanced across multiple clients, not for a single client.  You will likely see the response from a single VPC load balancer.
 
 ## Secure with HTTPS
 

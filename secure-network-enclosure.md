@@ -42,7 +42,7 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 ## Services used
 {: #products}
 
-This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
+This tutorial uses the following runtimes and services:
 * [Virtual Router Appliance](https://{DomainName}/catalog/infrastructure/virtual-router-appliance)
 
 This tutorial may incur costs. The VRA is only available on a monthly pricing plan.

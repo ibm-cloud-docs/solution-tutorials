@@ -32,12 +32,11 @@ This tutorial walks you through the creation of a web application using the popu
 
 {: #products}
 
-This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.databases-for-mongodb_full_notm}}](https://{DomainName}/catalog/services/databases-for-mongodb)
+* [{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)
 
-- [{{site.data.keyword.databases-for-mongodb_full_notm}}](https://{DomainName}/catalog/services/databases-for-mongodb)
-- [{{site.data.keyword.runtime_nodejs_notm}}](https://{DomainName}/catalog/starters/sdk-for-nodejs)
-
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 

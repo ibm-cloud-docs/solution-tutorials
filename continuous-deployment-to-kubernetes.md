@@ -36,8 +36,7 @@ This tutorial walks you through the process setting up a continuous integration 
 ## Services used
 {: #services}
 
-This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
-
+This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/start)
 - [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
 - [{{site.data.keyword.contdelivery_short}}](https://{DomainName}/catalog/services/continuous-delivery)

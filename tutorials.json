@@ -98,7 +98,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-02-21"
+          "lastUpdated": "2020-04-21"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -190,7 +190,7 @@
             "PHP",
             "File Storage"
           ],
-          "lastUpdated": "2019-06-19"
+          "lastUpdated": "2020-04-08"
         },
         {
           "name": "Modern web application using MEAN stack",
@@ -214,7 +214,7 @@
             "Python",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2019-10-01"
+          "lastUpdated": "2020-04-15"
         },
         {
           "name": "Serverless web application and API",
@@ -435,7 +435,7 @@
             "Infrastructure",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2020-04-03"
+          "lastUpdated": "2020-04-06"
         },
         {
           "name": "Big data logs with streaming analytics and SQL",
@@ -488,7 +488,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2019-12-03"
+          "lastUpdated": "2020-04-16"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",

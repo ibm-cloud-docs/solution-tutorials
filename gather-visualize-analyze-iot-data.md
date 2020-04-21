@@ -37,7 +37,9 @@ Simply register and connect your device, be it a sensor, a gateway, or something
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.iot_full}}](https://{DomainName}/catalog/services/internet-of-things-platform)
 * [Node.js Application](https://{DomainName}/catalog/starters/sdk-for-nodejs)
-* [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience) with [{{site.data.keyword.iae_full_notm}}](https://{DomainName}/catalog/services/analytics-engine) and [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
+* [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience)
+* [{{site.data.keyword.iae_full_notm}}](https://{DomainName}/catalog/services/analytics-engine)
+* [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.

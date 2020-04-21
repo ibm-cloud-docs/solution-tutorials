@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-12-03"
-lasttested: "2019-10-05"
+  years: 2018, 2019, 2020
+lastupdated: "2020-04-16"
+lasttested: "2020-04-16"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -50,6 +50,8 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.dashdblong}}](https://{DomainName}/catalog/services/db2-warehouse)
 * [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale)
 
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+
 ## Architecture
 {: #architecture}
 ![](images/solution22-build-machine-learning-model/architecture_diagram.png)
@@ -63,6 +65,7 @@ This tutorial uses the following runtimes and services:
 ## Before you begin
 {: #prereqs}
 
+* Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
 * {{site.data.keyword.DSX_full}}, {{site.data.keyword.pm_full}} and {{site.data.keyword.knowledgestudiofull}} are applications that are part of IBM Watson. Go to [Try IBM Watson](https://dataplatform.ibm.com/registration/stepone) to activate and try the Watson applications for free with your IBM Cloud account
 * Install [Python 3.x](https://www.python.org/downloads/)
 
@@ -84,8 +87,13 @@ You can create a project to add data and open a data asset in the data refiner f
 2. Click on the **Get Started** button to launch the **{{site.data.keyword.DSX_short}}** dashboard.
 3. Create a **project** by clicking **Create an empty project**.
 4. Provide **iris_project** as the project name and Leave the **Restrict who can be a collaborator** checkbox unchecked as there's no confidential data.
-5. Under **Define Storage**, Click on **Add** and choose an existing Cloud Object Storage service or create a new one (Select **Lite** plan > Create). Hit **Refresh** to see the created service.
-6. Click **Create**. Your new project opens and you can start adding resources to it.
+5. Under **Define Storage**, Click on **Add** and choose an **existing** Cloud Object Storage service or create a **new** service. If you choose to create a **New** service
+   1. Select a **Lite** plan
+   2. Click on **Create**
+   3. Select a Resource group and change the service name if you wish to
+   4. Click on **Confirm**
+6. Hit **Refresh** to see the created service.
+7. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Import data
 {: #import_data}
@@ -103,17 +111,17 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 ## Associate the {{site.data.keyword.pm_short}} service
 {:#associate_services}
 
-1. Click **Settings** on the top navigation bar > Associated Services.
-1. Click **Add Service** and choose **Watson**.
-1. Click **Add** on **{{site.data.keyword.pm_short}}** tile.
-1. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
+1. In the top navigation menu, click on `iris-project`, click on **Settings** in the top bar and scroll to **Associated Services** section.
+2. Click **Add Service** and choose **Watson**.
+3. Click **Add** on **{{site.data.keyword.pm_short}}** tile.
+4. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
    1. Choose the **Lite** plan and click **Create**.
-   1. Leave the default values and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
+   2. Leave the default values and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
 
 ## Build a machine learning model
 {:#build_model}
 
-1. Click **Add to project** and select **AutoAI experiment**. In the dialog,
+1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
   1. Select **From blank**.
   2. Set the Asset name to **iris_model**.
   3. Under **Associated service**, select the **Machine learning service instance**.
@@ -123,31 +131,39 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
   2. Choose the **iris_initial.csv** file.
   3. Click **Select asset**.
 3. Select **Species** as your Select column to predict.
-4. Click **Experiment settings** > Set **Holdout data split** under source settings to **25%**.
-5. Click **Prediction settings**
-   1. Select **Multiclass classification** as the prediction type.
-   2. Choose **Accuracy** as the Optimized metric.
-   3. Click **Save and close**.
-6. Click **Run experiment**.
-7. Once the experiment completes running, under the **Pipeline** leaderboard, click **Save as** > **Model** next to the model with *Rank 1*.
+4. Click **Experiment settings** > Set **Holdout data split** under **Data source** to **15%** by moving the slider.
+5. On the left menu, Click on **Prediction**
+   1. Check whether **Multiclass classification** is selected as the prediction type and **Accuracy** as the Optimized metric.
+   2. Click on **Save and close**.
+6. Click on **Run experiment**.
+
+   The **AutoAI experiment** may take up to 3 minutes to select the right Algorithm for your model. Click on **Swap view** to see the Relationship map.
+   {:tip}
+
+7. Once the experiment completes running, under the **Pipeline** leaderboard, click on **Save as** > **Model** next to the model with *Rank 1*.
 8. Check the details of the model and click **Save**.
-9. In the received notification, click **View in project** then click on **Overview** to check the details of the model.
+9. In the received notification, click **View in project** then under **Overview** tab check the details of the model.
 
 ## Deploy the model and try out the API
 {:#deploy_model}
 
-1. Under the created model, click on **Deployments** > **Add Deployment**.
-1. Choose **Web Service**. Add a name say `iris_deployment` and an optional description.
-2. Click **Save**. On the overview page, click on the name of the new web service. Once the status is **ready** (You may have to refresh the page), you can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation** tab of the deployment.
-3. Open a terminal and export the required values for the **cURL** code snippet by replacing the placeholders below
+In this section, you will deploy the saved model and expose the model as an API to be accessed from your applications.
+
+1. Under the created model, click on **Deployments** and then click **Add Deployment**.
+1. Add a **name** -`iris_deployment`, choose **Web Service** as your deployment type and add an optional description.
+2. Click **Save**. Once the status changes to **Ready** (You may have to refresh the page), click on the **name** of the new web service.
+
+   You can check the scoring-endpoint, code snippets in various programming languages, and API Specification under **Implementation** tab of the deployment.
+   {:tip}
+
+3. Launch the terminal and export the required values for the **cURL** code snippet by replacing the placeholders below
    ```sh
    export IAM_TOKEN='<IAM_TOKEN>'
    export ML_INSTANCE_ID='<ML_SERVICE_INSTANCE_ID>'
-   export SCORING_ENDPOINT='<ML_SCORING_ENDPOINT>'
    ```
    {:pre}
 
-   For getting an IAM token using a Watson service API key, refer this [link](https://{DomainName}/docs/services/watson?topic=watson-iam). You can find the ML_INSTANCE_ID under Service credentials of Machine Learning service you created earlier.
+   For getting an IAM token using a Watson service API key, refer this [link]((https://{DomainName}/docs/iam?topic=iam-iamtoken_from_apikey)). You can find the ML_INSTANCE_ID under Service credentials of Machine Learning service you created earlier.
    {:tip}
 
 4. Copy and paste the **cURL** code snippet in the terminal window where you have exported the variables. Thereafter, replace `$ARRAY_OF_VALUES_TO_BE_SCORED` with **[5.1,3.5,1.4,0.2]** and `$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED` with **[3.2,1.2,5.2,1.7]**.
@@ -167,19 +183,24 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
       }]
     }
    ```
-1. Click **Predict** and you should see the **Predicted value for species** in a chart.
-1. For JSON input and output, click on the icons next to the active input and output.
-1. You can change the input data and continue testing your model.
+2. Click **Predict** and you should see the **Predictions** JSON output.
+3. You can change the input data and continue testing your model.
 
 ## Create a feedback data connection
 {:#create_feedback_connection}
 
-1. For continuous learning and model evaluation, you need to store new data somewhere. Create a [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service by choosing **Flex One** plan which acts as our feedback data connection.
-2. Once the service is provisioned, On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open Console**. Click the Menu icon > click **Load Data** under LOAD .
-3. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
-4. Select **DB2XXXXX**, e.g., DB2INST1 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
-5. Datatypes are automatically detected. Click **Next** and then **Begin Load**.
-6. A new target **DB2XXXXX.IRIS_FEEDBACK** is created.
+1. For continuous learning and model evaluation, you need to store new data somewhere. Create a [{{site.data.keyword.dashdbshort}}](https://{DomainName}/catalog/services/db2-warehouse) service which acts as our feedback data connection.
+   1. Select a region preferably `Dallas`
+   2. Choose **Flex One** plan
+   3. Change the service name if you wish to
+   4. Choose an Organization and a space
+   5. Leave the datacenter location to default and click **Create**
+2. Once the service is provisioned, On the {{site.data.keyword.dashdbshort}} **Manage** page, click **Open Console**.
+3. Click the Hamburger Menu icon on the top leftmost corner of the page and click **Load Data** under LOAD.
+4. Click on **browse files** under **My computer** and upload `iris_initial.csv`. Click **Next**.
+5. Select **DB2XXXXX**, e.g., DB2INST1 as your **Schema** and then click on **New Table** > Name it `IRIS_FEEDBACK` > click **Create** and click **Next**.
+6. Datatypes are automatically detected. Click **Next** and then **Begin Load**.
+7. A new target **DB2XXXXX.IRIS_FEEDBACK** is created.
 
    You will be using this in the next step where you will be re-training the model for better performance and precision.
 
@@ -187,21 +208,27 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 {:#monitor_openscale}
 
 In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
-1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog and click **Launch Application**.
-1. Click on **No thanks** to manually setup the monitors.
-1. If prompted, click on `Show beta features` to enable the latest capabilities.
-1. Click **Use the free lite plan database** to store model deployment output and retraining data > click **Save**.
-1. Click **Select Provider** > Click **Add machine learning provider** > Select **Watson Machine Learning** as your service provider
+1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog
+   1. Select a region preferably Dallas
+   2. Choose **Lite** plan
+   3. Provide a service name if you wish to and select a resource group
+   4. Click **Create**.
+2. Once the service is provisioned, Click **Manage** on the left pane and click **Launch Application**.
+3. Click on **Manual setup** to manually setup the monitors.
+4. Choose **Free lite plan database** as your Database type and click **Save**. This is to store your model transactions and model evaluation results.
+5. Click **Machine learning providers**
+   1. Click on **Add machine learning provider** and click the edit icon on the **connection** tile
+   2. Select **Watson Machine Learning** as your service provider
       - In the dropdown, select the {{site.data.keyword.pm_full}} service you created above.
-      - Provide a service provider instance name (say `iris-wml-provider`)
+      - Leave the Environment type to **Pre-production**
       - Click **Save**
-1. Click **Go to Dashboard** to add a deployment > Click **Add** and select `iris_deployment`> Click **Configure**.
-1. Click **Configure monitors** to setup your monitors.
-1. Under **Payload logging**,
+6. Click **Go to Dashboard** to add a deployment > Click **Add** and select `iris_deployment`> Click **Configure**.
+7. Click **Configure monitors** to setup your monitors.
+8. Under **Payload logging**,
       - Select **Numerical/categorical** as Data type
       - Select **Multi-class classification** as the Algorithm type > Click **Save** and then **OK**
       - Send a payload scoring request using the `POST /online` API call or using the TEST section. Once done, click **I'm finished**
-1. Under **Model details**,
+9.  Under **Model details**,
       - Click **Begin** and select **Manually configure monitors** > Click **Next**.
       - Select **Db2** as the location for your training data > Provide the credentials of your Db2 service under [{{site.data.keyword.Bluemix_short}} Resource List](https://{DomainName}/resources) > Click **Test**. Once the connection is successful, Click **Next**
       - Select the schema - DB2XXXXX and the Table - IRIS_FEEDBACK > Click **Next**
@@ -210,7 +237,7 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
       - Select petal_length, petal_width as the text and categorical features.> Click **Next**
       - Select nodeADP_class as the deployment prediction column.
       - Click **Save**.
-1. Under **Accuracy**,
+10. Under **Accuracy**,
       - Click **Begin** and let the accuracy alert threshold be **80%**.
       - Set the minimum threshold to 10 and maximum threshold to 40 > Click **Next** and then **Save**.
       - Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.

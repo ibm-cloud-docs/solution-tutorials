@@ -1,15 +1,12 @@
-const yaml = require('js-yaml');
 const fs = require('fs');
 const Handlebars = require('handlebars');
 
+const conref = require('./conref.js');
+
 const destinationFolder = process.argv[2] || '.'
 
-// Get document, or throw exception on error
-const doc = yaml.safeLoad(fs.readFileSync('../../builddocs/cloudoeconrefs.yml', 'utf8'));
-// console.log(doc);
-
 Handlebars.registerHelper('value', function( aKey, options) {
-  return doc.keyword[aKey];
+  return conref.getValue(aKey);
 });
 
 Handlebars.registerHelper('placeholder', function( aKey, options) {
@@ -22,7 +19,7 @@ function writeFile(templateFile, destinationFile) {
 
   console.log('Writing to', destinationFile);
   fs.writeFileSync(destinationFile, template({
-    keywords: Object.keys(doc.keyword),
+    keywords: conref.getKeys(),
   }));
 }
 
