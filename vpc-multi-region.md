@@ -227,7 +227,7 @@ In this section, you will create a {{site.data.keyword.cis_full_notm}} ({{site.d
 1. Navigate to the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
 2. Enter a service name, select a resource group and click **Create** to provision an instance of the service. You can use any pricing plans for this tutorial.
 3. When the service instance is provisioned, set your domain name by clicking **Let's get started**, enter your domain name and click **Connect and continue**.
-4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed. If you are using the IBM Classic Domain Name Server you can find instructions [here](https://cloud.ibm.com/docs/dns?topic=dns-add-edit-or-delete-custom-name-servers-for-a-domain).
+4. Click **Next step**. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed. If you are using the IBM Classic Domain Name Server you can find instructions [here](https://{DomainName}/docs/dns?topic=dns-add-edit-or-delete-custom-name-servers-for-a-domain).
 5. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the overview page changes from *Pending* to *Active*, you can use the `dig <mydomain.com> ns` command to verify that the new name servers have taken effect.
@@ -242,7 +242,7 @@ In this section, you will configure a global load balancer (GLB) distributing th
 Open the {{site.data.keyword.cis_short_notm}} service you created by navigating to the [Resource list](https://{DomainName}/resources) under services.
 
 1. Navigate to **Global Load Balancers** under **Reliability** and click **create load balancer**.
-2. Enter the prefix **lb** to provide a balancer hostname, mine is **lb.mydomain.com**,  leave Proxy off, leave TTL as 60 seconds.
+2. Enter the prefix **lb** to provide a balancer hostname (the resulting fully qualified name would be **lb.mydomain.com**), leave Proxy off, leave TTL as 60 seconds.
 3. Click **Add pool** to define a default origin pool
    - **Name**: lb-region1
    - **Health check**: Create new
