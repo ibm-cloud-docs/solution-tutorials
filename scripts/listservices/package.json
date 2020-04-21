@@ -1,0 +1,16 @@
+{
+  "name": "html-generator",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "eslint": "^4.12.1",
+    "eslint-config-google": "^0.9.1"
+  },
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "read-yaml": "^1.1.0"
+  }
+}
