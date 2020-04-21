@@ -19,7 +19,7 @@ lasttested: "2020-04-20"
 
 # Build, deploy and test a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
-This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model.Also, monitor the deployed model and retrain the model with feedback dataAll of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}.
+This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. Also, monitor the deployed model and retrain the model with feedback data, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}.
 {:shortdesc}
 
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
@@ -87,7 +87,7 @@ You can create a project to add data and open a data asset in the data refiner f
    2. Click on **Create**
    3. Select a Resource group and change the service name if you wish to
    4. Click on **Confirm**
-6. Hit **Refresh** to see the created service.
+   6. Hit **Refresh** to see the created service.
 7. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Import data
@@ -120,28 +120,32 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
    1. Select **From blank**.
    2. Set the Asset name to **iris_model**.
    3. Under **Associated service**, select the **Machine learning service instance**.
-   4. Click **Create**.
-2. Once the model is created,
-   1. Add training data by clicking **Select from project**.
+4. Click **Create**.
+
+Once the model is created,
+1. Add training data by clicking **Select from project**.
    2. Choose the **iris_initial.csv** file.
    3. Click **Select asset**.
 3. Select **Species** as your Select column to predict.
 4. Click **Experiment settings** > Set **Holdout data split** under **Data source** to **15%** by moving the slider.
-5. On the left menu, Click on **Prediction**
-   1. Check whether **Multiclass classification** is selected as the prediction type and **Accuracy** as the Optimized metric.
-   2. Click on **Save and close**.
-6. Click on **Run experiment**. The **AutoAI experiment** may take up to 5 minutes to select the right Algorithm for your model. Click on **Swap view** to see the Relationship map.
+5. On the left menu, Click on **Prediction**:
+   6. Set **Prediction type** to **Multiclass classification**.
+   7. Set **Optimized metric** as **Accuracy**.
+2. Click on **Save settings**.
+6. Click on **Run experiment**.
+1. The **AutoAI experiment** may take up to 5 minutes to select the right Algorithm for your model. Click on **Swap view** to see the Relationship map.
 
    Each model pipeline is scored for a variety of metrics and then ranked. The default ranking metric for binary classification models is the area under the ROC curve, for multi-class classification models is accuracy, and for for regression models is the root mean-squared error (RMSE). The highest-ranked pipelines are displayed in a leaderboard, so you can view more information about them. The leaderboard also provides the option to save select model pipelines after reviewing them.
    {:tip}
 
-7. Once the experiment completes running, under the **Pipeline** leaderboard,
-   1. Click on **Pipeline comparison** to view how the top pipelines compare.
-   2. Sort the leaderboard by a different metric by selecting the **Rank by** dropdown
-   3. Click a pipeline to view more detail about the metrics and performance.
-8. Next to the model with *Rank 1*, click on **Save as** > **Model**.
-9.  Check the details of the model and click **Save**.
-10. In the received notification, click **View in project** then under **Overview** tab check the details of the model.
+Once the experiment completes running, under the **Pipeline** leaderboard:
+1. Click on **Pipeline comparison** to view how the top pipelines compare.
+2. Sort the leaderboard by a different metric by selecting the **Rank by** dropdown
+3. Click a pipeline to view more detail about the metrics and performance.
+1. Select the model with *Rank 1* to view the model details.
+   1. Click on **Save as** > **Model**.
+   2. **Save** the model.
+10. When the _Saved_ notification pops up, click **View in project** then under **Overview** tab check the details of the model.
 
 ## Deploy the model and try out the API
 {:#deploy_model}
@@ -149,8 +153,14 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 In this section, you will deploy the saved model and expose the deployed model as an API to be accessed from your applications.
 
 1. Under the created model, click on **Deployments** and then click **Add Deployment**.
-1. Add a **name** -`iris_deployment`, choose **Web Service** as your deployment type and add an optional description.
-2. Click **Save**. Once the status changes to **Ready** (You may have to refresh the page), click on the **name** of the new web service. Under **Implementation** tab of the deployment, You can see the scoring End-point, code snippets in various programming languages, and API Specification. **Copy and save** the scoring End-point in a notepad for future reference.
+   1. Set the **Name** to **iris_deployment**.
+   2. Select **Web Service** as your deployment type.
+2. Click **Save**.
+
+Once the status changes to **Ready** (You may have to refresh the page):
+1. click on the **Name** of the new web service.
+2. Under **Implementation** tab of the deployment, you can see the *Scoring End-point*, code snippets in various programming languages, and API Specification.
+3. **Copy** the *Scoring End-point* in a notepad for future reference.
 3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests.
    ```sh
    export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
@@ -177,7 +187,7 @@ In this section, you will deploy the saved model and expose the deployed model a
 
 6. For`ML_INSTANCE_ID`, run the below command in the Cloud Shell with the name of the machine learning service
    ```sh
-   ibmcloud resource service-instance pm-20-lab | grep GUID
+   ibmcloud resource service-instance pm-20-lab --output JSON | jq -r '.[] | .guid'
    ```
    {:pre}
 7. Export the returned `GUID` as `ML_INSTANCE_ID` for use in subsequent API requests
@@ -224,7 +234,7 @@ Along with CLI, you can also do predictions using an UI.
 {:#monitor_openscale}
 
 In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
-1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog
+1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog:
    1. Select a region preferably Dallas
    2. Choose **Lite** plan
    3. Provide a service name if you wish to and select a resource group
@@ -233,11 +243,11 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
 3. Click on **Manual setup** to manually setup the monitors.
 4. Choose **Free lite plan database** as your Database type and click **Save**. This is to store your model transactions and model evaluation results.
 5. Click **Machine learning providers**
-   1. Click on **Add machine learning provider** and click the edit icon on the **connection** tile
-   2. Select **Watson Machine Learning** as your service provider
-      - In the dropdown, select the {{site.data.keyword.pm_full}} service you created above.
-      - Leave the Environment type to **Pre-production**
-      - Click **Save**
+   1. Click on **Add machine learning provider** and click the edit icon on the **connection** tile.
+   2. Select **Watson Machine Learning** as your service provider.
+   1. In the **Watson Machine Learning service** dropdown, select the {{site.data.keyword.pm_full}} service you created above.
+   1. Leave the Environment type to **Pre-production**.
+   2. Click **Save**.
 6. Click **Go to Dashboard** to add a deployment > Click **Add** and select `iris_deployment`> Click **Configure**.
 7. Click **Configure monitors** to setup your monitors.
 8. Under **Payload logging**,
