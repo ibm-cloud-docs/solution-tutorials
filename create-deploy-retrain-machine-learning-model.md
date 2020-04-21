@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-04-20"
-lasttested: "2020-04-20"
+lastupdated: "2020-04-21"
+lasttested: "2020-04-21"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -62,7 +62,6 @@ This tutorial uses the following runtimes and services:
 {: #prereqs}
 
 * Obtain an [IBM Cloud API key](https://{DomainName}/iam/apikeys) and save the key for future reference.
-* Install [Python 3.x](https://www.python.org/downloads/)
 
 ## Import data to a project
 {: #import_data_project}
@@ -85,7 +84,7 @@ You can create a project to add data and open a data asset in the data refiner f
 5. Under **Define Storage**, Click on **Add** and choose an **existing** Cloud Object Storage service or create a **new** service. If you choose to create a **New** service
    1. Select a **Lite** plan
    2. Click on **Create**
-   3. Select a Resource group and change the service name if you wish to
+   3. Select a Resource group and change the service name to **cloud-object-storage-tutorial**
    4. Click on **Confirm**
 6. Hit **Refresh** to see the created service.
 7. Click **Create**. Your new project opens and you can start adding resources to it.
@@ -111,7 +110,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 4. If you have an existing **{{site.data.keyword.pm_short}}** service instance, select it otherwise continue with the following steps to create a new instance.
    1. Choose the **Lite** plan and click **Create**.
    2. Leave the default values for Region,Plan and Resource group.
-   3. Enter `pm-20-lab` as the **Service name** and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
+   3. Enter `pm-20-tutorial` as the **Service name** and click **Confirm** to provision a {{site.data.keyword.pm_short}} service.
 
 ## Build a machine learning model
 {:#build_model}
@@ -177,7 +176,7 @@ In this section, you will deploy the saved model and expose the deployed model a
 
 6. For`ML_INSTANCE_ID`, run the below command in the Cloud Shell with the name of the machine learning service
    ```sh
-   ibmcloud resource service-instance pm-20-lab | grep GUID
+   ibmcloud resource service-key --instance-name pm-20-tutorial | grep instance_id
    ```
    {:pre}
 7. Export the returned `GUID` as `ML_INSTANCE_ID` for use in subsequent API requests
@@ -223,9 +222,24 @@ Along with CLI, you can also do predictions using an UI.
 ## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
 {:#monitor_openscale}
 
-In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your machine learning model along with throughput and Analytics.
+### Create a {{site.data.keyword.pm_short}} model using a Jupyter notebook
+In this section, you will create a ML model using the same iris dataset for exploring {{site.data.keyword.aios_full_notm}}
+
+1. In the top navigation bar, click on the project name `iris_project` to see the project view.
+2. Click on **Add to project** in the menu bar and then click **Notebook**
+   1. Select **From URL** and give **iris_notebook** as the name
+   2. Under **Notebook URL**, enter `https://github.com/IBM-Cloud/ml-iris-classification/blob/master/classify_iris.ipynb`
+   3. Click **Create**
+3. Once the notebook is created, scroll to **Set up the WML instance** section of the notebook and provide the {{site.data.keyword.aios_full_notm}} service credentials.
+4. In the top menu of the notebook, Click **Cell** and then click **Run All**.
+5. This should create a ML model and also a deployment under `iris_project`.
+
+### Monitor the deployed model
+
+In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
+
 1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog
-   1. Select a region preferably Dallas
+   1. Select a region preferably Dallas. Create the service in the same region where you created the {{site.data.keyword.pm_short}} service.
    2. Choose **Lite** plan
    3. Provide a service name if you wish to and select a resource group
    4. Click **Create**.
@@ -238,13 +252,30 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
       - In the dropdown, select the {{site.data.keyword.pm_full}} service you created above.
       - Leave the Environment type to **Pre-production**
       - Click **Save**
-6. Click **Go to Dashboard** to add a deployment > Click **Add** and select `iris_deployment`> Click **Configure**.
+6. On the notification, click **go to dashboard** to add a deployment > Click **Add** and select `Deployment of iris model`> Click **Configure**.
 7. Click **Configure monitors** to setup your monitors.
-8. Under **Payload logging**,
-      - Select **Numerical/categorical** as Data type
-      - Select **Multi-class classification** as the Algorithm type > Click **Save** and then **OK**
-      - Send a payload scoring request using the `POST /online` API call or using the TEST section. Once done, click **I'm finished**
-9.  Under **Accuracy**,
+8. Provide the Model details by clicking the **edit** icon on the Model input tile and select
+   1. Data type: **Numerical/categorical**
+   2. Algorithm type: **Multi-class classification**
+   3. Click **Save and continue**
+9. Click the **edit** icon on the Training data tile and select
+   1. Storage type: **Database or cloud storage**
+   2. Location: **Cloud Object Storage**
+   3. Login URL: **https://s3.us.cloud-object-storage.appdomain.cloud**
+   4. For Resource instance ID and API key, Run the below command in the Cloud Shell
+      ```sh
+      ibmcloud resource service-key $(ibmcloud resource service-keys --instance-name "cloud-object-storage-tutorial" | awk '/WDP-Project-Management/ {print $1}')
+      ```
+      {:pre}
+   5. Copy and paste the credentials and click **Connect**
+   6. Select the Bucket that starts with `irisproject-donotdelete-`
+   7. Select `iris_initial.csv` from the Data set dropdown and click **Next**
+   8. Select **species** as your label column and click **Next**
+   9. Select **all** the four training features and click **Next**
+10. Before clicking on **Check now**, let's generate scoring payload required for logging. To do this, Go to the tab where you have your notebook open, scroll to **score data** section, select the code block and click **Run** on the top.
+11. Click **Check now**.
+
+12. Under **Accuracy**,
       - Click **Begin** and let the accuracy alert threshold be **80%**.
       - Set the minimum threshold to 10 and maximum threshold to 40 > Click **Next** and then **Save**.
       - Download the file [iris_retrain.csv](https://ibm.box.com/shared/static/96kvmwhb54700pjcwrd9hd3j6exiqms8.csv). Thereafter, Under **Feedback** tab, click **Add Feedback Data** and select `iris_retrain.csv` > select **Comma(,)** as the delimiter > click **Select**.
