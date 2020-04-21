@@ -15,3 +15,12 @@ exports.htmlTomd = function(filename) {
 exports.isExternalSolution = function(solution) {
   return solution.url.indexOf('/') >= 0;
 };
+
+exports.htmlLink = function(solution) {
+  if (exports.isExternalSolution(solution)) {
+    return solution.url;
+  } else {
+    const topic = solution.url.substring(0, solution.url.indexOf('.'));
+    return `/docs/tutorials?topic=solution-tutorials-${topic}#${topic}`;
+  }
+}

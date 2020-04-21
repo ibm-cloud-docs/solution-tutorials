@@ -37,12 +37,11 @@ Depending on the type of app that you have, the steps to migrate your app might 
 ## Services used
 {: #products}
 
-This tutorial uses the following {{site.data.keyword.Bluemix_notm}} services:
+This tutorial uses the following runtimes and services:
+* [{{site.data.keyword.containershort}}](https://{DomainName}/kubernetes/catalog/cluster)
+* [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/private)
 
-- [{{site.data.keyword.containershort}}](https://{DomainName}/kubernetes/catalog/cluster)
-- [{{site.data.keyword.registrylong_notm}}](https://{DomainName}/kubernetes/registry/main/private)
-
-**Attention:** This tutorial might incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
 {:#architecture}

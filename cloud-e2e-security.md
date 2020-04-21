@@ -42,7 +42,7 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage)
 * [{{site.data.keyword.at_short}}](https://{DomainName}/observe/activitytracker/create)
 * [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/key-protect)
-* Optional: [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/certificate-manager)
+* [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/certificate-manager)
 
 This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?topic=account-accounts#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
