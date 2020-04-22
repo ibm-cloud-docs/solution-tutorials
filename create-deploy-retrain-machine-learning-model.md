@@ -225,6 +225,10 @@ Along with CLI, you can also do predictions using the UI.
 ## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
 {:#monitor_openscale}
 
+{{site.data.keyword.aios_full}} tracks and measures outcomes from your AI models, and helps ensure they remain fair, explainable, and compliant wherever your models were built or are running. {{site.data.keyword.aios_short}} also detects and helps correct the drift in accuracy when an AI model is in production.
+
+For ease of understanding, the tutorial concentrates only on improving the quality (accuracy) of the AI model through {{site.data.keyword.aios_short}}.
+
 ### Create a {{site.data.keyword.pm_short}} model using a Jupyter notebook
 In this section, you will create a ML model using the same iris dataset for exploring {{site.data.keyword.aios_full_notm}}
 
@@ -236,13 +240,13 @@ In this section, you will create a ML model using the same iris dataset for expl
 3. Once the notebook is created, scroll to **Provide WML credentials** section of the notebook and provide the {{site.data.keyword.aios_full_notm}} service credentials from the Cloud shell.
 4. In the top menu of the notebook, Click **Cell** and then click **Run All**.
 5. This should create a ML model and also a deployment under `iris_project`.
-6. If you scroll to **Test the model** section, you can see that the accuracy score of the the model is around 0.9-0.9333. **_Make sure you don't close this window/tab_**.
+6. If you scroll to **Test the model** section, you can see that the accuracy score of the the model is between 0.85-0.95 based on the randomness of the train data. **_Make sure you don't close this window/tab_**.
 
 Let's improve the quality and accuracy of the model in the next section.
 
 ### Provision {{site.data.keyword.aios_full_notm}} service
 
-In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
+In this section, you will create a {{site.data.keyword.aios_short}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
 
 1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale)
    1. Select a region preferably Dallas. Create the service in the same region where you created the {{site.data.keyword.pm_short}} service.
@@ -328,3 +332,4 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 - [Detect Anomalies using {{site.data.keyword.pm_short}}](https://{DomainName}/docs/tutorials?topic=solution-tutorials-gather-visualize-analyze-iot-data#data_experiencee)
 - [Automatic model creation](https://datascience.ibm.com/docs/content/analyze-data/ml-model-builder.html?linkInPage=true)
 - [Machine learning & AI](https://dataplatform.ibm.com/docs/content/analyze-data/wml-ai.html?audience=wdp&context=wdp)
+- [{{site.data.keyword.aios_short}} documentation](https://{DomainName}/docs/ai-openscale)
