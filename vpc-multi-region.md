@@ -273,7 +273,7 @@ Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm
    - Click **Create** and choose **Infrastructure Service** as the source service
    - **Load Balancer for VPC** as the resource type
    - **Certificate Manager** as the target service
-   - Assign the **Reader** service access role.
+   - Assign the **Writer** service access role.
    - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific {{site.data.keyword.cloudcerts_short}} instance.
 
 ### Alternative 1: Proxy in {{site.data.keyword.cis_short_notm}} with wildcard certificate from Let's Encrypt
@@ -286,8 +286,17 @@ This first alternative creates a wildcard certificate for **mydomain.com** and t
    - Choose **All instances** or just the {{site.data.keyword.cis_short_notm}} created earlier
    - Assign the **Manager** service access role.
 1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
-   - Open the {{site.data.keyword.cloudcerts_short}} service and order a certificate. Choose **I'm using Cloud Internet Services**.  Provide the **Name**, **Description**, **Let's encrypt**, select the **Cloud Internet Service**.
-   - Choose **Wildcard certificate**
+   - Open the {{site.data.keyword.cloudcerts_short}} service and order a certificate. Choose **I'm using Cloud Internet Services**.
+   - On the **Order certificated** the **Certificate details** panel is displayed
+     - **Name** - choose a name you can remember to reference this certificate in a later step
+     - **Description** - more text
+     - **Certificate authority** choose  **Let's Encrypt**
+     - Leave the defaults for **Signature algorithm**, **Key algorithm**
+     - **Automatic certificate renewel** - leave off
+   - On the **Order certificateProvide** select the **details** panel
+     - **IBM Cloud Internet Services (CIS) instance** choose your instance
+     - **Certificate domains** check the **Add Wildccard** and leave **Add Domain** unchecked
+   - Click Order
 1. Configure https from client web browsers to the {{site.data.keyword.cis_short_notm}} endpoint. In {{site.data.keyword.cis_short_notm}} configure TLS Security:
    - Open the **Security** panel and choose **TLS**.
    - For the **Mode** choose **Client-to-edge**.  This will terminate https connections at the Global Load Balancer and will switch to http connections to the VPC load balancer.
@@ -302,7 +311,7 @@ Add an HTTPS listener to the VPC load balancers:
 1. Navigate to **VPC** then **Load balancers** and click **vpc-lb-region1**
 1. Choose **Front-end listeners**
 1. Click **New listener**
-1. Select HTTPS, Port: 443, SSL Certificate drop down should show **mydomain.com**, leave the rest as defaults
+1. Select HTTPS, Port: 443, SSL Certificate drop down should show the certificate **name** that you ordered using your {{site.data.keyword.cloudcerts_short}} instance earlier from Let's Encrypt.
 
 
 If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.cloudcerts_short}} service. Verify that the {{site.data.keyword.cloudcerts_short}} service has a certificate for **mydomain.com**
