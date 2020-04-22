@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-04-21"
-lasttested: "2020-04-21"
+lastupdated: "2020-04-22"
+lasttested: "2020-04-22"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -68,7 +68,7 @@ You can create a project to add data and open a data asset in the data refiner f
 ### Create a project
 {: #create_project}
 
-1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and select [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services) under the **AI** section.
+1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and create [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services)
   1. Select a **region**
   2. Select a **Lite** pricing plan
   3. Provide a **Service name**
@@ -81,8 +81,8 @@ You can create a project to add data and open a data asset in the data refiner f
    2. Click on **Create**
    3. Select a Resource group and change the service name to **cloud-object-storage-tutorial**
    4. Click on **Confirm**
-   6. Hit **Refresh** to see the created service.
-7. Click **Create**. Your new project opens and you can start adding resources to it.
+   5. Hit **Refresh** to see the created service.
+6. Click **Create**. Your new project opens and you can start adding resources to it.
 
 ### Import data
 {: #import_data}
@@ -233,41 +233,49 @@ In this section, you will create a ML model using the same iris dataset for expl
    1. Select **From URL** and give **iris_notebook** as the name
    2. Under **Notebook URL**, enter `https://github.com/IBM-Cloud/ml-iris-classification/blob/master/classify_iris.ipynb`
    3. Click **Create**
-3. Once the notebook is created, scroll to **Set up the WML instance** section of the notebook and provide the {{site.data.keyword.aios_full_notm}} service credentials from the Cloud shell.
+3. Once the notebook is created, scroll to **Provide WML credentials** section of the notebook and provide the {{site.data.keyword.aios_full_notm}} service credentials from the Cloud shell.
 4. In the top menu of the notebook, Click **Cell** and then click **Run All**.
 5. This should create a ML model and also a deployment under `iris_project`.
 6. If you scroll to **Test the model** section, you can see that the accuracy score of the the model is around 0.9-0.9333. **_Make sure you don't close this window/tab_**.
 
 Let's improve the quality and accuracy of the model in the next section.
 
-### Monitor the deployed model
+### Provision {{site.data.keyword.aios_full_notm}} service
 
 In this section, you will create a {{site.data.keyword.aios_full_notm}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
 
-1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale) under AI section of {{site.data.keyword.Bluemix_notm}} Catalog
+1. Create a [{{site.data.keyword.aios_full_notm}} service](https://{DomainName}/catalog/services/watson-openscale)
    1. Select a region preferably Dallas. Create the service in the same region where you created the {{site.data.keyword.pm_short}} service.
    2. Choose **Lite** plan
    3. Provide a service name if you wish to and select a resource group
    4. Click **Create**.
 2. Once the service is provisioned, Click **Manage** on the left pane and click **Launch Application**.
 3. Click on **Manual setup** to manually setup the monitors.
-4. Choose **Free lite plan database** as your Database type and click **Save**. This is to store your model transactions and model evaluation results.
-5. Click **Machine learning providers**
+
+### Selecting a deployment
+In this section, as part of preparing your model for monitoring you will set up and enable monitors for each deployment that you are tracking with {{site.data.keyword.aios_full_notm}}.
+
+1. Choose **Free lite plan database** as your Database type and click **Save**. This is to store your model transactions and model evaluation results.
+2. Click **Machine learning providers**
    1. Click on **Add machine learning provider** and click the edit icon on the **connection** tile.
    2. Select **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}** as your service provider.
-   1. In the **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service** dropdown, select the {{site.data.keyword.pm_full}} service you created above.
-   1. Leave the Environment type to **Pre-production**.
-   2. Click **Save**.
-6. On the notification:
-   7. click **go to the dashboard** to add a deployment
-   8. Click **Add** and select `Deployment of iris model`
-   9. Click **Configure**.
-7. Click **Configure monitors** to setup your monitors.
-8. Provide the Model details by clicking the **edit** icon on the Model input tile and select
+   3. In the **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service** dropdown, select the {{site.data.keyword.pm_full}} service you created above.
+   4. Leave the Environment type to **Pre-production**.
+   5. Click **Save**.
+3. On the left pane:
+   1. Click **Insights dashboard**(first icon) to add a deployment
+   2. Click **Add** and select `Deployment of iris model`
+   3. Click **Configure**.
+4. Click **Configure monitors** to setup your monitors.
+
+### Provide model details
+Provide information about your model so that {{site.data.keyword.aios_full_notm}} can access the database and understand how the model is set up.
+
+1. Provide the Model details by clicking the **edit** icon on the Model input tile and select
    1. Data type: **Numerical/categorical**
    2. Algorithm type: **Multi-class classification**
    3. Click **Save and continue**
-9. Click the **edit** icon on the Training data tile and select
+2.  Click the **edit** icon on the Training data tile and select
    1. Storage type: **Database or cloud storage**
    2. Location: **Cloud Object Storage**
    3. Login URL: **https://s3.us.cloud-object-storage.appdomain.cloud**
@@ -281,13 +289,16 @@ In this section, you will create a {{site.data.keyword.aios_full_notm}} service 
    7. Select `iris_initial.csv` from the Data set dropdown and click **Next**
    8. Select **species** as your label column and click **Next**
    9. Select **all** the four training features and click **Next**
-10. Before clicking on **Check now**, let's generate scoring payload required for logging. To do this, Go to the tab where you have your notebook open, scroll to **score data** section, select the code block and click **Run** on the top.
-11. Click **Check now**. You should see `Logging is active Click Next` response. Click **Next**
-12. Check both **prediction** and **probability** and click **Save**.
-13. On the left pane, click on **Quality** and click the **edit** icon on the Quality threshold tile
+3.  Before clicking on **Check now**, let's generate scoring payload required for logging. To do this, Go to the tab where you have your notebook open, scroll to **Score data** section(`In [25]` in the notebook), select the code block and click **Run** on the top.
+4.  Click **Check now**. You should see `Logging is active Click Next` response. Click **Next**
+5.  Check both **prediction** and **probability** and click **Save**.
+6. On the left pane, click on **Quality** and click the **edit** icon on the Quality threshold tile
     1. Threshold value: Accuracy - **0.98** and click **Next**
     2. Minimum sample size (number of transactions) - **10**, Maximum sample size (number of transactions) - **100** and click **Save**
     3. On the left pane, Click on **Go to model summary**
+
+   The quality monitor (previously known as the accuracy monitor) reveals how well your model predicts outcomes.
+   {:tip}
 
 As the tutorial uses a small dataset, configuring Fairness and Drift won't have an impact.
 
@@ -300,6 +311,9 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
    1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **Deployment of iris model Evaluations**
    2. Click on the Number of explanations (2), select one of the transactions and click **View**.
    3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
+
+   To understand the quality metrics, refer to [Quality metric overview](https://{DomainName}/docs/services/ai-openscale?topic=ai-openscale-anlz_metrics)
+   {:tip}
 
 ## Remove resources
 {:removeresources}
