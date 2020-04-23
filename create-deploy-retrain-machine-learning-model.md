@@ -17,7 +17,7 @@ lasttested: "2020-04-22"
 {:tip: .tip}
 {:pre: .pre}
 
-# Build, deploy, test, retrain and monitor a machine learning model
+# Build, deploy, test and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
 This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. Also, monitor the deployed model and retrain the model with feedback data, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}.
 {:shortdesc}
