@@ -766,6 +766,23 @@
             "Knative",
             "Kubernetes"
           ]
+        },
+        {
+          "name": "openshift ibm cloud tutorial",
+          "url": "openshift-ibm-cloud.hidden.html",
+          "description": "openshift ibm cloud integration",
+          "imgSrc": "images/solution55-openshift-ibm-cloud-hidden/app-architecture.png",
+          "tags": [
+            "OpenShift",
+            "Log Analysis",
+            "Availability Monitoring"
+          ],
+          "requirements": [
+            "openshift_on_ibm_cloud",
+            "docker",
+            "logdna",
+            "sysdig"
+          ]
         }
       ]
     },
