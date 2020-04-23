@@ -136,35 +136,35 @@ In this section, you'll deploy a simple Node.js Express application - "Example H
 
 1. Launch the `OpenShift web console`.
 
-    ![](../assets/ocp-console.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-console.png)
 
 1. Select the **Projects** view to display all the projects.
 
-    ![](../assets/ocp-projects.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-projects.png)
 
 1. Create a new project by selecting **Create Project**. Call the project "example-health".
 
-    ![](../assets/ocp-create-project.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-create-project.png)
 
 1. You should see a view that looks like this.
 
-    ![](../assets/ocp-admin-project.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-admin-project.png)
 
 1. Switch from the Administrator to the **Developer** view. Make sure your project is selected.
 
-    ![](../assets/ocp-project-view.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-project-view.png)
 
 1. Let's deploy the application by selecting **From Git**.
 
 1. Enter the repository `https://github.com/svennam92/node-s2i-openshift` in the Git Repo URL field.
 
-    ![](../assets/ocp-configure-git.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-configure-git.png)
 
     Note that the builder image automatically detected the language Node.js.
 
 1. Name your application such as `patient-ui`. Keep the default options and click **Create** at the bottom of the window to build and deploy the application.
 
-    ![](../assets/ocp-app-name-short.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-app-name-short.png)
 
     Your application is being deployed.
 
@@ -172,11 +172,11 @@ In this section, you'll deploy a simple Node.js Express application - "Example H
 
 1. You should see the app you just deployed.
 
-    ![](../assets/ocp-topology-app.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-topology-app.png)
 
 1. Select the app. You should see a single Deployment where you can see your Pods, Builds, Services and Routes.
 
-    ![](../assets/ocp-topo-app-details.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-topo-app-details.png)
 
     * **Pods**: Your Node.js application containers
     * **Builds**: The auto-generated build that created a Docker image from your Node.js source code, deployed it to the OpenShift container registry, and kicked off your deployment config.
@@ -185,7 +185,7 @@ In this section, you'll deploy a simple Node.js Express application - "Example H
 
 1. Click on **View Logs** next to your completed Build. This shows you the process that OpenShift took to install the dependencies for your Node.js application and build/push a Docker image.
 
-    ![Build Logs](../assets/ocp43-build-logs.png)
+    ![Build Logs](images/solution55-openshift-ibm-cloud-hidden/ocp43-build-logs.png)
 
     You should see that looks like this:
     ```
@@ -195,7 +195,7 @@ In this section, you'll deploy a simple Node.js Express application - "Example H
 
 1. Click back to the **Topology** and select your app again. Click on the url under **Routes** to open your application with the URL.
 
-    ![](../assets/patient-ui-web.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/patient-ui-web.png)
 
     You can enter any strings for username and password, for instance `test:test` because the app is running in demo mode.
 
@@ -264,11 +264,11 @@ Since we only created one pod, seeing our logs will be straight forward.
 
 2. Navigate to your Pod by selecting your app, then clicking the name of the Pod under **Pods**.
 
-    ![Navigate to Pod](../assets/ocp-topo-pod.png)
+    ![Navigate to Pod](images/solution55-openshift-ibm-cloud-hidden/ocp-topo-pod.png)
    
 3. Click on **View Logs** next to your Pods to see streaming logs from your running application. If you're still generating traffic, you should see log messages for every request being made.
 
-    ![Pod Logs](../assets/ocp43-pod-logs.png)
+    ![Pod Logs](images/solution55-openshift-ibm-cloud-hidden/ocp43-pod-logs.png)
 
 ### OpenShift Terminal
 
@@ -276,11 +276,11 @@ One of the great things about Kubernetes is the ability to quickly debug your ap
 
 1. Navigate to your Pod by selecting your app, then clicking the name of the Pod under **Pods**.
 
-   ![Navigate to Pod](../assets/ocp-topo-pod.png)
+   ![Navigate to Pod](images/solution55-openshift-ibm-cloud-hidden/ocp-topo-pod.png)
 
 2. Switch to the **Terminal** tab
 
-   ![Terminal](../assets/ocp43-terminal.png)
+   ![Terminal](images/solution55-openshift-ibm-cloud-hidden/ocp43-terminal.png)
 
 3. Run the following Shell commands:
 
@@ -296,11 +296,11 @@ When deploying new apps, making configuration changes, or simply inspecting the 
 
 1. Access the **Dashboard** now by going to the **Advanced > Project Details** tab on the left side menu.
 
-    ![View Details](../assets/ocp43-project-details.png)
+    ![View Details](images/solution55-openshift-ibm-cloud-hidden/ocp43-project-details.png)
 
 2. You can also dive in a bit deeper - the **Events** view is useful for identifying the timeline of events and finding potential error messages. When tracking the state of a new rollout, managing existing assets, or even something simple like exposing a route, the Events view is critical in identifying the timeline of activity. This becomes even more useful when considering that multiple operators may be working against a single cluster.
 
-    ![View Details](../assets/projectevents.png)
+    ![View Details](images/solution55-openshift-ibm-cloud-hidden/projectevents.png)
 
 You'll want to refer to this view throughout the lab. Almost all actions we take in in OpenShift will result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
 
@@ -314,21 +314,21 @@ Red Hat OpenShift on IBM Cloud comes with [Grafana](https://grafana.com/) preins
 
 1. Get started by switching to the **Administrator** perspective:
 
-    ![Administrator Perspective](../assets/ocp43-adminview.png)
+    ![Administrator Perspective](images/solution55-openshift-ibm-cloud-hidden/ocp43-adminview.png)
 
 2. Navigate to **Monitoring > Dashboards** in the left-hand bar. You'll be asked to login with OpenShift and then click through some permissions.
 
-    ![Monitoring Dashboards](../assets/ocp43-monitoring-dashboard.png)
+    ![Monitoring Dashboards](images/solution55-openshift-ibm-cloud-hidden/ocp43-monitoring-dashboard.png)
 
 3. You should then see your Grafana dashboard. Hit **Home** on the top left, and choose **Kubernetes / Compute Resources / Namespace (Pods)**.
 
-    ![Grafana](../assets/ocp43-grafana.png)
+    ![Grafana](images/solution55-openshift-ibm-cloud-hidden/ocp43-grafana.png)
 
 4. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
 
 5. You should be able to see the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day. We'll use this information in the next section to set up auto-scaling for our pods.
 
-    ![Grafana also project](../assets/ocp43-grafana-cpu.png)
+    ![Grafana also project](images/solution55-openshift-ibm-cloud-hidden/ocp43-grafana-cpu.png)
 
 ### Prometheus and Alert Manager
 
@@ -343,7 +343,7 @@ OpenShift provides a web interface to Prometheus, which enables you to run Prome
 
 1. The Metrics page is accessible by clicking **Monitoring → Metrics**.
 
-    ![Metrics, Alerts and Dashboards](../assets/ocp43-monitoring-prometheus.png)
+    ![Metrics, Alerts and Dashboards](images/solution55-openshift-ibm-cloud-hidden/ocp43-monitoring-prometheus.png)
 
 ## Scaling the application
 
@@ -357,11 +357,11 @@ Verify your script to simulate load is running, Grafana showed you that your app
 
 1. Switch to the **Administrator** view and then navigate to **Workloads > Deployments** in the left-hand bar. Choose the `patient-ui` Deployment, then choose **Actions > Edit Deployment**.
 
-    ![](../assets/ocp-deployments.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-deployments.png)
 
 2. In the YAML editor, go to line 44. In the section **template > spec > containers**, add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
 
-    ![](../assets/ocp-limits-yaml.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-limits-yaml.png)
 
   ```yaml
              resources:
@@ -377,7 +377,7 @@ Verify your script to simulate load is running, Grafana showed you that your app
 
 4. Verify that the replication controller has been changed by navigating to **Events**
 
-    ![Resource Limits](../assets/ocp-dc-events.png)
+    ![Resource Limits](images/solution55-openshift-ibm-cloud-hidden/ocp-dc-events.png)
 
 ### Enable Autoscaler
 
@@ -387,7 +387,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
 
 1. Navigate to **Workloads > Horizontal Pod Autoscalers**, then hit **Create Horizontal Pod Autoscaler**.
 
-    ![HPA](../assets/ocp-hpa.png)
+    ![HPA](images/solution55-openshift-ibm-cloud-hidden/ocp-hpa.png)
 
     ```yaml
     apiVersion: autoscaling/v2beta1
@@ -417,11 +417,11 @@ If you're not running the script to simulate load, the number of pods should sta
 
 1. Check by going to the **Overview** page of **Deployments**.
 
-    ![Scaled to 1 pod](../assets/ocp-hpa-before.png)
+    ![Scaled to 1 pod](images/solution55-openshift-ibm-cloud-hidden/ocp-hpa-before.png)
 
 2. Start simulating load by hitting the page several times, or running the script. You'll see that it starts to scale up:
 
-   ![Scaled to 4/10 pods](../assets/ocp-hpa-after.png)
+   ![Scaled to 4/10 pods](images/solution55-openshift-ibm-cloud-hidden/ocp-hpa-after.png)
 
 That's it! You now have a highly available and automatically scaled front-end Node.js application. OpenShift is automatically scaling your application pods since the CPU usage of the pods greatly exceeded `1`% of the resource limit, `30` millicores.
 
@@ -441,19 +441,19 @@ Let's understand exactly how Operators work. In the first exercise, you deployed
 
 1. Navigate to your OpenShift console, access the **Administrator** view, and click **Operators > OperatorHub**
 
-   ![OperatorHub](../assets/operatorhub.png)
+   ![OperatorHub](images/solution55-openshift-ibm-cloud-hidden/operatorhub.png)
 
 2. Find the **IBM Cloud Operator**, and hit **Install**
 
-   ![Operator Install](../assets/cloudoperatorinstall.png)
+   ![Operator Install](images/solution55-openshift-ibm-cloud-hidden/cloudoperatorinstall.png)
 
 3. Keep the default options and hit **Subscribe**:
 
-   ![Operator Subscribe](../assets/operatorsubscribe.png)
+   ![Operator Subscribe](images/solution55-openshift-ibm-cloud-hidden/operatorsubscribe.png)
 
 4. You may need to wait a few seconds and refresh for the operator to show up as `Installed`:
 
-   ![Installed Operators](../assets/installedoperators.png)
+   ![Installed Operators](images/solution55-openshift-ibm-cloud-hidden/installedoperators.png)
 
 5. Next, you'll need to set your IBM Cloud credentials so that the Operator knows how/where to create your Cloudant service. The operator needs to create the service in your own account, rather than the shared IBM lab account.
 
@@ -535,7 +535,7 @@ Let's understand exactly how Operators work. In the first exercise, you deployed
 
 1. Once the Operator is installed, the Custom Resource Definitions to create the Cloudant service are also available. Navigate to your OpenShift dashboard, ensure you're in the **Administrator** view, navigate to your **Installed Operators** and click the IBM Cloud Operator:
 
-   ![IBM Cloud Operator](../assets/ibmcloudoperator.png)
+   ![IBM Cloud Operator](images/solution55-openshift-ibm-cloud-hidden/ibmcloudoperator.png)
 
 2. You'll see that there's two APIs available -- a Service and a Binding. A **Service** will allow us to create the actual Cloudant service itself -- do that first by clicking **Create Instance** under **Service**. Copy and replace the following YAML:
 
@@ -549,7 +549,7 @@ Let's understand exactly how Operators work. In the first exercise, you deployed
 	>   serviceClass: cloudantnosqldb
 	>  ```
 
-   ![cloudantservice](../assets/cloudantservice.png)
+   ![cloudantservice](images/solution55-openshift-ibm-cloud-hidden/cloudantservice.png)
 
    Hit **Create**.
 
@@ -557,13 +557,13 @@ Let's understand exactly how Operators work. In the first exercise, you deployed
 
    {% hint style='info' %} You can also debug any potential issues here. If you already have a Cloudant "Lite" service, you won't be able to create another. To work around this issue, edit the service yaml to use `standard` instead of `lite`. Note that "Standard Cloudant" is a paid service. Another option is to navigate to your IBM Cloud dashboard and delete your existing instance of the `lite` Cloudant. {% endhint %}
 
-   ![servicedone](../assets/servicedone.png)
+   ![servicedone](images/solution55-openshift-ibm-cloud-hidden/servicedone.png)
 
 4. After verifying that there's no bugs and the service is "online", double-check that the Cloudant service exists in your account: [https://cloud.ibm.com/resources](https://cloud.ibm.com/resources)
 
    You may need to switch to your own account using the switcher on the top right.
 
-   ![resourcelist](../assets/resourcelist.png)
+   ![resourcelist](images/solution55-openshift-ibm-cloud-hidden/resourcelist.png)
 
 5. Next, create the "binding" resource for your Operator \(instead of Service as you did above\):
 
@@ -576,11 +576,11 @@ Let's understand exactly how Operators work. In the first exercise, you deployed
 	>   serviceName: cloudant-service
 	> ```
 
-   ![bindingresource](../assets/cloudantbinding.png)
+   ![bindingresource](images/solution55-openshift-ibm-cloud-hidden/cloudantbinding.png)
 
 6. The binding should get created fairly quickly -- you can check the status by clicking on your binding, and looking for **Message: Online**. By navigating to the **Resources** tab, you can see that the **cloudant-binding** secret is created. Click that to see your credentials for accessing your Cloudant DB, stored securely in a secret:
 
-   ![binding secret](../assets/bindingsecret.png)
+   ![binding secret](images/solution55-openshift-ibm-cloud-hidden/bindingsecret.png)
 
 ### Deploy the Node.js Patient Database App
 
@@ -600,19 +600,19 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
 
 3. The app will crash and fail to start repeatedly because the credentials to the Cloudant DB haven't been set yet.
 
-   ![Crashing](../assets/crashing.png)
+   ![Crashing](images/solution55-openshift-ibm-cloud-hidden/crashing.png)
 
 4. Let's fix this by setting the environment variable to the **cloudant-binding** secret we created earlier. Navigate to the deployment config for the `patient-db` app by clicking the app, and then selecting the name next to **DC**:
 
-   ![Deployment Config](../assets/deploymentconfig.png)
+   ![Deployment Config](images/solution55-openshift-ibm-cloud-hidden/deploymentconfig.png)
 
 5. Go to the **Environment** tab, click **Add from Config Map or Secret** and create a new environment variable named **CLOUDANT_URL**. Choose the **cloudant-binding** secret, then choose **url** for the Key. Hit the **Save** button.
 
-   ![Environment from Secret](../assets/envfromsecret.png)
+   ![Environment from Secret](images/solution55-openshift-ibm-cloud-hidden/envfromsecret.png)
 
 6. Go back to the **Topology** tab, and the **patient-db** should successfully start shortly.
 
-   ![Apps Running](../assets/runningapps.png)
+   ![Apps Running](images/solution55-openshift-ibm-cloud-hidden/runningapps.png)
 
 ### Configure Front-End Patient Health App to use Cloudant Database Backend
 
@@ -622,27 +622,27 @@ The `patient-ui` application has a configuration option for the backend database
 
    To find your routes, you can use the OpenShift console or type `oc get routes`.
 
-   ![clicksettings](../assets/clicksettings.png)
+   ![clicksettings](images/solution55-openshift-ibm-cloud-hidden/clicksettings.png)
 
 2. Input the route `http://patient-db:8080/` and hit the **node** OpenShift icon.
 
    You won't need to expose this application with the `oc expose` command. This is because your frontend `patient-ui` application can talk to the backend `patient-db` without the network request leaving the cluster. Kubernetes keeps an internal DNS record of the services which resolve to the IPs of the running application.
 
-   ![inputurl](../assets/inputurl.png)
+   ![inputurl](images/solution55-openshift-ibm-cloud-hidden/inputurl.png)
 
 Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
 
 1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://cloud.ibm.com/resources). Click **cloudant-service**.
 
-   ![cloudantdb](../assets/cloudantdb.png)
+   ![cloudantdb](images/solution55-openshift-ibm-cloud-hidden/cloudantdb.png)
 
 2. Launch the Cloudant dashboard and click the `patients` db.
 
-   ![databases](../assets/databases.png)
+   ![databases](images/solution55-openshift-ibm-cloud-hidden/databases.png)
 
 3. Click through the different patients you can log-in as.
 
-   ![credentials](../assets/credentials.png)
+   ![credentials](images/solution55-openshift-ibm-cloud-hidden/credentials.png)
 
 ## Configure the Sysdig Agent
 
@@ -667,7 +667,7 @@ To integrate your monitoring instance with your OpenShift cluster, you must run 
 
 1. Select the **OpenShift** tab and run the curl command next to **Public Endpoint**
 
-    ![](../assets/sysdig-install.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-install.png)
 
     The Sysdig agent collects metrics such as the worker node CPU usage, worker node memory usage, HTTP traffic to and from your containers, and data about several infrastructure components.
 
@@ -715,7 +715,7 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
 1. Select the **OpenShift** tab and run the 5 steps command:
 
-    ![](../assets/logdna-install.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/logdna-install.png)
 
     The LogDNA agent collects logs with the extension `*.log` and extensionsless files that are stored in the `/var/log` directory of your pod. By default, logs are collected from all namespaces, including `kube-system`, and automatically forwarded to the IBM Log Analysis with LogDNA service.
 
@@ -774,7 +774,7 @@ You launch the web UI within the context of an IBM Log Analysis with LogDNA inst
 
 1. Click **View LogDNA**.
 
-   ![](../assets/logdna-launch-ui.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/logdna-launch-ui.png)
 
 The Web UI opens.
 
@@ -787,23 +787,23 @@ When you launch the LogDNA web UI, log entries are displayed with a predefined f
 
 ### View events with the default format
 
-1. In the LogDNA web UI, click the **Views** icon ![](../assets/views.png).
+1. In the LogDNA web UI, click the **Views** icon ![](images/solution55-openshift-ibm-cloud-hidden/views.png).
 2. Select **Everything** to see all the events.
 
-![](../assets/views-img-1.png)
+![](images/solution55-openshift-ibm-cloud-hidden/views-img-1.png)
 
 ### Customize your default view
 
 In the **USER PREFERENCES** section, you can modify the order of the data fields that are displayed per line.
 
-1. Select the **Configuration** icon ![](../assets/admin.png).
+1. Select the **Configuration** icon ![](images/solution55-openshift-ibm-cloud-hidden/admin.png).
 2. Select **USER PREFERENCES**. A new window opens.
 3. Select **Log Format**.
 4. Modify the _Line Format_ section to match your requirements. Drag boxes around. Click **Done**.
 
     For example, add **%app** after the timestamp.
 
-    ![](../assets/views-img-19.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/views-img-19.png)
 
 
 ### Create a custom view to monitor logs
@@ -814,11 +814,11 @@ You can select the events that are displayed through a view by applying a search
 
    From the Openshift console, go to the developer view. Select the project where you have deployed the sample app, and get the pod name. For example: `patient-ui-8658f89574-rgjw8` 
 
-   ![](../assets/views-img1.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/views-img1.png)
 
 2. Enter in the search bar the following query: `host:{podName}` where {podName} is the name of your pod. For example: `host:patient-ui-8658f89574-rgjw8`
 
-   ![](../assets/views-img2.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/views-img2.png)
 
    Click enter.
 
@@ -826,13 +826,13 @@ You can select the events that are displayed through a view by applying a search
 
    Add in the search bar the following query: `level:debug` and click enter. The view will show lines that meet the filter and search criteria. For example: `host:patient-ui-8658f89574-rgjw8 level:debug` 
 
-   ![](../assets/views-img3.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/views-img3.png)
 
 4. Save the custom view.
 
    Click **Unsaved view**. Select **Save view**.
 
-   ![](../assets/views-img-6.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/views-img-6.png)
 
    Enter the name of the view. Use the following format: `<Enter your user name> patientUI`. For example, `marisa patientui`
 
@@ -842,7 +842,7 @@ You can select the events that are displayed through a view by applying a search
 
 A new category appears on the left navigation panel.
 
-![](../assets/views-img-11.png)
+![](images/solution55-openshift-ibm-cloud-hidden/views-img-11.png)
 
 #### Generate application log data
 
@@ -851,11 +851,11 @@ Generate logs:
 1. Run `oc status`.
 2. Get the application URL.
 
-    ![](../assets/views-img-20.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/views-img-20.png)
 
 3. Launch the application from a browser. Enter in the browser the application URL. Then, log in and log out with different names to see login entries for each user.
 
-    ![](../assets/views-img-21.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/views-img-21.png)
 
 ### Analyze a log line
 
@@ -863,7 +863,7 @@ At any time, you can view each log line in context.
 
 Complete the following steps:
 
-1. Click the **Views** icon ![](../assets/views.png).
+1. Click the **Views** icon ![](images/solution55-openshift-ibm-cloud-hidden/views.png).
 2. Select **Everything** or a view.
 3. Identify a line in the log that you want to explore.
 4. Expand the log line.
@@ -872,11 +872,11 @@ Complete the following steps:
 
 5. Click **View in Context** to see the log line in context of other log lines from that host, app, or both. This is a very useful feature when you want to troubleshoot a problem.
 
-   ![](../assets/views-img-12.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/views-img-12.png)
 
    A new pop up window opens.
 
-   ![](../assets/views-img-13.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/views-img-13.png)
 
    Choose one of the following options:
 
@@ -896,7 +896,7 @@ Complete the following steps:
 
     For example, the log record in the UI looks like:
 
-    ![](../assets/views-img-16.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/views-img-16.png)
 
     When you copy the record, you get:
 
@@ -918,7 +918,7 @@ Complete the following steps to jump to a specific time:
 
 1. Launch the LogDNA web UI. 
 
-2. Click the **Views** icon ![](../assets/views.png). 
+2. Click the **Views** icon ![](images/solution55-openshift-ibm-cloud-hidden/views.png). 
 
 3. Select your custom view. 
 
@@ -926,11 +926,11 @@ Complete the following steps to jump to a specific time:
 
     Enter an absolute time to jump to a point in time in your events such as `January 27 10:00am`.
 
-    ![](../assets/views-img-15.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/views-img-15.png)
 
     Enter a relative time such as `5 days ago`. 
 
-    ![](../assets/views-img-17.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/views-img-17.png)
 
     You can also enter a time range such as `yesterday 10am to yesterday 11am`, `last fri 4:30pm to 11/12 1 AM`, `last wed 4:30pm to 23/05 1 AM`, or `May 20 10am to May 22 10am`. Make sure to include `to` to separate the initial timestamp from the end timestamp.
 
@@ -946,32 +946,32 @@ For example, you can use graphs to analyze patterns and trends over a period of 
 
 Complete the following steps to create a dashboard to monitor logs from the lab's sample app:
 
-1. In the LogDNA web UI, click the **Boards** icon ![Dashboards icon](../assets/boards.png).
+1. In the LogDNA web UI, click the **Boards** icon ![Dashboards icon](images/solution55-openshift-ibm-cloud-hidden/boards.png).
 2. Select **NEW BOARD** to create a new dashboard.
 3. Click **Add graph**.
 4. Select the field **host**, then select the value that matches your pod name.
 
-   ![](../assets/board-img-4.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/board-img-4.png)
 
    Click **Add graph**.
 
-   ![](../assets/board-img-5.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/board-img-5.png)
 
 5. Open a view that displays the logs for the patientui app. Click the graph in a peak of data at the time that you want to see logs, and then click **Show logs**.
 
-   ![](../assets/board-img-6.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/board-img-6.png)
 
    A new page opens with the relevant log entries.
 
 6. Add subplots to analyze the data by applying additonal filtering criteria.
 
-   ![](../assets/board-img-8.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/board-img-8.png)
 
    Click **Show subplots**.
 
    Select **Histogram** and **level**.
 
-   ![](../assets/board-img-11.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/board-img-11.png)
 
 7. Name the dashboard by hitting "Edit".
 
@@ -989,7 +989,7 @@ You can create a screen to monitor your app graphically through metrics \(counte
 
 Complete the following steps to create a dashboard to monitor logs from the lab's sample app:
 
-1. In the LogDNA web UI, click the **screens** icon ![](../assets/screens.png).
+1. In the LogDNA web UI, click the **screens** icon ![](images/solution55-openshift-ibm-cloud-hidden/screens.png).
 2. Select **NEW SCREEN**.
 3. Click **Add Widget** and select **Count**.
 
@@ -1001,7 +1001,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 
    The widget should look similar to the following one:
 
-   ![](../assets/screen-img-7.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-7.png)
 
 4. Add a gauge.
 
@@ -1013,35 +1013,35 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 
    To configure the _Gauge_ widget to report on the debug log lines for the application patientui, you must select the field **level**, and set the value to **debug**. Then, set the advanced condition `app:patientui`. The duration is set to the default, last 1 day.
 
-   ![](../assets/screen-img-9.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-9.png)
 
    Add a label, by entering a value for the _label_ field. Enter `PatientUI - INFO`. Also add the gauge limits `0` for Minimum and `5000` for maximum.
 
    The widget should look similar to the following one:
 
-   ![](../assets/screen-img-11.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-11.png)
 
 5. Add a table.
 
    Click **Add Widget**.
 
-   ![](../assets/screen-img-2.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-2.png)
 
    Select **Table**.
 
-   ![](../assets/screen-img-12.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-12.png)
 
    Click the widget. You will get the configuration fields for this widget.
 
    To list the number of records in the last 24 hours for the cluster namespaces, set `Group By` to **namespace**.
 
-   ![](../assets/screen-img-13.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-13.png)
 
    Change the default number of rows from 3 to 10.
 
    The widget should look similar to the following one:
 
-   ![](../assets/screen-img-15.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-15.png)
 
 6. Save the screen. Select **Save Screen**.
 
@@ -1077,26 +1077,26 @@ The following table lists the different types of pre-defined dashboards:
 
 1. Launch the Sysdig web UI.
 
-    ![](../assets/icp-monitoring-launch.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/icp-monitoring-launch.png)
 
 2. In the Sysdig Welcome wizard, click **Next**
-   ![](../assets/sysdig-wizard1.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-wizard1.png)
 
 3. Select **Kubernetes | GKE | OpenShift** as the installation method.
-   ![](../assets/sysdig-wizard2.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-wizard2.png)
 
 4. You should see a message `You have X agents connected`. Click **GO TO NEXT STEP**. 
-   ![](../assets/sysdig-wizard3.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-wizard3.png)
 
 5. Setup is complete. Click **LET'S GET STARTED**
-   ![](../assets/sysdig-wizard4.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-wizard4.png)
 
 6. Select **Next**
-   ![](../assets/sysdig-wizard5.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-wizard5.png)
 
 7. Finally **Complete Onboarding**
 
-   ![](../assets/sysdig-wizard6.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-wizard6.png)
 
 
 ### View the Sysdig dashboard
@@ -1105,11 +1105,11 @@ The following table lists the different types of pre-defined dashboards:
 
 2. Under the **Explore** section,select **Containerized Apps** to view raw metrics for all workloads running on the cluster.
 
-   ![](../assets/sysdig-select-app.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-select-app.png)
 
 3. Under **Explore**, select **Nodes**, search `patient-ui`. Look for the partientui pod entry.
 
-   ![](../assets/sysdig-explore-node.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-explore-node.png)
 
 4. Under **Dashboard**, select **Default Dashboards** &gt; **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
 
@@ -1125,7 +1125,7 @@ You can use the **Connection Table** dashboard to monitor how data flows between
 3. Select the _patientui_ pod entry.
 4. Select **Default Dashboards**.
 
-   ![](../assets/explore-img-4.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/explore-img-4.png)
 
 5. Check out the two dashboards under **Hosts & Containers**:
    * **Overview by Host**
@@ -1139,7 +1139,7 @@ You can use the **Connection Table** dashboard to monitor how data flows between
 4. Select **Default Dashboards**.
 5. Select **Kubernetes > Kuberentes Cluster and Node Capacity**. 
 
-   ![](../assets/explore-img-9.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/explore-img-9.png)
 
    Check the **Total CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons.
 
@@ -1157,15 +1157,15 @@ You can use the **Connection Table** dashboard to monitor how data flows between
 
    The following dashboard is displayed. It shows information about all resources that are monitored thorugh the instance.
 
-   ![](../assets/dashboard-img-2.png)
+   ![](images/solution55-openshift-ibm-cloud-hidden/dashboard-img-2.png)
 
 2. Change the scope of the dashboard to display information about your openshift cluster. Select **Edit scope** on the right side and change it:
 
-    ![](../assets/dashboard-img-4.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/dashboard-img-4.png)
 
     The dashboard now shows information about the ibm-observe namespace.
 
-    ![](../assets/dashboard-img-5.png)
+    ![](images/solution55-openshift-ibm-cloud-hidden/dashboard-img-5.png)
 
 ### Congratulations!
 
