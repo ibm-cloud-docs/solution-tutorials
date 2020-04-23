@@ -113,7 +113,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
    1. Select **From blank**.
    2. Set the Asset name to **iris_model**.
-   3. Under **Associated service**, select the **Machine learning service instance**.
+   3. Under **Associated services**, select the **Machine learning service instance**(`pm-20-tutorial`) created above.
 4. Click **Create**.
 
 Once the model is created,
@@ -137,12 +137,12 @@ Once the experiment completes running, under the **Pipeline** leaderboard,
 2. Sort the leaderboard by a different metric by selecting the **Rank by** dropdown
 3. Click a pipeline to view more detail about the metrics and performance.
 
-   You may not say any noted changes in the leadership board as the dataset used in this tutorial is very simple and used only for your understanding of the concepts. With other datasets, the rank may vary
+   Sorting by different metrics may not change the leaderboard rankings as the dataset used in this tutorial is very simple and used only for your understanding of the concepts. With other datasets, the rank may vary
    {:tip}
 
-4. Next to the model with *Rank 1*, click on **Save as** > **Model**.
-5.  Check the details of the model and click **Save**.
-6.  In the received notification, click **View in project** then under **Overview** tab check the details of the model.
+4. Next to the model with *Rank 1* when sorted by Accuracy, click on **Save as** > **Model**.
+5. Check the details of the model and click **Save**.
+6. In the received notification, click **View in project** then under **Overview** tab check the details of the model.
 
 ## Deploy the model and try out the API
 {:#deploy_model}
@@ -177,7 +177,7 @@ Once the status changes to **Ready** (You may have to refresh the page):
    ```
    {:pre}
 
-7. For `ML_INSTANCE_ID`, run the below command in the Cloud Shell by passing the name of the machine learning service key. **_You will use the ML service credentials later in the tutorial_**
+7. Run the command below to retrieve the `instance_id`, required later in the tutorial. **_You will use the the ML service credentials later in the tutorial_**
    ```sh
    ibmcloud resource service-key wdp-writer
    ```
@@ -214,7 +214,7 @@ Along with CLI, you can also do predictions using the UI.
       "input_data": [{
         "fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         "values": [
-          ["5.1", "3.5", "1.4", "0.2"]
+          [5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]
         ]
       }]
     }
@@ -237,7 +237,11 @@ In this section, you will create a ML model using the same iris dataset for expl
    1. Select **From URL** and give **iris_notebook** as the name
    2. Under **Notebook URL**, enter `https://github.com/IBM-Cloud/ml-iris-classification/blob/master/classify_iris.ipynb`
    3. Click **Create**
-3. Once the notebook is created, scroll to **Provide WML credentials** section of the notebook and provide the {{site.data.keyword.aios_full_notm}} service credentials from the Cloud shell.
+3. Once the notebook is created, scroll to **Provide WML credentials** section of the notebook and provide the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service credentials from the Cloud shell.
+
+   Copy the three fields from the output of the `ibmcloud resource service-key wdp-writer` command in the Cloud shell.
+   {:tip}
+
 4. In the top menu of the notebook, Click **Cell** and then click **Run All**.
 5. This should create a ML model and also a deployment under `iris_project`.
 6. If you scroll to **Test the model** section, you can see that the accuracy score of the the model is between 0.85-0.95 based on the randomness of the train data. **_Make sure you don't close this window/tab_**.
@@ -262,7 +266,7 @@ In this section, as part of preparing your model for monitoring you will set up 
 1. Choose **Free lite plan database** as your Database type and click **Save**. This is to store your model transactions and model evaluation results.
 2. Click **Machine learning providers**
    1. Click on **Add machine learning provider** and click the edit icon on the **connection** tile.
-   2. Select **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}** as your service provider.
+   2. Select **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}** as your service provider type.
    3. In the **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service** dropdown, select the {{site.data.keyword.pm_full}} service you created above.
    4. Leave the Environment type to **Pre-production**.
    5. Click **Save**.
@@ -312,7 +316,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 1. Click on **Actions** and then **Evaluate now**.
 2. Click on **browse**, upload the `iris_retrain.csv` file and click on **Upload and evaluate**.
 3. After the evaluation is completed, you should see the dashboard with different metrics.
-   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **Deployment of iris model Evaluations**
+   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **Deployment of iris model: Accuracy**.
    2. Click on the Number of explanations (2), select one of the transactions and click **View**.
    3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
