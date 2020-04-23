@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-04-22"
+lastupdated: "2020-04-23"
 lasttested: "2020-04-22"
 ---
 
@@ -219,6 +219,7 @@ Along with CLI, you can also do predictions using the UI.
       }]
     }
    ```
+   {:pre}
 2. Click **Predict** and you should see the **Predictions** JSON output.
 3. You can change the input data and continue testing your model.
 
