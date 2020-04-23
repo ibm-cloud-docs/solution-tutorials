@@ -127,8 +127,1055 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
    {:pre}
 -->
 <!--#/isworkshop#-->
+--------------------------------------------------------------------------------
+## Deploying an application
 
-## Start
+In this section, you'll deploy a simple Node.js Express application - "Example Health". Example Health is a simple UI for a patient health records system. We'll use this example to demonstrate key OpenShift features throughout this workshop. You can find the sample application GitHub repository here: [https://github.com/svennam92/node-s2i-openshift](https://github.com/svennam92/node-s2i-openshift)
+
+### Deploy Example Health
+
+1. Launch the `OpenShift web console`.
+
+    ![](../assets/ocp-console.png)
+
+1. Select the **Projects** view to display all the projects.
+
+    ![](../assets/ocp-projects.png)
+
+1. Create a new project by selecting **Create Project**. Call the project "example-health".
+
+    ![](../assets/ocp-create-project.png)
+
+1. You should see a view that looks like this.
+
+    ![](../assets/ocp-admin-project.png)
+
+1. Switch from the Administrator to the **Developer** view. Make sure your project is selected.
+
+    ![](../assets/ocp-project-view.png)
+
+1. Let's deploy the application by selecting **From Git**.
+
+1. Enter the repository `https://github.com/svennam92/node-s2i-openshift` in the Git Repo URL field.
+
+    ![](../assets/ocp-configure-git.png)
+
+    Note that the builder image automatically detected the language Node.js.
+
+1. Name your application such as `patient-ui`. Keep the default options and click **Create** at the bottom of the window to build and deploy the application.
+
+    ![](../assets/ocp-app-name-short.png)
+
+    Your application is being deployed.
+
+### View the Example Health
+
+1. You should see the app you just deployed.
+
+    ![](../assets/ocp-topology-app.png)
+
+1. Select the app. You should see a single Deployment where you can see your Pods, Builds, Services and Routes.
+
+    ![](../assets/ocp-topo-app-details.png)
+
+    * **Pods**: Your Node.js application containers
+    * **Builds**: The auto-generated build that created a Docker image from your Node.js source code, deployed it to the OpenShift container registry, and kicked off your deployment config.
+    * **Services**: Tells OpenShift how to access your Pods by grouping them together as a service and defining the port to listen to
+    * **Routes**: Exposes your services to the outside world using the LoadBalancer provided by the IBM Cloud network
+
+1. Click on **View Logs** next to your completed Build. This shows you the process that OpenShift took to install the dependencies for your Node.js application and build/push a Docker image.
+
+    ![Build Logs](../assets/ocp43-build-logs.png)
+
+    You should see that looks like this:
+    ```
+    Successfully pushed image-registry.openshift-image-registry.svc:5000/example-health/patient-ui@sha256:f9385e010144f36353a74d16b6af10a028c12d005ab4fc0b1437137f6bd9e20a
+    Push successful
+    ```
+
+1. Click back to the **Topology** and select your app again. Click on the url under **Routes** to open your application with the URL.
+
+    ![](../assets/patient-ui-web.png)
+
+    You can enter any strings for username and password, for instance `test:test` because the app is running in demo mode.
+
+Congrats! You've deployed a `Node.js` app to OpenShift Container Platform.
+
+To recap:
+
+* Deployed the "Example Health" Node.js application directly from GitHub into your cluster 
+  * Used the "Source to Image" strategy provided by OpenShift
+* Deployed an end-to-end development pipeline 
+  * New commits that happen in GitHub can be pushed to your cluster with a simple \(re\)build
+* Looked at your app in the OpenShift console.
+
+### What's Next?
+
+Let's dive into some Day 1 OpenShift Operations tasks, starting with Monitoring and Logging
+
+## Logging and monitoring
+
+In this section, we'll explore the out-of-the-box logging and monitoring capabilities that are offered in OpenShift.
+
+### Simulate Load on the Application
+
+Let's simulate some load on our application.
+
+1. First, make sure you're connected to the project where you deployed your app.
+
+    ```sh
+    oc project example-health
+    ```
+
+1. Retrieve the public route to access your Example Health application:
+
+    ```
+    oc get routes
+    ```
+    Output looks similar to this (_remember not to copy this exact host_):
+    ```
+    NAME         HOST/PORT                                                                                                 PATH      SERVICES     PORT       TERMINATION   WILDCARD
+    patient-ui   patient-ui-example-health.roks07-872b77d77f69503584da5a379a38af9c-0000.eu-de.containers.appdomain.cloud             patient-ui   8080-tcp                 None
+    ```
+
+1. Run the following script which will endlessly spam our app with requests:
+
+    With Linux/MacOS:
+
+    ```bash
+    while sleep 1; do curl -s http://<host>/info; done
+    ```
+    
+    With Windows:
+    
+    ```bash
+    while($true){curl http://<host>/info}
+    ```
+
+We're hitting the `/info` endpoint which will trigger some logs from our app. For example:
+
+[`http://patient-ui-health-example.myopenshift-xxx.us-east.containers.appdomain.cloud/info`](http://patient-ui-health-example.myopenshift-341665-66631af3eb2bd8030c5bb56d415b8851-0001.us-east.containers.appdomain.cloud/jee.html)
+
+### OpenShift Logging
+
+Since we only created one pod, seeing our logs will be straight forward.
+
+1. Ensure that you're in the **Developer** view. Then, navigate to **Topology**.
+
+2. Navigate to your Pod by selecting your app, then clicking the name of the Pod under **Pods**.
+
+    ![Navigate to Pod](../assets/ocp-topo-pod.png)
+   
+3. Click on **View Logs** next to your Pods to see streaming logs from your running application. If you're still generating traffic, you should see log messages for every request being made.
+
+    ![Pod Logs](../assets/ocp43-pod-logs.png)
+
+### OpenShift Terminal
+
+One of the great things about Kubernetes is the ability to quickly debug your application pods with SSH terminals. This is great for development, but generally is not recommended in production environments. OpenShift makes it even easier by allowing you to launch a terminal directly in the dashboard.
+
+1. Navigate to your Pod by selecting your app, then clicking the name of the Pod under **Pods**.
+
+   ![Navigate to Pod](../assets/ocp-topo-pod.png)
+
+2. Switch to the **Terminal** tab
+
+   ![Terminal](../assets/ocp43-terminal.png)
+
+3. Run the following Shell commands:
+
+| Command | Description | 
+| :--- | :--- |
+| ls | List the project files. |
+| ps aux | List the running processes. |
+| cat /etc/redhat-release | Show the underlying OS. |
+
+### OpenShift Monitoring
+
+When deploying new apps, making configuration changes, or simply inspecting the state of your cluster, the Project-scope Dashboard gives Developer Clear Insights.
+
+1. Access the **Dashboard** now by going to the **Advanced > Project Details** tab on the left side menu.
+
+    ![View Details](../assets/ocp43-project-details.png)
+
+2. You can also dive in a bit deeper - the **Events** view is useful for identifying the timeline of events and finding potential error messages. When tracking the state of a new rollout, managing existing assets, or even something simple like exposing a route, the Events view is critical in identifying the timeline of activity. This becomes even more useful when considering that multiple operators may be working against a single cluster.
+
+    ![View Details](../assets/projectevents.png)
+
+You'll want to refer to this view throughout the lab. Almost all actions we take in in OpenShift will result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
+
+## Metrics and dashboards
+
+In this section, we'll explore the third-party monitoring and metrics dashboards that are installed for free with OpenShift!
+
+### Grafana
+
+Red Hat OpenShift on IBM Cloud comes with [Grafana](https://grafana.com/) preinstalled.
+
+1. Get started by switching to the **Administrator** perspective:
+
+    ![Administrator Perspective](../assets/ocp43-adminview.png)
+
+2. Navigate to **Monitoring > Dashboards** in the left-hand bar. You'll be asked to login with OpenShift and then click through some permissions.
+
+    ![Monitoring Dashboards](../assets/ocp43-monitoring-dashboard.png)
+
+3. You should then see your Grafana dashboard. Hit **Home** on the top left, and choose **Kubernetes / Compute Resources / Namespace (Pods)**.
+
+    ![Grafana](../assets/ocp43-grafana.png)
+
+4. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
+
+5. You should be able to see the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day. We'll use this information in the next section to set up auto-scaling for our pods.
+
+    ![Grafana also project](../assets/ocp43-grafana-cpu.png)
+
+### Prometheus and Alert Manager
+
+Navigating back to the cluster console, you can also launch:
+
+* [**Prometheus**](https://prometheus.io/) - a monitoring system with an efficient time series database
+* [**Alertmanager**](https://prometheus.io/docs/alerting/alertmanager/) - an extension of Prometheus focused on managing alerts
+
+### Prometheus
+
+OpenShift provides a web interface to Prometheus, which enables you to run Prometheus Query Language \(PromQL\) queries and examine the metrics visualized on a plot. This functionality provides an extensive overview of the cluster state and enables you to troubleshoot problems. Take a look around, and try the **Insert Example Query**.
+
+1. The Metrics page is accessible by clicking **Monitoring → Metrics**.
+
+    ![Metrics, Alerts and Dashboards](../assets/ocp43-monitoring-prometheus.png)
+
+## Scaling the application
+
+In this section, we'll leverage the metrics we've observed in the previous step to automatically scale our UI application in response to load.
+
+### Enable Resource Limits
+
+Before we can setup autoscaling for our pods, we first need to set resource limits on the pods running in our cluster. Limits allows you to choose the minimum and maximum CPU and memory usage for a pod.
+
+Verify your script to simulate load is running, Grafana showed you that your application was consuming anywhere between ".002" to ".02" cores. This translates to 2-20 "millicores". That seems like a good range for our CPU request, but to be safe, let's bump the higher-end up to 30 millicores. In addition, Grafana showed that the app consumes about `25`-`35` MB of RAM. Set the following resource limits for your deployment now.
+
+1. Switch to the **Administrator** view and then navigate to **Workloads > Deployments** in the left-hand bar. Choose the `patient-ui` Deployment, then choose **Actions > Edit Deployment**.
+
+    ![](../assets/ocp-deployments.png)
+
+2. In the YAML editor, go to line 44. In the section **template > spec > containers**, add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
+
+    ![](../assets/ocp-limits-yaml.png)
+
+  ```yaml
+             resources:
+               limits:
+                 cpu: 30m
+                 memory: 100Mi
+               requests:
+                 cpu: 3m
+                 memory: 40Mi
+  ```
+
+3. **Save** and **Reload** to see the new version.
+
+4. Verify that the replication controller has been changed by navigating to **Events**
+
+    ![Resource Limits](../assets/ocp-dc-events.png)
+
+### Enable Autoscaler
+
+Now that we have resource limits, let's enable autoscaler.
+
+By default, the autoscaler allows you to scale based on CPU or Memory. The UI allows you to do CPU only \(for now\). Pods are balanced between the minimum and maximum number of pods that you specify. With the autoscaler, pods are automatically created or deleted to ensure that the average CPU usage of the pods is below the CPU request target as defined. In general, you probably want to start scaling up when you get near `50`-`90`% of the CPU usage of a pod. In our case, let's make it `1`% to test the autoscaler since we are generating minimal load.
+
+1. Navigate to **Workloads > Horizontal Pod Autoscalers**, then hit **Create Horizontal Pod Autoscaler**.
+
+    ![HPA](../assets/ocp-hpa.png)
+
+    ```yaml
+    apiVersion: autoscaling/v2beta1
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: patient-hpa
+      namespace: example-health
+    spec:
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: patient-ui
+      minReplicas: 1
+      maxReplicas: 10
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            targetAverageUtilization: 1
+    ```
+
+2. Hit **Create**.
+
+### Test Autoscaler
+
+If you're not running the script to simulate load, the number of pods should stay at 1.
+
+1. Check by going to the **Overview** page of **Deployments**.
+
+    ![Scaled to 1 pod](../assets/ocp-hpa-before.png)
+
+2. Start simulating load by hitting the page several times, or running the script. You'll see that it starts to scale up:
+
+   ![Scaled to 4/10 pods](../assets/ocp-hpa-after.png)
+
+That's it! You now have a highly available and automatically scaled front-end Node.js application. OpenShift is automatically scaling your application pods since the CPU usage of the pods greatly exceeded `1`% of the resource limit, `30` millicores.
+
+#### Optional
+
+If you're interested in setting up the CLI, [follow the steps here](../getting-started/setup_cli.md). Then, run the following command in your CLI `oc get hpa` to get information about your horizontal pod autoscaler. Remember to switch to your project first with `oc project <project-name>`.
+
+You could have created the autoscaler with the command `oc autoscale deployment/patient-ui --min 1 --max 10 --cpu-percent=1`.
+
+## Cloudant DB with IBM Cloud Operator
+
+Currently, the Example Health `patient-ui` app is using a dummy in-memory patient. In this exercise, you'll create a Cloudant service in IBM Cloud and populate it with patient data. Cloudant is a NoSQL database-as-a-service, based on CouchDB.
+
+### Enable the IBM Cloud Operator
+
+Let's understand exactly how Operators work. In the first exercise, you deployed a simple application using a DeploymentConfig and Pods -- these are "default resources" that come with OpenShift. A custom resource definition allows you to create resources that are not necessarily running within Kubernetes, such an IBM Cloud service. Operators manage the lifecycle of resources and create CRDs, allowing you to manage custom resources the native "Kubernetes" way.
+
+1. Navigate to your OpenShift console, access the **Administrator** view, and click **Operators > OperatorHub**
+
+   ![OperatorHub](../assets/operatorhub.png)
+
+2. Find the **IBM Cloud Operator**, and hit **Install**
+
+   ![Operator Install](../assets/cloudoperatorinstall.png)
+
+3. Keep the default options and hit **Subscribe**:
+
+   ![Operator Subscribe](../assets/operatorsubscribe.png)
+
+4. You may need to wait a few seconds and refresh for the operator to show up as `Installed`:
+
+   ![Installed Operators](../assets/installedoperators.png)
+
+5. Next, you'll need to set your IBM Cloud credentials so that the Operator knows how/where to create your Cloudant service. The operator needs to create the service in your own account, rather than the shared IBM lab account.
+
+   ```sh
+    ibmcloud login --sso
+   ```
+
+   Remember: Pick your own account, not IBM.
+
+   ```
+    Select an account:
+    1. Sai Vennam's Account (d815248d6ad0cc354df42d43db45ce09) <-> 1909673
+    2. IBM (3a4766a7bcab032d4ffc980d360fbf23) <-> 338150
+    Enter a number> 1
+   ```
+
+6. Next, set your CF org, space and resource group where the Cloudant service will be created. Resource group is usually named `default` or `Default` -- case-sensitive.
+
+    ```sh
+    ibmcloud target --cf -g Default
+    or
+    ibmcloud target --cf -g default
+    ```
+
+7. Verify that all fields are set:
+
+    ```sh
+    ibmcloud target
+    ```
+
+    ```
+    API endpoint:      https://cloud.ibm.com   
+    Region:            us-south   
+    User:              svennam@us.ibm.com   
+    Account:           Sai Vennam's Account (d815248d6ad0cc354df42d43db45ce09) <-> 1909673   
+    Resource group:    default   
+    CF API endpoint:   https://api.us-south.cf.cloud.ibm.com (API version: 2.144.0)   
+    Org:               svennam@us.ibm.com   
+    Space:             dev
+    ```
+
+   If any of these fields are not set, the Operator will fail to create your service!
+
+8. Make sure you're logged in to the cluster in this terminal session. Otherwise you must re-run the command `oc login` with the cluster information:
+
+    [Access your cluster using the oc CLI](../getting-started/setup_cli.md#access-the-openShift-web-console).
+
+9. Use the helper script provided by IBM to create a new API token, and register it as a secret in your OpenShift cluster:
+
+    ```sh
+    curl -sL https://raw.githubusercontent.com/IBM/cloud-operators/master/hack/config-operator.sh | bash
+    ```
+
+10. Verify that all the fields in `data` are set for the configmap \(`org`, `region`, `resourceGroup` and `space`\) and secret \(`api-key` and `region`\):
+
+    ```sh
+    oc get configmap/seed-defaults -o yaml -n default
+    oc get secret/seed-secret -o yaml -n default
+    ```
+
+    Output:
+    ```
+    apiVersion: v1
+    data:
+        org: svennam@us.ibm.com
+        region: us-south
+        resourceGroup: default
+        space: dev
+    ...
+
+    apiVersion: v1
+    data:
+        api-key: <PRIVATE_API_TOKEN>=
+        region: dXMtc291dGg=
+    ...
+    ```
+
+### Create a Cloudant Service using the CRDs
+
+1. Once the Operator is installed, the Custom Resource Definitions to create the Cloudant service are also available. Navigate to your OpenShift dashboard, ensure you're in the **Administrator** view, navigate to your **Installed Operators** and click the IBM Cloud Operator:
+
+   ![IBM Cloud Operator](../assets/ibmcloudoperator.png)
+
+2. You'll see that there's two APIs available -- a Service and a Binding. A **Service** will allow us to create the actual Cloudant service itself -- do that first by clicking **Create Instance** under **Service**. Copy and replace the following YAML:
+
+	> ```
+	> apiVersion: ibmcloud.ibm.com/v1alpha1
+	> kind: Service
+	> metadata:
+	>   name: cloudant-service
+	> spec:
+	>   plan: lite
+	>   serviceClass: cloudantnosqldb
+	>  ```
+
+   ![cloudantservice](../assets/cloudantservice.png)
+
+   Hit **Create**.
+
+3. Wait a couple minutes for the service to provision. You can check the status by clicking on your service, and looking for **Message: Online**:
+
+   {% hint style='info' %} You can also debug any potential issues here. If you already have a Cloudant "Lite" service, you won't be able to create another. To work around this issue, edit the service yaml to use `standard` instead of `lite`. Note that "Standard Cloudant" is a paid service. Another option is to navigate to your IBM Cloud dashboard and delete your existing instance of the `lite` Cloudant. {% endhint %}
+
+   ![servicedone](../assets/servicedone.png)
+
+4. After verifying that there's no bugs and the service is "online", double-check that the Cloudant service exists in your account: [https://cloud.ibm.com/resources](https://cloud.ibm.com/resources)
+
+   You may need to switch to your own account using the switcher on the top right.
+
+   ![resourcelist](../assets/resourcelist.png)
+
+5. Next, create the "binding" resource for your Operator \(instead of Service as you did above\):
+
+	> ```shell
+	> apiVersion: ibmcloud.ibm.com/v1alpha1
+	> kind: Binding
+	> metadata:
+	>   name: cloudant-binding
+	> spec:
+	>   serviceName: cloudant-service
+	> ```
+
+   ![bindingresource](../assets/cloudantbinding.png)
+
+6. The binding should get created fairly quickly -- you can check the status by clicking on your binding, and looking for **Message: Online**. By navigating to the **Resources** tab, you can see that the **cloudant-binding** secret is created. Click that to see your credentials for accessing your Cloudant DB, stored securely in a secret:
+
+   ![binding secret](../assets/bindingsecret.png)
+
+### Deploy the Node.js Patient Database App
+
+Now you'll create the Node.js app that will populate your Cloudant DB with patient data. It will also serve data to the front-end application that we deployed in the first exercise.
+
+1. Make sure you're in the project **example-health**:
+
+    ```sh
+    oc project example-health
+    ```
+
+2. Run the following command to create this application:
+
+    ```sh
+    oc new-app --name=patient-db centos/nodejs-10-centos7~https://github.com/svennam92/nodejs-patientdb-cloudant
+    ```
+
+3. The app will crash and fail to start repeatedly because the credentials to the Cloudant DB haven't been set yet.
+
+   ![Crashing](../assets/crashing.png)
+
+4. Let's fix this by setting the environment variable to the **cloudant-binding** secret we created earlier. Navigate to the deployment config for the `patient-db` app by clicking the app, and then selecting the name next to **DC**:
+
+   ![Deployment Config](../assets/deploymentconfig.png)
+
+5. Go to the **Environment** tab, click **Add from Config Map or Secret** and create a new environment variable named **CLOUDANT_URL**. Choose the **cloudant-binding** secret, then choose **url** for the Key. Hit the **Save** button.
+
+   ![Environment from Secret](../assets/envfromsecret.png)
+
+6. Go back to the **Topology** tab, and the **patient-db** should successfully start shortly.
+
+   ![Apps Running](../assets/runningapps.png)
+
+### Configure Front-End Patient Health App to use Cloudant Database Backend
+
+The `patient-ui` application has a configuration option for the backend database. To start using the database you configured above, follow the steps below to configure it.
+
+1. Access your **patient-ui** application again and click **Settings**.
+
+   To find your routes, you can use the OpenShift console or type `oc get routes`.
+
+   ![clicksettings](../assets/clicksettings.png)
+
+2. Input the route `http://patient-db:8080/` and hit the **node** OpenShift icon.
+
+   You won't need to expose this application with the `oc expose` command. This is because your frontend `patient-ui` application can talk to the backend `patient-db` without the network request leaving the cluster. Kubernetes keeps an internal DNS record of the services which resolve to the IPs of the running application.
+
+   ![inputurl](../assets/inputurl.png)
+
+Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
+
+1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://cloud.ibm.com/resources). Click **cloudant-service**.
+
+   ![cloudantdb](../assets/cloudantdb.png)
+
+2. Launch the Cloudant dashboard and click the `patients` db.
+
+   ![databases](../assets/databases.png)
+
+3. Click through the different patients you can log-in as.
+
+   ![credentials](../assets/credentials.png)
+
+## Configure the Sysdig Agent
+
+To integrate your monitoring instance with your OpenShift cluster, you must run a script that creates a project and privileged service account for the Sysdig agent.
+
+{% hint style='info' %} If you've been invited to a lab account where an instance of Sysdig has already been provisioned and configured, skip the create and deploy steps and go to the step verify the agent at the bottom. Find your Sysdig instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
+
+### Create a Sysdig service instance
+
+1. Create an instance of [IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/observe/monitoring/create) from the catalog:
+   1. Set the **Service name** to **YOUR_IBM_ID-sysdig**.
+   1. Select the location where your cluster is created. If the location is not in the list, pick the closest region (e.g. us-south).
+   1. Use the default resource group.
+   1. Click **Create**.
+1. In the [**Observability** category, under Monitoring](https://cloud.ibm.com/observe/monitoring), locate the service instance you created.
+
+### Deploy the Sysdig agent in the cluster
+
+1. On your instance, click **Edit sources**.
+
+1. Before running the curl command in the next step, make sure you're still logged in to the cluster. [Access your cluster using the oc CLI](../getting-started/setup_cli#access-your-cluster-using-the-oc-cli). 
+
+1. Select the **OpenShift** tab and run the curl command next to **Public Endpoint**
+
+    ![](../assets/sysdig-install.png)
+
+    The Sysdig agent collects metrics such as the worker node CPU usage, worker node memory usage, HTTP traffic to and from your containers, and data about several infrastructure components.
+
+### Verify that the Sysdig agent is deployed successfully
+
+Verify that the `sydig-agent` pods on each node have a **Running** status.
+
+Run the following command:
+
+```text
+oc get pods -n ibm-observe
+```
+
+Example output:
+
+```text
+    NAME                 READY     STATUS    RESTARTS   AGE
+    sysdig-agent-qrbcq   1/1       Running   0          1m
+    sysdig-agent-rhrgz   1/1       Running   0          1m
+```
+
+
+## Configure LogDNA agent for OpenShift  cluster
+
+The LogDNA agent is responsible for collecting and forwarding logs to your IBM Log Analysis with LogDNA instance. After you provision an instance of IBM Log Analysis with LogDNA, you must configure a LogDNA agent for each log source that you want to monitor.
+
+To configure your Kubernetes cluster to send logs to your IBM Log Analysis with LogDNA instance, you must install a *LogDNA-agent* pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
+
+{% hint style='info' %} If you've been invited to a lab account where an instance of LogDNA has already been provisioned and configured, skip the create and deploy steps and go to the step Verify the agent at the bottom. Find your LogDNA instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
+
+### Create a Sysdig service instance
+
+1. Create an instance of [IBM Cloud Logging with LogDNA](https://cloud.ibm.com/observe/logging/create) from the catalog:
+   1. Set the **Service name** to **YOUR_IBM_ID-logdna**.
+   1. Select the location where your cluster is created. If the location is not in the list, pick the closest region (e.g. us-south).
+   1. Use the default resource group.
+   1. Click **Create**.
+1. In the [**Observability** category, under Logging](https://cloud.ibm.com/observe/logging), locate the service instance you created.
+
+### Deploy the LogDNA agent in the cluster
+
+1. On your instance, click **Edit log sources**.
+
+1. Before running the curl command in the next step, make sure you're still logged in to the cluster. [Access your cluster using the oc CLI](../getting-started/setup_cli#access-your-cluster-using-the-oc-cli). 
+
+1. Select the **OpenShift** tab and run the 5 steps command:
+
+    ![](../assets/logdna-install.png)
+
+    The LogDNA agent collects logs with the extension `*.log` and extensionsless files that are stored in the `/var/log` directory of your pod. By default, logs are collected from all namespaces, including `kube-system`, and automatically forwarded to the IBM Log Analysis with LogDNA service.
+
+### Verify that the LogDNA agent is deployed successfully
+
+To verify that the LogDNA agent is deployed successfully, run the following command:
+
+1. Target the project where the LogDNA agent is deployed.
+
+    ```
+    oc project ibm-observe
+    ```
+
+2. Verify that the `logdna-agent` pods on each node are in a **Running** status.
+
+    ```
+    oc get pods -n ibm-observe
+    ```
+
+
+The deployment is successful when you see one or more LogDNA pods.
+* **The number of LogDNA pods equals the number of worker nodes in your cluster.**
+* All pods must be in a `Running` state.
+* *Stdout* and *stderr* are automatically collected and forwarded from all containers. Log data includes application logs and worker logs.
+* By default, the LogDNA agent pod that runs on a worker collects logs from all namespaces on that node.
+
+After the agent is configured, you should start seeing logs from this cluster in the LogDNA web UI. If after a period of time you cannot see logs, check the agent logs.
+
+To check the logs that are generated by a LogDNA agent, run the following command:
+
+```
+oc logs logdna-agent-<ID>
+```
+
+Where *ID* is the ID for a LogDNA agent pod. 
+
+For example, 
+
+```
+oc logs logdna-agent-xxxkz
+```
+
+## Analyze your logs with LogDNA
+
+IBM Log Analysis with LogDNA is a co-branded service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with LogDNA is operated by LogDNA in partnership with IBM. [Learn more](https://cloud.ibm.com/docs/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started).
+
+You can use IBM Log Analysis with LogDNA to manage system and application logs in IBM Cloud.
+
+{% hint style='info' %} IMPORTANT: Use Chrome to complete this exercise. {% endhint %}
+
+### Launch the LogDNA webUI
+
+You launch the web UI within the context of an IBM Log Analysis with LogDNA instance, from the IBM Cloud UI. 
+
+1. Select your instance.
+
+1. Click **View LogDNA**.
+
+   ![](../assets/logdna-launch-ui.png)
+
+The Web UI opens.
+
+
+### Create a custom view
+
+In LogDNA, you can configure custom views to monitor a subset of data. You can also attach an alert to a view to be notified of the presence or absence of log lines.
+
+When you launch the LogDNA web UI, log entries are displayed with a predefined format. You can modify in the **User Preferences** section how the information in each log line is displayed. You can also filter logs and modify search settings, then bookmark the result as a _view_. You can attach and detach one or more alerts to a view. You can define a custom format for how your lines are shown in the view. You can expand a log line and see the data parsed.
+
+### View events with the default format
+
+1. In the LogDNA web UI, click the **Views** icon ![](../assets/views.png).
+2. Select **Everything** to see all the events.
+
+![](../assets/views-img-1.png)
+
+### Customize your default view
+
+In the **USER PREFERENCES** section, you can modify the order of the data fields that are displayed per line.
+
+1. Select the **Configuration** icon ![](../assets/admin.png).
+2. Select **USER PREFERENCES**. A new window opens.
+3. Select **Log Format**.
+4. Modify the _Line Format_ section to match your requirements. Drag boxes around. Click **Done**.
+
+    For example, add **%app** after the timestamp.
+
+    ![](../assets/views-img-19.png)
+
+
+### Create a custom view to monitor logs
+
+You can select the events that are displayed through a view by applying a search query in the search bar, selecting values in the search area, or a combination of both. You can save that view for reuse later.
+
+1. In the LogDNA web UI, filter out the logs for the sample app that you have delpoyed in the cluster in previous steps.
+
+   From the Openshift console, go to the developer view. Select the project where you have deployed the sample app, and get the pod name. For example: `patient-ui-8658f89574-rgjw8` 
+
+   ![](../assets/views-img1.png)
+
+2. Enter in the search bar the following query: `host:{podName}` where {podName} is the name of your pod. For example: `host:patient-ui-8658f89574-rgjw8`
+
+   ![](../assets/views-img2.png)
+
+   Click enter.
+
+3. Filter out log lines to display only lines that are tagged as debug lines. 
+
+   Add in the search bar the following query: `level:debug` and click enter. The view will show lines that meet the filter and search criteria. For example: `host:patient-ui-8658f89574-rgjw8 level:debug` 
+
+   ![](../assets/views-img3.png)
+
+4. Save the custom view.
+
+   Click **Unsaved view**. Select **Save view**.
+
+   ![](../assets/views-img-6.png)
+
+   Enter the name of the view. Use the following format: `<Enter your user name> patientUI`. For example, `marisa patientui`
+
+   Enter a category. Use the following format: `<Enter your user name>`. For example, `marisa` Then click **Add new category**.
+
+   Click **Save view**.
+
+A new category appears on the left navigation panel.
+
+![](../assets/views-img-11.png)
+
+#### Generate application log data
+
+Generate logs:
+
+1. Run `oc status`.
+2. Get the application URL.
+
+    ![](../assets/views-img-20.png)
+
+3. Launch the application from a browser. Enter in the browser the application URL. Then, log in and log out with different names to see login entries for each user.
+
+    ![](../assets/views-img-21.png)
+
+### Analyze a log line
+
+At any time, you can view each log line in context.
+
+Complete the following steps:
+
+1. Click the **Views** icon ![](../assets/views.png).
+2. Select **Everything** or a view.
+3. Identify a line in the log that you want to explore.
+4. Expand the log line.
+
+   Information about line identifiers, tags, and labels is displayed.
+
+5. Click **View in Context** to see the log line in context of other log lines from that host, app, or both. This is a very useful feature when you want to troubleshoot a problem.
+
+   ![](../assets/views-img-12.png)
+
+   A new pop up window opens.
+
+   ![](../assets/views-img-13.png)
+
+   Choose one of the following options:
+
+   **By Everything** to see the log line in the context of all log records \(everything\) that are available in the LogDNA instance.
+
+   **By source** to see the log line in the context of the log lines for the same source.
+
+   **By App** to see the log line in the context of the log lines of the app.
+
+   **By Source and App** to see the log line in the combined context of the app and source.
+
+   Then click **Continue in New Viewer** to get the view in a different page. You might need to scroll down to get this option.
+
+   > **Tip: Open a view per type of context to troubleshoot problems.**
+
+6. Click **Copy to clipboard** to copy the message field to the clipboard. 
+
+    For example, the log record in the UI looks like:
+
+    ![](../assets/views-img-16.png)
+
+    When you copy the record, you get:
+
+    ```
+    [36m[2020-01-16T13:22:25.951] [DEBUG] default - [39mcalled the information endpoint for Marisa
+    ```
+
+    Notice that when you copy the log record you get less information than what it is displayed in the view. To get a line with all the fields, you must export data from a custom view. 
+
+When you are finished, close the line.
+
+### View a subset of the events by applying a timeframe
+
+In a view, you can search events that are displayed through a view for a specific timeframe.
+
+You can apply a timestamp by specifying an absolute time, a relative time, or a time range.
+
+Complete the following steps to jump to a specific time: 
+
+1. Launch the LogDNA web UI. 
+
+2. Click the **Views** icon ![](../assets/views.png). 
+
+3. Select your custom view. 
+
+4. Enter a time query. Choose any of the following options:
+
+    Enter an absolute time to jump to a point in time in your events such as `January 27 10:00am`.
+
+    ![](../assets/views-img-15.png)
+
+    Enter a relative time such as `5 days ago`. 
+
+    ![](../assets/views-img-17.png)
+
+    You can also enter a time range such as `yesterday 10am to yesterday 11am`, `last fri 4:30pm to 11/12 1 AM`, `last wed 4:30pm to 23/05 1 AM`, or `May 20 10am to May 22 10am`. Make sure to include `to` to separate the initial timestamp from the end timestamp.
+
+    Click **ENTER**.
+
+You might get the error message: `Your request is taking longer than expected, try refreshing your browser in a bit as we try to catch up. Retry.` You might get this error when the timeframe that you have specified does not have any events available to show. Change the time query, and retry.
+
+### Create a dashboard
+
+You can create a dashboard to monitor your app graphically through interactive graphs.
+
+For example, you can use graphs to analyze patterns and trends over a period of time.
+
+Complete the following steps to create a dashboard to monitor logs from the lab's sample app:
+
+1. In the LogDNA web UI, click the **Boards** icon ![Dashboards icon](../assets/boards.png).
+2. Select **NEW BOARD** to create a new dashboard.
+3. Click **Add graph**.
+4. Select the field **host**, then select the value that matches your pod name.
+
+   ![](../assets/board-img-4.png)
+
+   Click **Add graph**.
+
+   ![](../assets/board-img-5.png)
+
+5. Open a view that displays the logs for the patientui app. Click the graph in a peak of data at the time that you want to see logs, and then click **Show logs**.
+
+   ![](../assets/board-img-6.png)
+
+   A new page opens with the relevant log entries.
+
+6. Add subplots to analyze the data by applying additonal filtering criteria.
+
+   ![](../assets/board-img-8.png)
+
+   Click **Show subplots**.
+
+   Select **Histogram** and **level**.
+
+   ![](../assets/board-img-11.png)
+
+7. Name the dashboard by hitting "Edit".
+
+   Enter `patientui` as the name of the dashboard.
+
+   Enter a category. Use the following format: `<Enter your user name>` For example, `marisa` Then click **Add new category**.
+
+   Click **Save**.
+
+A new category appears on the left navigation panel.
+
+### Create a screen to monitor your app
+
+You can create a screen to monitor your app graphically through metrics \(counters\), operational KPIs \(gauges\), tables, and time-shifted graphs \(graphs that you can use to analyze patterns and trends for comparison analysis\).
+
+Complete the following steps to create a dashboard to monitor logs from the lab's sample app:
+
+1. In the LogDNA web UI, click the **screens** icon ![](../assets/screens.png).
+2. Select **NEW SCREEN**.
+3. Click **Add Widget** and select **Count**.
+
+   Click the widget. You will get the configuration fields for this widget.
+
+   To configure the _Count_ widget to report on the log lines for the application patientui, you must select the field **app**, and set the value to **patientui**.
+
+   You can also add a label, by entering a value for the _label_ field -- for example `App PatientUI`
+
+   The widget should look similar to the following one:
+
+   ![](../assets/screen-img-7.png)
+
+4. Add a gauge.
+
+   Click **Add Widget**.
+
+   Select **Gauge**.
+
+   Click the widget. You will get the configuration fields for this widget.
+
+   To configure the _Gauge_ widget to report on the debug log lines for the application patientui, you must select the field **level**, and set the value to **debug**. Then, set the advanced condition `app:patientui`. The duration is set to the default, last 1 day.
+
+   ![](../assets/screen-img-9.png)
+
+   Add a label, by entering a value for the _label_ field. Enter `PatientUI - INFO`. Also add the gauge limits `0` for Minimum and `5000` for maximum.
+
+   The widget should look similar to the following one:
+
+   ![](../assets/screen-img-11.png)
+
+5. Add a table.
+
+   Click **Add Widget**.
+
+   ![](../assets/screen-img-2.png)
+
+   Select **Table**.
+
+   ![](../assets/screen-img-12.png)
+
+   Click the widget. You will get the configuration fields for this widget.
+
+   To list the number of records in the last 24 hours for the cluster namespaces, set `Group By` to **namespace**.
+
+   ![](../assets/screen-img-13.png)
+
+   Change the default number of rows from 3 to 10.
+
+   The widget should look similar to the following one:
+
+   ![](../assets/screen-img-15.png)
+
+6. Save the screen. Select **Save Screen**.
+
+   IMPORTANT: If you do not save the screen, you lose all your widgets.
+
+{% hint style='tip' %}
+Find more about IBM Log Analysis with LogDNA in the [IBM Cloud documentation](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
+{% endhint %}
+
+## Monitor your Cluster with SysDig
+
+IBM Cloud Monitoring with Sysdig is a co-branded cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. IBM Cloud Monitoring with Sysdig is operated by Sysdig in partnership with IBM. [Learn more](https://cloud.ibm.com/docs/Monitoring-with-Sysdig?topic=Sysdig-getting-started).
+
+In the next steps, you will learn how to use dashboards and metrics to monitor the health of your application.
+
+
+### View SysDig pre-defined views and dashboards
+
+Use views and dashboards to monitor your infrastructure, applications, and services. You can use pre-defined dashboards. You can also create custom dashboards through the Web UI or programmatically. You can backup and restore dashboards by using Python scripts.
+
+The following table lists the different types of pre-defined dashboards:
+
+| Type | Description | 
+| :--- | :--- |
+| Applications | Dashboards that you can use to monitor your applications and infrastructure components. |
+| Host and containers | Dashboards that you can use to monitor resource utilization and system activity on your hosts and in your containers. |
+| Network | Dashboards that you can use to monitor your network connections and activity. | 
+| Service | Dashboards that you can use to monitor the performance of your services, even if those services are deployed in orchestrated containers. | 
+| Topology | Dashboards that you can use to monitor the logical dependencies of your application tiers and overlay metrics. | 
+
+
+### Complete the Sysdig installation wizard
+
+1. Launch the Sysdig web UI.
+
+    ![](../assets/icp-monitoring-launch.png)
+
+2. In the Sysdig Welcome wizard, click **Next**
+   ![](../assets/sysdig-wizard1.png)
+
+3. Select **Kubernetes | GKE | OpenShift** as the installation method.
+   ![](../assets/sysdig-wizard2.png)
+
+4. You should see a message `You have X agents connected`. Click **GO TO NEXT STEP**. 
+   ![](../assets/sysdig-wizard3.png)
+
+5. Setup is complete. Click **LET'S GET STARTED**
+   ![](../assets/sysdig-wizard4.png)
+
+6. Select **Next**
+   ![](../assets/sysdig-wizard5.png)
+
+7. Finally **Complete Onboarding**
+
+   ![](../assets/sysdig-wizard6.png)
+
+
+### View the Sysdig dashboard
+
+1. Navigate the Sysdig console to get metrics on your Kubernetes cluster, nodes, deployments, pods, containers.
+
+2. Under the **Explore** section,select **Containerized Apps** to view raw metrics for all workloads running on the cluster.
+
+   ![](../assets/sysdig-select-app.png)
+
+3. Under **Explore**, select **Nodes**, search `patient-ui`. Look for the partientui pod entry.
+
+   ![](../assets/sysdig-explore-node.png)
+
+4. Under **Dashboard**, select **Default Dashboards** &gt; **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
+
+5. Under Dashboard, select **Default Dashboards** &gt; **Hosts & Containers**. Then select **Overview by Host** to understand how nodes are currently performing.
+
+
+### Explore the normal traffic flow of the application
+
+You can use the **Connection Table** dashboard to monitor how data flows between your application components.
+
+1. From the **Explore** tab, select **Deployments**.
+2. Select your cluster (e.g. roks081). Then, select the namespace where you deployed your sample app.
+3. Select the _patientui_ pod entry.
+4. Select **Default Dashboards**.
+
+   ![](../assets/explore-img-4.png)
+
+5. Check out the two dashboards under **Hosts & Containers**:
+   * **Overview by Host**
+   * **Overview by Container**.
+
+### Explore the cluster and the node capacity
+
+1. From the **Explore** tab, select **Deployments**.
+2. Select your cluster (e.g. roks081). Then, select the namespace where you deployed your sample app.
+3. Select the _patientui_ pod entry.
+4. Select **Default Dashboards**.
+5. Select **Kubernetes > Kuberentes Cluster and Node Capacity**. 
+
+   ![](../assets/explore-img-9.png)
+
+   Check the **Total CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons.
+
+   Check the **Total Allocatable CPU**. This is the CPU which is available for pods excluding system daemons.
+
+   Check the **Total Pod CPU limit**. It should be less than the allocatable CPU of the node or cluster.
+
+   Check the **Total Pod CPU Requested**. It is the amount of CPU that will be guaranteed for pods on the node or cluster.
+
+   Check the **Total Pod CPU Usage**. It is the total amount of CPU that is used by all Pods on the node or cluster.
+
+### Explore the Network
+
+1. From the **DASHBOARDS** tab, select **Default Dashboards**. Then, select **Network > Overview**.
+
+   The following dashboard is displayed. It shows information about all resources that are monitored thorugh the instance.
+
+   ![](../assets/dashboard-img-2.png)
+
+2. Change the scope of the dashboard to display information about your openshift cluster. Select **Edit scope** on the right side and change it:
+
+    ![](../assets/dashboard-img-4.png)
+
+    The dashboard now shows information about the ibm-observe namespace.
+
+    ![](../assets/dashboard-img-5.png)
+
+### Congratulations!
+
+That's it, you're done with the Red Hat OpenShift 4.3 on IBM Cloud workshop. Thanks for joining us!
+
+{% hint style='tip' %}
+Find more about IBM Cloud Monitoring with Sysdig in the [IBM Cloud documentation](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig/index.html#getting-started).
+{% endhint %}
+
+--------------------------------------------------------------------------------
 
 start things up
 
