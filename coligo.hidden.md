@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-04-13"
+lastupdated: "2020-04-23"
 lasttested: "2020-03-05"
 
 ---
@@ -67,7 +67,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * Coligo plugin (`coligo-service`),
+   * Coligo plugin (`coligo-cli`),
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`)
 
 <!--##istutorial#-->
@@ -86,7 +86,7 @@ In this section, you will create a Coligo project. A project is a grouping of ap
    - Click on **Create**
 3. On a terminal, make the command line tooling point to your project
    ```sh
-   ibmcloud coligo target --name $COLIGO_PROJECT
+   ibmcloud coligo target --name <PROJECT_NAME>
    ```
    {:pre}
 
@@ -109,8 +109,8 @@ In this section, you will deploy your front-end web application to Coligo under 
 
 2. Copy the URL from the output above and open it in a browser to see an output as similar to this
    ```
-   Hello World!! from the frontend.
-   Connection to the backend failed as there is no backend defined yet.
+   Congratulations! Your Frontend is working
+   Oops!! Looks like the Connection to the backend is failing. Time to add a backend
    ```
 3. For secured browsing, you can also browse the application with `HTTPS`.
 
@@ -187,9 +187,9 @@ Now, you will need to pass in the credentials for the services you just created 
 1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials and a configmap to hold the bucket name,
    ```sh
    ibmcloud coligo secret create --name cos-secret \
-   --from-literal=cos-endpoint=ENDPOINT \
-   --from-literal=cos-api-key=API_KEY
-   --from-literal=cos-resource-instance-id=RESOURCE_INSTANCE_ID
+   --from-literal=COS_ENDPOINT=<COS_ENDPOINT> \
+   --from-literal=COS_APIKEY=<COS_API_KEY> \
+   --from-literal=COS_RESOURCE_INSTANCE_ID=<COS_RESOURCE_INSTANCE_ID>
    ```
    {:pre}
 
@@ -198,7 +198,7 @@ Now, you will need to pass in the credentials for the services you just created 
 
    ```sh
    ibmcloud coligo configmap create --name cos-bucket-name \
-   --from-literal=bucket.name=COS_BUCKET_NAME
+   --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME>
    ```
    {:pre}
 
@@ -263,7 +263,7 @@ In this section, you will build your own container image from the source code an
 
 1. With the command below, delete the project to delete all it's components (applications, jobs etc.).
    ```sh
-   ibmcloud coligo project delete --name $COLIGO_PROJECT
+   ibmcloud coligo project delete --name <PROJECT_NAME>
    ```
    {:pre}
 2. Navigate to [Resource List](https://{DomainName}/resources/)
