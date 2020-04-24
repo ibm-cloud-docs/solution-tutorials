@@ -477,7 +477,7 @@
           "lastUpdated": "2019-11-21"
         },
         {
-          "name": "Build, deploy, test, and retrain a predictive machine learning model",
+          "name": "Build, deploy, test and monitor a predictive machine learning model",
           "url": "create-deploy-retrain-machine-learning-model.html",
           "description": "Build a predictive machine learning model, deploy it as an API, test and retrain the model with feedback data.",
           "imgSrc": "images/solution22-build-machine-learning-model/architecture_diagram.png",
@@ -488,7 +488,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-04-16"
+          "lastUpdated": "2020-04-23"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
