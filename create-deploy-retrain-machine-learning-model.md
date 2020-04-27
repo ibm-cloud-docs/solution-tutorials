@@ -69,7 +69,7 @@ You can create a project to add data and open a data asset in the data refiner f
 {: #create_project}
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and create [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services)
-  1. Select a **region**
+  1. Select a **region** preferably **Dallas**
   2. Select a **Lite** pricing plan
   3. Provide a **Service name**
   4. Select a **resource group** and click **Create**
@@ -184,7 +184,7 @@ Once the status changes to **Ready** (You may have to refresh the page):
    {:pre}
 8. Export the returned `instance_id` as `ML_INSTANCE_ID` for use in subsequent API requests
    ```sh
-   export ML_INSTANCE_ID='<ML_SERVICE_INSTANCE_ID>'
+   export ML_INSTANCE_ID='<INSTANCE_ID>'
    ```
    {:pre}
 
