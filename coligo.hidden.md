@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-04-23"
-lasttested: "2020-03-05"
+lastupdated: "2020-04-27"
+lasttested: "2020-04-27"
 
 ---
 
@@ -25,7 +25,7 @@ lasttested: "2020-03-05"
 
 > :warning: WORK-IN-PROGRESS
 
-In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. The application is made up of frontend and backend applications. The frontend application is a web application that users will use to upload images. This web application will send the uploaded images to the backend application for processing. The backend application will store the images into an object storage "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job task per image. A batch job is a collection of tasks where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another bucket. And finally, the results of those scans will then be visible on the web application.
+In this tutorial, you will be learn about Coligo by deploying an object detection application to a Coligo cluster. The application is made up of frontend and backend applications. The frontend application is a web application that users will use to upload images. This web application will send the uploaded images to the backend application for processing. The backend application will store the images into an object storage "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job task per image. A batch job is a collection of tasks where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another folder in the same bucket. And finally, the results of those scans will then be visible on the web application.
 {:shortdesc}
 
 Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton etc.).
@@ -172,8 +172,8 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    2. Set **Service name** to **coligo-cos** and select a resource group.
    3. Click on **Create**.
 2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for future reference
-3. Create a **Standard** bucket named `<your-initials>-coligo-images` with **Cross Region** resiliency and another bucket named `<your-initials>-coligo-results` with **Cross Region** resiliency.
-4. Under **Endpoint**, find the **private** endpoint to access your buckets and save the endpoint for quick reference.
+3. Create a **Standard** bucket named `<your-initials>-coligo` with **Cross Region** resiliency.
+4. Under **Endpoint**, find the **private** endpoint to access your bucket and save the endpoint for quick reference.
 5. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **coligo-vr** and select a resource group.
@@ -233,8 +233,8 @@ Now that you have the backend application connected to the frontend application,
    {:pre}
 2. Test the app by uploading an image through the frontend UI
    1. Click on **Choose an image...** and point to the image on your computer. You should see the preview of the image with a "Not Analyzed" tag on it.
-   2. Click on **Upload Images** to store the image in the {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-images`.
-3. Click on **Analyze** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} bucket to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in a separate {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo-results` and can be seen on the UI.
+   2. Click on **Upload Images** to store the image in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo`.
+3. Click on **Analyze** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} bucket to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
 4. Upload multiple images to create individual jobs. Each job retrieves a single image to process from the bucket.
 5. Check the results of the processed images on the UI.
 
