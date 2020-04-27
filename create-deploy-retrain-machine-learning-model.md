@@ -19,7 +19,7 @@ lasttested: "2020-04-27"
 
 # Build, deploy, test and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
-This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. To understand monitoring, you will create a new machine learning model using a notebook, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed model (using a notebook) with {{site.data.keyword.aios_full_notm}}.
+This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. You will also learn how to create a new machine learning model using a notebook, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed model (using a notebook) with {{site.data.keyword.aios_full_notm}}.
 {:shortdesc}
 
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
