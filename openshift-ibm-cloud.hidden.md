@@ -132,7 +132,7 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 --------------------------------------------------------------------------------
 ## Deploying an application
 
-In this section, you'll deploy a simple Node.js Express application - "Example Health". Example Health is a simple UI for a patient health records system. We'll use this example to demonstrate key {{site.data.keyword.openshiftshort}} features throughout this workshop. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
+In this section, you'll deploy a simple Node.js Express application, "patient-health-frontend", a simple UI for a patient health records system. We'll use this example to demonstrate key {{site.data.keyword.openshiftshort}} features throughout this workshop. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
 
 
 ### Deploy Example Health
@@ -169,7 +169,7 @@ In this section, you'll deploy a simple Node.js Express application - "Example H
 
 ### View the Example Health
 
-1. You should see the app you just deployed.  Notice that you are in the **Topology** view of the **Developer** perspective.
+1. You should see the app you just deployed.  Notice that you are in the **Topology** view of the example-health project in the **Developer** perspective.  All applications in the project are displayed.
 
 1. Click the center the **node** application to bring up the details view of the `Deployment` (note the **D** next to **patient-health-frontend**).  You should see your Pods, Builds, Services and Routes.
 
@@ -200,7 +200,7 @@ Congrats! You've deployed a `Node.js` app to {{site.data.keyword.openshiftshort}
 To recap:
 
 * Deployed the "Example Health" Node.js application directly from GitHub into your cluster 
-  * Used the "Source to Image" strategy provided by {{site.data.keyword.openshiftshort}}
+  * Configured the "Source to Image" builder provided by {{site.data.keyword.openshiftshort}}
 * Deployed an end-to-end development pipeline 
   * New commits that happen in GitHub can be pushed to your cluster with a simple \(re\)build
 * Looked at your app in the {{site.data.keyword.openshiftshort}} console.
@@ -354,7 +354,6 @@ Verify your script to simulate load is running, Grafana showed you that your app
 
 2. In the YAML editor, go to line 44. In the section **template > spec > containers**, add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
 
-    ![](images/solution55-openshift-ibm-cloud-hidden/ocp-limits-yaml.png)
 
   ```yaml
              resources:
@@ -365,6 +364,7 @@ Verify your script to simulate load is running, Grafana showed you that your app
                  cpu: 3m
                  memory: 40Mi
   ```
+    {:pre}
 
 Here is a snippet after you have made the changes:
   ```yaml
@@ -397,6 +397,8 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
 
     ![HPA](images/solution55-openshift-ibm-cloud-hidden/ocp-hpa.png)
 
+    If you edit in the changes make sure that the spec > scaleTargetRef > name matches the name of the deployment: `patient-health-frontend`.  You can just copy/paste in the entire section below:
+
     ```yaml
     apiVersion: autoscaling/v2beta1
     kind: HorizontalPodAutoscaler
@@ -416,6 +418,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
             name: cpu
             targetAverageUtilization: 1
     ```
+    {:pre}
 
 2. Hit **Create**.
 
@@ -423,7 +426,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
 
 If you're not running the script to simulate load, the number of pods should stay at 1.
 
-1. Check by going to the **Overview** page of **Deployments** for patient-health-frontend.
+1. Check by opening the **Overview** page of the deployment.  Click **Workloads** > **Deployments** and click **patient-health-frontend** and make sure the **Overview** panel is selected.
 
 2. Start simulating load by hitting the page several times, or running the script. You'll see that it starts to scale up:
 
@@ -438,6 +441,9 @@ You can also can delete and create resources like autoscalars with the command l
 Start by verifying the context is your project and get the autoscalar that was created earlier:
 ```
 oc project example-health
+```
+{:pre}
+```
 oc get hpa
 ```
 {:pre}
@@ -482,8 +488,7 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
    ![Installed Operators](images/solution55-openshift-ibm-cloud-hidden/installedoperators.png)
 
 ### Create a Cloudant Service using the CRDs
-
-There are great instructions in the **Requirements** section of the installed operator.  Below is my experience in the shell:
+An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database.  The API key is going to be stored in a kubernetes Secret resource.  This will need to be created using the shell.  There are great instructions in the **Requirements** section of the installed operator.  Below is my experience in the shell:
 
 1. List the resource groups
 
@@ -499,7 +504,7 @@ There are great instructions in the **Requirements** section of the installed op
    ```
    {:pre}
 
-7. Verify that it looks something like this.  Org and Space can be empty.
+7. Verify that it looks something like this.  CF API endpoint, Org and Space can be empty.
 
     ```sh
     ibmcloud target
@@ -508,21 +513,27 @@ There are great instructions in the **Requirements** section of the installed op
     User:              YOU@us.ibm.com   
     Account:           YOURs Account (32cdeadbeefdeadbeef1234132412343) <-> 1234567   
     Resource group:    default   
-    CF API endpoint:   https://api.us-south.cf.cloud.ibm.com (API version: 2.147.0)   
+    CF API endpoint:   
     Org:
     Space:
     ```
 
-9. Use the helper script provided by IBM to create a new API token, and register it as a secret in your {{site.data.keyword.openshiftshort}} cluster.  Copy this from the Requirements section not from the text below:
+9. Use the helper script provided by IBM to create the following resources:
+    - ibm cloud API token that represents you and your permissions to use the IBM cloud
+    - kubernetes Secret resource holding the API token with the name `secret-ibm-cloud-operator` in the `default` namespace
+    - kubernetes ConfigMap resource with the name `config-ibm-cloud-operator` in the `default` namespace to hold the region and resource group
+    
+    Copy curl command from the Requirements section not from the text below:
 
     ```sh
     curl ... | bash
     ```
-1. Optionally verify that the kubernetes secret has been created:
+1. Verify that the kubernetes secret has been created:
     ```sh
     kubectl describe secret secret-ibm-cloud-operator -n default
     ```
    {:pre}
+
     ```sh
     Name:         secret-ibm-cloud-operator
     Namespace:    default
@@ -536,6 +547,18 @@ There are great instructions in the **Requirements** section of the installed op
     api-key:  44 bytes
     region:   8 bytes
     ```
+
+1. Verify that the kubernetes ConfigMap has been created:
+    ```sh
+    kubectl describe configmap  config-ibm-cloud-operator  -n default
+    ```
+   {:pre}
+
+   It should match your resource group, mine is `default`
+    ```sh
+    ibmcloud resource group default
+    ```
+   {:pre}
 
 9. In the instructions \<SERVICE_CLASS\> is `cloudantnosqldb` and \<PLAN\> is `lite`
 
@@ -565,6 +588,7 @@ There are great instructions in the **Requirements** section of the installed op
       serviceClass: cloudantnosqldb
       plan: lite
     ```
+    {:pre}
 
     Then click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
 
@@ -582,6 +606,7 @@ There are great instructions in the **Requirements** section of the installed op
     spec:
       serviceName: cloudant-service
     ```
+    {:pre}
 
 6. Verify the binding was created.   Click on your binding, and look for **Message: Online**. By navigating to the **Resources** tab, you can see that the **cloudant-binding** secret is created. Click that to see your credentials for accessing your Cloudant DB, stored securely in a secret:
 
@@ -589,22 +614,30 @@ There are great instructions in the **Requirements** section of the installed op
 
 ### Deploy the Node.js Patient Backend Database App
 
-Now you'll create the Node.js app that will populate your Cloudant DB with patient data. It will also serve data to the front-end application that we deployed in the first exercise.
+Now you'll create the Node.js app that will populate your Cloudant DB with patient data. It will also serve data to the front-end application deployed earlier.
 
 1. Make sure you're your context is the project **example-health**:
 
     ```sh
     oc project example-health
     ```
+    {:pre}
 
-
+1. The following new-app commmand will make a build configuration and deploymet.  Similar to the patient-health-frontend a Build config and a Deployment will be created for the patient-health-backend:
     ```sh
     oc new-app --name=patient-health-backend centos/nodejs-10-centos7~https://github.com/IBM-Cloud/patient-health-backend
     ```
+    {:pre}
 
-3. The app will crash and fail to start repeatedly because the credentials to the Cloudant DB haven't been set yet.
+3. Back in the console in the **Topology** view of the **Developer** perspective open the **backend** app to notice that the **Pod** is failing to start.  Click on the **Pod** logs to see:
+    ```
+    > node app.js
 
-   ![Crashing](images/solution55-openshift-ibm-cloud-hidden/crashing.png)
+    /opt/app-root/src/app.js:23
+            throw("Cannot find Cloudant credentials, set CLOUDANT_URL.")
+            ^
+    Cannot find Cloudant credentials, set CLOUDANT_URL.
+    ```
 
 4. Let's fix this by setting the environment variable to the **cloudant-binding** secret we created earlier. Navigate to the deployment config for the `patient-health-backend` app by clicking the app, and then selecting the name next to **DC**:
 
@@ -614,9 +647,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
 
    ![Environment from Secret](images/solution55-openshift-ibm-cloud-hidden/envfromsecret.png)
 
-6. Go back to the **Topology** tab, and the **patient-health-backend** should successfully start shortly.  Click on the **patient-health-backend** **logs** and notice the databases created.
-
-   ![Apps Running](images/solution55-openshift-ibm-cloud-hidden/runningapps.png)
+6. Go back to the **Topology** tab, and click the **patient-health-backend**.  Check out the **Pods** section, which should should indicate **Running** shortly.  Click on the **Pod** **logs** and notice the databases created.
 
 ### Configure Patient Health Frontend App to use Patient Health Backend App
 
