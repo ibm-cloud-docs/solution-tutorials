@@ -37,7 +37,6 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.la_short}}](https://cloud.ibm.com/observe/logging/create)
 * [{{site.data.keyword.mon_full_notm}}](https://cloud.ibm.com/observe/monitoring/create)
 
-
 <!--##istutorial#-->
 This tutorial will incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 <!--#/istutorial#-->
@@ -56,7 +55,6 @@ in {{site.data.keyword.openshiftshort}} cluster.
 1. Users access the frontend application.
 1. The backend application is connected to the database with an IBM Cloud Operator.
 1. An Administrator monitors the app with {{site.data.keyword.la_short}} and {{site.data.keyword.monitoringshort_notm}}.
-
 
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
