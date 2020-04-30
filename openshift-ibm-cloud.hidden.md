@@ -24,7 +24,7 @@ This tutorial demonstrates the integration of [{{site.data.keyword.openshiftlong
 * Deploy an {{site.data.keyword.openshiftshort}} cluster
 * Deploy a microservice
 * scale the microservice
-* Use an operator to deploy {{site.data.keyword.cloudant_local_notm}}
+* Use an operator to deploy {{site.data.keyword.cloudant_local_notm}} and bind to a microservice
 * Observe the cluster using {{site.data.keyword.la_short}}
 * Observe the cluster using {{site.data.keyword.mon_full_notm}}
 
@@ -49,15 +49,17 @@ This tutorial will incur costs. Use the [Pricing Calculator](https://{DomainName
   ![Architecture](images/solution55-openshift-ibm-cloud-hidden/openshift-ibm-cloud.drawio.png)
 </p>
 
-1. A developer initializes the {{site.data.keyword.openshiftshort}} **Builder** with the repository URL.
-1. The **Builder** clones the source, creates an image, pushes it to OpenShift registry, then starts the app by creating a Kubernetes deployment
-in {{site.data.keyword.openshiftshort}} cluster.
+1. A developer initializes an {{site.data.keyword.openshiftshort}} application **Builder** and **Deployment** with the repository URL.
+1. The **Builder** clones the source, creates an image, pushes it to OpenShift registry, then starts the app by creating a Kubernetes **Deployment** in {{site.data.keyword.openshiftshort}} cluster.
 1. Users access the frontend application.
-1. The backend application is connected to the database with an IBM Cloud Operator.
+1. The {{site.data.keyword.cloudant_short_notm}} database instance is provisioned through an IBM Cloud Operator Service.
+1. The backend application is connected to the database with an IBM Cloud Operator Binding.
+1. {{site.data.keyword.la_short}} is provisioned and agent deployed.
+1. {site.data.keyword.monitoringshort_notm}} is provisioned and agent deployed.
 1. An Administrator monitors the app with {{site.data.keyword.la_short}} and {{site.data.keyword.monitoringshort_notm}}.
 
 <!--##istutorial#-->
-## Create an {{site.data.keyword.openshiftshort}} cluster
+## Create {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
 
 With {{site.data.keyword.openshiftshort}}, you have a fast and secure way to containerize and deploy enterprise workloads in {{site.data.keyword.openshiftshort}} clusters. {{site.data.keyword.openshiftshort}} clusters build on Kubernetes container orchestration that offers consistency and flexibility for your development lifecycle operations.
@@ -321,6 +323,8 @@ Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](h
 
     ![Grafana also project](images/solution55-openshift-ibm-cloud-hidden/ocp43-grafana-cpu.png)
 
+5. There is a lot more we could investigate with Grafana, but we are going to closely examine {{site.data.keyword.la_short}} in more detail later.  {{site.data.keyword.la_short}} provides log analysis for {{site.data.keyword.openshiftshort}} and the other IBM Cloud Services in a single managed service.
+
 ### Prometheus and Alert Manager
 
 Navigating back to the {{site.data.keyword.openshiftshort}} console, you can also launch:
@@ -335,6 +339,19 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
 1. The Metrics page is accessible in the **Administrator** perspective by clicking **Monitoring → Metrics**.
 
     ![Metrics, Alerts and Dashboards](images/solution55-openshift-ibm-cloud-hidden/ocp43-monitoring-prometheus.png)
+
+2. Navigate through the **Prometheus UI**. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.
+
+3. In the top box a query expression can be entered.  Paste in the following to get a look at our frontend:
+ 
+    ```
+    sum(container_cpu_usage_seconds_total{container="patient-health-frontend"})
+    ```
+
+4. Clilck on the **Graph** tab.  I turned the traffic generator script on for a while and then stopped it.  Note that the times are GMT:
+    ![Prometheus Graph](images/solution55-openshift-ibm-cloud-hidden/prometheus-01.png)
+
+5. There is a lot more we could investigate with Prometheus, but we are going to closely examine {{site.data.keyword.mon_short}} in more detail later.  {{site.data.keyword.mon_short}} montiors {{site.data.keyword.openshiftshort}} and the other IBM Cloud Services in a single managed service.
 
 ## Scaling the application
 
@@ -362,7 +379,7 @@ Verify your script to simulate load is running, Grafana showed you that your app
                  cpu: 3m
                  memory: 40Mi
   ```
-    {:pre}
+  {:pre}
 
 Here is a snippet after you have made the changes:
   ```yaml
@@ -526,11 +543,14 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
     ```sh
     curl ... | bash
     ```
+
 1. Verify that the kubernetes secret has been created:
     ```sh
     kubectl describe secret secret-ibm-cloud-operator -n default
     ```
-   {:pre}
+    {:pre}
+
+    generates
 
     ```sh
     Name:         secret-ibm-cloud-operator
@@ -550,13 +570,13 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
     ```sh
     kubectl describe configmap  config-ibm-cloud-operator  -n default
     ```
-   {:pre}
+    {:pre}
 
-   It should match your resource group, mine is `default`
+    It should match your resource group, mine is `default`
     ```sh
     ibmcloud resource group default
     ```
-   {:pre}
+    {:pre}
 
 9. In the instructions \<SERVICE_CLASS\> is `cloudantnosqldb` and \<PLAN\> is `lite`
 
@@ -573,10 +593,9 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
             lite                                        plan         cloudant-lite
             standard                                    plan         cloudant-standard
     ```
-    {:pre}
 
 9. Back in the GUI, click the **Create Instance** in the **Service** box on the **Installed Operators** page to bring up the yaml editor.  Make the suggested substitutions:
-    ```
+    ```yaml
     apiVersion: ibmcloud.ibm.com/v1alpha1
     kind: Service
     metadata:
@@ -595,7 +614,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
     Over time the **Message** field will change from **provisioning** to **Online** meaning it is good to go.
 
 5. Create a Binding resource associated with the Service resource you just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `cloudant-service`, the name provided in the **Service**
-    ```sh
+    ```yaml
     apiVersion: ibmcloud.ibm.com/v1alpha1
     kind: Binding
     metadata:
@@ -621,7 +640,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
     ```
     {:pre}
 
-1. The following new-app commmand will make a build configuration and deploymet.  Similar to the patient-health-frontend a Build config and a Deployment will be created for the patient-health-backend:
+1. The following new-app commmand will make a build configuration and Deployment Configuration.  The following demonstrates the CLI invocation of the add application (remember using the GUI console for the frontend):
     ```sh
     oc new-app --name=patient-health-backend centos/nodejs-10-centos7~https://github.com/IBM-Cloud/patient-health-backend
     ```
@@ -637,7 +656,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
     Cannot find Cloudant credentials, set CLOUDANT_URL.
     ```
 
-4. Let's fix this by setting the environment variable to the **cloudant-binding** secret we created earlier. Navigate to the deployment config for the `patient-health-backend` app by clicking the app, and then selecting the name next to **DC**:
+4. Let's fix this by setting the environment variable to the **cloudant-binding** secret we created in the earlier operator section. Navigate to the deployment config for the `patient-health-backend` app by clicking the app, and then selecting the name next to **DC**:
 
    ![Deployment Config](images/solution55-openshift-ibm-cloud-hidden/deploymentconfig.png)
 
@@ -679,7 +698,7 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 
 ## Configure the {{site.data.keyword.monitoringshort_notm}} Agent
 
-To integrate your monitoring instance with your {{site.data.keyword.openshiftshort}} cluster, you must run a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
+The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
 
 <!--##isworkshop#-->
 <!--
@@ -692,7 +711,7 @@ To integrate your monitoring instance with your {{site.data.keyword.openshiftsho
 1. Click this link for [IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/observe/monitoring/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Monitoring**:
    1. Click **Create a monitoring instance**
    1. Select the region where your cluster is created (.e.g Dallas)
-   1. Select the **Lite** plan TODO is this the right plan?
+   1. Select the **Graduated Tier** plan
    1. Set the **Service name** to **YOUR_IBM_ID-sysdig**.
    1. Use the default resource group.
    1. Click **Create**.
@@ -705,8 +724,14 @@ To integrate your monitoring instance with your {{site.data.keyword.openshiftsho
 1. Before running the curl command in the next step, make sure you're still logged in to the cluster.
     ```sh
     oc project
+    ```
+    {:pre}
+
+    ```sh
+    oc project
     curl -sL https://...
     ```
+
 
 1. Select the **{{site.data.keyword.openshiftshort}}** tab and run the curl command next to **Public Endpoint**
 
@@ -750,7 +775,7 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 1. Click this link for [IBM Cloud Logging with LogDNA](https://cloud.ibm.com/observe/logging/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Logging**:
    1. Click **Create instance**
    1. Select the region where your cluster is created (.e.g Dallas)
-   1. Select the **Lite** plan TODO is this the right plan?
+   1. Select the **Graduated Tier** TODO name?? plan
    1. Set the **Service name** to **YOUR_IBM_ID-logdna**.
    1. Use the default resource group.
    1. Click **Create**.
@@ -814,6 +839,8 @@ You can use IBM Log Analysis with {{site.data.keyword.la_short}} to manage syste
 
 {% hint style='info' %} IMPORTANT: Use Chrome to complete this exercise. {% endhint %}
 
+This section of the tutorial goes deep into the IBM logging service.  You can stop this section at any time and successfuly begin the next section.
+
 ### Launch the {{site.data.keyword.la_short}} webUI
 
 You launch the web UI within the context of an IBM Log Analysis with {{site.data.keyword.la_short}} instance, from the IBM Cloud UI. 
@@ -825,7 +852,6 @@ You launch the web UI within the context of an IBM Log Analysis with {{site.data
    ![](images/solution55-openshift-ibm-cloud-hidden/logdna-launch-ui.png)
 
 The Web UI opens.
-
 
 ### Create a custom view
 
