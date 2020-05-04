@@ -21,6 +21,7 @@ tar cf - \
   --exclude=README.md \
   --exclude="*.course.json" \
   --exclude=scripts \
+  --exclude=diagrams \
   --exclude="*.hidden.md" \
   --exclude="images/*hidden*" \
   --exclude=.vscode \
