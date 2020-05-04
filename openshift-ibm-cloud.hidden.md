@@ -83,7 +83,7 @@ In this section, you will provision a {{site.data.keyword.openshiftshort}} clust
 4. Review **Infrastructure permissions checker** to verify the required permissions
 5. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
-### Create and Configure a Cloud Shell
+### Initialize a Cloud Shell
 
 Start a IBM Cloud Shell and initialize it with the  oc login command.
 
@@ -136,21 +136,25 @@ In this step, you'll configure `oc` to point to the cluster assigned to you. The
 In this section, you'll deploy a simple Node.js Express application, "patient-health-frontend", a simple UI for a patient health records system. We'll use this example to demonstrate key {{site.data.keyword.openshiftshort}} features throughout this workshop. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
 
 
-### Deploy Example Health
+### Create Project
+
+A project is a collection of resources managed by a devops team.  An administrator will create the project and the developers can create applications that can be built and deployed.
 
 1. Navigate to the {{site.data.keyword.openshiftshort}} web console 
 
     ![](images/solution55-openshift-ibm-cloud-hidden/ocp-console.png)
 
-1. Select the **Home** > **Projects** view on the left to display all the projects.
+1. In the **Administrator** perspective select the **Home** > **Projects** view on the left to display all the projects.
 1. Create a new project by selecting **Create Project**. In the pop up **Name** the project "example-health", leave **Display Name** blank, click **Create**.
 1. The new project's **Project Details** page is displayed.  Observe that your context in **Administrator** > **Home** > **Projects** on the left and **Projects** > **Project Details** > **example-health** on the top.  Nice.
+
+### Build and Deploy Application
 
 1. Switch from the **Administrator** to the **Developer** view. Make sure your project is selected.  Your context should be **Developer** > **Topology** on the left and **Project: example-health** on the top.
 
     ![](images/solution55-openshift-ibm-cloud-hidden/ocp-project-view.png)
 
-1. Let's deploy the application by selecting **From Git**.
+1. Let's build and deploy the application by selecting **From Git**.
 
 1. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend` in the Git Repo URL field.
 
@@ -168,7 +172,7 @@ In this section, you'll deploy a simple Node.js Express application, "patient-he
 
     Your application is being deployed.
 
-### View the Example Health
+### View Application
 
 1. You should see the app you just deployed.  Notice that you are in the **Topology** view of the example-health project in the **Developer** perspective.  All applications in the project are displayed.
 
@@ -206,17 +210,13 @@ To recap:
   * New commits that happen in GitHub can be pushed to your cluster with a simple \(re\)build
 * Looked at your app in the {{site.data.keyword.openshiftshort}} console.
 
-### What's Next?
-
-Let's dive into some Day 1 {{site.data.keyword.openshiftshort}} Operations tasks, starting with Monitoring and Logging
-
 ## Logging and monitoring
 
 In this section, we'll explore the out-of-the-box logging and monitoring capabilities that are offered in {{site.data.keyword.openshiftshort}}.
 
 ### Simulate Load on the Application
 
-Let's simulate some load on our application.
+There are times during this tutorial when it is required to generate some load.
 
 1. First, make sure you're connected to the project where you deployed your app.
     ```sh
@@ -450,7 +450,7 @@ If you're not running the script to simulate load, the number of pods should sta
 
 That's it! You now have a highly available and automatically scaled front-end Node.js application. {{site.data.keyword.openshiftshort}} is automatically scaling your application pods since the CPU usage of the pods greatly exceeded `1`% of the resource limit, `30` millicores.
 
-#### Optional
+### Autoscaling from the command line
 
 You can also can delete and create resources like autoscalars with the command line.
 
@@ -503,7 +503,7 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
 
    ![Installed Operators](images/solution55-openshift-ibm-cloud-hidden/installedoperators.png)
 
-### Create a Cloudant Service using the CRDs
+### Create a Cloudant Service and Bind using the CRDs
 An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database.  The API key is going to be stored in a kubernetes Secret resource.  This will need to be created using the shell.  There are great instructions in the **Requirements** section of the installed operator.  Below is my experience in the shell:
 
 1. List the resource groups
@@ -697,68 +697,6 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 
    ![credentials](images/solution55-openshift-ibm-cloud-hidden/credentials.png)
 
-## Configure the {{site.data.keyword.monitoringshort_notm}} Agent
-
-The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
-
-<!--##isworkshop#-->
-<!--
-{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.monitoringshort_notm}} has already been provisioned and configured, skip the create and deploy steps and go to the step verify the agent at the bottom. Find your {{site.data.keyword.monitoringshort_notm}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
--->
-<!--#/isworkshop#-->
-
-### Create a {{site.data.keyword.monitoringshort_notm}} service instance
-
-1. Click this link for [IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/observe/monitoring/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Monitoring**:
-   1. Click **Create a monitoring instance**
-   1. Select the region where your cluster is created (.e.g Dallas)
-   1. Select the **Graduated Tier** plan
-   1. Set the **Service name** to **YOUR_IBM_ID-sysdig**.
-   1. Use the default resource group.
-   1. Click **Create**.
-1. In the [**Observability** category, under Monitoring](https://cloud.ibm.com/observe/monitoring), locate the service instance you created.
-
-### Deploy the {{site.data.keyword.monitoringshort_notm}} agent in the cluster
-
-1. On your instance, click **Edit sources**.
-
-1. Before running the curl command in the next step, make sure you're still logged in to the cluster.
-    ```sh
-    oc project
-    ```
-    {:pre}
-
-    ```sh
-    oc project
-    curl -sL https://...
-    ```
-
-
-1. Select the **{{site.data.keyword.openshiftshort}}** tab and run the curl command next to **Public Endpoint**
-
-    ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-install.png)
-
-    The {{site.data.keyword.monitoringshort_notm}} agent collects metrics such as the worker node CPU usage, worker node memory usage, HTTP traffic to and from your containers, and data about several infrastructure components.
-
-### Verify that the {{site.data.keyword.monitoringshort_notm}} agent is deployed successfully
-
-Verify that the `sydig-agent` pods on each node have a **Running** status.
-
-Run the following command:
-
-```text
-oc get pods -n ibm-observe
-```
-
-Example output:
-
-```text
-    NAME                 READY     STATUS    RESTARTS   AGE
-    sysdig-agent-qrbcq   1/1       Running   0          1m
-    sysdig-agent-rhrgz   1/1       Running   0          1m
-```
-
-
 ## Configure {{site.data.keyword.la_short}} agent for {{site.data.keyword.openshiftshort}}  cluster
 
 The {{site.data.keyword.la_short}} agent is responsible for collecting and forwarding logs to your IBM Log Analysis with LogDNA instance. After you provision an instance of IBM Log Analysis with LogDNA, you must configure a LogDNA agent for each log source that you want to monitor.
@@ -838,9 +776,8 @@ IBM Log Analysis with {{site.data.keyword.la_short}} is a co-branded service tha
 
 You can use IBM Log Analysis with {{site.data.keyword.la_short}} to manage system and application logs in IBM Cloud.
 
-{% hint style='info' %} IMPORTANT: Use Chrome to complete this exercise. {% endhint %}
-
-This section of the tutorial goes deep into the IBM logging service.  You can stop this section at any time and successfuly begin the next section.
+This section of the tutorial goes deep into the IBM logging service.  You can stop this section at any time and successfully begin the next section.
+{:note}
 
 ### Launch the {{site.data.keyword.la_short}} webUI
 
@@ -1122,16 +1059,76 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 
    IMPORTANT: If you do not save the screen, you lose all your widgets.
 
-{% hint style='tip' %}
 Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
-{% endhint %}
+{:note}
+
+## Configure {{site.data.keyword.monitoringshort_notm}}
+
+The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
+
+<!--##isworkshop#-->
+<!--
+{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.monitoringshort_notm}} has already been provisioned and configured, skip the create and deploy steps and go to the step verify the agent at the bottom. Find your {{site.data.keyword.monitoringshort_notm}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
+-->
+<!--#/isworkshop#-->
+
+### Create a {{site.data.keyword.monitoringshort_notm}} service instance
+
+1. Click this link for [IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/observe/monitoring/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Monitoring**:
+   1. Click **Create a monitoring instance**
+   1. Select the region where your cluster is created (.e.g Dallas)
+   1. Select the **Graduated Tier** plan
+   1. Set the **Service name** to **YOUR_IBM_ID-sysdig**.
+   1. Use the default resource group.
+   1. Click **Create**.
+1. In the [**Observability** category, under Monitoring](https://cloud.ibm.com/observe/monitoring), locate the service instance you created.
+
+### Deploy the {{site.data.keyword.monitoringshort_notm}} agent in the cluster
+
+1. On your instance, click **Edit sources**.
+
+1. Before running the curl command in the next step, make sure you're still logged in to the cluster.
+    ```sh
+    oc project
+    ```
+    {:pre}
+
+    ```sh
+    oc project
+    curl -sL https://...
+    ```
+
+
+1. Select the **{{site.data.keyword.openshiftshort}}** tab and run the curl command next to **Public Endpoint**
+
+    ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-install.png)
+
+    The {{site.data.keyword.monitoringshort_notm}} agent collects metrics such as the worker node CPU usage, worker node memory usage, HTTP traffic to and from your containers, and data about several infrastructure components.
+
+### Verify that the {{site.data.keyword.monitoringshort_notm}} agent is deployed successfully
+
+Verify that the `sydig-agent` pods on each node have a **Running** status.
+
+Run the following command:
+
+```text
+oc get pods -n ibm-observe
+```
+
+Example output:
+
+```text
+    NAME                 READY     STATUS    RESTARTS   AGE
+    sysdig-agent-qrbcq   1/1       Running   0          1m
+    sysdig-agent-rhrgz   1/1       Running   0          1m
+```
+
 
 ## Monitor your Cluster with SysDig
 
 IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is a co-branded cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is operated by Sysdig in partnership with IBM. [Learn more](https://cloud.ibm.com/docs/Monitoring-with-Sysdig?topic=Sysdig-getting-started).
 
 In the next steps, you will learn how to use dashboards and metrics to monitor the health of your application.
-
 
 ### View SysDig pre-defined views and dashboards
 
