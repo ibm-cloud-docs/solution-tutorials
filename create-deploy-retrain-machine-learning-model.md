@@ -219,6 +219,7 @@ Along with CLI, you can also do predictions using the UI.
       }]
     }
    ```
+   {:pre}
 2. Click **Predict** and you should see the **Predictions** JSON output.
 3. You can change the input data and continue testing your model.
 
