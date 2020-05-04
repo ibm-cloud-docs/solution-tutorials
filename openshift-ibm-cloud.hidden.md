@@ -34,9 +34,9 @@ This tutorial demonstrates the integration of [{{site.data.keyword.openshiftlong
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.openshiftshort}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
-* [{{site.data.keyword.cloudant_local_notm}}](https://cloud.ibm.com/catalog/services/cloudant)
-* [{{site.data.keyword.la_short}}](https://cloud.ibm.com/observe/logging/create)
-* [{{site.data.keyword.mon_full_notm}}](https://cloud.ibm.com/observe/monitoring/create)
+* [{{site.data.keyword.cloudant_local_notm}}](https://{DomainName}/catalog/services/cloudant)
+* [{{site.data.keyword.la_short}}](https://{DomainName}/observe/logging/create)
+* [{{site.data.keyword.mon_full_notm}}](https://{DomainName}/observe/monitoring/create)
 
 <!--##istutorial#-->
 This tutorial will incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -524,7 +524,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
 
     ```sh
     ibmcloud target
-    API endpoint:      https://cloud.ibm.com   
+    API endpoint:      https://{DomainName}   
     Region:            us-south   
     User:              YOU@us.ibm.com   
     Account:           YOURs Account (32cdeadbeefdeadbeef1234132412343) <-> 1234567   
@@ -685,7 +685,7 @@ The `patient-health-frontend` application has a configuration option for the bac
 
 Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
 
-1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://cloud.ibm.com/resources). Click **cloudant-service**.
+1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://{DomainName}/resources). Click **cloudant-service**.
 
    ![cloudantdb](images/solution55-openshift-ibm-cloud-hidden/cloudantdb.png)
 
@@ -711,7 +711,7 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
 ### Create a {{site.data.keyword.la_short}} service instance
 
-1. Click this link for [IBM Cloud Logging with LogDNA](https://cloud.ibm.com/observe/logging/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Logging**:
+1. Click this link for [IBM Cloud Logging with LogDNA](https://{DomainName}/observe/logging/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Logging**:
    1. Click **Create instance**
    1. Select the region where your cluster is created (.e.g Dallas)
    1. Select the **Graduated Tier** TODO name?? plan
@@ -772,7 +772,7 @@ oc logs logdna-agent-xxxkz
 
 ## Analyze your logs with {{site.data.keyword.la_short}}
 
-IBM Log Analysis with {{site.data.keyword.la_short}} is a co-branded service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with {{site.data.keyword.la_short}} is operated by {{site.data.keyword.la_short}} in partnership with IBM. [Learn more](https://cloud.ibm.com/docs/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started).
+IBM Log Analysis with {{site.data.keyword.la_short}} is a co-branded service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with {{site.data.keyword.la_short}} is operated by {{site.data.keyword.la_short}} in partnership with IBM. [Learn more](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started).
 
 You can use IBM Log Analysis with {{site.data.keyword.la_short}} to manage system and application logs in IBM Cloud.
 
@@ -1059,7 +1059,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 
    IMPORTANT: If you do not save the screen, you lose all your widgets.
 
-Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
+Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://{DomainName}/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
 {:note}
 
 ## Configure {{site.data.keyword.monitoringshort_notm}}
@@ -1074,14 +1074,14 @@ The IBM Cloud provides a fully managed monitoring service.  Lets create a monito
 
 ### Create a {{site.data.keyword.monitoringshort_notm}} service instance
 
-1. Click this link for [IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/observe/monitoring/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Monitoring**:
+1. Click this link for [IBM Cloud Monitoring with Sysdig](https://{DomainName}/observe/monitoring/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Monitoring**:
    1. Click **Create a monitoring instance**
    1. Select the region where your cluster is created (.e.g Dallas)
    1. Select the **Graduated Tier** plan
    1. Set the **Service name** to **YOUR_IBM_ID-sysdig**.
    1. Use the default resource group.
    1. Click **Create**.
-1. In the [**Observability** category, under Monitoring](https://cloud.ibm.com/observe/monitoring), locate the service instance you created.
+1. In the [**Observability** category, under Monitoring](https://{DomainName}/observe/monitoring), locate the service instance you created.
 
 ### Deploy the {{site.data.keyword.monitoringshort_notm}} agent in the cluster
 
@@ -1126,7 +1126,7 @@ Example output:
 
 ## Monitor your Cluster with SysDig
 
-IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is a co-branded cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is operated by Sysdig in partnership with IBM. [Learn more](https://cloud.ibm.com/docs/Monitoring-with-Sysdig?topic=Sysdig-getting-started).
+IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is a co-branded cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is operated by Sysdig in partnership with IBM. [Learn more](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Sysdig-getting-started).
 
 In the next steps, you will learn how to use dashboards and metrics to monitor the health of your application.
 
@@ -1239,7 +1239,7 @@ You can use the **Connection Table** dashboard to monitor how data flows between
 
     ![](images/solution55-openshift-ibm-cloud-hidden/dashboard-img-5.png)
 
-Find more about IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} in the [IBM Cloud documentation](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig/index.html#getting-started).
+Find more about IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} in the [IBM Cloud documentation](https://{DomainName}/docs/services/Monitoring-with-Sysdig/index.html#getting-started).
 
 ## Remove resources
 {:#cleanup}
@@ -1259,7 +1259,7 @@ Find more about IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_no
 -->
 <!--#/isworkshop#-->
 <!--##istutorial#-->
-In the [Resource List](https://cloud.ibm.com/resources) locate and delete the resources you created:
+In the [Resource List](https://{DomainName}/resources) locate and delete the resources you created:
 * Delete the {{site.data.keyword.openshiftshort}} cluster
 * IBM Log Analysis with {{site.data.keyword.la_short}} instance
 * IBM Monitoring with Sysdig instance
