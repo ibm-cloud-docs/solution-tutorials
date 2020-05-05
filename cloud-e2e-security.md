@@ -138,10 +138,9 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 2. Under **Service credentials**, create a *New credential*.
    * Set the **name** to **secure-file-storage-cos-acckey**.
    * Set **Role** to **Writer**.
-   * Do not specify a **Service ID**.
-   * Set **Inline Configuration Parameters** to **{"HMAC":true}**. This is required to generate pre-signed URLs.
+   * Under **Advanced options**, check **Include HMAC Credential**. This required to generate pre-signed URLs.
    * Click **Add**.
-   * Make note of the credentials by clicking **View credentials**. You will need them in a later step.
+   * Make note of the credentials. You will need them in a later step.
 3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location:
    * Classic infrastructure: Copy the **Private** service endpoint. It will be used later in the configuration of the application.
    * VPC infrastructure: Copy the **Direct** service endpoint. It will be used later in the configuration of the application.
@@ -165,7 +164,7 @@ Finally create the bucket.
    2. Set **Resiliency** to **Regional**.
    3. Set **Location** to the same location where you created the **secure-file-storage-kp** service.
    4. Set **Storage class** to **Standard**
-3. Select the checkbox to **Add Key Protect Keys**.
+3. Under **Key Management Services**, select the checkbox **Key Protect**.
    1. Select the **secure-file-storage-kp** service.
    2. Select **secure-file-storage-root-enckey** as the key.
 4. Enable {{site.data.keyword.at_short}} events to be recorded under **Additional Services**.
@@ -234,13 +233,13 @@ All services have been configured. In this section you will deploy the tutorial 
    - Find the registry endpoint with `ibmcloud cr info`, such as **us**.icr.io or **uk**.icr.io.
    - Create a namespace to store the container image.
       ```sh
-      ibmcloud cr namespace-add &lt;your-initials&gt;-secure-file-storage-ns
+      ibmcloud cr namespace-add <your-initials>-secure-file-storage-ns
       ```
       {: codeblock}
    - Use **secure-file-storage** as the image name.
 
       ```sh
-      ibmcloud cr build -t <location>.icr.io/&lt;your-initials&gt;-secure-file-storage-ns/secure-file-storage:latest .
+      ibmcloud cr build -t <location>.icr.io/<your-initials>-secure-file-storage-ns/secure-file-storage:latest .
       ```
       {: codeblock}
 
@@ -374,8 +373,6 @@ The [GitHub repository](https://github.com/IBM-Cloud/secure-file-storage) for th
 
 Security is never done. Try the below suggestions to enhance the security of your application.
 
-* Use [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights) to perform static and dynamic code scans
-* Ensure only quality code is released by using policies and rules with [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights)
 * Replace {{site.data.keyword.keymanagementservicelong_notm}} by [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/services/hs-crypto?topic=hs-crypto-get-started) for even greater security and control over encryption keys.
 
 ## Remove resources
