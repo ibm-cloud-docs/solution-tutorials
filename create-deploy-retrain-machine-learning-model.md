@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-04-22"
-lasttested: "2020-04-22"
+lastupdated: "2020-04-27"
+lasttested: "2020-04-27"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -17,9 +17,9 @@ lasttested: "2020-04-22"
 {:tip: .tip}
 {:pre: .pre}
 
-# Build, deploy, test, retrain and monitor a machine learning model
+# Build, deploy, test and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
-This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. Also, monitor the deployed model and retrain the model with feedback data, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}.
+This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. You will also learn how to create a new machine learning model using a notebook, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed model (using a notebook) with {{site.data.keyword.aios_full_notm}}.
 {:shortdesc}
 
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
@@ -69,7 +69,7 @@ You can create a project to add data and open a data asset in the data refiner f
 {: #create_project}
 
 1. Go to the [{{site.data.keyword.Bluemix_short}} catalog](https://{DomainName}/catalog) and create [{{site.data.keyword.DSX_short}}](https://{DomainName}/catalog/services/data-science-experience?taxonomyNavigation=app-services)
-  1. Select a **region**
+  1. Select a **region** preferably **Dallas**
   2. Select a **Lite** pricing plan
   3. Provide a **Service name**
   4. Select a **resource group** and click **Create**
@@ -113,7 +113,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
    1. Select **From blank**.
    2. Set the Asset name to **iris_model**.
-   3. Under **Associated service**, select the **Machine learning service instance**.
+   3. Under **Associated services**, select the **Machine learning service instance**(`pm-20-tutorial`) created above.
 4. Click **Create**.
 
 Once the model is created,
@@ -137,12 +137,12 @@ Once the experiment completes running, under the **Pipeline** leaderboard,
 2. Sort the leaderboard by a different metric by selecting the **Rank by** dropdown
 3. Click a pipeline to view more detail about the metrics and performance.
 
-   You may not say any noted changes in the leadership board as the dataset used in this tutorial is very simple and used only for your understanding of the concepts. With other datasets, the rank may vary
+   Sorting by different metrics may not change the leaderboard rankings as the dataset used in this tutorial is very simple and used only for your understanding of the concepts. With other datasets, the rank may vary
    {:tip}
 
-4. Next to the model with *Rank 1*, click on **Save as** > **Model**.
-5.  Check the details of the model and click **Save**.
-6.  In the received notification, click **View in project** then under **Overview** tab check the details of the model.
+4. Next to the model with *Rank 1* when sorted by Accuracy, click on **Save as** > **Model**.
+5. Check the details of the model and click **Save**.
+6. In the received notification, click **View in project** then under **Overview** tab check the details of the model.
 
 ## Deploy the model and try out the API
 {:#deploy_model}
@@ -177,14 +177,14 @@ Once the status changes to **Ready** (You may have to refresh the page):
    ```
    {:pre}
 
-7. For `ML_INSTANCE_ID`, run the below command in the Cloud Shell by passing the name of the machine learning service key. **_You will use the ML service credentials later in the tutorial_**
+7. Run the command below to retrieve the `instance_id`, required later in the tutorial. **_You will use the the ML service credentials later in the tutorial_**
    ```sh
    ibmcloud resource service-key wdp-writer
    ```
    {:pre}
 8. Export the returned `instance_id` as `ML_INSTANCE_ID` for use in subsequent API requests
    ```sh
-   export ML_INSTANCE_ID='<ML_SERVICE_INSTANCE_ID>'
+   export ML_INSTANCE_ID='<INSTANCE_ID>'
    ```
    {:pre}
 
@@ -214,11 +214,12 @@ Along with CLI, you can also do predictions using the UI.
       "input_data": [{
         "fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         "values": [
-          ["5.1", "3.5", "1.4", "0.2"]
+          [5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]
         ]
       }]
     }
    ```
+   {:pre}
 2. Click **Predict** and you should see the **Predictions** JSON output.
 3. You can change the input data and continue testing your model.
 
@@ -237,7 +238,11 @@ In this section, you will create a ML model using the same iris dataset for expl
    1. Select **From URL** and give **iris_notebook** as the name
    2. Under **Notebook URL**, enter `https://github.com/IBM-Cloud/ml-iris-classification/blob/master/classify_iris.ipynb`
    3. Click **Create**
-3. Once the notebook is created, scroll to **Provide WML credentials** section of the notebook and provide the {{site.data.keyword.aios_full_notm}} service credentials from the Cloud shell.
+3. Once the notebook is created, scroll to **Provide WML credentials** section of the notebook and provide the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service credentials from the Cloud shell.
+
+   Copy the three fields from the output of the `ibmcloud resource service-key wdp-writer` command in the Cloud shell.
+   {:tip}
+
 4. In the top menu of the notebook, Click **Cell** and then click **Run All**.
 5. This should create a ML model and also a deployment under `iris_project`.
 6. If you scroll to **Test the model** section, you can see that the accuracy score of the the model is between 0.85-0.95 based on the randomness of the train data. **_Make sure you don't close this window/tab_**.
@@ -262,7 +267,7 @@ In this section, as part of preparing your model for monitoring you will set up 
 1. Choose **Free lite plan database** as your Database type and click **Save**. This is to store your model transactions and model evaluation results.
 2. Click **Machine learning providers**
    1. Click on **Add machine learning provider** and click the edit icon on the **connection** tile.
-   2. Select **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}** as your service provider.
+   2. Select **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}}** as your service provider type.
    3. In the **{{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service** dropdown, select the {{site.data.keyword.pm_full}} service you created above.
    4. Leave the Environment type to **Pre-production**.
    5. Click **Save**.
@@ -288,15 +293,15 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
       ibmcloud resource service-key $(ibmcloud resource service-keys --instance-name "cloud-object-storage-tutorial" | awk '/WDP-Project-Management/ {print $1}')
       ```
       {:pre}
-   5. Copy and paste the credentials and click **Connect**
+   5. Copy and paste the credentials without any trailing spaces and click **Connect**
    6. Select the Bucket that starts with `irisproject-donotdelete-`
    7. Select `iris_initial.csv` from the Data set dropdown and click **Next**
-   8. Select **species** as your label column and click **Next**
-   9. Select **all** the four training features and click **Next**
-3.  Before clicking on **Check now**, let's generate scoring payload required for logging. To do this, Go to the tab where you have your notebook open, scroll to **Score data** section(`In [25]` in the notebook), select the code block and click **Run** on the top.
-4.  Click **Check now**. You should see `Logging is active Click Next` response. Click **Next**
-5.  Check both **prediction** and **probability** and click **Save**.
-6. On the left pane, click on **Quality** and click the **edit** icon on the Quality threshold tile
+3. Before clicking on **Check now**, let's generate scoring payload required for logging. To do this, Go to the tab where you have your notebook open, scroll to **Score data** section(`In [25]` in the notebook), select the code block and click **Run** on the top.
+4. Click **Check now**. You should see `Logging is active Click Next` response. Click **Next**
+   1.  Select **species** as your label column and click **Next**
+   2.  Select **all** the four training features and click **Next**
+   3.  Check both **prediction** and **probability** and click **Save**. The model details are now set.
+5. On the left pane, click on **Quality** and click the **edit** icon on the Quality threshold tile
     1. Threshold value: Accuracy - **0.98** and click **Next**
     2. Minimum sample size (number of transactions) - **10**, Maximum sample size (number of transactions) - **100** and click **Save**
     3. On the left pane, Click on **Go to model summary**
@@ -312,7 +317,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 1. Click on **Actions** and then **Evaluate now**.
 2. Click on **browse**, upload the `iris_retrain.csv` file and click on **Upload and evaluate**.
 3. After the evaluation is completed, you should see the dashboard with different metrics.
-   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **Deployment of iris model Evaluations**
+   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **Deployment of iris model: Accuracy**.
    2. Click on the Number of explanations (2), select one of the transactions and click **View**.
    3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
