@@ -221,6 +221,11 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
    ```
    {: pre}
+1. Ensure your local Docker engine can push to the container registry.
+   ```bash
+   ibmcloud cr login
+   ```
+   {: pre}
 1. Push the docker image to your container registry on IBM Cloud
    ```sh
    docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
