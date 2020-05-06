@@ -237,19 +237,28 @@ All services have been configured. In this section you will deploy the tutorial 
 
 ### Build the Docker image
 
-1. [Build the Docker image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}.
-   - Find the registry endpoint with `ibmcloud cr info`, such as **us**.icr.io or **uk**.icr.io.
-   - Create a namespace to store the container image.
-      ```sh
-      ibmcloud cr namespace-add <your-initials>-secure-file-storage-ns
-      ```
-      {: codeblock}
-   - Use **secure-file-storage** as the image name.
+To [build the Docker image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}:
 
-      ```sh
-      ibmcloud cr build -t <location>.icr.io/<your-initials>-secure-file-storage-ns/secure-file-storage:latest .
-      ```
-      {: codeblock}
+1. Identify your {{site.data.keyword.registryshort_notm}} URL, such as **us**.icr.io or **uk**.icr.io:
+   ```sh
+   ibmcloud cr region
+   ```
+   {:pre}
+1. Pick one of your existing registry namespaces or create a new one. To list existing namespaces, use:
+   ```sh
+   ibmcloud cr namespaces
+   ```
+   {:pre}
+   To create a new namespace:
+   ```sh
+   ibmcloud cr namespace-add <your-namespace>
+   ```
+   {:pre}
+1. Build the image:
+   ```sh
+   ibmcloud cr build -t <your-registry-url>/<your-namespace>/secure-file-storage:latest .
+   ```
+   {: codeblock}
 
 ### Fill in credentials and configuration settings
 
@@ -403,7 +412,7 @@ If you share an account with other users, always make sure to delete only your o
    {: codeblock}
 3. Remove the Docker image from the container registry:
    ```sh
-   ibmcloud cr image-rm <location>.icr.io/secure-file-storage-namespace/secure-file-storage:latest
+   ibmcloud cr image-rm <your-registry-url>/<your-namespace>/secure-file-storage:latest
    ```
    {: codeblock}
 4. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
