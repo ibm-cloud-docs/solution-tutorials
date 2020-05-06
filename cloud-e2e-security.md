@@ -44,7 +44,9 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/key-protect)
 * [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/certificate-manager)
 
+<!--##istutorial#-->
 This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?topic=account-accounts#accounts) and may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
+<!--#/istutorial#-->
 
 ## Architecture
 {: #architecture}
@@ -124,7 +126,7 @@ While the cluster is being provisioned, you will create the other services requi
 {{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](https://{DomainName}/docs/services/key-protect/integrations?topic=key-protect-integrate-cos#integrate-cos). In this section, you will create one root key for the storage bucket.
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
-   * Set the name to **secure-file-storage-kp**.
+   * Set the name to **<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-kp**.
    * Select the resource group where to create the service instance.
 2. Under **Manage**, click the **Add Key** button to create a new root key. It will be used to encrypt the storage bucket content.
    * Set the name to **secure-file-storage-root-enckey**.
