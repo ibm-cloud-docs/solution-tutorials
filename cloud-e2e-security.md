@@ -148,7 +148,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 2. Under **Service credentials**, create a *New credential*.
    * Set the **name** to **secure-file-storage-cos-acckey**.
    * Set **Role** to **Writer**.
-   * Under **Advanced options**, check **Include HMAC Credential**. This required to generate pre-signed URLs.
+   * Under **Advanced options**, check **Include HMAC Credential**. This is required to generate pre-signed URLs.
    * Click **Add**.
    * Make note of the credentials. You will need them in a later step.
 3. Click **Endpoint** from the menu: set **Resiliency** to **Regional** and set the **Location** to the target location:
