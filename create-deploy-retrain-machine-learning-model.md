@@ -300,7 +300,7 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
    ```json
    "request":  {"fields": ["sepal_length", "sepal_width",
                            "petal_length", "petal_width"], "values": [[5.1,3.5,1.4,0.2]]},
-  "response":
+   "response":
     {
       "fields": ["sepal_length", "sepal_width",
                            "petal_length", "petal_width",
