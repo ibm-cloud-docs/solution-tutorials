@@ -14,7 +14,7 @@ lasttested: "2020-04-30"
 {:tip: .tip}
 {:pre: .pre}
 
-# {{site.data.keyword.openshiftshort}} on IBM Cloud - Bring it all together
+# {{site.data.keyword.openshiftshort}} on IBM Cloud
 {: #openshift-ibm-cloud}
 
 This tutorial demonstrates the integration of [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) in the IBM Cloud.  The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to write a software application and for System Administrators to scale and observe the applications in production.
@@ -83,21 +83,40 @@ In this section, you will provision a {{site.data.keyword.openshiftshort}} clust
 4. Review **Infrastructure permissions checker** to verify the required permissions
 5. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
+Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
+{:note}
+
 ### Initialize a Cloud Shell
 
 Start a IBM Cloud Shell and initialize it with the  oc login command.
 
-1. When the cluster is ready, click on the **Access** tab under the cluster name.
-1. Click the **IBM Cloud Shell** button in the upper right corner to create a shell.
-1. Click the **OpenShift Web Console** button to open a new console tab.
-1. In the {{site.data.keyword.openshiftshort}} console in the upper right pull down on your identification and click **Copy Login Comand**
-1. Click the **Display Token** link in the new browser tab.
-1. Copy the contents of the **Log in with this token** text box and paste into the shell.  It looks something like: `oc login --token=z-DkVcAmzm... --server=https://c10...`
-1. Once logged-in run the below command to see all the namespaces in your cluster
+1. When the cluster is ready, before opening a {{site.data.keyword.openshiftshort}} click the **IBM Cloud Shell** button in the upper right corner to create a shell.
+1. In the bash shell try the following:
+   List the cluster and note the name of the one you created
+   ```sh
+   ibmcloud ks clusters
+   ```
+   {:pre}
+
+   ```
+   pquiring@cloudshell:~$ ibmcloud ks clusters
+   OK
+   Name          ID                     State    
+   mycluster     bqo6e3gd0p5ln5o6kbhg   normal
+   ```
+
+   Initialize the oc command environment:
+   ```sh
+   ibmcloud oc cluster config -c mycluster --admin
+   ```
+   {:pre}
+
+   Verify the oc command is working:
    ```sh
    oc get ns
    ```
    {:pre}
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -142,7 +161,11 @@ A project is a collection of resources managed by a devops team.  An administrat
 
 1. Navigate to the {{site.data.keyword.openshiftshort}} web console 
 
+    <p  style="width: 20%;">
+
     ![](images/solution55-openshift-ibm-cloud-hidden/ocp-console.png)
+    </p>
+
 
 1. In the **Administrator** perspective select the **Home** > **Projects** view on the left to display all the projects.
 1. Create a new project by selecting **Create Project**. In the pop up **Name** the project "example-health", leave **Display Name** blank, click **Create**.
@@ -326,14 +349,13 @@ Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](h
 
 5. There is a lot more we could investigate with Grafana, but we are going to closely examine {{site.data.keyword.la_short}} in more detail later.  {{site.data.keyword.la_short}} provides log analysis for {{site.data.keyword.openshiftshort}} and the other IBM Cloud Services in a single managed service.
 
-### Prometheus and Alert Manager
+### Prometheus
 
 Navigating back to the {{site.data.keyword.openshiftshort}} console, you can also launch:
 
 * [**Prometheus**](https://prometheus.io/) - a monitoring system with an efficient time series database
 * [**Alertmanager**](https://prometheus.io/docs/alerting/alertmanager/) - an extension of Prometheus focused on managing alerts
 
-### Prometheus
 
 {{site.data.keyword.openshiftshort}} provides a web interface to Prometheus, which enables you to run Prometheus Query Language \(PromQL\) queries and examine the metrics visualized on a plot. This functionality provides an extensive overview of the cluster state and enables you to troubleshoot problems. Take a look around, and try the **Insert Example Query**.
 
@@ -481,7 +503,7 @@ Revisit the **Workloads > Deployments** overview page for patient-health-frontnd
 
 ## Cloudant DB with IBM Cloud Operator
 
-Currently, the Example Health `patient-health-frontend` app is using a dummy in-memory patient. In this exercise, you'll create a Cloudant service in IBM Cloud and TODO populate it with patient data. Cloudant is a NoSQL database-as-a-service, based on CouchDB.
+Currently, the Example Health `patient-health-frontend` app is using a dummy in-memory patient. In this exercise, you'll create a Cloudant service in IBM Cloud and populate it with patient data. Cloudant is a NoSQL database-as-a-service, based on CouchDB.
 
 ### Enable the IBM Cloud Operator
 
@@ -513,7 +535,11 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {:pre}
 
-1. Choose the one you like for example `default`
+1. Use the same resource group that is associated with your cluster.  For me it was `default`
+   ```sh
+   ibmcloud ks clusters
+   ```
+   {:pre}
 
    ```sh
    ibmcloud target -g default
@@ -714,9 +740,9 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 1. Click this link for [IBM Cloud Logging with LogDNA](https://cloud.ibm.com/observe/logging/create) or open the ibmcloud console, click the hamburger menu  in upper left, and choose **Observability** > **Logging**:
    1. Click **Create instance**
    1. Select the region where your cluster is created (.e.g Dallas)
-   1. Select the **Graduated Tier** TODO name?? plan
+   1. Select the **Graduated Tier** name?? plan
    1. Set the **Service name** to **YOUR_IBM_ID-logdna**.
-   1. Use the default resource group.
+   1. Use the resource group associated with your cluster.
    1. Click **Create**.
 
 ### Deploy the {{site.data.keyword.la_short}} agent in the cluster
@@ -1062,7 +1088,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM Cloud documentation](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
 {:note}
 
-## Configure {{site.data.keyword.monitoringshort_notm}}
+## Configure {{site.data.keyword.monitoringshort}}
 
 The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
 
@@ -1079,7 +1105,7 @@ The IBM Cloud provides a fully managed monitoring service.  Lets create a monito
    1. Select the region where your cluster is created (.e.g Dallas)
    1. Select the **Graduated Tier** plan
    1. Set the **Service name** to **YOUR_IBM_ID-sysdig**.
-   1. Use the default resource group.
+   1. Use the resource group associated with your cluster.
    1. Click **Create**.
 1. In the [**Observability** category, under Monitoring](https://cloud.ibm.com/observe/monitoring), locate the service instance you created.
 
