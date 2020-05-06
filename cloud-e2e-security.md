@@ -256,9 +256,9 @@ To [build the Docker image](https://{DomainName}/docs/services/Registry?topic=re
    ibmcloud cr namespace-add <your-namespace>
    ```
    {:pre}
-1. Build the image:
+1. Build the image with a unique name such as **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage** :
    ```sh
-   ibmcloud cr build -t <your-registry-url>/<your-namespace>/secure-file-storage:latest .
+   ibmcloud cr build -t <your-registry-url>/<your-namespace>/<your-image-name>:latest .
    ```
    {: codeblock}
 
@@ -283,8 +283,8 @@ To [build the Docker image](https://{DomainName}/docs/services/Registry?topic=re
 | -------- | ----- | ----------- |
 | `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
 | `$REGISTRY_URL` | *us.icr.io* | The registry where the image was built in the previous section. |
-| `$REGISTRY_NAMESPACE` | *secure-file-storage-namespace* | The registry namespace where the image was built in the previous section. |
-| `$IMAGE_NAME` | *secure-file-storage* | The name of the Docker image. |
+| `$REGISTRY_NAMESPACE` | *&lt;your-namespace&gt;* | The registry namespace where the image was built in the previous section. |
+| `$IMAGE_NAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The name of the Docker image. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
 | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
@@ -416,7 +416,7 @@ If you share an account with other users, always make sure to delete only your o
    {: codeblock}
 3. Remove the Docker image from the container registry:
    ```sh
-   ibmcloud cr image-rm <your-registry-url>/<your-namespace>/secure-file-storage:latest
+   ibmcloud cr image-rm <your-registry-url>/<your-namespace>/<your-image-name>:latest
    ```
    {: codeblock}
 4. In the [{{site.data.keyword.Bluemix_notm}} Resource List](https://{DomainName}/resources) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
