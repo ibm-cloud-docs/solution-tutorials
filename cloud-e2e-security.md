@@ -334,6 +334,7 @@ Now that the application and its services have been successfully deployed, you c
 1. From the [**Observability**](https://{DomainName}/observe/activitytracker) dashboard, locate the {{site.data.keyword.at_short}} instance **secure-file-storage-activity-tracker** and click **View LogDNA**.
 4. Review all logs sent to the service as you were provisioning and interacting with resources.
 
+<!--##istutorial#-->
 ## Optional: Use a custom domain and encrypt network traffic
 By default, the application is accessible on a generic hostname at a subdomain of `containers.appdomain.cloud`. However, it is also possible to use a custom domain with the deployed app. For continued support of **https**, access with encrypted network traffic, either a certificate for the desired hostname or a wildcard certificate needs to be provided. In the following section, you will either upload an existing certificate or order a new certificate in the {{site.data.keyword.cloudcerts_short}} and deploy it to the cluster. You will also update the app configuration to use the custom domain.
 
@@ -374,6 +375,7 @@ For secured connection, you can either obtain a certificate from [Let's Encrypt]
    * Go to **Manage** under the **Identity Providers**, then to **Settings**.
    * In the **Add web redirect URLs** form add `https://secure-file-storage.<your custom domain>/appid_callback` as another URL.
 8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
+<!--#/istutorial#-->
 
 ## Security: Rotate service credentials
 To maintain security, service credentials, passwords and other keys should be replaced (rotated) a regular basis. Many security policies have a requirement to change passwords and credentials every 90 days or with similar frequency. Moreover, in the case an employee leaves the team or in (suspected) security incidents, access privileges should be changed immediately.
