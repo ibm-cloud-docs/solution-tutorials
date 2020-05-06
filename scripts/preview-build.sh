@@ -28,6 +28,7 @@ fi
 tar cf - \
   --exclude=builddocs \
   --exclude=scripts \
+  --exclude=diagrams \
   --exclude=.vscode \
   --exclude=.git \
   --exclude=README.md \
