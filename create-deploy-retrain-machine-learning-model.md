@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-04-27"
+lastupdated: "2020-05-06"
 lasttested: "2020-04-27"
 ---
 
@@ -112,7 +112,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
    1. Select **From blank**.
-   2. Set the Asset name to **iris_model**.
+   2. Set the name to **iris_model**.
    3. Under **Associated services**, select the **Machine learning service instance**(`pm-20-tutorial`) created above.
 4. Click **Create**.
 
@@ -171,7 +171,7 @@ Once the status changes to **Ready** (You may have to refresh the page):
    ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
    ```
    {:pre}
-6. Copy the IAM token from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
+6. Copy the complete IAM token along with `Bearer` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
    ```sh
    export IAM_TOKEN='<IAM_TOKEN>'
    ```
@@ -195,12 +195,12 @@ Once the status changes to **Ready** (You may have to refresh the page):
    --header 'Accept: application/json' \
    --header "Authorization: $IAM_TOKEN" \
    --header "ML-Instance-ID: $ML_INSTANCE_ID" \
-   -d '{"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"],"values": [[5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]]}]}' \
+   -d '{"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length","petal_width"],"values": [[5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]]}]}' \
    $SCORING_ENDPOINT
    ```
    {:pre}
 
-   If you observe, the code is from the **Implementation** tab of the deployment your created above. Thereafter, replacing the `$ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[5.1,3.5,1.4,0.2]** and `$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[3.2,1.2,5.2,1.7]**.
+   If you observe, the code is from the **Implementation** tab of the deployment your created above. Thereafter, replacing the `$ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[5.1,3.5,1.4,0.2]** and `$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[3.2,1.2,5.2,1.7]** respectively.
    {:tip}
 
 ## Test your model
@@ -208,7 +208,7 @@ Once the status changes to **Ready** (You may have to refresh the page):
 
 Along with CLI, you can also do predictions using the UI.
 
-1. Under **Test**, click on **Provide input data as JSON** icon next to **Enter input data** and provide the JSON below as input.
+1. Under **Test** tab of your deployment, click on **Provide input data as JSON** icon next to **Enter input data** and provide the JSON below as input.
    ```json
       {
       "input_data": [{
