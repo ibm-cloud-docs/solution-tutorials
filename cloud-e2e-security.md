@@ -126,7 +126,7 @@ While the cluster is being provisioned, you will create the other services requi
 {{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](https://{DomainName}/docs/services/key-protect/integrations?topic=key-protect-integrate-cos#integrate-cos). In this section, you will create one root key for the storage bucket.
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/catalog/services/kms).
-   * Set the name to **<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-kp**.
+   * Set the name to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-kp**.
    * Select the resource group where to create the service instance.
 2. Under **Manage**, click the **Add Key** button to create a new root key. It will be used to encrypt the storage bucket content.
    * Set the name to **secure-file-storage-root-enckey**.
@@ -155,14 +155,14 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
    * Classic infrastructure: Copy the **Private** service endpoint. It will be used later in the configuration of the application.
    * VPC infrastructure: Copy the **Direct** service endpoint. It will be used later in the configuration of the application.
 
-Before creating the bucket, you will grant **secure-file-storage-cos** access to the root key stored in **secure-file-storage-kp**.
+Before creating the bucket, you will grant **secure-file-storage-cos** access to the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.
 
 1. Go to [Identity & Access > Authorizations](https://{DomainName}/iam/#/authorizations) in the {{site.data.keyword.cloud_notm}} console.
 2. Click the **Create** button.
 3. In the **Source service** menu, select **Cloud Object Storage**.
 4. In the **Source service instance** menu, select the **secure-file-storage-cos** service previously created.
 5. In the **Target service** menu, select **Key Protect**.
-6. In the **Target service instance** menu, select the **secure-file-storage-kp** service to authorize.
+6. In the **Target service instance** menu, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
 7. Enable the **Reader** role.
 8. Click the **Authorize** button.
 
@@ -172,10 +172,10 @@ Finally create the bucket.
 2. Click **Create bucket** and then **Custom bucket**.
    1. Set the **name** to a unique value, such as **&lt;your-initials&gt;-secure-file-upload**.
    2. Set **Resiliency** to **Regional**.
-   3. Set **Location** to the same location where you created the **secure-file-storage-kp** service.
+   3. Set **Location** to the same location where you created the {{site.data.keyword.keymanagementserviceshort}} service instance.
    4. Set **Storage class** to **Standard**
 3. Under **Key Management Services**, select the checkbox **Key Protect**.
-   1. Select the **secure-file-storage-kp** service.
+   1. Select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
    2. Select **secure-file-storage-root-enckey** as the key.
 4. Enable {{site.data.keyword.at_short}} events to be recorded under **Additional Services**.
    1. After clicking the checkmark the service information for the previously created {{site.data.keyword.at_short}} instance should be shown.
