@@ -143,7 +143,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 #### A bucket for the content
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](https://{DomainName}/catalog/services/cloud-object-storage).
-   * Set the **name** to **secure-file-storage-cos**.
+   * Set the **name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cos**.
    * Use the same **resource group** as for the previous services.
 2. Under **Service credentials**, create a *New credential*.
    * Set the **name** to **secure-file-storage-cos-acckey**.
@@ -155,12 +155,12 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
    * Classic infrastructure: Copy the **Private** service endpoint. It will be used later in the configuration of the application.
    * VPC infrastructure: Copy the **Direct** service endpoint. It will be used later in the configuration of the application.
 
-Before creating the bucket, you will grant **secure-file-storage-cos** access to the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.
+Before creating the bucket, you will grant the {{site.data.keyword.cos_short}} service instance access to the root key stored in the {{site.data.keyword.keymanagementserviceshort}} service instance.
 
 1. Go to [Identity & Access > Authorizations](https://{DomainName}/iam/#/authorizations) in the {{site.data.keyword.cloud_notm}} console.
 2. Click the **Create** button.
 3. In the **Source service** menu, select **Cloud Object Storage**.
-4. In the **Source service instance** menu, select the **secure-file-storage-cos** service previously created.
+4. In the **Source service instance** menu, select the {{site.data.keyword.cos_short}} service instance previously created.
 5. In the **Target service** menu, select **Key Protect**.
 6. In the **Target service instance** menu, select the {{site.data.keyword.keymanagementserviceshort}} service instance created earlier.
 7. Enable the **Reader** role.
@@ -168,7 +168,7 @@ Before creating the bucket, you will grant **secure-file-storage-cos** access to
 
 Finally create the bucket.
 
-1. Access the **secure-file-storage-cos** service instance from the [Resource List](https://{DomainName}/resources).
+1. Access the {{site.data.keyword.cos_short}} service instance from the [Resource List](https://{DomainName}/resources).
 2. Click **Create bucket** and then **Custom bucket**.
    1. Set the **name** to a unique value, such as **&lt;your-initials&gt;-secure-file-upload**.
    2. Set **Resiliency** to **Regional**.
@@ -270,7 +270,7 @@ To [build the Docker image](https://{DomainName}/docs/services/Registry?topic=re
    ```
    {: codeblock}
 2. Edit `credentials.env` and fill in the blanks with these values:
-   * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for **secure-file-storage-cos**,
+   * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
    * and the credentials for **secure-file-storage-cloudant**.
 3. Copy `secure-file-storage.template.yaml` to `secure-file-storage.yaml`:
    ```sh
