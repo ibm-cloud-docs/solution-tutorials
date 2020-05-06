@@ -51,7 +51,9 @@ This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?to
 
 The tutorial features a sample application that enables groups of users to upload files to a common storage pool and to provides access to those files via shareable links. The application is written in Node.js and deployed as a Docker container to the {{site.data.keyword.containershort_notm}}. It leverages several security-related services and features to improve the application's security posture.
 
+<!--##istutorial#-->
 This tutorial will work with a Kubernetes cluster running in Classic Infrastructure or VPC Infrastructure.
+<!--#/istutorial#-->
 
 <p style="text-align: center;">
 
@@ -84,9 +86,13 @@ You will find instructions to download and install these tools for your operatin
 ## Create services
 {: #setup}
 
+In the next section, you are going to create the services used by the application.
+
+<!--##istutorial#-->
 ### Decide where to deploy the application
 
 1. Identify the **location** and **resource group** where you will deploy the application and its resources.
+<!--#/istutorial#-->
 
 ### Capture user and application activities
 {: #activity-tracker }
@@ -96,6 +102,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 1. Access the {{site.data.keyword.cloud_notm}} catalog and create an instance of [{{site.data.keyword.at_full_notm}}](https://{DomainName}/observe/activitytracker/create). Note that there can only be one instance of {{site.data.keyword.at_short}} per region. Set the **Service name** to **secure-file-storage-activity-tracker**.
 1. Ensure you have the right permissions assigned to manage the service instance by following [these instructions](/docs/services/Activity-Tracker-with-LogDNA?topic=logdnaat-iam_manage_events#admin_account_opt1).
 
+<!--##istutorial#-->
 ### Create a cluster for the application
 
 {{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
@@ -110,6 +117,7 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
   - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 
 While the cluster is being provisioned, you will create the other services required by the tutorial.
+<!--#/istutorial#-->
 
 ### Use your own encryption keys
 
@@ -267,8 +275,8 @@ All services have been configured. In this section you will deploy the tutorial 
 | `$REGISTRY_NAMESPACE` | *secure-file-storage-namespace* | The registry namespace where the image was built in the previous section. |
 | `$IMAGE_NAME` | *secure-file-storage* | The name of the Docker image. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
-| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster secure-file-storage-cluster`. |
-| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster secure-file-storage-cluster`. |
+| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 
 `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a Docker registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-images#other)).
 {: tip}
@@ -284,7 +292,7 @@ All services have been configured. In this section you will deploy the tutorial 
    {: codeblock}
 3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster.
    ```sh
-   ibmcloud ks cluster service bind --cluster secure-file-storage-cluster --namespace default --service secure-file-storage-appid
+   ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
    If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance secure-file-storage-appid`.
@@ -335,12 +343,12 @@ For secured connection, you can either obtain a certificate from [Let's Encrypt]
    * Click the **copy** symbol next to the certificate's **crn**.
 4. Switch to the command line to deploy the certificate information as a secret to the cluster. Execute the following command after copying in the crn from the previous step.
    ```sh
-   ibmcloud ks alb cert deploy --secret-name secure-file-storage-certificate --cluster secure-file-storage-cluster --cert-crn <the copied crn from previous step>
+   ibmcloud ks alb cert deploy --secret-name secure-file-storage-certificate --cluster <your-cluster-name> --cert-crn <the copied crn from previous step>
    ```
    {: codeblock}
    Verify that the cluster knows about the certificate by executing the following command.
    ```sh
-   ibmcloud ks alb certs --cluster secure-file-storage-cluster
+   ibmcloud ks alb certs --cluster <your-cluster-name>
    ```
    {: codeblock}
 5. Edit the file `secure-file-storage.yaml`.
