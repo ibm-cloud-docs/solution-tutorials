@@ -234,21 +234,20 @@ For ease of understanding, the tutorial concentrates only on improving the quali
 ### Deploy a Python function using a Jupyter notebook
 In this section, you will wrap the AutoAI model deployment in a Python function and deploy the Python function to explore {{site.data.keyword.aios_full_notm}}
 
+Deploying functions gives you the ability to hide details (such as credentials), preprocess data before passing it to models, perform error handling, and include calls to multiple models, all within the deployed function instead of in your application.
+
 1. In the top navigation bar, click on the project name `iris_project` to see the project view.
 2. Click on **Add to project** in the menu bar and then click **Notebook**
    1. Select **From URL** and give **iris_notebook** as the name
-   2. Under **Notebook URL**, enter `https://github.com/IBM-Cloud/ml-iris-classification/blob/master/classify_iris.ipynb`
+   2. Under **Notebook URL**, enter `https://github.com/IBM-Cloud/ml-iris-classification/blob/master/classify_iris_function.ipynb`
    3. Click **Create**
-3. Once the notebook is created, scroll to **Provide WML credentials** section of the notebook and provide the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service credentials from the Cloud shell.
+3. Once the notebook is created, scroll to **Provide WML credentials and model deployment endpoint** section of the notebook and provide the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service credentials from the Cloud shell.
 
    Copy the three fields from the output of the `ibmcloud resource service-key wdp-writer` command in the Cloud shell.
    {:tip}
-
-4. In the top menu of the notebook, Click **Cell** and then click **Run All**.
-5. This should create a ML model and also a deployment under `iris_project`.
-6. If you scroll to **Test the model** section, you can see that the accuracy score of the the model is between 0.85-0.95 based on the randomness of the train data. **_Make sure you don't close this window/tab_**.
-
-Let's improve the quality and accuracy of the model in the next section.
+4. For `model_deployment_endpoint_url`, replace the placeholder with the AutoAI deployed API **Scoring End-point** that you saved earlier.
+5. In the top menu of the notebook, Click **Cell** and then click **Run All**.
+6. This should create a deployment under `iris_project`.
 
 ### Provision {{site.data.keyword.aios_full_notm}} service
 
@@ -274,7 +273,7 @@ In this section, as part of preparing your model for monitoring you will set up 
    5. Click **Save**.
 3. On the left pane:
    1. Click **Insights dashboard**(first icon) to add a deployment
-   2. Click **Add** and select `Deployment of iris model`
+   2. Click **Add** and select `IRIS classification - AI Function`
    3. Click **Configure**.
 4. Click **Configure monitors** to setup your monitors.
 
@@ -297,12 +296,32 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
    5. Copy and paste the credentials without any trailing spaces and click **Connect**
    6. Select the Bucket that starts with `irisproject-donotdelete-`
    7. Select `iris_initial.csv` from the Data set dropdown and click **Next**
-3. Before clicking on **Check now**, let's generate scoring payload required for logging. To do this, Go to the tab where you have your notebook open, scroll to **Score data** section(`In [25]` in the notebook), select the code block and click **Run** on the top.
-4. Click **Check now**. You should see `Logging is active Click Next` response. Click **Next**
+3. Select **JSON payload** as the Scoring method and replace the request and response in the payload with the below
+   ```json
+   "request":  {"fields": ["sepal_length", "sepal_width",
+                           "petal_length", "petal_width"], "values": [[5.1,3.5,1.4,0.2]]},
+  "response":
+    {
+      "fields": ["sepal_length", "sepal_width",
+                           "petal_length", "petal_width",
+        "prediction",
+        "probability"
+      ],
+      "values": [[5.1,3.5,1.4,0.2,
+          "setosa",
+          [
+            0.873992306935645,
+            0.12598018154624505,
+            0.000027511518109972278
+          ]
+      ]]
+    },
+   ```
+4. Click **Send now**. You should see `Scoring request successful Click Next` response. Click **Next**
    1.  Select **species** as your label column and click **Next**
    2.  Select **all** the four training features and click **Next**
    3.  Check both **prediction** and **probability** and click **Save**. The model details are now set.
-5. On the left pane, click on **Quality** and click the **edit** icon on the Quality threshold tile
+1. On the left pane, click on **Quality** under Evaluations and click the **edit** icon on the Quality threshold tile
     1. Threshold value: Accuracy - **0.98** and click **Next**
     2. Minimum sample size (number of transactions) - **10**, Maximum sample size (number of transactions) - **100** and click **Save**
     3. On the left pane, Click on **Go to model summary**
@@ -318,7 +337,7 @@ In this section, you will evaluate the model by uploading a `iris_retrain.csv` f
 1. Click on **Actions** and then **Evaluate now**.
 2. Click on **browse**, upload the `iris_retrain.csv` file and click on **Upload and evaluate**.
 3. After the evaluation is completed, you should see the dashboard with different metrics.
-   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **Deployment of iris model: Accuracy**.
+   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **IRIS classification - AI Function : Accuracy**.
    2. Click on the Number of explanations (2), select one of the transactions and click **View**.
    3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
