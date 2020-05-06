@@ -51,7 +51,7 @@ This tutorial requires a [non-Lite account](https://{DomainName}/docs/account?to
 ## Architecture
 {: #architecture}
 
-The tutorial features a sample application that enables groups of users to upload files to a common storage pool and to provides access to those files via shareable links. The application is written in Node.js and deployed as a Docker container to the {{site.data.keyword.containershort_notm}}. It leverages several security-related services and features to improve the application's security posture.
+The tutorial features a sample application that enables groups of users to upload files to a common storage pool and to provides access to those files via shareable links. The application is written in Node.js and deployed as a container to the {{site.data.keyword.containershort_notm}}. It leverages several security-related services and features to improve the application's security posture.
 
 <!--##istutorial#-->
 This tutorial will work with a Kubernetes cluster running in Classic Infrastructure or VPC Infrastructure.
@@ -77,7 +77,6 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
    * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-* a Docker engine,
 * `kubectl` to interact with Kubernetes clusters,
 * `git` to clone source code repository.
 
@@ -107,7 +106,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 <!--##istutorial#-->
 ### Create a cluster for the application
 
-{{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in Docker containers that run in Kubernetes clusters.
+{{site.data.keyword.containershort_notm}} provides an environment to deploy highly available apps in containers that run in Kubernetes clusters.
 
 Skip this section if you have an existing cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster.
 {: tip}
@@ -237,9 +236,9 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-### Build the Docker image
+### Build the container image
 
-To [build the Docker image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}:
+To [build the container image](https://{DomainName}/docs/services/Registry?topic=registry-registry_images_#registry_images_creating) in {{site.data.keyword.registryshort_notm}}:
 
 1. Identify your {{site.data.keyword.registryshort_notm}} URL, such as **us**.icr.io or **uk**.icr.io:
    ```sh
@@ -284,12 +283,12 @@ To [build the Docker image](https://{DomainName}/docs/services/Registry?topic=re
 | `$IMAGE_PULL_SECRET` | Keep the lines commented in the .yaml | A secret to access the registry.  |
 | `$REGISTRY_URL` | *us.icr.io* | The registry where the image was built in the previous section. |
 | `$REGISTRY_NAMESPACE` | *&lt;your-namespace&gt;* | The registry namespace where the image was built in the previous section. |
-| `$IMAGE_NAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The name of the Docker image. |
+| `$IMAGE_NAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The name of the container image. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
 | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 
-`$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a Docker registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-images#other)).
+`$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-images#other)).
 {: tip}
 
 ### Deploy to the cluster
@@ -382,7 +381,7 @@ For secured connection, you can either obtain a certificate from [Let's Encrypt]
 ## Security: Rotate service credentials
 To maintain security, service credentials, passwords and other keys should be replaced (rotated) a regular basis. Many security policies have a requirement to change passwords and credentials every 90 days or with similar frequency. Moreover, in the case an employee leaves the team or in (suspected) security incidents, access privileges should be changed immediately.
 
-In this tutorial, services are utilized for different purposes, from storing files and metadata over securing application access to managing Docker images. Rotating the service credentials typically involves
+In this tutorial, services are utilized for different purposes, from storing files and metadata over securing application access to managing container images. Rotating the service credentials typically involves
 - renaming the existing service keys,
 - creating a new set of credentials with the previously used name,
 - replacing the access data in existing Kubernetes secrets and applying the changes,
@@ -414,7 +413,7 @@ If you share an account with other users, always make sure to delete only your o
    kubectl delete secret secure-file-storage-credentials
    ```
    {: codeblock}
-3. Remove the Docker image from the container registry:
+3. Remove the container image from the container registry:
    ```sh
    ibmcloud cr image-rm <your-registry-url>/<your-namespace>/<your-image-name>:latest
    ```
