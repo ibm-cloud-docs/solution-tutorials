@@ -144,7 +144,7 @@ Once the experiment completes running, under the **Pipeline** leaderboard,
 5. Check the details of the model and click **Save**.
 6. In the received notification, click **View in project** then under **Overview** tab check the details of the model.
 
-## Deploy the model and try out the API
+## Deploy and test your model
 {:#deploy_model}
 
 In this section, you will deploy the saved model and expose the deployed model as an API to be accessed from your applications.
@@ -153,60 +153,9 @@ In this section, you will deploy the saved model and expose the deployed model a
    1. Set the **Name** to **iris_deployment**.
    2. Select **Web Service** as your deployment type.
 2. Click **Save**.
+3. Once the status changes to **Ready** (You may have to refresh the page), Click on the **Name** of the new web service.
 
-Once the status changes to **Ready** (You may have to refresh the page):
-1. Click on the **Name** of the new web service.
-2. Under **Implementation** tab of the deployment, you can see the *Scoring End-point*, code snippets in various programming languages, and API Specification.
-3. **Copy** the *Scoring End-point* in a notepad for future reference.
-4. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
-   ```sh
-   export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
-   ```
-   {:pre}
-
-   {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
-   {:tip}
-5. To use the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} REST API, you need to obtain an [{{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command
-   ```sh
-   ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
-   ```
-   {:pre}
-6. Copy the complete IAM token along with `Bearer` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
-   ```sh
-   export IAM_TOKEN='<IAM_TOKEN>'
-   ```
-   {:pre}
-
-7. Run the command below to retrieve the `instance_id`, required later in the tutorial. **_You will use the the ML service credentials later in the tutorial_**
-   ```sh
-   ibmcloud resource service-key wdp-writer
-   ```
-   {:pre}
-8. Export the returned `instance_id` as `ML_INSTANCE_ID` for use in subsequent API requests
-   ```sh
-   export ML_INSTANCE_ID='<INSTANCE_ID>'
-   ```
-   {:pre}
-
-9. Run the below **cURL** code in the cloud shell to see the prediction results.
-   ```sh
-   curl -X POST \
-   --header 'Content-Type: application/json' \
-   --header 'Accept: application/json' \
-   --header "Authorization: $IAM_TOKEN" \
-   --header "ML-Instance-ID: $ML_INSTANCE_ID" \
-   -d '{"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length","petal_width"],"values": [[5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]]}]}' \
-   $SCORING_ENDPOINT
-   ```
-   {:pre}
-
-   If you observe, the code is from the **Implementation** tab of the deployment your created above. Thereafter, replacing the `$ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[5.1,3.5,1.4,0.2]** and `$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[3.2,1.2,5.2,1.7]** respectively.
-   {:tip}
-
-## Test your model
-{:#test_model}
-
-Along with CLI, you can also do predictions using the UI.
+### Test the deployed model
 
 1. Under **Test** tab of your deployment, click on **Provide input data as JSON** icon next to **Enter input data** and provide the JSON below as input.
    ```json
@@ -223,6 +172,58 @@ Along with CLI, you can also do predictions using the UI.
 2. Click **Predict** and you should see the **Predictions** JSON output.
 3. You can change the input data and continue testing your model.
 
+## Try out the API
+{:#try_api}
+
+Along with the UI, you can also do predictions using the API scoring endpoint.
+
+1. Under **Implementation** tab of the deployment, you can see the *Scoring End-point*, code snippets in various programming languages, and API Specification.
+2. **Copy** the *Scoring End-point* in a notepad for future reference.
+3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
+   ```sh
+   export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
+   ```
+   {:pre}
+
+   {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
+   {:tip}
+4. To use the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} REST API, you need to obtain an [{{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command
+   ```sh
+   ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
+   ```
+   {:pre}
+5. Copy the complete IAM token along with `Bearer` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
+   ```sh
+   export IAM_TOKEN='<IAM_TOKEN>'
+   ```
+   {:pre}
+
+6.  Run the command below to retrieve the `instance_id`, required later in the tutorial. **_You will use the the ML service credentials later in the tutorial_**
+   ```sh
+   ibmcloud resource service-key wdp-writer
+   ```
+   {:pre}
+7. Export the returned `instance_id` as `ML_INSTANCE_ID` for use in subsequent API requests
+   ```sh
+   export ML_INSTANCE_ID='<INSTANCE_ID>'
+   ```
+   {:pre}
+
+8. Run the below **cURL** code in the cloud shell to see the prediction results.
+   ```sh
+   curl -X POST \
+   --header 'Content-Type: application/json' \
+   --header 'Accept: application/json' \
+   --header "Authorization: $IAM_TOKEN" \
+   --header "ML-Instance-ID: $ML_INSTANCE_ID" \
+   -d '{"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length","petal_width"],"values": [[5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]]}]}' \
+   $SCORING_ENDPOINT
+   ```
+   {:pre}
+
+   If you observe, the code is from the **Implementation** tab of the deployment your created above. Thereafter, replacing the `$ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[5.1,3.5,1.4,0.2]** and `$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[3.2,1.2,5.2,1.7]** respectively.
+   {:tip}
+
 ## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
 {:#monitor_openscale}
 
@@ -230,8 +231,8 @@ Along with CLI, you can also do predictions using the UI.
 
 For ease of understanding, the tutorial concentrates only on improving the quality (accuracy) of the AI model through {{site.data.keyword.aios_short}}.
 
-### Create a {{site.data.keyword.pm_short}} model using a Jupyter notebook
-In this section, you will create a ML model using the same iris dataset for exploring {{site.data.keyword.aios_full_notm}}
+### Deploy a Python function using a Jupyter notebook
+In this section, you will wrap the AutoAI model deployment in a Python function and deploy the Python function to explore {{site.data.keyword.aios_full_notm}}
 
 1. In the top navigation bar, click on the project name `iris_project` to see the project view.
 2. Click on **Add to project** in the menu bar and then click **Notebook**
