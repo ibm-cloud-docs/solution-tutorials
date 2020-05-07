@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-05-06"
-lasttested: "2020-04-27"
+lastupdated: "2020-05-07"
+lasttested: "2020-05-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -19,7 +19,7 @@ lasttested: "2020-04-27"
 
 # Build, deploy, test and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
-This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. You will also learn how to create a new machine learning model using a notebook, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed model (using a notebook) with {{site.data.keyword.aios_full_notm}}.
+This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. You will also learn how to create a Python function to wrap the deployed model using a notebook, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed function (using a notebook) with {{site.data.keyword.aios_full_notm}}.
 {:shortdesc}
 
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
@@ -90,7 +90,7 @@ You can create a project to add data and open a data asset in the data refiner f
 As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, [The Use of Multiple Measurements in Taxonomic Problems](http://rcs.chemometrics.ru/Tutorials/classification/Fisher.pdf), and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 ![](images/solution22-build-machine-learning-model/iris_machinelearning.png)
 
-**Download** [iris_initial.csv](https://ibm.box.com/shared/static/nnxx7ozfvpdkjv17x4katwu385cm6k5d.csv) which consists of 40 instances of each species.
+**Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_initial.csv) which consists of 40 instances of each species.
 
 1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution22-build-machine-learning-model/data_icon.png).
 2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
@@ -144,10 +144,12 @@ Once the experiment completes running, under the **Pipeline** leaderboard,
 5. Check the details of the model and click **Save**.
 6. In the received notification, click **View in project** then under **Overview** tab check the details of the model.
 
+The accuracy of the model will be improved in the later part of the tutorial.
+
 ## Deploy and test your model
 {:#deploy_model}
 
-In this section, you will deploy the saved model and expose the deployed model as an API to be accessed from your applications.
+In this section, you will deploy the saved model and test the deployed model,
 
 1. Under the created model, click on **Deployments** and then click **Add Deployment**.
    1. Set the **Name** to **iris_deployment**.
@@ -175,7 +177,7 @@ In this section, you will deploy the saved model and expose the deployed model a
 ## Try out the API
 {:#try_api}
 
-Along with the UI, you can also do predictions using the API scoring endpoint.
+Along with the UI, you can also do predictions using the API scoring endpoint by exposing the deployed model as an API to be accessed from your applications.
 
 1. Under **Implementation** tab of the deployment, you can see the *Scoring End-point*, code snippets in various programming languages, and API Specification.
 2. **Copy** the *Scoring End-point* in a notepad for future reference.
@@ -231,7 +233,7 @@ Along with the UI, you can also do predictions using the API scoring endpoint.
 
 For ease of understanding, the tutorial concentrates only on improving the quality (accuracy) of the AI model through {{site.data.keyword.aios_short}}.
 
-### Deploy a Python function using a Jupyter notebook
+### Deploy a Python function using a notebook
 In this section, you will wrap the AutoAI model deployment in a Python function and deploy the Python function to explore {{site.data.keyword.aios_full_notm}}
 
 Deploying functions gives you the ability to hide details (such as credentials), preprocess data before passing it to models, perform error handling, and include calls to multiple models, all within the deployed function instead of in your application.
@@ -296,7 +298,7 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
    5. Copy and paste the credentials without any trailing spaces and click **Connect**
    6. Select the Bucket that starts with `irisproject-donotdelete-`
    7. Select `iris_initial.csv` from the Data set dropdown and click **Next**
-3. Select **JSON payload** as the Scoring method and replace the request and response in the payload with the below
+3. Select **JSON payload** as the Scoring method and replace the request and response in the payload with the below snippet
    ```json
    "request":  {"fields": ["sepal_length", "sepal_width",
                            "petal_length", "petal_width"], "values": [[5.1,3.5,1.4,0.2]]},
@@ -332,7 +334,7 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
 As the tutorial uses a small dataset, configuring Fairness and Drift won't have an impact.
 
 ### Evaluate the deployed model
-In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. Download [iris_retrain.csv](https://ibm.box.com/s/96kvmwhb54700pjcwrd9hd3j6exiqms8).
+In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. **Download** [iris_retrain.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_retrain.csv).
 
 1. Click on **Actions** and then **Evaluate now**.
 2. Click on **browse**, upload the `iris_retrain.csv` file and click on **Upload and evaluate**.
