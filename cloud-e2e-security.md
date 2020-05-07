@@ -215,7 +215,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
    * Set the **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
 2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
-`<cluster-name>.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
+`mycluster-1234-d123456789.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.mycluster-1234-d123456789.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
 3. In the same tab under **Authentication Settings** under **Runtime Activity** enable capturing events in {{site.data.keyword.at_short}}.
 
 You should customize the identity providers used as well as the login and user management experience in the {{site.data.keyword.appid_short}} dashboard. This tutorial uses the defaults for simplicity. For a production environment, consider to use Multi-Factor Authentication (MFA) and advanced password rules.
@@ -287,7 +287,7 @@ To [build the container image](https://{DomainName}/docs/services/Registry?topic
 | `$REGISTRY_NAMESPACE` | *&lt;your-namespace&gt;* | The registry namespace where the image was built in the previous section. |
 | `$IMAGE_NAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The name of the container image. |
 | `$TARGET_NAMESPACE` | *default* | the Kubernetes namespace where the app will be pushed. |
-| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+| `$INGRESS_SUBDOMAIN` | *mycluster-1234-d123456789.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
 
 `$IMAGE_PULL_SECRET` is only needed if you want to use another Kubernetes namespace than the default one. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](https://{DomainName}/docs/containers?topic=containers-images#other)).
@@ -327,7 +327,7 @@ To [build the container image](https://{DomainName}/docs/services/Registry?topic
 
 ## Test the application
 
-The application can be accessed at `https://secure-file-storage.<cluster-name>.<location>.containers.appdomain.cloud/`.
+The application can be accessed at `https://secure-file-storage.<your-cluster-ingress-subdomain>/`.
 
 1. Go to the application's home page. You will be redirected to the {{site.data.keyword.appid_short_notm}} default login page.
 2. Sign up for a new account with a valid email address.
