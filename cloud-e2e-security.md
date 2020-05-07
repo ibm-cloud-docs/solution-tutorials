@@ -188,7 +188,7 @@ Finally create the bucket.
 The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for all files uploaded from the application.
 
 1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudantNoSQLDB).
-   * Set the **name** to **secure-file-storage-cloudant**.
+   * Set the **name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
    * Set the location.
    * Use the same **resource group** as for the previous services.
    * Set **Available authentication methods** to **Use only IAM**.
@@ -272,7 +272,7 @@ To [build the container image](https://{DomainName}/docs/services/Registry?topic
    {: codeblock}
 2. Edit `credentials.env` and fill in the blanks with these values:
    * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
-   * and the credentials for **secure-file-storage-cloudant**.
+   * and the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**.
 3. Copy `secure-file-storage.template.yaml` to `secure-file-storage.yaml`:
    ```sh
    cp secure-file-storage.template.yaml secure-file-storage.yaml
