@@ -183,7 +183,7 @@ Finally create the bucket.
    2. Now, enable **Track Data events** and select **read & write** as **Data Events**.
 5. Click **Create bucket**.
 
-#### A database map relationships between users and their files
+### A database map relationships between users and their files
 
 The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for all files uploaded from the application.
 
