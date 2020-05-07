@@ -161,11 +161,7 @@ A project is a collection of resources managed by a devops team.  An administrat
 
 1. Navigate to the {{site.data.keyword.openshiftshort}} web console 
 
-    <p  style="width: 20%;">
-
     ![](images/solution55-openshift-ibm-cloud-hidden/ocp-console.png)
-    </p>
-
 
 1. In the **Administrator** perspective select the **Home** > **Projects** view on the left to display all the projects.
 1. Create a new project by selecting **Create Project**. In the pop up **Name** the project "example-health", leave **Display Name** blank, click **Create**.
@@ -313,13 +309,11 @@ One of the great things about Kubernetes is the ability to quickly debug your ap
 
 When deploying new apps, making configuration changes, or simply inspecting the state of your cluster, the Project-scope Dashboard gives Developer Clear Insights.
 
-1. Access the **Dashboard** now by going to the **Advanced > Project Details** tab on the left side menu.
+1. Access the **Dashboard** now in the **Developer** perspective by going to the **Advanced > Project Details** tab on the left side menu.
 
     ![View Details](images/solution55-openshift-ibm-cloud-hidden/ocp43-project-details.png)
 
-2. You can also dive in a bit deeper - the **Events** view is useful for identifying the timeline of events and finding potential error messages. When tracking the state of a new rollout, managing existing assets, or even something simple like exposing a route, the Events view is critical in identifying the timeline of activity. This becomes even more useful when considering that multiple operators may be working against a single cluster.
-
-    ![View Details](images/solution55-openshift-ibm-cloud-hidden/projectevents.png)
+2. You can also dive in a bit deeper - the **Events** view (beneath the **Project Details** on the left) is useful for identifying the timeline of events and finding potential error messages. When tracking the state of a new rollout, managing existing assets, or even something simple like exposing a route, the Events view is critical in identifying the timeline of activity. This becomes even more useful when considering that multiple operators may be working against a single cluster.
 
 You'll want to refer to this view throughout the lab. Almost all actions we take in in {{site.data.keyword.openshiftshort}} will result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
 
@@ -335,17 +329,22 @@ Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](h
 
 2. Navigate to **Monitoring > Dashboards** in the left-hand bar. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.
 
+    <p  style="width: 50%;">
+
     ![Monitoring Dashboards](images/solution55-openshift-ibm-cloud-hidden/ocp43-monitoring-dashboard.png)
+    </p>
+
 
 3. You should then see your Grafana dashboard. Hit **Home** on the top left, and choose **Kubernetes / Compute Resources / Namespace (Pods)**.
-
-    ![Grafana](images/solution55-openshift-ibm-cloud-hidden/ocp43-grafana.png)
 
 4. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
 
 5. You should be able to see the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day. We'll use this information in the next section to set up auto-scaling for our pods.
 
+    <p  style="width: 50%;">
+
     ![Grafana also project](images/solution55-openshift-ibm-cloud-hidden/ocp43-grafana-cpu.png)
+    </p>
 
 5. There is a lot more we could investigate with Grafana, but we are going to closely examine {{site.data.keyword.la_short}} in more detail later.  {{site.data.keyword.la_short}} provides log analysis for {{site.data.keyword.openshiftshort}} and the other IBM Cloud Services in a single managed service.
 
@@ -361,8 +360,6 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
 
 1. The Metrics page is accessible in the **Administrator** perspective by clicking **Monitoring → Metrics**.
 
-    ![Metrics, Alerts and Dashboards](images/solution55-openshift-ibm-cloud-hidden/ocp43-monitoring-prometheus.png)
-
 2. Navigate through the **Prometheus UI**. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.
 
 3. In the top box a query expression can be entered.  Paste in the following to get a look at our frontend:
@@ -372,7 +369,10 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
     ```
 
 4. Clilck on the **Graph** tab.  I turned the traffic generator script on for a while and then stopped it.  Note that the times are GMT:
+    <p  style="width: 50%;">
+
     ![Prometheus Graph](images/solution55-openshift-ibm-cloud-hidden/prometheus-01.png)
+    </p>
 
 5. There is a lot more we could investigate with Prometheus, but we are going to closely examine {{site.data.keyword.mon_short}} in more detail later.  {{site.data.keyword.mon_short}} montiors {{site.data.keyword.openshiftshort}} and the other IBM Cloud Services in a single managed service.
 
@@ -431,7 +431,7 @@ Now that we have resource limits, let's enable autoscaler.
 
 By default, the autoscaler allows you to scale based on CPU or Memory. The UI allows you to do CPU only \(for now\). Pods are balanced between the minimum and maximum number of pods that you specify. With the autoscaler, pods are automatically created or deleted to ensure that the average CPU usage of the pods is below the CPU request target as defined. In general, you probably want to start scaling up when you get near `50`-`90`% of the CPU usage of a pod. In our case, let's make it `1`% to test the autoscaler since we are generating minimal load.
 
-1. Navigate to **Workloads > Horizontal Pod Autoscalers**, then hit **Create Horizontal Pod Autoscaler**.
+1. Navigate to **Administrator** perspective **Workloads > Horizontal Pod Autoscalers**, then hit **Create Horizontal Pod Autoscaler**.
 
     ![HPA](images/solution55-openshift-ibm-cloud-hidden/ocp-hpa.png)
 
@@ -468,7 +468,10 @@ If you're not running the script to simulate load, the number of pods should sta
 
 2. Start simulating load by hitting the page several times, or running the script. You'll see that it starts to scale up:
 
+    <p  style="width: 50%;">
+
    ![Scaled to 4/10 pods](images/solution55-openshift-ibm-cloud-hidden/ocp-hpa-after.png)
+    </p>
 
 That's it! You now have a highly available and automatically scaled front-end Node.js application. {{site.data.keyword.openshiftshort}} is automatically scaling your application pods since the CPU usage of the pods greatly exceeded `1`% of the resource limit, `30` millicores.
 
@@ -511,8 +514,6 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
 
 1. In the **Administrator** perspective, and click **Operators > OperatorHub**.
 
-   ![OperatorHub](images/solution55-openshift-ibm-cloud-hidden/operatorhub.png)
-
 2. Find the **IBM Cloud Operator**, and hit **Install**
 
    ![Operator Install](images/solution55-openshift-ibm-cloud-hidden/cloudoperatorinstall.png)
@@ -535,7 +536,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {:pre}
 
-1. Use the same resource group that is associated with your cluster.  For me it was `default`
+1. Skip the command `ibmcloud target --cf -g default` it is using `--cf` that is for cloud foundry and is not required for {{site.data.keyword.cloudant_short_notm}}. Use the same resource group that is associated with your cluster.  For me it was `default`, you can double check:
    ```sh
    ibmcloud ks clusters
    ```
@@ -561,8 +562,8 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
     ```
 
 9. Use the helper script provided by IBM to create the following resources:
-    - ibm cloud API token that represents you and your permissions to use the IBM cloud
-    - kubernetes Secret resource holding the API token with the name `secret-ibm-cloud-operator` in the `default` namespace
+    - ibm cloud API key that represents you and your permissions to use the IBM cloud
+    - kubernetes Secret named `secret-ibm-cloud-operator` in the `default` namespace.  This secret has data keys `api-key` and `region`.  The operator will use this data to create the cloudant service instance.
     - kubernetes ConfigMap resource with the name `config-ibm-cloud-operator` in the `default` namespace to hold the region and resource group
     
     Copy curl command from the Requirements section not from the text below:
@@ -570,6 +571,18 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
     ```sh
     curl ... | bash
     ```
+
+1. Verify that the kubernetes ConfigMap has been created:
+    ```sh
+    kubectl describe configmap  config-ibm-cloud-operator  -n default
+    ```
+    {:pre}
+
+    You can verify the resourcegroupid value by passing your resource group name in the following command, my name is `default`
+    ```sh
+    ibmcloud resource group default
+    ```
+    {:pre}
 
 1. Verify that the kubernetes secret has been created:
     ```sh
@@ -593,17 +606,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
     region:   8 bytes
     ```
 
-1. Verify that the kubernetes ConfigMap has been created:
-    ```sh
-    kubectl describe configmap  config-ibm-cloud-operator  -n default
-    ```
-    {:pre}
-
-    It should match your resource group, mine is `default`
-    ```sh
-    ibmcloud resource group default
-    ```
-    {:pre}
+    Describe avoids showing the contents of a secret by default. This is to protect the secret from being exposed accidentally to an onlooker, or from being stored in a terminal log.  You can use the `secret/secret-ibm-cloud-operator -n default -o yaml` to see the values and decode the fields by piping into `base64 --decode`
 
 9. In the instructions \<SERVICE_CLASS\> is `cloudantnosqldb` and \<PLAN\> is `lite`
 
@@ -630,15 +633,15 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
       namespace: example-health
     spec:
       serviceClass: cloudantnosqldb
-      plan: lite
+      plan: standard
     ```
     {:pre}
 
     Then click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
 
-    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrative** perspective with Project: example-health in the **Overview** page displayed.
+    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrative** perspective with Project: example-health in the **Service** panel.
 
-    Over time the **Message** field will change from **provisioning** to **Online** meaning it is good to go.
+    Click on the **Service** just created and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
 
 5. Create a Binding resource associated with the Service resource you just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `cloudant-service`, the name provided in the **Service**
     ```yaml
