@@ -664,7 +664,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
     - Verify the binding was created.   Click on your binding, and look for **Message: Online**. 
     - Verify the Secret was created by navigating to the **Resources** tab of the **Binding**.
     - Click the **cloudant-binding** secret.  Scroll to the bottom to notice the **Data** keys/values created.  These can be wired to environment variables in a Deployment or DeploymentConfig (which you will do shortly)
-    - In a new tab navigate to the {{site.data.keyword.cloudant_local_notm}} service created. Start at [Resource list](https://cloud.ibm.com/resources) open Services and click on **cloudant-service** instance.
+    - In a new tab navigate to the {{site.data.keyword.cloudant_local_notm}} service created. Start at [Resource list](https://{DomainName}/resources) open Services and click on **cloudant-service** instance.
     - Open the cloudant-service **Service credentials** panel on the left and then open on the **cloudant-binding**.  The keys/values match the Kubernetes secret.
 
     Using the console shell:
