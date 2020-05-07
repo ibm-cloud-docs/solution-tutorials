@@ -275,7 +275,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
 
-   If using an HA pair, the command is slightly different, [VRRP Virtual IP (VIP) addresses](https://cloud.ibm.com/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-working-with-high-availability-and-vrrp#vrrp-virtual-ip-vip-addresses)
+   If using an HA pair, the command is slightly different, [VRRP Virtual IP (VIP) addresses](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-working-with-high-availability-and-vrrp#vrrp-virtual-ip-vip-addresses)
    {: tip}
 
 
