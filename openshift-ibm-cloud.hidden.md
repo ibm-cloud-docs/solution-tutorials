@@ -504,7 +504,7 @@ oc autoscale deployment/patient-health-frontend --name patient-hpa --min 1 --max
 Revisit the **Workloads > Deployments** overview page for patient-health-frontnd deployment and watch it work.
 
 
-## Cloudant DB with IBM Cloud Operator
+## Cloudant DB with IBM Cloud Operator and Binding
 
 Currently, the Example Health `patient-health-frontend` app is using a dummy in-memory patient. In this exercise, you'll create a Cloudant service in IBM Cloud and populate it with patient data. Cloudant is a NoSQL database-as-a-service, based on CouchDB.
 
@@ -643,7 +643,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
 
     Click on the **Service** just created and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
 
-5. Create a Binding resource associated with the Service resource you just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `cloudant-service`, the name provided in the **Service**
+5. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `cloudant-service`, the name provided in the **Service**
     ```yaml
     apiVersion: ibmcloud.ibm.com/v1alpha1
     kind: Binding
@@ -655,9 +655,78 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
     ```
     {:pre}
 
-6. Verify the binding was created.   Click on your binding, and look for **Message: Online**. By navigating to the **Resources** tab, you can see that the **cloudant-binding** secret is created. Click that to see your credentials for accessing your Cloudant DB, stored securely in a secret:
+6. Opionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**.
+
+    In the GUI Console:
 
    ![binding secret](images/solution55-openshift-ibm-cloud-hidden/bindingsecret.png)
+
+    - Verify the binding was created.   Click on your binding, and look for **Message: Online**. 
+    - Verify the Secret was created by navigating to the **Resources** tab of the **Binding**.
+    - Click the **cloudant-binding** secret.  Scroll to the bottom to notice the **Data** keys/values created.  These can be wired to environment variables in a Deployment or DeploymentConfig (which you will do shortly)
+    - In a new tab navigate to the {{site.data.keyword.cloudant_local_notm}} service created. Start at [Resource list](https://cloud.ibm.com/resources) open Services and click on **cloudant-service** instance.
+    - Open the cloudant-service **Service credentials** panel on the left and then open on the **cloudant-binding**.  The keys/values match the Kubernetes secret.
+
+    Using the console shell:
+    ```
+    youyou@cloudshell:~$ ibmcloud resource service-instances --service-name cloudantnosqldb
+    Retrieving instances with type service_instance in all resource groups in all locations under ..
+    OK
+    Name                           Location   State    Type   
+    cloudant-service               us-south   active   service_instance   
+    youyou@cloudshell:~$ ibmcloud resource service-instance cloudant-service
+    Retrieving service instance cloudant-service in all resource groups under ...
+    OK
+                            
+    Name:                  cloudant-service   
+    ID:                    crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET
+    GUID:                  SECRET
+    Location:              us-south   
+    Service Name:          cloudantnosqldb   
+    Service Plan Name:     standard   
+    Resource Group Name:   default   
+    State:                 active   
+    Type:                  service_instance   
+    Sub Type:                 
+    Created at:            2020-05-06T22:39:25Z   
+    Created by:            youyou@us.ibm.com   
+    Updated at:            2020-05-06T22:40:03Z   
+    Last Operation:                           
+                        Status       create succeeded      
+                        Message      Provisioning is complete      
+                        Updated At   2020-05-06 22:40:03.04469305 +0000 UTC      
+    youyou@cloudshell:~$ ibmcloud resource service-keys --instance-name cloudant-service --output json
+    [
+        {
+            "guid": "01234560-902d-4078-9a7f-20446a639aeb",
+            "id": "crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET",
+            "url": "/v2/resource_keys/01234560-902d-4078-9a7f-20446a639aeb",
+            "created_at": "2020-05-06T23:03:43.484872077Z",
+            "updated_at": "2020-05-06T23:03:43.484872077Z",
+            "deleted_at": null,
+            "name": "cloudant-binding",
+            "account_id": "0123456789507a53135fe6793c37cc74",
+            "resource_group_id": "01234567836d49029966ab5be7fe50b5",
+            "source_crn": "crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET",
+            "state": "active",
+            "credentials": {
+                "apikey": "SECRET",
+                "host": "SECRET",
+                "iam_apikey_description": "Auto-generated for key SECRET",
+                "iam_apikey_name": "cloudant-binding",
+                "iam_role_crn": "SECRET",
+                "iam_serviceid_crn": "SECRET",
+                "password": "SECRET",
+                "port": 443,
+                "url": "https://01234SECRET",
+                "username": "01234567-SECRET"
+            },
+            "iam_compatible": true,
+            "resource_instance_url": "/v2/resource_instances/SECRET",
+            "crn": "crn:v1:bluemix:public:cloudantnosqldb:us-south:a/0123456789507a53135fe6793c37cc74:SECRET"
+        }
+    ]
+    ```
 
 ### Deploy the Node.js Patient Backend Database App
 
@@ -686,7 +755,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
     Cannot find Cloudant credentials, set CLOUDANT_URL.
     ```
 
-4. Let's fix this by setting the environment variable to the **cloudant-binding** secret we created in the earlier operator section. Navigate to the deployment config for the `patient-health-backend` app by clicking the app, and then selecting the name next to **DC**:
+4. Let's fix this by setting the environment variable of the **DeploymentConfig** to the **cloudant-binding** secret created earlier in the operator binding section. Navigate to the deployment config for the `patient-health-backend` app by clicking the app, and then selecting the name next to **DC**:
 
    ![Deployment Config](images/solution55-openshift-ibm-cloud-hidden/deploymentconfig.png)
 
@@ -704,7 +773,10 @@ The `patient-health-frontend` application has a configuration option for the bac
 
    To find your routes, you can use the {{site.data.keyword.openshiftshort}} console or type `oc get routes`.
 
+    <p  style="width: 50%;">
+
    ![clicksettings](images/solution55-openshift-ibm-cloud-hidden/clicksettings.png)
+    </p>
 
 2. Input the route `http://patient-health-backend:8080/` and hit the **node** {{site.data.keyword.openshiftshort}} icon.
 
