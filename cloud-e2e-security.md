@@ -212,7 +212,7 @@ With {{site.data.keyword.appid_short}}, you can secure resources and add authent
 
 1. Create an instance of [{{site.data.keyword.appid_short}}](https://{DomainName}/catalog/services/AppID).
    * Select the **Graduated tier** as plan.
-   * Set the **Service name** to **secure-file-storage-appid**.
+   * Set the **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid**.
    * Use the same **location** and **resource group** as for the previous services.
 2. Under **Manage Authentication**, in the **Authentication Settings** tab, add a **web redirect URL** pointing to the domain you will use for the application. For example, if your cluster Ingress subdomain is
 `<cluster-name>.us-south.containers.appdomain.cloud`, the redirect URL will be `https://secure-file-storage.<cluster-name>.us-south.containers.appdomain.cloud/appid_callback`. {{site.data.keyword.appid_short}} requires the web redirect URL to be **https**. You can view your Ingress subdomain in the cluster dashboard or with `ibmcloud ks cluster get --cluster <cluster-name>`.
@@ -303,11 +303,21 @@ To [build the container image](https://{DomainName}/docs/services/Registry?topic
    ```
    {: codeblock}
 3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster.
+   <!--##istutorial#-->
    ```sh
    ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
-   If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance secure-file-storage-appid`.
+   <!--#/istutorial#-->
+   <!--##isworkshop#-->
+   <!--
+   ```sh
+   ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service <your-initials>-secure-file-storage-appid
+   ```
+   {: codeblock}
+   -->
+   <!--#/isworkshop#-->
+   If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
    {: tip}
 4. Deploy the app.
    ```sh
