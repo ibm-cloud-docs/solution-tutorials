@@ -319,6 +319,11 @@ To [build the container image](https://{DomainName}/docs/services/Registry?topic
    <!--#/isworkshop#-->
    If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
    {: tip}
+<!--##isworkshop#-->
+<!--
+1. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the bindings just created, such as `binding-<your-initials>-secure-file-storage-appid`.
+-->
+<!--#/isworkshop#-->
 4. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
