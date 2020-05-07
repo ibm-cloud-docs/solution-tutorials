@@ -321,7 +321,8 @@ To [build the container image](https://{DomainName}/docs/services/Registry?topic
    {: tip}
 <!--##isworkshop#-->
 <!--
-1. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the bindings just created, such as `binding-<your-initials>-secure-file-storage-appid`.
+1. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the binding just created, such as `binding-<your-initials>-secure-file-storage-appid`.
+
 -->
 <!--#/isworkshop#-->
 4. Deploy the app.
