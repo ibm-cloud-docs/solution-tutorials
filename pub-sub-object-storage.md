@@ -192,7 +192,7 @@ Navigate to [Resource List](https://{DomainName}/resources/) and
 1. Delete Kubernetes cluster `mycluster`
 2. Delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
 3. Delete {{site.data.keyword.messagehub}} `myeventstreams`
-4. Go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub-xxx` repositories.
+4. Go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub*` repositories.
 
 ## Related content
 {:related}
