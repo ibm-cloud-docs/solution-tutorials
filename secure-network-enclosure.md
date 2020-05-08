@@ -72,9 +72,9 @@ In this tutorial, the network enclosure created is not visible on the public int
      You should be a **Master User** to enable VPN access or contact a master user for access.
      {:tip}
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
-3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
+3. Log in to the VPN through [the web interface](https://www.ibm.com/cloud/vpn-access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
 
-   For the VPN client, use the FQDN of a single data center VPN access point from the [VPN web access page](https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the gateway address.
+   For the VPN client, use the FQDN of a single data center VPN access point from the [Available VPN endpoints page](https://{DomainName}/docs/iaas-vpn?topic=iaas-vpn-available-vpn-endpoints), of the form *vpn.xxxnn.softlayer.com* as the gateway address.
    {:tip}
 
 ### Check account permissions
@@ -94,7 +94,7 @@ Choose an {{site.data.keyword.Bluemix_notm}} data center to deploy the secure pr
 
 ### Order VLANs
 
-To create the private enclosure in the target data center, the required private VLANs for servers must first be assigned. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology are chargable.
+To create the private enclosure in the target data center, the required private VLANs for servers must first be assigned. When you create the VLAN, make sure to request it in the same data center pod as you plan to create the VRA, do not select a data center and not specify the pod. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology are chargeable.
 
 To ensure that sufficient VLANs are available on the same data center router and can be associated with the VRA, you can order VLANs. For details, see [Ordering VLANs](https://{DomainName}/docs/vlans?topic=vlans-ordering-premium-vlans#order-vlans).
 
@@ -131,7 +131,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 
 1. From your workstation, use the SSL VPN to log in to the VRA using the default **vyatta** account, accepting the SSH security prompts.
    ```bash
-   SSH vyatta@<VRA Private IP Address>
+   ssh vyatta@<VRA Private IP Address>
    ```
    {: codeblock}
 
@@ -192,9 +192,9 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 
 A virtual server is created at this point to aid in diagnosis of VRA configuration errors. Successful access to the VSI is validated over the {{site.data.keyword.Bluemix_notm}} private network before access to it is routed via the VRA in a later step.
 
-1. Order a [virtual server](https://{DomainName}/catalog/infrastructure/virtual-server-group).
-2. Select **Public Virtual Server** and continue.
-3. On the order page:
+1. Order a [virtual server](https://{DomainName}/gen1/infrastructure/provision/vs).
+2. On the order page:
+   - Select **Public**.
    - Set **Billing** to **Hourly**.
    - Set the *VSI Hostname* and *Domain name*. This domain name is not used for routing and DNS but should align with your network naming standards.
    - Set **Location** to the same as the VRA.
@@ -203,10 +203,10 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
    - Set **Operating System** to **CentOS 7.x - Minimal**
    - In **Uplink Port Speeds**, the network interface must be changed from the default of *public and private* to only specify a **Private Network Uplink**. This ensures that the new server has no direct access to the Internet, and access is controlled by the routing and firewall rules on the VRA.
    - Set **Private VLAN** to the VLAN number of the private VLAN ordered earlier.
-4. Select the checkbox to accept the 'Third-Party' service agreements, then click **Create**.
-5. Monitor for completion on the [Devices](https://{DomainName}/classic/devices) page or via email.
-6. Make note of the *Private IP address* of the VSI for a later step and that under the **Network** section on the **Device Details** page that the VSI is assigned to the correct VLAN. If not, delete this VSI and create a new VSI on the correct VLAN.
-7. Verify successful access to the VSI via the {{site.data.keyword.Bluemix_notm}} private network using ping and SSH from your local workstation over the VPN.
+3. Select the checkbox to accept the 'Third-Party' service agreements, then click **Create**.
+4. Monitor for completion on the [Devices](https://{DomainName}/classic/devices) page or via email.
+5. Make note of the *Private IP address* of the VSI for a later step and that under the **Network** section on the **Device Details** page that the VSI is assigned to the correct VLAN. If not, delete this VSI and create a new VSI on the correct VLAN.
+6. Verify successful access to the VSI via the {{site.data.keyword.Bluemix_notm}} private network using ping and SSH from your local workstation over the VPN.
    ```bash
    ping <VSI Private IP Address>
    SSH root@<VSI Private IP Address>
@@ -216,23 +216,22 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
 ## Route VLAN access through the VRA
 {: #routing_vlan_via_vra}
 
-The private VLAN(s) for the virtual server are associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage, the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible.
+The private VLAN(s) for the virtual server are associated by the {{site.data.keyword.Bluemix_notm}} management system to this VRA. At this stage, the VSI is still accessible via the IP routing on the {{site.data.keyword.Bluemix_notm}} private network. You will now route the subnet via the VRA to create the secure private network and validate by confirming that the VSI is now not accessible.
 
-1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here.
-2. If you want to add additional VLANs at this time, navigate to the **Associate a VLAN** section. The drop-down box, *Select VLAN* should be enabled and you can select other provisioned VLANs. ![](images/solution33-secure-network-enclosure/Gateway-Associate-VLAN.png)
-
-   If no eligible VLAN is shown, no VLANs are available on the same router as the VRA. This will require you to [order a VLAN](/docs/vlans?topic=vlans-ordering-premium-vlans) to request a private VLAN on the same router as the VRA.
+1. Proceed to the Gateway Details for the VRA via the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page and locate the **Associated VLANs** section on the lower half of the page. The associated VLAN will be listed here. At this stage, the VLAN and associated subnet are not protected or routed via the VRA, and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN is shown as *Route Around*. Click on the **Manage VLANs** button.
+   
+   The *Associate VLAN* link is enabled allowing you to add other provisioned VLANs. If no VLANs are available on the same router as the VRA, the link is grayed out. This will require you to [order a VLAN](/docs/vlans?topic=vlans-ordering-premium-vlans) to request a private VLAN on the same router as the VRA. Initial VLAN association can take a couple of minutes to complete. After completion, the VLAN is shown under the **Associated VLANs** heading.
    {:tip}
-3. Select the VLAN that you want to associate with the VRA and click **Save**. Initial VLAN association can take a couple of minutes to complete. After completion, the VLAN is shown under the **Associated VLANs** heading.
 
-At this stage, the VLAN and associated subnet are not protected or routed via the VRA, and the VSI is accessible via the {{site.data.keyword.Bluemix_notm}} Private network. The status of VLAN is shown as *Bypassed*.
+2. Click on the check box to the left of the associated VLAN and then click on **Route Through** to route the VLAN/Subnet via the VRA. This can take a few minutes. A screen refresh will show the status is *Route Through*.
 
-4. Select **Actions** in the right column, then **Route VLAN** to route the VLAN/Subnet via the VRA. This takes a few minutes. A screen refresh will show it is *Routed*.
-5. Select the [VLAN name](https://{DomainName}/classic/network/vlans/) to view the VLAN details. The provisioned VSI can be seen as well as the assigned Primary IP Subnet. Make a note of the Private VLAN Number &lt;nnnn&gt; (1199 in this example) as this will be used in a later step.
+3. Click on the VLAN number to view the VLAN details. Under Devices, the provisioned VSI can be seen. Under Subnets, the Primary Subnet which is to be used with the VRA is seen. Make a note of the Private VLAN Number &lt;nnnn&gt; as this will be used in a later step.
 
    For proper identification of a VLAN, check [VLAN identification](/docs/infrastructure/vlans?topic=vlans-about-vlans#vlan-identification)
    {:tip}
-6. Select the [subnet](https://{DomainName}/classic/network/subnets) to see the IP subnet details. Make a note of the subnet network, gateway addresses and CIDR (/26) as these are required for further VRA configuration. To find the gateway address, you might need to select page 2 or 3.
+
+4. Click on the [subnet](https://{DomainName}/classic/network/subnets) to see the IP subnet details. Make a note of the subnet network, gateway addresses and CIDR (/26) as these are required for further VRA configuration.
+
 7. Validate the that the subnet/VLAN is routed to the VRA and the VSI is **NOT** accessible via the management network from your workstation using ping.
    ```bash
    ping <VSI Private IP Address>
@@ -246,13 +245,7 @@ This completes setup of the VRA via the {{site.data.keyword.Bluemix_notm}} conso
 
 When the VRA configuration is committed, the running configuration is changed and the changes are automatically saved to the startup configuration.
 
-If you want to return to a previous working configuration, by default, the last 20 commit points can be viewed, compared, or restored.  See the [Vyatta Network OS Basic System Configuration Guide](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation) for details on  committing and saving the configuration.
-   ```bash
-   show system commit
-   rollback n
-   compare
-   ```
-   {: codeblock}
+If you want to return to a previous working configuration, by default, the last 20 commit points can be viewed, compared, or restored.  See the supplemental documentation [Basic System Configuration Guide](https://{DomainName}/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation) for details on `show system commit`, `compare`, `rollback`. 
 
 ### Configure VRA IP routing
 
@@ -265,13 +258,26 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    {: codeblock}
 2. Create a new virtual interface with the private VLAN number, subnet gateway IP address, and CIDR recorded in the earlier steps. The CIDR will typically be `/26`.
    ```
+   configure
    set interfaces bonding dp0bond0 vif <VLAN ID> address <Subnet Gateway IP>/<CIDR>
    commit
    ```
    {: codeblock}
 
-   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one of the first addresses in the subnet range. Entering an invalid gateway address results in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command and re-enter. You can look it up at **Network > IP Management > Subnets**. Click the subnet you need to know the gateway address. The second entry in the list (with the description **Gateway**) is the IP address to enter as <Subnet Gateway IP>/<CIDR>.
+   It is critical that the **`<Subnet Gateway IP>`** address is used. This is typically one of the first addresses in the subnet range. Entering an invalid gateway address results in the error `Configuration path: interfaces bonding dp0bond0 vif xxxx address [x.x.x.x] is not valid`. Correct the command and re-enter. You can look it up at **Network > IP Management > Subnets**. Click the subnet you need to know the gateway address. The second entry in the list (with the description **Gateway**) is the IP address to enter in the `<Subnet Gateway IP>/<CIDR>` before the `/`.
    {: tip}
+
+   By default, VRRP is set to disabled. This ensures that new provisions and reloads do not cause outages on the Master device. In order for VLAN traffic to work, VRRP must be reenabled once provisioning or a reload completes.
+
+   ```
+   delete interfaces bonding dp0bond0 vrrp vrrp-group 1 disable
+   commit
+   ```
+   {: codeblock}
+
+   If using an HA pair, the command is slightly different, [VRRP Virtual IP (VIP) addresses](https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-working-with-high-availability-and-vrrp#vrrp-virtual-ip-vip-addresses)
+   {: tip}
+
 
 3. List the new virtual interface (vif):
    ```
@@ -287,7 +293,7 @@ Configure the VRA virtual network interface to route to the new subnet from the 
    ```
    {: codeblock}
 
-   If the VSI is not accessible, check the VRA IP routing table is configured as expected. Delete and recreate the route if required. To run a show command in configuation mode, you can use the run command:
+   If the VSI is not accessible, check the VRA IP routing table is configured as expected. Delete by leveraging the information provided by show interfaces and running the delete command: `delete interfaces bonding dp0bond0 vif <VLAN ID> address <Subnet Gateway IP>/<CIDR>` and recreate with the proper values. To run a show command in configuration mode, you can use the run command:
    ```bash
     run show ip route <Subnet Gateway IP>
    ```
@@ -317,19 +323,23 @@ Two zones are defined:
 
    If a set command is accidentally run twice, you receive a message *'Configuration path xxxxxxxx is not valid. Node exists'*. This can be ignored. To change an incorrect parameter, it is necessary to first delete the node with 'delete security xxxxx xxxx xxxxx'.
    {:tip}
-2. Create the {{site.data.keyword.Bluemix_notm}} private network resource group. This address group defines the {{site.data.keyword.Bluemix_notm}} private networks that can access the enclosure and the networks that can be reached from the enclosure. Two sets of IP addresses need access to and from the secure enclosure. These IP addresses are the SSL VPN data centers and the {{site.data.keyword.Bluemix_notm}} Service Network (backend/private network). [{{site.data.keyword.Bluemix_notm}} IP Ranges](https://{DomainName}/docs/hardware-firewall-dedicated?topic=hardware-firewall-dedicated-ibm-cloud-ip-ranges#ibm-cloud-ip-ranges) provides the full list of IP ranges that are allowed.
-   - Define the SSL VPN address of the data center(s) you are using for VPN access. From the SSL VPN section of {{site.data.keyword.Bluemix_notm}} IP ranges, select the VPN access points for your data center or DC cluster. This example shows the VPN address ranges for the {{site.data.keyword.Bluemix_notm}} London data centers.
+2. Create the {{site.data.keyword.Bluemix_notm}} private network resource group. This address group defines the {{site.data.keyword.Bluemix_notm}} private networks that can access the enclosure and the networks that can be reached from the enclosure. Two sets of IP addresses need access to and from the secure enclosure. These IP addresses are the SSL VPN data centers and the {{site.data.keyword.Bluemix_notm}} Service Network (backend/private network). [{{site.data.keyword.Bluemix_notm}} IP Ranges](https://{DomainName}/docs/hardware-firewall-dedicated?topic=hardware-firewall-dedicated-ibm-cloud-ip-ranges) provides the full list of IP ranges that are allowed.
+
+   - Define the SSL VPN address of the data center(s) you are using for VPN access. From the 'SSL VPN datacenters' section of {{site.data.keyword.Bluemix_notm}} IP ranges, select the VPN access points for your data center or DC cluster. This example shows the VPN address ranges for the {{site.data.keyword.Bluemix_notm}} London data centers.
      ```
      set resources group address-group ibmprivate address 10.2.220.0/24
      set resources group address-group ibmprivate address 10.200.196.0/24
      set resources group address-group ibmprivate address 10.3.200.0/24
      ```
      {: codeblock}
-   - Define the address ranges for the {{site.data.keyword.Bluemix_notm}} ‘Service Network (on backend/private network)’ for WDC04, DAL01 and your target data center. The example here is WDC04 (two addresses), DAL01 and LON06.
+
+   - Define the address ranges for the {{site.data.keyword.Bluemix_notm}} 'Service Network (on backend/private network)' for DAL01, DAL10, WDC04, and your target data center. The example here is DAL01, DAL10, WDC04 (two addresses), and LON06.
      ```
+     set resources group address-group ibmprivate address 10.0.64.0/19
+     set resources group address-group ibmprivate address 10.200.80.0/20
      set resources group address-group ibmprivate address 10.3.160.0/20
      set resources group address-group ibmprivate address 10.201.0.0/20
-     set resources group address-group ibmprivate address 10.0.64.0/19
+
      set resources group address-group ibmprivate address 10.201.64.0/20
      commit
      ```
@@ -434,6 +444,7 @@ The firewall logs can be viewed from the VRA operational command prompt. In this
 
 1. Apply VRA security policy. By default, policy-based firewall zoning does not secure access to the VRA itself. This is configured through Control Plane Policing (CPP). VRA provides a basic CPP rule set as a template. Merge it into your configuration:
    ```bash
+   configure
    merge /opt/vyatta/etc/cpp.conf
    ```
    {: codeblock}

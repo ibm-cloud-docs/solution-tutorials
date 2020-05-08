@@ -295,41 +295,46 @@ To [build the container image](https://{DomainName}/docs/services/Registry?topic
 
 ### Deploy to the cluster
 
+<!--##istutorial#-->
 1. Gain access to your cluster as described on the **Access** tab of your cluster.
-
 2. Create the secret used by the application to obtain service credentials:
    ```sh
    kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
    ```
    {: codeblock}
-3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster.
-   <!--##istutorial#-->
+3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
    ```sh
    ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service secure-file-storage-appid
    ```
    {: codeblock}
-   <!--#/istutorial#-->
-   <!--##isworkshop#-->
-   <!--
-   ```sh
-   ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service <your-initials>-secure-file-storage-appid
-   ```
-   {: codeblock}
-   -->
-   <!--#/isworkshop#-->
-   If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
-   {: tip}
-<!--##isworkshop#-->
-<!--
-1. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the binding just created, such as `binding-<your-initials>-secure-file-storage-appid`.
-
--->
-<!--#/isworkshop#-->
 4. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
    {: codeblock}
+<!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+1. Gain access to your cluster as described on the **Access** tab of your cluster.
+2. Create the secret used by the application to obtain service credentials:
+   ```sh
+   kubectl create secret generic secure-file-storage-credentials --from-env-file=credentials.env
+   ```
+   {: codeblock}
+3. Bind the {{site.data.keyword.appid_short_notm}} service instance to the cluster. If you have several services with the same name the command will fail. You should pass the service GUID instead of its name. To find the GUID of a service, use `ibmcloud resource service-instance <service-name>`.
+   ```sh
+   ibmcloud ks cluster service bind --cluster <your-cluster-name> --namespace default --service <your-initials>-secure-file-storage-appid
+   ```
+   {: codeblock}
+4. Edit `secure-file-storage.yaml` and replace `binding-secure-file-storage-appid` with the name of the binding just created, such as `binding-<your-initials>-secure-file-storage-appid`.
+4. Deploy the app.
+   ```sh
+   kubectl apply -f secure-file-storage.yaml
+   ```
+   {: codeblock}
+-->
+<!--#/isworkshop#-->
 
 ## Test the application
 
