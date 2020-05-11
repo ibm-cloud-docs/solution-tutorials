@@ -154,14 +154,12 @@ The existing APP zone firewall rules are only configured to allow traffic to and
    ```
    set resources group address-group ibmprivate address <DC2 APP zone subnet/CIDR>
    commit
-   save
    ```
    {: codeblock}
 2. On the data center 2 VRA edit command mode, add the <DC1 APP zone subnet>/CIDR to the `ibmprivate` resource group
    ```
    set resources group address-group ibmprivate address <DC1 APP zone subnet/CIDR>
    commit
-   save
    ```
    {: codeblock}
 3. Verify that the VSIs in both data centers can now communicate
