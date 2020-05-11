@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-05-07"
-lasttested: "2020-05-07"
+lastupdated: "2020-05-08"
+lasttested: "2020-05-08"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -159,7 +159,7 @@ The UI application is a simple Node.js Express web application which allows the 
    ibmcloud dev deploy -t container
    ```
    {:pre}
-4. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
+4. Visit the application with the URL mentioned in the output of the command above and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
 
    ![](images/solution25/files_uploaded.png)
 
@@ -172,7 +172,7 @@ The worker application is a Java application which listens to the {{site.data.ke
    cd ../pubsub-worker
    ```
    {:pre}
-2. Open `resources/cos.properties` and update `bucket.name`,  property with your bucket name.
+2. Open `resources/cos.properties` and update `bucket.name` property with your bucket name.
 3. Build and deploy the worker application.
    ```sh
    ibmcloud dev build
@@ -189,10 +189,10 @@ In this tutorial, you learned how you can use Kafka based {{site.data.keyword.me
 {:removeresources}
 
 Navigate to [Resource List](https://{DomainName}/resources/) and
-1. delete Kubernetes cluster `mycluster`
-2. delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
-3. delete {{site.data.keyword.messagehub}} `myeventstreams`
-4. go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub-xxx` repositories.
+1. Delete Kubernetes cluster `mycluster`
+2. Delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
+3. Delete {{site.data.keyword.messagehub}} `myeventstreams`
+4. Go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub*` repositories.
 
 ## Related content
 {:related}

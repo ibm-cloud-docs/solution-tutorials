@@ -122,7 +122,7 @@ The [Device list](https://{DomainName}/classic/devices) will show the VRA almost
 
 ### Review deployed VRA
 
-1. Inspect the new VRA. On the [Infrastructure Dashboard](https://{DomainName}/classic) Select **Network** in the left pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page. Select the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page. ![](images/solution33-secure-network-enclosure/Gateway-detail.png)
+1. Inspect the new VRA. On the [Infrastructure Dashboard](https://{DomainName}/classic) Select **Network** in the left pane followed by **Gateway Appliances** to go to the [Gateway Appliances](https://{DomainName}/classic/network/gatewayappliances) page. Click on the name of the newly created VRA in the **Gateway** column to proceed to the Gateway Details page.
 
 2. Make a note of the `Private` and `Public` IP addresses of the VRA for future use.
 

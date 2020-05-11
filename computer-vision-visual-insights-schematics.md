@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2019, 2020
-lastupdated: "2020-04-06"
-lasttested: "2020-04-01"
+lastupdated: "2020-05-11"
+lasttested: "2020-05-11"
 ---
 
 {:shortdesc: .shortdesc}
@@ -70,13 +70,14 @@ In this section, you will provision a VPC with {{site.data.keyword.IBM_notm}} {{
 ### Create a {{site.data.keyword.bplong_notm}} backend workspace
 {:#backend_workspace}
 
-1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page, and click on **Create a workspace**.
-1. Set **Workspace name** to **visual-insights-workspace**. This is your backend workspace.
-1. Select a resource group.
-1. Set **GitHub or GitLab repository URL** to `https://github.com/ibm/vision-terraform`.
-1. Click **Retrieve input variables**.
-1. Once the input variables have been discovered, set `ibmcloud_api_key` to your {{site.data.keyword.Bluemix_notm}} API key and mark the variable as **sensitive**. Other variables can be kept to their default values unless you want to customize the deployed environment.
-1. Click on **Create** to create the workspace.
+1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page, and click on **Create a workspace**,
+   1. Set **Workspace name** to **visual-insights-workspace**. This is your backend workspace,
+   2. Select a Resource group and a Location
+   3. Click on **Create**
+2. Scroll to **Import your Terraform template** section and Set **GitHub or GitLab repository URL** to `https://github.com/ibm/vision-terraform`.
+3. Select **terraform_v0.11** as the Terraform version and click **Save template information**.
+4. Once the input variables have been discovered, set `ibmcloud_api_key` to your {{site.data.keyword.Bluemix_notm}} API key and mark the variable as **sensitive**. Other variables can be kept to their default values unless you want to customize the deployed environment.
+5. Click on **Save changes**.
 
 ### Apply the workspace plan
 {:#Apply_plan}
@@ -111,14 +112,14 @@ In this section, you will create a weather data set from the images you download
 2. Click **Create new data set**, set the **Data set name** to `weather_classification_dataset` and click **Create**.
 3. To add images to the dataset and to categorize, Click on the `weather_classification_dataset` tile.
    1. Click on **Import files** and point to the downloaded dataset folder.
-   2. Select **cloudy** image folder and import images numbered from `cloudy1.jpg` to `cloudy240.jpg`(240 images) to be uploaded for classification.
+   2. Import images numbered from `cloudy1.jpg` to `cloudy240.jpg`(240 images) to be uploaded for classification.
 
-     The rest of the images in the folder will be used for testing the model. You are splitting the data around 80%-20% between training and testing stages.
+     The rest of the images(`cloudy241.jpg` to `cloudy300.jpg`) will be used for testing the model. You are splitting the data around 80%-20% between training and testing stages.
      {:tip}
 
    3. Once all the images are imported, expand **Categories** on the left pane, select **Uncategorized**, and on the top menu bar, check **Select**.
    4. Click on **Assign category**, give **Cloudy** as the name and click **Assign**.
-   5. **Repeat** the steps with images from **rain (rain1.jpg to rain172.jpg)**, **shine (shine1.jpg to shine201.jpg)** and **sunrise (sunrise1.jpg to sunrise285.jpg)** dataset folders by assigning category names - **Rain**, **Shine** and **Sunrise** respectively.
+   5. **Repeat** the steps with images from **rain (rain1.jpg to rain172.jpg)**, **shine (shine1.jpg to shine201.jpg)** and **sunrise (sunrise1.jpg to sunrise285.jpg)** dataset by assigning category names - **Rain**, **Shine** and **Sunrise** respectively.
 4. Click on **Train model**:
    1. Select **Image classification** as your type of training.
    2. Select **System Default(GoogLeNet)** as your Optimization technique.
@@ -138,7 +139,7 @@ In this section, you will create a weather data set from the images you download
    {:tip}
 
 5. To test the deployed model,
-   - Click on **Import** and select an image from the respective folder. Remember to import an image that is not part of training.
+   - Click on **Import** and select an image. Remember to import an image that is not part of training.
    - Check the **Results** section to check the category and the confidence value
 
 ## Create a web app with {{site.data.keyword.bpshort}} for image classification
@@ -149,10 +150,13 @@ In this section, you will deploy a web application to a new VSI and upload an im
 ### Deploy a web app with {{site.data.keyword.bpshort}}
 {: #deploy_webapp}
 
-1. Navigate to [{{site.data.keyword.bpshort}} overview page](https://{DomainName}/schematics/overview) and click on **Create a workspace**.
-2. Enter **visual-insights-frontend-workspace** as the Workspace name and select a resource group.
-3. Enter the GitHub repository URL - `https://github.com/IBM-Cloud/visual-insights-image-classifier`
-4. Click on **Retrieve input variables** and complete the required fields.Other variables can be kept to their default values unless you want to customize the deployed environment.
+1. Navigate to [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page, and click on **Create a workspace**,
+   1. Set **Workspace name** to **visual-insights-frontend-workspace**. This is your frontend workspace
+   2. Select a Resource group and a Location
+   3. Click on **Create**
+2. Scroll to **Import your Terraform template** section and Set **GitHub or GitLab repository URL** to `https://github.com/IBM-Cloud/visual-insights-image-classifier`.
+3. Select **terraform_v0.11** as the Terraform version
+4. Click on **Save template information** and complete the required fields.Other variables can be kept to their default values unless you want to customize the deployed environment.
    <table>
     <thead>
         <tr>
@@ -197,23 +201,22 @@ In this section, you will deploy a web application to a new VSI and upload an im
    If you wish to check the details of the created VPC and it resources, target VPC gen 2 with this command - `ibmcloud is target --gen 2` and run the help command - `ibmcloud is --help` for more info.
    {:tip}
 
-5. Click on **Create** to create the workspace.
-6. On the subsequent page, Click **Apply plan** to provision
+5. On the subsequent page, Click **Apply plan** to provision
    * a front-end subnet
    * VSI within the front-end subnet to deploy the web app
    * Floating IP (FIP) address on the public Internet for the front-end subnet to access the web app
    * Security group with rules that allows ingress traffic on port 22 (for SSH), HTTP requests on port 80 , HTTP requests on port 3000 to allow nodeJS traffic and HTTPS on port 443.
    * a SSH keypair - For private key, check the logs. For public key, Refer [this link](https://{DomainName}/vpc-ext/compute/sshKeys)
-7. Click on **View log** next to the current running plan to follow the logs.
-8. Wait for the plan to complete and check the **Outputs** from the log for the application access URL. In a browser, enter `http://<Floating_IP>:3000` to see the front-end web app that calls the deployed model via an API call.
+6.  Click on **View log** next to the current running plan to follow the logs.
+7.  Wait for the plan to complete and check the **Outputs** from the log for the application access URL. In a browser, enter `http://<Floating_IP>:3000` to see the front-end web app that calls the deployed model via an API call.
 
 ### Classify images
 {: #classify_images}
 
-1. Click on **Upload a JPEG image** to select a `.JPEG` or `.JPG` image from `cloudy`(between cloudy241.jpg and cloudy300.jpg) folder on your machine.
+1. Click on **Upload a JPEG image** to select a `.JPEG` or `.JPG` image from `dataset2`(between cloudy241.jpg and cloudy300.jpg) folder on your machine.
 2. Click on **Classify image** to see the response from the deployed model.
 3. Check the category and confidence output.
-4. Repeat the above steps with images from other folders namely `sunrise`, `rain` and `shine`. Remember to upload an image that is not part of training.
+4. Repeat the above steps with images namely `sunrise`, `rain` and `shine`. Remember to upload an image that is not part of training.
 5. You can also upload any random `.JPEG` or `.JPG` image for classification.
 
 ## Remove resources
