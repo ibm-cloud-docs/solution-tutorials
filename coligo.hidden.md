@@ -178,7 +178,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **coligo-vr** and select a resource group.
    3. Click on **Create**.
-6. Under **Service Credentials**, expand **View credentials** and **save** the credentials for quick reference. If you don't see auto-generated credentials, create a **New credential**.
+6. Under **Service Credentials**, Expand the newly created credentials and **save** the credentials for quick reference. If you don't see auto-generated credentials, create a **New credential**.
 
 ### Bind the services to the backend service
 

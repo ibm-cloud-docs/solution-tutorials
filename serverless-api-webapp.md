@@ -81,7 +81,7 @@ Let's start by creating a {{site.data.keyword.cloudant_short_notm}}. {{site.data
    1. Create **New credential**.
    1. Set name to **for-guestbook**.
    1. Accept the other defaults and click **Add**.
-   2. Click **View credentials** under Actions. We will need these credentials later to allow Cloud Functions actions to read/write to your Cloudant service.
+   2. Expand the newly created credentials. We will need these credentials later to allow Cloud Functions actions to read/write to your Cloudant service.
 
 ## Create serverless actions
 

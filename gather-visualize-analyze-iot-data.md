@@ -187,7 +187,7 @@ In this section, you will create a {{site.data.keyword.cloudant_short_notm}} ser
 2. Go to the [Resource list](https://{DomainName}/resources) and enter `iot-db` in the Name field to check the status of the service.Once the status changes to **Provisioned**, click on the service name to see the Manage page.
    - On the left menu, click **Service credentials**
    - Click **New credential** and then **Add**
-   - Expand **View credentials** and save the credentials for future reference
+   - Expand the newly created credentials and save the credentials for future reference
 3. Under **Connections**:
    - Click **Create connection**
    - Select the Cloud Foundry location, organization and space where an alias to the {{site.data.keyword.cloudant_short_notm}} service should be created.
