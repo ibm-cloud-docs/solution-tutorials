@@ -783,6 +783,21 @@
             "logdna",
             "sysdig"
           ]
+        },
+        {
+          "name": "Istio on OpenShift",
+          "url": "istio-openshift.hidden.html",
+          "description": "Istio on Red Hat OpenShift",
+          "imgSrc": "images/solution57-istio-openshift-hidden/Architecture.png",
+          "tags": [
+            "OpenShift",
+            "Istio",
+            "Telemetry"
+          ],
+          "requirements": [
+            "openshift_on_ibm_cloud",
+            "istio"
+          ]
         }
       ]
     },
