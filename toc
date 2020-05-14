@@ -113,6 +113,7 @@ Solution Tutorials
     OpenShift
         scalable-webapp-openshift.md
         openshift-ibm-cloud.hidden.md
+        istio-openshift.hidden.md
 
     {: .topicgroup}
     Cloud Foundry
