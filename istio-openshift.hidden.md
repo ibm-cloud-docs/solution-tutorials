@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-13"
-lasttested: "2020-05-13"
+lastupdated: "2020-05-14"
+lasttested: "2020-05-14"
 ---
 
 {:shortdesc: .shortdesc}
@@ -125,6 +125,159 @@ ServiceMeshMemberRoll resource is used to to specify the namespaces associated w
 4. Click **Create ServiceMeshMemberRoll**
 5. Change `your-project` to `bookinfo` and delete the last line.
 6. Then, click **Create**.
+
+You successfully installed Istio into your cluster.
+
+## Deploy the BookInfo app in to the Service Mesh
+{: #deploy_bookinfo_app}
+
+The BookInfo application displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
+
+The application is composed of four separate microservices used to demonstrate various Istio features.
+
+![](images/solution57-istio-openshift-hidden/withistio.svg)
+
+### Enable the automatic sidecar injection for the bookinfo namespace
+
+In Kubernetes, a sidecar is a utility container in the pod, and its purpose is to support the main container. For Istio to work, Envoy proxies must be deployed as sidecars to each pod of the deployment. There are two ways of injecting the Istio sidecar into a pod: manually using the `istioctl` CLI tool or automatically using the Istio sidecar injector. In this section, you will use the automatic sidecar injection provided by Istio.
+
+1.  From your **IBM Cloud Shell**, create a project called "bookinfo" with `oc new-project` command
+    ``` shell
+    oc new-project bookinfo
+    ```
+    {:pre}
+
+    In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
+    {:tip}
+
+2.  Annotate the bookinfo namespace to enable automatic sidecar injection with `istio-injection=enabled`
+    ``` sh
+    oc label namespace bookinfo istio-injection=enabled
+    ```
+    {:pre}
+3.  Validate whether the namespace is annotated for automatic sidecar injection by running the below command
+    ``` sh
+    oc get namespace -L istio-injection
+    ```
+
+    **Sample output:**
+    ``` sh
+    NAME             STATUS   AGE    ISTIO-INJECTION
+    bookinfo         Active   271d   enabled
+    istio-system     Active   5d2h
+    ...
+    ```
+
+### Install the BookInfo app
+
+1. Clone the application source repository
+   ```sh
+   git clone https://github.com/rvennam/istio-roks-101
+   cd istio-roks-101/bookinfo
+   ```
+   {:pre}
+
+2. Inject the Istio Envoy sidecar into the bookinfo pods, and deploy the BookInfo app on to the OpenShift cluster. Deploy both the v1 and v2 versions of the app:
+
+    ```sh
+    oc apply -f bookinfo.yaml
+    ```
+    {:pre}
+
+   These commands deploy the BookInfo app on to the cluster. Since you enabled automation sidecar injection, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
+
+1. Verify that the pods are up and running.
+
+    ```sh
+    oc get pods
+    ```
+    {:pre}
+
+    **Sample output:**
+    ```sh
+    NAME                              READY     STATUS    RESTARTS   AGE
+    details-v1-789c5f58f4-9twtw       2/2       Running   0          4m12s
+    productpage-v1-856c8cc5d8-xcx2q   2/2       Running   0          4m11s
+    ratings-v1-5786768978-tr8z9       2/2       Running   0          4m12s
+    reviews-v1-5874566865-mxfgm       2/2       Running   0          4m12s
+    reviews-v2-86865fc7d9-mf6t4       2/2       Running   0          4m12s
+    reviews-v3-8d4cbbbbf-rfjcz        2/2       Running   0          4m12s
+    ```
+
+    Note that each bookinfo pods has 2 containers in it. One is the bookinfo container, and the other is the Envoy proxy sidecar.
+    {:tip}
+
+Your bookinfo app is running, but you can't access it! In the next section, you will expose the `productpage` service to allow incoming traffic.
+
+## Expose the app with the Istio Ingress Gateway and Route
+{: #ingress_gateway_route}
+
+The components deployed on the service mesh by default are not exposed outside the cluster. External access to individual services so far has been provided by creating an external load balancer or node port on each service.
+
+An Ingress Gateway resource can be created to allow external requests through the Istio Ingress Gateway to the backing services.
+
+1. Configure the bookinfo default route with the Istio Ingress Gateway.
+
+    ```sh
+    oc create -f bookinfo-gateway.yaml
+    ```
+    {:pre}
+
+2. Get the **ROUTE** of the Istio Ingress Gateway.
+
+    ```sh
+    oc get routes -n istio-system istio-ingressgateway
+    ```
+    {:pre}
+
+3. Save the HOST address that you retrieved in the previous step, as it will be used to access the BookInfo app in later parts of the tutorial. Create an environment variable called `$INGRESS_HOST` with your HOST address.
+
+    ```sh
+    export INGRESS_HOST=<HOST>
+    ```
+    {:pre}
+
+You extended the base Ingress features by providing a DNS entry to the Istio service.
+
+Visit the application by going to `http://<INGRESS_HOST>/productpage` in a new tab. If you keep hitting Refresh, you should see different versions of the page in random order (v1 - no stars, v2 - black stars, v3 - red stars).
+
+## Observe service telemetry: metrics and tracing
+{:istio_telemetry}
+
+Istio's tracing and metrics features are designed to provide broad and granular insight into the health of all services. Istio's role as a service mesh makes it the ideal data source for observability information, particularly in a microservices environment. As requests pass through multiple services, identifying performance bottlenecks becomes increasingly difficult using traditional debugging techniques. Distributed tracing provides a holistic view of requests transiting through multiple services, allowing for immediate identification of latency issues. With Istio, distributed tracing comes by default. This will expose latency, retry, and failure information for each hop in a request.
+
+You can read more about how [Istio mixer enables telemetry reporting](https://istio.io/docs/concepts/policy-and-control/mixer.html).
+{:tip}
+
+
+1. Open your Shell tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last exercise.
+
+   ```sh
+   for i in {1..20}; do sleep 0.5; curl -I $INGRESS_HOST/productpage; done
+   ```
+   {:pre}
+
+### Grafana
+
+Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored.
+
+1. In the **OpenShift web console**, under **Networking** -> **Routes**, click the URL next to **grafana**
+2. Click on **Home** and then **Istio** -> Istio Service Dashboard.
+3. Select `bookinfo` in the Service drop down.
+
+This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
+
+### Kiali
+
+Kiali is an open-source project that installs as an add-on on top of Istio to visualize your service mesh. It provides deeper insight into how your microservices interact with one another, and provides features such as circuit breakers and request rates for your services.
+
+1. From the **OpenShift web console**, under **Networking** -> **Routes**, select the URL next to **kiali**
+2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces to see the a visual **Service graph** of the various services in your Istio mesh.
+3. You can see request rates as well by clicking the "No edge Labels" tab and choosing "Requests per second".
+4. In a different tab, visit the BookInfo application and refresh the page multiple times to generate some load, or run the load script in the previous section.
+
+Kiali has a number of views to help you visualize your services. Click through the various tabs to explore the service graph, and the various views for workloads, applications and services.
+
 
 ## Remove resources
 {:#cleanup}
