@@ -2,17 +2,21 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-04-30"
-lasttested: "2020-04-30"
+lastupdated: "2020-05-16"
+lasttested: "2020-05-16"
 ---
 
-
+{:java: #java .ph data-hd-programlang='java'}
+{:swift: #swift .ph data-hd-programlang='swift'}
+{:ios: #ios data-hd-operatingsystem="ios"}
+{:android: #android data-hd-operatingsystem="android"}
 {:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
 {:codeblock: .codeblock}
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:important: .important}
 {:note: .note}
 
 # {{site.data.keyword.openshiftshort}} on IBM Cloud
