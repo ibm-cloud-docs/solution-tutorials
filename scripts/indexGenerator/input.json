@@ -770,8 +770,8 @@
         {
           "name": "openshift ibm cloud tutorial",
           "url": "openshift-ibm-cloud.hidden.html",
-          "description": "openshift ibm cloud integration",
-          "imgSrc": "images/solution55-openshift-ibm-cloud-hidden/app-architecture.png",
+          "description": "Demonstrates the integration of Red Hat OpenShift on IBM Cloud in the IBM Cloud",
+          "imgSrc": "images/solution55-openshift-ibm-cloud-hidden/openshift-ibm-cloud.drawio.png",
           "tags": [
             "OpenShift",
             "Log Analysis",
