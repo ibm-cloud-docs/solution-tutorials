@@ -13,6 +13,7 @@ lasttested: "2020-04-30"
 {:screen: .screen}
 {:tip: .tip}
 {:pre: .pre}
+{:note: .note}
 
 # {{site.data.keyword.openshiftshort}} on IBM Cloud
 {: #openshift-ibm-cloud}
@@ -68,20 +69,19 @@ With {{site.data.keyword.openshiftshort}}, you have a fast and secure way to con
 In this section, you will provision a {{site.data.keyword.openshiftshort}} cluster with two worker nodes.
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-1. Set the **Cluster type and version** to **the latest version of OpenShift**.
-1. Under **Location**,
-   - Select **Single zone** as **Availability**.
-   - Select a **Geography**.
-   - Choose a **Worker zone**.
-1. Under **Cluster Metadata**,
-   - Set **Cluster name** to **mycluster**.
-   - Select a **Resource group**.
-3. Under **Default worker pool**,
-   - Select **4 vCPUs 16GB RAM** as the flavor for Worker nodes.
-   - Leave **Encrypt local disk** checked and select **2** Worker nodes for this tutorial.
-   - Select **Purchase additional licenses for this worker pool** as your OCP entitlement if appropriate.
-4. Review **Infrastructure permissions checker** to verify the required permissions
-5. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+2. Set the **Orchestration service** to **the Latest,Default version of OpenShift**.
+3. Select **Purchase additional licenses for this worker pool** as your OCP entitlement.
+4. Under **Location**,
+   - Select a **Resource group**
+   - Select a **Geography**
+   - Select **Single zone** as **Availability**
+   - Choose a **Worker zone**
+5. Under **Worker pools**,
+   - Select **4 vCPUs 16GB Memory** as the flavor
+   - Select **2** Worker nodes per data center for this tutorial and Leave **Encrypt local disk** On.
+6. Review **Infrastructure permissions checker** to verify the required permissions
+7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
+8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
 
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {:note}
@@ -1255,11 +1255,11 @@ The following table lists the different types of pre-defined dashboards:
 
 Initial data is NOT available on newly created **Observability** > **Monitoring** instances.
 - After a few minutes raw data will be displayed
-- After 10s of minutes indexing occurs that provides the detail required to proceed with this tutorial
+- After about an hour indexing will provides the detail required to proceed with this tutorial
 
-1. Navigate the {{site.data.keyword.monitoringshort_notm}} console to get metrics on your Kubernetes cluster, nodes, deployments, pods, containers.
+Navigate the {{site.data.keyword.monitoringshort_notm}} console to get metrics on your Kubernetes cluster, nodes, deployments, pods, containers.
 
-2. Under the **EXPLORE** section,select **Containerized Apps** to view raw metrics for all workloads running on the cluster.
+1. Under the **EXPLORE** section,select **Containerized Apps** to view raw metrics for all workloads running on the cluster.
 
     If the drop down is not fully populated and indicates some inapplicable items double check that you have chosen **EXPLORE** on the upper left and clicked on the **Hosts & Containers** drop down.  If so you will need to wait until the indexing step mentioned above is complete before continuing
     {:note}
