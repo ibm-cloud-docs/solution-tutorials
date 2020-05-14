@@ -1126,14 +1126,6 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
    - In the **Appearance** section
      - In the **Label** text box type `patient-health-frontend`
 
-   ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-9.png)
-
-   Add a label, by entering a value for the _label_ field. Enter `PatientUI - INFO`. Also add the gauge limits `0` for Minimum and `5000` for maximum.
-
-   The widget should look similar to the following one:
-
-   ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-11.png)
-
 5. Add a table of logs by namespace.
    - Click **Add Widget** at the top and select **Table**.
    - Click the newly created widget to reveal the configuration fields for the widget on the right.
@@ -1142,7 +1134,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
    - In the **Data Format** section
      - Select the field **Number of Rows** and choose `10` from the drop down.
 
-5. Verify the screen resembles the following:
+5. Drag the table to improve the presentation.  Verify the screen resembles the following:
 
     ![](images/solution55-openshift-ibm-cloud-hidden/screen-img-15.png)
 
@@ -1261,67 +1253,63 @@ The following table lists the different types of pre-defined dashboards:
 
 ### View the {{site.data.keyword.monitoringshort_notm}} dashboard
 
+Initial data is NOT available on newly created **Observability** > **Monitoring** instances.
+- After a few minutes raw data will be displayed
+- After 10s of minutes indexing occurs that provides the detail required to proceed with this tutorial
+
 1. Navigate the {{site.data.keyword.monitoringshort_notm}} console to get metrics on your Kubernetes cluster, nodes, deployments, pods, containers.
 
-2. Under the **Explore** section,select **Containerized Apps** to view raw metrics for all workloads running on the cluster.
+2. Under the **EXPLORE** section,select **Containerized Apps** to view raw metrics for all workloads running on the cluster.
+
+    If the drop down is not fully populated and indicates some inapplicable items double check that you have chosen **EXPLORE** on the upper left and clicked on the **Hosts & Containers** drop down.  If so you will need to wait until the indexing step mentioned above is complete before continuing
+    {:note}
 
    ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-select-app.png)
 
-3. Under **Explore**, select **Nodes**, search `patient-health-frontend`. Look for the partientui pod entry.
+3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend`. Look for the patient-health-frontend pod entry.
 
    ![](images/solution55-openshift-ibm-cloud-hidden/sysdig-explore-node.png)
 
-4. Under **Dashboard**, select **Default Dashboards** &gt; **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
+4. Under **DASHBOARD**, select **Default Dashboards** > **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
 
-5. Under Dashboard, select **Default Dashboards** &gt; **Hosts & Containers**. Then select **Overview by Host** to understand how nodes are currently performing.
+5. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** > **Overview by Host** to understand how nodes are currently performing.
 
 
-### Explore the normal traffic flow of the application
-
-You can use the **Connection Table** dashboard to monitor how data flows between your application components.
-
-1. From the **Explore** tab, select **Deployments**.
-2. Select your cluster (e.g. roks081). Then, select the namespace where you deployed your sample app.
-3. Select the _patientui_ pod entry.
-4. Select **Default Dashboards**.
-
-   ![](images/solution55-openshift-ibm-cloud-hidden/explore-img-4.png)
-
-5. Check out the two dashboards under **Hosts & Containers**:
-   * **Overview by Host**
-   * **Overview by Container**.
+1. From the **EXPLORE** tab, select **Deployments**.
+2. Search for `example-health` namespace
+3. Select the `patient-health-frontend` to select all pods for the frontend.
+   ![](images/solution55-openshift-ibm-cloud-hidden/explore-img-9.png)
 
 ### Explore the cluster and the node capacity
 
-1. From the **Explore** tab, select **Deployments**.
-2. Select your cluster (e.g. roks081). Then, select the namespace where you deployed your sample app.
-3. Select the _patientui_ pod entry.
-4. Select **Default Dashboards**.
-5. Select **Kubernetes > Kubernetes Cluster and Node Capacity**. 
 
-   ![](images/solution55-openshift-ibm-cloud-hidden/explore-img-9.png)
-
+4. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** check out the two dashboards:
+   * **Overview by Host**
+   * **Overview by Container**.
+5. Select **DASHBOARD** > **Default Dashboards** > **Kubernetes > Kubernetes Cluster and Node Capacity**. 
    Check the **Total CPU Capacity**. This is the CPU capacity that has been reserved for the node including system daemons.
-
    Check the **Total Allocatable CPU**. This is the CPU which is available for pods excluding system daemons.
-
    Check the **Total Pod CPU limit**. It should be less than the allocatable CPU of the node or cluster.
-
    Check the **Total Pod CPU Requested**. It is the amount of CPU that will be guaranteed for pods on the node or cluster.
-
    Check the **Total Pod CPU Usage**. It is the total amount of CPU that is used by all Pods on the node or cluster.
 
 ### Explore the Network
 
-1. From the **DASHBOARDS** tab, select **Default Dashboards**. Then, select **Network > Overview**.
+1. Select **DASHBOARD** > **Default Dashboards** > **Network > Overview**.
 
    The following dashboard is displayed. It shows information about all resources that are monitored through the instance.
 
    ![](images/solution55-openshift-ibm-cloud-hidden/dashboard-img-2.png)
 
-2. Change the scope of the dashboard to display information about your {{site.data.keyword.openshiftshort}} cluster. Select **Edit scope** on the right side and change it:
-
-    ![](images/solution55-openshift-ibm-cloud-hidden/dashboard-img-4.png)
+2. Make this dashboard your own and then scope it to a specific namespace.  
+    - In the Hamburger menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
+    - Click Copy and Open
+    - In Yourname Network Overview in the upper right choose **Edit Scope**
+    - Change Everywhere to `kubernetes.namespace.name`
+    - Change in to `is`
+    - Change Value to `ibm-observe`
+   ![](images/solution55-openshift-ibm-cloud-hidden/explore-img-10.png)
+    - Click Save
 
     The dashboard now shows information about the ibm-observe namespace.
 
@@ -1347,10 +1335,14 @@ Find more about IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_no
 -->
 <!--#/isworkshop#-->
 <!--##istutorial#-->
-In the [Resource List](https://{DomainName}/resources) locate and delete the resources you created:
+In the [Resource List](https://{DomainName}/resources) locate and delete the resources you wish to remove:
 * Delete the {{site.data.keyword.openshiftshort}} cluster
-* IBM Log Analysis with {{site.data.keyword.la_short}} instance
-* IBM Monitoring with Sysdig instance
+* If not possible to delete cluster then delete the {{site.data.keyword.openshiftshort}} resources:
+  - oc delete all --all --namespace example-health
+  - oc delete project/example-health
+* Delete {{site.data.keyword.la_short}} instance
+* Delete {{site.data.keyword.mon_full_notm}}
+* Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
 * Cloudant service 
 <!--#/istutorial#-->
 
