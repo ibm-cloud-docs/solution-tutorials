@@ -262,7 +262,7 @@ You can read more about how [Istio mixer enables telemetry reporting](https://is
 Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored.
 
 1. In the **OpenShift web console**, under **Networking** -> **Routes**, click the URL next to **grafana**
-2. Click on **Home** and then **Istio** -> Istio Service Dashboard.
+2. Click on **Home** and then **Istio** -> **Istio Service Dashboard**.
 3. Select `bookinfo` in the Service drop down.
 
 This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
@@ -272,12 +272,11 @@ This Grafana dashboard provides metrics for each workload. Explore the other das
 Kiali is an open-source project that installs as an add-on on top of Istio to visualize your service mesh. It provides deeper insight into how your microservices interact with one another, and provides features such as circuit breakers and request rates for your services.
 
 1. From the **OpenShift web console**, under **Networking** -> **Routes**, select the URL next to **kiali**
-2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces to see the a visual **Service graph** of the various services in your Istio mesh.
-3. You can see request rates as well by clicking the "No edge Labels" tab and choosing "Requests per second".
+2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces from the top bar to see the a visual **Versioned app graph** of the various services in your Istio mesh.
+3. To see the request rates, click **No edge Labels** and choose **Requests per second**.
 4. In a different tab, visit the BookInfo application and refresh the page multiple times to generate some load, or run the load script in the previous section.
 
 Kiali has a number of views to help you visualize your services. Click through the various tabs to explore the service graph, and the various views for workloads, applications and services.
-
 
 ## Remove resources
 {:#cleanup}
