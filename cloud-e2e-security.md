@@ -199,7 +199,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
    * Set **Role** to **Manager**.
    * Keep the default values for the the remaining fields.
    * **Add**.
-3. Make note of the credentials by clicking **View credentials**. You will need them in a later step.
+3. Expand the newly created credentials and make note of the values. You will need them in a later step.
 4. Under **Manage**, launch the Cloudant dashboard.
 5. Click **Create Database** to create a **Non-partitioned** database named **secure-file-storage-metadata**.
 

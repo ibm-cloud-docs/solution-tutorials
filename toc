@@ -66,6 +66,7 @@ Solution Tutorials
         solution-template.md
         coligo.hidden.md
         openshift-ibm-cloud.hidden.md
+        istio-openshift.hidden.md
 
     {: .topicgroup}
     Identity and Access Management

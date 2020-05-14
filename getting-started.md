@@ -497,7 +497,7 @@ Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with
    ibmcloud plugin install cloud-functions
    ibmcloud plugin install cloud-object-storage
    ibmcloud plugin install kubernetes-service
-   ibmcloud cf install --version 6.49.0 --force
+   ibmcloud cf install
    ```
    {:pre}
 

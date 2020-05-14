@@ -72,7 +72,7 @@ In this section, you will create the services required by the tutorial starting 
 2. Click **Service credentials** on the left pane and click **New credential**
    1. Set **Name** to **for-android-app**
    2. Click **Add** to create a new credential
-3. Click **View Credentials** to see the credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
+3. Expand the newly created credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 The {{site.data.keyword.speechtotextshort}} service converts the human voice into the written word that can be sent as an input to {{site.data.keyword.conversationshort}} service on {{site.data.keyword.Bluemix_short}}.
 
@@ -83,7 +83,7 @@ The {{site.data.keyword.speechtotextshort}} service converts the human voice int
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential
    1. Set **Name** to **for-android-app**
    2. Click **Add** to create a new credential
-3. Click **View Credentials** to see the credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
+3. Expand the newly created credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 The {{site.data.keyword.texttospeechshort}} service processes text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. The service provides several voices and can be configured in the Android app.
 
@@ -94,7 +94,7 @@ The {{site.data.keyword.texttospeechshort}} service processes text and natural l
 2. Click **Service credentials** on the left pane and click **New credential** to add a new credential.
    1. Set **Name** to **for-android-app**.
    2. Click **Add** to create a new credential
-3. Click **View Credentials** to see the credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
+3. Expand the newly created credentials. Make note of the **API Key** and **URL**, you will need it for the mobile application.
 
 ## Create a skill
 {: #create_workspace}
