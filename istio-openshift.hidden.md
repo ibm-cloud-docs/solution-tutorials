@@ -80,13 +80,13 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 
 In this step, you'll configure `oc` to point to your newly created cluster. To easily connect to the cluster, you need the {{site.data.keyword.openshiftshort}} CLI `oc` that exposes commands for managing your applications, as well as lower level tools to interact with each component of your system.
 
-To avoid installing the command line, the recommended approach is to use the IBM Cloud Shell.
+To avoid installing the command line, the recommended approach is to use the {{site.data.keyword.Bluemix_notm}} Shell.
 
 {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
 
 1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**.
 2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command**.
-3. In a new browser tab/window, open the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) to start a new session.Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI.
+3. In a new browser tab/window, open the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) to start a new session.Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI. **_Make sure you don't close this window/tab_**
 4. Paste the login command you copied from the web console and hit Enter. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
@@ -142,7 +142,7 @@ The application is composed of four separate microservices used to demonstrate v
 In Kubernetes, a sidecar is a utility container in the pod, and its purpose is to support the main container. For Istio to work, Envoy proxies must be deployed as sidecars to each pod of the deployment. There are two ways of injecting the Istio sidecar into a pod: manually using the `istioctl` CLI tool or automatically using the Istio sidecar injector. In this section, you will use the automatic sidecar injection provided by Istio.
 
 1.  From your **IBM Cloud Shell**, create a project called "bookinfo" with `oc new-project` command
-    ``` shell
+    ``` sh
     oc new-project bookinfo
     ```
     {:pre}
@@ -249,32 +249,30 @@ Istio's tracing and metrics features are designed to provide broad and granular 
 You can read more about how [Istio mixer enables telemetry reporting](https://istio.io/docs/concepts/policy-and-control/mixer.html).
 {:tip}
 
-
-1. Open your Shell tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last exercise.
-
-   ```sh
-   for i in {1..20}; do sleep 0.5; curl -I $INGRESS_HOST/productpage; done
-   ```
-   {:pre}
-
-### Grafana
+### Visualize Metrics with Grafana
 
 Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored.
 
 1. In the **OpenShift web console**, under **Networking** -> **Routes**, click the URL next to **grafana**
 2. Click on **Home** and then **Istio** -> **Istio Service Dashboard**.
 3. Select `bookinfo` in the Service drop down.
+4. Open your {{site.data.keyword.Bluemix_notm}} Shell tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last section.
+
+   ```sh
+   for i in {1..20}; do sleep 0.5; curl -I $INGRESS_HOST/productpage; done
+   ```
+   {:pre}
 
 This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
 
-### Kiali
+### Observe your Service mesh with Kiali
 
 Kiali is an open-source project that installs as an add-on on top of Istio to visualize your service mesh. It provides deeper insight into how your microservices interact with one another, and provides features such as circuit breakers and request rates for your services.
 
 1. From the **OpenShift web console**, under **Networking** -> **Routes**, select the URL next to **kiali**
 2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces from the top bar to see the a visual **Versioned app graph** of the various services in your Istio mesh.
 3. To see the request rates, click **No edge Labels** and choose **Requests per second**.
-4. In a different tab, visit the BookInfo application and refresh the page multiple times to generate some load, or run the load script in the previous section.
+4. In a different tab/window, visit the BookInfo application URL and refresh the page multiple times to generate some load, or run the load script in the previous section.
 
 Kiali has a number of views to help you visualize your services. Click through the various tabs to explore the service graph, and the various views for workloads, applications and services.
 
