@@ -1192,14 +1192,14 @@ Verify that the `sydig-agent` pods on each node have a **Running** status.
 
 Run the following command:
 
-```text
+```sh
 oc get pods -n ibm-observe
 ```
 {:pre}
 
 Example output:
 
-```text
+```
     NAME                 READY     STATUS    RESTARTS   AGE
     sysdig-agent-qrbcq   1/1       Running   0          1m
     sysdig-agent-rhrgz   1/1       Running   0          1m
