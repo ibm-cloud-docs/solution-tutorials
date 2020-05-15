@@ -776,6 +776,19 @@
             "openshift_on_ibm_cloud",
             "istio"
           ]
+        },
+        {
+          "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "url": "vmware-solutions-shared-getting-started.hidden.html",
+          "description": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
+          "tags": [
+            "VMware"
+          ],
+          "requirements": [
+            "vmware",
+            "schematics"
+          ]
         }
       ]
     },
@@ -973,9 +986,9 @@
         },
         {
           "name": "Linking secure private networks over the IBM network",
-          "url": "vlan-spanning.html",
+          "url": "linking-secure-network-enclosures.html",
           "description": "Deploy two private networks that are securely linked over the IBM Cloud private network using the VLAN Spanning service.",
-          "imgSrc": "images/solution43-vlan-spanning/vlan-spanning.png",
+          "imgSrc": "images/solution43-linking-secure-network-enclosures/vlan-spanning.png",
           "tags": [
             "Infrastructure",
             "Vyatta",
