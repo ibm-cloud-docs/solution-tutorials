@@ -86,7 +86,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser, we will create the 
 #### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
 {: #access-vmware-solutions-shared}
 
-1. Navigate to your [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://cloud.ibm.com/infrastructure/vmware-solutions/console/instances).
+1. Navigate to your [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances).
 2. Click on the newly created instance `vmware-tutorial`.
 3. Click on **Set Organization Admin Password**, set a password (`vcd_password`) for the **admin** user (`vcd_user`).
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page.
