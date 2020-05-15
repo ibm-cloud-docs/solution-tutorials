@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-14"
-lasttested: "2020-05-14"
+lastupdated: "2020-05-15"
+lasttested: "2020-05-15"
 ---
 
 {:shortdesc: .shortdesc}
@@ -26,7 +26,7 @@ Based on the open source Istio project, {{site.data.keyword.openshiftlong_notm}}
 ## Objectives
 {: #objectives}
 
-* Install {{site.data.keyword.openshiftlong_notm}} Service Mesh in your cluster
+* Install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh in your cluster
 * Deploy the BookInfo sample app
 * Use metrics, logging and tracing to observe services
 * Set up the Istio Ingress Gateway
@@ -37,7 +37,7 @@ Based on the open source Istio project, {{site.data.keyword.openshiftlong_notm}}
 {: #services}
 
 This tutorial uses the following runtimes and services:
-* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
+* [{{site.data.keyword.openshiftlong}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
@@ -131,7 +131,7 @@ You successfully installed Istio into your cluster.
 ## Deploy the BookInfo app in to the Service Mesh
 {: #deploy_bookinfo_app}
 
-The BookInfo application displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
+The [BookInfo application](https://istio.io/docs/examples/bookinfo/) displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
 
 The application is composed of four separate microservices used to demonstrate various Istio features.
 
@@ -170,10 +170,10 @@ In Kubernetes, a sidecar is a utility container in the pod, and its purpose is t
 
 ### Install the BookInfo app
 
-1. Clone the application source repository
+1. Clone the Istio repository that includes the samples
    ```sh
-   git clone https://github.com/rvennam/istio-roks-101
-   cd istio-roks-101/bookinfo
+   git clone https://github.com/istio/istio.git
+   cd istio/samples/bookinfo/platform/kube
    ```
    {:pre}
 
@@ -186,7 +186,7 @@ In Kubernetes, a sidecar is a utility container in the pod, and its purpose is t
 
    These commands deploy the BookInfo app on to the cluster. Since you enabled automation sidecar injection, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
 
-1. Verify that the pods are up and running.
+3. Verify that the pods are up and running.
 
     ```sh
     oc get pods
@@ -219,6 +219,7 @@ An Ingress Gateway resource can be created to allow external requests through th
 1. Configure the bookinfo default route with the Istio Ingress Gateway.
 
     ```sh
+    cd ../../networking
     oc create -f bookinfo-gateway.yaml
     ```
     {:pre}
@@ -275,6 +276,73 @@ Kiali is an open-source project that installs as an add-on on top of Istio to vi
 4. In a different tab/window, visit the BookInfo application URL and refresh the page multiple times to generate some load, or run the load script in the previous section.
 
 Kiali has a number of views to help you visualize your services. Click through the various tabs to explore the service graph, and the various views for workloads, applications and services.
+
+## Perform traffic management
+{:#traffic_management}
+
+Istio’s traffic routing rules let you easily control the flow of traffic and API calls between services. Istio simplifies configuration of service-level properties like circuit breakers, timeouts, and retries, and makes it easy to set up important tasks like A/B testing, canary rollouts, and staged rollouts with percentage-based traffic splits. It also provides out-of-box failure recovery features that help make your application more robust against failures of dependent services or the network.
+
+Istio’s traffic management model relies on the Envoy proxies that are deployed along with your services. All traffic that your mesh services send and receive (data plane traffic) is proxied through Envoy, making it easy to direct and control traffic around your mesh without making any changes to your services.
+
+Pilot translates high-level rules into low-level configurations and distributes this config to Envoy instances. Pilot uses three types of configuration resources to manage traffic within its service mesh: [Virtual Services](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#VirtualService), [Destination Rules](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#Destination), and [Service Entries](https://istio.io/docs/reference/config/istio.networking.v1alpha3.html#ServiceEntry).
+
+### A/B testing with Istio
+**A/B testing** is a method of performing identical tests against two separate service versions in order to determine which performs better. To prevent Istio from performing the default routing behavior between the original and modernized service, define the following rules:
+
+1. Label the versions but running the below command in the Shell,
+   ```sh
+   oc create -f destination-rule-all.yaml
+   ```
+   {:pre}
+
+   A [DestinationRule](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#Destination) defines policies that apply to traffic intended for a service after routing has occurred. These rules specify configuration for load balancing, connection pool size from the sidecar, and outlier detection settings to detect and evict unhealthy hosts from the load balancing pool. Any destination `host` and `subset` referenced in a `VirtualService` rule must be defined in a corresponding `DestinationRule`.
+   {:tip}
+
+2. A VirtualService defines a set of traffic routing rules to apply when a host is addressed. Each routing rule defines matching criteria for traffic of a specific protocol. If the traffic is matched, then it is sent to a named destination service (or subset/version of it) defined in the registry. Run the below command to send all reviews traffic to v1
+   ```sh
+   oc create -f virtual-service-all-v1.yaml
+   ```
+   {:pre}
+
+   The `VirtualService` defines a rule that captures all HTTP traffic coming in to reviews service, and routes 100% of the traffic to pods of the service with label "version: v1". A subset or version of a route destination is identified with a reference to a named service subset which must be declared in a corresponding `DestinationRule`.
+   {:tip}
+
+3. View the bookinfo application using the `$INGRESS_HOST` specified in the above section and enter it as a URL in Firefox or Chrome web browsers. You can use the echo command to get this value, if you don't remember it.
+   ```sh
+   echo $INGRESS_HOST
+   ```
+   {:pre}
+   You should only get the v1 of the BookInfo application - No stars for ratings
+
+4. To enable the Istio service mesh for A/B testing against the new service version, modify the original `VirtualService` rule to send only Firefox traffic to v2
+
+   ```sh
+   oc replace -f virtual-service-firefox.yaml
+   ```
+   {:pre}
+
+   In Istio `VirtualService` rules, there can be only one rule for each service and therefore when defining multiple [HTTPRoute](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRoute) blocks, the order in which they are defined in the yaml matters. Hence, the original `VirtualService` rule is modified rather than creating a new rule. With the modified rule, incoming requests originating from `Firefox` browsers will go to the v2 version of bookinfo. All other requests fall-through to the next block, which routes all traffic to the v3 version of bookinfo.
+   {:tip}
+
+### Canary deployment
+In `Canary Deployments`, newer versions of services are incrementally rolled out to users to minimize the risk and impact of any bugs introduced by the newer version. To begin incrementally routing traffic to the newer version of the bookinfo service, modify the original `VirtualService` rule:
+
+1. Run the below command to send 80% of traffic to v1
+
+   ```sh
+   oc replace -f virtual-service-reviews-80-20.yaml
+   ```
+   {:pre}
+   In the modified rule, the routed traffic is split between two different subsets of the bookinfo service. In this manner, traffic to the modernized version 2 of reviews is controlled on a percentage basis to limit the impact of any unforeseen bugs. This rule can be modified over time until eventually all traffic is directed to the newer version of the service.
+   {:tip}
+
+1. View the bookinfo application using the `$INGRESS_HOST` and enter it as a URL in Firefox or Chrome web browsers. **Ensure that you are using a hard refresh (command + Shift + R on Mac or Ctrl + F5 on windows) to remove any browser caching.** You should notice that the bookinfo should swap between V1 or V2 at about the weight you specified.
+
+1. To route all traffic to reviews v3,
+   ```sh
+   oc replace -f virtual-service-reviews-v3.yaml
+   ```
+   {:pre}
 
 ## Remove resources
 {:#cleanup}
