@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-04-27"
-lasttested: "2020-04-27"
+lastupdated: "2020-05-07"
+lasttested: "2020-05-07"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -19,7 +19,7 @@ lasttested: "2020-04-27"
 
 # Build, deploy, test and monitor a predictive machine learning model
 {: #create-deploy-retrain-machine-learning-model}
-This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. You will also learn how to create a new machine learning model using a notebook, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed model (using a notebook) with {{site.data.keyword.aios_full_notm}}.
+This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in applications and testing the model. You will also learn how to create a Python function to wrap the deployed model using a notebook, all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed function (using a notebook) with {{site.data.keyword.aios_full_notm}}.
 {:shortdesc}
 
 In this tutorial, the **Iris flower data set** is used for creating a machine learning model to classify species of flowers.
@@ -90,7 +90,7 @@ You can create a project to add data and open a data asset in the data refiner f
 As mentioned earlier, you will be using the **Iris data set**. The Iris dataset was used in R.A. Fisher's classic 1936 paper, [The Use of Multiple Measurements in Taxonomic Problems](http://rcs.chemometrics.ru/Tutorials/classification/Fisher.pdf), and can also be found on the [UCI {{site.data.keyword.pm_short}} Repository](http://archive.ics.uci.edu/ml/). This small dataset is often used for testing out machine learning algorithms and visualizations. The aim is to classify Iris flowers among three species (Setosa, Versicolor or Virginica) from measurements of length and width of sepals and petals. The iris data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
 ![](images/solution22-build-machine-learning-model/iris_machinelearning.png)
 
-**Download** [iris_initial.csv](https://ibm.box.com/shared/static/nnxx7ozfvpdkjv17x4katwu385cm6k5d.csv) which consists of 40 instances of each species.
+**Download** [iris_initial.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_initial.csv) which consists of 40 instances of each species.
 
 1. Under **Assets** in your project, click the **Find and Add Data** icon ![Shows the find data icon.](images/solution22-build-machine-learning-model/data_icon.png).
 2. Under **Load**, click on **browse** and upload the downloaded `iris_initial.csv`.
@@ -112,7 +112,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 
 1. Click on **Add to project +** in the main menu and select **AutoAI experiment**. In the dialog,
    1. Select **From blank**.
-   2. Set the Asset name to **iris_model**.
+   2. Set the name to **iris_model**.
    3. Under **Associated services**, select the **Machine learning service instance**(`pm-20-tutorial`) created above.
 4. Click **Create**.
 
@@ -144,71 +144,22 @@ Once the experiment completes running, under the **Pipeline** leaderboard,
 5. Check the details of the model and click **Save**.
 6. In the received notification, click **View in project** then under **Overview** tab check the details of the model.
 
-## Deploy the model and try out the API
+The accuracy of the model will be improved in the later part of the tutorial.
+
+## Deploy and test your model
 {:#deploy_model}
 
-In this section, you will deploy the saved model and expose the deployed model as an API to be accessed from your applications.
+In this section, you will deploy the saved model and test the deployed model,
 
 1. Under the created model, click on **Deployments** and then click **Add Deployment**.
    1. Set the **Name** to **iris_deployment**.
    2. Select **Web Service** as your deployment type.
 2. Click **Save**.
+3. Once the status changes to **Ready** (You may have to refresh the page), Click on the **Name** of the new web service.
 
-Once the status changes to **Ready** (You may have to refresh the page):
-1. Click on the **Name** of the new web service.
-2. Under **Implementation** tab of the deployment, you can see the *Scoring End-point*, code snippets in various programming languages, and API Specification.
-3. **Copy** the *Scoring End-point* in a notepad for future reference.
-4. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
-   ```sh
-   export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
-   ```
-   {:pre}
+### Test the deployed model
 
-   {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
-   {:tip}
-5. To use the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} REST API, you need to obtain an [{{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command
-   ```sh
-   ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
-   ```
-   {:pre}
-6. Copy the IAM token from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
-   ```sh
-   export IAM_TOKEN='<IAM_TOKEN>'
-   ```
-   {:pre}
-
-7. Run the command below to retrieve the `instance_id`, required later in the tutorial. **_You will use the the ML service credentials later in the tutorial_**
-   ```sh
-   ibmcloud resource service-key wdp-writer
-   ```
-   {:pre}
-8. Export the returned `instance_id` as `ML_INSTANCE_ID` for use in subsequent API requests
-   ```sh
-   export ML_INSTANCE_ID='<INSTANCE_ID>'
-   ```
-   {:pre}
-
-9. Run the below **cURL** code in the cloud shell to see the prediction results.
-   ```sh
-   curl -X POST \
-   --header 'Content-Type: application/json' \
-   --header 'Accept: application/json' \
-   --header "Authorization: $IAM_TOKEN" \
-   --header "ML-Instance-ID: $ML_INSTANCE_ID" \
-   -d '{"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length", "petal_width"],"values": [[5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]]}]}' \
-   $SCORING_ENDPOINT
-   ```
-   {:pre}
-
-   If you observe, the code is from the **Implementation** tab of the deployment your created above. Thereafter, replacing the `$ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[5.1,3.5,1.4,0.2]** and `$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[3.2,1.2,5.2,1.7]**.
-   {:tip}
-
-## Test your model
-{:#test_model}
-
-Along with CLI, you can also do predictions using the UI.
-
-1. Under **Test**, click on **Provide input data as JSON** icon next to **Enter input data** and provide the JSON below as input.
+1. Under **Test** tab of your deployment, click on **Provide input data as JSON** icon next to **Enter input data** and provide the JSON below as input.
    ```json
       {
       "input_data": [{
@@ -223,6 +174,58 @@ Along with CLI, you can also do predictions using the UI.
 2. Click **Predict** and you should see the **Predictions** JSON output.
 3. You can change the input data and continue testing your model.
 
+## Try out the API
+{:#try_api}
+
+Along with the UI, you can also do predictions using the API scoring endpoint by exposing the deployed model as an API to be accessed from your applications.
+
+1. Under **Implementation** tab of the deployment, you can see the *Scoring End-point*, code snippets in various programming languages, and API Specification.
+2. **Copy** the *Scoring End-point* in a notepad for future reference.
+3. In a browser, launch the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) and export the scoring End-point to be used in subsequent requests. **_Make sure you don't close this window/tab_**..
+   ```sh
+   export SCORING_ENDPOINT='<SCORING_ENDPOINT_FROM_ABOVE_STEP>'
+   ```
+   {:pre}
+
+   {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
+   {:tip}
+4. To use the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} REST API, you need to obtain an [{{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command
+   ```sh
+   ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
+   ```
+   {:pre}
+5. Copy the complete IAM token along with `Bearer` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
+   ```sh
+   export IAM_TOKEN='<IAM_TOKEN>'
+   ```
+   {:pre}
+
+6.  Run the command below to retrieve the `instance_id`, required later in the tutorial. **_You will use the the ML service credentials later in the tutorial_**
+   ```sh
+   ibmcloud resource service-key wdp-writer
+   ```
+   {:pre}
+7. Export the returned `instance_id` as `ML_INSTANCE_ID` for use in subsequent API requests
+   ```sh
+   export ML_INSTANCE_ID='<INSTANCE_ID>'
+   ```
+   {:pre}
+
+8. Run the below **cURL** code in the cloud shell to see the prediction results.
+   ```sh
+   curl -X POST \
+   --header 'Content-Type: application/json' \
+   --header 'Accept: application/json' \
+   --header "Authorization: $IAM_TOKEN" \
+   --header "ML-Instance-ID: $ML_INSTANCE_ID" \
+   -d '{"input_data": [{"fields": ["sepal_length", "sepal_width", "petal_length","petal_width"],"values": [[5.1,3.5,1.4,0.2], [3.2,1.2,5.2,1.7]]}]}' \
+   $SCORING_ENDPOINT
+   ```
+   {:pre}
+
+   If you observe, the code is from the **Implementation** tab of the deployment your created above. Thereafter, replacing the `$ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[5.1,3.5,1.4,0.2]** and `$ANOTHER_ARRAY_OF_VALUES_TO_BE_SCORED` placeholder with **[3.2,1.2,5.2,1.7]** respectively.
+   {:tip}
+
 ## Monitor your deployed model with {{site.data.keyword.aios_full_notm}}
 {:#monitor_openscale}
 
@@ -230,24 +233,23 @@ Along with CLI, you can also do predictions using the UI.
 
 For ease of understanding, the tutorial concentrates only on improving the quality (accuracy) of the AI model through {{site.data.keyword.aios_short}}.
 
-### Create a {{site.data.keyword.pm_short}} model using a Jupyter notebook
-In this section, you will create a ML model using the same iris dataset for exploring {{site.data.keyword.aios_full_notm}}
+### Deploy a Python function using a notebook
+In this section, you will wrap the AutoAI model deployment in a Python function and deploy the Python function to explore {{site.data.keyword.aios_full_notm}}
+
+Deploying functions gives you the ability to hide details (such as credentials), preprocess data before passing it to models, perform error handling, and include calls to multiple models, all within the deployed function instead of in your application.
 
 1. In the top navigation bar, click on the project name `iris_project` to see the project view.
 2. Click on **Add to project** in the menu bar and then click **Notebook**
    1. Select **From URL** and give **iris_notebook** as the name
-   2. Under **Notebook URL**, enter `https://github.com/IBM-Cloud/ml-iris-classification/blob/master/classify_iris.ipynb`
+   2. Under **Notebook URL**, enter `https://github.com/IBM-Cloud/ml-iris-classification/blob/master/classify_iris_function.ipynb`
    3. Click **Create**
-3. Once the notebook is created, scroll to **Provide WML credentials** section of the notebook and provide the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service credentials from the Cloud shell.
+3. Once the notebook is created, scroll to **Provide WML credentials and model deployment endpoint** section of the notebook and provide the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} service credentials from the Cloud shell.
 
    Copy the three fields from the output of the `ibmcloud resource service-key wdp-writer` command in the Cloud shell.
    {:tip}
-
-4. In the top menu of the notebook, Click **Cell** and then click **Run All**.
-5. This should create a ML model and also a deployment under `iris_project`.
-6. If you scroll to **Test the model** section, you can see that the accuracy score of the the model is between 0.85-0.95 based on the randomness of the train data. **_Make sure you don't close this window/tab_**.
-
-Let's improve the quality and accuracy of the model in the next section.
+4. For `model_deployment_endpoint_url`, replace the placeholder with the AutoAI deployed API **Scoring End-point** that you saved earlier.
+5. In the top menu of the notebook, Click **Cell** and then click **Run All**.
+6. This should create a deployment under `iris_project`.
 
 ### Provision {{site.data.keyword.aios_full_notm}} service
 
@@ -273,7 +275,7 @@ In this section, as part of preparing your model for monitoring you will set up 
    5. Click **Save**.
 3. On the left pane:
    1. Click **Insights dashboard**(first icon) to add a deployment
-   2. Click **Add** and select `Deployment of iris model`
+   2. Click **Add** and select `IRIS classification - AI Function`
    3. Click **Configure**.
 4. Click **Configure monitors** to setup your monitors.
 
@@ -296,12 +298,32 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
    5. Copy and paste the credentials without any trailing spaces and click **Connect**
    6. Select the Bucket that starts with `irisproject-donotdelete-`
    7. Select `iris_initial.csv` from the Data set dropdown and click **Next**
-3. Before clicking on **Check now**, let's generate scoring payload required for logging. To do this, Go to the tab where you have your notebook open, scroll to **Score data** section(`In [25]` in the notebook), select the code block and click **Run** on the top.
-4. Click **Check now**. You should see `Logging is active Click Next` response. Click **Next**
+3. Select **JSON payload** as the Scoring method and replace the request and response in the payload with the below snippet
+   ```json
+   "request":  {"fields": ["sepal_length", "sepal_width",
+                           "petal_length", "petal_width"], "values": [[5.1,3.5,1.4,0.2]]},
+   "response":
+    {
+      "fields": ["sepal_length", "sepal_width",
+                           "petal_length", "petal_width",
+        "prediction",
+        "probability"
+      ],
+      "values": [[5.1,3.5,1.4,0.2,
+          "setosa",
+          [
+            0.873992306935645,
+            0.12598018154624505,
+            0.000027511518109972278
+          ]
+      ]]
+    },
+   ```
+4. Click **Send now**. You should see `Scoring request successful Click Next` response. Click **Next**
    1.  Select **species** as your label column and click **Next**
    2.  Select **all** the four training features and click **Next**
    3.  Check both **prediction** and **probability** and click **Save**. The model details are now set.
-5. On the left pane, click on **Quality** and click the **edit** icon on the Quality threshold tile
+1. On the left pane, click on **Quality** under Evaluations and click the **edit** icon on the Quality threshold tile
     1. Threshold value: Accuracy - **0.98** and click **Next**
     2. Minimum sample size (number of transactions) - **10**, Maximum sample size (number of transactions) - **100** and click **Save**
     3. On the left pane, Click on **Go to model summary**
@@ -312,12 +334,12 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
 As the tutorial uses a small dataset, configuring Fairness and Drift won't have an impact.
 
 ### Evaluate the deployed model
-In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. Download [iris_retrain.csv](https://ibm.box.com/s/96kvmwhb54700pjcwrd9hd3j6exiqms8).
+In this section, you will evaluate the model by uploading a `iris_retrain.csv` file which contains 10 instances of each species. **Download** [iris_retrain.csv](https://github.com/IBM-Cloud/ml-iris-classification/blob/master/data/iris_retrain.csv).
 
 1. Click on **Actions** and then **Evaluate now**.
 2. Click on **browse**, upload the `iris_retrain.csv` file and click on **Upload and evaluate**.
 3. After the evaluation is completed, you should see the dashboard with different metrics.
-   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **Deployment of iris model: Accuracy**.
+   1. Click on **1.00** under Quality to check the Accuracy of the model. Click on the back button next to **IRIS classification - AI Function : Accuracy**.
    2. Click on the Number of explanations (2), select one of the transactions and click **View**.
    3. You can see important information like How this prediction was determined, Most important factors influencing prediction, confidence etc.,
 
