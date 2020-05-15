@@ -262,7 +262,6 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    ```sh
    for i in {1..20}; do sleep 0.5; curl -I $INGRESS_HOST/productpage; done
    ```
-   {:pre}
 
 This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
 
@@ -344,17 +343,48 @@ In `Canary Deployments`, newer versions of services are incrementally rolled out
    ```
    {:pre}
 
+## Secure your services
+{:#secure_services}
+
+Istio can secure the communication between microservices without requiring application code changes. Security is provided by authenticating and encrypting communication paths within the cluster. This is becoming a common security and compliance requirement. Delegating communication security to Istio (as opposed to implementing TLS in each microservice), ensures that your application will be deployed with consistent and manageable security policies.
+
+1.  To configure mTLS, you need to modify your previous destination rules to use `ISTIO_MUTUAL`.
+
+   ```sh
+   oc replace -f destination-rule-all-mtls.yaml
+   ```
+   {:pre}
+
+2. Send more traffic to your application. Everything should still continue to work as expected.
+3. Launch Kiali again and go to the **Graph**
+4. Under Display, select **Security**. Confirm your traffic is secure.
+
+## Enable SSL for traffic coming in to your cluster (HTTPS)
+{:#enable_https}
+### Create a secure Route to the Ingress Gateway
+
+1. Launch the OpenShift console and choose the **istio-system** project from the top bar.
+2. Under **Networking** and then **Routes**, click **Create Route**
+   1. Name: `istio-ingressgateway-secure`
+   2. Service: `istio-ingressgateway`
+   3. Target Port `80->8080`
+   4. Check `Secure Route`
+   5. TLS Termination: `Edge`
+   6. Insecure Traffic: `None`
+3.  Click **Create**
+4. Visit the new HTTPS route next to **istio-ingressgateway-secure** route. Remember to add `/productpage` at the end of the URL!
+
 ## Remove resources
 {:#cleanup}
 
 * Delete all application resource objects:
    ```sh
-   oc delete all --selector app=$MYPROJECT
+   oc delete all --selector app=bookinfo
    ```
    {:pre}
 * Delete the project:
    ```sh
-   oc delete project $MYPROJECT
+   oc delete project bookinfo
    ```
    {:pre}
 <!--##istutorial#-->
