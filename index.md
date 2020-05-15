@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-05-14"
+lastupdated: "2020-05-15"
 ---
 
 {:shortdesc: .shortdesc}
@@ -963,7 +963,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-vlan-spanning#vlan-spanning">
+    <a href = "/docs/tutorials?topic=solution-tutorials-linking-secure-network-enclosures#linking-secure-network-enclosures">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -974,7 +974,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Deploy two private networks that are securely linked over the IBM Cloud private network using the VLAN Spanning service.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution43-vlan-spanning/vlan-spanning.png" alt="Architecture diagram for the solution Linking secure private networks over the IBM network"/>
+                    <img class="architectureDiagram" src = "images/solution43-linking-secure-network-enclosures/vlan-spanning.png" alt="Architecture diagram for the solution Linking secure private networks over the IBM network"/>
                 </div>
             </div>
         </div>

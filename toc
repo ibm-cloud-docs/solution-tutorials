@@ -66,8 +66,8 @@ Solution Tutorials
         coligo.hidden.md
         openshift-ibm-cloud.hidden.md
         istio-openshift.hidden.md
-        vmware-solutions-shared-getting-started.md
-        
+        vmware-solutions-shared-getting-started.hidden.md
+
     {: .topicgroup}
     Identity and Access Management
         users-teams-applications.md
@@ -87,7 +87,7 @@ Solution Tutorials
         nat-config-private.md
         byoip.md
         configuring-IPSEC-VPN.md
-        vlan-spanning.md
+        linking-secure-network-enclosures.md
         web-app-private-network.md
     {: .navgroup-end}
     
@@ -151,7 +151,7 @@ Solution Tutorials
         nat-config-private.md
         byoip.md
         configuring-IPSEC-VPN.md
-        vlan-spanning.md
+        linking-secure-network-enclosures.md
         web-app-private-network.md
 
     {: .navgroup-end}
