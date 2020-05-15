@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-12-13"
-lasttested: "2019-11-21"
+  years: 2018, 2019, 2020
+lastupdated: "2020-05-08"
+lasttested: "2020-05-08"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -23,7 +23,7 @@ In this tutorial, you will learn how to use an Apache Kafka based messaging serv
 
 {:shortdesc}
 
-You will simulate this pattern using a file processing example. First create a UI application which will be used to upload files to object storage and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
+You will simulate this pattern using a file processing example. First you will create a UI application which will be used to upload files to {{site.data.keyword.objectstorageshort}} and generate messages indicating work to be done. Next, you will create a separate worker application which will asynchronously process the user uploaded files when it receives messages.
 
 ## Objectives
 {: #objectives}
@@ -75,9 +75,10 @@ You will find instructions to download and install these tools for your operatin
 ## Create a Kubernetes cluster
 {: #create_kube_cluster}
 
-1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/kubernetes/catalog/cluster/create). Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster.
-   ![Kubernetes Cluster Creation on IBM Cloud](images/solution25/KubernetesClusterCreation.png)
-2. Check the status of your **Cluster** and **Worker Nodes** and wait for them to be **ready**.
+1. Create a Kubernetes cluster from the [Catalog](https://{DomainName}/kubernetes/catalog/cluster/create).
+   1. Name it `mycluster` for ease of following this tutorial. This tutorial can be accomplished with a **Free** cluster
+   2. Select a resource group and click **Create**
+2. Check the state of your **Cluster** and **Worker Nodes** and wait for them to be **Normal**.
 
 ### Configure kubectl
 
@@ -86,32 +87,34 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 1. Use `ibmcloud login` to log in interactively. Select the region where the cluster was created.
 2. When the cluster is ready, retrieve the cluster configuration:
    ```sh
-   ibmcloud ks cluster config --cluster <cluster-name>
+   ibmcloud ks cluster config --cluster mycluster
    ```
    {: pre}
 
    Make sure you are targeting the resource group where the cluster was created before running this command. You can view and set the current resource group with `ibmcloud target`.
    {: tip}
-4. Check that the `kubectl` command is correctly configured
+3. Check that the `kubectl` command is correctly configured
    ```sh
    kubectl cluster-info
    ```
    {: pre}
-   ![](images/solution2/kubectl_cluster-info.png)
 
 ## Create a {{site.data.keyword.messagehub}} instance
  {: #create_messagehub}
 
 {{site.data.keyword.messagehub}} is a fast, scalable, fully managed messaging service, based on Apache Kafka, an open-source, high-throughput messaging system which provides a low-latency platform for handling real-time data feeds.
 
-1. From the Dashboard, click on [**Create resource**](https://{DomainName}/catalog/) and select [**{{site.data.keyword.messagehub}}**](https://{DomainName}/catalog/services/event-streams) from the Application Services section.
-   1. Select the **Standard** plan.
-   1. Set the **Service name** to `myeventstreams`.
-   1. Click **Create**.
-1. Switch to **Topics**.
-   1. Create a topic named **work-topic**, with 1 partition and retention of a day.
-   1. Create a topic named **result-topic**, with 1 partition and retention of a day.
-1. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
+1. From the Catalog, create a [**{{site.data.keyword.messagehub}}**](https://{DomainName}/catalog/services/event-streams) service
+   1. Select a region preferably Dallas
+   2. Select the **Standard** pricing plan
+   3. Set the **Service name** to `myeventstreams`
+   4. Select a resource group and Click **Create**
+2. Under **Manage**, switch to **Topics**.
+   1. Click on **Create topic** and provide **work-topic** as the Topic name. Click **Next**
+   2. Select **1** partition, click **Next** and choose **a day** of Message retention.
+   3. Click **Create topic**
+   4. Repeat the above steps to create a topic named **result-topic**, with 1 partition and message retention of a day.
+3. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
    ```sh
    ibmcloud ks cluster service bind --cluster mycluster --namespace default --service myeventstreams --role Manager
    ```
@@ -120,17 +123,20 @@ In this step, you'll configure kubectl to point to your newly created cluster go
 The `cluster service bind` command creates a cluster secret that holds the credentials of your service instance in JSON format. Use `kubectl get secrets ` to see the generated secret with the name `binding-myeventstreams`. See [Integrating Services](https://{DomainName}/docs/containers?topic=containers-integrations#integrations) for more info
 {:tip}
 
-## Create an Object Storage instance
+## Create an {{site.data.keyword.objectstorageshort}} service
 {: #create_cos}
 
 {{site.data.keyword.cos_full_notm}} is encrypted and dispersed across multiple geographic locations, and accessed over HTTP using a REST API. {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data. You will use this to store the files uploaded by the UI.
 
-1. From the Dashboard, click on [**Create resource**](https://{DomainName}/catalog/) and select [**{{site.data.keyword.cos_short}}**](https://{DomainName}/catalog/services/cloud-object-storage) from the Storage section.
-2. Name the service `myobjectstorage` click **Create**.
-3. Click **Create Bucket**.
-4. Set the bucket name to a unique name such as `username-mybucket`.
-5. Select **Cross Region** Resiliency and **us-geo** Location and click **Create**
-6. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
+1. From the Catalog, create a [**{{site.data.keyword.cos_short}}**](https://{DomainName}/catalog/services/cloud-object-storage) service,
+   1. Select a region preferably Dallas
+   2. Select the Lite pricing plane
+   3. Name the service `myobjectstorage`
+   4. Select a resource group and click **Create**
+2. Under Buckets, Click **Create bucket**.
+3. Create a **custom bucket** by setting the bucket name to a unique name such as `username-mybucket`.
+4. Select **Cross Region** Resiliency and **us-geo** Location and click **Create bucket**
+5. Provide the service credentials to your cluster by binding the service instance to the `default` Kubernetes namespace.
    ```sh
    ibmcloud ks cluster service bind --cluster mycluster --namespace default --service myobjectstorage
    ```
@@ -146,14 +152,14 @@ The UI application is a simple Node.js Express web application which allows the 
    cd pub-sub-storage-processing/pubsub-ui
    ```
    {:pre}
-2. Open `config.js` and update COSBucketName with your bucket name.
-3. Build and deploy the application. The deploy command generates a docker images, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment. Follow the interactive instructions while deploying the app.
+2. Open `config.js` and update `COSBucketName` with your bucket name.
+3. Build and deploy the application. The deploy command generates a docker image, pushes it to your {{site.data.keyword.registryshort_notm}} and then creates a Kubernetes deployment. Follow the interactive instructions while deploying the app.
    ```sh
    ibmcloud dev build
    ibmcloud dev deploy -t container
    ```
    {:pre}
-4. Visit the application and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
+4. Visit the application with the URL mentioned in the output of the command above and upload the files from the `sample-files` folder. The uploaded files will be stored in Object Storage and the status will be "awaiting" until they are processed by the worker application. Leave this browser window open.
 
    ![](images/solution25/files_uploaded.png)
 
@@ -166,7 +172,7 @@ The worker application is a Java application which listens to the {{site.data.ke
    cd ../pubsub-worker
    ```
    {:pre}
-2. Open `resources/cos.properties` and update `bucket.name`,  property with your bucket name.
+2. Open `resources/cos.properties` and update `bucket.name` property with your bucket name.
 3. Build and deploy the worker application.
    ```sh
    ibmcloud dev build
@@ -183,10 +189,10 @@ In this tutorial, you learned how you can use Kafka based {{site.data.keyword.me
 {:removeresources}
 
 Navigate to [Resource List](https://{DomainName}/resources/) and
-1. delete Kubernetes cluster `mycluster`
-2. delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
-3. delete {{site.data.keyword.messagehub}} `myeventstreams`
-4. go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub-xxx` repositories.
+1. Delete Kubernetes cluster `mycluster`
+2. Delete {{site.data.keyword.cos_full_notm}} `myobjectstorage`
+3. Delete {{site.data.keyword.messagehub}} `myeventstreams`
+4. Go to the [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/kubernetes/registry/main/private) and delete the `pubsub*` repositories.
 
 ## Related content
 {:related}

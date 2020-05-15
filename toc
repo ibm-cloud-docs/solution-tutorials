@@ -65,6 +65,7 @@ Solution Tutorials
         solution-template.md
         coligo.hidden.md
         openshift-ibm-cloud.hidden.md
+        istio-openshift.hidden.md
 
     {: .topicgroup}
     Identity and Access Management
@@ -110,6 +111,7 @@ Solution Tutorials
     OpenShift
         scalable-webapp-openshift.md
         openshift-ibm-cloud.hidden.md
+        istio-openshift.hidden.md
 
     {: .topicgroup}
     Cloud Foundry

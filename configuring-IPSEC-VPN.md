@@ -147,7 +147,6 @@ table.
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  tunnel 1
    set security vpn ipsec site-to-site peer <DC VPN Public IP>  tunnel 1 protocol gre
    commit
-   save
    ```
    {: codeblock}
 
@@ -279,7 +278,6 @@ Create the VRA routing to direct traffic to the remote subnet via the tunnel.
    set security zone-policy zone TUNNEL to APP firewall TUNNEL-TO-APP
    set security zone-policy zone APP to TUNNEL firewall APP-TO-TUNNEL
    commit
-   save
    ```
    {: codeblock}
 3. To validate the firewalls and routing at both ends are configured correctly and are now allowing ICMP and TCP traffic ping the gateway address of the remote subnet, first from the VRA command line and if successful then by logging into the VSI.

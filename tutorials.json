@@ -98,7 +98,7 @@
             "Container Registry",
             "Node.js"
           ],
-          "lastUpdated": "2020-04-21"
+          "lastUpdated": "2020-05-13"
         },
         {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
@@ -138,7 +138,7 @@
             "Message hub",
             "Cloud Object Storage"
           ],
-          "lastUpdated": "2019-12-13"
+          "lastUpdated": "2020-05-08"
         },
         {
           "name": "Web application on LAMP stack",
@@ -422,7 +422,7 @@
             "Infrastructure",
             "Virtual Private Cloud"
           ],
-          "lastUpdated": "2020-04-06"
+          "lastUpdated": "2020-05-11"
         },
         {
           "name": "Big data logs with streaming analytics and SQL",
@@ -475,7 +475,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-04-23"
+          "lastUpdated": "2020-04-27"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",

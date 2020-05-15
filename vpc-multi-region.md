@@ -258,6 +258,8 @@ Open the {{site.data.keyword.cis_short_notm}} service you created by navigating 
 
 4. **ADD** one more **origin pool** pointing to **region2** load balancer in the **Eastern North America** region and click **Create** to provision your global load balancer.
 
+5. Click **Create**
+
 Wait until the **Health** check status changes to **Healthy**. Open the link **lb.mydomain.com** in a browser of your choice to see the global load balancer in action. The global load balancer is a DNS resolver. Most clients, like browsers, only resolve the DNS address one time or infrequently.  The load is balanced across multiple clients, not for a single client.  You will likely see the response from a single VPC load balancer.
 
 ## Secure with HTTPS
@@ -275,25 +277,26 @@ Manage the SSL certificates through the {{site.data.keyword.cloudcerts_full_notm
    - **Certificate Manager** as the target service
    - Assign the **Writer** service access role.
    - To create a load balancer, you must grant All resource instances authorization for the source resource instance. The target service instance may be **All instances**, or it may be your specific {{site.data.keyword.cloudcerts_short}} instance.
-
-### Alternative 1: Proxy in {{site.data.keyword.cis_short_notm}} with wildcard certificate from Let's Encrypt
-This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
-
 1. Continuing in the Authorizations panel, create an authorization that gives the {{site.data.keyword.cloudcerts_short}} access to {{site.data.keyword.cis_short_notm}}:
    - Click **Create** and choose **Certificate Manager** as the source service
    - Choose **All instances** or just the {{site.data.keyword.cloudcerts_short}} created earlier
    - **Internet Services** as the target service
    - Choose **All instances** or just the {{site.data.keyword.cis_short_notm}} created earlier
    - Assign the **Manager** service access role.
+
+### Alternative 1: Proxy in {{site.data.keyword.cis_short_notm}} with wildcard certificate
+This first alternative creates a wildcard certificate for **mydomain.com** and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
+
 1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
-   - Open the {{site.data.keyword.cloudcerts_short}} service and order a certificate. Choose **I'm using Cloud Internet Services**.
+   - Open the {{site.data.keyword.cloudcerts_short}} service and select **Order certificate** on the left.
+   - Click **IBM Cloud Internet Services (CIS)** then **Continue**
    - On the **Order certificated** the **Certificate details** panel is displayed
      - **Name** - choose a name you can remember to reference this certificate in a later step
      - **Description** - more text
      - **Certificate authority** choose  **Let's Encrypt**
      - Leave the defaults for **Signature algorithm**, **Key algorithm**
      - **Automatic certificate renewel** - leave off
-   - On the **Order certificateProvide** select the **details** panel
+   - On the **Order certificateProvide** select the **Domains** panel
      - **IBM Cloud Internet Services (CIS) instance** choose your instance
      - **Certificate domains** check the **Add Wildccard** and leave **Add Domain** unchecked
    - Click Order
@@ -336,35 +339,40 @@ The wildcard certificate created will allow access to domain name like vpc-lb-re
 In a browser open https://**lb.mydomain.com** to verify success
 
 ### Alternative 2: Have the Global Load Balancer pass through directly to VPC load balancers
-In this alternative you should obtain an SSL certificate for the subdomain you plan to use with the global load balancer. Assuming a domain like mydomain.com, the global load balancer could be hosted at `lb.mydomain.com`. The certificate will need to be issued for lb.mydomain.com.
+In this alternative you will order an SSL certificate for `lb.mydomain.com` from [Let's Encrypt](https://letsencrypt.org/) through {{site.data.keyword.cloudcerts_long}} and configure the Global Load Balancer 
 
-You can get free SSL certificates from [Let's Encrypt](https://letsencrypt.org/) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates). Use these steps:
+It is not currently possible to order a certificate directly for a {{site.data.keyword.cis_short_notm}} Global Load Balancer, but it is possible to order one for a CNAME record.  So create one of these, order the the certificate, then delete the CNAME record.
 
-```
-mkdir letsencrypt
-docker run -it -v $(pwd)/letsencrypt:/etc/letsencrypt certbot/certbot certonly --manual --preferred-challenges dns -d lb.mydomain.com
-``` 
+1. Open the {{site.data.keyword.cis_short_notm}} service you created by earlier, you can find it in the [Resource list](https://{DomainName}/resources)
 
-During the process you may need to configure a DNS record of type TXT in the DNS interface of {{site.data.keyword.cis_full_notm}} to prove you are the owner of the domain.
+1. Navigate to **Global Load Balancers** under **Reliability** and click **DNS**.
 
-Once you have obtained the SSL certificate and private key for your domain you may need to convert them to the [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format (not required if you follow the letsencrypt instructions above).
+1. In the DNS Records section:
+    - Type: CNAME
+    - Name: lb
+    - TTL: default (Automatic)
+    - Alias Domain Name: zzz.mydomain.com (remember, this is only going to be used to order a certificate)
+    - Click Add Record
 
-1. To convert a Certificate to PEM format:
-   ```
-   openssl x509 -in domain-crt.txt -out domain-crt.pem -outform PEM
-   ```
-   {: pre}
-2. To convert a Private Key to PEM format:
-   ```
-   openssl rsa -in domain-key.txt -out domain-key.pem -outform PEM
-   ```
-   {: pre}
+1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
+   - Open the {{site.data.keyword.cloudcerts_short}} service and select **Order certificate** on the left.
+   - Click **IBM Cloud Internet Services (CIS)** then **Continue**
+   - On the **Order certificated** the **Certificate details** panel is displayed
+     - **Name** - choose an order name you can remember to reference this certificate in a later step
+     - **Description** - more text
+     - **Certificate authority** choose  **Let's Encrypt**
+     - Leave the defaults for **Signature algorithm**, **Key algorithm**
+     - **Automatic certificate renewel** - leave off
+   - On the **Order certificateProvide** select the **Domains** panel
+     - **IBM Cloud Internet Services (CIS) instance** choose your instance
+     - **Certificate domains** click the **Subdomains** link
+     - in the pop up dialog, check the **Add Domain** box next to lb.mydomain.com
+     - click Apply
+   - Notice that lb.mydomain.com has been added to the Order summary
+   - Click **Order**
 
-3. In the service dashboard, use **Import Certificate**:
-   * Set **Name** to the custom subdomain and domain, such as **lb.mydomain.com**.
-   * Browse for the **Certificate file** in PEM format.
-   * Browse for the **Private key file** in PEM format.
-   * **Import**.
+1. Back in your {{site.data.keyword.cis_short_notm}} service delete the CNAME lb.mydomain.com DNS record you created in the **Global Load Balancers** under **Reliability** and **DNS**.
+
 
 Create a HTTPS listener:
 
@@ -376,9 +384,9 @@ Create a HTTPS listener:
    -  **Port**: 443
    -  **Back-end pool**: POOL in the same region
    - Choose the current region as your SSL region
-   - Choose the SSL certificate for **lb.mydomain.com**
+   - Choose the SSL certificate order name you just created for **lb.mydomain.com**
 
-3. Click **Create** to configure an HTTPS listener
+3. Click **Save** to configure an HTTPS listener
 
 **REPEAT** the above steps in the load balancer of **region 2**.
 

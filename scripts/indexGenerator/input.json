@@ -746,10 +746,10 @@
           ]
         },
         {
-          "name": "openshift ibm cloud tutorial",
+          "name": "Red Hat OpenShift on IBM Cloud",
           "url": "openshift-ibm-cloud.hidden.html",
-          "description": "openshift ibm cloud integration",
-          "imgSrc": "images/solution55-openshift-ibm-cloud-hidden/app-architecture.png",
+          "description": "Demonstrates the integration of Red Hat OpenShift on IBM Cloud in the IBM Cloud",
+          "imgSrc": "images/solution55-openshift-ibm-cloud-hidden/openshift-ibm-cloud.drawio.png",
           "tags": [
             "OpenShift",
             "Log Analysis",
@@ -760,6 +760,21 @@
             "docker",
             "logdna",
             "sysdig"
+          ]
+        },
+        {
+          "name": "Istio on OpenShift",
+          "url": "istio-openshift.hidden.html",
+          "description": "Istio on Red Hat OpenShift",
+          "imgSrc": "images/solution57-istio-openshift-hidden/Architecture.png",
+          "tags": [
+            "OpenShift",
+            "Istio",
+            "Telemetry"
+          ],
+          "requirements": [
+            "openshift_on_ibm_cloud",
+            "istio"
           ]
         }
       ]
