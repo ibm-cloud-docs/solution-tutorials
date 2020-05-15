@@ -41,7 +41,6 @@ This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.cloudcerts_full_notm}}](https://{DomainName}/catalog/services/certificate-manager)
 * [{{site.data.keyword.hpvs}}](https://{DomainName}/catalog/services/hyper-protect-virtual-servers)
 * [{{site.data.keyword.vsi_is_short}}](https://{DomainName}/vpc/provision/vs)
-* [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
 * [{{site.data.keyword.datashield_full_notm}}](https://{DomainName}/catalog/infrastructure/ibm-datashield-helm)
 * [{{site.data.keyword.ihsdbaas_postgresql_full}}](https://{DomainName}/catalog/services/hyper-protect-dbaas-for-postgresql)
 * [{{site.data.keyword.ihsdbaas_mongodb_full}}](https://{DomainName}/catalog/services/hyper-protect-dbaas-for-mongodb)
@@ -82,8 +81,7 @@ One of the fundamental principles of Cloud Computing is the sharing of resources
 
 To isolate application runtime environments and related services, you can provision dedicated machines and enterprise-level service plans. Typically, entry-level, lower-priced plans run on shared infrastructure in a multi-tenant mode. The more advanced plans utilize dedicated environments and provide greater physical separation of data. Here are some considerations for some of the compute options.
 
-* When deploying [Cloud Foundry apps](https://{DomainName}/cloudfoundry/overview), consider running them on {{site.data.keyword.cfee_full_notm}} instead of Cloud Foundry public.
-* Look into running virtual servers or {{site.data.keyword.containershort}} on [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc) to benefit from isolation of compute and network resources.
+Look into running virtual servers or {{site.data.keyword.containershort}} on [{{site.data.keyword.vpc_full}}](https://{DomainName}/vpc) to benefit from isolation of compute and network resources.
 
   Check out the tutorials on [how to deploy isolated workloads across multiple locations and regions](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-multi-region) and [how to securely access remote instances using a bastion host](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) to get started with {{site.data.keyword.vpc_full}}.
   {: #tip}

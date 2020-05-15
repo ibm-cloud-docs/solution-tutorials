@@ -27,7 +27,6 @@ Solution Tutorials
         serverless-api-webapp.md
         multi-region-serverless.md
         application-log-analysis.md
-        isolated-cloud-foundry-enterprise-apps.md
 
     {: .topicgroup}
     Chatbots
@@ -102,7 +101,6 @@ Solution Tutorials
         pub-sub-object-storage.md
         plan-create-update-deployments.md
         application-log-analysis.md
-        isolated-cloud-foundry-enterprise-apps.md
         multi-region-k8s-cis.md
         cloud-e2e-security.md
         coligo.hidden.md
@@ -122,7 +120,6 @@ Solution Tutorials
         plan-create-update-deployments.md
         mean-stack.md
         sql-database.md
-        isolated-cloud-foundry-enterprise-apps.md
         slack-chatbot-database-watson.md
         multi-region-webapp.md
         create-manage-secure-apis.md

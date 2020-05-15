@@ -40,7 +40,6 @@ Regardless of the compute option, Kubernetes, Cloud Foundry, Cloud Functions or 
 
 This tutorial uses the following runtimes and services:
 * [{{site.data.keyword.containershort_notm}}](https://{DomainName}/kubernetes/catalog/cluster)
-* [{{site.data.keyword.cfee_full_notm}}](https://{DomainName}/cfadmin/create)
 * [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/openwhisk)
 * [{{site.data.keyword.BluVirtServers}}](https://{DomainName}/catalog/infrastructure/virtual-server-group)
 * [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant)
@@ -138,28 +137,6 @@ Cloud Foundry offers the capability to achieve deployment of a multi-region arch
 ![CF-Architecture](images/solution39/CF2-Architecture.png)
 
 The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp) tutorial guides you through the deployment of a similar architecture.
-
-### {{site.data.keyword.cfee_full_notm}}
-
-**{{site.data.keyword.cfee_full_notm}} (CFEE)** offers all the same functionalities as the public Cloud Foundry together with additional features.
-
-**{{site.data.keyword.cfee_full_notm}}** allows you to instantiate multiple, isolated, enterprise-grade Cloud Foundry platforms on demand. Instances of CFEE run within your own account in [{{site.data.keyword.cloud_notm}}
-](http://ibm.com/cloud). The environment is deployed on isolated hardware on top of [the {{site.data.keyword.containershort_notm}}](https://www.ibm.com/cloud/container-service). You have full control over the environment, including access control, capacity management, change management, monitoring, and services.
-
-A multi-region architecture using {{site.data.keyword.cfee_full_notm}} is below.
-
-![Architecture](images/solution39/CFEE-Architecture.png)
-
-Deploying this architecture requires the following:
-
-- Setup two CFEE instances - one in each region.
-- Create and bind the services to the CFEE account.
-- Push the apps targeting the CFEE API endpoint.
-- Setup database replication, just as you would on public Cloud Foundry.
-
-Additionally, check out the step by step guide [Deploy Logistics Wizard to Cloud Foundry Enterprise Environment (CFEE)](https://github.com/IBM-Cloud/logistics-wizard/blob/master/Deploy_Microservices_CFEE.md). It will take you through the deployment of a microservice based application to CFEE. Once deployed to one CFEE instance, you can replicate the procedure to a second region and attach the [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started) in front of the two CFEE instances to load balance the traffic.
-
-Refer to the [{{site.data.keyword.cfee_full_notm}} documentation](https://{DomainName}/docs/cloud-foundry?topic=cloud-foundry-about#about) for additional details.
 
 ### Kubernetes
 
@@ -332,7 +309,6 @@ Many of the services provide stateless APIs and offer high-availability through 
 | Offering | Resiliency Options |
 | -------- | ------------------ |
 | Cloud Foundry | <ul><li>Deploy applications to multiple locations</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li><li>Use Cloud Foundry APIs to configure orgs, spaces and push apps to multiple locations</li></ul> |
-| {{site.data.keyword.cfee_full_notm}} | <ul><li>Deploy applications to multiple locations</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li><li>Use Cloud Foundry APIs to configure orgs, spaces and push apps to multiple locations</li><li>Built on Kubernetes service</li></ul> |
 | {{site.data.keyword.containerlong_notm}} | <ul><li>Resiliency by design with support for multi-zone clusters</li><li>Serve requests from clusters spread in multiple locations with {{site.data.keyword.cis_full_notm}}</li></ul> |
 | {{site.data.keyword.openwhisk_short}} | <ul><li>Available in multiple locations</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li><li>Use Cloud Functions API to deploy actions in multiple locations</li></ul> |
 | {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} | <ul><li>Provision servers in multiple locations</li><li>Attach servers in the same location to a local load balancer</li><li>Serve requests from multiple locations with {{site.data.keyword.cis_full_notm}}</li></ul> |
