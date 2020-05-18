@@ -24,7 +24,7 @@ lasttested: "2020-05-15"
 
 On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/services/vmwaresolutions?topic=vmware-solutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware vCloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
   - On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
-  - Reserved where vCPU and RAM are pre-allocated and priced on a monthly basis. 
+  - Reserved where vCPU and RAM are pre-allocated and priced monthly. 
 
 {:shortdesc}
 
@@ -33,7 +33,7 @@ On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offering
 
 * Create and explore a {{site.data.keyword.vmwaresolutions_short}} Shared instance in the {{site.data.keyword.Bluemix_notm}}.
 * Create a {{site.data.keyword.bpshort}} workspace in the {{site.data.keyword.Bluemix_notm}} to run Infrastructure as Code(IaC) based on Terraform.
-* Use {{site.data.keyword.bpshort}} to create a network, firewall and SNAT rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
+* Use {{site.data.keyword.bpshort}} to create a network, firewall, and SNAT rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
 
 ## Services used
 {: #services}
@@ -55,8 +55,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 2. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance using the {{site.data.keyword.Bluemix_notm}} console.
 3. Review a Terraform template that will be used to configure and create resources in the virtual data center (VDC).
 4. Use the {{site.data.keyword.bplong_notm}} service to run the Terraform template and:
-    - Modify the provided Edge Gateway to add firewall and SNAT rules.
-    - Add a network and configure to the Edge Gateway.
+    - With each virtual data center instance, an Edge Gateway is provided with five external IP addresses. Add firewall and SNAT rules to the gateway.
+    - Add a network and configure it to the Edge Gateway.
     - Provision a virtual machine instance in the virtual data center.
 
 ## Before you begin
@@ -76,14 +76,14 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 #### {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #create-vmware-solutions-shared}
 
-1. Create an instance of [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console).
+1. Navigate to [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console).
 2. In the **Start Provisioning** section, click the **VMware Solutions Shared** card.
 3. For **Pricing Plans**, select `On-Demand`.
 4. Enter the virtual data center name, i.e. `vmware-tutorial`.
 5. Select the {{site.data.keyword.Bluemix_notm}} data center to host the instance, i.e. `Dallas`.
 6. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
 7. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
-8. After having read and agreed to the third-party service agreements, click on **Create**. While waiting for the instance to create, you can proceed to reviewing the Terraform template section of this tutorial and come back to perform steps below once the instance is available.
+8. After having read and agreed to the third-party service agreements, click on **Create**. While waiting for the instance to create, proceed to review the Terraform template section of this tutorial and come back to perform access steps below once the instance is available.
 
 #### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
 {: #access-vmware-solutions-shared}
@@ -91,7 +91,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
 2. Click on the newly created instance `vmware-tutorial`.
 3. Click on **Reset Organization Admin Password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
-4. With your password created, click on the **vCloud Director console** button found on the top right of the page.
+4. With your password created, click on the **vCloud Director console** button found on the top right of the page and login with your credentials.
 5. In the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
 6. In the menu bar, click on the hamburger menu and select **Administration**, click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
 
@@ -99,16 +99,16 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 ## Review the Terraform template
 {: #review_terraform_template}
 
-[Terraform](https://www.terraform.io/) is an open-source infrastructure as code tool. It enables users to define and provision a datacenter infrastructure using a high-level configuration language known as Hashicorp Configuration Language (HCL). Configuration files (Terraform template) describe to Terraform the components needed to run a single application or your entire datacenter.  
+[Terraform](https://www.terraform.io/) is an open-source infrastructure as code tool. It enables users to define and provision a data center infrastructure using a high-level configuration language known as Hashicorp Configuration Language (HCL). Configuration files (Terraform template) describe to Terraform the components needed to run a single application or your entire datacenter.  
 
-In a previous step you created a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center(VCD). This tutorial includes a Terraform template available in a [public Github repository](https://github.com/IBM-Cloud/vmware-solutions-shared) which you will be using to configure and deploy resources in the VDC. 
+In a previous step you created a virtual data center(VDC). This tutorial includes a Terraform template available in a [public Github repository](https://github.com/IBM-Cloud/vmware-solutions-shared) which will be used to configure and deploy resources in that VDC. 
 
 The `main.tf` file contains most of the critical sections for this template.
 
 ### Create a routed network
 {:#create_routed_network}
 
-An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The template creates a routed network and connects it to an existing edge gateway that was created for you when you created the {{site.data.keyword.vmwaresolutions_short}} Shared instance.  The template specifies a static IP pool and DNS servers for the network.
+An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network.
 
    ```hcl
     resource "vcd_network_routed" "tutorial_network" {
@@ -223,7 +223,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 ### Create VM section
 {:#create_vm}
 
-A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. A vApp can contain multiple virtual machines. This section creates a vApp and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs and based on a a CentOS template from the Public catalog.
+A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. A vApp can contain multiple virtual machines. This section creates a vApp and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
 
    ```hcl
     resource "vcd_vapp" "vmware_tutorial_vapp" {
@@ -268,11 +268,11 @@ A vApp consists of one or more virtual machines that communicate over a network 
 2. Enter the workspace name for your workspace, i.e. `vmware-tutorial`.
    - Select the resource group and location of the workspace, you can also add tags and description as needed.
    - Click **Create** to create your workspace. Your workspace is created with a Draft state and the workspace Settings page opens.
-3. Connect your workspace to the GitHub source repository where our Terraform template for this tutorial are stored.
+3. Connect your workspace to the GitHub source repository where our Terraform template for this tutorial is stored.
    - On the workspace Settings page, enter the link to our GitHub repository, `https://github.com/IBM-Cloud/vmware-solutions-shared`. 
    - Select `terraform_v0.12` as the **Terraform version**.
    - Click **Save template information**. 
-4. In the Input variables section, enter the information that were previously captured from the VMware vCloud Director console. 
+4. In the Input variables section, enter the information that was previously captured from the VMware vCloud Director console. 
   
     Some values have defaults which are appropriate to keep for this tutorial, replace those with `your_xxx`.
     {:tip}
@@ -362,12 +362,13 @@ A vApp consists of one or more virtual machines that communicate over a network 
 
 1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces.
 2. Click on the action menu next to the `vmware-tutorial` workspace.
-3. Click on **Delete**, check all the Delete options, enter the name of the workspace and click **Delete** to cleanup all the provisioned resources.
+3. Click on **Delete**, check all the Delete options, enter the name of the workspace, and click **Delete** to clean up all the provisioned resources.
 
 ## Expand the tutorial 
 
 Want to add to or change this tutorial? Here are some ideas:
 - Create a fork of the `vmware-solutions-shared` repository and modify it to include additional virtual machine and update your Schematics workspace to use it. 
+- Modify the Terraform template to add a firewall and [DNAT rule](https://www.terraform.io/docs/providers/vcd/r/nsxv_dnat.html) to the edge gateway to allow you to SSH directly to it.
 
 ## Related content
 {: #related}
