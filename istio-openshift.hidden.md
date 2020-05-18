@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-15"
+lastupdated: "2020-05-18"
 lasttested: "2020-05-15"
 ---
 
@@ -19,9 +19,9 @@ lasttested: "2020-05-15"
 This tutorial walks you through how to install Service Mesh alongside microservices for a simple mock app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster.
 {:shortdesc}
 
-Based on the open source Istio project, {{site.data.keyword.openshiftlong_notm}}  Service Mesh adds a transparent layer on existing distributed applications. {{site.data.keyword.openshiftlong_notm}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With {{site.data.keyword.openshiftlong_notm}} , you can connect, secure, and monitor microservices in your OpenShift Container Platform environment.
+Based on the open source Istio project, {{site.data.keyword.openshiftlong_notm}}  Service Mesh adds a transparent layer on existing distributed applications. {{site.data.keyword.openshiftlong_notm}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With {{site.data.keyword.openshiftlong_notm}} , you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftshort}} Container Platform environment.
 
-[Istio](https://www.ibm.com/cloud/info/istio) is an open platform to connect, secure, control and observe microservices, also known as a service mesh, on cloud platforms such as Kubernetes in OpenShift. With Istio, you can manage network traffic, load balance across microservices, enforce access policies, verify service identity, secure service communication and observe what exactly is going on with your services.
+[Istio](https://www.ibm.com/cloud/info/istio) is an open platform to connect, secure, control and observe microservices, also known as a service mesh, on cloud platforms such as Kubernetes in {{site.data.keyword.openshiftshort}}. With Istio, you can manage network traffic, load balance across microservices, enforce access policies, verify service identity, secure service communication and observe what exactly is going on with your services.
 
 ## Objectives
 {: #objectives}
@@ -62,7 +62,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster with two worker nodes.
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **the Latest,Default version of OpenShift**.
+2. Set the **Orchestration service** to **the Latest,Default version of {{site.data.keyword.openshiftshort}}**.
 3. Select **Purchase additional licenses for this worker pool** as your OCP entitlement.
 4. Under **Location**,
    - Select a **Resource group**
@@ -98,21 +98,26 @@ To avoid installing the command line, the recommended approach is to use the {{s
 
 In this section, you will install Service Mesh - Istio on the cluster. Installing the Service Mesh involves installing the Elasticsearch, Jaeger, Kiali and Service Mesh Operators, creating and managing a `ServiceMeshControlPlane` resource to deploy the control plane, and creating a `ServiceMeshMemberRoll` resource to specify the namespaces associated with the Service Mesh.
 
+**Elasticsearch** - Based on the open source Elasticsearch project that enables you to configure and manage an Elasticsearch cluster for tracing and logging with Jaeger.
+**Jaeger** - based on the open source Jaeger project, lets you perform tracing to monitor and troubleshoot transactions in complex distributed systems.
+**Kiali** - based on the open source Kiali project, provides observability for your service mesh. By using Kiali you can view configurations, monitor traffic, and view and analyze traces in a single console.
+**Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** - based on the open source Istio project, lets you connect, secure, control, and observe the microservices that make up your applications.
+
 ### Install the Operators
 
-1. On the left pane of **OpenShift web console**, select **Administrator** in the drop down
+1. On the left pane of **{{site.data.keyword.openshiftshort}} web console**, select **Administrator** in the drop down
 2. Select **Operators** and then **OperatorHub**
 3. Search for **Elasticsearch Operator**, click **Install** and then **Subscribe**
-4. **Repeat** steps 2 and 3 for installing **Red Hat OpenShift Jaeger**, **Kiali Operator provided by Red Hat** and **Red Hat OpenShift Service Mesh** Operators.
+4. **Repeat** steps 2 and 3 for installing **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**, **Kiali Operator provided by Red Hat** and **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** Operators.
 
-### Deploying the Red Hat OpenShift Service Mesh control plane
+### Deploying the Red Hat {{site.data.keyword.openshiftshort}} Service Mesh control plane
 
-The operator uses a `ServiceMeshControlPlane` resource to determine how to install Istio and what components you want. Let's create that resource now.
+The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `ServiceMeshControlPlane` resource to determine how to install Istio and what components you want. Let's create that resource now.
 
 1.  Create a new project by going to **Home** on the left pane of the web console, click **Projects** and then **Create Project**
 2.  Enter `istio-system` in the **Name** and click **Create**
 3.  Navigate to **Operators** and click **Installed Operators**
-4.  Click the **Red Hat OpenShift Service Mesh Operator**. If you don't see it, wait a couple of minutes and refresh.
+4.  Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**. If you don't see it, wait a couple of minutes and refresh.
 5.  Under **Istio Service Mesh Control Plane** click **Create ServiceMeshControlPlane**.
 6.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
@@ -120,7 +125,7 @@ The operator uses a `ServiceMeshControlPlane` resource to determine how to insta
 ServiceMeshMemberRoll resource is used to to specify the namespaces associated with the Service Mesh.
 
 1. Navigate to **Operators** → **Installed Operators** again.
-2. Click the **Red Hat OpenShift Service Mesh Operator**.
+2. Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**.
 3. In the tab area, scroll to the right to find **Istio Service Mesh Member Roll**
 4. Click **Create ServiceMeshMemberRoll**
 5. Change `your-project` to `bookinfo` and delete the last line.
@@ -177,7 +182,7 @@ In Kubernetes, a sidecar is a utility container in the pod, and its purpose is t
    ```
    {:pre}
 
-2. Inject the Istio Envoy sidecar into the bookinfo pods, and deploy the BookInfo app on to the OpenShift cluster. Deploy both the v1 and v2 versions of the app:
+2. Inject the Istio Envoy sidecar into the bookinfo pods, and deploy the BookInfo app on to the {{site.data.keyword.openshiftshort}} cluster. Deploy both the v1 and v2 versions of the app:
 
     ```sh
     oc apply -f bookinfo.yaml
@@ -254,7 +259,7 @@ You can read more about how [Istio mixer enables telemetry reporting](https://is
 
 Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored.
 
-1. In the **OpenShift web console**, under **Networking** -> **Routes**, click the URL next to **grafana**
+1. In the **{{site.data.keyword.openshiftshort}} web console**, under **Networking** -> **Routes**, click the URL next to **grafana**
 2. Click on **Home** and then **Istio** -> **Istio Service Dashboard**.
 3. Select `bookinfo` in the Service drop down.
 4. Open your {{site.data.keyword.Bluemix_notm}} Shell tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last section.
@@ -269,7 +274,7 @@ This Grafana dashboard provides metrics for each workload. Explore the other das
 
 Kiali is an open-source project that installs as an add-on on top of Istio to visualize your service mesh. It provides deeper insight into how your microservices interact with one another, and provides features such as circuit breakers and request rates for your services.
 
-1. From the **OpenShift web console**, under **Networking** -> **Routes**, select the URL next to **kiali**
+1. From the **{{site.data.keyword.openshiftshort}} web console**, under **Networking** -> **Routes**, select the URL next to **kiali**
 2. Click the **Graph** on the left pane and select the `bookinfo` and `istio-system` namespaces from the top bar to see the a visual **Versioned app graph** of the various services in your Istio mesh.
 3. To see the request rates, click **No edge Labels** and choose **Requests per second**.
 4. In a different tab/window, visit the BookInfo application URL and refresh the page multiple times to generate some load, or run the load script in the previous section.
@@ -361,9 +366,9 @@ Istio can secure the communication between microservices without requiring appli
 
 ## Enable SSL for traffic coming in to your cluster (HTTPS)
 {:#enable_https}
-### Create a secure Route to the Ingress Gateway
+In this section, you will create a secure Route to the Ingress Gateway with **Edge** termination using the default certificate provided by {{site.data.keyword.openshiftshort}}. With an edge route, the Ingress Controller terminates TLS encryption before forwarding traffic to the destination Pod.
 
-1. Launch the OpenShift console and choose the **istio-system** project from the top bar.
+1. Launch the {{site.data.keyword.openshiftshort}} console and choose the **istio-system** project from the top bar.
 2. Under **Networking** and then **Routes**, click **Create Route**
    1. Name: `istio-ingressgateway-secure`
    2. Service: `istio-ingressgateway`
