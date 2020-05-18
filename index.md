@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-05-14"
+lastupdated: "2020-05-15"
 ---
 
 {:shortdesc: .shortdesc}
@@ -459,23 +459,6 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution12/Architecture.png" alt="Architecture diagram for the solution Analyze logs and monitor application health with LogDNA and Sysdig"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-isolated-cloud-foundry-enterprise-apps#isolated-cloud-foundry-enterprise-apps">
-    <div class = "solutionBox">
-        <div class = "solutionBoxContent">
-            <h3 class="solutionBoxTitle">
-                Isolated Cloud Foundry Enterprise Apps
-            </h3>
-            <div class="solutionBoxDescription">
-                <div class="descriptionContainer">
-                    <p>Provide an innovation platform to your organization by deploying an isolated, enterprise-grade Cloud Foundry platform using Cloud Foundry Enterprise Environment.</p>
-                </div>
-                <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution45-CFEE-apps/Architecture.png" alt="Architecture diagram for the solution Isolated Cloud Foundry Enterprise Apps"/>
                 </div>
             </div>
         </div>
@@ -980,7 +963,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         </div>
     </div>
     </a>
-    <a href = "/docs/tutorials?topic=solution-tutorials-vlan-spanning#vlan-spanning">
+    <a href = "/docs/tutorials?topic=solution-tutorials-linking-secure-network-enclosures#linking-secure-network-enclosures">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
             <h3 class="solutionBoxTitle">
@@ -991,7 +974,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                     <p>Deploy two private networks that are securely linked over the IBM Cloud private network using the VLAN Spanning service.</p>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src = "images/solution43-vlan-spanning/vlan-spanning.png" alt="Architecture diagram for the solution Linking secure private networks over the IBM network"/>
+                    <img class="architectureDiagram" src = "images/solution43-linking-secure-network-enclosures/vlan-spanning.png" alt="Architecture diagram for the solution Linking secure private networks over the IBM network"/>
                 </div>
             </div>
         </div>

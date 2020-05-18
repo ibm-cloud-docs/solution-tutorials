@@ -433,30 +433,20 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
 
 ### Create a Cloudant Service and Bind using the CRDs
 
-An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are great instructions in the **Requirements** section of the installed operator. Below is my experience in the shell:
+An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are instructions in the **Requirements** section of the installed operator. Below is my experience in the shell:
 
-1. List the resource groups
+1. Skip the `login` command and the `ibmcloud target --cf -g Default`.  The `--cf` is for Cloud Foundry and is not required for {{site.data.keyword.cloudant_short_notm}}. Use the same resource group that is associated with your cluster.
    ```sh
-   ibmcloud resource groups
+   ibmcloud target -g Default
    ```
    {:pre}
-1. Skip the command `ibmcloud target --cf -g default` it is using `--cf` that is for Cloud Foundry and is not required for {{site.data.keyword.cloudant_short_notm}}. Use the same resource group that is associated with your cluster.  For me it was `default`, you can double check:
+7. Verify that it looks something like this.  CF API endpoint, Org and Space can be empty, Resource group matches your cluster:
    ```sh
-   ibmcloud ks clusters
-   ```
-   {:pre}
-   ```sh
-   ibmcloud target -g default
-   ```
-   {:pre}
-7. Verify that it looks something like this.  CF API endpoint, Org and Space can be empty.
-   ```sh
-   ibmcloud target
    API endpoint:      https://{DomainName}   
    Region:            us-south   
    User:              YOU@us.ibm.com   
    Account:           YOURs Account (32cdeadbeefdeadbeef1234132412343) <-> 1234567   
-   Resource group:    default   
+   Resource group:    Default   
    CF API endpoint:   
    Org:
    Space:
@@ -471,50 +461,8 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```sh
    curl ... | bash
    ```
-1. Verify that the kubernetes ConfigMap has been created:
-   ```sh
-   kubectl describe configmap  config-ibm-cloud-operator  -n default
-   ```
-   {:pre}
-   You can verify the resourcegroupid value by passing your resource group name in the following command, my name is `default`
-   ```sh
-   ibmcloud resource group default
-   ```
-   {:pre}
-1. Verify that the kubernetes secret has been created:
-   ```sh
-   kubectl describe secret secret-ibm-cloud-operator -n default
-   ```
-   {:pre}
-   generates:
-   ```sh
-   Name:         secret-ibm-cloud-operator
-   Namespace:    default
-   Labels:       app.kubernetes.io/name=ibmcloud-operator
-                seed.ibm.com/ibmcloud-token=apikey
-   Annotations:  
-   Type:         Opaque
-
-   Data
-   ====
-   api-key:  44 bytes
-   region:   8 bytes
-   ```
-   Describe avoids showing the contents of a secret by default. This is to protect the secret from being exposed accidentally to an onlooker, or from being stored in a terminal log.  You can use the `secret/secret-ibm-cloud-operator -n default -o yaml` to see the values and decode the fields by piping into `base64 --decode`
-9. In the instructions \<SERVICE_CLASS\> is `cloudantnosqldb` and \<PLAN\> is `lite`
-   ```sh
-   ibmcloud catalog service cloudantnosqldb | grep plan
-   ```
-   {:pre}
-   Like this:
-   ```
-   $ ibmcloud catalog service cloudantnosqldb | grep plan
-           dedicated-hardware                          plan         cloudant-dedicated-hardware
-            extension-for-apache-couchdb                plan         cloudant-extension-couchdb
-            lite                                        plan         cloudant-lite
-            standard                                    plan         cloudant-standard
-   ```
-9. Back in the GUI, click the **Create Instance** in the **Service** box on the **Installed Operators** page to bring up the yaml editor.  Make the suggested substitutions:
+9. Back in the GUI, click the **Create Instance** in the **Service** box on the **Installed Operators** page to bring up the yaml editor. 
+9. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account):
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1alpha1
    kind: Service
@@ -529,7 +477,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
 1. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrative** perspective with Project: example-health in the **Service** panel.
 1. Click on the service just created, **cloudant-service** and over time the **State** field will change from **provisioning** to **Online** meaning it is good to go.
-5. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Overview** tab and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `cloudant-service`, the name provided in the **Service**
+5. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Overview** tab and notice in the top next to the **Service** tab there is a **Binding** tab.  Open the **Binding** tab and click **Create Binding** .  Create a cloudant-binding associated with the serviceName `cloudant-service`, (this is the the name provided for the **Service** created earlier)
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1alpha1
    kind: Binding
@@ -540,19 +488,25 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
      serviceName: cloudant-service
    ```
    {:codeblock}
-6. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**.
+6. Optionally dig a little deeper to understand the relationship between the {{site.data.keyword.openshiftshort}} resources: **Service**, service **Binding**, binding **Secret** and the {{site.data.keyword.cloud_notm}} resources: **Service**, service **Instance** and the instance's **Service credentials**. Using the console shell:
 
-   In the GUI Console:
+   ```
+   ibmcloud resource service-instances --service-name cloudantnosqldb
+   ```
+   {:pre}
 
-   ![binding secret](images/solution55-openshift-ibm-cloud-hidden/bindingsecret.png)
+   ```
+   ibmcloud resource service-instance cloudant-service
+   ```
+   {:pre}
 
-   - Verify the binding was created.   Click on your binding, and look for **Message: Online**. 
-   - Verify the Secret was created by navigating to the **Resources** tab of the **Binding**.
-   - Click the **cloudant-binding** secret.  Scroll to the bottom to notice the **Data** keys/values created.  These can be wired to environment variables in a Deployment or DeploymentConfig (which you will do shortly)
-   - In a new tab navigate to the {{site.data.keyword.cloudant_short_notm}} service created. Start at [Resource list](https://{DomainName}/resources) open Services and click on **cloudant-service** instance.
-   - Open the cloudant-service **Service credentials** panel on the left and then open on the **cloudant-binding**.  The keys/values match the Kubernetes secret.
+   ```
+   ibmcloud resource service-keys --instance-name cloudant-service --output json
+   ```
+   {:pre}
 
-   Using the console shell:
+
+   Output looks something like this:
    ```
    youyou@cloudshell:~$ ibmcloud resource service-instances --service-name cloudantnosqldb
    Retrieving instances with type service_instance in all resource groups in all locations under ..
@@ -1059,14 +1013,14 @@ Navigate the {{site.data.keyword.monitoringshort_notm}} console to get metrics o
    ![](images/solution55-openshift-ibm-cloud-hidden/dashboard-img-2.png)
 
 2. Make this dashboard your own and then scope it to a specific namespace.  
-    - In the Hamburger menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
-    - Click Copy and Open
-    - In Yourname Network Overview in the upper right choose **Edit Scope**
-    - Change Everywhere to `kubernetes.namespace.name`
-    - Change in to `is`
-    - Change Value to `ibm-observe`
+   - In the Hamburger menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
+   - Click Copy and Open
+   - In Yourname Network Overview in the upper right choose **Edit Scope**
+   - Change Everywhere to `kubernetes.namespace.name`
+   - Change in to `is`
+   - Change Value to `ibm-observe`
    ![](images/solution55-openshift-ibm-cloud-hidden/explore-img-10.png)
-    - Click Save
+   - Click Save
 
     The dashboard now shows information about the ibm-observe namespace.
 
