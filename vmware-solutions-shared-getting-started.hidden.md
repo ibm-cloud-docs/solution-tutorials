@@ -22,7 +22,7 @@ lasttested: "2020-05-15"
 # Getting Started with {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #vmware-solutions-shared-getting-started}
 
-On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/services/vmwaresolutions?topic=vmware-solutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware vCloud Director is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
+On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/services/vmwaresolutions?topic=vmware-solutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware vCloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
   - On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
   - Reserved where vCPU and RAM are pre-allocated and priced on a monthly basis. 
 
@@ -71,7 +71,7 @@ This tutorial requires:
 ## Create services
 {: #setup}
 
-Login to {{site.data.keyword.cloud_notm}} via a web browser, we will create the {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance with your desired vCPU and RAM configuration via the UI and later on will use a Terraform template to configure networking and deploy a virtual machine.
+Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance with the desired vCPU and RAM configuration.
 
 #### {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #create-vmware-solutions-shared}
@@ -101,8 +101,9 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser, we will create the 
 
 [Terraform](https://www.terraform.io/) is an open-source infrastructure as code tool. It enables users to define and provision a datacenter infrastructure using a high-level configuration language known as Hashicorp Configuration Language (HCL). Configuration files (Terraform template) describe to Terraform the components needed to run a single application or your entire datacenter.  
 
-In a previous step you created a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center(VCD). This tutorial includes a Terraform template available in a [public Github repository](https://github.com/IBM-Cloud/vmware-solutions-shared) which you will be using to configure and deploy resources in the VDC. Let's review the interesting sections of this template which we will find inside of the `main.tf` file.
+In a previous step you created a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center(VCD). This tutorial includes a Terraform template available in a [public Github repository](https://github.com/IBM-Cloud/vmware-solutions-shared) which you will be using to configure and deploy resources in the VDC. 
 
+The `main.tf` file contains most of the critical sections for this template.
 
 ### Create a routed network
 {:#create_routed_network}
@@ -222,7 +223,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 ### Create VM section
 {:#create_vm}
 
-A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. A vApp can contain multiple virtual machines. We will create our first vApp and add a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs and based on a a CentOS template from the Public catalog.
+A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. A vApp can contain multiple virtual machines. This section creates a vApp and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs and based on a a CentOS template from the Public catalog.
 
    ```hcl
     resource "vcd_vapp" "vmware_tutorial_vapp" {
@@ -258,7 +259,7 @@ A vApp consists of one or more virtual machines that communicate over a network 
 ## Deploy using Schematics
 {: #deploy_using_schematics}
 
-{{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure as Code (IaC). You can organize your IBM Cloud resources across environments by using workspaces. Every workspace is connected to a GitHub repository that contains a set of Terraform configuration files, which build a Terraform template. We will use {{site.data.keyword.bpshort}} to connect to the template hosted in GitHub which we reviewed above. 
+{{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure as Code (IaC). You can organize your IBM Cloud resources across environments by using workspaces. Every workspace is connected to a GitHub repository that contains a set of Terraform configuration files, which build a Terraform template. Use {{site.data.keyword.bpshort}} to connect to the template hosted in GitHub which was reviewed above to configure networking and deploy a virtual machine.
 
 #### 	{{site.data.keyword.bplong_notm}}
 {: #create-schematics}
