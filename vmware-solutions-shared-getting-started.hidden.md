@@ -374,4 +374,5 @@ Want to add to or change this tutorial? Here are some ideas:
 
 * [Relevant links in {{site.data.keyword.vmwaresolutions_short}} docs](https://{DomainName}/docs/vmwaresolutions?topic=vmware-solutions-shared_overview)
 * [Relevant links in {{site.data.keyword.bpshort}} docs](https://{DomainName}/docs/schematics?topic=schematics-getting-started)
+* [{{site.data.keyword.vmwaresolutions_short}}](https://www.ibm.com/cloud/vmware)
 * [VMware Cloud Director Documentation](https://docs.vmware.com/en/VMware-Cloud-Director/index.html)
