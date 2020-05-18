@@ -52,10 +52,12 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 </p>
 
 1. Create a {{site.data.keyword.bpshort}} Workspace using the {{site.data.keyword.Bluemix_notm}} console.
-2. Create a {{site.data.keyword.vmwaresolutions_short}} Shared using the {{site.data.keyword.Bluemix_notm}} console.
-3. Review a Terraform template that will be used to create various resources in VMware virtual data center (VCD).
-4. Use the {{site.data.keyword.bplong_notm}} service to run the template and to create the instance in the VCD.
-
+2. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance using the {{site.data.keyword.Bluemix_notm}} console.
+3. Review a Terraform template that will be used to configure and create resources in the virtual data center (VDC).
+4. Use the {{site.data.keyword.bplong_notm}} service to run the Terraform template and:
+    - Modify the provided Edge Gateway to add firewall and SNAT rules.
+    - Add a network and configure to the Edge Gateway.
+    - Provision a virtual machine instance in the virtual data center.
 
 ## Before you begin
 {: #prereqs}
@@ -69,26 +71,26 @@ This tutorial requires:
 ## Create services
 {: #setup}
 
-Login to {{site.data.keyword.cloud_notm}} via a web browser, we will create the {{site.data.keyword.vmwaresolutions_short}} Shared and {{site.data.keyword.bplong_notm}} services via the UI and later on will use a Terraform template to configure networking in the VMware vCloud Director and deploy a virtual machine.
+Login to {{site.data.keyword.cloud_notm}} via a web browser, we will create the {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance with your desired vCPU and RAM configuration via the UI and later on will use a Terraform template to configure networking and deploy a virtual machine.
 
 #### {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #create-vmware-solutions-shared}
 
 1. Create an instance of [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console).
-2. In the Start Provisioning section, click the {{site.data.keyword.vmwaresolutions_short}} Shared card.
+2. In the **Start Provisioning** section, click the **VMware Solutions Shared** card.
 3. For **Pricing Plans**, select `On-Demand`.
 4. Enter the virtual data center name, i.e. `vmware-tutorial`.
 5. Select the {{site.data.keyword.Bluemix_notm}} data center to host the instance, i.e. `Dallas`.
-6. Select the capacity for your **Virtual data center**, we will not need much for this tutorial, set for `4 vCPU` for the **vCPU Limit** and `16 GB` for the **RAM Limit**. You can increase or reduce the capacity as needed later on. 
-7. On the Summary pane, verify the configuration and estimated cost before you place the order.
-8. After having read and agreed to the third-part service agreements, click on **Create**.
+6. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
+7. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
+8. After having read and agreed to the third-party service agreements, click on **Create**. While waiting for the instance to create, you can proceed to reviewing the Terraform template section of this tutorial and come back to perform steps below once the instance is available.
 
 #### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
 {: #access-vmware-solutions-shared}
 
-1. Navigate to your [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances).
+1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
 2. Click on the newly created instance `vmware-tutorial`.
-3. Click on **Set Organization Admin Password**, set a password (`vcd_password`) for the **admin** user (`vcd_user`).
+3. Click on **Reset Organization Admin Password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page.
 5. In the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
 6. In the menu bar, click on the hamburger menu and select **Administration**, click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
@@ -97,19 +99,17 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser, we will create the 
 ## Review the Terraform template
 {: #review_terraform_template}
 
-Introductory statement that overviews the section
+[Terraform](https://www.terraform.io/) is an open-source infrastructure as code tool. It enables users to define and provision a datacenter infrastructure using a high-level configuration language known as Hashicorp Configuration Language (HCL). Configuration files (Terraform template) describe to Terraform the components needed to run a single application or your entire datacenter.  
 
-1. Step 1 Click **This** and enter your name.
+In a previous step you created a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center(VCD). This tutorial includes a Terraform template available in a [public Github repository](https://github.com/IBM-Cloud/vmware-solutions-shared) which you will be using to configure and deploy resources in the VDC. Let's review the interesting sections of this template which we will find inside of the `main.tf` file.
 
-  This is a tip.
-  {:tip}
 
 ### Create a routed network
+{:#create_routed_network}
 
-Introductory statement that overviews the section...
+An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The template creates a routed network and connects it to an existing edge gateway that was created for you when you created the {{site.data.keyword.vmwaresolutions_short}} Shared instance.  The template specifies a static IP pool and DNS servers for the network.
 
    ```hcl
-    # Create a routed network
     resource "vcd_network_routed" "tutorial_network" {
 
       name         = "Tutorial-Network"
@@ -127,15 +127,42 @@ Introductory statement that overviews the section...
       dns2 = "1.1.1.1"
     }
    ```
-   {: pre}
 
+### Create a firewall and SNAT rule to access the Internet
+{:#create_internet_rules}
 
-### Create SNAT rules
-
-Introductory statement that overviews the section...
+You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the vcd network to reach the Internet with no additional restrictions.
 
    ```hcl
-   # Create SNAT rule to access the Internet
+    resource "vcd_nsxv_firewall_rule" "rule_internet" {
+      edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
+      name         = vcd_network_routed.tutorial_network.name
+
+      logging_enabled = "false"
+      action          = "accept"
+
+      source {
+        exclude             = false
+        gateway_interfaces  = []
+        ip_addresses        = []
+        ip_sets             = []
+        org_networks        = [vcd_network_routed.tutorial_network.name]
+        virtual_machine_ids = []
+      }
+
+      destination {
+        exclude             = false
+        gateway_interfaces  = []
+        ip_addresses        = []
+        ip_sets             = []
+        org_networks        = []
+      }
+
+      service {
+        protocol = "any"
+      }
+    }
+
     resource "vcd_nsxv_snat" "rule_internet" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       network_type = "ext"
@@ -144,8 +171,43 @@ Introductory statement that overviews the section...
       original_address   = "${vcd_network_routed.tutorial_network.gateway}/24"
       translated_address = module.ibm_vmware_solutions_shared_instance.default_external_network_ip
     }
+   ```
 
-    # Create SNAT rule to access the IBM Cloud services over a private network
+### Create a firewall rule to access the IBM Cloud private network
+{:#create_private_rules}
+
+You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the vcd network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
+
+   ```hcl
+    resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
+      edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
+      name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
+
+      logging_enabled = "false"
+      action          = "accept"
+
+      source {
+        exclude             = false
+        gateway_interfaces  = []
+        ip_addresses        = []
+        ip_sets             = []
+        org_networks        = [vcd_network_routed.tutorial_network.name]
+        virtual_machine_ids = []
+      }
+
+      destination {
+        exclude             = false
+        gateway_interfaces  = [module.ibm_vmware_solutions_shared_instance.external_networks_2]
+        ip_addresses        = []
+        ip_sets             = []
+        org_networks        = []
+      }
+
+      service {
+        protocol = "any"
+      }
+    }
+
     resource "vcd_nsxv_snat" "rule_ibm_private" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       network_type = "ext"
@@ -155,26 +217,23 @@ Introductory statement that overviews the section...
       translated_address = module.ibm_vmware_solutions_shared_instance.external_network_ips_2
     }
    ```
-   {: pre}
 
 
 ### Create VM section
+{:#create_vm}
 
-Introductory statement that overviews the section...
+A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. A vApp can contain multiple virtual machines. We will create our first vApp and add a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs and based on a a CentOS template from the Public catalog.
 
    ```hcl
-   # Create vcd App
     resource "vcd_vapp" "vmware_tutorial_vapp" {
       name = "vmware-tutorial-vApp"
     }
 
-    # Connect org Network to vcpApp
     resource "vcd_vapp_org_network" "tutorial_network" {
       vapp_name        = vcd_vapp.vmware_tutorial_vapp.name
       org_network_name = vcd_network_routed.tutorial_network.name
     }
 
-    # Create VM
     resource "vcd_vapp_vm" "vm_1" {
       vapp_name     = vcd_vapp.vmware_tutorial_vapp.name
       name          = "vm-centos8-01"
@@ -195,17 +254,14 @@ Introductory statement that overviews the section...
       }
     }
    ```
-   {: pre}
 
 ## Deploy using Schematics
 {: #deploy_using_schematics}
 
-Introductory statement that overviews the section
+{{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure as Code (IaC). You can organize your IBM Cloud resources across environments by using workspaces. Every workspace is connected to a GitHub repository that contains a set of Terraform configuration files, which build a Terraform template. We will use {{site.data.keyword.bpshort}} to connect to the template hosted in GitHub which we reviewed above. 
 
 #### 	{{site.data.keyword.bplong_notm}}
 {: #create-schematics}
-
-{{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure as Code (IaC). We will use {{site.data.keyword.bpshort}} to automate the process of creating/deleting virtual server in our vCloud Directory virtual data center. 
 
 1. Navigate to the [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click **Create a workspace**.
 2. Enter the workspace name for your workspace, i.e. `vmware-tutorial`.
@@ -285,6 +341,21 @@ Introductory statement that overviews the section
 8. Click on **View log** next to the current running plan to follow the logs.
 9. Wait for the plan to complete and check the Outputs from the log for the application the password to the deployed virtual machine, note you will be prompted to change the password on first use. 
 
+## Access deployed virtual machine and test 
+{: #access-vmware-solutions-shared}
+
+1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
+2. Click on the instance `vmware-tutorial` instance.
+3. Click on the **vCloud Director console** button found on the top right of the page.
+4. Click on the card for the virtual data center `vmware-tutorial` 
+5. Click on **Virtual Machines** 
+6. On the card for the `vm-centos8-01` virtual machine, click on **Details** 
+7. Scroll down to **Guest OS Customization** and expand the section. Capture the password for the instance. 
+8. Back at the **Virtual Machines** page, click on **Actions**  and then **Launch Web Console**. 
+9. Login to the instance using the user `root` and the password captured above. You will be required to change the password. Change it to a password of your choice and proceed to login. 
+10. Test connectivity to the Internet by pinging known addresses on the Internet, i.e. `ping 8.8.8.8`. 
+11. Test connectivity to the IBM Cloud by pinging internal addresses, i.e. [IBM Cloud private DNS resolver endpoint](https://test.cloud.ibm.com/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
+
 ## Remove resources
 {: #removeresources}
 
@@ -296,10 +367,10 @@ Introductory statement that overviews the section
 
 Want to add to or change this tutorial? Here are some ideas:
 - Create a fork of the `vmware-solutions-shared` repository and modify it to include additional virtual machine and update your Schematics workspace to use it. 
-- 
 
 ## Related content
 {: #related}
 
 * [Relevant links in {{site.data.keyword.vmwaresolutions_short}} docs](https://{DomainName}/docs/vmwaresolutions?topic=vmware-solutions-shared_overview)
 * [Relevant links in {{site.data.keyword.bpshort}} docs](https://{DomainName}/docs/schematics?topic=schematics-getting-started)
+* [VMware Cloud Director Documentation](https://docs.vmware.com/en/VMware-Cloud-Director/index.html)
