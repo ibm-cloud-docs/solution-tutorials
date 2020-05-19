@@ -165,9 +165,10 @@ In Kubernetes, a sidecar is a utility container in the pod, and its purpose is t
     ```
     {:pre}
 3.  Validate whether the namespace is annotated for automatic sidecar injection by running the below command
-    ``` sh
+    ```sh
     oc get namespace -L istio-injection
     ```
+    {:pre}
 
     **Sample output:**
     ``` sh
@@ -271,6 +272,7 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    ```sh
    for i in {1..20}; do sleep 0.5; curl -I $INGRESS_HOST/productpage; done
    ```
+   {:pre}
 
 This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
 
