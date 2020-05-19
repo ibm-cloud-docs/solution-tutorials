@@ -600,17 +600,16 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
 
 ### Configure Patient Health Frontend App to use Patient Health Backend App
 
-The `patient-health-frontend` application has a configuration option for the backend database. To start using the backend app with the connected cloudant database you configured above, follow the steps below to configure it.
+The `patient-health-frontend` application has an environment variable for the backend microservice url.
 
-1. Access your **patient-health-frontend** application again and click **Settings**.
-   <p style="width: 50%;">
+1. Set the **API_URL** environment variable to **default** in the frontend **Deployment**. Navigate to the deployment for the `patient-health-frontend` app by clicking the frontend app in the **Topology** view, and then selecting the name next to **D**:
 
-   ![clicksettings](images/solution55-openshift-ibm-cloud-hidden/clicksettings.png)
-   </p>
-2. Input the route `http://patient-health-backend:8080/` and hit the **node** {{site.data.keyword.openshiftshort}} icon.
-   You won't need to expose this application with the `oc expose` command. This is because your frontend `patient-health-frontend` application can talk to the backend `patient-health-backend` without the network request leaving the cluster. Kubernetes keeps an internal DNS record of the services which resolve to the IPs of the running application.
+2. Go to the **Environment** tab, and in the **Single value(env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template Containers Port` output of this command:
 
-   ![inputurl](images/solution55-openshift-ibm-cloud-hidden/inputurl.png)
+   ```
+   oc describe deployment/patient-health-frontend
+   ```
+   {:pre}
 
 Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
 
