@@ -16,7 +16,7 @@ lasttested: "2020-05-15"
 # Service Mesh on {{site.data.keyword.openshiftshort}}
 {: #istio-openshift}
 
-This tutorial walks you through how to install Service Mesh alongside microservices for a simple mock app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster.
+This tutorial walks you through how to install Service Mesh alongside microservices for a simple mock app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. You will also learn how to configure an Istio gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and usage of metrics, logging and tracing to observe services.
 {:shortdesc}
 
 Based on the open source Istio project, {{site.data.keyword.openshiftlong_notm}}  Service Mesh adds a transparent layer on existing distributed applications. {{site.data.keyword.openshiftlong_notm}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With {{site.data.keyword.openshiftlong_notm}} , you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftshort}} Container Platform environment.
