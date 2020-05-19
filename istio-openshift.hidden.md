@@ -16,7 +16,7 @@ lasttested: "2020-05-15"
 # Service Mesh on {{site.data.keyword.openshiftshort}}
 {: #istio-openshift}
 
-This tutorial walks you through how to install Service Mesh alongside microservices for a simple mock app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. You will also learn how to configure an Istio gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and usage of metrics, logging and tracing to observe services.
+This tutorial walks you through how to install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh alongside microservices for a simple mock app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. You will also learn how to configure an Istio gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and usage of metrics, logging and tracing to observe services.
 {:shortdesc}
 
 Based on the open source Istio project, {{site.data.keyword.openshiftlong_notm}}  Service Mesh adds a transparent layer on existing distributed applications. {{site.data.keyword.openshiftlong_notm}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With {{site.data.keyword.openshiftlong_notm}} , you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftshort}} Container Platform environment.
@@ -146,10 +146,6 @@ The application is composed of four separate microservices used to demonstrate v
 
 ![](images/solution57-istio-openshift-hidden/withistio.svg)
 
-### Enable the automatic sidecar injection for the bookinfo namespace
-
-In Kubernetes, a sidecar is a utility container in the pod, and its purpose is to support the main container. For Istio to work, Envoy proxies must be deployed as sidecars to each pod of the deployment. There are two ways of injecting the Istio sidecar into a pod: manually using the `istioctl` CLI tool or automatically using the Istio sidecar injector. In this section, you will use the automatic sidecar injection provided by Istio.
-
 1.  From your **IBM Cloud Shell**, create a project called "bookinfo" with `oc new-project` command
     ``` sh
     oc new-project bookinfo
@@ -159,46 +155,25 @@ In Kubernetes, a sidecar is a utility container in the pod, and its purpose is t
     In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
     {:tip}
 
-2.  Annotate the bookinfo namespace to enable automatic sidecar injection with `istio-injection=enabled`
-    ``` sh
-    oc label namespace bookinfo istio-injection=enabled
-    ```
-    {:pre}
-3.  Validate whether the namespace is annotated for automatic sidecar injection by running the below command
-    ```sh
-    oc get namespace -L istio-injection
-    ```
-    {:pre}
-
-    **Sample output:**
-    ``` sh
-    NAME             STATUS   AGE    ISTIO-INJECTION
-    bookinfo         Active   271d   enabled
-    istio-system     Active   5d2h
-    ...
-    ```
-
-### Install the BookInfo app
-
-1. Clone the Istio repository that includes the samples
+2. Clone the Istio repository that includes the samples
    ```sh
-   git clone https://github.com/istio/istio.git
+   git clone https://github.com/Maistra/istio
    cd istio/samples/bookinfo/platform/kube
    ```
    {:pre}
 
    You can check the contents of an YAML file by running `cat <FILENAME_WITH_EXTENSION>' command in the Shell.
 
-2. Inject the Istio Envoy sidecar into the bookinfo pods, and deploy the BookInfo app on to the {{site.data.keyword.openshiftshort}} cluster. Deploy both the v1 and v2 versions of the app:
+3. Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.openshiftshort}} cluster. This deploys both the v1 and v2 versions of the app,
 
     ```sh
     oc apply -f bookinfo.yaml
     ```
     {:pre}
 
-   This command deploys the BookInfo app on to the cluster. Since you enabled automation sidecar injection, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
+    The `bookinfo.yaml` file is annotated to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
 
-3. Verify that the pods are up and running.
+4. Verify that the pods are up and running.
 
     ```sh
     oc get pods
@@ -258,9 +233,6 @@ Visit the application by going to `http://<INGRESS_HOST>/productpage` in a new t
 {:istio_telemetry}
 
 Istio's tracing and metrics features are designed to provide broad and granular insight into the health of all services. Istio's role as a service mesh makes it the ideal data source for observability information, particularly in a microservices environment. As requests pass through multiple services, identifying performance bottlenecks becomes increasingly difficult using traditional debugging techniques. Distributed tracing provides a holistic view of requests transiting through multiple services, allowing for immediate identification of latency issues. With Istio, distributed tracing comes by default. This will expose latency, retry, and failure information for each hop in a request.
-
-You can read more about how [Istio mixer enables telemetry reporting](https://istio.io/docs/concepts/policy-and-control/mixer.html).
-{:tip}
 
 ### Visualize Metrics with Grafana
 
