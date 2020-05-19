@@ -22,9 +22,12 @@ lasttested: "2020-05-15"
 # Getting Started with {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #vmware-solutions-shared-getting-started}
 
-On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/services/vmwaresolutions?topic=vmware-solutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware vCloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
+On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offerings](https://{DomainName}/docs/services/vmwaresolutions?topic=vmware-solutions-getting-started#getting-started-depl-offerings) for VMware that you can choose from, with each providing a different level of abstraction. VMware Cloud Director (VCD) is offered under the banner of {{site.data.keyword.vmwaresolutions_short}} Shared. It is a multi-tenant service with elasticity and two subscription types: 
   - On-demand where vCPU and RAM are allocated as needed and priced on an hourly basis.
   - Reserved where vCPU and RAM are pre-allocated and priced monthly. 
+
+    VMware changed the name of VMware **vCloud** Director to VMware **Cloud** Director, you may see references in the UI and/or related documentation of one or the other, they are the same product.
+    {:tip}
 
 {:shortdesc}
 
@@ -264,10 +267,10 @@ You can create rules to allow or deny traffic, this section creates a rule to al
    ```
 
 
-### Create VM section
+### Create vApp and VM
 {:#create_vm}
 
-A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. A vApp can contain multiple virtual machines. This section creates a vApp and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
+A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
 
    ```hcl
     resource "vcd_vapp" "vmware_tutorial_vapp" {
