@@ -351,7 +351,9 @@ A vApp consists of one or more virtual machines that communicate over a network 
 
 1. Navigate to [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/workspaces) workspaces.
 2. Click on the action menu next to the `vmware-tutorial` workspace.
-3. Click on **Delete**, check all the Delete options, enter the name of the workspace, and click **Delete** to clean up all the provisioned resources.
+3. Click on **Delete**, check all the Delete options, enter the name of the workspace, and click **Delete** to clean up all the resources that were provisioned via Schematics.
+4. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Resources](https://{DomainName}/infrastructure/vmware-solutions/console/instances).
+5. Delete the `vmware-tutorial` instance listed under the **VMware Solutions Shared** section.
 
 ## Expand the tutorial 
 
