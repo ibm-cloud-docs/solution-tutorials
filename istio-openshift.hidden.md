@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2020
 lastupdated: "2020-05-19"
-lasttested: "2020-05-15"
+lasttested: "2020-05-19"
 ---
 
 {:shortdesc: .shortdesc}
@@ -49,7 +49,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. The admin provisions an {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
 2. Admin creates an `istio-system` namespace(project) and creates `ServiceMeshControlPlane`.
-3. Admin creates a `bookinfo` namespace with automatic sidecar injection and deploys the BookInfo app (with four separate microservices) in to the Service Mesh.
+3. Admin creates a `bookinfo` namespace with automatic sidecar injection enabled and deploys the BookInfo app (with four separate microservices) in to the Service Mesh.
 4. Admin exposes the app for external traffic with the Istio Ingress Gateway.
 5. The user securely(HTTPS) accesses the application via browser and also secures the microservices communication with mutual TLS(mtls).
 6. The Admin monitors the health and performance of the microservices using the Telemetry data(metrics, traces, logs).
@@ -146,6 +146,8 @@ The application is composed of four separate microservices used to demonstrate v
 
 ![](images/solution57-istio-openshift-hidden/withistio.svg)
 
+Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on a proxy sidecar within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Red Hat recommends automatic injection using the annotation with no need to label projects.
+
 1.  From your **IBM Cloud Shell**, create a project called "bookinfo" with `oc new-project` command
     ``` sh
     oc new-project bookinfo
@@ -155,7 +157,7 @@ The application is composed of four separate microservices used to demonstrate v
     In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
     {:tip}
 
-2. Clone the Istio repository that includes the samples
+2. Clone the Istio repository that includes the Bookinfo sample
    ```sh
    git clone https://github.com/Maistra/istio
    cd istio/samples/bookinfo/platform/kube
@@ -171,7 +173,10 @@ The application is composed of four separate microservices used to demonstrate v
     ```
     {:pre}
 
-    The `bookinfo.yaml` file is annotated to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
+    The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
+
+    The upstream version of Istio injects the sidecar by default if you have labeled the project. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
+    {:tip}
 
 4. Verify that the pods are up and running.
 
@@ -373,9 +378,8 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
    oc delete project bookinfo
    ```
    {:pre}
-<!--##istutorial#-->
 * Delete the cluster you created.
-<!--#/istutorial#-->
+
 
 ## Related content
 
