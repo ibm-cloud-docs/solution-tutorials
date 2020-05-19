@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-18"
+lastupdated: "2020-05-19"
 lasttested: "2020-05-15"
 ---
 
@@ -45,13 +45,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Architecture
 {: #architecture}
+![](images/solution57-istio-openshift-hidden/Architecture.png)
 
-
-<!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
-<!--#/istutorial#-->
-
-In addition, make sure you [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
+1. The admin provisions an {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
+2. Admin creates an `istio-system` namespace(project) and creates `ServiceMeshControlPlane`.
+3. Admin creates a `bookinfo` namespace with automatic sidecar injection and deploys the BookInfo app with four seperate microservices in to the Service Mesh.
+4. Admin exposes the app for external traffic with the Istio Ingress Gateway and also secures the microservice communication with mutual TLS(mtls).
+5. The user securely(HTTPS) accesses the application via browser.
+6. The Admin monitors the application using the Telemetry data(metrics, traces) and also makes necessary updates to manage the traffic.
 
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
@@ -99,8 +100,11 @@ To avoid installing the command line, the recommended approach is to use the {{s
 In this section, you will install Service Mesh - Istio on the cluster. Installing the Service Mesh involves installing the Elasticsearch, Jaeger, Kiali and Service Mesh Operators, creating and managing a `ServiceMeshControlPlane` resource to deploy the control plane, and creating a `ServiceMeshMemberRoll` resource to specify the namespaces associated with the Service Mesh.
 
 **Elasticsearch** - Based on the open source Elasticsearch project that enables you to configure and manage an Elasticsearch cluster for tracing and logging with Jaeger.
+
 **Jaeger** - based on the open source Jaeger project, lets you perform tracing to monitor and troubleshoot transactions in complex distributed systems.
+
 **Kiali** - based on the open source Kiali project, provides observability for your service mesh. By using Kiali you can view configurations, monitor traffic, and view and analyze traces in a single console.
+
 **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** - based on the open source Istio project, lets you connect, secure, control, and observe the microservices that make up your applications.
 
 ### Install the Operators
