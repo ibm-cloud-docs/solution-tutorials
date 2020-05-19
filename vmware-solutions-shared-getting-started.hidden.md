@@ -33,7 +33,7 @@ On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offering
 
 * Create and explore a {{site.data.keyword.vmwaresolutions_short}} Shared instance in the {{site.data.keyword.Bluemix_notm}}.
 * Create a {{site.data.keyword.bpshort}} workspace in the {{site.data.keyword.Bluemix_notm}} to run Infrastructure as Code(IaC) based on Terraform.
-* Use {{site.data.keyword.bpshort}} to create a network, firewall, and SNAT rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
+* Use {{site.data.keyword.bpshort}} to create a network, firewall, source network address translation (SNAT) rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
 
 ## Services used
 {: #services}
@@ -69,7 +69,7 @@ This tutorial requires:
   {:tip}
 
 ## Create services
-{: #setup}
+{: #create_services}
 
 Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance with the desired vCPU and RAM configuration.
 
@@ -90,11 +90,55 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 
 1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
 2. Click on the newly created instance `vmware-tutorial`.
-3. Click on **Reset Organization Admin Password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
+3. Click on **Set Organization Admin Password**, and copy the password (`vcd_password`) for the **admin** user (`vcd_user`) when it is presented on the screen.
 4. With your password created, click on the **vCloud Director console** button found on the top right of the page and login with your credentials.
 5. In the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
 6. In the menu bar, click on the hamburger menu and select **Administration**, click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
 
+    Use the following table to confirm that you have all of the information you will need for use later on.
+    {:tip}
+
+    <table>
+      <thead>
+        <tr>
+          <td><strong>Name</strong></td>
+          <td><strong>Description</strong></td>
+          <td><strong>Default</strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>vcd_user</td>
+          <td>vCloud Director username</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>vcd_password</td>
+          <td>vCloud Director instance password</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>vcd_org</td>
+          <td>vCloud Director organization name/id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>vcd_url</td>
+          <td>vCloud Director url</td>
+          <td>https://daldir01.vmware-solutions.cloud.ibm.com/api</td>
+        </tr>
+        <tr>
+          <td>vdc_edge_gateway_name</td>
+          <td>vCloud Director virtual datacenter edge gateway name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>vdc_name</td>
+          <td>vCloud Director virtual data center name/id</td>
+          <td>vmware-tutorial</td>
+        </tr>        
+      </tbody>
+    </table>
 
 ## Review the Terraform template
 {: #review_terraform_template}
@@ -274,64 +318,8 @@ A vApp consists of one or more virtual machines that communicate over a network 
    - Click **Save template information**. 
 4. In the Input variables section, enter the information that was previously captured from the VMware vCloud Director console. 
   
-    Some values have defaults which are appropriate to keep for this tutorial, replace those with `your_xxx`.
+    Some values have defaults which are appropriate to keep for this tutorial.
     {:tip}
-
-    <table>
-      <thead>
-        <tr>
-          <td><strong>Name</strong></td>
-          <td><strong>Description</strong></td>
-          <td><strong>Type</strong></td>
-          <td><strong>Default</strong></td>
-          <td><strong>Sensitive</strong></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>vcd_user</td>
-          <td>Enter the vCloud Director username</td>
-          <td>string</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>vcd_password</td>
-          <td>Enter vCloud Director instance password</td>
-          <td>string</td>
-          <td></td>
-          <td>yes</td>
-        </tr>
-        <tr>
-          <td>vcd_org</td>
-          <td>Enter vCloud Director organization name/id</td>
-          <td>string</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>vcd_url</td>
-          <td>Enter the vCloud Director url</td>
-          <td>string</td>
-          <td>https://daldir01.vmware-solutions.cloud.ibm.com/api</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>vdc_edge_gateway_name</td>
-          <td>Enter vCloud Director virtual datacenter edge gateway name</td>
-          <td>string</td>
-          <td></td>
-          <td>yes</td>
-        </tr>
-        <tr>
-          <td>vdc_name</td>
-          <td>Enter vCloud Director virtual data center name/id</td>
-          <td>string</td>
-          <td>vmware-tutorial</td>
-          <td></td>
-        </tr>        
-      </tbody>
-    </table>
 
     Set the Sensitive flag for the `vcd-password` variable to that the value is not displayed in the workspace and/or logs.
     {:tip}
@@ -339,8 +327,7 @@ A vApp consists of one or more virtual machines that communicate over a network 
 5. Click Save changes.
 6. Scroll to the top of the page and click on **Generate Plan** to create the execution plan, review the logs and confirm it was successful.
 7. Click on **Apply plan**.
-8. Click on **View log** next to the current running plan to follow the logs.
-9. Wait for the plan to complete and check the Outputs from the log for the application the password to the deployed virtual machine, note you will be prompted to change the password on first use. 
+8. Click on **View log** next to the current running plan to follow the logs. Confirm it completes with no errors. 
 
 ## Access deployed virtual machine and test 
 {: #access-vmware-solutions-shared}
@@ -348,14 +335,13 @@ A vApp consists of one or more virtual machines that communicate over a network 
 1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
 2. Click on the instance `vmware-tutorial` instance.
 3. Click on the **vCloud Director console** button found on the top right of the page.
-4. Click on the card for the virtual data center `vmware-tutorial` 
-5. Click on **Virtual Machines** 
-6. On the card for the `vm-centos8-01` virtual machine, click on **Details** 
-7. Scroll down to **Guest OS Customization** and expand the section. Capture the password for the instance. 
-8. Back at the **Virtual Machines** page, click on **Actions**  and then **Launch Web Console**. 
-9. Login to the instance using the user `root` and the password captured above. You will be required to change the password. Change it to a password of your choice and proceed to login. 
-10. Test connectivity to the Internet by pinging known addresses on the Internet, i.e. `ping 8.8.8.8`. 
-11. Test connectivity to the IBM Cloud by pinging internal addresses, i.e. [IBM Cloud private DNS resolver endpoint](https://test.cloud.ibm.com/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
+4. Click on **Virtual Machines** 
+5. On the card for the `vm-centos8-01` virtual machine, click on **Details** 
+6. Scroll down to **Guest OS Customization** and expand the section. Capture the password for the instance. 
+7. Back at the **Virtual Machines** page, click on **Actions**  and then **Launch Web Console**. 
+8. Login to the instance using the user `root` and the password captured above. You will be required to change the password. Change it to a password of your choice and proceed to login. 
+9. Test connectivity to the Internet by pinging known addresses on the Internet, i.e. `ping 8.8.8.8`. 
+10. Test connectivity to the IBM Cloud by pinging internal addresses, i.e. [IBM Cloud private DNS resolver endpoint](https://test.cloud.ibm.com/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
 
 ## Remove resources
 {: #removeresources}
