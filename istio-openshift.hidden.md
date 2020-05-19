@@ -402,6 +402,6 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 
 ## Related content
 
-* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.3/nodes/pods/nodes-pods-autoscaling.html)
-* [Secured routes](https://docs.openshift.com/container-platform/4.3/networking/routes/secured-routes.html)
+* [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift?topic=openshift-why_openshift)
+* [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
+* [Istio Observability](https://istio.io/docs/concepts/observability/)
