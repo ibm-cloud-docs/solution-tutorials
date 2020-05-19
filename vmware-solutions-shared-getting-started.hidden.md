@@ -54,13 +54,15 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
   ![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.png)
 </p>
 
-1. Create a {{site.data.keyword.bpshort}} Workspace using the {{site.data.keyword.Bluemix_notm}} console.
-2. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance using the {{site.data.keyword.Bluemix_notm}} console.
-3. Review a Terraform template that will be used to configure and create resources in the virtual data center (VDC).
-4. Use the {{site.data.keyword.bplong_notm}} service to run the Terraform template and:
-    - With each virtual data center instance, an Edge Gateway is provided with five external IP addresses. Add firewall and SNAT rules to the gateway.
-    - Add a network and configure it to the Edge Gateway.
-    - Provision a virtual machine instance in the virtual data center.
+1. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center (VDC) instance using the {{site.data.keyword.Bluemix_notm}} console. With each VDC created, an edge gateway is provided with five (5) external IP addresses and one (1) internal IP address.
+2. Review a Terraform template that will be used to configure and create resources in the VDC:
+    - Create a routed network, this type of network provides controlled access to machines outside of the VDC via an edge gateway.
+    - Create firewall and SNAT rules on the edge gateway to allow traffic to the Internet and to the IBM Cloud private network.
+    - Create a vApp and configure it to use the routed network.
+    - Create a virtual machine instance inside of the vApp.
+3. Create a {{site.data.keyword.bpshort}} Workspace using the {{site.data.keyword.Bluemix_notm}} console.
+4. Use the {{site.data.keyword.bplong_notm}} service to apply the Terraform template and create the resources in the VDC.
+
 
 ## Before you begin
 {: #prereqs}
@@ -358,8 +360,8 @@ A vApp consists of one or more virtual machines that communicate over a network 
 ## Expand the tutorial 
 
 Want to add to or change this tutorial? Here are some ideas:
-- Create a fork of the `vmware-solutions-shared` repository and modify it to include additional virtual machine and update your Schematics workspace to use it. 
-- Modify the Terraform template to add a firewall and [DNAT rule](https://www.terraform.io/docs/providers/vcd/r/nsxv_dnat.html) to the edge gateway to allow you to SSH directly to it.
+- Create a fork of the `vmware-solutions-shared` repository and modify it to include additional virtual machines and update your Schematics workspace to use it. 
+- Modify the Terraform template to add a firewall and [destination network address translation (DNAT) rule](https://www.terraform.io/docs/providers/vcd/r/nsxv_dnat.html) to the edge gateway to allow you to SSH directly to your virtual machine.
 
 ## Related content
 {: #related}
