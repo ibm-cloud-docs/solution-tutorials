@@ -433,7 +433,7 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
 
 ### Create a Cloudant Service and Bind using the CRDs
 
-An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are instructions in the **Requirements** section of the installed operator. Below is my experience in the shell:
+An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are instructions in the **Requirements** section of the installed operator.  Steps:
 
 1. Skip the `login` command and the `ibmcloud target --cf -g Default`.  The `--cf` is for Cloud Foundry and is not required for {{site.data.keyword.cloudant_short_notm}}. Use the same resource group that is associated with your cluster.
    ```sh
@@ -456,11 +456,13 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    - kubernetes Secret named `secret-ibm-cloud-operator` in the `default` namespace.  This secret has data keys `api-key` and `region`.  The operator will use this data to create the cloudant service instance.
    - kubernetes ConfigMap resource with the name `config-ibm-cloud-operator` in the `default` namespace to hold the region and resource group
     
-   Copy curl command from the Requirements section not from the text below:
+   Use the supplied curl command: 
 
    ```sh
-   curl ... | bash
+   curl -sL https://raw.githubusercontent.com/IBM/cloud-operators/master/hack/config-operator.sh | bash 
    ```
+   {:pre}
+
 9. Back in the GUI, click the **Create Instance** in the **Service** box on the **Installed Operators** page to bring up the yaml editor. 
 9. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account):
    ```yaml
@@ -598,17 +600,16 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
 
 ### Configure Patient Health Frontend App to use Patient Health Backend App
 
-The `patient-health-frontend` application has a configuration option for the backend database. To start using the backend app with the connected cloudant database you configured above, follow the steps below to configure it.
+The `patient-health-frontend` application has an environment variable for the backend microservice url.
 
-1. Access your **patient-health-frontend** application again and click **Settings**.
-   <p style="width: 50%;">
+1. Set the **API_URL** environment variable to **default** in the frontend **Deployment**. Navigate to the deployment for the `patient-health-frontend` app by clicking the frontend app in the **Topology** view, and then selecting the name next to **D**:
 
-   ![clicksettings](images/solution55-openshift-ibm-cloud-hidden/clicksettings.png)
-   </p>
-2. Input the route `http://patient-health-backend:8080/` and hit the **node** {{site.data.keyword.openshiftshort}} icon.
-   You won't need to expose this application with the `oc expose` command. This is because your frontend `patient-health-frontend` application can talk to the backend `patient-health-backend` without the network request leaving the cluster. Kubernetes keeps an internal DNS record of the services which resolve to the IPs of the running application.
+2. Go to the **Environment** tab, and in the **Single value(env)** section add a name `API_URL` and value `default`.  Click **Save** then **Reload**.  This will result in a connection to `http://patient-health-backend:8080/` which you can verify by looking at the pod logs.  You can verify this is the correct port by scanning for the `Pod Template Containers Port` output of this command:
 
-   ![inputurl](images/solution55-openshift-ibm-cloud-hidden/inputurl.png)
+   ```
+   oc describe deployment/patient-health-frontend
+   ```
+   {:pre}
 
 Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
 

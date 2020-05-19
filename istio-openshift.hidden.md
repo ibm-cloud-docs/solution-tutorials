@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-18"
-lasttested: "2020-05-15"
+lastupdated: "2020-05-19"
+lasttested: "2020-05-19"
 ---
 
 {:shortdesc: .shortdesc}
@@ -16,7 +16,7 @@ lasttested: "2020-05-15"
 # Service Mesh on {{site.data.keyword.openshiftshort}}
 {: #istio-openshift}
 
-This tutorial walks you through how to install Service Mesh alongside microservices for a simple mock app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster.
+This tutorial walks you through how to install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh alongside microservices for a simple mock app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. You will also learn how to configure an Istio gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and usage of metrics, logging and tracing to observe services.
 {:shortdesc}
 
 Based on the open source Istio project, {{site.data.keyword.openshiftlong_notm}}  Service Mesh adds a transparent layer on existing distributed applications. {{site.data.keyword.openshiftlong_notm}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With {{site.data.keyword.openshiftlong_notm}} , you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftshort}} Container Platform environment.
@@ -45,13 +45,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 ## Architecture
 {: #architecture}
+![](images/solution57-istio-openshift-hidden/Architecture.png)
 
-
-<!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
-<!--#/istutorial#-->
-
-In addition, make sure you [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
+1. The admin provisions an {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
+2. Admin creates an `istio-system` namespace(project) and creates `ServiceMeshControlPlane`.
+3. Admin creates a `bookinfo` namespace with automatic sidecar injection enabled and deploys the BookInfo app (with four separate microservices) in to the Service Mesh.
+4. Admin exposes the app for external traffic with the Istio Ingress Gateway.
+5. The user securely(HTTPS) accesses the application via browser and also secures the microservices communication with mutual TLS(mtls).
+6. The Admin monitors the health and performance of the microservices using the Telemetry data(metrics, traces, logs).
 
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
@@ -99,8 +100,11 @@ To avoid installing the command line, the recommended approach is to use the {{s
 In this section, you will install Service Mesh - Istio on the cluster. Installing the Service Mesh involves installing the Elasticsearch, Jaeger, Kiali and Service Mesh Operators, creating and managing a `ServiceMeshControlPlane` resource to deploy the control plane, and creating a `ServiceMeshMemberRoll` resource to specify the namespaces associated with the Service Mesh.
 
 **Elasticsearch** - Based on the open source Elasticsearch project that enables you to configure and manage an Elasticsearch cluster for tracing and logging with Jaeger.
+
 **Jaeger** - based on the open source Jaeger project, lets you perform tracing to monitor and troubleshoot transactions in complex distributed systems.
+
 **Kiali** - based on the open source Kiali project, provides observability for your service mesh. By using Kiali you can view configurations, monitor traffic, and view and analyze traces in a single console.
+
 **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** - based on the open source Istio project, lets you connect, secure, control, and observe the microservices that make up your applications.
 
 ### Install the Operators
@@ -142,9 +146,7 @@ The application is composed of four separate microservices used to demonstrate v
 
 ![](images/solution57-istio-openshift-hidden/withistio.svg)
 
-### Enable the automatic sidecar injection for the bookinfo namespace
-
-In Kubernetes, a sidecar is a utility container in the pod, and its purpose is to support the main container. For Istio to work, Envoy proxies must be deployed as sidecars to each pod of the deployment. There are two ways of injecting the Istio sidecar into a pod: manually using the `istioctl` CLI tool or automatically using the Istio sidecar injector. In this section, you will use the automatic sidecar injection provided by Istio.
+Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on a proxy sidecar within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Red Hat recommends automatic injection using the annotation with no need to label projects.
 
 1.  From your **IBM Cloud Shell**, create a project called "bookinfo" with `oc new-project` command
     ``` sh
@@ -155,43 +157,28 @@ In Kubernetes, a sidecar is a utility container in the pod, and its purpose is t
     In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
     {:tip}
 
-2.  Annotate the bookinfo namespace to enable automatic sidecar injection with `istio-injection=enabled`
-    ``` sh
-    oc label namespace bookinfo istio-injection=enabled
-    ```
-    {:pre}
-3.  Validate whether the namespace is annotated for automatic sidecar injection by running the below command
-    ``` sh
-    oc get namespace -L istio-injection
-    ```
-
-    **Sample output:**
-    ``` sh
-    NAME             STATUS   AGE    ISTIO-INJECTION
-    bookinfo         Active   271d   enabled
-    istio-system     Active   5d2h
-    ...
-    ```
-
-### Install the BookInfo app
-
-1. Clone the Istio repository that includes the samples
+2. Clone the Istio repository that includes the Bookinfo sample
    ```sh
-   git clone https://github.com/istio/istio.git
+   git clone https://github.com/Maistra/istio
    cd istio/samples/bookinfo/platform/kube
    ```
    {:pre}
 
-2. Inject the Istio Envoy sidecar into the bookinfo pods, and deploy the BookInfo app on to the {{site.data.keyword.openshiftshort}} cluster. Deploy both the v1 and v2 versions of the app:
+   You can check the contents of an YAML file by running `cat <FILENAME_WITH_EXTENSION>' command in the Shell.
+
+3. Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.openshiftshort}} cluster. This deploys both the v1 and v2 versions of the app,
 
     ```sh
     oc apply -f bookinfo.yaml
     ```
     {:pre}
 
-   These commands deploy the BookInfo app on to the cluster. Since you enabled automation sidecar injection, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
+    The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
 
-3. Verify that the pods are up and running.
+    The upstream version of Istio injects the sidecar by default if you have labeled the project. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
+    {:tip}
+
+4. Verify that the pods are up and running.
 
     ```sh
     oc get pods
@@ -252,9 +239,6 @@ Visit the application by going to `http://<INGRESS_HOST>/productpage` in a new t
 
 Istio's tracing and metrics features are designed to provide broad and granular insight into the health of all services. Istio's role as a service mesh makes it the ideal data source for observability information, particularly in a microservices environment. As requests pass through multiple services, identifying performance bottlenecks becomes increasingly difficult using traditional debugging techniques. Distributed tracing provides a holistic view of requests transiting through multiple services, allowing for immediate identification of latency issues. With Istio, distributed tracing comes by default. This will expose latency, retry, and failure information for each hop in a request.
 
-You can read more about how [Istio mixer enables telemetry reporting](https://istio.io/docs/concepts/policy-and-control/mixer.html).
-{:tip}
-
 ### Visualize Metrics with Grafana
 
 Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored.
@@ -267,6 +251,7 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    ```sh
    for i in {1..20}; do sleep 0.5; curl -I $INGRESS_HOST/productpage; done
    ```
+   {:pre}
 
 This Grafana dashboard provides metrics for each workload. Explore the other dashboards provided as well.
 
@@ -291,7 +276,8 @@ Istio’s traffic management model relies on the Envoy proxies that are deployed
 Pilot translates high-level rules into low-level configurations and distributes this config to Envoy instances. Pilot uses three types of configuration resources to manage traffic within its service mesh: [Virtual Services](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#VirtualService), [Destination Rules](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#Destination), and [Service Entries](https://istio.io/docs/reference/config/istio.networking.v1alpha3.html#ServiceEntry).
 
 ### A/B testing with Istio
-**A/B testing** is a method of performing identical tests against two separate service versions in order to determine which performs better. To prevent Istio from performing the default routing behavior between the original and modernized service, define the following rules:
+
+A/B testing is a method of performing identical tests against two separate service versions in order to determine which performs better. To prevent Istio from performing the default routing behavior between the original and modernized service, define the following rules:
 
 1. Label the versions but running the below command in the Shell,
    ```sh
@@ -329,9 +315,9 @@ Pilot translates high-level rules into low-level configurations and distributes 
    {:tip}
 
 ### Canary deployment
-In `Canary Deployments`, newer versions of services are incrementally rolled out to users to minimize the risk and impact of any bugs introduced by the newer version. To begin incrementally routing traffic to the newer version of the bookinfo service, modify the original `VirtualService` rule:
+In Canary Deployments, newer versions of services are incrementally rolled out to users to minimize the risk and impact of any bugs introduced by the newer version. To begin incrementally routing traffic to the newer version of the bookinfo service, modify the original `VirtualService` rule:
 
-1. Run the below command to send 80% of traffic to v1
+1. Run the below command to send 80% of traffic to v1,
 
    ```sh
    oc replace -f virtual-service-reviews-80-20.yaml
@@ -366,7 +352,7 @@ Istio can secure the communication between microservices without requiring appli
 
 ## Enable SSL for traffic coming in to your cluster (HTTPS)
 {:#enable_https}
-In this section, you will create a secure Route to the Ingress Gateway with **Edge** termination using the default certificate provided by {{site.data.keyword.openshiftshort}}. With an edge route, the Ingress Controller terminates TLS encryption before forwarding traffic to the destination Pod.
+In this section, you will create a secure Route to the Ingress Gateway with **Edge** termination using the default certificate provided by {{site.data.keyword.openshiftshort}}. With an edge route, the Ingress Controller terminates TLS encryption before forwarding traffic to the istio-ingressgateway Pod.
 
 1. Launch the {{site.data.keyword.openshiftshort}} console and choose the **istio-system** project from the top bar.
 2. Under **Networking** and then **Routes**, click **Create Route**
@@ -392,12 +378,11 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
    oc delete project bookinfo
    ```
    {:pre}
-<!--##istutorial#-->
 * Delete the cluster you created.
-<!--#/istutorial#-->
+
 
 ## Related content
 
-* [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/docs/openshift?topic=openshift-why_openshift)
-* [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.3/nodes/pods/nodes-pods-autoscaling.html)
-* [Secured routes](https://docs.openshift.com/container-platform/4.3/networking/routes/secured-routes.html)
+* [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift?topic=openshift-why_openshift)
+* [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
+* [Istio Observability](https://istio.io/docs/concepts/observability/)
