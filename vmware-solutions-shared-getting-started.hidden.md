@@ -73,7 +73,7 @@ This tutorial requires:
 
 Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center instance with the desired vCPU and RAM configuration.
 
-#### {{site.data.keyword.vmwaresolutions_short}} Shared
+### {{site.data.keyword.vmwaresolutions_short}} Shared
 {: #create-vmware-solutions-shared}
 
 1. Navigate to [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console).
@@ -85,7 +85,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 7. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
 8. After having read and agreed to the third-party service agreements, click on **Create**. While waiting for the instance to create, proceed to review the Terraform template section of this tutorial and come back to perform access steps below once the instance is available.
 
-#### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
+### Access the {{site.data.keyword.vmwaresolutions_short}} Shared Instance
 {: #access-vmware-solutions-shared}
 
 1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
@@ -305,7 +305,7 @@ A vApp consists of one or more virtual machines that communicate over a network 
 
 {{site.data.keyword.bplong_notm}} delivers Terraform-as-a-Service so that you can use a high-level scripting language to model the resources that you want in your {{site.data.keyword.Bluemix_notm}} environment, and enable Infrastructure as Code (IaC). You can organize your IBM Cloud resources across environments by using workspaces. Every workspace is connected to a GitHub repository that contains a set of Terraform configuration files, which build a Terraform template. Use {{site.data.keyword.bpshort}} to connect to the template hosted in GitHub which was reviewed above to configure networking and deploy a virtual machine.
 
-#### 	{{site.data.keyword.bplong_notm}}
+### 	{{site.data.keyword.bplong_notm}}
 {: #create-schematics}
 
 1. Navigate to the [{{site.data.keyword.bplong_notm}}](https://{DomainName}/schematics/overview) overview page and click **Create a workspace**.
