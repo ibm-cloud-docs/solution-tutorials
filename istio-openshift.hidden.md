@@ -49,10 +49,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. The admin provisions an {{site.data.keyword.openshiftlong_notm}} cluster and installs the Service Mesh Operator along with other Telemetry Operators.
 2. Admin creates an `istio-system` namespace(project) and creates `ServiceMeshControlPlane`.
-3. Admin creates a `bookinfo` namespace with automatic sidecar injection and deploys the BookInfo app with four seperate microservices in to the Service Mesh.
-4. Admin exposes the app for external traffic with the Istio Ingress Gateway and also secures the microservice communication with mutual TLS(mtls).
-5. The user securely(HTTPS) accesses the application via browser.
-6. The Admin monitors the application using the Telemetry data(metrics, traces) and also makes necessary updates to manage the traffic.
+3. Admin creates a `bookinfo` namespace with automatic sidecar injection and deploys the BookInfo app (with four separate microservices) in to the Service Mesh.
+4. Admin exposes the app for external traffic with the Istio Ingress Gateway.
+5. The user securely(HTTPS) accesses the application via browser and also secures the microservices communication with mutual TLS(mtls).
+6. The Admin monitors the health and performance of the microservices using the Telemetry data(metrics, traces, logs).
 
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
@@ -187,6 +187,8 @@ In Kubernetes, a sidecar is a utility container in the pod, and its purpose is t
    ```
    {:pre}
 
+   You can check the contents of an YAML file by running `cat <FILENAME_WITH_EXTENSION>' command in the Shell.
+
 2. Inject the Istio Envoy sidecar into the bookinfo pods, and deploy the BookInfo app on to the {{site.data.keyword.openshiftshort}} cluster. Deploy both the v1 and v2 versions of the app:
 
     ```sh
@@ -194,7 +196,7 @@ In Kubernetes, a sidecar is a utility container in the pod, and its purpose is t
     ```
     {:pre}
 
-   These commands deploy the BookInfo app on to the cluster. Since you enabled automation sidecar injection, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
+   This command deploys the BookInfo app on to the cluster. Since you enabled automation sidecar injection, these pods will also include an Envoy sidecar as they are started in the cluster. Here, you have two versions of deployments, a new version (`v2`) in the current directory, and a previous version (`v1`) in a sibling directory. They will be used in future sections to showcase the Istio traffic routing capabilities.
 
 3. Verify that the pods are up and running.
 
@@ -297,7 +299,8 @@ Istio’s traffic management model relies on the Envoy proxies that are deployed
 Pilot translates high-level rules into low-level configurations and distributes this config to Envoy instances. Pilot uses three types of configuration resources to manage traffic within its service mesh: [Virtual Services](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#VirtualService), [Destination Rules](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#Destination), and [Service Entries](https://istio.io/docs/reference/config/istio.networking.v1alpha3.html#ServiceEntry).
 
 ### A/B testing with Istio
-**A/B testing** is a method of performing identical tests against two separate service versions in order to determine which performs better. To prevent Istio from performing the default routing behavior between the original and modernized service, define the following rules:
+
+A/B testing is a method of performing identical tests against two separate service versions in order to determine which performs better. To prevent Istio from performing the default routing behavior between the original and modernized service, define the following rules:
 
 1. Label the versions but running the below command in the Shell,
    ```sh
@@ -335,9 +338,9 @@ Pilot translates high-level rules into low-level configurations and distributes 
    {:tip}
 
 ### Canary deployment
-In `Canary Deployments`, newer versions of services are incrementally rolled out to users to minimize the risk and impact of any bugs introduced by the newer version. To begin incrementally routing traffic to the newer version of the bookinfo service, modify the original `VirtualService` rule:
+In Canary Deployments, newer versions of services are incrementally rolled out to users to minimize the risk and impact of any bugs introduced by the newer version. To begin incrementally routing traffic to the newer version of the bookinfo service, modify the original `VirtualService` rule:
 
-1. Run the below command to send 80% of traffic to v1
+1. Run the below command to send 80% of traffic to v1,
 
    ```sh
    oc replace -f virtual-service-reviews-80-20.yaml
