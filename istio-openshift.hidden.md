@@ -347,7 +347,7 @@ Istio can secure the communication between microservices without requiring appli
 
 ## Enable SSL for traffic coming in to your cluster (HTTPS)
 {:#enable_https}
-In this section, you will create a secure Route to the Ingress Gateway with **Edge** termination using the default certificate provided by {{site.data.keyword.openshiftshort}}. With an edge route, the Ingress Controller terminates TLS encryption before forwarding traffic to the destination Pod.
+In this section, you will create a secure Route to the Ingress Gateway with **Edge** termination using the default certificate provided by {{site.data.keyword.openshiftshort}}. With an edge route, the Ingress Controller terminates TLS encryption before forwarding traffic to the istio-ingressgateway Pod.
 
 1. Launch the {{site.data.keyword.openshiftshort}} console and choose the **istio-system** project from the top bar.
 2. Under **Networking** and then **Routes**, click **Create Route**
