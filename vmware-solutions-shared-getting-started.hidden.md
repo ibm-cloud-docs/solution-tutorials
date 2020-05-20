@@ -54,7 +54,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
   ![Architecture](images/solution58-vmware-solutions-getting-started-hidden/Architecture.png)
 </p>
 
-1. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center (VDC) instance using the {{site.data.keyword.Bluemix_notm}} console. With each VDC created, an edge gateway is provided and can route traffic to the Internet and to the {{site.data.keyword.Bluemix_notm}} private network for connectivity to other {{site.data.keyword.Bluemix_notm}} services.
+1. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center (VDC) instance using the {{site.data.keyword.Bluemix_notm}} console. With each VDC created, an edge gateway is provided and is capable of routing traffic to the Internet and to the {{site.data.keyword.Bluemix_notm}} private network for connectivity to other {{site.data.keyword.Bluemix_notm}} services.
 2. Review a Terraform template that will be used to configure and create resources in the VDC:
     - Create a routed network, this type of network provides controlled access to machines outside of the VDC via an edge gateway.
     - Create firewall and SNAT rules on the edge gateway to allow traffic to the Internet and to the {{site.data.keyword.Bluemix_notm}} private network.
@@ -159,7 +159,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
 An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network.
 
-   ```hcl
+   ```terraform
     resource "vcd_network_routed" "tutorial_network" {
 
       name         = "Tutorial-Network"
@@ -183,7 +183,7 @@ An organization VDC network with a routed connection provides controlled access 
 
 You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the vcd network to reach the Internet with no additional restrictions.
 
-   ```hcl
+   ```terraform
     resource "vcd_nsxv_firewall_rule" "rule_internet" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       name         = "${vcd_network_routed.tutorial_network.name}-Internet"
@@ -228,7 +228,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the vcd network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
 
-   ```hcl
+   ```terraform
     resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
@@ -274,7 +274,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
 
-   ```hcl
+   ```terraform
     resource "vcd_vapp" "vmware_tutorial_vapp" {
       name = "vmware-tutorial-vApp"
     }
