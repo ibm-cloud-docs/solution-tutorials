@@ -157,10 +157,9 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a routed network
 {:#create_routed_network}
 
-<p style="text-align: center;">
-  ![Architecture](images/solution58-vmware-solutions-getting-started-hidden/routed-network.png)
-</p>
-
+<img style="float: left;" 
+  src="images/solution58-vmware-solutions-getting-started-hidden/routed-network.png"
+/>
 An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network.
 
    ```terraform
@@ -185,10 +184,9 @@ An organization VDC network with a routed connection provides controlled access 
 ### Create a firewall and SNAT rule to access the Internet
 {:#create_internet_rules}
 
-<p style="text-align: center;">
-  ![Architecture](images/solution58-vmware-solutions-getting-started-hidden/internet.png)
-</p>
-
+<img style="float: left;" 
+  src="images/solution58-vmware-solutions-getting-started-hidden/internet.png"
+/>
 You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VCD network to reach the Internet with no additional restrictions.
 
    ```terraform
@@ -234,10 +232,9 @@ You can create rules to allow or deny traffic, this section creates a firewall a
 ### Create a firewall rule to access the IBM Cloud private network
 {:#create_private_rules}
 
-<p style="text-align: center;">
-  ![Architecture](images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png)
-</p>
-
+<img style="float: left;" 
+  src="images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png"
+/>
 You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the vcd network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
 
    ```terraform
@@ -284,43 +281,41 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 ### Create vApp and VM
 {:#create_vm}
 
-<p style="text-align: left;">
   <img style="float: left;" 
     src="images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png"
   />
   A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
-</p>
 
-  ```terraform
-  resource "vcd_vapp" "vmware_tutorial_vapp" {
-    name = "vmware-tutorial-vApp"
-  }
-
-  resource "vcd_vapp_org_network" "tutorial_network" {
-    vapp_name        = vcd_vapp.vmware_tutorial_vapp.name
-    org_network_name = vcd_network_routed.tutorial_network.name
-  }
-
-  resource "vcd_vapp_vm" "vm_1" {
-    vapp_name     = vcd_vapp.vmware_tutorial_vapp.name
-    name          = "vm-centos8-01"
-    catalog_name  = "Public Catalog"
-    template_name = "CentOS-8-Template-Official"
-    memory        = 8192
-    cpus          = 2
-
-    guest_properties = {
-      "guest.hostname" = "vm-centos8-01"
+    ```terraform
+    resource "vcd_vapp" "vmware_tutorial_vapp" {
+      name = "vmware-tutorial-vApp"
     }
 
-    network {
-      type               = "org"
-      name               = vcd_vapp_org_network.tutorial_network.org_network_name
-      ip_allocation_mode = "POOL"
-      is_primary         = true
+    resource "vcd_vapp_org_network" "tutorial_network" {
+      vapp_name        = vcd_vapp.vmware_tutorial_vapp.name
+      org_network_name = vcd_network_routed.tutorial_network.name
     }
-  }
-  ```
+
+    resource "vcd_vapp_vm" "vm_1" {
+      vapp_name     = vcd_vapp.vmware_tutorial_vapp.name
+      name          = "vm-centos8-01"
+      catalog_name  = "Public Catalog"
+      template_name = "CentOS-8-Template-Official"
+      memory        = 8192
+      cpus          = 2
+
+      guest_properties = {
+        "guest.hostname" = "vm-centos8-01"
+      }
+
+      network {
+        type               = "org"
+        name               = vcd_vapp_org_network.tutorial_network.org_network_name
+        ip_allocation_mode = "POOL"
+        is_primary         = true
+      }
+    }
+    ```
 
 ## Deploy using Schematics
 {: #deploy_using_schematics}
