@@ -59,6 +59,7 @@ intro sentence
 {: #prereqs}
 
 This tutorial requires:
+* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
 * {{site.data.keyword.cloud_notm}} CLI,
    * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
