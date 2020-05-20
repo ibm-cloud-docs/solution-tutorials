@@ -157,12 +157,13 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a routed network
 {:#create_routed_network}
 
-<img style="float: left;" 
-  src="images/solution58-vmware-solutions-getting-started-hidden/routed-network.png"
-/>
-An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network.
+  <div  style="float: left;">
+    <img src="images/solution58-vmware-solutions-getting-started-hidden/routed-network.png"/>
+  </div>
+  An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network. 
+  <div style="clear:both;"></div>
 
-   ```terraform
+  ```terraform
     resource "vcd_network_routed" "tutorial_network" {
 
       name         = "Tutorial-Network"
@@ -179,39 +180,30 @@ An organization VDC network with a routed connection provides controlled access 
       dns1 = "9.9.9.9"
       dns2 = "1.1.1.1"
     }
-   ```
+  ```
 
 ### Create a firewall and SNAT rule to access the Internet
 {:#create_internet_rules}
 
-<img style="float: left;" 
-  src="images/solution58-vmware-solutions-getting-started-hidden/internet.png"
-/>
-You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VCD network to reach the Internet with no additional restrictions.
+  <div  style="float: left;">
+    <img src="images/solution58-vmware-solutions-getting-started-hidden/internet.png" />
+  </div>
+  You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VCD network to reach the Internet with no additional restrictions.
+  <div style="clear:both;"></div>
 
    ```terraform
     resource "vcd_nsxv_firewall_rule" "rule_internet" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       name         = "${vcd_network_routed.tutorial_network.name}-Internet"
 
-      logging_enabled = "false"
-      action          = "accept"
+      action = "accept"
 
       source {
-        exclude             = false
-        gateway_interfaces  = []
-        ip_addresses        = []
-        ip_sets             = []
-        org_networks        = [vcd_network_routed.tutorial_network.name]
-        virtual_machine_ids = []
+        org_networks = [vcd_network_routed.tutorial_network.name]
       }
 
       destination {
-        exclude             = false
-        gateway_interfaces  = []
-        ip_addresses        = []
-        ip_sets             = []
-        org_networks        = []
+        ip_addresses = []
       }
 
       service {
@@ -232,10 +224,11 @@ You can create rules to allow or deny traffic, this section creates a firewall a
 ### Create a firewall rule to access the IBM Cloud private network
 {:#create_private_rules}
 
-<img style="float: left;" 
-  src="images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png"
-/>
-You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the vcd network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
+  <div  style="float: left;">
+    <img src="images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png"/>
+  </div>
+  You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the vcd network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
+  <div style="clear:both;"></div>
 
    ```terraform
     resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
@@ -277,14 +270,14 @@ You can create rules to allow or deny traffic, this section creates a rule to al
     }
    ```
 
-
 ### Create vApp and VM
 {:#create_vm}
 
-  <img style="float: left;" 
-    src="images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png"
-  />
+  <div  style="float: left;">
+    <img src="images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png"/>
+  </div>
   A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
+  <div style="clear:both;"></div>
 
     ```terraform
     resource "vcd_vapp" "vmware_tutorial_vapp" {
@@ -314,6 +307,53 @@ You can create rules to allow or deny traffic, this section creates a rule to al
         ip_allocation_mode = "POOL"
         is_primary         = true
       }
+    }
+    ```
+
+### Create a firewall rule to allow to SSH into the VM from the Internet
+{:#create_ssh_rules}
+
+  <div  style="float: left;">
+    <img src="images/solution58-vmware-solutions-getting-started-hidden/internet-ssh.png"/>
+  </div>
+  You can create rules to allow or deny traffic, this section creates a rule to allow SSH from the Internet into the VM.  
+  <div style="clear:both;"></div>
+
+  This tutorial does not get into securing SSH, at minimum you should configure the VM to only use Public/Private keys. The VM deployed in this tutorial is CentIS and read up their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
+  {:tip}
+
+  ```terraform
+    resource "vcd_nsxv_firewall_rule" "rule_internet_ssh" {
+      edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
+      name         = "${vcd_network_routed.tutorial_network.name}-Internet-SSH"
+
+      action = "accept"
+
+      source {
+        ip_addresses = []
+      }
+
+      destination {
+        ip_addresses = [module.ibm_vmware_solutions_shared_instance.default_external_network_ip]
+      }
+
+      service {
+        protocol = "tcp"
+        port     = 22
+      }
+    }
+
+    resource "vcd_nsxv_dnat" "rule_internet_ssh" {
+      edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
+      network_type = "ext"
+      network_name = module.ibm_vmware_solutions_shared_instance.default_gateway_network
+
+      original_address = module.ibm_vmware_solutions_shared_instance.default_external_network_ip
+      original_port    = 22
+
+      translated_address = vcd_vapp_vm.vm_1.network[0].ip
+      translated_port    = 22
+      protocol           = "tcp"
     }
     ```
 
