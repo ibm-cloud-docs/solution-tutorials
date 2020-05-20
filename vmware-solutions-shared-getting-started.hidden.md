@@ -284,10 +284,10 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 ### Create vApp and VM
 {:#create_vm}
 
-<p style="text-align: center;">
-  ![Architecture](images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png)
-</p>
-
+<!-- <p style="text-align: center;"> -->
+<img style="align: right;" 
+  src="![Architecture](images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png)"
+/>
 A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
 
    ```terraform
