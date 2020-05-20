@@ -231,34 +231,25 @@ The `main.tf` file contains most of the critical sections for this template.
   <div style="clear:both;"></div>
 
    ```terraform
-    resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
-      edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
-      name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
+      resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
+        edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
+        name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
 
-      logging_enabled = "false"
-      action          = "accept"
+        logging_enabled = "false"
+        action          = "accept"
 
-      source {
-        exclude             = false
-        gateway_interfaces  = []
-        ip_addresses        = []
-        ip_sets             = []
-        org_networks        = [vcd_network_routed.tutorial_network.name]
-        virtual_machine_ids = []
+        source {
+          org_networks = [vcd_network_routed.tutorial_network.name]
+        }
+
+        destination {
+          gateway_interfaces = [module.ibm_vmware_solutions_shared_instance.external_networks_2]
+        }
+
+        service {
+          protocol = "any"
+        }
       }
-
-      destination {
-        exclude             = false
-        gateway_interfaces  = [module.ibm_vmware_solutions_shared_instance.external_networks_2]
-        ip_addresses        = []
-        ip_sets             = []
-        org_networks        = []
-      }
-
-      service {
-        protocol = "any"
-      }
-    }
 
     resource "vcd_nsxv_snat" "rule_ibm_private" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
