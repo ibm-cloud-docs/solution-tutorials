@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-04-27"
-lasttested: "2020-04-27"
+lastupdated: "2020-05-20"
+lasttested: "2020-05-20"
 
 ---
 
@@ -67,7 +67,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * Coligo plugin (`coligo-cli`),
+   * Coligo plugin (`coligo/cli`),
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`)
 
 <!--##istutorial#-->
@@ -81,14 +81,15 @@ In this section, you will create a Coligo project. A project is a grouping of ap
 
 1. Navigate to [IBM Coligo Overview](https://{DomainName}/knative/overview) page
 2. Click on **Create project**.
-   - Provide a project name
-   - Select a resource group and Location
+   - Select a Location preferably Dallas
+   - Provide a project name and select a Resource group
    - Click on **Create**
 3. On a terminal, make the command line tooling point to your project
    ```sh
    ibmcloud coligo target --name <PROJECT_NAME>
    ```
    {:pre}
+4. Set the KUBECONFIG environment variable to use `kubectl` with your project by running the `export KUBECONFIG` command displayed in the output above.
 
 ## Deploy the frontend and backend apps as Coligo applications
 {: #deploy_app}
@@ -107,14 +108,14 @@ In this section, you will deploy your front-end web application to Coligo under 
     With just these two pieces of data, Coligo can deploy your application and it will handle all of the complexities of configuring it and managing it for you.
     {:tip}
 
-2. Copy the URL from the output above and open it in a browser to see an output as similar to this
+2. Run `ibmcloud coligo application get -n frontend` command to check the application status. Copy the URL from the output and open it in a browser to see an output as similar to this
    ```
    Congratulations! Your Frontend is working
    Oops!! Looks like the Connection to the backend is failing. Time to add a backend
    ```
 3. For secured browsing, you can also browse the application with `HTTPS`.
 
-   For troubleshooting and to display logs of your application, run the command `ibmcloud coligo application logs --name APPLICATION_NAME`
+   For troubleshooting and to display logs of your application, run the command `ibmcloud coligo application logs --name frontend`
    {:tip}
 <!--4. List the pods of the service and notice that it has a running pod
    ```sh
@@ -126,7 +127,7 @@ Congratulations!! You've just deployed a web application to Coligo with a simple
 ### Scale the application
 
 To check the autoscaling capabilities of Coligo,
-1. Navigate to the [load generator URL](https://load.fun.{DomainName}/) and paste the frontend application URL from the step above.
+1. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/) and paste the frontend application URL from the step above.
 2. Click on **Generate load** to generate traffic.
 3. Run the below command to see the pod count incrementing as part the autoscaling
    ```sh
@@ -143,10 +144,10 @@ To check the autoscaling capabilities of Coligo,
    --image ibmcom/backend --cluster-local
    ```
    {:pre}
-   The `--cluster-local` flag will instruct Coligo to keep the endpoint for this application private. Meaning, it will only be available from within the cluster often used for security purposes.
+   The `--cluster-local` flag will instruct Coligo to keep the endpoint for this application private. Meaning, it will only be available from within the cluster. This is often used for security purposes.
    {:tip}
 
-2. Copy the private endpoint (URL) from the output above.
+2. Run `ibmcloud coligo application get -n backend` command to check the application status. Copy the private endpoint (URL) from the output.
 3. The frontend application uses an environment variable to know where the backend application is hosted. You now need to modify the frontend application to set this value to point to the backend application's endpoint - make sure to use the value from the previous command
    ```sh
    ibmcloud coligo application update --name frontend \
