@@ -43,7 +43,7 @@ On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offering
 
 This tutorial uses the following services:
 * [{{site.data.keyword.vmwaresolutions_short}} Shared](https://{DomainName}/infrastructure/vmware-solutions/console)
-* [{{site.data.keyword.bpshort}}](https://{DomainName}/catalog/services/schematics)
+* [{{site.data.keyword.bpshort}}](https://{DomainName}/schematics/overview)
 
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
@@ -68,7 +68,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} Pay-As-You-Go account,
+* An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts), 
 
   A GitHub account is optional and only required if you plan on modifying the provided Terraform template beyond the steps outlined in this tutorial.
   {:tip}
@@ -186,7 +186,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
    ```hcl
     resource "vcd_nsxv_firewall_rule" "rule_internet" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
-      name         = vcd_network_routed.tutorial_network.name
+      name         = "${vcd_network_routed.tutorial_network.name}-Internet"
 
       logging_enabled = "false"
       action          = "accept"
@@ -366,7 +366,7 @@ Want to add to or change this tutorial? Here are some ideas:
 ## Related content
 {: #related}
 
-* [Relevant links in {{site.data.keyword.vmwaresolutions_short}} docs](https://{DomainName}/docs/vmwaresolutions?topic=vmware-solutions-shared_overview)
-* [Relevant links in {{site.data.keyword.bpshort}} docs](https://{DomainName}/docs/schematics?topic=schematics-getting-started)
+* [{{site.data.keyword.vmwaresolutions_short}} docs](https://{DomainName}/docs/services/vmwaresolutions?topic=vmware-solutions-shared_overview)
+* [{{site.data.keyword.bpshort}} docs](https://{DomainName}/docs/schematics?topic=schematics-getting-started)
 * [{{site.data.keyword.vmwaresolutions_short}}](https://www.ibm.com/cloud/vmware)
 * [VMware Cloud Director Documentation](https://docs.vmware.com/en/VMware-Cloud-Director/index.html)
