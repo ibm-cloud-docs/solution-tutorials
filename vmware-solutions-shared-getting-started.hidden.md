@@ -51,7 +51,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #architecture}
 
 <p style="text-align: center;">
-  ![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.png)
+  ![Architecture](images/solution58-vmware-solutions-getting-started-hidden/Architecture.png)
 </p>
 
 1. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center (VDC) instance using the {{site.data.keyword.Bluemix_notm}} console. With each VDC created, an edge gateway is provided with five (5) external IP addresses and one (1) internal IP address.
