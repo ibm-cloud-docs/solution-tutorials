@@ -54,10 +54,10 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
   ![Architecture](images/solution58-vmware-solutions-getting-started-hidden/Architecture.png)
 </p>
 
-1. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center (VDC) instance using the {{site.data.keyword.Bluemix_notm}} console. With each VDC created, an edge gateway is provided and can route traffic to the Internet and to the IBM Cloud private network for connectivity to other Cloud services.
+1. Create a {{site.data.keyword.vmwaresolutions_short}} Shared virtual data center (VDC) instance using the {{site.data.keyword.Bluemix_notm}} console. With each VDC created, an edge gateway is provided and can route traffic to the Internet and to the {{site.data.keyword.Bluemix_notm}} private network for connectivity to other {{site.data.keyword.Bluemix_notm}} services.
 2. Review a Terraform template that will be used to configure and create resources in the VDC:
     - Create a routed network, this type of network provides controlled access to machines outside of the VDC via an edge gateway.
-    - Create firewall and SNAT rules on the edge gateway to allow traffic to the Internet and to the IBM Cloud private network.
+    - Create firewall and SNAT rules on the edge gateway to allow traffic to the Internet and to the {{site.data.keyword.Bluemix_notm}} private network.
     - Create a vApp and configure it to use the routed network.
     - Create a virtual machine instance inside of the vApp.
 3. Create a {{site.data.keyword.bpshort}} Workspace using the {{site.data.keyword.Bluemix_notm}} console.
