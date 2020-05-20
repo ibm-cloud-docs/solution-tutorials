@@ -68,7 +68,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
    * Coligo plugin (`coligo/cli`),
-   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`)
+* `kubectl` to interact with Kubernetes clusters,
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
