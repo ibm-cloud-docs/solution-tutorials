@@ -158,11 +158,9 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a routed network
 {:#create_routed_network}
 
-  <div  style="float: left;">
-    <img src="images/solution58-vmware-solutions-getting-started-hidden/routed-network.png"/>
-  </div>
   An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network. 
-  <div style="clear:both;"></div>
+
+  ![](images/solution58-vmware-solutions-getting-started-hidden/Architecture.png)
 
   ```terraform
     resource "vcd_network_routed" "tutorial_network" {
@@ -186,11 +184,11 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a firewall and SNAT rule to access the Internet
 {:#create_internet_rules}
 
-  <div  style="float: left;">
+  You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VCD network to reach the Internet with no additional restrictions.
+
+  <div  style="text-align: center;">
     <img src="images/solution58-vmware-solutions-getting-started-hidden/internet.png" />
   </div>
-  You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VCD network to reach the Internet with no additional restrictions.
-  <div style="clear:both;"></div>
 
    ```terraform
     resource "vcd_nsxv_firewall_rule" "rule_internet" {
@@ -228,7 +226,7 @@ The `main.tf` file contains most of the critical sections for this template.
   <div  style="float: left;">
     <img src="images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png"/>
   </div>
-  You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the vcd network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
+  You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VCD network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
   <div style="clear:both;"></div>
 
    ```terraform
@@ -404,8 +402,8 @@ The `main.tf` file contains most of the critical sections for this template.
 ## Expand the tutorial 
 
 Want to add to or change this tutorial? Here are some ideas:
-- Create a fork of the `vmware-solutions-shared` repository and modify it to include additional virtual machines and update your Schematics workspace to use it. 
-- Modify the Terraform template to add a firewall and [destination network address translation (DNAT) rule](https://www.terraform.io/docs/providers/vcd/r/nsxv_dnat.html) to the edge gateway to allow you to SSH directly to your virtual machine.
+- Create a fork of the `vmware-solutions-shared` repository and modify it to include additional virtual machines and create a new Schematics workspace to use it. 
+- Add to the template to configure the virtual machine for secure SSH.
 
 ## Related content
 {: #related}
