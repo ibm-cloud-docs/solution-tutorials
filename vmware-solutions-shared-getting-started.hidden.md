@@ -193,7 +193,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/internet.png)
 
-   ```terraform
+   ```sh
     resource "vcd_nsxv_firewall_rule" "rule_internet" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       name         = "${vcd_network_routed.tutorial_network.name}-Internet"
@@ -231,7 +231,7 @@ The `main.tf` file contains most of the critical sections for this template.
   You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VCD network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
   <div style="clear:both;"></div>
 
-   ```terraform
+   ```javascript
       resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
         edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
         name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
@@ -270,7 +270,7 @@ The `main.tf` file contains most of the critical sections for this template.
   A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
   <div style="clear:both;"></div>
 
-    ```terraform
+    ```go
     resource "vcd_vapp" "vmware_tutorial_vapp" {
       name = "vmware-tutorial-vApp"
     }
@@ -312,7 +312,7 @@ The `main.tf` file contains most of the critical sections for this template.
   If you do not want to configure SSH into the VM, set the `allow_ssh` variable in the Terraform to false.
   {:tip}
 
-  ```terraform
+  ```graphql
     resource "vcd_nsxv_firewall_rule" "rule_internet_ssh" {
       count = var.allow_ssh == true ? 1 :0
 
