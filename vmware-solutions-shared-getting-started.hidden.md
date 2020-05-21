@@ -101,55 +101,16 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 5. In the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
 6. In the menu bar, click on the hamburger menu and select **Administration**, click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
 
-    Use the following table to confirm that you have all of the information you will need for use later on.
-    {:tip}
-
-    <table>
-      <thead>
-        <tr>
-          <td><strong>Name</strong></td>
-          <td><strong>Description</strong></td>
-          <td><strong>Default</strong></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>vcd_user</td>
-          <td>vCloud Director username</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>vcd_password</td>
-          <td>vCloud Director instance password</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>vcd_org</td>
-          <td>vCloud Director organization name/id</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>vcd_url</td>
-          <td>vCloud Director url</td>
-          <td>https://daldir01.vmware-solutions.cloud.ibm.com/api</td>
-        </tr>
-        <tr>
-          <td>vdc_edge_gateway_name</td>
-          <td>vCloud Director virtual datacenter edge gateway name</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>vdc_name</td>
-          <td>vCloud Director virtual data center name/id</td>
-          <td>vmware-tutorial</td>
-        </tr>
-        <tr>
-          <td>allow_ssh</td>
-          <td>Set to false to not configure SSH into the VM.</td>
-          <td>true</td>
-        </tr>  
-      </tbody>
-    </table>
+    | Name | Description | Default |
+    |----------|---------|---------|
+    | vcd_user | vCloud Director username |  |
+    | vcd_password | vCloud Director instance password |  |
+    | vcd_org | vCloud Director organization name |  |
+    | vcd_url | vCloud Director url | https://daldir01.vmware-solutions.cloud.ibm.com/api |
+    | vdc_edge_gateway_name | vCloud Director organization name |  |
+    | vdc_name | vCloud Director virtual data center name/id | vmware-tutorial |
+    | allow_ssh | Set to false to not configure SSH into the VM | true |
+    {: caption="Table 1. Use the following table to confirm that you have all of the information you will need for use later on." caption-side="top"}
 
 ## Review the Terraform template
 {: #review_terraform_template}
