@@ -128,7 +128,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/routed-network.png)
 
-  ```tf
+  ```terraform
     resource "vcd_network_routed" "tutorial_network" {
 
       name         = "Tutorial-Network"
@@ -154,7 +154,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/internet.png)
 
-   ```tf
+   ```terraform
     resource "vcd_nsxv_firewall_rule" "rule_internet" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       name         = "${vcd_network_routed.tutorial_network.name}-Internet"
@@ -191,7 +191,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png)
 
-   ```hcl
+   ```terraform
       resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
         edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
         name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
@@ -229,35 +229,35 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png)
 
-    ```hcl
-    resource "vcd_vapp" "vmware_tutorial_vapp" {
-      name = "vmware-tutorial-vApp"
-    }
-
-    resource "vcd_vapp_org_network" "tutorial_network" {
-      vapp_name        = vcd_vapp.vmware_tutorial_vapp.name
-      org_network_name = vcd_network_routed.tutorial_network.name
-    }
-
-    resource "vcd_vapp_vm" "vm_1" {
-      vapp_name     = vcd_vapp.vmware_tutorial_vapp.name
-      name          = "vm-centos8-01"
-      catalog_name  = "Public Catalog"
-      template_name = "CentOS-8-Template-Official"
-      memory        = 8192
-      cpus          = 2
-
-      guest_properties = {
-        "guest.hostname" = "vm-centos8-01"
+    ```terraform
+      resource "vcd_vapp" "vmware_tutorial_vapp" {
+        name = "vmware-tutorial-vApp"
       }
 
-      network {
-        type               = "org"
-        name               = vcd_vapp_org_network.tutorial_network.org_network_name
-        ip_allocation_mode = "POOL"
-        is_primary         = true
+      resource "vcd_vapp_org_network" "tutorial_network" {
+        vapp_name        = vcd_vapp.vmware_tutorial_vapp.name
+        org_network_name = vcd_network_routed.tutorial_network.name
       }
-    }
+
+      resource "vcd_vapp_vm" "vm_1" {
+        vapp_name     = vcd_vapp.vmware_tutorial_vapp.name
+        name          = "vm-centos8-01"
+        catalog_name  = "Public Catalog"
+        template_name = "CentOS-8-Template-Official"
+        memory        = 8192
+        cpus          = 2
+
+        guest_properties = {
+          "guest.hostname" = "vm-centos8-01"
+        }
+
+        network {
+          type               = "org"
+          name               = vcd_vapp_org_network.tutorial_network.org_network_name
+          ip_allocation_mode = "POOL"
+          is_primary         = true
+        }
+      }
     ```
 
 ### Create a firewall rule to allow to SSH into the VM from the Internet
