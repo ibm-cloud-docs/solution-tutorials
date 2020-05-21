@@ -103,6 +103,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         display: -webkit-box !important;
         -webkit-line-clamp: 2 !important;
         -webkit-box-orient: vertical !important;
+        -webkit-box-align: inherit;
     }
     .solutionBoxDescription {
         flex-grow: 1 !important;
