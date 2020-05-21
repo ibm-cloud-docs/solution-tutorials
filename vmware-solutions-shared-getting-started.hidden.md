@@ -142,7 +142,12 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
           <td>vdc_name</td>
           <td>vCloud Director virtual data center name/id</td>
           <td>vmware-tutorial</td>
-        </tr>        
+        </tr>
+        <tr>
+          <td>vdc_name</td>
+          <td>Set to false to not configure SSH into the VM.</td>
+          <td>true</td>
+        </tr>  
       </tbody>
     </table>
 
@@ -312,8 +317,13 @@ The `main.tf` file contains most of the critical sections for this template.
   This tutorial does not get into securing SSH, at minimum you should configure the VM to only use Public/Private keys. The VM deployed in this tutorial is CentIS and read up their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
   {:tip}
 
+  If you do not want to configure SSH into the VM, set the `allow_ssh` variable in the Terraform to false.
+  {:tip}
+
   ```terraform
     resource "vcd_nsxv_firewall_rule" "rule_internet_ssh" {
+      count = var.allow_ssh == true ? 1 :0
+
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       name         = "${vcd_network_routed.tutorial_network.name}-Internet-SSH"
 
@@ -334,6 +344,8 @@ The `main.tf` file contains most of the critical sections for this template.
     }
 
     resource "vcd_nsxv_dnat" "rule_internet_ssh" {
+      count = var.allow_ssh == true ? 1 :0
+
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       network_type = "ext"
       network_name = module.ibm_vmware_solutions_shared_instance.default_gateway_network
