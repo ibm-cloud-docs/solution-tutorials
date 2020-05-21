@@ -189,7 +189,7 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a firewall and SNAT rule to access the Internet
 {:#create_internet_rules}
 
-  You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VCD network to reach the Internet with no additional restrictions.
+  You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VDC network to reach the Internet with no additional restrictions.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/internet.png)
 
@@ -228,7 +228,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png)
 
-  You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VCD network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
+  You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VDC network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
   <div style="clear:both;"></div>
 
    ```javascript
