@@ -165,7 +165,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   An organization VDC network with a routed connection provides controlled access to machines and networks outside of the organization VDC.  The following section creates a routed network and connects it to the existing edge gateway. The template also specifies a static IP pool and DNS servers for the network. 
 
-  ![](images/solution58-vmware-solutions-getting-started-hidden/Architecture.png)
+  ![](images/solution58-vmware-solutions-getting-started-hidden/routed-network.png)
 
   ```terraform
     resource "vcd_network_routed" "tutorial_network" {
@@ -191,9 +191,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VCD network to reach the Internet with no additional restrictions.
 
-  <div  style="text-align: center;">
-    <img src="images/solution58-vmware-solutions-getting-started-hidden/internet.png" />
-  </div>
+  ![](images/solution58-vmware-solutions-getting-started-hidden/internet.png)
 
    ```terraform
     resource "vcd_nsxv_firewall_rule" "rule_internet" {
@@ -228,9 +226,8 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a firewall rule to access the IBM Cloud private network
 {:#create_private_rules}
 
-  <div  style="float: left;">
-    <img src="images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png"/>
-  </div>
+  ![](images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png)
+
   You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VCD network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
   <div style="clear:both;"></div>
 
@@ -268,9 +265,8 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create vApp and VM
 {:#create_vm}
 
-  <div  style="float: left;">
-    <img src="images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png"/>
-  </div>
+  ![](images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png)
+
   A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
   <div style="clear:both;"></div>
 
@@ -308,11 +304,7 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a firewall rule to allow to SSH into the VM from the Internet
 {:#create_ssh_rules}
 
-  <div  style="float: left;">
-    <img src="images/solution58-vmware-solutions-getting-started-hidden/internet-ssh.png"/>
-  </div>
-  You can create rules to allow or deny traffic, this section creates a rule to allow SSH from the Internet into the VM.  
-  <div style="clear:both;"></div>
+  ![](images/solution58-vmware-solutions-getting-started-hidden/internet-ssh.png)
 
   This tutorial does not get into securing SSH, at minimum you should configure the VM to only use Public/Private keys. The VM deployed in this tutorial is CentIS and read up their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
   {:tip}
