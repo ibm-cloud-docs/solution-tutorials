@@ -412,7 +412,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
    5. TLS Termination: `Edge`
    6. Insecure Traffic: `None`
 4. Click **Create**
-5. Visit the new HTTPS route next to **istio-ingressgateway-secure** route. Remember to add `/productpage` at the end of the URL!
+5. Visit the new HTTPS URL under **Location** section of **istio-ingressgateway-secure** route. Remember to add `/productpage` at the end of the URL!
 
 ## Remove resources
 
