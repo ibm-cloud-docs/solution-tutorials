@@ -89,7 +89,7 @@ To avoid installing the command line, the recommended approach is to use the {{s
 
 {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
 
-1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**.
+1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**.**_Make sure you don't close this window/tab_**
 2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command** and then click the **Display Token** link.
 3. Copy the text under **Log in with this token**.
 4. In a new browser tab/window, open the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) to start a new session.Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI. **_Make sure you don't close this window/tab_**
@@ -172,7 +172,7 @@ Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy si
     ```
     {:pre}
 
-    You can check the contents of an YAML file by running `cat <FILENAME_WITH_EXTENSION>' command in the Shell.
+    You can check the contents of any YAML file by running `cat <FILENAME_WITH_EXTENSION>' command in the Shell.
 
 3.  Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.openshiftshort}} cluster. This deploys both the v1 and v2 versions of the app,
 
@@ -320,7 +320,7 @@ A/B testing is a method of performing identical tests against two separate servi
    echo $INGRESS_HOST
    ```
    {:pre}
-   You should only get the v1 of the BookInfo application - No stars for ratings
+   Add `/productpage` to the end of the URL and you should only get the v1 of the BookInfo application - No stars for ratings
 
 4. To enable the Istio service mesh for A/B testing against the new service version, modify the original `VirtualService` rule to send only Firefox traffic to v2
 
@@ -362,11 +362,10 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
    oc replace -f virtual-service-reviews-80-20.yaml
    ```
    {:pre}
-   In the modified rule, the routed traffic is split between two different subsets of the reviews service. In this manner, traffic to the modernized version 2 of reviews is controlled on a percentage basis to limit the impact of any unforeseen bugs. This rule can be modified over time until eventually all traffic is directed to the newer version of the service.
+   In the modified rule, the routed traffic is split between two different subsets of the reviews microservice. In this manner, traffic to the modernized version 2 of reviews is controlled on a percentage basis to limit the impact of any unforeseen bugs. This rule can be modified over time until eventually all traffic is directed to the newer version of the service.
    {:tip}
 
-2. View the bookinfo application using the `$INGRESS_HOST` and enter it as a URL in Firefox or Chrome web browsers. **Ensure that you are using a hard refresh (command + Shift + R on Mac or Ctrl + F5 on windows) to remove any browser caching.** You should notice that the bookinfo should swap between V1 or V2 at about the weight you specified.
-
+2. View the bookinfo application using the `$INGRESS_HOST` and enter it as a URL in Firefox or Chrome web browsers. **Ensure that you are using a hard refresh (command + Shift + R on Mac or Ctrl + F5 on windows) to remove any browser caching.** You should notice that the bookinfo application should swap between V1 or V2 at about the weight you specified.
 3. To route all traffic to reviews v3,
    ```sh
    oc replace -f virtual-service-reviews-v3.yaml
@@ -379,12 +378,10 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
 Istio can secure the communication between microservices without requiring application code changes. Security is provided by authenticating and encrypting communication paths within the cluster. This is becoming a common security and compliance requirement. Delegating communication security to Istio (as opposed to implementing TLS in each microservice), ensures that your application will be deployed with consistent and manageable security policies.
 
 1.  To configure mTLS, you need to modify your previous destination rules to use `ISTIO_MUTUAL`.
-
    ```sh
    oc replace -f destination-rule-all-mtls.yaml
    ```
    {:pre}
-
 2. Send more traffic to your application. Everything should still continue to work as expected.
 3. Launch Kiali again and go to the **Graph**
 4. Under Display, select **Security**. Confirm your traffic is secure.
