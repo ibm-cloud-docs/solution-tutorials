@@ -167,7 +167,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/routed-network.png)
 
-  ```terraform
+  ```tf
     resource "vcd_network_routed" "tutorial_network" {
 
       name         = "Tutorial-Network"
@@ -193,7 +193,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/internet.png)
 
-   ```sh
+   ```tf
     resource "vcd_nsxv_firewall_rule" "rule_internet" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       name         = "${vcd_network_routed.tutorial_network.name}-Internet"
@@ -230,7 +230,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png)
 
-   ```javascript
+   ```hcl
       resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
         edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
         name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
@@ -268,7 +268,7 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png)
 
-    ```go
+    ```hcl
     resource "vcd_vapp" "vmware_tutorial_vapp" {
       name = "vmware-tutorial-vApp"
     }
@@ -312,7 +312,7 @@ The `main.tf` file contains most of the critical sections for this template.
   In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in the Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
   {:tip}
 
-  ```graphql
+  ```terraform
     resource "vcd_nsxv_firewall_rule" "rule_internet_ssh" {
       count = var.allow_ssh == true ? 1 :0
 
