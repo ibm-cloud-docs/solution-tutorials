@@ -14,13 +14,13 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
 <style>
 <!--
     #tutorials { /* hide the page header */
-        display: none !important
+        display: none !important;
     }
     .docs--DocsContentPage__contentArea {
         max-width: 100% !important;
     }
     .Toc {
-        display: none;
+        display: none !important;
     }
     p.last-updated { /* hide the last updated */
         display: none !important;
