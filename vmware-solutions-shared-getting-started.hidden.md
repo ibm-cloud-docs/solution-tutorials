@@ -144,7 +144,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
           <td>vmware-tutorial</td>
         </tr>
         <tr>
-          <td>vdc_name</td>
+          <td>allow_ssh</td>
           <td>Set to false to not configure SSH into the VM.</td>
           <td>true</td>
         </tr>  
@@ -189,11 +189,11 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a firewall and SNAT rule to access the Internet
 {:#create_internet_rules}
 
-  You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VCD network to reach the Internet with no additional restrictions.
+  You can create rules to allow or deny traffic, this section creates a firewall and SNAT rule to allow traffic from the VDC network to reach the Internet with no additional restrictions.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/internet.png)
 
-   ```terraform
+   ```sh
     resource "vcd_nsxv_firewall_rule" "rule_internet" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
       name         = "${vcd_network_routed.tutorial_network.name}-Internet"
@@ -226,12 +226,11 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a firewall rule to access the IBM Cloud private network
 {:#create_private_rules}
 
+  You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VDC network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
+
   ![](images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png)
 
-  You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VCD network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
-  <div style="clear:both;"></div>
-
-   ```terraform
+   ```javascript
       resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
         edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
         name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
@@ -265,12 +264,11 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create vApp and VM
 {:#create_vm}
 
+  A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
+
   ![](images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png)
 
-  A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
-  <div style="clear:both;"></div>
-
-    ```terraform
+    ```go
     resource "vcd_vapp" "vmware_tutorial_vapp" {
       name = "vmware-tutorial-vApp"
     }
@@ -304,15 +302,17 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a firewall rule to allow to SSH into the VM from the Internet
 {:#create_ssh_rules}
 
+  You can create rules to allow or deny traffic, this section creates a rule to allow SSH from the Internet to the VM. 
+
   ![](images/solution58-vmware-solutions-getting-started-hidden/internet-ssh.png)
 
   This tutorial does not get into securing SSH, at minimum you should configure the VM to only use Public/Private keys. The VM deployed in this tutorial is CentIS and read up their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
   {:tip}
 
-  If you do not want to configure SSH into the VM, set the `allow_ssh` variable in the Terraform to false.
+  In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in the Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
   {:tip}
 
-  ```terraform
+  ```graphql
     resource "vcd_nsxv_firewall_rule" "rule_internet_ssh" {
       count = var.allow_ssh == true ? 1 :0
 
