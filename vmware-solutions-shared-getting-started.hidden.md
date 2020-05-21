@@ -36,7 +36,7 @@ On {{site.data.keyword.Bluemix_notm}} there are a number of [deployment offering
 
 * Create and explore a {{site.data.keyword.vmwaresolutions_short}} Shared instance in the {{site.data.keyword.Bluemix_notm}}.
 * Create a {{site.data.keyword.bpshort}} workspace in the {{site.data.keyword.Bluemix_notm}} to run Infrastructure as Code(IaC) based on Terraform.
-* Use {{site.data.keyword.bpshort}} to create a network, firewall, source network address translation (SNAT) rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
+* Use {{site.data.keyword.bpshort}} to create a network, firewall, source network address translation (SNAT), destination network address translation (DNAT) rules, and deploy a virtual machine instance in VMware Virtual Data Center via a Terraform template.
 
 ## Services used
 {: #services}
@@ -60,6 +60,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
     - Create firewall and SNAT rules on the edge gateway to allow traffic to the Internet and to the {{site.data.keyword.Bluemix_notm}} private network.
     - Create a vApp and configure it to use the routed network.
     - Create a virtual machine instance inside of the vApp.
+    - Create firewall and DNAT rules on the edge gateway to allow SSH from the Internet to the virtual machine.
 3. Create a {{site.data.keyword.bpshort}} Workspace using the {{site.data.keyword.Bluemix_notm}} console.
 4. Use the {{site.data.keyword.bplong_notm}} service to apply the Terraform template and create the resources in the VDC.
 
