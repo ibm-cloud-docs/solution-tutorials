@@ -144,7 +144,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
           <td>vmware-tutorial</td>
         </tr>
         <tr>
-          <td>vdc_name</td>
+          <td>allow_ssh</td>
           <td>Set to false to not configure SSH into the VM.</td>
           <td>true</td>
         </tr>  
@@ -309,7 +309,7 @@ The `main.tf` file contains most of the critical sections for this template.
   This tutorial does not get into securing SSH, at minimum you should configure the VM to only use Public/Private keys. The VM deployed in this tutorial is CentIS and read up their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
   {:tip}
 
-  If you do not want to configure SSH into the VM, set the `allow_ssh` variable in the Terraform to false.
+  In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in the Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
   {:tip}
 
   ```graphql
