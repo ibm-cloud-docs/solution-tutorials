@@ -226,10 +226,9 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create a firewall rule to access the IBM Cloud private network
 {:#create_private_rules}
 
-  ![](images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png)
-
   You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VDC network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
-  <div style="clear:both;"></div>
+
+  ![](images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png)
 
    ```javascript
       resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
@@ -265,10 +264,9 @@ The `main.tf` file contains most of the critical sections for this template.
 ### Create vApp and VM
 {:#create_vm}
 
-  ![](images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png)
-
   A vApp consists of one or more virtual machines that communicate over a network and use resources and services in a deployed environment. This section creates a vApp, attaches the routed network, and adds a virtual machine to it. The virtual machine is configured with 8 GB of RAM, 2 vCPUs, and based on a CentOS template from the Public catalog.
-  <div style="clear:both;"></div>
+
+  ![](images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png)
 
     ```go
     resource "vcd_vapp" "vmware_tutorial_vapp" {
@@ -303,6 +301,8 @@ The `main.tf` file contains most of the critical sections for this template.
 
 ### Create a firewall rule to allow to SSH into the VM from the Internet
 {:#create_ssh_rules}
+
+  You can create rules to allow or deny traffic, this section creates a rule to allow SSH from the Internet to the VM. 
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/internet-ssh.png)
 
