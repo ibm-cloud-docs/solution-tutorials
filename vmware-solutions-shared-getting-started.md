@@ -341,7 +341,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 8. Click on **View log** next to the current running plan to follow the logs. At the completion of the apply plan, confirm there are no errors and capture the information provided under the **Outputs** section. 
 
 ## Access deployed virtual machine and test 
-{: #access-vmware-solutions-shared}
+{: #access-virtual-machine}
 
 1. Connect to the virtual machine with `ssh` using the user `root` and the password as shown in the logs above. You are required to change the password on the first login.
 
