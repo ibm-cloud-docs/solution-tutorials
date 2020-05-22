@@ -423,7 +423,9 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 ## Remove resources
 {: #cleanup}
 
-- Delete the project:
+### Delete the application project
+
+- To delete the bookinfo project, run the below command
   ```sh
   oc delete project bookinfo
   ```
@@ -452,7 +454,14 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 3. Click **Remove**.
 4. Repeat steps 2 and 3 for each of the operator in the list.
 
-- Delete the cluster to delete everything in one-go. This action is irreversible.
+### Delete the cluster
+Delete the cluster to delete everything in one-go. This action is irreversible.
+
+1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) page.
+2. Click on the action menu next to `myopenshiftcluster` and select **Delete**.
+3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
+4. Click on **Delete**
+
 
 ## Related content
 
