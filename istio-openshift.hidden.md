@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2020
 lastupdated: "2020-05-22"
-lasttested: "2020-05-19"
+lasttested: "2020-05-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -68,7 +68,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
 2. Set the **Orchestration service** to **the Latest,Default version of {{site.data.keyword.openshiftshort}}**.
-3. Select **Purchase additional licenses for this worker pool** as your OCP entitlement.
+3. Select your OCP entitlement.
 4. Under **Location**,
    - Select a **Resource group**
    - Select a **Geography**
@@ -118,6 +118,9 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 2. Select **Operators** and then **OperatorHub**
 3. Search for **Elasticsearch Operator**, click **Install** and then **Subscribe**
 4. **Repeat** steps 2 and 3 for installing **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**, **Kiali Operator** (provided by Red Hat) and **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** Operators.
+
+This installs the Operators in the default `openshift-operators` project and makes the Operators available to all projects in the cluster.
+{:tip}
 
 ### Deploying the Red Hat {{site.data.keyword.openshiftshort}} Service Mesh control plane
 
@@ -425,25 +428,28 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
   ```
   {:pre}
 
-### Removing the control plane from the CLI
+### Removing the ServiceMeshControlPlane from the CLI
 
-1. Run this command to retrieve the name of the installed ServiceMeshControlPlane:
+1. Run this command to retrieve the name of the installed ServiceMeshControlPlane,
    ```sh
    oc get servicemeshcontrolplanes -n istio-system
    ```
    {:pre}
-2. Replace `<name_of_custom_resource>` with the output from the previous command, and run this command to remove the custom resource:
+2. Replace `<NAME_OF_CUSTOM_RESOURCE>` with the name from the previous command, and run this command to remove the custom resource,
    ```sh
-   oc delete servicemeshcontrolplanes -n istio-system <name_of_custom_resource>
+   oc delete servicemeshcontrolplanes -n istio-system <NAME_OF_CUSTOM_RESOURCE>
    ```
    {:pre}
+
+   The `ServiceMeshMemberRoll` resource is automatically deleted when you delete the `ServiceMeshControlPlane` resource it is associated with.
+   {:tip}
 
 ### Remove the Operators
 
 1. Navigate to the **Operators** → **Installed Operators** page of the web console.
-2. On the right-hand side of the Operator Details page, select **Uninstall Operator** from the Actions drop-down menu.
+2. On the right-hand side of the Operator Details page, select **Uninstall Operator** from the Actions drop-down menu of **Red Hat OpenShift Service Mesh** Operator.
 3. Click **Remove**.
-4. Repeat steps 2 and 3 for each of the operator.
+4. Repeat steps 2 and 3 for each of the operator in the list.
 
 - Delete the cluster to delete everything in one-go. This action is irreversible.
 
