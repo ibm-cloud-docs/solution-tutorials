@@ -81,6 +81,10 @@ Solution Tutorials
         configuring-IPSEC-VPN.md
         linking-secure-network-enclosures.md
         web-app-private-network.md
+
+    {: .topicgroup}
+    VMware Solutions
+        vmware-solutions-shared-getting-started.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
