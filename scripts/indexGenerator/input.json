@@ -1016,7 +1016,7 @@
         {
           "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
           "url": "vmware-solutions-shared-getting-started.html",
-          "description": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "description": "Create a network for Internet and IBM CLoud private access inside of a VMware virtual data center and deploy a virtual machine.",
           "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
           "tags": [
             "VMware"
