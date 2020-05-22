@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-21"
-lasttested: "2020-05-19"
+lastupdated: "2020-05-22"
+lasttested: "2020-05-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -16,7 +16,7 @@ lasttested: "2020-05-19"
 # Service Mesh on {{site.data.keyword.openshiftshort}}
 {: #istio-openshift}
 
-This tutorial walks you through how to install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh alongside microservices for a simple mock app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
+This tutorial walks you through how to install Red Hat {{site.data.keyword.openshiftshort}} Service Mesh alongside microservices for a sample app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
 {:shortdesc}
 
 Based on the open source Istio project, Red Hat {{site.data.keyword.openshiftshort}} Service Mesh adds a transparent layer on existing distributed applications. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With Red Hat {{site.data.keyword.openshiftshort}}, you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftlong_notm}} cluster.
@@ -54,8 +54,8 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 2. Admin creates an `istio-system` namespace(project) and creates `ServiceMeshControlPlane`.
 3. Admin creates a `bookinfo` namespace with automatic sidecar injection enabled and deploys the BookInfo app (with four separate microservices) in to the Service Mesh.
 4. Admin exposes the app for external traffic with the Istio Ingress Gateway.
-5. The user securely(HTTPS) accesses the application via browser and also secures the microservices communication with mutual TLS(mtls).
-6. The Admin monitors the health and performance of the microservices using the Telemetry data(metrics, traces, logs).
+5. The user securely(HTTPS) accesses the application via browser.
+6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
 
 <!--##istutorial#-->
 
@@ -68,7 +68,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
 2. Set the **Orchestration service** to **the Latest,Default version of {{site.data.keyword.openshiftshort}}**.
-3. Select **Purchase additional licenses for this worker pool** as your OCP entitlement.
+3. Select your OCP entitlement.
 4. Under **Location**,
    - Select a **Resource group**
    - Select a **Geography**
@@ -89,7 +89,7 @@ To avoid installing the command line, the recommended approach is to use the {{s
 
 {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
 
-1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**.**_Make sure you don't close this window/tab_**
+1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **{{site.data.keyword.openshiftshort}} web console**. **_Make sure you don't close this window/tab_**
 2. On the web console, from the dropdown menu in the upper right of the page, click **Copy Login Command** and then click the **Display Token** link.
 3. Copy the text under **Log in with this token**.
 4. In a new browser tab/window, open the [{{site.data.keyword.Bluemix_notm}} Shell](https://{DomainName}/shell) to start a new session.Once the session starts, you should be automatically logged-in to the {{site.data.keyword.Bluemix_notm}} CLI. **_Make sure you don't close this window/tab_**
@@ -117,7 +117,10 @@ In this section, you will install Service Mesh - Istio on the cluster. Installin
 1. On the left pane of **{{site.data.keyword.openshiftshort}} web console**, select **Administrator** in the drop down
 2. Select **Operators** and then **OperatorHub**
 3. Search for **Elasticsearch Operator**, click **Install** and then **Subscribe**
-4. **Repeat** steps 2 and 3 for installing **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**, **Kiali Operator provided by Red Hat** and **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** Operators.
+4. **Repeat** steps 2 and 3 for installing **Red Hat {{site.data.keyword.openshiftshort}} Jaeger**, **Kiali Operator** (provided by Red Hat) and **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh** Operators.
+
+This installs the Operators in the default `openshift-operators` project and makes the Operators available to all projects in the cluster.
+{:tip}
 
 ### Deploying the Red Hat {{site.data.keyword.openshiftshort}} Service Mesh control plane
 
@@ -126,9 +129,10 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 1.  Create a new project by going to **Home** on the left pane of the web console, click **Projects** and then **Create Project**
 2.  Enter `istio-system` in the **Name** and click **Create**
 3.  Navigate to **Operators** and click **Installed Operators**
-4.  Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**. If you don't see it, wait a couple of minutes and refresh.
-5.  Under **Istio Service Mesh Control Plane** click **Create ServiceMeshControlPlane**.
-6.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
+4.  Select `istio-system` from the Project menu on the top bar.
+5.  Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**. If you don't see it, wait a couple of minutes and refresh.
+6.  Under **Istio Service Mesh Control Plane** click **Create Instance**.
+7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
 ### Create a ServiceMeshMemberRoll
 
@@ -137,8 +141,8 @@ ServiceMeshMemberRoll resource is used to to specify the namespaces associated w
 1. Navigate to **Operators** → **Installed Operators** again.
 2. Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**.
 3. In the tab area, scroll to the right to find **Istio Service Mesh Member Roll**
-4. Click **Create ServiceMeshMemberRoll**
-5. Change `your-project` to `bookinfo` and delete the last line.
+4. Click **Create Instance**
+5. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).
 6. Then, click **Create**.
 
 You successfully installed Istio into your cluster.
@@ -148,7 +152,20 @@ You successfully installed Istio into your cluster.
 
 The [BookInfo application](https://istio.io/docs/examples/bookinfo/) displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
 
-The application is composed of four separate microservices used to demonstrate various Istio features.
+The Bookinfo application is broken into four separate microservices:
+
+* **productpage**. The productpage microservice calls the details and reviews microservices to populate the page.
+* **details**. The details microservice contains book information.
+* **reviews**. The reviews microservice contains book reviews. It also calls the ratings microservice.
+* **ratings**. The ratings microservice contains book ranking information that accompanies a book review.
+
+There are 3 versions of the reviews microservice:
+
+* Version v1 doesn’t call the ratings service.
+* Version v2 calls the ratings service, and displays each rating as 1 to 5 black stars.
+* Version v3 calls the ratings service, and displays each rating as 1 to 5 red stars.
+
+The end-to-end architecture of the application is shown below.
 
 ![](images/solution57-istio-openshift-hidden/withistio.svg)
 
@@ -208,7 +225,7 @@ Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy si
     Note that each bookinfo pods has 2 containers in it. One is the bookinfo container, and the other is the Envoy proxy sidecar.
     {:tip}
 
-Your bookinfo app is running, but you can't access it! In the next section, you will expose the `productpage` service to allow incoming traffic.
+Your bookinfo app is running, but you can't access it as the service is not yet configured to receive external traffic. In the next section, you will expose the `productpage` service to allow incoming traffic.
 
 ## Expose the app with the Istio Ingress Gateway and Route
 {: #ingress_gateway_route}
@@ -294,7 +311,7 @@ Pilot translates high-level rules into low-level configurations and distributes 
 
 A/B testing is a method of performing identical tests against two separate service versions in order to determine which performs better. To prevent Istio from performing the default routing behavior between the original and modernized service, define the following rules:
 
-1. Label the versions by running the below command in the Shell,
+1. Run the following command to create default destination rules for the Bookinfo services,
 
    ```sh
    oc create -f destination-rule-all.yaml
@@ -322,35 +339,35 @@ A/B testing is a method of performing identical tests against two separate servi
    {:pre}
    Add `/productpage` to the end of the URL and you should only get the v1 of the BookInfo application - No stars for ratings
 
-4. To enable the Istio service mesh for A/B testing against the new service version, modify the original `VirtualService` rule to send only Firefox traffic to v2
+4. To enable the Istio service mesh for A/B testing against the new service version, modify the original `VirtualService` rule to send only Firefox traffic to v2. You may change the `user-agent` to any other installed browser on your machine
 
    ```sh
    cat <<EOF | oc replace -f -
    apiVersion: networking.istio.io/v1alpha3
    kind: VirtualService
    metadata:
-    name: reviews
+     name: reviews
    spec:
-    hosts:
-    - reviews
-    http:
-    - match:
-         - headers:
-               user-agent:
-               regex: '.*Firefox.*'
-      route:
-      - destination:
-         host: reviews
-         subset: v2
-    - route:
-      - destination:
-         host: reviews
-         subset: v3
+     hosts:
+     - reviews
+     http:
+     - match:
+       - headers:
+           user-agent:
+             regex: '.*Firefox.*'
+       route:
+       - destination:
+           host: reviews
+           subset: v2
+     - route:
+       - destination:
+           host: reviews
+           subset: v3
    EOF
    ```
    {:pre}
 
-   In Istio `VirtualService` rules, there can be only one rule for each service and therefore when defining multiple [HTTPRoute](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRoute) blocks, the order in which they are defined in the yaml matters. Hence, the original `VirtualService` rule is modified rather than creating a new rule. With the modified rule, incoming requests originating from `Firefox` browsers will go to the v2 version of bookinfo. All other requests fall-through to the next block, which routes all traffic to the v3 version of bookinfo.
+   In Istio `VirtualService` rules, there can be only one rule for each service and therefore when defining multiple [HTTPRoute](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRoute) blocks, the order in which they are defined in the yaml matters. Hence, the original `VirtualService` rule is modified rather than creating a new rule. With the modified rule, incoming requests originating from `Firefox` browsers will go to the v2 version(Black stars) of bookinfo. All other requests fall-through to the next block, which routes all traffic to the v3(Red Stars) version of bookinfo.
    {:tip}
 
 ### Canary deployment
@@ -384,7 +401,8 @@ Istio can secure the communication between microservices without requiring appli
    {:pre}
 2. Send more traffic to your application. Everything should still continue to work as expected.
 3. Launch Kiali again and go to the **Graph**
-4. Under Display, select **Security**. Confirm your traffic is secure.
+4. Under Display, select **Security**.
+5. To confirm your traffic is secure, you should see `mTLS enabled` with lock icon on the right pane.
 
 ## Enable SSL for traffic coming in to your cluster (HTTPS)
 {: #enable_https}
@@ -405,17 +423,45 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 ## Remove resources
 {: #cleanup}
 
-- Delete all application resource objects:
-  ```sh
-  oc delete all --selector app=bookinfo
-  ```
-  {:pre}
-- Delete the project:
+### Delete the application project
+
+- To delete the bookinfo project, run the below command
   ```sh
   oc delete project bookinfo
   ```
   {:pre}
-- Delete the cluster you created.
+
+### Removing the ServiceMeshControlPlane from the CLI
+
+1. Run this command to retrieve the name of the installed ServiceMeshControlPlane,
+   ```sh
+   oc get servicemeshcontrolplanes -n istio-system
+   ```
+   {:pre}
+2. Replace `<NAME_OF_CUSTOM_RESOURCE>` with the name from the previous command, and run this command to remove the custom resource,
+   ```sh
+   oc delete servicemeshcontrolplanes -n istio-system <NAME_OF_CUSTOM_RESOURCE>
+   ```
+   {:pre}
+
+   The `ServiceMeshMemberRoll` resource is automatically deleted when you delete the `ServiceMeshControlPlane` resource it is associated with.
+   {:tip}
+
+### Remove the Operators
+
+1. Navigate to the **Operators** → **Installed Operators** page of the web console.
+2. On the right-hand side of the Operator Details page, select **Uninstall Operator** from the Actions drop-down menu of **Red Hat OpenShift Service Mesh** Operator.
+3. Click **Remove**.
+4. Repeat steps 2 and 3 for each of the operator in the list.
+
+### Delete the cluster
+Delete the cluster to delete everything in one-go. This action is irreversible.
+
+1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](https://{DomainName}/kubernetes/clusters?platformType=openshift) page.
+2. Click on the action menu next to `myopenshiftcluster` and select **Delete**.
+3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
+4. Click on **Delete**
+
 
 ## Related content
 
