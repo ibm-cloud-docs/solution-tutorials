@@ -779,7 +779,7 @@
         },
         {
           "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
-          "url": "vmware-solutions-shared-getting-started.hidden.html",
+          "url": "vmware-solutions-shared-getting-started.html",
           "description": "Getting Started with IBM Cloud for VMware Solutions Shared",
           "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
           "tags": [
@@ -1019,6 +1019,25 @@
             "vlan_spanning"
           ],
           "supportsCloudShell": "not_applicable"
+        }
+      ]
+    },
+    {
+      "name": "VMware Solutions",
+      "anchor": "vmware",
+      "solutions": [
+        {
+          "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "url": "vmware-solutions-shared-getting-started.html",
+          "description": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
+          "tags": [
+            "VMware"
+          ],
+          "requirements": [
+            "vmware",
+            "schematics"
+          ]
         }
       ]
     }

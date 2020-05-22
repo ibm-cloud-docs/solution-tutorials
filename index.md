@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-05-21"
+lastupdated: "2020-05-22"
 ---
 
 {:shortdesc: .shortdesc}
@@ -999,6 +999,28 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution42-web-app-private-network/web-app-private.png" alt="Architecture diagram for the solution Hosting web applications from a secure private network"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+</div>
+
+## VMware Solutions
+{: #vmware }
+<div class = "solutionBoxContainer">
+    <a href = "/docs/solution-tutorials?topic=solution-tutorials-vmware-solutions-shared-getting-started#vmware-solutions-shared-getting-started">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Getting Started with IBM Cloud for VMware Solutions Shared
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Getting Started with IBM Cloud for VMware Solutions Shared</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution58-vmware-solutions-getting-started/Architecture.png" alt="Architecture diagram for the solution Getting Started with IBM Cloud for VMware Solutions Shared"/>
                 </div>
             </div>
         </div>

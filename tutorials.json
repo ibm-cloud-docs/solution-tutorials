@@ -687,6 +687,22 @@
           "lastUpdated": "2019-03-07"
         }
       ]
+    },
+    {
+      "name": "VMware Solutions",
+      "anchor": "vmware",
+      "solutions": [
+        {
+          "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "url": "vmware-solutions-shared-getting-started.html",
+          "description": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
+          "tags": [
+            "VMware"
+          ],
+          "lastUpdated": "2020-05-22"
+        }
+      ]
     }
   ]
 }
