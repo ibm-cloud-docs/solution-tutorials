@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-15"
-lasttested: "2020-05-15"
+lastupdated: "2020-05-22"
+lasttested: "2020-05-22"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -64,7 +64,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 3. Create a {{site.data.keyword.bpshort}} Workspace using the {{site.data.keyword.Bluemix_notm}} console.
 4. Use the {{site.data.keyword.bplong_notm}} service to apply the Terraform template and create the resources in the VDC.
 
-
 ## Before you begin
 {: #prereqs}
 
@@ -101,16 +100,16 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 5. In the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
 6. In the menu bar, click on the hamburger menu and select **Administration**, click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
 
-    | Name | Description | Default |
-    |----------|---------|---------|
-    | vcd_user | vCloud Director username |  |
-    | vcd_password | vCloud Director instance password |  |
-    | vcd_org | vCloud Director organization name |  |
-    | vcd_url | vCloud Director url | https://daldir01.vmware-solutions.cloud.ibm.com/api |
-    | vdc_edge_gateway_name | vCloud Director organization name |  |
-    | vdc_name | vCloud Director virtual data center name/id | vmware-tutorial |
-    | allow_ssh | Set to false to not configure SSH into the VM | true |
-    {: caption="Table 1. Use the following table to confirm that you have all of the information you will need for use later on." caption-side="top"}
+  | Name | Description | Default |
+  |----------|---------|---------|
+  | vcd_user | vCloud Director username |  |
+  | vcd_password | vCloud Director instance password |  |
+  | vcd_org | vCloud Director organization name |  |
+  | vcd_url | vCloud Director url | https://daldir01.vmware-solutions.cloud.ibm.com/api |
+  | vdc_edge_gateway_name | vCloud Director organization name |  |
+  | vdc_name | vCloud Director virtual data center name/id | vmware-tutorial |
+  | allow_ssh | Set to false to not configure SSH into the VM | true |
+  {: caption="Table 1. Use the following table to confirm that you have all of the information you will need for use later on." caption-side="top"}
 
 ## Review the Terraform template
 {: #review_terraform_template}
@@ -192,25 +191,25 @@ The `main.tf` file contains most of the critical sections for this template.
   ![](images/solution58-vmware-solutions-getting-started-hidden/ibm-cloud.png)
 
    ```terraform
-      resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
-        edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
-        name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
+    resource "vcd_nsxv_firewall_rule" "rule_ibm_private" {
+      edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
+      name         = "${vcd_network_routed.tutorial_network.name}-IBM-Private"
 
-        logging_enabled = "false"
-        action          = "accept"
+      logging_enabled = "false"
+      action          = "accept"
 
-        source {
-          org_networks = [vcd_network_routed.tutorial_network.name]
-        }
-
-        destination {
-          gateway_interfaces = [module.ibm_vmware_solutions_shared_instance.external_networks_2]
-        }
-
-        service {
-          protocol = "any"
-        }
+      source {
+        org_networks = [vcd_network_routed.tutorial_network.name]
       }
+
+      destination {
+        gateway_interfaces = [module.ibm_vmware_solutions_shared_instance.external_networks_2]
+      }
+
+      service {
+        protocol = "any"
+      }
+    }
 
     resource "vcd_nsxv_snat" "rule_ibm_private" {
       edge_gateway = module.ibm_vmware_solutions_shared_instance.edge_gateway_name
@@ -310,7 +309,7 @@ The `main.tf` file contains most of the critical sections for this template.
       translated_port    = 22
       protocol           = "tcp"
     }
-    ```
+  ```
 
 ## Deploy using Schematics
 {: #deploy_using_schematics}
