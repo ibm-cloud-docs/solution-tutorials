@@ -344,22 +344,19 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 {: #access-virtual-machine}
 
 1. Connect to the virtual machine with `ssh` using the user `root` and the password as shown in the logs above. You are required to change the password on the first login.
-
-    - If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#create_ssh_rules), you can use the following steps instead to access the virtual machine.
-      - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
-      - Click on the instance `vmware-tutorial` instance.
-      - Click on the **vCloud Director console** button found on the top right of the page.
-      - Click on **Virtual Machines** 
-      - On the card for the `vm-centos8-01` virtual machine, click on **Details** 
-      - Scroll down to **Guest OS Customization** and expand the section. Capture the password for the instance. 
-      - Back at the **Virtual Machines** page, click on **Actions**  and then **Launch Web Console**. 
-      - Login to the instance using the user `root` and the password captured above. You will be required to change the password. Change it to a password of your choice and proceed to login.
-  {:tip}
-
 2. Test connectivity to the Internet by pinging known addresses on the Internet, i.e. `ping 8.8.8.8`. 
 3. Test connectivity to the IBM Cloud by pinging internal addresses, i.e. [IBM Cloud private DNS resolver endpoint](https://test.cloud.ibm.com/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
 
-
+  If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#create_ssh_rules), you can use the following steps instead to access the virtual machine.
+    - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
+    - Click on the instance `vmware-tutorial` instance.
+    - Click on the **vCloud Director console** button found on the top right of the page.
+    - Click on **Virtual Machines** 
+    - On the card for the `vm-centos8-01` virtual machine, click on **Details** 
+    - Scroll down to **Guest OS Customization** and expand the section. Capture the password for the instance. 
+    - Back at the **Virtual Machines** page, click on **Actions**  and then **Launch Web Console**. 
+    - Login to the instance using the user `root` and the password captured above. You will be required to change the password. Change it to a password of your choice and proceed to login.
+  {:tip}
 
 ## Remove resources
 {: #removeresources}
