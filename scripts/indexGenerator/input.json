@@ -776,19 +776,6 @@
             "openshift_on_ibm_cloud",
             "istio"
           ]
-        },
-        {
-          "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
-          "url": "vmware-solutions-shared-getting-started.html",
-          "description": "Getting Started with IBM Cloud for VMware Solutions Shared",
-          "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware",
-            "schematics"
-          ]
         }
       ]
     },
