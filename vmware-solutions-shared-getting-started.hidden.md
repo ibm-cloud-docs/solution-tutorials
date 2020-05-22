@@ -228,36 +228,36 @@ The `main.tf` file contains most of the critical sections for this template.
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/vapp-vm.png)
 
-    ```terraform
-      resource "vcd_vapp" "vmware_tutorial_vapp" {
-        name = "vmware-tutorial-vApp"
+  ```terraform
+    resource "vcd_vapp" "vmware_tutorial_vapp" {
+      name = "vmware-tutorial-vApp"
+    }
+
+    resource "vcd_vapp_org_network" "tutorial_network" {
+      vapp_name        = vcd_vapp.vmware_tutorial_vapp.name
+      org_network_name = vcd_network_routed.tutorial_network.name
+    }
+
+    resource "vcd_vapp_vm" "vm_1" {
+      vapp_name     = vcd_vapp.vmware_tutorial_vapp.name
+      name          = "vm-centos8-01"
+      catalog_name  = "Public Catalog"
+      template_name = "CentOS-8-Template-Official"
+      memory        = 8192
+      cpus          = 2
+
+      guest_properties = {
+        "guest.hostname" = "vm-centos8-01"
       }
 
-      resource "vcd_vapp_org_network" "tutorial_network" {
-        vapp_name        = vcd_vapp.vmware_tutorial_vapp.name
-        org_network_name = vcd_network_routed.tutorial_network.name
+      network {
+        type               = "org"
+        name               = vcd_vapp_org_network.tutorial_network.org_network_name
+        ip_allocation_mode = "POOL"
+        is_primary         = true
       }
-
-      resource "vcd_vapp_vm" "vm_1" {
-        vapp_name     = vcd_vapp.vmware_tutorial_vapp.name
-        name          = "vm-centos8-01"
-        catalog_name  = "Public Catalog"
-        template_name = "CentOS-8-Template-Official"
-        memory        = 8192
-        cpus          = 2
-
-        guest_properties = {
-          "guest.hostname" = "vm-centos8-01"
-        }
-
-        network {
-          type               = "org"
-          name               = vcd_vapp_org_network.tutorial_network.org_network_name
-          ip_allocation_mode = "POOL"
-          is_primary         = true
-        }
-      }
-    ```
+    }
+  ```
 
 ### Create a firewall rule to allow to SSH into the VM from the Internet
 {:#create_ssh_rules}
