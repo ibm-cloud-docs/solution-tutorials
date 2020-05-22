@@ -100,16 +100,16 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 5. In the left navigation click on **Edges** under the **Networking** category.  Take note of the name of the edge gateway (`vdc_edge_gateway_name`). 
 6. In the menu bar, click on the hamburger menu and select **Administration**, click on **General** under the **Settings** category and take note of the **Organization name**. It is your virtual cloud director organization (`vcd_org`).
 
-  | Name | Description | Default |
-  |----------|---------|---------|
-  | vcd_user | vCloud Director username |  |
-  | vcd_password | vCloud Director instance password |  |
-  | vcd_org | vCloud Director organization name |  |
-  | vcd_url | vCloud Director url | https://daldir01.vmware-solutions.cloud.ibm.com/api |
-  | vdc_edge_gateway_name | vCloud Director organization name |  |
-  | vdc_name | vCloud Director virtual data center name/id | vmware-tutorial |
-  | allow_ssh | Set to false to not configure SSH into the VM | true |
-  {: caption="Table 1. Use the following table to confirm that you have all of the information you will need for use later on." caption-side="top"}
+| Name | Description | Default |
+|----------|---------|---------|
+| vcd_user | vCloud Director username |  |
+| vcd_password | vCloud Director instance password |  |
+| vcd_org | vCloud Director organization name |  |
+| vcd_url | vCloud Director url | https://daldir01.vmware-solutions.cloud.ibm.com/api |
+| vdc_edge_gateway_name | vCloud Director organization name |  |
+| vdc_name | vCloud Director virtual data center name/id | vmware-tutorial |
+| allow_ssh | Set to false to not configure SSH into the VM | true |
+{: caption="Table 1. Use the following table to confirm that you have all of the information you will need for use later on." caption-side="top"}
 
 ## Review the Terraform template
 {: #review_terraform_template}
@@ -266,7 +266,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
   ![](images/solution58-vmware-solutions-getting-started-hidden/internet-ssh.png)
 
-  This tutorial does not get into securing SSH, at minimum you should configure the VM to only use Public/Private keys. The VM deployed in this tutorial is CentIS and read up their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
+  This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH) documentation.
   {:tip}
 
   In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
