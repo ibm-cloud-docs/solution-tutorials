@@ -154,10 +154,10 @@ The [BookInfo application](https://istio.io/docs/examples/bookinfo/) displays in
 
 The Bookinfo application is broken into four separate microservices:
 
-* productpage. The productpage microservice calls the details and reviews microservices to populate the page.
-* details. The details microservice contains book information.
-* reviews. The reviews microservice contains book reviews. It also calls the ratings microservice.
-* ratings. The ratings microservice contains book ranking information that accompanies a book review.
+* **productpage**. The productpage microservice calls the details and reviews microservices to populate the page.
+* **details**. The details microservice contains book information.
+* **reviews**. The reviews microservice contains book reviews. It also calls the ratings microservice.
+* **ratings**. The ratings microservice contains book ranking information that accompanies a book review.
 
 There are 3 versions of the reviews microservice:
 
