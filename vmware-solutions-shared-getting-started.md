@@ -338,21 +338,28 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 5. Click Save changes.
 6. Scroll to the top of the page and click on **Generate Plan** to create the execution plan, review the logs and confirm it was successful.
 7. Click on **Apply plan**.
-8. Click on **View log** next to the current running plan to follow the logs. Confirm it completes with no errors. 
+8. Click on **View log** next to the current running plan to follow the logs. At the completion of the apply plan, confirm there are no errors and capture the information provided under the **Outputs** section. 
 
 ## Access deployed virtual machine and test 
 {: #access-vmware-solutions-shared}
 
-1. Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
-2. Click on the instance `vmware-tutorial` instance.
-3. Click on the **vCloud Director console** button found on the top right of the page.
-4. Click on **Virtual Machines** 
-5. On the card for the `vm-centos8-01` virtual machine, click on **Details** 
-6. Scroll down to **Guest OS Customization** and expand the section. Capture the password for the instance. 
-7. Back at the **Virtual Machines** page, click on **Actions**  and then **Launch Web Console**. 
-8. Login to the instance using the user `root` and the password captured above. You will be required to change the password. Change it to a password of your choice and proceed to login. 
-9. Test connectivity to the Internet by pinging known addresses on the Internet, i.e. `ping 8.8.8.8`. 
-10. Test connectivity to the IBM Cloud by pinging internal addresses, i.e. [IBM Cloud private DNS resolver endpoint](https://test.cloud.ibm.com/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
+1. Connect to the virtual machine with `ssh` using the user `root` and the password as shown in the logs above. You are required to change the password on the first login.
+
+    - If you did not allow_ssh as described under [Create a firewall rule to allow to SSH into the VM from the Internet](#create_ssh_rules), you can use the following steps instead to access the virtual machine.
+      - Navigate to the [{{site.data.keyword.vmwaresolutions_short}} Shared instances](https://{DomainName}/infrastructure/vmware-solutions/console/instances) page.
+      - Click on the instance `vmware-tutorial` instance.
+      - Click on the **vCloud Director console** button found on the top right of the page.
+      - Click on **Virtual Machines** 
+      - On the card for the `vm-centos8-01` virtual machine, click on **Details** 
+      - Scroll down to **Guest OS Customization** and expand the section. Capture the password for the instance. 
+      - Back at the **Virtual Machines** page, click on **Actions**  and then **Launch Web Console**. 
+      - Login to the instance using the user `root` and the password captured above. You will be required to change the password. Change it to a password of your choice and proceed to login.
+  {:tip}
+
+2. Test connectivity to the Internet by pinging known addresses on the Internet, i.e. `ping 8.8.8.8`. 
+3. Test connectivity to the IBM Cloud by pinging internal addresses, i.e. [IBM Cloud private DNS resolver endpoint](https://test.cloud.ibm.com/docs/vpc?topic=vpc-service-endpoints-for-vpc#dns-domain-name-system-resolver-endpoints) or [Ubuntu and Debian APT Mirrors](https://{DomainName}/docs/vpc?topic=vpc-service-endpoints-for-vpc#ubuntu-apt-mirrors).
+
+
 
 ## Remove resources
 {: #removeresources}
