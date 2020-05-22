@@ -356,7 +356,6 @@ You can create rules to allow or deny traffic, this section creates a rule to al
     - Scroll down to **Guest OS Customization** and expand the section. Capture the password for the instance. 
     - Back at the **Virtual Machines** page, click on **Actions**  and then **Launch Web Console**. 
     - Login to the instance using the user `root` and the password captured above. You will be required to change the password. Change it to a password of your choice and proceed to login.
-  {:tip}
 
 ## Remove resources
 {: #removeresources}
