@@ -339,7 +339,7 @@ A/B testing is a method of performing identical tests against two separate servi
    {:pre}
    Add `/productpage` to the end of the URL and you should only get the v1 of the BookInfo application - No stars for ratings
 
-4. To enable the Istio service mesh for A/B testing against the new service version, modify the original `VirtualService` rule to send only Firefox traffic to v2
+4. To enable the Istio service mesh for A/B testing against the new service version, modify the original `VirtualService` rule to send only Firefox traffic to v2. You may change the `user-agent` to any other installed browser on your machine
 
    ```sh
    cat <<EOF | oc replace -f -
@@ -367,7 +367,7 @@ A/B testing is a method of performing identical tests against two separate servi
    ```
    {:pre}
 
-   In Istio `VirtualService` rules, there can be only one rule for each service and therefore when defining multiple [HTTPRoute](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRoute) blocks, the order in which they are defined in the yaml matters. Hence, the original `VirtualService` rule is modified rather than creating a new rule. With the modified rule, incoming requests originating from `Firefox` browsers will go to the v2 version of bookinfo. All other requests fall-through to the next block, which routes all traffic to the v3 version of bookinfo.
+   In Istio `VirtualService` rules, there can be only one rule for each service and therefore when defining multiple [HTTPRoute](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRoute) blocks, the order in which they are defined in the yaml matters. Hence, the original `VirtualService` rule is modified rather than creating a new rule. With the modified rule, incoming requests originating from `Firefox` browsers will go to the v2 version(Black stars) of bookinfo. All other requests fall-through to the next block, which routes all traffic to the v3(Red Stars) version of bookinfo.
    {:tip}
 
 ### Canary deployment
@@ -401,7 +401,8 @@ Istio can secure the communication between microservices without requiring appli
    {:pre}
 2. Send more traffic to your application. Everything should still continue to work as expected.
 3. Launch Kiali again and go to the **Graph**
-4. Under Display, select **Security**. Confirm your traffic is secure.
+4. Under Display, select **Security**.
+5. To confirm your traffic is secure, you should see `mTLS enabled` with lock icon on the right pane.
 
 ## Enable SSL for traffic coming in to your cluster (HTTPS)
 {: #enable_https}
