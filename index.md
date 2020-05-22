@@ -103,7 +103,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
         display: -webkit-box !important;
         -webkit-line-clamp: 2 !important;
         -webkit-box-orient: vertical !important;
-        -webkit-box-align: inherit;
+        -webkit-box-align: inherit !important;
     }
     .solutionBoxDescription {
         flex-grow: 1 !important;
@@ -1017,7 +1017,7 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
             </h3>
             <div class="solutionBoxDescription">
                 <div class="descriptionContainer">
-                    <p>Create a network for Internet and IBM CLoud private access inside of a VMware virtual data center and deploy a virtual machine.</p>
+                    <p>Create a network for Internet and IBM Cloud private access inside of a VMware virtual data center and deploy a virtual machine.</p>
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution58-vmware-solutions-getting-started/Architecture.png" alt="Architecture diagram for the solution Getting Started with IBM Cloud for VMware Solutions Shared"/>
