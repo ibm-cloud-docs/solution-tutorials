@@ -735,7 +735,7 @@
           "imgSrc": ""
         },
         {
-          "name": "Coligo tutorial",
+          "name": "Image Classification with Coligo",
           "url": "coligo.hidden.html",
           "description": "provision a Coligo cluster and deploy an image processing application",
           "imgSrc": "images/solution54-coligo-hidden/architecture_diagram.png",
