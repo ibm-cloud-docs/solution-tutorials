@@ -163,7 +163,7 @@ To check the autoscaling capabilities of Coligo,
 ## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:connect_cloud_services}
 
-In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service. The backend service will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to analyze the images.
+In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service. The backend service will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to classify the images.
 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:#create_services}
@@ -233,11 +233,11 @@ Now that you have the backend application connected to the frontend application,
    ```
    {:pre}
 2. Test the app by uploading an image through the frontend UI
-   1. Click on **Choose an image...** and point to the image on your computer. You should see the preview of the image with a "Not Analyzed" tag on it.
+   1. Click on **Choose an image...** and point to the image on your computer. You should see the preview of the image with a 'Not Classified' tag on it.
    2. Click on **Upload Images** to store the image in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo`.
 3. Click on **Classify** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} `bucket/images` folder to {{site.data.keyword.visualrecognitionshort}} service for image classification. The result (JSON) from the {{site.data.keyword.visualrecognitionshort}} are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
-4. Upload multiple images to create individual jobs.
-5. Check the results of the processed images on the UI.
+4. Upload multiple images and test the application.
+5. Check the results of the classified images on the UI.
 
    If you are interested in checking the job details, run the command `ibmcloud coligo job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud coligo job get --name <JOBRUN_NAME>`. To check the logs, run the following command `ibmcloud coligo job logs --name <JOBRUN_NAME> `
    {:tip}
