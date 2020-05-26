@@ -367,7 +367,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
            name: cpu
            targetAverageUtilization: 1
    ```
-   {:pre}
+   {:codeblock}
 2. Hit **Create**.
 
 ### Test Autoscaler
