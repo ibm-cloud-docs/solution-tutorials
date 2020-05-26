@@ -20,12 +20,12 @@ lasttested: "2020-05-26"
 {:important: .important}
 {:note: .note}
 
-# Object detection with Coligo
+# Image classification with Coligo
 {: #coligo}
 
 > :warning: WORK-IN-PROGRESS
 
-In this tutorial, you will be learn about Coligo by deploying an object detection application. The application is made up of a frontend and a backend component. The frontend component is a web application that users will use to upload images. This web application will send the uploaded images to the backend component for processing. The backend will store the images into an object storage "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job task per image. A batch job is a collection of tasks where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another folder in the same bucket. And finally, the results of those scans will then be visible on the web application.
+In this tutorial, you will be learn about Coligo by deploying an image classification application. The application is made up of a frontend and a backend component. The frontend component is a web application that users will use to upload images. This web application will send the uploaded images to the backend component for processing. The backend will store the images into an {{site.data.keyword.cos_short}} "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job task per image. A batch job is a collection of tasks where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another folder in the same bucket. And finally, the results of those scans will then be visible on the web application.
 {:shortdesc}
 
 Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
@@ -148,10 +148,10 @@ To check the autoscaling capabilities of Coligo,
    {:tip}
 
 2. Run `ibmcloud coligo application get -n backend` command to check the application status. Copy the private endpoint (URL) from the output.
-3. The frontend application uses an environment variable to know where the backend application is hosted. You now need to modify the frontend application to set this value to point to the backend application's endpoint - make sure to use the value from the previous command
+3. The frontend application uses an environment variable(BACKEND_URL) to know where the backend application is hosted. You now need to modify the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command
    ```sh
    ibmcloud coligo application update --name frontend \
-   --env backend=backend.XXX.svc.cluster.local
+   --env BACKEND_URL=<BACKEND_PRIVATE_URL>
    ```
    {:pre}
 
@@ -223,7 +223,7 @@ Now, you will need to pass in the credentials for the services you just created 
 ## Testing the entire application
 {:testing_app}
 
-Now that you have the backend application connected to the frontend application, let's test it by uploading images for object detection,
+Now that you have the backend application connected to the frontend application, let's test it by uploading images for image classification,
 
 1. Before testing the application, let's create a secret for {{site.data.keyword.visualrecognitionshort}} service to be used with the jobs in the subsequent steps,
    ```sh
@@ -235,12 +235,51 @@ Now that you have the backend application connected to the frontend application,
 2. Test the app by uploading an image through the frontend UI
    1. Click on **Choose an image...** and point to the image on your computer. You should see the preview of the image with a "Not Analyzed" tag on it.
    2. Click on **Upload Images** to store the image in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo`.
-3. Click on **Analyze** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} bucket to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
+3. Click on **Classify** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} `bucket/images` folder to {{site.data.keyword.visualrecognitionshort}} service for image classification. The result (JSON) from the {{site.data.keyword.visualrecognitionshort}} are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
 4. Upload multiple images to create individual jobs.
 5. Check the results of the processed images on the UI.
 
-   If you are interested in checking the job details, run the command `ibmcloud coligo job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud coligo job get --name JOBRUN_NAME`
+   If you are interested in checking the job details, run the command `ibmcloud coligo job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud coligo job get --name <JOBRUN_NAME>`. To check the logs, run the following command `ibmcloud coligo job logs --name <JOBRUN_NAME> `
    {:tip}
+
+## Create a job definition and run a job
+{: #job}
+
+In this section, you will understand what happens under the hood once you click the **Classify** button in the UI, how a job definition created and used in a job run.
+
+Jobs in Coligo are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a Coligo application does.
+
+Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. Rather than specifying the full configuration of a job each time it is executed, you can create a `job definition` which acts as a "template" for the job.
+
+1. Go to the frontend UI and upload images for classification. Don't click on **Classify** yet.
+2. On a terminal, run the following command to create a job definition,
+   ```sh
+   ibmcloud coligo jobdef create --name backend-jobdef \
+   --image ibmcom/backend-job \
+   --env-from-secret cos-secret \
+   --env-from-secret vr-secret
+   ```
+   {:pre}
+3. With the following command, run a job using the jobdefinition created above
+   ```sh
+   ibmcloud coligo job run --name backend-job \
+   --jobdef backend-jobdef \
+   --image ibmcom/backend-job \
+   --arraysize 1 \
+   --retrylimit 2 \
+   --memory 128M \
+   --cpu 1
+   ```
+   {:pre}
+
+   When you run a job, you can override many of the variables that you set in the job definition. To check the variables, run `ibmcloud coligo job run --help`.
+   {:tip}
+4. In the frontend UI, click on **Classify** to see the results.
+5. To delete the job, run the below command
+   ```sh
+   ibmcloud coligo job delete --name backend-job
+   ```
+   {:pre}
 
 ## Remove resources
 {:#cleanup}
@@ -254,3 +293,6 @@ Now that you have the backend application connected to the frontend application,
 3. Delete the services you have created:
  * [{{site.data.keyword.cos_full}}](https://{DomainName}/catalog/services/cloud-object-storage)
  * [{{site.data.keyword.visualrecognitionfull}}](https://{DomainName}/catalog/services/visual-recognition)
+
+## Related resources
+{: #related_resources}
