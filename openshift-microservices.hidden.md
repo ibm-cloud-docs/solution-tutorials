@@ -27,7 +27,9 @@ This tutorial demonstrates the integration of [{{site.data.keyword.openshiftlong
 ## Objectives
 {: #objectives}
 
+<!--##istutorial#-->
 * Deploy an {{site.data.keyword.openshiftshort}} cluster
+<!--#/istutorial#-->
 * Deploy a microservice
 * Scale the microservice
 * Use an operator to deploy {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
@@ -108,7 +110,7 @@ Take a note of the resource group selected above.  This same resource group will
 The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and configure `oc` to point to the cluster assigned to you.
 
-1. When the cluster is ready click the button in the upper right corner to create a shell.
+1. When the cluster is ready click the button in the upper right corner to create a [shell](https://{DomainName}/shell).
 1. Initialize the `oc` command environment:
    ```sh
    ibmcloud oc cluster config -c mycluster --admin

@@ -748,7 +748,7 @@
         {
           "name": "Deploy microservices with Red Hat OpenShift",
           "url": "openshift-microservices.hidden.html",
-          "description": "Demonstrate the integration of Red Hat OpenShift in the IBM Cloud",
+          "description": "Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.",
           "imgSrc": "images/solution55-openshift-microservices-hidden/openshift-microservices.drawio.png",
           "tags": [
             "OpenShift",
