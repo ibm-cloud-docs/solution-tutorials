@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-20"
-lasttested: "2020-05-20"
+lastupdated: "2020-05-26"
+lasttested: "2020-05-26"
 
 ---
 
@@ -89,7 +89,7 @@ In this section, you will create a Coligo project. A project is a grouping of ap
    ibmcloud coligo target --name <PROJECT_NAME>
    ```
    {:pre}
-4. Set the KUBECONFIG environment variable to use `kubectl` with your project by running the `export KUBECONFIG` command displayed in the output above.
+4. Set the KUBECONFIG environment variable to use `kubectl` with your project by running the `export KUBECONFIG` command displayed from the output above.
 
 ## Deploy the frontend and backend apps as Coligo applications
 {: #deploy_app}
@@ -108,7 +108,7 @@ In this section, you will deploy your front-end web application to Coligo under 
     With just these two pieces of data, Coligo can deploy your application and it will handle all of the complexities of configuring it and managing it for you.
     {:tip}
 
-2. Run `ibmcloud coligo application get -n frontend` command to check the application status. Copy the URL from the output and open it in a browser to see an output as similar to this
+2. Run `ibmcloud coligo application get -n frontend` command to check the application status. Copy the URL from the output and open it in a browser to see an output similar to this
    ```
    Congratulations! Your Frontend is working
    Oops!! Looks like the Connection to the backend is failing. Time to add a backend
@@ -155,10 +155,10 @@ To check the autoscaling capabilities of Coligo,
    ```
    {:pre}
 
-   The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `application create` command for the frontend application as well if you knew its value at that time.
+   The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud coligo application create` command for the frontend application as well if you knew its value at that time.
    {:tip}
 
-4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Try uploading an image from your computer to detect objects, you should still see an error message as the backend is still not connected with the required services to store the image and process it.
+4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Try uploading an image from your computer to detect objects, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store the image and process it.
 
 ## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:connect_cloud_services}
@@ -206,58 +206,41 @@ Now, you will need to pass in the credentials for the services you just created 
 2. With the secrets and configmap defined, you can now update the backend service by asking Coligo to set environment variables in the runtime of the application based on the values in those resources.Update the backend application with the following command
    ```sh
    ibmcloud coligo application update --name backend \
-   --env-from secret:cos-secret \
-   --env-from configmap:cos-bucket-name
+   --env-from-secret cos-secret \
+   --env-from-configmap cos-bucket-name
    ```
    {:pre}
 
    Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
    {:tip}
 
-3. To verify whether the backend application is updated with the secret. You can run the below command and look for the "env" section
+3. To verify whether the backend application is updated with the secret and configmap. You can run the below command and look for the `Environment Variables` section
    ```sh
-   ibmcloud coligo application describe --name backend -o yaml
+   ibmcloud coligo application get --name backend --more-details
    ```
    {:pre}
 
 ## Testing the entire application
 {:testing_app}
 
-Now that you have the backend application connected to the frontend application, let's test it by uploading images for processing.
+Now that you have the backend application connected to the frontend application, let's test it by uploading images for object detection,
 
 1. Before testing the application, let's create a secret for {{site.data.keyword.visualrecognitionshort}} service to be used with the jobs in the subsequent steps,
    ```sh
    ibmcloud coligo secret create --name vr-secret \
-   --from-literal=api-key=VISUAL_RECOGNITION_APIKEY \
-   --from-literal=url=VISUAL_RECOGNITION_URL
+   --from-literal=VR_APIKEY=<VISUAL_RECOGNITION_APIKEY> \
+   --from-literal=VR_URL=<VISUAL_RECOGNITION_URL>
    ```
    {:pre}
 2. Test the app by uploading an image through the frontend UI
    1. Click on **Choose an image...** and point to the image on your computer. You should see the preview of the image with a "Not Analyzed" tag on it.
    2. Click on **Upload Images** to store the image in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo`.
 3. Click on **Analyze** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} bucket to {{site.data.keyword.visualrecognitionshort}} service for object detection. The results are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
-4. Upload multiple images to create individual jobs. Each job retrieves a single image to process from the bucket.
+4. Upload multiple images to create individual jobs.
 5. Check the results of the processed images on the UI.
 
    If you are interested in checking the job details, run the command `ibmcloud coligo job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud coligo job get --name JOBRUN_NAME`
    {:tip}
-
-<!--## Build your own container image and push it to {{site.data.keyword.registrylong_notm}}
-{:#container_image_registry}
-
-> Optional step
-
-In this section, you will build your own container image from the source code and store the image in a private registry - {{site.data.keyword.registrylong_notm}}
-
-1. If you wish to build your own container image from source code, run the below command
-    - If `ibmcloud coligo CLI` provides a way to build a container from the source code, we can mention that here or use Tekton pipelines
-    - Or we can talk about Kaniko, Buildkit, Jib, Skaffold etc., to build the container image from source code.
-    - Or follow the usual Dockerfile create flow
-2. With Coligo, I am assuming something like this (internally using any of the methods above)
-   ```sh
-   ibmcloud coligo service frontend --source https://github.com/test/nodeapp.git
-   ```
-   {:pre}-->
 
 ## Remove resources
 {:#cleanup}
