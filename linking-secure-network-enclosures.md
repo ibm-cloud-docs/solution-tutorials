@@ -47,7 +47,7 @@ This tutorial might incur costs. The VRA is only available on a monthly pricing 
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution43-vlan-spanning/vlan-spanning.png)
+  ![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png)
 </p>
 
 

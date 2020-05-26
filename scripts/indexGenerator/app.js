@@ -20,12 +20,7 @@ Handlebars.registerHelper('tocLink', function(solution, options) {
 });
 
 Handlebars.registerHelper('htmlLink', function(solution, options) {
-  if (helper.isExternalSolution(solution)) {
-    return solution.url;
-  } else {
-    const topic = solution.url.substring(0, solution.url.indexOf('.'));
-    return `/docs/tutorials?topic=solution-tutorials-${topic}#${topic}`;
-  }
+  return helper.htmlLink(solution);
 });
 
 Handlebars.registerHelper('hasTag', function( solution, tag, options) {

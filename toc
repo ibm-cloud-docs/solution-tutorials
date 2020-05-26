@@ -1,7 +1,7 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="solution-tutorials" audience="platform" category="platform_services" arm="4086992" href="/docs/tutorials?topic=solution-tutorials-tutorials#tutorials" path="tutorials"}
+{: .toc subcollection="solution-tutorials" audience="platform" category="platform_services" arm="4086992" href="/docs/solution-tutorials?topic=solution-tutorials-tutorials" path="solution-tutorials"}
 Solution Tutorials
 
     {: .navgroup id="learn"}
@@ -64,9 +64,8 @@ Solution Tutorials
     Work In Progress
         solution-template.md
         coligo.hidden.md
-        openshift-ibm-cloud.hidden.md
+        openshift-microservices.hidden.md
         istio-openshift.hidden.md
-        vmware-solutions-shared-getting-started.hidden.md
 
     {: .topicgroup}
     Identity and Access Management
@@ -89,6 +88,10 @@ Solution Tutorials
         configuring-IPSEC-VPN.md
         linking-secure-network-enclosures.md
         web-app-private-network.md
+
+    {: .topicgroup}
+    VMware Solutions
+        vmware-solutions-shared-getting-started.md
     {: .navgroup-end}
     
     {: .navgroup id="howto"}
@@ -111,7 +114,7 @@ Solution Tutorials
     {: .topicgroup}
     OpenShift
         scalable-webapp-openshift.md
-        openshift-ibm-cloud.hidden.md
+        openshift-microservices.hidden.md
         istio-openshift.hidden.md
 
     {: .topicgroup}

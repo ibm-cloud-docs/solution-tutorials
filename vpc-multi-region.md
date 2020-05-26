@@ -290,13 +290,13 @@ This first alternative creates a wildcard certificate for **mydomain.com** and t
 1. Order a certficate in {{site.data.keyword.cloudcerts_short}}
    - Open the {{site.data.keyword.cloudcerts_short}} service and select **Order certificate** on the left.
    - Click **IBM Cloud Internet Services (CIS)** then **Continue**
-   - On the **Order certificated** the **Certificate details** panel is displayed
+   - The **Certificate details** panel is displayed
      - **Name** - choose a name you can remember to reference this certificate in a later step
      - **Description** - more text
      - **Certificate authority** choose  **Let's Encrypt**
      - Leave the defaults for **Signature algorithm**, **Key algorithm**
      - **Automatic certificate renewel** - leave off
-   - On the **Order certificateProvide** select the **Domains** panel
+   - Switch to the **Domains** panel
      - **IBM Cloud Internet Services (CIS) instance** choose your instance
      - **Certificate domains** check the **Add Wildccard** and leave **Add Domain** unchecked
    - Click Order
@@ -314,7 +314,7 @@ Add an HTTPS listener to the VPC load balancers:
 1. Navigate to **VPC** then **Load balancers** and click **vpc-lb-region1**
 1. Choose **Front-end listeners**
 1. Click **New listener**
-1. Select HTTPS, Port: 443, SSL Certificate drop down should show the certificate **name** that you ordered using your {{site.data.keyword.cloudcerts_short}} instance earlier from Let's Encrypt.
+1. Select HTTPS, Port: 443. The SSL Certificate drop down should show the certificate **name** that you ordered using your {{site.data.keyword.cloudcerts_short}} instance earlier from Let's Encrypt.
 
 
 If the SSL Certificate drop down does not have **mydomain.com** you may have missed the authorization step above that gives the VPC load balancer access to the {{site.data.keyword.cloudcerts_short}} service. Verify that the {{site.data.keyword.cloudcerts_short}} service has a certificate for **mydomain.com**
@@ -371,7 +371,7 @@ It is not currently possible to order a certificate directly for a {{site.data.k
    - Notice that lb.mydomain.com has been added to the Order summary
    - Click **Order**
 
-1. Back in your {{site.data.keyword.cis_short_notm}} service delete the CNAME lb.mydomain.com DNS record you created in the **Global Load Balancers** under **Reliability** and **DNS**.
+1. Back in your {{site.data.keyword.cis_short_notm}} service delete the CNAME lb.mydomain.com DNS record you created in the **Global Load Balancers** under **Reliability** > **DNS**.
 
 
 Create a HTTPS listener:

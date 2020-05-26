@@ -21,6 +21,6 @@ exports.htmlLink = function(solution) {
     return solution.url;
   } else {
     const topic = solution.url.substring(0, solution.url.indexOf('.'));
-    return `/docs/tutorials?topic=solution-tutorials-${topic}#${topic}`;
+    return `/docs/solution-tutorials?topic=solution-tutorials-${topic}#${topic}`;
   }
 }

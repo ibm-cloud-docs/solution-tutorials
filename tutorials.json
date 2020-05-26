@@ -475,7 +475,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-04-27"
+          "lastUpdated": "2020-05-07"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",
@@ -685,6 +685,22 @@
             "Virtual Router Appliance VPN"
           ],
           "lastUpdated": "2019-03-07"
+        }
+      ]
+    },
+    {
+      "name": "VMware Solutions",
+      "anchor": "vmware",
+      "solutions": [
+        {
+          "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "url": "vmware-solutions-shared-getting-started.html",
+          "description": "Create a network for Internet and IBM Cloud private access inside of a VMware virtual data center and deploy a virtual machine.",
+          "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
+          "tags": [
+            "VMware"
+          ],
+          "lastUpdated": "2020-05-22"
         }
       ]
     }

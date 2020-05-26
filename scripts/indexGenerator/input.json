@@ -735,9 +735,9 @@
           "imgSrc": ""
         },
         {
-          "name": "Coligo tutorial",
+          "name": "Image Classification with Coligo",
           "url": "coligo.hidden.html",
-          "description": "provision a Coligo cluster and deploy an image processing application",
+          "description": "Provision a Coligo cluster and deploy an image processing application",
           "imgSrc": "images/solution54-coligo-hidden/architecture_diagram.png",
           "tags": [
             "Coligo",
@@ -746,10 +746,10 @@
           ]
         },
         {
-          "name": "Red Hat OpenShift on IBM Cloud",
-          "url": "openshift-ibm-cloud.hidden.html",
-          "description": "Demonstrates the integration of Red Hat OpenShift on IBM Cloud in the IBM Cloud",
-          "imgSrc": "images/solution55-openshift-ibm-cloud-hidden/openshift-ibm-cloud.drawio.png",
+          "name": "Deploy microservices with Red Hat OpenShift",
+          "url": "openshift-microservices.hidden.html",
+          "description": "Demonstrate the integration of Red Hat OpenShift in the IBM Cloud",
+          "imgSrc": "images/solution55-openshift-microservices-hidden/openshift-microservices.drawio.png",
           "tags": [
             "OpenShift",
             "Log Analysis",
@@ -775,19 +775,6 @@
           "requirements": [
             "openshift_on_ibm_cloud",
             "istio"
-          ]
-        },
-        {
-          "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
-          "url": "vmware-solutions-shared-getting-started.hidden.html",
-          "description": "Getting Started with IBM Cloud for VMware Solutions Shared",
-          "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
-          "tags": [
-            "VMware"
-          ],
-          "requirements": [
-            "vmware",
-            "schematics"
           ]
         }
       ]
@@ -1019,6 +1006,25 @@
             "vlan_spanning"
           ],
           "supportsCloudShell": "not_applicable"
+        }
+      ]
+    },
+    {
+      "name": "VMware Solutions",
+      "anchor": "vmware",
+      "solutions": [
+        {
+          "name": "Getting Started with IBM Cloud for VMware Solutions Shared",
+          "url": "vmware-solutions-shared-getting-started.html",
+          "description": "Create a network for Internet and IBM Cloud private access inside of a VMware virtual data center and deploy a virtual machine.",
+          "imgSrc": "images/solution58-vmware-solutions-getting-started/Architecture.png",
+          "tags": [
+            "VMware"
+          ],
+          "requirements": [
+            "vmware",
+            "schematics"
+          ]
         }
       ]
     }
