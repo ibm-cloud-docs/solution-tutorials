@@ -64,7 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 1. User creates a Coligo project and deploys a frontend and a backend Coligo application.
 2. User connects the frontend(UI) app to the backend by modifying the frontend application to set an environment variable value to point to the backend application's endpoint.
-3. User provisions the required cloud services and binds them to the backend application.
+3. User provisions the required cloud services and binds them to the backend application and jobs by creating secrets and configmap.
 4. User uploads an image(s) via the frontend app that is stored in {{site.data.keyword.cos_short}}.
 5. User clicks Classify on the UI that runs a Coligo job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app.
 
