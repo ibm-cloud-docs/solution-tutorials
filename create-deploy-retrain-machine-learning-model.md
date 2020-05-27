@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-05-07"
+lastupdated: "2020-05-27"
 lasttested: "2020-05-07"
 ---
 
@@ -170,7 +170,6 @@ In this section, you will deploy the saved model and test the deployed model,
       }]
     }
    ```
-   {:pre}
 2. Click **Predict** and you should see the **Predictions** JSON output.
 3. You can change the input data and continue testing your model.
 
@@ -298,7 +297,7 @@ Provide information about your model so that {{site.data.keyword.aios_full_notm}
    5. Copy and paste the credentials without any trailing spaces and click **Connect**
    6. Select the Bucket that starts with `irisproject-donotdelete-`
    7. Select `iris_initial.csv` from the Data set dropdown and click **Next**
-3. Select **JSON payload** as the Scoring method and replace the request and response in the payload with the below snippet
+3. Select **JSON payload** as the Scoring method and **replace** the request and response in the payload with the below snippet
    ```json
    "request":  {"fields": ["sepal_length", "sepal_width",
                            "petal_length", "petal_width"], "values": [[5.1,3.5,1.4,0.2]]},
