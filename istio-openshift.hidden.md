@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-22"
-lasttested: "2020-05-22"
+lastupdated: "2020-05-27"
+lasttested: "2020-05-27"
 ---
 
 {:shortdesc: .shortdesc}
@@ -131,7 +131,7 @@ The Red Hat {{site.data.keyword.openshiftshort}} Service Mesh operator uses a `S
 3.  Navigate to **Operators** and click **Installed Operators**
 4.  Select `istio-system` from the Project menu on the top bar.
 5.  Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**. If you don't see it, wait a couple of minutes and refresh.
-6.  Under **Istio Service Mesh Control Plane** click **Create Instance**.
+6.  Under **Istio Service Mesh Control Plane**,click **Create Instance**.
 7.  Then, click **Create**. The Operator creates Pods, services, and Service Mesh control plane components based on your configuration parameters.
 
 ### Create a ServiceMeshMemberRoll
@@ -140,10 +140,9 @@ ServiceMeshMemberRoll resource is used to to specify the namespaces associated w
 
 1. Navigate to **Operators** → **Installed Operators** again.
 2. Click the **Red Hat {{site.data.keyword.openshiftshort}} Service Mesh Operator**.
-3. In the tab area, scroll to the right to find **Istio Service Mesh Member Roll**
-4. Click **Create Instance**
-5. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).
-6. Then, click **Create**.
+3. Under **Istio Service Mesh Member Roll**,click **Create Instance**
+4. Change `your-project` to `bookinfo` and delete the last line(`-another-of-your-projects`).
+5. Then, click **Create**.
 
 You successfully installed Istio into your cluster.
 
@@ -171,7 +170,7 @@ The end-to-end architecture of the application is shown below.
 
 Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
 
-1.  From your **IBM Cloud Shell**, create a project called "bookinfo" with `oc new-project` command
+1.  From your **{{site.data.keyword.Bluemix_notm}} Shell**, create a project called "bookinfo" with `oc new-project` command
 
     ```sh
     oc new-project bookinfo
@@ -181,29 +180,19 @@ Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy si
     In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
     {:tip}
 
-2.  Clone the Istio repository that includes the Bookinfo sample
+2.  Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.openshiftshort}} cluster. This deploys both the v1 and v2 versions of the app,
 
     ```sh
-    git clone https://github.com/Maistra/istio
-    cd istio/samples/bookinfo/platform/kube
-    ```
-    {:pre}
-
-    You can check the contents of any YAML file by running `cat <FILENAME_WITH_EXTENSION>` command in the Shell.
-
-3.  Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.openshiftshort}} cluster. This deploys both the v1 and v2 versions of the app,
-
-    ```sh
-    oc apply -f bookinfo.yaml
+    oc apply -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/platform/kube/bookinfo.yaml
     ```
     {:pre}
 
     The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster.
 
-    By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
+    An installation of Red Hat {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_arch/ossm-vs-community.html) comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
     {:tip}
 
-4.  Verify that the pods are up and running.
+3.  Verify that the pods are up and running.
 
     ```sh
     oc get pods
@@ -237,8 +226,7 @@ An Ingress Gateway resource can be created to allow external requests through th
 1. Configure the bookinfo default route with the Istio Ingress Gateway.
 
    ```sh
-   cd ../../networking
-   oc create -f bookinfo-gateway.yaml
+   oc create -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/networking/bookinfo-gateway.yaml
    ```
    {:pre}
 
@@ -271,9 +259,9 @@ Grafana allows you to query, visualize, alert on and understand your metrics no 
    1. On the left pane, under **Networking**, click on **Routes**
    2. Select Project: **istio-system** from the top bar
    3. Click the URL(Location) next to **grafana**
-   4. Log into OpenShift and provide the required access to see the Grafana dashboard.
+   4. Log into OpenShift and allow the requested permissions to see the Grafana dashboard.
 2. Click on **Home** ,then **Istio** and **Istio Service Dashboard**.
-3. Select `bookinfo` in the Service drop down.
+3. Select `productpage.bookinfo.svc.cluster.local` in the **Service** drop down.
 4. Open your {{site.data.keyword.Bluemix_notm}} Shell tab/window and generate a small load to the app by sending traffic to the Ingress host location you set in the last section.
 
    ```sh
@@ -314,7 +302,7 @@ A/B testing is a method of performing identical tests against two separate servi
 1. Run the following command to create default destination rules for the Bookinfo services,
 
    ```sh
-   oc create -f destination-rule-all.yaml
+   oc create -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/networking/destination-rule-all.yaml
    ```
    {:pre}
 
@@ -324,7 +312,7 @@ A/B testing is a method of performing identical tests against two separate servi
 2. A VirtualService defines a set of traffic routing rules to apply when a host is addressed. Each routing rule defines matching criteria for traffic of a specific protocol. If the traffic is matched, then it is sent to a named destination service (or subset/version of it) defined in the registry. Run the below command to send all reviews traffic to v1
 
    ```sh
-   oc create -f virtual-service-all-v1.yaml
+   oc create -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/networking/virtual-service-all-v1.yaml
    ```
    {:pre}
 
@@ -376,7 +364,7 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
 1. Run the below command to send 80% of traffic to v1,
 
    ```sh
-   oc replace -f virtual-service-reviews-80-20.yaml
+   oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/networking/virtual-service-reviews-80-20.yaml
    ```
    {:pre}
    In the modified rule, the routed traffic is split between two different subsets of the reviews microservice. In this manner, traffic to the modernized version 2 of reviews is controlled on a percentage basis to limit the impact of any unforeseen bugs. This rule can be modified over time until eventually all traffic is directed to the newer version of the service.
@@ -385,7 +373,7 @@ In Canary Deployments, newer versions of services are incrementally rolled out t
 2. View the bookinfo application using the `$INGRESS_HOST` and enter it as a URL in Firefox or Chrome web browsers. **Ensure that you are using a hard refresh (command + Shift + R on Mac or Ctrl + F5 on windows) to remove any browser caching.** You should notice that the bookinfo application should swap between V1 or V2 at about the weight you specified.
 3. To route all traffic to reviews v3,
    ```sh
-   oc replace -f virtual-service-reviews-v3.yaml
+   oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/networking/virtual-service-reviews-v3.yaml
    ```
    {:pre}
 
@@ -396,13 +384,14 @@ Istio can secure the communication between microservices without requiring appli
 
 1.  To configure mTLS, you need to modify your previous destination rules to use `ISTIO_MUTUAL`.
    ```sh
-   oc replace -f destination-rule-all-mtls.yaml
+   oc replace -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/networking/destination-rule-all-mtls.yaml
    ```
    {:pre}
 2. Send more traffic to your application. Everything should still continue to work as expected.
-3. Launch Kiali again and go to the **Graph**
-4. Under Display, select **Security**.
-5. To confirm your traffic is secure, you should see `mTLS enabled` with lock icon on the right pane.
+3. Launch **Kiali** again and go to **Graph**.
+4. Select `bookinfo` from the top **Namespace** bar.
+5. Under Display, select **Security**. You should see **lock** icon on all the arrows(traffic).
+6. To confirm your traffic is secure, click on the arrow from `productpage` to `v1` and you should see `mTLS Enabled` with lock icon on the right pane.
 
 ## Enable SSL for traffic coming in to your cluster (HTTPS)
 {: #enable_https}
