@@ -82,7 +82,7 @@ In this section, you will provision a {{site.data.keyword.openshiftshort}} clust
    - Select a **Geography**
    - Select **Single zone** as **Availability**
    - Choose a **Worker zone**
-5. Under **Worker pools**:
+5. Under **Worker pool**:
    - Select **4 vCPUs 16GB Memory** as the flavor
    - Select **2** Worker nodes per data center for this tutorial and Leave **Encrypt local disk** On
 6. Review **Infrastructure permissions checker** to verify the required permissions.
