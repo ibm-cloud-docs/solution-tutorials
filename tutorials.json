@@ -101,6 +101,19 @@
           "lastUpdated": "2020-05-13"
         },
         {
+          "name": "Service Mesh on OpenShift",
+          "url": "openshift-service-mesh.html",
+          "description": "Install Red Hat OpenShift Service Mesh alongside microservices for a sample app called BookInfo in a Red Hat OpenShift on IBM Cloud cluster.",
+          "imgSrc": "images/solution57-openshift-service-mesh/Architecture.png",
+          "tags": [
+            "OpenShift",
+            "Service Mesh",
+            "Istio",
+            "Telemetry"
+          ],
+          "lastUpdated": "2020-05-27"
+        },
+        {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
           "url": "static-files-cdn.html?pos=2",
           "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
@@ -475,7 +488,7 @@
             "Cloud Object Storage",
             "Db2 Warehouse"
           ],
-          "lastUpdated": "2020-05-07"
+          "lastUpdated": "2020-05-27"
         },
         {
           "name": "Analyze and visualize open data with Apache Spark",

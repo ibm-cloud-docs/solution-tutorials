@@ -139,6 +139,21 @@
           "supportsCloudShell": false
         },
         {
+          "name": "Service Mesh on OpenShift",
+          "url": "openshift-service-mesh.html",
+          "description": "Install Red Hat OpenShift Service Mesh alongside microservices for a sample app called BookInfo in a Red Hat OpenShift on IBM Cloud cluster.",
+          "imgSrc": "images/solution57-openshift-service-mesh/Architecture.png",
+          "tags": [
+            "OpenShift",
+            "Service Mesh",
+            "Istio",
+            "Telemetry"
+          ],
+          "requirements": [
+            "openshift_on_ibm_cloud"
+          ]
+        },
+        {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
           "url": "static-files-cdn.html?pos=2",
           "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
@@ -760,21 +775,6 @@
             "docker",
             "logdna",
             "sysdig"
-          ]
-        },
-        {
-          "name": "Istio on OpenShift",
-          "url": "istio-openshift.hidden.html",
-          "description": "Istio on Red Hat OpenShift",
-          "imgSrc": "images/solution57-istio-openshift-hidden/Architecture.png",
-          "tags": [
-            "OpenShift",
-            "Istio",
-            "Telemetry"
-          ],
-          "requirements": [
-            "openshift_on_ibm_cloud",
-            "istio"
           ]
         }
       ]

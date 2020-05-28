@@ -15,6 +15,7 @@ Solution Tutorials
         strategies-for-resilient-applications.md
         continuous-deployment-to-kubernetes.md
         scalable-webapp-openshift.md
+        openshift-service-mesh.md
         static-files-cdn.md
         dynamic-content-cdn.md
         pub-sub-object-storage.md
@@ -106,6 +107,7 @@ Solution Tutorials
     {: .topicgroup}
     OpenShift
         scalable-webapp-openshift.md
+        openshift-service-mesh.md
 
     {: .topicgroup}
     Cloud Foundry
