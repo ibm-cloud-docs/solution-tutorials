@@ -121,7 +121,7 @@ In this section, you will deploy your front-end web application to Coligo under 
    ```
 3. For secured browsing, you can also browse the application with `HTTPS`.
 
-  <!--> For troubleshooting and to display logs of your application, run the command `ibmcloud coligo application logs --name frontend`
+  <!-- For troubleshooting and to display logs of your application, run the command `ibmcloud coligo application logs --name frontend`
    {:tip}-->
 <!--4. List the pods of the service and notice that it has a running pod
    ```sh
