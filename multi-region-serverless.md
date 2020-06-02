@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2019
-lastupdated: "2019-10-09"
-lasttested: "2019-10-09"
+  years: 2018, 2019, 2020
+lastupdated: "2020-06-02"
+lasttested: "2020-06-02"
 ---
 
 {:java: #java .ph data-hd-programlang='java'}
@@ -78,12 +78,31 @@ The first step is to create an instance of {{site.data.keyword.cis_full_notm}} (
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {:tip}
 
-### Request a certificate using {{site.data.keyword.cloudcerts_short}} and a custom sample code
+### Create a {{site.data.keyword.cloudcerts_short}} instance and verify ownership of your domain.
 
-1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location.
-1. Use the [code sample](https://github.com/ibm-cloud-security/certificate-manager-domain-validation-cloud-function-sample) and included instructions to request and import a certificate using {{site.data.keyword.openwhisk_short}} for a domain maintained by {{site.data.keyword.cis_full_notm}}. The code sample can be deployed using similar steps as provided below.
+1. Create a [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/catalog/services/cloudcerts) instance in a supported location by providing a service name and resource group.
+2. Before a certificate can be issued to you, {{site.data.keyword.cloudcerts_short}} must verify that you control all of the domains that you list in your request. To do so, {{site.data.keyword.cloudcerts_short}}uses DNS validation. Complete the following steps to verify ownership of your domains in Internet Services (CIS),
+   1. Click **Manage** on the top bar and then **Access (IAM)** > Authorizations.
+   2. Click Create and assign a source and target service. The source service is granted access to the target service based on the roles that you set in the next step.
+     - Source service: {{site.data.keyword.cloudcerts_short}} in **Account**
+     - Target Service: Internet Services in **Account**
+   3. Specify a service instance for both the source and the target.
+   4. Assign the **Reader** role to allow {{site.data.keyword.cloudcerts_short}} to view the CIS instance and its domains.
+   5. Click **Authorize**.
 
-For secured connection, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/) as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates) or through [{{site.data.keyword.cloudcerts_long}}](https://{DomainName}/docs/services/certificate-manager?topic=certificate-manager-ordering-certificates).
+### Order a certificate
+
+1. Navigate to your [Resource list](https://{DomainName}/resources) and under **Services**, click on name of the **{{site.data.keyword.cloudcerts_short}}** service your created.
+2. Under **Your certificates**, click on **Order**.
+3. Click on **Continue** under {{site.data.keyword.cis_full_notm}}(CIS) tile.
+4. Provide a certificate name under **Certificate details**, select **Let's Encrypt** as the certificate authority and you may change the Key algorithm if you wish to.
+5. Under **Domains** tab,
+   1. Select the {{site.data.keyword.cis_full_notm}} instance you've assigned a service access role for
+   2. Select the domain(s) and/or subdomain(s)
+   3. Select the certificate Common Name in the Order summary
+6. Click **Order**.
+
+For renewing certificates, check the documentation [here](/docs/certificate-manager?topic=certificate-manager-ordering-certificates#renew-certificate)
 {: tip}
 
 ## Deploy actions in multiple locations
