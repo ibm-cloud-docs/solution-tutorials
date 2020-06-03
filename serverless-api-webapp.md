@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2020-06-02"
-lasttested: "2020-06-02"
+lastupdated: "2020-06-03"
+lasttested: "2020-06-03"
 ---
 
 {:shortdesc: .shortdesc}
@@ -138,17 +138,14 @@ Now, add the second action to that sequence:
 3. Create a **New Binding** and complete the form as follows:
    1. Set **Name** to `binding-for-guestbook`.
    2. For **Instance** select your instance, for the credentials **for-guestbook** as created earlier, and as **Database** pick **guestbook**.
-4. Click **Add**.
-5. To test it, click on **Invoke with parameters** and enter the JSON below
+4. Click **Add**, thereafter **Save**.
+5. To test the entire sequence, click on **Invoke with parameters** and enter the JSON below
    ```json
-   { 
-      "doc": 
       {
         "name": "John Smith",
         "email": "john@smith.com",
         "comment": "this is my comment"
       }
-   }
    ```
    {: codeblock}
 6. Click **Invoke**.
