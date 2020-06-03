@@ -22,7 +22,7 @@ lasttested: "2020-05-16"
 # Deploy microservices with {{site.data.keyword.openshiftlong_notm}}
 {: #openshift-microservices}
 
-This tutorial demonstrates the integration of [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster) in the IBM Cloud.  The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to deploy software applications and for System Administrators to scale and observe the applications in production.
+This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to deploy software applications and for System Administrators to scale and observe the applications in production.
 
 ## Objectives
 {: #objectives}
@@ -75,14 +75,14 @@ With {{site.data.keyword.openshiftshort}}, you have a fast and secure way to con
 In this section, you will provision a {{site.data.keyword.openshiftshort}} cluster with two worker nodes.
 
 1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](https://{DomainName}/kubernetes/catalog/create?platformType=openshift).
-2. Set the **Orchestration service** to **the Latest,Default version of OpenShift**.
-3. Select **Purchase additional licenses for this worker pool** as your OCP entitlement.
+2. Set the **Orchestration service** to **the Latest, Default version of OpenShift**.
+3. Select your OCP entitlement.
 4. Under **Location**:
    - Select a **Resource group**
    - Select a **Geography**
    - Select **Single zone** as **Availability**
    - Choose a **Worker zone**
-5. Under **Worker pools**:
+5. Under **Worker pool**:
    - Select **4 vCPUs 16GB Memory** as the flavor
    - Select **2** Worker nodes per data center for this tutorial and Leave **Encrypt local disk** On
 6. Review **Infrastructure permissions checker** to verify the required permissions.
@@ -261,10 +261,6 @@ Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](h
 
 1. Get started by switching from the **Developer** perspective to the **Administrator** perspective:
 2. Navigate to **Monitoring > Dashboards** in the left-hand bar. You'll be asked to login with {{site.data.keyword.openshiftshort}} and then click through some permissions.
-   <p style="height: 50%;">
-
-   ![Monitoring Dashboards](images/solution55-openshift-microservices-hidden/ocp43-monitoring-dashboard.png)
-   </p>
 3. You should then see your Grafana dashboard. Hit **Home** on the top left, and choose **Kubernetes / Compute Resources / Namespace (Pods)**.
 4. For the **Namespace** field, choose `example-health` which is the name of the project your app resides in.
 5. Notice the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day.  Auto-scaling is one way to handle fluctuations and will be demonstrated a little later.

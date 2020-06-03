@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-05-26"
+lastupdated: "2020-06-03"
 lasttested: "2020-05-26"
 
 ---
@@ -25,7 +25,7 @@ lasttested: "2020-05-26"
 
 > :warning: WORK-IN-PROGRESS
 
-In this tutorial, you will be learn about Coligo by deploying an image classification application. The application is made up of a frontend and a backend component. The frontend component is a web application that users will use to upload images. This web application will send the uploaded images to the backend component for processing. The backend will store the images into an {{site.data.keyword.cos_short}} "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job task per image. A batch job is a collection of tasks where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another folder in the same bucket. And finally, the results of those scans will then be visible on the web application.
+In this tutorial, you will learn about Coligo by deploying an image classification application. The application is made up of a frontend and a backend component. The frontend component is a web application that users will use to upload images. This web application will send the uploaded images to the backend component for processing. The backend will store the images into an {{site.data.keyword.cos_short}} "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job task per image. A batch job is a collection of tasks where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another folder in the same bucket. And finally, the results of those scans will then be visible on the web application.
 {:shortdesc}
 
 Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
@@ -62,12 +62,18 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
   ![Architecture](images/solution54-coligo-hidden/architecture_diagram.png)
 </p>
 
+1. Developer creates a Coligo project and deploys a frontend and a backend Coligo application.
+2. Developer connects the frontend(UI) app to the backend by modifying the frontend application to set an environment variable value to point to the backend application's endpoint.
+3. Developer provisions the required cloud services and binds them to the backend application and jobs by creating secrets and configmap.
+4. User uploads an image(s) via the frontend app that is stored in {{site.data.keyword.cos_short}}.
+5. User clicks Classify on the UI that runs a Coligo job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app.
+
 ## Before you begin
 {: #prereqs}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * Coligo plugin (`coligo/cli`),
+   * Coligo plugin (`coligo`),
 * `kubectl` to interact with Kubernetes clusters,
 
 <!--##istutorial#-->
@@ -115,8 +121,8 @@ In this section, you will deploy your front-end web application to Coligo under 
    ```
 3. For secured browsing, you can also browse the application with `HTTPS`.
 
-   For troubleshooting and to display logs of your application, run the command `ibmcloud coligo application logs --name frontend`
-   {:tip}
+  <!-- For troubleshooting and to display logs of your application, run the command `ibmcloud coligo application logs --name frontend`
+   {:tip}-->
 <!--4. List the pods of the service and notice that it has a running pod
    ```sh
    kubectl get pods --watch
@@ -158,7 +164,7 @@ To check the autoscaling capabilities of Coligo,
    The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud coligo application create` command for the frontend application as well if you knew its value at that time.
    {:tip}
 
-4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Try uploading an image from your computer to detect objects, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store the image and process it.
+4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Choose an image from your computer to see a **preview** of the image with `Not classified` tag. Try uploading the image by clicking on **Upload files**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store the image and process it.
 
 ## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:connect_cloud_services}
@@ -172,20 +178,29 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
    2. Set **Service name** to **coligo-cos** and select a resource group.
    3. Click on **Create**.
-2. Under **Service Credentials**, create new credential and select **Include HMAC Credential**. Click **Add** and save the credentials for future reference
-3. Create a **Standard** bucket named `<your-initials>-coligo` with **Cross Region** resiliency.
-4. Under **Endpoint**, find the **private** endpoint to access your bucket and save the endpoint for quick reference.
-5. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
+2. Under **Service Credentials**, click on **New credential**
+    1. Give it a name - `for-coligo` and select **Writer** as the role
+    2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**
+    3. Click **Add**.
+    4. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.
+3. Create a **Custom** bucket named `<your-initials>-coligo`,
+   1. Select **Cross Region** resiliency
+   2. Select a Location preferably `Dallas`
+   3. Select a **Standard** storage class for high performance and low latency.
+   4. Click **Create bucket**
+4. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
+5.  Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
+6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **coligo-vr** and select a resource group.
    3. Click on **Create**.
-6. Under **Service Credentials**, Expand the newly created credentials and **save** the credentials for quick reference. If you don't see auto-generated credentials, create a **New credential**.
+7. Under **Service Credentials**, Expand the newly created credentials and **save** the credentials for quick reference. If you don't see auto-generated credentials, create a **New credential**.
 
 ### Bind the services to the backend service
 
 Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by storing the credentials into "secrets", and then asking the Coligo runtime to make them available to the application via environment variables.
 
-1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials and a configmap to hold the bucket name,
+1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials you saved earlier while creating the {{site.data.keyword.cos_short}} service and a configmap to hold the bucket name - `<your-initials>-coligo`,
    ```sh
    ibmcloud coligo secret create --name cos-secret \
    --from-literal=COS_ENDPOINT=<COS_ENDPOINT> \
@@ -220,8 +235,8 @@ Now, you will need to pass in the credentials for the services you just created 
    ```
    {:pre}
 
-## Testing the entire application
-{:testing_app}
+## Test the entire application
+{:test_app}
 
 Now that you have the backend application connected to the frontend application, let's test it by uploading images for image classification,
 
@@ -233,7 +248,7 @@ Now that you have the backend application connected to the frontend application,
    ```
    {:pre}
 2. Test the app by uploading an image through the frontend UI
-   1. Click on **Choose an image...** and point to the image on your computer. You should see the preview of the image with a 'Not Classified' tag on it.
+   1. Click on **Choose an image...** and point to the image on your computer. You should see the **preview** of the image with a 'Not Classified' tag on it.
    2. Click on **Upload Images** to store the image in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo`.
 3. Click on **Classify** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} `bucket/images` folder to {{site.data.keyword.visualrecognitionshort}} service for image classification. The result (JSON) from the {{site.data.keyword.visualrecognitionshort}} are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
 4. Upload multiple images and test the application.

@@ -106,7 +106,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 | vcd_password | vCloud Director instance password |  |
 | vcd_org | vCloud Director organization name |  |
 | vcd_url | vCloud Director url | https://daldir01.vmware-solutions.cloud.ibm.com/api |
-| vdc_edge_gateway_name | vCloud Director organization name |  |
+| vdc_edge_gateway_name | vCloud Director edge gateway name |  |
 | vdc_name | vCloud Director virtual data center name/id | vmware-tutorial |
 | allow_ssh | Set to false to not configure SSH into the VM | true |
 {: caption="Table 1. Use the following table to confirm that you have all of the information you will need for use later on." caption-side="top"}
@@ -186,7 +186,7 @@ You can create rules to allow or deny traffic, this section creates a firewall a
 ### Create a firewall rule to access the IBM Cloud private network
 {:#create_private_rules}
 
-You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VDC network to the IBM Cloud private network with no additional restrictions. This will all for your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
+You can create rules to allow or deny traffic, this section creates a rule to allow traffic from the VDC network to the IBM Cloud private network with no additional restrictions. This will enable your virtual machines to access other IBM Cloud services, such as AI, cloud databases, storage without going over the Internet. 
 
   ![](images/solution58-vmware-solutions-getting-started/ibm-cloud.png)
 

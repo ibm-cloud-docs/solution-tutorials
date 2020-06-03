@@ -94,7 +94,7 @@ Choose an {{site.data.keyword.Bluemix_notm}} data center to deploy the secure pr
 
 ### Order VLANs
 
-To create the private enclosure in the target data center, the required private VLANs for servers must first be assigned. When you create the VLAN, make sure to request it in the same data center pod as you plan to create the VRA, do not select a data center and not specify the pod. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology are chargeable.
+To create the private enclosure in the target data center, the required private VLANs for servers must first be assigned. When you create the VLAN, select **Pod** under **Location** and make sure to request the VLAN in the same data center and pod as you plan to create the VRA. There is no charge for the first private and first public VLANs. Additional VLANs to support a multi-tier application topology are chargeable.
 
 To ensure that sufficient VLANs are available on the same data center router and can be associated with the VRA, you can order VLANs. For details, see [Ordering VLANs](https://{DomainName}/docs/vlans?topic=vlans-ordering-premium-vlans#order-vlans).
 

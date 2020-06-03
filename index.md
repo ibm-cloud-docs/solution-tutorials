@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-05-26"
+lastupdated: "2020-05-28"
 ---
 
 {:shortdesc: .shortdesc}
@@ -262,6 +262,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution50-scalable-webapp-openshift/Architecture.png" alt="Architecture diagram for the solution Scalable web app on OpenShift"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/solution-tutorials?topic=solution-tutorials-openshift-service-mesh#openshift-service-mesh">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Service Mesh on OpenShift
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Install Red Hat OpenShift Service Mesh alongside microservices for a sample app called BookInfo in a Red Hat OpenShift on IBM Cloud cluster.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution57-openshift-service-mesh/Architecture.png" alt="Architecture diagram for the solution Service Mesh on OpenShift"/>
                 </div>
             </div>
         </div>
