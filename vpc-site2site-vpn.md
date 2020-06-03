@@ -175,7 +175,7 @@ In this section, you will create the database service.
 
 2. Once you have verified the service status changed to "create succeeded", you may proceed to create a service key with role **Administrator**:
    ```sh
-   ibmcloud resource service-key-create vpns2s-pg-key Administrator --instance-name vpns2s-pg
+   ibmcloud resource service-key-create vpns2s-pg-key --instance-name vpns2s-pg
    ```
    {: codeblock}
 
