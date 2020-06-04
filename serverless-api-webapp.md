@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2017, 2019
-lastupdated: "2020-06-03"
+lastupdated: "2020-06-04"
 lasttested: "2020-06-03"
 ---
 
@@ -133,7 +133,7 @@ Then add the action to a sequence:
 Now, add the second action to that sequence:
 
 1. Click on the entry **save-guestbook-entry-sequence**. It opens sequence details. Then click **Add** on the upper right.
-1. Instead of **Create New** select **Use Public**. It loads and displays icons for available integrations. Pick **Cloudant**. 
+1. Instead of **Create New** select **Use Public**. It loads and displays icons for available integrations. Pick **Cloudant**.
 2. Under **Actions** choose **create-document**.
 3. Create a **New Binding** and complete the form as follows:
    1. Set **Name** to `binding-for-guestbook`.
@@ -156,7 +156,7 @@ The second sequence is used to retrieve the existing guestbook entries. This seq
    * List all documents from the database.
    * Format the documents and returning them.
 
-1. Under [**Functions**](https://{DomainName}/functions), click on **Actions** and then **Create**. 
+1. Under [**Functions**](https://{DomainName}/functions), click on **Actions** and then **Create**.
 2. Then, after selecting **Action**, use `set-read-input` as name. Again, select **guestbook** as package and a **Node.js** version as runtime. Click **Create**.
 3. In the action details, replace the existing code with the code snippet below. This action passes the appropriate parameters to the next action in the sequence.
    ```js
@@ -286,10 +286,20 @@ Once the DNS changes have been propagated, you will be able to access your guest
 <!--#/istutorial#-->
 
 ## Remove resources
+{:#cleanup}
 
-* Delete {{site.data.keyword.cloudant_short_notm}} service
-* Delete API from {{site.data.keyword.openwhisk_short}}
-* Delete actions from {{site.data.keyword.openwhisk_short}}
+To delete the created {{site.data.keyword.cloudant_short_notm}} service,
+1. Navigate to [resource list](https://{DomainName}/resources)
+2. Under **Services**, click on the action menu next to `<yourinitials>-guestbook-db` service
+3. Click **Delete**
+
+To delete the API and actions from {{site.data.keyword.openwhisk_short}},
+
+1. Navigate to [{{site.data.keyword.openwhisk_short}}](https://{DomainName}/functions/) landing page.
+2. On the left pane, click on **APIs**.
+3. Click on the **delete** icon in the `guestbook` API row and then **Delete** on the modal window.
+4. On the left pane, click on **Actions**.
+5. Under the `guestbook` package, delete all the actions by clicking on the **delete** icon in the respective action rows.
 
 ## Related content
 * [Serverless Computing](https://www.ibm.com/cloud/learn/serverless)
