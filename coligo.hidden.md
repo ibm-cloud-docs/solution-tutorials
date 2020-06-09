@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-06-03"
+lastupdated: "2020-06-09"
 lasttested: "2020-05-26"
 
 ---
@@ -25,14 +25,12 @@ lasttested: "2020-05-26"
 
 > :warning: WORK-IN-PROGRESS
 
-In this tutorial, you will learn about Coligo by deploying an image classification application. The application is made up of a frontend and a backend component. The frontend component is a web application that users will use to upload images. This web application will send the uploaded images to the backend component for processing. The backend will store the images into an {{site.data.keyword.cos_short}} "bucket" and then initiate a "batch" job to process all of the images uploaded to the bucket - one job task per image. A batch job is a collection of tasks where each task performs exactly one action and then exits. This processing will involve passing the image to the {{site.data.keyword.visualrecognitionshort}} service to determine what is in the image. The result from the {{site.data.keyword.visualrecognitionshort}} service will be stored into another folder in the same bucket. And finally, the results of those scans will then be visible on the web application.
+In this tutorial, you will learn about Coligo by deploying an image classification application. You will create a Coligo project, target the project and deploy Coligo components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your Coligo components. You will also understand the auto-scaling capability of Coligo where instances are scaled up or down (to zero) based on incoming workload.
 {:shortdesc}
 
 Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
 
-Kubernetes is a complex product that requires developers to understand a lot of configuration knobs in order to properly run their applications. Developers need to carry out repetitive tasks, such as installing dependencies and configuring networking rules. They must generate configuration files, manage logging and tracing, and write their own CI/CD scripts using tools like Jenkins. Before they can deploy their containers, they have to go through multiple steps to containerize their source code in the first place.
-
-Coligo helps developers by hiding many of these tasks, simplifying container-based management and enabling you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
+Coligo helps developers by hiding many of the complex tasks like configuration, dependency management etc., Coligo simplifies container-based management and enables you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
 
 ## Objectives
 {: #objectives}
@@ -65,7 +63,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 1. Developer creates a Coligo project and deploys a frontend and a backend Coligo application.
 2. Developer connects the frontend(UI) app to the backend by modifying the frontend application to set an environment variable value to point to the backend application's endpoint.
 3. Developer provisions the required cloud services and binds them to the backend application and jobs by creating secrets and configmap.
-4. User uploads an image(s) via the frontend app that is stored in {{site.data.keyword.cos_short}}.
+4. User uploads an image(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
 5. User clicks Classify on the UI that runs a Coligo job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app.
 
 ## Before you begin
@@ -114,11 +112,14 @@ In this section, you will deploy your front-end web application to Coligo under 
     With just these two pieces of data, Coligo can deploy your application and it will handle all of the complexities of configuring it and managing it for you.
     {:tip}
 
-2. Run `ibmcloud coligo application get -n frontend` command to check the application status. Copy the URL from the output and open it in a browser to see an output similar to this
+2. Copy the URL from the output and open it in a browser to see an output similar to this
    ```
    Congratulations! Your Frontend is working
    Oops!! Looks like the Connection to the backend is failing. Time to add a backend
    ```
+
+   Run `ibmcloud coligo application get -n frontend` command to see the details of the application.
+   {:tip}
 3. For secured browsing, you can also browse the application with `HTTPS`.
 
   <!-- For troubleshooting and to display logs of your application, run the command `ibmcloud coligo application logs --name frontend`
@@ -153,7 +154,10 @@ To check the autoscaling capabilities of Coligo,
    The `--cluster-local` flag will instruct Coligo to keep the endpoint for this application private. Meaning, it will only be available from within the cluster. This is often used for security purposes.
    {:tip}
 
-2. Run `ibmcloud coligo application get -n backend` command to check the application status. Copy the private endpoint (URL) from the output.
+2. Copy the private endpoint (URL) from the output.
+   
+   Run `ibmcloud coligo application get -n backend` command to check the status and details of the backend application.
+   {:tip}
 3. The frontend application uses an environment variable(BACKEND_URL) to know where the backend application is hosted. You now need to modify the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command
    ```sh
    ibmcloud coligo application update --name frontend \
