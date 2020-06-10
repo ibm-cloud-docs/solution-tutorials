@@ -60,7 +60,7 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
 1. Follow the instructions [here](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_prereq_install_toolkit#installing-the-api-connect-toolkit) to install the {{site.data.keyword.apiconnect_short}} command line tool.
 2. Enter the following command to create the application.
     ```sh
-    apic loopback --name entries-api
+    apic loopback
     ```
     {: pre}
 3. Press `Enter` to use **entries-api** as the **name of your application**.
@@ -108,6 +108,10 @@ A model is a JavaScript object with both Node and REST APIs that represents data
 
 ![Model generator](images/solution13/models.png)
 
+<!-- 
+
+NOTE: Hidden currently has this does not work with modern browsers SSL issue, I created a support ticket: CS1839894
+
 ## Test your LoopBack application
 
 In this section, you will start a local instance of your Loopback application and test the API by inserting and querying data using the API Designer. You must use the API Designer's Explore tool to test REST endpoints in your browser because it includes the proper security headers and other request parameters.
@@ -151,6 +155,8 @@ To prepare for the next steps, you will create an **{{site.data.keyword.apiconne
 
 1. Launch {{site.data.keyword.Bluemix_notm}} [Resource List](https://{DomainName}/resources).
 2. Navigate to **Catalog > Integration > {{site.data.keyword.apiconnect_short}}** and click the **Create** button.
+
+-->
 
 ## Publish an API to {{site.data.keyword.Bluemix_notm}}
 
