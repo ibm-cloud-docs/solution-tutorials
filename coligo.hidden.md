@@ -203,6 +203,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
     <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
    2. Click **Add**.
    <!--3. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.-->
+   
 ### Bind the services to the backend application
 
 Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by binding the cloud services to your application and then asking the Coligo runtime to make them available to the application via environment variables.
