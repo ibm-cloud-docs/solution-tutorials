@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-06-09"
+lastupdated: "2020-06-10"
 lasttested: "2020-05-26"
 
 ---
@@ -28,7 +28,7 @@ lasttested: "2020-05-26"
 In this tutorial, you will learn about Coligo by deploying an image classification application. You will create a Coligo project, target the project and deploy Coligo components - applications, jobs to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your Coligo components. You will also understand the auto-scaling capability of Coligo where instances are scaled up or down (to zero) based on incoming workload.
 {:shortdesc}
 
-Coligo aims to create a platform to unify the deployment of functions, applications, batch jobs (run-to-completion workloads), and pre-built containers to Kubernetes-based infrastructure. It provides a "one-stop-shop" experience for developers, enabling higher productivity and faster time to market. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
+Coligo provides a platform to unify the deployment of all of your container-based applications. Whether those applications are functions, traditional 12-factor apps, batch workloads(run-to-completion) or any other container-based workloads, if they can be bundled into a container image, then Coligo can host and manage them for you - all on a Kubernetes-based infrastructure. And Coligo does this without the need for you to learn, or even know about, Kubernetes. The Coligo experience is designed so that you can focus on writing code and not on the infrastructure needed to host it. It is delivered as a managed service on the cloud and built on open-source projects (Kubernetes, Istio, Knative, Tekton, etc.).
 
 Coligo helps developers by hiding many of the complex tasks like configuration, dependency management etc., Coligo simplifies container-based management and enables you to concentrate on writing code. It also makes available many of the features of a serverless platform, such as "scale-to-zero".
 
@@ -183,57 +183,63 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    2. Set **Service name** to **coligo-cos** and select a resource group.
    3. Click on **Create**.
 2. Under **Service Credentials**, click on **New credential**
-    1. Give it a name - `for-coligo` and select **Writer** as the role
-    2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**
-    3. Click **Add**.
-    4. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.
+   1. Give it a name - `cos-for-coligo` and select **Writer** as the role
+    <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
+   2. Click **Add**.
+   <!--3. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.-->
 3. Create a **Custom** bucket named `<your-initials>-coligo`,
    1. Select **Cross Region** resiliency
    2. Select a Location preferably `Dallas`
    3. Select a **Standard** storage class for high performance and low latency.
    4. Click **Create bucket**
 4. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
-5.  Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
+5. Copy the desired **Public** endpoint to access your bucket and **save** the endpoint for quick reference.
 6. Create an instance of [{{site.data.keyword.visualrecognitionshort}}](https://{DomainName}/catalog/services/visual-recognition)
    1. Select a region and select **Lite** plan.
    2. Set **Service name** to **coligo-vr** and select a resource group.
    3. Click on **Create**.
-7. Under **Service Credentials**, Expand the newly created credentials and **save** the credentials for quick reference. If you don't see auto-generated credentials, create a **New credential**.
+7. Under **Service Credentials**, click on **New credential**
+   1. Give it a name - `vr-for-coligo` and select **Writer** as the role
+    <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
+   2. Click **Add**.
+   <!--3. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.-->
+### Bind the services to the backend application
 
-### Bind the services to the backend service
+Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by binding the cloud services to your application and then asking the Coligo runtime to make them available to the application via environment variables.
 
-Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by storing the credentials into "secrets", and then asking the Coligo runtime to make them available to the application via environment variables.
-
-1. Create a secret for {{site.data.keyword.cos_short}} service by replacing the placeholders with appropriate service credentials you saved earlier while creating the {{site.data.keyword.cos_short}} service and a configmap to hold the bucket name - `<your-initials>-coligo`,
+1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application,
    ```sh
-   ibmcloud coligo secret create --name cos-secret \
-   --from-literal=COS_ENDPOINT=<COS_ENDPOINT> \
-   --from-literal=COS_APIKEY=<COS_API_KEY> \
-   --from-literal=COS_RESOURCE_INSTANCE_ID=<COS_RESOURCE_INSTANCE_ID>
+   ibmcloud coligo application bind --name backend \
+   --service-instance coligo-cos \
+   --service-credential cos-for-coligo \
+   --prefix COS 
    ```
    {:pre}
 
-   You will put the bucket name into a "configmap" as the information isn't sensitive.
+   If you have created the {{site.data.keyword.cos_short}} service instance with a different name, pass your service name with `--service-instance` flag. `--service-credential` is an optional flag.
    {:tip}
 
    ```sh
-   ibmcloud coligo configmap create --name cos-bucket-name \
+   ibmcloud coligo configmap create --name backend-configuration \
    --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME>
+   --from-literal=COS_ENDPOINT=<COS_ENDPOINT>
    ```
    {:pre}
-
-2. With the secrets and configmap defined, you can now update the backend service by asking Coligo to set environment variables in the runtime of the application based on the values in those resources.Update the backend application with the following command
+   
+   You will put the bucket name and the endpoint into a "configmap" as the information isn't sensitive.
+   {:tip}
+   
+2. With the configmap defined, you can now update the backend application by asking Coligo to set environment variables in the runtime of the application based on the values in the configmap.Update the backend application with the following command
    ```sh
    ibmcloud coligo application update --name backend \
-   --env-from-secret cos-secret \
-   --env-from-configmap cos-bucket-name
+   --env-from-configmap backend-configuration
    ```
    {:pre}
 
    Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
    {:tip}
 
-3. To verify whether the backend application is updated with the secret and configmap. You can run the below command and look for the `Environment Variables` section
+3. To verify whether the backend application is updated with the binding and configmap. You can run the below command to look for the `Service Bindings` and `Environment Variables` sections
    ```sh
    ibmcloud coligo application get --name backend --more-details
    ```
