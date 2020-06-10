@@ -63,11 +63,11 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
     apic loopback
     ```
     {: pre}
-3. Press `Enter` to use **entries-api** as the **name of your application**.
-4. Press `Enter` to use **entries-api** as the **directory to contain the project**.
+3. Use **entries-api** as the **name of your application**.
+4. Use **entries-api** as the **directory to contain the project**.
 6. Choose **empty-server** as the **kind of application**.
 
-![APIC Loopback scaffolding](images/solution13/apic_loopback.png)
+<!-- ![APIC Loopback scaffolding](images/solution13/apic_loopback.png) -->
 
 ### Add a data source
 
