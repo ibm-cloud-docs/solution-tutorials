@@ -143,7 +143,7 @@ To check the autoscaling capabilities of Coligo,
    {:pre}
 4. Once load generation is stopped, wait for a minute to see the pods scaling to zero.
 
-### Deploy a backend app and test the connection
+### Deploy a backend application and test the connection
 
 1. To deploy a new backend application, run this command
    ```sh
@@ -170,10 +170,10 @@ To check the autoscaling capabilities of Coligo,
 
 4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Choose an image from your computer to see a **preview** of the image with `Not classified` tag. Try uploading the image by clicking on **Upload files**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store the image and process it.
 
-## Connect the backend service to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
+## Connect the backend application to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:connect_cloud_services}
 
-In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend service. The backend service will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to classify the images.
+In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to classify the images.
 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:#create_services}
@@ -281,7 +281,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
    ```sh
    ibmcloud coligo jobdef create --name backend-jobdef \
    --image ibmcom/backend-job \
-   --env-from-secret cos-secret \
+   --env-from-secret backend-binding-request \
    --env-from-secret vr-secret
    ```
    {:pre}
