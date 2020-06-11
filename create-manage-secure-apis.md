@@ -60,14 +60,14 @@ In this section, you will create an API in Node.js using [LoopBack](https://loop
 1. Follow the instructions [here](https://{DomainName}/docs/services/apiconnect/tutorials?topic=apiconnect-tut_prereq_install_toolkit#installing-the-api-connect-toolkit) to install the {{site.data.keyword.apiconnect_short}} command line tool.
 2. Enter the following command to create the application.
     ```sh
-    apic loopback --name entries-api
+    apic loopback
     ```
     {: pre}
-3. Press `Enter` to use **entries-api** as the **name of your application**.
-4. Press `Enter` to use **entries-api** as the **directory to contain the project**.
+3. Use **entries-api** as the **name of your application**.
+4. Use **entries-api** as the **directory to contain the project**.
 6. Choose **empty-server** as the **kind of application**.
 
-![APIC Loopback scaffolding](images/solution13/apic_loopback.png)
+<!-- ![APIC Loopback scaffolding](images/solution13/apic_loopback.png) -->
 
 ### Add a data source
 
@@ -107,43 +107,6 @@ A model is a JavaScript object with both Node and REST APIs that represents data
 5. Click the **Save** icon in the upper right to save the model.
 
 ![Model generator](images/solution13/models.png)
-
-## Test your LoopBack application
-
-In this section, you will start a local instance of your Loopback application and test the API by inserting and querying data using the API Designer. You must use the API Designer's Explore tool to test REST endpoints in your browser because it includes the proper security headers and other request parameters.
-
-1. Start the local server by clicking **Start** icon in the lower left corner and wait for the **Running** message.
-2. From the banner, click the **Explore** link to see the API Designer's Explore tool. The sidebar shows the REST operations available for the LoopBack models in the API.
-3. Click the **entry.create** operation in the left pane to display the endpoint. The center pane displays summary information about the endpoint, including its parameters, security, model instance data and response codes. The right pane provides sample code to call the endpoint using the cURL command, and languages such as Ruby, Python, Java and Node.
-4. On the right pane click the **Try it** link. Scroll down to **Parameters** and enter the following in the **data** text area:
-    ```javascript
-    {
-      "name": "Jane Doe",
-      "email": "janedoe@mycompany.com",
-      "comment": "Jane likes Blue"
-    }
-    ```
-    {: pre}
-5. Click the **Call operation** button.
-  ![Testing an API from API Designer](images/solution13/data_entry_1.png)
-6. Confirm the POST was successful by checking for **Response Code: 200 OK**. If you see an error message due to an untrusted certificate for localhost, click the link provided in the error message in API Designer Explore tool to accept the certificate, then proceed to call the operations in your web browser. The exact procedure depends on the web browser you are using.
-7. Add another entry using cURL. Confirm the port matches your application's port.
-    ```sh
-    curl --request POST \
-    --url https://localhost:4002/api/entries \
-    --header 'accept: application/json' \
-    --header 'content-type: application/json' \
-    --header 'x-ibm-client-id: default' \
-    --header 'x-ibm-client-secret: SECRET' \
-    --data '{"name":"John Doe","email":"johndoe@mycomany.com","comment":"John likes Orange"}' \
-    --insecure
-    ```
-    {: pre}
-8. Click the **entry.find** operation, then the **Try It** link followed by the **Call operation** button. The response displays all entries. You should see JSON for **Jane Doe** and **John Doe**.
-  ![entry_find](images/solution13/find_response.png)
-
-You can also manually start the Loopback application by issuing the `npm start` command from the `entries-api` directory. Your REST APIs will be available at [http://localhost:3000/api/entries](http://localhost:3000/api/entries); however, they will not be managed and protected by {{site.data.keyword.apiconnect_short}}.
-{:tip}
 
 ## Create {{site.data.keyword.apiconnect_short}} service
 

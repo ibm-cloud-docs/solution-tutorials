@@ -239,7 +239,7 @@ The following sections assume you are running macOS High Sierra or later under a
    ```
    {:pre}
 
-   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, in the Finder on your Mac, locate the `oc` binary. Control-click its icon, then choose **Open** from the shortcut menu.
+   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/oc`.
    {:tip}
 
 ### Helm 3
@@ -258,7 +258,7 @@ The following sections assume you are running macOS High Sierra or later under a
    ```
    {:pre}
 
-   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `helm` to be executed anyway, in the Finder on your Mac, locate the `helm` binary. Control-click its icon, then choose **Open** from the shortcut menu.
+   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `helm` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/helm`.
    {:tip}
 
 ### Terraform
@@ -297,7 +297,7 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    ```
    {:pre}
 
-   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow the provider to be executed anyway, in the Finder on your Mac, locate the provider binary. Control-click its icon, then choose **Open** from the shortcut menu.
+   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow the provider to be executed anyway, run `sudo xattr -r -d com.apple.quarantine $HOME/.terraform.d/plugins/terraform-provider-ibm_*`.
    {:tip}
 
 ### jq
