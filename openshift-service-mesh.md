@@ -180,7 +180,6 @@ The end-to-end architecture of the application is shown below.
 Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
 
 1.  From your **{{site.data.keyword.Bluemix_notm}} Shell**, create a project called "bookinfo" with `oc new-project` command
-
    ```sh
    oc new-project bookinfo
    ```
@@ -190,7 +189,6 @@ Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy si
    {:tip}
 
 2.  Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.openshiftshort}} cluster. This deploys both the v1 and v2 versions of the app,
-
    ```sh
    oc apply -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/platform/kube/bookinfo.yaml
    ```
@@ -447,6 +445,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 3. Click **Remove**.
 4. Repeat steps 2 and 3 for each of the operator in the list.
 
+<!--##istutorial#-->
 ### Delete the cluster
 Delete the cluster to delete everything in one-go. This action is irreversible.
 
@@ -454,7 +453,7 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 2. Click on the action menu next to `myopenshiftcluster` and select **Delete**.
 3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
 4. Click on **Delete**
-
+<!--#/istutorial#-->
 
 ## Related content
 
