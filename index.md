@@ -1,7 +1,7 @@
 ---
 copyright:
   years: 2017, 2018, 2019, 2020
-lastupdated: "2020-06-04"
+lastupdated: "2020-06-11"
 ---
 
 {:shortdesc: .shortdesc}
@@ -279,6 +279,23 @@ Learn how to build, deploy and scale real-world solutions on IBM Cloud. These gu
                 </div>
                 <div class="architectureDiagramContainer">
                     <img class="architectureDiagram" src = "images/solution57-openshift-service-mesh/Architecture.png" alt="Architecture diagram for the solution Service Mesh on OpenShift"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href = "/docs/solution-tutorials?topic=solution-tutorials-openshift-microservices#openshift-microservices">
+    <div class = "solutionBox">
+        <div class = "solutionBoxContent">
+            <h3 class="solutionBoxTitle">
+                Deploy microservices with OpenShift
+            </h3>
+            <div class="solutionBoxDescription">
+                <div class="descriptionContainer">
+                    <p>Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.</p>
+                </div>
+                <div class="architectureDiagramContainer">
+                    <img class="architectureDiagram" src = "images/solution55-openshift-microservices/openshift-microservices.drawio.png" alt="Architecture diagram for the solution Deploy microservices with OpenShift"/>
                 </div>
             </div>
         </div>
