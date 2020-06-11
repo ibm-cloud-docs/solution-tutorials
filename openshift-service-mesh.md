@@ -55,6 +55,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 5. The user securely(HTTPS) accesses the application via browser.
 6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
 
+<!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
 
@@ -76,6 +77,18 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 6. Review **Infrastructure permissions checker** to verify the required permissions
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+<!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+## Configure the access to your cluster
+{: #access-cluster}
+
+1. Log in to the {{site.data.keyword.cloud_notm}} console.
+1. Select the account where you have been invited.
+1. Find the cluster assigned to you in the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift).
+-->
+<!--#/isworkshop#-->
 
 ### Access the cluster using the {{site.data.keyword.Bluemix_notm}} Shell
 
