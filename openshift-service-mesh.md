@@ -41,9 +41,7 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.openshiftlong}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
 
 <!--##istutorial#-->
-
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
 <!--#/istutorial#-->
 
 ## Architecture
@@ -58,7 +56,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
 
 <!--##istutorial#-->
-
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
 
@@ -80,6 +77,18 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 6. Review **Infrastructure permissions checker** to verify the required permissions
 7. Under **Resource details**,Set **Cluster name** to **myopenshiftcluster**.
 8. Click **Create** to provision an {{site.data.keyword.openshiftshort}} cluster.
+<!--#/istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+## Configure the access to your cluster
+{: #access-cluster}
+
+1. Log in to the {{site.data.keyword.cloud_notm}} console.
+1. Select the account where you have been invited.
+1. Find the cluster assigned to you in the [cluster list](https://{DomainName}/kubernetes/clusters?platformType=openshift).
+-->
+<!--#/isworkshop#-->
 
 ### Access the cluster using the {{site.data.keyword.Bluemix_notm}} Shell
 
@@ -171,48 +180,46 @@ The end-to-end architecture of the application is shown below.
 Red Hat {{site.data.keyword.openshiftshort}} Service Mesh relies on the Envoy sidecars within the application’s pod to provide Service Mesh capabilities to the application. You can enable automatic sidecar injection or manage it manually. Automatic injection using the annotation is the recommended way.
 
 1.  From your **{{site.data.keyword.Bluemix_notm}} Shell**, create a project called "bookinfo" with `oc new-project` command
+   ```sh
+   oc new-project bookinfo
+   ```
+   {:pre}
 
-    ```sh
-    oc new-project bookinfo
-    ```
-    {:pre}
-
-    In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
-    {:tip}
+   In {{site.data.keyword.openshiftshort}}, a project is a Kubernetes namespace with additional annotations.
+   {:tip}
 
 2.  Deploy the Bookinfo application in the `bookinfo` project by applying the bookinfo.yaml file on to the {{site.data.keyword.openshiftshort}} cluster. This deploys both the v1 and v2 versions of the app,
+   ```sh
+   oc apply -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/platform/kube/bookinfo.yaml
+   ```
+   {:pre}
 
-    ```sh
-    oc apply -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/platform/kube/bookinfo.yaml
-    ```
-    {:pre}
+   The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster.
 
-    The `bookinfo.yaml` file is annotated `sidecar.istio.io/inject: "true"` to enable automatic injection of the Istio sidecar for Red Hat {{site.data.keyword.openshiftshort}} Service Mesh. So, these pods will also include an Envoy sidecar as they are started in the cluster.
-
-    An installation of Red Hat {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_arch/ossm-vs-community.html) comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
-    {:tip}
+   An installation of Red Hat {{site.data.keyword.openshiftshort}} Service Mesh differs from upstream Istio community installations in multiple ways. Refer [this link](https://docs.openshift.com/container-platform/4.3/service_mesh/service_mesh_arch/ossm-vs-community.html) comparing Service Mesh and Istio. By default, Istio injects the sidecar if you have labeled the project `istio-injection=enabled`. Red Hat {{site.data.keyword.openshiftshort}} Service Mesh handles this differently and requires you to opt in to having the sidecar automatically injected to a deployment, so you are not required to label the project. This avoids injecting a sidecar if it is not wanted (for example, in build or deploy pods).
+   {:tip}
 
 3.  Verify that the pods are up and running.
 
-    ```sh
-    oc get pods
-    ```
-    {:pre}
+   ```sh
+   oc get pods
+   ```
+   {:pre}
 
-    **Sample output:**
+   **Sample output:**
 
-    ```sh
-    NAME                              READY     STATUS    RESTARTS   AGE
-    details-v1-789c5f58f4-9twtw       2/2       Running   0          4m12s
-    productpage-v1-856c8cc5d8-xcx2q   2/2       Running   0          4m11s
-    ratings-v1-5786768978-tr8z9       2/2       Running   0          4m12s
-    reviews-v1-5874566865-mxfgm       2/2       Running   0          4m12s
-    reviews-v2-86865fc7d9-mf6t4       2/2       Running   0          4m12s
-    reviews-v3-8d4cbbbbf-rfjcz        2/2       Running   0          4m12s
-    ```
+   ```sh
+   NAME                              READY     STATUS    RESTARTS   AGE
+   details-v1-789c5f58f4-9twtw       2/2       Running   0          4m12s
+   productpage-v1-856c8cc5d8-xcx2q   2/2       Running   0          4m11s
+   ratings-v1-5786768978-tr8z9       2/2       Running   0          4m12s
+   reviews-v1-5874566865-mxfgm       2/2       Running   0          4m12s
+   reviews-v2-86865fc7d9-mf6t4       2/2       Running   0          4m12s
+   reviews-v3-8d4cbbbbf-rfjcz        2/2       Running   0          4m12s
+   ```
 
-    Note that each bookinfo pods has 2 containers in it. One is the bookinfo container, and the other is the Envoy proxy sidecar.
-    {:tip}
+   Note that each bookinfo pods has 2 containers in it. One is the bookinfo container, and the other is the Envoy proxy sidecar.
+   {:tip}
 
 Your bookinfo app is running, but you can't access it as the service is not yet configured to receive external traffic. In the next section, you will expose the `productpage` service to allow incoming traffic.
 
@@ -224,21 +231,16 @@ The components deployed on the service mesh by default are not exposed outside t
 An Ingress Gateway resource can be created to allow external requests through the Istio Ingress Gateway to the backing services.
 
 1. Configure the bookinfo default route with the Istio Ingress Gateway.
-
    ```sh
    oc create -f https://raw.githubusercontent.com/Maistra/istio/maistra-1.2/samples/bookinfo/networking/bookinfo-gateway.yaml
    ```
    {:pre}
-
 2. Get the **ROUTE** of the Istio Ingress Gateway.
-
    ```sh
    oc get routes -n istio-system istio-ingressgateway
    ```
    {:pre}
-
 3. Save the HOST address that you retrieved in the previous step, as it will be used to access the BookInfo app in later parts of the tutorial. Create an environment variable called `$INGRESS_HOST` with your HOST address.
-
    ```sh
    export INGRESS_HOST=<HOST>
    ```
@@ -443,6 +445,7 @@ In this section, you will create a secure Route to the Ingress Gateway with **Ed
 3. Click **Remove**.
 4. Repeat steps 2 and 3 for each of the operator in the list.
 
+<!--##istutorial#-->
 ### Delete the cluster
 Delete the cluster to delete everything in one-go. This action is irreversible.
 
@@ -450,7 +453,7 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 2. Click on the action menu next to `myopenshiftcluster` and select **Delete**.
 3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
 4. Click on **Delete**
-
+<!--#/istutorial#-->
 
 ## Related content
 
