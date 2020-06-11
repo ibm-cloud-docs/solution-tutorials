@@ -41,9 +41,7 @@ This tutorial uses the following runtimes and services:
 - [{{site.data.keyword.openshiftlong}}](https://{DomainName}/kubernetes/clusters?platformType=openshift)
 
 <!--##istutorial#-->
-
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
-
 <!--#/istutorial#-->
 
 ## Architecture
@@ -56,8 +54,6 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 4. Admin exposes the app for external traffic with the Istio Ingress Gateway.
 5. The user securely(HTTPS) accesses the application via browser.
 6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
-
-<!--##istutorial#-->
 
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #create_openshift_cluster}
