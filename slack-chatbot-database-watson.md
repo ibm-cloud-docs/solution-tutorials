@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2018, 2019
 lastupdated: "2020-03-16"
-lasttested: "2020-03-16"
+lasttested: "2020-06-12"
 ---
 
 {:shortdesc: .shortdesc}
@@ -160,6 +160,10 @@ With some sample data in it is time to search.
 
 After some more searches and new event entries, you can revisit the chat history and improve the future dialog. Follow the instructions in the [{{site.data.keyword.conversationshort}} documentation on **Improving understanding**](https://{DomainName}/docs/services/assistant?topic=assistant-logs-intro#logs_intro).
 
+## Share resources
+
+If you want to work with others on resources of this solution tutorial, you can share all or only some the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](https://{DomainName}/docs/iam?topic=iam-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign predefined access roles to either a user, a service ID, or to an access group. Details on how you can set up access control is discussed in the blog [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project).
+
 
 ## Remove resources
 {:removeresources}
@@ -191,6 +195,7 @@ Chatbot-related blog posts:
 * [Lively chatbots: Best Practices](https://www.ibm.com/blogs/bluemix/2017/07/lively-chatbots-best-practices/)
 * [Building chatbots: more tips and tricks](https://www.ibm.com/blogs/bluemix/2017/06/building-chatbots-tips-tricks/)
 * [Add Watson Discovery News to your Chatbot](https://www.ibm.com/cloud/blog/add-watson-discovery-news-to-your-chatbot)
+* [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project)
 
 Documentation and SDKs:
 * GitHub repository with [tips and tricks for handling variables in IBM Watson Conversation](https://github.com/IBM-Cloud/watson-conversation-variables)
