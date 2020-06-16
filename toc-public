@@ -16,6 +16,7 @@ Solution Tutorials
         continuous-deployment-to-kubernetes.md
         scalable-webapp-openshift.md
         openshift-service-mesh.md
+        openshift-microservices.md
         static-files-cdn.md
         dynamic-content-cdn.md
         pub-sub-object-storage.md
@@ -107,6 +108,7 @@ Solution Tutorials
     OpenShift
         scalable-webapp-openshift.md
         openshift-service-mesh.md
+        openshift-microservices.md
 
     {: .topicgroup}
     Cloud Foundry

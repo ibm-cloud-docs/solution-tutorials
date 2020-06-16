@@ -114,6 +114,18 @@
           "lastUpdated": "2020-05-27"
         },
         {
+          "name": "Deploy microservices with OpenShift",
+          "url": "openshift-microservices.html",
+          "description": "Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.",
+          "imgSrc": "images/solution55-openshift-microservices/openshift-microservices.drawio.png",
+          "tags": [
+            "OpenShift",
+            "Log Analysis",
+            "Availability Monitoring"
+          ],
+          "lastUpdated": "2020-05-16"
+        },
+        {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
           "url": "static-files-cdn.html?pos=2",
           "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
@@ -239,7 +251,7 @@
             "API Gateway",
             "Cloudant NoSQL DB"
           ],
-          "lastUpdated": "2020-03-31"
+          "lastUpdated": "2020-06-04"
         },
         {
           "name": "Deploy serverless apps across multiple regions",
@@ -251,7 +263,7 @@
             "Cloud Functions",
             "Certificate Manager"
           ],
-          "lastUpdated": "2019-10-09"
+          "lastUpdated": "2020-06-02"
         },
         {
           "name": "Analyze logs and monitor application health with LogDNA and Sysdig",

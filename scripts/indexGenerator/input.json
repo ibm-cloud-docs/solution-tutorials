@@ -154,6 +154,23 @@
           ]
         },
         {
+          "name": "Deploy microservices with OpenShift",
+          "url": "openshift-microservices.html",
+          "description": "Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.",
+          "imgSrc": "images/solution55-openshift-microservices/openshift-microservices.drawio.png",
+          "tags": [
+            "OpenShift",
+            "Log Analysis",
+            "Availability Monitoring"
+          ],
+          "requirements": [
+            "openshift_on_ibm_cloud",
+            "docker",
+            "logdna",
+            "sysdig"
+          ]
+        },
+        {
           "name": "Accelerate delivery of static files using Object Storage and CDN",
           "url": "static-files-cdn.html?pos=2",
           "description": "Host and serve website assets (images, videos, documents) and user generated content in a Cloud Object Storage and use a Content Delivery Network (CDN) for fast and secure delivery to users around the world.",
@@ -740,23 +757,6 @@
             "Coligo",
             "Knative",
             "Kubernetes"
-          ]
-        },
-        {
-          "name": "Deploy microservices with Red Hat OpenShift",
-          "url": "openshift-microservices.hidden.html",
-          "description": "Deploy microservices to an OpenShift cluster, view their logs and metrics, use an operator to provision IBM Cloud services.",
-          "imgSrc": "images/solution55-openshift-microservices-hidden/openshift-microservices.drawio.png",
-          "tags": [
-            "OpenShift",
-            "Log Analysis",
-            "Availability Monitoring"
-          ],
-          "requirements": [
-            "openshift_on_ibm_cloud",
-            "docker",
-            "logdna",
-            "sysdig"
           ]
         }
       ]

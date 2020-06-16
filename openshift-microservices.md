@@ -19,7 +19,7 @@ lasttested: "2020-05-16"
 {:important: .important}
 {:note: .note}
 
-# Deploy microservices with {{site.data.keyword.openshiftlong_notm}}
+# Deploy microservices with {{site.data.keyword.openshiftshort}}
 {: #openshift-microservices}
 
 This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](https://{DomainName}/kubernetes/catalog/openshiftcluster). The {{site.data.keyword.openshiftshort}} fully managed service provides a great experience for Developers to deploy software applications and for System Administrators to scale and observe the applications in production.
@@ -54,7 +54,7 @@ This tutorial will incur costs. Use the [Pricing Calculator](https://{DomainName
 
 <p style="text-align: center;">
 
-  ![Architecture](images/solution55-openshift-microservices-hidden/openshift-microservices.drawio.png)
+  ![Architecture](images/solution55-openshift-microservices/openshift-microservices.drawio.png)
 </p>
 
 1. A developer initializes an {{site.data.keyword.openshiftshort}} application with a repository URL resulting in a **Builder**, **Deployment**, and **Service**.
@@ -138,7 +138,7 @@ A project is a collection of resources managed by a devops team.  An administrat
 ### Build and Deploy Application
 
 1. Switch from the **Administrator** to the **Developer** view. Make sure your project is selected.  Your context should be **Developer** > **Topology** on the left and **Project: example-health** on the top.
-   ![](images/solution55-openshift-microservices-hidden/ocp-project-view.png)
+   ![](images/solution55-openshift-microservices/ocp-project-view.png)
 1. Let's build and deploy the application by selecting **From Git**.
 1. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend` in the Git Repo URL field.
    * Hit the tab key
@@ -154,7 +154,7 @@ A project is a collection of resources managed by a devops team.  An administrat
 
 1. You should see the app you just deployed.  Notice that you are in the **Topology** view of the example-health project in the **Developer** perspective.  All applications in the project are displayed.
 1. Select the **node** **patient-health-frontend** to bring up the details view of the `Deployment`.  Note the **D** next to **patient-health-frontend**.  The Pods, Builds, Services and Routes are visible.
-   ![](images/solution55-openshift-microservices-hidden/ocp-topo-app-details.png)
+   ![](images/solution55-openshift-microservices/ocp-topo-app-details.png)
 
    * **Pods**: Your Node.js application containers
    * **Builds**: The auto-generated build that created a Docker image from your Node.js source code, deployed it to the {{site.data.keyword.openshiftshort}} container registry, and kicked off your deployment config
@@ -225,7 +225,7 @@ Since there is only one pod, seeing the application logs will be straight forwar
 2. Navigate to your Pod by selecting your app, then clicking the name of the Pod under **Pods**.
 3. Click on **View Logs** next to your Pods to see streaming logs from your running application. If you're still generating traffic, you should see log messages for every request being made.
 
-   ![Pod Logs](images/solution55-openshift-microservices-hidden/ocp43-pod-logs.png)
+   ![Pod Logs](images/solution55-openshift-microservices/ocp43-pod-logs.png)
 
 ### {{site.data.keyword.openshiftshort}} Terminal
 
@@ -246,7 +246,7 @@ One of the great things about Kubernetes is the ability to quickly debug your ap
 When deploying new apps, making configuration changes, or simply inspecting the state of your cluster, the Project-scope Dashboard gives a Developer clear insights.
 
 1. Access the **Dashboard** in the **Developer** perspective by going to the **Advanced > Project Details** tab on the left side menu.
-    ![View Details](images/solution55-openshift-microservices-hidden/ocp43-project-details.png)
+    ![View Details](images/solution55-openshift-microservices/ocp43-project-details.png)
 2. You can also dive in a bit deeper - the **Events** view (beneath the **Project Details** on the left) is useful for identifying the timeline of events and finding potential error messages. When tracking the state of a new rollout, managing existing assets, or even something simple like exposing a route, the Events view is critical in identifying the timeline of activity. This becomes even more useful when considering that multiple operators may be working against a single cluster.
 
 Almost all actions in {{site.data.keyword.openshiftshort}} result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
@@ -266,7 +266,7 @@ Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](h
 5. Notice the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day.  Auto-scaling is one way to handle fluctuations and will be demonstrated a little later.
    <p style="width: 50%;">
 
-   ![Grafana also project](images/solution55-openshift-microservices-hidden/ocp43-grafana-cpu.png)
+   ![Grafana also project](images/solution55-openshift-microservices/ocp43-grafana-cpu.png)
    </p>
 5. There is a lot more to investigate with Grafana, but instead the fully managed cloud {{site.data.keyword.la_short}} service will be covered in detail later.  {{site.data.keyword.la_short}} provides log analysis for {{site.data.keyword.openshiftshort}} and the other IBM Cloud Services in a single managed service.
 
@@ -288,7 +288,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
 4. Click on the **Graph** tab.  I turned the traffic generator script on for a while and then stopped it.  Note that the times are GMT:
    <p style="width: 50%;">
 
-   ![Prometheus Graph](images/solution55-openshift-microservices-hidden/prometheus-01.png)
+   ![Prometheus Graph](images/solution55-openshift-microservices/prometheus-01.png)
    </p>
 5. There is a lot more to investigate with Prometheus, but instead the fully managed {{site.data.keyword.mon_short}} service will be covered later.
 
@@ -303,7 +303,7 @@ Before autoscaling maximum CPU and memory resource limits must be established.
 Verify script to simulate load is running. Grafana earlier showed you that the load was consuming anywhere between ".002" to ".02" cores. This translates to 2-20 "millicores". To be safe, let's bump the higher-end up to 30 millicores. In addition, Grafana showed that the app consumes about `25`-`35` MB of RAM. The following steps will set the resource limits in the deployment
 
 1. Switch to the **Administrator** perspective and then navigate to **Workloads > Deployments** in the left-hand bar. Choose the `patient-health-frontend` Deployment, then choose **Actions > Edit Deployment**.
-   ![](images/solution55-openshift-microservices-hidden/ocp-deployments.png)
+   ![](images/solution55-openshift-microservices/ocp-deployments.png)
 2. In the YAML editor, go to line 44. In the section **template > spec > containers**, add the following resource limits into the empty resources. Replace the `resources {}`, and ensure the spacing is correct -- YAML uses strict indentation.
    ```yaml
              resources:
@@ -332,7 +332,7 @@ Verify script to simulate load is running. Grafana earlier showed you that the l
    {:codeblock}
 3. **Save** and **Reload** to see the new version.
 4. Verify that the replication controller has been changed by navigating to **Events**:
-   ![Resource Limits](images/solution55-openshift-microservices-hidden/ocp-dc-events.png)
+   ![Resource Limits](images/solution55-openshift-microservices/ocp-dc-events.png)
 
 ### Enable Autoscaler
 
@@ -342,7 +342,7 @@ By default, the autoscaler allows you to scale based on CPU or Memory. The UI al
 
 1. Navigate to **Administrator** perspective **Workloads > Horizontal Pod Autoscalers**, then hit **Create Horizontal Pod Autoscaler**.
 
-   ![HPA](images/solution55-openshift-microservices-hidden/ocp-hpa.png)
+   ![HPA](images/solution55-openshift-microservices/ocp-hpa.png)
 
    If you edit in the changes make sure that the spec > scaleTargetRef > name matches the name of the deployment: `patient-health-frontend`.  You can just copy/paste in the entire section below:
 
@@ -376,7 +376,7 @@ If you're not running the script to simulate load, the number of pods should sta
 2. Start simulating load (see previous section to simulate load on the application).
    <p style="width: 50%;">
 
-   ![Scaled to 4/10 pods](images/solution55-openshift-microservices-hidden/ocp-hpa-after.png)
+   ![Scaled to 4/10 pods](images/solution55-openshift-microservices/ocp-hpa-after.png)
    </p>
 
    It can take a few minutes for the autoscaler to make adjustments.
@@ -420,11 +420,11 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
 
 1. In the **Administrator** perspective, and click **Operators > OperatorHub**.
 2. Find the **IBM Cloud Operator**, and hit **Install**:
-   ![Operator Install](images/solution55-openshift-microservices-hidden/cloudoperatorinstall.png)
+   ![Operator Install](images/solution55-openshift-microservices/cloudoperatorinstall.png)
 3. Keep the default options and hit **Subscribe**:
-   ![Operator Subscribe](images/solution55-openshift-microservices-hidden/operatorsubscribe.png)
+   ![Operator Subscribe](images/solution55-openshift-microservices/operatorsubscribe.png)
 4. You may need to wait a few seconds and refresh for the operator to show up as `Installed`:
-   ![Installed Operators](images/solution55-openshift-microservices-hidden/installedoperators.png)
+   ![Installed Operators](images/solution55-openshift-microservices/installedoperators.png)
 
 ### Create a Cloudant Service and Bind using the CRDs
 
@@ -588,9 +588,9 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
    Cannot find Cloudant credentials, set CLOUDANT_URL.
    ```
 4. Let's fix this by setting the environment variable of the **DeploymentConfig** to the **cloudant-binding** secret created earlier in the operator binding section. Navigate to the deployment config for the `patient-health-backend` app by clicking the app, and then selecting the name next to **DC**:
-   ![Deployment Config](images/solution55-openshift-microservices-hidden/deploymentconfig.png)
+   ![Deployment Config](images/solution55-openshift-microservices/deploymentconfig.png)
 5. Go to the **Environment** tab, click **Add from Config Map or Secret** and create a new environment variable named **CLOUDANT_URL**. Choose the **cloudant-binding** secret, then choose **url** for the Key. Hit the **Save** button.
-   ![Environment from Secret](images/solution55-openshift-microservices-hidden/envfromsecret.png)
+   ![Environment from Secret](images/solution55-openshift-microservices/envfromsecret.png)
 6. Go back to the **Topology** tab, and click the **patient-health-backend**.  Check out the **Pods** section, which should should indicate **Running** shortly.  Click on the **Pod** **logs** and notice the databases created.
 
 ### Configure Patient Health Frontend App to use Patient Health Backend App
@@ -609,7 +609,7 @@ The `patient-health-frontend` application has an environment variable for the ba
 Your application is now backed by the mock patient data in the Cloudant DB! You can log-in using any user-id/password in the Cloudant DB, for example "**opall:opall**".
 
 1. In a real-world application, these passwords should **not** be stored as plain-text. To review the patients (and alternate logins) in the Cloudant DB, navigate to your services in IBM Cloud [Resource List](https://{DomainName}/resources). Click **cloudant-service**.
-   ![cloudantdb](images/solution55-openshift-microservices-hidden/cloudantdb.png)
+   ![cloudantdb](images/solution55-openshift-microservices/cloudantdb.png)
 2. Launch the Cloudant dashboard and click the `patients` db.
 3. Click through the different patients you can log-in as.
 
@@ -637,7 +637,7 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 1. On the {{site.data.keyword.la_short}} instance just created, click **Edit log sources**.
 1. Before running the `curl` command in the next step, make sure you're still logged in to the cluster.
 1. Select the **{{site.data.keyword.openshiftshort}}** tab and run the 5 steps listed:
-   ![](images/solution55-openshift-microservices-hidden/logdna-install.png)
+   ![](images/solution55-openshift-microservices/logdna-install.png)
 
    The {{site.data.keyword.la_short}} agent collects logs with the extension `*.log` and extensionsless files that are stored in the `/var/log` directory of your pod. By default, logs are collected from all namespaces, including `kube-system`, and automatically forwarded to the IBM Log Analysis with {{site.data.keyword.la_short}} service.
 
@@ -697,7 +697,7 @@ Launch the web UI within the context of an IBM Log Analysis with {{site.data.key
 
 1. Select the {{site.data.keyword.la_short}}  instance.
 1. Click **View LogDNA**.
-   ![](images/solution55-openshift-microservices-hidden/logdna-launch-ui.png)
+   ![](images/solution55-openshift-microservices/logdna-launch-ui.png)
 
 The Web UI opens.
 
@@ -711,20 +711,20 @@ When you launch the {{site.data.keyword.la_short}} web UI, log entries are displ
 
 Generate load on the application with the `curl` loop used earlier.
 
-1. In the {{site.data.keyword.la_short}} web UI, click the **Views** icon ![](images/solution55-openshift-microservices-hidden/views.png).
+1. In the {{site.data.keyword.la_short}} web UI, click the **Views** icon ![](images/solution55-openshift-microservices/views.png).
 2. Select **Everything** to see all the events.  It can take a few minutes for the load on the application to be visible.
-   ![](images/solution55-openshift-microservices-hidden/views-img-1.png)
+   ![](images/solution55-openshift-microservices/views-img-1.png)
 
 ### Customize your default view
 
 In the **USER PREFERENCES** section, you can modify the order of the data fields that are displayed per line.
 
-1. Select the **Configuration** icon ![](images/solution55-openshift-microservices-hidden/admin.png).
+1. Select the **Configuration** icon ![](images/solution55-openshift-microservices/admin.png).
 2. Select **USER PREFERENCES**. A new window opens.
 3. Select **Log Format**.
 4. Modify the _Line Format_ section to match your requirements. Drag boxes around. Click **Done**.
    For example, add **%app** after the timestamp.
-   ![](images/solution55-openshift-microservices-hidden/views-img-19.png)
+   ![](images/solution55-openshift-microservices/views-img-19.png)
 
 ### Create a custom view to monitor logs
 
@@ -735,9 +735,9 @@ You can select the events that are displayed through a view by applying a search
 3. Filter out log lines to display only lines that are tagged as debug lines.
    Add in the search bar the following query: `level:debug` and click enter. The view will show lines that meet the filter and search criteria.
 
-   ![](images/solution55-openshift-microservices-hidden/views-img3.png)
+   ![](images/solution55-openshift-microservices/views-img3.png)
 4. Click **Unsaved view**. Select **Save view**.
-   ![](images/solution55-openshift-microservices-hidden/views-img-6.png)
+   ![](images/solution55-openshift-microservices/views-img-6.png)
    1. Enter the name of the view. Use the following format: `<Enter your user name> patientUI`. For example, `yourname patientui`.
    1. Enter a category. Use the following format: `<Enter your user name>`. For example, `yourname` Then click **Add new category**.
    1. Click **Save view**.
@@ -753,12 +753,12 @@ At any time, you can view each log line in context.
 
 Complete the following steps:
 
-1. Click the **Views** icon ![](images/solution55-openshift-microservices-hidden/views.png).
+1. Click the **Views** icon ![](images/solution55-openshift-microservices/views.png).
 2. Select **Everything** or a view.
 3. Identify a line in the log that you want to explore.
 4. Expand the log line to display information about line identifiers, tags, and labels.
 5. Click **View in Context** to see the log line in context of other log lines from that host, app, or both. This is a very useful feature when you want to troubleshoot a problem.
-   ![](images/solution55-openshift-microservices-hidden/views-img-12.png)
+   ![](images/solution55-openshift-microservices/views-img-12.png)
 1. A new pop up window opens. In the window, choose one of the following options:
    **By Everything** to see the log line in the context of all log records \(everything\) that are available in the {{site.data.keyword.la_short}} instance
    **By source** to see the log line in the context of the log lines for the same source
@@ -768,7 +768,7 @@ Complete the following steps:
 
    > **Tip: Open a view per type of context to troubleshoot problems.**
 
-   ![](images/solution55-openshift-microservices-hidden/views-img-13.png)
+   ![](images/solution55-openshift-microservices/views-img-13.png)
 6. Click **Copy to clipboard** to copy the message field to the clipboard. Notice that when you copy the log record you get less information than what it is displayed in the view. To get a line with all the fields, you must export data from a custom view.
 1. When you are finished, close the line.
 
@@ -781,11 +781,11 @@ You can apply a timestamp by specifying an absolute time, a relative time, or a 
 Complete the following steps to jump to a specific time: 
 
 1. Launch the {{site.data.keyword.la_short}} web UI.
-2. Click the **Views** icon ![](images/solution55-openshift-microservices-hidden/views.png).
+2. Click the **Views** icon ![](images/solution55-openshift-microservices/views.png).
 3. Select your custom view.
 4. Enter a time query. Choose any of the following options:
    - Enter a relative time such as `1 hour ago`. Type **ENTER**
-   ![](images/solution55-openshift-microservices-hidden/views-img-17.png)
+   ![](images/solution55-openshift-microservices/views-img-17.png)
    - Enter an absolute time to jump to a point in time in your events such as `January 27 10:00am`
    - You can also enter a time range such as `yesterday 10am to yesterday 11am`, `last fri 4:30pm to 11/12 1 AM`, `last wed 4:30pm to 23/05 1 AM`, or `May 20 10am to May 22 10am`. Make sure to include `to` to separate the initial timestamp from the end timestamp
 
@@ -800,17 +800,17 @@ Index fields are created on a regular schedule.   Currently it is done at 00:01 
 
 Complete the following steps to create a dashboard to monitor logs from the lab's sample app:
 
-1. In the {{site.data.keyword.la_short}} web UI, click the **Boards** icon ![Dashboards icon](images/solution55-openshift-microservices-hidden/boards.png).
+1. In the {{site.data.keyword.la_short}} web UI, click the **Boards** icon ![Dashboards icon](images/solution55-openshift-microservices/boards.png).
 2. Select **NEW BOARD** to create a new dashboard.
 3. Click **Add Graph**.
 4. Select the Field **All lines**.
 4. Select the Filter **app:patient-health-frontend**.
 
-   ![](images/solution55-openshift-microservices-hidden/board-img-4.png)
+   ![](images/solution55-openshift-microservices/board-img-4.png)
 
    Click **Add Graph**.
 
-   ![](images/solution55-openshift-microservices-hidden/board-img-5.png)
+   ![](images/solution55-openshift-microservices/board-img-5.png)
 
 5. Note the view that displays the count of logs lines for the frontend app. Click the graph in a peak of data at the time that you want to see logs, and then click **Show logs**.
 
@@ -818,13 +818,13 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 
 6. Add subplots to analyze the data by applying additonal filtering criteria.
 
-   ![](images/solution55-openshift-microservices-hidden/board-img-8.png)
+   ![](images/solution55-openshift-microservices/board-img-8.png)
 
    Click **Show subplots**.
 
    Select **Histogram** and **level**.
 
-   ![](images/solution55-openshift-microservices-hidden/board-img-11.png)
+   ![](images/solution55-openshift-microservices/board-img-11.png)
 
 7. Name the dashboard by hitting the pencil **Edit Board** button next to the *New Board N* name".
 
@@ -840,7 +840,7 @@ You can create a screen to monitor your app graphically through metrics \(counte
 
 Complete the following steps to create a dashboard to monitor logs from the lab's sample app:
 
-1. In the {{site.data.keyword.la_short}} web UI, click the **screens** icon ![](images/solution55-openshift-microservices-hidden/screens.png).
+1. In the {{site.data.keyword.la_short}} web UI, click the **screens** icon ![](images/solution55-openshift-microservices/screens.png).
 2. Select **NEW SCREEN**.
 3. Add a count of the patient health frontend log lines for the last two weeks:
    - Click **Add Widget** at the top and select **Count**
@@ -854,7 +854,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 
    The widget should look similar to the following one:
 
-   ![](images/solution55-openshift-microservices-hidden/screen-img-7.png)
+   ![](images/solution55-openshift-microservices/screen-img-7.png)
 4. Add a gauge that records the debug lines for the patient-health-frontend for the last day.
    - Click **Add Widget** at the top and select **Gauge**
    - Click the newly created widget to reveal the configuration fields for the widget on the right
@@ -872,7 +872,7 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
    - In the **Data Format** section
      - Select the field **Number of Rows** and choose `10` from the drop down
 5. Drag the table to improve the presentation.  Verify the screen resembles the following:
-    ![](images/solution55-openshift-microservices-hidden/screen-img-15.png)
+    ![](images/solution55-openshift-microservices/screen-img-15.png)
 6. Save the screen. Select **Save Screen**.
    IMPORTANT: If you do not save the screen, you lose all your widgets.
 
@@ -908,7 +908,7 @@ The IBM Cloud provides a fully managed monitoring service.  Lets create a monito
    ```
    {:pre}
 1. Select the **{{site.data.keyword.openshiftshort}}** tab and run the curl command next to **Public Endpoint**.
-   ![](images/solution55-openshift-microservices-hidden/sysdig-install.png)
+   ![](images/solution55-openshift-microservices/sysdig-install.png)
    The {{site.data.keyword.monitoringshort_notm}} agent collects metrics such as the worker node CPU usage, worker node memory usage, HTTP traffic to and from your containers, and data about several infrastructure components.
 
 ### Verify that the {{site.data.keyword.monitoringshort_notm}} agent is deployed successfully
@@ -953,17 +953,17 @@ The following table lists the different types of pre-defined dashboards:
 
 1. After the curl command click **View Sysdig** or back on the **Observability** > **Monitoring** page click **View Sysdig** to launch the {{site.data.keyword.monitoringshort_notm}} web UI.
 2. In the {{site.data.keyword.monitoringshort_notm}} Welcome wizard, click **Next**.
-   ![](images/solution55-openshift-microservices-hidden/sysdig-wizard1.png)
+   ![](images/solution55-openshift-microservices/sysdig-wizard1.png)
 3. Select **Kubernetes | GKE | OpenShift** as the installation method.
-   ![](images/solution55-openshift-microservices-hidden/sysdig-wizard2.png)
+   ![](images/solution55-openshift-microservices/sysdig-wizard2.png)
 4. You should see a message `You have X agents connected`. This may take a few minuts. Wait if necessary.  Click **GO TO NEXT STEP**.
-   ![](images/solution55-openshift-microservices-hidden/sysdig-wizard3.png)
+   ![](images/solution55-openshift-microservices/sysdig-wizard3.png)
 5. Setup is complete. Click **LET'S GET STARTED**.
-   ![](images/solution55-openshift-microservices-hidden/sysdig-wizard4.png)
+   ![](images/solution55-openshift-microservices/sysdig-wizard4.png)
 6. Select **Next**.
-   ![](images/solution55-openshift-microservices-hidden/sysdig-wizard5.png)
+   ![](images/solution55-openshift-microservices/sysdig-wizard5.png)
 7. Finally **Complete Onboarding**.
-   ![](images/solution55-openshift-microservices-hidden/sysdig-wizard6.png)
+   ![](images/solution55-openshift-microservices/sysdig-wizard6.png)
 
 ### View the {{site.data.keyword.monitoringshort_notm}} dashboard
 
@@ -978,15 +978,15 @@ Navigate the {{site.data.keyword.monitoringshort_notm}} console to get metrics o
    If the drop down is not fully populated and indicates some inapplicable items double check that you have chosen **EXPLORE** on the upper left and clicked on the **Hosts & Containers** drop down.  If so you will need to wait until the indexing step mentioned above is complete before continuing
    {:note}
 
-   ![](images/solution55-openshift-microservices-hidden/sysdig-select-app.png)
+   ![](images/solution55-openshift-microservices/sysdig-select-app.png)
 3. Under **EXPLORE**, select **Nodes**, search `patient-health-frontend`. Look for the patient-health-frontend pod entry.
-   ![](images/solution55-openshift-microservices-hidden/sysdig-explore-node.png)
+   ![](images/solution55-openshift-microservices/sysdig-explore-node.png)
 4. Under **DASHBOARD**, select **Default Dashboards** > **Applications**. Then select **HTTP** to get a global view of the cluster HTTP load.
 5. Select **DASHBOARD** > **Default Dashboards** > **Hosts & Containers** > **Overview by Host** to understand how nodes are currently performing.
 1. From the **EXPLORE** tab, select **Deployments**.
 2. Search for `example-health` namespace.
 3. Select the `patient-health-frontend` to select all pods for the frontend.
-   ![](images/solution55-openshift-microservices-hidden/explore-img-9.png)
+   ![](images/solution55-openshift-microservices/explore-img-9.png)
 
 ### Explore the cluster and the node capacity
 
@@ -1006,7 +1006,7 @@ Navigate the {{site.data.keyword.monitoringshort_notm}} console to get metrics o
 
    The following dashboard is displayed. It shows information about all resources that are monitored through the instance.
 
-   ![](images/solution55-openshift-microservices-hidden/dashboard-img-2.png)
+   ![](images/solution55-openshift-microservices/dashboard-img-2.png)
 
 2. Make this dashboard your own and then scope it to a specific namespace.
    - In the Hamburger menu in the upper right choose **Copy Dashboard** and name it `Yourname Network Dashboard`
@@ -1015,12 +1015,12 @@ Navigate the {{site.data.keyword.monitoringshort_notm}} console to get metrics o
    - Change Everywhere to `kubernetes.namespace.name`
    - Change in to `is`
    - Change Value to `ibm-observe`
-   ![](images/solution55-openshift-microservices-hidden/explore-img-10.png)
+   ![](images/solution55-openshift-microservices/explore-img-10.png)
    - Click Save
 
     The dashboard now shows information about the ibm-observe namespace.
 
-    ![](images/solution55-openshift-microservices-hidden/dashboard-img-5.png)
+    ![](images/solution55-openshift-microservices/dashboard-img-5.png)
 
 Find more about IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} in the [IBM Cloud documentation](https://{DomainName}/docs/services/Monitoring-with-Sysdig/index.html#getting-started).
 
