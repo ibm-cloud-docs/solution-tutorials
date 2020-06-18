@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-06-10"
+lastupdated: "2020-06-18"
 lasttested: "2020-05-26"
 
 ---
@@ -155,7 +155,7 @@ To check the autoscaling capabilities of Coligo,
    {:tip}
 
 2. Copy the private endpoint (URL) from the output.
-   
+
    Run `ibmcloud coligo application get -n backend` command to check the status and details of the backend application.
    {:tip}
 3. The frontend application uses an environment variable(BACKEND_URL) to know where the backend application is hosted. You now need to modify the frontend application to set this value to point to the backend application's endpoint. **Replace** the placeholder `<BACKEND_PRIVATE_URL>` with the value from the previous command
@@ -168,7 +168,7 @@ To check the autoscaling capabilities of Coligo,
    The `--env` flag can appear as many times as you would like if you need to set more than one environment variable. This option could have also been used on the `ibmcloud coligo application create` command for the frontend application as well if you knew its value at that time.
    {:tip}
 
-4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Choose an image from your computer to see a **preview** of the image with `Not classified` tag. Try uploading the image by clicking on **Upload files**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store the image and process it.
+4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Try uploading an image by clicking on **Upload image**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image.
 
 ## Connect the backend application to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:connect_cloud_services}
@@ -203,7 +203,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
     <!--2. Expand **Advanced options** and change the **Include HMAC Credential** switch to **On**-->
    2. Click **Add**.
    <!--3. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.-->
-   
+
 ### Bind the services to the backend application
 
 Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by binding the cloud services to your application and then asking the Coligo runtime to make them available to the application via environment variables.
@@ -213,7 +213,7 @@ Now, you will need to pass in the credentials for the services you just created 
    ibmcloud coligo application bind --name backend \
    --service-instance coligo-cos \
    --service-credential cos-for-coligo \
-   --prefix COS 
+   --prefix COS
    ```
    {:pre}
 
@@ -226,10 +226,10 @@ Now, you will need to pass in the credentials for the services you just created 
    --from-literal=COS_ENDPOINT=<COS_ENDPOINT>
    ```
    {:pre}
-   
+
    You will put the bucket name and the endpoint into a "configmap" as the information isn't sensitive.
    {:tip}
-   
+
 2. With the configmap defined, you can now update the backend application by asking Coligo to set environment variables in the runtime of the application based on the values in the configmap.Update the backend application with the following command
    ```sh
    ibmcloud coligo application update --name backend \
@@ -259,8 +259,8 @@ Now that you have the backend application connected to the frontend application,
    ```
    {:pre}
 2. Test the app by uploading an image through the frontend UI
-   1. Click on **Choose an image...** and point to the image on your computer. You should see the **preview** of the image with a 'Not Classified' tag on it.
-   2. Click on **Upload Images** to store the image in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo`.
+   1. Click on **Upload image** and point to the image on your computer.
+   2. Once successfully uploaded, the image will be stored in the `images` folder of {{site.data.keyword.cos_short}} bucket - `<your-initials>-coligo`.
 3. Click on **Classify** to create a new job that passes the uploaded image in the {{site.data.keyword.cos_short}} `bucket/images` folder to {{site.data.keyword.visualrecognitionshort}} service for image classification. The result (JSON) from the {{site.data.keyword.visualrecognitionshort}} are stored in a separate folder(results) in the same {{site.data.keyword.cos_short}} bucket and can be seen on the UI.
 4. Upload multiple images and test the application.
 5. Check the results of the classified images on the UI.
@@ -300,7 +300,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
    When you run a job, you can override many of the variables that you set in the job definition. To check the variables, run `ibmcloud coligo job run --help`.
    {:tip}
-4. In the frontend UI, click on **Classify** to see the results.
+4. In the frontend UI, click on **refresh** to see the results.
 5. To delete the job, run the below command
    ```sh
    ibmcloud coligo job delete --name backend-job
