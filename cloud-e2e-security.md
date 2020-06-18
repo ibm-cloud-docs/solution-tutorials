@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2019, 2020
-lastupdated: "2020-01-10"
+lastupdated: "2020-06-18"
 lasttested: "2019-12-05"
 
 ---
@@ -417,6 +417,21 @@ The [GitHub repository](https://github.com/IBM-Cloud/secure-file-storage) for th
 Security is never done. Try the below suggestions to enhance the security of your application.
 
 * Replace {{site.data.keyword.keymanagementservicelong_notm}} by [{{site.data.keyword.hscrypto}}](https://{DomainName}/docs/services/hs-crypto?topic=hs-crypto-get-started) for even greater security and control over encryption keys.
+  
+## Share resources
+
+If you want to work with others on resources of this solution tutorial, you can share all or only some of the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](https://{DomainName}/docs/iam?topic=iam-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign [predefined access roles](https://{DomainName}/docs/iam?topic=iam-userroles) to either a user, a service ID, or to an [access group](https://{DomainName}/docs/iam?topic=iam-groups). An access group can be created to organize a set of users and service IDs into a single entity. It makes it easy for you to assign access. You can assign a single policy to the group instead of assigning the same access multiple times per individual user or service ID. Thus, you can organize groups for roles on your development project and align security and project management.
+
+You can find information on the individual services and their available IAM access roles here:
+* [{{site.data.keyword.containershort_notm}}](https://{DomainName}/docs/containers?topic=containers-access_reference#service). Note that this service also provides examples for [mapping service roles to typical project roles](https://{DomainName}/docs/containers?topic=containers-users#platform). 
+* [{{site.data.keyword.registryshort_notm}}](https://{DomainName}/docs/Registry?topic=Registry-iam#iam)
+* [{{site.data.keyword.appid_short}}](https://{DomainName}/docs/appid?topic=appid-service-access-management)
+* [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/docs/Cloudant?topic=Cloudant-ibm-cloud-identity-and-access-management-iam-#ibm-cloudant-roles)
+* [{{site.data.keyword.cos_short}}](https://{DomainName}/docs/cloud-object-storage?topic=cloud-object-storage-iam)
+* [{{site.data.keyword.at_short}}](https://{DomainName}/docs/Activity-Tracker-with-LogDNA?topic=Activity-Tracker-with-LogDNA-iam)
+* [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-manage-access#service-access-roles)
+* [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-managing-service-access-roles)
+
 
 ## Remove resources
 {:removeresources}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018-2020
-lastupdated: "2020-06-12"
+lastupdated: "2020-06-18"
 lasttested: "2020-06-12"
 ---
 
@@ -162,7 +162,7 @@ After some more searches and new event entries, you can revisit the chat history
 
 ## Share resources
 
-If you want to work with others on resources of this solution tutorial, you can share all or only some the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](https://{DomainName}/docs/iam?topic=iam-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign predefined access roles to either a user, a service ID, or to an access group. Details on how you can set up access control is discussed in the blog [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project).
+If you want to work with others on resources of this solution tutorial, you can share all or only some of the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](https://{DomainName}/docs/iam?topic=iam-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign [predefined access roles](https://{DomainName}/docs/iam?topic=iam-userroles) to either a user, a service ID, or to an [access group](https://{DomainName}/docs/iam?topic=iam-groups). Details on how you can set up access control is discussed in the blog [IBM Cloud Security Hands-On: Share Your Chatbot Project](https://www.ibm.com/cloud/blog/share-your-chatbot-project).
 
 
 ## Remove resources
