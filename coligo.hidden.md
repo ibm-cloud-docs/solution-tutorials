@@ -277,7 +277,7 @@ Jobs in Coligo are meant to run to completion as batch or standalone executables
 
 Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. Rather than specifying the full configuration of a job each time it is executed, you can create a `job definition` which acts as a "template" for the job.
 
-1. Go to the frontend UI and upload images for classification. Don't click on **Classify** yet.
+1. Go to the frontend UI and upload images for classification.
 2. On a terminal, run the following command to create a job definition,
    ```sh
    ibmcloud coligo jobdef create --name backend-jobdef \
