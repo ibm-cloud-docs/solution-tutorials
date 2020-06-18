@@ -432,6 +432,7 @@ You can find information on the individual services and their available IAM acce
 * [{{site.data.keyword.keymanagementserviceshort}}](https://{DomainName}/docs/key-protect?topic=key-protect-manage-access#service-access-roles)
 * [{{site.data.keyword.cloudcerts_short}}](https://{DomainName}/docs/certificate-manager?topic=certificate-manager-managing-service-access-roles)
 
+To get started, check out the [best practices for access management and how to define access groups](https://{DomainName}/docs/iam?topic=iam-account_setup#rg_strategy).
 
 ## Remove resources
 {:removeresources}
