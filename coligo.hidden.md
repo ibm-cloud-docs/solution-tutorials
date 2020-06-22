@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2020
 lastupdated: "2020-06-22"
-lasttested: "2020-05-26"
+lasttested: "2020-06-22"
 
 ---
 
@@ -64,7 +64,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 2. Developer connects the frontend(UI) app to the backend by modifying the frontend application to set an environment variable value to point to the backend application's endpoint.
 3. Developer provisions the required cloud services and binds them to the backend application and jobs by creating secrets and configmap.
 4. User uploads an image(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
-5. User clicks Classify on the UI that runs a Coligo job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app.
+5. User runs a Coligo job via the backend to classify the image by pushing the image to {{site.data.keyword.visualrecognitionshort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
 
 ## Before you begin
 {: #prereqs}
@@ -170,10 +170,10 @@ To check the autoscaling capabilities of Coligo,
 
 4. Refresh the frontend URL on the browser to test the connection to the backend service. Now, backend should be available. Try uploading an image by clicking on **Upload image**, you should still see an error message as the backend is still not connected with the required {{site.data.keyword.cloud_notm}} services to store and process the image.
 
-## Connect the backend application to {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
+## Connect the backend application to {{site.data.keyword.cos_short}} service
 {:connect_cloud_services}
 
-In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used to classify the images.
+In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used later in the tutorial to classify the images.
 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:#create_services}
@@ -328,13 +328,13 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
    ibmcloud coligo job logs --name backend-job
    ```
    {:pre}
-3. In the frontend UI, click on **refresh** button to see the results for each of the uploaded images.
+3. In the frontend UI, click on the **refresh** button to see the results for each of the uploaded images.
 4. To delete the job, run the below command
    ```sh
    ibmcloud coligo job delete --name backend-job
    ```
    {:pre}
-5. Upload new images, create the job again and hit the refresh button.}
+5. Upload new images, create the job again and hit the refresh button to see the results.
 
 ## Remove resources
 {:#cleanup}
