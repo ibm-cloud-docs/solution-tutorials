@@ -224,8 +224,8 @@ Now, you will need to pass in the credentials for the services you just created 
 2. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive,
    ```sh
    ibmcloud coligo configmap create --name backend-configuration \
-   --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME>
-   --from-literal=COS_ENDPOINT=<COS_ENDPOINT>
+   --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME> \
+   --from-literal=COS_ENDPOINT=<COS_ENDPOINT> \
    ```
    {:pre}
 
@@ -236,7 +236,7 @@ Now, you will need to pass in the credentials for the services you just created 
    ```
    {:pre}
 
-   Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
+   To create a secret, you will use `--env-from-secret` flag. Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
    {:tip}
 
 4. To verify whether the backend application is updated with the binding and configmap. You can run the below command to look for the `Service Bindings` and `Environment Variables` sections
@@ -283,9 +283,13 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
    ```sh
    ibmcloud coligo jobdef create --name backend-jobdef \
    --image ibmcom/backend-job \
-   --env-from-configmap backend-configuration
+   --env-from-configmap backend-configuration \
+   --env VR_VERSION='2018-03-19'
    ```
    {:pre}
+
+   You can set an environmental variable using `--env` flag in `KEY=VALUE` format. This flag can be specified multiple times.
+   {:tip}
 
 ### Bind the {{site.data.keyword.cloud_notm}} services to jobdef
 
