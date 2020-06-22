@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-06-18"
+lastupdated: "2020-06-22"
 lasttested: "2020-05-26"
 
 ---
@@ -204,7 +204,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    2. Click **Add**.
    <!--3. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.-->
 
-### Bind the services to the backend application
+### Bind the {{site.data.keyword.cos_short}} service to the backend application
 
 Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by binding the cloud services to your application and then asking the Coligo runtime to make them available to the application via environment variables.
 
@@ -220,6 +220,8 @@ Now, you will need to pass in the credentials for the services you just created 
    If you have created the {{site.data.keyword.cos_short}} service instance with a different name, pass your service name with `--service-instance` flag. `--service-credential` is an optional flag.
    {:tip}
 
+
+2. Define a configmap to hold the bucket name and the endpoint as the information isn't sensitive,
    ```sh
    ibmcloud coligo configmap create --name backend-configuration \
    --from-literal=COS_BUCKETNAME=<COS_BUCKET_NAME>
@@ -227,10 +229,7 @@ Now, you will need to pass in the credentials for the services you just created 
    ```
    {:pre}
 
-   You will put the bucket name and the endpoint into a "configmap" as the information isn't sensitive.
-   {:tip}
-
-2. With the configmap defined, you can now update the backend application by asking Coligo to set environment variables in the runtime of the application based on the values in the configmap.Update the backend application with the following command
+3. With the configmap defined, you can now update the backend application by asking Coligo to set environment variables in the runtime of the application based on the values in the configmap.Update the backend application with the following command
    ```sh
    ibmcloud coligo application update --name backend \
    --env-from-configmap backend-configuration
@@ -240,13 +239,13 @@ Now, you will need to pass in the credentials for the services you just created 
    Both secrets and configmap are "maps"; so the environment variables set will have a name corresponding to the "key" of each entry in those maps, and the environment variable values will be the value of that "key".
    {:tip}
 
-3. To verify whether the backend application is updated with the binding and configmap. You can run the below command to look for the `Service Bindings` and `Environment Variables` sections
+4. To verify whether the backend application is updated with the binding and configmap. You can run the below command to look for the `Service Bindings` and `Environment Variables` sections
    ```sh
    ibmcloud coligo application get --name backend --more-details
    ```
    {:pre}
 
-## Test the entire application
+<!--## Test the entire application
 {:test_app}
 
 Now that you have the backend application connected to the frontend application, let's test it by uploading images for image classification,
@@ -266,14 +265,16 @@ Now that you have the backend application connected to the frontend application,
 5. Check the results of the classified images on the UI.
 
    If you are interested in checking the job details, run the command `ibmcloud coligo job list` to see the list of job runs and then pass the job name retrieved from the list to the command - `ibmcloud coligo job get --name <JOBRUN_NAME>`. To check the logs, run the following command `ibmcloud coligo job logs --name <JOBRUN_NAME> `
-   {:tip}
+   {:tip}-->
 
-## Create a job definition and run a job
-{: #job}
+## Test the application
+{: #test_the_app}
 
-In this section, you will understand what happens under the hood once you click the **Classify** button in the UI, how a job definition created and used in a job run.
+Now that you have the backend application connected to the frontend application, let's test it by uploading images for image classification. To test, you will create a job definition and use the job definition to run a job to classify images using {{site.data.keyword.visualrecognitionshort}} service. <!--understand what happens under the hood once you click the **Classify** button in the UI, how a job definition created and used in a job run.-->
 
 Jobs in Coligo are meant to run to completion as batch or standalone executables. They are not intended to provide lasting endpoints to access like a Coligo application does.
+
+### Create a job definition
 
 Jobs, unlike applications which react to incoming HTTP requests, are meant to be used for running container images that contain an executable designed to run one time and then exit. Rather than specifying the full configuration of a job each time it is executed, you can create a `job definition` which acts as a "template" for the job.
 
@@ -282,11 +283,32 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
    ```sh
    ibmcloud coligo jobdef create --name backend-jobdef \
    --image ibmcom/backend-job \
-   --env-from-secret backend-binding-request \
-   --env-from-secret vr-secret
+   --env-from-configmap backend-configuration
    ```
    {:pre}
-3. With the following command, run a job using the jobdefinition created above
+
+### Bind the {{site.data.keyword.cloud_notm}} services to jobdef
+
+1. Before further testing the application, let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
+   ```sh
+   ibmcloud coligo application bind --name backend-jobdef \
+   --service-instance coligo-cos \
+   --service-credential cos-for-coligo \
+   --prefix COS_JOB
+   ```
+   {:pre}
+2. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
+   ```sh
+   ibmcloud coligo application bind --name backend-jobdef \
+   --service-instance coligo-vr \
+   --service-credential vr-for-coligo \
+   --prefix VR_JOB
+   ```
+   {:pre}
+
+### Run the job
+
+1. With the following command, run a job using the jobdefinition created above
    ```sh
    ibmcloud coligo job run --name backend-job \
    --jobdef backend-jobdef \
@@ -300,12 +322,19 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
    When you run a job, you can override many of the variables that you set in the job definition. To check the variables, run `ibmcloud coligo job run --help`.
    {:tip}
-4. In the frontend UI, click on **refresh** to see the results.
-5. To delete the job, run the below command
+
+2. To check the logs, run the following command
+   ```sh
+   ibmcloud coligo job logs --name backend-job
+   ```
+   {:pre}
+3. In the frontend UI, click on **refresh** button to see the results for each of the uploaded images.
+4. To delete the job, run the below command
    ```sh
    ibmcloud coligo job delete --name backend-job
    ```
    {:pre}
+5. Upload new images, create the job again and hit the refresh button.}
 
 ## Remove resources
 {:#cleanup}
