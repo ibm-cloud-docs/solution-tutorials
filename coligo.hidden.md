@@ -288,7 +288,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
    ```
    {:pre}
 
-   You can set an environmental variable using `--env` flag in `KEY=VALUE` format. This flag can be specified multiple times.
+   You can set the version of {{site.data.keyword.visualrecognitionshort}} service using the `--env` flag. For versioning, check this [link](https://{DomainName}/apidocs/visual-recognition/visual-recognition-v3#versioning)
    {:tip}
 
 ### Bind the {{site.data.keyword.cloud_notm}} services to jobdef
