@@ -76,8 +76,10 @@ In this section, you will create and configure a bastion host along with a secur
    If you are using VPC for Gen 1, select **VPC default** for your subnet access control list (ACL). You can configure the inbound and outbound rules later.
    {:note}
 1. Switch the **Public gateway** to **Attached**.
+
    Attach a public gateway to the subnet to allow all attached resources to communicate with the public internet.
    {:tip}
+
 2. Click **Create subnet** to provision it.
 
 ### Create and configure bastion security group
