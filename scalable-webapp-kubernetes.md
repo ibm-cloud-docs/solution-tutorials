@@ -275,7 +275,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
 1. Make note of the the public port the service is listening on. The port is a 5-digit number(e.g., 31569) under `PORT(S)`.
 1. Identify a public IP of a worker node with the command below:
    ```sh
-   ibmcloud ks workers ${MYCLUSTER}
+   ibmcloud ks workers --cluster ${MYCLUSTER}
    ```
    {: pre}
 1. Access the application at `http://worker-ip-address:portnumber/`. For VPC the IP addresses of the clusters are private to the VPC. These can be accessed by opening the **Web Terminal** from the Kubernetes cluster console UI.  See [Using the Kubernetes web terminal in your web browser](https://{DomainName}/docs/containers?topic=containers-cs_cli_install#cli_web)
