@@ -85,6 +85,7 @@ Login to {{site.data.keyword.cloud_notm}} via a web browser to create the {{site
 2. In the **Start Provisioning** section, click the **VMware Solutions Shared** card.
 3. For **Pricing Plans**, select `On-Demand`.
 4. Enter the virtual data center name, i.e. `vmware-tutorial`.
+5. Select the **Resource group** where to create the service instance.
 5. Select the {{site.data.keyword.Bluemix_notm}} data center to host the instance, i.e. `Dallas`.
 6. Scroll to **Virtual data center capacity** and set the **vCPU Limit** to `4 vCPU` and the **RAM Limit** to `16 GB`.  You may increase or reduce the capacity as needed later on. 
 7. From the **Summary** pane on the right side of the screen, verify the configuration and estimated cost.
