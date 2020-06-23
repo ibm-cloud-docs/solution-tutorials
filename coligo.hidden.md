@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-06-22"
+lastupdated: "2020-06-23"
 lasttested: "2020-06-22"
 
 ---
@@ -173,7 +173,7 @@ To check the autoscaling capabilities of Coligo,
 ## Connect the backend application to {{site.data.keyword.cos_short}} service
 {:connect_cloud_services}
 
-In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind them to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used later in the tutorial to classify the images.
+In this section, you will provision the required {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services and bind the {{site.data.keyword.cos_short}} service to the backend application. The backend application will store the images into the {{site.data.keyword.cos_short}}, while the {{site.data.keyword.visualrecognitionshort}} will be used later in the tutorial to classify the images.
 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.visualrecognitionshort}} services
 {:#create_services}
@@ -206,7 +206,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 
-Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by binding the cloud services to your application and then asking the Coligo runtime to make them available to the application via environment variables.
+Now, you will need to pass in the credentials for the services you just created into our backend application. You will do this by binding the {{site.data.keyword.cos_short}} service to your application and then asking the Coligo runtime to make them available to the application via environment variables.
 
 1. Create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS` for ease of use in your application,
    ```sh
