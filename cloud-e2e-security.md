@@ -203,7 +203,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 4. Under **Manage**, launch the Cloudant dashboard.
 5. Click **Create Database** to create a **Non-partitioned** database named **secure-file-storage-metadata**.
 
-{{site.data.keyword.cloudant_short_notm}} instances on dedicated hardware allow private endpoints. Instances with dedicated service plans allow IP whitelisting. See [{{site.data.keyword.cloudant_short_notm}} Secure access control](https://{DomainName}/docs/services/Cloudant?topic=cloudant-security#secure-access-control) for details.
+{{site.data.keyword.cloudant_short_notm}} instances on dedicated hardware allow private endpoints. Instances with dedicated service plans allow to define a list of allowed IP addresses. See [{{site.data.keyword.cloudant_short_notm}} Secure access control](https://{DomainName}/docs/services/Cloudant?topic=cloudant-security#secure-access-control) for details.
 {: tip}
 
 ### Authenticate users

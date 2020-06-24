@@ -66,7 +66,7 @@ In this example only http and https ports are enabled as these cover a majority 
 -	Port 80 (http)
 -	Port 443 (https)
 
-Verify if the third party service supports whitelisting of source addresses. If yes, the public IP address of the VRA will be required to configure the third party service to limit access to the service. 
+Verify if the third party service supports defining a list of allowed source addresses. If yes, the public IP address of the VRA will be required to configure the third party service to limit access to the service. 
 
 
 ## NAT masquerade to Internet 
