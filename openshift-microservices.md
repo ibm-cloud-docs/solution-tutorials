@@ -166,7 +166,7 @@ A project is a collection of resources managed by a devops team.  An administrat
    Push successful
    ```
 1. Click back to the **Topology** and select your app again.
-1. Click on the url under **Routes** to open your application with the URL. Enter any strings for username and password, for instance `test:test` because the app is running in demo mode.
+1. Click on the url under **Routes** to open your application with the URL. Enter any strings for username and password, for instance `test:test` because the app is running in demonstration mode.
 
 The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Container Platform. To recap:
    * The "Example Health" Node.js application was deployed directly from GitHub into your cluster

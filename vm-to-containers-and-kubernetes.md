@@ -332,7 +332,7 @@ In this tutorial, you learned the following:
 ## Put everything learned to practice, run the JPetStore app in your cluster
 {: #runthejpetstore}
 
-To put everything you've learned in practice, follow the [demo](https://github.com/ibm-cloud/ModernizeDemo/) to run the **JPetStore** app on your cluster and apply the concepts learned. The JPetStore app has some extended functionality to allow you to extend an app in Kubernetes by IBM Watson services running as a separate microservice.
+To put everything you've learned in practice, follow the [demonstration](https://github.com/ibm-cloud/ModernizeDemo/) to run the **JPetStore** app on your cluster and apply the concepts learned. The JPetStore app has some extended functionality to allow you to extend an app in Kubernetes by IBM Watson services running as a separate microservice.
 
 ## Related Content
 {: #related}
