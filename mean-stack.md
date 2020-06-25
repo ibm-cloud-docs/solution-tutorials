@@ -57,7 +57,7 @@ This tutorial requires:
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
 In addition, make sure you [install Node.js](https://nodejs.org/).
@@ -167,6 +167,6 @@ To remove resource, follow these steps:
 
 {: #related}
 
-- Set up source control and [continuous delivery](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#devops).
-- Secure web application across [multiple locations](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp).
-- Create, secure and manage [REST APIs](https://{DomainName}/docs/tutorials?topic=solution-tutorials-create-manage-secure-apis#create-manage-secure-apis).
+- Set up source control and [continuous delivery](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#devops).
+- Secure web application across [multiple locations](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp).
+- Create, secure and manage [REST APIs](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-create-manage-secure-apis#create-manage-secure-apis).

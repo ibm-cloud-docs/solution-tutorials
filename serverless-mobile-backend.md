@@ -25,7 +25,7 @@ In this tutorial, you will learn how to use {{site.data.keyword.openwhisk}} alon
 
 Not all mobile developers have experience managing server-side logic, or a server to start with. They would prefer to focus their efforts on the app they are building. Now what if they could reuse their existing development skills to write their mobile backend?
 
-{{site.data.keyword.openwhisk_short}} is a serverless event-driven platform. As [highlighted in this example](https://{DomainName}/docs/tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp), the actions you deploy can easily be turned into HTTP endpoints as *web actions* to build a web application backend API. A web application being a client to the REST API, it is easy to take this example a step further and apply the same approach to build a backend for a mobile app. And with {{site.data.keyword.openwhisk_short}}, mobile developers can write the actions in the same language used for their mobile app, Java for Android, and Swift for iOS.
+{{site.data.keyword.openwhisk_short}} is a serverless event-driven platform. As [highlighted in this example](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp), the actions you deploy can easily be turned into HTTP endpoints as *web actions* to build a web application backend API. A web application being a client to the REST API, it is easy to take this example a step further and apply the same approach to build a backend for a mobile app. And with {{site.data.keyword.openwhisk_short}}, mobile developers can write the actions in the same language used for their mobile app, Java for Android, and Swift for iOS.
 
 This tutorial is configurable based on your target platform. You are currently viewing the documentation for the **iOS / Swift** version of this tutorial. Use the tab at the top of this documentation to select the **Android / Java** version of this tutorial.
 {: swift}
@@ -79,7 +79,7 @@ This tutorial requires:
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
 Additionally you will need the following software and accounts:
@@ -96,7 +96,7 @@ Additionally you will need the following software and accounts:
    3. Bash shell, cURL
    {: swift}
 
-In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic {{site.data.keyword.mobilepushshort}} tutorial for either [Android](https://{DomainName}/docs/tutorials?topic=solution-tutorials-android-mobile-push-analytics#android-mobile-push-analytics) or [iOS](https://{DomainName}/docs/tutorials?topic=solution-tutorials-ios-mobile-push-analytics#ios-mobile-push-analytics) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
+In this tutorial, you will configure push notifications for the application. The tutorial assumes you have completed the basic {{site.data.keyword.mobilepushshort}} tutorial for either [Android](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-android-mobile-push-analytics#android-mobile-push-analytics) or [iOS](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#ios-mobile-push-analytics) and you are familiar with the configuration of Firebase Cloud Messaging or Apple Push Notification Service.
 {:tip}
 
 For Windows 10 users to work with the command line instructions, we recommend installing the Windows Subsystem for Linux and Ubuntu as described in [this article](https://msdn.microsoft.com/en-us/commandline/wsl/install-win10).
@@ -228,7 +228,7 @@ When a user submits a new feedback, the application will analyze this feedback a
 1. Go to the [Apple Developer](https://developer.apple.com/) portal and Register an App ID.
 2. Create a development and distribution APNs SSL certificate.
 3. Create a development provisioning profile.
-4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/tutorials?topic=solution-tutorials-ios-mobile-push-analytics#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
+4. Configure the {{site.data.keyword.mobilepushshort}} service instance on {{site.data.keyword.Bluemix_notm}}. Refer to [Obtain APNs credentials and configure {{site.data.keyword.mobilepushshort}} service](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-ios-mobile-push-analytics#obtain-apns-credentials-and-configure-push-notifications-service-instance-) for detailed steps.
 {: swift}
 
 ## Deploy a serverless backend

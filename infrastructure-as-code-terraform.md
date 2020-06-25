@@ -55,7 +55,7 @@ This tutorial requires:
 * and `git` to clone source code repository.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
 In addition, contact your Infrastructure master user to get the following permissions:
@@ -203,5 +203,5 @@ Delete resources using the following command:
 - [Terraform](https://www.terraform.io/)
 - [{{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/services/cloud-object-storage?topic=cloud-object-storage-about-ibm-cloud-object-storage#about-ibm-cloud-object-storage)
 - [{{site.data.keyword.Bluemix_notm}} Provider for Terraform](https://{DomainName}/docs/terraform?topic=terraform-tf-provider)
-- [Accelerate delivery of static files using a CDN - {{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn)
+- [Accelerate delivery of static files using a CDN - {{site.data.keyword.cos_full_notm}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn)
 
