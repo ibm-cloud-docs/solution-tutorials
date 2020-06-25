@@ -149,7 +149,7 @@ Navigate to **VPC** and **Subnets** under **Network** on the left pane and **REP
 {: #install-configure-web-server-vsis}
 
 
-Follow the steps mentioned in [securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.  One bastion host in each VPC will be required.
+Follow the steps mentioned in [securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) for secured maintenance of the servers using a bastion host which acts as a `jump` server and a maintenance security group.  One bastion host in each VPC will be required.
 {:tip}
 
 Once you successfully SSH into the server provisioned in subnet of **zone 1** of **region 1**,

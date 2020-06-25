@@ -47,14 +47,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 ## Architecture
 {: #architecture}
 
-In this tutorial, you will deploy the configuration introduced in another tutorial, [Public frontend and private backend in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
+In this tutorial, you will deploy the configuration introduced in another tutorial, [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend). You will provision a frontend server accessible from the public Internet talking to a backend server with no Internet connectivity.
 
 <p style="text-align: center;">
 
   ![Architecture of Public frontend and private backend in a Virtual Private Cloud](images/solution40-vpc-public-app-private-backend/Architecture.png)
 </p>
 
-The configuration also includes [a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned without a public IP address:
+The configuration also includes [a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server) acting as a jump server allowing secure connection to instances provisioned without a public IP address:
 
 <p style="text-align: center;">
 
@@ -192,7 +192,7 @@ Based on whether the host has internet connectivity, the script modifies the `in
 
 There may be data and software that is available on the filesystem of your on-premise system or CI/CD pipeline that needs to be uploaded to the virtual server instance and then executed.
 
-In such cases, you can use the SSH connection to the server to upload files with `scp` and then execute scripts on the server with `ssh`. The scripts could also retrieve software installers from the Internet, or from your on-premise systems assuming you have established a connection [such as a VPN](/docs/tutorials?topic=solution-tutorials-vpc-site2site-vpn) between your on-premise systems and the cloud.
+In such cases, you can use the SSH connection to the server to upload files with `scp` and then execute scripts on the server with `ssh`. The scripts could also retrieve software installers from the Internet, or from your on-premise systems assuming you have established a connection [such as a VPN](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-site2site-vpn) between your on-premise systems and the cloud.
 
 The tutorial code contains a script named [`uploaded.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh) which will be uploaded from your workstation to the virtual server instances (manually or through automation like Terraform and Ansible).
 
@@ -203,7 +203,7 @@ In the next sections, you will use the script [test_provision.bash](https://gith
 
 The {{site.data.keyword.Bluemix_notm}} CLI provides commands to interact with all the resources you can create in the {{site.data.keyword.Bluemix_notm}}.
 
-This section uses a shell script found in the [Public frontend and private backend in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups.
+This section uses a shell script found in the [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend) tutorial to provision VPC resources including subnets, frontend and backend virtual server instances, security groups.
 
 ### Before you begin
 {: #cli-before-you-begin}
@@ -662,6 +662,6 @@ Now that Terraform has deployed resources and Ansible installed the software, yo
 ## Related content
 {: #related}
 
-- [Public frontend and private backend in a Virtual Private Cloud](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-- [Deploy a LAMP stack using Terraform](/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
+- [Public frontend and private backend in a Virtual Private Cloud](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
+- [Deploy a LAMP stack using Terraform](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-infrastructure-as-code-terraform)
 

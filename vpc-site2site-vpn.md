@@ -77,7 +77,7 @@ This tutorial requires:
 * `git` to clone source code repository.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
 In addition:
@@ -618,7 +618,7 @@ When using the console, you may need to refresh your browser to see updated stat
 Want to add to or extend this tutorial? Here are some ideas:
 
 - Add a [load balancer](/docs/vpc-on-classic-network?topic=vpc-on-classic-network---using-load-balancers-in-ibm-cloud-vpc) to distribute inbound microservice traffic across multiple instances.
-- Deploy the [application on a public server, your data and services on a private host](/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend).
+- Deploy the [application on a public server, your data and services on a private host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend).
 
 
 ## Related content
@@ -626,4 +626,4 @@ Want to add to or extend this tutorial? Here are some ideas:
 
 - [IBM Cloud CLI plugin for VPC Reference](/docs/vpc-on-classic?topic=vpc-on-classic-vpc-reference)
 - [VPC using the REST APIs](/docs/vpc-on-classic?topic=vpc-on-classic-creating-a-vpc-using-the-rest-apis)
-- Solution tutorial: [Securely access remote instances with a bastion host](/docs/tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
+- Solution tutorial: [Securely access remote instances with a bastion host](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
