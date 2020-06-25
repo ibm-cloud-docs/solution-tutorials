@@ -136,7 +136,7 @@ Cloud Foundry offers the capability to achieve deployment of a multi-region arch
 
 ![CF-Architecture](images/solution39/CF2-Architecture.png)
 
-The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp) tutorial guides you through the deployment of a similar architecture.
+The same application is deployed in multiple regions and a global load balancer routes traffic to the closest and healthy region. The [**Secure web application across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#multi-region-webapp) tutorial guides you through the deployment of a similar architecture.
 
 ### Kubernetes
 
@@ -152,7 +152,7 @@ The Kubernetes multi-region architecture looks like this.
 4. End-users access the application.
 5. {{site.data.keyword.cis_full_notm}} is configured to intercept requests to the application and to distribute the load across the clusters. In addition, DDoS Protection and Web Application Firewall are enabled to protect the application from common threats. Optionally assets like images, CSS files are cached.
 
-The tutorial [**Resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis) walks you through the steps to deploy such architecture.
+The tutorial [**Resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis) walks you through the steps to deploy such architecture.
 
 ### {{site.data.keyword.openwhisk_short}}
 
@@ -165,7 +165,7 @@ The tutorial [**Resilient and secure multi-region Kubernetes clusters with {{sit
 3. Certificate Manager provides the API with its SSL certificate. The traffic is encrypted end-to-end.
 4. The API is implemented with Cloud Functions.
 
-Find out how to deploy this architecture by following the tutorial [**Deploy serverless apps across multiple regions**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-serverless#multi-region-serverless).
+Find out how to deploy this architecture by following the tutorial [**Deploy serverless apps across multiple regions**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless#multi-region-serverless).
 
 ### Virtual server instances on VPC Infrastructure
 {{site.data.keyword.vsi_is_full}} offer the capability to achieve a multi-region architecture. You can provision instances in many available zones on {{site.data.keyword.cloud_notm}}.
@@ -176,7 +176,7 @@ The below architecture demonstrates deploying isolated workloads by provisioning
 
 ![VPC-Architecture](images/solution41-vpc-multi-region/Architecture.png)
 
-The tutorial [**Deploy isolated workloads across multiple locations and zones**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-vpc-multi-region) implements this architecture.
+The tutorial [**Deploy isolated workloads across multiple locations and zones**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) implements this architecture.
 
 ### {{site.data.keyword.baremetal_short}} and {{site.data.keyword.virtualmachinesshort}} on Classic Infrastructure
 
@@ -198,7 +198,7 @@ The components required for such architecture:
 4. Databases are deployed on a virtual server. Backup is enabled and replication is set up between regions. The alternative would be use a database-as-service, a topic discussed later in the tutorial.
 5. File storage to store the application images and files, File storage offers the capability to take a snapshot at a given time and date, this snapshot then can be reused within another region, something in which you would do manually.
 
-The tutorial [**Use Virtual Servers to build highly available and scalable web app**](https://{DomainName}/docs/tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#highly-available-and-scalable-web-application) implements this architecture.
+The tutorial [**Use Virtual Servers to build highly available and scalable web app**](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#highly-available-and-scalable-web-application) implements this architecture.
 
 ## Databases and application files
 {: #databaseservices}
@@ -325,7 +325,7 @@ Many of the services provide stateless APIs and offer high-availability through 
 
 - [{{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/infrastructure/cis?topic=cis-getting-started)
 - [Improving App Availability with Multizone Clusters](https://www.ibm.com/cloud/blog/announcements/improving-app-availability-multizone-clusters)
-- [Cloud Foundry, secure web application across multiple regions](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-webapp#secure-web-application-across-multiple-regions)
-- [Cloud Functions, deploy serverless apps across multiple regions](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-serverless#deploy-serverless-apps-across-multiple-regions)
-- [Kubernetes, resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-k8s-cis#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services)
-- [Virtual Servers, build highly available and scalable web app](https://{DomainName}/docs/tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#use-virtual-servers-to-build-highly-available-and-scalable-web-app)
+- [Cloud Foundry, secure web application across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-webapp#secure-web-application-across-multiple-regions)
+- [Cloud Functions, deploy serverless apps across multiple regions](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-serverless#deploy-serverless-apps-across-multiple-regions)
+- [Kubernetes, resilient and secure multi-region Kubernetes clusters with {{site.data.keyword.cis_full_notm}}](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#resilient-and-secure-multi-region-kubernetes-clusters-with-cloud-internet-services)
+- [Virtual Servers, build highly available and scalable web app](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-highly-available-and-scalable-web-application#use-virtual-servers-to-build-highly-available-and-scalable-web-app)

@@ -349,7 +349,7 @@ In production applications, encrypt information such as URLs, usernames and pass
 Congratulations, you have built a data lake using {{site.data.keyword.cos_short}}. Below are additional suggestions to enhance your data lake.
 
 - Experiment with additional datasets using SQL Query
-- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://{DomainName}/docs/tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics)
+- Stream data from multiple sources into your data lake by completing [Big data logs with streaming analytics and SQL](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-big-data-log-analytics#big-data-log-analytics)
 - Edit the dashboard application's code to store dashboard specifications to [{{site.data.keyword.cloudant_short_notm}}](https://{DomainName}/catalog/services/cloudant) or {{site.data.keyword.cos_short}}
 - Create an [{{site.data.keyword.appid_full_notm}}](https://{DomainName}/catalog/services/app-id) service instance to enable security in the dashboard application
 

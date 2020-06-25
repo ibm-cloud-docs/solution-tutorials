@@ -22,7 +22,7 @@ lasttested: "2019-04-23"
 
 In today’s world of web based IT applications and services, few applications exist in isolation. Developers have come to expect access to services on the Internet, whether it is open-source application code and updates or ‘third party’ services providing application functionality via REST APIs. Network Address Translation (NAT) masquerade, is a commonly used approach to securing the access to Internet hosted service from  private networks. In NAT masquerade, private IP addresses are translated to the IP address of the out-bound public interface in a many-to-one relationship, shielding the private IP address from public view.  
 
-This tutorial presents the setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the [Isolating workloads with a secure private network](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial, adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
+This tutorial presents the setup of Network Address Translation (NAT) masquerade on a Virtual Router Appliance (VRA) to connect to a secured subnet on the {{site.data.keyword.Bluemix_notm}} private network. It builds on the [Isolating workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial, adding a Source NAT (SNAT) configuration, where the source address is obfuscated and firewall rules are used to secure out-bound traffic. More complex NAT configurations can be found in the [supplemental VRA documentation]( https://{DomainName}/docs/infrastructure/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
 {:shortdesc}
 
 ## Objectives
@@ -54,7 +54,7 @@ This tutorial may incur costs. The VRA is only available on a monthly pricing pl
 ## Before you begin
 {: #prereqs}
 
-This tutorial enables hosts in the secure private network enclosure created by the [Isolate workloads with a secure private network](https://{DomainName}/docs/tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to access public Internet services. That tutorial must be completed first. 
+This tutorial enables hosts in the secure private network enclosure created by the [Isolate workloads with a secure private network](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure#secure-network-enclosure) tutorial to access public Internet services. That tutorial must be completed first. 
 
 ## Document Internet services
 {: #Document_outbound}

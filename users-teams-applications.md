@@ -200,14 +200,14 @@ Congratulations, your application can now safely be deployed from dev to product
 
 * Add [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights) to your pipeline to perform quality control during deployments.
 * Review team member coding contributions and the interactions between developers with [{{site.data.keyword.DRA_short}}](https://{DomainName}/catalog/services/devops-insights).
-* Follow the tutorial [Plan, create and update deployment environments](https://{DomainName}/docs/tutorials?topic=solution-tutorials-plan-create-update-deployments#plan-create-update-deployments) to automate the deployment of your environments.
+* Follow the tutorial [Plan, create and update deployment environments](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-plan-create-update-deployments#plan-create-update-deployments) to automate the deployment of your environments.
 
 ## Related information
 
 * [Getting Started with {{site.data.keyword.iamshort}}](https://{DomainName}/docs/iam?topic=iam-getstarted#getstarted)
 * [Best practices for organizing resources in a resource group](https://{DomainName}/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)
-* [Analyze logs and monitor health with LogDNA and Sysdig](https://{DomainName}/docs/tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
-* [Continuous Deployment to Kubernetes](https://{DomainName}/docs/tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
+* [Analyze logs and monitor health with LogDNA and Sysdig](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
+* [Continuous Deployment to Kubernetes](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
 * [Hello Helm toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
 * [Develop a microservices application with Kubernetes and Helm](https://github.com/open-toolchain/microservices-helm-toolchain)
 * [Grant permissions to a user to view logs in LogDNA](/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-work_iam)
