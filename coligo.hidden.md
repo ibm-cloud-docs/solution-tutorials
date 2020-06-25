@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2020
-lastupdated: "2020-06-23"
+lastupdated: "2020-06-25"
 lasttested: "2020-06-22"
 
 ---
@@ -189,7 +189,7 @@ In this section, you will provision the required {{site.data.keyword.cos_short}}
    <!--3. Expand the `for-coligo` credentials, copy and **save** the credentials for future reference.-->
 3. Create a **Custom** bucket named `<your-initials>-coligo`,
    1. Select **Cross Region** resiliency
-   2. Select a Location preferably `Dallas`
+   2. Select a Location near to you
    3. Select a **Standard** storage class for high performance and low latency.
    4. Click **Create bucket**
 4. On the left pane under **Endpoint**, Select **Cross region** resiliency and select a Location near to you.
@@ -295,7 +295,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
 
 1. Before further testing the application, let's create a binding for {{site.data.keyword.cos_short}} service with a prefix `COS_JOB` to be used with the jobs in the subsequent steps,
    ```sh
-   ibmcloud coligo application bind --name backend-jobdef \
+   ibmcloud coligo jobdef bind --name backend-jobdef \
    --service-instance coligo-cos \
    --service-credential cos-for-coligo \
    --prefix COS_JOB
@@ -303,7 +303,7 @@ Jobs, unlike applications which react to incoming HTTP requests, are meant to be
    {:pre}
 2. Similarly, let's bind {{site.data.keyword.visualrecognitionshort}} service with a prefix `VR_JOB` to classify the uploaded images,
    ```sh
-   ibmcloud coligo application bind --name backend-jobdef \
+   ibmcloud coligo jobdef bind --name backend-jobdef \
    --service-instance coligo-vr \
    --service-credential vr-for-coligo \
    --prefix VR_JOB
