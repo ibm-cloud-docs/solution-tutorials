@@ -135,7 +135,7 @@ One of the most often used services is {{site.data.keyword.cos_short}}. After yo
   ![control encryption in {{site.data.keyword.cos_short}}](images/solution51-extended-app-security/Sol51_COScrypto.png)
 </p>
 
-A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](https://cloud.ibm.com/docs/vpc?topic=vpc-block-storage-vpc-encryption) to encrypt VPC boot and data volumes.
+A similar flow is available for [{{site.data.keyword.block_storage_is_short}}](https://{DomainName}/docs/vpc?topic=vpc-block-storage-vpc-encryption) to encrypt VPC boot and data volumes.
 
 ## Conclusions
 
