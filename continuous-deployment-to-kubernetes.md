@@ -76,7 +76,7 @@ You will find instructions to download and install these tools for your operatin
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
-- and [understand the basics of Kubernetes](https://kubernetes.io/docs/solution-tutorials/kubernetes-basics/).
+- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
 <!--##istutorial#-->
 ## Create development Kubernetes cluster
