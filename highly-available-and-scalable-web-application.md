@@ -672,7 +672,7 @@ To implement this architecture, you would need to do the following in location t
 
 - Repeat all of the above previous steps in the new location.
 - Setup a database replication between the two MySQL servers across locations.
-- Configure {{site.data.keyword.cis_full_notm}} to distribute traffic between the locations to healthy servers as described in [this other tutorial](https://{DomainName}/docs/tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis).
+- Configure {{site.data.keyword.cis_full_notm}} to distribute traffic between the locations to healthy servers as described in [this other tutorial](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-multi-region-k8s-cis#multi-region-k8s-cis).
 
 ## Remove resources
 {: #removeresources}
@@ -686,6 +686,6 @@ To implement this architecture, you would need to do the following in location t
 {: #related}
 
 - To see a video presentation of this solution, refer to [Building HA VSI with Load Balancer on IBM Cloud Classic Infrastructure](https://youtu.be/Dk9mVkOkCg0){: new_window}
-- Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](https://{DomainName}/docs/tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn) for a tutorial implementing a Content Delivery Network.
+- Static content served by your application may benefit from a Content Delivery Network in front of the Load Balancer to reduce the load on your backend servers. Refer to [Accelerate delivery of static files using a CDN - Object Storage](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn#static-files-cdn) for a tutorial implementing a Content Delivery Network.
 - In this tutorial we provision two servers, more servers could be added automatically to handle additional load. [Auto Scale](https://{DomainName}/docs/vsi?topic=virtual-servers-about-auto-scale) provides you with the ability to automate the manual scaling process associated with adding or removing virtual servers to support your business applications.
 - To increase availability and disaster recovery options, File Storage can be configured to perform [automatic regular snapshots](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-snapshots#working-with-snapshots) of the content and [replication](https://{DomainName}/docs/infrastructure/FileStorage?topic=FileStorage-replication#working-with-replication) to another data center.
