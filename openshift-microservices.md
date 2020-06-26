@@ -266,7 +266,7 @@ Red Hat {{site.data.keyword.openshiftshort}} on IBM Cloud comes with [Grafana](h
 5. Notice the CPU and Memory usage for your application. In production environments, this is helpful for identifying the average amount of CPU or Memory your application uses, especially as it can fluctuate through the day.  Auto-scaling is one way to handle fluctuations and will be demonstrated a little later.
    <p style="width: 50%;">
 
-   ![Grafana also project](images/solution55-openshift-microservices/ocp43-grafana-cpu.png)
+   ![Grafana CPU view](images/solution55-openshift-microservices/ocp43-grafana-cpu.png)
    </p>
 5. There is a lot more to investigate with Grafana, but instead the fully managed cloud {{site.data.keyword.la_short}} service will be covered in detail later.  {{site.data.keyword.la_short}} provides log analysis for {{site.data.keyword.openshiftshort}} and the other IBM Cloud Services in a single managed service.
 
