@@ -312,49 +312,19 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    {: pre}
 1. Configure the newly created data volume on the VSI.  
 
-   - Capture the volume name
    ```sh
    new_bsv=$(echo $(parted -l 2>&1) | awk 'NR==1{print $2}' | sed 's/:$//')
-   ```
-   {: pre}   
-
-   - Create a partition on the disk.
-   ```sh
    parted $new_bsv mklabel gpt
    parted -a opt $new_bsv mkpart primary ext4 0% 100%
    new_part=${new_bsv}1
-   ```
-   {: pre}
-
-   - Create the file system, note that this command takes a few seconds to run, wait for a prompt to return.
-   ```sh
    mkfs.ext4 -L lamp-data ${new_part}
-   ```
-   {: pre}
-
-   - Create a partition name data.
-   ```sh
    mkdir /data
-   ```
-   {: pre}
-   
-   -Mount the storage with the partition name.
-   ```sh
    mount ${new_part} /data
-   ```
-   {: pre}
-
-   - Append the following line to the end of /etc/fstab
-   ```sh
    echo "${new_part} /data ext4 defaults,relatime 0 0" | tee -a /etc/fstab
-   ```
-   {: pre}
-
-   - mount the drive
-   ```sh
    mount -a
    ```
-   {: pre}
+   {: pre}   
+
 
 ### Configure Apache to use the new /data file system
 
