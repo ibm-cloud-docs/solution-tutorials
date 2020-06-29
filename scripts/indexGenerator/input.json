@@ -758,6 +758,22 @@
             "Knative",
             "Kubernetes"
           ]
+        },
+        {
+          "name": "PHP web application on a LAMP Stack in VPC Gen2",
+          "url": "lamp-stack-on-vpc.hidden.html",
+          "description": "Create an Ubuntu Linux virtual server, with Apache web server, MySQL, and PHP. Then install and configure the WordPress open source application on the LAMP stack.",
+          "imgSrc": "images/solution4/Architecture.png",
+          "tags": [
+            "VPC",
+            "LAMP Stack",
+            "Ubuntu",
+            "Linux",
+            "Apache",
+            "MySQL",
+            "PHP",
+            "WordPress"
+          ]
         }
       ]
     },
