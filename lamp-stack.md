@@ -56,7 +56,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 2. Obtain your VPN Access credentials in [your user page under the Users list](https://{DomainName}/iam#/users).
 3. Log in to the VPN through [the web interface](https://www.softlayer.com/VPN-Access) or use a VPN client for [Linux](/docs/infrastructure/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-mac-osx) or [Windows](/docs/infrastructure/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
 
-   For the VPN client use the FQDN of a single data center VPN access point from the [VPN web access page](https://www.softlayer.com/VPN-Access), of the form *vpn.xxxnn.softlayer.com* as the Gateway address.
+   For the VPN client, use the FQDN of a single data center VPN access point from the [Available VPN endpoints page](https://www.ibm.com/cloud/vpn-access), such as vpn.ams01.softlayer.com as the gateway address.
    {:tip}
 
 ## Create services

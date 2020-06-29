@@ -74,7 +74,7 @@ In this tutorial, the network enclosure created is not visible on the public int
 2. Obtain your VPN Access credentials by selecting your user in the [Users list](https://{DomainName}/iam#/users).
 3. Log in to the VPN through [the web interface](https://www.ibm.com/cloud/vpn-access) or use a VPN client for [Linux](/docs/iaas-vpn?topic=VPN-setup-ssl-vpn-connections), [macOS](/docs/iaas-vpn?topic=iaas-vpn-connect-ssl-vpn-mac-osx) or [Windows](/docs/iaas-vpn?topic=VPN-connect-ssl-vpn-windows7).
 
-   For the VPN client, use the FQDN of a single data center VPN access point from the [Available VPN endpoints page](https://{DomainName}/docs/iaas-vpn?topic=iaas-vpn-available-vpn-endpoints), of the form *vpn.xxxnn.softlayer.com* as the gateway address.
+   For the VPN client, use the FQDN of a single data center VPN access point from the [Available VPN endpoints page](https://www.ibm.com/cloud/vpn-access), such as vpn.ams01.softlayer.com as the gateway address.
    {:tip}
 
 ### Check account permissions
