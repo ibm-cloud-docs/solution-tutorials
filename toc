@@ -65,6 +65,7 @@ Solution Tutorials
     Work In Progress
         solution-template.md
         image-classification-code-engine.hidden.md
+        lamp-stack-on-vpc.hidden.md
 
     {: .topicgroup}
     Identity and Access Management
