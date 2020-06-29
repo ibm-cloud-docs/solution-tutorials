@@ -71,7 +71,7 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI,
-   * Code Engine plugin (`codeengine`),
+   * Coligo plugin (`coligo`),
 * `kubectl` to interact with Kubernetes clusters,
 
 <!--##istutorial#-->
