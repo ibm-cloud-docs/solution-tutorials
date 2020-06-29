@@ -749,12 +749,12 @@
           "imgSrc": ""
         },
         {
-          "name": "Image Classification with Coligo",
-          "url": "coligo.hidden.html",
-          "description": "Provision a Coligo cluster and deploy an image processing application",
-          "imgSrc": "images/solution54-coligo-hidden/architecture_diagram.png",
+          "name": "Image Classification with Code Engine",
+          "url": "image-classification-code-engine.hidden.html",
+          "description": "Create a Code Engine project and deploy an image classification application",
+          "imgSrc": "images/solution54-codeengine-hidden/architecture_diagram.png",
           "tags": [
-            "Coligo",
+            "code engine",
             "Knative",
             "Kubernetes"
           ]
