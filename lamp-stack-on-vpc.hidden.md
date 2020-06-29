@@ -285,16 +285,17 @@ If you would like to configure the logging service follow the steps outlined in 
 {: #configure_data_volume}
 The VSI was created with a provider managed encrypted **Boot** volume of 100 GB, however if you delete that VSI any data you want to safeguard will need to get moved before you delete the VSI. An alternative is to create a **Data** volume which can be persisted even if the VSI is deleted.  If that is your desired outcome, follow the steps outlined below to create a data volume and attach it to your VSI.
 
-In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two services:
-- a FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect).  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](https://{DomainName}/docs/key-protect?topic=key-protect-provision) topic in the documentation.
-- a FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation.
-{:tip}
-
 1. Create a data volume configuration file.
    ```sh
    VOLUME_ID=$(ibmcloud is volume-create volume-lamp-1 10iops-tier us-south-1 --capacity 100 --resource-group-name default --json | jq -r '.id')
    ```
    {:pre}
+
+   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services:
+   a FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect).  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](https://{DomainName}/docs/key-protect?topic=key-protect-provision) topic in the documentation.
+   a FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation.
+   While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
+   {:tip}
 1. Capture the ID of the VSI you created earlier by listing all instances 
    ```sh
    ibmcloud is instances
