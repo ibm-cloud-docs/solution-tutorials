@@ -123,6 +123,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    {:pre}
 
 ## Deploying an application
+{: #deploy}
 
 In this section, you'll deploy a Node.js Express application named `patient-health-frontend`, a user interface for a patient health records system to demonstrate {{site.data.keyword.openshiftshort}} features. You can find the sample application GitHub repository here: https://github.com/IBM-Cloud/patient-health-frontend
 
@@ -174,6 +175,7 @@ The `Node.js` app has been deployed to {{site.data.keyword.openshiftshort}} Cont
    * A **Build Configuration** was created - a new commit can be both built and deployed by clicking **Start Build** in the Builds section of the application details.
 
 ## Logging and monitoring
+{: #logging-monitoring}
 
 In this section, you will explore the out-of-the-box logging and monitoring capabilities that are offered in {{site.data.keyword.openshiftshort}}.
 
@@ -252,6 +254,7 @@ When deploying new apps, making configuration changes, or simply inspecting the 
 Almost all actions in {{site.data.keyword.openshiftshort}} result in an event being fired in this view. As it is updated real-time, it's a great way to track changes to state.
 
 ## Metrics and dashboards
+{: #metrics}
 
 In this section explore the third-party monitoring and metrics dashboards included in {{site.data.keyword.openshiftshort}}.
 
@@ -293,6 +296,7 @@ Navigating back to the {{site.data.keyword.openshiftshort}} console, you can als
 5. There is a lot more to investigate with Prometheus, but instead the fully managed {{site.data.keyword.mon_short}} service will be covered later.
 
 ## Scaling the application
+{: #scaling}
 
 In this section, the metrics observed in the previous section can be used to scale the UI application in response to load.
 
@@ -410,7 +414,8 @@ You can also can delete and create resources like autoscalars with the command l
    {:pre}
 1. Revisit the **Workloads > Deployments** overview page for `patient-health-frontend` deployment and watch it work.
 
-## Cloudant DB with IBM Cloud Operator and Binding
+## Using the IBM Cloud Operator to create a Cloudant DB
+{: #operator}
 
 Currently, the Example Health `patient-health-frontend` app is using a dummy in-memory patient. In this exercise, you'll create a Cloudant service in IBM Cloud and populate it with patient data. Cloudant is a NoSQL database-as-a-service, based on CouchDB.
 
@@ -614,6 +619,7 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 3. Click through the different patients you can log-in as.
 
 ## Configure {{site.data.keyword.la_short}} agent for {{site.data.keyword.openshiftshort}}  cluster
+{: #configure-logdna}
 
 The {{site.data.keyword.la_short}} agent is responsible for collecting and forwarding logs to your IBM Log Analysis with LogDNA instance. After you provision an instance of IBM Log Analysis with LogDNA, you must configure a LogDNA agent for each log source that you want to monitor.
 
@@ -683,6 +689,7 @@ For example,
    ```
 
 ## Analyze your logs with {{site.data.keyword.la_short}}
+{: #use-logdna}
 
 IBM Log Analysis with {{site.data.keyword.la_short}} is a co-branded service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with {{site.data.keyword.la_short}} is operated by {{site.data.keyword.la_short}} in partnership with IBM. [Learn more](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started).
 
@@ -880,6 +887,7 @@ Find more about IBM Log Analysis with {{site.data.keyword.la_short}} in the [IBM
 {:note}
 
 ## Configure {{site.data.keyword.monitoringshort}}
+{: #configure-sysdig}
 
 The IBM Cloud provides a fully managed monitoring service.  Lets create a monitoring instance and then integrate it with your {{site.data.keyword.openshiftshort}} cluster using a script that creates a project and privileged service account for the {{site.data.keyword.monitoringshort_notm}} agent.
 
@@ -929,6 +937,7 @@ Example output:
    ```
 
 ## Monitor your Cluster with SysDig
+{: #use-sysdig}
 
 IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is a co-branded cloud-native, and container- intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams, and developers full stack telemetry with advanced features to monitor and troubleshoot performance issues, define alerts, and design custom dashboards. IBM Cloud Monitoring with {{site.data.keyword.monitoringshort_notm}} is operated by Sysdig in partnership with IBM. [Learn more](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Sysdig-getting-started).
 
