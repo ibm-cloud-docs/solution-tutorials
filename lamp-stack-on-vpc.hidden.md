@@ -16,14 +16,14 @@ lasttested: "2019-06-29"
 # PHP web application on a LAMP Stack in VPC
 {: #lamp-stack-on-vpc}
 
-This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc). This combination of software - more commonly called a LAMP stack - is very popular and often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/) content management system.
+This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc). This combination of software - more commonly called a LAMP stack - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/) content management system.
 
 ## Objectives
 
-* Provision a virtual server instance (VSI) in a VPC
-* Install the latest Apache, MySQL and PHP version
-* Host a website or blog by installing and configuring WordPress
-* Configure logging and monitoring to detect outages and monitor for slow performance (optional)
+* Provision a virtual server instance (VSI) in a VPC.
+* Install the latest Apache, MySQL and PHP software.
+* Host a website or blog by installing and configuring WordPress.
+* Configure logging and monitoring to detect outages and monitor for slow performance (optional).
 
 ## Services used
 
@@ -35,10 +35,12 @@ This tutorial uses the following runtimes and services:
 This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}/estimator/review) to generate a cost estimate based on your projected usage.
 
 ## Architecture
-
+<p style="text-align: center;">
 ![Architecture diagram](images/solution56-lamp-stack-on-vpc-hidden/Architecture.png)
+</p>
 
 1. End user accesses the LAMP server running on a VPC using a web browser.
+2. The VSI is configured to use data from an encrypted Block Storage volume (optional).
 
 ## Before you begin
 
@@ -53,17 +55,17 @@ This tutorial requires:
    * `jq` to query JSON files,
    * `git` to clone source code repository,
 
-   <!--##istutorial#-->
-   If you prefer to walk through this tutorial using your local machine, make sure to install the tools listed above. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
-   {:tip}
-   <!--#/istutorial#-->
+<!--##istutorial#-->
+If you prefer to walk through this tutorial using your local machine, make sure to install the tools listed above. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+{:tip}
+<!--#/istutorial#-->
 
 ## Create services
 
 In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell) and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](https://{DomainName}/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
    
-   If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/vpc-lamp and follow the instructions in the README.md.
-   {:tip}
+If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/vpc-lamp and follow the instructions in the README.md.
+{:tip}
 
 1. From the [{{site.data.keyword.Bluemix_notm}} Console](https://{DomainName}), launch the [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell).
 1. You are automatically logged into one of the IBM Cloud regions, you can switch to a different region if desired by running the following command:
@@ -76,7 +78,7 @@ In this section, you will provision a VPC, Subnet, Security Group and a Virtual 
    ibmcloud is target --gen 2
    ```
    {:pre}
-1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accepting the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys). 
+1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accept the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](https://{DomainName}/docs/vpc?topic=vpc-ssh-keys). 
    ```sh
    ssh-keygen -t rsa -b 4096
    ```
@@ -86,7 +88,7 @@ In this section, you will provision a VPC, Subnet, Security Group and a Virtual 
   {:tip}
 
    If you have an existing SSH key that you would like to re-use, you can upload it to your {{site.data.keyword.cloud-shell_short}} session instead.
-  {:tip}
+   {:tip}
 1. Add the SSH key to your account.
    ```sh
    SSHKEY_ID=$(ibmcloud is key-create sshkey-lamp-tutorial @$HOME/.ssh/id_rsa.pub --json --resource-group-name default | jq -r '.id')
@@ -133,7 +135,7 @@ In this section, you will provision a VPC, Subnet, Security Group and a Virtual 
 
 1.  Create virtual server instance
    ```sh
-   NIC_ID=$(ibmcloud is instance-create vsi-lamp-1 $VPC_ID us-south-1 cx2-2x4 $SUBNET_ID --image-id $IMAGE_ID --key-ids $SSHKEY_ID --security-group-ids $SG_ID --json | jq -r '.primary_network_interface.id')
+   NIC_ID=$(ibmcloud is instance-create vsi-lamp-1 $VPC_ID us-south-1 cx2-2x4 $SUBNET_ID --image-id $IMAGE_ID --key-ids $SSHKEY_ID --security-group-ids $SG_ID --resource-group-name default --json | jq -r '.primary_network_interface.id')
    ```
    {:pre}
 1. Reserve a Floating IP
@@ -157,10 +159,6 @@ In this section, you'll run commands to update Ubuntu package sources and instal
 1. Disable interactive prompts
 ```sh
 export DEBIAN_FRONTEND=noninteractive
-```
-
-1. It's advised to update the LAMP stack with the latest security patches and bug fixes periodically. Note the caret (^) at the end of the command.
-```sh
 apt update
 apt install apache2 -y
 apt install mysql-server -y
@@ -266,19 +264,19 @@ To use an existing domain name with your LAMP server, update the A record to poi
 
 ## Server monitoring and log management
 
-To ensure server availability and the best user experience, monitoring should be enabled on every production server. In this section, you'll explore the options that are available to monitor your VSI and capture logs in a central location for analysis.
+To ensure server availability and the best user experience, monitoring should be enabled on every production server. Several options are available to monitor your VSI and capture logs in a central location for analysis.
 
 ### Server monitoring
 
-You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.monitoringlong_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-ubuntu) documentation. 
+You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.mon_full_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](https://{DomainName}/docs/Monitoring-with-Sysdig?topic=Monitoring-with-Sysdig-ubuntu) documentation. 
 
 ### Server logging
 
-You can use IBM Log Analysis with LogDNA to manage system and application logs in the IBM Cloud.
+You can use {{site.data.keyword.la_full_notm}} to manage system and application logs in the IBM Cloud.
 
-IBM Log Analysis with LogDNA offers administrators, DevOps teams, and developers advanced features to filter, search, and tail log data, define alerts, and design custom views to monitor application and system logs
+{{site.data.keyword.la_full_notm}} offers administrators, DevOps teams, and developers advanced features to filter, search, and tail log data, define alerts, and design custom views to monitor application and system logs
 
-If you would like to configure the logging service follow the steps outlined in the [Managing Ubuntu logs with IBM Log Analysis with LogDNA](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-ubuntu)
+If you would like to configure the logging service follow the steps outlined in the [Managing Ubuntu logs with {{site.data.keyword.la_full_notm}}](https://{DomainName}/docs/Log-Analysis-with-LogDNA?topic=Log-Analysis-with-LogDNA-ubuntu)
 
 
 ## Configure a Data Volume (Optional)
@@ -291,9 +289,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```
    {:pre}
 
-   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services:
-   a FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect).  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](https://{DomainName}/docs/key-protect?topic=key-protect-provision) topic in the documentation.
-   a FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation.
+   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect).  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](https://{DomainName}/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services), see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://{DomainName}/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation.
    While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
    {:tip}
 1. Capture the ID of the VSI you created earlier by listing all instances 
@@ -301,9 +297,9 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ibmcloud is instances
    ```
    {:pre}   
-1. Attach the data volume to your existing VSI, by replacing the <VSI ID> in the command below with the ID for your VSI.
+1. Attach the data volume to your existing VSI, by replacing the <VSI_ID> in the command below with the ID for your VSI.
    ```sh
-   ibmcloud is instance-volume-attachment-add attachment-data-1 <VSI ID> $VOLUME_ID --auto-delete false --json
+   ibmcloud is instance-volume-attachment-add attachment-data-1 <VSI_ID> $VOLUME_ID --auto-delete false --json
    ```
    {:pre}
 1. Connect to the server with SSH.
