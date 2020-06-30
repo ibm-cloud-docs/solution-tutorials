@@ -60,23 +60,33 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereq}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * `dev` plugin,
-* a Docker engine,
-* `kubectl` to interact with Kubernetes clusters,
-* `helm` to deploy charts,
-* `git` to clone source code repository,
+* [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell),
+* The following tools are also required, however they come pre-installed in {{site.data.keyword.cloud-shell_notm}}:
+   * {{site.data.keyword.cloud_notm}} CLI,
+      * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+      * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+      * `dev` plugin,
+   * a Docker engine,
+   * `kubectl` to interact with Kubernetes clusters,
+   * `helm` to deploy charts,
+   * `git` to clone source code repository,
 * {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+If you prefer to walk through this tutorial using your local machine, make sure to install the tools listed above. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
+
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new {{site.data.keyword.cloud-shell_short}}.
+
+  ![](images/gettingstarted/cloud_shell.png)
+
+2. Your {{site.data.keyword.cloud-shell_short}} session is [short lived](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-shell-ui#multi-shell), any files you create inside of {{site.data.keyword.cloud-shell_notm}} should be saved in a safe location for future re-use. There is a download and upload file option in {{site.data.keyword.cloud-shell_short}} on the upper right section of the screen.
+
 
 <!--##istutorial#-->
 ## Create development Kubernetes cluster
@@ -116,8 +126,8 @@ To complete this tutorial you would need to select the **Paid** cluster of type 
 {{site.data.keyword.containershort_notm}} offers a selection of starter applications, these starter applications can be created using the `ibmcloud dev create` command or the web console. In this tutorial, we are going to use the web console. The starter application greatly cuts down on development time by generating application starters with all the necessary boilerplate, build and configuration code so that you can start coding business logic faster.
 
 1. From the [{{site.data.keyword.cloud_notm}} console](https://{DomainName}), use the left side menu option and select [App Development](https://{DomainName}/developer/appservice/dashboard).
-2. Under **Start from the Web**, section click on the **Get Started** button.
-3. Select the `Node.js with Express App` tile and then `Create app` to create a Node.js starter application.
+2. Under **Starter Kist**, section click on the **Get a Starter Kit** button.
+3. Select the `Node.js Express App` tile, click on **Get Started** and then `Create app` to create a Node.js starter application.
 4. Enter a unique **name** for the application such as `<your-initial>-mynodestarter` and select a resource group. Then, click **Create**.
 
 ## Configure DevOps delivery pipeline
@@ -129,9 +139,9 @@ Now that you successfully created the starter application, you can automate its 
 1. Select **{{site.data.keyword.containershort_notm}}** as the **Deployment target**.
 1. Provide an {{site.data.keyword.Bluemix_notm}} API Key. If you don't have one, create by clicking on **New**.
 1. Select a region and your cluster from the list.
-1. Select **Helm** as the **Deployment type**.
+1. Select **Helm** as the **Deployment type** and click on **Next**.
 1. Define a unique **DevOps toolchain name**.
-1. Select a region to create your toolchain in, and then select the resource group that provides access to your new toolchain.
+1. Select a region to create your toolchain in.
 1. Click **Create**.
 
 The toolchain will build your application and deploy it to the cluster.
@@ -141,10 +151,10 @@ The toolchain will build your application and deploy it to the cluster.
 5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
    ![](images/solution21/Logs.png)
 
-## Clone, build and run the application locally
+## Clone, build and run the application in {{site.data.keyword.cloud-shell_notm}}
 {: #cloneandbuildapp}
 
-In this section, you will use the starter app created in the earlier section, clone it to your local machine, modify the code and then build/run it locally.
+In this section, you will use the starter app, clone it to the {{site.data.keyword.cloud-shell_notm}} session you created earlier, modify the code and then build/run it.
 {: shortdesc}
 
 ### Clone the application
@@ -161,7 +171,7 @@ In this section, you will use the starter app created in the earlier section, cl
 
 4. Open the cloned repository in an IDE of your choice and navigate to `public/index.html`. Update the code by trying to change "Congratulations!" to something else and the save the file.
 
-### Build the application locally
+### Build the application
 You can build and run the application as you normally would using `mvn` for java local development or `npm` for node development.  You can also build a docker image and run the application in a container to ensure consistent execution locally and on the cloud. Use the following steps to build your docker image.
 {: shortdesc}
 
@@ -175,7 +185,7 @@ You can build and run the application as you normally would using `mvn` for java
    cd <project name>
    ```
    {: codeblock}
-3. Build the application locally.
+3. Build the application.
    ```
    ibmcloud dev build
    ```
@@ -183,7 +193,7 @@ You can build and run the application as you normally would using `mvn` for java
 
    This might take a few minutes to run as all the application dependencies are downloaded and a Docker image, which contains your application and all the required environment, is built.
 
-### Run the application locally
+### Run the application
 
 1. Run the container.
    ```
