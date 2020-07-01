@@ -63,21 +63,32 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} CLI,
-   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * `dev` plugin,
-* a Docker engine,
-* `kubectl` to interact with Kubernetes clusters,
-* `helm` to deploy charts.
+* [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell),
+* The following tools are also required, however they come pre-installed in {{site.data.keyword.cloud-shell_notm}}:
+   * {{site.data.keyword.cloud_notm}} CLI,
+      * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+      * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+      * `dev` plugin,
+   * a Docker engine,
+   * `kubectl` to interact with Kubernetes clusters,
+   * `helm` to deploy charts.
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+If you prefer to walk through this tutorial using your local machine, make sure to install the tools listed above. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
 <!--#/istutorial#-->
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
+
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new {{site.data.keyword.cloud-shell_short}}.
+
+  ![](images/gettingstarted/cloud_shell.png)
+
+2. Your {{site.data.keyword.cloud-shell_short}} session is [short lived](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-shell-ui#multi-shell), any files you create inside of {{site.data.keyword.cloud-shell_notm}} should be saved in a safe location for future re-use. There is a download and upload file option in {{site.data.keyword.cloud-shell_short}} on the upper right section of the screen.
+@dimitri-prosper
+ 
 
 <!--##istutorial#-->
 ## Create a Kubernetes cluster
@@ -94,16 +105,7 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
   - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 {: #create_cluster}
 
-- Gain access to your cluster as described on the Access tab of your cluster.
 
-  For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
-   {:tip}
-- Initialize the environment variable with the cluster name
-
-   ```bash
-   export MYCLUSTER=<CLUSTER_NAME>
-   ibmcloud ks cluster config --cluster ${MYCLUSTER}
-   ```
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -155,7 +157,7 @@ The `ibmcloud dev` tooling greatly cuts down on development time by generating a
 
    You may be asked to target an organization and a space, follow the instructions on the CLI
    {:tip}
-1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Web App with Eclipse MicroProfile and Java EE` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
+1. Select `Backend Service / Web App` > `Java - MicroProfile / JavaEE` > `Java Liberty App` to create a Java starter. (To create a Node.js starter instead, use `Backend Service / Web App` > `Node`> `Node.js Web App with Express.js (Web App)` )
 1. Enter a **unique name** for your application such as `<your-initials>kubeapp`.
 4. Select the **resource group** where your cluster has been created.
 1. Do not add additional services.
@@ -216,23 +218,24 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    docker ps
    ```
    {: pre}
-1. Build and tag (`-t`) the docker image
+1. Build, tag (`-t`) and push the docker image to your container registry on IBM Cloud
    ```sh
-   docker build . -t ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
-   ```
-   {: pre}
-1. Ensure your local Docker engine can push to the container registry.
-   ```bash
-   ibmcloud cr login
-   ```
-   {: pre}
-1. Push the docker image to your container registry on IBM Cloud
-   ```sh
-   docker push ${MYREGISTRY}/${MYNAMESPACE}/${MYPROJECT}:v1.0.0
+   ibmcloud cr build -t $MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 .
    ```
    {: pre}
 
 ### Deploy the application
+
+1. Gain access to your cluster as described on the Access tab of your cluster.
+
+  For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
+   {:tip}
+
+1. Initialize the environment variable with the cluster name
+
+   ```bash
+   export MYCLUSTER=<CLUSTER_NAME>
+   ```
 
 [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
