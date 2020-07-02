@@ -63,32 +63,24 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 This tutorial requires:
-* [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell),
-* The following tools are also required, however they come pre-installed in {{site.data.keyword.cloud-shell_notm}}:
-   * {{site.data.keyword.cloud_notm}} CLI,
-      * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-      * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-      * `dev` plugin,
-   * a Docker engine,
-   * `kubectl` to interact with Kubernetes clusters,
-   * `helm` to deploy charts.
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+   * `dev` plugin,
+* a Docker engine,
+* `kubectl` to interact with Kubernetes clusters,
+* `helm` to deploy charts.
 
 <!--##istutorial#-->
-If you prefer to walk through this tutorial using your local machine, make sure to install the tools listed above. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+
+Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{:tip}
 <!--#/istutorial#-->
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
-
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new {{site.data.keyword.cloud-shell_short}}.
-
-  ![](images/gettingstarted/cloud_shell.png)
-
-2. Your {{site.data.keyword.cloud-shell_short}} session is [short lived](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-shell-ui#multi-shell), any files you create inside of {{site.data.keyword.cloud-shell_notm}} should be saved in a safe location for future re-use. There is a download and upload file option in {{site.data.keyword.cloud-shell_short}} on the upper right section of the screen.
-@dimitri-prosper
- 
 
 <!--##istutorial#-->
 ## Create a Kubernetes cluster
@@ -110,6 +102,10 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 
 <!--##isworkshop#-->
 <!--
+
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+
 ## Configure the access to your cluster
 {: #access-cluster}
 
