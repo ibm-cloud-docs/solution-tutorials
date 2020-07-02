@@ -55,16 +55,18 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 
 This tutorial requires:
-* [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell),
-* The following tools are also required, however they come pre-installed in {{site.data.keyword.cloud-shell_notm}}:
-   * {{site.data.keyword.cloud_notm}} CLI,
-      * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-      * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-   * `kubectl` to interact with Kubernetes clusters,
-   * `git` to clone source code repository.
+* {{site.data.keyword.cloud_notm}} CLI,
+   * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+   * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+* `kubectl` to interact with Kubernetes clusters,
+* `git` to clone source code repository.
 
 <!--##istutorial#-->
-If you prefer to walk through this tutorial using your local machine, make sure to install the tools listed above. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+
+Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{:tip}
+
 <!--#/istutorial#-->
 
 <!--##istutorial#-->
@@ -75,12 +77,13 @@ In addition, make sure you:
 
 <!--##istutorial#-->
 
+<!--##isworkshop#-->
+<!--
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new {{site.data.keyword.cloud-shell_short}}.
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
 
-  ![](images/gettingstarted/cloud_shell.png)
-
-2. Your {{site.data.keyword.cloud-shell_short}} session is [short lived](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-shell-ui#multi-shell), any files you create inside of {{site.data.keyword.cloud-shell_notm}} should be saved in a safe location for future re-use. There is a download and upload file option in {{site.data.keyword.cloud-shell_short}} on the upper right section of the screen.
+-->
+<!--#/isworkshop#-->
 
 ## Create a Kubernetes cluster
 {: #create_cluster}
@@ -148,7 +151,7 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
 
 ### Prepare the access to {{site.data.keyword.registryshort_notm}}
 
-1. From the {{site.data.keyword.cloud-shell_notm}} session you created earlier, set the target region and resource group to the same as your cluster.
+1. Set the target region and resource group to the same as your cluster.
    ```sh
    ibmcloud target -r YOUR_REGION -g YOUR_RESOURCE_GROUP
     ```
