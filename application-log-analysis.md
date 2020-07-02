@@ -224,12 +224,22 @@ On a terminal:
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
    ```
    {: pre}
-5. Edit app-log-analysis.yaml changing the strings in MYx, then Deploy the app:
+
+5. Edit `app-log-analysis.yaml` and replace the placeholders (`$MYREGISGRY`, `$MYNAMESPACE`, `$MYIMAGE`, `$MYINGRESSSUBDOMAIN`) with the values captured in previous sections/steps.
+
+| Variable | Value | Description |
+| -------- | ----- | ----------- |
+| `$MYREGISGRY` | *us.icr.io* | The registry where the image was built in the previous section. |
+| `$MYNAMESPACE` | *&lt;your-namespace&gt;* | The registry namespace where the image was built in the previous section. |
+| `$MYIMAGE` | *&lt;your-initials&gt;-app-log-analysis* | The name of the container image. |
+| `$MYINGRESSSUBDOMAIN` | *mycluster-1234-d123456789.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+
+6. Deploy the app:
    ```sh
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
-6. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
+7. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
 
 ### Configure the cluster to send logs to your LogDNA instance
 
