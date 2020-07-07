@@ -75,9 +75,19 @@ This tutorial requires:
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](https://{DomainName}/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+
+Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{:tip}
 <!--#/istutorial#-->
 
 In addition, make sure you [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup).
+
+<!--##isworkshop#-->
+<!--
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+-->
+<!--#/isworkshop#-->
 
 <!--##istutorial#-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
@@ -107,7 +117,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 In this step, you'll configure `oc` to point to your newly created cluster. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.3/cli_reference/openshift_cli/getting-started-cli.html) exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
 1. When the cluster is ready, click on the **Access** tab under the cluster name and open the **OpenShift web console**.
-1. From the dropdown menu in the upper right of the page, click **Copy Login Command**. Paste the copied command in your local terminal.
+1. From the dropdown menu in the upper right of the page, click **Copy Login Command**. Paste the copied command in your terminal.
 1. Once logged-in using the `oc login` command, run the below command to see all the namespaces in your cluster
    ```sh
    oc get ns
@@ -187,7 +197,7 @@ In this step, you will create a private IBM Cloud Git repository and push the ge
 ### Create a Git deploy token
 In this step, you will create a deploy token to allow read-only access to your repository
 1. To create a **Deploy token**,
-      - On the left pane of the Git repo page, click **Settings** > Repository
+      - On the left pane of the Git repo page, click **Settings** > **Repository**
       - Click on **Expand** next to **Deploy Tokens**.
       - Provide **foropenshift** as the name then check **read_repository** checkbox and click **create deploy token**.
       - Save the generated **username** and **password** for future reference.
@@ -454,11 +464,12 @@ In this section, you will learn to monitor the health and performance of your ap
     oc get routes -n openshift-monitoring
    ```
    {:pre}
-2. You will use Apache *ab* to generate load on your deployed application by hitting the route URL 15000 times with 50 concurrent requests at a time. This will in turn generate data into Prometheus.
+2. Run the following script which will endlessly send requests to the application, this will in turn generate data into Prometheus.
    ```sh
-    ab -n 15000 -c 50 <APPLICATION_ROUTE_URL>/
+    while sleep 1; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL>/info; done
    ```
    {:pre}
+
 3. In the expression box of Prometheus web UI, enter **`namespace:container_cpu_usage_seconds_total:sum_rate{namespace="<MYPROJECT>"}`** and click **Execute** to see the total container cpu usage in seconds on a Graph and a console.
 4. Open the **Grafana** web UI URL on a browser.
 5. On the Grafana **Home** page, click on **Kubernetes / Compute Resources / Namespace (Pods)** and Select
