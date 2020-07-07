@@ -221,6 +221,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    {: pre}
 
 ### Deploy the application
+<!--##istutorial#-->
 
 1. Gain access to your cluster as described on the Access tab of your cluster.
 
@@ -232,6 +233,7 @@ In this section, you first push the Docker image to the IBM Cloud private contai
    ```bash
    export MYCLUSTER=<CLUSTER_NAME>
    ```
+<!--#/istutorial#-->
 
 [Helm](https://helm.sh/) helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
