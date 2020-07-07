@@ -466,7 +466,7 @@ In this section, you will learn to monitor the health and performance of your ap
    {:pre}
 2. Run the following script which will endlessly send requests to the application, this will in turn generate data into Prometheus.
    ```sh
-    while sleep 1; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL>/info; done
+    while sleep 1; do curl --max-time 2 -s http://<APPLICATION_ROUTE_URL>; done
    ```
    {:pre}
 
