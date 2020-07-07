@@ -63,6 +63,10 @@ This tutorial requires:
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+
+Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{:tip}
+
 <!--#/istutorial#-->
 
 <!--##istutorial#-->
@@ -72,6 +76,15 @@ In addition, make sure you:
 <!--#/istutorial#-->
 
 <!--##istutorial#-->
+
+<!--##isworkshop#-->
+<!--
+## Start a new {{site.data.keyword.cloud-shell_notm}}
+1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell).
+
+-->
+<!--#/isworkshop#-->
+
 ## Create a Kubernetes cluster
 {: #create_cluster}
 
@@ -79,7 +92,7 @@ In addition, make sure you:
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
-- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster in the console](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_ui).
+- For Kubernetes on VPC infrastructure, you are required to create a VPC and subnet(s) prior to creating the Kubernetes cluster. You may follow the instructions provided under the [Creating a standard VPC Gen 1 compute cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpc_standard) or [Creating a standard VPC Gen 2 compute cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_vpcg2) 
   - Make sure to attach a Public Gateway for each of the subnet that you create as it is required for accessing cloud services.
 - For Kubernetes on Classic infrastructure follow the [Creating a standard classic cluster](https://{DomainName}/docs/containers?topic=containers-clusters#clusters_standard) instructions.
 <!--#/istutorial#-->
@@ -138,7 +151,7 @@ The ready-to-run [code for the logging app is located in this GitHub repository]
 
 ### Prepare the access to {{site.data.keyword.registryshort_notm}}
 
-1. Log in to {{site.data.keyword.Bluemix_notm}} and set the target region and resource group to the same as your cluster.
+1. Set the target region and resource group to the same as your cluster.
    ```sh
    ibmcloud target -r YOUR_REGION -g YOUR_RESOURCE_GROUP
     ```
@@ -214,12 +227,22 @@ On a terminal:
    MYINGRESSSUBDOMAIN=<Ingress Subdomain value>
    ```
    {: pre}
-5. Edit app-log-analysis.yaml changing the strings in MYx, then Deploy the app:
+
+5. Edit `app-log-analysis.yaml` and replace the placeholders (`$MYREGISTRY`, `$MYNAMESPACE`, `$MYIMAGE`, `$MYINGRESSSUBDOMAIN`) with the values captured in previous sections/steps.
+
+| Variable | Value | Description |
+| -------- | ----- | ----------- |
+| `$MYREGISTRY` | *us.icr.io* | The registry where the image was built in the previous section. |
+| `$MYNAMESPACE` | *&lt;your-namespace&gt;* | The registry namespace where the image was built in the previous section. |
+| `$MYIMAGE` | *&lt;your-initials&gt;-app-log-analysis* | The name of the container image. |
+| `$MYINGRESSSUBDOMAIN` | *mycluster-1234-d123456789.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+
+6. Deploy the app:
    ```sh
    kubectl apply -f app-log-analysis.yaml
    ```
    {: pre}
-6. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
+7. You can now access the application at `http://$MYINGRESSSUBDOMAIN/`.
 
 ### Configure the cluster to send logs to your LogDNA instance
 
@@ -332,7 +355,7 @@ Finally, the application includes a Prometheus library `prometheus_client`, whic
 ### Configure {{site.data.keyword.mon_short}}
 
 To Configure Sysdig to monitor health and performance of your cluster:
-1. Click **View Sysdig** and you should see the sysdig monitor UI. On the welcome page, click **Next**.
+1. Click **View Sysdig** and you should see the Sysdig monitor UI. On the welcome page, click **Next**.
 1. Choose **Kubernetes** as your installation method under set up environment.
 1. Click **Go to Next step** next to the agent configuration success message and click **Let's Get started** on the next page.
 1. Click **Next** and then **Complete onboarding** to see the `Explore` tab of Sysdig UI.
@@ -345,7 +368,7 @@ Note: Change the interval to **1 M** on the bottom bar of the Sysdig UI.
 {: tip}
 
 1. Go back to the application running at `http://$MYINGRESSSUBDOMAIN/` and click on the **Monitoring** tab, generate several metrics.
-1. Under `Explore` choose `Deployments and Pods` for `My Groupings`
+1. Back to the Sysdig UI, under `Explore` choose `Deployments and Pods` for `My Groupings`
 1. Expand your cluster name on the left pane > expand **default** namespace > click on **app-log-analysis-deployment**.
 1. To check **default metrics** such as the HTTP request-response codes, select `HTTP` under `Applications` in the `Metrics and Dashboards` dropdown.
 1. To monitor the latency of the application,
