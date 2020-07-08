@@ -232,33 +232,33 @@ On a terminal:
 
   <table>
     <thead>
-    <tr>
-      <td>Variable</td>
-      <td>Value</td>
-      <td>Description</td>
-    </tr>
+      <tr>
+        <td><strong>Variable</strong></td>
+        <td><strong>Value</strong></td>
+        <td><strong>Description</strong></td>
+      </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>$MYREGISTRY</td>
-      <td>us.icr.io</td>
-      <td>The registry where the image was built in the previous section.</td>
-    </tr>
-    <tr>
-      <td>$MYNAMESPACE</td>
-      <td>&lt;your-namespace&gt;</td>
-      <td>The registry namespace where the image was built in the previous section.</td>
-    </tr>
-    <tr>
-      <td>$MYIMAGE</td>
-      <td>&lt;your-initials&gt;-app-log-analysis</td>
-      <td>The name of the container image.</td>
-    </tr>
-    <tr>
-      <td>$MYINGRESSSUBDOMAIN</td>
-      <td>mycluster-1234-d123456789.us-south.containers.appdomain.cloud</td>
-      <td>Retrieve from the cluster overview page or with ibmcloud ks cluster get --cluster &lt;your-cluster-name&gt;.</td>
-    </tr>
+      <tr>
+        <td>$MYREGISTRY</td>
+        <td>us.icr.io</td>
+        <td>The registry where the image was built in the previous section.</td>
+      </tr>
+      <tr>
+        <td>$MYNAMESPACE</td>
+        <td>&lt;your-namespace&gt;</td>
+        <td>The registry namespace where the image was built in the previous section.</td>
+      </tr>
+      <tr>
+        <td>$MYIMAGE</td>
+        <td>&lt;your-initials&gt;-app-log-analysis</td>
+        <td>The name of the container image.</td>
+      </tr>
+      <tr>
+        <td>$MYINGRESSSUBDOMAIN</td>
+        <td>mycluster-1234-d123456789.us-south.containers.appdomain.cloud</td>
+        <td>Retrieve from the cluster overview page or with ibmcloud ks cluster get --cluster &lt;your-cluster-name&gt;.</td>
+      </tr>
     </tbody>
 </table>
 
