@@ -230,12 +230,33 @@ On a terminal:
 
 5. Edit `app-log-analysis.yaml` and replace the placeholders (`$MYREGISTRY`, `$MYNAMESPACE`, `$MYIMAGE`, `$MYINGRESSSUBDOMAIN`) with the values captured in previous sections/steps.
 
-  | Variable | Value | Description |
-  | -------- | ----- | ----------- |
-  | `$MYREGISTRY` | *us.icr.io* | The registry where the image was built in the previous section. |
-  | `$MYNAMESPACE` | *&lt;your-namespace&gt;* | The registry namespace where the image was built in the previous section. |
-  | `$MYIMAGE` | *&lt;your-initials&gt;-app-log-analysis* | The name of the container image. |
-  | `$MYINGRESSSUBDOMAIN` | *mycluster-1234-d123456789.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+  <table>
+    <tr>
+        <td>Variable</td>
+        <td>Value</td>
+        <td>Description</td>
+    </tr>
+    <tr>
+        <td>$MYREGISTRY</td>
+        <td>us.icr.io</td>
+        <td>The registry where the image was built in the previous section.</td>
+    </tr>
+    <tr>
+        <td>$MYNAMESPACE</td>
+        <td>&lt;your-namespace&gt;</td>
+        <td>The registry namespace where the image was built in the previous section.</td>
+    </tr>
+    <tr>
+        <td>$MYIMAGE</td>
+        <td>&lt;your-initials&gt;-app-log-analysis</td>
+        <td>The name of the container image.</td>
+    </tr>
+    <tr>
+        <td>$MYINGRESSSUBDOMAIN</td>
+        <td>mycluster-1234-d123456789.us-south.containers.appdomain.cloud</td>
+        <td>Retrieve from the cluster overview page or with ibmcloud ks cluster get --cluster &lt;your-cluster-name&gt;.</td>
+    </tr>
+</table>
 
 6. Deploy the app:
    ```sh
