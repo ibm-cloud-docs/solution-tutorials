@@ -60,33 +60,26 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereq}
 
 This tutorial requires:
-* [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell),
-* The following tools are also required, however they come pre-installed in {{site.data.keyword.cloud-shell_notm}}:
-   * {{site.data.keyword.cloud_notm}} CLI,
-      * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
-      * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
-      * `dev` plugin,
-   * a Docker engine,
-   * `kubectl` to interact with Kubernetes clusters,
-   * `helm` to deploy charts,
-   * `git` to clone source code repository,
+* {{site.data.keyword.cloud_notm}} CLI,
+  * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
+  * {{site.data.keyword.registryshort_notm}} plugin (`container-registry`),
+  * `dev` plugin,
+* a Docker engine,
+* `kubectl` to interact with Kubernetes clusters,
+* `helm` to deploy charts,
+* `git` to clone source code repository,
 * {{site.data.keyword.cloud_notm}} GitLab configured with your SSH key.
 
 <!--##istutorial#-->
-If you prefer to walk through this tutorial using your local machine, make sure to install the tools listed above. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-getting-started) guide.
+
+Note: To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
+{:tip}
 <!--#/istutorial#-->
 
 In addition, make sure you:
 - [set up a registry namespace](/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_namespace_setup)
 - and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
-
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, click the button in the upper right corner to create a new {{site.data.keyword.cloud-shell_short}}.
-
-  ![](images/gettingstarted/cloud_shell.png)
-
-2. Your {{site.data.keyword.cloud-shell_short}} session is [short lived](https://{DomainName}/docs/cloud-shell?topic=cloud-shell-shell-ui#multi-shell), any files you create inside of {{site.data.keyword.cloud-shell_notm}} should be saved in a safe location for future re-use. There is a download and upload file option in {{site.data.keyword.cloud-shell_short}} on the upper right section of the screen.
-
 
 <!--##istutorial#-->
 ## Create development Kubernetes cluster
@@ -151,7 +144,8 @@ The toolchain will build your application and deploy it to the cluster.
 5. Visit the URL displayed to access the application (`http://worker-public-ip:portnumber/`).
    ![](images/solution21/Logs.png)
 
-## Clone, build and run the application in {{site.data.keyword.cloud-shell_notm}}
+<!--##istutorial#-->
+## Clone, build and run the application
 {: #cloneandbuildapp}
 
 In this section, you will use the starter app, clone it to the {{site.data.keyword.cloud-shell_notm}} session you created earlier, modify the code and then build/run it.
@@ -223,6 +217,7 @@ In this section, you will commit your change to your Git repository. The pipelin
 6. Click the application **url** under Last Execution result to view your changes live.
 
 If you don't see your application updating, check the logs of the DEPLOY and BUILD stages of your pipeline.
+<!--#/istutorial#-->
 
 ## Deploy to a production environment
 {: #deploytoproduction}
