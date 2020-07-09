@@ -47,16 +47,14 @@ This tutorial may incur costs. Use the [Pricing Calculator](https://{DomainName}
 {: #prereqs}
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](https://{DomainName}/docs/account?topic=account-accounts),
-* [{{site.data.keyword.cloud-shell_notm}}](https://{DomainName}/shell),
-* The following tools are also required, however they come pre-installed in {{site.data.keyword.cloud-shell_notm}}:
-   * {{site.data.keyword.cloud_notm}} CLI,
-      * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
-   * `terraform` to use Infrastructure as Code to provision resources,
-   * `jq` to query JSON files,
-   * `git` to clone source code repository,
+* {{site.data.keyword.cloud_notm}} CLI,
+  * {{site.data.keyword.vpc_short}} plugin (`vpc-infrastructure`),
+* `terraform` to use Infrastructure as Code to provision resources,
+* `jq` to query JSON files,
+* `git` to clone source code repository,
 
 <!--##istutorial#-->
-If you prefer to walk through this tutorial using your local machine, make sure to install the tools listed above. You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/tutorials?topic=solution-tutorials-getting-started) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](https://{DomainName}/shell) from the {{site.data.keyword.cloud_notm}} console.
 {:tip}
 <!--#/istutorial#-->
 
